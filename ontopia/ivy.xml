@@ -54,6 +54,7 @@
         <dependency org="javax.servlet" name="servlet-api" rev="2.4"/>
         <dependency org="javax.servlet" name="jsp-api" rev="2.0"/>
         <dependency org="javax.servlet" name="jstl" rev="1.1.2"/>
+        <dependency org="taglibs" name="standard" rev="1.1.2"/>
 
     </dependencies>
 </ivy-module>
