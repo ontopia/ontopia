@@ -1,0 +1,60 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+          xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="sweden">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#se"/>
+    </subjectIdentity>
+
+    <baseName>
+      <baseNameString>Sweden</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="norway">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#no"/>
+    </subjectIdentity>
+
+    <baseName>
+      <baseNameString>Norway</baseNameString>
+    </baseName>
+  </topic>
+
+  <topic id="country">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#country"/>
+    </subjectIdentity>
+
+    <baseName>
+      <baseNameString>Country</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="borders-with">
+    <baseName>
+      <baseNameString>Borders with</baseNameString>
+    </baseName>
+  </topic>
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#borders-with"/>
+    </instanceOf>
+
+    <member>
+      <roleSpec>
+  	<topicRef xlink:href="#country"/>
+      </roleSpec>
+      <topicRef xlink:href="#norway"/>
+    </member>
+
+    <member>
+      <roleSpec>
+  	<topicRef xlink:href="#country"/>
+      </roleSpec>
+      <topicRef xlink:href="#sweden"/>
+    </member>
+  </association>
+
+</topicMap>

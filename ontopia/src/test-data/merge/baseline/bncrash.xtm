@@ -1,0 +1,32 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>Country</baseNameString>
+</baseName>
+<baseName>
+<baseNameString>Country2</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Country</baseNameString>
+</baseName>
+<baseName>
+<baseNameString>Country4</baseNameString>
+</baseName>
+<baseName>
+<baseNameString>Country6</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<baseName>
+<baseNameString>Country2</baseNameString>
+</baseName>
+<baseName>
+<baseNameString>Country3</baseNameString>
+</baseName>
+<baseName>
+<baseNameString>Country7</baseNameString>
+</baseName>
+</topic>
+</topicMap>

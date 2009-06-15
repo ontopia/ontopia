@@ -1,0 +1,7 @@
+
+[super-sub = "Superclass-subclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"] 
+[super = "Superclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"] 
+[sub = "Subclass"
+ @"http://www.topicmaps.org/ xtm/1.0/core.xtm#subclass"] 

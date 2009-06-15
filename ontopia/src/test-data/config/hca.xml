@@ -1,0 +1,29 @@
+<test-collection>
+
+  <include>tests.xml</include>
+
+  <group>
+    <name>default</name>
+    <group-ref>core</group-ref>
+    <group-ref>basic</group-ref>
+    <group-ref>schema</group-ref>
+    <group-ref>cmdlineutils</group-ref>
+    <group-ref>nav</group-ref>
+    <group-ref>nav2</group-ref>
+    <group-ref>webed</group-ref>
+    <group-ref>query</group-ref>
+    <group-ref>fulltext</group-ref>
+  </group>
+
+  <property>
+    <name>net.ontopia.test.root</name>
+    <value>/home/hca/ontopia/src/java/test-data</value>
+  </property>
+
+
+  <property>
+    <name>net.ontopia.test.TestRunner.debug</name>
+    <value>false</value>
+  </property>
+
+</test-collection>

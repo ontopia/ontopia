@@ -1,0 +1,1401 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>topicmaps/geography.xtmm#calabria</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>topicmaps/geography.xtmm#tyrol</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.2.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>topicmaps/i18n.ltm#region</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>topicmaps/opera.xtm#attila</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.56.role.1"></rolePlayed>
+</topic>
+<topic number="5">
+<itemIdentifiers>
+<locator>topicmaps/opera.xtm#la-battaglia-di-legnano</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.57.role.1"></rolePlayed>
+</topic>
+<topic number="6">
+<itemIdentifiers>
+<locator>topicmaps/opera.xtm#la-forza-del-destino</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.58.role.1"></rolePlayed>
+</topic>
+<topic number="7">
+<itemIdentifiers>
+<locator>topicmaps/opera.xtm#silvano</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.59.role.1"></rolePlayed>
+</topic>
+<topic number="8">
+<subjectIdentifiers>
+<locator>http://psi.oasis-open.org/iso/3166/#country</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.60.role.1"></rolePlayed>
+</topic>
+<topic number="9">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/#geography</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="10">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/#music</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="11">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#bassano</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.3.role.1"></rolePlayed>
+</topic>
+<topic number="12">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#bologna</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.4.role.1"></rolePlayed>
+</topic>
+<topic number="13">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#borgo-san-lorenzo</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.5.role.1"></rolePlayed>
+</topic>
+<topic number="14">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#brescia</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.6.role.1"></rolePlayed>
+</topic>
+<topic number="15">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#capri</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.7.role.1"></rolePlayed>
+</topic>
+<topic number="16">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#caprino-bergamasco</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.8.role.1"></rolePlayed>
+</topic>
+<topic number="17">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#castelnuovo</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.9.role.1"></rolePlayed>
+</topic>
+<topic number="18">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#colleretto-parella</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.10.role.1"></rolePlayed>
+</topic>
+<topic number="19">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#cremona</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.11.role.1"></rolePlayed>
+</topic>
+<topic number="20">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#ferrara</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.12.role.1"></rolePlayed>
+</topic>
+<topic number="21">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#firenze</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.13.role.1"></rolePlayed>
+</topic>
+<topic number="22">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#foggia</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.14.role.1"></rolePlayed>
+</topic>
+<topic number="23">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#genova</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.15.role.1"></rolePlayed>
+</topic>
+<topic number="24">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#la-spezia</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.16.role.1"></rolePlayed>
+</topic>
+<topic number="25">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#laquila</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.17.role.1"></rolePlayed>
+</topic>
+<topic number="26">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#le-roncole</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.18.role.1"></rolePlayed>
+</topic>
+<topic number="27">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#lecce</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.19.role.1"></rolePlayed>
+</topic>
+<topic number="28">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#lecco</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.20.role.1"></rolePlayed>
+</topic>
+<topic number="29">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#livorno</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.21.role.1"></rolePlayed>
+</topic>
+<topic number="30">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#lucca</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.22.role.1"></rolePlayed>
+</topic>
+<topic number="31">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#mantua</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.23.role.1"></rolePlayed>
+</topic>
+<topic number="32">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#milano</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.24.role.1"></rolePlayed>
+</topic>
+<topic number="33">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#montecatini</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.25.role.1"></rolePlayed>
+</topic>
+<topic number="34">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#murano</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.26.role.1"></rolePlayed>
+</topic>
+<topic number="35">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#napoli</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.27.role.1"></rolePlayed>
+</topic>
+<topic number="36">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#paderno-fasolaro</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.28.role.1"></rolePlayed>
+</topic>
+<topic number="37">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#padua</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.29.role.1"></rolePlayed>
+</topic>
+<topic number="38">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#palmi</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.30.role.1"></rolePlayed>
+</topic>
+<topic number="39">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#pesaro</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.31.role.1"></rolePlayed>
+</topic>
+<topic number="40">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#pescara</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.32.role.1"></rolePlayed>
+</topic>
+<topic number="41">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#piacenza</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.33.role.1"></rolePlayed>
+</topic>
+<topic number="42">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#posillipo</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.34.role.1"></rolePlayed>
+</topic>
+<topic number="43">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#prato</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.35.role.1"></rolePlayed>
+</topic>
+<topic number="44">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#ravenna</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.36.role.1"></rolePlayed>
+</topic>
+<topic number="45">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#reggio-emilia</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.37.role.1"></rolePlayed>
+</topic>
+<topic number="46">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#rimini</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.38.role.1"></rolePlayed>
+</topic>
+<topic number="47">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#roma</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.39.role.1"></rolePlayed>
+</topic>
+<topic number="48">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#rovereto</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.40.role.1"></rolePlayed>
+</topic>
+<topic number="49">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#san-remo</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.41.role.1"></rolePlayed>
+</topic>
+<topic number="50">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#siena</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.42.role.1"></rolePlayed>
+</topic>
+<topic number="51">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#torino</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.43.role.1"></rolePlayed>
+</topic>
+<topic number="52">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#trento</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.44.role.1"></rolePlayed>
+</topic>
+<topic number="53">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#trieste</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.45.role.1"></rolePlayed>
+</topic>
+<topic number="54">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#udine</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.46.role.1"></rolePlayed>
+</topic>
+<topic number="55">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#varazza</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.47.role.1"></rolePlayed>
+</topic>
+<topic number="56">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#varese</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.48.role.1"></rolePlayed>
+</topic>
+<topic number="57">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#venezia</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.49.role.1"></rolePlayed>
+</topic>
+<topic number="58">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#verona</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.50.role.1"></rolePlayed>
+</topic>
+<topic number="59">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#viareggio</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.51.role.1"></rolePlayed>
+</topic>
+<topic number="60">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/city/380/#zoagli</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.52.role.1"></rolePlayed>
+</topic>
+<topic number="61">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/geography/#containee</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="62">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/geography/#container</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="63">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/geography/#country</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.61.role.1"></rolePlayed>
+</topic>
+<topic number="64">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/geography/#located-in</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="65">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/geography/#place</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="66">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/i18n/#language</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="67">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/i18n/#spoken-in</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="68">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/iso3166/it.xtm#savoia</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.53.role.1"></rolePlayed>
+</topic>
+<topic number="69">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/iso3166/it.xtm#sicilia</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.54.role.1"></rolePlayed>
+</topic>
+<topic number="70">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/metadata/#resource</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="71">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/metadata/#value</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="72">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/music/#opera</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="73">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/opera/#takes-place-in</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="74">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="75">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="76">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="77">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="78">
+<subjectIdentifiers>
+<locator>http://purl.org/dc/elements/1.1/subject</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="79">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/country.xtm#IT</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id430</locator>
+<locator>#italy</locator>
+<locator>topicmaps/geography.xtmm#italy</locator>
+<locator>topicmaps/i18n.ltm#italy</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Italy</value>
+<type topicref="75"></type>
+</name>
+<rolePlayed ref="association.55.role.1"></rolePlayed>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+<rolePlayed ref="association.2.role.2"></rolePlayed>
+<rolePlayed ref="association.3.role.2"></rolePlayed>
+<rolePlayed ref="association.4.role.2"></rolePlayed>
+<rolePlayed ref="association.5.role.2"></rolePlayed>
+<rolePlayed ref="association.6.role.2"></rolePlayed>
+<rolePlayed ref="association.7.role.2"></rolePlayed>
+<rolePlayed ref="association.8.role.2"></rolePlayed>
+<rolePlayed ref="association.9.role.2"></rolePlayed>
+<rolePlayed ref="association.10.role.2"></rolePlayed>
+<rolePlayed ref="association.11.role.2"></rolePlayed>
+<rolePlayed ref="association.12.role.2"></rolePlayed>
+<rolePlayed ref="association.13.role.2"></rolePlayed>
+<rolePlayed ref="association.14.role.2"></rolePlayed>
+<rolePlayed ref="association.15.role.2"></rolePlayed>
+<rolePlayed ref="association.16.role.2"></rolePlayed>
+<rolePlayed ref="association.17.role.2"></rolePlayed>
+<rolePlayed ref="association.18.role.2"></rolePlayed>
+<rolePlayed ref="association.19.role.2"></rolePlayed>
+<rolePlayed ref="association.20.role.2"></rolePlayed>
+<rolePlayed ref="association.21.role.2"></rolePlayed>
+<rolePlayed ref="association.22.role.2"></rolePlayed>
+<rolePlayed ref="association.23.role.2"></rolePlayed>
+<rolePlayed ref="association.24.role.2"></rolePlayed>
+<rolePlayed ref="association.25.role.2"></rolePlayed>
+<rolePlayed ref="association.26.role.2"></rolePlayed>
+<rolePlayed ref="association.27.role.2"></rolePlayed>
+<rolePlayed ref="association.28.role.2"></rolePlayed>
+<rolePlayed ref="association.29.role.2"></rolePlayed>
+<rolePlayed ref="association.30.role.2"></rolePlayed>
+<rolePlayed ref="association.31.role.2"></rolePlayed>
+<rolePlayed ref="association.32.role.2"></rolePlayed>
+<rolePlayed ref="association.33.role.2"></rolePlayed>
+<rolePlayed ref="association.34.role.2"></rolePlayed>
+<rolePlayed ref="association.35.role.2"></rolePlayed>
+<rolePlayed ref="association.36.role.2"></rolePlayed>
+<rolePlayed ref="association.37.role.2"></rolePlayed>
+<rolePlayed ref="association.38.role.2"></rolePlayed>
+<rolePlayed ref="association.39.role.2"></rolePlayed>
+<rolePlayed ref="association.40.role.2"></rolePlayed>
+<rolePlayed ref="association.41.role.2"></rolePlayed>
+<rolePlayed ref="association.42.role.2"></rolePlayed>
+<rolePlayed ref="association.43.role.2"></rolePlayed>
+<rolePlayed ref="association.44.role.2"></rolePlayed>
+<rolePlayed ref="association.45.role.2"></rolePlayed>
+<rolePlayed ref="association.46.role.2"></rolePlayed>
+<rolePlayed ref="association.47.role.2"></rolePlayed>
+<rolePlayed ref="association.48.role.2"></rolePlayed>
+<rolePlayed ref="association.49.role.2"></rolePlayed>
+<rolePlayed ref="association.50.role.2"></rolePlayed>
+<rolePlayed ref="association.51.role.2"></rolePlayed>
+<rolePlayed ref="association.52.role.2"></rolePlayed>
+<rolePlayed ref="association.53.role.2"></rolePlayed>
+<rolePlayed ref="association.54.role.2"></rolePlayed>
+<rolePlayed ref="association.56.role.2"></rolePlayed>
+<rolePlayed ref="association.57.role.2"></rolePlayed>
+<rolePlayed ref="association.58.role.2"></rolePlayed>
+<rolePlayed ref="association.59.role.2"></rolePlayed>
+<rolePlayed ref="association.62.role.1"></rolePlayed>
+<rolePlayed ref="association.60.role.2"></rolePlayed>
+<rolePlayed ref="association.61.role.2"></rolePlayed>
+</topic>
+<topic number="80">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/language.xtm#it</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.55.role.2"></rolePlayed>
+</topic>
+<topic number="81">
+<subjectIdentifiers>
+<locator>topicmaps/opera.xtm#operatm-tm</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.62.role.2"></rolePlayed>
+</topic>
+<association number="1">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="2">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="3">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="11"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="4">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="12"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="5">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="13"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="6">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="14"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="7">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="15"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="8">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="16"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="9">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="17"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="10">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="18"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="11">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="19"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="12">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="20"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="13">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="21"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="14">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="22"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="15">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="23"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="16">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="24"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="17">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="25"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="18">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="26"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="19">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="27"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="20">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="28"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="21">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="29"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="22">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="30"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="23">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="31"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="24">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="32"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="25">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="33"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="26">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="34"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="27">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="35"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="28">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="36"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="29">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="37"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="30">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="38"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="31">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="39"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="32">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="40"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="33">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="41"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="34">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="42"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="35">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="43"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="36">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="44"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="37">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="45"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="38">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="46"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="39">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="47"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="40">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="48"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="41">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="49"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="42">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="50"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="43">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="51"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="44">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="52"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="45">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="53"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="46">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="54"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="47">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="55"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="48">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="56"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="49">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="57"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="50">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="58"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="51">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="59"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="52">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="60"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="53">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="68"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="54">
+<type topicref="64"></type>
+<role number="1">
+<player topicref="69"></player>
+<type topicref="61"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="62"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+</scope>
+</association>
+<association number="55">
+<type topicref="67"></type>
+<role number="1">
+<player topicref="79"></player>
+<type topicref="3"></type>
+</role>
+<role number="2">
+<player topicref="80"></player>
+<type topicref="66"></type>
+</role>
+</association>
+<association number="56">
+<type topicref="73"></type>
+<role number="1">
+<player topicref="4"></player>
+<type topicref="72"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="65"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+<scopingTopic topicref="10"></scopingTopic>
+</scope>
+</association>
+<association number="57">
+<type topicref="73"></type>
+<role number="1">
+<player topicref="5"></player>
+<type topicref="72"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="65"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+<scopingTopic topicref="10"></scopingTopic>
+</scope>
+</association>
+<association number="58">
+<type topicref="73"></type>
+<role number="1">
+<player topicref="6"></player>
+<type topicref="72"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="65"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+<scopingTopic topicref="10"></scopingTopic>
+</scope>
+</association>
+<association number="59">
+<type topicref="73"></type>
+<role number="1">
+<player topicref="7"></player>
+<type topicref="72"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="65"></type>
+</role>
+<scope>
+<scopingTopic topicref="9"></scopingTopic>
+<scopingTopic topicref="10"></scopingTopic>
+</scope>
+</association>
+<association number="60">
+<type topicref="77"></type>
+<role number="1">
+<player topicref="8"></player>
+<type topicref="76"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="74"></type>
+</role>
+</association>
+<association number="61">
+<type topicref="77"></type>
+<role number="1">
+<player topicref="63"></player>
+<type topicref="76"></type>
+</role>
+<role number="2">
+<player topicref="79"></player>
+<type topicref="74"></type>
+</role>
+</association>
+<association number="62">
+<type topicref="78"></type>
+<role number="1">
+<player topicref="79"></player>
+<type topicref="71"></type>
+</role>
+<role number="2">
+<player topicref="81"></player>
+<type topicref="70"></type>
+</role>
+</association>
+</topicMap>

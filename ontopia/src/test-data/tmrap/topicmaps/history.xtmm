@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap id="history.xtmm"
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<!-- $Id: history.xtmm,v 1.1 2005/11/08 14:33:18 opland Exp $ -->
+<!-- Include Ontopia PSIs -->
+<mergeMap xlink:href="ontopsi.xtmm"/>
+
+  <!-- TT: event -->
+<topic id="event">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/history/#event"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Historical event</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Historisk begivenhet</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="french-revolution">
+  <instanceOf><topicRef xlink:href="#event"/></instanceOf>
+  <baseName>
+    <baseNameString>The French Revolution</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Den franske revolusjonen</baseNameString>
+  </baseName>
+</topic>
+
+</topicMap>

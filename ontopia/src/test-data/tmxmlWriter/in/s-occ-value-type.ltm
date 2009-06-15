@@ -1,0 +1,7 @@
+/* These two lines show that occurrences are sorted by value (type ignored). */ 
+{topicA, typeB, [[Value A]]}
+{topicA, typeA, [[Value B]]}
+
+/* These two lines show that if values are the same. sorting is by type. */ 
+{topicB, typeB, [[Value A]]}
+{topicB, typeA, [[Value A]]}

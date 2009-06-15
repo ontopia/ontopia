@@ -1,0 +1,40 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.example.org/far</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.example.org/near</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.example.org/topic</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.example.org/type-one</locator>
+</subjectIdentifiers>
+</topic>
+<association number="1">
+<type topicref="5"></type>
+<role number="1">
+<player topicref="3"></player>
+<type topicref="1"></type>
+</role>
+<role number="2">
+<player topicref="4"></player>
+<type topicref="2"></type>
+</role>
+</association>
+</topicMap>

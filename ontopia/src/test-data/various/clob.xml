@@ -1,0 +1,1166 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<!--DOCTYPE article PUBLIC '-//Ontopia//DTD Specification V1.0//EN' ''-->
+
+<!--
+
+Cross-TM handling must be fleshed out.
+
+Go through finished XTM spec and update this document.
+
+Add the list of operations; make sure they are common ones that need
+to be fast. Make the list to be about 5-10, and make it not just index
+lookups, but also traversal things.  Assoc traversal seems like a
+likely candidate for some of these.  Possible other operation: merging.
+  
+-->
+
+
+<article class="whitepaper">
+<title>The Ontopia Topic Map Engine</title>
+<subtitle>Specification of Functionality, version 1.0</subtitle>
+
+<articleinfo> 
+<author><firstname>Sylvia</firstname> <surname>Schwab</surname>
+<affiliation><orgname>Ontopia A/S</orgname></affiliation> 
+</author> 
+<pubdate>$Date: 2008/04/10 08:14:13 $</pubdate> 
+<releaseinfo>$Revision: 1.1 $</releaseinfo>
+
+<abstract> 
+<para>
+This description of functionality is part of the product plan. It
+serves two purposes: to document our common agreement on what will be
+in the 1.0 release and to serve as the basis for development planning.
+</para>
+</abstract>
+</articleinfo>
+
+<section>
+<title>Definition of scope</title>
+
+<para>
+This specification defines the requirements that must be met by the
+topic map engine as a product before we release version 1.0. This
+includes requirements made to the code of the engine, its
+documentation and supporting infrastructure. No requirements to other
+products such as the navigator, editor or query engine belong in this
+document, as these products will have their own specification
+documents.
+</para>
+
+<para>
+In this specification, <firstterm>topic maps</firstterm> means topic
+maps as specified by XTM 1.0.
+</para>
+
+<para>
+By <firstterm>topic map implementation</firstterm>, we mean a set of
+classes that together implement all the core topic map interfaces in
+such a way as to provide a view of a topic map. This view will
+generally represent a topic map as stored in a persistent store, but
+may also represent virtual topic maps that are dynamically generated
+views of some other data source or other kinds of topic maps.
+</para>
+
+<para>
+The engine itself is made up of the core interfaces, the topic map
+implementations described in this specification and all the extra
+utilities that are provided around the topic map implementations.
+</para>
+</section>
+
+<section id="sect-performance"><title>Performance and scalability</title> 
+<para>
+All the database-based engine implementations must be able to perform
+the following operations within the given time limits on a normal
+Intel workstation. Note that these figures are based on informal tests
+of the current code base.
+</para>
+
+<reqlist>
+<req id="req-speed-import">
+import a topic map of sizes up to 50 kilotaos with a speed of at least
+30 taos per second.
+</req>
+<req id="req-speed-export">
+export a topic map of sizes up to 50 kilotaos with a speed of at
+least 100 taos per second.
+</req>
+<subreqlist id="req-speed-lookup">
+<para>perform the following operations within the given time limits:
+</para>
+<itemizedlist>
+<listitem>
+<para>looking up topic by object ID, <remark>time!</remark></para>
+</listitem>
+<listitem>
+<para>index lookups <remark>(look at intfs and specify)</remark></para>
+</listitem>
+</itemizedlist>
+</subreqlist>
+</reqlist>
+
+<para>
+The basic, that is, in-memory, engine implementation must be able to
+perform the following operations within the given time limits on a
+normal Intel workstation:
+</para>
+
+<reqlist>
+<req id="req-speed-import-basic">
+import a topic map of sizes up to 50 kilotaos with a speed of at
+least 7500 taos per second.
+</req>
+<req id="req-speed-export-basic">
+export a topic map of sizes up to 50 kilotaos with a speed of at
+least 8000 taos per second.
+</req>
+<subreqlist id="req-speed-lookup-basic">
+<para>perform the following operations within the given time limits:
+</para>
+<itemizedlist>
+<listitem>
+<para>looking up topic by SGML ID</para>
+</listitem>
+<listitem>
+<para>index lookups <remark>(look at intfs and specify)</remark></para>
+</listitem>
+</itemizedlist>
+</subreqlist>
+</reqlist>
+
+<para>
+The engine implementations built on database backends should also be
+able to handle the following sizes of certain variables without
+causing performance to degrade by a factor of more than 3 compared to
+the above requirements.
+</para>
+
+<reqlist>
+<req id="req-scale-tmsize">
+A single topic map with a size of 1 megatao.
+</req>
+<req id="req-scale-tmsizesum">
+A set of topic maps stored in the same database backend that
+together have a size of 10 megatao.
+</req>
+<req id="req-scale-tmcount">
+1000 topic maps in the same database backend accessed at the
+same time.
+</req>
+<req id="req-scale-connections">
+10 processes connected to the same database backend at the same
+time, each accessing 10 topic maps (the total number of topic maps
+accessed can be anywhere between 10 and 100).
+</req>
+</reqlist>
+</section>
+
+<section id="sect-concurrency">
+<title>Concurrency</title>
+<para>
+The engine and all its implementations shall support concurrency by
+being able to handle the following without violating data integrity or
+causing undue performance delays through locking:
+</para>
+
+<reqlist>
+<req id="req-conc-process">
+separate processes simultaneously modifying the topic map in its
+persistent store. (This does not apply to the XML and Java
+serialization storage implementations.)
+</req>
+<req id="req-conc-thread">
+separate threads simultaneously modifying the topic map while it
+is in-memory.
+</req>
+</reqlist>
+
+<para>
+<ireq id="req-conc-locking">
+It shall be possible for multiple client applications to connect to
+the same topic map storage repository across the network and access
+the same topic maps without violating data integrity, causing
+performance delays through locking or too slow data access.
+</ireq>
+</para>
+
+<para>
+A separate document will specify the behaviour of the engine with
+respect to concurrency in more detail.
+</para>
+
+<para>
+<ireq id="req-conc-j2ee">
+The engine implementation shall not prevent applications from being
+deployable in Java 2 Enterprise Edition (J2EE) application servers.
+</ireq>
+</para>
+</section>
+
+<section><title>Multi-TM Support</title>
+
+<section><title>Cross-TM Handling</title> 
+<para>
+All topic map implementations, as well as the common API, shall:
+</para>
+
+<reqlist>
+<req id="req-ctm-refs">
+support having topics used as types (meaning topic types,
+association types, occurrence role types), players in associations,
+and themes in scopes that are in a different topic map from the
+constructs that reference the topic. (The other topic map may use a
+different database or implementation.)
+</req>
+<req id="req-ctm-foreign-objs">
+be able to detect when client code attempts to insert objects
+into a topic map that belong to a different topic map and either
+reject them or (in the case of topics) handle them using its support
+for external topics.
+</req>
+<req id="req-ctm-persist-refs">
+persist references to external topic maps so that when the topic map
+is closed and reopened, the same external topic object shall reappear
+in the exact same places in the topic map.
+</req>
+<req id="req-ctm-broken-refs">
+When the reference has been broken the topic will only have local
+characteristics. There shall be a method that can be used to determine
+whether the reference has been resolved successfully or not.
+</req>
+</reqlist>
+
+<para>
+The handling of external topics with respect to indexing must be
+clearly defined.
+</para>
+</section>
+
+<section id="sect-topic-merge">
+<title>Support for merging topics</title> 
+
+<para>
+The engine shall:
+</para>
+
+<reqlist>
+<req id="req-merge-detect">
+detect when an operation is attempted that causes two topics within
+the same topic map have the same identity, or the same string
+(determined using <ulink
+url="http://www.w3.org/TR/REC-xml#dt-match">the XML Recommendation's
+rules for string matching</ulink>) as a name in the same scope and
+throw an exception. The engine must detect this and raise an exception
+when client code attempts to set an identity or a name or change a
+scope that violates these constraints.
+</req>
+<req id="rec-merge-utilities">
+have a utility API that allows applications to merge two topics. There
+must also be a utility for deciding whether two topics from separate
+topic maps would or would not be merged under ISO 13250/XTM 1.0 rules.
+</req>
+</reqlist>
+
+<para>
+When two topics are merged the result shall be a single topic that
+has:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>the union of the names of the two topics. Name strings are
+matched using the XML Recommendation's rules for string matching.
+</para>
+</listitem>
+<listitem>
+<para>the union of the subject identities of the two topics.</para>
+</listitem>
+<listitem>
+<para>the union of the resource identifiers of the two topics.</para>
+</listitem>
+<listitem>
+<para>the union of the occurrences of the two topics.  Two occurrences
+are equal if they have the same locator, the same base name and the
+same type.</para>
+</listitem>
+<listitem>
+<para>the union of the association roles of the two topics.
+Association roles from one topic are discarded if, as a result of the
+merge, the two associations become indistinguishable. Two associations
+are equal if they have the same type and the same roles with the same
+players and the same types.</para>
+</listitem>
+<listitem>
+<para>the object ID of one of the two topics. The API must make it
+clear which object ID is lost.</para>
+</listitem>
+<listitem>
+<para>the addressable subject of the topics, if any. If the two topics
+have different addressable subjects, i.e. different values of the
+<symbol>subject</symbol> property, the merge operation will fail with
+an exception.
+</para>
+</listitem>
+<listitem>
+<para>union of the types of the two topics.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+After the two topics have merged, the topic map must be revisited to
+ensure that any objects only distinguished by the difference between
+these two topics now have one duplicate removed.
+</para>
+
+<para>
+The utility that merges two topics should take a boolean parameter
+that controls whether the merge operation fails in the case where it
+triggers further merges. The merge operation should always leave the
+topic map in a consistent state.
+</para>
+</section>
+
+<section id="sect-tm-merging">
+<title>Support for merging topic maps</title>
+
+<para>
+The engine APIs shall support merging of topic maps in the following
+ways:
+</para>
+
+<reqlist>
+<req id="req-tmmerge-api">
+there shall be a utility for merging the contents of one topic
+map (A) into another topic map (B), leaving A untouched, but all its
+contents copied into B and B updated as required for proper merging.
+(This is described below.)
+</req>
+<req id="req-tmmerge-cmdline">
+the utility shall have a command-line interface in addition to
+the programmatic interface.
+</req>
+<req id="req-tmmerge-impl">
+there shall be a topic map implementation that acts as an
+'umbrella' implementation on top of an ordered collection of other
+topic maps and presents a unified view of them as they appear when
+merged. (This requirement is here because it is required by
+StarBase.)
+</req>
+</reqlist>
+
+<para>
+<ireq id="req-tmmerge-subject-handler">
+If merging causes two topics with different <symbol>subject</symbol>
+properties to be merged, a handler object will be asked to resolve the
+conflict. The default implementation of this handler will raise an
+exception. The command-line utility will use the default
+implementation.
+</ireq>
+</para>
+
+<para>
+The result of merging two topic maps shall be the same as applying the
+algorithm described below. The result of merging N topic maps shall be
+the same as merging the first two, then merging the result of that
+with the next and so on recursively.
+</para>
+
+<orderedlist>
+<listitem>
+<para>First all topics shall be merged as described in
+<xref linkend="sect-topic-merge"/>.</para>
+</listitem>
+<listitem>
+<para>When two topics are merged, one shall disappear and be replaced
+by the other wherever it appears as a topic type, association type,
+association role type, association role player, occurrence role type,
+facet type, facet value type or theme in a scope. (The topic from
+topic map A will disappear. When both topics are from topic map B, the
+API must somehow make it clear which one disappears.)</para>
+</listitem>
+<listitem>
+<para>If both of a pair of merged topics appeared as a themes in the
+scope of any topic names this algorithm is applied again, starting
+with step 1.
+</para>
+<para>
+If no merged topics met either of these requirements the merging
+algorithm is done.</para>
+</listitem>
+</orderedlist>
+</section>
+</section>
+
+<section><title>Core features</title> 
+<section id="sect-full-std-support">
+<title>Full standard support</title>
+
+<para>
+<ireq id="req-13250-support">
+The engine shall support all the constructs in the entire ISO 13250
+standard. This means topic maps, topics, topic names, base names, sort
+names, display names (as strings and as other kinds of resources),
+occurrences, associations, association roles, facets and facet values.
+These must also be supported with all their properties, as described
+in <ulink
+url="http://www.doctypes.org/xtm/docs/express-model.pdf">this
+unofficial EXPRESS model for ISO 13250</ulink>.  Support for ISO 13250
+topic names will be handled by translating them into XTM 1.0 topic
+name constructs in the manner specified by the XTM 1.0 specification.
+</ireq>
+</para>
+
+<para>
+<ireq id="req-xtm-support">
+The engine shall also support all constructs and mechanisms in the XTM
+1.0 specification when that is finalized. This means that the engine
+must conform to the XTM processing model. This further implies that
+TopicMapIF objects must have a 'base locator' property. Note, however,
+that using topics and associations with PSIs defined in the XTM 1.0
+specification to emulate topic names with occurrences and suchlike
+will not be supported by the engine. The engine will, however,
+recognize associations that use the instance-of PSI and treat these as
+equivalent to types directly specified through the API with the
+methods for manipulating type-instance relationships. This applies
+only to typing of topics, not to other topic map constructs.
+</ireq>
+</para>
+
+<para>
+The engine must allow applications to create, access, modify and
+destroy all these constructs and properties. A separate document
+describes how deletion is to be performed.
+</para>
+</section>
+
+<section id="sect-occurrences">
+<title>Occurrences</title>
+
+<para>
+The topic map engine shall:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>be extensible to handle any locator syntax. This implies that
+all locators must be representable as strings.</para>
+</listitem>
+<listitem>
+<para>provide information about the locator syntax used.</para>
+</listitem>
+<listitem>
+<para>not restrict the possible notations/data formats or locations of
+resources in any way.</para>
+</listitem>
+<listitem>
+<para>enable applications to resolve the locators and access the
+contents of referred resources and provide all available metadata
+about these resources.</para>
+</listitem>
+<listitem>
+<para>support dynamically generated information resources.</para>
+</listitem>
+<listitem>
+<para>support locators that point to one or more information
+resources.</para>
+</listitem>
+<listitem>
+<para>support normalizing and absolutizing locators.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+Part of the rationale for this is to enable the engine to support
+the HyTime framework for locators.
+</para>
+
+<para>
+We only provide support for URI locators.
+</para>
+</section>
+
+<section>
+<title>Convenience APIs</title>
+
+<para>
+The engine shall have convenience APIs for performing the following
+commonly used operations:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>traversing transitive association types. The details of how to
+implement this are yet to be designed.</para>
+</listitem>
+<listitem>
+<para>testing whether a topic belongs to the type defined by another
+topic, whether directly (via <symbol>instanceOf</symbol> or
+<symbol>types=</symbol>) or through subtyping. (There must be a
+separate method for this, which may build on the support for
+transitive association types.)</para>
+</listitem>
+<listitem>
+<para>finding all occurrences of a given resource. (Anyone interested
+in the topics having these occurrences can find them from the
+occurrence objects.)</para>
+</listitem>
+<listitem>
+<para>creating a new topic map in any implementation.</para>
+</listitem>
+<listitem>
+<para>filtering scoped topic map objects by scope. The filtering
+process can be modified in the following ways:</para>
+<itemizedlist>
+<listitem>
+<para>there must also be some means of specifying the strictness of
+the matching. Proposed strictness levels: exact match, supplied scope
+is a subset of actual scope, intersection (there exists a non-empty
+common subset) and no strictness at all.</para>
+</listitem>
+<listitem>
+<para>whether one or more objects are the result of the filtering,</para>
+</listitem>
+<listitem>
+<para>if more objects, whether they are ranked by closeness of match
+or not, (for identical matching there can be no ranking).</para>
+</listitem>
+</itemizedlist>
+</listitem>
+<listitem>
+<para>taking a string that refers to a particular topic map in any of
+the persistent storage backends that we support and returning a topic
+map object representing that topic map.</para>
+</listitem>
+<listitem>
+<para>taking a string that refers to a particular topic map object in
+any of the persistent storage backends that we support and returning a
+topic map object representing that object.</para>
+</listitem>
+<listitem>
+<para>taking a topic and a collection of association types and
+returning the assocation roles of the topic which belong to
+assocations of one of the given types. If possible this should be made
+more generic.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+Note that this is not a complete list, since some requirements for
+convenience APIs are listed elsewhere in this specification.
+</para>
+
+<section id="sect-index-system">
+<title>The index system</title>
+
+<para>
+The engine shall also support an index system that:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>enables client applications to easily look up commonly needed
+information about the topic map that may otherwise require full topic
+map traversal to collect.</para>
+</listitem>
+<listitem>
+<para>can be used in a way that does not require client applications
+to have knowledge about which topic map implementation it is using.</para>
+</listitem>
+<listitem>
+<para>is extensible, so that new index interfaces can easily be added.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+For the in-memory topic map implementation there is no guarantee that
+this index will be up to date at all times. Methods are provided that
+can be used to refresh the indexes where needed, however.
+</para>
+</section>
+
+<section>
+<title>Deletion utilities</title>
+
+<para>
+Support for deletion will be provided in two parts: remove methods on
+the core interfaces and an external deletion utility.
+<ireq id="req-remove">
+The remove methods will detach and permanently kill objects from their
+parents.  This, however, will only be done when there are no external
+references to the objects (such as when a topic is used as a theme in
+a scope somewhere). If there are external references the methods will
+raise an exception.</ireq>
+</para>
+
+<para>
+The external deletion utilities will provide:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>a method for checking whether there are external references to a
+topic.</para>
+</listitem>
+<listitem>
+<para>a method for deleting a topic together will all external
+references to it. This method will be built using the remove methods
+of the core interfaces.</para>
+</listitem>
+</itemizedlist>
+</section>
+</section>
+
+<section id="sect-impl-completeness">
+<title>Completeness of implementations</title>
+
+<para>
+All topic map implementations in the engine must be complete in the
+sense that they shall:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>conform to the requirements in <xref
+linkend="sect-full-std-support"/>.  Implementations that are not
+straightforward representations of the topic map constructs, but which
+create some form of virtual view are exempt from the requirement that
+they support creation, modification and deletion.</para>
+</listitem>
+<listitem>
+<para>provide a complete implementation of the index interfaces, as
+described in <xref linkend="sect-index-system"/>.</para>
+</listitem>
+<listitem>
+<para>support import and export as described in
+<xref linkend="sect-import-export"/>.</para>
+</listitem>
+<listitem>
+<para>conform to the performance requirements in <xref
+linkend="sect-performance"/>.
+</para>
+</listitem>
+<listitem>
+<para>conform to the concurrency requirements in <xref
+linkend="sect-concurrency"/>.</para>
+</listitem>
+<listitem>
+<para>conform to the merging requirements in <xref
+linkend="sect-topic-merge"/> and <xref linkend="sect-tm-merging"/>.
+</para>
+</listitem>
+</itemizedlist>
+</section>
+
+<section>
+<title>Certain other features</title>
+
+<para>
+The engine shall provide:
+</para>
+
+<reqlist>
+<req id="req-i18n-sort">
+internationalized sorting, providing convenience APIs for this
+and allow implementors to provide their own sort key generators.
+</req>
+<req id="req-logging">
+logging of important operations. Logging must be configurable
+and high-performant. Operations that will be logged are: index
+creation and refreshing, transaction events, topic map creation
+(whether loaded from file or created in store), topic map deletion,
+opening and closing topic map store.
+</req>
+<req id="req-version">
+mechanisms that allow applications to find out which version of
+the engine they are using. This mechanism must provide the version
+number of the engine in such a way that in-between-release builds can
+be distinguished from release builds.
+</req>
+</reqlist>
+
+<para>
+The engine must fulfill all requirements in this specification while
+running on the following platforms:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>Windows 98, 2000 and NT 4.0.</para>
+</listitem>
+<listitem>
+<para>The Debian and RedHat Linux distributions on i386 hardware.</para>
+</listitem>
+<listitem>
+<para>Solaris on SPARC hardware.</para>
+</listitem>
+</itemizedlist>
+</section>
+</section>
+
+<section>
+<title>Storage/Persistence</title>
+
+<section id="sect-import-export">
+<title>Import/export of interchange syntax</title>
+
+<para>
+The engine shall:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>support exporting topic maps from all implementations to
+the tmloose.dtd, which can be found in CVS at
+<filename moreinfo="none">src/java/dtds/tmloose.dtd</filename>.</para>
+</listitem>
+<listitem>
+<para>support importing topic maps from the tmloose.dtd to all
+topic map implementations.</para>
+</listitem>
+<listitem>
+<para>support exporting topic maps from all implementations to the XTM
+1.0 interchange syntax. Note that on export mnemonics will be lost,
+while facets must be retained by mapping them into XTM 1.0
+constructs.</para>
+</listitem>
+<listitem>
+<para>support importing topic maps from XTM 1.0 interchange syntax 
+to all topic map implementations.</para>
+</listitem>
+<listitem>
+<para>support importing and exporting topic maps to and from any
+character encoding supported by Java. If the topic map contains
+characters not expressible using that encoding the exporter must use
+character references to encode these characters.</para>
+</listitem>
+<listitem>
+<para>support the <ulink url="http://www.w3.org/TR/xmlbase/">XML
+Base</ulink> specification, by allowing <symbol>xml:base</symbol>
+attributes to appear on any element and thereby modify the base URI
+against which relative URIs specified inside that element are
+absolutized.</para>
+</listitem>
+<listitem>
+<para>support namespaces on import in such a way as to allow the XTM
+1.0 namespace URI to be mapped from any namespace prefix. The
+implementation must complain if the <symbol>'xtm'</symbol> prefix is
+mapped to some URI other than the XTM 1.0 one.</para>
+</listitem>
+<listitem>
+<para>support namespaces on export by placing all element and
+attribute types in the correct namespaces according to the XTM 1.0
+specification, and by providing the correct namespace declarations for
+all namespace prefixes used in the exported document.</para>
+</listitem>
+</itemizedlist>
+
+<section>
+<title>SAX support</title>
+
+<para>
+All the interchange syntax implementations shall:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>be implemented as a SAX 2.0
+<interfacename>ContentHandler</interfacename> that can be used on its
+own. This <interfacename>ContentHandler</interfacename> must be part
+of the exposed API.</para>
+</listitem>
+<listitem>
+<para>provide a convenience method that the user can call to parse a
+topic map document, with the several overloaded parameter
+variations.</para>
+</listitem>
+<listitem>
+<para>allow the user of the API to instantiate a
+<symbol>ContentHandler</symbol> implementation connected to a topic
+map object provided by the user and then allow the user to control the
+parsing process (that is, instantiate and configure the parser and
+call .parse())</para>
+</listitem>
+<listitem>
+<para>provide flexibility so that developers can control which
+externally referenced topic maps are loaded in and which are only left
+as empty external references. This applies to both
+<symbol>mergeMap</symbol> elements and external topic references.
+</para>
+</listitem>
+</itemizedlist>
+
+<para>
+The SAX 2.0 libraries and a SAX 2.0 parser implementation will be
+distributed with the engine.
+</para>
+
+<para>
+The export implementation will write the XML document to either a
+<interfacename>OutputStream</interfacename> or a
+<interfacename>Writer</interfacename> provided by the application.
+</para>
+</section>
+</section>
+
+<section>
+<title>RDBMS persistence</title>
+
+<para>
+There shall be a topic map implementation that persists topic map
+constructs in a relational database. This implementation shall conform
+to the requirements in <xref linkend="sect-impl-completeness"/>.
+Furthermore, it shall:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>support these relational databases: Oracle.</para>
+</listitem>
+<listitem>
+<para>use JDBC to connect to the databases.</para>
+</listitem>
+</itemizedlist>
+</section>
+
+<section>
+<title>OODBMS persistence</title>
+
+<para>
+The engine shall have topic map implementations that can persist their
+data in object-oriented databases. These implementations shall conform
+to the requirements in <xref linkend="sect-impl-completeness"/>.
+They shall also:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>taken as a whole support the following databases: Poet.</para>
+</listitem>
+</itemizedlist>
+</section>
+
+</section>
+
+<section id="sect-infrastructure">
+<title>Infrastructure</title>
+
+<para>
+An installation script will not be provided for the engine, since the
+engine is not an end-user application. It will be used in such
+applications, but these will have to provide their own installation
+mechanisms in any case.
+</para>
+
+<section>
+<title>Setup scripts</title>
+
+<para>
+For each database backend a tool must be provided that can be run to
+create an empty topic map database once the database itself has been
+installed. This tool must be configurable so that users can give it
+the location of the database and any authentication information
+necessary.
+</para>
+</section>
+
+<section>
+<title>Command-line utilities</title>
+<para>
+The command-line utilities serve a two purposes, the first of which is
+to provide a very simple interface to the engine itself and allow
+users to perform some very simple tasks on their topic maps. The
+second is to serve as example code for real applications that show
+developers how to write code to the engine APIs.
+</para>
+
+<para>
+The following requirements apply to all the utilities:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>The source code must be well-written and properly commented.
+Programming style, visual layout and naming choices must all be very
+good.</para>
+</listitem>
+<listitem>
+<para>The utilities must all work with both XML topic maps and topic
+maps stored in databases.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+The set of utilities consists of:
+</para>
+
+<variablelist>
+<varlistentry>
+<term>A statistics printer</term>
+<listitem>
+<para>This utility collects various useful statistics about topic maps
+and prints them to standard out.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>A sanity checker</term>
+<listitem>
+<para>This utility checks topic maps for constructs that seem strange
+and may indicate problems with the topic map.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>A deletion tool</term>
+<listitem>
+<para>This utility removes certain parts of topic maps based on user
+input.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>A merging tool</term>
+<listitem>
+<para>This tool takes two topic map documents as input and produces a
+third document as output that contains the topic map resulting from
+the merge. This is described in more detail in <xref
+linkend="sect-tm-merging"/>.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<section>
+<title>The statistics printer</title>
+
+<para>
+The statistics printer shall:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>report the total number of topics, associations, occurrences and
+the sum of these.</para>
+</listitem>
+<listitem>
+<para>report the number of topics, associations and occurrences broken
+down by type and ordered alphabetically. Note that topics may have
+more than one type. This is handled by counting the topic once for
+each type.</para>
+</listitem>
+<listitem>
+<para>report the number of occurrences of each combination of
+association roles, grouped by association type.</para>
+</listitem>
+<listitem>
+<para>handle topics, associations and occurrences that have no types
+by reporting them separately.</para>
+</listitem>
+</itemizedlist>
+</section>
+
+<section>
+<title>The sanity checker</title>
+
+<para>
+The sanity checker shall:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>work on topic maps stored in XML documents and databases</para>
+</listitem>
+<listitem>
+<para>report one of the below, or neither, depending on arguments:</para>
+  <itemizedlist>
+  <listitem>
+  <para>all topics with no names</para>
+  </listitem>
+  <listitem>
+  <para>all topics with no characteristics</para>
+  </listitem>
+  <listitem>
+  <para>all topics with no name in a scope defined on the
+  command-line, which may be the unconstrained scope.</para>
+  </listitem>
+  </itemizedlist>
+</listitem>
+<listitem>
+<para>report all duplicated occurrences (same locator, same occurrence
+role type) on a single topic.</para>
+</listitem>
+<listitem>
+<para>report all duplicated names (same basename, same scope)</para>
+</listitem>
+</itemizedlist>
+</section>
+
+<section>
+<title>The deletion tool</title>
+
+<para>
+The deletion tool shall:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>work on topic maps stored in XML documents and databases</para>
+</listitem>
+<listitem>
+<para>remove all instances of the type given on the command-line,
+whether these be topics, associations or occurrences</para>
+</listitem>
+<listitem>
+<para>produce its result by committing (if the topic map is in a
+database) or writing out the topic map XML document if it is not.  If
+an output file is given the tool will write to it, if it is not the
+tool shall write to standard out.</para>
+</listitem>
+</itemizedlist>
+</section>
+</section>
+
+<section>
+<title>Test suite</title>
+<para>
+The exact requirements for the test suite will be described in detail
+in a separate document (the test plan). Below is given a minimal
+summary of the test suite contents.
+</para>
+
+<itemizedlist>
+<listitem>
+<para>Automated performance tests for verifying that the engine meets
+the performance and scalability requirements set forth in this
+document.</para>
+</listitem>
+<listitem>
+<para>Automated unit tests testing individual classes.</para>
+</listitem>
+<listitem>
+<para>Automated component tests testing the functionality of the
+larger components. This set of tests must also contain a special test
+suite for ensuring that the concurrency and cross-topic map handling
+work as they should.</para>
+</listitem>
+<listitem>
+<para>Automated regression tests for the engine as a whole that import
+topic map XML documents, perform some operations on them and re-export
+the documents. These tests must be applied to all storage backends.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+In addition to the test plan, there will be a document that describes
+the design of the test suite, covering aspects such as the package
+structure, command-line tools for running the tests etc.  This is
+intended to serve as documentation for developers, describing where to
+put new test cases and how to run the existing ones.
+</para>
+</section>
+</section>
+
+<section id="sect-documentation">
+<title>Documentation</title>
+
+<para>
+The engine shall have the following self-contained sets of
+documentation:
+</para>
+
+<reqlist>
+<req id="req-doc-javadoc">
+javadoc comments throughout the code, conforming to the internal
+guidelines for javadoc comments. There must be comments on every
+class, interface, package and methods, and these must do more than
+simply repeat the name of the construct as a sentence.
+The level of detail should be about the same as that of the
+javadoc to the Java language APIs.
+</req>
+<req id="req-doc-devguide">
+high-level developer documentation giving an overview of the
+engine and its APIs, as well as any Ontopia-defined PSIs and how to use
+these. The high-level documentation can refer to the javadoc for
+detailed information, but shall be readable even for those who do not
+have access to the javadoc.
+</req>
+<req id="req-doc-install-guide">
+an installation guide describing how to install the database
+backends and getting them to work.
+</req>
+<req id="req-doc-whitepaper">
+a whitepaper suitable for those wanting to know what the engine
+can do without necessarily having the full details about how it is
+done. This whitepaper shall describe all the features of the engine,
+at least in outline. No details of APIs are given.
+</req>
+<req id="req-doc-dbmaint">
+documentation of how to maintain the different database
+backends. This must describe procedures for backup, restore,
+checkpointing and user management. If possible the documentation
+should be the documentation belonging to the product, and not
+Ontopia-specific.
+</req>
+</reqlist>
+
+<para>
+The engine APIs must be clearly separated into internal APIs and
+exposed APIs, and only the exposed APIs must be visible in external
+developer documentation. Experimental APIs need to be clearly marked
+as such.
+</para>
+</section>
+
+<section>
+<title>Distributions</title>
+
+<para>
+The engine shall be packaged into the following distributions, with
+one version of each per backend connector:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>the evaluation distribution, which contains the complete engine
+with external APIs as described in this specification, all
+documentation described in <xref linkend="sect-documentation"/> and
+all infrastructure as described in <xref linkend="sect-infrastructure"/>.
+However, the distribution will have a 90-day time limit.</para>
+</listitem>
+<listitem>
+<para>the full version, which contains the same as the evaluation
+distribution, except that it will have no time limit and only one
+backend connector.</para>
+</listitem>
+<listitem>
+<para>the beta 1 evaluation version, which is relatively limited.  It
+will meet the following requirements: <reqref
+ref="req-merge-detect"/>, <reqref ref="req-13250-support"/>,
+<reqref ref="req-xtm-support"/>, those listed in
+<xref linkend="sect-occurrences"/>, those listed in
+<xref linkend="sect-index-system"/>, <reqref ref="req-remove"/>,
+<reqref ref="req-version"/>, those listed in <xref
+linkend="sect-import-export"/>, <reqref ref="req-doc-javadoc"/> and
+<reqref ref="req-doc-devguide"/>.
+</para>
+</listitem>
+<listitem>
+<para>the beta 2 evaluation version, which is the same as the full
+distribution.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+Parts of the engine will also be included in the free download, which
+is basically a distribution of the generic navigator application,
+using the engine. To make this distribution the following engine
+requirements must be fulfilled: <reqref ref="req-13250-support"/>,
+<reqref ref="req-xtm-support"/>, those listed in
+<xref linkend="sect-index-system"/> and those listed in
+<xref linkend="sect-import-export"/>.
+</para>
+
+<para>
+The internal APIs shall not be visible in any of these distributions,
+only the external APIs.
+</para>
+</section>
+
+</article>

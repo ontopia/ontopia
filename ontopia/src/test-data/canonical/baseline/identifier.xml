@@ -1,0 +1,13 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/syntax"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id2">
+<instanceOf href="#id1"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/tmxml"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<multi>
+  <topicMap id="tm1"
+     xmlns="http://www.topicmaps.org/xtm/1.0/"
+     xmlns:xlink='http://www.w3.org/1999/xlink'> 
+  
+    <topic id="topic1">
+      <baseName><baseNameString>topic 1</baseNameString></baseName>    
+    </topic>
+
+    <mergeMap xlink:href="multiple-tms-bug522-included.stm"/>
+  
+  </topicMap>
+  
+  <topicMap id="tm2"
+     xmlns="http://www.topicmaps.org/xtm/1.0/"
+     xmlns:xlink='http://www.w3.org/1999/xlink'> 
+  
+    <topic id="topic2">
+      <baseName><baseNameString>topic 2</baseNameString></baseName>    
+    </topic>
+
+    <mergeMap xlink:href="multiple-tms-bug522-included.stm"/>
+  
+  </topicMap>
+</multi>

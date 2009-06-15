@@ -1,0 +1,73 @@
+<topicMap id='xtm-language'
+   xmlns='http://www.topicmaps.org/xtm/1.0/'
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id='norway'>
+    <baseName>
+      <baseNameString>Norway</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='oslo'>
+    <baseName>
+      <baseNameString>Oslo</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='country'>
+    <baseName>
+      <baseNameString>Country</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='city'>
+    <baseName>
+      <baseNameString>City</baseNameString>
+    </baseName>    
+  </topic>
+
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href='http://www.topicmaps.org/xtm/1.0/core.xtm#class-instance'/>
+    </instanceOf>
+
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href='http://www.topicmaps.org/xtm/1.0/core.xtm#class'/>
+      </roleSpec>
+      <topicRef xlink:href='#country'/>
+    </member>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href='http://www.topicmaps.org/xtm/1.0/core.xtm#instance'/>
+      </roleSpec>
+      <topicRef xlink:href='#norway'/>
+    </member>
+  </association>
+
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href='http://www.topicmaps.org/xtm/1.0/core.xtm#class-instance'/>
+    </instanceOf>
+    <scope>
+      <topicRef xlink:href='#norway'/>
+    </scope>
+
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href='http://www.topicmaps.org/xtm/1.0/core.xtm#class'/>
+      </roleSpec>
+      <topicRef xlink:href='#city'/>
+    </member>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href='http://www.topicmaps.org/xtm/1.0/core.xtm#instance'/>
+      </roleSpec>
+      <topicRef xlink:href='#oslo'/>
+    </member>
+  </association>
+
+</topicMap>
+

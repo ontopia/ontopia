@@ -1,0 +1,81 @@
+<rdf:RDF
+    xmlns:j.0="http://psi.ontopia.net/xtm/occurrence-type/"
+    xmlns:j.2="http://psi.ontopia.net/testing/"
+    xmlns:j.1="http://psi.ontopia.net/tminrdf/#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" >
+  <rdf:Description rdf:nodeID="A0">
+    <rdf:subject rdf:resource="http://psi.ontopia.net/testing/employment"/>
+    <rdf:predicate rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdf:object>employs</rdf:object>
+    <j.1:inscope rdf:nodeID="A1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="jill-ontopia-association">
+    <rdf:type rdf:resource="http://psi.ontopia.net/testing/employment"/>
+    <rdfs:label>Jill's position with Ontopia</rdfs:label>
+    <j.0:contract rdf:resource="http://www.ontopia.net/internal/employees/contracts/jill.htm"/>
+    <rdf:subject rdf:nodeID="A2"/>
+    <rdf:predicate rdf:resource="http://psi.ontopia.net/testing/employment"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdf:object rdf:nodeID="A3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A2">
+    <rdf:type rdf:nodeID="A4"/>
+    <rdfs:label>Jill Hacker</rdfs:label>
+    <j.0:kudo rdf:resource="http://www.ontopia.net"/>
+    <j.2:employment rdf:nodeID="A3"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A1">
+    <rdfs:label>employer</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A5">
+    <rdfs:label>company</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://psi.ontopia.net/testing/employment">
+    <rdfs:label>employment</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A3">
+    <rdf:type rdf:nodeID="A5"/>
+    <rdfs:label>Ontopia</rdfs:label>
+    <j.0:homepage rdf:resource="http://www.ontopia.net"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://psi.ontopia.net/xtm/occurrence-type/description">
+    <rdfs:label>description</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://psi.ontopia.net/xtm/occurrence-type/homepage">
+    <rdfs:label>web site</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://psi.ontopia.net/xtm/occurrence-type/contract">
+    <rdfs:label>contract</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://psi.ontopia.net/xtm/occurrence-type/kudo">
+    <rdf:type rdf:resource="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+    <rdfs:label>kudo</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A6">
+    <rdfs:label>employee</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A4">
+    <rdfs:label>developer</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A7">
+    <rdf:subject rdf:resource="http://psi.ontopia.net/testing/employment"/>
+    <rdf:predicate rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdf:object>employed by</rdf:object>
+    <j.1:inscope rdf:nodeID="A6"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="jills-contract">
+    <rdf:type rdf:resource="http://psi.ontopia.net/xtm/occurrence-type/contract"/>
+    <rdfs:label>Jill's contract with Ontopia</rdfs:label>
+    <j.0:contract rdf:resource="http://www.ontopia.net/internal/employees/contracts/jill.htm"/>
+    <rdf:subject rdf:nodeID="jill-ontopia-association"/>
+    <rdf:predicate rdf:resource="http://psi.ontopia.net/xtm/occurrence-type/contract"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdf:object rdf:resource="http://www.ontopia.net/internal/employees/contracts/jill.htm"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="jillstm">
+    <rdfs:label>Jill's First TM</rdfs:label>
+  </rdf:Description>
+</rdf:RDF>

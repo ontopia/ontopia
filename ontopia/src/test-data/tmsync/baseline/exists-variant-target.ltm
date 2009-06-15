@@ -1,0 +1,43 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/test/source</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>exists-variant-source.ltm#source</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Source</value>
+<type topicref="2"></type>
+<variant number="1">
+<value>SSource</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="3"></scopingTopic>
+</scope>
+</variant>
+<variant number="2">
+<value>ssource</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="4"></scopingTopic>
+</scope>
+</variant>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#display</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#sort</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

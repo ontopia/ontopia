@@ -1,0 +1,3 @@
+A column mentioned in groupBy="CREATION" did not match the "order by" of the query:
+"select $PERSON, $CREATION, $OCC, $OCCTYPE from                       instance-of($PERSON, person),                        created-by($PERSON : creator, $CREATION : creation),                       occurrence($CREATION, $OCC),                       type($OCC, $OCCTYPE)                        order by $PERSON, $OCCTYPE, $OCC, $CREATION?".
+Please make sure the query result is ordered in the same way as you wish to group it in the output.

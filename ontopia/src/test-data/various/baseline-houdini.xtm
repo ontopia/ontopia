@@ -1,0 +1,145 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#ansvarlig-enhet"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#brukergrupper"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#bruksmonster"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#dok-ansvarlig"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id5">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#enhet"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id6">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#epostliste"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id7">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#kort-beskrivelse"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id8">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#lang-beskrivelse"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id9">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#oppesjekk"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id10">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#person"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id11">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#tjeneste"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id12">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#vanlige-problemer"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id13">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#webapp-url"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id14">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/ddok/#wo-app"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id15">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/org/#usit-xml"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id16">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/person/#areg"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id17">
+<instanceOf href="#id14"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.uio.no/usit/tjeneste/#testapp1"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>testapp1</baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id7"></instanceOf>
+<resourceData>Applikasjonen brukes kun ved testing av Houdini</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id9"></instanceOf>
+<resourceData>Den er aldri oppe, den eksisterer ikke...</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id8"></instanceOf>
+<resourceData>Dette er ingen ekte applikasjon, kun en testinstans</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id6"></instanceOf>
+<resourceData>houston-emnekart@usit.uio.no</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id13"></instanceOf>
+<resourceData>http://www.usit.uio.no/testapp1/</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id12"></instanceOf>
+<resourceData>Ingen kjente problemer</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id2"></instanceOf>
+<resourceData>Utviklere av Houdini</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id3"></instanceOf>
+<resourceData>Ved test av lagring i Houdini</resourceData>
+</occurrence>
+</topic>
+<association>
+<instanceOf href="#id1"></instanceOf>
+<member>
+<instanceOf href="#id5"></instanceOf>
+<topicRef href="#id15"></topicRef>
+</member>
+<member>
+<instanceOf href="#id11"></instanceOf>
+<topicRef href="#id17"></topicRef>
+</member>
+</association>
+<association>
+<instanceOf href="#id4"></instanceOf>
+<member>
+<instanceOf href="#id10"></instanceOf>
+<topicRef href="#id16"></topicRef>
+</member>
+<member>
+<instanceOf href="#id11"></instanceOf>
+<topicRef href="#id17"></topicRef>
+</member>
+</association>
+</topicMap>

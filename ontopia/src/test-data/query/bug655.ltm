@@ -1,0 +1,11 @@
+
+[subclass-of = "Subclass of"
+	= "Superclass of" / superclass
+	@"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+
+[superclass = "Superclass"
+	@"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+
+[subclass = "Subclass"
+	@"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+subclass-of([country-CH] : superclass)

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<topic id="the-first">
+  <baseName>
+    <baseNameString>The first</baseNameString>
+
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>1</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="the-second">
+  <baseName>
+    <baseNameString>Second</baseNameString>
+
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>2</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="sort">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#psi-sort-description"/>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Sort name</baseNameString>
+  </baseName>
+</topic>
+
+</topicMap>

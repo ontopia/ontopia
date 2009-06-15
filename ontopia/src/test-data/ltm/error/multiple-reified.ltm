@@ -1,0 +1,6 @@
+#BASEURI "http://some.random.baseuri/base"
+[scoping-topic = "Scoping topic"]
+[reifying-topic = "Reifying topic"]
+[some-topic = "Just Some Topic" 
+              ("Random Topic" /scoping-topic ~reifying-topic)
+              ("Wee Topic" /scoping-topic ~reifying-topic)]

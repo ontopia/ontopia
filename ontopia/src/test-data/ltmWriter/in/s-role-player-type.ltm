@@ -1,0 +1,5 @@
+/* This line shows that roles are sorted first by player (type ignored). */
+atypeA(playerB : rtypeA, playerA : rtypeB)
+
+/* This line shows that if role player are equal, sorting is by role type. */
+atypeB(playerA : rtypeA, playerA : rtypeB)

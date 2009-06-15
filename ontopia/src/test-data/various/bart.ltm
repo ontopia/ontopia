@@ -1,0 +1,7 @@
+#PREFIX t @"test:"
+
+[t:bart = "Bart Simpson"]
+{t:bart, t:description, [[Bartholomew "Bart" Jojo Simpson is a fictional character in the animated television series The Simpsons, who is voiced by Nancy Cartwright.[1] He is the oldest child and only son of Homer and Marge Simpson, and is the brother of Lisa and Maggie.]]}
+t:born-in(t:bart : t:person, t:springfield : t:place)
+
+[t:other]

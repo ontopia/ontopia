@@ -1,0 +1,10 @@
+<!DOCTYPE topicMap [
+  <!ENTITY external SYSTEM "entities.ent">
+]>
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  &external;
+
+</topicMap>

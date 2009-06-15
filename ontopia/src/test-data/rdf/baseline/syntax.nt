@@ -1,0 +1,71 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<instanceOf href="#id7"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://piss.ontopia.net/ontosaurus/#bad-thing"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>Bad thing</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<instanceOf href="#id7"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://piss.ontopia.net/ontosaurus/#good-thing"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>Good thing</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<instanceOf href="#id7"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://piss.ontopia.net/ontosaurus/#thing"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>Thing</baseNameString>
+</baseName>
+</topic>
+<topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#broader"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id5">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#broader-narrower"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id6">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#narrower"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id7">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#term"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<association>
+<instanceOf href="#id5"></instanceOf>
+<member>
+<instanceOf href="#id4"></instanceOf>
+<topicRef href="#id3"></topicRef>
+</member>
+<member>
+<instanceOf href="#id6"></instanceOf>
+<topicRef href="#id1"></topicRef>
+</member>
+</association>
+<association>
+<instanceOf href="#id5"></instanceOf>
+<member>
+<instanceOf href="#id4"></instanceOf>
+<topicRef href="#id3"></topicRef>
+</member>
+<member>
+<instanceOf href="#id6"></instanceOf>
+<topicRef href="#id2"></topicRef>
+</member>
+</association>
+</topicMap>

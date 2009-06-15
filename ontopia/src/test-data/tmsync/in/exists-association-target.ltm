@@ -1,0 +1,4 @@
+#PREFIX test @"http://psi.ontopia.net/test/"
+
+test:invented-by(test:source : test:invention, lmg : test:inventor)
+/* and pretty damn unimaginative he is, too... :) */

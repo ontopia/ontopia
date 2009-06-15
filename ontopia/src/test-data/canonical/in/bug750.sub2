@@ -1,0 +1,22 @@
+<topicMap id="xtm1.0-psi-language"
+    xmlns="http://www.topicmaps.org/xtm/1.0/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"> 
+
+  <topic id="lang-code">
+    <instanceOf><topicRef xlink:href="bug750.sub3#class"/></instanceOf>
+    <baseName>
+      <baseNameString>Language code</baseNameString>
+    </baseName>
+  </topic>
+
+  <topic id="en">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#en"/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>EN</baseNameString>
+    </baseName>
+  </topic>
+
+</topicMap>
+

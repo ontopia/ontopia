@@ -1,0 +1,36 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>inverse name</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>inverse name</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://a.b.com/tm_a_b.xtm#topic-a"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://a.b.com/tm_a_b.xtm#topic-b"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>the a topic</baseNameString>
+</baseName>
+<baseName>
+<baseNameString>the b topic</baseNameString>
+</baseName>
+<baseName>
+<scope>
+<topicRef href="#id2"></topicRef>
+</scope>
+<baseNameString>topic the a</baseNameString>
+</baseName>
+<baseName>
+<scope>
+<topicRef href="#id2"></topicRef>
+</scope>
+<baseNameString>topic the b</baseNameString>
+</baseName>
+</topic>
+</topicMap>

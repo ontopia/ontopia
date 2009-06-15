@@ -1,0 +1,88 @@
+
+/* ===================================================================================
+
+   BRAINBANK
+
+   Ontologi for BrainBank, utviklet av Ontopia
+   (C) BrainBank 2003
+
+   $Id: bb-ontologi.ltm,v 1.2 2003/12/15 10:37:17 larsga Exp $
+
+=================================================================================== */
+
+#INCLUDE "core.ltm"
+#INCLUDE "userman.ltm"
+
+/* scope topics */
+[english = "English" @"http://www.topicmaps.org/xtm/1.0/language.xtm#en"]
+
+/* machinery topics */
+
+[userownstopic = "User Owns Topic" = "User Owns Topic" / english]
+    [ownedtopic = "Owned Topic" = "Owned Topic" / english]
+
+[userownstopictype = "User Owns Topic Type" = "User Owns Topic Type" / english]
+[bbtype = "bbtype" = "bbtype" / english]
+
+[topicbelongstosubject = "Topic Belongs to Subject" = "Topic Belongs to Subject" / english]
+       
+[topicisfinished = "Topic is finished" = "Topic is finished" / english]
+[bbtopic = "brain bank topic" = "brain bank topic" / english @"http://psi.ontopia.net/brainbank/#bbtopic"] /* helps us to define constraints */
+ 
+/* --- EMNETYPER ------------------------------------------------------------------ */
+
+[fag           = "Fag" = "Subject" / english]
+[skole         = "Skole" = "School" / english]
+[klasse        = "Klasse" = "Class" / english @"http://psi.ontopia.net/brainbank/#class"]
+[klassefag     = "Klassefag" = "ClassSubject" / english]
+[nettressurs   = "Nettressurs" = "Net Resource" / english] /* brukes for tingliggjorte ressurser */
+[status        = "Status" = "Status" / english]      /* tilstanden til et emne */
+[ressurstype   = "Ressurstype" = "Resource Type" / english] /* kan brukes til å type ressurser */
+
+[elev        : role = "Elev" = "Pupil" / english @"http://psi.ontopia.net/brainbank/#student"]
+[bruker      : role = "Bruker" = "User" / english]
+[larer       : role = "Lærer" = "Teacher" / english]
+[admin       : role = "Admin" = "Admin" / english]
+[superbruker : role = "Superbruker" = "Super User" / english] /* Cerpus; har lov til alt */ 
+
+/* --- FOREKOMSTTYPER ------------------------------------------------------------- */
+
+[kommentar   = "Kommentar" = "Comment" / english]
+[dato-postet = "Dato postet" = "Date Posted" / english] /* dato da kommentar ble postet */
+[beskrivelse = "Beskrivelse" = "Description" / english
+ @"http://psi.ontopia.net/xtm/occurrence-type/description"]
+[lastupdated = "Sist endret" = "Last updated" / english
+ @"http://psi.ontopia.net/xtm/occurrence-type/last-modified-at"]
+
+
+/* --- ASSOSIASJONSTYPER ---------------------------------------------------------- */
+
+[postet-av = "Postet av" = "Comment Posting" / english]
+  [poster = "Poster" = "Poster" / english]
+  [posting = "Posting" = "Posting" / english]
+  
+[elev-klasse = "Elev i klasse" = "Pupil in class" / english @"http://psi.ontopia.net/brainbank/#pupilinclass"]
+
+[larer-i-fag = "Lærer i fag" = "Teaches Subject" / english]
+
+[ansatt-ved = "Ansatt ved" = "QuestionAnswering" / english] /* lærer - skole */
+  [ansatt = "Ansatt" = "Answer" / english]
+  [arbeidsgiver = "Arbeidsgiver" = "Answer Provider" / english]
+  
+[klasse-fag = "Klasse/fag" = "Class/Subject" / english] /* klasse - klassefag */
+
+
+/* --- TYPEHIERARKI --------------------------------------------------------------- */
+
+
+
+/* --- INSTANSER ------------------------------------------------------------------ */
+
+[ferdig  : status = "Ferdig" = "Finished" / english]
+[uferdig : status = "Uferdig" = "Unfinished" / english]
+
+[dokument : ressurstype = "Dokument" = "Document" / english]
+[lyd      : ressurstype = "Lyd" = "Sound" / english]
+[video    : ressurstype = "Video" = "Video" / english]
+[bilde    : ressurstype = "Bilde" = "Picture" / english]
+[nettsted : ressurstype = "Nettsted" = "Web Page" / english]

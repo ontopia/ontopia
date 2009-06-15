@@ -1,0 +1,109 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://example.org/Lars Marius</locator>
+</subjectIdentifiers>
+<occurrence number="1">
+<value>Lars Mariusontopia</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="7"></type>
+</occurrence>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://example.org/Une M. Ployed</locator>
+</subjectIdentifiers>
+<occurrence number="1">
+<value>Une M. Ployed</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="7"></type>
+</occurrence>
+<rolePlayed ref="association.2.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.example.org/employed-by</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Employed by</value>
+<type topicref="9"></type>
+</name>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.example.org/employee</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Employee</value>
+<type topicref="9"></type>
+</name>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.example.org/employer</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Employer</value>
+<type topicref="9"></type>
+</name>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://psi.example.org/person</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Person</value>
+<type topicref="9"></type>
+</name>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+<rolePlayed ref="association.2.role.2"></rolePlayed>
+</topic>
+<topic number="7">
+<subjectIdentifiers>
+<locator>http://psi.example.org/test</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="8">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="9">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="10">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="11">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+</subjectIdentifiers>
+</topic>
+<association number="1">
+<type topicref="11"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="8"></type>
+</role>
+<role number="2">
+<player topicref="6"></player>
+<type topicref="10"></type>
+</role>
+</association>
+<association number="2">
+<type topicref="11"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="8"></type>
+</role>
+<role number="2">
+<player topicref="6"></player>
+<type topicref="10"></type>
+</role>
+</association>
+</topicMap>

@@ -1,0 +1,2 @@
+associationA(role-playerA : role-typeA)
+associationB(role-playerA : role-typeA)

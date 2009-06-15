@@ -1,0 +1,34 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#command</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#silly</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#topic</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Topic</value>
+<type topicref="4"></type>
+<variant number="1">
+<value>TOPIC!</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</variant>
+</name>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

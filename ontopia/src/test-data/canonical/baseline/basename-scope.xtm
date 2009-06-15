@@ -1,0 +1,21 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>Bar</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Foo</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<baseName>
+<scope>
+<topicRef href="#id1"></topicRef>
+<topicRef href="#id2"></topicRef>
+</scope>
+<baseNameString>Norway</baseNameString>
+</baseName>
+</topic>
+</topicMap>

@@ -1,0 +1,28 @@
+
+# Just testing that we can actually read the N3 syntax.
+
+@prefix rtm: <http://psi.ontopia.net/rdf2tm/#> .
+@prefix ontosaurus: <http://piss.ontopia.net/ontosaurus/#> .
+@prefix thesaurus: <http://www.techquila.com/psi/thesaurus/#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+
+ontosaurus:thing rdf:type thesaurus:term .
+ontosaurus:thing rdfs:label "Thing" .
+
+ontosaurus:good-thing rdf:type thesaurus:term .
+ontosaurus:good-thing rdfs:label "Good thing" .
+ontosaurus:good-thing ontosaurus:parent ontosaurus:thing .
+
+ontosaurus:bad-thing rdf:type thesaurus:term .
+ontosaurus:bad-thing rdfs:label "Bad thing" .
+ontosaurus:bad-thing ontosaurus:parent ontosaurus:thing .
+
+rdf:type rtm:maps-to rtm:instance-of .
+rdfs:label rtm:maps-to rtm:basename .
+
+ontosaurus:parent rtm:maps-to rtm:association .
+ontosaurus:parent rtm:type thesaurus:broader-narrower .
+ontosaurus:parent rtm:subject-role thesaurus:narrower .
+ontosaurus:parent rtm:object-role thesaurus:broader .

@@ -1,0 +1,22 @@
+
+/*
+  Topic map with instance-of relationships _and_ subclasses used by
+  the query engine test cases.
+*/
+
+[subclass-of = "Subclass of"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+[superclass = "Superclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+[subclass = "Subclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+
+[type1 = "Type1" @"http://psi.ontopia.net/test/#1"]
+[type2 = "Type2" %"http://psi.ontopia.net/test/#2"]
+subclass-of([type1] : superclass, [type2] : subclass)
+
+[topic1 : type1 = "Topic1"]
+[topic2 : type1 = "Topic2"]
+[topic3 : type2 = "Topic3"]
+[topic4 : type2 = "Topic4"]
+

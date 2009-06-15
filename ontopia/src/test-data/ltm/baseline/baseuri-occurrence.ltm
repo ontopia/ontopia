@@ -1,0 +1,13 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Ontopia</baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id1"></instanceOf>
+<resourceRef href="http://psi.ontopia.net/ontopia/ontopia.xtm#ontopia"></resourceRef>
+</occurrence>
+</topic>
+</topicMap>

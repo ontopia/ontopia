@@ -1,0 +1,27 @@
+/* note: reverse order sort keys to allow for easy testing */
+
+[created-by = "Created by"]
+{created-by, sortkey, "y"}
+
+[is-about = "Is about"]
+{is-about, sortkey, "x"}
+
+created-by(article1 : work, jane : creator) 
+created-by(article1 : work, john : creator) 
+is-about(article1 : work, football : subject)
+is-about(article1 : work, icehockey : subject)
+is-about(article1 : work, javelin : subject)
+is-about(article1 : work, soccer : subject)
+
+[jane : employee = "Jane"]
+{jane, sortkey, [[b]]}
+[john : employee = "John"]
+{john, sortkey, [[a]]}
+
+[football : sport = "Football"]
+{football, sortkey, [[l]]}
+[icehockey : sport = "Ice hockey"]
+{icehockey, sortkey, [[k]]}
+[javelin : sport = "Javelin"] /* no sort key */
+[soccer : sport = "Soccer"]
+{soccer, sortkey, [[g]]}

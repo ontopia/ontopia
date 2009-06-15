@@ -1,0 +1,20 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#foo</locator>
+</itemIdentifiers>
+<occurrence number="1">
+<value>Occurrence contents.</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="2"></type>
+</occurrence>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/xtm/1.0/null-topic</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#null-topic</locator>
+</itemIdentifiers>
+</topic>
+</topicMap>

@@ -1,0 +1,18 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<scope>
+<topicRef href="#id2"></topicRef>
+</scope>
+<baseNameString>Norway</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/#country"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>Country</baseNameString>
+</baseName>
+</topic>
+</topicMap>

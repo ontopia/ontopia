@@ -1,0 +1,10 @@
+<topicMap id="xtm-language" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+
+  <topic id="norge">
+    <baseName><baseNameString>Norge</baseNameString></baseName>
+    <occurrence>
+      <resourceRef xlink:href="http://www.norge.no"/>
+    </occurrence>
+  </topic>
+
+</topicMap>

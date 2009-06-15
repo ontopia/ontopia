@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:rtm="http://psi.ontopia.net/rdf2tm/#" 
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+<foaf:Person rdf:about="bogus:larsga">
+  <foaf:name>Lars Marius Garshol</foaf:name>
+
+  <foaf:mbox><rdf:Description/></foaf:mbox>
+</foaf:Person>
+
+<foaf:Person>
+  <foaf:name>Geir Ove Grønmo</foaf:name>
+
+  <foaf:nick>grove</foaf:nick>
+  <foaf:knows rdf:resource="bogus:larsga"/>
+</foaf:Person>
+
+<!--===========================================================================
+    TOPIC MAP MAPPING
+============================================================================-->
+
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/name">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/knows">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"/>
+    <rtm:type rdf:resource="bogus:association-type"/>
+    <rtm:subject-role><rdf:Description/></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  </rdf:Description>
+
+</rdf:RDF>

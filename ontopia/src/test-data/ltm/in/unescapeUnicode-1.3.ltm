@@ -1,0 +1,2 @@
+[unicode = "u\u1234icode"]
+{unicode, description, [[Description of u\u1234icode.]]}

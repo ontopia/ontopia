@@ -1,0 +1,14 @@
+<topicMap
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="lmg">
+    <instanceOf>
+      <topicRef xlink:href="#lmg-name"/>
+    </instanceOf>
+    <baseName id="lmg-name">
+      <baseNameString>Lars Marius Garshol</baseNameString>
+    </baseName>
+  </topic>
+
+</topicMap>

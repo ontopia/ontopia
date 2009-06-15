@@ -1,0 +1,24 @@
+<topicMap id='xtm-language'
+   xmlns='http://www.topicmaps.org/xtm/1.0/'
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id='lmg'>
+    <baseName>
+      <scope>
+        <resourceRef xlink:href='http://psi.ontopia.net/bingo'/>
+      </scope>
+      <baseNameString>Lars Marius Garshol</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='bingo'>
+    <subjectIdentity>
+      <resourceRef xlink:href='http://psi.ontopia.net/bingo'/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Bingo</baseNameString>
+    </baseName>    
+  </topic>
+
+</topicMap>
+

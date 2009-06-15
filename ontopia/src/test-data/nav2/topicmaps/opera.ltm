@@ -1,0 +1,3280 @@
+@"utf-8"
+#VERSION "1.3"
+/*
+   Generator: Ontopia Knowledge Suite (OKS)
+   Date:      2008-05-16 16:26
+*/
+
+/* ----------------- TOPIC MAP ----------------- */
+
+#TOPICMAP ~ operatm
+[operatm = "Italian Opera topic map"
+         = "The famous Italian Opera topic map" / fullname
+         = "Italian Opera" / shortname]
+   {operatm, desc, "file:/C|/ontopia/topicmaps/opera/occurs/operatm.htm"}
+   {operatm, desc, "http://www.ontopia.net/topicmaps/examples/opera/occurs/operatm.htm"}
+
+/* ----------------- ONTOLOGY ------------------ */
+
+/* ----------------- Topic Types --------------- */
+
+
+/* -- TT: artform -- */
+[aria : artform = "aria"
+    @"http://psi.ontopia.net/opera/#aria"]
+[ballet : artform = "ballet"
+    @"http://psi.ontopia.net/opera/#ballet"]
+[novel : artform = "novel"
+    @"http://psi.ontopia.net/opera/#novel"]
+[novella : artform = "novella"
+    @"http://psi.ontopia.net/opera/#novella"]
+[opera : artform = "opera"
+    @"http://psi.ontopia.net/opera/#opera"]
+   {opera, guidelines, "file:/C|/ontopia/topicmaps/opera/occurs/opera.htm"}
+   {opera, guidelines, "http://www.ontopia.net/topicmaps/examples/opera/occurs/opera.htm"}
+   {opera, homepage, "http://home.prcn.org/~pauld/opera/"} ~ pauld-website
+[play : artform = "play"
+    @"http://psi.ontopia.net/opera/#play"]
+[poem : artform = "poem"
+    @"http://psi.ontopia.net/opera/#poem"]
+
+/* -- TT: voice -- */
+[baritone : voice = "baritone"
+    @"http://psi.ontopia.net/opera/#baritone"]
+[bass : voice = "bass"
+              = "basses" / plural
+    @"http://psi.ontopia.net/opera/#bass"]
+[bass-baritone : voice = "bass-baritone"
+    @"http://psi.ontopia.net/opera/#bass-baritone"]
+[contralto : voice = "contralto"
+    @"http://psi.ontopia.net/opera/#contralto"]
+[mezzo : voice = "mezzo"
+    @"http://psi.ontopia.net/opera/#mezzo"]
+[soprano : voice = "soprano"
+    @"http://psi.ontopia.net/opera/#soprano"]
+[tenor : voice = "tenor"
+    @"http://psi.ontopia.net/opera/#tenor"]
+
+/* -- TT: (untyped) -- */
+[artform = "art form"; "art form"
+    @"http://psi.ontopia.net/opera/#artform"]
+[at.tr = "transitive association"; "transitive association"
+    @"http://psi.ontopia.net/xtm/association-type/transitive"]
+[cause = "cause"; "cause"
+    @"http://psi.ontopia.net/opera/#cause"]
+[character = "character"
+    @"http://psi.ontopia.net/opera/#character"]
+[city = "city"
+      = "cities" / plural
+    @"http://psi.ontopia.net/geography/#city"]
+[codetype = "code type"; "code type"]
+[composer = "composer"
+          = "compositore" / italian
+          = "komponist" / norwegian
+    @"http://psi.ontopia.net/opera/#composer"]
+[country = "country"
+         = "countries" / plural
+    @"http://psi.ontopia.net/geography/#country"]
+[domain = "subject domain"; "subject domain"]
+[event = "historical event"]
+[language = "language"; "language"
+    @"http://psi.ontopia.net/opera/#language"]
+[librettist = "librettist"
+    @"http://psi.ontopia.net/opera/#librettist"]
+[location = "location"; "location"
+    @"http://psi.ontopia.net/opera/#location"]
+[nameform = "name form"; "name form"]
+[nametype = "name type"; "name type"]
+[ot.default = "default occurrence"; "default occurrence"
+    @"http://psi.ontopia.net/xtm/occurrence-type/default"]
+[ot.metadata = "metadata"; "metadata"
+    @"http://psi.ontopia.net/xtm/occurrence-type/metadata"]
+[playwright = "playwright"; "playwright"
+    @"http://psi.ontopia.net/opera/#playwright"]
+[producer = "producer"
+    @"http://psi.ontopia.net/opera/#producer"]
+[publisher = "publisher"
+    @"http://psi.ontopia.net/opera/#publisher"]
+[region = "region"; "region"
+    @"http://psi.ontopia.net/geography/#region"]
+   {region, guidelines, "file:/C|/ontopia/topicmaps/opera/occurs/region.htm"}
+   {region, guidelines, "http://www.ontopia.net/topicmaps/examples/opera/occurs/region.htm"}
+[style = "style"
+    @"http://psi.ontopia.net/opera/#style"]
+[theatre = "theatre"
+    @"http://psi.ontopia.net/opera/#theatre"]
+[tv = "TV company"; "tv company"
+    @"http://psi.ontopia.net/opera/#tv"]
+[voice = "voice type"
+    @"http://psi.ontopia.net/opera/#voice"]
+[work = "work"; "work"
+    @"http://psi.ontopia.net/opera/#work"]
+[writer = "writer"; "writer"
+    @"http://psi.ontopia.net/opera/#writer"]
+
+/* ----------------- Type Hierarchy ------------ */
+
+superclass-subclass( literary-work : superclass, novel : subclass ) / ontology
+superclass-subclass( literary-work : superclass, novella : subclass ) / ontology
+superclass-subclass( literary-work : superclass, play : subclass ) / ontology
+superclass-subclass( literary-work : superclass, poem : subclass ) / ontology
+superclass-subclass( musical-work : superclass, ballet : subclass ) / ontology
+superclass-subclass( musical-work : superclass, opera : subclass ) / ontology
+superclass-subclass( musician : superclass, composer : subclass ) / ontology
+superclass-subclass( person : superclass, character : subclass ) / ontology
+superclass-subclass( person : superclass, musician : subclass ) / ontology
+superclass-subclass( person : superclass, producer : subclass ) / ontology
+superclass-subclass( person : superclass, pupil : subclass ) / ontology
+superclass-subclass( person : superclass, teacher : subclass ) / ontology
+superclass-subclass( person : superclass, writer : subclass ) / ontology
+superclass-subclass( place : superclass, city : subclass ) / ontology
+superclass-subclass( place : superclass, country : subclass ) / ontology
+superclass-subclass( place : superclass, region : subclass ) / ontology
+superclass-subclass( theatrical-work : superclass, ballet : subclass ) / ontology
+superclass-subclass( theatrical-work : superclass, opera : subclass ) / ontology
+superclass-subclass( theatrical-work : superclass, play : subclass ) / ontology
+superclass-subclass( work : superclass, literary-work : subclass ) / ontology
+superclass-subclass( work : superclass, musical-work : subclass ) / ontology
+superclass-subclass( work : superclass, theatrical-work : subclass ) / ontology
+superclass-subclass( writer : superclass, librettist : subclass ) / ontology
+superclass-subclass( writer : superclass, playwright : subclass ) / ontology
+
+/* ----------------- Role Types ---------------- */
+
+[agent = "perpetrator"
+    @"http://psi.ontopia.net/opera/#agent"]
+[containee = "containee"
+    @"http://psi.ontopia.net/geography/#containee"]
+[container = "container"
+    @"http://psi.ontopia.net/geography/#container"]
+[person = "person"; "person"
+    @"http://psi.ontopia.net/opera/#person"]
+[place = "place"; "place"
+    @"http://psi.ontopia.net/geography/#place"]
+[pupil = "pupil"
+    @"http://psi.ontopia.net/opera/#pupil"]
+[result = "result"
+    @"http://psi.ontopia.net/opera/#result"]
+[source = "source"
+    @"http://psi.ontopia.net/opera/#source"]
+[subclass = "subclass"
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+[superclass = "superclass"
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+[teacher = "teacher"
+    @"http://psi.ontopia.net/opera/#teacher"]
+[victim = "victim"
+    @"http://psi.ontopia.net/opera/#victim"]
+
+/* ----------------- Association Types --------- */
+
+
+/* -- TT: at.tr -- */
+[based-on : at.tr = "based on"
+                  = "source of" / source
+    @"http://psi.ontopia.net/opera/#based-on"]
+[located-in : at.tr = "located in/contains"
+                    = "located in" / containee
+                    = "contains" / container
+    @"http://psi.ontopia.net/geography/#located-in"]
+
+/* -- TT: (untyped) -- */
+[aria-in-opera = "aria in opera"
+               = "contains aria" / opera
+    @"http://psi.ontopia.net/opera/#aria-in-opera"]
+[born-in = "born in"
+         = "birthplace of" / place
+    @"http://psi.ontopia.net/opera/#born-in"]
+[character-dies = "death of character"
+                = "causes death of" / agent
+                = "cause of death" / cause
+                = "death of" / victim
+    @"http://psi.ontopia.net/opera/#character-dies"]
+[character-in-opera = "character in opera"
+                    = "appears in opera" / character
+                    = "dramatis personae" / opera
+    @"http://psi.ontopia.net/opera/#character-in-opera"]
+[composed-by = "composed by"
+             = "composed" / composer
+    @"http://psi.ontopia.net/opera/#composed-by"]
+[consists-of = "consists of"
+             = "part of" / containee
+    @"http://psi.ontopia.net/opera/#consists-of"]
+[died-in = "died in"
+         = "died here" / place
+    @"http://psi.ontopia.net/opera/#died-in"]
+[exponent-of = "exponent of"
+             = "represented by" / style
+    @"http://psi.ontopia.net/opera/#exponent-of"]
+[premiere = "first performed at"
+          = "premières (see also individual theatres)" / city
+          = "premières" / theatre tv
+    @"http://psi.ontopia.net/opera/#premiere"]
+[published-by = "published by"
+              = "publisher of" / publisher
+    @"http://psi.ontopia.net/opera/#published-by"]
+[pupil-of = "teacher/pupil"
+          = "pupil of" / pupil
+          = "teacher of" / teacher
+    @"http://psi.ontopia.net/opera/#pupil-of"]
+[setting = "setting"
+         = "setting for" / event place
+         = "set in" / opera
+    @"http://psi.ontopia.net/opera/#setting"]
+[sings-aria = "sung by"
+            = "sings aria" / character
+    @"http://psi.ontopia.net/opera/#sings-aria"]
+[superclass-subclass = "superclass-subclass"; "superclass-subclass"
+                     = "subclass of"; "subclass of" / subclass
+                     = "superclass of"; "superclass of" / superclass
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+[written-by = "written by/wrote"
+            = "wrote libretto for" / librettist
+            = "libretto written by" / opera
+            = "written by" / work
+            = "wrote" / writer
+    @"http://psi.ontopia.net/opera/#written-by"]
+
+/* ----------------- Occurrence Types ---------- */
+
+
+/* -- TT: ot.default -- */
+[az-synopsis : ot.default = "AZ Opera synopsis"
+                          = "AZ Opera synopses" / plural
+    @"http://psi.ontopia.net/opera/#az-synopsis"]
+[desc : ot.default = "description"; "description"
+    @"http://psi.ontopia.net/xtm/occurrence-type/description"]
+[factbook : ot.default = "World Factbook"]
+[guidelines : ot.default = "editorial guidelines"]
+[website : ot.default = "web site"
+    @"http://psi.ontopia.net/opera/#website"]
+
+/* -- TT: ot.metadata -- */
+[born : ot.metadata = "born"
+    @"http://psi.ontopia.net/opera/#born"]
+[died : ot.metadata = "died"
+    @"http://psi.ontopia.net/opera/#died"]
+[premiere-date : ot.metadata = "première"
+    @"http://psi.ontopia.net/opera/#premiere-date"]
+
+/* -- TT: (untyped) -- */
+[article = "article"
+    @"http://psi.ontopia.net/opera/#article"]
+[bio = "bio"
+    @"http://psi.ontopia.net/opera/#bio"]
+[gallery = "gallery"
+         = "galleries" / plural
+    @"http://psi.ontopia.net/opera/#gallery"]
+[homepage = "home page"
+    @"http://psi.ontopia.net/opera/#homepage"]
+[illustration = "illustration"
+    @"http://psi.ontopia.net/opera/#illustration"]
+[libretto = "libretto"
+          = "libretti" / plural
+    @"http://psi.ontopia.net/opera/#libretto"]
+[on-synopsis = "Opera News synopsis"
+             = "Opera News synopses" / plural
+    @"http://psi.ontopia.net/opera/#on-synopsis"]
+[poster = "poster"
+    @"http://psi.ontopia.net/opera/#poster"]
+[snippet = "sound clip"
+    @"http://psi.ontopia.net/opera/#snippet"]
+[synopsis = "synopsis"
+          = "synopses" / plural
+    @"http://psi.ontopia.net/opera/#synopsis"]
+
+/* ----------------- INSTANCES ----------------- */
+
+/* ----------------- Topics -------------------- */
+
+
+/* -- TT: aria -- */
+[ah-per-lultima-volta : aria = "Ah! Per l'ultima volta!"]
+[amor-ti-vieta : aria = "Amor ti vieta"]
+[apri-la-tua-finestra : aria = "Apri la tua finestra"]
+[che-gelida-manina : aria = "Che gelida manina"]
+[che-me-ne-faccio : aria = "Che me ne faccio"]
+[cherry-duet : aria = "Duetto delle ciliege"
+                    = "The Cherry Duet"; "Cherry Duet" / english]
+[chi-il-bel-sogno : aria = "Chi il bel sogno di Doretta"]
+[cielo-e-mar : aria = "Cielo e mar!"]
+[come-un-bel-di-di-maggio : aria = "Come un bel dì di maggio"]
+[dogni-dolor : aria = "D'ogni dolor"]
+[e-la-solita-storia-del-pastore : aria = "È la storia del pastore"; "E la storia del pastore"]
+[e-lucevan-le-stelle : aria = "É lucevan le stelle"; "E lucevan le stelle"]
+[ebben-ne-andro-lontana : aria = "Ebben? Ne andrò, lontana"]
+[in-quelle-trine-morbide : aria = "In quelle trine morbide"]
+[in-questa-regia : aria = "In questa regia"]
+[io-son-lumile-ancella : aria = "Io son l'umile ancella"]
+[la-dolcissima-effigie : aria = "La dolcissima effigie"]
+[la-mamma-morta : aria = "La mamma morta"; "mamma morta"]
+   {la-mamma-morta, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/la-mamma-morta.wav"}
+   {la-mamma-morta, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/la-mamma-morta.wav"}
+[laggiu-nel-soledad : aria = "Laggiù nel Soledad"]
+[laltra-notte : aria = "L'altra notte in fondo al mare"; "Altra notte in fondo al mare"]
+[lanima-ho-stanca : aria = "L'anima ho stanca"]
+[ma-piu-spesso : aria = "Ma più spesso"]
+[mamma-quel-vino-e-generoso : aria = "Mamma, quel vino è generoso"]
+[mi-chiamono-mimi : aria = "Mi chiamono Mimi"]
+[nel-verde-maggio : aria = "Nel verde maggio"]
+[nessun-dorma : aria = "Nessun dorma"]
+   {nessun-dorma, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"}
+   {nessun-dorma, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/nessun-dorma.mp3"}
+[non-piangere-liu : aria = "Non piangere, Liù"]
+[o-dolci-mani : aria = "O dolci mani"]
+[o-mio-babbino-caro : aria = "O mio babbino caro"]
+[o-soave-fanciulla : aria = "O soave fanciulla"]
+[o-tu-palermo : aria = "O tu Palermo"]
+[pace-pace-mio-dio : aria = "Pace, pace, mio Dio"]
+[piangea-cantando : aria = "Piangea cantando"]
+[qual-fiamma : aria = "Qual fiamma avea nel guardo"]
+[quando-men-vo-soletta : aria = "Quando m'en vo' soletta"]
+[recondita-armonia : aria = "Recondita armonia"]
+[ritorna-vincitor : aria = "Ritorna vincitor"]
+[se-come-voi : aria = "Se come voi"]
+[se-franz-dicesse-il-vero : aria = "Se Franz dicesse il vero"]
+[senza-mamma : aria = "Senza mamma"]
+[signore-ascolta : aria = "Signore, ascolta!"]
+[sola-perduta-abbandonata : aria = "Sola, perduta, abbandonata!"]
+[suicidio : aria = "Suicidio!"]
+[tu-che-di-gel-sei-cinta : aria = "Tu, che di gel sei cinta"]
+[un-bel-di-vedremo : aria = "Un bel' dì vedremo"]
+[un-di-allazzurro-spazio : aria = "Un dì all'azzurro spazio"]
+[va-tosca : aria = "Va, Tosca!"]
+[vesti-la-giubba : aria = "Vesti la giubba"]
+[vissi-darte : aria = "Vissi d'arte"]
+   {vissi-darte, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/vissi-darte.wav"}
+   {vissi-darte, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/vissi-darte.wav"}
+[voce-di-donna : aria = "Voce di donna"]
+
+/* -- TT: ballet -- */
+[nabucodonosor : ballet = "Nabucodonosor"]
+
+/* -- TT: baritone -- */
+[alfio : baritone character = "Alfio"]
+[amantio : baritone character = "Ser Amantio di Nicolao"]
+   {amantio, desc, [[notary]]}
+[amonasro : baritone character = "Amonasro"]
+[barnaba : baritone character = "Barnaba"]
+[baron-hermann : baritone character = "Baron Hermann"]
+[carlo : baritone character = "Don Carlo di Vargas"]
+[david : baritone character = "David"]
+[de-brigole : baritone character = "De Brigole"]
+   {de-brigole, desc, [[court chamberlain]]}
+[de-sirieux : baritone character = "De Sirieux"]
+[fernandez : baritone character = "Rambaldo Fernandez"]
+   {fernandez, desc, [[Magda's protector]]}
+[flamberge : baritone character = "Flamberge"]
+   {flamberge, desc, [[sergeant]]}
+[fouche : baritone character = "Fouché"]
+   {fouche, desc, [[minister of police]]}
+[gellner : baritone character = "Vincenzo Gellner"]
+[gelsomino : baritone character = "Gelsomino"]
+   {gelsomino, desc, [[valet]]}
+[gerard : baritone character = "Carlo Gérard"]
+[gianni : baritone character = "Gianni Schicchi (character)"
+                             = "Gianni Schicchi" / character]
+   {gianni, desc, [[(aged 50)]]}
+[guglielmo : baritone character = "Guglielmo Wulf"]
+[guido-di-monforte : baritone character = "Guido di Monforte"]
+[jago : baritone character = "Jago"]
+   {jago, desc, [[Otello's ensign]]}
+[kyoto : baritone character = "Kyoto"]
+[leroy : baritone character = "Leroy"]
+   {leroy, desc, [[tailor]]}
+[lescaut : baritone character = "Lescaut"]
+   {lescaut, desc, [[Manon's brother, sergeant of the King's Guard]]}
+[mandarin : baritone character = "Mandarin"]
+[marcello : baritone character = "Marcello"]
+   {marcello, desc, [[painter]]}
+[marco : baritone character = "Marco"]
+   {marco, desc, [[Simone's son]]}
+[metifio : baritone character = "Metifio"]
+[michele : baritone character = "Michele"]
+   {michele, desc, [[barge-owner (aged 50)]]}
+[michonnet : baritone character = "Michonnet"]
+   {michonnet, desc, [[stage director of the Comédie Française]]}
+[napoleon : baritone character = "Napoleon"]
+[ping : baritone character = "Ping"]
+   {ping, desc, [[Grand Chancellor]]}
+[rance : baritone character = "Jack Rance"]
+   {rance, desc, [[sheriff]]}
+[roustan : baritone character = "Roustan"]
+   {roustan, desc, [[head of the Marmelukes]]}
+[sacristan : baritone character = "Sacristan"]
+[scarpia : baritone character = "Baron Scarpia"]
+   {scarpia, desc, [[chief of police]]}
+[schaunard : baritone character = "Schaunard"]
+   {schaunard, desc, [[musician]]}
+[sharpless : baritone character = "Sharpless"]
+   {sharpless, desc, [[U.S. consul at Nagasaki]]}
+[silvio : baritone character = "Silvio"]
+[sonora : baritone character tenor = "Sonora, Trin, Sid, Bello, Harry, Joe, Happy, Larkens"]
+   {sonora, desc, [[miners]]}
+[tonio : baritone character = "Tonio"]
+[uberto : baritone character = "Uberto"]
+   {uberto, desc, [[owner of a country lodge]]}
+[yamadori : baritone character = "Prince Yamadori"]
+   {yamadori, desc, [[rich Japanese]]}
+
+/* -- TT: bass -- */
+[alcindoro : bass character = "Alcindoro de Mittoneaux"]
+   {alcindoro, desc, [[state councillor]]}
+[angelotti : bass character = "Cesare Angelotti"]
+   {angelotti, desc, [[political prisoner]]}
+[ashby : bass character = "Ashby"]
+   {ashby, desc, [[agent of the Wells Fargo Company]]}
+[badoero : bass character = "Alvise Badoero"]
+[benoit : bass character = "Benoît"]
+   {benoit, desc, [[landlord]]}
+[bethune : bass character = "Bethune"]
+[betto : bass character = "Betto di Signa"]
+   {betto, desc, [[Buoso's brother-in-law]]}
+[bonze : bass character = "The Bonze"; "Bonze"]
+   {bonze, desc, [[Cio-Cio-San's uncle]]}
+[calatrava : bass character = "Marchese di Calatrava"]
+[castro : bass character = "José Castro"]
+   {castro, desc, [[mestizo from Ramerrez' band]]}
+[colline : bass character = "Colline"]
+   {colline, desc, [[philosopher]]}
+[customs-official : bass character = "Customs official"]
+[frank : bass character = "Frank"]
+[gaoler : bass character = "Gaoler"]
+[geronte : bass character = "Géronte di Ravoir"]
+   {geronte, desc, [[treasurer general]]}
+[giovanni-da-procida : bass character = "Giovanni da Procida"]
+[gualterio : bass character = "Gualterio"]
+[guardiano : bass character = "Padre Guardiano"]
+[guccio : bass character = "Guccio"]
+   {guccio, desc, [[dyer]]}
+[hanezo : bass character = "Hanezò"; "Hanezo"]
+[il-cieco : bass character = "Il Cieco"]
+[jackrabbit : bass character = "Billy Jackrabbit"]
+   {jackrabbit, desc, [[Indian]]}
+[king-of-egypt : bass character = "King of Egypt"]
+[lodovico : bass character = "Lodovico"]
+   {lodovico, desc, [[Venetian ambassador]]}
+[margrave-of-biberich : bass character = "Margrave of Biberich"]
+[mefistofele-c : bass character = "Mefistofele (character)"
+                                = "Mefistofele" / character]
+[melitone : bass character = "Fra Melitone"]
+[montano : bass character = "Montano"]
+   {montano, desc, [[Otello's predecessor as Governor of Cyprus]]}
+[pinelli : bass character = "Pinelli"]
+   {pinelli, desc, [[cobbler]]}
+[prince-de-bouillon : bass character = "Prince de Bouillon"]
+[quinault : bass character = "Quinault"]
+   {quinault, desc, [[member of the Comédie]]}
+[ramfis : bass character = "Ramfis"]
+[roberto : bass character = "Roberto (I Vespri siciliani)"
+                          = "Roberto" / i-vespri-siciliani]
+[roucher : bass character = "Roucher"]
+[sciarrone : bass character = "Sciarrone"]
+   {sciarrone, desc, [[gendarme]]}
+[simone : bass character = "Simone"]
+   {simone, desc, [[Buoso's cousin (aged 70)]]}
+[spinelloccio : bass character = "Maestro Spinelloccio"]
+   {spinelloccio, desc, [[doctor]]}
+[stromminger : bass character = "Stromminger"]
+[talpa : bass character = "Talpa"]
+   {talpa, desc, [[stevedore (aged 55)]]}
+[timur : bass character = "Timur"]
+   {timur, desc, [[exiled King of Tartary]]}
+[un-araldo : bass character = "Un araldo"
+                            = "Herald" / english]
+[vaudemont : bass character = "Vaudemont"]
+
+/* -- TT: bass-baritone -- */
+[perichaud : bass-baritone character tenor = "Perichaud, Gobin, Crébillon"]
+   {perichaud, desc, [[Rambaldo's friends]]}
+
+/* -- TT: cause -- */
+[roofjump : cause = "jumping from roof"]
+[shooting : cause = "shooting"]
+[stabbing : cause = "stabbing"]
+[strangling : cause = "strangling"]
+
+/* -- TT: character -- */
+[abbe-of-chazeuil : character tenor = "Abbé of Chazeuil"]
+[abbess : character mezzo = "Abbess"]
+[adonella : character = "Adonella"]
+[adriana : character soprano = "Adriana Lecouvreur (character)"
+                             = "Adriana Lecouvreur" / character]
+[aida-c : character soprano = "Aida (character)"
+                            = "Aida" / character]
+[alms-collector : character soprano = "Alms Collector"]
+[altichiara : character = "Altichiara"]
+[alvaro : character tenor = "Don Alvaro"]
+[amneris : character mezzo = "Amneris"]
+[angelica : character soprano = "Suor Angelica"]
+[anna : character soprano = "Anna (Le Villi)"
+                          = "Anna" / le-villi]
+[anna2 : character soprano = "Anna von Rehberg"]
+[arrigo : character tenor = "Arrigo"]
+[beppe : character tenor = "Beppe (Pagliacci)"
+                         = "Beppe" / pagliacci]
+[beppe-s : character mezzo = "Beppe (L'amico Fritz)"
+                           = "Beppe" / lamico-fritz]
+[bersi : character mezzo = "Bersi"]
+[biancofiore : character = "Biancofiore"]
+[butterfly : character soprano = "Butterfly"
+                               = "Cio-cio-san"]
+[calaf : character tenor = "Calaf"]
+   {calaf, desc, [[Timur's son]]}
+[canio : character tenor = "Canio"]
+[cassio : character tenor = "Cassio"]
+   {cassio, desc, [[lieutenant]]}
+[catarina : character soprano = "Catarina Hubscher"]
+   {catarina, desc, [[laundress, then Duchess of Danzig]]}
+[caterina : character soprano = "Caterina"]
+[cavaradossi : character tenor = "Mario Cavaradossi"]
+   {cavaradossi, desc, [[painter]]}
+[chenier : character tenor = "Andrea Chénier (character)"
+                           = "Andrea Chénier" / character]
+[coigny : character mezzo = "Comtessa di Coigny"]
+[danieli : character tenor = "Danieli"]
+[des-grieux : character tenor = "Des-Grieux"]
+[desdemona : character soprano = "Desdemona"]
+   {desdemona, desc, [[Otello's wife]]}
+[despereaux : character tenor = "Despereaux"]
+   {despereaux, desc, [[dancing master]]}
+[dhia : character soprano = "Dhia"]
+[dolcina : character mezzo = "Suor Dolcina"]
+[edgar-c : character tenor = "Edgar (character)"
+                           = "Edgar" / character]
+[edmondo : character tenor = "Edmondo"]
+   {edmondo, desc, [[student]]}
+[elena : character soprano = "Duchess Elena"]
+   {elena, desc, [[sister of Friedrich of Austria]]}
+[elena-mefistofele : character soprano = "Elena"]
+[emilia : character mezzo = "Emilia"]
+   {emilia, desc, [[Desdemona's attendant, Jago's wife]]}
+[emperor-altoum : character tenor = "Emperor Altoum"]
+   {emperor-altoum, desc, [[Turandot's father]]}
+[faust-c : character tenor = "Faust (character)"
+                           = "Faust" / character]
+[federico : character tenor = "Federico (L'amico Fritz)"
+                            = "Federico" / lamico-fritz]
+[federico2 : character tenor = "Federico (L'arlesiana)"
+                             = "Federico" / larlesiana]
+[fedora-c : character soprano = "Fedora Romazov"
+                              = "Fedora" / character]
+[fidelia : character soprano = "Fidelia"]
+[flammen : character tenor = "Flammen"]
+[francesca : character = "Francesca"]
+[fritz : character tenor = "Fritz Kobus"]
+[frugola : character mezzo = "Frugola"]
+   {frugola, desc, [[Talpa's wife (aged 50)]]}
+[garsenda : character = "Garsenda"]
+[genovieffa : character soprano = "Suor Genovieffa"]
+[gherardino : character contralto = "Gherardino"]
+   {gherardino, desc, [[Gherardo's son (aged 7)]]}
+[gherardo : character tenor = "Gherardo"]
+   {gherardo, desc, [[Buoso's nephew (aged 40)]]}
+[gina-c : character mezzo = "Gina"]
+   {gina-c, desc, [[Uberto's sister]]}
+[gioconda : character soprano = "La Gioconda (character)"; "Gioconda"
+                              = "La Gioconda"; "Gioconda" / character]
+[giorgetta : character soprano = "Giorgetta"]
+   {giorgetta, desc, [[Michele's wife (aged 25)]]}
+[giovanni : character = "Giovanni Malatesta"]
+[giulia : character soprano = "Giulia"]
+   {giulia, desc, [[laundress]]}
+[giulio : character tenor = "Giulio"]
+[goro : character tenor = "Goro"]
+   {goro, desc, [[marriage broker]]}
+[grimaldo : character tenor = "Enzo Grimaldo"]
+[hagenbach : character tenor = "Giuseppe Hagenbach"]
+[il-balestiere : character = "Il Balestiere"; "Balestiere"]
+[il-giullare : character = "Il Giullare"; "Giullare"]
+[il-torregiano : character = "Il Torregiano"; "Torregiano"]
+[incredible : character tenor = "L'Incredible"; "Incredible"]
+[iris-c : character soprano = "Iris (character)"
+                            = "Iris" / character]
+[johnsen : character tenor = "Dick Johnsen"
+                           = "Ramerrez" / nom-de-guerre]
+   {johnsen, desc, [[bandit]]}
+[kate-pinkerton : character mezzo = "Kate Pinkerton"]
+   {kate-pinkerton, desc, [[Pinkerton's American wife]]}
+[la-cieca : character contralto = "La Cieca"; "Cieca"]
+[la-ciesca : character mezzo = "La Ciesca"]
+   {la-ciesca, desc, [[Marco's wife (aged 38)]]}
+[la-rossa : character soprano = "La Rossa"]
+   {la-rossa, desc, [[laundress]]}
+[laura : character mezzo = "Laura Adorno"]
+[lauretta : character soprano = "Lauretta Schicchi"]
+   {lauretta, desc, [[Gianni's daughter (aged 21)]]}
+[lefebvre : character tenor = "Lefebvre"]
+   {lefebvre, desc, [[sergeant, then duke of Danzig]]}
+[leonora : character soprano = "Donna Leonora di Vargas"]
+[lilla : character contralto = "Lilla"]
+   {lilla, desc, [[Uberto's fiancée]]}
+[lisette : character soprano = "Lisette"]
+   {lisette, desc, [[Magda's maid]]}
+[liu : character soprano = "Liù"]
+   {liu, desc, [[slave girl]]}
+[lodoletta-c : character soprano = "Lodoletta (character)"
+                                 = "Lodoletta" / character]
+[lola : character mezzo = "Lola"]
+[loreley-c : character soprano = "Loreley (character)"
+                               = "Loreley" / character]
+[loris : character tenor = "Loris Ipanov"]
+[lucia : character contralto = "Mamma Lucia"]
+[luigi : character tenor = "Luigi"]
+   {luigi, desc, [[stevedore (aged 20)]]}
+[madame-de-bulow : character soprano = "Madame de Bülow"]
+   {madame-de-bulow, desc, [[lady at court]]}
+[maddalena : character soprano = "Maddalena di Coigny"]
+[magda : character soprano = "Magda de Civry"]
+   {magda, desc, [[Rambaldo's mistress]]}
+[malatestino : character = "Malatestino Malatesta"]
+[manfredo : character tenor = "Manfredo"]
+[manon : character soprano = "Manon"]
+[margherita : character soprano = "Margherita"]
+[marta : character contralto = "Marta"]
+[maurizio : character tenor = "Maurizio"]
+   {maurizio, desc, [[Count of Saxony]]}
+[mimi : character soprano = "Mimì"; "Mimi"]
+   {mimi, desc, [[seamstress]]}
+[minnie : character soprano = "Minnie"]
+[mistress-of-novices : character mezzo = "Mistress of Novices"]
+[mlle-dangeville : character mezzo = "Mlle Dangeville"]
+   {mlle-dangeville, desc, [[member of the Comédie]]}
+[mlle-jouvenot : character soprano = "Mlle Jouvenot"]
+   {mlle-jouvenot, desc, [[member of the Comédie]]}
+[monitor : character mezzo = "Monitor"]
+[musetta : character soprano = "Musetta"]
+   {musetta, desc, [[singer]]}
+[nedda : character soprano = "Nedda"]
+[neipperg : character tenor = "Count Neipperg"]
+[nella : character soprano = "Nella"]
+   {nella, desc, [[Gherardo's wife (aged 34)]]}
+[nick : character tenor = "Nick"]
+   {nick, desc, [[bartender at the Polka saloon]]}
+[ninetta : character contralto = "Ninetta"]
+[osaka : character tenor = "Osaka"]
+[osmina : character soprano = "Suor Osmina"]
+[ostasio : character = "Ostasio"]
+[otello-c : character tenor = "Otello (character)"
+                            = "Otello" / otello]
+   {otello-c, desc, [[Moorish general in the Venetian army]]}
+[pang : character tenor = "Pang"]
+   {pang, desc, [[General Purveyor]]}
+[paolo : character = "Paolo Malatesta"]
+[parpignol : character tenor = "Parpignol"]
+   {parpignol, desc, [[toy vendor]]}
+[pinkerton : character tenor = "B. F. Pinkerton"]
+   {pinkerton, desc, [[lieutenant in the United States Army]]}
+[poisson : character tenor = "Poisson"]
+   {poisson, desc, [[member of the Comédie]]}
+[pong : character tenor = "Pong"]
+   {pong, desc, [[Chief Cook]]}
+[preziosilla : character mezzo = "Preziosilla"]
+[prigioniero : character = "Voce del Prigioniero"]
+[princess-de-buoillon : character mezzo = "Princess de Buoillon"]
+[princess-elisa : character soprano = "Princess Elisa"]
+[prunier : character tenor = "Prunier"]
+   {prunier, desc, [[poet]]}
+[queen-carolina : character soprano = "Queen Carolina"]
+[radames : character tenor = "Radamès"; "Radames"]
+[rinuccio : character tenor = "Rinuccio"]
+   {rinuccio, desc, [[Zita's nephew (aged 40)]]}
+[roberto-le-villi : character tenor = "Roberto (Le Villi)"
+                                    = "Roberto" / le-villi]
+[roderigo : character tenor = "Roderigo"]
+   {roderigo, desc, [[Venetian gentleman]]}
+[rodolfo : character tenor = "Rodolfo"]
+   {rodolfo, desc, [[poet]]}
+[rosa-mammai : character soprano = "Rosa Mammai"]
+[ruggero : character tenor = "Ruggero Lastouc"]
+   {ruggero, desc, [[young man]]}
+[samaritana : character = "Samaritana"]
+[santuzza : character soprano = "Santuzza"]
+[ser-toldo : character = "Ser Toldo Berardengo"]
+[shepherd-boy : character contralto = "Shepherd-boy"]
+[smaragdi : character = "Smaragdi"]
+   {smaragdi, desc, [[la schiava]]}
+[spoletta : character tenor = "Spoletta"]
+   {spoletta, desc, [[police agent]]}
+[suzel : character soprano = "Suzel"]
+[suzuki : character mezzo = "Suzuki"]
+   {suzuki, desc, [[servant]]}
+[tebaldo : character tenor = "Tebaldo"]
+[tigrana : character mezzo = "Tigrana"]
+[tinca : character tenor = "Tinca"]
+   {tinca, desc, [[stevedore (aged 35)]]}
+[toniotta : character soprano = "Toniotta"]
+   {toniotta, desc, [[laundress]]}
+[tosca-c : character soprano = "Floria Tosca"
+                             = "Tosca" / character]
+   {tosca-c, desc, [[celebrated singer]]}
+[turandot-c : character soprano = "Princess Turandot"
+                                = "Turandot" / character]
+[turiddu : character tenor = "Turiddu"]
+[vinaigre : character tenor = "Vinaigre"]
+   {vinaigre, desc, [[drummer]]}
+[vivette : character soprano = "Vivette"]
+[wagner : character tenor = "Wagner"]
+[wally : character soprano = "Wally"]
+[walter : character soprano = "Walter"]
+[walter2 : character tenor = "Walter von Oberwesel"]
+[wowkle : character mezzo = "Wowkle"]
+   {wowkle, desc, [[Billy Jackrabbit's squaw]]}
+[yvette : character mezzo soprano = "Yvette, Bianca, Suzy"]
+   {yvette, desc, [[Magda's friends]]}
+[zia : character contralto = "Principessa La Zia"]
+   {zia, desc, [[Suor Angelica's aunt]]}
+[zita : character contralto = "Zita"]
+   {zita, desc, [[called La Vecchia, Buoso's cousin (aged 60)]]}
+
+/* -- TT: city -- */
+[antioch : city = "Antioch"]
+[arles : city = "Arles"]
+[babylon : city = "Babylon"]
+[bassano : city = "Bassano"]
+[beijing : city = "Beijing"]
+   {beijing, article, "http://detnews.com/1998/accent/9809/05/09050080.htm"}
+[bologna : city = "Bologna"]
+[borgo-san-lorenzo : city = "Borgo S. Lorenzo"]
+[boston : city = "Boston"]
+[brescia : city = "Bréscia"]
+[brussels : city = "Brussels"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.be.brussels"]
+[buenos-aires : city = "Buenos Aires"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.ar.buenos-aires"]
+[cairo : city = "Cairo"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.eg.cairo"]
+[capri : city = "Capri"]
+[caprino-bergamasco : city = "Caprino Bergamasco"]
+[colleretto-parella : city = "Colleretto Parella"]
+[cremona : city = "Cremona"]
+[ferrara : city = "Ferrara"]
+[firenze : city = "Firenze"
+                = "Florence" / english
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.firenze"]
+[foggia : city = "Foggia"]
+[genova : city = "Genova"
+               = "Genoa" / english]
+[jerusalem : city = "Jerusalem"]
+[la-spezia : city = "La Spezia"]
+[le-roncole : city = "Le Roncole"]
+[lecce : city = "Lecce"]
+[lecco : city = "Lecco"]
+[livorno : city = "Livorno"
+                = "Leghorn" / english]
+[london : city = "London"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb.london"]
+[lucca : city = "Lucca"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.lucca"]
+[lugano : city = "Lugano"]
+[madrid : city = "Madrid"]
+[mantua : city = "Mantua"]
+[marly-le-roy : city = "Marly-Le-Roy"]
+[marseilles : city = "Marseilles"]
+[milano : city = "Milan"
+               = "Milano" / italian
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.milano"]
+[monte-carlo : city = "Monte Carlo"]
+[montecatini : city = "Montecatini"]
+[murano : city = "Murano"]
+[nagasaki : city = "Nagasaki"]
+[napoli : city = "Napoli"
+               = "Naples" / english
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.napoli"]
+[new-york : city = "New York"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.us.new-york"]
+[nice : city = "Nice"]
+[nimes : city = "Nimes"]
+[orange : city = "Orange"]
+[paderno-fasolaro : city = "Paderno Fasolaro"]
+[padua : city = "Padua"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.padua"]
+[palermo : city = "Palermo"]
+[palmi : city = "Palmi"]
+[paris : city = "Paris"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.fr.paris"]
+[pesaro : city = "Pesaro"]
+[pescara : city = "Pescara"]
+[piacenza : city = "Piacenza"]
+[prato : city = "Prato"]
+[roma : city = "Roma"
+             = "Rome" / english
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.roma"]
+[rovereto : city = "Rovereto"]
+[san-remo : city = "San Remo"]
+[sevilla : city = "Sevilla"
+                = "Seville" / english
+                = "Siviglia" / italian]
+[siena : city = "Siena"]
+[st-petersburg : city = "Leningrad"
+                      = "Petrograd"
+                      = "St Petersburg"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.ru.st-petersburg"]
+[torino : city = "Torino"
+               = "Turin" / english
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.torino"]
+[trento : city = "Trento"]
+[trieste : city = "Trieste"]
+[udine : city = "Udine"]
+[varazza : city = "Varazza"]
+[varese : city = "Varese"]
+[venezia : city = "Venezia"
+                = "Venice" / english
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.venezia"]
+[verona : city = "Verona"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.verona"]
+[windsor : city = "Windsor"]
+[zara : city = "Zara"]
+[zoagli : city = "Zoagli"]
+
+/* -- TT: codetype -- */
+[iso639-1 : codetype = "ISO 639:1988 language codes"
+    @"http://psi.ontopia.net/opera/#iso639-1"]
+[iso639-2b : codetype = "ISO 639-2:1996 Alpha-3 language codes (bibliographic)"
+    @"http://psi.ontopia.net/opera/#iso639-2b"]
+[iso639-2t : codetype = "ISO 639-2:1996 Alpha-3 language codes (terminological)"
+    @"http://psi.ontopia.net/opera/#iso639-2t"]
+
+/* -- TT: composer -- */
+[beethoven : composer = "Beethoven, Ludwig van"
+                      = "Ludwig van Beethoven" / normal]
+[bizet : composer = "Bizet, Georges"
+                  = "Georges Bizet" / normal]
+[boito : composer librettist = "Boïto, Arrigo"; "Boito, Arrigo"
+                             = "Gorrio, Tobia" / nom-de-plume
+                             = "Arrigo Boïto" / normal
+                             = "Tobia Gorrio" / normal
+                             = "Boïto" / shortname]
+   {boito, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/boito.htm"}
+   {boito, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/boito.htm"}
+   {boito, bio, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/librettist/boito.html"}
+   {boito, born, [[1842 (24 Feb)]]}
+   {boito, desc, [[Arrigo Boito is probably better known as a librettist than as a composer, especially for his texts for Verdi's Simon Boccanegra, and the Shakespearian Otello and Falstaff, as well as the libretto of Ponchielli's La Gioconda.]]}
+   {boito, died, [[1918 (10 Jun)]]}
+   {boito, homepage, "http://www.hnh.com/composer/boito.htm"}
+   {boito, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/boito.gif"}
+[catalani : composer = "Catalani, Alfredo"
+                     = "Alfredo Catalani" / normal
+                     = "Catalani" / shortname]
+   {catalani, born, [[1854 (19 Jun)]]}
+   {catalani, died, [[1893 (7 Aug)]]}
+   {catalani, homepage, "http://www.hnh.com/composer/catalani.htm"}
+   {catalani, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/catalani.gif"}
+[cilea : composer = "Cilea, Francesco"
+                  = "Francesco Cilea" / normal
+                  = "Cilea" / shortname]
+   {cilea, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/cilea.htm"}
+   {cilea, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/cilea.htm"}
+   {cilea, born, [[1866 (23 Jul)]]}
+   {cilea, died, [[1950 (20 Nov)]]}
+   {cilea, homepage, "http://www.hnh.com/composer/cilea.htm"}
+   {cilea, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/cilea.gif"}
+[giordano : composer = "Giordano, Umberto"
+                     = "Umberto Giordano" / normal
+                     = "Giordano" / shortname]
+   {giordano, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/giordano.htm"}
+   {giordano, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/giordano.htm"}
+   {giordano, born, [[1867 (28 Aug)]]}
+   {giordano, died, [[1948 (12 Nov)]]}
+   {giordano, homepage, "http://www.hnh.com/composer/giordano.htm"}
+   {giordano, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/giordano.gif"}
+[leoncavallo : composer librettist = "Leoncavallo, Ruggero"
+                                   = "Ruggero Leoncavallo" / normal
+                                   = "Leoncavallo" / shortname]
+   {leoncavallo, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/leoncavallo.htm"}
+   {leoncavallo, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/leoncavallo.htm"}
+   {leoncavallo, born, [[1857 (8 Mar)]]}
+   {leoncavallo, died, [[1919 (9 Aug)]]}
+   {leoncavallo, homepage, "http://www.hnh.com/composer/leoncavallo.htm"}
+   {leoncavallo, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/leoncavallo.gif"}
+[mascagni : composer = "Mascagni, Pietro"
+                     = "Pietro Mascagni" / normal
+                     = "Mascagni" / shortname]
+   {mascagni, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/mascagni.htm"}
+   {mascagni, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/mascagni.htm"}
+   {mascagni, born, [[1863 (7 Dec)]]}
+   {mascagni, died, [[1945 (2 Aug)]]}
+   {mascagni, homepage, "http://www.hnh.com/composer/mascagni.htm"}
+   {mascagni, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/mascagni.gif"}
+   {mascagni, website, "http://www.mascagni.org"}
+[mozart : composer = "Mozart, Wolfgang Amadeus"
+                   = "Wolfgang Amadeus Mozart" / normal]
+[ponchielli : composer = "Ponchielli, Amilcar"
+                       = "Amilcar Ponchielli" / normal
+                       = "Ponchielli" / shortname]
+   {ponchielli, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/ponchielli.htm"}
+   {ponchielli, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/ponchielli.htm"}
+   {ponchielli, born, [[1834 (31 Aug)]]}
+   {ponchielli, died, [[1886 (17 Jan)]]}
+   {ponchielli, homepage, "http://www.hnh.com/composer/ponchiel.htm"}
+   {ponchielli, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/ponchielli.gif"}
+[prokofiev : composer = "Prokofiev, Sergei"
+                      = "Sergei Prokofiev" / normal]
+[puccini : composer = "Puccini, Giacomo"
+                    = "Giacomo Puccini" / normal
+                    = "Puccini" / shortname]
+   {puccini, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/puccini.htm"}
+   {puccini, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/puccini.htm"}
+   {puccini, born, [[1858 (22 Dec)]]}
+   {puccini, died, [[1924 (29 Nov)]]}
+   {puccini, gallery, "file:/C|/ontopia/topicmaps/opera/occurs/puccini-gallery.htm"}
+   {puccini, homepage, "file:/C|/ontopia/topicmaps/opera/occurs/hnh-puccini.htm"}
+   {puccini, homepage, "http://www.hnh.com/composer/puccini.htm"}
+   {puccini, homepage, "http://www.r-ds.com/opera/pucciniana/gallery.htm"}
+   {puccini, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/puccini.gif"}
+   {puccini, snippet, "http://www.puccini.it/files/vocepucc.wav"}
+   {puccini, website, "http://www.puccini.it"}
+[rossini : composer = "Rossini, Gioacchino"
+                    = "Gioacchino Rossini" / normal]
+[verdi : composer = "Verdi, Giuseppe"
+                  = "Giuseppe Verdi" / normal
+                  = "Verdi" / shortname]
+   {verdi, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/verdi.htm"}
+   {verdi, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/verdi.htm"}
+   {verdi, born, [[1813 (10 Oct)]]}
+   {verdi, died, [[1901 (27 Jan)]]}
+   {verdi, homepage, "http://www.giuseppeverdi.it/verdi/"}
+   {verdi, homepage, "http://www.hnh.com/composer/verdi.htm"}
+   {verdi, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/verdi.gif"}
+[zandonai : composer = "Zandonai, Riccardo"
+                     = "Riccardo Zandonai" / normal
+                     = "Zandonai" / shortname]
+   {zandonai, born, [[1883 (30 May)]]}
+   {zandonai, died, [[1944 (5 Jun)]]}
+   {zandonai, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/composer/zandonai-ho.jpg"}
+
+/* -- TT: country -- */
+[argentina : country = "Argentina"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.ar"]
+   {argentina, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/ar.html"}
+   {argentina, factbook, "http://www.cia.gov/cia/publications/factbook/geos/ar.html"}
+[austria : country = "Austria"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.at"]
+   {austria, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/au.html"}
+   {austria, factbook, "http://www.cia.gov/cia/publications/factbook/geos/au.html"}
+[belgium : country = "Belgium"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.be"]
+   {belgium, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/be.html"}
+   {belgium, factbook, "http://www.cia.gov/cia/publications/factbook/geos/be.html"}
+[china : country = "China"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.cn"]
+   {china, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/ch.html"}
+   {china, factbook, "http://www.cia.gov/cia/publications/factbook/geos/ch.html"}
+[cyprus : country = "Cyprus"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.cy"]
+   {cyprus, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/cy.html"}
+   {cyprus, factbook, "http://www.cia.gov/cia/publications/factbook/geos/cy.html"}
+[egypt : country = "Egypt"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.eg"]
+   {egypt, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/eg.html"}
+   {egypt, factbook, "http://www.cia.gov/cia/publications/factbook/geos/eg.html"}
+[england : country region = "England"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb.england"]
+[france : country = "France"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.fr"]
+   {france, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/fr.html"}
+   {france, factbook, "http://www.cia.gov/cia/publications/factbook/geos/fr.html"}
+[germany : country = "Germany"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.de"]
+   {germany, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/gm.html"}
+   {germany, factbook, "http://www.cia.gov/cia/publications/factbook/geos/gm.html"}
+[greece : country = "Greece"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gr"]
+   {greece, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/gr.html"}
+   {greece, factbook, "http://www.cia.gov/cia/publications/factbook/geos/gr.html"}
+[israel : country = "Israel"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.il"]
+   {israel, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/is.html"}
+   {israel, factbook, "http://www.cia.gov/cia/publications/factbook/geos/is.html"}
+[italy : country = "Italy"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it"]
+   {italy, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/it.html"}
+   {italy, factbook, "http://www.cia.gov/cia/publications/factbook/geos/it.html"}
+[japan : country = "Japan"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.jp"]
+   {japan, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/ja.html"}
+   {japan, factbook, "http://www.cia.gov/cia/publications/factbook/geos/ja.html"}
+[netherlands : country = "Netherlands"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.nl"]
+   {netherlands, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/nl.html"}
+   {netherlands, factbook, "http://www.cia.gov/cia/publications/factbook/geos/nl.html"}
+[russia : country = "Russia"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.ru"]
+   {russia, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/rs.html"}
+   {russia, factbook, "http://www.cia.gov/cia/publications/factbook/geos/rs.html"}
+[scotland : country region = "Scotland"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb.scotland"]
+[spain : country = "Spain"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.es"]
+   {spain, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/sp.html"}
+   {spain, factbook, "http://www.cia.gov/cia/publications/factbook/geos/sp.html"}
+[switzerland : country = "Switzerland"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.ch"]
+   {switzerland, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/sz.html"}
+   {switzerland, factbook, "http://www.cia.gov/cia/publications/factbook/geos/sz.html"}
+[turkey : country = "Turkey"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.tu"]
+   {turkey, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/tu.html"}
+   {turkey, factbook, "http://www.cia.gov/cia/publications/factbook/geos/tu.html"}
+[united-kingdom : country = "United Kingdom"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb"]
+   {united-kingdom, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/uk.html"}
+   {united-kingdom, factbook, "http://www.cia.gov/cia/publications/factbook/geos/uk.html"}
+[usa : country = "United States"
+               = "USA"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.us"]
+   {usa, factbook, "file:/C|/ontopia/topicmaps/ontologies/country/cia/html/us.html"}
+   {usa, factbook, "http://www.cia.gov/cia/publications/factbook/geos/us.html"}
+[wales : country region = "Wales"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gb.wales"]
+
+/* -- TT: domain -- */
+[biography : domain = "biography"
+    @"http://psi.ontopia.net/opera/#biography"]
+[geography : domain = "geography"]
+[history : domain = "history"]
+[literature : domain = "literature"
+    @"http://psi.ontopia.net/opera/#literature"]
+[music : domain = "music"
+    @"http://psi.ontopia.net/opera/#music"]
+[ontology : domain = "ontology"]
+
+/* -- TT: event -- */
+[french-revolution : event = "French Revolution"]
+
+/* -- TT: language -- */
+[english : language = "English"
+                    = "en" / iso639-1
+                    = "eng" / iso639-2b iso639-2t
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso639.en"]
+[french : language = "French"
+                   = "fr" / iso639-1
+                   = "fre" / iso639-2b
+                   = "fra" / iso639-2t
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso639.fr"]
+[italian : language = "Italian"
+                    = "it" / iso639-1
+                    = "ita" / iso639-2b iso639-2t
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso639.it"]
+[norwegian : language = "Norwegian"
+                      = "no" / iso639-1
+                      = "nor" / iso639-2b iso639-2t
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso639.no"]
+
+/* -- TT: librettist -- */
+[adami : librettist = "Adami, Giuseppe"
+                    = "Giuseppe Adami" / normal]
+   {adami, bio, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/librettist/adami.html"}
+   {adami, born, [[1878 (4 Nov)]]}
+   {adami, died, [[1946 (12 Oct)]]}
+[benelli : librettist = "Benelli, Sem"
+                      = "Sem Benelli" / normal]
+   {benelli, born, [[1877 (10 Aug)]]}
+   {benelli, died, [[1949 (18 Dec)]]}
+[bey : librettist = "Bey, August Mariette"
+                  = "August Mariette Bey" / normal]
+[cammarano : librettist = "Cammarano, Salvatore"
+                        = "Salvatore Cammarano" / normal]
+   {cammarano, born, [[1801 (19 Mar)]]}
+   {cammarano, died, [[1852 (17 Jul)]]}
+[choudens : librettist writer = "Choudens, Paul de"
+                              = "Bérel, Paul" / nom-de-plume
+                              = "Paul de Choudens" / normal]
+[civinini : librettist = "Civinini, Guelfo"
+                       = "Guelfo Civinini" / normal]
+   {civinini, born, [[1873 (1 Aug)]]}
+   {civinini, died, [[1954 (10 Apr)]]}
+[colautti : librettist = "Colautti, Arturo"
+                       = "Arturo Colautti" / normal]
+   {colautti, born, [[1851]]}
+   {colautti, died, [[1914 (9 Nov)]]}
+[da-ponte : librettist = "Da Ponte, Lorenzo"
+                       = "Lorenzo Da Ponte" / normal]
+[dannunzio : librettist = "D'Annunzio, Gabriele"; "Annunzio, Gabriele"
+                        = "Gabriele D'Annunzio" / normal]
+   {dannunzio, born, [[1863 (12 Mar)]]}
+   {dannunzio, died, [[1938 (1 Mar)]]}
+[daspuro : librettist = "Daspuro, Nicola"
+                      = "Daspuro, P." / nom-de-plume
+                      = "Nicola Daspuro" / normal
+                      = "P. Daspuro" / normal]
+   {daspuro, born, [[1853 (19 Jan)]]}
+   {daspuro, died, [[1941 (13 Dec)]]}
+[dormeville : librettist = "d'Ormeville, Carlo"; "Ormeville, Carlo"
+                         = "Carlo d'Ormeville" / normal]
+   {dormeville, born, [[1840 (24 Apr)]]}
+   {dormeville, died, [[1924 (29 Jul)]]}
+[duveyrier : librettist = "Duveyrier, Charles"
+                        = "Charles Duveyrier" / normal]
+[fontana : librettist playwright = "Fontana, Ferdinando"
+                                 = "Ferdinando Fontana" / normal]
+   {fontana, born, [[1850 (30 Jan)]]}
+   {fontana, died, [[1919 (12 May)]]}
+[forzano : librettist producer = "Forzano, Giovacchino"
+                               = "Giovacchino Forzano" / normal]
+   {forzano, born, [[1884 (19 Nov)]]}
+   {forzano, died, [[1970 (18 Oct)]]}
+[ghislanzoni : librettist = "Ghislanzoni, Antonio"
+                          = "Antonio Ghislanzoni" / normal]
+   {ghislanzoni, born, [[1824 (25 Nov)]]}
+   {ghislanzoni, died, [[1893 (16 Jul)]]}
+[giachetti : librettist = "Giachetti, G."
+                        = "G. Giachetti" / normal]
+[giacosa : librettist playwright = "Giacosa, Giuseppe"
+                                 = "Giuseppe Giacosa" / normal]
+   {giacosa, born, [[1847 (21 Oct)]]}
+   {giacosa, died, [[1906 (1 Sep)]]}
+[golisciani : librettist = "Golisciani, Enrico"
+                         = "Enrico Golisciani" / normal]
+   {golisciani, born, [[1848]]}
+   {golisciani, died, [[1919]]}
+[guidi : librettist = "Guidi, F."
+                    = "F. Guidi" / normal]
+[halevy : librettist = "Halévy, Ludovic"
+                     = "Ludovic Halévy" / normal]
+[illica : librettist playwright = "Illica, Luigi"
+                                = "Luigi Illica" / normal]
+   {illica, bio, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/librettist/illica.html"}
+   {illica, born, [[1857 (9 May)]]}
+   {illica, died, [[1919 (16 Dec)]]}
+[locle : librettist = "Locle, Camille du"
+                    = "Camille du Locle" / normal]
+   {locle, born, [[1832 (16 Jul)]]}
+   {locle, died, [[1903 (9 Dec)]]}
+[maffei : librettist = "Maffei, Andrea"
+                     = "Andrea Maffei" / normal]
+   {maffei, born, [[1798 (19 Apr)]]}
+   {maffei, died, [[1885 (27 Nov)]]}
+[marenco : librettist = "Marenco, Leopoldo"
+                      = "Leopoldo Marenco" / normal]
+[meilhac : librettist = "Meilhac, Henri"
+                      = "Henri Meilhac" / normal]
+[menasci : librettist = "Menasci, Guido"
+                      = "Guido Menasci" / normal]
+   {menasci, born, [[1867 (24 Mar)]]}
+   {menasci, died, [[1925 (27 Dec)]]}
+[mery : librettist = "Méry, Joseph"
+                   = "Joseph Méry" / normal]
+   {mery, born, [[1797 (21 Jan)]]}
+   {mery, died, [[1865 (17 Jun)]]}
+[oliva : librettist = "Oliva, Domenico"
+                    = "Domenico Oliva" / normal]
+[piave : librettist = "Piave, Francesco Maria"
+                    = "Francesco Maria Piave" / normal]
+   {piave, bio, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/librettist/piave.html"}
+   {piave, born, [[1810 (18 May)]]}
+   {piave, died, [[1876 (5 Mar)]]}
+[piazza : librettist = "Piazza, Antonio"
+                     = "Antonio Piazza" / normal]
+   {piazza, born, [[1742]]}
+   {piazza, died, [[1825]]}
+[praga : librettist = "Praga, Marco"
+                    = "Marco Praga" / normal]
+   {praga, born, [[1862 (20 Jun)]]}
+   {praga, died, [[1929 (31 Jan)]]}
+[ricordi : librettist = "Ricordi, Giulio"
+                      = "Giulio Ricordi" / normal]
+   {ricordi, born, [[1840 (19 Dec)]]}
+   {ricordi, died, [[1912 (6 Jun)]]}
+[romani : librettist = "Romani, Felice"
+                     = "Felice Romani" / normal]
+   {romani, born, [[1788 (31 Jan)]]}
+   {romani, died, [[1865 (28 Jan)]]}
+[royer : librettist = "Royer, Alphonse"
+                    = "Alphonse Royer" / normal]
+   {royer, born, [[1803]]}
+   {royer, died, [[1875 (11 Apr)]]}
+[scribe : librettist = "Scribe, Eugène"
+                     = "Eugène Scribe" / normal]
+   {scribe, born, [[1791 (24 Dec)]]}
+   {scribe, died, [[1861 (20 Feb)]]}
+[simoni : librettist = "Simoni, Renato"
+                     = "Renato Simoni" / normal]
+   {simoni, born, [[1875 (5 Sep)]]}
+   {simoni, died, [[1952 (5 Jul)]]}
+[solera : librettist = "Solera, Temistocle"
+                     = "Temistocle Solera" / normal]
+   {solera, bio, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/librettist/solera.html"}
+   {solera, born, [[1815 (25 Dec)]]}
+   {solera, died, [[1878 (21 Apr)]]}
+[somma : librettist = "Somma, Antonio"
+                    = "Antonio Somma" / normal]
+   {somma, born, [[1809 (28 Aug)]]}
+   {somma, died, [[1864 (8 Aug)]]}
+[sterbini : librettist = "Sterbini, Cesare"
+                       = "Cesare Sterbini" / normal]
+[targioni-tozzetti : librettist = "Targioni-Tozzetti, Giovanni"
+                                = "Giovanni Targioni-Tozzetti" / normal]
+   {targioni-tozzetti, bio, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/librettist/targioni-tozzetti.html"}
+   {targioni-tozzetti, born, [[1863 (17 Mar)]]}
+   {targioni-tozzetti, died, [[1934 (30 May)]]}
+[vaez : librettist = "Vaëz, Gustave"
+                   = "Gustave Vaëz" / normal]
+   {vaez, born, [[1812 (6 Dec)]]}
+   {vaez, died, [[1862 (12 Mar)]]}
+[zanardini : librettist = "Zanardini, Angelo"
+                        = "Angelo Zanardini" / normal]
+   {zanardini, born, [[1812 (5 Dec)]]}
+   {zanardini, died, [[1893 (7 Mar)]]}
+[zangarini : librettist = "Zangarini, Carlo"
+                        = "Carlo Zangarini" / normal]
+   {zangarini, born, [[1874 (9 Dec)]]}
+   {zangarini, died, [[1943 (19 Jul)]]}
+
+/* -- TT: location -- */
+[offline : location = "offline"
+    @"http://psi.ontopia.net/opera/#offline"]
+[online : location = "online"
+    @"http://psi.ontopia.net/opera/#online"]
+
+/* -- TT: nameform -- */
+[normal : nameform = "normal form"
+    @"http://psi.ontopia.net/opera/#normal"]
+[plural : nameform = "plural name"
+    @"http://psi.ontopia.net/xtm/basename/plural"]
+
+/* -- TT: nametype -- */
+[altname : nametype = "alternative name"
+    @"http://psi.ontopia.net/opera/#altname"]
+[fullname : nametype = "full name"
+    @"http://psi.ontopia.net/opera/#fullname"]
+[nom-de-guerre : nametype = "nom de guerre"
+    @"http://psi.ontopia.net/opera/#nom-de-guerre"]
+[nom-de-plume : nametype = "nom de plume"
+    @"http://psi.ontopia.net/opera/#nom-de-plume"]
+   {nom-de-plume, guidelines, "file:/C|/ontopia/topicmaps/opera/occurs/nom-de-plume.htm"}
+   {nom-de-plume, guidelines, "http://www.ontopia.net/topicmaps/examples/opera/occurs/nom-de-plume.htm"}
+[original-name : nametype = "original name"
+    @"http://psi.ontopia.net/opera/#original-name"]
+[realname : nametype = "real name"
+    @"http://psi.ontopia.net/opera/#realname"]
+[shortname : nametype = "short name"
+    @"http://psi.ontopia.net/opera/#shortname"]
+
+/* -- TT: novel -- */
+[geyer-wally : novel = "Die Geyer-Wally"; "Geyer-Wally"]
+[i-promessi-sposi-src : novel = "I promessi sposi (novel)"
+                              = "I promessi sposi" / novel]
+[la-dame-aux-camelias : novel = "La Dame aux Camélias"; "Dame aux Camélias"]
+[lami-fritz : novel = "L'Ami Fritz"; "Ami Fritz"]
+[les-willis : novel = "Les willis"; "Willis"]
+[manon-lescaut-src : novel = "Manon Lescaut (novel)"
+                           = "Manon Lescaut" / novel]
+[scenes-de-la-vie-de-boheme : novel = "Scènes de la vie de Bohème"]
+[two-little-wooden-shoes : novel = "Two Little Wooden Shoes"]
+
+/* -- TT: novella -- */
+[novella-by-salvatore-di-giacomo : novella = "[novella by Salvatore Di Giacomo]"]
+
+/* -- TT: opera -- */
+[adriana-lecouvreur : opera = "Adriana Lecouvreur"]
+   {adriana-lecouvreur, premiere-date, [[1902 (6 Nov)]]}
+[aida : opera = "Aida"]
+   {aida, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/a_syn.php3.htm"}
+   {aida, az-synopsis, "http://www.azopera.com/98season/a_syn.php3"}
+   {aida, homepage, "http://opera.stanford.edu/opera/Verdi/Aida/main.html"}
+   {aida, libretto, "http://php.indiana.edu/~lneff/libretti/aida.html"}
+   {aida, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Aida.htm"}
+   {aida, premiere-date, [[1871 (24 Dec)]]}
+   {aida, synopsis, "http://www.metopera.org/synopses/aida.html"}
+[alzira : opera = "Alzira"]
+   {alzira, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Alzira.htm"}
+   {alzira, premiere-date, [[1845 (12 Aug)]]}
+[amica : opera = "Amica"]
+   {amica, libretto, "http://www.mascagni.org/works/amica/libretto.html"}
+[andrea-chenier : opera = "Andrea Chénier"]
+   {andrea-chenier, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/ac_syn.php3.htm"}
+   {andrea-chenier, az-synopsis, "http://www.azopera.com/98season/ac_syn.php3"}
+   {andrea-chenier, homepage, "http://opera.stanford.edu/opera/Giordano/AndreaChenier/main.html"}
+   {andrea-chenier, premiere-date, [[1896 (28 Mar)]]}
+   {andrea-chenier, synopsis, "http://www.metopera.org/synopses/chenier.html"}
+[attila : opera = "Attila"]
+   {attila, libretto, "http://php.indiana.edu/~lneff/libretti/attila0.htm"}
+   {attila, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Attila.htm"}
+   {attila, premiere-date, [[1846 (17 Mar)]]}
+[bertrando-dal-bormio : opera = "Bertrando dal Bormio"]
+[betrothal-in-a-monastery : opera = "Betrothal in a Monastery"]
+[carmen : opera = "Carmen"]
+[cavalleria-rusticana : opera = "Cavalleria Rusticana"]
+   {cavalleria-rusticana, homepage, "http://opera.stanford.edu/opera/Mascagni/Cavalleria/main.html"}
+   {cavalleria-rusticana, libretto, "http://opera.stanford.edu/opera/Mascagni/Cavalleria/libretto.html"}
+   {cavalleria-rusticana, premiere-date, [[1890 (17 May)]]}
+   {cavalleria-rusticana, synopsis, "http://www.metopera.org/synopses/cavpag.html"}
+   {cavalleria-rusticana, synopsis, "http://www.opera.it/Operaweb/it/cavalleriarusticana/trama.html"}
+[chatterton : opera = "Chatterton"]
+   {chatterton, premiere-date, [[1896]]}
+[conchita : opera = "Conchita"]
+   {conchita, premiere-date, [[1911 (14 Oct)]]}
+[dejanice : opera = "Dejanice"]
+   {dejanice, premiere-date, [[1883]]}
+[der-roland-von-berlin : opera = "Der Roland von Berlin"; "Roland von Berlin"]
+   {der-roland-von-berlin, premiere-date, [[1904]]}
+[don-carlo : opera = "Don Carlo"
+                   = "Don Carlos" / english]
+   {don-carlo, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/dc_syn.php3.htm"}
+   {don-carlo, az-synopsis, "http://www.azopera.com/00season/dc_syn.php3"}
+   {don-carlo, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Don_Carlo.htm"}
+   {don-carlo, premiere-date, [[1867 (11 Mar)]]}
+   {don-carlo, synopsis, "http://www.metopera.org/synopses/carlo.html"}
+[don-giovanni : opera = "Don Giovanni"]
+[edgar : opera = "Edgar"]
+   {edgar, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/edgar-score1.gif"}
+   {edgar, premiere-date, [[1889 (21 Apr)]]}
+[edmea : opera = "Edmea"]
+   {edmea, premiere-date, [[1886]]}
+[epido-re : opera = "Epido Re"]
+   {epido-re, premiere-date, [[1920]]}
+[ernani : opera = "Ernani"]
+   {ernani, homepage, "http://opera.stanford.edu/opera/Verdi/Ernani/main.html"}
+   {ernani, libretto, "http://opera.stanford.edu/opera/Verdi/Ernani/libretto.html"}
+   {ernani, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Ernani.htm"}
+   {ernani, premiere-date, [[1844 (9 Mar)]]}
+[falstaff : opera = "Falstaff"]
+   {falstaff, homepage, "http://opera.stanford.edu/opera/Verdi/Falstaff/main.html"}
+   {falstaff, libretto, "http://opera.stanford.edu/opera/Verdi/Falstaff/libretto.html"}
+   {falstaff, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Falstaff.htm"}
+   {falstaff, premiere-date, [[1893 (9 Feb)]]}
+[fedora : opera = "Fedora"]
+   {fedora, premiere-date, [[1898 (17 Nov)]]}
+   {fedora, synopsis, "http://www.metopera.org/synopses/fedora.html"}
+[fidelio : opera = "Fidelio"]
+[francesca-da-rimini : opera = "Francesca da Rimini"]
+   {francesca-da-rimini, premiere-date, [[1914 (19 Feb)]]}
+[gianni-schicchi : opera = "Gianni Schicchi"]
+   {gianni-schicchi, homepage, "http://opera.stanford.edu/opera/Puccini/GianniSchicchi/main.html"}
+   {gianni-schicchi, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/gianni-schicchi-poster1.jpg"}
+   {gianni-schicchi, libretto, "http://opera.stanford.edu/opera/Puccini/GianniSchicchi/libretto.html"}
+   {gianni-schicchi, premiere-date, [[1918 (14 Dec)]]}
+[gina : opera = "Gina"]
+   {gina, premiere-date, [[1889 (9 Feb)]]}
+[giovanna-darco : opera = "Giovanna d'Arco"
+                        = "Joan of Arc" / english]
+   {giovanna-darco, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Giovanna_Arco.htm"}
+   {giovanna-darco, premiere-date, [[1845 (15 Feb)]]}
+[giuliano : opera = "Giuliano"]
+   {giuliano, premiere-date, [[1928 (4 Feb)]]}
+[giulietta-e-romeo : opera = "Giulietta e Romeo"]
+   {giulietta-e-romeo, premiere-date, [[1922 (14 Feb)]]}
+[gloria : opera = "Gloria"]
+   {gloria, homepage, "http://opera.stanford.edu/opera/Cilea/Gloria/main.html"}
+[goffredo-mameli : opera = "Goffredo Mameli"]
+   {goffredo-mameli, premiere-date, [[1916]]}
+[guglielmo-ratcliff : opera = "Guglielmo Ratcliff"]
+   {guglielmo-ratcliff, libretto, "http://udel.edu/~dovidl/ratcliff.html"}
+   {guglielmo-ratcliff, premiere-date, [[1895 (16 Feb)]]}
+[i-cavalieri-di-ekebu : opera = "I Cavalieri di Ekebù"; "Cavalieri di Ekebù"]
+   {i-cavalieri-di-ekebu, premiere-date, [[1925 (7 Mar)]]}
+[i-due-foscari : opera = "I due foscari"; "Due foscari"]
+   {i-due-foscari, libretto, "http://php.indiana.edu/~lneff/libretti/foscari1.htm"}
+   {i-due-foscari, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Due_Foscari.htm"}
+   {i-due-foscari, premiere-date, [[1844 (3 Nov)]]}
+[i-lituani : opera = "I Lituani"; "Lituani"]
+   {i-lituani, premiere-date, [[1874 (6 Mar)]]}
+[i-lombardi : opera = "I Lombardi"; "Lombardi"
+                    = "I Lombardi alla prima Crociata"; "Lombardi alla prima Crociata" / fullname]
+   {i-lombardi, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Lombardi_alla_crociata.htm"}
+   {i-lombardi, premiere-date, [[1843 (11 Feb)]]}
+[i-masnadieri : opera = "I masnadieri"; "Masnadieri"
+                      = "The Robbers"; "Robbers" / english]
+   {i-masnadieri, homepage, "http://opera.stanford.edu/opera/Verdi/Masnadieri/main.html"}
+   {i-masnadieri, libretto, "http://opera.stanford.edu/opera/Verdi/Masnadieri/libretto.html"}
+   {i-masnadieri, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Masnadieri.htm"}
+   {i-masnadieri, premiere-date, [[1847 (22 Jul)]]}
+[i-medici : opera = "I Medici"; "Medici"]
+   {i-medici, premiere-date, [[1893]]}
+[i-mori-di-valenza : opera = "I mori di Valenza"]
+   {i-mori-di-valenza, premiere-date, [[1914 (17 Mar)]]}
+[i-promessi-sposi : opera = "I promessi sposi"; "Promessi sposi"]
+   {i-promessi-sposi, premiere-date, [[1856 (30 Aug)]]}
+   {i-promessi-sposi, premiere-date, [[1872 (4 Dec)]]}
+[i-rantzau : opera = "I Rantzau"; "Rantzau"]
+   {i-rantzau, libretto, "http://www.mascagni.org/works/rantzau/excerpts.html"}
+   {i-rantzau, premiere-date, [[1892 (10 Nov)]]}
+[i-vespri-siciliani : opera = "I Vespri siciliani"; "Vespri siciliani"
+                            = "The Sicilian Vespers"; "Sicilian Vespers" / english
+                            = "Les Vêpres siciliennes"; "Vêpres siciliennes" / french]
+   {i-vespri-siciliani, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Vespri_siciliani.htm"}
+   {i-vespri-siciliani, premiere-date, [[1855 (13 Jun)]]}
+[il-bacio : opera = "Il Bacio"; "Bacio"]
+   {il-bacio, premiere-date, [[1954 (10 Mar)]]}
+[il-barbiere-di-siviglia : opera = "Il barbiere di Siviglia"; "Barbiere di Siviglia"
+                                 = "The Barber of Sevilla"; "Barber of Sevilla" / english]
+[il-corsaro : opera = "Il corsaro"; "Corsaro"]
+   {il-corsaro, libretto, "http://php.indiana.edu/~lneff/libretti/corsaro1.htm"}
+   {il-corsaro, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Corsaro.htm"}
+   {il-corsaro, premiere-date, [[1848 (25 Oct)]]}
+[il-figliuol-prodigo : opera = "Il figliuol prodigo"]
+   {il-figliuol-prodigo, premiere-date, [[1880 (26 Dec)]]}
+[il-grillo-del-focolare : opera = "Il grillo del focolare"; "grillo del focolare"]
+   {il-grillo-del-focolare, premiere-date, [[1908 (28 Nov)]]}
+[il-matrimonio-selvaggio : opera = "Il matrimonio selvaggio"; "matrimonio selvaggio"
+                                 = "The Wild Marriage"; "Wild Marriage" / english]
+[il-parlatore-eterno : opera = "Il parlatore eterno"]
+   {il-parlatore-eterno, premiere-date, [[1863 (18 Oct)]]}
+[il-piccolo-marat : opera = "Il piccolo Marat"; "Piccolo Marat"]
+   {il-piccolo-marat, premiere-date, [[1921 (2 May)]]}
+[il-re : opera = "Il re"]
+   {il-re, premiere-date, [[1929]]}
+[il-sindaco-babbeo : opera = "Il sindaco babbeo"]
+   {il-sindaco-babbeo, premiere-date, [[1851 (Mar)]]}
+[il-tabarro : opera = "Il Tabarro"; "Tabarro"
+                    = "The Cloak"; "Cloak" / english]
+   {il-tabarro, homepage, "http://opera.stanford.edu/opera/Puccini/IlTabarro/main.html"}
+   {il-tabarro, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/il-tabarro-poster1.jpg"}
+   {il-tabarro, poster, "http://www.r-ds.com/opera/pucciniana/pictures/tabarro_poster.htm"}
+   {il-tabarro, premiere-date, [[1918 (14 Dec)]]}
+[il-trittico : opera = "Il Trittico"; "Trittico"]
+   {il-trittico, homepage, "http://opera.stanford.edu/opera/Puccini/Trittico/main.html"}
+   {il-trittico, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/il-trittico-score1.gif"}
+[il-trovatore : opera = "Il trovatore"; "Trovatore"
+                      = "The Troubadour"; "Troubadour" / english]
+   {il-trovatore, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/it_syn.php3.htm"}
+   {il-trovatore, az-synopsis, "http://www.azopera.com/95season/it_syn.php3"}
+   {il-trovatore, homepage, "http://opera.stanford.edu/opera/Verdi/Trovatore/main.html"}
+   {il-trovatore, libretto, "http://opera.stanford.edu/opera/Verdi/Trovatore/libretto.html"}
+   {il-trovatore, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Trovatore.htm"}
+   {il-trovatore, premiere-date, [[1853 (19 Jan)]]}
+   {il-trovatore, synopsis, "http://www.metopera.org/synopses/trovator.html"}
+   {il-trovatore, synopsis, "http://www.opera.it/Operaweb/it/trovatore/trama.html"}
+[il-voto : opera = "Il voto"
+                 = "Mala vita" / original-name]
+   {il-voto, premiere-date, [[1892]]}
+   {il-voto, premiere-date, [[1897]]}
+[iris : opera = "Iris"]
+   {iris, libretto, "http://www.mascagni.org/works/iris/libretto.html"}
+   {iris, premiere-date, [[1898 (22 Nov)]]}
+[isabeau : opera = "Isabeau"]
+   {isabeau, libretto, "http://www.mascagni.org/works/isabeau/excerpts.html"}
+   {isabeau, premiere-date, [[1911 (2 Jun)]]}
+[jerusalem-o : opera = "Jérusalem"]
+[la-battaglia-di-legnano : opera = "La battaglia di Legnano"; "Battaglia di Legnano"
+                                 = "L'assiedo di Arlem"; "Assiedo di Arlem" / altname
+                                 = "La sconfitta degli austriachi"; "Sconfitta degli austriachi" / altname]
+   {la-battaglia-di-legnano, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Battaglia_di_Legnano.htm"}
+   {la-battaglia-di-legnano, premiere-date, [[1849 (27 Jan)]]}
+[la-boheme : opera = "La Bohème (Puccini)"; "Boheme, Puccini"]
+   {la-boheme, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/lb_syn.php3.htm"}
+   {la-boheme, az-synopsis, "http://www.azopera.com/98season/lb_syn.php3"}
+   {la-boheme, homepage, "http://opera.stanford.edu/opera/Puccini/LaBoheme/main.html"}
+   {la-boheme, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/la-boheme-poster1.jpg"}
+   {la-boheme, libretto, "http://opera.stanford.edu/opera/Puccini/LaBoheme/libretto.html"}
+   {la-boheme, poster, "http://www.r-ds.com/opera/pucciniana/pictures/boheme-score.htm"}
+   {la-boheme, poster, "http://www.r-ds.com/opera/pucciniana/pictures/boheme_poster.htm"}
+   {la-boheme, premiere-date, [[1896 (1 Feb)]]}
+   {la-boheme, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/la-boheme.wav"}
+   {la-boheme, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/la-boheme.wav"}
+   {la-boheme, synopsis, "http://www.metopera.org/synopses/boheme.html"}
+[la-boheme2 : opera = "La Bohème (Leoncavallo)"; "Boheme, Leoncavallo"
+                    = "La Bohème"; "Boheme, Leoncavallo" / leoncavallo]
+   {la-boheme2, premiere-date, [[1897 (6 May)]]}
+[la-cena-delle-beffe : opera = "La cena delle beffe"]
+   {la-cena-delle-beffe, premiere-date, [[1924]]}
+[la-coppa-del-re : opera = "La coppa del re"; "coppa del re"]
+   {la-coppa-del-re, premiere-date, [[1906 or earlier]]}
+[la-falce : opera = "La Falce"; "Falce"]
+   {la-falce, premiere-date, [[1875]]}
+[la-fanciulla-del-west : opera = "La fanciulla del West"; "Fanciulla del West"
+                               = "The Girl of the Golden West"; "Girl of the Golden West" / english]
+   {la-fanciulla-del-west, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/ggw_syn.php3.htm"}
+   {la-fanciulla-del-west, az-synopsis, "http://www.azopera.com/00season/ggw_syn.php3"}
+   {la-fanciulla-del-west, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/la-fanciulla-del-west-poster1.jpg"}
+   {la-fanciulla-del-west, poster, "http://www.r-ds.com/opera/pucciniana/pictures/fanciulla_poster.htm"}
+   {la-fanciulla-del-west, premiere-date, [[1910 (10 Dec)]]}
+[la-farsa-amorosa : opera = "La farsa amorosa"; "farsa amorosa"]
+   {la-farsa-amorosa, premiere-date, [[1933 (22 Feb)]]}
+[la-forza-del-destino : opera = "La forza del destino"; "Forza del destino"]
+   {la-forza-del-destino, homepage, "http://opera.stanford.edu/opera/Verdi/Forza/main.html"}
+   {la-forza-del-destino, libretto, "http://php.indiana.edu/~lneff/libretti/forz0.html"}
+   {la-forza-del-destino, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Forza_destino.htm"}
+   {la-forza-del-destino, premiere-date, [[1862 (10 Nov)]]}
+   {la-forza-del-destino, synopsis, "http://www.metopera.org/synopses/forza.html"}
+[la-gioconda : opera = "La Gioconda"; "Gioconda, La"]
+   {la-gioconda, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/lg_syn.php3.htm"}
+   {la-gioconda, az-synopsis, "http://www.azopera.com/97season/lg_syn.php3"}
+   {la-gioconda, libretto, "http://www.karadar.it/Librettos/ponchielli_GIOCONDA.html"}
+   {la-gioconda, premiere-date, [[1876 (8 Apr)]]}
+   {la-gioconda, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/la-gioconda.wav"}
+   {la-gioconda, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/la-gioconda.wav"}
+[la-rondine : opera = "La rondine"; "Rondine"
+                    = "The Swallow"; "Swallow" / english]
+   {la-rondine, homepage, "http://opera.stanford.edu/opera/Puccini/LaRondine/main.html"}
+   {la-rondine, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/la-rondine-poster1.jpg"}
+   {la-rondine, premiere-date, [[1917 (27 Mar)]]}
+[la-savoiarda : opera = "Lina"
+                      = "La savoiarda" / original-name]
+   {la-savoiarda, premiere-date, [[1861 (19 Jan)]]}
+   {la-savoiarda, premiere-date, [[1877 (17 Nov)]]}
+[la-tilda : opera = "La Tilda"; "Tilda"]
+   {la-tilda, premiere-date, [[1892 (7 Apr)]]}
+[la-traviata : opera = "La traviata"; "Traviata"]
+   {la-traviata, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/lt_syn.php3.htm"}
+   {la-traviata, az-synopsis, "http://www.azopera.com/96season/lt_syn.php3"}
+   {la-traviata, homepage, "http://opera.stanford.edu/opera/Verdi/Traviata/main.html"}
+   {la-traviata, libretto, "http://php.indiana.edu/~lneff/libretti/traviata.html"}
+   {la-traviata, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Traviata.htm"}
+   {la-traviata, premiere-date, [[1853 (6 Mar)]]}
+   {la-traviata, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/la-traviata.wav"}
+   {la-traviata, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/la-traviata.wav"}
+   {la-traviata, synopsis, "http://www.metopera.org/synopses/traviata.html"}
+   {la-traviata, synopsis, "http://www.opera.it/Operaweb/it/traviata/trama.html"}
+[la-vergine-di-kermo : opera = "La vergine di Kermo"]
+   {la-vergine-di-kermo, premiere-date, [[1870 (22 Feb)]]}
+[la-via-della-finestra : opera = "La via della finestra"; "via della finestra"]
+   {la-via-della-finestra, premiere-date, [[1919 (27 Jul)]]}
+[la-wally : opera = "La Wally"; "Wally"]
+   {la-wally, libretto, "http://php.indiana.edu/~lneff/libretti/wally.htm"}
+   {la-wally, premiere-date, [[1892 (20 Jan)]]}
+[lamico-fritz : opera = "L'amico Fritz"; "Amico Fritz"]
+   {lamico-fritz, libretto, "http://www.mascagni.org/works/fritz/excerpts.html"}
+   {lamico-fritz, premiere-date, [[1891 (1 Nov)]]}
+[larlesiana : opera = "L'Arlesiana"; "Arlesiana"
+                    = "The Girl from Arles"; "Girl from Arles" / english]
+   {larlesiana, homepage, "http://opera.stanford.edu/opera/Cilea/LArlesiana/main.html"}
+   {larlesiana, premiere-date, [[1897 (27 Nov)]]}
+[le-maschere : opera = "Le maschere"; "Maschere"
+                     = "The Masks"; "Masks" / english]
+   {le-maschere, libretto, "http://www.mascagni.org/works/maschere/excerpts.html"}
+   {le-maschere, premiere-date, [[1901 (17 Jan)]]}
+[le-nozze-di-figaro : opera = "Le nozze di Figaro"; "Nozze di Figaro"
+                            = "The Marriage of Figaro"; "Marriage of Figaro" / english]
+[le-villi : opera = "Le Villi"; "Villi"]
+   {le-villi, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/le-villi-cd1.jpg"}
+   {le-villi, libretto, "http://opera.stanford.edu/opera/Puccini/LeVilli/libretto.html"}
+   {le-villi, premiere-date, [[1884 (31 May)]]}
+[lodoletta : opera = "Lodoletta"]
+   {lodoletta, libretto, "http://www.mascagni.org/works/lodoletta/libretto.html"}
+   {lodoletta, premiere-date, [[1917 (30 Apr)]]}
+[loreley : opera = "Loreley"
+                 = "Elda" / original-name]
+   {loreley, premiere-date, [[1880]]}
+   {loreley, premiere-date, [[1890 (16 Feb)]]}
+[luccellino-doro : opera = "L'uccellino d'oro"; "uccellino d'oro"]
+   {luccellino-doro, premiere-date, [[1907]]}
+[luisa-miller : opera = "Luisa Miller"]
+   {luisa-miller, homepage, "http://opera.stanford.edu/opera/Verdi/LuisaMiller/main.html"}
+   {luisa-miller, libretto, "http://php.indiana.edu/~lneff/libretti/Luisa0.html"}
+   {luisa-miller, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Luisa_Miller.htm"}
+   {luisa-miller, premiere-date, [[1849 (8 Dec)]]}
+[macbeth1 : opera = "Macbeth"]
+   {macbeth1, libretto, "http://php.indiana.edu/~lneff/libretti/macbeth.html"}
+   {macbeth1, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Macbeth.htm"}
+   {macbeth1, premiere-date, [[1847 (14 Mar)]]}
+   {macbeth1, synopsis, "http://www.metopera.org/synopses/macbeth.html"}
+   {macbeth1, synopsis, "http://www.orc.soton.ac.uk/ngb/macbeth.html"}
+[madama-butterfly : opera = "Madame Butterfly"]
+   {madama-butterfly, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/madama-butterfly.htm"}
+   {madama-butterfly, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/madama-butterfly.htm"}
+   {madama-butterfly, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/mb_syn.php3.htm"}
+   {madama-butterfly, az-synopsis, "http://www.azopera.com/95season/mb_syn.php3"}
+   {madama-butterfly, homepage, "http://opera.stanford.edu/opera/Puccini/Butterfly/main.html"}
+   {madama-butterfly, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/madama-butterfly-poster1.jpg"}
+   {madama-butterfly, libretto, "http://home.earthlink.net/~markdlew/lib/butterfly/index.htm"}
+   {madama-butterfly, poster, "http://www.r-ds.com/opera/pucciniana/pictures/butterfly-score.htm"}
+   {madama-butterfly, poster, "http://www.r-ds.com/opera/pucciniana/pictures/butterfly_poster.htm"}
+   {madama-butterfly, premiere-date, [[1904 (17 Feb)]]}
+   {madama-butterfly, synopsis, "http://www.metopera.org/synopses/madama.html"}
+[madame-sans-gene : opera = "Madame Sans-Gêne"]
+   {madame-sans-gene, premiere-date, [[1915 (25 Jan)]]}
+[maia : opera = "Maià"; "Maia"]
+   {maia, premiere-date, [[1910]]}
+[manon-lescaut : opera = "Manon Lescaut"]
+   {manon-lescaut, gallery, "file:/C|/ontopia/topicmaps/opera/occurs/background-manon_lescaut.htm"}
+   {manon-lescaut, gallery, "http://www.ontopia.net/topicmaps/examples/opera/occurs/background-manon_lescaut.htm"}
+   {manon-lescaut, homepage, "http://www.r-ds.com/opera/pucciniana/manon_lescaut.htm"}
+   {manon-lescaut, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/manon-lescaut-score1.jpg"}
+   {manon-lescaut, poster, "http://www.r-ds.com/opera/pucciniana/pictures/manonl_poster.htm"}
+   {manon-lescaut, premiere-date, [[1893 (1 Feb)]]}
+   {manon-lescaut, synopsis, "http://www.opera.it/Operaweb/it/manonlescaut/trama.html"}
+[marcella : opera = "Marcella"]
+   {marcella, premiere-date, [[1907]]}
+[marina : opera = "Marina"]
+[marion-delorme : opera = "Marion Delorme"]
+   {marion-delorme, premiere-date, [[1885 (17 Mar)]]}
+[mefistofele : opera = "Mefistofele"]
+   {mefistofele, desc, [[Based on both parts of Goethe's Faust. In naming his setting of Goethe's poem after the devil rather than after its human protagonist. Boito was signalling that is primary concern was the metaphysics of the 'bargain between God and the Devil'.]]}
+   {mefistofele, homepage, "http://opera.stanford.edu/opera/Boito/Mefistofele/main.html"}
+   {mefistofele, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/boito/mefistofele-poster1.jpg"}
+   {mefistofele, libretto, "http://php.indiana.edu/~lneff/libretti/MefPro.html"}
+   {mefistofele, synopsis, "http://www.metopera.org/synopses/mefisto.html"}
+[melenis : opera = "Melenis"]
+   {melenis, premiere-date, [[1912 (13 Nov)]]}
+[mese-mariano : opera = "Mese Mariano"]
+   {mese-mariano, premiere-date, [[1910]]}
+[nabucco : opera = "Nabucco"
+                 = "Nabucodonosor" / altname
+                 = "Nebuchadnezzar" / altname]
+   {nabucco, homepage, "http://opera.stanford.edu/opera/Verdi/Nabucco/main.html"}
+   {nabucco, libretto, "http://opera.stanford.edu/opera/Verdi/Nabucco/libretto.html"}
+   {nabucco, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Nabucco.htm"}
+   {nabucco, premiere-date, [[1842 (9 Mar)]]}
+   {nabucco, synopsis, "http://www.metopera.org/synopses/nabucco.html"}
+   {nabucco, synopsis, "http://www.opera.it/Operaweb/it/nabucco/trama.html"}
+[nerone : opera = "Nerone (Boito)"
+                = "Nerone" / boito]
+   {nerone, desc, [[Though Verdi urged Boito to renew his musical career, Boite failed to finish Nerone, an opera he begun in 1862. Toscanini saw to its completion and conducted the first performance in 1924.]]}
+   {nerone, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/boito/nerone-score1.jpg"}
+[nerone2 : opera = "Nerone (Mascagni)"
+                 = "Nerone" / mascagni]
+   {nerone2, libretto, "http://www.mascagni.org/works/nerone/excerpts.html"}
+   {nerone2, premiere-date, [[1935 (16 Jan)]]}
+[oberto : opera = "Oberto, conte di San Bonifacio"]
+   {oberto, libretto, "http://php.indiana.edu/~lneff/libretti/oberto1.htm"}
+   {oberto, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Oberto.htm"}
+   {oberto, premiere-date, [[1839 (17 Nov)]]}
+[oedipus-rex : opera = "Oedipus Rex"]
+[otello : opera = "Otello"
+                = "Othello" / english]
+   {otello, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/o_syn.php3.htm"}
+   {otello, az-synopsis, "http://www.azopera.com/97season/o_syn.php3"}
+   {otello, homepage, "http://opera.stanford.edu/opera/Verdi/Otello/main.html"}
+   {otello, libretto, "http://php.indiana.edu/~lneff/libretti/verotel0.html"}
+   {otello, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Otello.htm"}
+   {otello, premiere-date, [[1887 (5 Feb)]]}
+   {otello, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/otello.wav"}
+   {otello, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/otello.wav"}
+   {otello, synopsis, "http://www.metopera.org/synopses/otello.html"}
+   {otello, synopsis, "http://www.opera.it/Operaweb/it/otello/trama.html"}
+[pagliacci : opera = "Pagliacci"]
+   {pagliacci, homepage, "http://opera.stanford.edu/opera/Leoncavallo/Pagliacci/main.html"}
+   {pagliacci, libretto, "http://home.earthlink.net/~markdlew/lib/pagliacci/index.htm"}
+   {pagliacci, premiere-date, [[1892 (21 May)]]}
+   {pagliacci, synopsis, "http://www.metopera.org/synopses/cavpag.html"}
+[parisina : opera = "Parisina"]
+   {parisina, libretto, "http://www.mascagni.org/works/parisina/libretto.html"}
+   {parisina, premiere-date, [[1913 (15 Dec)]]}
+[pinotta : opera = "Pinotta"]
+   {pinotta, premiere-date, [[1932 (23 Mar)]]}
+[regina-diaz : opera = "Regina Diaz"]
+   {regina-diaz, premiere-date, [[1894]]}
+[rigoletto : opera = "Rigoletto"]
+   {rigoletto, homepage, "http://opera.stanford.edu/opera/Verdi/Rigoletto/main.html"}
+   {rigoletto, libretto, "http://opera.stanford.edu/opera/Verdi/Rigoletto/libretto.html"}
+   {rigoletto, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Rigoletto.htm"}
+   {rigoletto, premiere-date, [[1851 (11 Mar)]]}
+   {rigoletto, synopsis, "http://www.metopera.org/synopses/rigoletto.html"}
+[ritorno-ad-amore : opera = "Ritorno ad amore"]
+[roderigo-re-dei-goti : opera = "Roderigo, Re dei Goti"]
+   {roderigo-re-dei-goti, premiere-date, [[1863 (26 Dec)]]}
+[si : opera = "Sì"; "Si"]
+   {si, premiere-date, [[1919 (13 Dec)]]}
+[siberia : opera = "Siberia"]
+   {siberia, premiere-date, [[1903]]}
+[silvano : opera = "Silvano"]
+   {silvano, premiere-date, [[1895 (25 Mar)]]}
+[simon-boccanegra : opera = "Simon Boccanegra"]
+   {simon-boccanegra, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Simon_Boccanegra.htm"}
+   {simon-boccanegra, premiere-date, [[1857 (12 Mar)]]}
+   {simon-boccanegra, synopsis, "http://www.metopera.org/synopses/simon.html"}
+[stiffelio : opera = "Aroldo"
+                   = "Stiffelio" / original-name]
+   {stiffelio, homepage, "http://opera.stanford.edu/opera/Verdi/Stiffelio/main.html"}
+   {stiffelio, libretto, "http://php.indiana.edu/~lneff/libretti/stiffelio.htm"}
+   {stiffelio, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Stiffelio.htm"}
+   {stiffelio, premiere-date, [[1850 (16 Nov)]]}
+   {stiffelio, synopsis, "http://www.metopera.org/synopses/stiffeli.html"}
+[suor-angelica : opera = "Suor Angelica"]
+   {suor-angelica, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/suor-angelica-score1.gif"}
+   {suor-angelica, libretto, "http://php.indiana.edu/~lneff/libretti/suorange.html"}
+   {suor-angelica, premiere-date, [[1918 (14 Dec)]]}
+[tosca : opera = "Tosca"]
+   {tosca, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/tosca.htm"}
+   {tosca, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/tosca.htm"}
+   {tosca, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/tosca_syn.php3.htm"}
+   {tosca, az-synopsis, "http://www.azopera.com/97season/t_syn.php3"}
+   {tosca, homepage, "http://opera.stanford.edu/opera/Puccini/Tosca/main.html"}
+   {tosca, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/tosca-poster1.jpg"}
+   {tosca, libretto, "file:/C|/ontopia/topicmaps/opera/occurs/tosca-libretto.htm"}
+   {tosca, libretto, "http://opera.stanford.edu/opera/Puccini/Tosca/libretto.html"}
+   {tosca, on-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/tosca-synopsis.htm"}
+   {tosca, on-synopsis, "http://www.metopera.org/synopses/tosca.html"}
+   {tosca, poster, "file:/C|/ontopia/topicmaps/opera/occurs/tosca_poster.htm"}
+   {tosca, poster, "http://www.r-ds.com/opera/pucciniana/pictures/tosca_poster.htm"}
+   {tosca, premiere-date, [[1900 (14 Jan)]]}
+   {tosca, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/vissi-darte.wav"}
+   {tosca, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/vissi-darte.wav"}
+[turandot : opera = "Turandot"]
+   {turandot, article, "file:/C|/ontopia/topicmaps/opera/occurs/snl/turandot.htm"}
+   {turandot, article, "http://detnews.com/1998/accent/9809/05/09050080.htm"}
+   {turandot, article, "http://www.ontopia.net/topicmaps/examples/opera/occurs/snl/turandot.htm"}
+   {turandot, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/t_syn.php3.htm"}
+   {turandot, az-synopsis, "http://www.azopera.com/99season/t_syn.php3"}
+   {turandot, homepage, "http://opera.stanford.edu/opera/Puccini/Turandot/main.html"}
+   {turandot, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/opera/puccini/turandot-poster1.jpg"}
+   {turandot, poster, "http://www.r-ds.com/opera/pucciniana/pictures/turandot_poster.htm"}
+   {turandot, premiere-date, [[1926 (25 Apr)]]}
+   {turandot, snippet, "file:/C|/ontopia/topicmaps/opera/occurs/nessun-dorma.mp3"}
+   {turandot, snippet, "http://www.ontopia.net/topicmaps/examples/opera/occurs/nessun-dorma.mp3"}
+   {turandot, synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/turandot-synopsis.htm"}
+   {turandot, synopsis, "http://www.metopera.org/synopses/turandot.html"}
+   {turandot, synopsis, "http://www.orc.soton.ac.uk/ngb/turandot.html"}
+[un-ballo-in-maschera : opera = "Un ballo in maschera"; "Ballo in maschera"
+                              = "A Masked Ball"; "Masked Ball" / english]
+   {un-ballo-in-maschera, az-synopsis, "file:/C|/ontopia/topicmaps/opera/occurs/ubm_syn.php3.htm"}
+   {un-ballo-in-maschera, az-synopsis, "http://www.azopera.com/99season/ubm_syn.php3"}
+   {un-ballo-in-maschera, homepage, "http://opera.stanford.edu/opera/Verdi/Ballo/main.html"}
+   {un-ballo-in-maschera, libretto, "http://php.indiana.edu/~lneff/libretti/Ball0.html"}
+   {un-ballo-in-maschera, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Ballo_in_maschera.htm"}
+   {un-ballo-in-maschera, premiere-date, [[1859 (17 Feb)]]}
+[un-giorno-de-regno : opera = "Un giorno de regno"; "Giorno de regno"
+                            = "Il finto Stanislao"; "Finto Stanislao" / altname]
+   {un-giorno-de-regno, libretto, "http://php.indiana.edu/~lneff/libretti/giorno1.htm"}
+   {un-giorno-de-regno, libretto, "http://www.giuseppeverdi.it/verdi/libretti/Giorno_di_regno.htm"}
+   {un-giorno-de-regno, premiere-date, [[1840 (5 Sep)]]}
+[una-partita : opera = "Una Partita"; "Partita"]
+   {una-partita, premiere-date, [[1933 (19 Jan)]]}
+[zanetto : opera = "Zanetto"]
+   {zanetto, libretto, "http://www.mascagni.org/works/zanetto/libretto.html"}
+   {zanetto, premiere-date, [[1896 (2 Mar)]]}
+[zaza : opera = "Zazà"; "Zaza"]
+   {zaza, premiere-date, [[1900 (10 Nov)]]}
+[zingari : opera = "Zingari"]
+   {zingari, premiere-date, [[1912]]}
+
+/* -- TT: play -- */
+[adrienne-lecouvreur : play = "Adrienne Lecouvreur"]
+[alzire : play = "Alzire, ou Les Américains"]
+[angelo : play = "Angelo, Tyran de Padoue"]
+[attila-src : play = "Attila, König der Hunnen"]
+[catherine-ou-la-croix-dor : play = "Cathérine ou La croix d'or"]
+[cavalleria-rusticana-src : play = "Cavalleria Rusticana (play)"
+                                 = "Cavalleria Rusticana" / play]
+[die-jungfrau-von-orleans : play = "Die Jungfrau von Orleans"; "Jungfrau von Orleans"]
+[die-rauber : play = "Die Räuber"; "Räuber"]
+[don-alvaro : play = "Don Alvaro, ó La Fuerza del Sino"]
+[don-carlos : play = "Don Carlos"]
+[el-trovador : play = "El trovador"; "Trovador"]
+[faust : play = "Faust"]
+[fedora0 : play = "Fédora (play)"; "Fedora"
+                = "Fédora"; "Fedora" / play]
+[henry-iv : play = "King Henry IV"]
+[hernani : play = "Hernani"]
+[kabale-und-liebe : play = "Kabale und Liebe"]
+[la-battaille-de-toulouse : play = "La battaille de Toulouse"; "battaille de Toulouse"]
+[la-coupe-et-les-levres : play = "La Coupe et les lèvres"; "Coupe et les lèvres"]
+[la-houppelande : play = "La Houppelande"; "Houppelande"]
+[la-tosca : play = "La Tosca"; "Tosca, La"]
+[larlesienne : play = "L'arlésienne (play)"; "Arlesienne"
+                    = "L'arlésienne"; "Arlesienne" / play]
+[le-faux-stanislas : play = "Le faux Stanislas"; "faux Stanislas"]
+[le-passant : play = "Le Passant"; "Passant"]
+[le-pasteur : play = "Le Pasteur, ou L'Évangile et le foyer"; "Pasteur, ou L'Évangile et le foyer"]
+[le-roi-samuse : play = "Le Roi s'amuse"; "Roi s'amuse"]
+[macbeth : play = "Macbeth (play)"
+                = "Macbeth" / play]
+[madama-butterfly-src : play = "Madama Butterfly (play)"
+                             = "Madama Butterfly" / play]
+[madame-sans-gene0 : play = "Madame Sans-Gêne (play)"
+                          = "Madame Sans-Gêne" / play]
+[marion-de-lorme : play = "Marion de Lorme"]
+[merry-wives : play = "The Merry Wives of Windsor"; "Merry Wives of Windsor"]
+[nabuchodonosor : play = "Nabuchodonosor"]
+[nerone-src : play = "Nerone (play)"
+                   = "Nerone" / play]
+[othello : play = "Othello"]
+[piquillo-alliaga : play = "Piquillo Alliaga"]
+[play-by-pierre-berton-and-charles-simon : play = "[play by Pierre Berton and Charles Simon]"]
+[simon-boccanegra-src : play = "Simon Boccanegra (play)"
+                             = "Simon Boccanegra" / play]
+[the-girl-of-the-golden-west : play = "The Girl of the Golden West (play)"; "Girl of the Golden West"
+                                    = "The Girl of the Golden West"; "Girl of the Golden West" / play]
+[the-two-foscari : play = "The Two Foscari"]
+[turandot-src : play = "Turandot (play)"
+                     = "Turandot" / play]
+[wallensteins-lager : play = "Wallensteins Lager"]
+
+/* -- TT: poem -- */
+[inferno : poem = "Inferno"]
+[konrad-wallenrod : poem = "Konrad Wallenrod"]
+[parisina-src : poem = "Parisina (poem)"
+                     = "Parisina" / poem]
+[poem-by-alfred-de-vigny : poem = "[poem by Alfredo de Vigny]"]
+[roderick : poem = "Roderick"]
+[the-corsair : poem = "The Corsair"; "Corsair"]
+[william-ratcliff : poem = "William Ratcliff"]
+
+/* -- TT: publisher -- */
+[az-opera : publisher = "Arizona Opera"]
+   {az-opera, homepage, "http://www.azopera.com"}
+[cia : publisher = "CIA"]
+   {cia, homepage, "http://www.cia.gov/cia/publications/factbook/"}
+[land-of-verdi : publisher = "Land of Verdi"]
+   {land-of-verdi, homepage, "http://www.giuseppeverdi.net/ing/index-s.htm"}
+[lucca-p : publisher = "Lucca (publisher)"
+                     = "Lucca" / publisher]
+[lyle-neff : publisher = "Lyle K. Neff"]
+   {lyle-neff, homepage, "http://php.indiana.edu/~lneff/librettim.html"}
+[mark-lew : publisher = "Mark D. Lew"]
+   {mark-lew, homepage, "http://home.earthlink.net/~markdlew/lib/"}
+[mascagni.org : publisher = "Mascagni.org"]
+   {mascagni.org, homepage, "http://www.mascagni.org"}
+[naxos : publisher = "Naxos"]
+   {naxos, homepage, "http://www.naxos.com"}
+[ontopus : publisher = "Ontopus"]
+[opera-l : publisher = "Opera-l synopsis project"]
+   {opera-l, homepage, "http://www.orc.soton.ac.uk/ngb/list2.html"}
+[operaglass : publisher = "Opera Glass"]
+   {operaglass, homepage, "http://opera.stanford.edu/opera/"}
+[operanews : publisher = "Opera News"]
+   {operanews, homepage, "http://www.operanews.com"}
+[operaweb : publisher = "Opera Web"]
+   {operaweb, homepage, "http://www.opera.it/Operaweb/en/home.html"}
+[puccini-study-centre : publisher = "Centro studi Giacomo Puccini"]
+   {puccini-study-centre, homepage, "http://www.puccini.it"}
+[r-ds : publisher = "OperaResource"]
+   {r-ds, homepage, "http://www.r-ds.com/opera/resource.htm"}
+[ricordi-p : publisher = "Ricordi"]
+[snl : publisher = "Store Norske Leksikon"]
+   {snl, homepage, "http://www.snl.no"}
+[sonzogno : publisher = "Sonzogno"]
+
+/* -- TT: region -- */
+[alsace : region = "Alsace"]
+[black-forest : region = "Black Forest"]
+[bretagne : region = "Bretagne"
+                   = "Brittany" / english]
+[calabria : region = "Calabria"]
+[california : region = "California"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.us.ca"]
+[flanders : region = "Flanders"]
+[kreta : region = "Crete"
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.gr.kreta"]
+[middle-east : region = "Middle East"]
+[rhine : region = "Rhine"]
+[savoia : region = "Savoia"
+                 = "Savoy" / english
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.savoia"]
+[sicilia : region = "Sicilia"
+                  = "Sicily" / english
+    @"file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/net.ontopia.topicmaps.psd.iso3166.it.sicilia"]
+[south-america : region = "South America"]
+[tyrol : region = "Tyrol"]
+
+/* -- TT: style -- */
+[verismo : style = "verismo"]
+   {verismo, article, "http://www.operaworld.com/special/verismo.shtml"}
+   {verismo, desc, "file:/C|/ontopia/topicmaps/opera/occurs/verismo.htm"}
+   {verismo, desc, "http://www.ontopia.net/topicmaps/examples/opera/occurs/verismo.htm"}
+
+/* -- TT: theatre -- */
+[cairo-opera : theatre = "Cairo Opera House"]
+[casino-di-san-remo : theatre = "Casinò di San Remo"]
+[h-majestys : theatre = "His/Her Majesty's"]
+[la-fenice : theatre = "Teatro La Fenice"]
+   {la-fenice, homepage, "http://web.tin.it/la_fenice/"}
+   {la-fenice, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/theatre/la-fenice-650x485.jpg"}
+[la-scala : theatre = "Teatro alla Scala"]
+   {la-scala, homepage, "http://www.teatroallascala.org"}
+   {la-scala, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/theatre/la-scala-800x468.gif"}
+[liceo-musicale : theatre = "Liceo Musicale"]
+[metropolitan : theatre = "Metropolitan Opera"]
+   {metropolitan, homepage, "http://www.metopera.org"}
+[paris-opera : theatre = "Paris Opera"]
+[st-petersburg-imperial-opera : theatre = "Imperial Opera"]
+[teatro-apollo : theatre = "Teatro Apollo"]
+[teatro-argentina : theatre = "Teatro Argentina"]
+   {teatro-argentina, homepage, "http://www.teatro.roma.it"}
+[teatro-carlo-felice : theatre = "Teatro Carlo Felice"]
+[teatro-colon : theatre = "Teatro Colón"]
+[teatro-concordia : theatre = "Teatro Concordia"]
+[teatro-costanzi : theatre = "Teatro Costanzi"]
+[teatro-dal-verme : theatre = "Teatro dal Verme"]
+[teatro-della-pergola : theatre = "Teatro della Pergola"]
+   {teatro-della-pergola, homepage, "http://www.pergola.firenze.it"}
+   {teatro-della-pergola, illustration, "file:/ontopia/oks-3-4-x/src/java/test-data/nav2/topicmaps/occurs/theatre/teatro-della-pergola-640x480.jpg"}
+[teatro-filarmonico : theatre = "Teatro Filarmonico"]
+[teatro-grande : theatre = "Teatro Grande"]
+[teatro-lirico : theatre = "Teatro Lirico"]
+[teatro-municipale : theatre = "Teatro Municipale di Piacenza"]
+[teatro-pagliano : theatre = "Teatro Pagliano"]
+[teatro-quirino : theatre = "Teatro Quirino"]
+   {teatro-quirino, homepage, "http://www.teatroquirino.it"}
+[teatro-regio : theatre = "Teatro Regio Ducal"]
+[teatro-san-carlo : theatre = "Teatro San Carlo"]
+   {teatro-san-carlo, homepage, "http://www.intecs.it/voxneapolis/FIRMS/SANCARLO/sancarlo.htm"}
+[teatro-sociale : theatre = "Teatro Sociale di Lecco"]
+[theatre-du-casino : theatre = "Theatre du Casino"]
+
+/* -- TT: tv -- */
+[rai : tv = "RAI"]
+
+/* -- TT: work -- */
+[work-by-paul-de-choudens : work = "[work by Paul de Choudens]"]
+[work-by-salvatore-di-giacomo : work = "[work by Salvatore Di Giacomo]"]
+
+/* -- TT: writer -- */
+[anicet-bourgeois : writer = "Anicet-Bourgeois, Auguste"
+                           = "Auguste Anicet-Bourgeois" / normal]
+[belasco : writer = "Belasco, David"
+                  = "David Belasco" / normal]
+   {belasco, born, [[1853 (25 Jul)]]}
+   {belasco, died, [[1931 (15 May)]]}
+[berton : writer = "Berton, Pierre"
+                 = "Pierre Berton" / normal]
+[bourgeois : writer = "Bourgeois, Eugène"
+                    = "Eugène Bourgeois" / normal]
+[brazier : writer = "Brazier, Nicholas"
+                  = "Nicholas Brazier" / normal]
+[byron : writer = "Lord Byron"]
+   {byron, born, [[1788 (22 Jan)]]}
+   {byron, died, [[1824 (19 Apr)]]}
+[chatrian : writer = "Chatrian, Alexandre"
+                   = "Alexandre Chatrian" / normal]
+   {chatrian, born, [[1826 (18 Dec)]]}
+   {chatrian, died, [[1890 (3 Sep)]]}
+[coppee : writer = "Coppée, François"
+                 = "François Coppée" / normal]
+   {coppee, born, [[1842 (26 Jan)]]}
+   {coppee, died, [[1908 (23 May)]]}
+[cornu : writer = "Cornu, Francis"
+                = "Francis Cornu" / normal]
+[cortesi : writer = "Cortesi, Antonio"
+                  = "Antonio Cortesi" / normal]
+[cossa : writer = "Cossa, Pietro"
+                = "Pietro Cossa" / normal]
+[dante : writer = "Dante Alighieri"]
+   {dante, born, [[1265 (May/Jun)]]}
+   {dante, died, [[1321 (14 Sep)]]}
+[daudet : writer = "Daudet, Alphonse"
+                 = "Alphonse Daudet" / normal]
+   {daudet, born, [[1840 (13 May)]]}
+   {daudet, died, [[1897 (16 Dec)]]}
+[dumas-fils : writer = "Dumas, Alexandre, fils"
+                     = "Alexandre, fils Dumas" / normal]
+   {dumas-fils, born, [[1824 (27 Jul)]]}
+   {dumas-fils, died, [[1895 (27 Nov)]]}
+[erckmann : writer = "Erckmann, Emile"
+                   = "Emile Erckmann" / normal]
+   {erckmann, born, [[1822 (20 May)]]}
+   {erckmann, died, [[1899 (14 Mar)]]}
+[franci : writer = "Franci, Arturo"
+                 = "Arturo Franci" / normal]
+[giacomo : writer = "Giacomo, Salvatore di"
+                  = "Salvatore di Giacomo" / normal]
+   {giacomo, born, [[1860 (16 Mar)]]}
+   {giacomo, died, [[1934 (5 Apr)]]}
+[goethe : writer = "Goethe, Johann Wolfgang von"
+                 = "Johann Wolfgang von Goethe" / normal]
+   {goethe, born, [[1749 (28 Aug)]]}
+   {goethe, died, [[1832 (22 Mar)]]}
+[gold : writer = "Gold, Didier"
+               = "Didier Gold" / normal]
+[gozzi : writer = "Gozzi, Carlo"
+                = "Carlo Gozzi" / normal]
+   {gozzi, born, [[1720 (13 Dec)]]}
+   {gozzi, died, [[1806 (14 Apr)]]}
+[gutierrez : writer = "Gutiérrez, Antonio García"
+                    = "Antonio García Gutiérrez" / normal]
+   {gutierrez, born, [[1813 (5 Oct)]]}
+   {gutierrez, died, [[1884 (26 Jun)]]}
+[heine : writer = "Heine, Heinrich"
+                = "Heinrich Heine" / normal]
+   {heine, born, [[1797 (13 Dec)]]}
+   {heine, died, [[1856 (17 Feb)]]}
+[hugo : writer = "Hugo, Victor"
+               = "Victor Hugo" / normal]
+   {hugo, born, [[1802 (26 Feb)]]}
+   {hugo, died, [[1885 (22 May)]]}
+[karr : writer = "Karr, Alphonse"
+               = "Alphonse Karr" / normal]
+[legouve : writer = "Legouvé, Ernest"
+                  = "Ernest Legouvé" / normal]
+[lombardo : writer = "Lombardo, Carlo"
+                   = "Carlo Lombardo" / normal]
+[manzoni : writer = "Manzoni, Alessandro"
+                  = "Alessandro Manzoni" / normal]
+[melesville : writer = "Mélésville"
+                     = "Baron Anne-Honoré-Joseph Duveyrier" / realname]
+   {melesville, born, [[1787 (13 Nov)]]}
+   {melesville, died, [[1865 (3 Nov)]]}
+[mickiewicz : writer = "Mickiewicz, Adam"
+                     = "Adam Mickiewicz" / normal]
+[murger : writer = "Murger, Henri"
+                 = "Henri Murger" / normal]
+   {murger, born, [[1822 (27 Mar)]]}
+   {murger, died, [[1861 (28 Jan)]]}
+[musset : writer = "Musset, Alfred de"
+                 = "Alfred de Musset" / normal]
+   {musset, born, [[1810 (11 Dec)]]}
+   {musset, died, [[1857 (2 May)]]}
+[ouida : writer = "Ramée, Marie Louise de la"
+                = "Ouida" / nom-de-plume
+                = "Marie Louise de la Ramée" / normal]
+   {ouida, born, [[1839 (1 Jan)]]}
+   {ouida, died, [[1908 (25 Jan)]]}
+[pineux-duval : writer = "Pineux-Duval, Alexandre-Vincent"
+                       = "Alexandre-Vincent Pineux-Duval" / normal]
+[prevost : writer = "Prévost, Antoine-François"
+                  = "Antoine-François Prévost" / normal]
+   {prevost, born, [[1697 (1 Apr)]]}
+   {prevost, died, [[1763 (25 Nov)]]}
+[saavedra : writer = "Saavedra Ramírez de Banquedano, Angel de"
+                   = "Angel de Saavedra Ramírez de Banquedano" / normal]
+   {saavedra, born, [[1791 (10 Mar)]]}
+   {saavedra, died, [[1865 (22 Jun)]]}
+[sardou : writer = "Sardou, Victorien"
+                 = "Victorien Sardou" / normal]
+   {sardou, born, [[1831 (5 Sep)]]}
+   {sardou, died, [[1908 (8 Nov)]]}
+[schiller : writer = "Schiller, Friedrich"
+                   = "Friedrich Schiller" / normal]
+   {schiller, born, [[1759 (10 Nov)]]}
+   {schiller, died, [[1805 (9 May)]]}
+[shakespeare : writer = "Shakespeare, William"
+                      = "William Shakespeare" / normal]
+   {shakespeare, born, [[1564 (26 Apr) (baptised)]]}
+   {shakespeare, died, [[1616 (23 Apr)]]}
+[simon : writer = "Simon, Charles"
+                = "Charles Simon" / normal]
+[southey : writer = "Southey, Robert"
+                  = "Robert Southey" / normal]
+[souvestre : writer = "Souvestre, Émile"
+                    = "Émile Souvestre" / normal]
+[verga : writer = "Verga, Giovanni"
+                = "Giovanni Verga" / normal]
+   {verga, born, [[1840 (2 Sep)]]}
+   {verga, died, [[1922 (27 Jan)]]}
+[vigny : writer = "Vigny, Alfred de"
+                = "Alfred de Vigny" / normal]
+   {vigny, born, [[1797 (27 Mar)]]}
+   {vigny, died, [[1863 (17 Sep)]]}
+[voltaire : writer = "Voltaire, François de"
+                   = "François de Voltaire" / normal]
+   {voltaire, born, [[1694 (21 Nov)]]}
+   {voltaire, died, [[1778 (30 May)]]}
+[von-hillern : writer = "von Hillern, Wilhelmine"; "Hillern, Wilhelmine"
+                      = "Wilhelmine von Hillern" / normal]
+[werner : writer = "Werner, Zacharias"
+                 = "Zacharias Werner" / normal]
+
+/* -- TT: (untyped) -- */
+[date = "date"; "date"
+    @"http://psi.ontopia.net/xtm/topic/date"]
+[display = "display"; "display"
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#display"]
+   {display, desc, [[Suitability for display: Suitability of a topic name for display; for use in the parameters of variant names.]]}
+[literary-work = "literary work"; "literary work"
+    @"http://psi.ontopia.net/opera/#literary-work"]
+[musical-work = "musical work"; "musical work"
+    @"http://psi.ontopia.net/opera/#musical-work"]
+[musician = "musician"; "musician"
+    @"http://psi.ontopia.net/opera/#musician"]
+[pauld-website = "Opera: A Philatelic History"
+               = "Paul den Ouden's \u000022Opera: A Philatelic History\u000022" / fullname]
+   {pauld-website, website, "http://home.prcn.org/~pauld/opera/"}
+[singer = "singer"
+    @"http://psi.ontopia.net/opera/#singer"]
+[sort = "sort"; "sort"
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#sort"]
+   {sort, desc, [[Suitability for sorting: Suitability of a topic name for use as a sort key; for use in the parameters of variant names.]]}
+[theatrical-work = "theatrical work"; "theatrical work"
+    @"http://psi.ontopia.net/opera/#theatrical-work"]
+[turandot-beijing = "Turandot performed in the Forbidden City"]
+   {turandot-beijing, article, "http://detnews.com/1998/accent/9809/05/09050080.htm"}
+   {turandot-beijing, article, "http://www.pbs.org/wnet/gperf/turandot/"}
+   {turandot-beijing, article, "http://www.sallys-place.com/travel/asia/beijing.htm"}
+
+/* ----------------- Associations -------------- */
+
+/* -- AT: aria-in-opera */
+aria-in-opera( adriana-lecouvreur : opera, io-son-lumile-ancella : aria ) / music
+aria-in-opera( adriana-lecouvreur : opera, la-dolcissima-effigie : aria ) / music
+aria-in-opera( adriana-lecouvreur : opera, lanima-ho-stanca : aria ) / music
+aria-in-opera( aida : opera, ritorna-vincitor : aria ) / music
+aria-in-opera( andrea-chenier : opera, come-un-bel-di-di-maggio : aria ) / music
+aria-in-opera( andrea-chenier : opera, la-mamma-morta : aria ) / music
+aria-in-opera( andrea-chenier : opera, un-di-allazzurro-spazio : aria ) / music
+aria-in-opera( cavalleria-rusticana : opera, mamma-quel-vino-e-generoso : aria ) / music
+aria-in-opera( edgar : opera, dogni-dolor : aria ) / music
+aria-in-opera( fedora : opera, amor-ti-vieta : aria ) / music
+aria-in-opera( gianni-schicchi : opera, o-mio-babbino-caro : aria ) / music
+aria-in-opera( i-vespri-siciliani : opera, o-tu-palermo : aria ) / music
+aria-in-opera( iris : opera, apri-la-tua-finestra : aria ) / music
+aria-in-opera( la-boheme : opera, che-gelida-manina : aria ) / music
+aria-in-opera( la-boheme : opera, mi-chiamono-mimi : aria ) / music
+aria-in-opera( la-boheme : opera, o-soave-fanciulla : aria ) / music
+aria-in-opera( la-boheme : opera, quando-men-vo-soletta : aria ) / music
+aria-in-opera( la-fanciulla-del-west : opera, laggiu-nel-soledad : aria ) / music
+aria-in-opera( la-forza-del-destino : opera, pace-pace-mio-dio : aria ) / music
+aria-in-opera( la-gioconda : opera, cielo-e-mar : aria ) / music
+aria-in-opera( la-gioconda : opera, suicidio : aria ) / music
+aria-in-opera( la-gioconda : opera, voce-di-donna : aria ) / music
+aria-in-opera( la-rondine : opera, chi-il-bel-sogno : aria ) / music
+aria-in-opera( la-wally : opera, ebben-ne-andro-lontana : aria ) / music
+aria-in-opera( lamico-fritz : opera, cherry-duet : aria ) / music
+aria-in-opera( larlesiana : opera, e-la-solita-storia-del-pastore : aria ) / music
+aria-in-opera( le-villi : opera, se-come-voi : aria ) / music
+aria-in-opera( lodoletta : opera, se-franz-dicesse-il-vero : aria ) / music
+aria-in-opera( loreley : opera, nel-verde-maggio : aria ) / music
+aria-in-opera( madama-butterfly : opera, un-bel-di-vedremo : aria ) / music
+aria-in-opera( madame-sans-gene : opera, che-me-ne-faccio : aria ) / music
+aria-in-opera( madame-sans-gene : opera, ma-piu-spesso : aria ) / music
+aria-in-opera( manon-lescaut : opera, in-quelle-trine-morbide : aria ) / music
+aria-in-opera( manon-lescaut : opera, sola-perduta-abbandonata : aria ) / music
+aria-in-opera( mefistofele : opera, laltra-notte : aria ) / music
+aria-in-opera( otello : opera, piangea-cantando : aria ) / music
+aria-in-opera( pagliacci : opera, qual-fiamma : aria ) / music
+aria-in-opera( pagliacci : opera, vesti-la-giubba : aria ) / music
+aria-in-opera( suor-angelica : opera, senza-mamma : aria ) / music
+aria-in-opera( tosca : opera, e-lucevan-le-stelle : aria ) / music
+aria-in-opera( tosca : opera, o-dolci-mani : aria ) / music
+aria-in-opera( tosca : opera, recondita-armonia : aria ) / music
+aria-in-opera( tosca : opera, va-tosca : aria ) / music
+aria-in-opera( tosca : opera, vissi-darte : aria ) / music
+aria-in-opera( turandot : opera, ah-per-lultima-volta : aria ) / music
+aria-in-opera( turandot : opera, in-questa-regia : aria ) / music
+aria-in-opera( turandot : opera, nessun-dorma : aria ) / music
+aria-in-opera( turandot : opera, non-piangere-liu : aria ) / music
+aria-in-opera( turandot : opera, signore-ascolta : aria ) / music
+aria-in-opera( turandot : opera, tu-che-di-gel-sei-cinta : aria ) / music
+
+/* -- AT: based-on */
+based-on( adriana-lecouvreur : result, adrienne-lecouvreur : source ) / music
+based-on( alzira : result, alzire : source ) / music
+based-on( attila : result, attila-src : source ) / music
+based-on( cavalleria-rusticana : result, cavalleria-rusticana-src : source ) / music
+based-on( chatterton : result, poem-by-alfred-de-vigny : source ) / music
+based-on( don-carlo : result, don-carlos : source ) / music
+based-on( edgar : result, la-coupe-et-les-levres : source ) / music
+based-on( ernani : result, hernani : source ) / music
+based-on( falstaff : result, henry-iv : source ) / music
+based-on( falstaff : result, merry-wives : source ) / music
+based-on( fedora : result, fedora0 : source ) / music
+based-on( gianni-schicchi : result, inferno : source ) / music
+based-on( gina : result, catherine-ou-la-croix-dor : source ) / music
+based-on( giovanna-darco : result, die-jungfrau-von-orleans : source ) / music
+based-on( guglielmo-ratcliff : result, william-ratcliff : source ) / music
+based-on( i-due-foscari : result, the-two-foscari : source ) / music
+based-on( i-lituani : result, konrad-wallenrod : source ) / music
+based-on( i-masnadieri : result, die-rauber : source ) / music
+based-on( i-mori-di-valenza : result, piquillo-alliaga : source ) / music
+based-on( i-promessi-sposi : result, i-promessi-sposi-src : source ) / music
+based-on( il-corsaro : result, the-corsair : source ) / music
+based-on( il-tabarro : result, la-houppelande : source ) / music
+based-on( il-trovatore : result, el-trovador : source ) / music
+based-on( il-voto : result, novella-by-salvatore-di-giacomo : source ) / music
+based-on( jerusalem-o : result, i-lombardi : source ) / music
+based-on( la-battaglia-di-legnano : result, la-battaille-de-toulouse : source ) / music
+based-on( la-boheme : result, scenes-de-la-vie-de-boheme : source ) / music
+based-on( la-boheme2 : result, scenes-de-la-vie-de-boheme : source ) / music
+based-on( la-fanciulla-del-west : result, the-girl-of-the-golden-west : source ) / music
+based-on( la-forza-del-destino : result, don-alvaro : source ) / music
+based-on( la-forza-del-destino : result, wallensteins-lager : source ) / music
+based-on( la-gioconda : result, angelo : source ) / music
+based-on( la-traviata : result, la-dame-aux-camelias : source ) / music
+based-on( la-wally : result, geyer-wally : source ) / music
+based-on( lamico-fritz : result, lami-fritz : source ) / music
+based-on( larlesiana : result, larlesienne : source ) / music
+based-on( le-villi : result, les-willis : source ) / music
+based-on( lodoletta : result, two-little-wooden-shoes : source ) / music
+based-on( luisa-miller : result, kabale-und-liebe : source ) / music
+based-on( macbeth1 : result, macbeth : source ) / music
+based-on( madama-butterfly : result, madama-butterfly-src : source ) / music
+based-on( madame-sans-gene : result, madame-sans-gene0 : source ) / music
+based-on( maia : result, work-by-paul-de-choudens : source ) / music
+based-on( manon-lescaut : result, manon-lescaut-src : source ) / music
+based-on( marion-delorme : result, marion-de-lorme : source ) / music
+based-on( mefistofele : result, faust : source ) / music
+based-on( mese-mariano : result, work-by-salvatore-di-giacomo : source ) / music
+based-on( nabucco : result, nabuchodonosor : source ) / music
+based-on( nabucco : result, nabucodonosor : source ) / music
+based-on( nerone2 : result, nerone-src : source ) / music
+based-on( otello : result, othello : source ) / music
+based-on( parisina : result, parisina-src : source ) / music
+based-on( rigoletto : result, le-roi-samuse : source ) / music
+based-on( roderigo-re-dei-goti : result, roderick : source ) / music
+based-on( simon-boccanegra : result, simon-boccanegra-src : source ) / music
+based-on( stiffelio : result, le-pasteur : source ) / music
+based-on( tosca : result, la-tosca : source ) / music
+based-on( turandot : result, turandot-src : source ) / music
+based-on( un-giorno-de-regno : result, le-faux-stanislas : source ) / music
+based-on( zanetto : result, le-passant : source ) / music
+based-on( zaza : result, play-by-pierre-berton-and-charles-simon : source ) / music
+
+/* -- AT: born-in */
+born-in( bologna : place, zangarini : person ) / biography
+born-in( borgo-san-lorenzo : place, forzano : person ) / biography
+born-in( brussels : place, vaez : person ) / biography
+born-in( colleretto-parella : place, giacosa : person ) / biography
+born-in( ferrara : place, solera : person ) / biography
+born-in( foggia : place, giordano : person ) / biography
+born-in( genova : place, romani : person ) / biography
+born-in( le-roncole : place, verdi : person ) / biography
+born-in( lecce : place, daspuro : person ) / biography
+born-in( lecco : place, ghislanzoni : person ) / biography
+born-in( livorno : place, civinini : person ) / biography
+born-in( livorno : place, mascagni : person ) / biography
+born-in( livorno : place, menasci : person ) / biography
+born-in( livorno : place, targioni-tozzetti : person ) / biography
+born-in( lucca : place, catalani : person ) / biography
+born-in( lucca : place, puccini : person ) / biography
+born-in( marseilles : place, mery : person ) / biography
+born-in( milano : place, fontana : person ) / biography
+born-in( milano : place, praga : person ) / biography
+born-in( milano : place, ricordi : person ) / biography
+born-in( murano : place, piave : person ) / biography
+born-in( napoli : place, cammarano : person ) / biography
+born-in( napoli : place, golisciani : person ) / biography
+born-in( napoli : place, leoncavallo : person ) / biography
+born-in( nimes : place, daudet : person ) / biography
+born-in( orange : place, locle : person ) / biography
+born-in( paderno-fasolaro : place, ponchielli : person ) / biography
+born-in( padua : place, boito : person ) / biography
+born-in( palmi : place, cilea : person ) / biography
+born-in( paris : place, melesville : person ) / biography
+born-in( paris : place, royer : person ) / biography
+born-in( paris : place, scribe : person ) / biography
+born-in( pescara : place, dannunzio : person ) / biography
+born-in( piacenza : place, illica : person ) / biography
+born-in( prato : place, benelli : person ) / biography
+born-in( roma : place, dormeville : person ) / biography
+born-in( rovereto : place, zandonai : person ) / biography
+born-in( trento : place, maffei : person ) / biography
+born-in( udine : place, somma : person ) / biography
+born-in( venezia : place, piazza : person ) / biography
+born-in( venezia : place, zanardini : person ) / biography
+born-in( verona : place, adami : person ) / biography
+born-in( verona : place, simoni : person ) / biography
+born-in( zara : place, colautti : person ) / biography
+
+/* -- AT: character-dies */
+character-dies( roofjump : cause,
+                tosca : opera,
+                tosca-c : agent,
+                tosca-c : victim ) / music
+character-dies( stabbing : cause,
+                madama-butterfly : opera,
+                butterfly : agent,
+                butterfly : victim ) / music
+character-dies( stabbing : cause,
+                tosca : opera,
+                tosca-c : agent,
+                scarpia : victim ) / music
+character-dies( stabbing : cause,
+                turandot : opera,
+                liu : agent,
+                liu : victim ) / music
+character-dies( strangling : cause,
+                il-tabarro : opera,
+                michele : agent,
+                luigi : victim ) / music
+character-dies( shooting : cause,
+                tosca : opera,
+                cavaradossi : victim ) / music
+character-dies( tosca : opera,
+                angelotti : agent,
+                angelotti : victim ) / music
+
+/* -- AT: character-in-opera */
+character-in-opera( adriana-lecouvreur : opera, abbe-of-chazeuil : character ) / music
+character-in-opera( adriana-lecouvreur : opera, adriana : character ) / music
+character-in-opera( adriana-lecouvreur : opera, maurizio : character ) / music
+character-in-opera( adriana-lecouvreur : opera, michonnet : character ) / music
+character-in-opera( adriana-lecouvreur : opera, mlle-dangeville : character ) / music
+character-in-opera( adriana-lecouvreur : opera, mlle-jouvenot : character ) / music
+character-in-opera( adriana-lecouvreur : opera, poisson : character ) / music
+character-in-opera( adriana-lecouvreur : opera, prince-de-bouillon : character ) / music
+character-in-opera( adriana-lecouvreur : opera, princess-de-buoillon : character ) / music
+character-in-opera( adriana-lecouvreur : opera, quinault : character ) / music
+character-in-opera( aida : opera, aida-c : character ) / music
+character-in-opera( aida : opera, amneris : character ) / music
+character-in-opera( aida : opera, amonasro : character ) / music
+character-in-opera( aida : opera, king-of-egypt : character ) / music
+character-in-opera( aida : opera, radames : character ) / music
+character-in-opera( aida : opera, ramfis : character ) / music
+character-in-opera( andrea-chenier : opera, bersi : character ) / music
+character-in-opera( andrea-chenier : opera, chenier : character ) / music
+character-in-opera( andrea-chenier : opera, coigny : character ) / music
+character-in-opera( andrea-chenier : opera, gerard : character ) / music
+character-in-opera( andrea-chenier : opera, incredible : character ) / music
+character-in-opera( andrea-chenier : opera, maddalena : character ) / music
+character-in-opera( andrea-chenier : opera, roucher : character ) / music
+character-in-opera( cavalleria-rusticana : opera, alfio : character ) / music
+character-in-opera( cavalleria-rusticana : opera, lola : character ) / music
+character-in-opera( cavalleria-rusticana : opera, lucia : character ) / music
+character-in-opera( cavalleria-rusticana : opera, santuzza : character ) / music
+character-in-opera( cavalleria-rusticana : opera, turiddu : character ) / music
+character-in-opera( edgar : opera, edgar-c : character ) / music
+character-in-opera( edgar : opera, fidelia : character ) / music
+character-in-opera( edgar : opera, frank : character ) / music
+character-in-opera( edgar : opera, gualterio : character ) / music
+character-in-opera( edgar : opera, tigrana : character ) / music
+character-in-opera( fedora : opera, de-sirieux : character ) / music
+character-in-opera( fedora : opera, fedora-c : character ) / music
+character-in-opera( fedora : opera, loris : character ) / music
+character-in-opera( francesca-da-rimini : opera, adonella : character ) / music
+character-in-opera( francesca-da-rimini : opera, altichiara : character ) / music
+character-in-opera( francesca-da-rimini : opera, biancofiore : character ) / music
+character-in-opera( francesca-da-rimini : opera, francesca : character ) / music
+character-in-opera( francesca-da-rimini : opera, garsenda : character ) / music
+character-in-opera( francesca-da-rimini : opera, giovanni : character ) / music
+character-in-opera( francesca-da-rimini : opera, il-balestiere : character ) / music
+character-in-opera( francesca-da-rimini : opera, il-giullare : character ) / music
+character-in-opera( francesca-da-rimini : opera, il-torregiano : character ) / music
+character-in-opera( francesca-da-rimini : opera, malatestino : character ) / music
+character-in-opera( francesca-da-rimini : opera, ostasio : character ) / music
+character-in-opera( francesca-da-rimini : opera, paolo : character ) / music
+character-in-opera( francesca-da-rimini : opera, prigioniero : character ) / music
+character-in-opera( francesca-da-rimini : opera, samaritana : character ) / music
+character-in-opera( francesca-da-rimini : opera, ser-toldo : character ) / music
+character-in-opera( francesca-da-rimini : opera, smaragdi : character ) / music
+character-in-opera( gianni-schicchi : opera, amantio : character ) / music
+character-in-opera( gianni-schicchi : opera, betto : character ) / music
+character-in-opera( gianni-schicchi : opera, gherardino : character ) / music
+character-in-opera( gianni-schicchi : opera, gherardo : character ) / music
+character-in-opera( gianni-schicchi : opera, gianni : character ) / music
+character-in-opera( gianni-schicchi : opera, guccio : character ) / music
+character-in-opera( gianni-schicchi : opera, la-ciesca : character ) / music
+character-in-opera( gianni-schicchi : opera, lauretta : character ) / music
+character-in-opera( gianni-schicchi : opera, marco : character ) / music
+character-in-opera( gianni-schicchi : opera, nella : character ) / music
+character-in-opera( gianni-schicchi : opera, pinelli : character ) / music
+character-in-opera( gianni-schicchi : opera, rinuccio : character ) / music
+character-in-opera( gianni-schicchi : opera, simone : character ) / music
+character-in-opera( gianni-schicchi : opera, spinelloccio : character ) / music
+character-in-opera( gianni-schicchi : opera, zita : character ) / music
+character-in-opera( gina : opera, flamberge : character ) / music
+character-in-opera( gina : opera, gina-c : character ) / music
+character-in-opera( gina : opera, giulio : character ) / music
+character-in-opera( gina : opera, lilla : character ) / music
+character-in-opera( gina : opera, uberto : character ) / music
+character-in-opera( i-vespri-siciliani : opera, arrigo : character ) / music
+character-in-opera( i-vespri-siciliani : opera, bethune : character ) / music
+character-in-opera( i-vespri-siciliani : opera, danieli : character ) / music
+character-in-opera( i-vespri-siciliani : opera, elena : character ) / music
+character-in-opera( i-vespri-siciliani : opera, giovanni-da-procida : character ) / music
+character-in-opera( i-vespri-siciliani : opera, guido-di-monforte : character ) / music
+character-in-opera( i-vespri-siciliani : opera, manfredo : character ) / music
+character-in-opera( i-vespri-siciliani : opera, ninetta : character ) / music
+character-in-opera( i-vespri-siciliani : opera, roberto : character ) / music
+character-in-opera( i-vespri-siciliani : opera, tebaldo : character ) / music
+character-in-opera( i-vespri-siciliani : opera, vaudemont : character ) / music
+character-in-opera( il-tabarro : opera, frugola : character ) / music
+character-in-opera( il-tabarro : opera, giorgetta : character ) / music
+character-in-opera( il-tabarro : opera, luigi : character ) / music
+character-in-opera( il-tabarro : opera, michele : character ) / music
+character-in-opera( il-tabarro : opera, talpa : character ) / music
+character-in-opera( il-tabarro : opera, tinca : character ) / music
+character-in-opera( iris : opera, dhia : character ) / music
+character-in-opera( iris : opera, il-cieco : character ) / music
+character-in-opera( iris : opera, iris-c : character ) / music
+character-in-opera( iris : opera, kyoto : character ) / music
+character-in-opera( iris : opera, osaka : character ) / music
+character-in-opera( la-boheme : opera, alcindoro : character ) / music
+character-in-opera( la-boheme : opera, benoit : character ) / music
+character-in-opera( la-boheme : opera, colline : character ) / music
+character-in-opera( la-boheme : opera, customs-official : character ) / music
+character-in-opera( la-boheme : opera, marcello : character ) / music
+character-in-opera( la-boheme : opera, mimi : character ) / music
+character-in-opera( la-boheme : opera, musetta : character ) / music
+character-in-opera( la-boheme : opera, parpignol : character ) / music
+character-in-opera( la-boheme : opera, rodolfo : character ) / music
+character-in-opera( la-boheme : opera, schaunard : character ) / music
+character-in-opera( la-boheme2 : opera, marcello : character ) / music
+character-in-opera( la-boheme2 : opera, mimi : character ) / music
+character-in-opera( la-boheme2 : opera, musetta : character ) / music
+character-in-opera( la-boheme2 : opera, rodolfo : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, ashby : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, castro : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, jackrabbit : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, johnsen : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, minnie : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, nick : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, rance : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, sonora : character ) / music
+character-in-opera( la-fanciulla-del-west : opera, wowkle : character ) / music
+character-in-opera( la-forza-del-destino : opera, alvaro : character ) / music
+character-in-opera( la-forza-del-destino : opera, calatrava : character ) / music
+character-in-opera( la-forza-del-destino : opera, carlo : character ) / music
+character-in-opera( la-forza-del-destino : opera, guardiano : character ) / music
+character-in-opera( la-forza-del-destino : opera, leonora : character ) / music
+character-in-opera( la-forza-del-destino : opera, melitone : character ) / music
+character-in-opera( la-forza-del-destino : opera, preziosilla : character ) / music
+character-in-opera( la-gioconda : opera, badoero : character ) / music
+character-in-opera( la-gioconda : opera, barnaba : character ) / music
+character-in-opera( la-gioconda : opera, gioconda : character ) / music
+character-in-opera( la-gioconda : opera, grimaldo : character ) / music
+character-in-opera( la-gioconda : opera, la-cieca : character ) / music
+character-in-opera( la-gioconda : opera, laura : character ) / music
+character-in-opera( la-rondine : opera, fernandez : character ) / music
+character-in-opera( la-rondine : opera, lisette : character ) / music
+character-in-opera( la-rondine : opera, magda : character ) / music
+character-in-opera( la-rondine : opera, perichaud : character ) / music
+character-in-opera( la-rondine : opera, prunier : character ) / music
+character-in-opera( la-rondine : opera, ruggero : character ) / music
+character-in-opera( la-rondine : opera, yvette : character ) / music
+character-in-opera( la-wally : opera, gellner : character ) / music
+character-in-opera( la-wally : opera, hagenbach : character ) / music
+character-in-opera( la-wally : opera, stromminger : character ) / music
+character-in-opera( la-wally : opera, wally : character ) / music
+character-in-opera( la-wally : opera, walter : character ) / music
+character-in-opera( lamico-fritz : opera, beppe-s : character ) / music
+character-in-opera( lamico-fritz : opera, caterina : character ) / music
+character-in-opera( lamico-fritz : opera, david : character ) / music
+character-in-opera( lamico-fritz : opera, federico : character ) / music
+character-in-opera( lamico-fritz : opera, fritz : character ) / music
+character-in-opera( lamico-fritz : opera, hanezo : character ) / music
+character-in-opera( lamico-fritz : opera, suzel : character ) / music
+character-in-opera( larlesiana : opera, federico2 : character ) / music
+character-in-opera( larlesiana : opera, metifio : character ) / music
+character-in-opera( larlesiana : opera, rosa-mammai : character ) / music
+character-in-opera( larlesiana : opera, vivette : character ) / music
+character-in-opera( le-villi : opera, anna : character ) / music
+character-in-opera( le-villi : opera, guglielmo : character ) / music
+character-in-opera( le-villi : opera, roberto-le-villi : character ) / music
+character-in-opera( lodoletta : opera, flammen : character ) / music
+character-in-opera( lodoletta : opera, lodoletta-c : character ) / music
+character-in-opera( loreley : opera, anna2 : character ) / music
+character-in-opera( loreley : opera, baron-hermann : character ) / music
+character-in-opera( loreley : opera, loreley-c : character ) / music
+character-in-opera( loreley : opera, margrave-of-biberich : character ) / music
+character-in-opera( loreley : opera, walter2 : character ) / music
+character-in-opera( madama-butterfly : opera, bonze : character ) / music
+character-in-opera( madama-butterfly : opera, butterfly : character ) / music
+character-in-opera( madama-butterfly : opera, goro : character ) / music
+character-in-opera( madama-butterfly : opera, kate-pinkerton : character ) / music
+character-in-opera( madama-butterfly : opera, pinkerton : character ) / music
+character-in-opera( madama-butterfly : opera, sharpless : character ) / music
+character-in-opera( madama-butterfly : opera, suzuki : character ) / music
+character-in-opera( madama-butterfly : opera, yamadori : character ) / music
+character-in-opera( madame-sans-gene : opera, catarina : character ) / music
+character-in-opera( madame-sans-gene : opera, de-brigole : character ) / music
+character-in-opera( madame-sans-gene : opera, despereaux : character ) / music
+character-in-opera( madame-sans-gene : opera, fouche : character ) / music
+character-in-opera( madame-sans-gene : opera, gelsomino : character ) / music
+character-in-opera( madame-sans-gene : opera, giulia : character ) / music
+character-in-opera( madame-sans-gene : opera, la-rossa : character ) / music
+character-in-opera( madame-sans-gene : opera, lefebvre : character ) / music
+character-in-opera( madame-sans-gene : opera, leroy : character ) / music
+character-in-opera( madame-sans-gene : opera, madame-de-bulow : character ) / music
+character-in-opera( madame-sans-gene : opera, napoleon : character ) / music
+character-in-opera( madame-sans-gene : opera, neipperg : character ) / music
+character-in-opera( madame-sans-gene : opera, princess-elisa : character ) / music
+character-in-opera( madame-sans-gene : opera, queen-carolina : character ) / music
+character-in-opera( madame-sans-gene : opera, roustan : character ) / music
+character-in-opera( madame-sans-gene : opera, toniotta : character ) / music
+character-in-opera( madame-sans-gene : opera, vinaigre : character ) / music
+character-in-opera( manon-lescaut : opera, des-grieux : character ) / music
+character-in-opera( manon-lescaut : opera, edmondo : character ) / music
+character-in-opera( manon-lescaut : opera, geronte : character ) / music
+character-in-opera( manon-lescaut : opera, lescaut : character ) / music
+character-in-opera( manon-lescaut : opera, manon : character ) / music
+character-in-opera( mefistofele : opera, elena-mefistofele : character ) / music
+character-in-opera( mefistofele : opera, faust-c : character ) / music
+character-in-opera( mefistofele : opera, margherita : character ) / music
+character-in-opera( mefistofele : opera, marta : character ) / music
+character-in-opera( mefistofele : opera, mefistofele-c : character ) / music
+character-in-opera( mefistofele : opera, wagner : character ) / music
+character-in-opera( otello : opera, cassio : character ) / music
+character-in-opera( otello : opera, desdemona : character ) / music
+character-in-opera( otello : opera, emilia : character ) / music
+character-in-opera( otello : opera, jago : character ) / music
+character-in-opera( otello : opera, lodovico : character ) / music
+character-in-opera( otello : opera, montano : character ) / music
+character-in-opera( otello : opera, otello-c : character ) / music
+character-in-opera( otello : opera, roderigo : character ) / music
+character-in-opera( otello : opera, un-araldo : character ) / music
+character-in-opera( pagliacci : opera, beppe : character ) / music
+character-in-opera( pagliacci : opera, canio : character ) / music
+character-in-opera( pagliacci : opera, nedda : character ) / music
+character-in-opera( pagliacci : opera, silvio : character ) / music
+character-in-opera( pagliacci : opera, tonio : character ) / music
+character-in-opera( suor-angelica : opera, abbess : character ) / music
+character-in-opera( suor-angelica : opera, alms-collector : character ) / music
+character-in-opera( suor-angelica : opera, angelica : character ) / music
+character-in-opera( suor-angelica : opera, dolcina : character ) / music
+character-in-opera( suor-angelica : opera, genovieffa : character ) / music
+character-in-opera( suor-angelica : opera, mistress-of-novices : character ) / music
+character-in-opera( suor-angelica : opera, monitor : character ) / music
+character-in-opera( suor-angelica : opera, osmina : character ) / music
+character-in-opera( suor-angelica : opera, zia : character ) / music
+character-in-opera( tosca : opera, angelotti : character ) / music
+character-in-opera( tosca : opera, cavaradossi : character ) / music
+character-in-opera( tosca : opera, gaoler : character ) / music
+character-in-opera( tosca : opera, sacristan : character ) / music
+character-in-opera( tosca : opera, scarpia : character ) / music
+character-in-opera( tosca : opera, sciarrone : character ) / music
+character-in-opera( tosca : opera, shepherd-boy : character ) / music
+character-in-opera( tosca : opera, spoletta : character ) / music
+character-in-opera( tosca : opera, tosca-c : character ) / music
+character-in-opera( turandot : opera, calaf : character ) / music
+character-in-opera( turandot : opera, emperor-altoum : character ) / music
+character-in-opera( turandot : opera, liu : character ) / music
+character-in-opera( turandot : opera, mandarin : character ) / music
+character-in-opera( turandot : opera, pang : character ) / music
+character-in-opera( turandot : opera, ping : character ) / music
+character-in-opera( turandot : opera, pong : character ) / music
+character-in-opera( turandot : opera, timur : character ) / music
+character-in-opera( turandot : opera, turandot-c : character ) / music
+
+/* -- AT: composed-by */
+composed-by( beethoven : composer, fidelio : opera ) / music
+composed-by( bizet : composer, carmen : opera ) / music
+composed-by( boito : composer, mefistofele : opera ) / music
+composed-by( boito : composer, nerone : opera ) / music
+composed-by( catalani : composer, dejanice : opera ) / music
+composed-by( catalani : composer, edmea : opera ) / music
+composed-by( catalani : composer, la-falce : opera ) / music
+composed-by( catalani : composer, la-wally : opera ) / music
+composed-by( catalani : composer, loreley : opera ) / music
+composed-by( cilea : composer, adriana-lecouvreur : opera ) / music
+composed-by( cilea : composer, gina : opera ) / music
+composed-by( cilea : composer, gloria : opera ) / music
+composed-by( cilea : composer, il-matrimonio-selvaggio : opera ) / music
+composed-by( cilea : composer, la-tilda : opera ) / music
+composed-by( cilea : composer, larlesiana : opera ) / music
+composed-by( cilea : composer, ritorno-ad-amore : opera ) / music
+composed-by( giordano : composer, andrea-chenier : opera ) / music
+composed-by( giordano : composer, fedora : opera ) / music
+composed-by( giordano : composer, il-re : opera ) / music
+composed-by( giordano : composer, il-voto : opera ) / music
+composed-by( giordano : composer, la-cena-delle-beffe : opera ) / music
+composed-by( giordano : composer, madame-sans-gene : opera ) / music
+composed-by( giordano : composer, marcella : opera ) / music
+composed-by( giordano : composer, marina : opera ) / music
+composed-by( giordano : composer, mese-mariano : opera ) / music
+composed-by( giordano : composer, regina-diaz : opera ) / music
+composed-by( giordano : composer, siberia : opera ) / music
+composed-by( leoncavallo : composer, chatterton : opera ) / music
+composed-by( leoncavallo : composer, der-roland-von-berlin : opera ) / music
+composed-by( leoncavallo : composer, epido-re : opera ) / music
+composed-by( leoncavallo : composer, goffredo-mameli : opera ) / music
+composed-by( leoncavallo : composer, i-medici : opera ) / music
+composed-by( leoncavallo : composer, la-boheme2 : opera ) / music
+composed-by( leoncavallo : composer, maia : opera ) / music
+composed-by( leoncavallo : composer, oedipus-rex : opera ) / music
+composed-by( leoncavallo : composer, pagliacci : opera ) / music
+composed-by( leoncavallo : composer, zaza : opera ) / music
+composed-by( leoncavallo : composer, zingari : opera ) / music
+composed-by( mascagni : composer, amica : opera ) / music
+composed-by( mascagni : composer, cavalleria-rusticana : opera ) / music
+composed-by( mascagni : composer, guglielmo-ratcliff : opera ) / music
+composed-by( mascagni : composer, i-rantzau : opera ) / music
+composed-by( mascagni : composer, il-piccolo-marat : opera ) / music
+composed-by( mascagni : composer, iris : opera ) / music
+composed-by( mascagni : composer, isabeau : opera ) / music
+composed-by( mascagni : composer, lamico-fritz : opera ) / music
+composed-by( mascagni : composer, le-maschere : opera ) / music
+composed-by( mascagni : composer, lodoletta : opera ) / music
+composed-by( mascagni : composer, nerone2 : opera ) / music
+composed-by( mascagni : composer, parisina : opera ) / music
+composed-by( mascagni : composer, pinotta : opera ) / music
+composed-by( mascagni : composer, si : opera ) / music
+composed-by( mascagni : composer, silvano : opera ) / music
+composed-by( mascagni : composer, zanetto : opera ) / music
+composed-by( mozart : composer, don-giovanni : opera ) / music
+composed-by( mozart : composer, le-nozze-di-figaro : opera ) / music
+composed-by( ponchielli : composer, bertrando-dal-bormio : opera ) / music
+composed-by( ponchielli : composer, i-lituani : opera ) / music
+composed-by( ponchielli : composer, i-mori-di-valenza : opera ) / music
+composed-by( ponchielli : composer, i-promessi-sposi : opera ) / music
+composed-by( ponchielli : composer, il-figliuol-prodigo : opera ) / music
+composed-by( ponchielli : composer, il-parlatore-eterno : opera ) / music
+composed-by( ponchielli : composer, il-sindaco-babbeo : opera ) / music
+composed-by( ponchielli : composer, la-gioconda : opera ) / music
+composed-by( ponchielli : composer, la-savoiarda : opera ) / music
+composed-by( ponchielli : composer, la-vergine-di-kermo : opera ) / music
+composed-by( ponchielli : composer, marion-delorme : opera ) / music
+composed-by( ponchielli : composer, roderigo-re-dei-goti : opera ) / music
+composed-by( prokofiev : composer, betrothal-in-a-monastery : opera ) / music
+composed-by( puccini : composer, edgar : opera ) / music
+composed-by( puccini : composer, gianni-schicchi : opera ) / music
+composed-by( puccini : composer, il-tabarro : opera ) / music
+composed-by( puccini : composer, il-trittico : opera ) / music
+composed-by( puccini : composer, la-boheme : opera ) / music
+composed-by( puccini : composer, la-fanciulla-del-west : opera ) / music
+composed-by( puccini : composer, la-rondine : opera ) / music
+composed-by( puccini : composer, le-villi : opera ) / music
+composed-by( puccini : composer, madama-butterfly : opera ) / music
+composed-by( puccini : composer, manon-lescaut : opera ) / music
+composed-by( puccini : composer, suor-angelica : opera ) / music
+composed-by( puccini : composer, tosca : opera ) / music
+composed-by( puccini : composer, turandot : opera ) / music
+composed-by( rossini : composer, il-barbiere-di-siviglia : opera ) / music
+composed-by( verdi : composer, aida : opera ) / music
+composed-by( verdi : composer, alzira : opera ) / music
+composed-by( verdi : composer, attila : opera ) / music
+composed-by( verdi : composer, don-carlo : opera ) / music
+composed-by( verdi : composer, ernani : opera ) / music
+composed-by( verdi : composer, falstaff : opera ) / music
+composed-by( verdi : composer, giovanna-darco : opera ) / music
+composed-by( verdi : composer, i-due-foscari : opera ) / music
+composed-by( verdi : composer, i-lombardi : opera ) / music
+composed-by( verdi : composer, i-masnadieri : opera ) / music
+composed-by( verdi : composer, i-vespri-siciliani : opera ) / music
+composed-by( verdi : composer, il-corsaro : opera ) / music
+composed-by( verdi : composer, il-trovatore : opera ) / music
+composed-by( verdi : composer, jerusalem-o : opera ) / music
+composed-by( verdi : composer, la-battaglia-di-legnano : opera ) / music
+composed-by( verdi : composer, la-forza-del-destino : opera ) / music
+composed-by( verdi : composer, la-traviata : opera ) / music
+composed-by( verdi : composer, luisa-miller : opera ) / music
+composed-by( verdi : composer, macbeth1 : opera ) / music
+composed-by( verdi : composer, nabucco : opera ) / music
+composed-by( verdi : composer, oberto : opera ) / music
+composed-by( verdi : composer, otello : opera ) / music
+composed-by( verdi : composer, rigoletto : opera ) / music
+composed-by( verdi : composer, simon-boccanegra : opera ) / music
+composed-by( verdi : composer, stiffelio : opera ) / music
+composed-by( verdi : composer, un-ballo-in-maschera : opera ) / music
+composed-by( verdi : composer, un-giorno-de-regno : opera ) / music
+composed-by( zandonai : composer, conchita : opera ) / music
+composed-by( zandonai : composer, francesca-da-rimini : opera ) / music
+composed-by( zandonai : composer, giuliano : opera ) / music
+composed-by( zandonai : composer, giulietta-e-romeo : opera ) / music
+composed-by( zandonai : composer, i-cavalieri-di-ekebu : opera ) / music
+composed-by( zandonai : composer, il-bacio : opera ) / music
+composed-by( zandonai : composer, il-grillo-del-focolare : opera ) / music
+composed-by( zandonai : composer, la-coppa-del-re : opera ) / music
+composed-by( zandonai : composer, la-farsa-amorosa : opera ) / music
+composed-by( zandonai : composer, la-via-della-finestra : opera ) / music
+composed-by( zandonai : composer, luccellino-doro : opera ) / music
+composed-by( zandonai : composer, melenis : opera ) / music
+composed-by( zandonai : composer, una-partita : opera ) / music
+
+/* -- AT: consists-of */
+consists-of( il-trittico : container, gianni-schicchi : containee ) / music
+consists-of( il-trittico : container, il-tabarro : containee ) / music
+consists-of( il-trittico : container, suor-angelica : containee ) / music
+
+/* -- AT: died-in */
+died-in( bologna : place, zangarini : person ) / biography
+died-in( brescia : place, dannunzio : person ) / biography
+died-in( brussels : place, puccini : person ) / biography
+died-in( capri : place, locle : person ) / biography
+died-in( caprino-bergamasco : place, ghislanzoni : person ) / biography
+died-in( colleretto-parella : place, giacosa : person ) / biography
+died-in( la-spezia : place, romani : person ) / biography
+died-in( livorno : place, menasci : person ) / biography
+died-in( livorno : place, targioni-tozzetti : person ) / biography
+died-in( lugano : place, fontana : person ) / biography
+died-in( marly-le-roy : place, melesville : person ) / biography
+died-in( milano : place, adami : person ) / biography
+died-in( milano : place, boito : person ) / biography
+died-in( milano : place, catalani : person ) / biography
+died-in( milano : place, dormeville : person ) / biography
+died-in( milano : place, giordano : person ) / biography
+died-in( milano : place, maffei : person ) / biography
+died-in( milano : place, piave : person ) / biography
+died-in( milano : place, piazza : person ) / biography
+died-in( milano : place, ponchielli : person ) / biography
+died-in( milano : place, ricordi : person ) / biography
+died-in( milano : place, simoni : person ) / biography
+died-in( milano : place, solera : person ) / biography
+died-in( milano : place, verdi : person ) / biography
+died-in( milano : place, zanardini : person ) / biography
+died-in( montecatini : place, leoncavallo : person ) / biography
+died-in( napoli : place, cammarano : person ) / biography
+died-in( napoli : place, daspuro : person ) / biography
+died-in( napoli : place, golisciani : person ) / biography
+died-in( paris : place, daudet : person ) / biography
+died-in( paris : place, mery : person ) / biography
+died-in( paris : place, royer : person ) / biography
+died-in( paris : place, scribe : person ) / biography
+died-in( paris : place, vaez : person ) / biography
+died-in( pesaro : place, zandonai : person ) / biography
+died-in( piacenza : place, illica : person ) / biography
+died-in( roma : place, civinini : person ) / biography
+died-in( roma : place, colautti : person ) / biography
+died-in( roma : place, forzano : person ) / biography
+died-in( roma : place, mascagni : person ) / biography
+died-in( varazza : place, cilea : person ) / biography
+died-in( varese : place, praga : person ) / biography
+died-in( venezia : place, somma : person ) / biography
+died-in( zoagli : place, benelli : person ) / biography
+
+/* -- AT: exponent-of */
+exponent-of( verismo : style, giacosa : person ) / music
+exponent-of( verismo : style, giordano : person ) / music
+exponent-of( verismo : style, leoncavallo : person ) / music
+exponent-of( verismo : style, mascagni : person ) / music
+exponent-of( verismo : style, puccini : person ) / music
+
+/* -- AT: located-in */
+located-in( argentina : container, buenos-aires : containee ) / geography
+located-in( austria : container, tyrol : containee ) / geography
+located-in( belgium : container, brussels : containee ) / geography
+located-in( buenos-aires : container, teatro-colon : containee ) / geography
+located-in( cairo : container, cairo-opera : containee ) / geography
+located-in( china : container, beijing : containee ) / geography
+located-in( cremona : container, teatro-concordia : containee ) / geography
+located-in( egypt : container, cairo : containee ) / geography
+located-in( england : container, london : containee ) / geography
+located-in( england : container, windsor : containee ) / geography
+located-in( firenze : container, teatro-della-pergola : containee ) / geography
+located-in( france : container, alsace : containee ) / geography
+located-in( france : container, arles : containee ) / geography
+located-in( france : container, bretagne : containee ) / geography
+located-in( france : container, marly-le-roy : containee ) / geography
+located-in( france : container, marseilles : containee ) / geography
+located-in( france : container, nice : containee ) / geography
+located-in( france : container, nimes : containee ) / geography
+located-in( france : container, orange : containee ) / geography
+located-in( france : container, paris : containee ) / geography
+located-in( genova : container, teatro-carlo-felice : containee ) / geography
+located-in( germany : container, alsace : containee ) / geography
+located-in( germany : container, black-forest : containee ) / geography
+located-in( germany : container, rhine : containee ) / geography
+located-in( greece : container, kreta : containee ) / geography
+located-in( israel : container, jerusalem : containee ) / geography
+located-in( italy : container, bassano : containee ) / geography
+located-in( italy : container, borgo-san-lorenzo : containee ) / geography
+located-in( italy : container, calabria : containee ) / geography
+located-in( italy : container, colleretto-parella : containee ) / geography
+located-in( italy : container, cremona : containee ) / geography
+located-in( italy : container, firenze : containee ) / geography
+located-in( italy : container, foggia : containee ) / geography
+located-in( italy : container, genova : containee ) / geography
+located-in( italy : container, le-roncole : containee ) / geography
+located-in( italy : container, livorno : containee ) / geography
+located-in( italy : container, lucca : containee ) / geography
+located-in( italy : container, mantua : containee ) / geography
+located-in( italy : container, milano : containee ) / geography
+located-in( italy : container, montecatini : containee ) / geography
+located-in( italy : container, murano : containee ) / geography
+located-in( italy : container, napoli : containee ) / geography
+located-in( italy : container, paderno-fasolaro : containee ) / geography
+located-in( italy : container, padua : containee ) / geography
+located-in( italy : container, palmi : containee ) / geography
+located-in( italy : container, pesaro : containee ) / geography
+located-in( italy : container, piacenza : containee ) / geography
+located-in( italy : container, roma : containee ) / geography
+located-in( italy : container, rovereto : containee ) / geography
+located-in( italy : container, san-remo : containee ) / geography
+located-in( italy : container, savoia : containee ) / geography
+located-in( italy : container, sicilia : containee ) / geography
+located-in( italy : container, siena : containee ) / geography
+located-in( italy : container, torino : containee ) / geography
+located-in( italy : container, trieste : containee ) / geography
+located-in( italy : container, tyrol : containee ) / geography
+located-in( italy : container, varazza : containee ) / geography
+located-in( italy : container, venezia : containee ) / geography
+located-in( italy : container, verona : containee ) / geography
+located-in( japan : container, nagasaki : containee ) / geography
+located-in( lecco : container, teatro-sociale : containee ) / geography
+located-in( london : container, h-majestys : containee ) / geography
+located-in( middle-east : container, babylon : containee ) / geography
+located-in( milano : container, la-scala : containee ) / geography
+located-in( milano : container, teatro-dal-verme : containee ) / geography
+located-in( milano : container, teatro-lirico : containee ) / geography
+located-in( milano : container, teatro-regio : containee ) / geography
+located-in( monte-carlo : container, theatre-du-casino : containee ) / geography
+located-in( napoli : container, teatro-san-carlo : containee ) / geography
+located-in( new-york : container, metropolitan : containee ) / geography
+located-in( paris : container, paris-opera : containee ) / geography
+located-in( pesaro : container, liceo-musicale : containee ) / geography
+located-in( piacenza : container, teatro-municipale : containee ) / geography
+located-in( roma : container, teatro-apollo : containee ) / geography
+located-in( roma : container, teatro-argentina : containee ) / geography
+located-in( roma : container, teatro-costanzi : containee ) / geography
+located-in( roma : container, teatro-quirino : containee ) / geography
+located-in( russia : container, st-petersburg : containee ) / geography
+located-in( san-remo : container, casino-di-san-remo : containee ) / geography
+located-in( sicilia : container, palermo : containee ) / geography
+located-in( spain : container, madrid : containee ) / geography
+located-in( spain : container, sevilla : containee ) / geography
+located-in( st-petersburg : container, st-petersburg-imperial-opera : containee ) / geography
+located-in( switzerland : container, lugano : containee ) / geography
+located-in( teatro-pagliano : container, firenze : containee ) / geography
+located-in( trieste : container, teatro-grande : containee ) / geography
+located-in( turkey : container, antioch : containee ) / geography
+located-in( united-kingdom : container, england : containee ) / geography
+located-in( united-kingdom : container, scotland : containee ) / geography
+located-in( united-kingdom : container, wales : containee ) / geography
+located-in( usa : container, boston : containee ) / geography
+located-in( usa : container, california : containee ) / geography
+located-in( usa : container, new-york : containee ) / geography
+located-in( venezia : container, la-fenice : containee ) / geography
+located-in( verona : container, teatro-filarmonico : containee ) / geography
+
+/* -- AT: premiere */
+premiere( milano : city, il-re : opera ) / music
+premiere( milano : city, il-sindaco-babbeo : opera ) / music
+premiere( milano : city, la-cena-delle-beffe : opera ) / music
+premiere( milano : city, marcella : opera ) / music
+premiere( milano : city, melenis : opera ) / music
+premiere( milano : city, siberia : opera ) / music
+premiere( monte-carlo : city, amica : opera ) / music
+premiere( napoli : city, gina : opera ) / music
+premiere( napoli : city, regina-diaz : opera ) / music
+premiere( palermo : city, mese-mariano : opera ) / music
+premiere( pesaro : city, la-via-della-finestra : opera ) / music
+premiere( pesaro : city, zanetto : opera ) / music
+premiere( roma : city, il-voto : opera ) / music
+premiere( roma : city, la-farsa-amorosa : opera ) / music
+premiere( rovereto : city, luccellino-doro : opera ) / music
+premiere( teatro-della-pergola : city, i-rantzau : opera ) / music
+premiere( torino : city, il-grillo-del-focolare : opera ) / music
+premiere( cairo-opera : theatre, aida : opera ) / music
+premiere( h-majestys : theatre, i-masnadieri : opera ) / music
+premiere( la-fenice : theatre, attila : opera ) / music
+premiere( la-fenice : theatre, ernani : opera ) / music
+premiere( la-fenice : theatre, la-boheme2 : opera ) / music
+premiere( la-fenice : theatre, la-traviata : opera ) / music
+premiere( la-fenice : theatre, le-maschere : opera ) / music
+premiere( la-fenice : theatre, rigoletto : opera ) / music
+premiere( la-fenice : theatre, simon-boccanegra : opera ) / music
+premiere( la-scala : theatre, andrea-chenier : opera ) / music
+premiere( la-scala : theatre, dejanice : opera ) / music
+premiere( la-scala : theatre, edgar : opera ) / music
+premiere( la-scala : theatre, edmea : opera ) / music
+premiere( la-scala : theatre, falstaff : opera ) / music
+premiere( la-scala : theatre, giovanna-darco : opera ) / music
+premiere( la-scala : theatre, guglielmo-ratcliff : opera ) / music
+premiere( la-scala : theatre, i-cavalieri-di-ekebu : opera ) / music
+premiere( la-scala : theatre, i-lituani : opera ) / music
+premiere( la-scala : theatre, i-lombardi : opera ) / music
+premiere( la-scala : theatre, il-figliuol-prodigo : opera ) / music
+premiere( la-scala : theatre, la-gioconda : opera ) / music
+premiere( la-scala : theatre, la-wally : opera ) / music
+premiere( la-scala : theatre, le-maschere : opera ) / music
+premiere( la-scala : theatre, madama-butterfly : opera ) / music
+premiere( la-scala : theatre, marion-delorme : opera ) / music
+premiere( la-scala : theatre, nabucco : opera ) / music
+premiere( la-scala : theatre, nerone2 : opera ) / music
+premiere( la-scala : theatre, oberto : opera ) / music
+premiere( la-scala : theatre, otello : opera ) / music
+premiere( la-scala : theatre, parisina : opera ) / music
+premiere( la-scala : theatre, silvano : opera ) / music
+premiere( la-scala : theatre, turandot : opera ) / music
+premiere( la-scala : theatre, un-giorno-de-regno : opera ) / music
+premiere( la-scala : theatre, una-partita : opera ) / music
+premiere( liceo-musicale : theatre, zanetto : opera ) / music
+premiere( metropolitan : theatre, gianni-schicchi : opera ) / music
+premiere( metropolitan : theatre, il-tabarro : opera ) / music
+premiere( metropolitan : theatre, il-trittico : opera ) / music
+premiere( metropolitan : theatre, la-fanciulla-del-west : opera ) / music
+premiere( metropolitan : theatre, madame-sans-gene : opera ) / music
+premiere( metropolitan : theatre, suor-angelica : opera ) / music
+premiere( paris-opera : theatre, don-carlo : opera ) / music
+premiere( paris-opera : theatre, i-vespri-siciliani : opera ) / music
+premiere( pinotta : theatre, casino-di-san-remo : opera ) / music
+premiere( st-petersburg-imperial-opera : theatre, la-forza-del-destino : opera ) / music
+premiere( teatro-apollo : theatre, il-trovatore : opera ) / music
+premiere( teatro-apollo : theatre, un-ballo-in-maschera : opera ) / music
+premiere( teatro-argentina : theatre, chatterton : opera ) / music
+premiere( teatro-argentina : theatre, i-due-foscari : opera ) / music
+premiere( teatro-argentina : theatre, la-battaglia-di-legnano : opera ) / music
+premiere( teatro-carlo-felice : theatre, le-maschere : opera ) / music
+premiere( teatro-colon : theatre, isabeau : opera ) / music
+premiere( teatro-concordia : theatre, i-promessi-sposi : opera ) / music
+premiere( teatro-concordia : theatre, la-savoiarda : opera ) / music
+premiere( teatro-concordia : theatre, la-vergine-di-kermo : opera ) / music
+premiere( teatro-costanzi : theatre, cavalleria-rusticana : opera ) / music
+premiere( teatro-costanzi : theatre, giulietta-e-romeo : opera ) / music
+premiere( teatro-costanzi : theatre, il-piccolo-marat : opera ) / music
+premiere( teatro-costanzi : theatre, iris : opera ) / music
+premiere( teatro-costanzi : theatre, lamico-fritz : opera ) / music
+premiere( teatro-costanzi : theatre, le-maschere : opera ) / music
+premiere( teatro-costanzi : theatre, lodoletta : opera ) / music
+premiere( teatro-costanzi : theatre, maia : opera ) / music
+premiere( teatro-costanzi : theatre, tosca : opera ) / music
+premiere( teatro-dal-verme : theatre, conchita : opera ) / music
+premiere( teatro-dal-verme : theatre, i-medici : opera ) / music
+premiere( teatro-dal-verme : theatre, i-promessi-sposi : opera ) / music
+premiere( teatro-dal-verme : theatre, la-savoiarda : opera ) / music
+premiere( teatro-dal-verme : theatre, le-villi : opera ) / music
+premiere( teatro-dal-verme : theatre, pagliacci : opera ) / music
+premiere( teatro-della-pergola : theatre, macbeth1 : opera ) / music
+premiere( teatro-filarmonico : theatre, le-maschere : opera ) / music
+premiere( teatro-grande : theatre, il-corsaro : opera ) / music
+premiere( teatro-grande : theatre, stiffelio : opera ) / music
+premiere( teatro-lirico : theatre, adriana-lecouvreur : opera ) / music
+premiere( teatro-lirico : theatre, fedora : opera ) / music
+premiere( teatro-lirico : theatre, larlesiana : opera ) / music
+premiere( teatro-lirico : theatre, zaza : opera ) / music
+premiere( teatro-municipale : theatre, roderigo-re-dei-goti : opera ) / music
+premiere( teatro-pagliano : theatre, la-tilda : opera ) / music
+premiere( teatro-quirino : theatre, si : opera ) / music
+premiere( teatro-regio : theatre, francesca-da-rimini : opera ) / music
+premiere( teatro-regio : theatre, la-boheme : opera ) / music
+premiere( teatro-regio : theatre, le-maschere : opera ) / music
+premiere( teatro-regio : theatre, loreley : opera ) / music
+premiere( teatro-regio : theatre, manon-lescaut : opera ) / music
+premiere( teatro-san-carlo : theatre, alzira : opera ) / music
+premiere( teatro-san-carlo : theatre, giuliano : opera ) / music
+premiere( teatro-san-carlo : theatre, luisa-miller : opera ) / music
+premiere( teatro-sociale : theatre, il-parlatore-eterno : opera ) / music
+premiere( theatre-du-casino : theatre, i-mori-di-valenza : opera ) / music
+premiere( theatre-du-casino : theatre, la-rondine : opera ) / music
+premiere( rai : tv, il-bacio : opera ) / music
+
+/* -- AT: published-by */
+published-by( lucca-p : publisher, attila : opera ) / music
+published-by( lucca-p : publisher, dejanice : opera ) / music
+published-by( lucca-p : publisher, edmea : opera ) / music
+published-by( lucca-p : publisher, i-masnadieri : opera ) / music
+published-by( lucca-p : publisher, il-corsaro : opera ) / music
+published-by( lucca-p : publisher, loreley : opera ) / music
+published-by( ricordi-p : publisher, aida : opera ) / music
+published-by( ricordi-p : publisher, alzira : opera ) / music
+published-by( ricordi-p : publisher, don-carlo : opera ) / music
+published-by( ricordi-p : publisher, edgar : opera ) / music
+published-by( ricordi-p : publisher, ernani : opera ) / music
+published-by( ricordi-p : publisher, falstaff : opera ) / music
+published-by( ricordi-p : publisher, giovanna-darco : opera ) / music
+published-by( ricordi-p : publisher, i-due-foscari : opera ) / music
+published-by( ricordi-p : publisher, i-lombardi : opera ) / music
+published-by( ricordi-p : publisher, i-medici : opera ) / music
+published-by( ricordi-p : publisher, i-vespri-siciliani : opera ) / music
+published-by( ricordi-p : publisher, il-trovatore : opera ) / music
+published-by( ricordi-p : publisher, jerusalem-o : opera ) / music
+published-by( ricordi-p : publisher, la-battaglia-di-legnano : opera ) / music
+published-by( ricordi-p : publisher, la-boheme : opera ) / music
+published-by( ricordi-p : publisher, la-fanciulla-del-west : opera ) / music
+published-by( ricordi-p : publisher, la-forza-del-destino : opera ) / music
+published-by( ricordi-p : publisher, la-traviata : opera ) / music
+published-by( ricordi-p : publisher, la-wally : opera ) / music
+published-by( ricordi-p : publisher, le-villi : opera ) / music
+published-by( ricordi-p : publisher, luisa-miller : opera ) / music
+published-by( ricordi-p : publisher, macbeth1 : opera ) / music
+published-by( ricordi-p : publisher, madama-butterfly : opera ) / music
+published-by( ricordi-p : publisher, manon-lescaut : opera ) / music
+published-by( ricordi-p : publisher, nabucco : opera ) / music
+published-by( ricordi-p : publisher, oberto : opera ) / music
+published-by( ricordi-p : publisher, otello : opera ) / music
+published-by( ricordi-p : publisher, rigoletto : opera ) / music
+published-by( ricordi-p : publisher, simon-boccanegra : opera ) / music
+published-by( ricordi-p : publisher, stiffelio : opera ) / music
+published-by( ricordi-p : publisher, tosca : opera ) / music
+published-by( ricordi-p : publisher, un-ballo-in-maschera : opera ) / music
+published-by( ricordi-p : publisher, un-giorno-de-regno : opera ) / music
+published-by( sonzogno : publisher, adriana-lecouvreur : opera ) / music
+published-by( sonzogno : publisher, andrea-chenier : opera ) / music
+published-by( sonzogno : publisher, cavalleria-rusticana : opera ) / music
+published-by( sonzogno : publisher, fedora : opera ) / music
+published-by( sonzogno : publisher, gina : opera ) / music
+published-by( sonzogno : publisher, il-voto : opera ) / music
+published-by( sonzogno : publisher, la-boheme2 : opera ) / music
+published-by( sonzogno : publisher, la-gioconda : opera ) / music
+published-by( sonzogno : publisher, la-rondine : opera ) / music
+published-by( sonzogno : publisher, la-tilda : opera ) / music
+published-by( sonzogno : publisher, lamico-fritz : opera ) / music
+published-by( sonzogno : publisher, larlesiana : opera ) / music
+published-by( sonzogno : publisher, pagliacci : opera ) / music
+published-by( sonzogno : publisher, parisina : opera ) / music
+published-by( sonzogno : publisher, regina-diaz : opera ) / music
+published-by( sonzogno : publisher, zaza : opera ) / music
+
+/* -- AT: pupil-of */
+pupil-of( mascagni : teacher, zandonai : pupil ) / biography
+pupil-of( ponchielli : teacher, mascagni : pupil ) / biography
+pupil-of( ponchielli : teacher, puccini : pupil ) / biography
+
+/* -- AT: setting */
+setting( french-revolution : event, andrea-chenier : opera ) / history music
+setting( french-revolution : event, gina : opera ) / history music
+setting( french-revolution : event, madame-sans-gene : opera ) / history music
+setting( alsace : place, lamico-fritz : opera ) / geography music
+setting( antioch : place, i-lombardi : opera ) / geography music
+setting( arles : place, larlesiana : opera ) / geography music
+setting( babylon : place, nabucco : opera ) / geography music
+setting( bassano : place, oberto : opera ) / geography music
+setting( beijing : place, turandot : opera ) ~ turandot-beijing
+setting( black-forest : place, le-villi : opera ) / geography music
+setting( boston : place, un-ballo-in-maschera : opera ) / geography music
+setting( bretagne : place, un-giorno-de-regno : opera ) / geography music
+setting( calabria : place, pagliacci : opera ) / geography music
+setting( california : place, la-fanciulla-del-west : opera ) / geography music
+setting( cyprus : place, otello : opera ) / geography music
+setting( egypt : place, aida : opera ) / geography music
+setting( firenze : place, gianni-schicchi : opera ) / geography music
+setting( firenze : place, suor-angelica : opera ) / geography music
+setting( firenze : place, zanetto : opera ) / geography music
+setting( flanders : place, edgar : opera ) / geography music
+setting( france : place, gina : opera ) / geography music
+setting( france : place, giovanna-darco : opera ) / geography music
+setting( france : place, madame-sans-gene : opera ) / geography music
+setting( france : place, manon-lescaut : opera ) / geography music
+setting( genova : place, simon-boccanegra : opera ) / geography music
+setting( italy : place, attila : opera ) / geography music
+setting( italy : place, la-battaglia-di-legnano : opera ) / geography music
+setting( japan : place, iris : opera ) / geography music
+setting( jerusalem : place, i-lombardi : opera ) / geography music
+setting( jerusalem : place, nabucco : opera ) / geography music
+setting( kreta : place, i-due-foscari : opera ) / geography music
+setting( madrid : place, don-carlo : opera ) / geography music
+setting( mantua : place, rigoletto : opera ) / geography music
+setting( milano : place, i-lombardi : opera ) / geography music
+setting( nagasaki : place, madama-butterfly : opera ) / geography music
+setting( napoli : place, il-voto : opera ) / geography music
+setting( netherlands : place, lodoletta : opera ) / geography music
+setting( nice : place, la-rondine : opera ) / geography music
+setting( palermo : place, i-vespri-siciliani : opera ) / geography music
+setting( paris : place, adriana-lecouvreur : opera ) / geography music
+setting( paris : place, andrea-chenier : opera ) / geography music
+setting( paris : place, don-carlo : opera ) / geography music
+setting( paris : place, fedora : opera ) / geography music
+setting( paris : place, il-piccolo-marat : opera ) / geography music
+setting( paris : place, il-tabarro : opera ) / geography music
+setting( paris : place, la-boheme : opera ) / geography music
+setting( paris : place, la-boheme2 : opera ) / geography music
+setting( paris : place, la-rondine : opera ) / geography music
+setting( paris : place, la-traviata : opera ) / geography music
+setting( paris : place, lodoletta : opera ) / geography music
+setting( paris : place, zaza : opera ) / geography music
+setting( rhine : place, loreley : opera ) / geography music
+setting( roma : place, nerone2 : opera ) / geography music
+setting( roma : place, tosca : opera ) / geography music
+setting( savoia : place, amica : opera ) / geography music
+setting( scotland : place, guglielmo-ratcliff : opera ) / geography music
+setting( scotland : place, macbeth1 : opera ) / geography music
+setting( sevilla : place, betrothal-in-a-monastery : opera ) / geography music
+setting( sevilla : place, carmen : opera ) / geography music
+setting( sevilla : place, conchita : opera ) / geography music
+setting( sevilla : place, don-giovanni : opera ) / geography music
+setting( sevilla : place, fidelio : opera ) / geography music
+setting( sevilla : place, il-barbiere-di-siviglia : opera ) / geography music
+setting( sevilla : place, la-forza-del-destino : opera ) / geography music
+setting( sevilla : place, le-nozze-di-figaro : opera ) / geography music
+setting( sicilia : place, cavalleria-rusticana : opera ) / geography music
+setting( siena : place, gloria : opera ) / geography music
+setting( south-america : place, alzira : opera ) / geography music
+setting( spain : place, ernani : opera ) / geography music
+setting( spain : place, il-trovatore : opera ) / geography music
+setting( tyrol : place, la-wally : opera ) / geography music
+setting( tyrol : place, luisa-miller : opera ) / geography music
+setting( usa : place, manon-lescaut : opera ) / geography music
+setting( venezia : place, la-gioconda : opera ) / geography music
+setting( windsor : place, falstaff : opera ) / geography music
+
+/* -- AT: sings-aria */
+sings-aria( adriana : character, io-son-lumile-ancella : aria ) / music
+sings-aria( aida-c : character, ritorna-vincitor : aria ) / music
+sings-aria( angelica : character, senza-mamma : aria ) / music
+sings-aria( anna : character, se-come-voi : aria ) / music
+sings-aria( butterfly : character, un-bel-di-vedremo : aria ) / music
+sings-aria( calaf : character, ah-per-lultima-volta : aria ) / music
+sings-aria( calaf : character, nessun-dorma : aria ) / music
+sings-aria( calaf : character, non-piangere-liu : aria ) / music
+sings-aria( canio : character, vesti-la-giubba : aria ) / music
+sings-aria( catarina : character, che-me-ne-faccio : aria ) / music
+sings-aria( catarina : character, ma-piu-spesso : aria ) / music
+sings-aria( cavaradossi : character, e-lucevan-le-stelle : aria ) / music
+sings-aria( cavaradossi : character, o-dolci-mani : aria ) / music
+sings-aria( cavaradossi : character, recondita-armonia : aria ) / music
+sings-aria( chenier : character, come-un-bel-di-di-maggio : aria ) / music
+sings-aria( chenier : character, un-di-allazzurro-spazio : aria ) / music
+sings-aria( desdemona : character, piangea-cantando : aria ) / music
+sings-aria( federico2 : character, e-la-solita-storia-del-pastore : aria ) / music
+sings-aria( fidelia : character, dogni-dolor : aria ) / music
+sings-aria( flammen : character, se-franz-dicesse-il-vero : aria ) / music
+sings-aria( fritz : character, cherry-duet : aria ) / music
+sings-aria( gioconda : character, suicidio : aria ) / music
+sings-aria( giovanni-da-procida : character, o-tu-palermo : aria ) / music
+sings-aria( grimaldo : character, cielo-e-mar : aria ) / music
+sings-aria( la-cieca : character, voce-di-donna : aria ) / music
+sings-aria( lauretta : character, o-mio-babbino-caro : aria ) / music
+sings-aria( leonora : character, pace-pace-mio-dio : aria ) / music
+sings-aria( liu : character, ah-per-lultima-volta : aria ) / music
+sings-aria( liu : character, signore-ascolta : aria ) / music
+sings-aria( liu : character, tu-che-di-gel-sei-cinta : aria ) / music
+sings-aria( loris : character, amor-ti-vieta : aria ) / music
+sings-aria( maddalena : character, la-mamma-morta : aria ) / music
+sings-aria( magda : character, chi-il-bel-sogno : aria ) / music
+sings-aria( manon : character, in-quelle-trine-morbide : aria ) / music
+sings-aria( manon : character, sola-perduta-abbandonata : aria ) / music
+sings-aria( margherita : character, laltra-notte : aria ) / music
+sings-aria( maurizio : character, la-dolcissima-effigie : aria ) / music
+sings-aria( maurizio : character, lanima-ho-stanca : aria ) / music
+sings-aria( mimi : character, mi-chiamono-mimi : aria ) / music
+sings-aria( minnie : character, laggiu-nel-soledad : aria ) / music
+sings-aria( musetta : character, quando-men-vo-soletta : aria ) / music
+sings-aria( nedda : character, qual-fiamma : aria ) / music
+sings-aria( osaka : character, apri-la-tua-finestra : aria ) / music
+sings-aria( pang : character, ah-per-lultima-volta : aria ) / music
+sings-aria( ping : character, ah-per-lultima-volta : aria ) / music
+sings-aria( pong : character, ah-per-lultima-volta : aria ) / music
+sings-aria( rodolfo : character, che-gelida-manina : aria ) / music
+sings-aria( rodolfo : character, o-soave-fanciulla : aria ) / music
+sings-aria( scarpia : character, va-tosca : aria ) / music
+sings-aria( suzel : character, cherry-duet : aria ) / music
+sings-aria( timur : character, ah-per-lultima-volta : aria ) / music
+sings-aria( tosca-c : character, vissi-darte : aria ) / music
+sings-aria( turandot-c : character, in-questa-regia : aria ) / music
+sings-aria( turiddu : character, mamma-quel-vino-e-generoso : aria ) / music
+sings-aria( wally : character, ebben-ne-andro-lontana : aria ) / music
+sings-aria( walter2 : character, nel-verde-maggio : aria ) / music
+
+/* -- AT: written-by */
+written-by( adami : librettist, il-tabarro : opera ) / music
+written-by( adami : librettist, la-rondine : opera ) / music
+written-by( adami : librettist, turandot : opera ) / music
+written-by( benelli : librettist, la-cena-delle-beffe : opera ) / music
+written-by( bey : librettist, aida : opera ) / music
+written-by( boito : librettist, falstaff : opera ) / music
+written-by( boito : librettist, la-falce : opera ) / music
+written-by( boito : librettist, la-gioconda : opera ) / music
+written-by( boito : librettist, otello : opera ) / music
+written-by( boito : librettist, simon-boccanegra : opera ) / music
+written-by( cammarano : librettist, alzira : opera ) / music
+written-by( cammarano : librettist, il-trovatore : opera ) / music
+written-by( cammarano : librettist, la-battaglia-di-legnano : opera ) / music
+written-by( cammarano : librettist, luisa-miller : opera ) / music
+written-by( choudens : librettist, amica : opera ) / music
+written-by( civinini : librettist, la-fanciulla-del-west : opera ) / music
+written-by( colautti : librettist, adriana-lecouvreur : opera ) / music
+written-by( colautti : librettist, fedora : opera ) / music
+written-by( da-ponte : librettist, don-giovanni : opera ) / music
+written-by( da-ponte : librettist, le-nozze-di-figaro : opera ) / music
+written-by( dannunzio : librettist, parisina : opera ) / music
+written-by( daspuro : librettist, il-voto : opera ) / music
+written-by( daspuro : librettist, lamico-fritz : opera ) / music
+written-by( dormeville : librettist, la-savoiarda : opera ) / music
+written-by( dormeville : librettist, loreley : opera ) / music
+written-by( duveyrier : librettist, i-vespri-siciliani : opera ) / music
+written-by( fontana : librettist, edgar : opera ) / music
+written-by( fontana : librettist, le-villi : opera ) / music
+written-by( forzano : librettist, epido-re : opera ) / music
+written-by( forzano : librettist, gianni-schicchi : opera ) / music
+written-by( forzano : librettist, il-piccolo-marat : opera ) / music
+written-by( forzano : librettist, il-re : opera ) / music
+written-by( forzano : librettist, lodoletta : opera ) / music
+written-by( forzano : librettist, oedipus-rex : opera ) / music
+written-by( forzano : librettist, suor-angelica : opera ) / music
+written-by( franci : librettist, si : opera ) / music
+written-by( ghislanzoni : librettist, aida : opera ) / music
+written-by( ghislanzoni : librettist, edmea : opera ) / music
+written-by( ghislanzoni : librettist, i-mori-di-valenza : opera ) / music
+written-by( ghislanzoni : librettist, il-parlatore-eterno : opera ) / music
+written-by( ghislanzoni : librettist, la-forza-del-destino : opera ) / music
+written-by( giachetti : librettist, il-sindaco-babbeo : opera ) / music
+written-by( giacosa : librettist, la-boheme : opera ) / music
+written-by( giacosa : librettist, loreley : opera ) / music
+written-by( giacosa : librettist, madama-butterfly : opera ) / music
+written-by( giacosa : librettist, manon-lescaut : opera ) / music
+written-by( giacosa : librettist, tosca : opera ) / music
+written-by( golisciani : librettist, gina : opera ) / music
+written-by( golisciani : librettist, marion-delorme : opera ) / music
+written-by( guidi : librettist, la-savoiarda : opera ) / music
+written-by( guidi : librettist, la-vergine-di-kermo : opera ) / music
+written-by( guidi : librettist, roderigo-re-dei-goti : opera ) / music
+written-by( halevy : librettist, carmen : opera ) / music
+written-by( illica : librettist, andrea-chenier : opera ) / music
+written-by( illica : librettist, iris : opera ) / music
+written-by( illica : librettist, isabeau : opera ) / music
+written-by( illica : librettist, la-boheme : opera ) / music
+written-by( illica : librettist, la-wally : opera ) / music
+written-by( illica : librettist, le-maschere : opera ) / music
+written-by( illica : librettist, loreley : opera ) / music
+written-by( illica : librettist, madama-butterfly : opera ) / music
+written-by( illica : librettist, manon-lescaut : opera ) / music
+written-by( illica : librettist, tosca : opera ) / music
+written-by( leoncavallo : librettist, la-boheme2 : opera ) / music
+written-by( leoncavallo : librettist, pagliacci : opera ) / music
+written-by( leoncavallo : librettist, zaza : opera ) / music
+written-by( locle : librettist, aida : opera ) / music
+written-by( locle : librettist, don-carlo : opera ) / music
+written-by( lombardo : librettist, si : opera ) / music
+written-by( maffei : librettist, guglielmo-ratcliff : opera ) / music
+written-by( maffei : librettist, i-masnadieri : opera ) / music
+written-by( marenco : librettist, larlesiana : opera ) / music
+written-by( meilhac : librettist, carmen : opera ) / music
+written-by( menasci : librettist, cavalleria-rusticana : opera ) / music
+written-by( menasci : librettist, i-rantzau : opera ) / music
+written-by( menasci : librettist, zanetto : opera ) / music
+written-by( mery : librettist, don-carlo : opera ) / music
+written-by( oliva : librettist, manon-lescaut : opera ) / music
+written-by( piave : librettist, ernani : opera ) / music
+written-by( piave : librettist, i-due-foscari : opera ) / music
+written-by( piave : librettist, il-corsaro : opera ) / music
+written-by( piave : librettist, la-forza-del-destino : opera ) / music
+written-by( piave : librettist, la-traviata : opera ) / music
+written-by( piave : librettist, macbeth1 : opera ) / music
+written-by( piave : librettist, rigoletto : opera ) / music
+written-by( piave : librettist, simon-boccanegra : opera ) / music
+written-by( piave : librettist, stiffelio : opera ) / music
+written-by( piazza : librettist, oberto : opera ) / music
+written-by( praga : librettist, i-promessi-sposi : opera ) / music
+written-by( praga : librettist, manon-lescaut : opera ) / music
+written-by( ricordi : librettist, manon-lescaut : opera ) / music
+written-by( romani : librettist, un-giorno-de-regno : opera ) / music
+written-by( royer : librettist, jerusalem-o : opera ) / music
+written-by( scribe : librettist, i-vespri-siciliani : opera ) / music
+written-by( scribe : librettist, il-figliuol-prodigo : opera ) / music
+written-by( scribe : librettist, un-ballo-in-maschera : opera ) / music
+written-by( simoni : librettist, madame-sans-gene : opera ) / music
+written-by( simoni : librettist, turandot : opera ) / music
+written-by( solera : librettist, attila : opera ) / music
+written-by( solera : librettist, giovanna-darco : opera ) / music
+written-by( solera : librettist, i-lombardi : opera ) / music
+written-by( solera : librettist, nabucco : opera ) / music
+written-by( solera : librettist, oberto : opera ) / music
+written-by( somma : librettist, un-ballo-in-maschera : opera ) / music
+written-by( sterbini : librettist, il-barbiere-di-siviglia : opera ) / music
+written-by( targioni-tozzetti : librettist, amica : opera ) / music
+written-by( targioni-tozzetti : librettist, cavalleria-rusticana : opera ) / music
+written-by( targioni-tozzetti : librettist, i-rantzau : opera ) / music
+written-by( targioni-tozzetti : librettist, il-piccolo-marat : opera ) / music
+written-by( targioni-tozzetti : librettist, nerone2 : opera ) / music
+written-by( targioni-tozzetti : librettist, silvano : opera ) / music
+written-by( targioni-tozzetti : librettist, zanetto : opera ) / music
+written-by( vaez : librettist, jerusalem-o : opera ) / music
+written-by( zanardini : librettist, dejanice : opera ) / music
+written-by( zanardini : librettist, il-figliuol-prodigo : opera ) / music
+written-by( zanardini : librettist, loreley : opera ) / music
+written-by( zangarini : librettist, la-fanciulla-del-west : opera ) / music
+written-by( anicet-bourgeois : writer, nabuchodonosor : work ) / literature
+written-by( belasco : writer, madama-butterfly-src : work ) / literature
+written-by( belasco : writer, the-girl-of-the-golden-west : work ) / literature
+written-by( berton : writer, play-by-pierre-berton-and-charles-simon : work ) / literature
+written-by( bourgeois : writer, le-pasteur : work ) / literature
+written-by( brazier : writer, catherine-ou-la-croix-dor : work ) / literature
+written-by( byron : writer, parisina-src : work ) / literature
+written-by( byron : writer, the-corsair : work ) / literature
+written-by( byron : writer, the-two-foscari : work ) / literature
+written-by( catherine-ou-la-croix-dor : writer, melesville : work ) / literature
+written-by( chatrian : writer, lami-fritz : work ) / literature
+written-by( choudens : writer, work-by-paul-de-choudens : work ) / literature
+written-by( coppee : writer, le-passant : work ) / literature
+written-by( cornu : writer, nabuchodonosor : work ) / literature
+written-by( cortesi : writer, nabucodonosor : work ) / literature
+written-by( cossa : writer, nerone-src : work ) / literature
+written-by( dante : writer, inferno : work ) / literature
+written-by( daudet : writer, larlesienne : work ) / literature
+written-by( dumas-fils : writer, la-dame-aux-camelias : work ) / literature
+written-by( erckmann : writer, lami-fritz : work ) / literature
+written-by( forzano : writer, la-cena-delle-beffe : work ) / literature
+written-by( giacomo : writer, novella-by-salvatore-di-giacomo : work ) / literature
+written-by( giacomo : writer, work-by-salvatore-di-giacomo : work ) / literature
+written-by( goethe : writer, faust : work ) / literature
+written-by( gold : writer, la-houppelande : work ) / literature
+written-by( gozzi : writer, turandot-src : work ) / literature
+written-by( gutierrez : writer, el-trovador : work ) / literature
+written-by( gutierrez : writer, simon-boccanegra-src : work ) / literature
+written-by( heine : writer, william-ratcliff : work ) / literature
+written-by( hugo : writer, angelo : work ) / literature
+written-by( hugo : writer, hernani : work ) / literature
+written-by( hugo : writer, le-roi-samuse : work ) / literature
+written-by( hugo : writer, marion-de-lorme : work ) / literature
+written-by( karr : writer, les-willis : work ) / literature
+written-by( legouve : writer, adrienne-lecouvreur : work ) / literature
+written-by( manzoni : writer, i-promessi-sposi-src : work ) / literature
+written-by( mery : writer, la-battaille-de-toulouse : work ) / literature
+written-by( mickiewicz : writer, konrad-wallenrod : work ) / literature
+written-by( murger : writer, scenes-de-la-vie-de-boheme : work ) / literature
+written-by( musset : writer, la-coupe-et-les-levres : work ) / literature
+written-by( ouida : writer, two-little-wooden-shoes : work ) / literature
+written-by( pineux-duval : writer, le-faux-stanislas : work ) / literature
+written-by( prevost : writer, manon-lescaut-src : work ) / literature
+written-by( saavedra : writer, don-alvaro : work ) / literature
+written-by( sardou : writer, fedora0 : work ) / literature
+written-by( sardou : writer, la-tosca : work ) / literature
+written-by( schiller : writer, die-jungfrau-von-orleans : work ) / literature
+written-by( schiller : writer, die-rauber : work ) / literature
+written-by( schiller : writer, don-carlos : work ) / literature
+written-by( schiller : writer, kabale-und-liebe : work ) / literature
+written-by( schiller : writer, wallensteins-lager : work ) / literature
+written-by( scribe : writer, adrienne-lecouvreur : work ) / literature
+written-by( scribe : writer, piquillo-alliaga : work ) / literature
+written-by( shakespeare : writer, henry-iv : work ) / literature
+written-by( shakespeare : writer, macbeth : work ) / literature
+written-by( shakespeare : writer, merry-wives : work ) / literature
+written-by( shakespeare : writer, othello : work ) / literature
+written-by( simon : writer, play-by-pierre-berton-and-charles-simon : work ) / literature
+written-by( southey : writer, roderick : work ) / literature
+written-by( souvestre : writer, le-pasteur : work ) / literature
+written-by( verga : writer, cavalleria-rusticana-src : work ) / literature
+written-by( vigny : writer, poem-by-alfred-de-vigny : work ) / literature
+written-by( voltaire : writer, alzire : work ) / literature
+written-by( von-hillern : writer, geyer-wally : work ) / literature
+written-by( werner : writer, attila-src : work ) / literature

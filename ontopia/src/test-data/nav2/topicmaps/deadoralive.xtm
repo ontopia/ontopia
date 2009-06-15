@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<topicMap
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  id="topicmapid">
+
+<!-- ================================================================
+       "TopicMap" topic
+                                                                    -->
+
+<topic>
+<subjectIdentity>
+  <subjectIndicatorRef xlink:href="#topicmapid"/>
+  <!--<subjectIndicatorRef xlink:href=" http://localhost:8080/navigator/deadoralive.xtm#topicmapid"/>-->
+</subjectIdentity>
+<baseName><baseNameString>Dead or Alive?</baseNameString></baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#description"/>
+    </instanceOf>
+    <resourceData>A topic map dedicated to great performers. Where are they today? This topic map has been designed for educative purposes. It is best viewed with the example model on the elvis topic page</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#frontmatter"/>
+    </instanceOf>
+    <resourceRef xlink:href="resources/deadoralive.html"/>
+  </occurrence>
+</topic>
+
+
+
+
+<!-- ================================================================
+       Themes (topics used to define scopes)
+                                                                    -->
+
+<topic id="formal">
+  <baseName><baseNameString>Formal</baseNameString></baseName>
+</topic>
+
+<topic id="slang">
+  <baseName><baseNameString>Slang</baseNameString></baseName>
+</topic>
+
+<topic id="icon">
+  <baseName><baseNameString>Icon</baseNameString></baseName>
+</topic>
+
+<topic id="sound">
+  <baseName><baseNameString>Sound</baseNameString></baseName>
+</topic>
+
+<topic id="portrait">
+  <baseName><baseNameString>Portrait</baseNameString></baseName>
+</topic>
+
+<topic id="tagname">
+  <baseName><baseNameString>Tag Name</baseNameString></baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used for topic types
+                                                                    -->
+
+
+<topic id="performer">
+  <baseName><baseNameString>Performer</baseNameString></baseName>
+</topic>
+
+
+
+
+
+<!-- ================================================================
+       Topics used for super-types
+                                                                    -->
+
+<topic id="or.default">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/default"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Default</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/></parameters>
+      <variantName><resourceData>~~~default occurrence</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="or.metadata">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/metadata"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Metadata</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/></parameters>
+      <variantName><resourceData>~~~metadata occurrence</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+
+<!-- ================================================================
+       Topics used for association types
+                                                                    -->
+<topic id="plays">
+  <baseName>
+    <baseNameString>Plays</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used for association roles
+                                                                    -->
+<topic id="player">
+  <baseName>
+    <baseNameString>Player</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="style">
+  <baseName>
+    <baseNameString>Style</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used for occurrence role types
+                                                                    -->
+
+<topic id="frontmatter">
+  <instanceOf>
+    <topicRef xlink:href="#or.default"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>Front Matter</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"/></parameters>
+      <variantName><resourceData>Front matter</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="homepage">
+  <baseName>
+    <baseNameString>Homepage</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"/></parameters>
+      <variantName><resourceData>Homepage</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><topicRef xlink:href="#icon" /></parameters>
+      <variantName><resourceRef xlink:href="images/homepage.gif"/></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="website">
+  <baseName>
+    <baseNameString>Website</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/></parameters>
+      <variantName><resourceData>web site</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><topicRef xlink:href="#icon" /></parameters>
+      <variantName><resourceRef xlink:href="images/website.gif"/></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="description">
+  <baseName>
+    <baseNameString>Description</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort" /></parameters>
+      <variantName><resourceData>description</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display" /></parameters>
+      <variantName><resourceData>Description of topic</resourceData></variantName>
+    </variant>
+  </baseName>
+  <subjectIdentity><subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/description" /></subjectIdentity>
+</topic>
+
+<topic id="born">
+  <instanceOf><topicRef xlink:href="#or.metadata"/></instanceOf>
+  <baseName>
+    <baseNameString>born</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"/></parameters>
+      <variantName><resourceData>born</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="died">
+  <instanceOf><topicRef xlink:href="#or.metadata"/></instanceOf>
+  <baseName>
+    <baseNameString>died</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"/></parameters>
+      <variantName><resourceData>died</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       "Regular" topics
+                                                                    -->
+<topic id="elvis">
+  <instanceOf>
+    <topicRef xlink:href="#performer"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>Elvis Presley</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort" /></parameters>
+      <variantName><resourceData>Presley, Elvis</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display" /></parameters>
+      <variantName><resourceData>Elvis</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><topicRef xlink:href="#portrait" /></parameters>
+      <variantName><resourceRef xlink:href="resources/elvis.gif"/></variantName>
+    </variant>
+  </baseName>
+  <baseName id="theKingName">
+    <scope><topicRef xlink:href="#slang"/></scope>
+    <baseNameString>The King</baseNameString>
+    <variant id="kingName">
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort" /></parameters>
+      <variantName><resourceData>King</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display" /></parameters>
+      <variantName><resourceData>The King</resourceData></variantName>
+    </variant>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#formal"/></scope>
+    <baseNameString>Mr Elvis Presley</baseNameString>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort" /></parameters>
+      <variantName><resourceData>Presley, Elvis</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display" /></parameters>
+      <variantName><resourceData>Mr Elvis Presley</resourceData></variantName>
+    </variant>
+  </baseName>
+
+
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#description"/>
+    </instanceOf>
+    <resourceData>Elvis was a great performer - so much so that he was called The King. It is not thought that his musical influences included Italian Opera.</resourceData>
+  </occurrence>
+
+
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#born"/>
+    </instanceOf>
+    <resourceData>Jan. 8, 1935</resourceData>
+  </occurrence>
+
+
+  <occurrence id="occ2">
+    <instanceOf>
+      <topicRef xlink:href="#died"/>
+    </instanceOf>
+    <resourceData>Aug. 16, 1977</resourceData>
+  </occurrence>
+
+  <occurrence id="occ1">
+    <instanceOf>
+      <topicRef xlink:href="#homepage"/>
+    </instanceOf>
+    <resourceRef xlink:href="http://sunsite.unc.edu/elvis/elvishom.html"/>
+  </occurrence>
+
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#website"/>
+    </instanceOf>
+    <resourceRef xlink:href="http://www.geocities.com/Vienna/1673/"/>
+  </occurrence>
+
+   <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#homepage"/>
+    </instanceOf>
+    <resourceRef xlink:href="http://www.elvis-presley.com"/>
+  </occurrence>
+
+</topic>
+
+<topic id="rock">
+  <instanceOf><topicRef xlink:href="#or.metadata"/></instanceOf>
+  <baseName>
+    <baseNameString>Rock</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="blues">
+  <instanceOf><topicRef xlink:href="#or.metadata"/></instanceOf>
+  <baseName>
+    <baseNameString>Blues</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       "Reify" topics
+     -->
+<!-- reify a resource in an occurrence -->
+<topic id="unofficialhomepage">
+  <instanceOf><topicRef xlink:href="#homepage"/></instanceOf>
+  <subjectIdentity><resourceRef xlink:href="http://sunsite.unc.edu:80/elvis/elvishom.html"/></subjectIdentity>
+  <baseName>
+    <baseNameString>The Unofficial Homepage</baseNameString>
+      <variant>
+        <parameters><topicRef xlink:href="#tagname"/></parameters>
+      <variantName><resourceData>The biggest and the best unofficial site dedicated to the King.</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+
+<!-- reify another resource in an occurrence -->
+<topic id="americansforcloningelvis">
+  <instanceOf><topicRef xlink:href="#website"/></instanceOf>
+  <subjectIdentity><resourceRef xlink:href="http://www.geocities.com/Vienna/1673/"/></subjectIdentity>
+  <baseName>
+    <baseNameString>Americans for Cloning Elvis (ACE)</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#tagname"/></parameters>
+      <variantName><resourceData>America's answer to all these Britney clones.</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<!-- reify an occurrence -->
+<topic>
+  <subjectIdentity><subjectIndicatorRef xlink:href="#occ2"/></subjectIdentity>
+  <baseName>
+    <baseNameString>Elvis's death</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#description"/>
+    </instanceOf>
+    <resourceData>Know one knows for sure if Elvis is dead. His memory lives on.</resourceData>
+  </occurrence>
+</topic>
+<topic>
+  <subjectIdentity><subjectIndicatorRef xlink:href="#occ1"/></subjectIdentity>
+  <baseName>
+    <baseNameString>Elvis has an Unofficial Website</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#description"/>
+    </instanceOf>
+    <resourceData>Elvis had many fans during his performing years. This adulation has been continued on the internet.</resourceData>
+  </occurrence>
+</topic>
+
+<topic id="t.influence">
+  <subjectIdentity><subjectIndicatorRef xlink:href="#influence"/></subjectIdentity>
+  <baseName>
+    <baseNameString>Blues influence on Elvis</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#description"/>
+    </instanceOf>
+    <resourceData>Elvis was heavily influenced by blues music. This changed the course of rock and pop music.</resourceData>
+  </occurrence>
+</topic>
+
+<!-- reify baseName -->
+<topic id="t.theKingName">
+  <subjectIdentity><subjectIndicatorRef xlink:href="#theKingName"/></subjectIdentity>
+  <baseName>
+    <baseNameString>"The King" name</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#description"/></parameters>
+      <variantName><resourceData>'The King' as a name has been popularised. Those labelled with this name are ranked alongside the legendary Elvis.</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<!-- reify variantName -->
+<topic id="t.kingName">
+  <subjectIdentity><subjectIndicatorRef xlink:href="#kingName"/></subjectIdentity>
+  <baseName>
+    <baseNameString>"King" sort name</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#description"/></parameters>
+      <variantName><resourceData>'King' is used as a sort name for 'The King' so that it appears under 'K' in alphabetical listings of topics.</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+<!-- ================================================================
+       Associations
+     -->
+
+  <association id="influential">
+    <instanceOf>
+      <topicRef xlink:href="#plays"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#player"/>
+      </roleSpec>
+      <topicRef xlink:href="#elvis"/>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#style"/>
+      </roleSpec>
+      <topicRef xlink:href="#rock"/>
+    </member>
+  </association>
+
+  <association id="influence">
+    <instanceOf>
+      <topicRef xlink:href="#plays"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#player"/>
+      </roleSpec>
+      <topicRef xlink:href="#elvis"/>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#style"/>
+      </roleSpec>
+      <topicRef xlink:href="#blues"/>
+    </member>
+  </association>
+
+</topicMap>

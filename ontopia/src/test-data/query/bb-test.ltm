@@ -1,0 +1,111 @@
+/* starter data */
+
+#INCLUDE "bb-ontologi.ltm"
+
+[gdm    : user = "Graham Moore" = "gdm" / username @ "urn:gdm"]
+{gdm, password, [[moore]]}
+
+/* create some topics that I own */
+[thequeen    : bbtopic = "Queen Elizabeth II"]
+[equation    : bbtopic = "Equation"]
+[horse       : bbtopic = "Horse"]
+[rider       : bbtopic = "Rider"]
+[white-horse : bbtopic = "The Ballad of the White Horse"]
+
+userownstopic(thequeen     : ownedtopic, gdm : bruker)
+{thequeen, beskrivelse, [[The queen of england]]}
+{thequeen, lastupdated, [[2003-06-03]]}
+
+userownstopic(equation     : ownedtopic, gdm : bruker)
+{equation, beskrivelse, [[Mathematical Equation]]}
+{equation, lastupdated, [[2003-06-04]]}
+
+userownstopic(horse        : ownedtopic, gdm : bruker)
+{horse, beskrivelse, [[Nayyy]]}
+{horse, lastupdated, [[2003-06-02]]}
+
+userownstopic(rider        : ownedtopic, gdm : bruker)
+{rider, beskrivelse, [[Person who rides a horse]]}
+{rider, lastupdated, [[2003-07-04]]}
+
+userownstopic(white-horse  : ownedtopic, gdm : bruker)
+{white-horse, beskrivelse, [[Epic ballad by G.K. Chesterton.]]}
+{white-horse, lastupdated, [[2003-07-03]]}
+
+topicbelongstosubject(equation    : bbtopic , k7amaths   : fag)
+topicbelongstosubject(thequeen    : bbtopic , k7ahistory : fag)
+topicbelongstosubject(horse       : bbtopic , k7ahistory : fag)
+topicbelongstosubject(rider       : bbtopic , k7ahistory : fag)
+topicbelongstosubject(white-horse : bbtopic , k7ahistory : fag)
+
+/* associations */
+
+[is-about = "Is about" / role2
+          = "Described in" / role1]
+is-about(horse : role1, white-horse : role2)
+
+/* comments */
+
+[comment1 : comment]
+written-by(comment1 : comment, gdm : author)
+comment-on(comment1 : comment, white-horse : bbtopic)
+{comment1, content, [[Do I have to read this damned horse shit?]]}
+{comment1, lastupdated, [[2003-06-03]]}
+
+[comment2 : comment]
+written-by(comment2 : comment, steve : author)
+comment-on(comment2 : comment, white-horse : bbtopic)
+{comment2, content, [[Horse shit?!? It's spelt 'horseshit', and of course you do!]]}
+{comment2, lastupdated, [[2003-06-04]]}
+
+/* define role played */
+
+plays-role(gdm : user, elev : role)
+
+[larsga : user = "Lars Marius Garshol"]
+{larsga, password, [[hemmelig]]}
+[grove  : user = "Geir Ove Gronmo"]
+
+/* teacher */
+[steve  : user = "Steve Pepper"]
+[sylvia : user = "Sylvia Schwab"]
+
+/* classes */
+[k7a : klasse = "7a"]
+[k7b : klasse = "7b"]
+[k8a : klasse = "8a"]
+[k8b : klasse = "8b"]
+
+[k7amaths : klassefag = "7a Maths"]
+[k7ahistory : klassefag = "7a History"]
+
+/* pupils in class */
+elev-klasse(gdm : elev, k7amaths : klasse)
+elev-klasse(gdm : elev, k7ahistory : klasse)
+
+/* subjects */
+[maths   : fag = "Maths"]
+[history : fag = "History"]
+[science : fag = "Science"]
+
+/* teachers teachs subject to class */
+larer-i-fag(steve : larer, k7amaths : klassefag)
+larer-i-fag(steve : larer, k7ahistory : klassefag)
+
+/* define people as role players with priviledges */
+
+plays-role(steve   : user, larer : role)
+
+/* reified association with description */
+[is-about-horse] /* Java code will make this reify the association that says
+                    the white-horse is-about horse */
+{is-about-horse, beskrivelse, [[The best association ever]]}
+{is-about-horse, lastupdated, [[2003-08-14]]}
+
+{horse, nettressurs, "http://www.hest.no"}
+
+{dog1, bark, "voff:1"}
+{dog2, bark, [[voff:1]]}
+
+{cat1, beg, "meow:1"}
+{cat2, beg, [[meow:1]]}

@@ -1,0 +1,5 @@
+[occurrence_typeA = "Occurrence Type A"]
+[reifierA = "Disallowed Topic"]
+[topicA = "Topic A"]
+{topicA, occurrence_typeA, [[Allowed Occurrence]]} ~reifierA
+

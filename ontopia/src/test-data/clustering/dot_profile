@@ -1,0 +1,21 @@
+export JAVA_HOME=/home/oks/jdk1.5.0
+export PATH=${PATH}:${JAVA_HOME}/bin
+export OKS_HOME=${HOME}/oks-enterprise
+export TC_HOME=${HOME}/terracotta
+export CLASSPATH=${HOME}
+export CLASSPATH=${CLASSPATH}:${OKS_HOME}/lib/oks-enterprise.jar
+export CLASSPATH=${CLASSPATH}:${OKS_HOME}/lib/oks-enterprise-test.jar
+export CLASSPATH=${CLASSPATH}:${OKS_HOME}/apache-tomcat/common/lib/postgresql.jar
+export CLASSPATH=${CLASSPATH}:${OKS_HOME}/apache-tomcat/common/lib/servlet-api.jar
+export CLASSPATH=${CLASSPATH}:${OKS_HOME}/apache-tomcat/common/lib/jsp-api.jar
+export TC_OPTS="-Xbootclasspath/p:${TC_HOME}/lib/dso-boot/dso-boot-hotspot_linux_150_13.jar -Xmx196M -Xss10M -Djava.net.preferIPv4Stack=true -Dtc.install-root=${TC_HOME}/ -Dtc.config=${HOME}/oks-terracotta.xml"
+export ORACLE_SID=XE
+export ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server
+export PATH=$PATH:$ORACLE_HOME/bin
+export CLASSPATH=${CLASSPATH}:${ORACLE_HOME}/jdbc/lib/ojdbc14.jar
+
+# terracotta enabled
+#export CATALINA_OPTS=$TC_OPTS
+
+# terracotta disabled
+export CATALINA_OPTS=-Xmx384M

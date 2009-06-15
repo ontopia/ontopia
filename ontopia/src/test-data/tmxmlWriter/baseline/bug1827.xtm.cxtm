@@ -1,0 +1,52 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://foo.bar/#1</locator>
+</subjectIdentifiers>
+<subjectLocators>
+<locator>http://foo.bar/#1</locator>
+</subjectLocators>
+<itemIdentifiers>
+<locator>#topic1新</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Topic1</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://foo.bar/#2</locator>
+</subjectIdentifiers>
+<subjectLocators>
+<locator>http://foo.bar/#2</locator>
+</subjectLocators>
+<itemIdentifiers>
+<locator>#topic2</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Topic2</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://foo.bar/#3</locator>
+</subjectIdentifiers>
+<subjectLocators>
+<locator>http://foo.bar/#3</locator>
+</subjectLocators>
+<itemIdentifiers>
+<locator>#topic3</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Topic3</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

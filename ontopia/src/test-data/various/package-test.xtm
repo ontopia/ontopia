@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <topic id="association-type-1"></topic>
+  <topic id="id2">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="association-role-type-1"></topic>
+  <topic id="theme-1"></topic>
+  <topic id="double"></topic>
+  <topic id="pre-added-type-2"></topic>
+  <topic id="id1">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="post-added-theme-2"></topic>
+  <topic id="topic-1">
+    <instanceOf>
+      <topicRef xlink:href="#pre-added-type-1"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#pre-added-type-2"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#topic-identity-1"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Topic 1</baseNameString>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id2"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>TOPIC 1</resourceData>
+        </variantName>
+      </variant>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id1"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>1 topic</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+  </topic>
+  <topic id="topic-4"></topic>
+  <topic id="facet-value-type-2"></topic>
+  <topic id="occurrence-type-1"></topic>
+  <topic id="association-type-3"></topic>
+  <topic id="occurrence-type-2"></topic>
+  <topic id="removed-topic-1"></topic>
+  <topic id="topic-2">
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#double"></topicRef>
+      </scope>
+      <baseNameString>Topic 2b</baseNameString>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id1"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>2b topic</resourceData>
+        </variantName>
+      </variant>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id1"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>2a topic</resourceData>
+        </variantName>
+      </variant>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id2"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>TOPIC 2a</resourceData>
+        </variantName>
+      </variant>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id2"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>TOPIC 2b</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#double"></topicRef>
+      </scope>
+      <baseNameString>Topic 2a</baseNameString>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id1"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>2a topic</resourceData>
+        </variantName>
+      </variant>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id2"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>TOPIC 2a</resourceData>
+        </variantName>
+      </variant>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id1"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>2b topic</resourceData>
+        </variantName>
+      </variant>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id2"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>TOPIC 2b</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+    <baseName>
+      <baseNameString>Topic two</baseNameString>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id1"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>2 topic</resourceData>
+        </variantName>
+      </variant>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#id2"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>TOPIC two</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#occurrence-type-1"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="file:/ontopia/oks-3-4-x/src/java/test-data/various/href1"></resourceRef>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#occurrence-type-2"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="file:/ontopia/oks-3-4-x/src/java/test-data/various/href2"></resourceRef>
+    </occurrence>
+  </topic>
+  <topic id="pre-added-theme-2"></topic>
+  <topic id="pre-added-theme-1"></topic>
+  <topic id="topic-3"></topic>
+  <topic id="facet-value-type-1"></topic>
+  <topic id="post-added-type-1"></topic>
+  <topic id="facet-type-1"></topic>
+  <topic id="pre-added-type-1"></topic>
+  <topic id="post-added-type-2"></topic>
+  <topic id="post-added-theme-1"></topic>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#association-type-3"></topicRef>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#association-role-type-1"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#topic-3"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#association-role-type-1"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#topic-4"></topicRef>
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#association-type-1"></topicRef>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#association-role-type-1"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#topic-1"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#association-role-type-1"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#topic-2"></topicRef>
+    </member>
+  </association>
+</topicMap>

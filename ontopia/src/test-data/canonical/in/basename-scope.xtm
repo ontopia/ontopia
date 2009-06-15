@@ -1,0 +1,23 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="norway">
+    <baseName>
+      <scope>
+  	<topicRef xlink:href="#foo"/>
+  	<topicRef xlink:href="#bar"/>
+      </scope>
+      <baseNameString>Norway</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="foo">
+    <baseName><baseNameString>Foo</baseNameString></baseName>
+  </topic>
+
+  <topic id="bar">
+    <baseName><baseNameString>Bar</baseNameString></baseName>
+  </topic>
+
+</topicMap>

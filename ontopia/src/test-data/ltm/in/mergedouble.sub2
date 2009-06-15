@@ -1,0 +1,5 @@
+
+#MERGEMAP "mergedouble.sub3"
+
+[company = "Company"
+ @"http://psi.ontopia.net/fake/company"]

@@ -1,0 +1,31 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>emnetype</baseNameString>
+<variant>
+<scope>
+<topicRef href="#id2"></topicRef>
+</scope>
+<variantName>
+<resourceData>Emnetype</resourceData>
+</variantName>
+</variant>
+</baseName>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>display</baseNameString>
+<variant>
+<scope>
+<topicRef href="#id2"></topicRef>
+</scope>
+<variantName>
+<resourceData>~display</resourceData>
+</variantName>
+</variant>
+</baseName>
+</topic>
+</topicMap>

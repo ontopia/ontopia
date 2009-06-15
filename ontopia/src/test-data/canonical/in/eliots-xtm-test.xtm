@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<myTopicmapCollection 
+  xmlns:xtm="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xhtm="http://w3.org/TR/xhtml....">
+<!-- here you could have all sorts of metadata that describes this
+document in a way
+     that you cannot annotate a bare topicMap document. -->
+  <docMetaData>
+    <author>W. Eliot Kimber, eliot@isogen.com</author>
+    <copyright>...</copyright>
+    <date.created>2002-09-02</date.created>
+  </docMetaData>
+  <topicMaps>
+    <xtm:topicMap>
+      <xtm:topic id="topic-01">
+       <xtm:occurrence>
+         <xtm:resourceRef xlink:href="http://www.example.com/#xpointer(//*(@id='desc-01'))"/>
+       </xtm:occurrence>
+      </xtm:topic>
+    </xtm:topicMap>
+  </topicMaps>
+  <topicDescriptions>
+    <description id="desc-01">
+      <xhtm:p>This is the description of topic 'topic-01'</xhtm:p>
+      <xhtm:p>This is the second paragraph of the description, something
+you can't
+do in resourceData.</xhtm:p>
+    </description>   
+  </topicDescriptions>
+  <topicNotes>
+    <note xlink:href="xpointer(//*[@id='topic-01'])">
+     <xhtm:p>The records in the database are pointers to web resources
+maintained internationally</xhtm:p>
+    </note>
+  </topicNotes>
+</myTopicmapCollection>

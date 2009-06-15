@@ -1,0 +1,7 @@
+[har_sprak @"test:har_sprak"]
+[objekt @"test:objekt"]
+[feltverdi @"test:feltverdi"]
+
+har_sprak(dok1 : objekt, s1 : feltverdi)
+har_sprak(dok2 : objekt, s2 : feltverdi)
+har_sprak(dok3 : objekt, s1 : feltverdi)

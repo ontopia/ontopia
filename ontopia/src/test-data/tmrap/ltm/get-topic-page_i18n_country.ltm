@@ -1,0 +1,62 @@
+@"utf-8"
+#VERSION "1.3"
+/*
+   Generator: Ontopia Knowledge Suite (OKS)
+   Date:      2006-03-15 20:33
+*/
+
+/* ----------------- ONTOLOGY ------------------ */
+
+/* ----------------- Topic Types --------------- */
+
+[id5
+    @"http://psi.ontopia.net/tmrap/view-page"]
+[id8
+    @"http://psi.ontopia.net/tmrap/server"]
+[id9
+    @"http://psi.ontopia.net/tmrap/topicmap"]
+
+/* ----------------- Type Hierarchy ------------ */
+
+/* ----------------- Role Types ---------------- */
+
+[id4
+    @"http://psi.ontopia.net/tmrap/container"]
+[id7
+    @"http://psi.ontopia.net/tmrap/containee"]
+
+/* ----------------- Association Types --------- */
+
+[id6
+    @"http://psi.ontopia.net/tmrap/contained-in"]
+
+/* ----------------- Occurrence Types ---------- */
+
+[id10
+    @"http://psi.ontopia.net/tmrap/handle"]
+
+/* ----------------- INSTANCES ----------------- */
+
+/* ----------------- Topics -------------------- */
+
+
+/* -- TT: id5 -- */
+[id2 : id5
+    %"http://localhost:8080/omnigator/models/topic_complete.jsp?tm=i18n.ltm&id=152"]
+
+/* -- TT: id8 -- */
+[id1 : id8]
+
+/* -- TT: id9 -- */
+[id11 : id9]
+   {id11, id10, [[i18n.ltm]]}
+
+/* -- TT: (untyped) -- */
+[id3 = "Country"
+    @"http://psi.oasis-open.org/iso/3166/#country"]
+
+/* ----------------- Associations -------------- */
+
+/* -- AT: id6 */
+id6( id1 : id4, id11 : id7 )
+id6( id11 : id4, id2 : id7 )

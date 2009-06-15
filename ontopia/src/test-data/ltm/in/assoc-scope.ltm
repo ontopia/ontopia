@@ -1,0 +1,5 @@
+[lmg       = "Lars Marius Garshol"]
+[ontopia   = "Ontopia"]
+[works-for = "Works for"]
+
+works-for(lmg, ontopia) / lmg

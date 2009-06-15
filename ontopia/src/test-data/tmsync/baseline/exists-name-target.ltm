@@ -1,0 +1,35 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/test/scope</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/test/source</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>exists-name-source.ltm#source</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Extra name</value>
+<type topicref="3"></type>
+</name>
+<name number="2">
+<value>Scoped test name</value>
+<type topicref="3"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</name>
+<name number="3">
+<value>Test name</value>
+<type topicref="3"></type>
+</name>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

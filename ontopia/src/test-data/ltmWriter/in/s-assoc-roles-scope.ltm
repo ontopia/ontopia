@@ -1,0 +1,7 @@
+/* These 2 lines show that assocs are sorted first by type (roles ignored). */
+atypeA(playerB : rtypeA) / scopeA
+atypeA(playerA : rtypeA) / scopeB
+
+/* These two lines show tat with equal types, sorting is by roles. */
+atypeA(playerC : rtypeA) / scopeB
+atypeA(playerC : rtypeA) / scopeA

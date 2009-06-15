@@ -1,0 +1,3 @@
+[topicA]
+{topicA, propertyA, [[Occurrence String A]]} /topicB
+{topicA, propertyA, [[Occurrence String B]]}

@@ -1,0 +1,4 @@
+[topic = "Topic"]
+[type  = "Type"]
+
+[topic : type]

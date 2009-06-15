@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<topicMap
+   xmlns="http://www.topicmaps.org/xtm/1.0/"   
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xml:base="http://www.techquila.com/types.xtm"
+>
+
+<topic id="at-subtype-supertype">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+  </subjectIdentity>
+</topic>
+
+<topic id="rt-supertype">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+  </subjectIdentity>
+</topic>
+
+<topic id="rt-subtype">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+  </subjectIdentity>
+</topic>
+
+<topic id="thing">
+</topic>
+
+<topic id="living-thing">
+</topic>
+
+<topic id="inanimate-thing">
+</topic>
+
+<topic id="person">
+</topic>
+
+<topic id="artist">
+</topic>
+
+<topic id="musician">
+</topic>
+
+<topic id="kal">
+  <instanceOf><topicRef xlink:href="#musician"/></instanceOf>
+</topic>
+
+<association>
+  <instanceOf><topicRef xlink:href="#at-subtype-supertype"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-subtype"/></roleSpec>
+    <topicRef xlink:href="#musician"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-supertype"/></roleSpec>
+    <topicRef xlink:href="#artist"/>
+  </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#at-subtype-supertype"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-subtype"/></roleSpec>
+    <topicRef xlink:href="#artist"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-supertype"/></roleSpec>
+    <topicRef xlink:href="#person"/>
+  </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#at-subtype-supertype"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-subtype"/></roleSpec>
+    <topicRef xlink:href="#person"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-supertype"/></roleSpec>
+    <topicRef xlink:href="#living-thing"/>
+  </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#at-subtype-supertype"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-subtype"/></roleSpec>
+    <topicRef xlink:href="#living-thing"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-supertype"/></roleSpec>
+    <topicRef xlink:href="#thing"/>
+  </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#at-subtype-supertype"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-subtype"/></roleSpec>
+    <topicRef xlink:href="#inanimate-thing"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#rt-supertype"/></roleSpec>
+    <topicRef xlink:href="#thing"/>
+  </member>
+</association>
+
+
+</topicMap>

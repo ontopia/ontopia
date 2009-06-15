@@ -1,0 +1,37 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#employed-by"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#employee"/>        
+      </roleSpec>
+      <topicRef xlink:href="#lmg"/>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#employer"/>
+      </roleSpec>
+      <topicRef xlink:href="#ontopia"/>
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#employed-by"/>
+    </instanceOf>
+    <member>
+      <!--roleSpec>
+        <topicRef xlink:href="#employee"/>        
+      </roleSpec-->
+      <topicRef xlink:href="#lmg"/>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#employer"/>
+      </roleSpec>
+      <topicRef xlink:href="#ontopia"/>
+    </member>
+  </association>
+</topicMap>

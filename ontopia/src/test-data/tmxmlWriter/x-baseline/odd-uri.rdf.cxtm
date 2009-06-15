@@ -1,0 +1,16 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#id1</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Bernard Vatant</value>
+<type topicref="2"></type>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

@@ -1,0 +1,28 @@
+#PREFIX menu @"http://psi.ontopia.net/portal/menu/"
+
+[menu1 : menu:menu = "menu title"]
+menu:owned-by(menu1 : menu:owned, menu1-owner : menu:owner)
+
+[heading1 : menu:heading = "heading1 title"]
+menu:parent-child(menu1 : menu:parent, heading1 : menu:child)
+{heading1, menu:sort, [[001]]}
+
+[heading2 : menu:heading = "heading2 title"]
+menu:parent-child(menu1 : menu:parent, heading2 : menu:child)
+{heading2, menu:sort, [[002]]}
+
+[item2 : menu:item = "item 2"]
+{item2, menu:sort, [[002]]}
+{item2, menu:link, [[some link2]]}
+{item2, menu:image, [[some image2]]}
+{item2, menu:condition, [[some condition2]]}
+menu:item-topic(item2 : menu:item, item2-topic : menu:topic)
+menu:parent-child(heading1 : menu:parent, item2 : menu:child)
+
+[item1 : menu:item = "item 1"]
+{item1, menu:sort, [[001]]}
+{item1, menu:link, [[some link1]]}
+{item1, menu:image, [[some image1]]}
+{item1, menu:condition, [[some condition1]]}
+menu:item-topic(item1 : menu:item, item1-topic : menu:topic)
+menu:parent-child(heading1 : menu:parent, item1 : menu:child)

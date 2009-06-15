@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<multi>
+  <topicMap id="tm3"
+     xmlns="http://www.topicmaps.org/xtm/1.0/"
+     xmlns:xlink='http://www.w3.org/1999/xlink'> 
+  
+    <topic id="topic3">
+      <baseName><baseNameString>topic 3</baseNameString></baseName>    
+    </topic>
+  
+  </topicMap>
+  
+  <topicMap id="tm4"
+     xmlns="http://www.topicmaps.org/xtm/1.0/"
+     xmlns:xlink='http://www.w3.org/1999/xlink'> 
+  
+    <topic id="topic4">
+      <baseName><baseNameString>topic 4</baseNameString></baseName>    
+    </topic>
+  
+  </topicMap>
+</multi>

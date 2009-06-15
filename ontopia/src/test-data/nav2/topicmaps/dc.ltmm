@@ -1,0 +1,35 @@
+/* LTM template for Dublin Core metadata
+   -------------------------------------
+   $Id: dc.ltmm,v 1.1 2007/09/04 08:48:18 geir.gronmo Exp $ */
+
+/* Topics for DC Metadata Elements */
+
+[Title       = "Title" @"http://purl.org/dc/elements/1.1/title"]
+[Creator     = "Creator" @"http://purl.org/dc/elements/1.1/creator"]
+[Subject     = "Subject" @"http://purl.org/dc/elements/1.1/subject"]
+[Description = "Description" @"http://purl.org/dc/elements/1.1/description"]
+[Publisher   = "Publisher" @"http://purl.org/dc/elements/1.1/publisher"]
+[Contributor = "Contributor" @"http://purl.org/dc/elements/1.1/contributor"]
+[Date        = "Date" @"http://purl.org/dc/elements/1.1/date"]
+[Type        = "Type" @"http://purl.org/dc/elements/1.1/type"]
+[Format      = "Format" @"http://purl.org/dc/elements/1.1/format"]
+[Identifier  = "Identifier" @"http://purl.org/dc/elements/1.1/identifier"]
+[Source      = "Source" @"http://purl.org/dc/elements/1.1/source"]
+[Language    = "Language" @"http://purl.org/dc/elements/1.1/language"]
+[Relation    = "Relation" @"http://purl.org/dc/elements/1.1/relation"]
+[Coverage    = "Coverage" @"http://purl.org/dc/elements/1.1/coverage"]
+[Rights      = "Rights" @"http://purl.org/dc/elements/1.1/rights"]
+
+/* Topics used as association role types */
+
+[resource = "Resource" @"http://psi.ontopia.net/metadata/#resource"]
+[value    = "Value" @"http://psi.ontopia.net/metadata/#value"]
+
+/* Topics used as standard property values */
+
+[topicmap-type : Type     = "Topic Map" @"http://psi.ontopia.net/metadata/#topicmap"]
+[XTM-format    : Format   = "XTM" @"http://psi.ontopia.net/metadata/#XTM"]
+[HyTM-format   : Format   = "HyTM" @"http://psi.ontopia.net/metadata/#HyTM"]
+[LTM-format    : Format   = "LTM" @"http://psi.ontopia.net/metadata/#LTM"]
+[AsTMa-format  : Format   = "AsTMa" @"http://psi.ontopia.net/metadata/#AsTMa"]
+

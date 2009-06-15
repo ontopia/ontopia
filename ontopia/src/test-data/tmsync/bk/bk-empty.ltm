@@ -1,0 +1,4 @@
+#PREFIX bk @"http://psi.bergen.kommune.no/portal/"
+#MERGEMAP "bk-ontologi.ltm"
+
+[barnehage : bk:tjeneste = "Barnehage"]

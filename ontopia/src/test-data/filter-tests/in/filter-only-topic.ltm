@@ -1,0 +1,3 @@
+#PREFIX tests @"http://xtmFragmentExporter/tests#"
+
+[tests:t1 = "fTopic-t1"]

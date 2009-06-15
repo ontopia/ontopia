@@ -1,0 +1,2 @@
+#BASEURI "http://some.random.baseuri/base"
+#TOPICMAP ~test:ltm1.3map

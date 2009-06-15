@@ -1,0 +1,4 @@
+
+takes-place-in(tosca : opera, rome : place)
+takes-place-in(attila : opera, italy : place)
+takes-place-in(andrea-chenier : opera, french-revolution : event)

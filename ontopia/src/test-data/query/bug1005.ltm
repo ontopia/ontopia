@@ -1,0 +1,10 @@
+
+[andy : male = "Andy"]
+[nancy : female = "Nancy"]
+[peter : male = "Peter"]
+[eileen : female  = "Eileen"]
+
+alcoholic(andy : person)
+alcoholic(nancy : person)
+alcoholic(peter : person)
+

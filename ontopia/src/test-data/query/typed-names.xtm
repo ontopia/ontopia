@@ -1,0 +1,99 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" 
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <topic id="antheil">
+    <instanceOf>
+      <topicRef xlink:href="#composer"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://en.wikipedia.org/wiki/Antheil"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#fullname"></topicRef>
+      </instanceOf>
+      <baseNameString>George Antheil</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Antheil</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="dvorak">
+    <instanceOf>
+      <topicRef xlink:href="#composer"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://en.wikipedia.org/wiki/Antonin_Dvorak"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#fullname"></topicRef>
+      </instanceOf>
+      <baseNameString>Antonín Dvořák</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Dvořák</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="kverndokk">
+    <instanceOf>
+      <topicRef xlink:href="#composer"></topicRef>
+    </instanceOf>
+    <baseName>
+      <baseNameString>Kverndokk</baseNameString>
+    </baseName>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#fullname"></topicRef>
+      </instanceOf>
+      <baseNameString>Gisle Kverndokk</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="mozart">
+    <instanceOf>
+      <topicRef xlink:href="#composer"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://en.wikipedia.org/wiki/Mozart"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#fullname"></topicRef>
+      </instanceOf>
+      <baseNameString>Wolfgang Amadeus Mozart</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Mozart</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="gounod">
+    <instanceOf>
+      <topicRef xlink:href="#composer"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://en.wikipedia.org/wiki/Gounod"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Gounod</baseNameString>
+    </baseName>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#fullname"></topicRef>
+      </instanceOf>
+      <baseNameString>Charles Gounod</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="rachmaninov">
+    <instanceOf>
+      <topicRef xlink:href="#composer"></topicRef>
+    </instanceOf>
+    <baseName>
+      <baseNameString>Rachmaninov</baseNameString>
+    </baseName>
+    <baseName>
+      <instanceOf>
+        <topicRef xlink:href="#fullname"></topicRef>
+      </instanceOf>
+      <baseNameString>Sergei Rachmaninov</baseNameString>
+    </baseName>
+  </topic>  
+</topicMap>

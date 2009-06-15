@@ -1,0 +1,8 @@
+
+[country
+ @"#country1"]
+
+[country-topic
+ %"#country1"]
+
+[select = "select"]

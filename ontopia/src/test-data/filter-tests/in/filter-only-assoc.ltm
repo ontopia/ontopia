@@ -1,0 +1,4 @@
+#PREFIX tests @"http://xtmFragmentExporter/tests#"
+
+[tests:at1 = "fAssocs-at1"]
+tests:at1(tests:t1 : tests:rt1, tests:t2 : tests:rt2)

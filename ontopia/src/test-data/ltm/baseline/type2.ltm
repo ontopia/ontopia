@@ -1,0 +1,13 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<instanceOf href="#id2"></instanceOf>
+<baseName>
+<baseNameString>Topic</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Type</baseNameString>
+</baseName>
+</topic>
+</topicMap>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<rdf:RDF
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:rtm="http://psi.ontopia.net/rdf2tm/#"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:wot="http://xmlns.com/wot/0.1/"
+        xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
+        xmlns:wn="http://xmlns.com/wordnet/1.6/" >
+
+  <foaf:Person>
+      <foaf:name>Bernard Vatant</foaf:name>
+  </foaf:Person>
+
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/name">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"/>
+  </rdf:Description>
+
+</rdf:RDF>

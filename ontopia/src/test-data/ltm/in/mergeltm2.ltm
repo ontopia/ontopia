@@ -1,0 +1,6 @@
+
+#MERGEMAP "mergeltm.sub"
+
+[topic1 = "Topic number one" / english]
+[english = "English"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#en"]

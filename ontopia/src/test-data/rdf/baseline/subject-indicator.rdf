@@ -1,0 +1,39 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<subjectIdentity>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/Person"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/knows"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="mailto:grove@ontopia.net"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>Geir Ove Grønmo</baseNameString>
+</baseName>
+</topic>
+<topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="mailto:larsga@garshol.priv.no"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>Lars Marius Garshol</baseNameString>
+</baseName>
+</topic>
+<association>
+<instanceOf href="#id2"></instanceOf>
+<member>
+<instanceOf href="#id1"></instanceOf>
+<topicRef href="#id3"></topicRef>
+</member>
+<member>
+<instanceOf href="#id1"></instanceOf>
+<topicRef href="#id4"></topicRef>
+</member>
+</association>
+</topicMap>

@@ -1,0 +1,4 @@
+
+#INCLUDE "include-two-levels.sub"
+
+super-sub(person : sub, sentient-being : super)

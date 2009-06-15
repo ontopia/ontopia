@@ -1,0 +1,42 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#topicA</locator>
+</itemIdentifiers>
+<occurrence number="1">
+<value>Value A</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="4"></type>
+</occurrence>
+<occurrence number="2">
+<value>Value B</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="3"></type>
+</occurrence>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#topicB</locator>
+</itemIdentifiers>
+<occurrence number="1">
+<value>Value A</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="3"></type>
+</occurrence>
+<occurrence number="2">
+<value>Value A</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="4"></type>
+</occurrence>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#typeA</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#typeB</locator>
+</itemIdentifiers>
+</topic>
+</topicMap>

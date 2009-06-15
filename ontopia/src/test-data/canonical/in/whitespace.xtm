@@ -1,0 +1,39 @@
+<!DOCTYPE topicMap PUBLIC "-//TopicMaps.Org//DTD XML Topic Map (XTM) 1.0//EN" "">
+<topicMap id="xtm-whitespace"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="topic">
+    <baseName>
+      <baseNameString>   
+  	with 	 spaces 	 
+	   </baseNameString>
+    </baseName>    
+    <baseName>
+      <baseNameString> 	
+  	with 	 tabs 	 
+				</baseNameString>
+      <variant><variantName>
+	<resourceData> 	
+  	with 	 tabs 	 
+				</resourceData>
+      </variantName></variant>
+      <variant><variantName>
+	<resourceData>   
+  	with 	 spaces 	 
+	   </resourceData>
+      </variantName></variant>
+    </baseName>    
+      <occurrence>			
+	<resourceData> 	
+  	with 	 tabs 	 
+				</resourceData>
+      </occurrence>
+      <occurrence>			
+	<resourceData>   
+  	with 	 spaces 	 
+	   </resourceData>
+      </occurrence>
+  </topic>
+
+</topicMap>

@@ -1,0 +1,46 @@
+
+/* ===================================================================================
+
+   USER MANAGEMENT
+
+   Core Ontopia ontology for managing users, roles, and privileges.
+   (C) Ontopia 2003
+
+   $Id: userman.ltm,v 1.1 2003/07/05 18:01:42 larsga Exp $
+
+=================================================================================== */
+
+/* ----- REUSED ------------------------------------------------------------------- */
+
+[definition = "Definition" @"http://psi.ontopia.net/xtm/occurrence-type/description"]
+
+
+/* ----- TOPIC TYPES -------------------------------------------------------------- */
+
+[user = "User" @"http://psi.ontopia.net/userman/#user"]
+{user, definition, [[A user account in the system, possibly, but not necessarily
+corresponding to a person. It may be a group account and one person may have more
+than a single account.]]}
+
+[role = "Role" @"http://psi.ontopia.net/userman/#role"]
+{role, definition, [[A role is a set of privileges that is extended to all users
+which play that role. A role often corresponds to a particular position or
+responsibility, but need not necessarily do so.]]}
+
+[privilege = "Privilege" @"http://psi.ontopia.net/userman/#privilege"]
+{privilege, definition, [[A privilege is a right extended to a user or a role,
+which enables those users who have the privilege to perform a certain task or
+access certain kinds of information.]]}
+
+
+/* ----- ASSOCIATION TYPES -------------------------------------------------------- */
+
+[plays-role = "Plays role" @"http://net.ontopia.psi/userman/#plays-role"] /* user <-> role */
+
+[has-privilege = "Has privilege"]
+  [receiver = "Receiver"] /* whoever receives the privilege */
+  
+/* ------- Topics that identify usernames and passwords --------------------------- */
+
+[username = "User Name" @"http://net.ontopia.psi/userman/#username"]
+[password = "Password" @"http://net.ontopia.psi/userman/#password"]

@@ -1,0 +1,32 @@
+<topicMap reifier="1">
+<topic number="1">
+<occurrence number="1">
+<value>SyncTest:complexchanges:1</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="3"></type>
+</occurrence>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://example.org/test/1/2</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Changed</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/db2tm/synchronization-state</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>DB2TM synchronization state</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

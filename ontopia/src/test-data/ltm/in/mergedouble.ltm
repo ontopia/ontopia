@@ -1,0 +1,8 @@
+
+#MERGEMAP "mergedouble.sub1"
+#MERGEMAP "mergedouble.sub2"
+
+[lmg : person = "Lars Marius Garshol"
+ @"http://psi.ontopia.net/fake/lmg"]
+[person
+ @"http://psi.ontopia.net/fake/person"]

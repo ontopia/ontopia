@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap id="ontopsi.xtmm"
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<!-- $Id: ontopsi.xtmm,v 1.1 2005/11/08 14:33:18 opland Exp $ -->
+<!-- ================================================================
+       Ontopia Published Subjects
+                                                                    -->
+<topic id="metadata">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/occurrence/#metadata"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Metadata</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="description">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/occurrence/#description"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Description</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="guidelines">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/occurrence/#editorial-guidelines"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Editorial guidelines</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="revision">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/revision"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Revision</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="date">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/topic/date"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Date</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="unfinished">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/association-type/unfinished"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Unfinished</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="plural">
+  <instanceOf><topicRef xlink:href="opera-template.xtmp#nameform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/basename/plural"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Plural name</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="superclass-subclass">
+  <instanceOf><topicRef xlink:href="#hierarchical-relation-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Subtype of</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#superclass"/></scope>
+    <baseNameString>Supertype of</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="superclass">
+  <instanceOf><topicRef xlink:href="#superordinate-role-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Supertype</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="subclass">
+  <instanceOf><topicRef xlink:href="#subordinate-role-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Subtype</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="sort">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Sort</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#description"/></instanceOf>
+    <resourceData>Suitability for sorting: Suitability of a topic name for use as a sort key; for use in the parameters of variant names.</resourceData>
+  </occurrence>
+</topic>
+
+<topic id="display">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Display</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#description"/></instanceOf>
+    <resourceData>Suitability for display: Suitability of a topic name for display; for use in the parameters of variant names.</resourceData>
+  </occurrence>
+</topic>
+
+<topic id="hierarchical-relation-type">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#hierarchical-relation-type"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Hierarchical relation type</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Hierarkisk relasjonstype</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="superordinate-role-type">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#superordinate-role-type"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Superordinate role type</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="subordinate-role-type">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#subordinate-role-type"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Subordinate role type</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Published Subjects for Dublin Core properties
+                                                                    -->
+<topic id="Title">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/title"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Title</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Tittel</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Creator">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/creator"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Creator</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Skaper</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Subject">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/subject"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Subject</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Tema</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Description">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/description"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Description</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Beskrivelse</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Publisher">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/publisher"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Publisher</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Utgiver</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Contributor">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/contributor"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Contributor</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Bidragsyter</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Date">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/date"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Date</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Dato</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Type">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/type"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Type</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Format">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/format"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Format</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Identifier">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/identifier"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Identifier</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Identifikator</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Source">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/source"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Source</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Kilde</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Language">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/language"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Language</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Relation">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/relation"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Relation</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Relasjon</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Coverage">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/coverage"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Coverage</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Dekning</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Rights">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/rights"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Rights</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Rettigheter</baseNameString>
+  </baseName>
+</topic>
+
+<!-- Topics used as association role types for Dublin Core properties -->
+<topic id="resource">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#resource"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Resource</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Ressurs</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="value">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#value"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Value</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Verdi</baseNameString>
+  </baseName>
+</topic>
+
+<!-- Topics used as standard Dublin Core property values -->
+<topic id="topicmap">
+  <instanceOf><topicRef xlink:href="#Type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#topicmap"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Topic Map</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Emnekart</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="HyTM">
+  <instanceOf><topicRef xlink:href="#Format"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#HyTM"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>HyTM</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="XTM">
+  <instanceOf><topicRef xlink:href="#Format"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#XTM"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>XTM</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used for subject domains
+                                                                    -->
+<topic id="domain">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/#domain"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Subject domain</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Emneområde</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="biography">
+  <instanceOf><topicRef xlink:href="#domain"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/#biography"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Biography</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Biografi</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="geography">
+  <instanceOf><topicRef xlink:href="#domain"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/#geography"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Geography</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Geografi</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="history">
+  <instanceOf><topicRef xlink:href="#domain"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/#history"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>History</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Historie</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="music">
+  <instanceOf><topicRef xlink:href="#domain"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/#music"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Music</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Musikk</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="literature">
+  <instanceOf><topicRef xlink:href="#domain"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/#literature"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Literature</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Litteratur</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="ontology">
+  <instanceOf><topicRef xlink:href="#domain"/></instanceOf>
+  <baseName>
+    <baseNameString>Ontology</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Ontologi</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used for supertypes
+                                                                    -->
+<topic id="person">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/#person"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Person</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="organization">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/#organization"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Organization</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Organisasjon</baseNameString>
+  </baseName>
+</topic>
+
+</topicMap>

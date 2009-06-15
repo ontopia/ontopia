@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<topic id="int-occ">
+  <baseName>
+    <baseNameString>XSLT</baseNameString>
+  </baseName>
+  <occurrence id="id555">
+    <resourceData>Language for transforming XML documents
+    into other XML documents.</resourceData>
+  </occurrence>
+</topic>
+
+</topicMap>

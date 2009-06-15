@@ -1,0 +1,17 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>topic 2</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>topic 3</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<baseName>
+<baseNameString>topic 4</baseNameString>
+</baseName>
+</topic>
+</topicMap>

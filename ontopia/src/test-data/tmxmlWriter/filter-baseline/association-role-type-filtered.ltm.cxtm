@@ -1,0 +1,38 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#association_typeA</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Association Type A</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#role_playerA</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Role Player A</value>
+<type topicref="4"></type>
+</name>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#topicA</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<association number="1">
+<type topicref="1"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="3"></type>
+</role>
+</association>
+</topicMap>

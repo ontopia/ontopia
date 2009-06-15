@@ -1,0 +1,82 @@
+@"utf-8"
+#VERSION "1.3"
+/*
+   Generator: Ontopia Knowledge Suite (OKS)
+   Date:      2006-03-15 23:27
+*/
+
+/* ----------------- ONTOLOGY ------------------ */
+
+/* ----------------- Topic Types --------------- */
+
+[id8
+    @"http://psi.ontopia.net/i18n/#language"]
+
+/* ----------------- Type Hierarchy ------------ */
+
+/* ----------------- Role Types ---------------- */
+
+[id11
+    @"http://psi.ontopia.net/i18n/#script"]
+[region]
+
+/* ----------------- Association Types --------- */
+
+[id5
+    @"http://psi.ontopia.net/i18n/#written-in"]
+[id7
+    @"http://psi.ontopia.net/i18n/#spoken-in"]
+
+/* ----------------- Occurrence Types ---------- */
+
+/* ----------------- INSTANCES ----------------- */
+
+/* ----------------- Topics -------------------- */
+
+
+/* -- TT: id8 -- */
+[balochi : id8 = "Balochi"]
+[pashto : id8 = "Pashto"
+    @"http://www.topicmaps.org/xtm/1.0/language.xtm#ps"]
+[persian : id8 = "Persian"
+               = "Farsi" / persian]
+
+/* -- TT: (untyped) -- */
+[id1
+    @"http://psi.ontopia.net/iso/15924.xtm#arab"]
+[id10
+    @"http://www.topicmaps.org/xtm/1.0/country.xtm#TM"]
+[id12
+    @"http://www.topicmaps.org/xtm/1.0/country.xtm#TJ"]
+[id2
+    @"http://www.topicmaps.org/xtm/1.0/country.xtm#PK"]
+[id3]
+[id4
+    @"http://www.topicmaps.org/xtm/1.0/country.xtm#IR"]
+[id6
+    @"http://www.topicmaps.org/xtm/1.0/country.xtm#AF"]
+[id9
+    @"http://www.topicmaps.org/xtm/1.0/country.xtm#IN"]
+[oman]
+[uae]
+
+/* ----------------- Associations -------------- */
+
+/* -- AT: id5 */
+id5( id1 : id11, balochi : id8 )
+id5( id1 : id11, pashto : id8 )
+id5( id1 : id11, persian : id8 )
+
+/* -- AT: id7 */
+id7( balochi : id8, id10 : region )
+id7( balochi : id8, id2 : region )
+id7( balochi : id8, id4 : region )
+id7( balochi : id8, id6 : region )
+id7( balochi : id8, id9 : region )
+id7( balochi : id8, oman : region )
+id7( balochi : id8, uae : region )
+id7( pashto : id8, id6 : region )
+id7( persian : id8, id12 : region )
+id7( persian : id8, id2 : region )
+id7( persian : id8, id4 : region )
+id7( persian : id8, id6 : region )

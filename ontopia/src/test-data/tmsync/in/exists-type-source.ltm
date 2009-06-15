@@ -1,0 +1,4 @@
+#PREFIX test @"http://psi.ontopia.net/test/"
+
+[source : test:type]
+[test:type = "A test type"]

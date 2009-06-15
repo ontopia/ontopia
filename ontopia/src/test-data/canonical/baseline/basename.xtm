@@ -1,0 +1,26 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+</topic>
+<topic id="id2">
+</topic>
+<topic id="id3">
+<baseName>
+<baseNameString>Country</baseNameString>
+</baseName>
+</topic>
+<topic id="id4">
+<baseName>
+<instanceOf href="#id2"></instanceOf>
+<scope>
+<topicRef href="#id1"></topicRef>
+</scope>
+<baseNameString>Joe Average</baseNameString>
+</baseName>
+</topic>
+<topic id="id5">
+<baseName>
+<instanceOf href="#id2"></instanceOf>
+<baseNameString>John Doe</baseNameString>
+</baseName>
+</topic>
+</topicMap>

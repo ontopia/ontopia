@@ -1,0 +1,8 @@
+
+/* this is a test for bug #614 */
+
+[foo = "foo"]
+[bar = "bar"]
+{foo, bar, [[unclosed thingy]}
+
+[baz = "baz"]

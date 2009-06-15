@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<topicMap xmlns='http://www.topicmaps.org/xtm/1.0/' xmlns:xlink='http://www.w3.org/1999/xlink' id='id0'>
+  <topic id='id21'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#dok-ansvarlig'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id13'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#bruksmonster'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id1'>
+    <instanceOf>
+      <topicRef xlink:href='#id2'></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/tjeneste/#testapp1'></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id='id3'>
+      <baseNameString>testapp1</baseNameString>
+    </baseName>
+    <occurrence id='id12'>
+      <instanceOf>
+        <topicRef xlink:href='#id13'></topicRef>
+      </instanceOf>
+      <resourceData>Ved test av lagring i Houdini</resourceData>
+    </occurrence>
+    <occurrence id='id14'>
+      <instanceOf>
+        <topicRef xlink:href='#id15'></topicRef>
+      </instanceOf>
+      <resourceData>http://www.usit.uio.no/testapp1/</resourceData>
+    </occurrence>
+    <occurrence id='id10'>
+      <instanceOf>
+        <topicRef xlink:href='#id11'></topicRef>
+      </instanceOf>
+      <resourceData>houston-emnekart@usit.uio.no</resourceData>
+    </occurrence>
+    <occurrence id='id6'>
+      <instanceOf>
+        <topicRef xlink:href='#id7'></topicRef>
+      </instanceOf>
+      <resourceData>Dette er ingen ekte applikasjon, kun en testinstans</resourceData>
+    </occurrence>
+    <occurrence id='id4'>
+      <instanceOf>
+        <topicRef xlink:href='#id5'></topicRef>
+      </instanceOf>
+      <resourceData>Ingen kjente problemer</resourceData>
+    </occurrence>
+    <occurrence id='id16'>
+      <instanceOf>
+        <topicRef xlink:href='#id17'></topicRef>
+      </instanceOf>
+      <resourceData>Utviklere av Houdini</resourceData>
+    </occurrence>
+    <occurrence id='id18'>
+      <instanceOf>
+        <topicRef xlink:href='#id19'></topicRef>
+      </instanceOf>
+      <resourceData>Den er aldri oppe, den eksisterer ikke...</resourceData>
+    </occurrence>
+    <occurrence id='id8'>
+      <instanceOf>
+        <topicRef xlink:href='#id9'></topicRef>
+      </instanceOf>
+      <resourceData>Applikasjonen brukes kun ved testing av Houdini</resourceData>
+    </occurrence>
+  </topic>
+  <topic id='id9'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#kort-beskrivelse'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id11'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#epostliste'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id15'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#webapp-url'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id28'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#ansvarlig-enhet'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id2'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#wo-app'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id31'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/org/#usit-xml'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id30'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#enhet'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id26'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/person/#areg'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id7'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#lang-beskrivelse'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id25'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#person'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id17'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#brukergrupper'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id19'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#oppesjekk'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id5'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#vanlige-problemer'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id='id23'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.uio.no/usit/ddok/#tjeneste'></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <association id='id27'>
+    <instanceOf>
+      <topicRef xlink:href='#id28'></topicRef>
+    </instanceOf>
+    <member id='id29'>
+      <roleSpec>
+        <topicRef xlink:href='#id30'></topicRef>
+      </roleSpec>
+      <topicRef xlink:href='#id31'></topicRef>
+    </member>
+    <member id='id32'>
+      <roleSpec>
+        <topicRef xlink:href='#id23'></topicRef>
+      </roleSpec>
+      <topicRef xlink:href='#id1'></topicRef>
+    </member>
+  </association>
+  <association id='id20'>
+    <instanceOf>
+      <topicRef xlink:href='#id21'></topicRef>
+    </instanceOf>
+    <member id='id24'>
+      <roleSpec>
+        <topicRef xlink:href='#id25'></topicRef>
+      </roleSpec>
+      <topicRef xlink:href='#id26'></topicRef>
+    </member>
+    <member id='id22'>
+      <roleSpec>
+        <topicRef xlink:href='#id23'></topicRef>
+      </roleSpec>
+      <topicRef xlink:href='#id1'></topicRef>
+    </member>
+  </association>
+</topicMap>
+
+
+<!-- This document saved from http://www.ontopia.net/bugs/download.cgi?id=100 -->

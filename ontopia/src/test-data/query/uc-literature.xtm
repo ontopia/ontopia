@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<topicMap id="map" xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink"><!-- == minimal ontology ======================================
+ -->
+
+  <topic id="superclass">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+    </subjectIdentity>
+  </topic>
+
+  <topic id="subclass">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+    </subjectIdentity>
+  </topic>
+
+  <topic id="subclasses">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+    </subjectIdentity>
+  </topic>
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#subclasses" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#superclass" />
+      </roleSpec>
+      <topicRef xlink:href="#document" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#subclass" />
+      </roleSpec>
+      <topicRef xlink:href="#paper" />
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#subclasses" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#superclass" />
+      </roleSpec>
+      <topicRef xlink:href="#paper" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#subclass" />
+      </roleSpec>
+      <topicRef xlink:href="#conference-paper" />
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#subclasses" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#superclass" />
+      </roleSpec>
+      <topicRef xlink:href="#paper" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#subclass" />
+      </roleSpec>
+      <topicRef xlink:href="#journal-paper" />
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#subclasses" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#superclass" />
+      </roleSpec>
+      <topicRef xlink:href="#document" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#subclass" />
+      </roleSpec>
+      <topicRef xlink:href="#tutorial" />
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#subclasses" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#superclass" />
+      </roleSpec>
+      <topicRef xlink:href="#document" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#subclass" />
+      </roleSpec>
+      <topicRef xlink:href="#article" />
+    </member>
+  </association><!-- == publications ==========================================
+ -->
+  <topic id="pepper99a">
+    <instanceOf>
+      <topicRef xlink:href="#conference-paper" />
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#tutorial" />
+    </instanceOf>
+    <subjectIdentity>
+      <resourceRef xlink:href="http://www.ontopia.net/topicmaps/materials/euler.pdf" />
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Euler, topic maps, and revolution</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#de" />
+      </scope>
+      <baseNameString>Euler, Topic Maps und Revolution</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#cite-code" />
+      </instanceOf>
+      <resourceRef xlink:href="urn:x-bibtex:pepper99a" />
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#download" />
+      </instanceOf>
+      <resourceRef xlink:href="http://www.ontopia.net/topicmaps/materials/euler.pdf" />
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#publication-date" />
+      </instanceOf>
+      <resourceData>1999</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#language" />
+      </instanceOf>
+      <resourceData>english</resourceData>
+    </occurrence>
+  </topic>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-author-of" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#opus" />
+      </roleSpec>
+      <topicRef xlink:href="#pepper99a" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#author" />
+      </roleSpec>
+      <topicRef xlink:href="#steve-pepper" />
+    </member>
+  </association>
+  <topic id="pepper99b">
+    <instanceOf>
+      <topicRef xlink:href="#journal-paper" />
+    </instanceOf>
+    <baseName>
+      <baseNameString>Navigating haystacks and discovering needles</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#publication-date" />
+      </instanceOf>
+      <resourceData>1999</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#cite-code" />
+      </instanceOf>
+      <resourceRef xlink:href="urn:x-bibtex:pepper99b" />
+    </occurrence>
+  </topic>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-author-of" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#opus" />
+      </roleSpec>
+      <topicRef xlink:href="#pepper99b" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#author" />
+      </roleSpec>
+      <topicRef xlink:href="#steve-pepper" />
+    </member>
+  </association>
+  <topic id="pepp00">
+    <instanceOf>
+      <topicRef xlink:href="#article" />
+    </instanceOf>
+    <subjectIdentity>
+      <resourceRef xlink:href="http://www.ontopia.net/topicmaps/materials/tao.pdf" />
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>The TAO of Topic Maps</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#cite-code" />
+      </instanceOf>
+      <resourceRef xlink:href="urn:x-bibtex:pepp00" />
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#publication-date" />
+      </instanceOf>
+      <resourceData>2000</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#download" />
+      </instanceOf>
+      <resourceRef xlink:href="http://www.broken.example.com/" />
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#abstract" />
+      </instanceOf>
+      <resourceData>.... Topic Map .....</resourceData>
+    </occurrence>
+  </topic>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-author-of" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#opus" />
+      </roleSpec>
+      <topicRef xlink:href="#pepp00" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#author" />
+      </roleSpec>
+      <topicRef xlink:href="#steve-pepper" />
+    </member>
+  </association>
+  <topic id="d-topicmaps-color">
+    <instanceOf>
+      <topicRef xlink:href="#tutorial" />
+    </instanceOf>
+    <subjectIdentity>
+      <resourceRef xlink:href="http://www.gca.org/papers/xmleurope2000/papers/s29-01.html" />
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Making topic maps more colourful</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#publication-date" />
+      </instanceOf>
+      <resourceData>2000</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#download" />
+      </instanceOf>
+      <resourceRef xlink:href="http://www.gca.org/papers/xmleurope2000/papers/s29-01.html" />
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#abstract" />
+      </instanceOf>
+      <scope>
+        <topicRef xlink:href="#de" />
+      </scope>
+      <resourceData>....Themen-Karte....</resourceData>
+    </occurrence>
+  </topic>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-author-of" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#opus" />
+      </roleSpec>
+      <topicRef xlink:href="#d-topicmaps-color" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#author" />
+      </roleSpec>
+      <topicRef xlink:href="#holger-rath" />
+    </member>
+  </association>
+  <topic id="bienew01">
+    <instanceOf>
+      <topicRef xlink:href="#journal-paper" />
+    </instanceOf>
+    <baseName>
+      <baseNameString>XML topic maps: finding aids for the Web</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#cite-code" />
+      </instanceOf>
+      <resourceRef xlink:href="urn:x-bibtex:bienew01" />
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#publication-date" />
+      </instanceOf>
+      <resourceData>2001</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#language" />
+      </instanceOf>
+      <resourceData>english</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#abstract" />
+      </instanceOf>
+      <resourceData>.... Topic Map .....</resourceData>
+    </occurrence>
+  </topic>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-author-of" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#opus" />
+      </roleSpec>
+      <topicRef xlink:href="#bienew01" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#author" />
+      </roleSpec>
+      <topicRef xlink:href="#steve-newcomb" />
+      <topicRef xlink:href="#michel-biezunski" />
+    </member>
+  </association><!-- == influences ========================================
+ -->
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-influenced-by" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#influence" />
+      </roleSpec>
+      <topicRef xlink:href="#pepper99a" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#influenced" />
+      </roleSpec>
+      <topicRef xlink:href="#pepper99b" />
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-influenced-by" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#influence" />
+      </roleSpec>
+      <topicRef xlink:href="#pepper99b" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#influenced" />
+      </roleSpec>
+      <topicRef xlink:href="#d-topicmaps-color" />
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-influenced-by" />
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#influence" />
+      </roleSpec>
+      <topicRef xlink:href="#d-topicmaps-color" />
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#influenced" />
+      </roleSpec>
+      <topicRef xlink:href="#bienew01" />
+    </member>
+  </association><!-- == people ============================================
+ -->
+  <topic id="steve-newcomb">
+    <instanceOf>
+      <topicRef xlink:href="#person" />
+    </instanceOf>
+    <baseName>
+      <baseNameString>Steve Newcomb</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#sort" />
+      </scope>
+      <baseNameString>Newcomb, Steve</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#email" />
+      </instanceOf>
+      <resourceRef xlink:href="srn@n0spam.coolheads.com" />
+    </occurrence>
+  </topic>
+  <topic id="michel-biezunski">
+    <instanceOf>
+      <topicRef xlink:href="#person" />
+    </instanceOf>
+    <baseName>
+      <baseNameString>Michel Biezunski</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#sort" />
+      </scope>
+      <baseNameString>Biezunski, Michel</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#email" />
+      </instanceOf>
+      <resourceRef xlink:href="mb@n0spam.coolheads.com" />
+    </occurrence>
+  </topic>
+  <topic id="steve-pepper">
+    <instanceOf>
+      <topicRef xlink:href="#person" />
+    </instanceOf>
+    <baseName>
+      <baseNameString>Steve Pepper</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#sort" />
+      </scope>
+      <baseNameString>Pepper, Steve</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#email" />
+      </instanceOf>
+      <resourceRef xlink:href="pepper@n0spam.ontopia.net" />
+    </occurrence>
+  </topic>
+  <topic id="holger-rath">
+    <instanceOf>
+      <topicRef xlink:href="#person" />
+    </instanceOf>
+    <baseName>
+      <baseNameString>Holger Rath</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#sort" />
+      </scope>
+      <baseNameString>Rath, Holger</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#email" />
+      </instanceOf>
+      <resourceRef xlink:href="holger.rath@n0spam.empolis.com" />
+    </occurrence>
+  </topic>
+  <topic id="john-smith">
+    <instanceOf>
+      <topicRef xlink:href="#person" />
+    </instanceOf>
+    <baseName>
+      <baseNameString>John Smith</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#sort" />
+      </scope>
+      <baseNameString>Smith, John </baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#email" />
+      </instanceOf>
+      <resourceRef xlink:href="j.smith@example.com" />
+    </occurrence>
+  </topic>
+</topicMap>

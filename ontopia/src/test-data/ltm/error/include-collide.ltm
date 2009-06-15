@@ -1,0 +1,6 @@
+
+#TOPICMAPID topicmap
+#INCLUDE "include-collide.sub"
+
+[person = "Person"]
+[lmg : person = "Lars Marius Garshol"]

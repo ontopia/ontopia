@@ -1,0 +1,19 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+<topic id="mytopic">
+  <baseName>
+    <instanceOf><topicRef xlink:href="#testname1"/></instanceOf>
+    <baseNameString>A</baseNameString>
+  </baseName>
+  <baseName>
+    <baseNameString>B</baseNameString>
+  </baseName>
+  <baseName>
+    <instanceOf><topicRef xlink:href="#testname2"/></instanceOf>
+    <baseNameString>C</baseNameString>
+  </baseName>
+  <baseName>
+    <instanceOf><topicRef xlink:href="#testname3"/></instanceOf>
+    <baseNameString>D</baseNameString>
+  </baseName>
+</topic>
+</topicMap>

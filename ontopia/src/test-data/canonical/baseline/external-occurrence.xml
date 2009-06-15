@@ -1,0 +1,25 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/homepage"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/syntax"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<instanceOf href="#id2"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/tmxml"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>TM/XML</baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id1"></instanceOf>
+<resourceRef href="http://www.ontopia.net/topicmaps/materials/tmxml/"></resourceRef>
+</occurrence>
+</topic>
+</topicMap>

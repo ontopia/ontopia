@@ -1,0 +1,16 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="lmg">
+    <baseName>
+      <baseNameString>Lars Marius Garshol</baseNameString>
+    </baseName>    
+    <occurrence>
+	<resourceData>
+	Lars is an eager tester. He tests a lot.
+	</resourceData>
+    </occurrence>
+  </topic>
+
+</topicMap>

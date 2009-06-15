@@ -1,0 +1,13 @@
+
+/*
+  Topic map with instance-of relationships used by the query engine
+  test cases.
+*/
+
+[type1 = "Type1" @"http://psi.ontopia.net/test/#1"]
+[type2 = "Type2" %"http://psi.ontopia.net/test/#2"]
+[topic1 : type1 = "Topic1"]
+[topic2 : type1 = "Topic2"]
+[topic3 : type2 = "Topic3"]
+[topic4 : type2 = "Topic4"]
+

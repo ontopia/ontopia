@@ -1,0 +1,14 @@
+@"utf-8"
+#TOPICMAP mini
+
+/* --- THE TOPIC MAP TOPIC --- */
+[minimap = "A minimalistic topicmap"]
+
+[sometype = "Some Type"]
+[website = "Website"]
+[something = "Some Thing"]
+
+[sometopic = "Some Topic"]
+{sometopic, website, "http://www.google.com?this=th at"}
+{sometopic, something, [[This string uses <B>unsafe</B> characters & lætters]]}
+

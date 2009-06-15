@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink" id="id0">
+  <topic id="www.uio.no">
+    <instanceOf>
+      <topicRef xlink:href="#webapp"></topicRef>
+    </instanceOf>
+    <baseName>
+      <baseNameString>www.uio.no</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="lang-beskrivelse">
+    <baseName id="id3">
+      <baseNameString>Lang beskrivelse</baseNameString>
+    </baseName>
+  </topic>
+</topicMap>

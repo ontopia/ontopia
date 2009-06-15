@@ -1,0 +1,30 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#danish</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#norwegian</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#topic</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Emne</value>
+<type topicref="4"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</name>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

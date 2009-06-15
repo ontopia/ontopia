@@ -1,0 +1,2 @@
+atypeA(roleA : rtypeA, roleC : rtypeA)
+atypeA(roleB : rtypeA, roleA : rtypeA)

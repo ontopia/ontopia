@@ -1,0 +1,186 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#id11</locator>
+</itemIdentifiers>
+<name number="1">
+<value>The Italian Opera Topic Map</value>
+<type topicref="13"></type>
+</name>
+<occurrence number="1">
+<value>opera.xtm</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="8"></type>
+</occurrence>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+<rolePlayed ref="association.2.role.1"></rolePlayed>
+<rolePlayed ref="association.3.role.1"></rolePlayed>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#id2</locator>
+</itemIdentifiers>
+<name number="1">
+<value>TMRAP Test Suite</value>
+<type topicref="13"></type>
+</name>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+<rolePlayed ref="association.4.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<subjectLocators>
+<locator>http://localhost:8080/omnigator/models/topic_complete.jsp?tm=opera.xtm&amp;id=1362</locator>
+</subjectLocators>
+<itemIdentifiers>
+<locator>#id18</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.2.role.2"></rolePlayed>
+<rolePlayed ref="association.5.role.1"></rolePlayed>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://en.wikipedia.org/wiki/Puccini</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id4</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Puccini, Giacomo</value>
+<type topicref="13"></type>
+</name>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmrap/contained-in</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id8</locator>
+</itemIdentifiers>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmrap/containee</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id10</locator>
+</itemIdentifiers>
+</topic>
+<topic number="7">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmrap/container</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id9</locator>
+</itemIdentifiers>
+</topic>
+<topic number="8">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmrap/handle</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id7</locator>
+</itemIdentifiers>
+</topic>
+<topic number="9">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmrap/server</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id1</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.4.role.2"></rolePlayed>
+</topic>
+<topic number="10">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmrap/topicmap</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id6</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.3.role.2"></rolePlayed>
+</topic>
+<topic number="11">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmrap/view-page</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id17</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.5.role.2"></rolePlayed>
+</topic>
+<topic number="12">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="13">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="14">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="15">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+</subjectIdentifiers>
+</topic>
+<association number="1">
+<type topicref="5"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="6"></type>
+</role>
+<role number="2">
+<player topicref="2"></player>
+<type topicref="7"></type>
+</role>
+</association>
+<association number="2">
+<type topicref="5"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="7"></type>
+</role>
+<role number="2">
+<player topicref="3"></player>
+<type topicref="6"></type>
+</role>
+</association>
+<association number="3">
+<type topicref="15"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="10"></player>
+<type topicref="14"></type>
+</role>
+</association>
+<association number="4">
+<type topicref="15"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="9"></player>
+<type topicref="14"></type>
+</role>
+</association>
+<association number="5">
+<type topicref="15"></type>
+<role number="1">
+<player topicref="3"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="11"></player>
+<type topicref="14"></type>
+</role>
+</association>
+</topicMap>

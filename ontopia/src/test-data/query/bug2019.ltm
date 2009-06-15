@@ -1,0 +1,36 @@
+#PREFIX semports  @"http://psi.semports.org/ontology#"
+#PREFIX wikipedia  @"http://de.wikipedia.org/wiki/"
+
+
+[dt : semports:type = "Datentyp"
+ @"http://psi.semports.org/ontology#type"]
+
+[id1 : semports:type = "Person"
+ @"http://psi.semports.org/ontology#person"]
+
+[id2 : semports:type = "Ort"
+ @"http://psi.semports.org/ontology#place"]
+
+[id3 : semports:type = "Datum"
+ @"http://psi.semports.org/ontology#date"]
+
+[id4 : semports:person = "Clara Schumann"
+@"http://de.wikipedia.org/wiki/Clara_Schumann"
+@"http://psi.semports.org/composers#Frau_Clara_Schumann"
+@"http://psi.semports.org/composers#Clara_Schumann"
+@"http://psi.semports.org/composers#Cl_Schumann"
+@"http://psi.semports.org/composers#Klara_Schumann"
+@"http://psi.semports.org/composers#Clara_Wieck"
+]
+
+{wikipedia:Clara_Schumann , semports:date , [[1819-09-13]]}
+
+[id5 : semports:place = "Leipzig"
+@"http://de.wikipedia.org/wiki/Leipzig"]
+
+[id6 :semports:type  = "Geburtsort"
+    = "ist geboren in" / semports:person
+    = "ist Geburtsort von" / semports:place
+  @"http://psi.semports.org/ontology#born-in"]
+
+semports:born-in(wikipedia:Clara_Schumann : semports:person , wikipedia:Leipzig : semports:place)

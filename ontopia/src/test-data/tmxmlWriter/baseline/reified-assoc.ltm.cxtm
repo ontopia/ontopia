@@ -1,0 +1,41 @@
+<topicMap>
+<topic>
+<sourceLocators><locator address="#assocication1" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<sourceLocators><locator address="#player1" notation="URI"></locator>
+</sourceLocators>
+<rolePlayed ref="association.1.role.1"></rolePlayed></topic>
+<topic>
+<sourceLocators><locator address="#player2" notation="URI"></locator>
+</sourceLocators>
+<rolePlayed ref="association.1.role.2"></rolePlayed></topic>
+<topic>
+<sourceLocators><locator address="#roleType1" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<sourceLocators><locator address="#roleType2" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic reified="association.1">
+<subjectIdentifiers><locator address="#--reified--reifier1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#reifier1" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<association reifier="6">
+<type topicref="1"></type>
+<role>
+<rolePlayer topicref="2"></rolePlayer>
+<type topicref="4"></type>
+</role>
+<role>
+<rolePlayer topicref="3"></rolePlayer>
+<type topicref="5"></type>
+</role>
+<sourceLocators><locator address="#--reified--reifier1" notation="URI"></locator>
+</sourceLocators>
+</association>
+</topicMap>

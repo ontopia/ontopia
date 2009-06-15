@@ -1,0 +1,21 @@
+<test-collection>
+
+  <include>tests.xml</include>
+
+  <group>
+    <name>default</name>
+    <group-ref>query</group-ref>
+    <group-ref>core</group-ref>
+    <group-ref>basic</group-ref>
+    <group-ref>cmdlineutils</group-ref>
+    <group-ref>fulltext</group-ref>    
+    <group-ref>webed</group-ref>
+    <group-ref>WebedUsage</group-ref>
+  </group>
+
+  <property>
+    <name>net.ontopia.test.TestRunner.debug</name>
+    <value>false</value>
+  </property>
+
+</test-collection>

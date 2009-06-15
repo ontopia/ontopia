@@ -1,0 +1,50 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers><locator>#scope1</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers><locator>#scope2</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers><locator>#topic1</locator>
+</itemIdentifiers>
+<topicName number="1">
+<value>Name 1</value>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</topicName>
+<topicName number="2">
+<value>Name 2</value>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</topicName>
+</topic>
+<topic number="4">
+<itemIdentifiers><locator>#topic2</locator>
+</itemIdentifiers>
+<topicName number="1">
+<value>Name 1</value>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</topicName>
+<topicName number="2">
+<value>Name 1</value>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</topicName>
+</topic>
+<topic number="5">
+<subjectIdentifiers><locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

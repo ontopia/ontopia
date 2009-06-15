@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!-- A test for bug #516 -->
+<!DOCTYPE topicMap PUBLIC "-//TopicMaps.Org//DTD XML Topic Map (XTM) 1.0//EN"
+                          "">
+
+<topicMap id="CPAN-templates"
+    xmlns="http://www.topicmaps.org/xtm/1.0/"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xml:base="">
+ 
+<topic id="at-tti">
+  <subjectIdentity>
+    <subjectIndicatorRef
+      xlink:href="http://psi.topicmapping.com/cpan-psi.rdf#psi-at-tti" />
+  </subjectIdentity>
+  <baseName>
+    <scope>
+      <subjectIndicatorRef
+        xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#en" />
+    </scope>
+    <baseNameString>Association Template (technology/technique/implementation)</baseNameString>
+  </baseName>
+</topic>
+<topic id="role-implemented-technology">
+  <subjectIdentity>
+    <subjectIndicatorRef
+      xlink:href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-implemented-technology" />
+  </subjectIdentity>
+  <baseName>
+    <scope>
+      <subjectIndicatorRef
+        xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#en" />
+    </scope>
+    <baseNameString>Implemented Technology (role)</baseNameString>
+  </baseName>
+</topic>
+<topic id="role-applied-technique">
+  <subjectIdentity>
+    <subjectIndicatorRef
+      xlink:href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-applied-technique" />
+  </subjectIdentity>
+  <baseName>
+    <scope>
+      <subjectIndicatorRef
+        xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#en" />
+    </scope>
+    <baseNameString>Applied Technique (role)</baseNameString>
+  </baseName>
+</topic>
+<topic id="role-implementation">
+  <subjectIdentity>
+    <subjectIndicatorRef
+      xlink:href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-implementation" />
+  </subjectIdentity>
+  <baseName>
+    <scope>
+      <subjectIndicatorRef
+        xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#en" />
+    </scope>
+    <baseNameString>Implementation (role)</baseNameString>
+  </baseName>
+</topic>
+<association id="atrole-role-implemented-technology-at-tti">
+  <instanceOf>
+    <subjectIndicatorRef
+      xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#at-template-role-rpc" />
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-template"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="#at-tti"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-role"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="#role-implemented-technology"/>
+  </member>
+  <!-- no role player constraints member here -->
+</association>
+<association id="atrole-role-applied-technique-at-tti">
+  <instanceOf>
+    <subjectIndicatorRef
+      xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#at-template-role-rpc" />
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-template"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="#at-tti"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-role"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="#role-applied-technique"/>
+  </member>
+  <!-- no role player constraints member here -->
+</association>
+<association id="atrole-role-implementation-at-tti">
+  <instanceOf>
+    <subjectIndicatorRef
+      xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#at-template-role-rpc" />
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-template"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="#at-tti"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-role"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="#role-implementation"/>
+  </member>
+  <!-- no role player constraints member here -->
+</association>
+</topicMap>

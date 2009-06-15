@@ -1,0 +1,31 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/" version="2.0">
+  <association>
+    <type>
+      <topicRef href="#assoctype"/>
+    </type>
+    <role>
+      <type>
+        <topicRef href="#roletype1"/>
+      </type>
+      <topicRef href="#topic1"/>
+    </role>
+    <role>
+      <type>
+        <topicRef href="#roletype2"/>
+      </type>
+      <topicRef href="#topic2"/>
+    </role>
+    <role>
+      <type>
+        <topicRef href="#roletype3"/>
+      </type>
+      <topicRef href="#topic3"/>
+    </role>
+    <role>
+      <type>
+        <topicRef href="#roletype1"/>
+      </type>
+      <topicRef href="#topic1"/>
+    </role>
+  </association>
+</topicMap>

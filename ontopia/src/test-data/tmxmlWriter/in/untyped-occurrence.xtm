@@ -1,0 +1,18 @@
+<topicMap
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="foo">
+    <occurrence>
+      <resourceData>Occurrence contents.</resourceData>
+    </occurrence>
+  </topic>
+  
+  <!-- added explicit reference to null-topic because otherwise we get a mismatch on the item identifier -->
+  <topic id="null-topic">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/1.0/null-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+
+</topicMap>

@@ -1,0 +1,441 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.example.org/at</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>at</value>
+<type topicref="23"></type>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.example.org/at1</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.example.org/at2</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.example.org/code</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Code</value>
+<type topicref="23"></type>
+</name>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/a1</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.7.role.1"></rolePlayed>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/a2</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.8.role.1"></rolePlayed>
+</topic>
+<topic number="7">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/a3</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.9.role.1"></rolePlayed>
+</topic>
+<topic number="8">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/a4</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.10.role.1"></rolePlayed>
+</topic>
+<topic number="9">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/a5</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.11.role.1"></rolePlayed>
+</topic>
+<topic number="10">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/a6</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.12.role.1"></rolePlayed>
+</topic>
+<topic number="11">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/p1</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="12">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/p2</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.2.role.1"></rolePlayed>
+</topic>
+<topic number="13">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/p3</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.3.role.1"></rolePlayed>
+</topic>
+<topic number="14">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/p4</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.4.role.1"></rolePlayed>
+</topic>
+<topic number="15">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/p5</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.5.role.1"></rolePlayed>
+</topic>
+<topic number="16">
+<subjectIdentifiers>
+<locator>http://psi.example.org/other/p6</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.6.role.1"></rolePlayed>
+</topic>
+<topic number="17">
+<subjectIdentifiers>
+<locator>http://psi.example.org/rt1</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>rt1</value>
+<type topicref="23"></type>
+</name>
+</topic>
+<topic number="18">
+<subjectIdentifiers>
+<locator>http://psi.example.org/rt2</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>rt2</value>
+<type topicref="23"></type>
+</name>
+</topic>
+<topic number="19">
+<subjectIdentifiers>
+<locator>http://psi.example.org/rt3</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="20">
+<subjectIdentifiers>
+<locator>http://psi.example.org/rt4</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="21">
+<subjectIdentifiers>
+<locator>http://psi.example.org/topic</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Topic</value>
+<type topicref="23"></type>
+</name>
+<rolePlayed ref="association.13.role.1"></rolePlayed>
+<rolePlayed ref="association.14.role.1"></rolePlayed>
+<rolePlayed ref="association.15.role.1"></rolePlayed>
+</topic>
+<topic number="22">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="23">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="24">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="25">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="26">
+<subjectIdentifiers>
+<locator>http://psi.example.org/subject-identifier/o6</locator>
+<locator>http://psi.example.org/topic/3</locator>
+</subjectIdentifiers>
+<subjectLocators>
+<locator>http://psi.example.org/subject-locator/o6</locator>
+</subjectLocators>
+<itemIdentifiers>
+<locator>http://psi.example.org/item-identifier/o6</locator>
+</itemIdentifiers>
+<name number="1">
+<value>n6</value>
+<type topicref="23"></type>
+</name>
+<occurrence number="1">
+<value>o6</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="4"></type>
+</occurrence>
+<rolePlayed ref="association.6.role.2"></rolePlayed>
+<rolePlayed ref="association.12.role.2"></rolePlayed>
+<rolePlayed ref="association.13.role.2"></rolePlayed>
+</topic>
+<topic number="27">
+<subjectIdentifiers>
+<locator>http://psi.example.org/subject-identifier/o4</locator>
+<locator>http://psi.example.org/subject-identifier/o5</locator>
+<locator>http://psi.example.org/topic/2</locator>
+</subjectIdentifiers>
+<subjectLocators>
+<locator>http://psi.example.org/subject-locator/o4</locator>
+<locator>http://psi.example.org/subject-locator/o5</locator>
+</subjectLocators>
+<itemIdentifiers>
+<locator>http://psi.example.org/item-identifier/o4</locator>
+<locator>http://psi.example.org/item-identifier/o5</locator>
+</itemIdentifiers>
+<name number="1">
+<value>n4</value>
+<type topicref="23"></type>
+</name>
+<name number="2">
+<value>n5</value>
+<type topicref="23"></type>
+</name>
+<occurrence number="1">
+<value>o4</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="4"></type>
+</occurrence>
+<occurrence number="2">
+<value>o5</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="4"></type>
+</occurrence>
+<rolePlayed ref="association.4.role.2"></rolePlayed>
+<rolePlayed ref="association.5.role.2"></rolePlayed>
+<rolePlayed ref="association.10.role.2"></rolePlayed>
+<rolePlayed ref="association.11.role.2"></rolePlayed>
+<rolePlayed ref="association.14.role.2"></rolePlayed>
+</topic>
+<topic number="28">
+<subjectIdentifiers>
+<locator>http://psi.example.org/subject-identifier/o1</locator>
+<locator>http://psi.example.org/subject-identifier/o2</locator>
+<locator>http://psi.example.org/subject-identifier/o3</locator>
+<locator>http://psi.example.org/topic/1</locator>
+</subjectIdentifiers>
+<subjectLocators>
+<locator>http://psi.example.org/subject-locator/o1</locator>
+<locator>http://psi.example.org/subject-locator/o2</locator>
+<locator>http://psi.example.org/subject-locator/o3</locator>
+</subjectLocators>
+<itemIdentifiers>
+<locator>http://psi.example.org/item-identifier/o1</locator>
+<locator>http://psi.example.org/item-identifier/o2</locator>
+<locator>http://psi.example.org/item-identifier/o3</locator>
+</itemIdentifiers>
+<name number="1">
+<value>n1</value>
+<type topicref="23"></type>
+</name>
+<name number="2">
+<value>n2</value>
+<type topicref="23"></type>
+</name>
+<name number="3">
+<value>n3</value>
+<type topicref="23"></type>
+</name>
+<occurrence number="1">
+<value>o1</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="4"></type>
+</occurrence>
+<occurrence number="2">
+<value>o2</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="4"></type>
+</occurrence>
+<occurrence number="3">
+<value>o3</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="4"></type>
+</occurrence>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+<rolePlayed ref="association.2.role.2"></rolePlayed>
+<rolePlayed ref="association.3.role.2"></rolePlayed>
+<rolePlayed ref="association.7.role.2"></rolePlayed>
+<rolePlayed ref="association.8.role.2"></rolePlayed>
+<rolePlayed ref="association.9.role.2"></rolePlayed>
+<rolePlayed ref="association.15.role.2"></rolePlayed>
+</topic>
+<association number="1">
+<type topicref="2"></type>
+<role number="1">
+<player topicref="11"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="28"></player>
+<type topicref="17"></type>
+</role>
+</association>
+<association number="2">
+<type topicref="2"></type>
+<role number="1">
+<player topicref="12"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="28"></player>
+<type topicref="17"></type>
+</role>
+</association>
+<association number="3">
+<type topicref="2"></type>
+<role number="1">
+<player topicref="13"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="28"></player>
+<type topicref="17"></type>
+</role>
+</association>
+<association number="4">
+<type topicref="2"></type>
+<role number="1">
+<player topicref="14"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="27"></player>
+<type topicref="17"></type>
+</role>
+</association>
+<association number="5">
+<type topicref="2"></type>
+<role number="1">
+<player topicref="15"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="27"></player>
+<type topicref="17"></type>
+</role>
+</association>
+<association number="6">
+<type topicref="2"></type>
+<role number="1">
+<player topicref="16"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="26"></player>
+<type topicref="17"></type>
+</role>
+</association>
+<association number="7">
+<type topicref="3"></type>
+<role number="1">
+<player topicref="5"></player>
+<type topicref="20"></type>
+</role>
+<role number="2">
+<player topicref="28"></player>
+<type topicref="19"></type>
+</role>
+</association>
+<association number="8">
+<type topicref="3"></type>
+<role number="1">
+<player topicref="6"></player>
+<type topicref="20"></type>
+</role>
+<role number="2">
+<player topicref="28"></player>
+<type topicref="19"></type>
+</role>
+</association>
+<association number="9">
+<type topicref="3"></type>
+<role number="1">
+<player topicref="7"></player>
+<type topicref="20"></type>
+</role>
+<role number="2">
+<player topicref="28"></player>
+<type topicref="19"></type>
+</role>
+</association>
+<association number="10">
+<type topicref="3"></type>
+<role number="1">
+<player topicref="8"></player>
+<type topicref="20"></type>
+</role>
+<role number="2">
+<player topicref="27"></player>
+<type topicref="19"></type>
+</role>
+</association>
+<association number="11">
+<type topicref="3"></type>
+<role number="1">
+<player topicref="9"></player>
+<type topicref="20"></type>
+</role>
+<role number="2">
+<player topicref="27"></player>
+<type topicref="19"></type>
+</role>
+</association>
+<association number="12">
+<type topicref="3"></type>
+<role number="1">
+<player topicref="10"></player>
+<type topicref="20"></type>
+</role>
+<role number="2">
+<player topicref="26"></player>
+<type topicref="19"></type>
+</role>
+</association>
+<association number="13">
+<type topicref="25"></type>
+<role number="1">
+<player topicref="21"></player>
+<type topicref="24"></type>
+</role>
+<role number="2">
+<player topicref="26"></player>
+<type topicref="22"></type>
+</role>
+</association>
+<association number="14">
+<type topicref="25"></type>
+<role number="1">
+<player topicref="21"></player>
+<type topicref="24"></type>
+</role>
+<role number="2">
+<player topicref="27"></player>
+<type topicref="22"></type>
+</role>
+</association>
+<association number="15">
+<type topicref="25"></type>
+<role number="1">
+<player topicref="21"></player>
+<type topicref="24"></type>
+</role>
+<role number="2">
+<player topicref="28"></player>
+<type topicref="22"></type>
+</role>
+</association>
+</topicMap>

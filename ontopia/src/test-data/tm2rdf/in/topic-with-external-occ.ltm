@@ -1,0 +1,4 @@
+
+[homepage = "Homepage"
+ @"http://psi.ontopia.net/xtm/occurrence-type/homepage"]
+{ontopia, homepage, "http://www.ontopia.net"}

@@ -1,0 +1,7 @@
+
+#INCLUDE "core.sub"
+
+[sentient-being = "Sentient being"]
+[person = "Person"]
+
+super-sub(person : sub, sentient-being : super)

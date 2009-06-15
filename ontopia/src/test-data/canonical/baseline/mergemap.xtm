@@ -1,0 +1,29 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>Country</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Lies</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<baseName>
+<scope>
+<topicRef href="#id2"></topicRef>
+</scope>
+<baseNameString>Norwegian</baseNameString>
+<variant>
+<scope>
+<topicRef href="#id2"></topicRef>
+<topicRef href="#id3"></topicRef>
+</scope>
+<variantName>
+<resourceRef href="http://www.npolar.no/Images/norskflagg.gif"></resourceRef>
+</variantName>
+</variant>
+</baseName>
+</topic>
+</topicMap>

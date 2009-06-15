@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<repository>
+  <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+    <param name="path" value="${CWD}"/>
+    <param name="suffix" value=".xtm"/>
+  </source>  
+  <source class="net.ontopia.topicmaps.utils.ltm.LTMPathTopicMapSource">
+    <param name="path" value="${CWD}"/>
+    <param name="suffix" value=".ltm"/>
+    <param name="hidden" value="true"/>
+  </source>
+</repository>

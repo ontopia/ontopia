@@ -1,0 +1,12 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="special-chars">
+    <baseName><baseNameString>&lt;Donald Duck &amp; Co.&gt;</baseNameString></baseName>    
+    <occurrence>
+      <resourceRef xlink:href="http://www.ontopia.net/script.cgi?param=a&quot;b"/>
+    </occurrence>
+  </topic>
+
+</topicMap>

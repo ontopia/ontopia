@@ -1,0 +1,24 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.w3.org/2000/01/rdf-schema#comment"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/geekcode"></subjectIndicatorRef>
+</subjectIdentity>
+<occurrence>
+<instanceOf href="#id2"></instanceOf>
+<scope>
+<topicRef href="#id1"></topicRef>
+</scope>
+<resourceData>a textual geekcode for this person</resourceData>
+</occurrence>
+</topic>
+</topicMap>

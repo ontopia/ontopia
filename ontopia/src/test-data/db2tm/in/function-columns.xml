@@ -1,0 +1,38 @@
+<db2tm name="function-columns">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <relation name="function-columns.csv" columns="id s u l t">
+    <!-- toUpperCase -->
+    <function-column name="uppercase" method="net.ontopia.topicmaps.db2tm.Functions.toUpperCase">
+      <param>${u}</param>
+    </function-column>
+    <!-- toLowerCase -->
+    <function-column name="lowercase" method="net.ontopia.topicmaps.db2tm.Functions.toLowerCase">
+      <param>${l}</param>
+    </function-column>
+    <!-- trim -->
+    <function-column name="trim" method="net.ontopia.topicmaps.db2tm.Functions.trim">
+      <param>${t}</param>
+    </function-column>
+    <!-- substring -->
+    <function-column name="substring" method="net.ontopia.topicmaps.db2tm.Functions.substring">
+      <param>${s}</param>
+      <param>1</param>
+      <param>3</param>
+    </function-column>
+
+    <topic type="local:" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <topic-name column="id"/>
+      <occurrence type="local:uppercase">${uppercase}</occurrence>
+      <occurrence type="local:lowercase" column="lowercase"/>
+      <occurrence type="local:trim" column="trim"/>
+      <occurrence type="local:substring">${substring}</occurrence>
+    </topic>
+
+  </relation>   
+</db2tm>

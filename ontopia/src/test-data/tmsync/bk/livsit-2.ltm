@@ -1,0 +1,8 @@
+#PREFIX bk @"http://psi.bergen.kommune.no/portal/"
+#MERGEMAP "livsit-ontologi.ltm"
+#MERGEMAP "livsit-1.ltm"
+
+/* adding one new emneord */
+[bk:arbeidsformidling : bk:emneord = "Arbeidsformidling"]
+bk:forelder-barn(bk:arbeidsgiver : bk:forelder, bk:arbeidsformidling : bk:barn)
+bk:forelder-barn(bk:arbeidssoker : bk:forelder, bk:arbeidsformidling : bk:barn)

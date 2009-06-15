@@ -1,0 +1,11 @@
+[virker_som @"http://psi.kulturnett.no/ontologi/virker_som"]
+  [person @"http://psi.kulturnett.no/ontologi/person"]
+    [eva_kernst @"http://psi.kulturnett.no/person/eva_kernst"]
+  [profesjon @"http://psi.kulturnett.no/ontologi/profesjon"]
+    [bildekunstner @"http://psi.kulturnett.no/profesjon/bildekunstner"]
+    [jazzmusiker @"http://psi.kulturnett.no/profesjon/jazzmusiker"]
+
+[ingress @"http://psi.kulturnett.no/ontologi/ingress"]
+
+virker_som(eva_kernst : person, bildekunstner : profesjon)
+

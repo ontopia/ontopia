@@ -1,0 +1,38 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/test/occtype</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/test/scope</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/test/source</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>exists-occurrence-source.ltm#source</locator>
+</itemIdentifiers>
+<occurrence number="1">
+<value>And this is the extra</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="1"></type>
+</occurrence>
+<occurrence number="2">
+<value>Hey ho</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="1"></type>
+<scope>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</occurrence>
+<occurrence number="3">
+<value>http://hey.ho/</value>
+<datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
+<type topicref="1"></type>
+</occurrence>
+</topic>
+</topicMap>

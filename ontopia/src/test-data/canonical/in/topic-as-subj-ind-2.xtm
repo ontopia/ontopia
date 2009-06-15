@@ -1,0 +1,21 @@
+<topicMap id='xtm-language'
+   xmlns='http://www.topicmaps.org/xtm/1.0/'
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id='land'>
+    <baseName>
+      <baseNameString>Land</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='country'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='#land'/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Country</baseNameString>
+    </baseName>    
+  </topic>
+
+</topicMap>
+

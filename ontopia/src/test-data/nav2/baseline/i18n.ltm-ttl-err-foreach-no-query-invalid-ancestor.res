@@ -1,0 +1,1 @@
+<tolog:foreach> missing query attribute or grouping ancestor. A grouping ancestor is another <tolog:foreach> tag that is nested around this <tolog:foreach> tag and groups by a subset of its columns.

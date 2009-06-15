@@ -1,0 +1,559 @@
+<!--
+    $Id: tests.xml,v 1.109 2008/01/10 11:35:50 geir.gronmo Exp $
+
+    The Framework configuration test file. This file is read by the
+    TaglibFrameworkTestCaseGenerator and produces pairs of tests
+    containing different jspfile and topicmap files.
+-->
+<tests>
+
+  <!-- This defines the different tests for the opera topicmap. -->
+  <test tm="opera.xtm">
+    <jsp file="topicassoc.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="topicassoc.jsp" tm="opera.xtm" id="i-vespri-siciliani" />
+
+    <jsp file="topicassoc.jsp" tm="opera.xtm" id="foo" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+
+    <jsp file="indicator.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="indicator.jsp" tm="opera.xtm" id="i-vespri-siciliani" />
+
+    <jsp file="indicator.jsp" tm="opera.xtm" id="foo" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+
+    <jsp file="subj-addr.jsp" tm="opera.xtm" id="puccini" />
+    <jsp file="subj-addr.jsp" tm="subj-addr.xtm" id="test-topic" />
+
+
+    <!--
+        FIXME: This test cannot be tested while we have no relative locator
+               output, so in another environment the full path to the topicmap
+               will be different!!
+    <jsp file="sourceLocators.jsp" tm="opera.xtm" id="puccini" />
+    -->
+    <jsp file="if.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="nestedSet.jsp" tm="opera.xtm" />
+
+    <jsp file="externalFunction.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="lookup.jsp" tm="opera.xtm" output="opera.xtm-lookup.res" />
+
+    <jsp file="lookup-relative.jsp" tm="opera.xtm" output="opera.xtm-lookup-relative.res" />
+
+    <jsp file="occurrences.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="occurrences.jsp" tm="opera.xtm" id="i-vespri-siciliani" />
+
+    <jsp file="occurrences.jsp" tm="opera.xtm" id="foo" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+
+    <jsp file="occurrencesInternal.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="occurrencesInternal.jsp" tm="opera.xtm" id="tosca" />
+
+    <jsp file="occurrencesInternal.jsp" tm="opera.xtm" id="foo" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+
+    <jsp file="occurrencesExternal.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="occurrencesExternal.jsp" tm="opera.xtm" id="tosca" />
+
+    <jsp file="occurrencesExternal.jsp" tm="opera.xtm" id="foo" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+
+    <jsp file="occurrencesWithTypes.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="occurrencesIllegalType.jsp" tm="opera.ltm" id="puccini" fail="true"
+         exception="javax.servlet.jsp.JspException" />
+
+    <!-- this test should deliver everytime different content  -->
+    <jsp file="randomOcc.jsp" tm="opera.xtm" id="puccini" fail="true"/>
+
+    <!-- ========= test foreach sequence mechanism ================ -->
+    <jsp file="testSequenceIndex.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="sequenceFirst.jsp" tm="opera.xtm" id="i-vespri-siciliani" />
+
+    <jsp file="sequenceLast.jsp" tm="opera.xtm" id="i-vespri-siciliani" />
+    <!-- === -->
+
+    <jsp file="namesWithMarkup.jsp" tm="opera.xtm" id="foobar" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+
+    <jsp file="namesWithMarkup.jsp" tm="opera.xtm" id="i-vespri-siciliani" />
+
+    <jsp file="namesWithScope.jsp" tm="opera.xtm" id="foo" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+    <jsp file="namesWithScopeCrash.jsp" tm="opera.xtm" id="i-vespri-siciliani"/>
+
+    <jsp file="names.jsp" tm="opera.xtm" id="tosca" />
+
+    <jsp file="names.jsp" tm="opera.xtm" id="i-vespri-siciliani" />
+
+    <jsp file="names.jsp" tm="opera.xtm" id="i-lombardi" />
+
+    <jsp file="names.jsp" tm="opera.xtm" id="foo" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+
+    <jsp file="names.jsp" tm="opera.xtm" id="tosca|i-vespri-siciliani|puccini"
+         output="opera.xtm-multipleParamValues" />
+
+    <jsp file="names.jsp" tm="opera.xtm" id="tosca|i-vespri-siciliani|puccini"
+         output="opera.xtm-multipleParamValues" />
+
+    <jsp file="name.jsp" tm="screwed-up.ltm" id="no-name"
+         output="no-name" />
+    <jsp file="name-select.jsp" tm="screwed-up.ltm" id="no-name"
+         output="no-name-selected" />
+
+    <!-- make sure to start the test in the right directory: {CVS-co-src}/java -->
+    <!--
+    <jsp file="functionCall-getNames.jsp"
+         tm="opera.xtm" id="puccini"/>
+    <jsp file="functionCall-outputNames.jsp"
+         tm="opera.xtm" id="puccini"/>
+    -->
+
+    <jsp file="refresh-button.jsp" tm="opera.xtm" />
+
+    <jsp file="associated.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="associated.jsp" tm="opera.xtm" id="foo" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NonexistentObjectException" />
+
+    <jsp file="associated-type.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="associated-error.jsp" tm="opera.xtm" id="puccini" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.VariableNotSetException" />
+
+    <jsp file="associationTypeLoop.jsp" tm="opera.xtm" id="tosca" />
+
+    <jsp file="associated-to.jsp" tm="opera.xtm"/>
+
+    <!-- tests bug #661 -->
+    <jsp file="associationTypeLoop.jsp" tm="opera.xtm" id="butterfly" />
+
+    <jsp file="classes.jsp" tm="opera.xtm" />
+
+    <jsp file="classes.jsp" tm="notexist.ltm" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException" />
+
+    <!-- nested if inside a set tag (bug #315) -->
+    <jsp file="if-inside-set.jsp" tm="opera.xtm" id="i-vespri-siciliani" />
+    <!-- what does logic:if set if else branch is not run? -->
+    <jsp file="if-inside-set.jsp" tm="emptynames.xtm" id="no-basename" />
+
+    <!-- if tag test equals attribute -->
+    <jsp file="if-equalsB.jsp" tm="opera.xtm" id="aida" />
+
+    <!-- filter 'is' -->
+    <jsp file="kind.jsp" tm="opera.xtm" id="tosca" />
+
+    <jsp file="foreach-comparator.jsp" tm="opera.xtm" />
+
+    <!-- bug #329 -->
+    <jsp file="themes.jsp" tm="opera.xtm" />
+
+    <!-- bug #344 -->
+    <jsp file="contextFilterOccurrence.jsp" tm="opera.xtm" />
+
+    <jsp file="contextFilterAssociation.jsp" tm="opera.xtm" />
+
+    <jsp file="contextFilterAssociationRoles.jsp" tm="opera.xtm" id="puccini" />
+
+    <jsp file="contextFilterBasenames.jsp" tm="opera.xtm" />
+
+    <jsp file="contextFilterVariant.jsp" tm="opera.xtm" />
+
+    <jsp file="getcontext.jsp" tm="opera.xtm" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="opera.ltm">
+    <jsp file="tt-equals-ar-instances.jsp" tm="opera.ltm" id="event"/>
+    <jsp file="tt-equals-ar-instances.jsp" tm="opera.ltm" id="composer"/>
+
+    <jsp file="tolog.jsp" tm="opera.ltm" />
+
+    <jsp file="tolog-rulesfile.jsp" tm="opera.ltm" />
+
+    <jsp file="tolog_count.jsp" tm="opera.ltm" />
+
+    <jsp file="tolog_order_desc.jsp" tm="opera.ltm" />
+
+    <jsp file="tolog_order_asc.jsp" tm="opera.ltm" />
+
+    <jsp file="tolog_var_ref.jsp" tm="opera.ltm" />
+
+    <jsp file="tolog_if.jsp" tm="opera.ltm" />
+
+    <jsp file="looped-tolog.jsp" tm="opera.ltm" />
+
+    <jsp file="tolog_var_ref_fail.jsp" tm="opera.ltm" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.VariableNotSetException" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="opera-small.xtm">
+    <jsp file="if-equals.jsp" tm="opera-small.xtm" id="composer" />
+    <jsp file="nestedSet.jsp" tm="opera-small.xtm" />
+    <jsp file="defaultIf.jsp" />
+    <jsp file="union-bug.jsp" tm="opera-small.xtm"/>
+  </test>
+
+
+  <!-- =================================================================== -->
+  <!-- This tests the association topicmap file. -->
+  <test tm="association.xtm">
+    <jsp file="topicassoc.jsp" tm="association.xtm" id="oslo" />
+
+    <jsp file="indicator.jsp" tm="association.xtm" id="oslo" />
+
+    <jsp file="occurrences.jsp" tm="association.xtm" id="oslo" />
+
+    <jsp file="namesWithMarkup.jsp" tm="association.xtm" id="oslo" />
+
+    <jsp file="namesWithScope.jsp" tm="association.xtm" id="topic1" />
+
+    <jsp file="names.jsp" tm="association.xtm" id="topic1" />
+
+    <jsp file="associated.jsp" tm="association.xtm" id="oslo" />
+
+    <jsp file="associated_error1.jsp" tm="association.xtm" id="topic1" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.VariableNotSetException" />
+
+    <jsp file="classes.jsp" tm="association.xtm" />
+
+    <jsp file="foo.jsp" fail="true" exception="java.io.FileNotFoundException" />
+
+    <jsp file="occurrences.jsp" tm="foo.xtm" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="emptynames.xtm">
+    <!-- ====== test non-existant, null and empty basenames ========== -->
+    <jsp file="name.jsp" tm="emptynames.xtm" id="no-basename" output="name-no-basename" />
+
+    <jsp file="name.jsp" tm="emptynames.xtm" id="null-basename" output="name-null-basename" />
+
+    <jsp file="name.jsp" tm="emptynames.xtm" id="empty-basename" output="name-empty-basename" />
+
+    <jsp file="names.jsp" tm="emptynames.xtm" id="no-basename" output="names-no-basename" />
+
+    <jsp file="names.jsp" tm="emptynames.xtm" id="null-basename" output="names-null-basename" />
+
+    <jsp file="names.jsp" tm="emptynames.xtm" id="empty-basename" output="names-empty-basename" />
+
+    <!-- ====== test comparision of problematic basenames =========== -->
+    <jsp file="names.jsp" tm="emptynames.xtm" id="compare-basenameset-null"
+         output="names-comparision-inclNull" />
+
+    <jsp file="names.jsp" tm="emptynames.xtm" id="compare-basenameset-empty"
+         output="names-comparision-inclEmpty" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="emptyvariants.xtm">
+    <!-- ====== test non-existant, null and empty variant names ========== -->
+    <jsp file="variants.jsp" tm="emptyvariants.xtm" id="no-variant"
+         output="variants-no-basevariant" />
+
+    <jsp file="variants.jsp" tm="emptyvariants.xtm" id="null-variant"
+         output="variants-null-basevariant" />
+
+    <jsp file="variants.jsp" tm="emptyvariants.xtm" id="empty-variant"
+         output="variants-empty-basevariant" />
+
+    <!-- ====== test comparision of problematic variant names =========== -->
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="emptyoccs.xtm">
+    <!-- ====== test problematic internal occurrences ========== -->
+    <jsp file="occurrencesInternal.jsp" tm="emptyoccs.xtm" id="no-occ"
+         output="occurrencesInt-no" />
+
+    <jsp file="occurrencesInternal.jsp" tm="emptyoccs.xtm" id="null-occ"
+         output="occurrencesInt-null" />
+
+    <jsp file="occurrencesInternal.jsp" tm="emptyoccs.xtm" id="empty-int-occ"
+         output="occurrencesInt-empty" />
+
+    <jsp file="occurrencesInternal.jsp" tm="emptyoccs.xtm" id="setWithNullOcc"
+         output="occurrencesInt-compareWithNull" />
+
+    <jsp file="occurrencesInternal.jsp" tm="emptyoccs.xtm" id="setWithEmptyOccs"
+         output="occurrencesInt-compareWithEmpty" />
+
+    <!-- ====== test problematic external occurrences ========== -->
+    <jsp file="occurrencesExternal.jsp" tm="emptyoccs.xtm" id="no-occ"
+         output="occurrencesExt-no" />
+
+    <jsp file="occurrencesExternal.jsp" tm="emptyoccs.xtm" id="null-occ"
+         output="occurrencesExt-null" />
+
+    <jsp file="occurrencesExternal.jsp" tm="emptyoccs.xtm" id="empty-ext-occ"
+         output="occurrencesExt-empty" />
+
+    <jsp file="occurrencesExternal.jsp" tm="emptyoccs.xtm" id="setWithNullOcc"
+         output="occurrencesExt-compareWithNull" />
+
+    <jsp file="occurrencesExternal.jsp" tm="emptyoccs.xtm" id="setWithEmptyOccs"
+         output="occurrencesExt-compareWithEmpty" />
+
+    <!-- ====== test problematic external AND internal occurrences ========== -->
+    <jsp file="occurrences.jsp" tm="emptyoccs.xtm" id="setWithNullOcc"
+         output="occurrences-compareWithNull" />
+
+    <jsp file="occurrences.jsp" tm="emptyoccs.xtm" id="setWithEmptyOccs"
+         output="occurrences-compareWithEmpty" />
+
+    <!-- == output property from application configuration file == -->
+    <jsp file="outputProperty.jsp" output="outputProperty-msg" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="variants.xtm">
+    <jsp file="pluralName.jsp" tm="variants.xtm" id="battery" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="deadoralive.xtm">
+    <jsp file="lookup-deadoralive.jsp" tm="deadoralive.xtm"
+         output="deadoralive.xtm-lookup.res" />
+    <jsp file="reified.jsp" tm="deadoralive.xtm" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="reification.xtm">
+    <jsp file="reification.jsp" tm="reification.xtm" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="empty.xtm">
+    <jsp file="classes.jsp" tm="empty.xtm" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="superclasses.xtm">
+    <!-- Tests for bug #405 -->
+    <jsp file="superclass.jsp" tm="superclasses.xtm" />
+
+    <jsp file="subclass.jsp" tm="superclasses.xtm" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="assoc-with-self.xtm">
+    <jsp file="associationTypeLoop.jsp" tm="assoc-with-self.xtm" id="personA" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="assoc-no-roletype.xtm">
+    <jsp file="associationTypeLoop.jsp" tm="assoc-no-roletype.xtm" id="personA" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="agris-names.xtm">
+    <jsp file="sortNamesWithinContext.jsp" tm="agris-names.xtm" />
+
+    <jsp file="sortTopicsWithinContext.jsp" tm="agris-names.xtm" />
+  </test>
+
+
+  <!-- =================================================================== -->
+  <test tm="reification.xtm">
+    <!-- Test for bug #311 -->
+    <jsp file="reification.jsp" tm="reification.xtm" />
+  </test>
+
+  <!-- =================================================================== -->
+  <test tm="oslo.xtm">
+    <!-- Test for bug #600 -->
+    <jsp file="tags-in-functions.jsp" tm="oslo.xtm" />
+  </test>
+
+  <!-- =================================================================== -->
+  <test tm="i18n.ltm">
+    <!-- Test for bug #584 -->
+    <jsp file="scripts-sorted.jsp" tm="i18n.ltm" />
+    <!-- Test that limit works in <tm:tolog/> -->
+    <jsp file="scripts-sorted-limit.jsp" tm="i18n.ltm" />
+    <!-- Test that offset works in <tm:tolog/> -->
+    <jsp file="scripts-sorted-offset.jsp" tm="i18n.ltm" />
+    <!-- Test that offset works in <tm:tolog/> when not using select -->
+    <jsp file="scripts-sorted-offset-noselect.jsp" tm="i18n.ltm" />
+  </test>
+
+  <!-- =================================================================== -->
+  <test tm="sort-twopsis.xtm">
+    <!-- Test for bug #652 -->
+    <jsp file="sort-twopsis.jsp" tm="sort-twopsis.xtm" />
+  </test>
+
+  <!-- =================================================================== -->
+  <test tm="sort-nary-roles.ltm">
+    <!-- Test for bug #659 -->
+    <jsp file="associationTypeLoop.jsp" tm="sort-nary-roles.ltm" id="msh"/>
+  </test>
+
+  <!-- =================================================================== -->
+  <test tm="occ-with-markup.xtm">
+    <jsp file="occs-unescaped.jsp" tm="occ-with-markup.xtm" id="int-occ"/>
+  </test>
+
+  <!-- =================================================================== -->
+  <test tm="oslo.xtm">
+    <jsp file="sequenceTag.jsp"/>
+  </test>
+
+  <!-- =================================================================== -->
+  <test tm="ontopsi.xtm">
+    <jsp file="namesWithScope2.jsp"/> <!-- bug #689 -->
+  </test>
+
+  <!-- === NEW TOLOG TAG LIBRARY ========================================= -->
+  <test tm="i18n.ltm">
+    <jsp file="ttl-declare.jsp"/>
+    <jsp file="ttl-declare-multi.jsp"/>
+    <jsp file="ttl-foreach-3levels.jsp"/>
+    <jsp file="ttl-foreach-with-optional.jsp"/>
+    <jsp file="ttl-foreach-scope.jsp"/>
+    <jsp file="ttl-foreach-with-optional-explicit-groupBy.jsp"/>
+    <jsp file="ttl-foreach-choose.jsp" id="chinese-l"/>
+    <jsp file="ttl-foreach-choose-2.jsp"/>
+    <jsp file="ttl-foreach-choose-2when.jsp"/>
+    <jsp file="ttl-foreach-composite-groupBy.jsp"/>
+    <jsp file="ttl-foreach-grouped-no-rows.jsp"/>
+    <jsp file="ttl-foreach-onerow.jsp"/>
+    <jsp file="ttl-foreach-self-contained-nested.jsp"/>
+    <jsp file="ttl-foreach-self-contained-nested-explicit.jsp"/>
+    <jsp file="ttl-foreach-sequence-3levels.jsp"/>
+    <jsp file="ttl-foreach-sequence-singleton.jsp"/>
+    <jsp file="ttl-if-empty-collection.jsp"/>
+    <jsp file="ttl-if-query.jsp"/>
+    <jsp file="ttl-if-query-2.jsp"/>
+    <jsp file="ttl-nested-contexts.jsp"/>
+    <jsp file="ttl-multiple-contexts.jsp"/>
+    <jsp file="ttl-oid.jsp"/>
+    <jsp file="ttl-oid-query.jsp"/>
+    <jsp file="ttl-out-collection.jsp"/>
+    <jsp file="ttl-out-escape.jsp"/>
+    <jsp file="ttl-out-name-variant.jsp"/>
+    <jsp file="ttl-out-one-cell.jsp"/>
+    <jsp file="ttl-out-scope.jsp"/>
+    <jsp file="ttl-query-2.jsp"/>
+    <jsp file="ttl-query-oid.jsp"/>
+    <jsp file="ttl-query-set.jsp"/>
+    <jsp file="ttl-set-body.jsp"/>
+    <jsp file="ttl-set-query.jsp"/>
+    <jsp file="ttl-set-query-qname.jsp"/>
+    <jsp file="ttl-set-query-twice.jsp"/>
+    <jsp file="ttl-set-query-0res.jsp"/>
+    <jsp file="ttl-set-request.jsp" id="cyrillic|foo|cirth|bar|n|landa|kaithi"/>
+    <jsp file="ttl-set-var-query.jsp"/>
+    <jsp file="ttl-set-var-value.jsp"/>
+    <jsp file="ttl-when-empty-collection.jsp"/>
+
+    <!-- Cases that raise (and should raise) an exception.-->
+    <jsp file="ttl-err-choose-empty.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+
+    <jsp file="ttl-err-foreach-empty-and-lonely.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-empty-groupBy.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-groupBy-no-query.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-invalid-groupBy.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-insuff-groupBy-nested-descendant.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-insuff-groupBy-nested-self-contained.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-insuff-groupBy-root.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-no-query-invalid-ancestor.jsp" fail="true"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
+    <jsp file="ttl-err-foreach-no-query-self-contained.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-not-ordered.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-foreach-wrong-order.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+
+
+    <jsp file="ttl-err-if-no-attributes.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-if-var-query.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+
+    <jsp file="ttl-err-otherwise-no-choose.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+
+    <jsp file="ttl-err-out-unbound.jsp"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
+    <jsp file="ttl-err-out-empty-collection.jsp"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
+    <jsp file="ttl-err-out-empty-query-result.jsp"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
+    <jsp file="ttl-err-out-multiple-columns.jsp"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
+    <jsp file="ttl-err-out-no-input.jsp"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
+
+    <jsp file="ttl-err-set-none.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-set-query-reqparam.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+    <jsp file="ttl-err-set-empty-request.jsp"
+         exception="net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException"/>
+
+    <jsp file="ttl-err-when-no-choose.jsp"
+         exception="javax.servlet.jsp.JspTagException"/>
+
+    <jsp file="ttl-normalize.jsp"/>
+
+    <!-- Currently not supported -->
+    <!--jsp file="ttl-err-set-body-closed.jsp"
+         exception="javax.servlet.jsp.JspTagException"/-->
+    <!--jsp file="ttl-err-set-body-value.jsp"
+         exception="javax.servlet.jsp.JspTagException"/-->
+    <!--jsp file="ttl-query.jsp"/-->
+  </test>
+
+  <test tm="reification.xtm">
+    <jsp file="ttl-set-reqparam.jsp" id="id44"/>
+  </test>
+
+  <test tm="bug1674.xtm">
+    <jsp file="ttl-out-bug1674.jsp" id="mytopic"/>
+  </test>
+
+  <!-- =========================================================================
+  PORTLET TAGS
+  ===========================================================================-->
+
+  <test tm="i18n.ltm">
+    <jsp file="ptl-related-simple.jsp" id="latin-s"/>
+    <jsp file="ptl-related-filter.jsp" id="latin-s"/>
+    <jsp file="ptl-related-filter-prefix.jsp" id="latin-s"/>
+  </test>
+  
+</tests>

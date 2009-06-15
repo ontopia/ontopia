@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<!-- DOCTYPE topicMap PUBLIC "-//TopicMaps.Org//DTD XML Topic Map (XTM) 1.0//EN" "xtm1.dtd" -->
+
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<topic id="sort">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>sort</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~sort</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="no-variant">
+  <baseName>
+    <baseNameString>Variant name not available at all</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="null-variant">
+  <baseName>
+    <baseNameString>Variant name with null value</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="empty-variant">
+  <baseName>
+    <baseNameString>Variant name with empty value</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData></resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="compare-variantset-null">
+  <baseName>
+    <baseNameString>Variant names with one null value</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>Variant, B</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+    </variant>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>Variant, A</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="compare-variantset-empty">
+  <baseName>
+    <baseNameString>Variant names with one empty value</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>Variant, D</resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData></resourceData></variantName>
+    </variant>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>Variant, C</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+</topicMap>

@@ -1,0 +1,24 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>Is nice</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Nice</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<baseName>
+<baseNameString>Oslo</baseNameString>
+</baseName>
+</topic>
+<association>
+<instanceOf href="#id1"></instanceOf>
+<member>
+<instanceOf href="#id2"></instanceOf>
+<topicRef href="#id3"></topicRef>
+</member>
+</association>
+</topicMap>

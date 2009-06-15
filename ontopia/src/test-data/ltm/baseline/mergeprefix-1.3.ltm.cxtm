@@ -1,0 +1,25 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://merge-address/#foo</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Merged1</value>
+<type topicref="2"></type>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://some-address/#foo</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Merger1</value>
+<type topicref="2"></type>
+</name>
+</topic>
+</topicMap>

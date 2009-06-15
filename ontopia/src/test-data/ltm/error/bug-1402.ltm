@@ -1,0 +1,7 @@
+
+/* the bug here is that the topic in the included file has the same
+   source locator as the topic map itself.  this is correctly detected
+   if the topic occurs in this file, but not when it is INCLUDEd. */
+
+#TOPICMAP apollonia
+#INCLUDE "bug-1402.sub"

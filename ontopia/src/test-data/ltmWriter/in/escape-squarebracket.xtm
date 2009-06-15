@@ -1,0 +1,17 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+<topic id="topicA">
+  <baseName>
+    <baseNameString>"Name A"</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#otypeA"/></instanceOf>
+    <resourceData>]"]</resourceData>
+  </occurrence>
+</topic>
+<topic id="otypeA">
+</topic>
+
+</topicMap>

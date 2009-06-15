@@ -1,0 +1,26 @@
+<topicMap>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#ot1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id1" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>ot1</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#t1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id3" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>t1</value>
+</topicName>
+<occurrence>
+<value>t1-occ1</value>
+<type topicref="1"></type>
+<sourceLocators><locator address="#id5" notation="URI"></locator>
+</sourceLocators>
+</occurrence>
+</topic>
+</topicMap>

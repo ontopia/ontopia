@@ -1,0 +1,52 @@
+
+#TOPICMAP tm
+
+/* Associations */
+
+parenthood(lmg    : child, bjorg    : mother, kfg      : father)
+parenthood(silje  : child, bjorg    : mother, kfg      : father)
+parenthood(astri  : child, bjorg    : mother, kfg      : father)
+	   	  	   	       		       
+parenthood(trygve : child, may      : mother, petter   : father)
+parenthood(tine   : child, may      : mother, petter   : father)
+parenthood(julie  : child, may      : mother, petter   : father)
+		  				       
+parenthood(kfg    : child, kjellaug : mother, edvin    : father)
+parenthood(petter : child, kjellaug : mother, edvin    : father)
+						       
+parenthood(lms    : child, gerd     : mother, asle     : father)
+						       
+parenthood(gerd   : child, bertha   : mother, magnus   : father)
+parenthood(bjorg  : child, bertha   : mother, magnus   : father)
+parenthood(asle   : child, unknown1 : mother, unknown2 : father)
+
+
+/* Names; needed for sorting */
+
+[silje  = "Silje England Garshol"]
+[astri  = "Astri England Garshol"]
+[trygve = "Trygve Garshol"]
+[tine   = "Tine Garshol"]
+[julie  = "Julie Garshol"]
+[lmg    = "Lars Marius Garshol"]
+[bjorg  = "Bjørg England"]
+[may    = "May Stenersen"]
+[kjellaug = "Kjellaug Garshol"]
+[edvin  : father = "Edvin Garshol"; "5"]
+[kfg    : father = "Knut Garshol";  "4"]
+[petter : father = "Petter Garshol";"2"]
+
+[lms    = "Lars Magne Skalle"]
+[gerd   = "Gerd Skalle"]
+[asle   : father = "Asle Skalle";  "6"]
+[magnus : father = "Magnus England";"3"]
+[bertha = "Bertha England"]
+[unknown1 = "Unknown 1"]
+[unknown2 : father = "Unknown 2"; "1"]
+
+/* ID duplicate for case sensitivity testing */
+
+[TRYGVE = "WRONG WRONG WRONG"]
+
+/* bug 2123 */
+{asle, age, [[23]]}

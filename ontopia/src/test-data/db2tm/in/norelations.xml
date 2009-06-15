@@ -1,0 +1,5 @@
+<db2tm name="norelations">
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="1"/>
+  </sources>
+</db2tm>

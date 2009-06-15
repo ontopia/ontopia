@@ -1,0 +1,29 @@
+<topicMap>
+<itemIdentifiers><locator>#xtm-language</locator>
+</itemIdentifiers>
+<topic number="1">
+<itemIdentifiers><locator>#scope1</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers><locator>#topic1</locator>
+</itemIdentifiers>
+<topicName number="1">
+<value>Name 1</value>
+<type topicref="3"></type>
+<variant number="1">
+<value>Variant 1</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+<itemIdentifiers><locator>#variant1</locator>
+</itemIdentifiers>
+</variant>
+</topicName>
+</topic>
+<topic number="3">
+<subjectIdentifiers><locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

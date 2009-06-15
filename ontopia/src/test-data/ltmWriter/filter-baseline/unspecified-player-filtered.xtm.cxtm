@@ -1,0 +1,34 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#contained-in</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Contained In</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#container</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Container Name</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#norway</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Norway</value>
+<type topicref="4"></type>
+</name>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

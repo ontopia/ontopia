@@ -1,0 +1,15 @@
+
+[daat = "Drug and alcohol testing"]
+[daau = "Drug and alcohol use"]
+[alcohol-testing = "Alcohol testing"]
+[drug-abuse = "Drug abuse"]
+[drug-testing = "Drug testing"]
+[addiction = "Addiction"]
+[alcohol-abuse = "Alcohol abuse"]
+
+use-for(daat : used-term, alcohol-testing : unused-term)
+use-for(daat : used-term, drug-abuse : unused-term)
+use-for(daat : used-term, drug-testing : unused-term)
+use-for(daau : used-term, addiction : unused-term)
+use-for(daau : used-term, alcohol-abuse : unused-term)
+use-for(daau : used-term, drug-abuse : unused-term)

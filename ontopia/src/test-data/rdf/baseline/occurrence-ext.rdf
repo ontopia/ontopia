@@ -1,0 +1,13 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<occurrence>
+<instanceOf href="#id2"></instanceOf>
+<resourceRef href="mailto:larsga@garshol.priv.no"></resourceRef>
+</occurrence>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/mbox"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

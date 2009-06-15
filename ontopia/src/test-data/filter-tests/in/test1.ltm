@@ -1,0 +1,39 @@
+#PREFIX tests @"http://xtmFragmentExporter/tests#"
+
+/* Ontology */
+
+[tests:tt1 = "tt1"]
+[tests:tt2 = "fTopic-tt2"]
+
+[tests:ot1 = "ot1"]
+[tests:ot2 = "ot2"]
+
+[tests:rt1 = "rt1"]
+[tests:rt2 = "rt2"]
+
+[tests:at1 = "at1"]
+[tests:at2 = "at2"]
+
+
+/* Topics, Occurrences */
+
+[tests:tt1-i1 : tests:tt1 = "tt1-i1"]
+{tests:tt1-i1, tests:ot1, [[ot1 of tt1-i1]]}
+{tests:tt1-i1, tests:ot2, [[ot2 of tt1-i1]]}
+
+[tests:tt1-i2 : tests:tt1 = "tt1-i2"]
+{tests:tt1-i1, tests:ot1, [[ot1 of tt1-i2]]}
+
+[tests:tt1-i3 : tests:tt1 = "tt1-i3"]
+[tests:tt1-i4 : tests:tt1 = "tt1-i4"]
+
+[tests:tt2-i1 : tests:tt2 = "tt2-i1"]
+{tests:tt2-i1, tests:ot2, [[ot2 of tt2-i1]]}
+
+
+/* Associations */
+
+tests:at1(tests:tt1-i2 : tests:rt1, tests:tt1-i3 : tests:rt2)
+tests:at1(tests:tt1-i3 : tests:rt1, tests:tt1-i4 : tests:rt2)
+
+tests:at2(tests:tt1-i3 : tests:rt2, tests:tt1-i4 : tests:rt1)

@@ -1,0 +1,223 @@
+<topicMap>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#instance" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#type" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#type-instance" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#at1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id13" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>at1</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#at2" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id15" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>at2</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#ot1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id5" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>ot1</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#ot2" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id7" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>ot2</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#rt1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id9" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>rt1</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#rt2" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id11" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>rt2</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#tt1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id1" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>tt1</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#tt1-i1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id17" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>tt1-i1</value>
+</topicName>
+<occurrence>
+<value>ot1 of tt1-i1</value>
+<type topicref="6"></type>
+<sourceLocators><locator address="#id19" notation="URI"></locator>
+</sourceLocators>
+</occurrence>
+<occurrence>
+<value>ot1 of tt1-i2</value>
+<type topicref="6"></type>
+<sourceLocators><locator address="#id23" notation="URI"></locator>
+</sourceLocators>
+</occurrence>
+<occurrence>
+<value>ot2 of tt1-i1</value>
+<type topicref="7"></type>
+<sourceLocators><locator address="#id20" notation="URI"></locator>
+</sourceLocators>
+</occurrence>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#tt1-i2" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id21" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>tt1-i2</value>
+</topicName>
+<rolePlayed ref="association.5.role.1"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#tt1-i3" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id24" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>tt1-i3</value>
+</topicName>
+<rolePlayed ref="association.6.role.1"></rolePlayed><rolePlayed ref="association.5.role.2"></rolePlayed><rolePlayed ref="association.7.role.1"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#tt1-i4" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id26" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>tt1-i4</value>
+</topicName>
+<rolePlayed ref="association.7.role.2"></rolePlayed><rolePlayed ref="association.6.role.2"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#tt2-i1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id28" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>tt2-i1</value>
+</topicName>
+<occurrence>
+<value>ot2 of tt2-i1</value>
+<type topicref="7"></type>
+<sourceLocators><locator address="#id30" notation="URI"></locator>
+</sourceLocators>
+</occurrence>
+</topic>
+<association>
+<type topicref="3"></type>
+<role>
+<rolePlayer topicref="10"></rolePlayer>
+<type topicref="2"></type>
+</role>
+<role>
+<rolePlayer topicref="11"></rolePlayer>
+<type topicref="1"></type>
+</role>
+</association>
+<association>
+<type topicref="3"></type>
+<role>
+<rolePlayer topicref="10"></rolePlayer>
+<type topicref="2"></type>
+</role>
+<role>
+<rolePlayer topicref="12"></rolePlayer>
+<type topicref="1"></type>
+</role>
+</association>
+<association>
+<type topicref="3"></type>
+<role>
+<rolePlayer topicref="10"></rolePlayer>
+<type topicref="2"></type>
+</role>
+<role>
+<rolePlayer topicref="13"></rolePlayer>
+<type topicref="1"></type>
+</role>
+</association>
+<association>
+<type topicref="3"></type>
+<role>
+<rolePlayer topicref="10"></rolePlayer>
+<type topicref="2"></type>
+</role>
+<role>
+<rolePlayer topicref="14"></rolePlayer>
+<type topicref="1"></type>
+</role>
+</association>
+<association>
+<type topicref="4"></type>
+<role>
+<rolePlayer topicref="12"></rolePlayer>
+<type topicref="8"></type>
+</role>
+<role>
+<rolePlayer topicref="13"></rolePlayer>
+<type topicref="9"></type>
+</role>
+</association>
+<association>
+<type topicref="4"></type>
+<role>
+<rolePlayer topicref="13"></rolePlayer>
+<type topicref="8"></type>
+</role>
+<role>
+<rolePlayer topicref="14"></rolePlayer>
+<type topicref="9"></type>
+</role>
+</association>
+<association>
+<type topicref="5"></type>
+<role>
+<rolePlayer topicref="13"></rolePlayer>
+<type topicref="9"></type>
+</role>
+<role>
+<rolePlayer topicref="14"></rolePlayer>
+<type topicref="8"></type>
+</role>
+</association>
+</topicMap>

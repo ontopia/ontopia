@@ -1,0 +1,30 @@
+<topicMap
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <association>
+    <!--instanceOf>
+      <topicRef xlink:href="#contained-in"/>
+    </instanceOf-->
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#containee"/>
+      </roleSpec>
+      <topicRef xlink:href="#oslo"/>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#container"/>
+      </roleSpec>
+      <topicRef xlink:href="#norway"/>
+    </member>
+  </association>
+
+  <!-- added explicit reference to null-topic because otherwise we get a mismatch on the item identifier -->
+  <topic id="null-topic">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/1.0/null-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+
+</topicMap>

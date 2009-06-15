@@ -1,0 +1,16 @@
+<topicMap>
+<topic>
+<sourceLocators><locator address="#association_typeA" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>Association Type A</value>
+</topicName>
+</topic>
+<topic>
+<sourceLocators><locator address="#role_typeA" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>Role Type A</value>
+</topicName>
+</topic>
+</topicMap>

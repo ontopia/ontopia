@@ -1,0 +1,35 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#ejo</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#knower</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#knows</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#lmg</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+</topic>
+<association number="1">
+<type topicref="3"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="2"></type>
+</role>
+<role number="2">
+<player topicref="4"></player>
+<type topicref="2"></type>
+</role>
+</association>
+</topicMap>

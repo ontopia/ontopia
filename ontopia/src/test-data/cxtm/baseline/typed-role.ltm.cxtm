@@ -1,0 +1,22 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers><locator>#atype1</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers><locator>#player1</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<itemIdentifiers><locator>#rtype1</locator>
+</itemIdentifiers>
+</topic>
+<association number="1">
+<type topicref="1"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="3"></type>
+</role>
+</association>
+</topicMap>

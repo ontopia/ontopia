@@ -1,0 +1,41 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>Home page</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Norway</baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id4"></instanceOf>
+<resourceData>Norway is a nice country.</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id1"></instanceOf>
+<resourceRef href="http://www.norge.no/"></resourceRef>
+</occurrence>
+<occurrence>
+<instanceOf href="#id4"></instanceOf>
+<resourceRef href="http://www.norway.com/"></resourceRef>
+</occurrence>
+<occurrence>
+<instanceOf href="#id4"></instanceOf>
+<scope>
+<topicRef href="#id3"></topicRef>
+</scope>
+<resourceRef href="http://www.visitnorway.com/"></resourceRef>
+</occurrence>
+</topic>
+<topic id="id3">
+<baseName>
+<baseNameString>Tourism</baseNameString>
+</baseName>
+</topic>
+<topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.ontopia.net/xtm/1.0/null-topic"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

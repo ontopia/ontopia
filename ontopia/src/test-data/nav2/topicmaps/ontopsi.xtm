@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap id="ontopsi.xtm"
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<!-- $Id: ontopsi.xtm,v 1.3 2002/09/13 09:06:17 niko Exp $ -->
+
+<!-- ================================================================
+       Ontopia Public Subjects
+                                                                    -->
+<topic id="ot.default">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/default"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>default occurrence</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~default occurrence</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="ot.metadata">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/metadata"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>metadata</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~metadata</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="desc">
+  <instanceOf><topicRef xlink:href="#ot.default"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>description</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>description</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="at.tr">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/association-type/transitive"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>transitive association</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~transitive association</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="plural">
+  <instanceOf><topicRef xlink:href="opera-template.xtm#nameform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/basename/plural"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>plural name</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="superclass-subclass">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>superclass-subclass</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~superclass-subclass</resourceData></variantName>
+    </variant>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#superclass"/></scope>
+    <baseNameString>superclass of</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~superclass of</resourceData></variantName>
+    </variant>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#subclass"/></scope>
+    <baseNameString>subclass of</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~subclass of</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="superclass">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>superclass</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="subclass">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>subclass</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="sort">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>sort</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~sort</resourceData></variantName>
+    </variant>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#desc"/></instanceOf>
+    <resourceData>Suitability for sorting: Suitability of a topic name for use as a sort key; for use in the parameters of variant names.</resourceData>
+  </occurrence>
+</topic>
+
+<topic id="display">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>display</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~display</resourceData></variantName>
+    </variant>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#desc"/></instanceOf>
+    <resourceData>Suitability for display: Suitability of a topic name for display; for use in the parameters of variant names.</resourceData>
+  </occurrence>
+</topic>
+
+<!-- ================================================================
+       Topics used for subject domains
+                                                                    -->
+<topic id="ontology">
+  <instanceOf><topicRef xlink:href="#domain"/></instanceOf>
+  <baseName>
+    <baseNameString>ontology</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="domain">
+  <baseName>
+    <baseNameString>subject domain</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~subject domain</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+</topicMap>

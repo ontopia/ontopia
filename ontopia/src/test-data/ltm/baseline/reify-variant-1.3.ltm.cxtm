@@ -1,0 +1,57 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#reifying-topic1</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Reifying topic1</value>
+<type topicref="5"></type>
+</name>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#reifying-topic2</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Reifying topic2</value>
+<type topicref="5"></type>
+</name>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#scoping-topic</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Scoping topic</value>
+<type topicref="5"></type>
+</name>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#some-topic</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Just Some Topic</value>
+<type topicref="5"></type>
+<variant number="1" reifier="1">
+<value>Random Topic</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="3"></scopingTopic>
+</scope>
+</variant>
+<variant number="2" reifier="2">
+<value>Wee Topic</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="3"></scopingTopic>
+</scope>
+</variant>
+</name>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

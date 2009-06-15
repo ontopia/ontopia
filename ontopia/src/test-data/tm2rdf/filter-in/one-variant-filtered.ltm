@@ -1,0 +1,2 @@
+[topicB = "Topic B"]
+[topicA = "Allowed Name" ("Disallowed Variant" /topicB)]

@@ -1,0 +1,36 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#propertyA</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#topicA</locator>
+</itemIdentifiers>
+<occurrence number="1">
+<value>Occurrence String A</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="1"></type>
+<scope>
+<scopingTopic topicref="3"></scopingTopic>
+<scopingTopic topicref="4"></scopingTopic>
+</scope>
+</occurrence>
+<occurrence number="2">
+<value>Occurrence String B</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="1"></type>
+</occurrence>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#topicB</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#topicC</locator>
+</itemIdentifiers>
+</topic>
+</topicMap>

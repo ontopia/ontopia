@@ -1,0 +1,16 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>Homepage</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Lars Marius Garshol</baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id1"></instanceOf>
+<resourceRef href="http://www.garshol.priv.no/"></resourceRef>
+</occurrence>
+</topic>
+</topicMap>

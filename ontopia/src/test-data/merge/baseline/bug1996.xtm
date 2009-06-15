@@ -1,0 +1,30 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<instanceOf href="#id2"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://cch.com/xtm/fedtax/#(lea04b)-(cch-internal-ref)-(184)"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://cch.com/xtm/fedtax/#ftd18059"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://cch.com/xtm/statetax/#std18059"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>Effect on Estates</baseNameString>
+</baseName>
+<baseName>
+<baseNameString>Effect on Estates State</baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id3"></instanceOf>
+<resourceData>184</resourceData>
+</occurrence>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://wolterskluwer.com/psi/#document"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://wolterskluwer.com/psi/#normval"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

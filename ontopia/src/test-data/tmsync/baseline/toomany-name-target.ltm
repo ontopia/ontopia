@@ -1,0 +1,19 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/test/source</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>toomany-name-source.ltm#source</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Test name</value>
+<type topicref="2"></type>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

@@ -1,0 +1,21 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers><locator>#no</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers><locator>#topic1</locator>
+</itemIdentifiers>
+<topicName number="1">
+<value>Navn 2</value>
+<type topicref="3"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</topicName>
+</topic>
+<topic number="3">
+<subjectIdentifiers><locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

@@ -1,0 +1,15 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>Bongo</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<scope>
+<topicRef href="#id1"></topicRef>
+</scope>
+<baseNameString>ugga</baseNameString>
+</baseName>
+</topic>
+</topicMap>

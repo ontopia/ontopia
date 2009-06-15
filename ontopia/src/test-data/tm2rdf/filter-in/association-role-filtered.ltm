@@ -1,0 +1,3 @@
+[topicA = "Disallowed Type"]
+[association_typeA = "Association Type A"]
+association_typeA(topicA : topicA)

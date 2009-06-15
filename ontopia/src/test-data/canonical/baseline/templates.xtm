@@ -1,0 +1,103 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<subjectIdentity>
+<subjectIndicatorRef href="#at-tti"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmapping.com/cpan-psi.rdf#psi-at-tti"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<scope>
+<topicRef href="#id5"></topicRef>
+</scope>
+<baseNameString>Association Template (technology/technique/implementation)</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="#role-applied-technique"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-applied-technique"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<scope>
+<topicRef href="#id5"></topicRef>
+</scope>
+<baseNameString>Applied Technique (role)</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="#role-implementation"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-implementation"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<scope>
+<topicRef href="#id5"></topicRef>
+</scope>
+<baseNameString>Implementation (role)</baseNameString>
+</baseName>
+</topic>
+<topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="#role-implemented-technology"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-implemented-technology"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<scope>
+<topicRef href="#id5"></topicRef>
+</scope>
+<baseNameString>Implemented Technology (role)</baseNameString>
+</baseName>
+</topic>
+<topic id="id5">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id6">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#at-template-role-rpc"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id7">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-role"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id8">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-template"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<association>
+<instanceOf href="#id6"></instanceOf>
+<member>
+<instanceOf href="#id7"></instanceOf>
+<topicRef href="#id2"></topicRef>
+</member>
+<member>
+<instanceOf href="#id8"></instanceOf>
+<topicRef href="#id1"></topicRef>
+</member>
+</association>
+<association>
+<instanceOf href="#id6"></instanceOf>
+<member>
+<instanceOf href="#id7"></instanceOf>
+<topicRef href="#id3"></topicRef>
+</member>
+<member>
+<instanceOf href="#id8"></instanceOf>
+<topicRef href="#id1"></topicRef>
+</member>
+</association>
+<association>
+<instanceOf href="#id6"></instanceOf>
+<member>
+<instanceOf href="#id7"></instanceOf>
+<topicRef href="#id4"></topicRef>
+</member>
+<member>
+<instanceOf href="#id8"></instanceOf>
+<topicRef href="#id1"></topicRef>
+</member>
+</association>
+</topicMap>

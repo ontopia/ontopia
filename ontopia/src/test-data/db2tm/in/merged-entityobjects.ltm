@@ -1,0 +1,4 @@
+#PREFIX local @"http://psi.example.org/"
+
+[local:person = "Person"]
+[local:description = "Description"]

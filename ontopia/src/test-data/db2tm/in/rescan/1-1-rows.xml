@@ -1,0 +1,26 @@
+<db2tm name="1-1-rows">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <!-- TEST: one row is removed, one row is updated, one row is left 
+             unchanged and one row is new. -->
+
+  <relation name="1-1-rows.csv" columns="id name occurrence player">
+    <topic id="other">
+      <subject-identifier>http://psi.example.org/other/${player}</subject-identifier>
+    </topic>
+    <topic type="local:topic" primary="true">
+      <extent query="direct-instance-of($T, local:topic)?"/>
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>      
+      <topic-name>${name}</topic-name>
+      <occurrence type="local:code">${occurrence}</occurrence>
+      <player atype="local:at1" rtype="local:rt1">
+        <other rtype="local:rt2" player="#other"/>
+      </player>
+    </topic>
+  </relation>   
+
+</db2tm>

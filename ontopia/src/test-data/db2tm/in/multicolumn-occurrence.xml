@@ -1,0 +1,29 @@
+<db2tm name="multicolumn-occurrence">
+  <using prefix="local" subject-identifier="http://psi.test-psi/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0"/>
+  </sources>
+  
+  <!-- TEST: multiple characteristics of same kind from different columns -->
+
+  <relation name="multicolumn-occurrence.csv" columns="id o1 o2 o3 o4 o5 o6 o7 o8 o9">
+    <topic id="scope">
+      <subject-identifier>http://psi.example.org/topic/${o9}</subject-identifier>      
+    </topic>
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>      
+      <occurrence type="local:ot1" column="o1"/>
+      <occurrence type="local:ot1">${o2}</occurrence>
+      <occurrence type="local:ot1" scope="local:scope">${o3}</occurrence>
+      <occurrence type="local:ot1" column="o4" scope="local:scope"/>
+      <occurrence type="local:ot1" scope="#scope">${o9}</occurrence>
+
+      <occurrence type="local:ot2" column="o5"/>
+      <occurrence type="local:ot2">${o6}</occurrence>
+      <occurrence type="local:ot2" scope="local:scope">${o7}</occurrence>
+      <occurrence type="local:ot2" column="o8" scope="local:scope"/>
+      <occurrence type="local:ot2" scope="#scope">${o9}</occurrence>
+    </topic>
+  </relation> 
+</db2tm>

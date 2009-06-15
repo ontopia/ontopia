@@ -1,0 +1,112 @@
+<!-- 
+
+  $Id: tmstrict.dtd,v 1.1 2001/04/07 14:49:56 grove Exp $ 
+
+  An XML DTD supported by the Ontopia Navigator. This version is very
+  strict and should be used for validating purposes. Topic map
+  documents should in general always be validated before they are
+  imported into the topic map system.
+
+  Notes:
+
+    o The use of the type property is required, i.e. all instances of
+    occurs, assoc, assocrl, facet and fvalue must have a type
+    attribute.  
+
+    o All topics must be explicitly declared. The use of ID, IDREF and
+    IDREFS attributes checks this for you.
+
+    o References to information resources is done via the href
+    attribute on the occurs and fvalue elements. The loctype attribute
+    can be used to say what kind of locator it is. The default is URI.
+
+    Recommended public identifier:
+    '+//IDN ontopia.net//DTD Topic Map Interchange Format (Strict 1.0)//EN'
+
+-->
+
+<!ELEMENT topicmap (topic|assoc|facet)*
+>
+<!ATTLIST topicmap
+   addthems IDREFS #IMPLIED
+   topic CDATA #IMPLIED
+>
+
+<!-- topicmap.topic: identifies topic that represents the whole topic map. 
+     Reftype: topic -->
+
+<!ELEMENT topic (topname*, occurs*)
+>
+<!ATTLIST topic
+   id ID #REQUIRED
+   identity CDATA #IMPLIED
+   linktype CDATA #IMPLIED
+   scope IDREFS #IMPLIED
+   types IDREFS #IMPLIED
+>
+
+<!ELEMENT topname (basename+, dispname*, sortname*)
+>
+<!ATTLIST topname
+   scope IDREFS #IMPLIED
+>
+
+<!ELEMENT basename (#PCDATA)
+>
+<!ATTLIST basename
+   scope IDREFS #IMPLIED
+>
+
+<!ELEMENT sortname (#PCDATA)
+>
+<!ATTLIST sortname
+   scope IDREFS #IMPLIED
+>
+
+<!ELEMENT dispname (#PCDATA)
+>
+<!ATTLIST dispname
+   scope IDREFS #IMPLIED
+>
+
+<!ELEMENT occurs EMPTY
+>
+<!ATTLIST occurs
+   href CDATA #REQUIRED
+   loctype CDATA #IMPLIED
+   occrl CDATA #IMPLIED
+   scope IDREFS #IMPLIED
+   type IDREF #REQUIRED
+>
+
+<!ELEMENT assoc (assocrl+)
+>
+<!ATTLIST assoc
+   linktype CDATA #IMPLIED
+   scope IDREFS #IMPLIED
+   type IDREF #REQUIRED
+>
+
+<!ELEMENT assocrl EMPTY
+>
+<!ATTLIST assocrl
+   anchrole CDATA #IMPLIED
+   href IDREF #REQUIRED
+   type IDREF #REQUIRED
+>
+
+<!ELEMENT facet (fvalue)+
+>
+<!ATTLIST facet
+   linktype CDATA #IMPLIED
+   type IDREF #REQUIRED
+>
+
+<!ELEMENT fvalue EMPTY
+>
+<!ATTLIST fvalue
+   facetval CDATA #IMPLIED
+   href CDATA #REQUIRED
+   loctype CDATA #IMPLIED
+   type IDREF #REQUIRED
+>

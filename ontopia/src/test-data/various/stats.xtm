@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+  <topic id="course">
+    <baseName>
+      <baseNameString>course</baseNameString>
+    </baseName>
+  </topic>
+
+
+  <topic id="Judy_Bishop">
+    <instanceOf>
+      <topicRef xlink:href="#author"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#author"></topicRef>
+      </scope>
+      <baseNameString>Bishop, Judy</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="coursecode">
+    <baseName>
+      <baseNameString>coursecode</baseNameString>
+    </baseName>
+  </topic>
+
+
+  <topic id="written_by">
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#author"></topicRef>
+      </scope>
+      <baseNameString>is author of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>wrote book</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#book"></topicRef>
+      </scope>
+      <baseNameString>written by</baseNameString>
+    </baseName>
+  </topic>
+
+
+  <topic id="courseliterature">
+    <baseName>
+      <baseNameString>course literature</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#course"></topicRef>
+      </scope>
+      <baseNameString>has course literature</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#book"></topicRef>
+      </scope>
+      <baseNameString>is course literature</baseNameString>
+    </baseName>
+  </topic>
+
+
+  <topic id="in102">
+    <instanceOf>
+      <topicRef xlink:href="#course"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#Programmeringslab"></topicRef>
+      </scope>
+      <baseNameString>Programmeringslab</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#coursecode"></topicRef>
+      </scope>
+      <baseNameString>In 102</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#homepage"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="http://www.ifi.uio.no/~in102"></resourceRef>
+    </occurrence>
+  </topic>
+
+
+  <topic id="courselanguage">
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#language"></topicRef>
+      </scope>
+      <baseNameString>used by course</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>course language</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#course"></topicRef>
+      </scope>
+      <baseNameString>uses programming language</baseNameString>
+    </baseName>
+  </topic>
+
+
+  <topic id="language">
+    <baseName>
+      <baseNameString>language</baseNameString>
+    </baseName>
+  </topic>
+
+
+
+  <topic id="Java_Gently">
+    <instanceOf>
+      <topicRef xlink:href="#book"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#book"></topicRef>
+      </scope>
+      <baseNameString>Java Gently</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#homepage"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="http://www.ifi.uio.no/~javagently"></resourceRef>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#homepage"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="http://www.ifi.uio.no/~javagently"></resourceRef>
+    </occurrence>
+  </topic>
+
+
+  <topic id="homepage"></topic>
+
+
+  <topic id="book">
+    <baseName>
+      <baseNameString>book</baseNameString>
+    </baseName>
+  </topic>
+
+
+  <topic id="java">
+    <instanceOf>
+      <topicRef xlink:href="#language"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#language"></topicRef>
+      </scope>
+      <baseNameString>Java</baseNameString>
+    </baseName>
+  </topic>
+
+
+  <topic id="Programmeringslab"></topic>
+
+
+  <topic id="author">
+    <baseName>
+      <baseNameString>author</baseNameString>
+    </baseName>
+  </topic>
+
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#courselanguage"></topicRef>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#course"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#in102"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#language"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#java"></topicRef>
+    </member>
+  </association>
+
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#written_by"></topicRef>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#author"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#Judy_Bishop"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#book"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#Java_Gently"></topicRef>
+    </member>
+  </association>
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#written_by"></topicRef>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#author"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#Judy_Bishop"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#book"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#Java_Gently"></topicRef>
+    </member>
+  </association>
+
+</topicMap>

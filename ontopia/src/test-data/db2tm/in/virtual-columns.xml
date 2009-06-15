@@ -1,0 +1,38 @@
+<db2tm name="virtual-columns">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <relation name="virtual-columns.csv" columns="id code">
+    <!-- virtual column with fallout -->
+    <mapping-column name="teename" column="code">
+      <map from="t1" to="Tee one"/>
+      <map from="t2" to="Tee two"/>
+      <default to="Unknown"/>
+    </mapping-column>
+    <!-- virtual column without fallout -->
+    <mapping-column name="tooname" column="id">
+      <map from="1" to="Too one"/>
+      <map from="2" to="Too two"/>
+      <map from="3" to="Too three"/>
+      <map from="4" to="Too four"/>
+    </mapping-column>
+    <!-- virtual column without fallout and based on other virtual column -->
+    <mapping-column name="neename" column="tooname">
+      <map from="Too one" to="Nee one"/>
+      <map from="Too two" to="Nee two"/>
+      <map from="Too three" to="Nee three"/>
+      <map from="Too four" to="Nee four"/>
+    </mapping-column>
+    <topic type="local:tee" primary="true">
+      <subject-identifier>http://psi.example.org/tee/${id}</subject-identifier>
+      <topic-name column="teename"/>
+      <occurrence type="local:teename">${teename}</occurrence>
+      <occurrence type="local:tooname" column="tooname"/>
+      <occurrence type="local:neename" column="neename"/>
+      <occurrence type="local:code">${code}</occurrence>
+    </topic>
+  </relation>   
+</db2tm>

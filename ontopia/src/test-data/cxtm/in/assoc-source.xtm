@@ -1,0 +1,15 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+  <association id="assoc1">
+    <instanceOf>
+      <topicRef xlink:href="#assoctype1"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#roletype1"/>
+      </roleSpec>
+      <topicRef xlink:href="#player1"/>
+    </member>
+  </association>
+</topicMap>

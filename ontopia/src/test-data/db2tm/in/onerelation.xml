@@ -1,0 +1,13 @@
+<db2tm name="onerelation">
+  <using prefix="local" subject-identifier="http://psi.test-psi/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="1"/>
+  </sources>
+  
+  <relation name="onerelation.csv" columns="tt1">
+    <topic type="local:tt1">
+      <item-identifier>#${tt1}</item-identifier>
+    </topic>
+  </relation> 
+</db2tm>

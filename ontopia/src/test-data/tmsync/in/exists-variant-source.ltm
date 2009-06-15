@@ -1,0 +1,4 @@
+#PREFIX test @"http://psi.ontopia.net/test/"
+
+[source = "Source"; "ssource"; "SSource"
+ @"http://psi.ontopia.net/test/source"]

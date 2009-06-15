@@ -1,0 +1,68 @@
+<topicMap>
+<topic>
+<sourceLocators><locator address="#other-tt1-i1" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<sourceLocators><locator address="#other-tt2-i2" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<sourceLocators><locator address="#other-tt3-i3" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.test-psi/tt1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#tt1" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>Topic Type 1</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#instance" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#type" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#type-instance" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<association>
+<type topicref="7"></type>
+<role>
+<rolePlayer topicref="1"></rolePlayer>
+<type topicref="5"></type>
+</role>
+<role>
+<rolePlayer topicref="4"></rolePlayer>
+<type topicref="6"></type>
+</role>
+</association>
+<association>
+<type topicref="7"></type>
+<role>
+<rolePlayer topicref="2"></rolePlayer>
+<type topicref="5"></type>
+</role>
+<role>
+<rolePlayer topicref="4"></rolePlayer>
+<type topicref="6"></type>
+</role>
+</association>
+<association>
+<type topicref="7"></type>
+<role>
+<rolePlayer topicref="3"></rolePlayer>
+<type topicref="5"></type>
+</role>
+<role>
+<rolePlayer topicref="4"></rolePlayer>
+<type topicref="6"></type>
+</role>
+</association>
+</topicMap>

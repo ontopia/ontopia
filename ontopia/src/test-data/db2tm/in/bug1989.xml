@@ -1,0 +1,16 @@
+<db2tm name="bug1989">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <relation name="bug1989.csv" columns="id v1 v2">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <topic-name>${v1}</topic-name>
+      <occurrence type="local:code">${v2}</occurrence>
+    </topic>
+  </relation>   
+
+</db2tm>

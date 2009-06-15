@@ -1,0 +1,14 @@
+[subordinate-role-type = "Subordinate role type"
+  @"http://www.techquila.com/psi/hierarchy/#subordinate-role-type"]
+[superordinate-role-type = "Superordinate role type"
+  @"http://www.techquila.com/psi/hierarchy/#superordinate-role-type"]
+[superclass-subclass : hierarchical-relation-type = "Supertype-subtype"
+                                                  = "Subtype of" / subclass
+                                                  = "Supertype of" / superclass
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+[subclass : subordinate-role-type = "Subtype"
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+[superclass : superordinate-role-type = "Supertype"
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+
+superclass-subclass( superclassA : superclass, subclassA : subclass )

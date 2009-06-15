@@ -1,0 +1,36 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+</topic>
+<topic id="id2">
+<instanceOf href="#id3"></instanceOf>
+<baseName>
+<baseNameString>English</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/language"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/syntax"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id5">
+<instanceOf href="#id4"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/tmxml"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>TM/XML</baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id1"></instanceOf>
+<scope>
+<topicRef href="#id2"></topicRef>
+</scope>
+<resourceData>A nice, compact TM syntax.</resourceData>
+</occurrence>
+</topic>
+</topicMap>

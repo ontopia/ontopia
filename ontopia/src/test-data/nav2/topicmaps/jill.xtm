@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          id="jillstm">
+
+<!-- ...................... ONTOLOGY TOPICS ...................... -->
+
+<!-- .................... THE TOPIC MAP TOPIC .................... -->
+
+<topic id="jillstm-topic">
+  <!-- Reifies the topic map and gives it a name -->
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#jillstm"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Jill's First TM</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ........................ TOPIC TYPES ........................ -->
+
+<topic id="developer">
+  <baseName>
+    <baseNameString>developer</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="company">
+  <baseName>
+    <baseNameString>company</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ..................... OCCURRENCE TYPES ...................... -->
+
+<topic id="description">
+  <!-- Uses Ontopia's "description occurrence" PSI -->
+  <subjectIdentity>
+    <subjectIndicatorRef
+      xlink:href="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>description</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="kudo">
+  <!-- An instance of the "description occurrence" class -->
+  <instanceOf>
+    <topicRef xlink:href="#description"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>kudo</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="website">
+  <baseName>
+    <baseNameString>web site</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="contract">
+  <baseName>
+    <baseNameString>contract</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ..................... ASSOCIATION TYPES ..................... -->
+
+<topic id="employment">
+  <!-- Illustrates the use of names scoped by roles -->
+  <baseName>
+    <baseNameString>employment</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#employer"/></scope>
+    <baseNameString>employs</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#employee"/></scope>
+    <baseNameString>employed by</baseNameString>
+  </baseName>
+</topic>
+
+<!-- .................. ASSOCIATION ROLE TYPES.................... -->
+
+<topic id="employer">
+  <baseName>
+    <baseNameString>employer</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="employee">
+  <baseName>
+    <baseNameString>employee</baseNameString>
+  </baseName>
+</topic>
+
+
+<!-- ..................... INDIVIDUAL TOPICS ..................... -->
+
+
+<topic id="ontopia">
+  <instanceOf>
+    <topicRef xlink:href="#company"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>Ontopia</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#website"/>
+    </instanceOf>
+    <resourceRef xlink:href="http://www.ontopia.net/"/>
+  </occurrence>
+</topic>
+
+<topic id="jill">
+  <instanceOf>
+    <topicRef xlink:href="#developer"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>Jill Hacker</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#kudo"/>
+    </instanceOf>
+    <resourceRef xlink:href="http://www.ontopia.net/"/>
+  </occurrence>
+</topic>
+
+
+<!-- ....................... ASSOCIATIONS ........................ -->
+
+
+<association id="jill-ontopia-association">
+  <instanceOf>
+    <topicRef xlink:href="#employment"/>
+  </instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#employee"/></roleSpec>
+    <topicRef xlink:href="#jill"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#employer"/></roleSpec>
+    <topicRef xlink:href="#ontopia"/>
+  </member>
+</association>
+
+
+<!-- ................... REIFICATION EXAMPLES .................... -->
+
+
+<!-- ................... REIFIED ASSOCIATIONS .................... -->
+
+<topic id="jill-ontopia-topic">
+  <!-- reifies the Jill/Ontopia association -->
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#jill-ontopia-association"/>
+  </subjectIdentity>
+  <instanceOf>
+    <topicRef xlink:href="#employment"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>Jill's position with Ontopia</baseNameString>
+  </baseName>
+  <occurrence id="jills-contract">
+    <instanceOf>
+      <topicRef xlink:href="#contract"/>
+    </instanceOf>
+    <resourceRef
+      xlink:href="http://www.ontopia.net/internal/employees/contracts/jill.htm"/>
+  </occurrence>
+</topic>
+
+<!-- .................... REIFIED OCCURRENCES .................... -->
+
+<topic id="jills-contract-topic">
+  <!-- Reifies the occurrence of the reified Jill/Ontopia association -->
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#jills-contract"/>
+  </subjectIdentity>
+  <instanceOf>
+    <topicRef xlink:href="#contract"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>Jill's contract with Ontopia</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#contract"/>
+    </instanceOf>
+    <resourceRef
+      xlink:href="http://www.ontopia.net/internal/employees/contracts/jill.htm"/>
+  </occurrence>
+</topic>
+
+
+</topicMap>

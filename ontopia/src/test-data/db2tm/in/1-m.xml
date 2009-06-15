@@ -1,0 +1,70 @@
+<db2tm name="1-m">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <relation name="1-m-subjectidentifier.csv" columns="id code">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <subject-identifier>http://psi.example.org/subject-identifier/${code}</subject-identifier>
+    </topic>
+  </relation>   
+
+  <!-- NOTE: doesn't really work as only single locators are supported. in practice this 
+             will mean that only the last subject locator survives -->
+  <relation name="1-m-subjectlocator.csv" columns="id code">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <subject-locator>http://psi.example.org/subject-locator/${code}</subject-locator>
+    </topic>
+  </relation>   
+
+  <relation name="1-m-itemidentifier.csv" columns="id code">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <item-identifier>http://psi.example.org/item-identifier/${code}</item-identifier>
+    </topic>
+  </relation>   
+
+  <relation name="1-m-topicname.csv" columns="id code">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <topic-name>${code}</topic-name>
+    </topic>
+  </relation>   
+
+  <relation name="1-m-occurrence.csv" columns="id code">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <occurrence type="local:code">${code}</occurrence>
+    </topic>
+  </relation>   
+
+  <relation name="1-m-player.csv" columns="id code">
+    <topic id="other">
+      <subject-identifier>http://psi.example.org/other/${code}</subject-identifier>
+    </topic>
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <player atype="local:at1" rtype="local:rt1">
+        <other rtype="local:rt2" player="#other"/>
+      </player>
+    </topic>
+  </relation>   
+
+  <relation name="1-m-association.csv" columns="id code">
+    <topic id="topic">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+    </topic>
+    <topic id="other">
+      <subject-identifier>http://psi.example.org/other/${code}</subject-identifier>
+    </topic>
+    <association type="local:at2">
+      <role type="local:rt3" player="#topic"/>
+      <role type="local:rt4" player="#other"/>
+    </association>
+  </relation>   
+
+</db2tm>

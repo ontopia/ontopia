@@ -1,0 +1,1 @@
+<tolog:foreach> missing query attribute

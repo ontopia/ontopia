@@ -1,0 +1,5 @@
+[t1 = "Topic 1"]
+[t2 = "X"; "Topic 2"]
+[t3 = "Topic 3"]
+[t4 = "A"; "Topic 4"]
+[sort @"http://www.topicmaps.org/xtm/1.0/core.xtm#sort"]

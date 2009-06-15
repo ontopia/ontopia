@@ -1,0 +1,3 @@
+#PREFIX test @"http://psi.ontopia.net/test/"
+
+[test:source : othertype]

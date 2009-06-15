@@ -1,0 +1,4 @@
+#PREFIX test @"http://psi.ontopia.net/test/"
+
+{test:source, test:occtype, "http://this.must.go"}
+{test:source, test:occtype, "http://this.must.go.too"}

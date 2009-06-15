@@ -1,0 +1,17 @@
+#PREFIX bk @"http://psi.bergen.kommune.no/portal/"
+
+/* same ontology as in bk-ontologi.ltm, except the names are nynorsk */
+[bk:tjeneste = "Teneste"]
+[bk:tema     = "Tema"]
+[bk:emneord  = "Emneord"]
+[bk:ressurs  = "Ressurs"]
+
+[bk:forelder-barn = "Forelder/born"]
+  [bk:forelder = "Forelder"]
+  [bk:barn = "Born"]
+
+[bk:relevant-for = "Relevant før"]
+  [bk:kategori = "Kategori"]
+  [bk:kategorisert = "Kategorisert"]
+
+[bk:livsit-relevant-for = "Relevant før (LivsIT)"] /* workaround */

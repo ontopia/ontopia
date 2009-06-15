@@ -1,0 +1,15 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+</topic>
+<topic id="id2">
+<instanceOf href="#id1"></instanceOf>
+<baseName>
+<baseNameString>Lars Marius Garshol</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<baseName>
+<baseNameString>Person</baseNameString>
+</baseName>
+</topic>
+</topicMap>

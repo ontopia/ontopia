@@ -1,0 +1,24 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" 
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <topic id="kultur"/>
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#temahierarki"/>
+    </instanceOf>
+
+    <member>
+      <roleSpec>
+	<topicRef xlink:href="#overordnet"/>
+      </roleSpec>
+    </member>
+
+    <member>
+      <roleSpec>
+	<topicRef xlink:href="#underordnet"/>
+      </roleSpec>
+      <topicRef xlink:href="#samisk-kultur"/>
+    </member>
+  </association>
+</topicMap>

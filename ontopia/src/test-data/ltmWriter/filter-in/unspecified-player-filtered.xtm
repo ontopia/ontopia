@@ -1,0 +1,48 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="containee">
+    <baseName id="containee_name">
+      <baseNameString>Disallowed Topic</baseNameString>
+    </baseName>
+  </topic>
+  
+  <topic id="container">
+    <baseName id="container_name">
+      <baseNameString>Container Name</baseNameString>
+    </baseName>
+  </topic>
+  
+  <topic id="norway">
+    <baseName id="norway_name">
+      <baseNameString>Norway</baseNameString>
+    </baseName>
+  </topic>
+  
+  <topic id="contained-in">
+    <baseName id="contained-in_name">
+      <baseNameString>Contained In</baseNameString>
+    </baseName>
+  </topic>
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#contained-in"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#containee"/>
+      </roleSpec>
+      <!--topicRef xlink:href="#oslo"/-->
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#container"/>
+      </roleSpec>
+      <topicRef xlink:href="#norway"/>
+    </member>
+  </association>
+
+
+</topicMap>

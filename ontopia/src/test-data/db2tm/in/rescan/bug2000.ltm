@@ -1,0 +1,16 @@
+#PREFIX local @"http://psi.example.org/"
+
+[local:topic = "Topic"]
+
+[local:code = "Code"]
+
+[local:at = "at"]
+[local:rt1 = "rt1"]
+[local:rt2 = "rt2"]
+
+[existing1 @ "http://psi.example.org/topic/1"]
+{existing1, local:code, "test:1"}
+
+[existing2 @ "http://psi.example.org/topic/2"]
+{existing2, local:code, [[test]]}
+

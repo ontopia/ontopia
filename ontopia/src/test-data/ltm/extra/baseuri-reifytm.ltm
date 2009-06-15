@@ -1,0 +1,6 @@
+
+#BASEURI "http://psi.ontopia.net/"
+#TOPICMAP thistm
+
+[tmtopic = "This topic map"
+ @"#thistm"]

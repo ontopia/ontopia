@@ -1,0 +1,21 @@
+
+# Just testing that we can actually read the NTRIPLE syntax.
+
+<http://piss.ontopia.net/ontosaurus/#thing> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.techquila.com/psi/thesaurus/#term> .
+<http://piss.ontopia.net/ontosaurus/#thing> <http://www.w3.org/2000/01/rdf-schema#label> "Thing" .
+
+<http://piss.ontopia.net/ontosaurus/#good-thing> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.techquila.com/psi/thesaurus/#term> .
+<http://piss.ontopia.net/ontosaurus/#good-thing> <http://www.w3.org/2000/01/rdf-schema#label> "Good thing" .
+<http://piss.ontopia.net/ontosaurus/#good-thing> <http://piss.ontopia.net/ontosaurus/#parent> <http://piss.ontopia.net/ontosaurus/#thing> .
+
+<http://piss.ontopia.net/ontosaurus/#bad-thing> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.techquila.com/psi/thesaurus/#term> .
+<http://piss.ontopia.net/ontosaurus/#bad-thing> <http://www.w3.org/2000/01/rdf-schema#label> "Bad thing" .
+<http://piss.ontopia.net/ontosaurus/#bad-thing> <http://piss.ontopia.net/ontosaurus/#parent> <http://piss.ontopia.net/ontosaurus/#thing> .
+
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://psi.ontopia.net/rdf2tm/#maps-to> <http://psi.ontopia.net/rdf2tm/#instance-of> .
+<http://www.w3.org/2000/01/rdf-schema#label> <http://psi.ontopia.net/rdf2tm/#maps-to> <http://psi.ontopia.net/rdf2tm/#basename> .
+
+<http://piss.ontopia.net/ontosaurus/#parent> <http://psi.ontopia.net/rdf2tm/#maps-to> <http://psi.ontopia.net/rdf2tm/#association> .
+<http://piss.ontopia.net/ontosaurus/#parent> <http://psi.ontopia.net/rdf2tm/#type> <http://www.techquila.com/psi/thesaurus/#broader-narrower> .
+<http://piss.ontopia.net/ontosaurus/#parent> <http://psi.ontopia.net/rdf2tm/#subject-role> <http://www.techquila.com/psi/thesaurus/#narrower> .
+<http://piss.ontopia.net/ontosaurus/#parent> <http://psi.ontopia.net/rdf2tm/#object-role> <http://www.techquila.com/psi/thesaurus/#broader> .

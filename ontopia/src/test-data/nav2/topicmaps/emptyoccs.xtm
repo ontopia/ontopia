@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<!DOCTYPE topicMap PUBLIC "-//TopicMaps.Org//DTD XML Topic Map (XTM) 1.0//EN" "xtm1.dtd">
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<topic id="no-occ">
+  <baseName>
+    <baseNameString>No Occurrence at all</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="null-occ">
+  <baseName>
+    <baseNameString>Occurrence with null value</baseNameString>
+  </baseName>
+  <occurrence>
+  </occurrence>
+</topic>
+
+<topic id="empty-int-occ">
+  <baseName>
+    <baseNameString>Internal occurrence with empty value</baseNameString>
+  </baseName>
+  <occurrence>
+    <resourceData></resourceData>
+  </occurrence>
+</topic>
+
+<topic id="empty-ext-occ">
+  <baseName>
+    <baseNameString>External occurrence with empty value</baseNameString>
+  </baseName>
+  <occurrence>
+    <!-- <resourceRef xlink:href=""/> -->
+  </occurrence>
+</topic>
+
+<topic id="setWithNullOcc">
+  <baseName>
+    <baseNameString>XSLT</baseNameString>
+  </baseName>
+  <occurrence>
+    <resourceData>Language for transforming XML documents
+    into other XML documents.</resourceData>
+  </occurrence>
+  <occurrence>
+  </occurrence>
+</topic>
+
+<topic id="setWithEmptyOccs">
+  <baseName>
+    <baseNameString>XSLT</baseNameString>
+  </baseName>
+  <occurrence>
+    <resourceData>Language for transforming XML documents
+    into other XML documents.</resourceData>
+  </occurrence>
+  <occurrence>
+    <resourceData></resourceData>
+  </occurrence>
+  <occurrence>
+    <!-- <resourceRef  xlink:href=""/> -->
+  </occurrence>
+</topic>
+
+</topicMap>

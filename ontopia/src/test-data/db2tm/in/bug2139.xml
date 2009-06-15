@@ -1,0 +1,16 @@
+<db2tm name="bug2139">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  <using prefix="xsd" subject-identifier="http://www.w3.org/2001/XMLSchema#"/>
+
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <relation name="bug2139.csv" columns="id v1">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <occurrence type="local:uri" datatype="xsd:anyURI">test:${v1}</occurrence>
+    </topic>
+  </relation>   
+
+</db2tm>

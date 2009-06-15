@@ -1,0 +1,6 @@
+
+borders-with(norway : country, sweden : country)
+borders-with(norway : country, finland : country)
+borders-with(norway : country, russia : country)
+borders-with(finland : country, sweden : country)
+borders-with(finland : country, russia : country)

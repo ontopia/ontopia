@@ -1,0 +1,4 @@
+[tt1 = "Topic Type 1"
+ @"http://psi.test-psi/tt1"]
+[ot1 = "Occurrence Type 1"
+ @"http://psi.test-psi/ot1"]

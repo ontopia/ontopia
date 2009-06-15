@@ -1,0 +1,3 @@
+#PREFIX prefix @"http://some-address/#"
+#PREFIX prefix @"http://some-other-address/#"
+[prefix:foo = "A topic"]

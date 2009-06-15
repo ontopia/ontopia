@@ -1,0 +1,14 @@
+<topicMap id="xtm1.0-psi-core"
+    xmlns="http://www.topicmaps.org/xtm/1.0/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <topic id="topic">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#topic"/>
+    </subjectIdentity>
+    <baseName><scope><topicRef xlink:href="bug750.sub2#en"/></scope>
+      <baseNameString>topic</baseNameString>
+    </baseName>
+  </topic>
+
+</topicMap>

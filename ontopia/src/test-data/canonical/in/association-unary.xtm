@@ -1,0 +1,35 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="oslo">
+    <baseName>
+      <baseNameString>Oslo</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="is-nice">
+    <baseName>
+      <baseNameString>Is nice</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="nice">
+    <baseName>
+      <baseNameString>Nice</baseNameString>
+    </baseName>    
+  </topic>
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#is-nice"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+  	<topicRef xlink:href="#nice"/>
+      </roleSpec>
+      <topicRef xlink:href="#oslo"/>
+    </member>
+  </association>
+
+</topicMap>

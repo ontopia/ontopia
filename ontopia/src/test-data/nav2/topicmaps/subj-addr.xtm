@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<topic id="test-topic">
+  <subjectIdentity>
+    <resourceRef xlink:href="http://www.example.com"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>XSLT</baseNameString>
+  </baseName>
+</topic>
+
+</topicMap>

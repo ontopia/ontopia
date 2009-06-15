@@ -1,0 +1,23 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#foo</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Foo</value>
+<type topicref="2"></type>
+<variant number="1">
+<value>http://foo.no/</value>
+<datatype>http://www.w3.org/2001/XMLSchema#anyURI</datatype>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</variant>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

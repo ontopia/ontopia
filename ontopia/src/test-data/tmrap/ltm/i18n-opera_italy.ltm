@@ -1,0 +1,247 @@
+@"utf-8"
+#VERSION "1.3"
+/*
+   Generator: Ontopia Knowledge Suite (OKS)
+   Date:      2006-03-15 23:27
+*/
+
+/* ----------------- ONTOLOGY ------------------ */
+
+/* ----------------- Topic Types --------------- */
+
+[id15
+    @"http://psi.oasis-open.org/iso/3166/#country"]
+[id23
+    @"http://psi.ontopia.net/geography/#country"]
+
+/* ----------------- Type Hierarchy ------------ */
+
+/* ----------------- Role Types ---------------- */
+
+[id29
+    @"http://psi.ontopia.net/music/#opera"]
+[id3
+    @"http://psi.ontopia.net/geography/#place"]
+[id31
+    @"http://psi.ontopia.net/geography/#container"]
+[id43
+    @"http://psi.ontopia.net/i18n/#language"]
+[id44
+    @"http://psi.ontopia.net/geography/#containee"]
+[id51
+    @"http://psi.ontopia.net/metadata/#value"]
+[id57
+    @"http://psi.ontopia.net/metadata/#resource"]
+[region]
+
+/* ----------------- Association Types --------- */
+
+[id2
+    @"http://psi.ontopia.net/opera/#takes-place-in"]
+[id24
+    @"http://purl.org/dc/elements/1.1/subject"]
+[id58
+    @"http://psi.ontopia.net/geography/#located-in"]
+[id65
+    @"http://psi.ontopia.net/i18n/#spoken-in"]
+
+/* ----------------- Occurrence Types ---------- */
+
+/* ----------------- INSTANCES ----------------- */
+
+/* ----------------- Topics -------------------- */
+
+
+/* -- TT: id15 -- */
+[italy : id15 id23 = "Italy"
+    @"http://www.topicmaps.org/xtm/1.0/country.xtm#IT"]
+
+/* -- TT: (untyped) -- */
+[attila]
+[calabria]
+[id1
+    @"http://psi.ontopia.net/city/380/#pescara"]
+[id10
+    @"http://psi.ontopia.net/city/380/#caprino-bergamasco"]
+[id11
+    @"http://psi.ontopia.net/city/380/#firenze"]
+[id12
+    @"http://psi.ontopia.net/city/380/#la-spezia"]
+[id13
+    @"http://psi.ontopia.net/city/380/#brescia"]
+[id14
+    @"http://psi.ontopia.net/city/380/#palmi"]
+[id16
+    @"http://psi.ontopia.net/city/380/#colleretto-parella"]
+[id17
+    @"http://psi.ontopia.net/city/380/#lecce"]
+[id18
+    @"http://psi.ontopia.net/city/380/#lecco"]
+[id19
+    @"http://psi.ontopia.net/city/380/#laquila"]
+[id20
+    @"http://psi.ontopia.net/city/380/#murano"]
+[id21
+    @"http://psi.ontopia.net/iso3166/it.xtm#savoia"]
+[id22
+    @"http://psi.ontopia.net/city/380/#milano"]
+[id25
+    @"http://psi.ontopia.net/city/380/#castelnuovo"]
+[id26
+    @"http://psi.ontopia.net/city/380/#prato"]
+[id27
+    @"http://psi.ontopia.net/city/380/#lucca"]
+[id28
+    @"http://psi.ontopia.net/city/380/#zoagli"]
+[id30
+    @"http://psi.ontopia.net/city/380/#ravenna"]
+[id32
+    @"http://www.topicmaps.org/xtm/1.0/language.xtm#it"]
+[id33
+    @"http://psi.ontopia.net/city/380/#montecatini"]
+[id34
+    @"http://psi.ontopia.net/city/380/#paderno-fasolaro"]
+[id35
+    @"http://psi.ontopia.net/city/380/#rimini"]
+[id36
+    @"http://psi.ontopia.net/city/380/#foggia"]
+[id37
+    @"http://psi.ontopia.net/city/380/#pesaro"]
+[id38
+    @"http://psi.ontopia.net/city/380/#trieste"]
+[id39
+    @"http://psi.ontopia.net/city/380/#torino"]
+[id4
+    @"http://psi.ontopia.net/city/380/#napoli"]
+[id40
+    @"http://psi.ontopia.net/city/380/#cremona"]
+[id41
+    @"http://psi.ontopia.net/city/380/#livorno"]
+[id42
+    @"http://psi.ontopia.net/iso3166/it.xtm#sicilia"]
+[id45
+    @"http://psi.ontopia.net/city/380/#capri"]
+[id46
+    @"http://psi.ontopia.net/city/380/#udine"]
+[id47
+    @"http://psi.ontopia.net/city/380/#padua"]
+[id48
+    @"http://psi.ontopia.net/city/380/#siena"]
+[id49
+    @"http://psi.ontopia.net/city/380/#borgo-san-lorenzo"]
+[id5
+    @"http://psi.ontopia.net/city/380/#san-remo"]
+[id50
+    @"http://psi.ontopia.net/city/380/#ferrara"]
+[id52
+    @"http://psi.ontopia.net/city/380/#varese"]
+[id53
+    @"http://psi.ontopia.net/city/380/#venezia"]
+[id54
+    @"http://psi.ontopia.net/city/380/#verona"]
+[id55
+    @"http://psi.ontopia.net/city/380/#bassano"]
+[id56
+    @"http://psi.ontopia.net/#geography"]
+[id59
+    @"http://psi.ontopia.net/city/380/#bologna"]
+[id6
+    @"http://psi.ontopia.net/city/380/#rovereto"]
+[id60
+    @"http://psi.ontopia.net/city/380/#piacenza"]
+[id61
+    @"http://psi.ontopia.net/city/380/#viareggio"]
+[id62
+    @"http://psi.ontopia.net/#music"]
+[id63
+    @"http://psi.ontopia.net/city/380/#reggio-emilia"]
+[id64
+    @"http://psi.ontopia.net/city/380/#roma"]
+[id66
+    @"http://psi.ontopia.net/city/380/#varazza"]
+[id67
+    @"http://psi.ontopia.net/city/380/#genova"]
+[id68
+    @"http://psi.ontopia.net/city/380/#mantua"]
+[id69
+    @"http://psi.ontopia.net/city/380/#le-roncole"]
+[id7
+    @"http://psi.ontopia.net/city/380/#posillipo"]
+[id8
+    @"http://psi.ontopia.net/city/380/#trento"]
+[id9
+    @"file:/Users/larsga/cvs-co/src/java/test-data/tmrap/topicmaps/opera.xtm#operatm-tm"]
+[la-battaglia-di-legnano]
+[la-forza-del-destino]
+[silvano]
+[tyrol]
+
+/* ----------------- Associations -------------- */
+
+/* -- AT: id2 */
+id2( italy : id3, attila : id29 ) / id56 id62
+id2( italy : id3, la-battaglia-di-legnano : id29 ) / id56 id62
+id2( italy : id3, la-forza-del-destino : id29 ) / id56 id62
+id2( italy : id3, silvano : id29 ) / id56 id62
+
+/* -- AT: id24 */
+id24( italy : id51, id9 : id57 )
+
+/* -- AT: id58 */
+id58( italy : id31, calabria : id44 ) / id56
+id58( italy : id31, id1 : id44 ) / id56
+id58( italy : id31, id10 : id44 ) / id56
+id58( italy : id31, id11 : id44 ) / id56
+id58( italy : id31, id12 : id44 ) / id56
+id58( italy : id31, id13 : id44 ) / id56
+id58( italy : id31, id14 : id44 ) / id56
+id58( italy : id31, id16 : id44 ) / id56
+id58( italy : id31, id17 : id44 ) / id56
+id58( italy : id31, id18 : id44 ) / id56
+id58( italy : id31, id19 : id44 ) / id56
+id58( italy : id31, id20 : id44 ) / id56
+id58( italy : id31, id21 : id44 ) / id56
+id58( italy : id31, id22 : id44 ) / id56
+id58( italy : id31, id25 : id44 ) / id56
+id58( italy : id31, id26 : id44 ) / id56
+id58( italy : id31, id27 : id44 ) / id56
+id58( italy : id31, id28 : id44 ) / id56
+id58( italy : id31, id30 : id44 ) / id56
+id58( italy : id31, id33 : id44 ) / id56
+id58( italy : id31, id34 : id44 ) / id56
+id58( italy : id31, id35 : id44 ) / id56
+id58( italy : id31, id36 : id44 ) / id56
+id58( italy : id31, id37 : id44 ) / id56
+id58( italy : id31, id38 : id44 ) / id56
+id58( italy : id31, id39 : id44 ) / id56
+id58( italy : id31, id4 : id44 ) / id56
+id58( italy : id31, id40 : id44 ) / id56
+id58( italy : id31, id41 : id44 ) / id56
+id58( italy : id31, id42 : id44 ) / id56
+id58( italy : id31, id45 : id44 ) / id56
+id58( italy : id31, id46 : id44 ) / id56
+id58( italy : id31, id47 : id44 ) / id56
+id58( italy : id31, id48 : id44 ) / id56
+id58( italy : id31, id49 : id44 ) / id56
+id58( italy : id31, id5 : id44 ) / id56
+id58( italy : id31, id50 : id44 ) / id56
+id58( italy : id31, id52 : id44 ) / id56
+id58( italy : id31, id53 : id44 ) / id56
+id58( italy : id31, id54 : id44 ) / id56
+id58( italy : id31, id55 : id44 ) / id56
+id58( italy : id31, id59 : id44 ) / id56
+id58( italy : id31, id6 : id44 ) / id56
+id58( italy : id31, id60 : id44 ) / id56
+id58( italy : id31, id61 : id44 ) / id56
+id58( italy : id31, id63 : id44 ) / id56
+id58( italy : id31, id64 : id44 ) / id56
+id58( italy : id31, id66 : id44 ) / id56
+id58( italy : id31, id67 : id44 ) / id56
+id58( italy : id31, id68 : id44 ) / id56
+id58( italy : id31, id69 : id44 ) / id56
+id58( italy : id31, id7 : id44 ) / id56
+id58( italy : id31, id8 : id44 ) / id56
+id58( italy : id31, tyrol : id44 ) / id56
+
+/* -- AT: id65 */
+id65( id32 : id43, italy : region )

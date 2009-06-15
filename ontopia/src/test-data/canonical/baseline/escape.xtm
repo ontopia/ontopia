@@ -1,0 +1,16 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>&lt;Donald Duck &amp; Co.&gt;</baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id2"></instanceOf>
+<resourceRef href="http://www.ontopia.net/script.cgi?param=a%22b"></resourceRef>
+</occurrence>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.ontopia.net/xtm/1.0/null-topic"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

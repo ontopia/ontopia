@@ -1,0 +1,4 @@
+[unicode = "\u0055\u006e\u0069\u0063\u006f\u0064\u0065"]
+{unicode, description1, [[\u000000\u10ffFFf\\u005cuABCD\\uu\\u1234\u001234a.]]}
+{unicode, description2, [[\u12345\u0041]]}
+{unicode, description3, [[\\u1234]]}

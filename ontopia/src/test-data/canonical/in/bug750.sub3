@@ -1,0 +1,23 @@
+<topicMap id="xtm1.0-psi-core"
+    xmlns="http://www.topicmaps.org/xtm/1.0/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <topic id="topic">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#topic"/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>topic</baseNameString>
+    </baseName>
+  </topic>
+
+  <topic id="class">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#class"/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>CLASS</baseNameString>
+    </baseName>
+  </topic>
+
+</topicMap>

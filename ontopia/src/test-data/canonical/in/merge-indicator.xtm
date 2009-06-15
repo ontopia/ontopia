@@ -1,0 +1,24 @@
+<topicMap id='xtm-language'
+   xmlns='http://www.topicmaps.org/xtm/1.0/'
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id='lmg1'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.ontopia.net/people/lmg-desc'/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Lars Marius Garshol</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='lmg2'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://psi.ontopia.net/people/lmg-desc'/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>larsga@ontopia.net</baseNameString>
+    </baseName>    
+  </topic>
+
+</topicMap>
+

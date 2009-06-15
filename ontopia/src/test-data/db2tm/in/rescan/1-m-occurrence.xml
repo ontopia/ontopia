@@ -1,0 +1,17 @@
+<db2tm name="1-1">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <!-- TEST: 1:many occurrence rescan test -->
+
+  <relation name="1-m-occurrence.csv" columns="id o1">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>
+      <occurrence type="local:code">${o1}</occurrence>
+    </topic>
+  </relation>   
+
+</db2tm>

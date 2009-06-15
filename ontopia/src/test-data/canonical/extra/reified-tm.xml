@@ -1,0 +1,12 @@
+<topicmap xmlns:tech="http://psi.example.org/example/"
+          xmlns:tm="http://psi.ontopia.net/xml/tm-xml/"
+          xmlns:iso="http://psi.topicmaps.org/iso13250/model/"
+          reifier="tm-topic">
+
+  <tech:topicmap id="tm-topic">
+    <iso:topic-name>
+      <tm:value>A TM/XML Example Topic Map</tm:value>
+    </iso:topic-name>
+  </tech:topicmap>
+
+</topicmap>

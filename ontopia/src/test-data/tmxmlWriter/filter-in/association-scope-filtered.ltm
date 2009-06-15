@@ -1,0 +1,5 @@
+[topicA = "Disallowed Topic"]
+[role_playerA = "Role Player A"]
+[role_typeA = "Role Type A"]
+[association_typeA = "Association Type A"]
+association_typeA(role_playerA : role_typeA) /topicA

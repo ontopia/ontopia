@@ -1,0 +1,13 @@
+<topicMap xmlns:xlink="http://www.w3.org/1999/xlink" 
+          xmlns="http://www.topicmaps.org/xtm/1.0/">
+
+  <topic id="test">
+    <instanceOf>
+      <topicRef xlink:href=""/> <!-- crashes with StringIndexOutOfBounds... -->
+    </instanceOf>
+    <baseName>
+      <baseNameString>Test</baseNameString>
+    </baseName>
+  </topic>
+
+</topicMap>

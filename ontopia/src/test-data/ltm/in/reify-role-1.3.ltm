@@ -1,0 +1,2 @@
+#BASEURI "http://some.random.baseuri/base"
+employs(ontopia : employer ~ontopia-employing-eirik, opland : employee)

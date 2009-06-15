@@ -1,0 +1,33 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/" version="2.0">
+  <topic id="topic1">
+    <instanceOf>
+      <topicRef href="#topic2"/>
+    </instanceOf>
+  </topic>
+  <association>
+    <type>
+      <topicRef href="#assoctype"/>
+    </type>
+    <role>
+      <type>
+        <topicRef href="#roletype1"/>
+      </type>
+      <topicRef href="#topic1"/>
+    </role>
+    <role>
+      <type>
+        <topicRef href="#roletype2"/>
+      </type>
+      <topicRef href="#topic2"/>
+    </role>
+  </association>
+  <topic id="assoctype">
+    <subjectIdentifier href="http://psi.topicmaps.org/iso13250/model/type-instance"/>
+  </topic>
+  <topic id="roletype1">
+    <subjectIdentifier href="http://psi.topicmaps.org/iso13250/model/instance"/>
+  </topic>
+  <topic id="roletype2">
+    <subjectIdentifier href="http://psi.topicmaps.org/iso13250/model/type"/>
+  </topic>
+</topicMap>

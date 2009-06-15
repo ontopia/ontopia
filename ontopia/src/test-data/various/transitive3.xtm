@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<topicMap
+   xmlns="http://www.topicmaps.org/xtm/1.0/"   
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xml:base="http://www.techquila.org/simpsons.xtm"
+>
+
+<topic id="descendant-of">
+</topic>
+
+<topic id="ancestor">
+</topic>
+
+<topic id="descendant">
+</topic>
+
+<topic id="bart"/>
+<topic id="lisa"/>
+<topic id="maggie"/>
+<topic id="homer"/>
+<topic id="marge"/>
+<topic id="gramps"/>
+<topic id="great-grandaddy-simpson"/>
+
+<association>
+  <instanceOf><topicRef xlink:href="#descendant-of"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#descendant"/></roleSpec>
+    <topicRef xlink:href="#bart"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#ancestor"/></roleSpec>
+    <topicRef xlink:href="#homer"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#ancestor"/></roleSpec>
+    <topicRef xlink:href="#marge"/>
+  </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#descendant-of"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#descendant"/></roleSpec>
+    <topicRef xlink:href="#homer"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#ancestor"/></roleSpec>
+    <topicRef xlink:href="#gramps"/>
+  </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#descendant-of"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#descendant"/></roleSpec>
+    <topicRef xlink:href="#gramps"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#ancestor"/></roleSpec>
+    <topicRef xlink:href="#great-grandaddy-simpson"/>
+  </member>
+</association>
+
+</topicMap>

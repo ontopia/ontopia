@@ -1,0 +1,15 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<scope>
+<topicRef href="#id2"></topicRef>
+</scope>
+<baseNameString>grove</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/nick"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

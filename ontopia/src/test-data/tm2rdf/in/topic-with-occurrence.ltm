@@ -1,0 +1,4 @@
+
+[description = "Description"
+ @"http://psi.ontopia.net/xtm/occurrence-type/description"]
+{ontopia, description, [[The world's best topic map software company.]]}

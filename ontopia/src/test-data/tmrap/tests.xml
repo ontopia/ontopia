@@ -1,0 +1,82 @@
+<tests>
+  <!-- *************** Testing the get-tolog operation *************** -->
+  <test exception ="javax.servlet.ServletException"
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=ping"
+        comment="get-tolog: Invalid 'syntax' parameter (not supported)."/>
+  <test exception ="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;view=ping"
+        comment="get-tolog: Invalid 'view' parameter (not supported)"/>
+  <test exception ="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?tolog=topic($T)?"
+        comment="get-tolog: Missing 'tolog' parameter."/>
+  <test exception ="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm"
+        comment="get-tolog: Missing 'topicmap' parameter."/>
+  <test exception ="javax.servlet.ServletException"
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;tolog=topic($T)?"
+        comment="get-tolog: Repeated 'tolog' parameter."/>
+  <test exception ="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=application/x-xtm&amp;view=stub"
+        comment="get-tolog: Repeated 'topicmap' parameter."/>
+  <test exception ="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=application/x-xtm&amp;view=stub&amp;view=stub"
+        comment="get-tolog: Repeated 'syntax' parameter."/>
+  <test exception ="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=application/x-xtm&amp;syntax=application/x-xtm&amp;view=stub"
+        comment="get-tolog: Repeated 'view' parameter."/>
+
+  <!--test id ="getTolog_i18n" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=i18n.ltm&amp;tolog=spoken-in($LANGUAGE : language, afghanistan : region)?"/-->
+  <test id ="getTolog_mini_xtm_stub" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-tolog?topicmap=mini.ltm&amp;tolog=topic($T)?&amp;syntax=application/x-xtm&amp;view=stub"/>
+
+  <!-- *************** Testing the get-topic operation *************** -->
+
+  <test exception="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=mini.ltm&amp;syntax=ping"
+        comment="get-topic: Invalid 'syntax' parameter (not supported)"/>
+  <test exception="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=mini.ltm&amp;view=pong"
+        comment="get-topic: Invalid 'syntax' parameter (not supported)"/>
+  <test exception="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?syntax=application/x-xtm&amp;syntax=application/x-xtm"
+        comment="Repeated 'syntax' parameter."/>
+  <test exception="javax.servlet.ServletException" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?view=stub&amp;view=stub"
+        comment="Repeated 'view' parameter."/>
+
+  <test id ="get-topic" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic"
+        comment="No parameters"/>
+  <test id ="mini_stub" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=mini.ltm&amp;view=stub"/>
+  <test id="mini_xtm" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=mini.ltm&amp;syntax=application/x-xtm"/>
+  <test id="i18n_italy" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=i18n.ltm&amp;identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT"/>
+  <test id="i18n_italy_xtm" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=i18n.ltm&amp;identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT&amp;syntax=application/x-xtm"/>
+  <test id="i18n_noIndicators"
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=opera.xtm"/>
+  <test id="i18n-opera_italy" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=opera.xtm&amp;topicmap=i18n.ltm&amp;identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT"/>
+  <test id="noMap_italy" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?identifier=http://en.wikipedia.org/wiki/Puccini"/>
+  <test id="opera_italy" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic?topicmap=opera.xtm&amp;identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT"/>
+
+  <!-- *************** Testing the get-topic-page operation *************** -->
+
+  <test id ="get-topic-page" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic-page"/>
+  <test id ="get-topic-page_edit_view" edit="true" view="true"
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic-page"/>
+  <test id ="get-topic-page_i18n_italy" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic-page?topicmap=i18n.ltm&amp;identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT"/>
+  <test id ="get-topic-page_i18n_italy_edit_view" edit="true" view="true"
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic-page?topicmap=i18n.ltm&amp;identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT"/>
+  <test id ="get-topic-page_opera" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic-page?topicmap=opera.xtm"/>
+  <test id ="get-topic-page_opera_puccini" 
+        uri="http://localhost:8080/omnigator/plugins/viz/get-topic-page?topicmap=opera.xtm&amp;identifier=http://en.wikipedia.org/wiki/Puccini"/>
+</tests>

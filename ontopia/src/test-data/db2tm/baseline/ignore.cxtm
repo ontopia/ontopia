@@ -1,0 +1,49 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://example.org/test/1</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Topic</value>
+<type topicref="3"></type>
+</name>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>psi:test/2</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+</topic>
+<association number="1">
+<type topicref="5"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="2"></type>
+</role>
+<role number="2">
+<player topicref="6"></player>
+<type topicref="4"></type>
+</role>
+</association>
+</topicMap>

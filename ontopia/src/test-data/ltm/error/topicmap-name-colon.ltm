@@ -1,0 +1,3 @@
+#BASEURI "http://some.random.baseuri/base"
+#PREFIX namewith @"http://some-address/#"
+#TOPICMAP namewith:colon

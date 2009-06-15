@@ -1,0 +1,2 @@
+#BASEURI "http://some.random.baseuri/base"
+{mytopic, info, [[Some information about mytopic]]} ~mytopic-info

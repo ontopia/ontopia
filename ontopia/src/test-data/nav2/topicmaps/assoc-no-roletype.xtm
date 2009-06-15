@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+  <topic id="personA">
+    <baseName>
+      <baseNameString>person A</baseNameString>
+    </baseName>
+  </topic>
+
+  <topic id="personB">
+    <baseName>
+      <baseNameString>person B</baseNameString>
+    </baseName>
+  </topic>
+
+  <topic id="role1">
+    <baseName>
+      <baseNameString>role 1</baseNameString>
+    </baseName>
+  </topic>
+
+  <topic id="role2">
+    <baseName>
+      <baseNameString>role 2</baseNameString>
+    </baseName>
+  </topic>
+
+  <topic id="rel">
+    <baseName>
+      <baseNameString>relationship</baseNameString>
+    </baseName>
+  </topic>
+  
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#rel"/>
+    </instanceOf>
+    <member>
+      <topicRef xlink:href="#personA"></topicRef>
+    </member>
+    <member>
+      <topicRef xlink:href="#personB"></topicRef>
+    </member>
+  </association>
+
+</topicMap>

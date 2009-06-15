@@ -1,0 +1,46 @@
+<topicMap>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#at1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id1" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>at1</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#rt1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id6" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#rt2" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id9" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#t1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id5" notation="URI"></locator>
+</sourceLocators>
+<rolePlayed ref="association.1.role.1"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#t2" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id8" notation="URI"></locator>
+</sourceLocators>
+<rolePlayed ref="association.1.role.2"></rolePlayed></topic>
+<association>
+<type topicref="1"></type>
+<role>
+<rolePlayer topicref="4"></rolePlayer>
+<type topicref="2"></type>
+</role>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+</topicMap>

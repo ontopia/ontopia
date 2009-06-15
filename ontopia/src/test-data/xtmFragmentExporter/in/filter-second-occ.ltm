@@ -1,0 +1,7 @@
+#PREFIX tests @"http://xtmFragmentExporter/tests#"
+
+[tests:ot1 = "ot1"]
+[tests:ot2 = "fOccs-ot2"]
+[tests:t1 = "t1"]
+{tests:t1, tests:ot1, [[t1-occ1]]}
+{tests:t1, tests:ot2, [[t1-occ2]]}

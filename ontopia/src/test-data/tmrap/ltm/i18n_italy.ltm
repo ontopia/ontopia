@@ -1,0 +1,46 @@
+@"utf-8"
+#VERSION "1.3"
+/*
+   Generator: Ontopia Knowledge Suite (OKS)
+   Date:      2006-03-15 23:27
+*/
+
+/* ----------------- ONTOLOGY ------------------ */
+
+/* ----------------- Topic Types --------------- */
+
+[id2
+    @"http://psi.oasis-open.org/iso/3166/#country"]
+
+/* ----------------- Type Hierarchy ------------ */
+
+/* ----------------- Role Types ---------------- */
+
+[id3
+    @"http://psi.ontopia.net/i18n/#language"]
+[region]
+
+/* ----------------- Association Types --------- */
+
+[id4
+    @"http://psi.ontopia.net/i18n/#spoken-in"]
+
+/* ----------------- Occurrence Types ---------- */
+
+/* ----------------- INSTANCES ----------------- */
+
+/* ----------------- Topics -------------------- */
+
+
+/* -- TT: id2 -- */
+[italy : id2 = "Italy"
+    @"http://www.topicmaps.org/xtm/1.0/country.xtm#IT"]
+
+/* -- TT: (untyped) -- */
+[id1
+    @"http://www.topicmaps.org/xtm/1.0/language.xtm#it"]
+
+/* ----------------- Associations -------------- */
+
+/* -- AT: id4 */
+id4( id1 : id3, italy : region )

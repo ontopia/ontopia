@@ -1,0 +1,8 @@
+[parent-child = "Parent/child"]
+[father       = "Father"]
+[mother       = "Mother"]
+[child        = "Child"]
+
+parent-child([lmg = "Lars Marius Garshol"] : child,
+             [beg = "Bjørg England Garshol"] : mother,
+             [kfg = "Knut Finn Garshol"] : father)

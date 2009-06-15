@@ -1,0 +1,4 @@
+#BASEURI "http://www.example.com"
+#VERSION "1.3"
+
+/* this isn't allowed; the #VERSION has to be first */

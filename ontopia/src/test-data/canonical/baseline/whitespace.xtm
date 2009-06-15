@@ -1,0 +1,45 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString> 	
+  	with 	 tabs 	 
+				</baseNameString>
+<variant>
+<variantName>
+<resourceData> 	
+  	with 	 tabs 	 
+				</resourceData>
+</variantName>
+</variant>
+<variant>
+<variantName>
+<resourceData>   
+  	with 	 spaces 	 
+	   </resourceData>
+</variantName>
+</variant>
+</baseName>
+<baseName>
+<baseNameString>   
+  	with 	 spaces 	 
+	   </baseNameString>
+</baseName>
+<occurrence>
+<instanceOf href="#id2"></instanceOf>
+<resourceData> 	
+  	with 	 tabs 	 
+				</resourceData>
+</occurrence>
+<occurrence>
+<instanceOf href="#id2"></instanceOf>
+<resourceData>   
+  	with 	 spaces 	 
+	   </resourceData>
+</occurrence>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.ontopia.net/xtm/1.0/null-topic"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

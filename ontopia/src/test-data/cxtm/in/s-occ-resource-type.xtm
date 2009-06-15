@@ -1,0 +1,26 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+  
+  <topic id="topic1">
+    <occurrence>
+      <instanceOf><topicRef xlink:href="#type1"/></instanceOf>
+      <resourceRef xlink:href="#resource2"/>
+    </occurrence>
+    <occurrence>
+      <instanceOf><topicRef xlink:href="#type2"/></instanceOf>
+      <resourceRef xlink:href="#resource1"/>
+    </occurrence>
+  </topic>
+  
+  <topic id="topic2">
+    <occurrence>
+      <instanceOf><topicRef xlink:href="#type1"/></instanceOf>
+      <resourceRef xlink:href="#resource1"/>
+    </occurrence>
+    <occurrence>
+      <instanceOf><topicRef xlink:href="#type2"/></instanceOf>
+      <resourceRef xlink:href="#resource1"/>
+    </occurrence>
+  </topic>
+</topicMap>

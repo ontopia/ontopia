@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE topicMap SYSTEM "this-dtd-doesnt-exist.dtd">
+<topicMap id="tricky-tm">
+
+<topic id="tm-topic">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#tricky-tm"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Tricky TM test for bug #864</baseNameString>
+  </baseName>
+</topic>
+
+</topicMap>

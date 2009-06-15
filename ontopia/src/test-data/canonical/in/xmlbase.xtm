@@ -1,0 +1,18 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'
+   xml:base="http://www.ontopia.net/"> 
+
+  <topic id="norway">
+    <baseName>
+      <baseNameString>Ontopia</baseNameString>
+    </baseName>    
+    <occurrence>
+      <resourceRef xlink:href=""/>
+    </occurrence>
+    <occurrence xml:base="http://www.garshol.priv.no">
+      <resourceRef xlink:href=""/>
+    </occurrence>
+  </topic>
+
+</topicMap>

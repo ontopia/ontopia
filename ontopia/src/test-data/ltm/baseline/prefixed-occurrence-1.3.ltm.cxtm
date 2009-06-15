@@ -1,0 +1,17 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://some-address/#mytopic</locator>
+</subjectIdentifiers>
+<occurrence number="1">
+<value>Nothing interesting.</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="2"></type>
+</occurrence>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://some-address/#mytype</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

@@ -1,0 +1,3 @@
+#MERGEMAP "mergeprefix.sub"
+#PREFIX myprefix @"http://some-address/#"
+[myprefix:foo = "Merger1"]

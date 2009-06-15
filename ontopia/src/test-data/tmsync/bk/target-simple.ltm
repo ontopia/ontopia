@@ -1,0 +1,4 @@
+
+#PREFIX ex @"http://psi.example.org/"
+
+[ex:topic = "Topic"]

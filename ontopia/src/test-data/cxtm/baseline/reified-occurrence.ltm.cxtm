@@ -1,0 +1,23 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers><locator>#topic1</locator>
+</itemIdentifiers>
+<occurrence number="1" reifier="3">
+<value>Internal string</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="2"></type>
+<itemIdentifiers><locator>#--reified--scope1</locator>
+</itemIdentifiers>
+</occurrence>
+</topic>
+<topic number="2">
+<itemIdentifiers><locator>#type1</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3" reified="topic.1.occurrence.1">
+<subjectIdentifiers><locator>#--reified--scope1</locator>
+</subjectIdentifiers>
+<itemIdentifiers><locator>#scope1</locator>
+</itemIdentifiers>
+</topic>
+</topicMap>

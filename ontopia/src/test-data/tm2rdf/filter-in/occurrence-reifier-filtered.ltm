@@ -1,0 +1,4 @@
+[occurrence_typeA = "Occurrence Type A" @"http://example.org/o/otypea"]
+[reifierA = "Disallowed Topic"]
+[topicA = "Topic A"]
+{topicA, occurrence_typeA, [[Allowed Occurrence]]} ~reifierA

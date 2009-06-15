@@ -1,0 +1,41 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<baseNameString>Contained in</baseNameString>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<baseNameString>Containee</baseNameString>
+</baseName>
+</topic>
+<topic id="id3">
+<baseName>
+<baseNameString>Container</baseNameString>
+</baseName>
+</topic>
+<topic id="id4">
+<baseName>
+<baseNameString>Norway</baseNameString>
+</baseName>
+</topic>
+<topic id="id5">
+<baseName>
+<baseNameString>Oslo</baseNameString>
+</baseName>
+</topic>
+<association>
+<instanceOf href="#id1"></instanceOf>
+<scope>
+<topicRef href="#id4"></topicRef>
+</scope>
+<member>
+<instanceOf href="#id2"></instanceOf>
+<topicRef href="#id5"></topicRef>
+</member>
+<member>
+<instanceOf href="#id3"></instanceOf>
+<topicRef href="#id4"></topicRef>
+</member>
+</association>
+</topicMap>

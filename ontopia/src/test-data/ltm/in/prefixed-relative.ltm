@@ -1,0 +1,3 @@
+#BASEURI "http://psi.ontopia.nut/"
+#PREFIX test @"test/"
+[test:topic]

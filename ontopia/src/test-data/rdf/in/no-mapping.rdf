@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<rdf:RDF 
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:rtm="http://psi.ontopia.net/rdf2tm/#" 
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:wot="http://xmlns.com/wot/0.1/"
+        xmlns:daml="http://www.daml.org/2001/03/daml+oil#" 
+        xmlns:wn="http://xmlns.com/wordnet/1.6/" >
+
+<foaf:Person rdf:ID="larsga">
+  <foaf:name>Lars Marius Garshol</foaf:name>
+
+  <foaf:mbox rdf:resource="mailto:larsga@garshol.priv.no"/>
+  <foaf:mbox rdf:resource="mailto:larsga@ontopia.net"/>
+  <foaf:mbox rdf:resource="mailto:larsga@opera.no"/>
+  <foaf:mbox rdf:resource="mailto:larsga@opera.com"/>
+
+  <foaf:nick>larsbot</foaf:nick>
+  <foaf:nick>botlars</foaf:nick>
+
+  <foaf:homepage rdf:resource="http://www.garshol.priv.no/" />
+  <foaf:workplaceHomepage rdf:resource="http://www.ontopia.net/" />
+
+  <foaf:schoolHomepage rdf:resource="http://www.ifi.uio.no/" />
+
+  <foaf:knows>
+    <foaf:Person>
+      <foaf:mbox rdf:resource="mailto:grove@ontopia.net"/>
+    </foaf:Person>
+  </foaf:knows>
+
+  <foaf:knows>
+    <foaf:Person>
+      <foaf:mbox rdf:resource="mailto:pepper@ontopia.net" />
+    </foaf:Person>
+  </foaf:knows>
+
+  <foaf:knows>
+    <foaf:Person>
+      <foaf:mbox rdf:resource="mailto:sylvias@ontopia.net" />
+    </foaf:Person>
+  </foaf:knows>
+
+  <foaf:knows>
+    <foaf:Person>
+      <foaf:mbox rdf:resource="mailto:kal@techquila.com" />
+    </foaf:Person>
+  </foaf:knows>
+
+  <foaf:knows>
+    <foaf:Person>
+        <foaf:mbox rdf:resource="mailto:gdm@empolis.co.uk" />
+        <foaf:name>Graham Moore</foaf:name>
+    </foaf:Person>
+  </foaf:knows>
+
+  <foaf:knows>
+    <foaf:Person>
+        <foaf:mbox rdf:resource="mailto:annw@alphaxml.co.uk" />
+        <foaf:name>Ann Wrightson</foaf:name>
+    </foaf:Person>
+  </foaf:knows>
+
+  <foaf:knows>
+    <foaf:Person>
+        <foaf:mbox rdf:resource="mailto:bernard.vatant@mondeca.com" />
+        <foaf:name>Bernard Vatant</foaf:name>
+    </foaf:Person>
+  </foaf:knows>
+</foaf:Person>
+
+<foaf:Person rdf:ID="grove">
+  <foaf:name>Geir Ove Grønmo</foaf:name>
+
+  <foaf:nick>grove</foaf:nick>
+
+  <foaf:homepage rdf:resource="http://www.ontopia.net/~grove/" />
+  <foaf:workplaceHomepage rdf:resource="http://www.ontopia.net/" />
+
+  <foaf:mbox rdf:resource="mailto:grove@ontopia.net"/>
+</foaf:Person>
+
+<foaf:Person rdf:ID="pepper">
+  <foaf:name>Steve Pepper</foaf:name>
+
+  <foaf:nick>pepper</foaf:nick>
+  <foaf:nick>pepe</foaf:nick>
+  <foaf:nick>chili</foaf:nick>
+  <foaf:nick>habanero</foaf:nick>
+
+  <foaf:workplaceHomepage rdf:resource="http://www.ontopia.net/" />
+
+  <foaf:mbox rdf:resource="mailto:pepper@ontopia.net"/>
+</foaf:Person>
+
+<foaf:Person rdf:ID="sylvia">
+  <foaf:name>Sylvia Schwab</foaf:name>
+
+  <foaf:nick>sylvia</foaf:nick>
+
+  <foaf:workplaceHomepage rdf:resource="http://www.ontopia.net/" />
+
+  <foaf:mbox rdf:resource="mailto:sylvias@ontopia.net"/>
+</foaf:Person>
+
+<foaf:Person rdf:ID="kal">
+  <foaf:name>Kal Ahmed</foaf:name>
+
+  <foaf:nick>kalbot</foaf:nick>
+
+  <foaf:workplaceHomepage rdf:resource="http://www.techquila.com/" />
+
+  <foaf:mbox rdf:resource="mailto:kal@techquila.com"/>
+</foaf:Person>
+
+</rdf:RDF>

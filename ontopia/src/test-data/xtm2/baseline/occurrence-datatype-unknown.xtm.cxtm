@@ -1,0 +1,17 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#occtype</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#topic</locator>
+</itemIdentifiers>
+<occurrence number="1">
+<value>BOGUS</value>
+<datatype>http://example.com/bogus</datatype>
+<type topicref="1"></type>
+</occurrence>
+</topic>
+</topicMap>

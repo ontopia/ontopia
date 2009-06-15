@@ -1,0 +1,3725 @@
+@"utf-8"
+/*
+ A topic map of internationalization information.
+ $Id: i18n.ltm,v 1.1 2005/11/08 14:33:18 opland Exp $
+ */
+
+/* Information sources from which more info should be dug:
+ - WWS
+ - Nakanishi
+ - http://www.evertype.com/alphabets/
+ - omniglot
+ - asw
+ - http://www.deniart.com/ancientwritingsone.shtml
+ - http://www.spelwerx.com/alphabets.html
+ - http://www.loc.gov/catdir/cpso/roman.html
+ - http://www.eki.ee/wgrs/
+*/
+
+#TOPICMAP topicmap
+#INCLUDE "dc.ltmm"
+
+/* ===== REIFICATION ===== */
+
+[version = "Version"
+ @"http://psi.ontopia.net/i18n/#version"]
+
+[topicmap-topic = "Scripts and languages"
+ @"#topicmap"]
+{topicmap-topic, description, [[This is a topic map with information
+about languages and the scripts used to write them. It has been
+authored by hand by Lars Marius Garshol.]]}
+{topicmap-topic, version, [[$Revision: 1.1 $]]}
+{topicmap-topic, Date, [[$Date: 2005/11/08 14:33:18 $]]}
+{topicmap-topic, copyright, [[This topic map is copyright (C) Ontopia.
+You may freely use this information for non-commercial purposes, but
+you may not redistribute it, nor use it for commercial demonstrations
+without the express written permission of Ontopia.]]}
+
+/* DC properties modelled as associations: */
+Creator(topicmap-topic : resource, larsga : value)
+Subject(topicmap-topic : resource, script : value)
+Subject(topicmap-topic : resource, language : value)
+Publisher(topicmap-topic : resource, ontopia : value)
+Type(topicmap-topic : resource, topicmap-type : value)
+Format(topicmap-topic : resource, LTM-format : value)
+
+/* Topic used for non-applicable DC properties */
+[na = "N/A"]
+
+/* Topics used as values of real metadata for this topic map */
+[ontopia : company = "Ontopia" @"http://psi.ontopia.net/ontopia/#ontopia"]
+[larsga : person = "Lars Marius Garshol" @"http://psi.ontopia.net/ontopia/#larsga"]
+
+/* ===== GENERAL PSIS ===== */
+
+[subclass-of : hierarchical-relation-type
+             = "Subclass of"
+             = "Superclass of" / superclass
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+[superclass : superordinate-role-type
+            = "Superclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+[subclass : subordinate-role-type
+          = "Subclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+[sort = "Sort name"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#sort"]
+[copyright = "Copyright"
+ @"http://psi.ontopia.net/xtm/occurrence-type/copyright"
+ @"http://purl.org/dc/elements/1.1/rights"]
+
+/* ===== ONTOLOGY ===== */
+
+/* --- Topic types --- */
+
+[script = "Script"
+  @"http://psi.ontopia.net/i18n/#script"]
+{script, site-about ,"http://www.ancientscripts.com/"}
+{script, site-about ,"http://www.omniglot.com/writing/"}
+{script, article-about, "http://www.krysstal.com/writing.html"}
+{script, article-about, "http://gurpsnet.sjgames.com/Archive/AdsDisSkills/Languages/languages.writing"}
+{script, article-about, "http://www.evertype.com/standards/iso15924/document/n02.html"}
+{script, bibliography, "http://www.evertype.com/standards/iso15924/document/scriptbib.html"}
+{script, forum, "http://groups.yahoo.com/group/qalam"}
+{script, journal, "http://www.benjamins.com/jbp/journals/Wll_info.html"}
+{script, definition, [[The general term for a writing system
+consisting of a signary and the rules for assembling signs from the
+signary into text.]]}
+
+[alphabet      = "Alphabet"
+  @"http://psi.ontopia.net/i18n/#alphabet"]
+subclass-of(alphabet      : subclass, script : superclass)
+{alphabet, definition, [[A type of writing system that denotes consonants
+and vowels with separate characters.]]}
+/* {alphabet, description, "alphabet/index.html"} */
+
+[abjad         = "Abjad"
+  @"http://psi.ontopia.net/i18n/#abjad"]
+subclass-of(abjad         : subclass, script : superclass)
+{abjad, definition, [[A type of writing system where only consonants
+are generally written. Some abjads have signs for vowels, but use
+them only in special cases, such as loanwords or special kinds of
+texts.]]}
+/* {abjad, description, "abjad/index.html"} */
+
+[abugida       = "Abugida"
+  @"http://psi.ontopia.net/i18n/#abugida"]
+subclass-of(abugida       : subclass, script : superclass)
+{abugida, definition, [[A type of writing system in which each
+character represents a consonant followed by a specific vowel, and the
+other vowels are represented by a consistent modification of the
+consonant symbols.]]}
+
+[logosyllabary = "Logosyllabary"
+  @"http://psi.ontopia.net/i18n/#logosyllabary"]
+subclass-of(logosyllabary : subclass, script : superclass)
+{logosyllabary, definition, [[A type of writing system whose
+characters denote morphemes, and a subset of whose characters
+can be used for their phonetic syllabic values without regard
+to their semantic values.]]}
+
+[syllabary     = "Syllabary"
+  @"http://psi.ontopia.net/i18n/#syllabary"]
+subclass-of(syllabary     : subclass, script : superclass)
+{syllabary, definition, [[A type of writing system whose
+characters denote syllables, with no deliberate graphic similarity
+between characters denoting phonetically similar syllables.]]}
+{syllabary, site-about, "http://sourceforge.net/projects/syllabary/"}
+
+[featural = "Featural"
+  @"http://psi.ontopia.net/i18n/#featural"]
+subclass-of(featural : subclass, script : superclass)
+{featural, definition, [[A type of writing system where the shape of
+each character has a systematic relation to the phonetic features of
+its sound value.]]}
+
+[language = "Language"
+ @"http://psi.ontopia.net/i18n/#language"]
+[region = "Geographic region"]
+[country = "Country"
+ @"http://psi.oasis-open.org/iso/3166/#country"]
+[province = "Province"
+ @"http://psi.ontopia.net/geography/#province"]
+subclass-of(region : superclass, country : subclass)
+subclass-of(region : superclass, province : subclass)
+
+[standard = "Standard"
+ @"http://psi.ontopia.net/xmltools/#Standard"]
+[charset = "Character set"
+ @"http://psi.ontopia.net/i18n/#charset"]
+[charenc = "Character encoding"
+ @"http://psi.ontopia.net/i18n/#charenc"]
+subclass-of(standard : superclass, charset : subclass)
+subclass-of(standard : superclass, charenc : subclass)
+[std-body = "Standards body"
+ @"http://psi.ontopia.net/i18n/#standards-body"]
+[company = "Company"
+ @"http://psi.ontopia.net/xmltools/#Company"]
+[person = "Person"
+ @"http://psi.ontopia.net/#person"]
+{charset, site-about, "http://www.hermessoft.com/codepage.html"}
+{charset, article-about, "http://www.cwi.nl/~dik/english/codes/stand.html"}
+{charset, site-about, "http://czyborra.com/"}
+
+[script-category  = "Script category"
+ @"http://psi.ontopia.net/i18n/#category"]
+{script-category, definition, [[The broadest category of scripts,
+reflecting how the script came into being and what it has been used
+for, rather than being typology based on their features.]]}
+
+[script-group  = "Script group"
+ @"http://psi.ontopia.net/i18n/#group"]
+{script-group, article-about, "http://www.dlib.org/dlib/march97/sesame/03clews.html"}
+{script-group, definition, [[The broadest category of natural scripts,
+reflecting the historical development of scripts, rather than being a
+typology based on their features.]]}
+
+[script-family = "Script family"
+ @"http://psi.ontopia.net/i18n/#family"]
+{script-family, definition, [[A category of scripts derived from the
+same source. Usually the scripts in a script family are closely
+related, both historically and in features.]]}
+
+[transcription = "Transcription"
+ @"http://psi.ontopia.net/i18n/#transcription"]
+{transcription, definition, [[A standardized method for representing
+the sound of one language in a script not normally used to write that
+language.]]}
+{transcription, article-about, "http://www.xrce.xerox.com/competencies/content-analysis/arabic/info/romanization.html"}
+
+[transliteration = "Transliteration"
+ @"http://psi.ontopia.net/i18n/#transliteration"]
+{transliteration, definition, [[A standardized method for representing
+an ortography of a language in a script different from the one the
+ortography is actually written in.]]}
+{transliteration, article-about, "http://www.xrce.xerox.com/competencies/content-analysis/arabic/info/romanization.html"}
+
+/* --- Hierarchy PSIs --- */
+
+[hierarchical-relation-type = "Hierarchical relation type"
+ @"http://www.techquila.com/psi/hierarchy/#hierarchical-relation-type"]
+
+[superordinate-role-type = "Superordinate role type"
+ @"http://www.techquila.com/psi/hierarchy/#superordinate-role-type"]
+
+[subordinate-role-type = "Subordinate role type"
+ @"http://www.techquila.com/psi/hierarchy/#subordinate-role-type"]
+
+/* --- Association types --- */
+
+[written-in = "Written in"
+            = "Used to write" / script abjad abugida alphabet syllabary logosyllabary
+ @"http://psi.ontopia.net/i18n/#written-in"]
+
+[spoken-in = "Spoken in"
+           = "Languages spoken" / country
+           = "Languages spoken" / province
+ @"http://psi.ontopia.net/i18n/#spoken-in"]
+[part-of : hierarchical-relation-type
+         = "Part of"
+         = "Consists of" / container
+ @"http://psi.ontopia.net/geography/#located-in"]
+[contains-codes-for = "Contains codes for"
+                    = "Code registry for" / item-type
+ @"http://psi.ontopia.net/i18n/#contains-codes-for"]
+[encodes = "Encodes"
+         = "Encoded by" / charset
+ @"http://psi.ontopia.net/i18n/#encodes"]
+[supports = "Supports"
+          = "Supported by" / supported
+ @"http://psi.ontopia.net/i18n/#supports"]
+  [supporter = "Supporter"]
+  [supported = "Supported"]
+[defined-by = "Defined by"
+            = "Defined" / std-body
+ @"http://psi.ontopia.net/i18n/#defined-by"]
+[belongs-to : hierarchical-relation-type
+            = "Belongs to" / containee
+            = "Contains" / container
+            = "Containment"
+ @"http://psi.ontopia.net/i18n/#belongs-to"]
+[extension-of = "Extension of"
+              = "Extended by" / original
+ @"http://psi.ontopia.net/i18n/#extension-of"]
+[derived-from : hierarchical-relation-type
+              = "Gave rise to" / predecessor
+              = "Derived from" / successor
+              = "Derivation"
+ @"http://psi.ontopia.net/i18n/#derived-from"]
+[influenced-by = "Influenced by" / influenced
+               = "Influenced" / influence
+               = "Influence"
+ @"http://psi.ontopia.net/i18n/#influenced-by"]
+[created-by = "Creator of" / creator
+            = "Created by"
+ @"http://psi.ontopia.net/i18n/#created-by"]
+[deciphered-by = "Deciphered by"
+               = "Deciphered" / person
+ @"http://psi.ontopia.net/i18n/#deciphered-by"]
+[defines-standards-for = "Defines standards for"
+                       = "Standards body" / country
+ @"http://psi.ontopia.net/i18n/#defines-standards-for"]
+[transforms-from = "Transformation from"
+ @"http://psi.ontopia.net/i18n/#transformation-from"]
+[transforms-to   = "Transformation to"
+ @"http://psi.ontopia.net/i18n/#transformation-to"]
+
+[writing-direction = "Writing direction"
+                   = "Scripts using" / direction
+ @"http://psi.ontopia.net/i18n/#writing-direction"]
+  [direction = "Direction of writing"
+   @"http://psi.ontopia.net/i18n/#direction-of-writing"]
+
+/* --- Association roles --- */
+
+[creator = "Creator"]
+[creation = "Creation"]
+[predecessor : superordinate-role-type
+             = "Predecessor" @"http://psi.ontopia.net/i18n/#predecessor"]
+[successor   : subordinate-role-type
+             = "Successor"   @"http://psi.ontopia.net/i18n/#successor"]
+[item-type   = "Item type"]
+[superset = "Superset"]
+[subset = "Subset"]
+[container : superordinate-role-type
+           = "Container" @"http://psi.ontopia.net/i18n/#container"]
+[containee : subordinate-role-type
+           = "Containee" @"http://psi.ontopia.net/i18n/#containee"]
+[extended  = "Extended"]
+[original  = "Original"]
+[method    = "Method"]
+[source    = "Source"]
+[target    = "Target"]
+[influence = "Influence"]
+[influenced = "Influenced"]
+
+/* Name scopes */
+
+[old-name      = "Old name"]
+[official-name = "Official name"]
+[native-name   = "Native name"]
+[other-name    = "Other name"]
+
+/* Occurrence types */
+
+[official-site = "Official site"]
+[specification = "Specification"]
+[article-about = "Article"]
+[site-using    = "Site using"]
+[site-about    = "Site about"]
+[tutorial      = "Tutorial"]
+[mapping-table = "Mapping table"]
+[chartable     = "Character table"]
+[mentioned-in  = "Mentioned in"]
+[definition    = "Definition"]
+[description   = "Description"
+ @"http://psi.ontopia.net/xtm/occurrence-type/description"
+ @"http://purl.org/dc/elements/1.1/description"]
+[forum         = "Discussion forum"]
+[journal       = "Journal"]
+[test-page     = "Test page"]
+[bibliography  = "Bibliography"]
+[tables-for    = "Tables for"]
+[biography     = "Biography of"]
+[bibref        = "Bibliographic reference"]
+
+[period-of-use = "In use"
+ @"http://psi.ontopia.net/i18n/#period-of-use"]
+[number-of-characters = "Number of characters"
+ @"http://psi.ontopia.net/i18n/#number-of-characters"]
+{number-of-characters, definition, [[This is the number of distinct
+characters a script contains. If the script has two cases (upper and
+lower), both are counted.]]}
+
+/* Documentation */
+
+{derived-from, definition, [[A script is derived from another when it
+was clearly created with the other script as the single most important
+basis for the script, and when script model, character shapes, order,
+names, and sound values have been largely preserved. In some cases the
+script model will have changed to support a different language, and
+there needs to be differences in character repertoire sufficient to
+consider the two scripts distinct.]]}
+
+/* ===== STANDARDS ===== */
+
+[iso : std-body = "International Organization for Standardization"]
+{iso, official-site, "http://www.iso.ch"}
+
+[iso-15924 : standard = "ISO/IEC 15924"]
+contains-codes-for(iso-15924, script : item-type)
+defined-by(iso-15924, iso)
+{iso-15924, official-site, "http://www.evertype.com/standards/iso15924/"}
+
+[iso-14651 : standard = "ISO/IEC 14651"]
+defined-by(iso-14651, iso)
+{iso-14651, specification, "http://anubis.dkuug.dk/jtc1/sc22/open/n2933.pdf"}
+
+[iso-10646 : charset = "ISO/IEC 10646"]
+defined-by(iso, iso-10646 : standard)
+{iso-10646, specification, "http://www.dkuug.dk/jtc1/sc2/wg2/docs/annex-g.txt"}
+
+[iso-639 : standard = "ISO/IEC 639"]
+contains-codes-for(iso-639, language : item-type)
+defined-by(iso-639, iso)
+{iso-639, official-site, "http://lcweb.loc.gov/standards/iso639-2/langhome.html"}
+
+[iso-3166 : standard = "ISO/IEC 3166"]
+contains-codes-for(iso-3166, country : item-type)
+defined-by(iso-3166, iso)
+{iso-3166, official-site, "http://www.din.de/gremien/nas/nabd/iso3166ma/"}
+
+[jisc : std-body = "Japanese Industrial Standards Committee"]
+{jisc, official-site, "http://www.jisc.org"}
+defines-standards-for(jisc, japan)
+
+[tisi : std-body = "Thai Industrial Standards Institute"]
+{tisi, official-site, "http://www.tisi.go.th/"}
+defines-standards-for(tisi, thailand)
+
+[fips-pub-10-4 : standard = "COUNTRIES, DEPENDENCIES, AREAS OF SPECIAL
+SOVEREIGNTY,  AND THEIR PRINCIPAL ADMINISTRATIVE DIVISIONS"]
+contains-codes-for(fips-pub-10-4, country : item-type)
+{fips-pub-10-4, specification, "http://www.itl.nist.gov/fipspubs/fip10-4.htm"}
+
+[iso-8859-1 : charset charenc = "ISO 8859-1"]
+extension-of(iso-8859-1 : extended, ascii : original)
+defined-by(iso-8859-1 : standard, iso)
+supports(iso-8859-1 : supporter, latin-s : supported)
+
+[iso-8859-2 : charset charenc = "ISO 8859-2"]
+{iso-8859-2, article-about, "http://www.whizkidtech.net/ISO-8859-2/"}
+defined-by(iso-8859-2 : standard, iso)
+supports(iso-8859-2 : supporter, latin-s : supported)
+
+[iso-8859-3 : charset charenc = "ISO 8859-3"]
+defined-by(iso-8859-3 : standard, iso)
+supports(iso-8859-3 : supporter, latin-s : supported)
+
+[iso-8859-4 : charset charenc = "ISO 8859-4"]
+defined-by(iso-8859-4 : standard, iso)
+supports(iso-8859-4 : supporter, latin-s : supported)
+
+[iso-8859-5 : charset charenc = "ISO 8859-5"
+                              = "Latin/Cyrillic Alphabet"]
+defined-by(iso-8859-5 : standard, iso)
+supports(iso-8859-5 : supporter, cyrillic : supported)
+supports(iso-8859-5 : supporter, latin-s : supported)
+
+[iso-8859-6 : charset charenc = "ISO 8859-6"
+                              = "Latin/Arabic Alphabet"]
+defined-by(iso-8859-6 : standard, iso)
+supports(iso-8859-6 : supporter, arabic-s : supported)
+supports(iso-8859-6 : supporter, latin-s : supported)
+
+[iso-8859-7 : charset charenc = "ISO 8859-7"
+                              = "ELOT 928"
+                              = "Latin/Greek Alphabet"]
+defined-by(iso-8859-7 : standard, iso)
+supports(iso-8859-7 : supporter, greek-s : supported)
+supports(iso-8859-7 : supporter, latin-s : supported)
+
+[iso-8859-8 : charset charenc = "ISO 8859-8"
+                              = "Latin/Hebrew Alphabet"]
+defined-by(iso-8859-8 : standard, iso)
+supports(iso-8859-8 : supporter, hebrew-s : supported)
+supports(iso-8859-8 : supporter, latin-s : supported)
+
+[iso-8859-9 : charset charenc = "ISO 8859-9"]
+defined-by(iso-8859-9 : standard, iso)
+supports(iso-8859-9 : supporter, latin-s : supported)
+
+[iso-8859-10 : charset charenc = "ISO 8859-10"]
+defined-by(iso-8859-10 : standard, iso)
+supports(iso-8859-10 : supporter, latin-s : supported)
+{iso-8859-10, test-page, "http://titus.uni-frankfurt.de/unicode/iso8859/iso8859j.htm"}
+
+[iso-8859-11 : charset charenc = "ISO 8859-11"
+                               = "TIS-620"]
+defined-by(iso-8859-11 : standard, iso)
+defined-by(iso-8859-11 : standard, tisi)
+supports(iso-8859-11 : supporter, latin-s : supported)
+supports(iso-8859-11 : supporter, thai-s : supported)
+
+[iso-8859-13 : charset charenc = "ISO 8859-13"]
+defined-by(iso-8859-13 : standard, iso)
+supports(iso-8859-13 : supporter, latin-s : supported)
+
+[iso-8859-14 : charset charenc = "ISO 8859-14"]
+defined-by(iso-8859-14 : standard, iso)
+supports(iso-8859-14 : supporter, latin-s : supported)
+
+[iso-8859-15 : charset charenc = "ISO 8859-15"]
+defined-by(iso-8859-15 : standard, iso)
+supports(iso-8859-15 : supporter, latin-s : supported)
+
+
+[tron : charset = "TRON"]
+{tron, official-site, "http://tronweb.super-nova.co.jp/homepage.html"}
+
+[bytext : charset = "Bytext"]
+{bytext, official-site, "http://www.bytext.org/"}
+
+[utf-2000 : charset = "UTF-2000"]
+{utf-2000, official-site, "http://www.kanji.zinbun.kyoto-u.ac.jp/~tomo/UTF-2000/"}
+
+[unicode-c : std-body = "The Unicode Consortium"]
+[microsoft : company = "Microsoft"]
+{microsoft, official-site, "http://www.microsoft.com"}
+
+[utr10 : standard = "The Unicode Collation Algorithm"]
+defined-by(utr10, unicode-c)
+{utr10, specification, "http://www.unicode.org/unicode/reports/tr10/"}
+
+[unicode : charset = "Unicode"]
+extension-of(unicode : extended, iso-8859-1 : original)
+defined-by(unicode : standard, unicode-c)
+{unicode, official-site, "http://www.unicode.org/"}
+{unicode, article-about, "http://www.unicode.org/roadmaps/"}
+{unicode, site-about, "http://www.hclrss.demon.co.uk/unicode/"}
+{unicode, chartable, "http://www.unicode.org/charts/"}
+{unicode, article-about, "http://www-106.ibm.com/developerworks/unicode/library/u-secret.html?dwzone=unicode"}
+{unicode, forum, "http://www.unicode.org/unicode/consortium/distlist.html"}
+
+encodes([utf-7  : charenc = "UTF-7"],  unicode)
+defined-by(utf-7 : standard, unicode-c : std-body)
+{utf-7, specification, "ftp://sunsite.uio.no/pub/rfc/rfc2152.txt"}
+encodes([utf-8  : charenc = "UTF-8"],  unicode)
+defined-by(utf-8 : standard, unicode-c : std-body)
+{utf-8, specification, "ftp://sunsite.uio.no/pub/rfc/rfc2279.txt"}
+{utf-8, site-using, "http://www.unicode.org/unicode/standard/WhatIsUnicode.html"}
+{utf-8, site-using, "http://www.trigeminal.com/samples/provincial.html"}
+{utf-8, site-using, "http://www.fortunecity.it/centro/democrazia/2/"}
+encodes([utf-16 : charenc = "UTF-16"], unicode)
+defined-by(utf-16 : standard, unicode-c : std-body)
+encodes([utf-32 : charenc = "UTF-32"], unicode)
+defined-by(utf-32 : standard, unicode-c : std-body)
+
+encodes([ucs-2 : charenc = "UCS-2"], unicode)
+extension-of(ucs-2 : original, utf-16 : extended)
+
+encodes([utf-9  : charenc = "UTF-9"],  unicode)
+{utf-9, specification, "http://www.globecom.net/ietf/draft/draft-abela-utf9-00.html"}
+
+supports(unicode : supporter, latin-s : supported)
+supports(unicode : supporter, arabic-s : supported)
+supports(unicode : supporter, hebrew-s : supported)
+supports(unicode : supporter, chinese-s : supported)
+supports(unicode : supporter, hiragana : supported)
+supports(unicode : supporter, katakana : supported)
+supports(unicode : supporter, hangul : supported)
+supports(unicode : supporter, armenian-s : supported)
+supports(unicode : supporter, georgian-s : supported)
+supports(unicode : supporter, devanagari : supported)
+supports(unicode : supporter, greek-s : supported)
+supports(unicode : supporter, gujarati-s : supported)
+supports(unicode : supporter, gurmukhi : supported)
+supports(unicode : supporter, kannada-s : supported)
+supports(unicode : supporter, sinhalese-s : supported)
+supports(unicode : supporter, telugu-s : supported)
+supports(unicode : supporter, thai-s : supported)
+
+[ascii : charset charenc = "ASCII"]
+{ascii, article-about, "http://czyborra.com/charsets/iso646.html"}
+
+[armscii : charset charenc = "ARMSCII"]
+supports(armscii : supporter, armenian-s : supported)
+{armscii, specification, "http://moon.yerphi.am/~hovik/ArmSCII/armcs-006.html"}
+{armscii, mapping-table, "http://moon.yerphi.am/~hovik/ArmSCII/xref.txt"}
+
+[gsm03.38 : charset charenc = "GSM 03.38"]
+{gsm03.38, chartable, "http://www.nobbi.com/images/gsm338.png"}
+
+[viscii : charset charenc = "VISCII"]
+supports(viscii : supporter, latin-s : supported)
+{viscii, specification, "http://www.vietstd.org/document/viscii1.htm"}
+{viscii, specification, "ftp://ftp.isi.edu/in-notes/rfc1456.txt"}
+{viscii, article-about, "http://czyborra.com/charsets/vietnamese.html"}
+{viscii, mapping-table, "http://www.vietstd.org/document/unicode.html"}
+{viscii, site-using, "http://www.vnisoft.com/english/visciitext.htm"}
+{viscii, site-using, "http://www.godsdirectcontact.org/auviscii/news/118/"}
+
+[viscii2 : charset charenc = "VISCII-2"
+                           = "TCVN 5712:1993 VN2"]
+supports(viscii2 : supporter, latin-s : supported)
+
+[tcvn : charset charenc = "TCVN encoding"
+                        = "TCVN-Roman"
+                        = "TCVN 5712:1993 VN1"]
+supports(tcvn : supporter, latin-s : supported)
+{tcvn, specification, "http://wwwthep.physik.uni-mainz.de/~dhson/tcvn.html"}
+{tcvn, site-using, "http://www.tcvn.gov.vn"}
+{tcvn, mapping-table, "http://www.vnet.org/vanlangsj/mozilla/tvcn_uni.txt"}
+
+[viqr : charset charenc = "VIQR"]
+supports(viqr : supporter, latin-s : supported)
+{viqr, specification, "ftp://ftp.isi.edu/in-notes/rfc1456.txt"}
+
+[vps : charset charenc = "VPS"]
+supports(vps : supporter, latin-s : supported)
+{vps, mapping-table, "http://www.vnet.org/vanlangsj/mozilla/vps_uni.txt"}
+
+[isfoc : charset charenc = "ISFOC"]
+supports(isfoc : supporter, devanagari : supported)
+{isfoc, article-about, "http://www.scit.4mg.com/gist.html"}
+
+[iscii : charset charenc = "ISCII"]
+supports(iscii : supporter, devanagari : supported)
+{iscii, chartable, "http://www.geocities.com/Athens/5180/iscii91.html"}
+{iscii, article-about, "http://www.cwi.nl/~dik/english/codes/indic.html"}
+
+[tscii : charset charenc = "TSCII"]
+supports(tscii : supporter, tamil-s : supported)
+{tscii, specification, "http://www.tamil.net/tscii/tscii_draft.html"}
+
+[cp1250 : charenc charset = "Windows CP 1250 (Central Europe)"]
+defined-by(cp1250 : standard, microsoft : std-body)
+supports(cp1250 : supporter, latin-s : supported)
+{cp1250, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1250.htm"}
+
+[cp1251 : charenc charset = "Windows CP 1251 (Cyrillic)"]
+defined-by(cp1251 : standard, microsoft : std-body)
+supports(cp1251 : supporter, cyrillic : supported)
+{cp1251, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1251.htm"}
+
+[cp1252 : charenc charset = "Windows CP 1252 (Latin I)"]
+defined-by(cp1252 : standard, microsoft : std-body)
+supports(cp1252 : supporter, latin-s : supported)
+extension-of(cp1252 : extended, iso-8859-1 : original)
+{cp1252, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1252.htm"}
+
+[cp1253 : charenc charset = "Windows CP 1253 (Greek)"]
+defined-by(cp1253 : standard, microsoft : std-body)
+supports(cp1253 : supporter, greek-s : supported)
+{cp1253, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1253.htm"}
+
+[cp1254 : charenc charset = "Windows CP 1254 (Turkish)"]
+defined-by(cp1254 : standard, microsoft : std-body)
+supports(cp1254 : supporter, latin-s : supported)
+{cp1254, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1254.htm"}
+
+[cp1255 : charenc charset = "Windows CP 1255 (Hebrew)"]
+defined-by(cp1255 : standard, microsoft : std-body)
+supports(cp1255 : supporter, hebrew-s : supported)
+{cp1255, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1255.htm"}
+
+[cp1256 : charenc charset = "Windows CP 1256 (Arabic)"]
+defined-by(cp1256 : standard, microsoft : std-body)
+supports(cp1256 : supporter, arabic-s : supported)
+{cp1256, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1256.htm"}
+
+[cp1257 : charenc charset = "Windows CP 1257 (Baltic)"]
+defined-by(cp1257 : standard, microsoft : std-body)
+supports(cp1257 : supporter, latin-s : supported)
+{cp1257, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1257.htm"}
+
+[cp1258 : charenc charset = "Windows CP 1258 (Vietnamese)"]
+defined-by(cp1258 : standard, microsoft : std-body)
+supports(cp1258 : supporter, latin-s : supported)
+{cp1258, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/1258.htm"}
+
+[cp950 : charenc = "Windows CP 950"]
+supports(cp950 : supporter, chinese-s : supported)
+extension-of(cp950 : extended, big5 : original)
+{cp950, mapping-table, "http://oss.software.ibm.com/cvs/icu/charset/data/xml/windows-950-2000.xml"}
+{cp950, chartable, "http://www.microsoft.com/globaldev/reference/dbcs/950.htm"}
+{cp950, mapping-table, "http://www.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP950.TXT"}
+
+[cp874 : charset charenc = "Windows CP 874 (Thai)"]
+defined-by(cp874 : standard, microsoft : std-body)
+supports(cp874 : supporter, thai-s : supported)
+extension-of(iso-8859-11 : original, cp874 : extended)
+{cp874, chartable, "http://www.microsoft.com/globaldev/reference/sbcs/874.htm"}
+
+[iso-2022-cn : charenc = "ISO 2022-CN"]
+supports(iso-2022-cn : supporter, chinese-s : supported)
+{iso-2022-cn, specification, "ftp://sunsite.uio.no/pub/rfc/rfc1922.txt"}
+
+[gb2312 : charset = "GB-2312"]
+supports(gb2312 : supporter, chinese-s : supported)
+
+[euc-cn : charenc = "GB2312"
+                  = "EUC-CN"]
+encodes(euc-cn, gb2312)
+
+[gbk : charenc = "GBK"
+               = "Windows CP 936" / microsoft]
+encodes(gbk, gb2312)
+extension-of(gbk : extended, euc-cn : original)
+
+[gb-18030 : charset = "GB-18030"]
+encodes(gb-18030, unicode)
+extension-of(gb-18030 : extended, gbk : original)
+{gb-18030, article-about, "http://www-106.ibm.com/developerworks/unicode/library/u-china.html?dwzone=unicode"}
+{gb-18030, article-about, "ftp://ftp.oreilly.com/pub/examples/nutshell/cjkv/pdf/GB18030_Summary.pdf"}
+
+[cns-11643 : charset = "CNS-11643"]
+supports(cns-11643 : supporter, chinese-s : supported)
+
+[euc-tw : charenc = "EUC-TW"]
+encodes(euc-tw, cns-11643)
+
+[big5 : charset charenc = "Big 5"]
+supports(big5 : supporter, chinese-s : supported)
+{big5, site-using, "http://www.cmex.org.tw/big-5.html"}
+
+[euc-kr : charenc = "EUC-KR"
+                  = "Windows CP 949 (Korean)" / microsoft]
+supports(euc-kr : supporter, hangul : supported)
+{euc-kr, site-using, "http://www.daum.net"}
+{euc-kr, site-using, "http://www.ahnlab.com"}
+{euc-kr, site-using, "http://www.naver.com"}
+{euc-kr, site-using, "http://www.hp.co.kr"}
+
+[ks_c_5601 : charenc = "KS C 5601"]
+supports(ks_c_5601 : supporter, hangul : supported)
+{ks_c_5601, site-using, "http://www.microsoft.com/korea"}
+{ks_c_5601, site-using, "http://www.auction.co.kr"}
+{ks_c_5601, site-using, "http://www.iloveschool.co.kr"}
+
+[jis-0208 : charset = "JIS X 0208"]
+supports(jis-0208 : supporter, chinese-s : supported)
+supports(jis-0208 : supporter, katakana : supported)
+supports(jis-0208 : supporter, hiragana : supported)
+defined-by(jis-0208 : standard, jisc)
+
+[shift-jis : charenc = "Shift-JIS"
+                     = "Windows CP 932" / microsoft]
+encodes(shift-jis, jis-0208)
+defined-by(shift-jis : standard, microsoft : std-body)
+
+[iso-2022-jp : charenc = "ISO 2022-JP"]
+encodes(iso-2022-jp, jis-0208)
+
+[euc-jp : charenc = "EUC-JP"]
+encodes(euc-jp, jis-0208)
+
+[windows-sami-2 : charset charenc = "Sami-WS2"]
+{windows-sami-2, specification, "http://skolelinux.ping.uio.no/info/samisk/Tn35.pdf"}
+{windows-sami-2, site-using, "http://hjem.sol.no/sl1015/sami/inetsws1.htm"}
+{windows-sami-2, article-about, "http://hjem.sol.no/sl1015/sami/inetsan2.htm"}
+supports(windows-sami-2 : supporter, latin-s : supported)
+
+[hkscs : charset = "HKSCS"]
+supports(hkscs : supporter, chinese-s : supported)
+{hkscs, article-about, "http://www.info.gov.hk/digital21/eng/hkscs/introduction.html"}
+{hkscs, article-about, "http://www.unicode.org/iuc/iuc18/papers/b19.ppt"}
+
+[hkscs-big5 : charenc = "Big5 HKSCS"]
+encodes(hkscs, hkscs-big5)
+extension-of(hkscs-big5 : original, cp874 : extended)
+
+[tisi : std-body = "Thai Industrial Standards Institute"]
+{tisi, official-site, "http://www.nectec.or.th/it-standards/"}
+
+
+/* ===== LANGUAGES AND SCRIPTS ===== */
+
+[natural-scripts : script-category = "Natural scripts"]
+{natural-scripts, definition, [[Natural scripts are scripts which were
+created in order to serve a living natural language, and used by ordinary
+people to serve their day-to-day needs.]]}
+
+/* --- Writing directions --- */
+
+[rtl :      direction = "Right to left"]
+[ltr :      direction = "Left to right"]
+[bu-ltr :   direction = "Bottom up, left to right"]
+[bu-rtl :   direction = "Bottom up, right to left"]
+[tb-rtl :   direction = "Top to bottom, right to left"]
+[tb-ltr :   direction = "Top to bottom, left to right"]
+[variable : direction = "Variable"]
+[upwards-boustrophedon : direction = "Upwards boustrophedon"]
+[boustrophedon : direction = "Boustrophedon"]
+
+{rtl, description, [[Primarily used by the semitic writing systems,
+but also by other writing systems. Many scripts using this direction
+write numbers left-to-right. Mixing right-to-left and left-to-right
+text produces bidirectional text, which is hard to read.]]}
+
+{ltr, description, [[The writing direction used on this page, and the
+most common writing direction for scripts today.]]}
+
+{bu-ltr, description, [[This direction uses columns where one starts to
+read on the lower left and proceeds upwards to the top of the page. At
+the top of the page reading continues at the bottom of the next column
+to the right.]]}
+
+{bu-rtl, description, [[This direction uses columns where one starts to
+read on the lower right and proceeds upwards to the top of the page. At
+the top of the page reading continues at the bottom of the next column
+to the left.]]}
+
+{tb-rtl, description, [[This direction uses columns where one starts
+to read on the upper right and proceeds downwards to the bottom of the
+page. At the bottom of the page reading continues at the top of the
+next column to the left.]]}
+
+{tb-ltr, description, [[This direction uses columns where one starts
+to read on the upper left and proceeds downwards to the bottom of the
+page. At the bottom of the page reading continues at the top of the
+next column to the right.]]}
+
+{boustrophedon, description, [[A writing direction used in some
+ancient Greek writing, where lines alternate between being written
+left-to-right and right-to-left. The word comes from the way oxen turn
+at the end of each row when ploughing.]]}
+
+{upwards-boustrophedon, description, [[Boustrophedon writing (with
+alternating line directions), but starting at the bottom and moving
+upwards.]]}
+
+{variable, description, [[Not all scripts have a definite writing
+directions, and so each writer chooses what direction to use.  For
+some scripts there is no standard at all, while for others the writer
+can choose between a limited number of directions.]]}
+
+/* --- Script groups and families --- */
+
+[semitic       : script-group  = "Semitic scripts"]
+[greek-f       : script-family = "Greek script family"]
+[south-semitic : script-family = "Southern semitic script family"]
+[north-semitic : script-family = "Northern semitic script family"]
+[aramaic-f     : script-family = "Aramaic script family"]
+belongs-to(natural-scripts : container, semitic : containee)
+
+{semitic, definition, [[Contains the scripts descended from the
+proto-caananite script (also known as the northern linear abjad).
+These scripts show great systematic variation, and are united mainly
+by their common descent. The brahmic scripts have been separated out
+into a group of their own.]]}
+
+{north-semitic, definition, [[The ancestral northern linear abjad
+quickly developed distinct northern and southern variants. The
+scripts in this group are the descendants of the northern variant.]]}
+
+{south-semitic, definition, [[The ancestral northern linear abjad
+quickly developed distinct northern and southern variants. The
+scripts in this group are the descendants of the southern variant.]]}
+
+{greek-f, definition, [[Contains the greek alphabet and all its
+descendants, which are also alphabets. The scripts in this family
+all follow much the same principles.]]}
+
+{aramaic-f, definition, [[Contains the scripts derived from the
+aramaic abjad. These scripts have great family similarities, although
+some have developed into full alphabets. The brahmic scripts descend
+from the aramaic abjad, but have their own script group.]]}
+
+belongs-to(semitic : container, greek-f  : containee)
+belongs-to(semitic : container, south-semitic : containee)
+belongs-to(semitic : container, north-semitic : containee)
+belongs-to(semitic : container, aramaic-f : containee)
+
+
+[kharoshthi : abugida = "Kharoshthi"
+ @"http://psi.ontopia.net/iso/15924.xtm#khar"]
+{kharoshthi, period-of-use, [[500 B.C.E. - 300 C.E.]]}
+writing-direction(kharoshthi : script, rtl : direction)
+{kharoshthi, article-about, "http://www.omniglot.com/writing/kharosthi.htm"}
+{kharoshthi, article-about, "http://www.ancientscripts.com/kharosthi.html"}
+{kharoshthi, description, [[The oldest Indian script, excepting the
+Indus script; almost certainly derived from Aramaic. It was developed
+in much the same way as Greek: in adapting an abjad to a non-Semitic
+language, a mechanism to indicate vowels was added. In Greek separate
+vowel symbols were added, but in Kharoshthi vowels are indicated
+through systematic modifications to the consonant symbols.]]}
+
+derived-from(aramaic-s : predecessor, kharoshthi : successor)
+belongs-to(north-indic : container, kharoshthi : containee)
+
+/* http://www.engr.mun.ca/~adluri/telugu/language/script/chart.jpg */
+[james-prinsep : person = "James Prinsep"; "Prinsep, James"]
+[brahmic     : script-group   = "Brahmic scripts"]
+belongs-to(natural-scripts : container, brahmic : containee)
+[brahmic-s   : abugida = "Brahmi"
+ @"http://psi.ontopia.net/iso/15924.xtm#brah"]
+{brahmic-s, period-of-use, [[500 B.C.E. - 600? C.E.]]}
+{brahmic-s, article-about, "http://www.ancientscripts.com/brahmi.html"}
+{brahmic-s, article-about, "http://www.omniglot.com/writing/brahmi.htm"}
+{brahmic-s, article-about, "http://www.ucl.ac.uk/~ucgadkw/position/salomon.html"}
+{brahmic, article-about, "http://www.geocities.com/Athens/Academy/9594/brahmi.html"}
+{brahmic, site-about, "http://www.cs.colostate.edu/~malaiya/scripts.html"}
+{brahmic, article-about, "http://ourworld.compuserve.com/homepages/stone_catend/tr1.htm"}
+{brahmic, article-about, "http://www.indiaheritage.com/science/ling.htm"}
+writing-direction(brahmic-s : script, ltr : direction)
+deciphered-by(james-prinsep, brahmic-s : script)
+
+[north-indic : script-family = "North Indic scripts"]
+[south-indic : script-family = "South Indic scripts"]
+[se-asian    : script-family = "South-East Asian scripts"]
+[insular     : script-family = "Insular scripts of South-East Asia"]
+
+belongs-to(brahmic     : container, north-indic : containee)
+belongs-to(brahmic     : container, south-indic : containee)
+belongs-to(brahmic     : container, se-asian    : containee)
+belongs-to(brahmic     : container, insular     : containee)
+belongs-to(north-indic : container, brahmic-s   : containee)
+
+{brahmic, definition, [[Contains all the scripts derived from Ashokan
+brahmi used throughout southern Asia. The scrips are all of the same
+basic type, though with considerable variations.]]}
+
+{north-indic, definition, [[The north indic scripts are the scripts
+derived from the northern branch of Ashokan brahmi. These scripts
+show clear family resemblances.]]}
+
+{south-indic, definition, [[The south indic scripts are the scripts
+derived from the southern branch of Ashokan brahmi. These scripts
+show clear family resemblances.]]}
+
+{se-asian, definition, [[Contains the scripts derived from the Pallava
+script that were used throughout the mainland of south-east Asia.]]}
+
+{insular, definition, [[Contains the scripts derived from the Pallava
+script that were used throughout the islands of south-east Asia.]]}
+
+[sinitic : script-group = "Sinitic scripts"]
+belongs-to(natural-scripts : container, sinitic : containee)
+
+{sinitic, definition, [[The sinitic scripts are the scripts derived
+from the Chinese scripts, as well as a number of other scripts
+designed to resemble it graphically, or to be used together with it
+for various purposes.]]}
+
+
+/* --- Indian language area --- */
+
+[bangladesh : country  = "Bangladesh" @"http://www.topicmaps.org/xtm/1.0/country.xtm#BD"]
+[bengali-l  : language = "Bengali language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#bn"]
+{bengali-l, tutorial, "http://www.virtualbangladesh.com/bengali_index.html"}
+[bengali-s  : abugida = "Bengali script"
+                             = "Bangla"
+ @"http://psi.ontopia.net/iso/15924.xtm#beng"]
+{bengali-s, article-about, "http://www.omniglot.com/writing/bengali.htm"}
+{bengali-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_bengali.html"}
+{bengali-s, site-using, "http://lekho.sourceforge.net/banglapage.html"}
+
+spoken-in(bengali-l, bangladesh : region)
+written-in(bengali-l, bengali-s : script)
+belongs-to(north-indic : container, bengali-s : containee)
+derived-from(proto-bengali : predecessor, bengali-s : successor)
+
+[sylheti : language = "Sylheti"]
+[sylheti-nagri : abugida = "Syloti Nagri"]
+{sylheti-nagri, period-of-use, [[1303 -]]}
+{sylheti-nagri, article-about, "http://www.omniglot.com/writing/sylheti.htm"}
+{sylheti-nagri, article-about, "http://www.sylheti.org.uk/page3.html"}
+{sylheti, article-about, "http://www.sylheti.org.uk/page2.html"}
+
+writing-direction(sylheti-nagri : script, ltr : direction)
+written-in(sylheti, sylheti-nagri : script)
+derived-from(kaithi : predecessor, sylheti-nagri : successor)
+spoken-in(sylheti, bangladesh : region)
+belongs-to(sylheti-nagri : containee, north-indic : container)
+
+[bhutan : country = "Bhutan"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#BT"]
+[dzongkha : language = "Dzongkha"
+                     = "Bhutanese"
+  @"http://www.topicmaps.org/xtm/1.0/language.xtm#dz"]
+{dzongkha, article-about, "http://iias.leidenuniv.nl/host/himalaya/dzongkha.html"}
+{dzongkha, article-about, "http://iias.leidenuniv.nl/host/himalaya/individ/roman.html"}
+
+spoken-in(dzongkha, bhutan : region)
+written-in(dzongkha, tibetan-s : script)
+
+
+[gupta : abugida = "Gupta"]
+derived-from(brahmic-s : predecessor, gupta : successor)
+belongs-to(gupta : containee, north-indic : container)
+
+[nagari : abugida = "Nagari"]
+derived-from(gupta : predecessor, nagari : successor)
+belongs-to(nagari : containee, north-indic : container)
+
+[sharada : abugida = "Sharada"]
+derived-from(gupta : predecessor, sharada : successor)
+belongs-to(sharada : containee, north-indic : container)
+{sharada, article-about, "http://www.koausa.org/Languages/Sharda.html"}
+
+[proto-bengali : abugida = "Proto-bengali"]
+derived-from(nagari : predecessor, proto-bengali : successor)
+
+[india : country = "India" @"http://www.topicmaps.org/xtm/1.0/country.xtm#IN"]
+
+[west-bengal : province = "West Bengal"]
+part-of(west-bengal : containee, india : container)
+
+[maharashtra : province = "Maharashtra"]
+{maharashtra, site-about, "http://www.maharashtra.gov.in/"}
+{maharashtra, article-about, "http://www.mumbainet.com/cityinfo/histmaha.htm"}
+{maharashtra, site-about, "http://www.geocities.com/s_pravin/maharashtra.html"}
+part-of(maharashtra : containee, india : container)
+
+[gondi : language = "Gondi"]
+written-in(gondi, devanagari : script)
+spoken-in(gondi, maharashtra : region)
+
+[andhra-pradesh : province = "Andhra Pradesh"]
+[telugu-l : language = "Telugu language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#te"]
+{telugu-l, tutorial, "http://www.andhratoday.com/ltelugu/"}
+
+[telugu-s : abugida   = "Telugu script"
+ @"http://psi.ontopia.net/iso/15924.xtm#telu"]
+{telugu-s, period-of-use, [[1500 -]]}
+{telugu-s, article-about, "http://www.omniglot.com/writing/telugu.htm"}
+{telugu-s, article-about, "http://www.agfamonotype.co.uk/NonLatin/wt_info/info_telugu.html"}
+{telugu-s, site-using, "http://telugu.sify.com/"}
+{telugu-s, site-using, "http://www.etelugu.com/index.shtml"}
+{telugu-l, tutorial, "http://www.andhratoday.com/ltelugu/"}
+{telugu-l, tutorial, "http://www.sirigina.com/learn/"}
+
+part-of(andhra-pradesh : containee, india : container)
+spoken-in(telugu-l, andhra-pradesh : region)
+written-in(telugu-l, telugu-s : script)
+spoken-in(hindu, andhra-pradesh : region)
+belongs-to(south-indic : container, telugu-s : containee)
+derived-from(old-kannada : predecessor, telugu-s : successor)
+
+[assam-p : province = "Assam province"]
+[assamese : language = "Assamese" @"http://www.topicmaps.org/xtm/1.0/language.xtm#as"]
+
+part-of(assam-p : containee, india : container)
+spoken-in(assamese, assam-p : region)
+written-in(assamese, bengali-s : script)
+
+[bihar : province = "Bihar"]
+[bihari : language = "Bihari" @"http://www.topicmaps.org/xtm/1.0/language.xtm#bh"]
+[kaithi : abugida = "Kaithi"]
+
+part-of(bihar : containee, india : container)
+written-in(bihari, kaithi : script)
+spoken-in(bihari, bihar : region)
+spoken-in(hindu, bihar : region)
+belongs-to(north-indic : container, kaithi : containee)
+
+[goa : province = "Goa"]
+[marathi : language = "Marathi" @"http://www.topicmaps.org/xtm/1.0/language.xtm#mr"]
+[portuguese : language = "Portuguese" @"http://www.topicmaps.org/xtm/1.0/language.xtm#pt"]
+/* FIXME! */
+[konkani : language = "Konkani" ] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#kok"*/
+[devanagari : abugida = "Devanagari"
+                      = "देवनागरी" / native-name
+ @"http://psi.ontopia.net/iso/15924.xtm#deva"]
+{devanagari, period-of-use, [[1000 C.E. - ]]}
+{devanagari, article-about, "http://www.omniglot.com/writing/devanagari.htm"}
+{devanagari, article-about, "http://asianstudies.anu.edu.au/hindi/alphabet/"}
+{devanagari, article-about, "http://www.monotype.com/non-latin/wt_info/info_devanagari.html"}
+{devanagari, article-about, "http://www.ancientscripts.com/devanagari.html"}
+{devanagari, site-using, "http://www.trigeminal.com/index.asp?1081"}
+
+[bhojpuri : language = "Bhojpuri"]
+written-in(bhojpuri, devanagari : script)
+[mundari : language = "Mundari"]
+written-in(mundari, devanagari : script)
+[sanskrit : language = "Sanskrit"]
+{sanskrit, article-about, "http://www.suite101.com/article.cfm/world_languages/39065"}
+{sanskrit, site-about, "http://sundaralokah.net/sanskrit/references.shtml"}
+{sanskrit, article-about, "http://www.wikipedia.org/wiki/Sanskrit"}
+written-in(sanskrit, devanagari : script)
+written-in(sanskrit, brahmic-s : script)
+derived-from(nagari : predecessor, devanagari : successor)
+writing-direction(devanagari : script, ltr : direction)
+
+[harvard-kyoto : transcription = "Harvard-Kyoto"]
+transforms-from(harvard-kyoto : method, sanskrit : source)
+transforms-to(harvard-kyoto : method, latin-s : target)
+
+
+part-of(goa : containee, india : container)
+spoken-in(marathi, maharashtra : region)
+spoken-in(marathi, goa : region)
+spoken-in(portuguese, goa : region)
+spoken-in(konkani, goa : region)
+written-in(marathi, devanagari : script)
+belongs-to(north-indic : container, devanagari : containee)
+
+[gujarat : province = "Gujarat"]
+[gujarati-l : language = "Gujarati"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#gu"]
+[kacchi : language = "Kacchi"]
+[gujarati-s : abugida = "Gujarati"
+ @"http://psi.ontopia.net/iso/15924.xtm#gujr"]
+{gujarati-s, period-of-use, [[1550 C.E. - ]]}
+{gujarati-s, article-about, "http://www.omniglot.com/writing/gujarati.htm"}
+{gujarati-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_gujerati.html"}
+{gujarati-s, site-using, "http://www.gujaratsamachar.com/"}
+{gujarati-s, site-using, "http://www.sambhaav.com/"}
+{gujarati-s, site-using, "http://www.asmita.com/"}
+[sindhi : language = "Sindhi" @"http://www.topicmaps.org/xtm/1.0/language.xtm#sd"]
+
+writing-direction(gujarati-s : script, ltr : direction)
+part-of(gujarat : containee, india : container)
+spoken-in(gujarati-l, gujarat : region)
+spoken-in(sindhi, gujarat : region)
+written-in(gujarati-l, gujarati-s : script)
+written-in(kacchi, gujarati-s : script)
+written-in(sindhi, arabic-s : script)
+belongs-to(north-indic : container, gujarati-s : containee)
+derived-from(proto-bengali : predecessor, gujarati-s : successor)
+
+[haryana : province = "Haryana"]
+[hindu : language = "Hindi" = "Urdu"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#ur"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#hi"]
+{hindu, article-about, "http://www.sil.org/ethnologue/countries/Inda.html#HND"}
+{hindu, site-about, "http://www.cs.colostate.edu/~malaiya/hindilinks.html"}
+
+part-of(haryana : containee, india : container)
+written-in(hindu, devanagari : script)
+spoken-in(hindu, haryana : region)
+
+[himachal-pradesh : province = "Himachal Pradesh"]
+
+part-of(himachal-pradesh : containee, india : container)
+spoken-in(hindu, himachal-pradesh : region)
+
+[kashmir : province = "Jammu and Kashmir"]
+[kashmiri : language = "Kashmiri" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ks"]
+{kashmiri, site-about, "http://jammu-kashmir.org/KOA/Languages/"}
+
+part-of(kashmir : containee, india : container)
+written-in(kashmiri, arabic-s : script)
+written-in(kashmiri, devanagari : script)
+spoken-in(kashmiri, kashmir : region)
+spoken-in(hindu, kashmir : region)
+
+[calukya : abugida = "Calukya" = "Vengi"]
+{calukya, period-of-use, [[400 C.E. - 600 C.E.]]}
+derived-from(brahmic-s : predecessor, calukya : successor)
+
+[kadamba : abugida = "Kadamba"]
+{kadamba, period-of-use, [[400 C.E. - 600 C.E.]]}
+derived-from(brahmic-s : predecessor, kadamba : successor)
+
+[karnataka : province = "Karnataka"
+                      = "Mysore" / old-name]
+[kannada-l : language = "Kannarese"
+                      = "Kannada" / iso-639
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#kn"]
+[old-kannada : abugida = "Old kannada"]
+[kannada-s : abugida = "Kannada"
+ @"http://psi.ontopia.net/iso/15924.xtm#knda"]
+{kannada-s, period-of-use, [[1500 -]]}
+{kannada-s, article-about, "http://www.omniglot.com/writing/kannada.htm"}
+{kannada-s, article-about, "http://brahmi.sourceforge.net/docs/KannadaComputing.html"}
+{kannada-s, site-using, "http://www.prajavani.net/"}
+{kannada-s, site-using, "http://www.samyuktakarnataka.com/"}
+{kannada-s, site-using, "http://www.kannadaprabha.com/"}
+
+part-of(karnataka : containee, india : container)
+spoken-in(kannada-l, karnataka : region)
+written-in(kannada-l, kannada-s : script)
+belongs-to(south-indic : container, kannada-s : containee)
+derived-from(kadamba : predecessor, old-kannada : successor)
+derived-from(old-kannada : predecessor, kannada-s : successor)
+
+[kerala : province = "Kerala"]
+[malayalam-l : language = "Malayalam language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ml"]
+[malayalam-s : abugida = "Malayalam script"
+ @"http://psi.ontopia.net/iso/15924.xtm#mlym"]
+{malayalam-s, period-of-use, [[700 -]]}
+{malayalam-s, article-about, "http://www.omniglot.com/writing/malayalam.htm"}
+{malayalam-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_malayal.html"}
+{malayalam-s, site-using, "http://www.malayalamanorama.com/"}
+
+writing-direction(malayalam-s : script, ltr : direction)
+part-of(kerala : containee, india : container)
+written-in(malayalam-l, malayalam-s : script)
+written-in(malayalam-l, arabic-s : script)
+spoken-in(malayalam-l, kerala : region)
+belongs-to(south-indic : container, malayalam-s : containee)
+derived-from(grantha : predecessor, malayalam-s : successor)
+
+[madhya-pradesh : province = "Madhya Pradesh"]
+
+part-of(madhya-pradesh : containee, india : container)
+spoken-in(hindu, madhya-pradesh : region)
+spoken-in(marathi, madhya-pradesh : region)
+
+[meghalaya : province = "Meghalaya"]
+/* FIXME! */
+[khasi : language = "Khasi"] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#kha" */
+
+part-of(meghalaya : containee, india : container)
+written-in(khasi, latin-s : script)
+spoken-in(khasi, meghalaya : region)
+spoken-in(bengali-l, meghalaya : region)
+
+[kalinga : abugida = "Kalinga"]
+derived-from(brahmic-s : predecessor, kalinga : successor)
+written-in(oriya-l : language, kalinga : script)
+belongs-to(north-indic : container, kalinga : containee)
+
+[orissa : province = "Orissa"]
+[oriya-l : language = "Oriya language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#or"]
+[oriya-s : abugida = "Oriya script"
+ @"http://psi.ontopia.net/iso/15924.xtm#orya"]
+{oriya-s, period-of-use, [[1000 C.E. - ]]}
+{oriya-s, article-about, "http://www.omniglot.com/writing/oriya.htm"}
+{oriya-s, article-about, "http://www.agfamonotype.co.uk/NonLatin/wt_info/info_oriya.html"}
+
+writing-direction(oriya-s : script, ltr : direction)
+part-of(orissa : containee, india : container)
+written-in(oriya-l, oriya-s : script)
+written-in(sanskrit, oriya-s : script)
+written-in(pali-l, oriya-s : script)
+spoken-in(oriya-l, orissa : region)
+belongs-to(north-indic : container, oriya-s : containee)
+derived-from(kalinga : predecessor, oriya-s : successor)
+
+[landa : abugida = "Landa"]
+derived-from(devanagari : predecessor, landa : successor)
+belongs-to(north-indic : container, landa : containee)
+
+[guru-angad : person = "Guru Angad"; "Angad, Guru"]
+[punjab : province = "Punjab"]
+[punjabi : language = "Punjabi" @"http://www.topicmaps.org/xtm/1.0/language.xtm#pa"]
+[gurmukhi : abugida = "Gurmukhi"
+ @"http://psi.ontopia.net/iso/15924.xtm#guru"]
+{gurmukhi, period-of-use, [[1540 C.E. - ]]}
+{gurmukhi, article-about, "http://www.omniglot.com/writing/gurmuki.htm"}
+{gurmukhi, article-about, "http://www.monotype.com/non-latin/wt_info/info_gurmukhi.html"}
+
+writing-direction(gurmukhi : script, ltr : direction)
+part-of(punjab : containee, india : container)
+written-in(punjabi, gurmukhi : script)
+written-in(punjabi, arabic-s : script)
+spoken-in(punjabi, punjab : region)
+spoken-in(hindu, punjab : region)
+belongs-to(north-indic : container, gurmukhi : containee)
+derived-from(landa : predecessor, gurmukhi : successor)
+created-by(guru-angad : creator, gurmukhi : creation)
+
+[rajasthan : province = "Rajasthan"]
+/* FIXME! */
+[rajasthani : language = "Rajasthani"] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#raj" */
+
+part-of(rajasthan : containee, india : container)
+written-in(rajasthani, devanagari : script)
+spoken-in(rajasthani, rajasthan : region)
+
+[assam-p2 : province = "States and Union Territories of Assam"]
+/* FIXME! */
+[manipuri : language = "Manipuri"] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#mni"*/
+[mizo : language = "Mizo"]
+[naga : language = "Naga"]
+
+part-of(assam-p2 : containee, india : container)
+spoken-in(manipuri, assam-p2 : region)
+spoken-in(mizo, assam-p2 : region)
+spoken-in(naga, assam-p2 : region)
+written-in(manipuri, bengali-s : script)
+written-in(mizo, bengali-s : script)
+written-in(naga, bengali-s : script)
+
+[grantha : abugida = "Grantha"]
+{grantha, period-of-use, [[300 B.C.E. - ?]]}
+derived-from(brahmic-s : predecessor, grantha : successor)
+written-in(grantha : script, tamil-l)
+belongs-to(grantha : containee, south-indic : container)
+
+[tamil-nadu : province = "Tamil Nadu"]
+[tamil-l : language = "Tamil language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ta"]
+[tamil-s : abugida = "Tamil script"
+                   = "Tamiz ezuttu" / tamil-l
+ @"http://psi.ontopia.net/iso/15924.xtm#taml"]
+{tamil-s, article-about, "http://www.omniglot.com/writing/tamil.htm"}
+{tamil-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_tamil.html"}
+{tamil-s, article-about, "http://www.geocities.com/Athens/5180/numeral.html"}
+
+part-of(tamil-nadu : containee, india : container)
+spoken-in(tamil-l, tamil-nadu : region)
+written-in(tamil-l, tamil-s : script)
+derived-from(grantha : predecessor, tamil-s : successor)
+belongs-to(south-indic : container, tamil-s : containee)
+
+[uttar-pradesh : province = "Uttar Pradesh"]
+spoken-in(hindu, uttar-pradesh : region)
+
+[west-bengal : province = "West Bengal"]
+spoken-in(bengali-l, west-bengal : region)
+
+[sikkim : province = "Sikkim"]
+part-of(sikkim : containee, india : container)
+
+[nepal : country = "Nepal" @"http://www.topicmaps.org/xtm/1.0/country.xtm#NP"]
+[nepali : language = "Nepali" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ne"]
+[limbu : language = "Limbu"]
+
+spoken-in(nepali, nepal : region)
+written-in(nepali, devanagari : script)
+
+spoken-in(limbu, nepal : region)
+written-in(limbu, devanagari : script)
+
+spoken-in(newari : language, nepal : region)
+written-in(newari : language, ranjana : script)
+written-in(newari : language, devanagari : script)
+
+[newari : language = "Newari"]
+{newari, description, [[Newari is an important language, since it is the
+oldest written language in Nepal, having been written since the 14th
+century. It is the language of the Newars, the earliest settlers of the
+Kathmandu valley.]]}
+{newari, article-about, "https://www.vedamsbooks.com/no36365.htm"}
+
+[ranjana : abugida = "Ranjana" = "Lantsa" / other-name = "Kutila" / other-name]
+{ranjana, description, [[Used by the Newars to write Newari, as well as in
+Tibet for parts of translations from Sanskrit to Tibetan.]]}
+{ranjana, period-of-use, [[953 - ]]}
+{ranjana, article-about, "http://malaiya.tripod.com/ranjana/"}
+{ranjana, article-about, "http://www.omniglot.com/writing/ranjana.htm"}
+derived-from(brahmi-s : predecessor, ranjana : successor)
+belongs-to(north-indic : container, ranjana : containee)
+
+
+[sri-lanka : country = "Sri Lanka" @"http://www.topicmaps.org/xtm/1.0/country.xtm#LK"]
+[sinhalese-l : language = "Sinhalese"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#si"]
+[pali-l : language = "Pali"]
+{pali-l, article-about, "http://www.wikipedia.org/wiki/Pali"}
+[sinhalese-s : abugida = "Sinhalese"
+ @"http://psi.ontopia.net/iso/15924.xtm#sinh"]
+{sinhalese-s, article-about, "http://www.omniglot.com/writing/sinhala.htm"}
+{sinhalese-s, article-about, "http://www.agfamonotype.co.uk/NonLatin/wt_info/info_sinhalese.html"}
+{sinhalese-s, article-about, "http://www-texdev.mpce.mq.edu.au/l2h/indic/Sinhala/lreport/node2.html"}
+{sinhalese-l, site-about, "http://www.sinhalapage.com/"}
+{sinhalese-l, article-about, "http://members.tripod.com/~hettiarachchi/sinhala2.html"}
+
+spoken-in(sinhalese-l, sri-lanka : region)
+spoken-in(english, sri-lanka : region)
+spoken-in(tamil-l, sri-lanka : region)
+written-in(sinhalese-l, sinhalese-s : script)
+written-in(pali-l, sinhalese-s : script)
+written-in(sanskrit, sinhalese-s : script)
+belongs-to(south-indic : container, sinhalese-s : containee)
+derived-from(grantha : predecessor, sinhalese-s : successor)
+
+[mangei-gomango : person = "Mangei Gomango"; "Gomango Mangei"]
+[sorang-sompeng : alphabet = "Sorang Sompeng"]
+[sora : language = "Sora"]
+
+created-by(sorang-sompeng : creation, mangei-gomango : creator)
+written-in(sora, sorang-sompeng : script)
+written-in(sora, latin-s : script)
+written-in(sora, telugu-s : script)
+written-in(sora, oriya-s : script)
+spoken-in(sora, andhra-pradesh : region)
+spoken-in(sora, orissa : region)
+spoken-in(sora, bihar : region)
+spoken-in(sora, tamil-nadu : region)
+writing-direction(sorang-sompeng : script, ltr : direction)
+
+{sorang-sompeng, period-of-use, [[1936 - ]]}
+{sorang-sompeng, number-of-characters, [[24]]}
+{sorang-sompeng, article-about, "http://www.omniglot.com/writing/sorangsompeng.htm"}
+{sora, article-about, "http://www.ethnologue.com/show_language.asp?code=SRB"}
+
+[pandit-raghunath : person = "Pandit Raghunath Murmu"; "Murmu, Pandit Raghunath"]
+[ol-cemet : alphabet = "Ol Cemet'" = "Ol Ciki" = "Ol"]
+[santali : language = "Santali"]
+
+spoken-in(santali, orissa : region)
+written-in(santali, ol-cemet : script)
+written-in(santali, bengali-s : script)
+written-in(santali, latin-s : script)
+written-in(santali, oriya-s : script)
+written-in(santali, devanagari : script)
+created-by(pandit-raghunath : creator, ol-cemet : creation)
+
+{ol-cemet, article-about, "http://www.omniglot.com/writing/santali.htm"}
+{ol-cemet, article-about, "http://wesanthals.tripod.com/santals/id45.html"}
+{santali, site-about, "http://www.wesanthals.org"}
+{santali, article-about, "http://www.ethnologue.com/show_language.asp?code=SNT"}
+
+[lako-bodra : person = "Lako Bodra"; "Bodra, Lako"]
+[ho : language = "Ho"]
+[varang-kshiti : alphabet = "Varang Kshiti"]
+
+written-in(ho, varang-kshiti : script)
+written-in(ho, devanagari : script)
+written-in(ho, oriya-s : script)
+spoken-in(ho, bihar : region)
+spoken-in(ho, orissa : region)
+spoken-in(ho, bangladesh : region)
+spoken-in(ho, west-bengal : region)
+writing-direction(varang-kshiti : script, ltr : direction)
+created-by(lako-bodra : creator, varang-kshiti : creation)
+
+{varang-kshiti, article-about, "http://www.omniglot.com/writing/varangkshiti.htm"}
+{ho, article-about, "http://www.ethnologue.com/show_language.asp?code=HOC"}
+
+/* --- Southeast Asia --- */
+
+[burma : country = "Burma"
+                 = "Myanmar" / official-name
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#MM"]
+[burmese-l : language = "Burmese language"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#my"]
+[khmuen : language = "Khmuen"]
+[burmese-s : abugida = "Burmese script"
+ @"http://psi.ontopia.net/iso/15924.xtm#mymr"]
+{burmese-s, period-of-use, [[1100 - ]]}
+{burmese-s, article-about, "http://www.omniglot.com/writing/burmese.htm"}
+{burmese-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_burmese.html"}
+
+[mon-s : abugida = "Mon script"]
+[mon : language = "Mon"] /*  @"http://www.topicmaps.org/xtm/1.0/language.xtm#mkh" */
+[shan : language = "Shan"] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#shn"*/
+[karen : language = "Karen"] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#kar"*/
+[kachin : language = "Kachin"] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#kac"*/
+
+spoken-in(burmese-l, burma : region)
+spoken-in(khmuen, burma : region)
+spoken-in(mon, burma : region)
+spoken-in(shan, burma : region)
+spoken-in(karen, burma : region)
+spoken-in(kachin, burma : region)
+written-in(burmese-l, burmese-s : script)
+written-in(kachin, latin-s : script)
+written-in(mon, khmer-s : script)
+belongs-to(se-asian : container, khmer-s : containee)
+belongs-to(se-asian : container, mon-s : containee)
+belongs-to(se-asian : container, burmese-s : containee)
+derived-from(mon-s : successor, pallava : predecessor)
+derived-from(burmese-s : successor, mon-s : predecessor)
+written-in(shan, burmese-s : script)
+written-in(karen, burmese-s : script)
+written-in(mon, burmese-s : script)
+
+[pallava : abugida = "Pallava grantha"]
+derived-from(grantha : predecessor, pallava : successor)
+belongs-to(south-indic : container, pallava : containee)
+
+[cambodia : country = "Cambodia" @"http://www.topicmaps.org/xtm/1.0/country.xtm#KH"]
+[khmer-l : language = "Khmer language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#km"]
+[khmer-s : abugida = "Khmer script"
+ @"http://psi.ontopia.net/iso/15924.xtm#khmr"]
+{khmer-s, period-of-use, [[500 C.E. -]]}
+{khmer-s, article-about, "http://www.omniglot.com/writing/khmer.htm"}
+{khmer-s, article-about, "http://www.bauhahnm.clara.net/Khmer/Welcome.html"}
+
+writing-direction(khmer-s : script, ltr : direction)
+spoken-in(khmer-l, cambodia : region)
+written-in(khmer-l, khmer-s : script)
+derived-from(pallava : predecessor, khmer-s : successor)
+
+[laos : country = "Laos" @"http://www.topicmaps.org/xtm/1.0/country.xtm#LA"]
+[lao-l : language = "Lao language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#lo"]
+[lao-s : abugida = "Lao script"
+ @"http://psi.ontopia.net/iso/15924.xtm#laoo"]
+{lao-s, period-of-use, [[1500 - ]]}
+{lao-s, article-about, "http://www.omniglot.com/writing/lao.htm"}
+
+writing-direction(lao-s : script, ltr : direction)
+spoken-in(lao-l, laos : region)
+written-in(lao-l, lao-s : script)
+belongs-to(lao-s : containee, se-asian : container)
+derived-from(lao-s : successor, sukhothai : predecessor)
+
+[shong-lue-lang : person = "Shong Lue Lang"; "Lang, Shong Lue"]
+[pahawh-hmong : script = "Pahawh Hmong" = "Miao"]
+[hmong : language = "Hmong"]
+
+written-in(hmong, latin-s : script)
+written-in(hmong, pahawh-hmong : script)
+written-in(hmong, thai-s : script)
+written-in(hmong, chinese-s : script)
+created-by(shong-lue-lang : creator, pahawh-hmong : creation)
+spoken-in(hmong, thailand : region)
+spoken-in(hmong, laos : region)
+spoken-in(hmong, vietnam : region)
+writing-direction(pahawh-hmong : script, ltr : direction)
+
+{pahawh-hmong, number-of-characters, [[164]]}
+{pahawh-hmong, period-of-use, [[1959 - ]]}
+{pahawh-hmong, description, [[Pahawh Hmong is an unusual script for
+several reasons. Typologically it is something of an oddity, being
+abugida-like, but with vowels as the primary symbols, rather than the
+consonants. Historically, it has been associated with a messianic
+movement among the Hmong people.]]}
+
+[malaysia : country = "Malaysia" @"http://www.topicmaps.org/xtm/1.0/country.xtm#MY"]
+[malay : language = "Malay" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ms"]
+
+written-in(malay, latin-s : script)
+written-in(malay, arabic-s : script)
+spoken-in(malay, malaysia : region)
+spoken-in(punjabi, malaysia : region)
+spoken-in(english, malaysia : region)
+spoken-in(chinese-l, malaysia : region)
+spoken-in(tamil-l, malaysia : region)
+
+
+
+[singapore : country = "Singapore" @"http://www.topicmaps.org/xtm/1.0/country.xtm#SG"]
+
+spoken-in(malay, singapore : region)
+spoken-in(english, singapore : region)
+spoken-in(tamil-l, singapore : region)
+spoken-in(chinese-l, singapore : region)
+
+[sukhothai : abugida = "Sukhothai"]
+{sukhothai, period-of-use, [[1300 - 1500]]}
+belongs-to(se-asian : container, sukhothai : containee)
+derived-from(khmer-s : predecessor, sukhothai : successor)
+
+[thailand : country = "Thailand" @"http://www.topicmaps.org/xtm/1.0/country.xtm#TH"]
+[thai-l : language = "Thai language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#th"]
+[thai-s : abugida = "Thai script"
+ @ "http://psi.ontopia.net/iso/15924.xtm#thai"]
+{thai-l, article-about, "http://www.micheloud.com/FXM/LA/la/thai.htm"}
+{thai-s, period-of-use, [[1500 - ]]}
+{thai-s, article-about, "http://www.omniglot.com/writing/thai.htm"}
+{thai-s, article-about, "http://thaiarc.tu.ac.th/host/thaiarc/thai/thaiwrt.htm"}
+{thai-s, site-using, "http://www.thai.net"}
+{thai-s, site-using, "http://www.dailynews.co.th"}
+{thai-s, site-using, "http://www.thairath.co.th"}
+
+writing-direction(thai-s : script, ltr : direction)
+derived-from(sukhothai : predecessor, thai-s : successor)
+belongs-to(se-asian : container, thai-s : containee)
+
+
+[lanna : abugida = "Lanna script"]
+[kam-mueang : language = "Kam Mueang" = "Northern Thai"]
+[tai-lue : alphabet = "Tai Lue"
+                    = "Xishuang Banna Dai" / pinyin
+                    = "Dehong Dai" / chinese-l]
+[miao : language = "Miao"]
+
+{tai-lue, article-about, "http://www.omniglot.com/writing/tailue.htm"}
+{kam-mueang, article-about, "http://www.sil.org/ethnologue/countries/Thai.html#NOD"}
+
+spoken-in(thai-l, thailand : region)
+spoken-in(miao, thailand : region)
+spoken-in(lao-l, thailand : region)
+spoken-in(shan, thailand : region)
+spoken-in(english, thailand : region)
+spoken-in(chinese-l, thailand : region)
+written-in(kam-mueang, lanna : script)
+written-in(lue, lanna : script)
+written-in(pali-l, thai-s : script)
+written-in(sanskrit, thai-s : script)
+written-in(thai-l, thai-s : script)
+derived-from(mon-s : predecessor, lanna : successor)
+derived-from(lanna : predecessor, tai-lue : successor)
+belongs-to(tai-lue : containee, se-asian : container)
+belongs-to(lanna : containee, se-asian : container)
+
+[champa : abugida = "Champa"]
+{champa, period-of-use, [[700 - 1200]]}
+derived-from(pallava : predecessor, champa : successor)
+belongs-to(se-asian : container, champa : containee)
+
+[vietnam : country = "Vietnam"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#VN"]
+[vietnamese : language = "Vietnamese"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#vi"]
+[e-cham : language = "Eastern Cham"]
+[w-cham : language = "Western Cham"]
+[cham-s : abugida = "Cham" @"http://psi.ontopia.net/iso/15924.xtm#cham"]
+
+{vietnamese, site-about, "http://www.vnet.org/vanlangsj/mozilla/"}
+
+spoken-in(vietnamese, vietnam : region)
+spoken-in(e-cham, vietnam : region)
+spoken-in(w-cham, vietnam : region)
+written-in(vietnamese, latin-s : script)
+written-in(w-cham, arabic-s : script)
+written-in(w-cham, latin-s : script)
+written-in(e-cham, cham-s : script)
+written-in(e-cham, latin-s : script)
+derived-from(cham-s : successor, champa : predecessor)
+belongs-to(cham-s : containee, se-asian : container)
+
+[chu-nom : logosyllabary = "Chu-nôm"]
+{chu-nom, period-of-use, [[900 C.E. - 1950]]}
+{chu-nom, article-about, "http://www.omniglot.com/writing/chunom.htm"}
+{chu-nom, article-about, "http://www.cjvlang.com/Writing/writsys/writviet.html"}
+{chu-nom, article-about, "http://www.vietnamtourism.com/e_pages/vietnam/introduction/people_customer/language.htm"}
+{chu-nom, description, [[Chu-nôm was adapted from Chinese to write
+Vietnamese, in a period when Vietnam was ruled by the Chinese and
+where Chinese was the official language in the country. Chu-nôm
+retained the Chinese characters with ther original meanings, but
+adding a number of new specifically Vietnamese characters, although in
+many cases Chinese characters for the same concepts already
+existed.]]}
+written-in(vietnamese, chu-nom : script)
+derived-from(chinese-s : predecessor, chu-nom : successor)
+belongs-to(chu-nom : containee, sinitic : container)
+
+
+spoken-in([jarai : language = "Jarai"], vietnam : region)
+written-in(jarai, latin-s : script)
+
+{w-cham, article-about, "http://www.ethnologue.com/show_language.asp?code=CJA"}
+{e-cham, article-about, "http://www.ethnologue.com/show_language.asp?code=CJM"}
+{cham-s, article-about, "http://www.proel.org/alfabetos/cham.html"}
+{cham-s, article-about, "http://www.omniglot.com/writing/cham.htm"}
+
+
+/* Islands of south-east Asia */
+
+[alibata : abugida = "Alibata" = "Baybayin" = "Tagalog"]
+{alibata, period-of-use, [[1000 - 1800]]}
+{alibata, site-about, "http://home.earthlink.net/~aswang/alibata/"}
+{alibata, article-about, "http://www.mts.net/~pmorrow/bayeng1.htm"}
+{alibata, site-about, "http://www.eaglescorner.com/baybayin/"}
+{alibata, article-about, "http://www.bibingka.com/dahon/tagalog/tagalog.htm"}
+{alibata, forum, "http://groups.yahoo.com/group/Alibata/"}
+written-in(tagalog-l, alibata : script)
+written-in(pangasinan, alibata : script)
+written-in(ilokano, alibata : script)
+derived-from(kawi : predecessor, alibata : successor)
+belongs-to(insular : container, alibata : containee)
+supports(unicode : supporter, alibata : supported)
+writing-direction(alibata : script, bu-ltr : direction)
+
+[philippines : country = "Philippines" @"http://www.topicmaps.org/xtm/1.0/country.xtm#PH"]
+[filipino : language = "Filipino"]
+[tagalog-l : language = "Tagalog language"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#tl"]
+{tagalog-l, site-about, "http://www.ipl.org/youth/hello/tagalog.html"}
+[visayan : language = "Visayan"]
+[ilokano : language = "Ilokano"]
+[pangasinan : language = "Pangasinan"]/* @"http://www.topicmaps.org/xtm/1.0/language.xtm#pag"*/
+
+spoken-in(english, philippines : region)
+spoken-in(spanish, philippines : region)
+spoken-in(filipino, philippines : region)
+spoken-in(visayan, philippines : region)
+spoken-in(ilokano, philippines : region)
+spoken-in(pangasinan, philippines : region)
+written-in(filipino,   latin-s : script)
+written-in(visayan,    latin-s : script)
+written-in(ilokano,    latin-s : script)
+written-in(pangasinan, latin-s : script)
+
+[hanunoo-l : language = "Hanunoo"]
+[hanunoo-s : abugida = "Hanunoo" = "Mangyan"]
+{hanunoo-s, period-of-use, [[? - ]]}
+{hanunoo-s, article-about, "http://www.omniglot.com/writing/hanunoo.htm"}
+{hanunoo-s, article-about, "http://iloko.tripod.com/Hanunoo.html"}
+derived-from(kawi : predecessor, hanunoo-s : successor)
+belongs-to(hanunoo-s : containee, insular : container)
+written-in(hanunoo-s : script, hanunoo-l)
+spoken-in(hanunoo-l, philippines : region) /* island: mindoro */
+supports(unicode : supporter, hanunoo-s : supported)
+writing-direction(hanunoo-s : script, variable : direction)
+
+[eskaya-l : language = "Eskaya"]
+[eskaya-s : syllabary = "Eskaya"]
+
+written-in(eskaya-s : script, eskaya-l)
+spoken-in(eskaya-l, philippines : region)
+
+{eskaya-s, article-about, "http://www.bibingka.com/dahon/mystery/eskaya.htm"}
+
+[buhid : abugida = "Buhid"]
+belongs-to(buhid : containee, insular : container)
+written-in(buhid : script, tagalog-l)
+derived-from(buhid : successor, kawi : predecessor)
+supports(unicode : supporter, buhid : supported)
+{buhid, article-about, "http://www.omniglot.com/writing/buhid.htm"}
+
+[tagbanwa-s : abugida = "Tagbanwa"]
+[tagbanwa-l : language = "Tagbanwa" = "Apuruhuano"]
+belongs-to(tagbanwa-s : containee, insular : container)
+written-in(tagbanwa-s : script, tagbanwa-l)
+derived-from(tagbanwa-s : successor, kawi : predecessor)
+supports(unicode : supporter, tagbanwa-s : supported)
+spoken-in(tagbanwa-l, philippines : region) /* island: palawan */
+writing-direction(tagbanwa-s : script, bu-ltr : direction)
+{tagbanwa-s, article-about, "http://www.omniglot.com/writing/tagbanwa.htm"}
+{tagbanwa-s, article-about, "http://isis.csuhayward.edu/cesmith/virtmus/Philippines/Peoples/Tagbanwa.htm"}
+
+
+[indonesia : country = "Indonesia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#ID"]
+[indonese : language = "Indonese"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#id"]
+[javanese-l : language = "Javanese"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#jw"]
+
+written-in(indonese, latin-s : script)
+spoken-in(indonese, indonesia : region)
+spoken-in(malay, indonesia : region)
+spoken-in(javanese-l, indonesia : region)
+spoken-in(english, indonesia : region)
+spoken-in(chinese-l, indonesia : region)
+
+[batak : abugida = "Batak"]
+{batak, article-about, "http://www.omniglot.com/writing/batak.htm"}
+writing-direction(batak : script, ltr : direction)
+derived-from(kawi : predecessor, batak : successor)
+belongs-to(batak : containee, insular : container)
+written-in(batak : script, malay)
+written-in(batak : script, [toba       : language = "Toba"])
+written-in(batak : script, [dairi      : language = "Dairi"])
+written-in(batak : script, [asahan     : language = "Asahan"])
+written-in(batak : script, [mandailing : language = "Mandailing"])
+written-in(batak : script, [simalungun : language = "Simalungun" = "Timur"])
+written-in(batak : script, [angkola    : language = "Angkola"])
+spoken-in(toba,       indonesia : region)
+spoken-in(dairi,      indonesia : region)
+spoken-in(asahan,     indonesia : region)
+spoken-in(mandailing, indonesia : region)
+spoken-in(simalungun, indonesia : region)
+spoken-in(angkola,    indonesia : region)
+
+[rejang-l : language = "Rejang"]
+[rejang-s : abugida = "Rejang" = "Kaganga"]
+{rejang-s, article-about, "http://www.omniglot.com/writing/redjang.htm"}
+derived-from(kawi : predecessor, rejang-s : successor)
+belongs-to(rejang-s : containee, insular : container)
+written-in(rejang-l, rejang-s : script)
+spoken-in(rejang-l, indonesia : region)
+
+[kawi : abugida = "Kawi" = "Old Javanese"]
+{kawi, period-of-use, [[750 - 1600]]}
+writing-direction(kawi : script, ltr : direction)
+written-in(javanese-l, kawi : script)
+belongs-to(kawi : containee, insular : container)
+derived-from(pallava : predecessor, kawi : successor)
+
+[javanese-s : abugida = "Javanese" = "Tjarakan" = "Carakan"]
+{javanese-s, period-of-use, [[1600 - ]]}
+{javanese-s, article-about, "http://www.omniglot.com/writing/javanese.htm"}
+writing-direction(javanese-s : script, ltr : direction)
+written-in(javanese-l, javanese-s : script)
+belongs-to(javanese-s : containee, insular : container)
+derived-from(kawi : predecessor, javanese-s : successor)
+
+[bugis : language = "Bugis"]
+[mandar : language = "Mandar"]
+[makasarese-l : language = "Makasarese"]
+[makasarese-s : abugida = "Makasarese" = "Lontara" = "Buginese"]
+{makasarese-s, article-about, "http://www.omniglot.com/writing/lontara.htm"}
+belongs-to(makasarese-s : containee, insular : container)
+written-in(makasarese-l, makasarese-s : script)
+written-in(bugis, makasarese-s : script)
+written-in(mandar, makasarese-s : script)
+spoken-in(makasarese-l, indonesia : region) /* south sulawesi, bugis */
+spoken-in(bugis, indonesia : region) /* south sulawesi, bugis */
+spoken-in(mandar, indonesia : region) /* south sulawesi, bugis */
+
+
+
+/* --- Far East --- */
+
+[china : country = "China" @"http://www.topicmaps.org/xtm/1.0/country.xtm#CN"]
+[chinese-l : language = "Chinese language"
+                      = "Mandarin"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#zh"]
+[chinese-s : logosyllabary = "Chinese script"
+                       	   = "Hanzi" / chinese-l
+                       	   = "Kanji" / japanese
+                       	   = "Hanja" / korean
+                       	   = "Han ideographs" / iso-15924
+                           = "漢字" / native-name
+ @"http://psi.ontopia.net/iso/15924.xtm#hani"]
+{chinese-l, article-about, "http://www.micheloud.com/FXM/LA/LA/mandarin.htm"}
+{chinese-s, period-of-use, [[1200 B.C.E. - ]]}
+{chinese-s, article-about,
+ "http://www.monotype.com/non-latin/wt_info/info_chineset.html"}
+{chinese-s, site-about, "http://members.aol.com/writejapan/"}
+{chinese-s, site-about, "http://www.kanjisite.com/"}
+{chinese-s, article-about, "http://www.omniglot.com/writing/chinese.htm"}
+{chinese-s, article-about, "http://www.cs.ruu.nl/~otfried/Skipcode/"}
+{chinese-s, article-about, "http://www.geocities.com/hao510/charfreq/"}
+{chinese-s, article-about, "http://www.ancientscripts.com/chinese.html"}
+{chinese-s, article-about, "http://www.zompist.com/yingzi/yingzi.htm"}
+{chinese-s, article-about, "http://zhongwen.com/"}
+
+
+[zhuyin : syllabary = "Zhuyin"
+                    = "Chu Yin"
+                    = "Bopomofo" / iso-15924
+ @"http://psi.ontopia.net/iso/15924.xtm#bopo"]
+{zhuyin, period-of-use, [[1913 - ]]}
+[manchu : language = "Manchu"]
+[tai : language = "Tai"]
+[moso : language = "Moso"]
+/* FIXME! */
+[yao : language = "Yao"] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#yao" */
+
+written-in(chinese-l, chinese-s : script)
+written-in(chinese-l, zhuyin : script)
+spoken-in(korean, china : region)
+spoken-in(manchu, china : region)
+belongs-to(sinitic : container, chinese-s : containee)
+
+[pinyin : transcription = "Pinyin"]
+{pinyin, site-about, "http://www.uiowa.edu/~chinese/pinyin/"}
+{pinyin, article-about, "http://www.wwli.com/languages/zhongwen/lesson01/pinyin.html"}
+{pinyin, article-about, "http://www.omniglot.com/writing/chinese2.htm#pinyin"}
+transforms-from(pinyin : method, chinese-l : source)
+transforms-to(pinyin : method, latin-s : target)
+
+[wade-giles : transcription = "Wade-Giles"]
+{wade-giles, article-about, "http://www.omniglot.com/writing/chinese2.htm#wg"}
+{wade-giles, description, [[Previously the most-used transliteration
+from Chinese to latin script, Wade-Giles has now largely been
+superseded by Pinyin.]]}
+transforms-from(wade-giles : method, chinese-l : source)
+transforms-to(wade-giles : method, latin-s : target)
+
+[yunnan : province = "Yunnan"]
+[lue : language = "Lue" = "Tai Lue" = "Bayi"]
+
+{lue, article-about, "http://www.sil.org/ethnologue/countries/Chin.html#KHB"}
+
+part-of(yunnan : containee, china : container)
+spoken-in(lue, yunnan : region)
+spoken-in(tai, yunnan : region)
+spoken-in(moso, yunnan : region)
+spoken-in(chinese-l, yunnan : region)
+written-in(lue, tai-lue : script)
+
+[hunan : province = "Hunan"]
+part-of(hunan : containee, china : container)
+[nushu : logosyllabary = "Nushu"]
+{nushu, number-of-characters, [[At least 2000]]}
+{nushu, site-about, "http://www2.ttcn.ne.jp/~orie/"}
+{nushu, article-about, "http://wwwsshe.murdoch.edu.au/intersections/back_issues/nushu2.html"}
+{nushu, article-about, "http://members.aol.com/jiangyong/Nushu.html"}
+{nushu, article-about, "http://english.peopledaily.com.cn/200204/18/eng20020418_94249.shtml"}
+{nushu, article-about, "http://www.chinavoc.com/life/focus/wmbook.asp"}
+{nushu, article-about, "http://www.ancientscripts.com/nushu.html"}
+{nushu, article-about, "http://www.fortwayne.com/mld/journalgazette/2002/04/28/news/3150919.htm"}
+{nushu, article-about, "http://www.washingtonpost.com/wp-dyn/articles/A552-2004Feb23.html"}
+
+{nushu, description, [[A script developed by women and only used by
+women, in a small area of the Chinese province Hunan. The language
+written is the local dialect, but the script is an ideographic script.
+It is used by women to write letters, for decoration on fans and
+scarves, and for diaries. It seems quite clearly to have been a
+reaction to male oppression.]]}
+
+writing-direction(nushu : script, tb-rtl : direction)
+belongs-to(sinitic : container, nushu : containee)
+
+[kwangtung : province = "Kwangtung" / wade-giles
+                      = "Guangdong"]
+{kwangtung, article-about, "http://en.wikipedia.org/wiki/Guangdong"}
+part-of(kwangtung : containee, china : container)
+spoken-in(miao, kwangtung : region)
+spoken-in(yao, kwangtung : region)
+spoken-in(chinese-l, kwangtung : region)
+
+[hongkong : province = "Hong Kong"]
+part-of(hongkong : containee, china : container)
+spoken-in(chinese-l, hongkong : region)
+spoken-in(english, hongkong : region)
+
+[inner-mongolia : province = "Inner Mongolia"]
+
+part-of(inner-mongolia : containee, china : container)
+spoken-in(mongolian-l, inner-mongolia : region)
+
+[kwangsi : province = "Kwangsi" / wade-giles
+                    = "Guangxi"]
+[chuang : language = "Chuang" / wade-giles
+                   = "Zhuang"]
+
+part-of(kwangsi : containee, china : container)
+written-in(chuang, latin-s : script)
+spoken-in(chuang, kwangsi : region)
+spoken-in(chinese-l, kwangsi : region)
+
+[ningsia : province = "Ningsia" / wade-giles
+                    = "Ningxia"]
+
+part-of(ningsia : containee, china : container)
+spoken-in(chinese-l, ningsia : region)
+
+[sinkiang : province = "Sinkiang" / wade-giles
+                     = "Xinjiang"]
+[uighur : language = "Uighur" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ug"]
+
+part-of(sinkiang : containee, china : container)
+written-in(uighur, arabic-s : script)
+written-in(uighur, latin-s : script)
+written-in(kazakh, latin-s : script)
+spoken-in(uighur, sinkiang : region)
+spoken-in(kazakh, sinkiang : region)
+spoken-in(chinese-l, sinkiang : region)
+
+[tibet : province = "Tibet"]
+[tibetan-l : language = "Tibetan language"
+                      = "དབུ་ཅན་" / native-name
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#bo"]
+[tibetan-s : abugida = "Tibetan script"
+                    = "Dbu can" / tibetan-l
+ @"http://psi.ontopia.net/iso/15924.xtm#tibt"]
+{tibetan-s, period-of-use, [[700 C.E. -]]}
+{tibetan-s, article-about, "http://www.omniglot.com/writing/tibetan.htm"}
+{tibetan-s, article-about, "http://www.ancientscripts.com/tibetan.html"}
+{tibetan-s, article-about, "http://www.geocities.com/Athens/Academy/9594/tibet.html"}
+
+writing-direction(tibetan-s : script, ltr : direction)
+part-of(tibet : containee, china : container)
+written-in(tibetan-l, tibetan-s : script)
+spoken-in(tibetan-l, tibet : region)
+spoken-in(chinese-l, tibet : region)
+belongs-to(north-indic : container, tibetan-s : containee)
+
+[phyag : person = "Raja Phyag-rdor-rnam-rgyal"]
+[lepcha-l : language = "Lepcha"]
+[lepcha-s : abugida = "Lepcha" = "Rong"]
+{lepcha-s, period-of-use, [[1720 -]]}
+{lepcha-s, article-about, "http://www.omniglot.com/writing/lepcha.htm"}
+
+writing-direction(lepcha-s : script, tb-rtl : direction)
+derived-from(tibetan-s : predecessor, lepcha-s : successor)
+created-by(lepcha-s : creation, phyag : creator)
+belongs-to(north-indic : container, lepcha-s : containee)
+written-in(lepcha-s : script, lepcha-l)
+spoken-in(lepcha-l, sikkim : region)
+spoken-in(lepcha-l, bhutan : region)
+spoken-in(lepcha-l, nepal : region)
+
+[phags-pa-blo : person = "'Phags pa Blo gros rgyal mtshan";
+                         "Phags pa Blo gros rgyal mtshan"]
+[phags-pa : abugida = "'Phags pa"; "Phags pa"]
+{phags-pa, period-of-use, [[1269 - 1350]]}
+{phags-pa, article-about, "http://www.omniglot.com/writing/phagspa.htm"}
+
+derived-from(tibetan-s : predecessor, phags-pa : successor)
+created-by(phags-pa : creation, phags-pa-blo : creator)
+belongs-to(north-indic : container, phags-pa : containee)
+writing-direction(phags-pa : script, tb-ltr : direction)
+
+[tangut-s : logosyllabary = "Xi Xia"
+                          = "Tangut"]
+{tangut-s, period-of-use, [[1036 - 1550]]}
+{tangut-s, article-about, "http://www.iias.nl/host/himalaya/individ/tangut.html"}
+belongs-to(tangut-s : containee, sinitic : container)
+derived-from(tangut-s : successor, chinese-s : predecessor)
+
+[kitan-l : logosyllabary = "Kitan large script"]
+{kitan-l, period-of-use, [[920 - 1191]]}
+{kitan-l, article-about, "http://www.ancientscripts.com/khitan.html"}
+derived-from(chinese-s : predecessor, kitan-l : successor)
+belongs-to(kitan-l : containee, sinitic : container)
+
+[kitan-s : logosyllabary = "Kitan small script"]
+{kitan-s, period-of-use, [[925 - 1191]]}
+{kitan-s, article-about, "http://www.ancientscripts.com/khitan.html"}
+belongs-to(kitan-s : containee, sinitic : container)
+
+[xiyin : person = "Wanyan Xiyin"]
+[jurchin-l : language = "Jurchin"]
+[jurchin-s : logosyllabary = "Jurchin script"]
+{jurchin-s, period-of-use, [[1120 - ]]}
+{jurchin-s, article-about, "http://www.ancientscripts.com/jurchen.html"}
+
+belongs-to(jurchin-s : containee, sinitic : container)
+created-by(jurchin-s : creation, xiyin : creator)
+derived-from(chinese-s : predecessor, jurchin-s : successor)
+
+[yi-l : language = "Yi" = "Lolo" / other-name]
+{yi-l, article-about, "http://www.worldlanguage.com/Languages/Yi.htm"}
+spoken-in(yunnan : region, yi-l)
+
+[yi : logosyllabary = "Yi"
+                    = "Cuan script"
+                    = "Wei writing"
+ @"http://psi.ontopia.net/iso/15924.xtm#yiii"]
+{yi, period-of-use, [[1500? - ]]}
+{yi, article-about, "http://www.ancientscripts.com/yi.html"}
+{yi, article-about, "http://www.agfamonotype.com/presentations/iuc-17-km/Yi/st-1.htm"}
+{yi, article-about, "http://www.omniglot.com/writing/yi.htm"}
+belongs-to(yi : containee, sinitic : container)
+written-in(yi : script, yi-l)
+
+
+[western-hmong : language = "Western Hmong"
+                          = "A-Hmao"
+                          = "Hwa Miao"]
+{western-hmong, article-about, "http://www.worldlanguage.com/Languages/Miao.htm"}
+[pollard : person = "Samuel Pollard"; "Pollard, Samuel"]
+[pollard-s : script = "Pollard script"]
+{pollard-s, period-of-use, [[1905 -]]}
+{pollard-s, article-about, "http://www.omniglot.com/writing/pollardmiao.htm"}
+{pollard-s, tutorial, "http://www.archives.ecs.soton.ac.uk/miao/pronunciation/soundssymbols.pdf"}
+
+/* Everson and Cowan claim this is an alphabet. Daniels objects for
+reasons that are utterly obscure */
+
+writing-direction(pollard-s : script, ltr : direction)
+spoken-in(western-hmong, yunnan : region)
+spoken-in(western-hmong, hunan : region)
+written-in(western-hmong, pollard-s)
+created-by(pollard-s : creation, pollard : creator)
+
+
+[lisu : language = "Lisu"]
+[fraser-s : script = "Fraser script"]
+[fraser : person = "J.O. Fraser"; "Fraser, J.O."]
+
+{lisu, article-about, "http://www.chinatown-online.co.uk/pages/culture/ethnic/lisu.html"}
+
+spoken-in(lisu, yunnan : region)
+written-in(lisu, fraser-s)
+created-by(fraser-s : creation, fraser : creator)
+
+
+
+[tai-le-l : language = "Tai Le" = "Dehong Dai" / chinese-l
+                     = "Chinese Shan"
+                     = "Tai Nua"
+                     = "Tai Kong"]
+[tai-le-s : abugida = "Tai Le"
+                    = "Liek"
+                    = "Dehong"]
+{tai-le-s, period-of-use, [[1250 B.C.E. - ]]}
+{tai-le-s, article-about, "http://www.dkuug.dk/jtc1/sc2/wg2/docs/n2372.pdf"}
+{tai-le-s, article-about, "http://www.omniglot.com/writing/tainua.htm"}
+{tai-le-l, article-about, "http://www.ethnologue.com/show_language.asp?code=TDD"}
+
+writing-direction(tai-le-s : script, ltr : direction)
+written-in(tai-le-l : language, tai-le-s : script)
+spoken-in(tai-le-l, laos : region)
+spoken-in(tai-le-l, burma : region)
+spoken-in(tai-le-l, china : region)
+
+[mongolia : country = "Mongolia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#MN"]
+[mongolian-l : language = "Mongolian" = "Khalkha" / mongolian-l
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#mn"]
+[mongolian-s : alphabet = "Mongolian script"
+ @"http://psi.ontopia.net/iso/15924.xtm#mong"]
+{mongolian-s, article-about, "http://members.aol.com/yikhmongol/monls.htm"}
+{mongolian-s, period-of-use, [[1204 -]]}
+{mongolian-l, article-about, "http://www.indiana.edu/~mongsoc/mong/language.htm"}
+{mongolian-l, article-about, "http://www.koreanhistoryproject.org/Jta/Idx/MoIndexLAN1.htm"}
+{mongolian-l, article-about, "http://www.omniglot.com/writing/mongolian.htm"}
+{mongolian-s, tutorial, "http://www.viahistoria.com/SilverHorde/research/UighurScript.html"}
+
+writing-direction(mongolian-s : script, tb-ltr : direction)
+written-in(mongolian-l, mongolian-s : script)
+written-in(mongolian-l, cyrillic : script)
+derived-from(mongolian-s : successor, uighur-s : predecessor)
+spoken-in(mongolian-l, mongolia : region)
+
+[kalmyk : language = "Kalmyk"]
+[oirat : language = "Oirat"]
+
+[dalai : person = "Zaya Pandita Oktorguin Dalai"]
+[clear : alphabet = "Mongolian clear script"]
+{clear, period-of-use, [[1648 - ]]}
+created-by(clear : creation, dalai : creator)
+derived-from(mongolian-s : predecessor, clear : successor)
+written-in(oirat, clear : script)
+written-in(kalmyk, clear : script)
+writing-direction(clear : script, tb-ltr : direction)
+
+[evenki : language = "Evenki"]
+written-in(evenki, mongolian-s : script)
+spoken-in(evenki, inner-mongolia : region)
+
+[erdeni-bakshi : person = "Erdeni Bakshi"; "Bakshi, Erdeni"]
+[manchu-s : alphabet = "Manchu"]
+{manchu-s, period-of-use, [[1600 - ]]}
+derived-from(mongolian-s : predecessor, manchu-s : successor)
+written-in(manchu-s : script, manchu)
+writing-direction(manchu-s : script, tb-ltr : direction)
+
+[vagindra : person = "Agwaan Dorzhiev" = "Vagindra"]
+[tsyben   : person = "Tsyben Zhamtsarano"; "Zhamtsarano, Tsyben"]
+
+[buryat-l : language = "Buryat"]
+[buryat-s : alphabet = "Buryat"]
+{buryat-s, period-of-use, [[1905 - 1920]]}
+created-by(buryat-s : creation, tsyben : creator, vagindra : creator)
+derived-from(clear : predecessor, buryat-s : successor)
+written-in(buryat-l, buryat-s : script)
+writing-direction(buryat-s : script, tb-ltr : direction)
+
+
+[manyoogana : syllabary = "Man'yoogana"]
+{manyoogana, period-of-use, [[600 - 1200]]}
+{manyoogana, description, [[When the Japanese started using the
+Chinese characters to write their language, they needed to be able to
+write not just complete words, but also sounds (particularly for
+inflections). For this purpose they used a set of Chinese characters
+which were used for their sound, rather than for their meaning. This
+set of characters is the man'yoogana.]]}
+belongs-to(sinitic : container, manyoogana : containee)
+derived-from(chinese-s : predecessor, manyoogana : successor)
+
+[japan : country = "Japan" @"http://www.topicmaps.org/xtm/1.0/country.xtm#JP"]
+{japan, site-about, "http://www.csse.monash.edu.au/~jwb/japanese.html"}
+[japanese : language = "Japanese" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ja"]
+[hiragana : syllabary = "Hiragana"
+                      = "ひらがな" / native-name
+   @"http://psi.ontopia.net/iso/15924.xtm#hira"]
+{hiragana, period-of-use, [[1200 - ]]}
+{hiragana, number-of-characters, [[46]]}
+{hiragana, article-about,
+ "http://www.omniglot.com/writing/japanese.htm"}
+{hiragana, site-about,
+ "http://members.aol.com/writejapan/"}
+{hiragana, tutorial, "http://www.zompist.com/flash.html"}
+{hiragana, article-about, "http://okayama.cool.ne.jp/monjo/hentaigana.htm"}
+  / japanese
+{hiragana, description, [[Hiragana is used to write the grammatical
+parts of sentences, especially inflections, where the Chinese
+characters are used to write the word stem, and the inflected ending
+is then added in hiragana.  The characters themselves are derived from
+Chinese characters, through extraction of part of the Chinese
+character. The current collection of 46 characters was fixed by a
+regulation from the Ministry of Education in 1900. The hiragana (and
+katakana) characters that were rejected in this reform are today known
+as hentaigana.]]}
+
+/* Kuukai (774-835) is also, incorrectly, traditionally regarded as the
+creator of hiragana. */
+
+[katakana : syllabary = "Katakana"
+                      = "\u30AB\u30BF\u30AB\u30CA" / native-name
+   @"http://psi.ontopia.net/iso/15924.xtm#kana"]
+{katakana, period-of-use, [[1200 - ]]}
+{katakana, number-of-characters, [[46]]}
+{katakana, article-about, "http://www.omniglot.com/writing/japanese.htm"}
+{katakana, site-about, "http://members.aol.com/writejapan/"}
+{katakana, description, [[Katakana is used to write foreign names,
+loanwords, onomatopoeic words, exclamations, and some specialized
+scientific terminology. The characters themselves are derived from
+Chinese characters, through extraction of part of the Chinese
+character. The current collection of 46 characters was fixed by a
+regulation from the Ministry of Education in 1900. The katakana (and
+hiragana) characters that were rejected in this reform are today known
+as hentaigana.]]}
+
+spoken-in(japanese, japan : region)
+written-in(japanese, chinese-s : script)
+written-in(japanese, hiragana : script)
+written-in(japanese, katakana : script)
+belongs-to(sinitic : container, katakana : containee)
+belongs-to(sinitic : container, hiragana : containee)
+derived-from(manyoogana : predecessor, katakana : successor)
+derived-from(manyoogana : predecessor, hiragana : successor)
+
+[jindai : syllabary = "Jindai Moji"]
+{jindai, description, [[A fictional writing system invented by
+Japanese nationalists in the 1930s as a historical hoax in order to be
+able to claim that the Japanese did not get their writing system from
+the Chinese, but actually invented a writing system of their own.]]}
+
+belongs-to(conscript : container, jindai : containee)
+
+[ainu : language = "Ainu"]
+{ainu, site-about, "http://ramat.ram.ne.jp/ainu/"}
+{ainu, article-about, "http://www.suite101.com/article.cfm/fourth_world/22057"}
+spoken-in(ainu, japan : region)
+
+[north-korea : country = "North Korea" @"http://www.topicmaps.org/xtm/1.0/country.xtm#KP"]
+[south-korea : country = "South Korea" @"http://www.topicmaps.org/xtm/1.0/country.xtm#KR"]
+[korean : language = "Korean" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ko"]
+[seycong : person = "King Sejong"; "Sejong, King"]
+[hangul : featural = "Hangul"
+                   = "Hankul"
+                   = "Cosenkul" / north-korea
+                   = "한글" / native-name
+  @"http://psi.ontopia.net/iso/15924.xtm#hang"]
+{korean, article-about, "http://www.micheloud.com/FXM/LA/la/korean.htm"}
+{korean, article-about, "http://langintro.com/kintro/"}
+{hangul, article-about, "http://www.omniglot.com/writing/korean.htm"}
+{hangul, article-about, "http://www.ancientscripts.com/korean.html"}
+{hangul, article-about, "http://www.usu.edu/~anthro/origins_of_writing/invented_alphabets/#korean"}
+{hangul, article-about, "http://www.sigmainstitute.com/koreanonline/hangul_history.shtml"}
+{hangul, article-about, "http://korea.insights.co.kr/korean/sejong600/english/hangul.html"}
+{hangul, site-using, "http://www.daum.net"}
+{hangul, site-using, "http://www.microsoft.com/korea/"}
+{hangul, site-using, "http://www.naver.com"}
+{hangul, site-about, "http://myhome.shinbiro.com/~geston/hangul/english/eng1.html"}
+{hangul, period-of-use, [[1444 - ]]}
+
+created-by(hangul : creation, seycong : creator)
+spoken-in(korean, north-korea : region)
+spoken-in(korean, south-korea : region)
+written-in(korean, hangul : script)
+written-in(korean, chinese-s : script)
+belongs-to(sinitic : container, hangul : containee)
+
+
+[taiwan : country = "Taiwan"
+                  = "Republic of China" / official-name
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#TW"]
+
+spoken-in(chinese-l, taiwan : region)
+spoken-in(english, taiwan : region)
+
+
+/* --- Europe --- */
+
+[cretan-hiero : logosyllabary = "Cretan hieroglyhpic"]
+{cretan-hiero, period-of-use, [[1750 B.C.E. - 1600 B.C.E.]]}
+
+[gsmith : person = "George Smith"; "Smith, George"]
+[schmidt : person = "Moriz Schmidt"; "Schmidt, Moriz"]
+[cypriote : syllabary      = "Cypriote syllabary"
+ @"http://psi.ontopia.net/iso/15924.xtm#cprt"]
+{cypriote, period-of-use, [[800 B.C.E. - 200 B.C.E.]]}
+{cypriote, article-about, "http://www.ancientscripts.com/cypriot.html"}
+deciphered-by(cypriote : script, gsmith, schmidt)
+derived-from(cypriote : successor, linear-b : predecessor)
+written-in(greek-l, cypriote : script)
+
+[cypro-minoan : logosyllabary = "Cypro-minoan"
+ @"http://psi.ontopia.net/iso/15924.xtm#cpmn"]
+{cypro-minoan, period-of-use, [[1500 B.C.E. - 1200 B.C.E.]]}
+
+[ventris : person = "Michael Ventris"; "Ventris, Michael"]
+{ventris, biography, "http://www.amazon.com/exec/obidos/ASIN/0500510776"}
+[kober : person = "Alice Kober"; "Kober, Alice"]
+[linear-b : logosyllabary  = "Linear B"
+ @"http://psi.ontopia.net/iso/15924.xtm#linb"]
+{linear-b, period-of-use, [[1550 B.C.E. - 1200 B.C.E.]]}
+{linear-b, article-about, "http://www.kairatos.com.gr/linear1.htm"}
+{linear-b, article-about, "http://www.geocities.com/Athens/Acropolis/4423/linearb.html"}
+{linear-b, article-about, "http://www.ancientscripts.com/linearb.html"}
+{linear-b, article-about, "http://www.omniglot.com/writing/linearb.htm"}
+deciphered-by(linear-b : script, kober, ventris)
+derived-from(linear-b : successor, linear-a : predecessor)
+
+[linear-a : logosyllabary  = "Linear A"
+ @"http://psi.ontopia.net/iso/15924.xtm#lina"]
+{linear-a, period-of-use, [[1800 B.C.E. - 1450 B.C.E.]]}
+{linear-a, article-about, "http://www.ancientscripts.com/lineara.html"}
+writing-direction(linear-a : script, ltr : direction)
+
+[camunic : language = "Camunic"]
+[etruscan-l : language = "Etruscan"]
+{etruscan-l, article-about, "http://centime.tripod.com/Etruscans/language.html"}
+{etruscan-l, article-about, "http://members.nbci.com/Pdictus/etrlang.html"}
+[volscian : language = "Volscian"]
+[venetic : language = "Venetic"]
+[umbrian : language = "Umbrian"]
+{umbrian, article-about, "http://tied.narod.ru/tree/ital/umbrian.html"}
+{umbrian, article-about, "http://indoeuro.bizland.com/tree/ital/umbrian.html"}
+{umbrian, article-about, "http://members.tripod.com/babaev/tree/umbrian.html"}
+[oscan : language = "Oscan"]
+{oscan, article-about, "http://tied.narod.ru/tree/ital/oscan.html"}
+{oscan, article-about, "http://indoeuro.bizland.com/tree/ital/oscan.html"}
+{oscan, article-about, "http://space.tin.it/io/davmonac/sanniti/smliny.html"}
+[etruscan-s : alphabet = "Etruscan script"]
+{etruscan-s, period-of-use, [[700 B.C.E. - 100 B.C.E.]]}
+{etruscan-s, article-about, "http://tied.narod.ru/project/script/itali.html"}
+{etruscan-s, test-page, "http://www.geocities.com/i18nguy/unicode-example-plane1.html"}
+belongs-to(greek-f : container, etruscan-s : containee)
+derived-from(greek-s : predecessor, etruscan-s : successor)
+written-in(etruscan-s : script, etruscan-l)
+written-in(etruscan-s : script, umbrian)
+written-in(etruscan-s : script, oscan)
+written-in(etruscan-s : script, camunic)
+written-in(etruscan-s : script, volscian)
+written-in(etruscan-s : script, venetic)
+
+[celtiberian : language = "Celtiberian"]
+{celtiberian, description, [[The language of an ancient, possibly
+Celtic, people that lived in northern Spain in the last few centuries
+BC.  The language is known from a small number of partially-understood
+inscriptions in the Roman alphabet, and in Iberian syllabic script,
+from c.300-100 BC.]]}
+written-in(celtiberian, latin-s : script)
+
+[iberian : language = "Iberian"]
+[north-iberian : syllabary = "Northeast Iberian"]
+{north-iberian, period-of-use, [[200 B.C.E. - ?]]}
+[south-iberian : syllabary = "South Iberian"
+                           = "South Lusitanian" / other-name
+                           = "Tartessian" / other-name]
+{south-iberian, period-of-use, [[600 B.C.E? - ?]]}
+belongs-to(north-semitic : container, north-iberian : containee)
+belongs-to(north-semitic : container, south-iberian : containee)
+written-in(south-iberian : script, iberian)
+written-in(north-iberian : script, iberian)
+written-in(north-iberian : script, celtiberian)
+written-in(greek-s : script, iberian)
+written-in(latin-s : script, iberian)
+writing-direction(north-iberian : script, ltr : direction)
+writing-direction(south-iberian : script, rtl : direction)
+
+{iberian, description, [[Language(s) spoken by the tribe of the
+(H)iberi parts of Spain and Portugal in the two first millennia
+B.C.E.. The language(s) is not Indo-European, and is not understood.]]}
+
+{north-iberian, description, [[This script seems to have been derived
+from the South Iberian script, although this is not known for certain.
+It is partly alphabetic and partly syllabic. It is relatively sparsely
+attested.]]}
+
+{south-iberian, description, [[The script is partly alphabetic and
+partly syllabic, and its ancestry is unknown, though clearly Greek or
+Semitic. It is older than North Iberian, which may have been derived
+from it, and also more sparsely attested.]]}
+
+{iberian, article-about, "http://www.webpersonal.net/jrr/index.htm"}
+{north-iberian, article-about, "http://www.omniglot.com/writing/iberian.htm"}
+{south-iberian, article-about, "http://www.omniglot.com/writing/iberian.htm"}
+
+[wulfila : person = "Wulfila"]
+[gothic-l : language = "Gothic"]
+[gothic-s : alphabet = "Gothic script"
+ @"http://psi.ontopia.net/iso/15924.xtm#goth"]
+{gothic-s, period-of-use, [[400 C.E. - 500 C.E.]]}
+{gothic-s, test-page, "http://home.att.net/~jameskass/gothictest.htm"}
+writing-direction(gothic-s : script, ltr : direction)
+created-by(gothic-s : creation, wulfila : creator)
+derived-from(greek-s : predecessor, gothic-s : successor)
+belongs-to(greek-f : container, gothic-s : containee)
+written-in(gothic-s : script, gothic-l)
+
+[runic : alphabet = "Runic" = "Futhark"
+ @"http://psi.ontopia.net/iso/15924.xtm#runr"]
+{runic, period-of-use, [[50 C.E. - 1400 C.E.]]}
+{runic, article-about, "http://www.ancientscripts.com/futhark.html"}
+{runic, article-about, "http://www.omniglot.com/writing/runic.htm"}
+{runic, number-of-characters, [[24]]}
+{runic, description, [[The origin of the Futhark is uncertain. It may
+have been Latin, but it may also have been one of the other Italic
+scripts. The Futhark was first used in Denmark and Northern Germany
+and spread from there into Scandinavia and to the British Isles.]]}
+belongs-to(greek-f : container, runic : containee)
+writing-direction(runic : script, variable : direction)
+
+[ogham : alphabet = "Ogham" = "Beithe-luis-nin"
+ @"http://psi.ontopia.net/iso/15924.xtm#ogam"]
+{ogham, period-of-use, [[400 C.E. - 600 C.E.]]}
+{ogham, site-about, "http://www.evertype.com/standards/og/ogmharc.html"}
+{ogham, article-about, "http://members.aol.com/plieadesqu/ogham.htm"}
+{ogham, article-about, "http://www.wikipedia.com/wiki/Ogham"}
+{ogham, article-about, "http://www.omniglot.com/writing/ogham.htm"}
+belongs-to(greek-f : container, ogham : containee)
+writing-direction(ogham : script, upwards-boustrophedon : direction)
+
+[uk : country = "United Kingdom" @"http://www.topicmaps.org/xtm/1.0/country.xtm#GB"]
+[english : language = "English" @"http://www.topicmaps.org/xtm/1.0/language.xtm#en"]
+{english, article-about, "http://www.micheloud.com/FXM/LA/LA/english.htm"}
+{english, article-about, "http://www.krysstal.com/english.html"}
+
+[latin-s : alphabet = "Latin script"
+ @"http://psi.ontopia.net/iso/15924.xtm#latn"]
+{latin-s, article-about, "http://www.omniglot.com/writing/latin.htm"}
+{latin-s, article-about, "http://www.sprakrad.no/snytt014.htm#torp"}/ norwegian
+{latin-s, article-about, "http://www.sprakrad.no/snytt021.htm#torp"}/ norwegian
+{latin-s, description, [[This is the script you are reading right now,
+the script used for English, and by far the most widespread script in
+the world today. The rise of printing and later computing made Latin
+even more important.]]}
+
+spoken-in(english, uk : region)
+written-in(english, latin-s : script)
+belongs-to(greek-f : container, latin-s : containee)
+derived-from(etruscan-s : predecessor, latin-s : successor)
+writing-direction(latin-s : script, ltr : direction)
+
+[germany : country = "Germany"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#DE"]
+[german : language = "German" = "Deutsch" / native-name
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#de"]
+{german, article-about, "http://www.micheloud.com/FXM/LA/LA/german.htm"}
+spoken-in(german, germany : region)
+written-in(german, latin-s : script)
+
+[france : country = "France"]
+[french : language = "French"]
+{french, article-about, "http://www.micheloud.com/FXM/LA/LA/french.htm"}
+spoken-in(french, france : region)
+written-in(french, latin-s : script)
+
+[norway : country = "Norway"]
+[norwegian : language = "Norwegian"]
+spoken-in(norwegian, norway : region)
+written-in(norwegian, latin-s : script)
+
+[croatian : language = "Croatian"]
+[glagolithic : alphabet = "Glagolithic"
+ @"http://psi.ontopia.net/iso/15924.xtm#glag"]
+{glagolithic, period-of-use, [[850 C.E. - 1900 C.E.]]}
+{glagolithic, article-about, "http://www.ancientscripts.com/glagolitic.html"}
+writing-direction(glagolithic : script, ltr : direction)
+written-in(glagolithic : script, croatian)
+belongs-to(greek-f : container, glagolithic : containee)
+derived-from(greek-s : predecessor, glagolithic : successor)
+
+[slovakia : country = "Slovakia"]
+[slovak : language = "Slovak"]
+{slovak, article-about, "http://www.whizkidtech.net/ISO-8859-2/sk.html"}
+spoken-in(slovak, slovakia : region)
+written-in(slovak, latin-s : script)
+
+[russia : country = "Russia" @"http://www.topicmaps.org/xtm/1.0/country.xtm#RU"]
+[russian : language = "Russian" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ru"]
+{russian, article-about, "http://www.micheloud.com/FXM/LA/LA/russian.htm"}
+
+[st-cyril : person = "St. Cyril"
+                   = "Constantine" / other-name]
+[cyrillic : alphabet = "Cyrillic"
+                     = "Кириллица" / native-name
+ @"http://psi.ontopia.net/iso/15924.xtm#cyrl"]
+{cyrillic, period-of-use, [[900 C.E. - ]]}
+{cyrillic, article-about, "http://www.omniglot.com/writing/cyrillic.htm"}
+{cyrillic, article-about, "http://www.monotype.com/non-latin/wt_info/info_cyrillic.html"}
+{cyrillic, article-about, "http://www.ancientscripts.com/cyrillic.html"}
+{cyrillic, article-about, "http://www.terena.nl/projects/multiling/euroml/mlcs5-cyr.txt"}
+{cyrillic, site-about, "http://infoshare1.princeton.edu/katmandu/sgman/sltrans.html"}
+{cyrillic, article-about, "http://www.omda.bg/engl/history/kiril&meth.html"}
+{cyrillic, description, [[Cyrillic is essentially an adaptation of the
+Greek alphabet to the Slavic lanuages by the missionary monk
+St. Cyril, after whom it is named.]]}
+
+writing-direction(cyrillic : script, ltr : direction)
+spoken-in(russian, russia : region)
+spoken-in(yiddish, russia : region)
+written-in(russian, cyrillic : script)
+belongs-to(greek-f : container, cyrillic : containee)
+derived-from(greek-s : predecessor, cyrillic : successor)
+created-by(st-cyril : creator, cyrillic : creation)
+
+[ukraine : country = "Ukraine" @"http://www.topicmaps.org/xtm/1.0/country.xtm#UK"]
+[ukrainian : language = "Ukrainian" @"http://www.topicmaps.org/xtm/1.0/language.xtm#uk"]
+
+spoken-in(ukrainian, ukraine : region)
+written-in(ukrainian, cyrillic : script)
+
+
+[bulgaria : country = "Bulgaria"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#BG"]
+[bulgarian : language = "Bulgarian"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#bg"]
+
+spoken-in(bulgarian, bulgaria : region)
+written-in(bulgarian, cyrillic : script)
+
+{bulgarian, article-about, "http://abvg.net/Cyrillic/"}
+{bulgarian, article-about, "http://www.kirildouhalov.net/language/alphabet.html"}
+
+[slovio : transliteration = "Slovio"]
+{slovio, article-about, "http://www.slovio.com/ru/"}
+{slovio, description, [[A transliteration used to transliterate from
+Russian and Bulgarian written in Cyrillic to the Latin alphabet.]]}
+transforms-from(slovio : method, cyrillic : source)
+transforms-to(slovio : method, latin-s : target)
+
+
+[rumania : country = "Romania"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#RO"]
+[rumanian : language = "Rumanian" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ro"]
+
+spoken-in(rumanian, rumania : region)
+written-in(rumanian, latin-s : script)
+
+
+[spain : country = "Spain" @"http://www.topicmaps.org/xtm/1.0/country.xtm#ES"]
+[spanish : language = "Spanish"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#es"]
+{spanish, article-about, "http://www.micheloud.com/FXM/LA/LA/spanish.htm"}
+spoken-in(spanish, spain : region)
+written-in(spanish, latin-s : script)
+
+[portugal : country = "Portugal" @"http://www.topicmaps.org/xtm/1.0/country.xtm#PT"]
+spoken-in(portuguese, portugal : region)
+written-in(portuguese, latin-s : script)
+
+[italy : country = "Italy" @"http://www.topicmaps.org/xtm/1.0/country.xtm#IT"]
+[italian : language = "Italian"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#it"]
+{italian, article-about, "http://www.micheloud.com/FXM/LA/LA/italian.htm"}
+spoken-in(italian, italy : region)
+written-in(italian, latin-s : script)
+
+[finland : country = "Finland" = "Suomi" / finnish
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#FI"]
+[finnish : language = "Finnish"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#fi"]
+{finnish, article-about, "http://www.micheloud.com/FXM/LA/la/finnish.htm"}
+spoken-in(finnish, finland : region)
+written-in(finnish, latin-s : script)
+
+[belorussia : country = "Belorussia" = "White Russia" = "Belarus" / iso-3166
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#BY"]
+[belorussian : language = "Belorussian" @"http://www.topicmaps.org/xtm/1.0/language.xtm#be"]
+
+spoken-in(belorussian, belorussia : region)
+written-in(belorussian, cyrillic : script)
+
+
+[estonia : country = "Estonia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#EE"]
+[estonian : language = "Estonian" @"http://www.topicmaps.org/xtm/1.0/language.xtm#et"]
+
+spoken-in(estonian, estonia : region)
+written-in(estonian, latin-s : script)
+
+
+[latvia : country = "Latvia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#LV"]
+[latvian : language = "Latvian" @"http://www.topicmaps.org/xtm/1.0/language.xtm#lv"]
+
+spoken-in(latvian, latvia : region)
+written-in(latvian, latin-s : script)
+
+
+[hungary : country = "Hungary"]
+[hungarian : language = "Hungarian"]
+[rovasiras : alphabet = "Hungarian runes" = "Rovasiras"]
+{rovasiras, period-of-use, [[800 - 1850]]}
+{rovasiras, site-about, "http://fang.fa.gau.hu/~heves/runic.html"}
+{rovasiras, article-about, "http://www.omniglot.com/writing/hungarian_runes.htm"}
+{rovasiras, article-about, "http://www.interlog.com/~photodsk/magyar/rovas/rovaseng.html"}
+writing-direction(rovasiras : script, rtl : direction)
+written-in(hungarian : language, rovasiras : script)
+derived-from(orkhon : predecessor, rovasiras : successor)
+spoken-in(hungarian, hungary : region)
+written-in(hungarian : language, latin-s : script)
+
+
+[lithuania : country = "Lithuania"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#LT"]
+[lithuanian : language = "Lithuanian" @"http://www.topicmaps.org/xtm/1.0/language.xtm#lt"]
+
+spoken-in(lithuanian, lithuania : region)
+written-in(lithuanian, latin-s : script)
+
+
+[moldavia : country = "Moldavia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#MD"]
+spoken-in(rumanian, moldavia : region)
+written-in(rumanian, cyrillic : script)
+
+
+[greece : country = "Greece"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#GR"]
+[greek-l : language = "Greek"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#el"]
+[greek-s : alphabet = "Greek"
+ @"http://psi.ontopia.net/iso/15924.xtm#grek"]
+{greek-s, period-of-use, [[750 B.C.E. -]]}
+{greek-s, article-about, "http://www.omniglot.com/writing/greek.htm"}
+{greek-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_greekm.html"}
+{greek-s, site-using, "http://www.bbc.co.uk/greek/"}
+{greek-s, description, [[Greek is the original alphabet, being
+developed from the Phoenician abjad. While abjads are well suited to
+Semitic languages like Phoenician they do not fit a language like
+Greek, which made the Greeks add vowel symbols to the Phoenician
+abjad, thus creating the first alphabet.]]}
+
+writing-direction(greek-s : script, ltr : direction)
+belongs-to(greek-f : container, greek-s : containee)
+derived-from(phoenician-s : predecessor, greek-s : successor)
+written-in(greek-l, greek-s : script)
+spoken-in(greek-l, greece : region)
+
+
+[maltese : language = "Maltese"]
+[malta   : country  = "Malta"]
+
+written-in(maltese, latin-s : script)
+spoken-in(maltese,  malta : region)
+spoken-in(english,  malta : region)
+
+
+[albania : country  = "Albania"]
+[albanian : language = "Albanian"]
+spoken-in(albania : region, albanian : language)
+written-in(albanian : language, latin-s : script) /* today */
+/* has been written with greek and arabic */
+
+[elbasan : alphabet = "Elbasan"]
+{elbasan, period-of-use, [[~1750 - ?]]}
+{elbasan, description, [[Named after the city in Albania where it
+was used, Elbasan was briefly used to write Albanian, but never caught
+on widely.]]}
+{elbasan, article-about, "http://www.omniglot.com/writing/albanian.htm"}
+
+written-in(albanian : language, elbasan : script)
+writing-direction(elbasan : script, ltr : direction)
+
+[beitha-kukju : alphabet = "Beitha Kukju"]
+{beitha-kukju, period-of-use, [[~1840 - ?]]}
+{beitha-kukju, description, [[Named after its inventor, Beitha Kukju
+is obviously much too cumbersome to have caught on very widely.]]}
+{beitha-kukju, article-about, "http://www.omniglot.com/writing/albanian.htm"}
+
+written-in(albanian : language, beitha-kukju : script)
+writing-direction(beitha-kukju : script, ltr : direction)
+
+
+/* --- Middle East --- */
+
+[proto-cuneiform : logosyllabary = "Proto-cuneiform"]
+[sumerian : language = "Sumerian"]
+[akkadian : language = "Akkadian"]
+{proto-cuneiform, article-about, "http://www.mpiwg-berlin.mpg.de/Uruk_Prototype/History"}
+{proto-cuneiform, site-about, "http://early-cuneiform.humnet.ucla.edu/"}
+{proto-cuneiform, period-of-use, [[3200 B.C.E. - 2500 B.C.E.]]}
+{sumerian, site-about, "http://www.sumerian.org/"}
+
+written-in(proto-cuneiform : script, sumerian)
+written-in(proto-cuneiform : script, akkadian)
+
+[sumerian-cuneiform : logosyllabary = "Sumero-akkadian cuneiform"
+ @"http://psi.ontopia.net/iso/15924.xtm#xsux"]
+[elamite : language = "Elamite"]
+{sumerian-cuneiform, period-of-use, [[2500 B.C.E. - 100 C.E.]]}
+{sumerian-cuneiform, site-using, "http://www.sumerian.org/proverbs.htm"}
+{sumerian-cuneiform, site-about, "http://www.jhu.edu/ice/"}
+deciphered-by(edward-hincks, sumerian-cuneiform : script)
+derived-from(sumerian-cuneiform : successor, proto-cuneiform : predecessor)
+written-in(sumerian, sumerian-cuneiform : script)
+written-in(akkadian, sumerian-cuneiform : script)
+written-in(elamite, sumerian-cuneiform : script)
+
+[proto-elamite : logosyllabary = "Proto-Elamite"]
+{proto-elamite, period-of-use, [[3000 B.C.E. - 2500 B.C.E.]]}
+{proto-elamite, article-about, "http://i-cias.com/e.o/elam.htm"}
+{proto-elamite, article-about, "http://omniglot.com/writing/elamite.htm"}
+{proto-elamite, number-of-characters, [[1000]]}
+written-in(elamite, proto-elamite : script)
+
+[walter-hinz : person = "Walter Hinz"; "Hinz, Walter"]
+[elamite-s : syllabary = "Old Elamite"]
+{elamite-s, article-about, "http://omniglot.com/writing/elamite.htm"}
+{elamite-s, number-of-characters, [[80]]}
+{elamite-s, period-of-use, [[2250 B.C.E. - 2220 B.C.E.]]}
+written-in(elamite, elamite-s : script)
+derived-from(proto-elamite : predecessor, elamite-s : successor)
+writing-direction(proto-elamite : script, tb-ltr)
+deciphered-by(walter-hinz, proto-elamite : script)
+
+[elamite-cuneiform : logosyllabary = "Elamite cuneiform"]
+{elamite-cuneiform, article-about, "http://omniglot.com/writing/elamite.htm"}
+{elamite-cuneiform, number-of-characters, [[130]]}
+{elamite-cuneiform, period-of-use, [[2500 B.C.E. - 331 C.E.]]}
+written-in(elamite, elamite-cuneiform : script)
+derived-from(sumerian-cuneiform : predecessor, elamite-cuneiform : successor)
+
+/* PTD claims this is the "same cuneiform as all the others," whatever
+that might mean */
+
+[hurrian : language = "Hurrian"]
+written-in(hurrian, sumerian-cuneiform : script)
+
+[urartian : language = "Urartian"]
+written-in(urartian, sumerian-cuneiform : script)
+
+[hittite : language = "Hittite"]
+written-in(hittite, sumerian-cuneiform : script)
+
+[hittite-hiero : logosyllabary = "Hittite hieroglyphics"]
+[luvian : language = "Luvian"]
+{hittite-hiero, article-about, "http://tied.narod.ru/project/script/luwia.html"}
+written-in(luvian, hittite-hiero : script)
+writing-direction(hittite-hiero : script, variable : direction)
+
+[northern-linear : abjad = "Northern Linear"
+                         = "Proto-Caananite"]
+{northern-linear, period-of-use, [[2000 B.C.E. - 1100 B.C.E.]]}
+writing-direction(northern-linear : script, rtl : direction)
+belongs-to(northern-linear : containee, north-semitic : container)
+
+[virolleaud : person = "Charles Virolleaud"; "Virolleaud, Charles"]
+[bauer : person = "Hans Bauer"; "Bauer, Hans"]
+[dhorme : person = "Édouard Dhorme"; "Dhorme, Edouard"]
+[ugaritic : abjad = "Ugaritic"]
+{ugaritic, period-of-use, [[1500 B.C.E. - 1200 B.C.E.]]}
+{ugaritic, article-about, "http://www.ancientscripts.com/ugaritic.html"}
+{ugaritic, article-about, "http://www.mazzaroth.com/ChapterThree/UgariticWriting.htm"}
+writing-direction(ugaritic : script, ltr : direction)
+derived-from(northern-linear : predecessor, ugaritic : successor)
+belongs-to(ugaritic : containee, north-semitic : container)
+deciphered-by(ugaritic : script, virolleaud, bauer, dhorme)
+
+[southern-linear : abjad = "Southern Linear"]
+{southern-linear, period-of-use, [[1200 B.C.E. - 600 B.C.E.]]}
+derived-from(northern-linear : predecessor, southern-linear : successor)
+belongs-to(southern-linear : containee, south-semitic : container)
+
+[wilhelm-gesenius : person = "Wilhelm Gesenius"; "Gesenius, Wilhelm"]
+[emil-rodiger : person = "Emil Rödiger"; "Rodiger, Emil"]
+[old-south-arabian : abjad = "Sabean/Minean script"
+                           = "Himyarite"
+                           = "Old South Arabian scripts"]
+{old-south-arabian, period-of-use, [[600 B.C.E. - 500 C.E.]]}
+{old-south-arabian, article-about, "http://www.ancientscripts.com/s_arabn.html"}
+belongs-to(old-south-arabian : containee, south-semitic : container)
+derived-from(southern-linear : predecessor, old-south-arabian : successor)
+writing-direction(old-south-arabian : script, variable : direction)
+deciphered-by(old-south-arabian : script, wilhelm-gesenius)
+deciphered-by(old-south-arabian : script, emil-rodiger)
+
+[old-north-arabic : abjad = "Old North Arabic scripts"]
+{old-north-arabic, period-of-use, [[600 B.C.E. - 400 C.E.]]}
+belongs-to(old-north-arabic : containee, south-semitic : container)
+derived-from(old-south-arabian : predecessor, old-north-arabic : successor)
+
+[phoenician-s : abjad = "Phoenician script"
+ @"http://psi.ontopia.net/iso/15924.xtm#phnx"]
+{phoenician-s, article-about, "http://www.ancientscripts.com/protocan.html"}
+{phoenician-s, article-about, "http://www.omniglot.com/writing/phoenician.htm"}
+{phoenician-s, article-about, "http://www.newadvent.org/cathen/13709a.htm"}
+{phoenician-s, article-about, "http://www.good.co.uk/oneworld/AZphoenician.html"}
+{phoenician-s, period-of-use, [[1100 B.C.E. - 100 B.C.E.]]}
+derived-from(northern-linear : predecessor, phoenician-s : successor)
+belongs-to(north-semitic : container, phoenician-s : containee)
+
+[punic-s : abjad = "Punic script"]
+{punic-s, period-of-use, [[500 B.C.E. - 250 C.E.]]}
+derived-from(phoenician-s : predecessor, punic-s : successor)
+belongs-to(punic-s : containee, north-semitic : container)
+
+[hebrew-linear : abjad = "Hebrew linear"]
+{hebrew-linear, period-of-use, [[800 B.C.E. - 135 C.E.]]}
+derived-from(phoenician-s : predecessor, hebrew-linear : successor)
+belongs-to(hebrew-linear : containee, north-semitic : container)
+
+[samaritan : abjad = "Samaritan script"]
+{samaritan, period-of-use, [[50 B.C.E. - ]]}
+derived-from(hebrew-linear : predecessor, samaritan : successor)
+belongs-to(samaritan : containee, north-semitic : container)
+
+[aramaic-s  : abjad = "Aramaic script"
+ @"http://psi.ontopia.net/iso/15924.xtm#aram"]
+[aramaic-l  : language = "Aramaic"]
+[ammonite-l : language = "Ammonite"]
+{aramaic-s, article-about, "http://www.ancientscripts.com/aramaic.html"}
+{aramaic-s, period-of-use, [[750 B.C.E. - 250 B.C.E.]]}
+written-in(aramaic-s : script, aramaic-l)
+written-in(aramaic-s : script, hebrew-l)
+written-in(aramaic-s : script, ammonite-l)
+derived-from(phoenician-s : predecessor, aramaic-s : successor)
+belongs-to(aramaic-s : containee, aramaic-f : container)
+
+[nabatean-s : abjad = "Nabatean script"]
+{nabatean-s, period-of-use, [[250 B.C.E. - 400 C.E.]]}
+derived-from(aramaic-s : predecessor, nabatean-s : successor)
+belongs-to(nabatean-s : containee, aramaic-f : container)
+
+[barthelemy : person = "Abbé Jean-Jacques Barthélemy"]
+[palmyran-l : language = "Palmyrene"]
+[palmyran-s : abjad = "Palmyran script" = "Palmyrene"]
+{palmyran-s, period-of-use, [[250 B.C.E. - 250 C.E.]]}
+derived-from(aramaic-s : predecessor, palmyran-s : successor)
+deciphered-by(palmyran-s : script, barthelemy)
+belongs-to(palmyran-s : containee, aramaic-f : container)
+written-in(palmyran-s : script, palmyran-l)
+
+[edessan-s : abjad = "Edessan script"]
+{edessan-s, period-of-use, [[250 B.C.E. - 250 C.E.]]}
+derived-from(aramaic-s : predecessor, edessan-s : successor)
+belongs-to(edessan-s : containee, aramaic-f : container)
+
+[hatran-s : abjad = "Hatran script"]
+{hatran-s, period-of-use, [[250 B.C.E. - 150 C.E.]]}
+derived-from(aramaic-s : predecessor, hatran-s : successor)
+belongs-to(hatran-s : containee, aramaic-f : container)
+
+[mandaic-s : abjad = "Mandaic script"]
+{mandaic-s, period-of-use, [[250 B.C.E. - ]]}
+{mandaic-s, number-of-characters, [[22]]}
+writing-direction(mandaic-s : script, rtl : direction)
+derived-from(aramaic-s : predecessor, mandaic-s : successor)
+belongs-to(mandaic-s : containee, aramaic-f : container)
+
+[elymaic-s : abjad = "Elymaic script"]
+{elymaic-s, period-of-use, [[250 B.C.E. - 500? C.E.]]}
+derived-from(aramaic-s : predecessor, elymaic-s : successor)
+belongs-to(elymaic-s : containee, aramaic-f : container)
+
+[arabic-l : language = "Arabic language"
+                     = "Garshuni" / syriac-s
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#ar"]
+{arabic-l, article-about, "http://www.al-bab.com/arab/language/lang.htm"}
+[arabic-s : abjad = "Arabic script"
+                  = "العربيه" / native-name
+ @"http://psi.ontopia.net/iso/15924.xtm#arab"]
+{arabic-s, article-about, "http://www.omniglot.com/writing/arabic.htm"}
+{arabic-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_arabic.html"}
+{arabic-s, site-using, "http://news.bbc.co.uk/hi/arabic/news/"}
+{arabic-s, site-using, "http://www.iraq.net"}
+{arabic-s, period-of-use, [[300 C.E. - ]]}
+
+writing-direction(arabic-s : script, rtl : direction)
+written-in(arabic-l, arabic-s : script)
+belongs-to(aramaic-f : container, arabic-s : containee)
+derived-from(nabatean-s : predecessor, arabic-s : successor)
+
+[buckwalter : transliteration = "The Buckwalter transliteration"]
+{buckwalter, article-about, "http://www.xrce.xerox.com/competencies/content-analysis/arabic/info/buckwalter-about.html"}
+transforms-from(buckwalter : method, arabic-s : source)
+transforms-to(buckwalter : method, latin-s : target)
+
+[dmg : transliteration = "DMG"
+                       = "DIN 31635"
+                       = "ISO 233"]
+{dmg, description, [[The internationally recognised transliteration
+system accepted by the German Oriental Society (Deutsche
+Morgenländische Gesellschaft, or DMG). Proposed in 1935 in the famous
+"Denkschrift" to the International Congress of Orientalists.]]}
+{dmg, article-about, "http://www.eae.iwarp.com/trans.html"}
+{dmg, article-about, "http://www.orientasia.uni-bonn.de/orientalisierung/arab_trans.pdf"}
+transforms-from(dmg : method, arabic-s : source)
+transforms-to(dmg : method, latin-s : target)
+
+[ala-lc-arab : transliteration = "ALA-LC Arabic romanization"]
+{ala-lc-arab, description, [[The American Library Association/Library of
+Congress transliteration for Arabic.]]}
+{ala-lc-arab, tables-for, "http://lcweb.loc.gov/catdir/cpso/romanization/arabic.pdf"}
+transforms-from(ala-lc-arab : method, arabic-s : source)
+transforms-to(ala-lc-arab : method, latin-s : target)
+
+[bs-4280 : transliteration = "BS 4280:1969(1983)"]
+transforms-from(bs-4280 : method, arabic-s : source)
+transforms-to(bs-4280 : method, latin-s : target)
+
+[afghanistan : country = "Afghanistan"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#AF"]
+[pashto : language = "Pashto" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ps"]
+
+spoken-in(pashto, afghanistan : region)
+spoken-in(persian, afghanistan : region)
+written-in(pashto, arabic-s : script)
+
+[syriac-l : language = "Syriac"]
+[syriac-s : abjad = "Classical syriac"]
+{syriac-s, period-of-use, [[400 C.E. -]]}
+{syriac-s, number-of-characters, [[22]]}
+{syriac-s, article-about, "http://www.agfamonotype.co.uk/NonLatin/wt_info/info_syriac.html"}
+{syriac-s, article-about, "http://www.omniglot.com/writing/syriac.htm"}
+writing-direction(syriac-s : script, rtl : direction)
+derived-from(edessan-s : predecessor, syriac-s : successor)
+belongs-to(syriac-s : containee, aramaic-f : container)
+written-in(syriac-l : language, syriac-s : script)
+
+[aramaic-m : language = "Modern Aramaic Koine"]
+spoken-in(aramaic-m, iran : region)
+
+[syriac-m : alphabet = "Modern syriac"]
+{syriac-m, number-of-characters, [[22]]}
+{syriac-m, period-of-use, [[1850 -]]}
+writing-direction(syriac-m : script, rtl : direction)
+derived-from(syriac-s : predecessor, syriac-m : successor)
+written-in(aramaic-m, syriac-m : script)
+belongs-to(syriac-m : containee, aramaic-f : container)
+
+[old-persian : language = "Old Persian"]
+{old-persian, article-about, "http://www.farvardyn.com/oldpersian.htm"}
+
+[edward-hincks : person = "Edward Hincks"; "Hincks, Edward"]
+[persian-cuneiform : syllabary = "Old Persian"
+ @"http://psi.ontopia.net/iso/15924.xtm#xpeo"]
+/* According to Daniels this is "a mess" */
+{persian-cuneiform, period-of-use, [[520 B.C.E. - 400 B.C.E.]]}
+{persian-cuneiform, article-about, "http://www.omniglot.com/writing/opcuneiform.htm"}
+{persian-cuneiform, article-about, "http://tied.narod.ru/project/script/oldpe.html"}
+{persian-cuneiform, article-about, "http://www.cs.mcgill.ca/~fsaber1/language/frameoldalphabet.html"}
+{persian-cuneiform, article-about, "http://finanz.math.tu-graz.ac.at/~kainhofer/rk_fonts/rkaf_oldpercunei.html"}
+{persian-cuneiform, article-about, "http://www.ancientscripts.com/oldpersian.html"}
+deciphered-by(edward-hincks, persian-cuneiform : script)
+writing-direction(persian-cuneiform : script, ltr : direction)
+written-in(persian-cuneiform : script, old-persian)
+
+[indus-s : logosyllabary = "Indus script"
+ @"http://psi.ontopia.net/iso/15924.xtm#inds"]
+{indus-s, period-of-use, [[2500 B.C.E. - 1700 B.C.E.]]}
+writing-direction(indus-s : script, rtl : direction)
+
+[sidetic : alphabet = "Sidetic"] /* Bright and Daniels, p 282 */
+derived-from(greek-s : predecessor, sidetic : successor)
+belongs-to(greek-f : container, sidetic : containee)
+
+[lycian-l-a : language = "Lycian A"]
+[lycian-l-b : language = "Lycian B"]
+[lycian-s : alphabet = "Lycian"]
+{lycian-s, period-of-use, [[500 B.C.E. - 300 B.C.E.]]}
+writing-direction(lycian-s : script, ltr : direction)
+derived-from(greek-s : predecessor, lycian-s : successor)
+belongs-to(greek-f : container, lycian-s : containee)
+written-in(lycian-s : script, lycian-l-a)
+written-in(lycian-s : script, lycian-l-b)
+
+[lydian-s : alphabet = "Lydian"]
+{lydian-s, period-of-use, [[500 B.C.E. - 300 B.C.E.]]}
+writing-direction(lydian-s : script, rtl : direction)
+derived-from(greek-s : predecessor, lydian-s : successor)
+belongs-to(greek-f : container, lydian-s : containee)
+
+[carian-s : alphabet = "Carian"]
+writing-direction(carian-s : script, variable : direction)
+
+[parthian-l : language = "Parthian"]
+[parthian-s : abjad = "Parthian"]
+{parthian-s, period-of-use, [[100 - 292]]}
+derived-from(aramaic-s : predecessor, parthian-s : successor)
+written-in(parthian-s : script, parthian-l)
+
+[psalter : abjad = "Psalter script"]
+derived-from(aramaic-s : predecessor, psalter : successor)
+
+[early-pahlavi : abjad = "Early cursive Pahlavi"]
+derived-from(psalter : predecessor, early-pahlavi : successor)
+
+[pahlavi : abjad = "Pahlavi"
+                 = "Book Pahlavi"]
+derived-from(early-pahlavi : predecessor, pahlavi : successor)
+
+[avestan : alphabet = "Avestan"]
+{avestan, period-of-use, [[400 C.E. - ?]]}
+influenced-by(pahlavi : influence, avestan : influenced)
+
+[sogdian-l : language = "Sogdian"]
+{sogdian-l, article-about, "http://iranianlanguages.com/midiranian/sogdian.htm"}
+{sogdian-l, article-about, "http://tied.narod.ru/tree/iran/sogdian.html"}
+
+[early-sogdian : abjad = "Early Sogdian"]
+{early-sogdian, period-of-use, [[300 C.E. - ?]]}
+derived-from(aramaic-s : predecessor, early-sogdian : successor)
+written-in(sogdian-l, early-sogdian : script)
+writing-direction(early-sogdian : script, rtl : direction)
+
+[sogdian : abjad = "Sogdian"]
+derived-from(early-sogdian : predecessor, sogdian : successor)
+written-in(sogdian-l, sogdian : script)
+writing-direction(sogdian : script, rtl : direction)
+{sogdian, article-about, "http://iranianlanguages.com/midiranian/sogdian.htm"}
+
+[uighur-s : abjad = "Uighur"]
+{uighur-s, period-of-use, [[800 C.E. - ?]]}
+derived-from(sogdian : predecessor, uighur-s : successor)
+writing-direction(uighur-s : script, tb-ltr : direction)
+
+[manichean : abjad = "Manichaean"]
+{manichean, period-of-use, [[200 C.E. - ?]]}
+{manichean, article-about, "http://www.evertype.com/standards/iso10646/pdf/manichaean.pdf"}
+
+{manichean, description, [[Closely related to the Manichaean religion,
+and believed to have been created by Mani himself (the founder of the
+religion). The script was used to write Manichaean literature in many
+different languages to spread its teachings. Most characters have only
+medial and initial forms, but a few also have final forms.]]}
+writing-direction(manichean : script, rtl : direction)
+derived-from(syriac-s : predecessor, manichean : successor)
+
+written-in(parthian-l, manichean : script)
+written-in(sogdian-l, manichean : script)
+written-in(turkish, manichean : script)
+/* also middle Persian */
+
+/*[uighur-manichean : abjad = "Uighur Manichean"]*/
+
+
+[iran : country = "Iran"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#IR"]
+[persian : language = "Persian" = "Farsi" / persian]
+/* @"http://www.topicmaps.org/xtm/1.0/language.xtm#ira"*/
+
+spoken-in(persian, iran : region)
+written-in(persian, arabic-s : script)
+spoken-in([bakhtiari : language = "Bakhtiari"], iran : region)
+spoken-in([gilaki : language = "Gilaki"], iran : region)
+spoken-in([qashqai : language = "Qashqai"], iran : region)
+spoken-in([takestani : language = "Takestani"], iran : region)
+written-in(bakhtiari, arabic-s : script)
+written-in(gilaki, arabic-s : script)
+written-in(qashqai, arabic-s : script)
+written-in(takestani, arabic-s : script)
+
+[israel : country = "Israel"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#IL"]
+[hebrew-l : language = "Hebrew"
+  @"http://www.topicmaps.org/xtm/1.0/language.xtm#he"]
+[hebrew-s : abjad = "Hebrew"
+  @"http://psi.ontopia.net/iso/15924.xtm#hebr"]
+[yiddish : language = "Yiddish" @"http://www.topicmaps.org/xtm/1.0/language.xtm#yi"]
+{hebrew-s, article-about, "http://www.omniglot.com/writing/hebrew.htm"}
+{hebrew-s, article-about, "http://www.geocities.com/Athens/9587/alephbet.html"}
+{hebrew-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_hebrew.html"}
+{hebrew-s, site-using, "http://www.walla.co.il"}
+{hebrew-s, site-using, "http://www.goop.co.il"}
+
+writing-direction(hebrew-s : script, rtl : direction)
+spoken-in(hebrew-l, israel : region)
+spoken-in(yiddish, israel : region)
+spoken-in(arabic-l, israel : region)
+written-in(hebrew-l, hebrew-s : script)
+written-in(yiddish, hebrew-s : script)
+belongs-to(aramaic-f : container, hebrew-s : containee)
+derived-from(hebrew-s : successor, aramaic-s : predecessor)
+
+
+[maldives : country = "The Maldives"; "Maldives, the"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#MV"]
+[maldivian-l : language = "Dhivehi"]
+[maldivian-s : alphabet = "Thaana"
+                        = "Gabuli Tana"
+ @"http://psi.ontopia.net/iso/15924.xtm#thaa"]
+[evela : abugida = "Evela"]
+[dives-akuru : abugida = "Dives akuru"]
+
+{dives-akuru, article-about, "http://www.omniglot.com/writing/divehi.htm"}
+
+spoken-in(maldivian-l, maldives : region)
+written-in(maldivian-l, maldivian-s : script)
+belongs-to(aramaic-f : container, maldivian-s : containee)
+derived-from(evela : predecessor, dives-akuru : successor)
+influenced-by(arabic-s : influence, maldivian-s : influenced)
+
+{maldivian-s, period-of-use, [[1600 -]]}
+{maldivian-s, article-about, "http://www.omniglot.com/writing/thaana.htm"}
+{maldivian-s, site-using, "http://www.haveeru.com.mv/"}
+{maldivian-s, site-using, "http://www.mitf.f2s.com/index.php3?SHOW=projects/thaana/unicode-sample.html"}
+{maldivian-s, site-about, "http://www.mitf.f2s.com/"}
+{maldivian-s, article-about, "http://www.maldivesculture.com/thaana01.html"}
+{maldivian-s, article-about, "http://web.bham.ac.uk/eee3mxs1/dhivehiscript.htm"}
+{maldivian-s, site-using, "http://www.themaldiveislands.com/web2/tmi.phtml?pimt=4"}
+{maldivian-l, article-about, "http://www.geocities.co.jp/Milkyway-Kaigan/2202/e-how.html"}
+{maldivian-l, article-about, "http://www.lanka.net/lakehouse/2001/01/28/fea10.html"}
+writing-direction(maldivian-s : script, rtl : direction)
+
+[pakistan : country = "Pakistan"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#PK"]
+
+written-in(hindu, arabic-s : script)
+spoken-in(hindu, pakistan : region)
+spoken-in(english, pakistan : region)
+spoken-in(sindhi, pakistan : region)
+spoken-in(punjabi, pakistan : region)
+spoken-in(gujarati-l, pakistan : region)
+
+
+[saudi-arabia : country = "Saudi Arabia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#SA"]
+
+spoken-in(arabic-l, saudi-arabia : region)
+
+[thomsen : person = "Vilhelm Thomsen"; "Thomsen, Vilhelm"]
+[orkhon : abjad = "Orkhon" = "Kök Turki runes"]
+{orkhon, period-of-use, [[700 C.E. - 850 C.E.]]}
+{orkhon, article-about, "http://www.turcoman.btinternet.co.uk/orkhon-inscription.htm"}
+{orkhon, article-about, "http://www.omniglot.com/writing/orkhon.htm"}
+deciphered-by(orkhon : script, thomsen)
+writing-direction(orkhon : script, bu-rtl : direction)
+written-in(orkhon : script, uighur)
+derived-from(orkhon : successor, sogdian : predecessor)
+
+
+[turkey : country = "Turkey"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#TR"]
+[turkish : language = "Turkish" @"http://www.topicmaps.org/xtm/1.0/language.xtm#tr"]
+
+spoken-in(turkish, turkey : region)
+written-in(turkish, latin-s : script)
+
+
+[mesrop : person = "Mesrop Maštoc"]
+[armenia : country = "Armenia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#AM"]
+[armenian-l : language = "Armenian"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#hy"]
+[armenian-s : alphabet = "Armenian" = "Aybuben"
+ @"http://psi.ontopia.net/iso/15924.xtm#armn"]
+{armenian-s, period-of-use, [[406 C.E. -]]}
+{armenian-s, article-about, "http://www.omniglot.com/writing/armenian.htm"}
+{armenian-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_armenian.html"}
+
+writing-direction(armenian-s : script, ltr : direction)
+spoken-in(armenian-l, armenia : region)
+written-in(armenian-l, armenian-s : script)
+belongs-to(greek-f : container, armenian-s : containee)
+derived-from(greek-s : predecessor, armenian-s : successor)
+created-by(armenian-s : creation, mesrop : creator)
+
+[azerbaijan : country = "Azerbaijan"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#AZ"]
+[azerbaijani : language = "Azeri" @"http://www.topicmaps.org/xtm/1.0/language.xtm#az"]
+
+spoken-in(azerbaijani, azerbaijan : region)
+/* written-in(azerbaijani, cyrillic) */
+written-in(azerbaijani, latin-s : script)
+
+[asomtavruli : alphabet = "Asomtavruli" = "Mrglovani"
+ @"http://psi.ontopia.net/iso/15924.xtm#geoa"]
+{asomtavruli, period-of-use, [[340 C.E. - 800 C.E.]]}
+[khutsuri : alphabet = "Nusxa-xucuri" = "Khutsuri" = "Nuskhuri" = "Kutxovani"
+ @"http://psi.ontopia.net/iso/15924.xtm#geon"]
+{khutsuri, period-of-use, [[800 C.E. - 1000 C.E.]]}
+writing-direction(asomtavruli : script, ltr : direction)
+writing-direction(khutsuri : script, ltr : direction)
+
+[georgia : country = "Georgia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#GE"]
+[mingrelian : language = "Mingrelian"]
+[abkhaz : language = "Abkhaz"]
+[georgian-l : language = "Georgian" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ka"]
+{georgian-l, article-about, "http://www.armazi.demon.co.uk/georgian/grammar.html"}
+[georgian-s : alphabet = "Georgian script" = "Mkhedruli"
+ @"http://psi.ontopia.net/iso/15924.xtm#geor"]
+{georgian-s, period-of-use, [[900 C.E. -]]}
+{georgian-s, article-about, "http://www.omniglot.com/writing/georgian.htm"}
+{georgian-s, article-about, "http://www.monotype.com/non-latin/wt_info/info_georgian.html"}
+{georgian-s, article-about, "http://www.geocities.com/Paris/8975/dedaingl.html"}
+
+writing-direction(georgian-s : script, ltr : direction)
+spoken-in(georgian-l, georgia : region)
+written-in(georgian-s : script, georgian-l)
+written-in(georgian-s : script, abkhaz)     /* past */
+written-in(georgian-s : script, mingrelian) /* past */
+belongs-to(greek-f : container, georgian-s : containee)
+belongs-to(greek-f : container, asomtavruli : containee)
+belongs-to(greek-f : container, khutsuri : containee)
+derived-from(greek-s : predecessor, asomtavruli : successor)
+derived-from(asomtavruli : predecessor, khutsuri : successor)
+derived-from(khutsuri : predecessor, georgian-s : successor)
+
+[kazakhstan : country = "Kazakhstan"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#KZ"]
+[kazakh : language = "Kazakh" @"http://www.topicmaps.org/xtm/1.0/language.xtm#kk"]
+
+written-in(kazakh, arabic-s : script)
+written-in(kazakh, cyrillic : script)
+spoken-in(kazakh, kazakhstan : region)
+
+
+[kirghizia : country = "Kirghizia" = "Kyrgyzstan" / iso-3166
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#KG"]
+[kirghiz : language = "Kirghiz" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ky"]
+
+spoken-in(kirghiz, kirghizia : region)
+written-in(kirghiz, cyrillic : script)
+
+
+[tajikistan : country = "Tajikistan"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#TJ"]
+[tajik : language = "Tajik" @"http://www.topicmaps.org/xtm/1.0/language.xtm#tg"]
+
+spoken-in(tajik, tajikistan : region)
+written-in(tajik, cyrillic : script)
+
+
+[turkmenistan : country = "Turkmenistan"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#TM"]
+[turkmen : language = "Turkmen" @"http://www.topicmaps.org/xtm/1.0/language.xtm#tk"]
+
+spoken-in(turkmen, turkmenistan : region)
+/* written-in(turkmen, cyrillic) */
+written-in(turkmen, latin-s : script)
+
+
+[uzbekistan : country = "Uzbekistan"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#UZ"]
+[uzbek : language = "Uzbek" @"http://www.topicmaps.org/xtm/1.0/language.xtm#uz"]
+
+spoken-in(uzbek, uzbekistan : region)
+/* written-in(uzbek, cyrillic) */
+written-in(uzbek, latin-s : script)
+
+[tatar : language = "Tatar" @"http://www.topicmaps.org/xtm/1.0/language.xtm#tt"]
+written-in(tatar, latin-s : script)
+
+
+[iraq : country = "Iraq"]
+
+[kurdish  : language = "Kurdish"]
+{kurdish, site-about, "http://www.cogsci.ed.ac.uk/~siamakr/kurd_lal.html"}
+[balochi  : language = "Balochi"]
+[sulu     : language = "Sulu" = "Tausug"]
+
+spoken-in(persian, pakistan : region)
+spoken-in(persian, afghanistan : region)
+spoken-in(persian, tajikistan : region)
+spoken-in(kurdish, iran : region)
+spoken-in(kurdish, iraq : region)
+spoken-in(balochi, pakistan : region)
+spoken-in(balochi, india : region)
+spoken-in(balochi, iran : region)
+spoken-in(balochi, oman : region)
+spoken-in(balochi, uae : region)
+spoken-in(balochi, afghanistan : region)
+spoken-in(balochi, turkmenistan : region)
+spoken-in(sulu, indonesia : region)
+spoken-in(sulu, philippines : region)
+spoken-in(sulu, malaysia : region)
+
+written-in(kurdish, arabic-s : script)
+written-in(kurdish, latin-s : script)  /* in Turkey */
+written-in(kurdish, cyrillic : script) /* in parts of Soviet union */
+written-in(balochi, arabic-s : script)
+written-in(sulu, arabic-s : script)
+
+
+[oman : country = "Oman"]
+[uae  : country = "United Arab Emirates"]
+
+/* --- Africa --- */
+
+[champoillon : person = "Jean-Francois Champoillon"; "Champoillon, Jean-Francois"]
+[richard-lepsius : person = "Richard Lepsius"; "Lepsius, Richard"]
+[hieroglyphic : logosyllabary = "Egyptian hieroglyphic"
+ @"http://psi.ontopia.net/iso/15924.xtm#egyp"]
+{hieroglyphic, period-of-use, [[3100 B.C.E. - ?]]}
+deciphered-by(hieroglyphic : script, champoillon)
+deciphered-by(hieroglyphic : script, richard-lepsius)
+deciphered-by(hieroglyphic : script, edward-hincks)
+
+[hieratic : logosyllabary = "Egyptian hieratic"
+ @"http://psi.ontopia.net/iso/15924.xtm#egyh"]
+{hieratic, period-of-use, [[2750 B.C.E. - 100 C.E.]]}
+{hieratic, article-about, "http://i-cias.com/e.o/hieratic.htm"}
+derived-from(hieratic : successor, hieroglyphic : predecessor)
+writing-direction(hieratic : script, rtl : direction)
+
+[demotic : logosyllabary = "Egyptian demotic"
+ @"http://psi.ontopia.net/iso/15924.xtm#egyd"]
+{demotic, period-of-use, [[660 B.C.E. - 425 C.E.]]}
+{demotic, site-about, "http://www-oi.uchicago.edu/OI/DEPT/RA/ABZU/DEMOTIC_WWW.HTML"}
+{demotic, article-about, "http://i-cias.com/e.o/demotic.htm"}
+writing-direction(demotic : script, rtl : direction)
+derived-from(demotic : successor, hieratic : predecessor)
+deciphered-by(demotic : script, champoillon)
+deciphered-by(demotic : script, richard-lepsius)
+deciphered-by(demotic : script, edward-hincks)
+
+[griffith : person = "F. Ll. Griffith"; "Griffith, Ll."]
+[meroitic : abugida = "Meroitic"
+ @"http://psi.ontopia.net/iso/15924.xtm#mero"]
+{meroitic, period-of-use, [[300 B.C.E. - 500 C.E.]]}
+{meroitic, article-about, "http://www.ancientscripts.com/meroitic.html"}
+writing-direction(meroitic : script, rtl : direction)
+derived-from(meroitic : successor, hieratic : predecessor)
+deciphered-by(meroitic : script, griffith)
+
+{meroitic, description, [[This script is not well understood, but from
+what is known of it the claim that it is an abugida seems
+well-founded.]]}
+
+[egypt : country = "Egypt" @"http://www.topicmaps.org/xtm/1.0/country.xtm#EG"]
+
+spoken-in(arabic-l, egypt : region)
+
+
+[berber : abjad = "Berber script"]
+{berber, period-of-use, [[200 B.C.E. - 300 C.E.]]}
+{berber, article-about, "http://www.omniglot.com/writing/berber.htm"}
+{berber, article-about, "http://www.ancientscripts.com/berber.html"}
+derived-from(punic-s : predecessor, berber : successor)
+belongs-to(berber : containee, north-semitic : container)
+writing-direction(berber : script, variable : direction)
+
+[coptic-l : language = "Coptic"]
+[sahidic : language = "Sahidic"]
+[coptic-s : alphabet = "Coptic script"]
+{coptic-s, period-of-use, [[300 C.E. - ]]}
+{coptic-s, number-of-characters, [[32]]}
+{coptic-s, article-about, "http://www.ancientscripts.com/coptic.html"}
+{coptic-s, article-about, "http://www.evertype.com/standards/cy/coptic.html"}
+writing-direction(coptic-s : script, ltr : direction)
+derived-from(greek-s : predecessor, coptic-s : successor)
+belongs-to(greek-f : container, coptic-s : containee)
+written-in(coptic-s : script, coptic-l)
+written-in(coptic-s : script, sahidic)
+
+[ethiopia : country = "Ethiopia" @"http://www.topicmaps.org/xtm/1.0/country.xtm#ET"]
+[amharic-l : language = "Amharic language" @"http://www.topicmaps.org/xtm/1.0/language.xtm#am"]
+[geez : language = "Geez"]
+[oromo : language = "Oromo" = "Afaan Oromo"] /* @"http://www.topicmaps.org/xtm/1.0/language.xtm#orm"*/
+[oromo-s : abugida = "Oromo script"]
+[tigrinya : language = "Tigrinya" @"http://www.topicmaps.org/xtm/1.0/language.xtm#ti"]
+[amharic-s : abugida = "Amharic script"
+                     = "Ethiopic" / iso-15924
+ @"http://psi.ontopia.net/iso/15924.xtm#ethi"]
+[oromiffa : software = "Oromiffa 2000"]
+
+{amharic-s, period-of-use, [[400 C.E. - ]]}
+{amharic-s, article-about,
+ "http://www.ancientscripts.com/ethiopic.html"}
+{amharic-s, article-about,
+ "http://www.omniglot.com/writing/ethiopic.htm"}
+{amharic-s, article-about,
+ "http://www.monotype.com/non-latin/wt_info/info_ethiopic.html"}
+{oromo-s, article-about,
+ "http://www.abyssiniacybergateway.net/fidel/ShaykhBakriSapalo/"}
+{oromo, article-about,
+ "http://www.sas.upenn.edu/African_Studies/Hornet/Afaan_Oromo_19777.html"}
+
+written-in(amharic-l, amharic-s : script)
+written-in(oromo, oromo-s : script)
+written-in(oromo, amharic-s : script)
+written-in(oromo, latin-s : script)
+written-in(tigrinya, amharic-s : script)
+written-in(geez, amharic-s : script)
+spoken-in(amharic-l, ethiopia : region)
+spoken-in(oromo, ethiopia : region)
+spoken-in(tigrinya, ethiopia : region)
+belongs-to(south-semitic : container, amharic-s : containee)
+derived-from(old-south-arabian : predecessor, amharic-s : successor)
+supports(oromiffa : supporter, oromo-s : supported)
+
+
+[shaykh-bakri-sapalo : person = "Shaykh Bakri Sapalo"]
+{oromo-s, period-of-use, [[1956 - ?]]}
+created-by(oromo-s : creation, shaykh-bakri-sapalo : creator)
+
+{oromo-s, description, [[The Oromo script is an independent invention
+based on the model of the Amharic script. Its inspiration seems to be
+the difficulty of writing Oromo with scripts designed for other
+languages, as well as nationalistic aspirations. The writing of Oromo
+was banned by Ethiopian authorities until the accession of Mengistu's
+regime in 1974. Today Oromo is written in the Latin script.]]}
+
+[eae : transcription = "EAE"]
+{eae, article-about, "http://www.eae.iwarp.com/trans.html"}
+transforms-from(eae : method, amharic-s : source)
+transforms-to(eae : method, latin-s : target)
+
+[mali : country = "Mali" @"http://www.topicmaps.org/xtm/1.0/country.xtm#ML"]
+[sudan : country = "Sudan" @"http://www.topicmaps.org/xtm/1.0/country.xtm#SD"]
+[algeria : country = "Algeria" @"http://www.topicmaps.org/xtm/1.0/country.xtm#DZ"]
+[tamahaq : language = "Tamahaq"]
+[tifinagh : abjad = "Tifinagh" @"http://psi.ontopia.net/iso/15924.xtm#tfng"]
+{tamahaq, article-about, "http://isp.msu.edu/AfrLang/Handbook/Berber_root.htm"}
+
+spoken-in(tamahaq, mali : region)
+spoken-in(tamahaq, algeria : region)
+spoken-in(tamahaq, sudan : region)
+written-in(tamahaq, tifinagh : script)
+belongs-to(north-semitic : container, tifinagh : containee)
+derived-from(berber : predecessor, tifinagh : successor)
+
+[cameroon : country = "Cameroon"]
+[njoya : person = "King Njoya"]
+[bamum-l : language = "Bamum"]
+[bamum-s : syllabary = "Bamum script"] /* Cowan claims it was first a logosyll */
+{bamum-s, period-of-use, [[ca. 1900 -]]}
+
+{bamum-s, article-about, "http://www.members.aon.at/africanfonts.at/bamum.htm"}
+{bamum-s, article-about, "http://www.jaars.org/museum/alphabet/galleries/africa.htm"}
+
+written-in(bamum-s : script, bamum-l)
+spoken-in(bamum-l, cameroon : region)
+created-by(bamum-s : creation, njoya : creator)
+
+[osman-yusuf-keenadiid : person = "Osman Yusuf Keenadiid"]
+[somalia : country = "Somalia"
+ @"http://www.topicmaps.org/xtm/1.0/country.xtm#SO"]
+[somali : language = "Somali"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#so"]
+[osmanya : alphabet = "Osmanya"
+ @"http://psi.ontopia.net/iso/15924.xtm#osma"]
+[tigre : language = "Tigre"] /*  @"http://www.topicmaps.org/xtm/1.0/language.xtm#tig" */
+{osmanya, period-of-use, [[1920 - ]]}
+{osmanya, site-using, "http://www.evertype.com/standards/iso10646/pdf/afkeenna-iyo-fartiisa.pdf"}
+{osmanya, article-about, "http://somalinet.com/library/osmaniya/"}
+{somali, article-about, "http://somalinet.com/library/somalia/"}
+
+spoken-in(tigre, somalia : region)
+spoken-in(somali, somalia : region)
+written-in(somali, osmanya : script)
+written-in(somali, arabic-s : script)
+written-in(somali, latin-s : script)
+written-in(tigre, amharic-s : script)
+created-by(osmanya : creation, osman-yusuf-keenadiid : creator)
+
+[guinea : country = "Guinea"]
+[guinea-bissau : country = "Guinea-Bissau"]
+[senegal : country = "Senegal"]
+[gambia : country = "Gambia"]
+[sierra-leone : country = "Sierra Leone"]
+
+[mandekan : language = "Mandekan" = "Manding" = "Mandinka"
+ @"http://psi.ontopia.net/sil/ethnologue.xtm#MNK"]
+spoken-in(mandekan, guinea : region)
+spoken-in(mandekan, sierra-leone : region)
+spoken-in(mandekan, gambia : region)
+spoken-in(mandekan, senegal : region)
+spoken-in(mandekan, guinea-bissau : region)
+
+[kante : person = "Soulemayne Kante"]
+{kante, article-about, "http://www.fakoli.net/solomana_kante.htm"}
+
+[nko : alphabet = "N'ko"; "Nko"
+                = "The clear language" / other-name]
+{nko, period-of-use, [[1947 - ]]}
+{nko, number-of-characters, [[25]]}
+writing-direction(nko : script, rtl : direction)
+written-in(mandekan, nko : script)
+created-by(kante : creator, nko : creation)
+
+{nko, article-about, "http://www.omniglot.com/writing/nko.htm"}
+{nko, site-about, "http://www.nkoinstitute.com/"}
+{nko, site-about, "http://www.fakoli.net/"}
+{nko, article-about, "http://www.uiowa.edu/~linguist/faculty/culy/nko/"}
+{nko, tutorial, "http://www.geocities.com/nko_alpha/"}
+
+
+[liberia : country = "Liberia"]
+[momolu-bukele : person = "Momolu Duwalu Bukele"]
+[vai-l : language = "Vai"]
+[vai : syllabary = "Vai"]
+{vai, period-of-use, [[1832/33 - ]]}
+{vai, article-about, "http://www.library.cornell.edu/africana/Writing_Systems/VAI.html"}
+{vai, article-about, "http://www.omniglot.com/writing/vai.htm"}
+{vai, article-about, "http://www.geocities.com/Athens/Academy/8919/libyco.htm"}
+writing-direction(vai : script, ltr : direction)
+created-by(momolu-bukele : creator, vai : creation)
+written-in(vai : script, vai-l : language)
+spoken-in(vai-l, liberia : region)
+
+
+/* --- Oceania --- */
+
+[woleaian : language = "Woleaian"]
+[caroline1 : syllabary = "Caroline Islands script, type 1"]
+[caroline2 : syllabary = "Caroline Islands script, type 2"]
+
+{caroline1, number-of-characters, [[19]]}
+{caroline2, number-of-characters, [[At least 78]]}
+
+written-in(woleaian, caroline1 : script)
+written-in(woleaian, caroline2 : script)
+
+
+/* --- Americas --- */
+
+[maya-s : logosyllabary = "Maya hieroglyphs"
+ @"http://psi.ontopia.net/iso/15924.xtm#maya"]
+{maya-s, period-of-use, [[150 C.E. - 1600 C.E]]}
+{maya-s, article-about, "http://www.ancientscripts.com/maya.html"}
+{maya-s, article-about, "http://www.halfmoon.org/writfork.html"}
+
+[rapanui : language = "Rapa Nui"]
+{rapanui, tutorial, "http://www.netaxs.com/~trance/phrases.html"}
+
+written-in(rapanui, rongorongo : script)
+
+[rongorongo : script = "Rongorongo"
+ @"http://psi.ontopia.net/iso/15924.xtm#roro"]
+{rongorongo, article-about, "http://www.netaxs.com/~trance/rongo2.html"}
+{rongorongo, site-about, "http://www.rongorongo.org/"}
+{rongorongo, article-about, "http://www.trends.net/~yuku/tran/a2.htm"}
+
+[sequoyah : person = "Sequoyah"]
+{sequoyah, article-about, "http://ngeorgia.com/people/sequoyah.html"}
+[cherokee-s : syllabary = "Cherokee script"
+                        = "Sequoyan"
+ @"http://psi.ontopia.net/iso/15924.xtm#cher"]
+[cherokee-l : language = "Cherokee"]
+{cherokee-s, number-of-characters, [[86]]}
+{cherokee-s, period-of-use, [[1820 - ]]}
+{cherokee-s, article-about, "http://www.geocities.com/SunsetStrip/Stadium/7075/cherokee/Sequoyah.htm"}
+{cherokee-s, article-about, "http://www.ancientscripts.com/cherokee.html"}
+{cherokee-l, site-about, "http://public.csusm.edu/public/raven/cherokee.dir/cher1.html"}
+{cherokee-s, article-about, "http://www.usu.edu/~anthro/origins_of_writing/invented_alphabets/#cheroke"}
+
+writing-direction(cherokee-s : script, ltr : direction)
+written-in(cherokee-l, cherokee-s : script)
+created-by(cherokee-s : creation, sequoyah : creator)
+
+[greenland : country = "Greenland"]
+[canada : country = "Canada"]
+
+[james-evans : person = "James Evans"; "Evans, James"]
+[cree-s : abugida  = "Cree"]
+[cree-l : language = "Cree"]
+[ojibwe : language = "Ojibwe"]
+[athabaskan : language = "Athabaskan"]
+[inuit : language = "Inuit" = "Eskimo"]
+
+written-in(cree-l, cree-s : script)
+written-in(ojibwe, cree-s : script)
+written-in(athabaskan, cree-s : script)
+written-in(inuit, cree-s : script)
+written-in(inuit, latin-s : script) /* Greenland, at least */
+writing-direction(cree-s : script, ltr : direction)
+created-by(james-evans : creator, cree-s : creation)
+spoken-in(cree-l, canada : region)
+spoken-in(ojibwe, canada : region)
+spoken-in(inuit, canada : region)
+spoken-in(inuit, greenland : region)
+spoken-in(athabaskan, canada : region)
+
+{cree-s, period-of-use, [[1840 - ]]}
+{cree-s, article-about, "http://www.omniglot.com/writing/cree.htm"}
+
+
+[lejeune : person = "Father LeJeune"; "LeJeune"]
+[chinook : alphabet = "Chinook shorthand" = "Wawa writing"]
+[chinook-j : language = "Chinook Jargon"]
+{chinook, period-of-use, [[1890 -]]}
+{chinook, article-about, "http://aboriginalcollections.ic.gc.ca/secwepemc/secstin.html"}
+{chinook, article-about, "http://www.evertype.com/standards/iso10646/pdf/chinook-and-shorthand.pdf"}
+
+written-in(chinook-j, chinook : script)
+derived-from(chinook : successor, duploye : predecessor)
+created-by(lejeune : creator, chinook : creation)
+
+
+[alaska-s : script = "Alaska script"]
+[uyaqoq : person = "Uyaqoq"]
+
+{alaska-s, article-about,
+ "http://www.christusrex.org/www1/pater/JPN-inuit.html"}
+
+written-in(inuit, alaska-s)
+created-by(alaska-s : creation, uyaqoq : creator)
+
+
+[ndjuka-s : syllabary = "Ndjuka script"]
+[afaka : person = "Afaka"]
+[ndjuka-l : language = "Ndjuka"
+                     = "Aukan"]
+{ndjuka-s, period-of-use, [[ca 1910 - ?]]}
+{ndjuka-s, number-of-characters, [[56]]}
+{ndjuka-l, article-about, "http://www.xrefer.com/entry/443065"}
+{ndjuka-l, article-about,
+ "http://www.ethnologue.com/show_language.asp?code=DJK"}
+{ndjuka-s, article-about, "http://www.omniglot.com/writing/ndjuka.htm"}
+
+written-in(ndjuka-s : script, ndjuka-l)
+created-by(ndjuka-s : creation, afaka : creator)
+
+
+[mende-kikakui : syllabary = "Mende Kikakui"]
+writing-direction(mende-kikakui : script, rtl : direction)
+/* FIXME: look up language */
+{mende-kikakui, period-of-use, [[1917 - ]]}
+{mende-kikakui, number-of-characters, [[200]]}
+{mende-kikakui, description, [[Used in southern and eastern Sierra
+Leone, originally primarily for translations of the Quran. The first
+42 characters of the script work as an abugida, but the remaining 150+
+form a syllabary. Tuchscherer reports that it is still in use by
+about 100 people.]]}
+{mende-kikakui, bibref, [[Konrad Tuchscherer, "African Script and
+Scripture: The History of the Kikakui (Mende) Writing System for Bible
+Translations", _African Languages and Cultures_, 8, 2 (1995):
+169-188.]]}
+
+[ghana : country = "Ghana"]
+[akan : language = "Akan"]
+written-in(akan, latin-s : script)
+spoken-in(akan, ghana : region)
+
+{akan, description, [[A language spoken by 9 million people in Ghana,
+for which the Bureau of Ghana languages created a common standard
+Latin-based orthography of 22 characters in 1961. Of these characters
+2 are not part of the traditional Latin script.]]}
+{akan, article-about, "http://www.alphabets-world.com/akan.html"}
+
+
+/* ===== CONSCRIPT ===== */
+
+[conscript : script-category = "Artificial scripts"]
+{conscript, definition, [[Artificial scripts are scripts created for
+artificial or fictional languages, or which have never seen use as the
+primary script for a language community.]]}
+{conscript, site-about, "http://www.evertype.com/standards/csur/"}
+{conscript, site-about, "http://fizz.sys.uea.ac.uk/~jrk/conlang.html"}
+
+[brigham-young : person = "Brigham Young"; "Young, Brigham"]
+[deseret : alphabet = "Deseret"
+/* &#x10414;&#x1042F;&#x10445;&#x1042F;&#x10449;&#x1042F;&#x10443; */
+ @"http://psi.ontopia.net/iso/15924.xtm#dsrt"]
+{deseret, period-of-use, [[1855 - 1877]]}
+{deseret, number-of-characters, [[76]]}
+{deseret, article-about, "http://www.unicode.org/pending/deseret/Deseret.html"}
+{deseret, article-about, "http://dmla.clan.lib.nv.us/docs/museums/reno/thiswas/deseret.htm"}
+{deseret, article-about, "http://www.mormons.org/daily/history/1844_1877/deseret_alphabet_eom.htm"}
+{deseret, article-about, "http://faculty.ed.umuc.edu/~jmatthew/deseret.htm"}
+{deseret, article-about, "http://www.usu.edu/~anthro/origins_of_writing/invented_alphabets/#deseret"}
+{deseret, article-about, "http://homepage.mac.com/jenkins/Deseret/BoM.html"}
+{deseret, test-page, "http://home.att.net/~jameskass/deserettest.htm"}
+written-in(english, deseret : script)
+created-by(brigham-young : creator, deseret : creation)
+writing-direction(deseret : script, ltr : direction)
+belongs-to(conscript : container, deseret : containee)
+supports(deseret : supported, unicode : supporter)
+
+[tolkien : person = "J.R.R. Tolkien"; "Tolkien, J.R.R."]
+{tolkien, site-about, "http://www.csclub.uwaterloo.ca/u/relipper/tolkien/rootpage.html"}
+{tolkien, biography, "http://www.amazon.com/exec/obidos/ASIN/0618057021"}
+
+[tengwar : featural = "Tengwar"
+ @"http://psi.ontopia.net/iso/15924.xtm#teng"]
+{tengwar, article-about, "http://www.geocities.com/TimesSquare/4948/tengwar/"}
+{tengwar, article-about, "http://www.evertype.com/standards/csur/tengwar.html"}
+{tengwar, article-about, "http://hem.passagen.se/mansb/at/tengwar.htm"}
+{tengwar, article-about, "http://www.tolkienonline.de/tengwar.html"}
+{tengwar, article-about, "http://fan.theonering.net/rolozo/tengwar/tengwar/index.htm"}
+{tengwar, site-using, "http://www.forodrim.org/daeron/md_teng_primers.html"}
+{tengwar, article-about, "http://www.omniglot.com/writing/tengwar.htm"}
+{tengwar, forum, "http://groups.yahoo.com/group/elfscript/"}
+
+{tengwar, description, [[A fictional script invented by J.R.R. Tolkien
+and used both for his fictional languages and for English. A special
+feature of this system is that characters do not have fixed sound
+values. Instead, a 'mode' with sound value assignments is developed
+independently for every language written with the script.]]}
+
+writing-direction(tengwar : script, ltr : direction)
+belongs-to(conscript : container, tengwar : containee)
+supports(tengwar : supported, unicode : supporter)
+created-by(tolkien : creator, tengwar : creation)
+
+[cirth : alphabet = "Cirth"
+                  = "Angertha"]
+{cirth, article-about, "http://www.evertype.com/standards/csur/cirth.html"}
+{cirth, article-about, "http://fan.theonering.net/rolozo/tengwar/cirth/"}
+{cirth, forum, "http://groups.yahoo.com/group/elfscript/"}
+
+{cirth, description, [[A rune-like fictional script with clear
+similarities to the Germanic runes used in Europe.]]}
+
+belongs-to(conscript : container, cirth : containee)
+supports(cirth : supported, unicode : supporter)
+created-by(tolkien : creator, cirth : creation)
+derived-from(cirth : successor, tengwar : predecessor) /* according to rolozo */
+
+[sarati : alphabet = "Sarati"]
+{sarati, number-of-characters, [[36]]}
+{sarati, forum, "http://groups.yahoo.com/group/elfscript/"}
+{sarati, article-about, "http://hem.passagen.se/mansb/at/sarati.htm"}
+{sarati, article-about, "http://www.elvish.org/gwaith/sarati.htm"}
+{sarati, article-about, "http://omniglot.com/writing/sarati.htm"}
+
+{sarati, description, [[A little-known fictional script that was the
+first to be developed according to the history of Tolkien's fictional
+universe. It is very similar to the Mongolian script, and was most
+likely inspired by it.]]}
+
+writing-direction(sarati : script, tb-ltr : direction)
+belongs-to(conscript : container, sarati : containee)
+created-by(tolkien : creator, sarati : creation)
+
+
+[kingsley-read : person = "Kingsley Read"; "Read, Kingsley"]
+[shavian : alphabet = "Shavian" = "Shaw alphabet"
+ @"http://psi.ontopia.net/iso/15924.xtm#shaw"]
+{shavian, period-of-use, [[1962 - 1962]]}
+{shavian, number-of-characters, [[52]]}
+{shavian, article-about, "http://www.evertype.com/standards/csur/shavian.html"}
+{shavian, article-about, "http://www.demeyere.com/Shavian/info.html"}
+{shavian, article-about, "http://www.omniglot.com/writing/shavian.htm"}
+{shavian, article-about, "http://www.dkuug.dk/jtc1/sc2/wg2/docs/n2362.pdf"}
+{shavian, article-about, "http://www.usu.edu/~anthro/origins_of_writing/invented_alphabets/#shavian"}
+{shavian, site-about, "http://www.shavian.org/"}
+{shavian, site-about, "http://www.shavian.f9.co.uk/"}
+{shavian, forum, "http://groups.yahoo.com/group/shavian"}
+
+writing-direction(shavian : script, ltr : direction)
+belongs-to(conscript : container, shavian : containee)
+/* supports(shavian : supported, unicode : supporter) */
+created-by(kingsley-read : creator, shavian : creation)
+written-in(english, shavian : script)
+
+[quikscript : alphabet = "Quikscript" = "Read alphabet"]
+writing-direction(quikscript : script, ltr : direction)
+belongs-to(conscript : container, quikscript : containee)
+created-by(kingsley-read : creator, quikscript : creation)
+written-in(english, quikscript : script)
+derived-from(quikscript : successor, shavian : predecessor)
+
+{quikscript, article-about, "http://www.omniglot.com/writing/quikscript.htm"}
+{quikscript, article-about, "http://quikscript.teraiten.cjb.net/"}
+{quikscript, forum, "http://groups.yahoo.com/group/Read_Alphabet"}
+
+[geyinzi : alphabet = "Geyinzi"]
+[simon-ager : person = "Simon Ager"; "Ager, Simon"]
+{geyinzi, article-about, "http://www.omniglot.com/writing/geyinzi.htm"}
+writing-direction(geyinzi : script, ltr : direction)
+created-by(geyinzi : creation, simon-ager : creator)
+belongs-to(conscript : container, geyinzi : containee)
+
+{geyinzi, description, [[A script invented for writing Mandarin
+Chinese as a private amusement by script enthusiast Simon Ager, based
+on the sound system for Zhuyin, the Chinese syllabary.]]}
+
+
+[thomas-more : person = "Sir Thomas More"; "More, Thomas"]
+[utopian : alphabet = "Utopian"]
+{utopian, number-of-characters, [[22]]}
+{utopian, article-about, "http://www.adh.brighton.ac.uk/schoolofdesign/MA.COURSE/05/LL47.html"}
+belongs-to(conscript : container, utopian : containee)
+created-by(thomas-more : creator, utopian : creation)
+
+[joanne-marie : person = "JoAnne Marie"; "Marie, JoAnne"]
+[camion-code : featural = "Camion code"]
+{camion-code, article-about,
+ "http://www.geocities.com/ResearchTriangle/Campus/6437/fromunicode.html"}
+belongs-to(conscript : container, camion-code : containee)
+created-by(joanne-marie : creator, camion-code : creation)
+
+{camion-code, description, [[A script invented in 1999 in order to
+replace the latin script for writing English. Designed to be phonetic
+and to have some of the characteristics of featural scripts.]]}
+
+[theban : alphabet = "Theban alphabet"]
+{theban, number-of-characters, [[23]]}
+{theban, article-about, "http://tuxedo.org/~esr/unicode/theban/"}
+{theban, article-about, "http://realmagick.com/articles/52/1552.html"}
+{theban, article-about, "http://www.spelwerx.com/theban.html"}
+belongs-to(conscript : container, theban : containee)
+
+[doug-ewell : person = "Doug Ewell"; "Ewell, Doug"]
+[ewellic : alphabet = "Ewellic"]
+{ewellic, number-of-characters, [[50]]}
+{ewellic, article-about, "http://users.adelphia.net/~dewell/ewellic.html"}
+belongs-to(conscript : container, ewellic : containee)
+created-by(doug-ewell : creator, ewellic : creation)
+
+/* ===== PHONETICS ===== */
+
+[phonetic : script-category = "Phonetic scripts"]
+{phonetic, definition, [[Scripts specifically designed for representing
+language with phonetic accuracy, and not intended to be used for ordinary
+orthographies for any language.]]}
+
+/* IPA */
+/* Uralic Phonetic Alphabet */
+
+[dania : alphabet = "Dania"]
+[otto-jespersen : person = "Otto Jespersen"; "Jespersen, Otto"]
+{dania, description, [[Created by Danish linguist Otto Jespersen around
+1890.]]}
+{dania, article-about, "http://www.dal.lu.se/~si/danpage.html"}
+belongs-to(phonetic : container, dania : containee)
+created-by(otto-jespersen : creator, dania : creation)
+
+/* ===== SHORTHAND ===== */
+
+[shorthand : script-category = "Shorthand"]
+{shorthand, definition, [[Shorthand systems are scripts used to record
+speech in real-time by people trained in shorthand. A shorthand differs
+from an ordinary script is that it has been designed to favour speed of
+writing over all other features, including completeness of information.
+A shorthand report may therefore not contain all the information needed
+to read the report; a memory of what was written may be necessary to be
+able to read it.]]}
+
+[duploye : script = "Duployé shorthand"]
+{duploye, period-of-use, [[1860 -]]}
+
+written-in(french, duploye : script)
+belongs-to(shorthand : container, duploye : containee)
+
+[pitt : script = "Pitt's shorthand"]
+belongs-to(shorthand : container, pitt : containee)
+
+/* Gregg. Plus lots of other systems. */
+
+
+/* ===== SOFTWARE ===== */
+
+[software = "Software product"
+ @"http://psi.ontopia.net/xmltools/#Product"]
+
+[hangul-wp : software = "Hangul Wordian"]
+supports(hangul-wp : supporter, hangul : supported)
+{hangul-wp, official-site, "http://www.haansoft.com/"}
+

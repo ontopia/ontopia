@@ -1,0 +1,11 @@
+#VERSION "1.3" /* needed to put IDs on the associations and their roles */
+
+works-for(lmg : employee ~lmg-position, ontopia : employer)
+owner-of(lmg : owner, ontopia : owned)
+lives-with(lmg : cohab, stine : cohab)
+works-for(stine : employee, norad : employer)
+
+[lmg : person]
+[stine : person]
+
+played-by(person : type, employee : role)

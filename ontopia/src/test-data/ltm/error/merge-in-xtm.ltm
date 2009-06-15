@@ -1,0 +1,8 @@
+@"utf-8"
+#MERGEMAP "test.xtm" xtm
+
+[at.tr = "transitive association"
+ @"http://psi.ontopia.net/xtm/association-type/transitive"]
+
+[english : language = "English"
+ @"http://www.topicmaps.org/xtm/1.0/language.xtm#en"]

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<topicMap
+   xmlns="http://www.topicmaps.org/xtm/1.0/"   
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xml:base="http://www.ontopia.net/test-data/various/external-ref.xtm"
+>
+
+<!-- External topic map -->
+<mergeMap xlink:href="psi.xtm"/>
+
+</topicMap>

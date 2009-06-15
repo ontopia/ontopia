@@ -1,0 +1,8 @@
+
+[employed-by = "Employed by"]
+[ontopia 
+ @"http://psi.ontopia.net/ontopia/ontopia.xtm#ontopia"]
+[lmg
+ @"http://psi.ontopia.net/fake/lmg"]
+
+employed-by(ontopia, lmg)

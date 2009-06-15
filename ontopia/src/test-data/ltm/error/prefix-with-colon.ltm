@@ -1,0 +1,3 @@
+#PREFIX colon @"http://some-address/#"
+#PREFIX colon:prefix @"http://some-other-address/#"
+[foo = "A topic"]

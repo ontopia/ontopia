@@ -1,0 +1,7 @@
+/* These 2 lines show that assocs are sorted first by type (roles ignored). */
+atypeA(playerB : rtypeA)
+atypeB(playerA : rtypeA)
+
+/* These two lines show tat with equal types, sorting is by roles. */
+atypeC(playerB : rtypeA)
+atypeC(playerA : rtypeA)

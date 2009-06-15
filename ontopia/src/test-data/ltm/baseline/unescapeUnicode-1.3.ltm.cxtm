@@ -1,0 +1,26 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#description</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#unicode</locator>
+</itemIdentifiers>
+<name number="1">
+<value>uሴicode</value>
+<type topicref="3"></type>
+</name>
+<occurrence number="1">
+<value>Description of uሴicode.</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="1"></type>
+</occurrence>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

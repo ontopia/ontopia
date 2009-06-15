@@ -1,0 +1,23 @@
+<topicMap reifier="3">
+<topic>
+<sourceLocators><locator address="#associationA" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<sourceLocators><locator address="#roleA" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic reified="topicMap">
+<subjectIdentifiers><locator address="#--reified--tmreifier" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#tmreifier" notation="URI"></locator>
+</sourceLocators>
+<rolePlayed ref="association.1.role.1"></rolePlayed></topic>
+<association>
+<type topicref="1"></type>
+<role>
+<rolePlayer topicref="3"></rolePlayer>
+<type topicref="2"></type>
+</role>
+</association>
+</topicMap>

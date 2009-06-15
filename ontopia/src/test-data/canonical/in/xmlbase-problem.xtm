@@ -1,0 +1,24 @@
+
+<!-- this test case verifies that #foo references are handled correctly
+     in the presence of an xml:base attribute -->
+
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="ontopia">
+    <baseName>
+      <baseNameString>Ontopia</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="ontopiaas" xml:base="http://www.ontopia.net/">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#ontopia"/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Ontopia A/S</baseNameString>
+    </baseName>    
+  </topic>
+
+</topicMap>

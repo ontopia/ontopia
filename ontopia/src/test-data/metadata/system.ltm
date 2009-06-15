@@ -1,0 +1,12 @@
+
+/* A system topic map with metadata about other topic maps */
+
+[no-reifier-tm @"no-reifier.ltm#externally-reified"]
+[osl-schema @"http://psi.ontopia.net/xtm/occurrence-type/osl-schema"]
+{no-reifier-tm, osl-schema, "tag:larsga@ontopia.net,2002-08-27:the-schema3"}
+
+[simple-tm @"simple.ltm#topicmap"]
+{simple-tm, osl-schema, "tag:larsga@ontopia.net,2002-08-27:the-schema4"}
+
+[tm-class @"is-instance.ltm#tm-of-class"]
+{tm-class, osl-schema, "tag:larsga@ontopia.net,2002-08-27:the-schema5"}

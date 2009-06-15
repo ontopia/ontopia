@@ -1,0 +1,14 @@
+
+/* ===== GENERAL PSIS ===== */
+
+[super-sub = "Specialization"
+           = "Subclass of" / sub
+           = "Superclass of" / super
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+[super = "Superclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+[sub = "Subclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+[sort = "Sort name"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#sort"]
+[class = "Class" @"http://www.topicmaps.org/xtm/1.0/core.xtm#class"]

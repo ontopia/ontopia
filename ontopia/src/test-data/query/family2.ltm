@@ -1,0 +1,70 @@
+
+/* ===== GENERAL PSIS ===== */
+
+[subclass-of = "Subclass of"
+             = "Superclass of" / superclass
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+[superclass = "Superclass"
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+[subclass = "Subclass"
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+
+/* Firstnesses (Topic types) */
+[human = "human being"]
+[male = "male"]
+[female = "female"]
+[woman = "woman"]
+
+/* Secondness (Role types) */
+[wife = "wife"]
+[husband = "husband"]
+[mother = "mother"]
+[father = "father"]
+[child = "child"]
+[son = "son"]
+[daughter = "daughter"]
+
+/* Thirdness (Association types) */
+[marriage = "marriage"
+	    = "wife-of" /wife
+	    = "husband-of" /husband]
+
+[parenthood = "parenthood"
+		= "mother-of" /mother
+		= "has-parent" /child
+		= "father-of" /father]
+
+[andy : human male = "Andy"]
+[nancy : human female = "Nancy"]
+parenthood(nancy : child, norma : mother, clyde : father)
+marriage(andy : husband, nancy : wife)
+[peter : human male = "Peter"]
+parenthood(peter : child, nancy : mother, andy : father)
+[eileen : human female  = "Eileen"]
+parenthood(eileen : child, nancy : mother, andy : father)
+[dan : human male = "Dan"]
+marriage(eileen : wife, dan : husband)
+[philip: human male = "Philip"]
+parenthood(philip : child, eileen : mother, dan : father)
+[janet : human female  = "Janet"]
+parenthood(janet : child, nancy : mother, andy : father)
+[sharon : human female  = "Sharon"]
+parenthood(sharon : child, nancy : mother, andy : father)
+[spencer : human male = "Spencer"]
+parenthood(spencer : child, nancy : mother, andy : father)
+[lana : human female = "Lana"]
+parenthood(lana : child, nancy : mother, andy : father)
+
+[clyde : human male = "Clyde"]
+[norma : human female = "Norma"]
+marriage(clyde : husband, norma : wife)
+[bruce : human male = "Bruce"]
+parenthood(bruce : child, norma : mother, clyde : father)
+[anita : human female  = "Anita"]
+parenthood(anita : child, norma : mother, clyde : father)
+[alan : human male  = "Alan"]
+parenthood(alan : child, norma : mother, clyde : father)
+[carolyn : human female  = "Carolyn"]
+parenthood(carolyn : child, norma : mother, clyde : father)
+[james : human male = "James"]
+parenthood(james : child, norma : mother, clyde : father)

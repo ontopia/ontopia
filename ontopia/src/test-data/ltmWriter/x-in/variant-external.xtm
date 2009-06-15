@@ -1,0 +1,15 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+<topic id="foo">
+  <baseName>
+    <baseNameString>Foo</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#foo"/></parameters>
+      <variantName><resourceRef xlink:href="http://foo.no"/></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+</topicMap>

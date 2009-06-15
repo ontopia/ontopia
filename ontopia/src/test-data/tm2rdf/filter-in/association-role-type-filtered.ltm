@@ -1,0 +1,4 @@
+[association_typeA = "Association Type A"]
+[topicA = "Disallowed Topic"]
+[role_playerA = "Role Player A"]
+association_typeA(role_playerA : topicA)

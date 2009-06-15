@@ -1,0 +1,45 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#employee</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#employer</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#employs</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#ontopia</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="5">
+<itemIdentifiers>
+<locator>#ontopia-employing-eirik</locator>
+</itemIdentifiers>
+</topic>
+<topic number="6">
+<itemIdentifiers>
+<locator>#opland</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+</topic>
+<association number="1">
+<type topicref="3"></type>
+<role number="1" reifier="5">
+<player topicref="4"></player>
+<type topicref="2"></type>
+</role>
+<role number="2">
+<player topicref="6"></player>
+<type topicref="1"></type>
+</role>
+</association>
+</topicMap>

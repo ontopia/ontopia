@@ -1,0 +1,7 @@
+<tm-schema>
+  <topic id="something" match="loose">
+    <baseName>
+      <scope><internalTopicRef href="#something"/></scope>
+    </baseName>
+  </topic>
+</tm-schema>

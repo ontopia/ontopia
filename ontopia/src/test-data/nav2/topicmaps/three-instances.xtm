@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<topic id="class">
+  <baseName>
+    <baseNameString>class</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="a">
+  <instanceOf><topicRef xlink:href="#class"/></instanceOf>
+  <baseName>
+    <baseNameString>a</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="b">
+  <instanceOf><topicRef xlink:href="#class"/></instanceOf>
+  <baseName>
+    <baseNameString>b</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="c">
+  <instanceOf><topicRef xlink:href="#class"/></instanceOf>
+  <baseName>
+    <baseNameString>c</baseNameString>
+  </baseName>
+</topic>
+</topicMap>

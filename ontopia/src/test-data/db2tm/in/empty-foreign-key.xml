@@ -1,0 +1,20 @@
+<db2tm name="empty-foreign-key">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <relation name="empty-foreign-key.csv" columns="name employer">
+    <topic id="employer">
+      <subject-identifier>http://psi.example.org/company/${employer}</subject-identifier>
+    </topic>
+    <topic type="local:person" primary="true">
+      <subject-identifier>http://psi.example.org/company/${name}</subject-identifier>
+      <topic-name>${name}</topic-name>
+      <player atype="local:employed-by" rtype="local:employee">
+        <other rtype="local:employer" player="#employer"/>
+      </player>
+    </topic>
+  </relation>   
+</db2tm>

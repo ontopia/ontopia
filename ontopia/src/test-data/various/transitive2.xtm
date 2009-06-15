@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<topicMap
+   xmlns="http://www.topicmaps.org/xtm/1.0/"   
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xml:base="http://www.techquila.org/numbers.xtm"
+>
+
+<topic id="at-greaterThan">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/maths.html#greaterThan"/>
+  </subjectIdentity>
+  <baseName><baseNameString>greater than</baseNameString></baseName>
+</topic>
+
+<topic id="ar-smaller">
+  <baseName><baseNameString>smaller</baseNameString></baseName>
+</topic>
+
+<topic id="ar-larger">
+  <baseName><baseNameString>larger</baseNameString></baseName>
+</topic>
+
+<topic id="num1">
+  <baseName><baseNameString>1</baseNameString></baseName>
+</topic>
+
+<topic id="num2">
+  <baseName><baseNameString>2</baseNameString></baseName>
+</topic>
+
+<topic id="num3">
+  <baseName><baseNameString>3</baseNameString></baseName>
+</topic>
+
+<association>
+  <instanceOf><topicRef xlink:href="#at-greaterThan"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#ar-smaller"/></roleSpec>
+    <topicRef xlink:href="#num1"/>
+  </member>  
+  <member>
+    <roleSpec><topicRef xlink:href="#ar-larger"/></roleSpec>
+    <topicRef xlink:href="#num2"/>
+  </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#at-greaterThan"/></instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#ar-smaller"/></roleSpec>
+    <topicRef xlink:href="#num2"/>
+  </member>  
+  <member>
+    <roleSpec><topicRef xlink:href="#ar-larger"/></roleSpec>
+    <topicRef xlink:href="#num3"/>
+  </member>
+</association>
+
+</topicMap>

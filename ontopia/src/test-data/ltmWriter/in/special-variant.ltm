@@ -1,0 +1,11 @@
+[sort
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#sort"]
+[display
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#display"]
+
+[topicA = "Topic A"
+        ("A, Emne" / sort)
+        ("-Emne A-" / display)]
+[topicB = "Topic B"; "B, Emne" ; "-Emne B-"]
+[topicC = "Topic C"
+        = "Still Topic C"; "C, Fortsatt Emne" ; "- Fortsatt Emne C-" /otherbasename]

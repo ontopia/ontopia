@@ -1,0 +1,18 @@
+<topicMap>
+<topic>
+<sourceLocators><locator address="#empty-name" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/core.xtm#display" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#display-name" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/core.xtm#sort" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#sort-name" notation="URI"></locator>
+</sourceLocators>
+</topic>
+</topicMap>

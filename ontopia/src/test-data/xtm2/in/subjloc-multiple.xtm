@@ -1,0 +1,6 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/" version="2.0">
+  <topic id="topic">
+    <subjectLocator href="http://example.org/#topic"/>
+    <subjectLocator href="http://example.org/#subject"/>
+  </topic>
+</topicMap>

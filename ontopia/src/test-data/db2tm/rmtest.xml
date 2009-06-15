@@ -1,0 +1,41 @@
+<!-- Mapping used by RelationMappingTestCase.java -->
+<db2tm name="onerelation">
+  <using prefix="local" subject-identifier="http://psi.test-psi/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="1"/>
+  </sources>
+
+  <relation name='TEST' columns='ID1 ID2 NAME ADDRESS'>
+    <topic id="primary" type='local:tt'>
+      <subject-identifier>test:a:${ID1}</subject-identifier>
+      <topic-name>${NAME}</topic-name>
+      <occurrence type='local:address'>${ADDRESS}</occurrence>
+    </topic>
+    <topic id="non-primary">
+      <subject-locator>test:b:${ID2}</subject-locator>
+      <item-identifier>test:c:${ID2}</item-identifier>
+      <subject-identifier>test:d:${ID2}</subject-identifier>
+    </topic>
+    <topic id="true-primary" primary="true">
+      <subject-identifier>test:e:${ID2}</subject-identifier>
+      <player atype='local:at1' rtype='local:rt1' scope='#primary'>
+        <other player='#primary' rtype='local:rt2'></other>
+      </player>
+    </topic>
+    <topic id="false-primary" primary="false">
+      <subject-identifier>test:$f:{ID2}</subject-identifier>
+    </topic>
+    <association type='local:at2' primary='true' scope='#non-primary'>
+      <role player='#primary' type='local:rt3'></role>
+      <role player='#non-primary' type='local:rt4'></role>
+    </association>
+    <changelog action-column='CTYPE' table='TEST_CLOG' order-column='CORDER' primary-key='ID'>
+      <action type='create' value='N'></action>
+      <action type='delete' value='U'></action>
+      <action type='update' value='E1'></action>
+      <action type='ignore' value='E2'></action>
+    </changelog>
+  </relation>
+
+</db2tm>

@@ -1,0 +1,4 @@
+#PREFIX test @"http://psi.ontopia.net/test/"
+
+[source = "Test name"
+ @"http://psi.ontopia.net/test/source"]

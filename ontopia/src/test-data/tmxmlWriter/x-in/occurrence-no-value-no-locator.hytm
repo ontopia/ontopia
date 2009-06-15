@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicmap name="TopicMapA">
+  <topic id="TopicA">
+    <occurs/>
+  </topic>
+
+  <topic id="display-name" identity="http://www.topicmaps.org/xtm/1.0/core.xtm#display">
+  </topic>
+  <topic id="sort-name" identity="http://www.topicmaps.org/xtm/1.0/core.xtm#sort">
+  </topic>
+
+</topicmap>

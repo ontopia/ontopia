@@ -1,0 +1,14 @@
+
+[contact-at   = "Contact at"]
+[contact-resp = "Responsible"]
+[person       = "Person"]
+[organisation = "Organisation"]
+[no-longer    = "No longer"]
+
+[sylvia        = "Person who found the bug"]
+[michaeltowsey = "Michael Towsey"]
+[gmd           = "GMD"]
+
+
+contact-at([michaeltowsey] : person, [gmd] : organisation) /no-longer 
+contact-resp([sylvia] : person, [gmd] : organisation)

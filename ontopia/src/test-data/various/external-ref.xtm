@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<topicMap
+   xmlns="http://www.topicmaps.org/xtm/1.0/"   
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xml:base="http://www.ontopia.net/test-data/various/external-ref.xtm"
+>
+
+<!-- instanceOf and subjectIdentity -->
+<!-- 2 references, 2 unique -->
+<topic id="a-thing">
+  <instanceOf><topicRef xlink:href="types.xtm#thing"/></instanceOf>
+  <subjectIdentity><topicRef xlink:href="external1.xtm#merge-me"/></subjectIdentity>
+  <baseName><baseNameString>A Thing</baseNameString></baseName>
+</topic>
+
+<!-- External parameter and scope -->
+<!-- 2 references, 1 unique -->
+<topic id="another-thing">
+  <instanceOf><topicRef xlink:href="types.xtm#thing"/></instanceOf>
+  <baseName>
+    <baseNameString>A Thing</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="psi.xtm#sort"/></parameters>
+      <variantName><resourceData>And another thing</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<!-- External role players and role specs -->
+<!-- 4 references, 4 unique -->
+<association id="assoc1">
+  <member>
+    <roleSpec><topicRef xlink:href="psi.xtm#superclass"/></roleSpec>
+    <topicRef xlink:href="external1.xtm#topic1"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="psi.xtm#subclass"/></roleSpec>
+    <topicRef xlink:href="external1.xtm#topic2"/>
+  </member>
+</association>
+
+</topicMap>

@@ -1,0 +1,11 @@
+[lucca : city]
+[milan : city]
+[potato-land : country]
+
+born-in(puccini : person, lucca : place)
+born-in(catalani : person, lucca : place)
+born-in(potatohead : person, lucca : place)
+
+died-in(puccini : person, milan : place)
+died-in(catalani : person, milan : place)
+died-in(potatohead : person, potato-land : place)

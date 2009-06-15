@@ -1,0 +1,13 @@
+
+[preferred-role @"http://psi.ontopia.net/tm2rdf/#preferred-role"]
+[role-type @"http://psi.ontopia.net/tm2rdf/#role-type"]
+[association-type @"http://psi.ontopia.net/tm2rdf/#association-type"]
+
+preferred-role(employee : role-type, employment : association-type)
+
+[larsga = "Lars Marius Garshol"]
+[ontopia = "Ontopia"]
+
+[employment = "Employed by" @"http://www.example.com/employed-by"]
+
+employment(larsga : employee, ontopia : employer)

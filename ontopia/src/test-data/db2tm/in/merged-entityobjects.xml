@@ -1,0 +1,20 @@
+<db2tm name="merged-entityobjects">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <!-- NOTE: The scoping topic of #under's description will be null if
+             merging is not handled correctly by the db2tm processor -->
+  <relation name="merged-entityobjects.csv" columns="over under desc">
+    <topic id="over">
+      <subject-identifier>http://example.org/${over}</subject-identifier>
+    </topic>
+    <topic id="under" type="local:person">
+      <subject-identifier>http://foo.org/${under}</subject-identifier>
+      <subject-identifier>http://example.org/${under}</subject-identifier>
+      <occurrence type="local:description" scope="#over">${desc}</occurrence>
+    </topic>
+  </relation>   
+</db2tm>

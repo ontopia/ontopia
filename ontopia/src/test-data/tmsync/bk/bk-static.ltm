@@ -1,0 +1,20 @@
+#PREFIX bk @"http://psi.bergen.kommune.no/portal/"
+#MERGEMAP "bk-ontologi.ltm"
+
+[barnehage : bk:tjeneste = "Barnehage"]
+bk:relevant-for(bk:ansettelse : bk:kategori, barnehage : bk:kategorisert)
+
+/* identical to livsit-1.ltm */
+[bk:arbeid : bk:tema = "Arbeid"]
+[bk:arbeidssoker : bk:tema = "Arbeidssøker"]
+bk:forelder-barn(bk:arbeidssoker : bk:barn, bk:arbeid : bk:forelder)
+[bk:arbeidsgiver : bk:tema = "Arbeidsgiver"]
+bk:forelder-barn(bk:arbeidsgiver : bk:barn, bk:arbeid : bk:forelder)
+
+[bk:ansettelse : bk:emneord = "Ansettelse"]
+bk:forelder-barn(bk:arbeidsgiver : bk:forelder, bk:ansettelse : bk:barn)
+bk:forelder-barn(bk:arbeidssoker : bk:forelder, bk:ansettelse : bk:barn)
+
+[bk:ledige-stillinger : bk:ressurs = "Aetat - ledige stillinger"
+ %"http://www.aetat.no/sbl/as/stillingssok/enkelt.do"]
+bk:livsit-relevant-for(bk:ansettelse : bk:kategori, bk:ledige-stillinger : bk:kategorisert)

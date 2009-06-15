@@ -1,0 +1,19 @@
+#PREFIX bk @"http://psi.bergen.kommune.no/portal/"
+
+[bk:tjeneste = "Tjeneste"]
+[bk:tema     = "Kategori"]
+[bk:emneord  = "Emneord"]
+[bk:ressurs  = "Ressurs"]
+
+[bk:forelder-barn = "Forelder/barn"]
+  [bk:forelder = "Forelder"]
+  [bk:barn = "Barn"]
+
+[bk:relevant-for = "Relevant for"]
+  [bk:kategori = "Kategori"]
+  [bk:kategorisert = "Kategorisert"]
+
+[bk:livsit-relevant-for = "Relevant for (LivsIT)"] /* workaround */
+  
+[bk:er-privat = "Er privat"] /* for lokale emneord */
+  [bk:privat = "Privat"]

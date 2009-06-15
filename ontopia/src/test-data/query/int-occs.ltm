@@ -1,0 +1,7 @@
+
+/* topics with internal occurrences */
+
+{topic1, description, [[topic1]]}
+{topic2, description, [[topic2]]}
+{topic3, description, [[topic3]]}
+{topic4, description, [[topic4]]}

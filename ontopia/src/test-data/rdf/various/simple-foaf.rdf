@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:rtm="http://psi.ontopia.net/rdf2tm/#" >
+
+<foaf:Person>
+  <foaf:name>Lars Marius Garshol</foaf:name>
+
+  <foaf:mbox rdf:resource="mailto:larsga@garshol.priv.no"/>
+</foaf:Person>
+
+<foaf:Person>
+  <foaf:name>Geir Ove Grønmo</foaf:name>
+
+  <foaf:nick>grove</foaf:nick>
+</foaf:Person>
+
+<rdf:Property rdf:about="http://xmlns.com/foaf/0.1/geekcode" 
+              rdfs:label="geekcode" 
+              rdfs:comment="a textual geekcode for this person"/>
+
+<!--===========================================================================
+    TOPIC MAP MAPPING
+============================================================================-->
+
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#comment">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"/>
+  </rdf:Description>
+
+</rdf:RDF>

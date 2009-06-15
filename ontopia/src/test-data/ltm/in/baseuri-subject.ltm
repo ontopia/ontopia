@@ -1,0 +1,5 @@
+
+#BASEURI "http://psi.ontopia.net/"
+
+[ontopia = "Ontopia"
+ %"ontopia/ontopia.xtm#ontopia"]

@@ -1,0 +1,26 @@
+
+<!-- 
+
+  Please note: this is not a separate test case. It is referenced from
+  mergemap.xtm, mergemap2.xtm and extref.xtm.
+
+-->
+
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'
+   xml:base="http://www.ontopia.com"> 
+
+  <topic id="norwegian">
+    <baseName>
+      <baseNameString>Norwegian</baseNameString>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#norwegian"/>
+        </parameters>
+        <variantName><resourceRef xlink:href="http://www.npolar.no/Images/norskflagg.gif"/></variantName>
+      </variant>
+    </baseName>
+  </topic>
+
+</topicMap>

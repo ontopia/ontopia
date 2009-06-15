@@ -1,0 +1,10 @@
+
+[name-property @"http://psi.ontopia.net/tm2rdf/#name-property"]
+[type @"http://psi.ontopia.net/tm2rdf/#type"]
+[property @"http://psi.ontopia.net/tm2rdf/#property"]
+[name @"http://xmlns.com/foaf/0.1/fullname"]
+
+name-property(person : type, name : property)
+
+[person = "Person" @"http://xmlns.com/foaf/0.1/Person"]
+[larsga : person = "Lars Marius Garshol"]

@@ -1,0 +1,24 @@
+[segment = "segment"]
+[field = "field"]
+[has-fields = "has fields"]
+
+[msh_1 : field = "01. FieldSeparator"; "01 FieldSeparator"]
+{msh_1, required, [[yes]]}
+
+[msh_2 : field = "02. EncodingCharacters"; "02 EncodingCharacter"]
+
+[msh_3 : field = "03. SendingApplication"; "03 SendingApplication"]
+{msh_3, source-xpath, [[ /hl7/MSH/field[1] ]]}
+
+[msh_4 : field = "04. Sending Facility"; "04 SendingFacility"]
+[msh_5 : field = "05. Receiving Application"; "05 Receiving Application"]
+[msh_6 : field = "06. Receiving Facility"; "06 Receiving Facility"]
+
+has-fields(
+	msh : segment,
+	msh_1 : field,
+	msh_2 : field,
+	msh_3 : field,
+	msh_4 : field,
+	msh_5 : field,
+	msh_6 : field)

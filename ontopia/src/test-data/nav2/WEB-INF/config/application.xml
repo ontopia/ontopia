@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+
+<!--
+Configuration File for the Omnigator Web Application
+=====================================================================
+$Id: application.xml,v 1.2 2003/04/15 21:51:16 larsga Exp $
+=====================================================================
+This configuration file contains information which is loaded into
+application scope when the first page with a context tag is requested.
+Note: The location of this file needs to be recorded in web.xml.
+-->
+<configuration type="application">
+
+  <!--
+  AUTOLOAD
+  ==================================================================
+  Allows administrator control over what topic maps are loaded when
+  the application first starts. If a map isn't on this list then the
+  administrator must load it manually on the "manage.jsp" page in
+  order for it to be loaded.  Loading an id of "~all" will mean that
+  all topic maps are pre loaded on startup.
+  -->
+  <autoloads>
+    <autoload topicmapid="opera.xtm" />
+    <!-- autoload topicmapid="xmltools-tm.xtm" / -->
+    <!-- autoload topicmapid="~all" / -->
+  </autoloads>
+
+  <!--
+  CLASSMAP
+  ==================================================================
+  Frequently used objects which go into application scope. These
+  objects will must provide an empty constructor. Currently used for
+  default stringifiers and grabbers and comparators.
+  -->
+  <classmap>
+    <!-- Comparator mappings ================================== -->
+    <class shortcut="topicComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicComparator"/>
+    <class shortcut="nameComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparator"/>
+    <class shortcut="basenameComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.BaseNameComparator"/>
+    <class shortcut="assocComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationIDComparator"/>
+    <class shortcut="assocTypeComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationComparator"/>
+    <class shortcut="assocRoleComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationRoleComparator"/>
+    <class shortcut="assocRoleTypeComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationRoleTypeComparator"/>
+    <class shortcut="occComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.OccurrenceComparator"/>
+    <class shortcut="locComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.LocatorComparator"/>
+    <class shortcut="facetValueComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.FacetValueComparator"/>
+    <class shortcut="topicMapRefComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicMapReferenceComparator"/>
+
+    <!-- Decider mappings ===================================== -->
+    <class shortcut="defaultDecider"
+	   fullname="net.ontopia.topicmaps.nav2.impl.basic.DefaultIfDecider"/>
+
+    <!-- Grabber mappings ===================================== -->
+    <class shortcut="nameGrabber"
+	   fullname="net.ontopia.topicmaps.utils.NameGrabber"/>
+
+    <!-- Stringifier mappings ================================= -->
+    <class shortcut="NoEscapeStringifier"
+	   fullname="net.ontopia.topicmaps.nav2.utils.NoEscapeStringifier"/>
+
+    <!-- Link Generator mappings ============================== -->
+    <class shortcut="universalLinkGenerator"
+	   fullname="net.ontopia.topicmaps.nav2.impl.basic.DefaultUniversalLinkGenerator"/>
+
+    <!-- when using the MVS Framework approach -->
+    <class shortcut="modelLinkGenerator"
+	   fullname="net.ontopia.topicmaps.nav2.impl.framework.ModelLinkGenerator"/>
+
+  </classmap>
+
+  <!--
+  PROPERTIES
+  ==================================================================
+  Provides default values to the application.
+  -->
+  <properties>
+    <!-- Ontopia extensions: occurrence role types ============== -->
+    <!-- Ontopia uses these subject indicators to customise the operation of
+         the Navigator. XTM subject indicators must be URIs. -->
+
+    <property name="ontopiaOccurrenceTypeMetadata"
+              value="http://psi.ontopia.net/xtm/occurrence-type/metadata"/>
+    <property name="ontopiaOccurrenceTypeDefault"
+              value="http://psi.ontopia.net/xtm/occurrence-type/default"/>
+    <property name="ontopiaOccurrenceTypeDescription"
+              value="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+
+
+    <!-- other ================================================= -->
+
+    <!-- allowLoadOnRequest: if true, topicmaps will be loaded automatically
+     when requested by the user. Use this setting if you do not need to
+     control access to your topicmaps. If the value is "false" the user will
+     be transferred to an error page telling them that the topicmap is not
+     available. -->
+    <property name="allowLoadOnRequest" value="true"/>
+
+    <!-- maxListLength: paging of long lists (see <logic:foreach>-tag)
+     is controlled through this value. -->
+    <property name="maxListLength" value="100"/>
+
+    <!-- nameStringNonExistant: string which should be displayed when
+         a basename or variant is not existant -->
+    <!-- <property name="nameStringNonExistant" value="[Warning: No name existant]"/> -->
+
+    <!-- nameStringNullValue: string which should be displayed when
+         a basename or variant is null -->
+    <!-- <property name="nameStringNullValue" value="[Warning: Null name]"/> -->
+	      
+    <!-- nameStringEmptyValue: string which should be displayed when
+         a basename or variant is empty -->
+    <!-- <property name="nameStringEmptyValue" value="[Warning: Empty name]"/> -->
+
+
+    <!-- msg.UntypedAssoc: string which should be displayed when
+      no type is available for an association -->
+    <property name="msg.UntypedAssoc" value="untyped"/>
+
+
+    <!-- ===== Specify which Decider to use for context filtering ===== -->
+    <!-- Allowed values for the decider type:
+         * "applicableIn": all selected themes are required to be used for
+                           scoping a characteristic to be displayed.
+         * "intersection": one or more selected themes are required to be used
+                           for scoping an occurrence to be displayed.
+         * "within"        The context must be identical or a subset of the
+                           scopes (see "applicableIn").
+         * "superset"      Characteristic scope has to be a superset of the
+                           user context.
+         * "subset"        Characteristic scope has to be a subset of the
+                           user context.
+    -->
+    <property name="baseNameContextDecider"    value="intersection" />
+    <property name="variantNameContextDecider" value="intersection" />
+    <property name="occurrenceContextDecider"  value="intersection" />
+    <property name="associationContextDecider" value="intersection" />
+
+  </properties>
+
+
+</configuration>

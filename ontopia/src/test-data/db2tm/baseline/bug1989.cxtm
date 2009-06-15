@@ -1,0 +1,89 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.example.org/code</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Code</value>
+<type topicref="6"></type>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.example.org/topic</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Topic</value>
+<type topicref="6"></type>
+</name>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+<rolePlayed ref="association.2.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.example.org/topic/1</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>a</value>
+<type topicref="6"></type>
+</name>
+<occurrence number="1">
+<value>b</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="1"></type>
+</occurrence>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.example.org/topic/2</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>c</value>
+<type topicref="6"></type>
+</name>
+<rolePlayed ref="association.2.role.2"></rolePlayed>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="7">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="8">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+</subjectIdentifiers>
+</topic>
+<association number="1">
+<type topicref="8"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="7"></type>
+</role>
+<role number="2">
+<player topicref="3"></player>
+<type topicref="5"></type>
+</role>
+</association>
+<association number="2">
+<type topicref="8"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="7"></type>
+</role>
+<role number="2">
+<player topicref="4"></player>
+<type topicref="5"></type>
+</role>
+</association>
+</topicMap>

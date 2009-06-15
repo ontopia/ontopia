@@ -1,0 +1,6 @@
+#PREFIX test @"http://psi.ontopia.net/test/"
+
+[source @"http://psi.ontopia.net/test/source"]
+{test:source, test:occtype, [[Hey ho]]} / test:scope
+{test:source, test:occtype, "http://hey.ho"}
+{test:source, test:occtype, [[And this is the extra]]}

@@ -1,0 +1,21 @@
+
+[created-by = "Created by"]
+[is-about   = "Is about"]
+
+[employee = "Employee"]
+[org-unit = "Organizational unit"]
+[service  = "Service"]
+
+created-by(article1 : work, journo1 : creator) 
+is-about(article1 : work, taule : subject)
+is-about(article1 : work, it-avd : subject)
+is-about(article1 : work, portal : subject)
+
+[taule : employee]
+[it-avd : org-unit]
+[portal : service]
+
+created-by(article2 : work, journo1 : creator) 
+discusses(article2 : object, taule : subject)
+discusses(article2 : object, it-avd : subject)
+discusses(article2 : object, portal : subject)

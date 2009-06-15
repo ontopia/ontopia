@@ -1,0 +1,5 @@
+
+#TOPICMAP example
+
+[tm-topic = "An example topic map"
+ @"#example"]

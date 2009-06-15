@@ -1,0 +1,13 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/" version="2.0">  
+  <topic id="topic">
+    <name>
+      <value>Topic</value>
+      <variant>
+        <scope>
+          <topicRef href="#scope"/>
+        </scope>
+        <resourceData datatype="http://example.com/bogus">BOGUS</resourceData>
+      </variant>
+    </name>
+  </topic>
+</topicMap>

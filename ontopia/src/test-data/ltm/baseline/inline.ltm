@@ -1,0 +1,10 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+</topic>
+<topic id="id2">
+<occurrence>
+<instanceOf href="#id1"></instanceOf>
+<resourceData>A concise topic map format.</resourceData>
+</occurrence>
+</topic>
+</topicMap>

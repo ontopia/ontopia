@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+  <storage id="default">
+    <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+      <param name="path" value="${WEBAPP}/topicmaps"/>
+      <param name="suffix" value=".xtm"/>
+      <param name="validation" value="false"/>
+    </source>
+    <source class="net.ontopia.topicmaps.utils.ltm.LTMPathTopicMapSource">
+      <param name="path" value="${WEBAPP}/topicmaps"/>
+      <param name="suffix" value=".ltm"/>
+    </source>
+  </storage>
+</config>

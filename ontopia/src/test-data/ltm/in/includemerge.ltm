@@ -1,0 +1,5 @@
+
+#INCLUDE "includemerge.sub"
+#MERGEMAP "includemerge.sub"
+
+[lmg : person = "Lars Marius Garshol"]

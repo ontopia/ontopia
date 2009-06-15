@@ -1,0 +1,43 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#containee</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#container</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#norway</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#oslo</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/xtm/1.0/null-topic</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id1</locator>
+</itemIdentifiers>
+</topic>
+<association number="1">
+<type topicref="5"></type>
+<role number="1">
+<player topicref="3"></player>
+<type topicref="2"></type>
+</role>
+<role number="2">
+<player topicref="4"></player>
+<type topicref="1"></type>
+</role>
+</association>
+</topicMap>

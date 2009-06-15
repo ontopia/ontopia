@@ -1,0 +1,106 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#otherbasename</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#topicA</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Topic A</value>
+<type topicref="5"></type>
+<variant number="1">
+<value>-Emne A-</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="6"></scopingTopic>
+</scope>
+</variant>
+<variant number="2">
+<value>A, Emne</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="7"></scopingTopic>
+</scope>
+</variant>
+</name>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#topicB</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Topic B</value>
+<type topicref="5"></type>
+<variant number="1">
+<value>-Emne B-</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="6"></scopingTopic>
+</scope>
+</variant>
+<variant number="2">
+<value>B, Emne</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="7"></scopingTopic>
+</scope>
+</variant>
+</name>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#topicC</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Still Topic C</value>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+<variant number="1">
+<value>- Fortsatt Emne C-</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+<scopingTopic topicref="6"></scopingTopic>
+</scope>
+</variant>
+<variant number="2">
+<value>C, Fortsatt Emne</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+<scopingTopic topicref="7"></scopingTopic>
+</scope>
+</variant>
+</name>
+<name number="2">
+<value>Topic C</value>
+<type topicref="5"></type>
+</name>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#display</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#display</locator>
+</itemIdentifiers>
+</topic>
+<topic number="7">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#sort</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#sort</locator>
+</itemIdentifiers>
+</topic>
+</topicMap>

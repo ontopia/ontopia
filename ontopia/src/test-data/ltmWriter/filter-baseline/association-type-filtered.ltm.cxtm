@@ -1,0 +1,25 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#role_playerA</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Role Player A</value>
+<type topicref="3"></type>
+</name>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#role_typeA</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Role Type A</value>
+<type topicref="3"></type>
+</name>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

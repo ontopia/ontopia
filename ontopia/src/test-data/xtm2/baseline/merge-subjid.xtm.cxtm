@@ -1,0 +1,11 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://example.org/#topic</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#topic</locator>
+<locator>#topic2</locator>
+</itemIdentifiers>
+</topic>
+</topicMap>

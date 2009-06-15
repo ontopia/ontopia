@@ -1,0 +1,58 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="norway">
+    <baseName>
+      <baseNameString>Norway</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="oslo">
+    <baseName>
+      <baseNameString>Oslo</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="contained-in">
+    <baseName>
+      <baseNameString>Contained in</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="container">
+    <baseName>
+      <baseNameString>Container</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="containee">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/containee"/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Containee</baseNameString>
+    </baseName>    
+  </topic>
+
+
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#contained-in"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <subjectIndicatorRef xlink:href="http://psi.ontopia.net/containee"/>
+      </roleSpec>
+      <topicRef xlink:href="#oslo"/>
+    </member>
+    <member>
+      <roleSpec>
+  	<topicRef xlink:href="#container"/>
+      </roleSpec>
+      <topicRef xlink:href="#norway"/>
+    </member>
+  </association>
+
+
+</topicMap>

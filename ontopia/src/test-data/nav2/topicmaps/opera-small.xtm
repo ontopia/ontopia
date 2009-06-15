@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap
+  id="operatm-tm"
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<!--
+    Topic map for Italian Opera.
+    (shrink down version)
+-->
+
+<topic id="operatm">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#operatm-tm"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Italian Opera</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="iso639-1">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#iso639-1"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>ISO 639:1988 language codes</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="iso639-2t">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#iso639-2t"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>ISO 639-2:1996 Alpha-3 language codes (terminological)</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="iso639-2b">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#iso639-2b"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>ISO 639-2:1996 Alpha-3 language codes (bibliographic)</baseNameString>
+  </baseName>
+</topic>
+  
+<topic id="language">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#language"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>language</baseNameString>
+  </baseName>
+</topic>
+  
+<topic id="norwegian">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#no"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Norwegian</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>no</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>nor</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="italian">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#it"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Italian</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>it</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>ita</baseNameString>
+  </baseName>
+</topic>
+  
+<topic id="composer">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#composer"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>composer</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>komponist</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#italian"/></scope>
+    <baseNameString>compositore</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="normal">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#normal"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>normal form</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="fullname">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#fullname"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>full name</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="shortname">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#shortname"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>short name</baseNameString>
+  </baseName>
+</topic>
+  
+<!-- ================================================================
+       "Regular" topics
+                                                                    -->
+<!-- TT: composer -->
+<topic id="verdi">
+  <instanceOf><topicRef xlink:href="#composer"/></instanceOf>
+  <baseName>
+    <baseNameString>Verdi, Giuseppe</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#normal"/></scope>
+    <baseNameString>Giuseppe Verdi</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#shortname"/></scope>
+    <baseNameString>Verdi</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="puccini">
+  <instanceOf><topicRef xlink:href="#composer"/></instanceOf>
+  <baseName>
+    <baseNameString>Puccini, Giacomo</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#normal"/></scope>
+    <baseNameString>Giacomo Puccini</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#shortname"/></scope>
+    <baseNameString>Puccini</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="mascagni">
+  <instanceOf><topicRef xlink:href="#composer"/></instanceOf>
+  <baseName>
+    <baseNameString>Mascagni, Pietro</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#normal"/></scope>
+    <baseNameString>Pietro Mascagni</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#shortname"/></scope>
+    <baseNameString>Mascagni</baseNameString>
+  </baseName>
+</topic>
+  
+</topicMap>

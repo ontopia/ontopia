@@ -1,0 +1,8 @@
+<topicmap xmlns:tech="http://psi.example.org/technology/"
+          xmlns:tm="http://psi.ontopia.net/xml/tm-xml/">
+
+  <tech:syntax id="tmxml">
+    <tm:locator>http://psi.example.org/technology/tmxml</tm:locator>
+  </tech:syntax>
+
+</topicmap>

@@ -1,0 +1,8 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/" version="2.0">
+  <topic id="topic"/>
+  <topic id="topic2"/>
+  <topic id="topic3">
+    <itemIdentity href="#topic"/>
+    <itemIdentity href="#topic2"/>
+  </topic>
+</topicMap>

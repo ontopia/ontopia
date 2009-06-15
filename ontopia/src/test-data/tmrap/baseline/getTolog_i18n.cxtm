@@ -1,0 +1,302 @@
+<topicMap>
+<topic>
+</topic>
+<topic>
+<sourceLocators><locator address="topicmaps/i18n.ltm#oman" notation="URI"></locator>
+</sourceLocators>
+<rolePlayed ref="association.1.role.1"></rolePlayed></topic>
+<topic>
+<sourceLocators><locator address="topicmaps/i18n.ltm#region" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<sourceLocators><locator address="topicmaps/i18n.ltm#uae" notation="URI"></locator>
+</sourceLocators>
+<rolePlayed ref="association.2.role.1"></rolePlayed></topic>
+<topic>
+<sourceLocators><locator address="#balochi" notation="URI"></locator>
+<locator address="topicmaps/i18n.ltm#balochi" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>Balochi</value>
+</topicName>
+<rolePlayed ref="association.1.role.2"></rolePlayed><rolePlayed ref="association.2.role.2"></rolePlayed><rolePlayed ref="association.3.role.1"></rolePlayed><rolePlayed ref="association.4.role.1"></rolePlayed><rolePlayed ref="association.5.role.1"></rolePlayed><rolePlayed ref="association.6.role.1"></rolePlayed><rolePlayed ref="association.7.role.1"></rolePlayed><rolePlayed ref="association.13.role.1"></rolePlayed></topic>
+<topic>
+<sourceLocators><locator address="#persian" notation="URI"></locator>
+<locator address="topicmaps/i18n.ltm#persian" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>Farsi</value>
+<scope>
+<scopingTopic topicref="6"></scopingTopic>
+</scope>
+</topicName>
+<topicName>
+<value>Persian</value>
+</topicName>
+<rolePlayed ref="association.8.role.1"></rolePlayed><rolePlayed ref="association.9.role.1"></rolePlayed><rolePlayed ref="association.10.role.1"></rolePlayed><rolePlayed ref="association.11.role.1"></rolePlayed><rolePlayed ref="association.14.role.1"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.ontopia.net/i18n/#language" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.ontopia.net/i18n/#script" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.ontopia.net/i18n/#spoken-in" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.ontopia.net/i18n/#written-in" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.ontopia.net/iso/15924.xtm#arab" notation="URI"></locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.13.role.2"></rolePlayed><rolePlayed ref="association.14.role.2"></rolePlayed><rolePlayed ref="association.15.role.1"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#instance" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#type" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://psi.topicmaps.org/sam/1.0/#type-instance" notation="URI"></locator>
+</subjectIdentifiers>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/country.xtm#AF" notation="URI"></locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.3.role.2"></rolePlayed><rolePlayed ref="association.8.role.2"></rolePlayed><rolePlayed ref="association.12.role.1"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/country.xtm#IN" notation="URI"></locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.4.role.2"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/country.xtm#IR" notation="URI"></locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.5.role.2"></rolePlayed><rolePlayed ref="association.9.role.2"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/country.xtm#PK" notation="URI"></locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.6.role.2"></rolePlayed><rolePlayed ref="association.10.role.2"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/country.xtm#TJ" notation="URI"></locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.11.role.2"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/country.xtm#TM" notation="URI"></locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.7.role.2"></rolePlayed></topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/language.xtm#ps" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#pashto" notation="URI"></locator>
+<locator address="topicmaps/i18n.ltm#pashto" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>Pashto</value>
+</topicName>
+<rolePlayed ref="association.12.role.2"></rolePlayed><rolePlayed ref="association.15.role.2"></rolePlayed></topic>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="2"></rolePlayer>
+<type topicref="3"></type>
+</role>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="7"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="4"></rolePlayer>
+<type topicref="3"></type>
+</role>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="7"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="15"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="16"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="17"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="18"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="20"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="6"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="15"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="6"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="17"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="6"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="18"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="6"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="19"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+<association>
+<type topicref="9"></type>
+<role>
+<rolePlayer topicref="15"></rolePlayer>
+<type topicref="3"></type>
+</role>
+<role>
+<rolePlayer topicref="21"></rolePlayer>
+<type topicref="7"></type>
+</role>
+</association>
+<association>
+<type topicref="10"></type>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="11"></rolePlayer>
+<type topicref="8"></type>
+</role>
+</association>
+<association>
+<type topicref="10"></type>
+<role>
+<rolePlayer topicref="6"></rolePlayer>
+<type topicref="7"></type>
+</role>
+<role>
+<rolePlayer topicref="11"></rolePlayer>
+<type topicref="8"></type>
+</role>
+</association>
+<association>
+<type topicref="10"></type>
+<role>
+<rolePlayer topicref="11"></rolePlayer>
+<type topicref="8"></type>
+</role>
+<role>
+<rolePlayer topicref="21"></rolePlayer>
+<type topicref="7"></type>
+</role>
+</association>
+<association>
+<type topicref="14"></type>
+<role>
+<rolePlayer topicref="5"></rolePlayer>
+<type topicref="12"></type>
+</role>
+<role>
+<rolePlayer topicref="7"></rolePlayer>
+<type topicref="13"></type>
+</role>
+</association>
+<association>
+<type topicref="14"></type>
+<role>
+<rolePlayer topicref="6"></rolePlayer>
+<type topicref="12"></type>
+</role>
+<role>
+<rolePlayer topicref="7"></rolePlayer>
+<type topicref="13"></type>
+</role>
+</association>
+<association>
+<type topicref="14"></type>
+<role>
+<rolePlayer topicref="7"></rolePlayer>
+<type topicref="13"></type>
+</role>
+<role>
+<rolePlayer topicref="21"></rolePlayer>
+<type topicref="12"></type>
+</role>
+</association>
+</topicMap>

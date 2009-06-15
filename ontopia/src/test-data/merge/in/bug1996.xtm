@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          id="jillstm">
+
+    <topic id="ftd18059">
+
+        <instanceOf>
+
+            <subjectIndicatorRef xlink:href="http://wolterskluwer.com/psi/#document" />
+
+        </instanceOf>
+
+        <subjectIdentity>
+
+            <subjectIndicatorRef xlink:href="http://cch.com/xtm/fedtax/#ftd18059" />                                 
+
+            <subjectIndicatorRef xlink:href="http://cch.com/xtm/fedtax/#(lea04b)-(cch-internal-ref)-(184)" />
+
+        </subjectIdentity>
+
+        <baseName>
+
+            <baseNameString>Effect on Estates</baseNameString>
+
+        </baseName>
+
+        <occurrence>
+
+            <instanceOf>
+
+                <subjectIndicatorRef xlink:href="http://wolterskluwer.com/psi/#normval" />
+
+            </instanceOf>
+
+            <resourceData>184</resourceData>
+
+        </occurrence>
+
+    </topic>
+
+</topicMap>

@@ -1,0 +1,3 @@
+[topicA = "Disallowed Topic"]
+[topicB : topicA = "Topic B"]
+[topicC = "Topic C"]

@@ -1,0 +1,18 @@
+<rdf:RDF
+    xmlns:j.0="http://psi.ontopia.net/tminrdf/#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" >
+  <rdf:Description rdf:about="http://psi.ontopia.net/xtm/occurrence-type/description">
+    <rdfs:label>Description</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A0">
+    <rdf:subject rdf:nodeID="A1"/>
+    <rdf:predicate rdf:resource="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+    <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+    <rdf:object>The world's best topic map software company.</rdf:object>
+    <j.0:inscope rdf:nodeID="A1"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="A1">
+    <rdfs:label>Ontopia</rdfs:label>
+  </rdf:Description>
+</rdf:RDF>

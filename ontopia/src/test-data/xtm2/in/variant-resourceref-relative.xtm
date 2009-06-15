@@ -1,0 +1,13 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/" version="2.0">  
+  <topic id="topic">
+    <name>
+      <value>Topic</value>
+      <variant>
+        <scope>
+          <topicRef href="#command"/>
+        </scope>
+        <resourceRef href="topic-command.wav"/>
+      </variant>
+    </name>
+  </topic>
+</topicMap>

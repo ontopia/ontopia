@@ -1,0 +1,7 @@
+
+#PREFIX ex @"http://psi.example.org/"
+
+[ex:topic = "Topic"]
+
+ex:type-one(ex:topic : ex:near, ex:other : ex:far)
+ex:type-two(ex:topic : ex:near, ex:other : ex:far)

@@ -1,0 +1,163 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#hierarchical-relation-type</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#subclassA</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.4.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#superclassA</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.4.role.2"></rolePlayed>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="7">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="8">
+<subjectIdentifiers>
+<locator>http://www.techquila.com/psi/hierarchy/#subordinate-role-type</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#subordinate-role-type</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Subordinate role type</value>
+<type topicref="5"></type>
+</name>
+<rolePlayed ref="association.2.role.1"></rolePlayed>
+</topic>
+<topic number="9">
+<subjectIdentifiers>
+<locator>http://www.techquila.com/psi/hierarchy/#superordinate-role-type</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#superordinate-role-type</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Superordinate role type</value>
+<type topicref="5"></type>
+</name>
+<rolePlayed ref="association.3.role.1"></rolePlayed>
+</topic>
+<topic number="10">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#subclass</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#subclass</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Subtype</value>
+<type topicref="5"></type>
+</name>
+<rolePlayed ref="association.2.role.2"></rolePlayed>
+</topic>
+<topic number="11">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#superclass</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#superclass</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Supertype</value>
+<type topicref="5"></type>
+</name>
+<rolePlayed ref="association.3.role.2"></rolePlayed>
+</topic>
+<topic number="12">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#superclass-subclass</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Subtype of</value>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="10"></scopingTopic>
+</scope>
+</name>
+<name number="2">
+<value>Supertype of</value>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="11"></scopingTopic>
+</scope>
+</name>
+<name number="3">
+<value>Supertype-subtype</value>
+<type topicref="5"></type>
+</name>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+</topic>
+<association number="1">
+<type topicref="7"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="6"></type>
+</role>
+<role number="2">
+<player topicref="12"></player>
+<type topicref="4"></type>
+</role>
+</association>
+<association number="2">
+<type topicref="7"></type>
+<role number="1">
+<player topicref="8"></player>
+<type topicref="6"></type>
+</role>
+<role number="2">
+<player topicref="10"></player>
+<type topicref="4"></type>
+</role>
+</association>
+<association number="3">
+<type topicref="7"></type>
+<role number="1">
+<player topicref="9"></player>
+<type topicref="6"></type>
+</role>
+<role number="2">
+<player topicref="11"></player>
+<type topicref="4"></type>
+</role>
+</association>
+<association number="4">
+<type topicref="12"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="10"></type>
+</role>
+<role number="2">
+<player topicref="3"></player>
+<type topicref="11"></type>
+</role>
+</association>
+</topicMap>

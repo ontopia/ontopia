@@ -1,0 +1,23 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="country">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/#country"/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Country</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id="norway">
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/#country"/>
+    </instanceOf>
+    <baseName>
+      <baseNameString>Norway</baseNameString>
+    </baseName>    
+  </topic>
+
+</topicMap>

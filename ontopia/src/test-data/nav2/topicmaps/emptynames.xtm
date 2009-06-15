@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<topic id="no-basename">
+</topic>
+
+<topic id="null-basename">
+  <baseName>
+  </baseName>
+</topic>
+
+<topic id="empty-basename">
+  <baseName>
+    <baseNameString></baseNameString>
+  </baseName>
+</topic>
+
+<topic id="compare-basenameset-null">
+  <baseName>
+    <baseNameString>B Ontopia</baseNameString>
+  </baseName>
+  <baseName>
+  </baseName>
+  <baseName>
+    <baseNameString>A Ontopia</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="compare-basenameset-empty">
+  <baseName>
+    <baseNameString>D Ontopia</baseNameString>
+  </baseName>
+  <baseName>
+    <baseNameString></baseNameString>
+  </baseName>
+  <baseName>
+    <baseNameString>C Ontopia</baseNameString>
+  </baseName>
+</topic>
+
+</topicMap>

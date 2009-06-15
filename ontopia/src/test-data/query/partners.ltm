@@ -1,0 +1,12 @@
+
+/* special test case with ternary symmetric associations */
+
+[pos01 = "01"]
+[pos02 = "02"]
+[pos03 = "03"]
+[pos04 = "04"]
+
+partnership(ontopia : partner, isogen      : partner, pos01 : position)
+partnership(ontopia : partner, synergy     : partner, pos02 : position)
+partnership(ontopia : partner, innodigital : partner, pos03 : position)
+partnership(ontopia : partner, eurostep    : partner, pos04 : position)

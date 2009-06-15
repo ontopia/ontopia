@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink" id="registry">
+
+  <topic id="single">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/single"/>
+    </subjectIdentity>
+    <baseName id="lonly">
+      <baseNameString id="s01">
+        SINGLE
+      </baseNameString>
+    </baseName> 
+  </topic>
+
+</topicMap>
+
+
+
+
+
+
+

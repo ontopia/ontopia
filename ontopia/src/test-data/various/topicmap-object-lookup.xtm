@@ -1,0 +1,31 @@
+<topicMap id='tm-lookup'
+   xmlns='http://www.topicmaps.org/xtm/1.0/'
+   xmlns:xlink='http://www.w3.org/1999/xlink'
+   xml:base="http://test.ontopia.net/srclocs"> 
+
+  <topic id='topicA'>
+    <subjectIdentity>
+      <resourceRef xlink:href='http://test.ontopia.net/subject'/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>A</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='topicB'>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href='http://test.ontopia.net/indicator1'/>
+      <subjectIndicatorRef xlink:href='http://test.ontopia.net/indicator2'/>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>B</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='topicC'>
+    <baseName>
+      <baseNameString>C</baseNameString>
+    </baseName>    
+  </topic>
+
+</topicMap>

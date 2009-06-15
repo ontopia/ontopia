@@ -1,0 +1,33 @@
+<topicMap>
+<topic>
+<sourceLocators><locator address="#assocTypeA" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<sourceLocators><locator address="#foo" notation="URI"></locator>
+</sourceLocators>
+<rolePlayed ref="association.1.role.1"></rolePlayed></topic>
+<topic>
+<sourceLocators><locator address="#roletypeA" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/core.xtm#display" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#display-name" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://www.topicmaps.org/xtm/1.0/core.xtm#sort" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#sort-name" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<association>
+<type topicref="1"></type>
+<role>
+<rolePlayer topicref="2"></rolePlayer>
+<type topicref="3"></type>
+</role>
+</association>
+</topicMap>

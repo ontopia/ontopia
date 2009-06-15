@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<topicMap id='tm-ab'
+    xmlns='http://www.topicmaps.org/xtm/1.0/'
+    xmlns:xlink='http://www.w3.org/1999/xlink'
+>
+
+<topic id='inverse'>
+	<baseName>
+		<baseNameString>inverse name</baseNameString>
+	</baseName>
+</topic>
+
+<topic id='topic-ab'>
+	<subjectIdentity>
+		<subjectIndicatorRef xlink:href='http://a.b.com/tm_a_b.xtm#topic-a'/>
+		<subjectIndicatorRef xlink:href='http://a.b.com/tm_a_b.xtm#topic-b'/>
+	</subjectIdentity>
+</topic>
+
+</topicMap>
+

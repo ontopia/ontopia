@@ -1,0 +1,14 @@
+<db2tm name="fieldconcat">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <csv id="files" path="./" ignoreFirstLines="0" separator=";"/>
+  </sources>
+
+  <relation name="empty-foreign-key.csv" columns="name employer">
+    <topic type="local:person" primary="true">
+      <subject-identifier>http://example.org/${name}</subject-identifier>
+      <occurrence type="local:test">${name}${employer}</occurrence>
+    </topic>
+  </relation>   
+</db2tm>

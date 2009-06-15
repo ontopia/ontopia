@@ -1,0 +1,7 @@
+
+/* topics with external occurrences */
+
+{topic1, homepage, "http://example.org/topic1"}
+{topic2, homepage, "http://example.org/topic2"}
+{topic3, homepage, "http://example.org/topic3"}
+{topic4, homepage, "http://example.org/topic4"}

@@ -1,0 +1,27 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/acronym"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/syntax"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<instanceOf href="#id2"></instanceOf>
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.example.org/technology/xtm"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<baseNameString>XML Topic Maps</baseNameString>
+</baseName>
+<baseName>
+<scope>
+<topicRef href="#id1"></topicRef>
+</scope>
+<baseNameString>XTM</baseNameString>
+</baseName>
+</topic>
+</topicMap>

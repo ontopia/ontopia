@@ -1,0 +1,4637 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink" id="reachback">
+  <topic id="quantity">
+    <baseName id="id95">
+      <baseNameString>Quantity</baseNameString>
+    </baseName>
+    <occurrence id="id96">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Quantity is an amount.Quantification is usually applied to an attribute.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="person">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#person"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id249">
+      <baseNameString>Person</baseNameString>
+    </baseName>
+    <occurrence id="id250">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Person is a human object (can play the role of Agent).</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="human-agent">
+    <baseName id="id340">
+      <baseNameString>Human Agent</baseNameString>
+    </baseName>
+    <occurrence id="id341">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A person playing the role of Agent in some Association with a Process</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="pa6-1">
+    <instanceOf>
+      <topicRef xlink:href="#proposed-answer"></topicRef>
+    </instanceOf>
+    <baseName id="id431">
+      <baseNameString>Action is...</baseNameString>
+    </baseName>
+    <occurrence id="id432">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Action is a subclass of process, particularly a process initiated by an agent for a purpose (goal).</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="rec">
+    <instanceOf>
+      <topicRef xlink:href="#document"></topicRef>
+    </instanceOf>
+    <baseName id="id265">
+      <baseNameString>recommendation</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="communication-choice">
+    <baseName id="id399">
+      <baseNameString>Communication Choice</baseNameString>
+    </baseName>
+    <occurrence id="id400">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Association which records a particular recipient agent's selected sign-type along with the information type.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid59">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#diot"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id123">
+      <baseNameString>Domain-independent Ontological type</baseNameString>
+    </baseName>
+    <occurrence id="id124">
+      <instanceOf>
+        <topicRef xlink:href="#website"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="http://www.jfsowa.com/ontology/toplevel.htm"></resourceRef>
+    </occurrence>
+    <occurrence id="id126">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A domain independent ontological type represents a way of classifying things that exist in a 
+top-down, generic manner.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="accompaniment">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#accompaniment"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id41">
+      <baseNameString>Accompaniment</baseNameString>
+    </baseName>
+    <occurrence id="id42">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Accompaniment is the Role one participant in a process plays relative to another participant.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="object">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#object"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id355">
+      <baseNameString>Object</baseNameString>
+    </baseName>
+    <occurrence id="id356">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Object is an Actuality considered as a Continuant.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="issue">
+    <baseName id="id449">
+      <baseNameString>Issue/Question</baseNameString>
+    </baseName>
+    <occurrence id="id450">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>An Issue/Question is something needing additional definition 
+or verification.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid526">
+    <instanceOf>
+      <topicRef xlink:href="#example"></topicRef>
+    </instanceOf>
+    <baseName id="id436">
+      <baseNameString>The abstract information encoded in a trace of the instructions executed</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="diagnostic-procedure">
+    <instanceOf>
+      <topicRef xlink:href="#task"></topicRef>
+    </instanceOf>
+    <baseName id="id221">
+      <baseNameString>Diagnostic Procedure</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid95">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#tid93"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#physical"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id263">
+      <baseNameString>Physical</baseNameString>
+    </baseName>
+    <occurrence id="id264">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Physical is something that has material 
+existence--can be characterized by location in time and space.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="sign-transmission">
+    <instanceOf>
+      <topicRef xlink:href="#task"></topicRef>
+    </instanceOf>
+    <baseName id="id255">
+      <baseNameString>Sign Transmission</baseNameString>
+    </baseName>
+    <occurrence id="id256">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>The transmission of a semiotic Sign.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="cont-occur-dim-val">
+    <instanceOf>
+      <topicRef xlink:href="#dim-val"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#cont-occur-dim-val"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id420">
+      <baseNameString>Value in Domain of Dimension Continuant-Occurrent</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="script">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#script"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id490">
+      <baseNameString>Script</baseNameString>
+    </baseName>
+    <occurrence id="id491">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Script is a Form that represents the time sequences of an Occurrent.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid516">
+    <instanceOf>
+      <topicRef xlink:href="#example"></topicRef>
+    </instanceOf>
+    <baseName id="id152">
+      <baseNameString>A computer program</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="superclass">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id260">
+      <baseNameString>superclass</baseNameString>
+    </baseName>
+    <baseName id="id259">
+      <baseNameString>Superclass</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="situation">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#situation"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id218">
+      <baseNameString>Situation</baseNameString>
+    </baseName>
+    <occurrence id="id219">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Situation is a Nexus considered as an Occurrent.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="stage">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#stage"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id115">
+      <baseNameString>Stage</baseNameString>
+    </baseName>
+    <occurrence id="id116">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A part of an Occurrent</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid67">
+    <instanceOf>
+      <topicRef xlink:href="#dimension"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#ind-rel"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id129">
+      <baseNameString>Independent-Relative-Mediating Dimension</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="relates-to">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#relates-to"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id471">
+      <baseNameString>Relates to</baseNameString>
+    </baseName>
+    <baseName id="id470">
+      <scope>
+        <topicRef xlink:href="#phenomenon"></topicRef>
+      </scope>
+      <baseNameString>is described by</baseNameString>
+    </baseName>
+    <baseName id="id468">
+      <scope>
+        <topicRef xlink:href="#info"></topicRef>
+      </scope>
+      <baseNameString>describes</baseNameString>
+    </baseName>
+    <occurrence id="id472">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>This association type identifies what Actuality Information relates to.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="juncture">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#juncture"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id281">
+      <baseNameString>Juncture</baseNameString>
+    </baseName>
+    <occurrence id="id282">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Juncture is a Prehension considered as a Continuant. The prehending entity is an object.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid27">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/metadata"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id170">
+      <baseNameString>metadata</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="infoRef_552-failure-type-sequence-Andy">
+    <instanceOf>
+      <topicRef xlink:href="#failure-type-sequence"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#tabular-sign"></topicRef>
+    </instanceOf>
+    <baseName id="id202">
+      <baseNameString>infoRef_552-failure-type-sequence-Andy</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="aca">
+    <instanceOf>
+      <topicRef xlink:href="#ai"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#aca"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id67">
+      <baseNameString>Adaptive Communication Agent</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid171">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#cont-occur-dim-val"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#occurrent"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id268">
+      <baseNameString>Occurrent</baseNameString>
+    </baseName>
+    <occurrence id="id269">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Occurrent is an entity without persistent 
+identity over time; two occurrents can only be identified as the same occurrent by their co-location in space-time.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="loco3">
+    <instanceOf>
+      <topicRef xlink:href="#object"></topicRef>
+    </instanceOf>
+    <baseName id="id175">
+      <baseNameString>loco3</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid20">
+    <baseName id="id407">
+      <baseNameString>subject domain</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid93">
+    <instanceOf>
+      <topicRef xlink:href="#dim-val"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#phy-abs-dim-val"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id333">
+      <baseNameString>Value in Domain of Dimension Physical-Abstract</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="find-fault">
+    <instanceOf>
+      <topicRef xlink:href="#purpose"></topicRef>
+    </instanceOf>
+    <baseName id="id110">
+      <baseNameString>Find root cause of abnormal behavior</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid374">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#differentia"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id23">
+      <baseNameString>Differentia</baseNameString>
+      <variant id="tid376">
+        <parameters>
+          <topicRef xlink:href="#tid50"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>Contrast</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+    <occurrence id="id25">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A feature that distinguishes a class from other classes that have a common superclass</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid541">
+    <instanceOf>
+      <topicRef xlink:href="#example"></topicRef>
+    </instanceOf>
+    <baseName id="id448">
+      <baseNameString>A description of how people sang a piece of music</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="case">
+    <instanceOf>
+      <topicRef xlink:href="#document"></topicRef>
+    </instanceOf>
+    <baseName id="id200">
+      <baseNameString>Clarify Case</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid125">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#prehension"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id343">
+      <baseNameString>Prehension</baseNameString>
+    </baseName>
+    <occurrence id="id344">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Prehension is Physical entity considered Relative to to some other entity or entities.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid116">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#form"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id296">
+      <baseNameString>Form</baseNameString>
+    </baseName>
+    <occurrence id="id297">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Form is an Abstract information structure Independent of any embodiment.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid101">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#tid93"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#abstract"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id353">
+      <baseNameString>Abstract</baseNameString>
+    </baseName>
+    <occurrence id="id354">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Abstract is a pure information 
+structure--something that does not have location in time or space.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="artificial-agent">
+    <baseName id="id210">
+      <baseNameString>Artificial Agent</baseNameString>
+    </baseName>
+    <occurrence id="id211">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A non-human playing the role of Agent in some Association with a Process</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="q5">
+    <instanceOf>
+      <topicRef xlink:href="#issue"></topicRef>
+    </instanceOf>
+    <baseName id="id52">
+      <baseNameString>What's Information?</baseNameString>
+    </baseName>
+    <occurrence id="id53">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>What is Information in Sowa's diamond? Is any subtype of 
+Abstract information? e.g., a schema or script, description or history, reason or purpose?</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="whole">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#whole"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id408">
+      <baseNameString>Whole</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="service">
+    <instanceOf>
+      <topicRef xlink:href="#process"></topicRef>
+    </instanceOf>
+    <baseName id="id294">
+      <baseNameString>Service Offering</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid388">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#role"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id288">
+      <baseNameString>Role</baseNameString>
+    </baseName>
+    <occurrence id="id289">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A role is an actuality as it is seen in relation to something (in an association).</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="infoRef_552">
+    <instanceOf>
+      <topicRef xlink:href="#object"></topicRef>
+    </instanceOf>
+    <baseName id="id286">
+      <baseNameString>infoRef_552</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="topic">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#topic"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id454">
+      <baseNameString>Topic</baseNameString>
+    </baseName>
+    <occurrence id="id455">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Any Topic in the see-also association</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid567">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="file:/C:/Program Files/oks-professional/jakarta-tomcat/webapps/omnigator/WEB-INF/topicmaps/reachbackdata.xtmm#reachback-demo-0301"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id396">
+      <baseNameString>Reachback Demo 01/03 Topic Map</baseNameString>
+    </baseName>
+    <occurrence id="id397">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>This is a topic map developed for the GE Global Research/Lockheed-Martin Reachback project. It supports the demo of January 2003.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="unknown">
+    <baseName id="id237">
+      <baseNameString>Unknown</baseNameString>
+    </baseName>
+    <occurrence id="id238">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Unknown can play a variety of roles in associations such as "performs-action" when, for
+  example, the purpose (role=Goal) of the Action (role=Activity or Task) is not known.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="infoRef_547-fault-sequence-Andy">
+    <instanceOf>
+      <topicRef xlink:href="#tabular-sign"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#fault-sequence"></topicRef>
+    </instanceOf>
+    <baseName id="id186">
+      <baseNameString>infoRef_547-fault-sequence-Andy</baseNameString>
+    </baseName>
+    <occurrence id="id187">
+      <instanceOf>
+        <topicRef xlink:href="#table-rows"></topicRef>
+      </instanceOf>
+      <resourceData>8</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="loco1-fault-sequence-georgesmith">
+    <instanceOf>
+      <topicRef xlink:href="#tabular-sign"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#fault-sequence"></topicRef>
+    </instanceOf>
+    <baseName id="id307">
+      <baseNameString>Loco 1 Fault List Display for George Smith</baseNameString>
+    </baseName>
+    <occurrence id="id308">
+      <instanceOf>
+        <topicRef xlink:href="#table-rows"></topicRef>
+      </instanceOf>
+      <resourceData>10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="event-history">
+    <baseName id="id386">
+      <baseNameString>Event History</baseNameString>
+    </baseName>
+    <occurrence id="id387">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>An Event History records the history of sequence of Events with information such as time.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid340">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#paradigm"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id167">
+      <baseNameString>Paradigmatic Classification</baseNameString>
+    </baseName>
+    <occurrence id="id168">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Uses a pre-defined set of dimensions; classes are formed by intersection. Dimensions are orthogonal.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="loco1">
+    <instanceOf>
+      <topicRef xlink:href="#object"></topicRef>
+    </instanceOf>
+    <baseName id="id213">
+      <baseNameString>loco1</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid50">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id10">
+      <baseNameString>sort</baseNameString>
+    </baseName>
+    <baseName id="id9">
+      <baseNameString>Sort name</baseNameString>
+    </baseName>
+    <occurrence id="id11">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Suitability for sorting: Suitability of a topic name for use as a sort key; for use in the parameters of variant names.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="monitoring">
+    <baseName id="id480">
+      <baseNameString>Monitoring</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid328">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#classification"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id2">
+      <baseNameString>Classification</baseNameString>
+    </baseName>
+    <occurrence id="id3">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Definitive arrangement in the ideational realm, by features; introduces repetition.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="loco">
+    <instanceOf>
+      <topicRef xlink:href="#product"></topicRef>
+    </instanceOf>
+    <baseName id="id319">
+      <baseNameString>locomotive</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="loco3-fault-sequence-georgesmith">
+    <instanceOf>
+      <topicRef xlink:href="#graph-sign"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#fault-sequence"></topicRef>
+    </instanceOf>
+    <baseName id="id338">
+      <baseNameString>Loco 3 Fault List Display for George Smith</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid322">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#grouping"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id331">
+      <baseNameString>Grouping</baseNameString>
+    </baseName>
+    <occurrence id="id332">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Descriptive arrangement in the physical realm by attributes.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="loco2-fault-sequence-georgesmith">
+    <instanceOf>
+      <topicRef xlink:href="#tabular-sign"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#fault-sequence"></topicRef>
+    </instanceOf>
+    <baseName id="id405">
+      <baseNameString>Loco 2 Fault List Display for George Smith</baseNameString>
+    </baseName>
+    <occurrence id="id406">
+      <instanceOf>
+        <topicRef xlink:href="#table-rows"></topicRef>
+      </instanceOf>
+      <resourceData>3</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="dim-val">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#dim-val"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id58">
+      <baseNameString>Dimension Domain Value</baseNameString>
+    </baseName>
+    <occurrence id="id59">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A domain value of classification Dimension.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid143">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#nexus"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id215">
+      <baseNameString>Nexus</baseNameString>
+    </baseName>
+    <occurrence id="id216">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Nexus is a Physical entity that Mediates two or more other entities.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="essence">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#essence"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id13">
+      <baseNameString>Essence</baseNameString>
+    </baseName>
+    <occurrence id="id14">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Must be present at the end of the activity but does not control the activity</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="predecessor">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#predecessor"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id140">
+      <baseNameString>Predecessor</baseNameString>
+    </baseName>
+    <occurrence id="id141">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A predecessor is an occurrent which occurs before some other occurrent in succession.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid334">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#taxonomy"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id457">
+      <baseNameString>Taxonomic Classification</baseNameString>
+    </baseName>
+    <occurrence id="id458">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Based on non-dimensional, distinctive, ordered features.
+The definition of any taxonomic class (taxon) is a record of the sequence of contrasts (differentiae) between the taxon 
+and the root of the classification.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="structure">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#structure"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id441">
+      <baseNameString>Structure</baseNameString>
+    </baseName>
+    <occurrence id="id442">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Structure is a Nexus considered as a Continuant.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="recipient">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#recipient"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id207">
+      <baseNameString>Recipient</baseNameString>
+    </baseName>
+    <occurrence id="id208">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A recipient receives something through some Process.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tabular-sign">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#tabular-sign"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id78">
+      <baseNameString>Tabular Sign</baseNameString>
+    </baseName>
+    <occurrence id="id79">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Tabular Sign has a significant spatial arrangement, e.g., the information is arranged in rows and columns.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid85">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#tid70"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#mediating"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id460">
+      <baseNameString>Mediating</baseNameString>
+    </baseName>
+    <occurrence id="id461">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Mediating is something that brings other things into relation.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="visual-sign">
+    <baseName id="id247">
+      <baseNameString>Visual Sign</baseNameString>
+    </baseName>
+    <occurrence id="id248">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A visual sign is perceived by the visual system, starting with the eyes.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid521">
+    <instanceOf>
+      <topicRef xlink:href="#example"></topicRef>
+    </instanceOf>
+    <baseName id="id71">
+      <baseNameString>A computer executing a program</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="pa5-1">
+    <instanceOf>
+      <topicRef xlink:href="#proposed-answer"></topicRef>
+    </instanceOf>
+    <baseName id="id242">
+      <baseNameString>Information Is...</baseNameString>
+    </baseName>
+    <occurrence id="id243">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Information can be a schema, a script, 
+a description, a history, a reason, or a purpose. As such, the information is abstract but must be encoded into 
+something Physical, either an Object (artifact such as a manuscript) or a Process (such as waving goodbye)
+to be preserved or communicated. Such an Object or Process is a semiotic sign or text.
+The encoding and decoding of semiotic signs and texts is according to conventions. They must be shared for the
+communication to be effective.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="successor">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#successor"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id391">
+      <baseNameString>Successor</baseNameString>
+    </baseName>
+    <occurrence id="id392">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A successor is an occurrent which occurs after some other occurrent in succession.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="sign-decoding">
+    <instanceOf>
+      <topicRef xlink:href="#task"></topicRef>
+    </instanceOf>
+    <baseName id="id484">
+      <baseNameString>Sign Decoding</baseNameString>
+    </baseName>
+    <occurrence id="id485">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>The decoding of the Information signified by a Sign. The Information extracted may not
+be the same as the Information originally encoded.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid531">
+    <instanceOf>
+      <topicRef xlink:href="#example"></topicRef>
+    </instanceOf>
+    <baseName id="id410">
+      <baseNameString>A recipe for baking a cake</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="purpose">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#purpose"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id300">
+      <baseNameString>Purpose</baseNameString>
+    </baseName>
+    <occurrence id="id301">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Purpose is an Intention that is considered as an Occurrent.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid546">
+    <instanceOf>
+      <topicRef xlink:href="#example"></topicRef>
+    </instanceOf>
+    <baseName id="id138">
+      <baseNameString>The intention which explains why people sang a piece of music</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="diagnostic-engineer">
+    <baseName id="id69">
+      <baseNameString>Diagnostic Engineer</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="infoRef_547">
+    <instanceOf>
+      <topicRef xlink:href="#object"></topicRef>
+    </instanceOf>
+    <baseName id="id434">
+      <baseNameString>infoRef_547</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid22">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/revision"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id418">
+      <baseNameString>revision</baseNameString>
+      <variant id="tid24">
+        <parameters>
+          <topicRef xlink:href="#tid50"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>revision</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+  </topic>
+  <topic id="proposed-answer">
+    <instanceOf>
+      <topicRef xlink:href="#answer"></topicRef>
+    </instanceOf>
+    <baseName id="id178">
+      <baseNameString>Proposed Resolution/Answer</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="performs-action">
+    <baseName id="id106">
+      <scope>
+        <topicRef xlink:href="#agent"></topicRef>
+      </scope>
+      <baseNameString>Performs Action</baseNameString>
+    </baseName>
+    <baseName id="id100">
+      <scope>
+        <topicRef xlink:href="#goal"></topicRef>
+      </scope>
+      <baseNameString>is Motivated by</baseNameString>
+    </baseName>
+    <baseName id="id104">
+      <scope>
+        <topicRef xlink:href="#task"></topicRef>
+      </scope>
+      <baseNameString>Performed by</baseNameString>
+    </baseName>
+    <baseName id="id102">
+      <scope>
+        <topicRef xlink:href="#competency"></topicRef>
+      </scope>
+      <baseNameString>at Competency Level</baseNameString>
+    </baseName>
+    <baseName id="id98">
+      <scope>
+        <topicRef xlink:href="#activity"></topicRef>
+      </scope>
+      <baseNameString>Performed by</baseNameString>
+    </baseName>
+    <occurrence id="id107">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>An Action (role=Activity or Task) can be performed by a Person or Artificial Intelligence (role=Agent).
+ How well the Agent can do the Activity or Task can be measured (role=Competency).
+ Normally Action is motivated by some purpose or purposes (role=Goal). General Form: performs-action(&lt;person | ai&gt; : agent,
+ &lt;action&gt; : activity | task, &lt;quantity&gt; : competency, &lt;purpose&gt; : goal)</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="process">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#process"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id488">
+      <baseNameString>Process</baseNameString>
+    </baseName>
+    <occurrence id="id489">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Process is an Actuality considered as an Occurrent.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="rmd">
+    <instanceOf>
+      <topicRef xlink:href="#service"></topicRef>
+    </instanceOf>
+    <baseName id="id278">
+      <baseNameString>Remote monitoring and diagnostics</baseNameString>
+    </baseName>
+    <occurrence id="id279">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Remote monitoring and diagnostics is a service that uses advanced sensor and communication 
+technology to monitor and diagnose equipment problems remotely.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="graph-sign">
+    <baseName id="id462">
+      <baseNameString>Graphical Sign</baseNameString>
+    </baseName>
+    <occurrence id="id463">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Graphical Sign encodes information primarily in a spatial manner. Line graphs, box-plots, etc., are examples.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="communication">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#communication"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id349">
+      <scope>
+        <topicRef xlink:href="#sign"></topicRef>
+      </scope>
+      <baseNameString>encodes information for communication between</baseNameString>
+    </baseName>
+    <baseName id="id346">
+      <scope>
+        <topicRef xlink:href="#recipient"></topicRef>
+      </scope>
+      <baseNameString>receives communication with participants</baseNameString>
+    </baseName>
+    <baseName id="id347">
+      <scope>
+        <topicRef xlink:href="#initiator"></topicRef>
+      </scope>
+      <baseNameString>initiated communication with participants</baseNameString>
+    </baseName>
+    <baseName id="id348">
+      <baseNameString>Communication</baseNameString>
+    </baseName>
+    <occurrence id="id351">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Communication is a process with two or more agent participants in which one agent or
+collection of agents encodes Information in a sign or semiotic text and transfers these to a second agent or 
+collection of agents for decoding and comprehension.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid134">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#proposition"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id228">
+      <baseNameString>Proposition</baseNameString>
+    </baseName>
+    <occurrence id="id229">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Proposition is Abstract entity considered Relative to some other entity or entities.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="q4">
+    <instanceOf>
+      <topicRef xlink:href="#issue"></topicRef>
+    </instanceOf>
+    <baseName id="id55">
+      <baseNameString>Role Modifier</baseNameString>
+    </baseName>
+    <occurrence id="id56">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>An Agent playing a Role (RoleSpec) does so at a certain level of 
+proficiency. This seems like it should be a modifier of the Role in the Association. How could one represent that?</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid161">
+    <instanceOf>
+      <topicRef xlink:href="#dimension"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#cont-occur"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id258">
+      <baseNameString>Continuant-Occurrent Dimension</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="see-also">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#see-also"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id365">
+      <baseNameString>See Also</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="succession">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#succession"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id165">
+      <scope>
+        <topicRef xlink:href="#predecessor"></topicRef>
+      </scope>
+      <baseNameString>Preceeds</baseNameString>
+    </baseName>
+    <baseName id="id162">
+      <scope>
+        <topicRef xlink:href="#successor"></topicRef>
+      </scope>
+      <baseNameString>Succeeds</baseNameString>
+    </baseName>
+    <baseName id="id164">
+      <baseNameString>Succession</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="loco2">
+    <instanceOf>
+      <topicRef xlink:href="#object"></topicRef>
+    </instanceOf>
+    <baseName id="id82">
+      <baseNameString>loco2</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="document">
+    <baseName id="id451">
+      <baseNameString>Document</baseNameString>
+    </baseName>
+    <occurrence id="id452">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>What is this?</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="sign-vehicle">
+    <baseName id="id380">
+      <baseNameString>Sign Vehicle</baseNameString>
+    </baseName>
+    <occurrence id="id381">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>The Actuality (Object or Process) that serves as the "representamen" of a Semiotic sign or sequence of signs (text)"</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="sign-type">
+    <baseName id="id121">
+      <baseNameString>Sign Type</baseNameString>
+    </baseName>
+    <occurrence id="id122">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Semiotic sign type, e.g., verbal, visual, auditory</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="accompanies">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#accompanies"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id136">
+      <baseNameString>Accompanies</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="has-purpose">
+    <baseName id="id316">
+      <scope>
+        <topicRef xlink:href="#goal"></topicRef>
+      </scope>
+      <baseNameString>is motivated by</baseNameString>
+    </baseName>
+    <baseName id="id315">
+      <baseNameString>Agent's Purpose</baseNameString>
+    </baseName>
+    <baseName id="id314">
+      <scope>
+        <topicRef xlink:href="#agent"></topicRef>
+      </scope>
+      <baseNameString>has purpose</baseNameString>
+    </baseName>
+    <occurrence id="id317">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Person or Artificial Intelligence (role=Agent) may have one or more purposes (role=Goal).
+ These may motivate actions, i.e., lead to the creation of performs-action associations.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="diagnosis">
+    <instanceOf>
+      <topicRef xlink:href="#purpose"></topicRef>
+    </instanceOf>
+    <baseName id="id303">
+      <baseNameString>Diagnosis</baseNameString>
+    </baseName>
+    <baseName id="id304">
+      <baseNameString>Identify Problem</baseNameString>
+    </baseName>
+    <occurrence id="id305">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Diagnosis is an information gathering and processing Task.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="prehender">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#prehender"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id143">
+      <baseNameString>Prehending Entity</baseNameString>
+    </baseName>
+    <occurrence id="id144">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>In any Prehension, the Prehending Entity is the subject of the Prehension.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="discrete-process">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#discrete-process"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id34">
+      <baseNameString>Discrete Process</baseNameString>
+    </baseName>
+    <occurrence id="id35">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Discrete Process occurs as sequence of events and resulting states.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="action">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#action"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id412">
+      <baseNameString>Action</baseNameString>
+    </baseName>
+    <occurrence id="id413">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Action is a Process (role=Activity or Task) initiated by a Person or Artificial Intelligence (role=Agent).</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid31">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id325">
+      <baseNameString>display</baseNameString>
+    </baseName>
+    <occurrence id="id326">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Suitability for display: Suitability of a topic name for display; for use in the parameters of variant names.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="product">
+    <instanceOf>
+      <topicRef xlink:href="#object"></topicRef>
+    </instanceOf>
+    <baseName id="id87">
+      <baseNameString>Product Offering</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid536">
+    <instanceOf>
+      <topicRef xlink:href="#example"></topicRef>
+    </instanceOf>
+    <baseName id="id482">
+      <baseNameString>A sheet of music</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid18">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/basename/plural"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id240">
+      <baseNameString>plural name</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="prehendee">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#prehendee"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id371">
+      <baseNameString>Prehended Entity</baseNameString>
+    </baseName>
+    <occurrence id="id372">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>In any Prehension, the Prehended Entity is the object of the Prehension.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="attribute">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#attribute"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id359">
+      <baseNameString>Attribute</baseNameString>
+    </baseName>
+    <baseName id="id358">
+      <baseNameString>Attribute</baseNameString>
+    </baseName>
+    <occurrence id="id360">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>An Attribute is a prehended property of an Object, usually an adjective in English.</resourceData>
+    </occurrence>
+    <occurrence id="id361">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A smallest, quantitatively distinct characteristic of an object. 
+  (entity? physical realm only?)</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="description">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#descritiption"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id271">
+      <baseNameString>Description</baseNameString>
+    </baseName>
+    <occurrence id="id272">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Description is a Proposition about a Continuant.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="competency">
+    <baseName id="id309">
+      <baseNameString>Competency</baseNameString>
+    </baseName>
+    <occurrence id="id310">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Competency is a measure (Quantity) of how well a particular Agent performs a Process in a role such as a Task
+ or Activity.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="task">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#task"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id334">
+      <baseNameString>Task</baseNameString>
+    </baseName>
+    <occurrence id="id335">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Task is the role played by a Process when it is viewed as part of an Activity (containing Process).</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="text-sign">
+    <baseName id="id389">
+      <baseNameString>Textual Sign</baseNameString>
+    </baseName>
+    <occurrence id="id390">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Textual Sign consists only of a sequence of words; there is no other spatial arrangement.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid79">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#tid70"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#relative"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id133">
+      <baseNameString>Relative</baseNameString>
+    </baseName>
+    <occurrence id="id134">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Relative is the consideration of something relative to something else.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="activity">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#activity"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id225">
+      <baseNameString>Activity</baseNameString>
+    </baseName>
+    <occurrence id="id226">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Activity is the role played by a Process when it is initiated by (prehends) a
+ Participant agent (initiator).</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid73">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#tid70"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#independent"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id92">
+      <baseNameString>Independent</baseNameString>
+    </baseName>
+    <occurrence id="id93">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Independent is the consideration of something according to its own attributes.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid165">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#cont-occur-dim-val"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#continuant"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id383">
+      <baseNameString>Continuant</baseNameString>
+    </baseName>
+    <occurrence id="id384">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Continuant is an entity with a persistent identity over some time interval of interest.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid64">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#allthatis"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id234">
+      <baseNameString>All that exists</baseNameString>
+    </baseName>
+    <occurrence id="id235">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>All that exists is the root of all 
+classification trees. It includes both real and imaginary in all worlds: past, present, future, imagined, etc.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="illustrated">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#illustrated"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id473">
+      <baseNameString>Illustrated</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid70">
+    <instanceOf>
+      <topicRef xlink:href="#dim-val"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#ind-rel-dim-val"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id320">
+      <baseNameString>Value in Domain of Dimension Independent-Relative-Mediating</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="info">
+    <baseName id="id474">
+      <baseNameString>Information</baseNameString>
+    </baseName>
+    <occurrence id="id475">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Information is a Role which can be played by any Schema, Script, Description, History, Reason, or Purpose.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid319">
+    <instanceOf>
+      <topicRef xlink:href="#process"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#arrangement"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id322">
+      <baseNameString>Arrangement</baseNameString>
+    </baseName>
+    <occurrence id="id323">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Arrangement is any activity that leads to order or orders; unitizing.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="ai">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#ai"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id273">
+      <baseNameString>Artificial Intelligence</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="q6">
+    <instanceOf>
+      <topicRef xlink:href="#issue"></topicRef>
+    </instanceOf>
+    <baseName id="id112">
+      <baseNameString>What is an action?</baseNameString>
+    </baseName>
+    <occurrence id="id113">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Sowa used the term action without definition. Do we need it?
+ What is it?</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="history">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#history"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id84">
+      <baseNameString>History</baseNameString>
+    </baseName>
+    <occurrence id="id85">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>History is Proposition about an Occurrent.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="dimension">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#dimension"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id283">
+      <baseNameString>Dimension</baseNameString>
+    </baseName>
+    <occurrence id="id284">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A feature whose domain is a set of mutually exclusive alternative values</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="event">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#event"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id438">
+      <baseNameString>Event</baseNameString>
+    </baseName>
+    <occurrence id="id439">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>An event is a part of a Discrete Process, which results in a change of state.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid29">
+    <instanceOf>
+      <topicRef xlink:href="#tid20"></topicRef>
+    </instanceOf>
+    <baseName id="id369">
+      <baseNameString>ontology</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="q3">
+    <instanceOf>
+      <topicRef xlink:href="#issue"></topicRef>
+    </instanceOf>
+    <baseName id="id291">
+      <baseNameString>Ordering of parts</baseNameString>
+    </baseName>
+    <occurrence id="id292">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>How does one represent order in a collection in XTM? 
+(e.g., the parts of the process of communication are encoding, transmission, and decoding)</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid91">
+    <instanceOf>
+      <topicRef xlink:href="#dimension"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#phy-abs"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id245">
+      <baseNameString>Physical-Abstract Dimension</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="service-event">
+    <baseName id="id77">
+      <baseNameString>Service Event</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="state">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#state"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id415">
+      <baseNameString>State</baseNameString>
+    </baseName>
+    <occurrence id="id416">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A state is portion of a Discrete Process</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid107">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#actuality"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id38">
+      <baseNameString>Actuality</baseNameString>
+    </baseName>
+    <occurrence id="id39">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Actuality is a Physical whose existence is Independent of any other entity.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Andy">
+    <instanceOf>
+      <topicRef xlink:href="#person"></topicRef>
+    </instanceOf>
+    <baseName id="id45">
+      <baseNameString>Andy</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="schema">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#schema"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id118">
+      <baseNameString>Schema</baseNameString>
+    </baseName>
+    <occurrence id="id119">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Schema is a Form that has the structure of a Continuant.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="subclass">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id312">
+      <baseNameString>subclass</baseNameString>
+    </baseName>
+    <baseName id="id311">
+      <baseNameString>Subclass</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="fault-sequence">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#fault-sequence"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id180">
+      <baseNameString>Fault Sequence</baseNameString>
+    </baseName>
+    <occurrence id="id181">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Fault Sequence records a sequence of Fault Events with information such as time.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="tid152">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#intention"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id496">
+      <baseNameString>Intention</baseNameString>
+    </baseName>
+    <occurrence id="id497">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Intention is an Abstract entity that Mediates two or more other entities.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="definition">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/description"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id403">
+      <baseNameString>Definition</baseNameString>
+    </baseName>
+    <baseName id="id401">
+      <baseNameString>description</baseNameString>
+      <variant id="tid583">
+        <parameters>
+          <topicRef xlink:href="#tid50"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>description</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+  </topic>
+  <topic id="continuous-process">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#continuous-process"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id252">
+      <baseNameString>Continuous Process</baseNameString>
+    </baseName>
+    <occurrence id="id253">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Continuous Process has a beginning and end but no identifiable sequence 
+of events and resulting states.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="q2">
+    <instanceOf>
+      <topicRef xlink:href="#issue"></topicRef>
+    </instanceOf>
+    <baseName id="id374">
+      <baseNameString>Activities and Tasks</baseNameString>
+    </baseName>
+    <occurrence id="id375">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>What is the structure of Activities and Tasks?</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="participant">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#participant"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id426">
+      <baseNameString>Participant</baseNameString>
+    </baseName>
+    <occurrence id="id427">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Participant is a Role in the participates-in Association with prehending entity Process.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="failure-type-sequence">
+    <baseName id="id150">
+      <baseNameString>failure-type-sequence</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="website">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#website"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id366">
+      <baseNameString>Website</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="example">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#example"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id75">
+      <baseNameString>Example</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid25">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/association-type/transitive"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id394">
+      <baseNameString>transitive association</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="manner">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#manner"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id6">
+      <baseNameString>Manner</baseNameString>
+    </baseName>
+    <occurrence id="id7">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A Manner is a prehended property of a Process, usually an adverb in English.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="answer">
+    <baseName id="id486">
+      <baseNameString>Resolution/Answer</baseNameString>
+    </baseName>
+    <occurrence id="id487">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>The accepted resolution/answer to an issue/question.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="subclass-of">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id159">
+      <scope>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </scope>
+      <baseNameString>subclass of</baseNameString>
+    </baseName>
+    <baseName id="id154">
+      <scope>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </scope>
+      <baseNameString>superclass of</baseNameString>
+    </baseName>
+    <baseName id="id158">
+      <baseNameString>Subclass of</baseNameString>
+    </baseName>
+    <baseName id="id156">
+      <scope>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </scope>
+      <baseNameString>Superclass of</baseNameString>
+    </baseName>
+    <baseName id="id157">
+      <baseNameString>superclass-subclass</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="sign">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#sign"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id362">
+      <baseNameString>Semiotic Sign or Text</baseNameString>
+    </baseName>
+    <occurrence id="id363">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>This is the Role played by any Actuality which encodes Information for Communication to decoding agents.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="resource">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#resource"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id183">
+      <baseNameString>Resource</baseNameString>
+    </baseName>
+    <occurrence id="id184">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Must be present at the beginning of the activity but does not control the activity</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="answer-to">
+    <baseName id="id205">
+      <scope>
+        <topicRef xlink:href="#answer"></topicRef>
+      </scope>
+      <baseNameString>Answer To</baseNameString>
+    </baseName>
+    <baseName id="id204">
+      <scope>
+        <topicRef xlink:href="#issue"></topicRef>
+      </scope>
+      <baseNameString>Has Answer</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="feature">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#feature"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id377">
+      <baseNameString>Feature</baseNameString>
+    </baseName>
+    <occurrence id="id378">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>A primitive class of attributes, e.g., color.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="phenomenon">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#phenomenon"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id223">
+      <baseNameString>Phenomenon</baseNameString>
+    </baseName>
+    <occurrence id="id224">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>The Role played by an Actuality in the relates-to association.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="resolution">
+    <baseName id="id63">
+      <scope>
+        <topicRef xlink:href="#rec"></topicRef>
+      </scope>
+      <baseNameString>resolves case</baseNameString>
+    </baseName>
+    <baseName id="id61">
+      <scope>
+        <topicRef xlink:href="#case"></topicRef>
+      </scope>
+      <baseNameString>is resolved by</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="georgesmith">
+    <instanceOf>
+      <topicRef xlink:href="#person"></topicRef>
+    </instanceOf>
+    <baseName id="id429">
+      <baseNameString>George Smith</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid54">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/copyright"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id275">
+      <baseNameString>Copyright</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="fix-fault">
+    <instanceOf>
+      <topicRef xlink:href="#purpose"></topicRef>
+    </instanceOf>
+    <baseName id="id198">
+      <baseNameString>Resolve or workaround fault to achieve normal function or behavior</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="participation">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#participation"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id493">
+      <baseNameString>Participation</baseNameString>
+    </baseName>
+    <occurrence id="id494">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Participation is a Prehension considered as an Occurrent. The prehending entity is a Process.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="table-rows">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#table-rows"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id172">
+      <baseNameString>Number of Rows in Table</baseNameString>
+    </baseName>
+    <occurrence id="id173">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>This is an attribute, to be stored as resourceData, of a tabular-sign.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="reason">
+    <instanceOf>
+      <topicRef xlink:href="#tid59"></topicRef>
+    </instanceOf>
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#reason"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id328">
+      <baseNameString>Reason</baseNameString>
+    </baseName>
+    <occurrence id="id329">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Reason is an Intention that is considered as a Continuant.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="infoRef_547-failure-type-sequence-Andy">
+    <instanceOf>
+      <topicRef xlink:href="#failure-type-sequence"></topicRef>
+    </instanceOf>
+    <instanceOf>
+      <topicRef xlink:href="#tabular-sign"></topicRef>
+    </instanceOf>
+    <baseName id="id18">
+      <baseNameString>infoRef_547-failure-type-sequence-Andy</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tm-reachback">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#reachback"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id20">
+      <baseNameString>Reachback Topic Map</baseNameString>
+    </baseName>
+    <occurrence id="id21">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>This is a topic map developed for the GE Global Research/Lockheed-Martin Reachback project.
+ It supports the demo of January 2003.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="participates-in">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#participates-in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id148">
+      <scope>
+        <topicRef xlink:href="#activity"></topicRef>
+      </scope>
+      <baseNameString>has Participant</baseNameString>
+    </baseName>
+    <baseName id="id149">
+      <baseNameString>participation association</baseNameString>
+    </baseName>
+    <baseName id="id146">
+      <scope>
+        <topicRef xlink:href="#participant"></topicRef>
+      </scope>
+      <baseNameString>Participates-in</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="goal">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#goal"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id424">
+      <baseNameString>Goal</baseNameString>
+    </baseName>
+    <occurrence id="id425">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Controls the direction of the activity from the end</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="diagnostic-software">
+    <instanceOf>
+      <topicRef xlink:href="#script"></topicRef>
+    </instanceOf>
+    <baseName id="id466">
+      <baseNameString>Diagnostic Software</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="agent">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#agent"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id73">
+      <baseNameString>Agent</baseNameString>
+    </baseName>
+    <occurrence id="id74">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>An Agent is an Object in the role of Initiator (capable of purposeful actifity).</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="containee">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/i18n/#containee"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id446">
+      <baseNameString>Containee</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="auto-case">
+    <baseName id="id299">
+      <baseNameString>Auto-recommended Case</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="part">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#part"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id89">
+      <baseNameString>Part</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="proposed-answer-to">
+    <baseName id="id445">
+      <scope>
+        <topicRef xlink:href="#issue"></topicRef>
+      </scope>
+      <baseNameString>Has Proposed Answer</baseNameString>
+    </baseName>
+    <baseName id="id444">
+      <scope>
+        <topicRef xlink:href="#proposed-answer"></topicRef>
+      </scope>
+      <baseNameString>Proposed Answer To</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid9">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/topic/date"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id477">
+      <baseNameString>date</baseNameString>
+      <variant id="tid11">
+        <parameters>
+          <topicRef xlink:href="#tid50"></topicRef>
+        </parameters>
+        <variantName>
+          <resourceData>date</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+  </topic>
+  <topic id="sign-creation">
+    <baseName id="id231">
+      <baseNameString>Sign Creation</baseNameString>
+    </baseName>
+    <occurrence id="id232">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>The encoding of Information in or creation of a semiotic Sign.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="container">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/i18n/#container"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id131">
+      <baseNameString>Container</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="tid34">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="file:/C:/Program Files/oks-professional/jakarta-tomcat/webapps/omnigator/WEB-INF/topicmaps/sowatoponto.ltmm#sowaont"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id422">
+      <baseNameString>Sowa Top-Level Topic Map</baseNameString>
+    </baseName>
+    <occurrence id="id423">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>This is a topic map developed by the GE Global Research/Lockheed-Martin Reachback project.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="example-of">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#example-of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id49">
+      <scope>
+        <topicRef xlink:href="#illustrated"></topicRef>
+      </scope>
+      <baseNameString>Has Example</baseNameString>
+    </baseName>
+    <baseName id="id47">
+      <scope>
+        <topicRef xlink:href="#example"></topicRef>
+      </scope>
+      <baseNameString>Example-of</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="part-of">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#part-of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id194">
+      <scope>
+        <topicRef xlink:href="#part"></topicRef>
+      </scope>
+      <baseNameString>Part of</baseNameString>
+    </baseName>
+    <baseName id="id190">
+      <scope>
+        <topicRef xlink:href="#whole"></topicRef>
+      </scope>
+      <baseNameString>Has part</baseNameString>
+    </baseName>
+    <baseName id="id195">
+      <baseNameString>part-whole</baseNameString>
+    </baseName>
+    <baseName id="id189">
+      <scope>
+        <topicRef xlink:href="#container"></topicRef>
+      </scope>
+      <baseNameString>Consists of</baseNameString>
+    </baseName>
+    <baseName id="id192">
+      <scope>
+        <topicRef xlink:href="#containee"></topicRef>
+      </scope>
+      <baseNameString>Constitutes</baseNameString>
+    </baseName>
+    <occurrence id="id196">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>The concept of the part-whole (prehended-prehending) or containment relationship.
+ No ordering of the parts is implied.</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="initiator">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://crapo.crd.ge.com/reachback/psis.xtm#initiator"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id27">
+      <baseNameString>Initiator</baseNameString>
+    </baseName>
+    <occurrence id="id28">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Controls the direction of the activity from the beginning</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="q1">
+    <instanceOf>
+      <topicRef xlink:href="#issue"></topicRef>
+    </instanceOf>
+    <baseName id="id31">
+      <baseNameString>Subtype vs. Subclass</baseNameString>
+    </baseName>
+    <occurrence id="id32">
+      <instanceOf>
+        <topicRef xlink:href="#definition"></topicRef>
+      </instanceOf>
+      <resourceData>Is the type-subtype and the superclass-subclass 
+relationships the same or are they different in some way?</resourceData>
+    </occurrence>
+  </topic>
+  <association id="tid198">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id517">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid116"></topicRef>
+    </member>
+    <member id="id518">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#schema"></topicRef>
+    </member>
+  </association>
+  <association id="tid155">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id693">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid152"></topicRef>
+    </member>
+    <member id="id694">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid101"></topicRef>
+    </member>
+  </association>
+  <association id="tid243">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id520">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#history"></topicRef>
+    </member>
+    <member id="id521">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid134"></topicRef>
+    </member>
+  </association>
+  <association id="tid168">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id499">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid165"></topicRef>
+    </member>
+    <member id="id500">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid64"></topicRef>
+    </member>
+  </association>
+  <association id="tid378">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id832">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#feature"></topicRef>
+    </member>
+    <member id="id833">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid374"></topicRef>
+    </member>
+  </association>
+  <association id="tid146">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id654">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid143"></topicRef>
+    </member>
+    <member id="id655">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid95"></topicRef>
+    </member>
+  </association>
+  <association id="tid189">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id792">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#process"></topicRef>
+    </member>
+    <member id="id793">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid107"></topicRef>
+    </member>
+  </association>
+  <association id="tid1005">
+    <instanceOf>
+      <topicRef xlink:href="#proposed-answer-to"></topicRef>
+    </instanceOf>
+    <member id="id766">
+      <roleSpec>
+        <topicRef xlink:href="#issue"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#q5"></topicRef>
+    </member>
+    <member id="id765">
+      <roleSpec>
+        <topicRef xlink:href="#proposed-answer"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#pa5-1"></topicRef>
+    </member>
+  </association>
+  <association id="tid316">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id552">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#continuous-process"></topicRef>
+    </member>
+    <member id="id551">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#process"></topicRef>
+    </member>
+  </association>
+  <association id="id849">
+    <instanceOf>
+      <topicRef xlink:href="#relates-to"></topicRef>
+    </instanceOf>
+    <member id="id850">
+      <roleSpec>
+        <topicRef xlink:href="#info"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_547-failure-type-sequence-Andy"></topicRef>
+    </member>
+    <member id="id851">
+      <roleSpec>
+        <topicRef xlink:href="#phenomenon"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_547"></topicRef>
+    </member>
+  </association>
+  <association id="tid149">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id664">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid85"></topicRef>
+    </member>
+    <member id="id663">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid143"></topicRef>
+    </member>
+  </association>
+  <association id="tid756">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id660">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#process"></topicRef>
+    </member>
+    <member id="id661">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#action"></topicRef>
+    </member>
+  </association>
+  <association id="tid797">
+    <instanceOf>
+      <topicRef xlink:href="#performs-action"></topicRef>
+    </instanceOf>
+    <member id="id612">
+      <roleSpec>
+        <topicRef xlink:href="#task"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnosis"></topicRef>
+    </member>
+    <member id="id611">
+      <roleSpec>
+        <topicRef xlink:href="#agent"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnostic-engineer"></topicRef>
+    </member>
+  </association>
+  <association id="tid88">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id887">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid85"></topicRef>
+    </member>
+    <member id="id886">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid64"></topicRef>
+    </member>
+  </association>
+  <association id="tid180">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id808">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid107"></topicRef>
+    </member>
+    <member id="id807">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#object"></topicRef>
+    </member>
+  </association>
+  <association id="tid234">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id854">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#description"></topicRef>
+    </member>
+    <member id="id853">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid134"></topicRef>
+    </member>
+  </association>
+  <association id="tid325">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id548">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid319"></topicRef>
+    </member>
+    <member id="id549">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid322"></topicRef>
+    </member>
+  </association>
+  <association id="tid859">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id715">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#history"></topicRef>
+    </member>
+    <member id="id716">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#event-history"></topicRef>
+    </member>
+  </association>
+  <association id="tid358">
+    <instanceOf>
+      <topicRef xlink:href="#see-also"></topicRef>
+    </instanceOf>
+    <member id="id535">
+      <roleSpec>
+        <topicRef xlink:href="#topic"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#feature"></topicRef>
+    </member>
+    <member id="id536">
+      <roleSpec>
+        <topicRef xlink:href="#topic"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#attribute"></topicRef>
+    </member>
+  </association>
+  <association id="tid122">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id564">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid116"></topicRef>
+    </member>
+    <member id="id563">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid73"></topicRef>
+    </member>
+  </association>
+  <association id="tid76">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id512">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid64"></topicRef>
+    </member>
+    <member id="id511">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid73"></topicRef>
+    </member>
+  </association>
+  <association id="tid174">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id572">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid64"></topicRef>
+    </member>
+    <member id="id573">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid171"></topicRef>
+    </member>
+  </association>
+  <association id="tid441">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id865">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#participant"></topicRef>
+    </member>
+    <member id="id866">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#initiator"></topicRef>
+    </member>
+  </association>
+  <association id="tid953">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id746">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#event"></topicRef>
+    </member>
+    <member id="id745">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#service-event"></topicRef>
+    </member>
+  </association>
+  <association id="tid110">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id624">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid107"></topicRef>
+    </member>
+    <member id="id623">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid95"></topicRef>
+    </member>
+  </association>
+  <association id="tid543">
+    <instanceOf>
+      <topicRef xlink:href="#example-of"></topicRef>
+    </instanceOf>
+    <member id="id790">
+      <roleSpec>
+        <topicRef xlink:href="#illustrated"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#history"></topicRef>
+    </member>
+    <member id="id789">
+      <roleSpec>
+        <topicRef xlink:href="#example"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid541"></topicRef>
+    </member>
+  </association>
+  <association id="tid246">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id506">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid171"></topicRef>
+    </member>
+    <member id="id505">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#history"></topicRef>
+    </member>
+  </association>
+  <association id="tid574">
+    <instanceOf>
+      <topicRef xlink:href="#communication"></topicRef>
+    </instanceOf>
+    <member id="id700">
+      <roleSpec>
+        <topicRef xlink:href="#recipient"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#georgesmith"></topicRef>
+    </member>
+    <member id="id701">
+      <roleSpec>
+        <topicRef xlink:href="#initiator"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#aca"></topicRef>
+    </member>
+    <member id="id699">
+      <roleSpec>
+        <topicRef xlink:href="#sign"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco1-fault-sequence-georgesmith"></topicRef>
+    </member>
+  </association>
+  <association id="tid1014">
+    <instanceOf>
+      <topicRef xlink:href="#proposed-answer-to"></topicRef>
+    </instanceOf>
+    <member id="id801">
+      <roleSpec>
+        <topicRef xlink:href="#issue"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#q6"></topicRef>
+    </member>
+    <member id="id802">
+      <roleSpec>
+        <topicRef xlink:href="#proposed-answer"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#pa6-1"></topicRef>
+    </member>
+  </association>
+  <association id="tid279">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id799">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid152"></topicRef>
+    </member>
+    <member id="id798">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#purpose"></topicRef>
+    </member>
+  </association>
+  <association id="id637">
+    <instanceOf>
+      <topicRef xlink:href="#communication"></topicRef>
+    </instanceOf>
+    <member id="id638">
+      <roleSpec>
+        <topicRef xlink:href="#initiator"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#aca"></topicRef>
+    </member>
+    <member id="id640">
+      <roleSpec>
+        <topicRef xlink:href="#recipient"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#Andy"></topicRef>
+    </member>
+    <member id="id639">
+      <roleSpec>
+        <topicRef xlink:href="#sign"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_552-failure-type-sequence-Andy"></topicRef>
+    </member>
+  </association>
+  <association id="tid98">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id881">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid64"></topicRef>
+    </member>
+    <member id="id880">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid95"></topicRef>
+    </member>
+  </association>
+  <association id="tid201">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id774">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#schema"></topicRef>
+    </member>
+    <member id="id775">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid165"></topicRef>
+    </member>
+  </association>
+  <association id="tid909">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id626">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#communication"></topicRef>
+    </member>
+    <member id="id627">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#process"></topicRef>
+    </member>
+  </association>
+  <association id="tid192">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id860">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid171"></topicRef>
+    </member>
+    <member id="id859">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#process"></topicRef>
+    </member>
+  </association>
+  <association id="tid538">
+    <instanceOf>
+      <topicRef xlink:href="#example-of"></topicRef>
+    </instanceOf>
+    <member id="id857">
+      <roleSpec>
+        <topicRef xlink:href="#illustrated"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#script"></topicRef>
+    </member>
+    <member id="id856">
+      <roleSpec>
+        <topicRef xlink:href="#example"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid536"></topicRef>
+    </member>
+  </association>
+  <association id="tid381">
+    <instanceOf>
+      <topicRef xlink:href="#participates-in"></topicRef>
+    </instanceOf>
+    <member id="id632">
+      <roleSpec>
+        <topicRef xlink:href="#participant"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid374"></topicRef>
+    </member>
+    <member id="id633">
+      <roleSpec>
+        <topicRef xlink:href="#activity"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid334"></topicRef>
+    </member>
+  </association>
+  <association id="tid273">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id600">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid165"></topicRef>
+    </member>
+    <member id="id599">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#reason"></topicRef>
+    </member>
+  </association>
+  <association id="tid137">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id621">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid101"></topicRef>
+    </member>
+    <member id="id620">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid134"></topicRef>
+    </member>
+  </association>
+  <association id="tid413">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id737">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#containee"></topicRef>
+    </member>
+    <member id="id736">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehendee"></topicRef>
+    </member>
+  </association>
+  <association id="tid447">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id878">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#resource"></topicRef>
+    </member>
+    <member id="id877">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#participant"></topicRef>
+    </member>
+  </association>
+  <association id="id840">
+    <instanceOf>
+      <topicRef xlink:href="#relates-to"></topicRef>
+    </instanceOf>
+    <member id="id842">
+      <roleSpec>
+        <topicRef xlink:href="#phenomenon"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_552"></topicRef>
+    </member>
+    <member id="id841">
+      <roleSpec>
+        <topicRef xlink:href="#info"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_552-failure-type-sequence-Andy"></topicRef>
+    </member>
+  </association>
+  <association id="tid819">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id786">
+      <roleSpec>
+        <topicRef xlink:href="#container"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-vehicle"></topicRef>
+    </member>
+    <member id="id787">
+      <roleSpec>
+        <topicRef xlink:href="#containee"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#info"></topicRef>
+    </member>
+  </association>
+  <association id="tid879">
+    <instanceOf>
+      <topicRef xlink:href="#participates-in"></topicRef>
+    </instanceOf>
+    <member id="id657">
+      <roleSpec>
+        <topicRef xlink:href="#participant"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#info"></topicRef>
+    </member>
+    <member id="id658">
+      <roleSpec>
+        <topicRef xlink:href="#activity"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#communication"></topicRef>
+    </member>
+  </association>
+  <association id="new-assoc">
+    <instanceOf>
+      <topicRef xlink:href="#communication"></topicRef>
+    </instanceOf>
+    <member id="id751">
+      <roleSpec>
+        <topicRef xlink:href="#initiator"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#aca"></topicRef>
+    </member>
+    <member id="id753">
+      <roleSpec>
+        <topicRef xlink:href="#sign"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco3-fault-sequence-georgesmith"></topicRef>
+    </member>
+    <member id="id752">
+      <roleSpec>
+        <topicRef xlink:href="#recipient"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#georgesmith"></topicRef>
+    </member>
+  </association>
+  <association id="tid310">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id719">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#state"></topicRef>
+    </member>
+    <member id="id718">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#discrete-process"></topicRef>
+    </member>
+  </association>
+  <association id="tid187">
+    <instanceOf>
+      <topicRef xlink:href="#relates-to"></topicRef>
+    </instanceOf>
+    <member id="id869">
+      <roleSpec>
+        <topicRef xlink:href="#info"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco2-fault-sequence-georgesmith"></topicRef>
+    </member>
+    <member id="id868">
+      <roleSpec>
+        <topicRef xlink:href="#phenomenon"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco2"></topicRef>
+    </member>
+  </association>
+  <association id="tid453">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id896">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#participant"></topicRef>
+    </member>
+    <member id="id895">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#goal"></topicRef>
+    </member>
+  </association>
+  <association id="tid770">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id892">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#artificial-agent"></topicRef>
+    </member>
+    <member id="id893">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#agent"></topicRef>
+    </member>
+  </association>
+  <association id="tid252">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id681">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#structure"></topicRef>
+    </member>
+    <member id="id682">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid143"></topicRef>
+    </member>
+  </association>
+  <association id="tid131">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id697">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid79"></topicRef>
+    </member>
+    <member id="id696">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid125"></topicRef>
+    </member>
+  </association>
+  <association id="tid886">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id524">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#action"></topicRef>
+    </member>
+    <member id="id523">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-creation"></topicRef>
+    </member>
+  </association>
+  <association id="tid421">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id575">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#part"></topicRef>
+    </member>
+    <member id="id576">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehendee"></topicRef>
+    </member>
+  </association>
+  <association id="tid391">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id740">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid107"></topicRef>
+    </member>
+    <member id="id739">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid388"></topicRef>
+    </member>
+  </association>
+  <association id="tid219">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id673">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid165"></topicRef>
+    </member>
+    <member id="id672">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#juncture"></topicRef>
+    </member>
+  </association>
+  <association id="tid967">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id710">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#auto-case"></topicRef>
+    </member>
+    <member id="id709">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#case"></topicRef>
+    </member>
+  </association>
+  <association id="tid826">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id772">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#schema"></topicRef>
+    </member>
+    <member id="id771">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-type"></topicRef>
+    </member>
+  </association>
+  <association id="tid363">
+    <instanceOf>
+      <topicRef xlink:href="#participates-in"></topicRef>
+    </instanceOf>
+    <member id="id703">
+      <roleSpec>
+        <topicRef xlink:href="#participant"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#feature"></topicRef>
+    </member>
+    <member id="id704">
+      <roleSpec>
+        <topicRef xlink:href="#activity"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid328"></topicRef>
+    </member>
+  </association>
+  <association id="tid288">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id597">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#object"></topicRef>
+    </member>
+    <member id="id596">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#person"></topicRef>
+    </member>
+  </association>
+  <association id="tid264">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id759">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#situation"></topicRef>
+    </member>
+    <member id="id760">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid171"></topicRef>
+    </member>
+  </association>
+  <association id="id754">
+    <instanceOf>
+      <topicRef xlink:href="#communication"></topicRef>
+    </instanceOf>
+    <member id="id755">
+      <roleSpec>
+        <topicRef xlink:href="#initiator"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#aca"></topicRef>
+    </member>
+    <member id="id756">
+      <roleSpec>
+        <topicRef xlink:href="#recipient"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#Andy"></topicRef>
+    </member>
+    <member id="id757">
+      <roleSpec>
+        <topicRef xlink:href="#sign"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_547-failure-type-sequence-Andy"></topicRef>
+    </member>
+  </association>
+  <association id="tid301">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id652">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#discrete-process"></topicRef>
+    </member>
+    <member id="id651">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#event"></topicRef>
+    </member>
+  </association>
+  <association id="tid901">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id648">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#action"></topicRef>
+    </member>
+    <member id="id649">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-decoding"></topicRef>
+    </member>
+  </association>
+  <association id="tid794">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id555">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#process"></topicRef>
+    </member>
+    <member id="id554">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnosis"></topicRef>
+    </member>
+  </association>
+  <association id="tid426">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id503">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#participant"></topicRef>
+    </member>
+    <member id="id502">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehendee"></topicRef>
+    </member>
+  </association>
+  <association id="id559">
+    <instanceOf>
+      <topicRef xlink:href="#relates-to"></topicRef>
+    </instanceOf>
+    <member id="id561">
+      <roleSpec>
+        <topicRef xlink:href="#info"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_547-fault-sequence-Andy"></topicRef>
+    </member>
+    <member id="id560">
+      <roleSpec>
+        <topicRef xlink:href="#phenomenon"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_547"></topicRef>
+    </member>
+  </association>
+  <association id="tid270">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id781">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid152"></topicRef>
+    </member>
+    <member id="id780">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#reason"></topicRef>
+    </member>
+  </association>
+  <association id="tid937">
+    <instanceOf>
+      <topicRef xlink:href="#performs-action"></topicRef>
+    </instanceOf>
+    <member id="id578">
+      <roleSpec>
+        <topicRef xlink:href="#task"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnostic-procedure"></topicRef>
+    </member>
+    <member id="id579">
+      <roleSpec>
+        <topicRef xlink:href="#agent"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnostic-software"></topicRef>
+    </member>
+  </association>
+  <association id="tid523">
+    <instanceOf>
+      <topicRef xlink:href="#example-of"></topicRef>
+    </instanceOf>
+    <member id="id588">
+      <roleSpec>
+        <topicRef xlink:href="#illustrated"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#process"></topicRef>
+    </member>
+    <member id="id587">
+      <roleSpec>
+        <topicRef xlink:href="#example"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid521"></topicRef>
+    </member>
+  </association>
+  <association id="tid533">
+    <instanceOf>
+      <topicRef xlink:href="#example-of"></topicRef>
+    </instanceOf>
+    <member id="id872">
+      <roleSpec>
+        <topicRef xlink:href="#example"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid531"></topicRef>
+    </member>
+    <member id="id871">
+      <roleSpec>
+        <topicRef xlink:href="#illustrated"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#script"></topicRef>
+    </member>
+  </association>
+  <association id="tid776">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id836">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#agent"></topicRef>
+    </member>
+    <member id="id835">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#human-agent"></topicRef>
+    </member>
+  </association>
+  <association id="tid255">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id724">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#structure"></topicRef>
+    </member>
+    <member id="id725">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid165"></topicRef>
+    </member>
+  </association>
+  <association id="tid82">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id603">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid79"></topicRef>
+    </member>
+    <member id="id602">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid64"></topicRef>
+    </member>
+  </association>
+  <association id="tid140">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id827">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid79"></topicRef>
+    </member>
+    <member id="id826">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid134"></topicRef>
+    </member>
+  </association>
+  <association id="tid895">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id670">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-transmission"></topicRef>
+    </member>
+    <member id="id669">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#action"></topicRef>
+    </member>
+  </association>
+  <association id="tid295">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id614">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#discrete-process"></topicRef>
+    </member>
+    <member id="id615">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#process"></topicRef>
+    </member>
+  </association>
+  <association id="tid459">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id527">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#participant"></topicRef>
+    </member>
+    <member id="id526">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#essence"></topicRef>
+    </member>
+  </association>
+  <association id="tid943">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id848">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#monitoring"></topicRef>
+    </member>
+    <member id="id847">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#rmd"></topicRef>
+    </member>
+  </association>
+  <association id="tid853">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id839">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#graph-sign"></topicRef>
+    </member>
+    <member id="id838">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#visual-sign"></topicRef>
+    </member>
+  </association>
+  <association id="tid128">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id805">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid125"></topicRef>
+    </member>
+    <member id="id804">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid95"></topicRef>
+    </member>
+  </association>
+  <association id="tid476">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id707">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#initiator"></topicRef>
+    </member>
+    <member id="id706">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#agent"></topicRef>
+    </member>
+  </association>
+  <association id="tid417">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id742">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehender"></topicRef>
+    </member>
+    <member id="id743">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#whole"></topicRef>
+    </member>
+  </association>
+  <association id="tid172">
+    <instanceOf>
+      <topicRef xlink:href="#relates-to"></topicRef>
+    </instanceOf>
+    <member id="id762">
+      <roleSpec>
+        <topicRef xlink:href="#phenomenon"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco3"></topicRef>
+    </member>
+    <member id="id763">
+      <roleSpec>
+        <topicRef xlink:href="#info"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco3-fault-sequence-georgesmith"></topicRef>
+    </member>
+  </association>
+  <association id="tid865">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id863">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#fault-sequence"></topicRef>
+    </member>
+    <member id="id862">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#event-history"></topicRef>
+    </member>
+  </association>
+  <association id="tid915">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id728">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-transmission"></topicRef>
+    </member>
+    <member id="id727">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#communication"></topicRef>
+    </member>
+  </association>
+  <association id="tid924">
+    <instanceOf>
+      <topicRef xlink:href="#succession"></topicRef>
+    </instanceOf>
+    <member id="id630">
+      <roleSpec>
+        <topicRef xlink:href="#successor"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-decoding"></topicRef>
+    </member>
+    <member id="id629">
+      <roleSpec>
+        <topicRef xlink:href="#predecessor"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-transmission"></topicRef>
+    </member>
+  </association>
+  <association id="tid838">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id778">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#visual-sign"></topicRef>
+    </member>
+    <member id="id777">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#text-sign"></topicRef>
+    </member>
+  </association>
+  <association id="tid343">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id570">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid328"></topicRef>
+    </member>
+    <member id="id569">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid340"></topicRef>
+    </member>
+  </association>
+  <association id="tid371">
+    <instanceOf>
+      <topicRef xlink:href="#participates-in"></topicRef>
+    </instanceOf>
+    <member id="id796">
+      <roleSpec>
+        <topicRef xlink:href="#participant"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#dimension"></topicRef>
+    </member>
+    <member id="id795">
+      <roleSpec>
+        <topicRef xlink:href="#activity"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid340"></topicRef>
+    </member>
+  </association>
+  <association id="tid368">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id567">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#feature"></topicRef>
+    </member>
+    <member id="id566">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#dimension"></topicRef>
+    </member>
+  </association>
+  <association id="tid216">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id713">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid125"></topicRef>
+    </member>
+    <member id="id712">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#juncture"></topicRef>
+    </member>
+  </association>
+  <association id="tid889">
+    <instanceOf>
+      <topicRef xlink:href="#participates-in"></topicRef>
+    </instanceOf>
+    <member id="id690">
+      <roleSpec>
+        <topicRef xlink:href="#activity"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-creation"></topicRef>
+    </member>
+    <member id="id691">
+      <roleSpec>
+        <topicRef xlink:href="#resource"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#info"></topicRef>
+    </member>
+  </association>
+  <association id="tid470">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id675">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehendee"></topicRef>
+    </member>
+    <member id="id676">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#manner"></topicRef>
+    </member>
+  </association>
+  <association id="id812">
+    <instanceOf>
+      <topicRef xlink:href="#communication"></topicRef>
+    </instanceOf>
+    <member id="id813">
+      <roleSpec>
+        <topicRef xlink:href="#sign"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#infoRef_547-fault-sequence-Andy"></topicRef>
+    </member>
+    <member id="id814">
+      <roleSpec>
+        <topicRef xlink:href="#initiator"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#aca"></topicRef>
+    </member>
+    <member id="id815">
+      <roleSpec>
+        <topicRef xlink:href="#recipient"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#Andy"></topicRef>
+    </member>
+  </association>
+  <association id="tid570">
+    <instanceOf>
+      <topicRef xlink:href="#communication"></topicRef>
+    </instanceOf>
+    <member id="id540">
+      <roleSpec>
+        <topicRef xlink:href="#sign"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco2-fault-sequence-georgesmith"></topicRef>
+    </member>
+    <member id="id539">
+      <roleSpec>
+        <topicRef xlink:href="#initiator"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#aca"></topicRef>
+    </member>
+    <member id="id538">
+      <roleSpec>
+        <topicRef xlink:href="#recipient"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#georgesmith"></topicRef>
+    </member>
+  </association>
+  <association id="tid464">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id530">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehendee"></topicRef>
+    </member>
+    <member id="id529">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#attribute"></topicRef>
+    </member>
+  </association>
+  <association id="tid844">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id731">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#visual-sign"></topicRef>
+    </member>
+    <member id="id730">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tabular-sign"></topicRef>
+    </member>
+  </association>
+  <association id="tid918">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id508">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#communication"></topicRef>
+    </member>
+    <member id="id509">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-decoding"></topicRef>
+    </member>
+  </association>
+  <association id="tid782">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id684">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#manner"></topicRef>
+    </member>
+    <member id="id685">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#competency"></topicRef>
+    </member>
+  </association>
+  <association id="tid207">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id817">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid116"></topicRef>
+    </member>
+    <member id="id818">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#script"></topicRef>
+    </member>
+  </association>
+  <association id="tid104">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id558">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid64"></topicRef>
+    </member>
+    <member id="id557">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid101"></topicRef>
+    </member>
+  </association>
+  <association id="tid921">
+    <instanceOf>
+      <topicRef xlink:href="#succession"></topicRef>
+    </instanceOf>
+    <member id="id889">
+      <roleSpec>
+        <topicRef xlink:href="#predecessor"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-creation"></topicRef>
+    </member>
+    <member id="id890">
+      <roleSpec>
+        <topicRef xlink:href="#successor"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-transmission"></topicRef>
+    </member>
+  </association>
+  <association id="tid331">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id768">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid328"></topicRef>
+    </member>
+    <member id="id769">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid319"></topicRef>
+    </member>
+  </association>
+  <association id="tid397">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id734">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid388"></topicRef>
+    </member>
+    <member id="id733">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehender"></topicRef>
+    </member>
+  </association>
+  <association id="tid210">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id546">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#script"></topicRef>
+    </member>
+    <member id="id545">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid171"></topicRef>
+    </member>
+  </association>
+  <association id="tid113">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id667">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid107"></topicRef>
+    </member>
+    <member id="id666">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid73"></topicRef>
+    </member>
+  </association>
+  <association id="tid403">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id585">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehendee"></topicRef>
+    </member>
+    <member id="id584">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid388"></topicRef>
+    </member>
+  </association>
+  <association id="tid787">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id679">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnostic-engineer"></topicRef>
+    </member>
+    <member id="id678">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#human-agent"></topicRef>
+    </member>
+  </association>
+  <association id="tid282">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id646">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#purpose"></topicRef>
+    </member>
+    <member id="id645">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid171"></topicRef>
+    </member>
+  </association>
+  <association id="tid518">
+    <instanceOf>
+      <topicRef xlink:href="#example-of"></topicRef>
+    </instanceOf>
+    <member id="id618">
+      <roleSpec>
+        <topicRef xlink:href="#illustrated"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#script"></topicRef>
+    </member>
+    <member id="id617">
+      <roleSpec>
+        <topicRef xlink:href="#example"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid516"></topicRef>
+    </member>
+  </association>
+  <association id="tid948">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id687">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnosis"></topicRef>
+    </member>
+    <member id="id688">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#rmd"></topicRef>
+    </member>
+  </association>
+  <association id="tid349">
+    <instanceOf>
+      <topicRef xlink:href="#participates-in"></topicRef>
+    </instanceOf>
+    <member id="id810">
+      <roleSpec>
+        <topicRef xlink:href="#activity"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid322"></topicRef>
+    </member>
+    <member id="id811">
+      <roleSpec>
+        <topicRef xlink:href="#participant"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#attribute"></topicRef>
+    </member>
+  </association>
+  <association id="tid408">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id515">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#container"></topicRef>
+    </member>
+    <member id="id514">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#prehender"></topicRef>
+    </member>
+  </association>
+  <association id="tid832">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id830">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#visual-sign"></topicRef>
+    </member>
+    <member id="id829">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-type"></topicRef>
+    </member>
+  </association>
+  <association id="tid337">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id783">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid328"></topicRef>
+    </member>
+    <member id="id784">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid334"></topicRef>
+    </member>
+  </association>
+  <association id="tid432">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id605">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid171"></topicRef>
+    </member>
+    <member id="id606">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#stage"></topicRef>
+    </member>
+  </association>
+  <association id="tid912">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id582">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#sign-creation"></topicRef>
+    </member>
+    <member id="id581">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#communication"></topicRef>
+    </member>
+  </association>
+  <association id="tid228">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id823">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid171"></topicRef>
+    </member>
+    <member id="id824">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#participation"></topicRef>
+    </member>
+  </association>
+  <association id="tid225">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id542">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#participation"></topicRef>
+    </member>
+    <member id="id543">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid125"></topicRef>
+    </member>
+  </association>
+  <association id="tid183">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id875">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid165"></topicRef>
+    </member>
+    <member id="id874">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#object"></topicRef>
+    </member>
+  </association>
+  <association id="tid237">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id820">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#description"></topicRef>
+    </member>
+    <member id="id821">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid165"></topicRef>
+    </member>
+  </association>
+  <association id="tid261">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id591">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#situation"></topicRef>
+    </member>
+    <member id="id590">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid143"></topicRef>
+    </member>
+  </association>
+  <association id="tid119">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id722">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid116"></topicRef>
+    </member>
+    <member id="id721">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid101"></topicRef>
+    </member>
+  </association>
+  <association id="tid801">
+    <instanceOf>
+      <topicRef xlink:href="#performs-action"></topicRef>
+    </instanceOf>
+    <member id="id635">
+      <roleSpec>
+        <topicRef xlink:href="#agent"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnostic-software"></topicRef>
+    </member>
+    <member id="id636">
+      <roleSpec>
+        <topicRef xlink:href="#task"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#diagnosis"></topicRef>
+    </member>
+  </association>
+  <association id="tid548">
+    <instanceOf>
+      <topicRef xlink:href="#example-of"></topicRef>
+    </instanceOf>
+    <member id="id748">
+      <roleSpec>
+        <topicRef xlink:href="#illustrated"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#purpose"></topicRef>
+    </member>
+    <member id="id749">
+      <roleSpec>
+        <topicRef xlink:href="#example"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid546"></topicRef>
+    </member>
+  </association>
+  <association id="tid874">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id609">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#recipient"></topicRef>
+    </member>
+    <member id="id608">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#goal"></topicRef>
+    </member>
+  </association>
+  <association id="tid751">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id643">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#ai"></topicRef>
+    </member>
+    <member id="id642">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#object"></topicRef>
+    </member>
+  </association>
+  <association id="tid158">
+    <instanceOf>
+      <topicRef xlink:href="#subclass-of"></topicRef>
+    </instanceOf>
+    <member id="id594">
+      <roleSpec>
+        <topicRef xlink:href="#subclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid152"></topicRef>
+    </member>
+    <member id="id593">
+      <roleSpec>
+        <topicRef xlink:href="#superclass"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid85"></topicRef>
+    </member>
+  </association>
+  <association id="tid163">
+    <instanceOf>
+      <topicRef xlink:href="#relates-to"></topicRef>
+    </instanceOf>
+    <member id="id844">
+      <roleSpec>
+        <topicRef xlink:href="#info"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco1-fault-sequence-georgesmith"></topicRef>
+    </member>
+    <member id="id845">
+      <roleSpec>
+        <topicRef xlink:href="#phenomenon"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#loco1"></topicRef>
+    </member>
+  </association>
+  <association id="tid484">
+    <instanceOf>
+      <topicRef xlink:href="#part-of"></topicRef>
+    </instanceOf>
+    <member id="id532">
+      <roleSpec>
+        <topicRef xlink:href="#whole"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#activity"></topicRef>
+    </member>
+    <member id="id533">
+      <roleSpec>
+        <topicRef xlink:href="#part"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#task"></topicRef>
+    </member>
+  </association>
+  <association id="tid528">
+    <instanceOf>
+      <topicRef xlink:href="#example-of"></topicRef>
+    </instanceOf>
+    <member id="id884">
+      <roleSpec>
+        <topicRef xlink:href="#illustrated"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#history"></topicRef>
+    </member>
+    <member id="id883">
+      <roleSpec>
+        <topicRef xlink:href="#example"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#tid526"></topicRef>
+    </member>
+  </association>
+</topicMap>

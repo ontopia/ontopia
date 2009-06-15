@@ -1,0 +1,6 @@
+
+#TOPICMAP tm-of-class
+
+[tm : tm-class @"#tm-of-class"]
+[osl-schema @"http://psi.ontopia.net/xtm/occurrence-type/osl-schema"]
+{tm, osl-schema, "tag:larsga@ontopia.net,2002-08-27:the-schema5"}

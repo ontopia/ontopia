@@ -1,0 +1,20 @@
+<topicMap id='xtm-language'
+   xmlns='http://www.topicmaps.org/xtm/1.0/'
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id='country'>
+    <baseName>
+      <baseNameString>Country</baseNameString>
+    </baseName>    
+  </topic>
+
+  <topic id='lies'>
+    <baseName>
+      <baseNameString>Lies</baseNameString>
+    </baseName>    
+  </topic>
+
+  <mergeMap xlink:href='mergeloop.xtm'/>
+
+</topicMap>
+

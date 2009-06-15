@@ -1,0 +1,10 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="katakana">
+    <baseName><baseNameString>Katakana</baseNameString></baseName>    
+    <baseName><baseNameString>&#x30AB;&#x30BF;&#x30AB;&#x30CA;</baseNameString></baseName>    
+  </topic>
+
+</topicMap>

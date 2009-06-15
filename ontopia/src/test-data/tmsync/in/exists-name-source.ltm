@@ -1,0 +1,6 @@
+#PREFIX test @"http://psi.ontopia.net/test/"
+
+[source = "Test name"
+        = "Scoped test name" / test:scope
+        = "Extra name"
+ @"http://psi.ontopia.net/test/source"]

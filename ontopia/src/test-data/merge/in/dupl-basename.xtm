@@ -1,0 +1,33 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+
+  <topic id="country">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#country"/>
+    </subjectIdentity>
+
+    <baseName>
+      <baseNameString>Country</baseNameString>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#norwegian"/>
+        </parameters>
+        <variantName><resourceData>Land</resourceData></variantName>
+      </variant>
+    </baseName>    
+  </topic>
+
+  <topic id="norwegian">
+    <baseName>
+      <baseNameString>Norwegian</baseNameString>
+      <variant>
+        <parameters>
+          <topicRef xlink:href="#norwegian"/>
+        </parameters>
+        <variantName><resourceRef xlink:href="http://www.npolar.no/Images/norskflagg.gif"/></variantName>
+      </variant>
+    </baseName>
+  </topic>
+
+</topicMap>

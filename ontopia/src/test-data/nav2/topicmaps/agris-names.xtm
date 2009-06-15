@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink" id="agris-tm">
+  <topic id="tt_termspell_en">
+    <baseName>
+      <baseNameString>term</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#zh"></topicRef>
+      </scope>
+      <baseNameString>扲 逄</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>término</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>terme</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>المصطلح</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="en">
+    <instanceOf>
+      <topicRef xlink:href="#lang"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#zh"></topicRef>
+      </scope>
+      <baseNameString>荎 恅</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>English</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Ingleses</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>انكليزي</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Anglais</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="agris-tm-topic">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#agris-tm"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>AGRIS</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="zh">
+    <instanceOf>
+      <topicRef xlink:href="#lang"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#zh"></topicRef>
+      </scope>
+      <baseNameString>笢恅</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>صيني</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Chino</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Chinese</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Chinois</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="x92">
+    <instanceOf>
+      <topicRef xlink:href="#tt_termspell_en"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#de"></topicRef>
+      </scope>
+      <baseNameString>Säure</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Acidos</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>حموض</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Acids</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Acide</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="x27933">
+    <instanceOf>
+      <topicRef xlink:href="#tt_termspell_en"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Nutrición humana</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Nutrition humaine</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Human nutrition</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#de"></topicRef>
+      </scope>
+      <baseNameString>Menschliche ernährung</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>تغذية بشرية</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="de">
+    <instanceOf>
+      <topicRef xlink:href="#lang"></topicRef>
+    </instanceOf>
+    <baseName>
+      <baseNameString>German</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#zh"></topicRef>
+      </scope>
+      <baseNameString>[DE in ZH]</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>[DE in AR]</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>[DE in ES]</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>[DE in FR]</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="fr">
+    <instanceOf>
+      <topicRef xlink:href="#lang"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>فرنسي</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>French</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Français</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#zh"></topicRef>
+      </scope>
+      <baseNameString>楊恅</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Francés</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="x2829">
+    <instanceOf>
+      <topicRef xlink:href="#tt_termspell_en"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#de"></topicRef>
+      </scope>
+      <baseNameString>Futterpflanze</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>محاصيل علفية</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Feed crops</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Plante fourragère</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Plantas forrajeres</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="lang">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/language"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>اللغة</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#zh"></topicRef>
+      </scope>
+      <baseNameString>逄 晟</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>langage</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>idioma</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>language</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id2">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="es">
+    <instanceOf>
+      <topicRef xlink:href="#lang"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Espagnol</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Spanish</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>اسباني</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#zh"></topicRef>
+      </scope>
+      <baseNameString>昹啤挴恅</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Español</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="x2594">
+    <instanceOf>
+      <topicRef xlink:href="#tt_termspell_en"></topicRef>
+    </instanceOf>
+    <baseName>
+      <baseNameString>Environmental factors</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Facteur du milieu</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Factores ambientales</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>ظروف بيئية</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#de"></topicRef>
+      </scope>
+      <baseNameString>Umweltbedingung</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="ar">
+    <instanceOf>
+      <topicRef xlink:href="#lang"></topicRef>
+    </instanceOf>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Árabe</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#ar"></topicRef>
+      </scope>
+      <baseNameString>عربي</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Arabe</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#zh"></topicRef>
+      </scope>
+      <baseNameString>陝嶺皎恅</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Arabic</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id1">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="x24408">
+    <instanceOf>
+      <topicRef xlink:href="#tt_termspell_en"></topicRef>
+    </instanceOf>
+    <baseName>
+      <baseNameString>Residual effects</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#es"></topicRef>
+      </scope>
+      <baseNameString>Efectos residuales</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#de"></topicRef>
+      </scope>
+      <baseNameString>Restwirkung</baseNameString>
+    </baseName>
+    <baseName>
+      <scope>
+        <topicRef xlink:href="#fr"></topicRef>
+      </scope>
+      <baseNameString>Effet résiduel</baseNameString>
+    </baseName>
+  </topic>
+</topicMap>

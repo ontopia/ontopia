@@ -1,0 +1,3068 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap id="geography.xtmm"
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<!-- $Id: geography.xtmm,v 1.1 2005/11/08 14:33:18 opland Exp $ -->
+<!-- Include Ontopia PSIs -->
+<mergeMap xlink:href="ontopsi.xtmm"/>
+
+<!--
+  <topic id="factbook">
+    <topname>
+      <basename>World Factbook</basename>
+    </topname>
+  </topic>
+-->
+<topic id="city">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#city"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>City</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#plural"/></parameters>
+      <variantName><resourceData>Cities</resourceData></variantName>
+    </variant>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>By</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#german"/></scope>
+    <baseNameString>Stadt</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Città</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#sort"/></parameters>
+      <variantName><resourceData>Citta</resourceData></variantName>
+    </variant>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#french"/></scope>
+    <baseNameString>Ville</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="region">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#region"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Region</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
+    <scope><topicRef xlink:href="opera-template.xtmp#ontopus"/><topicRef xlink:href="opera-template.xtmp#offline"/></scope>
+    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/region.htm"/>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
+    <scope><topicRef xlink:href="opera-template.xtmp#ontopus"/><topicRef xlink:href="opera-template.xtmp#online"/></scope>
+    <resourceRef xlink:href="http://www.ontopia.net/topicmaps/examples/opera/occurs/region.htm"/>
+  </occurrence>
+</topic>
+
+<topic id="country">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#country"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Country</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#plural"/></parameters>
+      <variantName><resourceData>Countries</resourceData></variantName>
+    </variant>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/><topicRef xlink:href="opera-template.xtmp#german"/></scope>
+    <baseNameString>Land</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Paese</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#french"/></scope>
+    <baseNameString>Pays</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="located-in">
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#hierarchical-relation-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#located-in"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Located in</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#container"/></scope>
+    <baseNameString>Contains</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="container">
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superordinate-role-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#container"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Container</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="containee">
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#subordinate-role-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#containee"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Containee</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="place">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#place"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Place</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#norwegian"/></scope>
+    <baseNameString>Sted</baseNameString>
+  </baseName>
+</topic>
+
+<!-- place hierarchy -->
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#place"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#country"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#place"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#region"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#place"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#city"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#place"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="opera-template.xtmp#theatre"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#place"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="opera-template.xtmp#conservatory"/>
+    </member>
+</association>
+
+  <!-- TT: place -->
+<topic id="aegean-island">
+  <instanceOf><topicRef xlink:href="#place"/></instanceOf>
+  <baseName>
+    <baseNameString>Aegean island</baseNameString>
+  </baseName>
+</topic>
+
+  <!-- TT: city -->
+<!-- in argentina -->
+<topic id="buenos-aires">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/032/#buenos-aires"/>
+  </subjectIdentity>
+  <!-- located-in: argentina -->
+  <baseName>
+    <baseNameString>Buenos Aires</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in germany -->
+<topic id="berlin">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/276/#berlin"/>
+  </subjectIdentity>
+  <!-- located-in: germany -->
+  <baseName>
+    <baseNameString>Berlin</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="konstanz">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/276/#konstanz"/>
+  </subjectIdentity>
+  <!-- located-in: germany -->
+  <baseName>
+    <baseNameString>Konstanz</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in italy -->
+<topic id="bassano">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#bassano"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Bassano</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="bologna">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#bologna"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Bologna</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="borgo-san-lorenzo">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#borgo-san-lorenzo"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Borgo S. Lorenzo</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="brescia">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#brescia"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Bréscia</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="capri">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#capri"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Capri</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="caprino-bergamasco">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#caprino-bergamasco"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Caprino Bergamasco</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="castelnuovo">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#castelnuovo"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Castelnuovo</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="colleretto-parella">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#colleretto-parella"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Colleretto Parella</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="cremona">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#cremona"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Cremona</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="ferrara">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#ferrara"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Ferrara</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="firenze">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#firenze"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Firenze</baseNameString>
+  </baseName>
+  <baseName>
+    <baseNameString>Florence</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="foggia">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#foggia"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Foggia</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="genova">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#genova"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Genova</baseNameString>
+  </baseName>
+  <baseName>
+    <baseNameString>Genoa</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="laquila">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#laquila"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Laquila</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="la-spezia">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#la-spezia"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>La Spezia</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="le-roncole">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#le-roncole"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Le Roncole</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="lecce">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#lecce"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Lecce</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="lecco">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#lecco"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Lecco</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="livorno">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#livorno"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Livorno</baseNameString>
+  </baseName>
+  <baseName>
+    <baseNameString>Leghorn</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="lucca">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#lucca"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+<!--NB: other "famous sons": Boccherini, Geminiani-->
+  <baseName>
+    <baseNameString>Lucca</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="mantua">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#mantua"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Mantua</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="milano">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#milano"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Milan</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Milano</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="montecatini">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#montecatini"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Montecatini</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="murano">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#murano"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Murano</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="napoli">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#napoli"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Naples</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Napoli</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="paderno-fasolaro">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#paderno-fasolaro"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Paderno Fasolaro</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="padua">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#padua"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Padua</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="palermo">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#palermo"/>
+  </subjectIdentity>
+  <!-- located-in: sicilia -->
+  <baseName>
+    <baseNameString>Palermo</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="palmi">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#palmi"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Palmi</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="pesaro">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#pesaro"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Pesaro</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="pescara">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#pescara"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Pescara</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="piacenza">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#piacenza"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Piacenza</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="posillipo">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#posillipo"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Posillipo</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="prato">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#prato"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Prato</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="ravenna">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#ravenna"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Ravenna</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="reggio-emilia">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#reggio-emilia"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Reggio Emilia</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="rimini">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#rimini"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Rimini</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="roma">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#roma"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Rome</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Roma</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="rovereto">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#rovereto"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Rovereto</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="san-remo">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#san-remo"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>San Remo</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="siena">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#siena"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Siena</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="syracuse">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#syracuse"/>
+  </subjectIdentity>
+  <!-- located-in: sicilia -->
+  <baseName>
+    <baseNameString>Syracuse</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="torino">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#torino"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Torino</baseNameString>
+  </baseName>
+  <baseName>
+    <baseNameString>Turin</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="trento">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#trento"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Trento</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="trieste">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#trieste"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Trieste</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="udine">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#udine"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Udine</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="varazza">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#varazza"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Varazza</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="varese">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#varese"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Varese</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="venezia">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#venezia"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Venezia</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#english"/></scope>
+    <baseNameString>Venice</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="verona">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#verona"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Verona</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="viareggio">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#viareggio"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Viareggio</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="zara">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#zara"/>
+  </subjectIdentity>
+  <!-- located-in: croatia -->
+  <!-- NOTE: Italian baritone also born in Zara:
+         Pini-Corsi, Antonio (Zara (now Zadar), Dalmatia, 1858 - Milan, 1918) -->
+  <baseName>
+    <baseNameString>Zadar</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#former-name"/></scope>
+    <baseNameString>Zara</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="zoagli">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/380/#zoagli"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Zoagli</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in belgium -->
+<topic id="brussels">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/056/#brussels"/>
+  </subjectIdentity>
+  <!-- located-in: belgium -->
+  <baseName>
+    <baseNameString>Brussels</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in switzerland -->
+<topic id="lugano">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/756/#lugano"/>
+  </subjectIdentity>
+  <!-- located-in: switzerland -->
+  <baseName>
+    <baseNameString>Lugano</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in usa -->
+<topic id="new-york">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/840/#new-york"/>
+  </subjectIdentity>
+  <!-- located-in: usa -->
+  <baseName>
+    <baseNameString>New York</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="chicago">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/840/#chicago"/>
+  </subjectIdentity>
+  <!-- located-in: usa -->
+  <baseName>
+    <baseNameString>Chicago</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="boston">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/840/#boston"/>
+  </subjectIdentity>
+  <!-- located-in: usa -->
+  <baseName>
+    <baseNameString>Boston</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in monaco -->
+<topic id="monte-carlo">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/492/#monte-carlo"/>
+  </subjectIdentity>
+  <!-- located-in: monaco -->
+  <baseName>
+    <baseNameString>Monte Carlo</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in france -->
+<topic id="paris">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#paris"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Paris</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="limoges">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#limoges"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Limoges</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="st-etienne">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#st-etienne"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>St. Etienne</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="nice">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#nice"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Nice</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="arles">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#arles"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Arles</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="boulogne-sur-mer">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#boulogne-sur-mer"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Boulogne-sur-Mer</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="nimes">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#nimes"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Nimes</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="marly-le-roy">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#marly-le-roy"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Marly-Le-Roy</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="marseilles">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#marseilles"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Marseilles</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="orange">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#orange"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Orange</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="toulouse">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/250/#toulouse"/>
+  </subjectIdentity>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Toulouse</baseNameString>
+  </baseName>
+</topic>
+
+<!-- england -->
+<topic id="london">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/826/#london"/>
+  </subjectIdentity>
+  <!-- located-in: england -->
+  <baseName>
+    <baseNameString>London</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="windsor">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/826/#windsor"/>
+  </subjectIdentity>
+  <!-- located-in: england -->
+  <baseName>
+    <baseNameString>Windsor</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in russia -->
+<topic id="st-petersburg">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/643/#st-petersburg"/>
+  </subjectIdentity>
+  <!-- located-in: russia -->
+  <baseName>
+    <baseNameString>St. Petersburg</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#former-name"/></scope>
+    <baseNameString>Petrograd</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#former-name"/></scope>
+    <baseNameString>Leningrad</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in egypt -->
+<topic id="cairo">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/818/#cairo"/>
+  </subjectIdentity>
+  <!-- located-in: egypt -->
+  <baseName>
+    <baseNameString>Cairo</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in japan -->
+<topic id="nagasaki">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/392/#nagasaki"/>
+  </subjectIdentity>
+  <!-- located-in: japan -->
+  <baseName>
+    <baseNameString>Nagasaki</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in china -->
+<topic id="beijing">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/156/#beijing"/>
+  </subjectIdentity>
+  <!-- located-in: china -->
+  <baseName>
+    <baseNameString>Beijing</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#former-name"/></scope>
+    <baseNameString>Peking</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="opera-template.xtmp#article"/></instanceOf>
+    <scope><topicRef xlink:href="opera-template.xtmp#online"/></scope>
+    <resourceRef xlink:href="http://detnews.com/1998/accent/9809/05/09050080.htm"/>
+  </occurrence>
+</topic>
+
+<!-- in israel -->
+<topic id="jerusalem">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/376/#jerusalem"/>
+  </subjectIdentity>
+  <!-- located-in: israel -->
+  <baseName>
+    <baseNameString>Jerusalem</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in middle-east -->
+<topic id="babylon">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <!-- located-in: middle-east -->
+  <baseName>
+    <baseNameString>Babylon</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="mecca">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <!-- located-in: middle-east -->
+  <baseName>
+    <baseNameString>Mecca</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in spain -->
+<topic id="sevilla">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/724/#sevilla"/>
+  </subjectIdentity>
+  <!-- located-in: spain -->
+  <baseName>
+    <baseNameString>Sevilla</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#english"/></scope>
+    <baseNameString>Seville</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#italian"/></scope>
+    <baseNameString>Siviglia</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="madrid">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/724/#madrid"/>
+  </subjectIdentity>
+  <!-- located-in: spain -->
+  <baseName>
+    <baseNameString>Madrid</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in poland -->
+<topic id="wroclaw">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/616/#wroclaw"/>
+  </subjectIdentity>
+  <!-- located-in: poland -->
+  <baseName>
+    <baseNameString>Wroclaw</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#german"/></scope>
+    <baseNameString>Breslau</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in turkey -->
+<topic id="antioch">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/792/#antioch"/>
+  </subjectIdentity>
+  <!-- located-in: turkey -->
+  <baseName>
+    <baseNameString>Antioch</baseNameString>
+  </baseName>
+</topic>
+
+<!-- in greece -->
+<topic id="thebes">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/300/#thebes"/>
+  </subjectIdentity>
+  <!-- located-in: greece -->
+  <baseName>
+    <baseNameString>Thebes</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="coron">
+  <instanceOf><topicRef xlink:href="#city"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/city/300/#coron"/>
+  </subjectIdentity>
+  <!-- located-in: greece -->
+  <baseName>
+    <baseNameString>Coron</baseNameString>
+  </baseName>
+</topic>
+
+  <!-- TT: region -->
+<topic id="corsica">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <!-- located-in: france -->
+  <baseName>
+    <baseNameString>Corsica</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="south-america">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <baseName>
+    <baseNameString>South America</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="us-ca">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/country/us/#us-ca"/>
+  </subjectIdentity>
+  <!-- located-in: usa -->
+  <baseName>
+    <baseNameString>California</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="savoia">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso3166/it.xtm#savoia"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Savoia</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#english"/></scope>
+    <baseNameString>Savoy</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="sicilia">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso3166/it.xtm#sicilia"/>
+  </subjectIdentity>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Sicilia</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#english"/></scope>
+    <baseNameString>Sicily</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="calabria">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <!-- located-in: italy -->
+  <baseName>
+    <baseNameString>Calabria</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="alsace">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <!-- located-in: france germany -->
+  <baseName>
+    <baseNameString>Alsace</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="black-forest">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <!-- located-in: germany -->
+  <baseName>
+    <baseNameString>Schwarzwald</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#english"/></scope>
+    <baseNameString>Black Forest</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="rhine">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <!-- located-in: germany -->
+  <baseName>
+    <baseNameString>Rhein</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#english"/></scope>
+    <baseNameString>Rhine</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="flanders">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <baseName>
+    <baseNameString>Flanders</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="kreta">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso3166/gr.xtm#kreta"/>
+  </subjectIdentity>
+  <!-- located-in: greece -->
+  <baseName>
+    <baseNameString>Crete</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="tyrol">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <!-- located-in: italy austria -->
+  <baseName>
+    <baseNameString>Tyrol</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="middle-east">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <baseName>
+    <baseNameString>Middle East</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="bretagne">
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <!-- located-in: france -->
+  <baseName>
+    <scope><topicRef xlink:href="opera-template.xtmp#french"/></scope>
+    <baseNameString>Bretagne</baseNameString>
+  </baseName>
+  <baseName>
+    <baseNameString>Brittany</baseNameString>
+  </baseName>
+</topic>
+
+  <!-- TT: country (PSD: ISO 3166 two letter country code) -->
+<topic id="argentina">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#AR"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Argentina</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="austria">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#AT"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Austria</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="belgium">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#BE"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Belgium</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="china">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#CN"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>China</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="croatia">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#HR"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Croatia</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="cyprus">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#CY"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Cyprus</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="egypt">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#EG"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Egypt</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="england">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso3166/gb.xtm#england"/>
+  </subjectIdentity>
+  <!-- located-in: united-kingdom -->
+  <baseName>
+    <baseNameString>England</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="france">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#FR"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>France</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="germany">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#DE"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Germany</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="greece">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#GR"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Greece</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="india">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#IN"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>India</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="israel">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#IL"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Israel</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="italy">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#IT"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Italy</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="japan">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#JP"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Japan</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="lithuania">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#LT"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Lithuania</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="monaco">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#MC"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Monaco</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="netherlands">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#NL"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Netherlands</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="palestine">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <baseName>
+    <baseNameString>Palestine</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="peru">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#PE"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Peru</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="poland">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#PL"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Poland</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="russia">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#RU"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Russia</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="scotland">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso3166/gb.xtm#scotland"/>
+  </subjectIdentity>
+  <!-- located-in: united-kingdom -->
+  <baseName>
+    <baseNameString>Scotland</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="spain">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#ES"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Spain</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="sweden">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#SE"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Sweden</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="switzerland">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#CH"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Switzerland</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="turkey">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#TU"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Turkey</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="united-kingdom">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#GB"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>United Kingdom</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="usa">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/country.xtm#US"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>USA</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="wales">
+  <instanceOf><topicRef xlink:href="#country"/></instanceOf>
+  <instanceOf><topicRef xlink:href="#region"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso3166/gb.xtm#wales"/>
+  </subjectIdentity>
+  <!-- located-in: united-kingdom -->
+  <baseName>
+    <baseNameString>Wales</baseNameString>
+  </baseName>
+</topic>
+
+  <!-- AT: located-in -->
+<!-- (city/region) -->
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#syracuse"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#sicilia"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#palermo"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#sicilia"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#london"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#england"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#windsor"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#england"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#babylon"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#middle-east"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#mecca"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#middle-east"/>
+    </member>
+</association>
+
+<!-- (city/country) -->
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#limoges"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#st-etienne"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#posillipo"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#konstanz"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#germany"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#laquila"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#corsica"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#reggio-emilia"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#wroclaw"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#poland"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#viareggio"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#boulogne-sur-mer"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#zara"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#croatia"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#toulouse"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#thebes"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#greece"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#coron"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#greece"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#castelnuovo"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#ravenna"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#rimini"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#berlin"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#germany"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#chicago"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#usa"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#prato"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#pescara"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#lecce"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#lecco"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#trento"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#ferrara"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#udine"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#bologna"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#zoagli"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#brescia"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#caprino-bergamasco"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#capri"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#varese"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#la-spezia"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#cremona"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#san-remo"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#rovereto"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#pesaro"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#palmi"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#siena"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#varazza"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#trieste"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#torino"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#le-roncole"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#lucca"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#livorno"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#piacenza"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#colleretto-parella"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#milano"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#verona"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#borgo-san-lorenzo"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#monte-carlo"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#monaco"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#brussels"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#belgium"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#roma"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#lugano"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#switzerland"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#new-york"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#usa"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#paderno-fasolaro"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#foggia"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#napoli"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#padua"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#montecatini"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#venezia"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#firenze"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#paris"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#marly-le-roy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#marseilles"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#orange"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#arles"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#st-petersburg"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#russia"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#cairo"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#egypt"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#murano"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#nagasaki"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#japan"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#nice"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#nimes"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#beijing"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#china"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#jerusalem"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#israel"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#mantua"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#genova"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#boston"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#usa"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#sevilla"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#spain"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#madrid"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#spain"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#buenos-aires"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#argentina"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#bassano"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#antioch"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#turkey"/>
+    </member>
+</association>
+
+<!-- (region/country) -->
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#savoia"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#bretagne"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#black-forest"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#germany"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#rhine"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#germany"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#us-ca"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#usa"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#calabria"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#sicilia"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#alsace"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#france"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#alsace"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#germany"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#kreta"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#greece"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#tyrol"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#italy"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#tyrol"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#austria"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#england"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#united-kingdom"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#scotland"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#united-kingdom"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="#located-in"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#geography"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="#containee"/></roleSpec>
+    <topicRef xlink:href="#wales"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#container"/></roleSpec>
+    <topicRef xlink:href="#united-kingdom"/>
+    </member>
+</association>
+
+</topicMap>

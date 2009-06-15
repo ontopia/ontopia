@@ -1,0 +1,35 @@
+<topicMap>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#at1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id1" notation="URI"></locator>
+</sourceLocators>
+<topicName>
+<value>fAssocs-at1</value>
+</topicName>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#rt1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id6" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#rt2" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id9" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#t1" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id5" notation="URI"></locator>
+</sourceLocators>
+</topic>
+<topic>
+<subjectIdentifiers><locator address="http://xtmfragmentexporter/tests#t2" notation="URI"></locator>
+</subjectIdentifiers>
+<sourceLocators><locator address="#id8" notation="URI"></locator>
+</sourceLocators>
+</topic>
+</topicMap>

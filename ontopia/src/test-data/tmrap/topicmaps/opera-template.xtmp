@@ -1,0 +1,2102 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap id="opera-template.xtmp"
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<!-- $Id: opera-template.xtmp,v 1.1 2005/11/08 14:33:18 opland Exp $ -->
+<!-- Topics and associations defining a class of opera topic maps
+                                                                    -->
+<!-- Include geography template -->
+<mergeMap xlink:href="geography.xtmm"/>
+
+<!-- Include history template -->
+<mergeMap xlink:href="history.xtmm"/>
+
+<!-- ================================================================
+       Themes (topics used to define scopes)
+                                                                    -->
+<!-- Nametypes -->
+<!-- Used to type short-name, real-name, nom-de-plume, nom-de-guerre,
+       former-name, original-name, altname - and thereby define an axis of scope -->
+<topic id="nametype">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#name-type"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Name type</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Navnetype</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="short-name">
+  <instanceOf><topicRef xlink:href="#nametype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#short-name"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Short name</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Kortnavn</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="real-name">
+  <instanceOf><topicRef xlink:href="#nametype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#real-name"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Real name</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Egentlig navn</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="nom-de-plume">
+  <instanceOf><topicRef xlink:href="#nametype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#nom-de-plume"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Nom de plume</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
+    <scope><topicRef xlink:href="#ontopus"/><topicRef xlink:href="#offline"/></scope>
+    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/nom-de-plume.htm"/>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
+    <scope><topicRef xlink:href="#ontopus"/><topicRef xlink:href="#online"/></scope>
+    <resourceRef xlink:href="http://www.ontopia.net/topicmaps/examples/opera/occurs/nom-de-plume.htm"/>
+  </occurrence>
+</topic>
+
+<topic id="nom-de-guerre">
+  <instanceOf><topicRef xlink:href="#nametype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#nom-de-guerre"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Nom de guerre</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="former-name">
+  <instanceOf><topicRef xlink:href="#nametype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#former-name"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Former name</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Forhenværende navn</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="original-name">
+  <instanceOf><topicRef xlink:href="#nametype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#original-name"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Original name</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Originalnavn</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="altname">
+  <instanceOf><topicRef xlink:href="#nametype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#alternative-name"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Alternative name</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Alternativnavn</baseNameString>
+  </baseName>
+</topic>
+
+<!-- Nameforms -->
+<!-- Used to type normal, name form, and plural - and thereby define an axis of scope -->
+<topic id="nameform">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#nameform"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Name form</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Navneform</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="normal">
+  <instanceOf><topicRef xlink:href="#nameform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#normal"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Normal form</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Normalform</baseNameString>
+  </baseName>
+</topic>
+
+<!-- Codetypes -->
+<!-- Used to type iso639-1, iso639-2t, iso639-2b - and thereby define an axis of scope -->
+<topic id="codetype">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/#codetype"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Code type</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Kodetype</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="iso639-1">
+  <instanceOf><topicRef xlink:href="#codetype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/iso639-1"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>ISO 639:1988 language code</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#short-name"/></scope>
+    <baseNameString>ISO 639 code</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="iso639-2t">
+  <instanceOf><topicRef xlink:href="#codetype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/iso639-2t"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>ISO 639-2:1996 Alpha-3 language code (terminological)</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#short-name"/></scope>
+    <baseNameString>ISO 639-2(T) code</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="iso639-2b">
+  <instanceOf><topicRef xlink:href="#codetype"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/basename/iso639-2b"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>ISO 639-2:1996 Alpha-3 language code (bibliographic)</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#short-name"/></scope>
+    <baseNameString>ISO 639-2(B) code</baseNameString>
+  </baseName>
+</topic>
+
+<!--TT: language -->
+<topic id="italian">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#it"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Italian</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Italiensk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>it</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>ita</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="english">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>English</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Engelsk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>en</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>eng</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="sanskrit">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Sanskrit</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Sanskrit</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>sa</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>san</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="finnish">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#fi"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Finnish</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Finsk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>fi</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>fin</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="french">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#fr"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>French</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Fransk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>fr</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/></scope>
+    <baseNameString>fra</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>fre</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="spanish">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#es"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Spanish</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Spansk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>es</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>spa</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="norwegian">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#no"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Norwegian</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Norsk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>no</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>nor</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="german">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#de"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>German</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Tysk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>de</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>deu</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="czech">
+  <instanceOf><topicRef xlink:href="#language"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#cs"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Czech</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Tsjekkisk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-1"/></scope>
+    <baseNameString>cs</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#iso639-2t"/><topicRef xlink:href="#iso639-2b"/></scope>
+    <baseNameString>ces</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used for topic types
+                                                                    -->
+<topic id="musician">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#musician"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Musician</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Musiker</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="composer">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#composer"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Composer</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/><topicRef xlink:href="#german"/></scope>
+    <baseNameString>Komponist</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#italian"/></scope>
+    <baseNameString>Compositore</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#finnish"/></scope>
+    <baseNameString>Säveltäjä</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#czech"/></scope>
+    <baseNameString>Skladatel</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="librettist">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#librettist"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Librettist</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
+    <resourceData>A person who has written one or more libretti for an opera. Composers have written their own libretti do not qualify unless they have written libretti for other composers, like Boito or Leoncavallo</resourceData>
+  </occurrence>
+</topic>
+
+<topic id="writer">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#writer"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Writer</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Skribent</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="playwright">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#playwright"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Playwright</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Dramatiker</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="artform">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#artform"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Art form</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Kunstart</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="work">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#work"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Work</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Verk</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="literary-work">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#literary-work"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Literary work</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Litterært verk</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="musical-work">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#musical-work"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Musical work</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Musikalsk verk</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="theatrical-work">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#theatrical-work"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Theatrical work</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Dramatisk verk</baseNameString>
+  </baseName>
+</topic>
+
+<!-- literary works -->
+<topic id="poem">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#poem"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Poem</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Dikt</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="novella">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#novella"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Novella</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="novel">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#novel"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Novel</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Roman</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="dictionary">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#dictionary"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Dictionary</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Leksikon</baseNameString>
+  </baseName>
+</topic>
+
+<!-- theatrical and musical works -->
+<topic id="ballet">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#ballet"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Ballet</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Ballett</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="opera">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#opera"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Opera</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#finnish"/></scope>
+    <baseNameString>Ooppera</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
+    <scope><topicRef xlink:href="#ontopus"/><topicRef xlink:href="#offline"/></scope>
+    <resourceRef xlink:href="file:///C|/topicmaps/opera/occurs/opera.htm"/>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#guidelines"/></instanceOf>
+    <scope><topicRef xlink:href="#ontopus"/><topicRef xlink:href="#online"/></scope>
+    <resourceRef xlink:href="http://www.ontopia.net/topicmaps/examples/opera/occurs/opera.htm"/>
+  </occurrence>
+  <occurrence id="oc-pauld-website">
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <scope><topicRef xlink:href="#online"/></scope>
+    <resourceRef xlink:href="http://home.prcn.org/~pauld/opera/"/>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#website"/></instanceOf>
+    <resourceRef xlink:href="http://opera.stanford.edu/"/>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Batta, András: "Opera: Composers, Works, Performers", Könemann (Cologne, 1999)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Boyden, Matthew: "Opera: The Rough Guide", Rough Guides (London, 1999)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Bourne, Joyce: "Who's Who in Opera: A Guide to Opera Characters", Oxford University Press (Oxford, 1998)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Freeman, John W.: "Stories of the Great Operas", Norton (New York, 1984)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Holden, Amanda (ed): "The New Penguin Opera Guide", Penguin (London, 2002)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Keolker, James: "Last Acts : The Operas of Puccini and his Italian Contemporaries", Opera Companion Publications (Napa, 2000)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Pogue, David and Scott Speck: "Opera for Dummies", IDG Books (Foster City, 1997)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Osborne, Charles: "The Complete Operas of Verdi: A Critical Guide", Gollancz (London, 1969)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Rosenthal, Harold and John Warrack: "The Concise Oxford Dictionary of Opera", Oxford University Press (Oxford, 1980)</resourceData>
+  </occurrence>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#bibref"/></instanceOf>
+    <resourceData>Sadie, Stanley (ed): "The New Grove Book of Operas", Macmillan (London, 1996)</resourceData>
+  </occurrence>
+</topic>
+
+<!-- reified occurrence of opera -->
+<topic id="pauld-website">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#oc-pauld-website"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Opera: A Philatelic History</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#website"/></instanceOf>
+    <scope><topicRef xlink:href="#online"/></scope>
+    <resourceRef xlink:href="http://home.prcn.org/~pauld/opera/"/>
+  </occurrence>
+</topic>
+
+<topic id="aria">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#aria"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Aria</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="chorus">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#chorus"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Chorus</baseNameString>
+  </baseName>
+</topic>
+
+<!-- theatrical works -->
+<topic id="play">
+  <instanceOf><topicRef xlink:href="#artform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#play"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Play</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Skuespill</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="producer">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#producer"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Producer</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Produsent</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="singer">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#singer"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Singer</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Sanger</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="voice-type">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#voice-type"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Voice type</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Stemmetype</baseNameString>
+  </baseName>
+</topic>
+
+<!--TT: voice-type -->
+<topic id="soprano">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#soprano"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Soprano</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Sopran</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="mezzo">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#mezzo"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Mezzosoprano</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Mezzosopran</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="contralto">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#contralto"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Contralto</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Alt</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="tenor">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#tenor"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Tenor</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="baritone">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#baritone"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Baritone</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Bariton</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="bass-baritone">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#bass-baritone"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Bass-baritone</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Bass-bariton</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="bass">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#bass"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Bass</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#plural"/></parameters>
+      <variantName><resourceData>Basses</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="silent-voice">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#silent-voice"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Silent</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Stumm</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="spoken-voice">
+  <instanceOf><topicRef xlink:href="#voice-type"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#spoken-voice"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Spoken</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Tale</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="publisher">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#publisher"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Publisher</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Utgiver</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="theatre">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#theatre"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Theatre</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Teater</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="conservatory">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#conservatory"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Conservatory</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Konservatorium</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="tv">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#tv"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>TV company</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>TV-selskap</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="style">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#style"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Style</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Stil</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="cause-of-death">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#cause-of-death"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Cause of death</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Dødsarsåk</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="character">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#character"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Character</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Skikkelse</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used for association types
+                                                                    -->
+<topic id="composed-by">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#composed-by"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Composed by</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#composer"/></scope>
+    <baseNameString>Composed</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="born-in">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#born-in"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Born in</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="geography.xtmm#place"/></scope>
+    <baseNameString>Birthplace of</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="died-in">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#died-in"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Died in</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="geography.xtmm#place"/></scope>
+    <baseNameString>Died here</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="written-by">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#written-by"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Written by</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#writer"/></scope>
+    <baseNameString>Wrote</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#librettist"/></scope>
+    <baseNameString>Wrote libretto for</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#opera"/></scope>
+    <baseNameString>Libretto written by</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="published-by">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#published-by"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Published by</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#publisher"/></scope>
+    <baseNameString>Publisher of</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="takes-place-in">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#takes-place-in"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Setting</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="geography.xtmm#place"/><topicRef xlink:href="history.xtmm#event"/></scope>
+    <baseNameString>Setting for</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#opera"/></scope>
+    <baseNameString>Set in</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="pupil-of">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#pupil-of"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Teacher/pupil</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#pupil"/></scope>
+    <baseNameString>Pupil of</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#teacher"/></scope>
+    <baseNameString>Teacher of</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#description"/></instanceOf>
+    <resourceData>A relationship between a pupil and his teacher. The Italian Opera Topic Map only includes teachers of composition.</resourceData>
+  </occurrence>
+</topic>
+
+<topic id="exponent-of">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#exponent-of"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Exponent of</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#style"/></scope>
+    <baseNameString>Represented by</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="part-of">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#part-of"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Consists of</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#part"/></scope>
+    <baseNameString>Part of</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="premiere">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#premiere"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>First performed at</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="geography.xtmm#place"/></scope>
+    <baseNameString>Hosted première of</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="appears-in">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/literature/#appears-in"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Appears in</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#work"/></scope>
+    <baseNameString>Dramatis personae</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="has-voice">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#has-voice"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Has voice type</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="killed-by">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#killed-by"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Killed by</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#perpetrator"/><topicRef xlink:href="#cause-of-death"/></scope>
+    <baseNameString>Kills (by)</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="aria-in-opera">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#aria-in-opera"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Aria in opera</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#opera"/></scope>
+    <baseNameString>Contains aria</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="sung-by">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#sung-by"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Sung by</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="ontopsi.xtmm#person"/></scope>
+    <baseNameString>Sings</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="based-on">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#based-on"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Based on</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#source"/></scope>
+    <baseNameString>Source of</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="revision-of">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#revision-of"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Revision of</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#source"/></scope>
+    <baseNameString>Revised as</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used only for association roles
+                                                                    -->
+<topic id="pupil">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#pupil"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Pupil</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="teacher">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#teacher"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Teacher</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="perpetrator">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#perpetrator"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Perpetrator</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="victim">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#victim"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Victim</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="result">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#result"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Result</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="source">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#source"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Source</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="whole">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#whole"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Whole</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="part">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#part"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Part</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used for occurrence types
+                                                                    -->
+<topic id="website">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#website"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Web site</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="webpage">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#webpage"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Web page</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="sound-clip">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#sound-clip"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Sound clip</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="audio-recording">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#audio-recording"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Audio recording</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#sort"/></parameters>
+      <variantName><resourceData>Recording (audio)</resourceData></variantName>
+    </variant>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#description"/></instanceOf>
+    <resourceData>An audio recording. In the Italian Opera topic map this is currently modelled extremely simply as an occurrence whose value is the catalogue number of some recording in the author's collection.</resourceData>
+  </occurrence>
+</topic>
+
+<topic id="video-recording">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/music/#video-recording"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Video recording</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#sort"/></parameters>
+      <variantName><resourceData>Recording (video)</resourceData></variantName>
+    </variant>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="ontopsi.xtmm#description"/></instanceOf>
+    <resourceData>A video recording. In the Italian Opera topic map this is currently modelled extremely simply as an occurrence whose value is the catalogue number of some recording in the author's collection.</resourceData>
+  </occurrence>
+</topic>
+
+<topic id="bibref">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#bibref"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Bibliography</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="libretto">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#libretto"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Libretto</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#plural"/></parameters>
+      <variantName><resourceData>Libretti</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="synopsis">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#synopsis"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Synopsis</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#plural"/></parameters>
+      <variantName><resourceData>Synopses</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="article">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#article"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Article</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="gallery">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#gallery"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Gallery</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="ontopsi.xtmm#plural"/></parameters>
+      <variantName><resourceData>Galleries</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="poster">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#poster"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Poster</baseNameString>
+  </baseName>
+</topic>
+
+  <!-- FIXME: occurrences of type "illustration" should really
+       be posters, portraits, etc. Change when OPERAMAP app is
+       ready -->
+<topic id="illustration">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#illustration"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Illustration</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="biographical-article">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#biographical-article"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Bio</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="date-of-birth">
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#metadata"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#date-of-birth"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Date of birth</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="date-of-death">
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#metadata"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/biography/#date-of-death"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Date of death</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="premiere-date">
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#metadata"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#premiere-date"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Première date</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used (mainly) for facet types
+                                                                    -->
+<!--facet: source (source of a resource) -->
+<topic id="language">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#language"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Language</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#norwegian"/></scope>
+    <baseNameString>Språk</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#german"/></scope>
+    <baseNameString>Sprache</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#french"/></scope>
+    <baseNameString>Langue</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#italian"/></scope>
+    <baseNameString>Lingua</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#finnish"/></scope>
+    <baseNameString>Kieli</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="location">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#location"/>
+  </subjectIdentity>
+<!-- the location of a resource;
+       values may be "online" (the default) or "offline"
+       for use with facet filtering -->
+  <baseName>
+    <baseNameString>Location</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Topics used (only) for facet value types
+                                                                    -->
+<!--Facet values for language -->
+<!--facetvalue: language= italian -->
+<!--facetvalue: language= norwegian -->
+<!--Facet values for source -->
+<topic id="operaweb">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Opera Web</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.opera.it/Operaweb/en/home.html"/>
+  </occurrence>
+</topic>
+
+<topic id="operabase">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>OperaBase</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.operabase.com"/>
+  </occurrence>
+</topic>
+
+<topic id="snl">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Store Norske Leksikon</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.snl.no/"/>
+  </occurrence>
+</topic>
+
+<topic id="cia">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>CIA</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.cia.gov/cia/publications/factbook/"/>
+  </occurrence>
+</topic>
+
+<topic id="az-opera">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Arizona Opera</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.azopera.com/"/>
+  </occurrence>
+</topic>
+
+<topic id="ontopus">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Ontopus</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="operaglass">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Opera Glass</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://opera.stanford.edu/opera/"/>
+  </occurrence>
+</topic>
+
+<topic id="lyle-neff">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Lyle K. Neff</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://php.indiana.edu/~lneff/librettim.html"/>
+  </occurrence>
+</topic>
+
+<topic id="land-of-verdi">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Land of Verdi</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.giuseppeverdi.net/ing/index-s.htm"/>
+  </occurrence>
+</topic>
+
+<topic id="mascagni.org">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Mascagni.org</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.mascagni.org"/>
+  </occurrence>
+</topic>
+
+<topic id="r-ds">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>OperaResource</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.r-ds.com/opera/resource.htm"/>
+  </occurrence>
+</topic>
+
+<topic id="naxos">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Naxos</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.naxos.com/"/>
+  </occurrence>
+</topic>
+
+<topic id="operanews">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Opera News</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.operanews.com/"/>
+  </occurrence>
+</topic>
+
+<topic id="opera-l">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Opera-l synopsis project</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://www.orc.soton.ac.uk/ngb/list2.html"/>
+  </occurrence>
+</topic>
+
+<topic id="puccini-study-centre">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Centro studi Giacomo Puccini</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <scope><topicRef xlink:href="#italian"/><topicRef xlink:href="#puccini-study-centre"/><topicRef xlink:href="#online"/></scope>
+    <resourceRef xlink:href="http://www.puccini.it/"/>
+  </occurrence>
+</topic>
+
+<topic id="mark-lew">
+  <instanceOf><topicRef xlink:href="#publisher"/></instanceOf>
+  <baseName>
+    <baseNameString>Mark D. Lew</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf><topicRef xlink:href="#webpage"/></instanceOf>
+    <resourceRef xlink:href="http://home.earthlink.net/~markdlew/lib/"/>
+  </occurrence>
+</topic>
+
+<!--Facet values for location -->
+<topic id="offline">
+  <instanceOf><topicRef xlink:href="#location"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#offline"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Offline</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="online">
+  <instanceOf><topicRef xlink:href="#location"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/opera/#online"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Online</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+       Superclass-subclass associations
+                                                                    -->
+<!-- person hierarchy -->
+<!-- musician -->
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#person"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#musician"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#musician"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#composer"/>
+    </member>
+</association>
+
+<!-- writer -->
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#person"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#writer"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#writer"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#playwright"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#writer"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#librettist"/>
+    </member>
+</association>
+
+<!-- others -->
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#person"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#character"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#person"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#producer"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#person"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#teacher"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#person"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#pupil"/>
+    </member>
+</association>
+
+<!-- work hierarchy -->
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#musical-work"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#theatrical-work"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#literary-work"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#musical-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#opera"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#musical-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#aria"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#musical-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#ballet"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#theatrical-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#opera"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#theatrical-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#ballet"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#theatrical-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#play"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#literary-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#dictionary"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#literary-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#play"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#literary-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#poem"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#literary-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#novel"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="#literary-work"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#novella"/>
+    </member>
+</association>
+
+<!-- organization hierarchy -->
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#organization"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#publisher"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#organization"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#theatre"/>
+    </member>
+</association>
+
+<association>
+  <instanceOf><topicRef xlink:href="ontopsi.xtmm#superclass-subclass"/></instanceOf>
+  <scope><topicRef xlink:href="ontopsi.xtmm#ontology"/></scope>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#superclass"/></roleSpec>
+    <topicRef xlink:href="ontopsi.xtmm#organization"/>
+      </member>
+  <member>
+    <roleSpec><topicRef xlink:href="ontopsi.xtmm#subclass"/></roleSpec>
+    <topicRef xlink:href="#tv"/>
+    </member>
+</association>
+
+</topicMap>

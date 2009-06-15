@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap
+  id="variants-tm"
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<!-- ================================================================
+     Mini-ontology
+-->
+
+<topic id="sort">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>sort</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~~sort</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="nameform">
+  <baseName>
+    <baseNameString>name form</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#sort"/></parameters>
+      <variantName><resourceData>~~~name form</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+<topic id="plural">
+  <instanceOf><topicRef xlink:href="#nameform"/></instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/basename/plural"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>plural name</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ================================================================
+     "Regular" topics 
+-->
+
+<topic id="battery">
+  <baseName>
+    <baseNameString>battery</baseNameString>
+    <variant>
+      <parameters><topicRef xlink:href="#plural"/></parameters>
+      <variantName><resourceData>batteries</resourceData></variantName>
+    </variant>
+  </baseName>
+</topic>
+
+
+</topicMap>

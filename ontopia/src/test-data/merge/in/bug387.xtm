@@ -1,0 +1,44 @@
+<?xml version='1.0'?>
+<topicMap id='tm-a-b'
+    xmlns='http://www.topicmaps.org/xtm/1.0/'
+    xmlns:xlink='http://www.w3.org/1999/xlink'
+>
+
+<topic id='inverse'>
+	<baseName>
+		<baseNameString>inverse name</baseNameString>
+	</baseName>
+</topic>
+
+<topic id='topic-a'>
+	<subjectIdentity>
+		<subjectIndicatorRef xlink:href='http://a.b.com/tm_a_b.xtm#topic-a'/>
+	</subjectIdentity>
+	<baseName>
+		<scope>
+			<topicRef xlink:href='#inverse'></topicRef>
+		</scope>
+		<baseNameString>topic the a</baseNameString>
+	</baseName>
+	<baseName>
+		<baseNameString>the a topic</baseNameString>
+	</baseName>
+</topic>
+
+<topic id='topic-b'>
+	<subjectIdentity>
+		<subjectIndicatorRef xlink:href='http://a.b.com/tm_a_b.xtm#topic-b'/>
+	</subjectIdentity>
+	<baseName>
+		<scope>
+			<topicRef xlink:href='#inverse'></topicRef>
+		</scope>
+		<baseNameString>topic the b</baseNameString>
+	</baseName>
+	<baseName>
+		<baseNameString>the b topic</baseNameString>
+	</baseName>
+</topic>
+
+</topicMap>
+

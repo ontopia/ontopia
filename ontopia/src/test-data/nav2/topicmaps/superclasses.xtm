@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+	  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<topic id="topictype">
+  <baseName><baseNameString>Topic Type</baseNameString></baseName>
+</topic>
+
+<topic id="superclass_level1">
+  <instanceOf><topicRef xlink:href="#topictype"/></instanceOf>
+  <baseName>
+    <baseNameString>Superclass Level 1</baseNameString>
+  </baseName>
+</topic>
+
+
+<topic id="superclass_level2">
+  <instanceOf><topicRef xlink:href="#topictype"/></instanceOf>
+  <baseName>
+    <baseNameString>Superclass Level 2</baseNameString>
+  </baseName>
+</topic>
+
+
+<topic id="superclass_level3">
+  <instanceOf><topicRef xlink:href="#topictype"/></instanceOf>
+  <baseName>
+    <baseNameString>Superclass Level 3</baseNameString>
+  </baseName>
+</topic>
+
+
+<topic id="superclass_level4">
+  <instanceOf><topicRef xlink:href="#topictype"/></instanceOf>
+  <baseName>
+    <baseNameString>Superclass Level 4</baseNameString>
+  </baseName>
+</topic>
+
+
+<topic id="superclass_level5">
+  <instanceOf><topicRef xlink:href="#topictype"/></instanceOf>
+  <baseName>
+    <baseNameString>Superclass Level 5</baseNameString>
+  </baseName>
+</topic>
+
+
+<!-- This should have several levels of superclasses (in this case 5).-->
+<topic id="topic1">
+  <instanceOf><topicRef xlink:href="#topictype"/></instanceOf>
+  <baseName>
+    <baseNameString>Class 1</baseNameString>
+  </baseName>
+</topic>
+
+
+<!-- This should have only one level of superclass -->
+<topic id="topic2">
+  <instanceOf><topicRef xlink:href="#topictype"/></instanceOf>
+  <baseName>
+    <baseNameString>Class 2</baseNameString>
+  </baseName>
+</topic>
+
+<!-- This should have no level of superclass -->
+<topic id="topic3">
+  <instanceOf><topicRef xlink:href="#topictype"/></instanceOf>
+  <baseName>
+    <baseNameString>Class 3</baseNameString>
+  </baseName>
+</topic>
+
+  <!-- The superclass/subclass associations -->
+
+  <!-- topic1 -> sc_level1 -->
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level1"/>
+    </member>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#topic1"/>
+    </member>
+  </association>
+
+  <!-- sc_level1 -> sc_level2 -->
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level2"/>
+    </member>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level1"/>
+    </member>
+  </association>
+
+  <!-- sc_level2 -> sc_level3 -->
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level3"/>
+    </member>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level2"/>
+    </member>
+  </association>
+
+  <!-- sc_level3 -> sc_level4 -->
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level4"/>
+    </member>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level3"/>
+    </member>
+  </association>
+
+  <!-- sc_level4 -> sc_level5 -->
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level5"/>
+    </member>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level4"/>
+    </member>
+  </association>
+
+  <!-- topic2 -> sc_level5 -->
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#superclass_level5"/>
+    </member>
+    <member>
+      <roleSpec>
+  	<subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+      </roleSpec>
+      <topicRef xlink:href="#topic2"/>
+    </member>
+  </association>
+
+
+</topicMap>

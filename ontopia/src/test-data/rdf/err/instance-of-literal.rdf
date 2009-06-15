@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:foaf="http://xmlns.com/foaf/0.1/"
+        xmlns:rtm="http://psi.ontopia.net/rdf2tm/#" 
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+<rdf:Description rdf:about="bogus:larsga">
+  <rdf:type>ERROR</rdf:type>
+  <foaf:name>Lars Marius Garshol</foaf:name>
+
+  <foaf:mbox><rdf:Description/></foaf:mbox>
+</rdf:Description>
+
+<foaf:Person>
+  <foaf:name>Geir Ove Grønmo</foaf:name>
+
+  <foaf:nick>grove</foaf:nick>
+  <foaf:knows>ERROR</foaf:knows>
+</foaf:Person>
+
+<!--===========================================================================
+    TOPIC MAP MAPPING
+============================================================================-->
+
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#instance-of"/>
+  </rdf:Description>
+
+</rdf:RDF>

@@ -1,0 +1,5 @@
+
+#MERGEMAP "mergeltm.sub"
+#BASEURI "http://www.ontopia.net"
+
+[topic1 = "Topic number one"]

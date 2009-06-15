@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink" id="reification">
+  <topic id="id26">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id45"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id27">
+      <baseNameString>Topic 11</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id30">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id38"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id31">
+      <baseNameString>Topic 13</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id14">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id6"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id15">
+      <baseNameString>Topic 5</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id36">
+    <baseName id="id37">
+      <baseNameString>AssociationType</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id12">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id5"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id13">
+      <baseNameString>Topic 4</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id20">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id40"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id21">
+      <baseNameString>Topic 8</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id8">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id3"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id9">
+      <baseNameString>Topic 2</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id32">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id41"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id33">
+      <baseNameString>Topic 14</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id24">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id43"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id25">
+      <baseNameString>Topic 10</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id16">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id7"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id17">
+      <baseNameString>Topic 6</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id28">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id46"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id29">
+      <baseNameString>Topic 12</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id22">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id42"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id23">
+      <baseNameString>Topic 9</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id1">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://test.ontopia.net/#topic"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id2">
+      <baseNameString>topic 1</baseNameString>
+      <variant id="id5">
+        <variantName>
+          <resourceData>Same sourcelocator as topic4's subjectindicator</resourceData>
+        </variantName>
+      </variant>
+      <variant id="id3">
+        <variantName>
+          <resourceData>Same sourcelocator as topic2's subjectindicator</resourceData>
+        </variantName>
+      </variant>
+      <variant id="id4">
+        <variantName>
+          <resourceData>Same sourcelocator as topic3's subjectindicator</resourceData>
+        </variantName>
+      </variant>
+    </baseName>
+    <occurrence id="id7">
+      <resourceData>Occurrence 2</resourceData>
+    </occurrence>
+    <occurrence id="id6">
+      <resourceData>Occurrence 1</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id10">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id4"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id11">
+      <baseNameString>Topic 3</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id34">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id44"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id35">
+      <baseNameString>Topic 15</baseNameString>
+    </baseName>
+  </topic>
+  <topic id="id18">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#id39"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName id="id19">
+      <baseNameString>Topic 7</baseNameString>
+    </baseName>
+  </topic>
+  <association id="id38">
+    <instanceOf>
+      <topicRef xlink:href="#id36"></topicRef>
+    </instanceOf>
+    <member id="id40">
+      <topicRef xlink:href="#id8"></topicRef>
+    </member>
+    <member id="id39">
+      <topicRef xlink:href="#id1"></topicRef>
+    </member>
+  </association>
+  <association id="id41">
+    <instanceOf>
+      <topicRef xlink:href="#id36"></topicRef>
+    </instanceOf>
+    <member id="id43">
+      <topicRef xlink:href="#id10"></topicRef>
+    </member>
+    <member id="id42">
+      <topicRef xlink:href="#id1"></topicRef>
+    </member>
+  </association>
+  <association id="id44">
+    <instanceOf>
+      <topicRef xlink:href="#id36"></topicRef>
+    </instanceOf>
+    <member id="id45">
+      <topicRef xlink:href="#id1"></topicRef>
+    </member>
+    <member id="id46">
+      <topicRef xlink:href="#id12"></topicRef>
+    </member>
+  </association>
+</topicMap>

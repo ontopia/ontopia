@@ -1,0 +1,4 @@
+[occurrence_typeA = "Occurrence Type A"]
+[topicA = "Topic A"]
+{topicA, occurrence_typeA, [[Disallowed Occurrence]]}
+

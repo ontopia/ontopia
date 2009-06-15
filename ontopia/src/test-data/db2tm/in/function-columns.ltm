@@ -1,0 +1,7 @@
+#PREFIX local @"http://psi.example.org/"
+
+[local:topic = "Topic"]
+[local:uppercase = "Uppercase"]
+[local:lowercase = "Lowercase"]
+[local:trim = "Trim"]
+[local:substring = "Substring"]

@@ -1,0 +1,8 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/" version="2.0">
+  <mergeMap href="mergemap-merge.sub"/>
+  <topic id="topic">
+    <instanceOf>
+      <topicRef href="mergemap-merge.sub#type"/>
+    </instanceOf>
+  </topic>
+</topicMap>

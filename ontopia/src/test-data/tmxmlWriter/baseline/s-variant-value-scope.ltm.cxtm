@@ -1,0 +1,63 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#scopeA</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#scopeB</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#topicA</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Name</value>
+<type topicref="5"></type>
+<variant number="1">
+<value>Variant 1</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</variant>
+<variant number="2">
+<value>Variant 2</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</variant>
+</name>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#topicB</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Name</value>
+<type topicref="5"></type>
+<variant number="1">
+<value>Variant 1</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</variant>
+<variant number="2">
+<value>Variant 1</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<scope>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</variant>
+</name>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>
