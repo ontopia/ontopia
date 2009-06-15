@@ -3,7 +3,7 @@
 <!-- 
   $Id: build.xml,v 1.769 2009/05/25 05:48:16 geir.gronmo Exp $ 
 
-  Note to new users: call 'ant prepare' to initialize your build
+  Note to new users: call 'ant bootstrap' to initialize your build
                      system after you've checked out the source 
                      code for the first time.
 
@@ -24,7 +24,7 @@
 
 -->
 
-<project name="ontopia" default="prepare" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="ontopia" default="bootstrap" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
   <target name="init">
     <!-- Create time stamp -->
@@ -223,8 +223,7 @@
     <mkdir dir="${build.doc}" />
   </target>
 
-  <target name="domagic" depends="prepare" />
-  <target name="prepare" depends="dist.oks.init">
+  <target name="bootstrap" depends="dist.oks.init">
     <!-- This target prepares build system. The target should be called when 
          checking out the source code to a new system -->
 
@@ -1806,8 +1805,8 @@
     <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/enterprise-dev" />
   </target>
 
-  <target name="dist.jar.oks.enterprise" depends="dist.oks.init,check-jvm,prepare,clean.classes,compile.test.oks.enterprise,jar.oks.enterprise"/>
-  <target name="dist.jar.oks.enterprise.test" depends="dist.oks.init,check-jvm,prepare,clean.classes,compile.test.oks.enterprise,jar.oks.enterprise,jar.oks.enterprise.test"/>
+  <target name="dist.jar.oks.enterprise" depends="dist.oks.init,check-jvm,bootstrap,clean.classes,compile.test.oks.enterprise,jar.oks.enterprise"/>
+  <target name="dist.jar.oks.enterprise.test" depends="dist.oks.init,check-jvm,bootstrap,clean.classes,compile.test.oks.enterprise,jar.oks.enterprise,jar.oks.enterprise.test"/>
 
   <target name="dist.jar.oks.enterprise.noclean" depends="dist.oks.init,check-jvm,compile.test.oks.enterprise,jar.oks.enterprise"/>
 
