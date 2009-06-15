@@ -1,0 +1,11 @@
+<plugins>
+
+  <plugin id="rdf2tm" groups="topicmap"
+	  class="net.ontopia.topicmaps.nav2.plugins.RDF2TMPlugin">
+    <title>RDF2TM</title>
+    <descr>Configure the RDF-to-topic map mapping.</descr>
+    <activated>no</activated>
+    <uri>${plugins_rootdir}/rdf2tm/configure.jsp</uri>
+  </plugin>
+
+</plugins>

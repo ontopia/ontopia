@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+	<body>
+	
+<wicket:extend>	
+		
+<div wicket:id="titlePartPanel" />
+
+<table cellspacing="15px">
+	<tr>
+		<td class="start">		
+			<h3><wicket:message key="ontopoly.topic.maps" /></h3>
+			<ul>
+				<li wicket:id="eachOntopolyTopicMap">
+					<a wicket:id="ontTMLink"></a>
+				</li>
+			</ul>
+			<div wicket:id="missingTopicMapContainer">
+				<h3><wicket:message key="missing.topic.maps" /></h3>
+				<ul>
+					<li wicket:id="eachMissingOntopolyTopicMap">
+						<span wicket:id="missingOntTMTitle"></span>&nbsp;(<span wicket:id="missingOntTMFilename"></span>)
+						<a wicket:id="missingOntTMDeleteLink"><img src="images/remove.gif" /></a>
+					</li>
+				</ul>
+			</div>		
+		</td>
+		<td class="start">		
+			<h3><wicket:message key="other.topic.maps" /></h3>
+			<ul>
+				<li wicket:id="eachNonOntopolyTopicMap">
+					<a wicket:id="nonOntTMLink"></a>
+				</li>
+			</ul>
+			<p class="comment"><wicket:message key="other.topic.maps.comment" /></p>		
+		</td>
+		<td class="start">
+		    <div wicket:id="createNewTopicMapPanel"></div>
+		</td>	
+	</tr>
+</table>
+		
+</wicket:extend>
+
+	</body>
+</html>

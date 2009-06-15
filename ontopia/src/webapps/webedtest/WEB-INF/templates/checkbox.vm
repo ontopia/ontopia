@@ -1,0 +1,8 @@
+## $Id: checkbox.vm,v 1.4 2005/11/24 08:22:58 grove Exp $
+## Template used by net.ontopia.topicmaps.webed.taglibs.form.CheckboxTag
+## -----------------------------------------------------------------------
+#if ($readonly)
+  <input type="checkbox" name="${name}" disabled="disabled" #condAttribute("id" ${id}) #condAttribute("class" ${class}) ${checked} />
+#else
+  <input type="checkbox" name="${name}" #condAttribute("id" ${id}) #condAttribute("class" ${class}) ${checked} />
+#end

@@ -1,0 +1,8 @@
+net.ontopia.topicmaps.impl.rdbms.Database=firebird
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:firebirdsql://localhost//tmp/topicmaps.fdb
+net.ontopia.topicmaps.impl.rdbms.DriverClass=org.firebirdsql.jdbc.FBDriver
+
+net.ontopia.topicmaps.impl.rdbms.UserName=foo
+net.ontopia.topicmaps.impl.rdbms.Password=bar
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=true

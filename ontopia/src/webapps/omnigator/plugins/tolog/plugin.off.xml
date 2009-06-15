@@ -1,0 +1,6 @@
+<plugin id="tolog" groups="topic,topicmap"> <!-- class="FQCN" -->
+  <title>Query</title>
+  <descr>Query the topic map with tolog.</descr>
+  <activated>no</activated>
+  <uri>${plugins_rootdir}/tolog/form.jsp</uri>
+</plugin>

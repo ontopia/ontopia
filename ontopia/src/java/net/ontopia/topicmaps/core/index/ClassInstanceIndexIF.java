@@ -1,0 +1,173 @@
+
+// $Id: ClassInstanceIndexIF.java,v 1.16 2008/06/12 14:37:13 geir.gronmo Exp $
+
+package net.ontopia.topicmaps.core.index;
+
+import java.util.*;
+import net.ontopia.topicmaps.core.*;
+
+/**
+ * PUBLIC: Interface implemented by objects providing quick lookup
+ * facilities to find topics used as types, and the instances of those
+ * types, within a topic map.</p>
+ */
+
+public interface ClassInstanceIndexIF extends IndexIF {
+  
+  /**
+   * PUBLIC: Gets all topics that are instances of the given type. 
+   * Topic types are an abbreviated form of an association having 
+   * roles for type and instance. This index provides optimized handling for topic
+   * types.
+   *
+   * @param topic_type The given type; an object implementing TopicIF.
+   *
+   * @return A collection of TopicIF objects; the instances of the type 
+   *         represented by the given topic.
+   */
+  public Collection getTopics(TopicIF topic_type);
+  
+  /**
+   * PUBLIC: Gets all topic names that are of the given type.
+   *
+   * @param name_type The given type; an object implementing TopicIF.
+   *
+   * @return A collection of TopicNameIF objects; topic names with the type 
+   *         represented by the given topic.
+   * @since 3.0
+   */
+  public Collection getTopicNames(TopicIF name_type);
+  
+  /**
+   * PUBLIC: Gets all occurrences that are of the given type.
+   *
+   * @param occurrence_type The given type; an object implementing TopicIF.
+   *
+   * @return A collection of OccurrenceIF objects; occurrences with the type 
+   *         represented by the given topic.
+   */
+  public Collection getOccurrences(TopicIF occurrence_type);
+  
+  /**
+   * PUBLIC: Gets all associations that are of the given type.
+   *
+   * @param association_type The given type; an object implementing TopicIF.
+   *
+   * @return A collection of AssociationIF objects; associations with the type 
+   *         represented by the given topic.
+   */
+  public Collection getAssociations(TopicIF association_type);
+
+  /**
+   * PUBLIC: Gets all association roles that are of the given type.
+   *
+   * @param association_role_type The given type; an object implementing TopicIF.
+   *
+   * @return A collection of AssociationRoleIF objects; association roles with the type 
+   *         represented by the given topic.
+   */
+  public Collection getAssociationRoles(TopicIF association_role_type);
+
+  /**
+   * PUBLIC: Gets all topics that are used as topic types.
+   *
+   * @return A collection of TopicIF objects, each of which serves as a type
+   *          for some topic.
+   */
+  public Collection getTopicTypes();
+  
+  /**
+   * PUBLIC: Gets the topics that are used as topic name types.
+   *
+   * @return A collection of TopicIF objects, each of which serves as a type
+   *          for some topic name.
+   * @since 3.0
+   */
+  public Collection getTopicNameTypes();
+  
+  /**
+   * PUBLIC: Gets the topics that are used as occurrence types.
+   *
+   * @return A collection of TopicIF objects, each of which serves as a type
+   *          for some occurrence.
+   */
+  public Collection getOccurrenceTypes();
+  
+  /**
+   * PUBLIC: Gets the topics that are used as association types.
+   *
+   * @return A collection of TopicIF objects, each of which serves as a type
+   *          for some association.
+   */
+  public Collection getAssociationTypes();
+  
+  /**
+   * PUBLIC: Gets the topics that are used as association role types.
+   *
+   * @return A collection of TopicIF objects, each of which serves as a type
+   *          for some association role.
+   */
+  public Collection getAssociationRoleTypes();
+  
+  /**
+   * PUBLIC: Returns true if the topic is used as a topic type somewhere.
+   *
+   * @param topic An object implementing TopicIF.
+   *
+   * @return Boolean: true if the given topic serves as a type for some topic; 
+   *                  false otherwise.
+   */
+  public boolean usedAsTopicType(TopicIF topic);
+
+  /**
+   * PUBLIC: Returns true if the topic is used as an topic name type.
+   *
+   * @param topic An object implementing TopicIF.
+   *
+   * @return Boolean: true if the given topic serves as a type for
+   *                  some topic name; false otherwise.
+   * @since 3.0
+   */
+  public boolean usedAsTopicNameType(TopicIF topic);
+
+  /**
+   * PUBLIC: Returns true if the topic is used as an occurrence type.
+   *
+   * @param topic An object implementing TopicIF.
+   *
+   * @return Boolean: true if the given topic serves as a type for some occurrence; 
+   *                  false otherwise.
+   */
+  public boolean usedAsOccurrenceType(TopicIF topic);
+
+  /**
+   * PUBLIC: Returns true if the topic is used as an association type.
+   *
+   * @param topic An object implementing TopicIF.
+   *
+   * @return Boolean: true if the given topic serves as a type for some association; 
+   *                  false otherwise.
+   */
+  public boolean usedAsAssociationType(TopicIF topic);
+  
+  /**
+   * PUBLIC: Returns true if the topic is used as an association role type.
+   *
+   * @param topic An object implementing TopicIF.
+   *
+   * @return Boolean: true if the given topic serves as a type for some association role; 
+   *                  false otherwise.
+   */
+  public boolean usedAsAssociationRoleType(TopicIF topic);
+  
+  /**
+   * PUBLIC: Returns true if the topic is used as a type somewhere.
+   *
+   * @param topic An object implementing TopicIF.
+   *
+   * @return Boolean: true if the given topic serves as a type for any topic
+   *                    map object; false otherwise.
+   */
+  public boolean usedAsType(TopicIF topic);
+
+}

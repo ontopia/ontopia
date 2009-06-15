@@ -1,0 +1,32 @@
+<!-- $Id: JDBCDataSourceTest-readers.xml,v 1.1 2007/02/27 09:51:41 grove Exp $ -->
+<db2tm name='fellesdata'>
+
+  <using prefix='fd' subject-identifier='http://psi.bergen.kommune.no/portal/'></using>
+
+  <sources>
+    <jdbc id="jdbc" propfile='/tmp/grove.postgresql.props'/>
+  </sources>
+
+  <relation name='jdst' columns='a b c d' synctype='changelog'>
+    <topic id='over'>
+      <subject-identifier>psi:jdst/${c}</subject-identifier>
+    </topic>
+    <topic type='fd:organisasjonsenhet'>
+      <subject-identifier>http://example.org/jdst/${a}</subject-identifier>
+      <topic-name>${b}</topic-name>
+      <occurrence type='fd:number'>${c}</occurrence>
+      <occurrence type='fd:date'>${d}</occurrence>
+      <player atype='fd:underlagt-overordnet' rtype='fd:underlagt'>
+        <other player='#over' rtype='fd:overordnet'></other>
+      </player>
+    </topic>
+    <changelog action-column='ct' table='jdst_changes' order-column='cd' primary-key='a'>
+      <action type='create' value='a'></action>
+      <action type='delete' value='r'></action>
+      <action type='update' value='u'></action>
+      <action type='ignore' value='i'></action>
+      <action type='ignore' value='x'></action>
+    </changelog>
+  </relation>
+
+</db2tm>

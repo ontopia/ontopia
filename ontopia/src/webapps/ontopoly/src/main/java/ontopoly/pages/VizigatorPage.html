@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+	<body>
+		<wicket:extend>
+
+    <div wicket:id="titlePartPanel" />
+
+    <div wicket:id="functionBoxes" id="functionBoxes" ></div>
+
+    <br/>
+    <div>
+       <applet width="100%" height="1000" 
+         alt="Ontopia vizlet"
+         code="net.ontopia.topicmaps.viz.Vizlet.class"
+         archive="/omnigator/plugins/viz/ontopia-vizlet.jar">
+         <param name="tmrap" value="/omnigator/plugins/viz/" />
+         <param name="config" value="" />
+         <param wicket:id="tmid" />
+         <param wicket:id="idtype" />
+         <param wicket:id="idvalue"/>
+         <param name="propTarget" value="VizletProp" />
+         <param name="gotoTarget" value="" />
+         <param name="locality" value="1" />
+         <param name="max-locality" value="5" />
+       </applet>
+    </div>
+		
+		</wicket:extend>
+	</body>
+</html>

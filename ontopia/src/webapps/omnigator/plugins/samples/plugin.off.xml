@@ -1,0 +1,49 @@
+<plugins>
+
+<plugin id="dict" class="net.ontopia.topicmaps.nav2.plugins.TextPlugin"
+        groups="topic,topicmap">
+  <title>Dictionary</title>
+  <descr>Online Dictionary Database Query (dict.org).</descr>
+  <activated>no</activated>
+  <uri></uri>
+  <!--parameter name="text" value="<a href='http://dict.org'>dict.org</a>"/-->
+  <parameter name="text"><![CDATA[
+    <form name="DICT" method="POST" action="http://www.dict.org//bin/Dict" style="display: inline">
+    <input type="hidden" name="Form" value="Dict1"/>
+    <input type="text" name="Query" size="8" value="dict.org"/>
+    <input type="hidden" name="Strategy" value="*"/>
+    <input type="hidden" name="Database" value="*"/>
+    </form>
+]]></parameter>
+</plugin>
+
+<plugin id="ontopia" class="net.ontopia.topicmaps.nav2.plugins.TextPlugin"
+        groups="topic,topicmap">
+  <title>The Ontopia home page</title>
+  <descr>A link to www.ontopia.net</descr>
+  <activated>no</activated>
+  <uri>http://www.ontopia.net</uri>
+  <parameter name="text"><![CDATA[<a href='http://www.ontopia.net'>Ontopia</a>]]></parameter>
+</plugin>
+
+<plugin id="google" class="net.ontopia.topicmaps.nav2.plugins.GooglePlugin"
+        groups="topic">
+  <title>Google it!</title>
+  <descr>Searches for the current topic with Google</descr>
+  <activated>no</activated>
+  <uri></uri>
+  <parameter name="style" value="link"/> <!-- link or image -->
+  <parameter name="title" value="Google it!"/> <!-- contents of link element -->
+  <parameter name="types" value="yes"/>
+</plugin>
+
+<plugin id="reload" class="net.ontopia.topicmaps.nav2.plugins.ReloadPlugin"
+        groups="topic,topicmap">
+  <title>Reload</title>
+  <descr>Reload the topic map</descr>
+  <activated>no</activated>
+  <uri></uri>
+  <parameter name="style" value="link"/> <!-- link or button -->
+  <parameter name="title" value="Reload"/> <!-- contents of link element -->
+</plugin>
+</plugins>

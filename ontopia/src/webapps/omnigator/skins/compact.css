@@ -1,0 +1,136 @@
+/* $Id: compact.css,v 1.1 2004/03/08 10:45:50 pepper Exp $ */
+
+/* ---- Document wide general Layout ---- */
+
+/*
+body {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+*/
+
+body, p, h1, h2, h3, h4, ul, ol, li, div, td, th, address, blockquote, nobr, b, i {
+  font-family: Verdana, Geneva, Arial, sans-serif;
+}
+
+/* ---- Definition of Specific Font-Related classes ---- */
+
+table {
+  margin: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+tr {
+  margin: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+td {
+  margin: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+h1 {
+  font-size: 140%;
+  color: green;
+  margin: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+h2 {
+  font-size: 120%;
+  margin: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+h3 {
+  font-size: 110%;
+  color: white;
+  background-color: green;
+  padding: 2px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+h4 {
+  font-size: 105%;
+  margin: 0px;
+}
+
+
+body, p, td, th, address, nobr, b, i {
+  font-size: 92%;
+}
+
+input, textarea {
+  font-size: 85%;
+}
+
+pre {
+  font-family: Courier New, Courier;
+  font-size: 90%;
+}
+
+tt {
+  font-family: Courier New, Courier;
+  font-size: 90%;
+}
+
+/* ---- List Item Properties ---- */
+
+ul {
+  margin-top: 4px;
+  margin-bottom: 0px;
+  margin-left: 14px;
+}
+
+li {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+
+.reified {
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* ---- Boxes ---- */
+
+.boxed {
+  background-color: #FFFF00;
+  padding: 4pt
+}
+
+.shboxed {
+  background-color: #FFFFFF;
+  padding: 4pt
+}
+
+/* ---- Link Style Definition ---- */
+
+a:link {
+  color: #0000FF;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #004080;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline
+}
+
+/*
+a:active {
+  color: #000000;
+  text-decoration: none;
+}
+*/

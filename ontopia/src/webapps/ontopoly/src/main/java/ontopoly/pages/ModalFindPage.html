@@ -1,0 +1,61 @@
+<wicket:panel>
+  <div class="popupHeader"><span>&nbsp;</span></div>
+  <div class="popupBorder">
+  <div wicket:id="popupContent" class="popupContent">
+    <div class="popupTitle">
+ 		  <h1 wicket:id="title" class="title"></h1>
+ 		</div>
+    <br/>
+    <div class="popupTabs">
+      <b><a wicket:id="searchTabLink" href="#"><wicket:message key="ModalFindPage.search"/></a></b> | 
+      <b><a wicket:id="browseTabLink" href="#"><wicket:message key="ModalFindPage.browse"/></a></b></div>
+    <form onsubmit="event.stopPropagation(); return false;">
+    <br/>    
+      <div wicket:id="searchTab">
+        <input wicket:id="searchTerm" type="text" size="50" onkeydown="if (event.keyCode == 13 || event.keycode == 3) { form.elements[1].focus(); }" />
+        <input wicket:id="search" type="button" wicket:message="value:button.find" value=" Find " />
+
+        <div wicket:id="resultsContainer">
+          <br/>
+          <div wicket:id ="checkGroup">
+            <table>
+              <tr wicket:id="results"><td><input wicket:id="check" type="checkbox"/></td><td><span wicket:id="topic"/></td><td><span wicket:id="type"/></td></tr>
+            </table>
+            <div wicket:id="unsuccessfulSearchContainer">
+              <span wicket:id="message" />
+            </div>
+          </div>
+        </div>      
+        <br/>
+        <input wicket:id="closeOK" type="button" wicket:message="value:button.ok" value=" OK " />
+        <input wicket:id="closeCancel" type="button" wicket:message="value:button.cancel" value=" Cancel " /><br/>
+      </div>    
+
+      <div wicket:id="browseTab">
+        <select wicket:id="playerTypes"></select><br/>
+        <div wicket:id="resultsContainer">
+          <br/>
+          <div wicket:id ="checkGroup">
+            <div wicket:id ="results"/>
+          </div>
+        </div>
+        <br/>
+        <input wicket:id="closeOK" type="button" wicket:message="value:button.ok" value=" OK " />
+        <input wicket:id="closeCancel" type="button" wicket:message="value:button.cancel" value=" Cancel " /><br/>
+      </div>        
+    </form>
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    <br/>&nbsp;
+    
+  </div>  
+  </div>  
+</wicket:panel>

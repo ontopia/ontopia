@@ -1,0 +1,903 @@
+<queries>
+
+  <!-- $Id: queries.xml,v 1.69 2008/08/29 13:01:02 geir.gronmo Exp $ -->
+
+  <class-indicator name="TMObjectIFs">
+    <indicator token="A" class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+    <indicator token="R" class="net.ontopia.topicmaps.impl.rdbms.AssociationRole"/>
+    <indicator token="B" class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+    <indicator token="O" class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+    <indicator token="T" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <indicator token="M" class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <indicator token="N" class="net.ontopia.topicmaps.impl.rdbms.VariantName"/>
+  </class-indicator>
+
+  // -----------------------------------------------------------------------------
+  // TopicMapIF
+  // -----------------------------------------------------------------------------
+
+  <query name="TopicMapIF.getObjectByItemIdentifier" type="object" lookup="false">
+
+    <select class-indicator="TMObjectIFs"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.class, t1.tmobject_id from TM_ITEM_IDENTIFIERS t1 where t1.topicmap_id = ? and t1.address = ?"/>
+
+    <statement platform="postgresql"
+     query="select t1.class, t1.tmobject_id from TM_ITEM_IDENTIFIERS t1 where t1.topicmap_id = ? and t1.address = ? limit 1"/>
+
+    <statement platform="oracle"
+     query="select /*+ FIRST_ROWS(1) */ a.* from (select t1.class, t1.tmobject_id from TM_ITEM_IDENTIFIERS t1 where t1.topicmap_id = ? and t1.address = ?) a where rownum &lt;= 1"/>
+
+    <statement platform="mysql"
+     query="select t1.class, t1.tmobject_id from TM_ITEM_IDENTIFIERS t1 where t1.topicmap_id = ? and binary t1.address = ? limit 1"/>
+
+  </query>
+
+  <query name="TopicMapIF.getTopicBySubject" type="object" lookup="false">
+
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_TOPIC t1, TM_SUBJECT_LOCATORS t2 where t1.id = t2.topic_id and t1.topicmap_id = ? and t2.address = ?"/>
+
+    <statement platform="postgresql"
+     query="select t1.id from TM_TOPIC t1, TM_SUBJECT_LOCATORS t2 where t1.id = t2.topic_id and t1.topicmap_id = ? and t2.address = ? limit 1"/>
+
+    <statement platform="oracle"
+     query="select /*+ FIRST_ROWS(1) */ a.* from (select t1.id from TM_TOPIC t1, TM_SUBJECT_LOCATORS t2 where t1.id = t2.topic_id and t1.topicmap_id = ? and t2.address = ?) a where rownum &lt;= 1"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_TOPIC t1, TM_SUBJECT_LOCATORS t2 where t1.id = t2.topic_id and t1.topicmap_id = ? and binary t2.address = ? limit 1"/>
+
+  </query>
+
+  <query name="TopicMapIF.getTopicBySubjectIdentifier" type="object" lookup="false">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_TOPIC t1, TM_SUBJECT_IDENTIFIERS t2 where t1.id = t2.topic_id and t1.topicmap_id = ? and t2.address = ?"/>
+
+    <statement platform="postgresql"
+     query="select t1.id from TM_TOPIC t1, TM_SUBJECT_IDENTIFIERS t2 where t1.id = t2.topic_id and t1.topicmap_id = ? and t2.address = ? limit 1"/>
+
+    <statement platform="oracle"
+     query="select /*+ FIRST_ROWS(1) */ a.* from (select t1.id from TM_TOPIC t1, TM_SUBJECT_IDENTIFIERS t2 where t1.id = t2.topic_id and t1.topicmap_id = ? and t2.address = ?) a where rownum &lt;= 1"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_TOPIC t1, TM_SUBJECT_IDENTIFIERS t2 where t1.id = t2.topic_id and t1.topicmap_id = ? and binary t2.address = ? limit 1"/>
+  </query>
+
+  <query name="TopicMapIF.getTopics" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_TOPIC t1 where t1.topicmap_id = ?"/>
+
+  </query>
+
+  <query name="TopicMapIF.getAssociations" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+    
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_ASSOCIATION t1 where t1.topicmap_id = ?"/>
+
+  </query>
+
+  // -----------------------------------------------------------------------------
+  // TopicIF
+  // -----------------------------------------------------------------------------
+
+  <!-- 
+  <query name="TopicIF.getRoles" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.AssociationRole"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.player_id = ?"/>
+
+  </query>
+    -->
+
+  <query name="TopicIF.getRolesByType" type="collection" fetchSize="500">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.AssociationRole"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.player_id = ? and t1.type_id = ?"/>
+
+  </query>
+
+  // -----------------------------------------------------------------------------
+  // ClassInstanceIndexIF
+  // -----------------------------------------------------------------------------
+
+  <query name="ClassInstanceIndexIF.getTopics" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [T1] T2.types.contains(T1) -->
+    <statement platform="generic"
+     query="select distinct t1.topic_id from TM_TOPIC_TYPES t1 where t1.type_id = ?"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getTopics_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [count(T1)] T2.types.contains(T1) -->
+    <statement platform="generic"
+     query="select count(t1.topic_id) from TM_TOPIC_TYPES t1 where t1.type_id = ?"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getTopicNames" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [B1] B1.type == T1 -->
+    <statement platform="generic"
+     query="select t1.id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.type_id = ?"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getTopicNames_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [B1] B1.type == T1 -->
+    <statement platform="generic"
+     query="select count(t1.id) from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.type_id = ?"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getOccurrences" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [O1] O1.type == T1 -->
+    <statement platform="generic"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.type_id = ?"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getOccurrences_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [O1] O1.type == T1 -->
+    <statement platform="generic"
+     query="select count(t1.id) from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.type_id = ?"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getAssociations" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [A1] A1.type == T1 -->
+    <statement platform="generic"
+     query="select t1.id from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.type_id = ?"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getAssociations_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [A1] A1.type == T1 -->
+    <statement platform="generic"
+     query="select count(t1.id) from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.type_id = ?"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getAssociationRoles" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.AssociationRole"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [R1] R1.type == T1 -->
+    <statement platform="generic"
+     query="select t1.id from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id = ?"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getAssociationRoles_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <!-- JDOQL: [R1] R1.type == T1 -->
+    <statement platform="generic"
+     query="select count(t1.id) from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id = ?"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getTopics_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <!-- JDOQL: [T1] vT1.types.isEmpty() and vT1.topicmap = pM1 -->
+    <statement platform="generic"
+     query="select distinct t1.id from TM_TOPIC t1 left outer join TM_TOPIC_TYPES t2 on t1.id = t2.topic_id where t1.topicmap_id = ? and t2.type_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select distinct t1.id from TM_TOPIC t1 where t1.topicmap_id = ? and t1.id not in (select t2.topic_id from TM_TOPIC_TYPES t2)"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getTopics_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <!-- JDOQL: [T1] vT1.types.isEmpty() and vT1.topicmap = pM1 -->
+    <statement platform="generic"
+     query="select count(t1.id) from TM_TOPIC t1 left outer join TM_TOPIC_TYPES t2 on t1.id = t2.topic_id where t1.topicmap_id = ? and t2.type_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select count(t1.id) from TM_TOPIC t1 where t1.topicmap_id = ? and t1.id not in (select t2.topic_id from TM_TOPIC_TYPES t2)"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getTopicNames_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <!-- JDOQL: [B1] B1.type == null -->
+    <statement platform="generic"
+     query="select t1.id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.type_id is null"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getTopicNames_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <!-- JDOQL: [B1] B1.type == null -->
+    <statement platform="generic"
+     query="select count(t1.id) from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.type_id is null"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getOccurrences_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <!-- JDOQL: [O1] O1.type == null -->
+    <statement platform="generic"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.type_id is null"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getOccurrences_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <!-- JDOQL: [O1] O1.type == null -->
+    <statement platform="generic"
+     query="select count(t1.id) from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.type_id is null"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getAssociations_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select t1.id from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.type_id is null"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getAssociations_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.type_id is null"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getAssociationRoles_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.AssociationRole"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select t1.id from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id is null"/>
+  </query>
+  <query name="ClassInstanceIndexIF.getAssociationRoles_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id is null"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getTopicTypes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <!-- JDOQL: [T2] T1.types.contains(T2) & T2.topicmap = M1 -->
+    <statement platform="generic"
+     query="select distinct t1.id from TM_TOPIC t1, TM_TOPIC_TYPES t2 where t1.topicmap_id = ? and t1.id = t2.type_id"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getTopicNameTypes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.type_id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.type_id > 0"/>
+    <statement platform="postgresql"
+     query="select distinct t1.type_id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.type_id is not null"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getOccurrenceTypes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.type_id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.type_id > 0"/>
+    <statement platform="postgresql"
+     query="select distinct t1.type_id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.type_id is not null"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getAssociationTypes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <!-- JDOQL: [A1] A1.type == T1  & T1.topicmap = M1 -->
+    <statement platform="generic"
+     query="select distinct t1.type_id from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.type_id > 0"/>
+    <statement platform="postgresql"
+     query="select distinct t1.type_id from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.type_id is not null"/>
+  </query>
+
+  <query name="ClassInstanceIndexIF.getAssociationRoleTypes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.type_id from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id > 0"/>
+    <statement platform="postgresql"
+     query="select distinct t1.type_id from TM_ASSOCIATION_ROLE t1 where t1.topicmap_id = ? and t1.type_id is not null"/>
+  </query>
+
+  // -----------------------------------------------------------------------------
+  // OccurrenceIndexIF
+  // -----------------------------------------------------------------------------
+
+  <query name="OccurrenceIndexIF.getOccurrences" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.content = ?"/>
+
+    <statement platform="oracle"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) = ?"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and binary t1.content = ?"/>
+
+  </query>
+
+  <query name="OccurrenceIndexIF.getOccurrencesByDataType" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.content = ? and t1.datatype_address = ?"/>
+
+    <statement platform="oracle"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) = ? and t1.datatype_address = ?"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and binary t1.content = ? and binary t1.datatype_address = ?"/>
+
+  </query>
+
+  <query name="OccurrenceIndexIF.getOccurrencesBetween" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.content >= ? and t1.content &lt; ?"/>
+
+    <statement platform="oracle"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) >= ?  and tm_clob_value(t1.content) &lt; ?"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and binary t1.content >= ? and binary t1.content &lt; ?"/>
+
+  </query>
+
+  <query name="OccurrenceIndexIF.getOccurrencesBetween_datatype" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="java.lang.String"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.content >= ? and t1.content &lt; ? and t1.datatype_address = ?"/>
+
+    <statement platform="oracle"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) >= ?  and tm_clob_value(t1.content) &lt; ? and t1.datatype_address = ?"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and binary t1.content >= ? and binary t1.content &lt; ? and binary t1.datatype_address = ?"/>
+
+  </query>
+
+  <query name="OccurrenceIndexIF.getOccurrencesGreaterThanOrEqual" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.content >= ? order by t1.content"/>
+
+    <statement platform="oracle"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) >= ? order by t1.content"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and binary t1.content >= ? order by t1.content"/>
+
+  </query>
+
+  <query name="OccurrenceIndexIF.getOccurrencesLessThanOrEqual" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.content &lt; ?"/>
+
+    <statement platform="oracle"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) &lt; ?"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and binary t1.content &lt; ?"/>
+
+  </query>
+
+  // -----------------------------------------------------------------------------
+  // NameIndexIF
+  // -----------------------------------------------------------------------------
+
+  <query name="NameIndexIF.getTopicNames" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.content = ?"/>
+
+  </query>
+
+  <query name="NameIndexIF.getVariants" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.VariantName"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and t1.content = ?"/>
+
+    <statement platform="oracle"
+     query="select t1.id from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) = ?"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and binary t1.content = ?"/>
+
+  </query>
+
+  <query name="NameIndexIF.getVariantsByDataType" type="collection">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.VariantName"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and t1.content = ? and t1.datatype_address = ?"/>
+
+    <statement platform="oracle"
+     query="select t1.id from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and tm_clob_value(t1.content) = ? and t1.datatype_address = ?"/>
+
+    <statement platform="mysql"
+     query="select t1.id from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and binary t1.content = ? and binary t1.datatype_address = ?"/>
+
+  </query>
+
+  // -----------------------------------------------------------------------------
+  // ScopeIndexIF
+  // -----------------------------------------------------------------------------
+
+  <query name="ScopeIndexIF.getTopicNames" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_TOPIC_NAME t1 right outer join TM_TOPIC_NAME_SCOPE t2 on t2.scoped_id = t1.id where t1.topicmap_id = ? and t2.theme_id = ?"/>
+    <statement platform="oracle,hsqldb"
+     query="select distinct t1.id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.id in (select t2.scoped_id from TM_TOPIC_NAME_SCOPE t2 where t2.theme_id = ?)"/>
+  </query>
+  <query name="ScopeIndexIF.getTopicNames_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_TOPIC_NAME t1 right outer join TM_TOPIC_NAME_SCOPE t2 on t2.scoped_id = t1.id where t1.topicmap_id = ? and t2.theme_id = ?"/>
+    <statement platform="oracle,hsqldb"
+     query="select count(t1.id) from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.id in (select t2.scoped_id from TM_TOPIC_NAME_SCOPE t2 where t2.theme_id = ?)"/>
+  </query>
+
+  <query name="ScopeIndexIF.getVariants" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.VariantName"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_VARIANT_NAME t1 right outer join TM_VARIANT_NAME_SCOPE t2 on t2.scoped_id = t1.id where t1.topicmap_id = ? and t2.theme_id = ?"/>
+    <statement platform="oracle,hsqldb"
+     query="select distinct t1.id from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and t1.id in (select t2.scoped_id from TM_VARIANT_NAME_SCOPE t2 where t2.theme_id = ?)"/>
+  </query>
+  <query name="ScopeIndexIF.getVariants_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_VARIANT_NAME t1 right outer join TM_VARIANT_NAME_SCOPE t2 on t2.scoped_id = t1.id where t1.topicmap_id = ? and t2.theme_id = ?"/>
+    <statement platform="oracle,hsqldb"
+     query="select count(t1.id) from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and t1.id in (select t2.scoped_id from TM_VARIANT_NAME_SCOPE t2 where t2.theme_id = ?)"/>
+  </query>
+
+  <query name="ScopeIndexIF.getOccurrences" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_OCCURRENCE t1 right outer join TM_OCCURRENCE_SCOPE t2 on t2.scoped_id = t1.id where t1.topicmap_id = ? and t2.theme_id = ?"/>
+    <statement platform="oracle,hsqldb"
+     query="select distinct t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.id in (select t2.scoped_id from TM_OCCURRENCE_SCOPE t2 where t2.theme_id = ?)"/>
+  </query>
+  <query name="ScopeIndexIF.getOccurrences_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_OCCURRENCE t1 right outer join TM_OCCURRENCE_SCOPE t2 on t2.scoped_id = t1.id where t1.topicmap_id = ? and t2.theme_id = ?"/>
+    <statement platform="oracle,hsqldb"
+     query="select count(t1.id) from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.id in (select t2.scoped_id from TM_OCCURRENCE_SCOPE t2 where t2.theme_id = ?)"/>
+  </query>
+
+  <query name="ScopeIndexIF.getAssociations" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_ASSOCIATION t1 right outer join TM_ASSOCIATION_SCOPE t2 on t2.scoped_id = t1.id where t1.topicmap_id = ? and t2.theme_id = ?"/>
+    <statement platform="oracle,hsqldb"
+     query="select distinct t1.id from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.id in (select t2.scoped_id from TM_ASSOCIATION_SCOPE t2 where t2.theme_id = ?)"/>
+  </query>
+  <query name="ScopeIndexIF.getAssociations_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_ASSOCIATION t1 right outer join TM_ASSOCIATION_SCOPE t2 on t2.scoped_id = t1.id where t1.topicmap_id = ? and t2.theme_id = ?"/>
+    <statement platform="oracle,hsqldb"
+     query="select count(t1.id) from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.id in (select t2.scoped_id from TM_ASSOCIATION_SCOPE t2 where t2.theme_id = ?)"/>
+  </query>
+
+  <query name="ScopeIndexIF.getTopicNames_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_TOPIC_NAME t1 left outer join TM_TOPIC_NAME_SCOPE t2 on t1.id = t2.scoped_id where t1.topicmap_id = ? and t2.theme_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select distinct t1.id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.id not in (select t2.scoped_id from TM_TOPIC_NAME_SCOPE t2)"/>
+  </query>
+  <query name="ScopeIndexIF.getTopicNames_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_TOPIC_NAME t1 left outer join TM_TOPIC_NAME_SCOPE t2 on t1.id = t2.scoped_id where t1.topicmap_id = ? and t2.theme_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select count(t1.id) from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.id not in (select t2.scoped_id from TM_TOPIC_NAME_SCOPE t2)"/>
+  </query>
+
+  <query name="ScopeIndexIF.getVariants_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.VariantName"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_VARIANT_NAME t1 left outer join TM_VARIANT_NAME_SCOPE t2 on t1.id = t2.scoped_id where t1.topicmap_id = ? and t2.theme_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select distinct t1.id from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and t1.id not in (select t2.scoped_id from TM_VARIANT_NAME_SCOPE t2)"/>
+  </query>
+  <query name="ScopeIndexIF.getVariants_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_VARIANT_NAME t1 left outer join TM_VARIANT_NAME_SCOPE t2 on t1.id = t2.scoped_id where t1.topicmap_id = ? and t2.theme_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select count(t1.id) from TM_VARIANT_NAME t1 where t1.topicmap_id = ? and t1.id not in (select t2.scoped_id from TM_VARIANT_NAME_SCOPE t2)"/>
+  </query>
+
+  <query name="ScopeIndexIF.getOccurrences_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_OCCURRENCE t1 left outer join TM_OCCURRENCE_SCOPE t2 on t1.id = t2.scoped_id where t1.topicmap_id = ? and t2.theme_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select distinct t1.id from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.id not in (select t2.scoped_id from TM_OCCURRENCE_SCOPE t2)"/>
+  </query>
+  <query name="ScopeIndexIF.getOccurrences_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_OCCURRENCE t1 left outer join TM_OCCURRENCE_SCOPE t2 on t1.id = t2.scoped_id where t1.topicmap_id = ? and t2.theme_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select count(t1.id) from TM_OCCURRENCE t1 where t1.topicmap_id = ? and t1.id not in (select t2.scoped_id from TM_OCCURRENCE_SCOPE t2)"/>
+  </query>
+
+  <query name="ScopeIndexIF.getAssociations_null" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_ASSOCIATION t1 left outer join TM_ASSOCIATION_SCOPE t2 on t1.id = t2.scoped_id where t1.topicmap_id = ? and t2.theme_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select distinct t1.id from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.id not in (select t2.scoped_id from TM_ASSOCIATION_SCOPE t2)"/>
+  </query>
+  <query name="ScopeIndexIF.getAssociations_null_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select count(t1.id) from TM_ASSOCIATION t1 left outer join TM_ASSOCIATION_SCOPE t2 on t1.id = t2.scoped_id where t1.topicmap_id = ? and t2.theme_id is null"/>
+    <statement platform="oracle,hsqldb,mckoi"
+     query="select count(t1.id) from TM_ASSOCIATION t1 where t1.topicmap_id = ? and t1.id not in (select t2.scoped_id from TM_ASSOCIATION_SCOPE t2)"/>
+  </query>
+
+  <query name="ScopeIndexIF.getTopicNameThemes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_TOPIC t1, TM_TOPIC_NAME_SCOPE t2 where t1.topicmap_id = ? and t1.id = t2.theme_id"/>
+  </query>
+
+  <query name="ScopeIndexIF.getVariantThemes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_TOPIC t1, TM_VARIANT_NAME_SCOPE t2 where t1.topicmap_id = ? and t1.id = t2.theme_id"/>
+  </query>
+
+  <query name="ScopeIndexIF.getOccurrenceThemes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_TOPIC t1, TM_OCCURRENCE_SCOPE t2 where t1.topicmap_id = ? and t1.id = t2.theme_id"/>
+  </query>
+
+  <query name="ScopeIndexIF.getAssociationThemes" type="collection">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+     query="select distinct t1.id from TM_TOPIC t1, TM_ASSOCIATION_SCOPE t2 where t1.topicmap_id = ? and t1.id = t2.theme_id"/>
+  </query>
+
+  // -----------------------------------------------------------------------------
+  // RDBMSSearcher
+  // -----------------------------------------------------------------------------
+
+  <query name="RDBMSSearcher.searchLike:generic" type="matrix">
+  
+    <select name="class" class="java.lang.String"/>
+    <select name="object_id" class="java.lang.String"/>
+    <select name="content" class="java.lang.String"/>
+    <select name="_score" class="java.lang.Float"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="generic_case_sensitive"
+     query="select 'B' as class, 'B' || id as id, content as content, 1.0 as score from TM_TOPIC_NAME where topicmap_id = ? and content like ? union all select 'O', 'O' || id, content, 0.75 from TM_OCCURRENCE where topicmap_id = ? and content like ? union all select 'N', 'N' || id, content, 0.75 from TM_VARIANT_NAME where topicmap_id = ? and content like ?"/>
+
+    <statement platform="generic"
+     query="select 'B' as class, 'B' || id as id, content as content, 1.0 as score from TM_TOPIC_NAME where topicmap_id = ? and lower(content) like lower(?) union all select 'O', 'O' || id, content, 0.75 from TM_OCCURRENCE where topicmap_id = ? and lower(content) like lower(?) union all select 'N', 'N' || id, content, 0.75 from TM_VARIANT_NAME where topicmap_id = ? and lower(content) like lower(?)"/>
+
+    <statement platform="mysql"
+     query="select 'B' as class, concat('B', id) as id, content as content, 1.0 as score from TM_TOPIC_NAME where topicmap_id = ? and lower(content) like lower(?) union all select 'O', concat('O', id), content, 0.75 from TM_OCCURRENCE where topicmap_id = ? and lower(content) like lower(?) union all select 'N', concat('N', id), content, 0.75 from TM_VARIANT_NAME where topicmap_id = ? and lower(content) like lower(?)"/>
+
+    <statement platform="sqlserver"
+     query="select * from (select 'B' as class, 'B' + cast(id as varchar(20)) as id, content as content, 1.0 as score from TM_TOPIC_NAME where topicmap_id = ? and lower(content) like lower(?) union all select 'O', 'O' + cast(id as varchar(20)), content, 0.75 from TM_OCCURRENCE where topicmap_id = ? and lower(content) like lower(?) union all select 'N', 'N' + cast(id as varchar(20)), content, 0.75 from TM_VARIANT_NAME where topicmap_id = ? and lower(content) like lower(?)) as X order by score desc"/>
+
+  </query>
+
+  <query name="RDBMSSearcher.searchLike:oracle_text" type="matrix">
+  
+    <select name="class" class="java.lang.String"/>
+    <select name="object_id" class="java.lang.String"/>
+    <select name="content" class="java.lang.String"/>
+    <select name="_score" class="java.lang.Float"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="oracle"
+     query="select * from (select 'B' as class, 'B' || id as id, cast(content as varchar2(2048)) as content, score(1)/100 as score from TM_TOPIC_NAME where topicmap_id = ? and contains(content, ?, 1) > 0 union all select 'O' as class, 'O' || id as id, cast(content as varchar2(2048)) as content, (0.2*score(1))/100 as score from TM_OCCURRENCE where topicmap_id = ? and contains(content, ?, 1) > 0 union all select 'N' as class, 'N' || id as id, cast(content as varchar2(2048)) as content, (0.4*score(1))/100 as score from TM_VARIANT_NAME where topicmap_id = ? and contains(content, ?, 1) > 0) order by score desc"/>
+
+  </query>
+
+  <query name="RDBMSSearcher.searchLike:tsearch2" type="matrix">
+  
+    <select name="class" class="java.lang.String"/>
+    <select name="object_id" class="java.lang.String"/>
+    <select name="content" class="java.lang.String"/>
+    <select name="_score" class="java.lang.Float"/>
+
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+
+    <statement platform="postgresql"
+     query="select * from (select class, id as objectid, content, score as score from (select 'B' as class, 'B' || id as id, content as content, rank(tsearch2, to_tsquery('default', ?), 1) as score from TM_TOPIC_NAME where topicmap_id = ? and tsearch2 @@ to_tsquery('default', ?) union all select 'O' as class, 'O' || id as id, content as content, rank(tsearch2, to_tsquery('default', ?), 1) as score from TM_OCCURRENCE where topicmap_id = ? and tsearch2 @@ to_tsquery('default', ?) union all select 'N' as class, 'N' || id as id, content as content, rank(tsearch2, to_tsquery('default', ?), 1) as score from TM_VARIANT_NAME where topicmap_id = ? and tsearch2 @@ to_tsquery('default', ?)) tsearch_tm_type) as X order by score"/>
+
+  </query>
+
+  <query name="RDBMSSearcher.searchLike:sqlserver" type="matrix">
+  
+    <select name="class" class="java.lang.String"/>
+    <select name="object_id" class="java.lang.String"/>
+    <select name="content" class="java.lang.String"/>
+    <select name="_score" class="java.lang.Float"/>
+
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="java.lang.String"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <statement platform="sqlserver"
+     query="select * from (select 'B' as class, 'B' + cast(id as varchar(20)) as id, content as content, F.rank/1000.0 as score from TM_TOPIC_NAME as O inner join CONTAINSTABLE(TM_TOPIC_NAME, content, ?) as F on O.id = F.[key] and  topicmap_id = ? union all select 'O' as class, 'O' + cast(id as varchar(20)) as id, content as content, (0.2*F.rank)/1000.0 as score from TM_OCCURRENCE as O inner join CONTAINSTABLE(TM_OCCURRENCE, content, ?) as F on O.id = F.[key] and topicmap_id = ? union all select 'N' as class, 'N' + cast(id as varchar(20)) as id, content as content, (0.4*F.rank)/1000.0 as score from TM_VARIANT_NAME as O inner join CONTAINSTABLE(TM_VARIANT_NAME, content, ?) as F on O.id = F.[key] and topicmap_id = ?) as X order by score desc"/>
+
+  </query>
+
+  // -----------------------------------------------------------------------------
+  // Virtual collections
+  // -----------------------------------------------------------------------------
+
+  <query name="TopicMap.getTopics_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(id) from TM_TOPIC where topicmap_id = ?"/>
+  </query>
+  <query name="TopicMap.getTopics_iterator" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select id from TM_TOPIC where topicmap_id = ?"/>
+  </query>
+
+  <query name="TopicMap.getAssociations_size" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(id) from TM_ASSOCIATION where topicmap_id = ?"/>
+  </query>
+  <query name="TopicMap.getAssociations_iterator" type="matrix">
+    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select id from TM_ASSOCIATION where topicmap_id = ?"/>
+  </query>
+
+  // -----------------------------------------------------------------------------
+  // RDBMS statistics
+  // -----------------------------------------------------------------------------
+
+  <query name="Stats.topics" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_TOPIC where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.topicTypes" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(I.id), count(distinct T.type_id) from TM_TOPIC_TYPES T, TM_TOPIC I where T.topic_id = I.id and I.topicmap_id = ?"/>
+  </query>
+  <query name="Stats.topicTyped" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(I.id) from TM_TOPIC I where I.topicmap_id = ? and exists (select null from TM_TOPIC_TYPES T where T.topic_id = I.id)"/>
+  </query>
+  <query name="Stats.associations" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_ASSOCIATION where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.associationTypes" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(id), count(distinct type_id) from TM_ASSOCIATION where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.roles" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_ASSOCIATION_ROLE where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.roleTypes" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(id), count(distinct type_id) from TM_ASSOCIATION_ROLE where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.occurrences" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_OCCURRENCE where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.occurrenceTypes" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(id), count(distinct type_id) from TM_OCCURRENCE where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.names" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_TOPIC_NAME where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.nameTypes" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(id), count(distinct type_id) from TM_TOPIC_NAME where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.variants" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_VARIANT_NAME where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.rolesByType1" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from (select distinct r.player_id, r.type_id from TM_ASSOCIATION_ROLE r where r.topicmap_id = ?) X"/>
+  </query>
+  <query name="Stats.rolesByType2Players" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(distinct r.player_id) from TM_ASSOCIATION_ROLE r, TM_ASSOCIATION a where r.topicmap_id = ? and r.assoc_id = a.id"/>
+  </query>
+  <query name="Stats.rolesByType2Keys" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from (select distinct r.player_id as player_id, r.type_id as rtype_id, a.type_id as atype_id from TM_ASSOCIATION_ROLE r, TM_ASSOCIATION a where r.topicmap_id = ? and r.assoc_id = a.id) X"/>
+  </query>
+
+</queries>

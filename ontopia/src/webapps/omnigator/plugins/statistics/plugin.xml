@@ -1,0 +1,6 @@
+<plugin id="statistics" groups="topic,topicmap">
+  <title>Statistics</title>
+  <descr>Get an overview of the statistics of the topic map.</descr>
+  <activated>yes</activated>
+  <uri>${plugins_rootdir}/statistics/statistics.jsp</uri>
+</plugin>

@@ -1,0 +1,292 @@
+
+@import url("jquery-ui-themeroller/jquery-ui-themeroller.css");
+
+body { font-family: Verdana, Geneva, Arial, sans-serif; font-size: small; margin: 0; padding: 0; }
+
+a img { border: 0; }
+
+a:link { text-decoration: none; }
+a:visited { color: blue; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1 { color: #CC0000; margin: 2px; font-size: 180%; }
+h2 { color: black; margin: 2px; font-size: 125%; }
+h2.title { margin: 0; padding: 0; color: #C00; }
+
+ul, p, form { margin: 0; }
+
+p { padding: 5px; }
+
+table td { vertical-align: top; }
+table th { text-align: left; }
+
+/* FORM COMPONENTS */
+select, input, textarea { font-size: 90%; font-family: Verdana, GeneVa,Arial, sans-serif; }
+select, option { max-width: 500px; }
+
+/* Header */
+#header { background-image: url('../images/headerbg.gif'); background-repeat: no-repeat; height: 110px; }
+
+#header a:link { color: white; margin: 0px; padding: 0px; }
+#header a:visited { color: white; margin: 0px; padding: 0px; }
+#header a:hover { color: white; text-decoration: underline; margin: 0px; padding: 0px; }
+
+#header #topRightMenuContainer { padding: 16px 0 0 16px; text-align: right;	}
+#header #topRightMenu { background-image: url('../images/topmenubg.gif'); color: white; float: right; height: 25px; margin: 0; text-align: right; white-space: nowrap; }
+
+#header #tabMenuContainer { float: left; height: 66px; }
+#header #outer-outer-tabMenu { padding-top: 32px; }
+#header #outer-tabMenu { height: 34px; }
+#header #tabMenu { float: left; font-size: 93%; line-height: normal; }
+#header #tabMenu ul { list-style: none; margin: 0; padding: 10px 10px 0; }
+#header #tabMenu li { background: url("../images/tab_first_inactive_left.gif") no-repeat left top; float: left; margin: 0; padding: 0 0 0 14px; }
+#header #tabMenu a { background: url("../images/tab_last_inactive_right.gif") no-repeat right top; display: block; float: left; padding: 5px 15px 5px 1px; }
+  
+/* Popups */
+.popupHeader { background-image: url('../images/topmenubg.gif'); }
+.popupTitle { padding: 15px 0; border-bottom: dashed 1px #ccc; }
+.popupBorder  { background-image: url('../images/contentbg.gif'); }
+.popupContent  { margin-left: 8px; }
+
+/* Feedback/error messages */
+ul .feedbackPanelERROR { list-style-type: none; margin-left: -20px; padding-bottom: 2px; }
+li .feedbackPanelERROR { color: red; font-weight: bold; }
+
+/* Commented Backslash Hack hides rule from IE%-Mac \*/
+#header #tabMenu a {float: none;}
+/* End IE5-Mac hack */
+
+#header #tabMenu a:link, #tabMenu a:visited, #tabMenu a:hover, #tabMenu a:active {color: black; text-decoration: none;}
+#header #tabMenu a:hover {text-decoration: underline;}
+#header #tabMenu .selected { background-image: url("../images/tab_first_active_left.gif"); padding: 0 0 0 14px; }
+#header #tabMenu .selected a { background-image: url("../images/tab_mid_active_right.gif"); padding-left: 1px; }
+    
+#header #editingPanelContainer { float: right; text-align: right; vertical-align: top; white-space: nowrap; }
+#header #editingPanel{ border: solid 1px black; margin: 15px 15px 0 0; text-align: left; width: 280px; }
+#header #editingPanel p { background-image: url('../images/contentbg.gif'); border-bottom: solid 1px black; margin: 0; padding: 0; }
+#header #editingPanel form { margin: 0; }
+#header #editingPanel #tmfuncopen { background: url('../images/tmopen.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
+#header #editingPanel #tmfuncsave { background: url('../images/tmsave.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
+
+
+/* TODO check if some of the rules for the footer is unnecessary*/ 
+
+/* Footer */
+#footerleft, #footerright { background: black; color: white; padding: 8px 0; font-size: 130%; }
+#footerleft a:link, #footerright a:link {color: white; font-weight: bold}
+#footerleft a:visited, #footerright a:visited {color: white; font-weight: bold}
+#footerleft a:hover, #footerright a:hover {color: white; text-decoration: underline; }
+
+#footerright { float: right; }
+
+#outer-footer { /* this is here to avoid a vertical scrollbar in MSIE 6.0 */ margin: 0; padding: 0;	} 
+#footer { width: 100%; }
+#footerTable { padding: 5px; background-color: black; color: white; }
+#footerTable a { color: white; font-weight: bold; }
+
+/* Content */
+#content { background-image: url('../images/contentbg.gif'); }
+#inner-content { background: url('../images/contentbgtop.gif') repeat-x left top; padding: 0px 10px;}
+
+.clear { clear: both; }
+span.comment { color: #999; }
+span.emphasis { font-weight: bold;}
+span.italic { font-style: italic;}
+
+/* Help part section */
+.titleContainer { padding: 7px 0; border-bottom: dashed 1px #ccc; }
+.titleContainer table { width: 100%; }
+.titleContainer td { vertical-align: middle; }
+.titleContainer .help { float: right; }
+.titleContainer .help img { padding: 0 4px 0 0; }
+
+/* Ontology menu */
+.submenu { float:left; font-size: 93%; line-height:normal; }
+.submenu ul { margin: 0; padding: 0; list-style: none; }
+.submenu li { float: left; margin: 0; padding: 0; }
+.submenu a { display: block; padding-right: 4px;	}
+.submenu a:link, .submenu a:visited, .submenu a:hover, .submenu a:active { color: blue; }
+.submenu a:link, .submenu a:visited { text-decoration: none; }
+.submenu a:hover .submenu a:active { text-decoration: underline; }
+.submenu .selected a { color: black; }
+.submenu .delimiter { background: url('../images/delimiter.gif') no-repeat left center; padding: 0 0 0 6px; }
+
+/* Menu on top of the footer */
+#lowMenuContainer { background-color: white; border-top: solid 1px #CCC; margin-top: 12px; padding: 5px 10px; }
+#lowmenu { float:left; font-size: 93%; line-height: normal; }
+#lowmenu ul { margin: 0; padding: 0; list-style: none; }
+#lowmenu li { float: left; margin: 0; padding: 0; }
+#lowmenu a { display: block; padding-right: 4px;	}
+#lowmenu a:link, #lowmenu a:visited, #lowmenu a:hover {color: blue; }
+#lowmenu a:link, #lowmenu a:visited { text-decoration: none; }
+#lowmenu a:hover #lowmenu a:active { text-decoration: underline; }
+#lowmenu a:active { color: black; }
+#lowmenu .delimiter { background: url('../images/delimiter.gif') no-repeat left center; padding: 0 0 0 6px; }
+
+#functionBoxes { float: right; width: 250px; }
+#functionBoxes #functionBoxesList { width: 100%; margin: 0; padding:  5px 0;}
+#functionBoxes #functionBoxesList .functionBox { width: 100%; margin: 0; padding: 0; background-color: rgb(230,230,230);}
+#functionBoxes select, option  { max-width: 230px; }
+
+#formContainer { margin-right: 250px; margin-bottom: 10px; }
+#formContainer #buttonsRow{ padding: 20px 0; }
+
+#leftContentContainer { margin-right: 250px; }
+
+.hide { display: none; }
+
+.start { width: 20%; height: 100%; vertical-align: top; border: 1px solid #000000; background-color: white; margin: 0 auto; padding: 5px; }
+   
+table#exportFormTable td { vertical-align: top; }   
+
+.helptip {font-size: 80%; color: #BBB;}
+
+div.ontopoly-tree div.wicket-tree { border: none; overflow: auto;  width: auto; white-space: normal; margin: 2px; }
+div.ontopoly-tree div.wicket-tree span.junction { background-image: url("../images/boxed.gif"); background-position: 0px center; background-repeat: no-repeat; }
+div.ontopoly-tree div.wicket-tree span.junction-last { background-image: url("../images/boxed.gif"); background-position: 0px center; }
+div.ontopoly-tree div.wicket-tree span.minus { background-image: url("../images/collapse.gif"); background-position: 0px center; }
+div.ontopoly-tree div.wicket-tree span.plus { background-image: url("../images/expand.gif"); }
+div.ontopoly-tree div.wicket-tree span.corner { background-image: none; background-position: 0px center; }
+div.ontopoly-tree div.wicket-tree span.indent-line { background-image: none; width: 14px; }
+div.ontopoly-tree div.wicket-tree div.a_ { width: auto; }
+div.ontopoly-tree div.wicket-tree div.row { height: auto; }
+
+a.treeLink { color: #999;}
+
+div#navigationLinksPanel { margin: 15px 0; }
+div#interfaceControl { margin: 10px 0; }
+div#usedByPanel { margin: 10px 0; }
+
+/* Tables */
+
+#fieldPropertiesTable td { vertical-align: top; }
+#fieldPropertiesTable #psiTable { border-collapse: collapse; }
+#fieldPropertiesTable #psiTable td { padding: 1px 4px 1px 0px; vertical-align: middle; }
+
+div#searchFieldContainer { margin: 10px 0;}
+table#searchResult {width: 100%;}
+table#searchResult td {width: 50%;}
+
+span#errorReportForm {color: white; background-color: red; display: block; line-height: 16pt; font-weight: 700; font-size: 115%; margin: 6px 0; padding: 2px; } 
+
+.occurrenceImage {border: 1px solid #999; vertical-align: top}
+
+.border-collapse {border-collapse: collapse;}
+
+.roleTable {display:inline-table; border: 1px dashed #999; padding: .2em; color: #333; vertical-align: top; margin-bottom: 2px; }
+
+.confirmBox { width: 400px; border: 2px solid; padding: 7px; background-color: #F22; }
+
+/* field values */
+
+.fieldValue { vertical-align: top; }
+.fieldValueButtons { vertical-align: top; }
+
+table.fieldsTable {
+  display: inline-table;
+  table-layout: auto;
+  border-spacing: 5px 3px; /*cellspacing:poor IE support for  this*/
+  border-collapse: separate;
+}
+
+table.fieldsTable table.fieldsTable {
+  margin-top: 3px;
+  margin-bottom: 2px;
+  margin-right: 0px;
+  border: 1px solid #666666;
+	background-color: #eee;
+}
+
+/*
+tr.fieldRow {
+}
+*/
+/*
+.fieldLabel span {
+ font-weight: bold;
+}
+*/
+/*
+td.fieldLabel {
+  width: 20%;
+}
+td.fieldValuesContainer {
+  width: 50%;
+}
+
+td.fieldInstanceButtons {
+  width: 3%;
+}
+	 */
+
+td.fieldEmbeddedLabel {
+ font-weight: bold;
+}
+/*
+td.fieldEmbeddedValuesContainer {
+}
+*/
+td.fieldEmbeddedInstanceButtons {
+  text-align: right;
+}
+
+.fieldsEditor {
+  display: block;
+  float: left;
+}
+
+table.fieldsEditorExistingTable {
+  display: inline-table;
+  table-layout: fixed;
+  border-spacing: 5px 3px; /*cellspacing:poor IE support for  this*/
+  border-collapse: separate;
+  width: auto;
+  float: left;
+  border: 1px solid #666666;
+	background-color: #eee;
+}
+
+table.fieldsEditorAddTable {
+  display: inline-table;
+  table-layout: fixed;
+  border-spacing: 5px 3px; /*cellspacing:poor IE support for  this*/
+  border-collapse: separate;
+  width: auto;
+  float: left;
+  border: 1px dotted #666666;
+}
+
+/* drag and drop */
+.droppable-active {
+  cursor: move;    
+}
+.droppable-hover {
+  border: 1px dashed #666;
+  width: auto !important;
+}
+
+/* styles for auto-complete component */
+div.wicket-aa {
+  font-family: "Lucida Grande","Lucida Sans Unicode",Tahoma,Verdana;
+  font-size: 12px;
+  background-color: white;
+  border-width: 1px;
+  border-color: #cccccc;
+  border-style: solid;
+  padding: 2px;
+  margin: 1px 0 0 0;
+  text-align:left;
+}
+div.wicket-aa ul { list-style:none; padding: 2px; margin:0; }
+div.wicket-aa ul li.selected { background-color: #FFFF00; padding: 2px; margin:0; }
+
+/* hierarchies */
+.embeddedHierarchicalTreeCell {
+  width: 25%;
+}
+
+/*
+.embeddedHierarchicalInstanceCell {
+  width: 65%;
+}
+*/

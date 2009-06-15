@@ -1,0 +1,77 @@
+<db2tm name="vestforsk">
+
+  <using prefix="o" subject-identifier="http://psi.ontopia.net/#"/>
+  <using prefix="b" subject-identifier="http://psi.ontopia.net/bogus/"/>
+  <using prefix="dc" subject-identifier="http://purl.org/dc/elements/1.1/"/>
+
+  <sources>
+    <csv id="cvsfiles" path="./vfdata" ignoreFirstLines="1"/>
+  </sources>
+
+  <relation name="Tilsette.csv" 
+         columns="id omrade startdato nettid fornavn etternavn tittel gr gruppe stilling telefon mobil hjemmeside privtlf str bilde epost sluttdato bistilling title position team authid profile merknad">
+    <topic type="o:person">
+      <subject-identifier>x-urn:junk:tilsette:$1</subject-identifier>
+      <topic-name column="etternavn"/>
+      <occurrence column="tittel" type="b:academic-title"/>
+      <occurrence column="profile" type="dc:description"/>
+      <occurrence column="omrade" type="b:research-interests"/>
+      <occurrence column="epost" type="b:email"/>
+      <!-- FIXME: gruppe stilling -->
+    </topic>
+  </relation>
+
+  <relation name="Prosjekt.csv" 
+         columns="employer prosjektnr protitle tittel oppgjevar startdato sluttdato samandrag summary link">
+    <topic type="b:project">
+      <subject-identifier>x-urn:junk:prosjekt:$2</subject-identifier>
+      <topic-name column="tittel"/>
+      <occurrence column="samandrag" type="dc:description"/>
+      <occurrence column="link" type="b:homepage"/>
+      <!-- FIXME: oppgjevar -->
+    </topic>
+  </relation>
+
+  <relation name="TilsetteProsjekt.csv"
+         columns="ansattid prosjektnr prosjektrolle medarbsekv">
+    <topic id="tilsett">
+      <subject-identifier>x-urn:junk:tilsette:$1</subject-identifier>
+    </topic>
+    <topic id="prosjekt">
+      <subject-identifier>x-urn:junk:prosjekt:$2</subject-identifier>
+    </topic>
+    <association type="b:project-participant">
+      <role type="b:participant" player="#tilsett"/>
+      <role type="b:project" player="#prosjekt"/>
+    </association>
+  </relation>
+
+  <relation name="Publikasjonar.csv"
+         columns="rappnr prosjektnr pubnr pubaar tittel title pubtype publikasjonstype sdraglink sider lastned filstr format pris vedlegg">
+    <topic id="prosjekt">
+      <subject-identifier>x-urn:junk:prosjekt:$2</subject-identifier>
+    </topic>
+    <topic type="b:publication">
+      <subject-identifier>x-urn:junk:publikasjon:$1</subject-identifier>
+      <topic-name column="tittel"/>
+      <player atype="b:result-of" rtype="b:result">
+        <other rtype="b:project" player="#prosjekt"/>
+      </player>
+    </topic>
+  </relation>
+
+  <relation name="TilsettePublikasjonar.csv"
+            columns="ansattid sekvens rappnr">
+    <topic id="tilsett">
+      <subject-identifier>x-urn:junk:tilsette:$1</subject-identifier>
+    </topic>
+    <topic id="publikasjon">
+      <subject-identifier>x-urn:junk:publikasjon:$3</subject-identifier>
+    </topic>
+    <association type="b:author-of">
+      <role type="b:author" player="#tilsett"/>
+      <role type="b:work" player="#publikasjon"/>
+    </association>
+  </relation>
+
+</db2tm>

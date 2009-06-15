@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+          PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+	  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- $Id: nav2-logic.tld,v 1.2 2005/12/01 08:24:14 grove Exp $ -->
+
+<taglib>
+  <tlib-version>$Date: 2005/12/01 08:24:14 $ [$Revision: 1.2 $]</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>logic</short-name>
+  <uri>http://psi.ontopia.net/jsp/taglib/logic</uri>
+  <description>
+    Tag Library which is describing the logic tags
+    belonging to the Ontopia Navigator Framework.
+  </description>
+
+  <!-- ======================= Logic Tags ======================= -->
+
+  <!-- context tag -->
+  <tag>
+    <name>context</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag</tag-class>
+    <tei-class>net.ontopia.topicmaps.nav2.taglibs.logic.ContextExtraInfo</tei-class>
+    <body-content>JSP</body-content>
+    <description>
+      Establishes the outermost lexical scope in which
+      computation happens.
+    </description>
+    <attribute>
+      <name>tmparam</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>objparam</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>set</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>settm</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>topicmap</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- foreach tag -->
+  <tag>
+    <name>foreach</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.ForEachTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Iterate over each object in a collection, creating new
+      content for each iteration.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>set</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>comparator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>order</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>start</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>max</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>separator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>functionOnTruncate</name>
+      <required>false</required>
+    </attribute>
+  </tag>
+
+  <!-- if tag -->
+  <tag>
+    <name>if</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.IfTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Instantiates its contents provided that a given value
+      evaluates as true.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>decider</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>equals</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>sizeEquals</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>lessThan</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>greaterThan</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- then tag -->
+  <tag>
+    <name>then</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.IfThenTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      The then part of the if tag.
+    </description>
+  </tag>
+
+  <!-- else tag -->
+  <tag>
+    <name>else</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.IfElseTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      The else part of the if tag.
+    </description>
+  </tag>
+
+  <!-- set tag -->
+  <tag>
+    <name>set</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.SetTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Collects a value from its child and enters it as the value
+      of a variable in the context.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>comparator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- error tag -->
+  <tag>
+    <name>error</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.ErrorTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Logic Tag to allow JSP pages to signal errors.
+    </description>
+  </tag>
+
+  <!-- include tag -->
+  <tag>
+    <name>include</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.IncludeTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Creates template functions specified in an external file. These
+      may be called from elsewhere in the JSP page using the call tag.
+    </description>
+    <attribute>
+      <name>file</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- call tag -->
+  <tag>
+    <name>call</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.CallTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Calls a template function and instantiates its contents.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- externalFunction tag -->
+  <tag>
+    <name>externalFunction</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.ExternalFunctionTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Loads an external function and makes it available to the application.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fqcn</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- bind tag -->
+  <tag>
+    <name>bind</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.BindTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Turns map keys into variables.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+
+</taglib>

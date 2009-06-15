@@ -1,0 +1,12 @@
+## $Id: VM_global_library.vm,v 1.2 2005/08/26 11:03:45 grove Exp $
+## -----------------------------------------------------------------------
+#macro (condAttribute $name $value)
+#if ( $value )
+${name}="${value}"#end#end
+## -----------------------------------------------------------------------
+#macro (condHiddenField $name $value)
+#if ( $value )
+  <input type="hidden" name="${name}" value="${value}" />
+#end#end
+## -----------------------------------------------------------------------
+

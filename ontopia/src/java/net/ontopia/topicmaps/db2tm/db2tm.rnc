@@ -1,0 +1,140 @@
+
+start = db2tm
+#datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+db2tm = element db2tm { nameatt, using*, sources?, relation* }
+nameatt = attribute name { text }
+
+using = element using { 
+  attribute prefix { xsd:ID },
+  attribute subject-identifier { text }
+}
+
+columnatt = attribute column { text }
+
+typeatt = attribute type { text }
+typesatt = attribute types { text }
+scopeatt = attribute scope { text }
+atypeatt = attribute atype { text }
+rtypeatt = attribute rtype { text }
+playeratt = attribute player { text }
+idatt = attribute id { xsd:ID }
+datatypeatt = attribute datatype { xsd:NMTOKEN }
+optionalatt = attribute optional { xsd:boolean }
+
+# --- datasources
+sources = element sources { 
+ (csv | jdbc)*  
+}
+csv = element csv { 
+  idatt?, 
+  attribute path { text },
+  (attribute encoding { text } |
+   attribute separator { text } |
+   attribute quoting { text } |
+   attribute ignoreFirstLines { xsd:integer } )*
+}
+jdbc = element jdbc { 
+  idatt?, 
+  attribute propfile { text }
+}
+
+# -- relations
+relation = element relation { 
+  attribute name { text },
+  attribute columns { text }, 
+  attribute primary-key { text }?, 
+  attribute synctype { "none" | "rescan" | "changelog" }?, 
+  condition?,
+  virtual-column*,
+  (topic | association)+,
+  sync* 
+}
+
+# --- entity: topic
+topic = element topic { 
+  attribute id { xsd:NMTOKEN }?,
+  attribute condition { text }?,
+  attribute primary { xsd:boolean }?,
+  attribute repeatable { xsd:boolean }?,
+  (typeatt | typesatt)?,
+  extent*,
+  identity-field+, 
+  (topic-name | occurrence | player)*
+}
+
+# --- entity: association
+association = element association { 
+  attribute id { xsd:NMTOKEN }?,
+  attribute condition { text }?,
+  attribute primary { xsd:boolean }?,
+  typeatt, scopeatt?,
+  extent*,
+  identity-field*, 
+  (topic-name | occurrence | player)*,
+  role+
+}
+role = element role { typeatt, playeratt, optionalatt? }
+
+# --- field: identifiers
+subject-identifier = element subject-identifier { columnatt | text }
+item-identifier = element item-identifier { columnatt | text }
+subject-locator = element subject-locator { columnatt | text }
+identity-field = (subject-identifier | item-identifier | subject-locator)
+
+# --- field: characteristics
+topic-name = element topic-name { typeatt?, scopeatt?, (columnatt | text) }
+occurrence = element occurrence { typeatt, scopeatt?, datatypeatt?, (columnatt | text) }
+player = element player {
+  atypeatt,
+  rtypeatt,
+  scopeatt?,
+  element other { 
+    rtypeatt,
+    playeratt,
+    optionalatt?  
+  }*
+}
+characteristic-field = (topic-name | occurrence | player)
+
+# --- condition
+condition = element condition { text }
+
+# --- virtual-columns
+
+virtual-column = (mapping-column | function-column)
+
+mapping-column = element mapping-column { 
+  attribute name { text }, 
+  attribute column { text },
+  element map { 
+    attribute from { text }, 
+    attribute to { text }
+  }*,
+  element default { 
+    attribute to { text }
+  }?
+}
+
+function-column = element function-column { 
+  attribute name { text }, 
+  attribute method { text },
+  element param { text }*
+}
+
+# --- sync: changelog
+sync = element changelog { 
+  attribute table { text }, 
+  attribute primary-key { text }, 
+  attribute order-column { text }, 
+  attribute local-order-column { text }?, 
+  ( attribute action { text } |
+    attribute action-column { text }), 
+  element action { 
+    attribute value { text }, 
+    attribute type { "create" | "update" | "delete" | "ignore" }
+  }*
+}
+extent = element extent { 
+  attribute query { text }
+}

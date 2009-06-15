@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+          PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+	  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- $Id: nav2-output.tld,v 1.2 2005/12/01 08:24:14 grove Exp $ -->
+
+<taglib>
+  <tlib-version>$Date: 2005/12/01 08:24:14 $ [$Revision: 1.2 $]</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>output</short-name>
+  <uri>http://psi.ontopia.net/jsp/taglib/output</uri>
+  <description>
+    Tag Library which is describing the output producing tags
+    belonging to the Ontopia Navigator Framework.
+  </description>
+
+  <!-- ======================= Output-Producing Tags ======================= -->
+
+  <!-- name tag -->
+  <tag>
+    <name>name</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.NameTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Selects the name of an object and writes it out.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>grabber</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>stringifier</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>basenameScope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>variantScope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- id tag -->
+  <tag>
+    <name>id</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.SymbolicIdTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Outputs a stable identifier for a topic or other topic map object.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- objectid tag -->
+  <tag>
+    <name>objectid</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.ObjectIdTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Selects the ID of a topic map object and writes it out.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- INTERNAL: topicmapid tag -->
+  <tag>
+    <name>topicmapid</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.TopicMapIdTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Selects the ID of the topicmap which belongs to the given topic
+      map object and writes it out.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- content tag -->
+  <tag>
+    <name>content</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.ContentTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Writes out the content of an occurrence or a string.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>stringifier</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- debug tag -->
+  <tag>
+    <name>debug</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.DebugTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Writes out the content of an occurrence or a string.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- locator tag -->
+  <tag>
+    <name>locator</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.LocatorTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Writes out the URI of the resource that is an occurrence,
+      a variant name, or a locator.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>stringifier</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- count tag -->
+  <tag>
+    <name>count</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.CountTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Writes out the number of objects in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- link tag -->
+  <tag>
+    <name>link</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.LinkTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Writes out the URI of an object.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>template</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>generator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- element tag -->
+  <tag>
+    <name>element</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.ElementTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Writes out an element (ie. HTML) with dynamic attributes
+      and content.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- attribute tag -->
+  <tag>
+    <name>attribute</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.AttributeTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Assign name-value (equals element content) pair to the parent
+      element tag.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- INTERNAL: property tag -->
+  <tag>
+    <name>property</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.PropertyTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Print out the value of the given property (specified in the application
+      configuration file).
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- treediagram tag -->
+  <tag>
+    <name>treediagram</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.output.TreeDiagramTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>Create a tree diagram.</description>
+    <attribute>
+      <name>src</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>assoctype</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>parentrole</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>childrole</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>types</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>description</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>title</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>linktemplate</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>current</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>generator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+</taglib>

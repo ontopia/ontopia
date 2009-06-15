@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+          PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+    "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- $Id: portlets.tld,v 1.9 2007/09/04 08:07:25 geir.gronmo Exp $ -->
+
+<taglib>
+  <tlib-version>$Date: 2007/09/04 08:07:25 $ [$Revision: 1.9 $]</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>portlets</short-name>
+  <uri>http://psi.ontopia.net/jsp/taglib/portlets</uri>
+
+  <!-- menu tag -->
+  <tag>
+    <name>menu</name>
+    <tag-class>net.ontopia.topicmaps.nav2.portlets.taglib.MenuTag</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>topic</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- related tag -->
+  <tag>
+    <name>related</name>
+    <tag-class>net.ontopia.topicmaps.nav2.portlets.taglib.RelatedTag</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>topic</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>hideAssociations</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>excludeAssociations</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>excludeRoles</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>excludeTopics</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>includeAssociations</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>includeTopics</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>filterQuery</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>maxChildren</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>headingOrderQuery</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>headingOrdering</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>childOrderQuery</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>childOrdering</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>aggregateHierarchy</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>aggregateAssociations</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- tree tag -->
+  <tag>
+    <name>tree</name>
+    <tag-class>net.ontopia.topicmaps.nav2.portlets.taglib.TreeTag</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>query</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>topquery</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>ownpage</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>nodepage</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>  
+
+ </taglib>

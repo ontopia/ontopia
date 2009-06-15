@@ -1,0 +1,6 @@
+<plugin id="feedback" groups="topic,topicmap">
+  <title>Feedback</title>
+  <descr>Give Ontopia feedback on the Omnigator.</descr>
+  <activated>no</activated>
+  <uri>${plugins_rootdir}/feedback/feedback-form.jsp</uri>
+</plugin>

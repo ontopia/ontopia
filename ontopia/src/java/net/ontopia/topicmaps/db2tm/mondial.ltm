@@ -1,0 +1,84 @@
+#PREFIX geo  @"http://psi.ontopia.net/geography/"
+#PREFIX md   @"http://psi.ontopia.net/mondial/"
+#PREFIX lang @"http://psi.oasis-open.org/iso/639/#"
+#PREFIX cnt  @"http://psi.oasis-open.org/iso/3166/#"
+#TOPICMAP ~tm
+
+/* topic map */
+[tm = "Mondial"]
+
+/* topic types */
+[cnt:country = "Country"]
+[geo:city = "City"]
+[geo:province = "Province"]
+[geo:lake = "Lake"]
+[geo:river = "River"]
+[geo:sea = "Sea"]
+[geo:island = "Island"]
+[geo:mountain = "Mountain"]
+[geo:desert = "Desert"]
+[geo:continent = "Continent"]
+
+[lang:language = "Language"]
+[md:religion = "Religion"]
+[md:ethnic-group = "Ethnic group"]
+[md:organization = "Organization"]
+
+/* name scope */
+[md:code = "Code"]
+[md:abbreviation = "Abbreviation"]
+
+/* occurrence types */
+[geo:area = "Area"]
+[geo:population = "Population"]
+[geo:gdp = "GDP"]
+[geo:population-growth = "Population growth"]
+[geo:infant-mortality = "Infant Mortality"]
+[geo:inflation = "Inflation"]
+[geo:independence = "Independence"]
+[geo:longitude = "Longitude"]
+[geo:latitude = "Latitude"]
+[geo:length = "Length"]
+[geo:depth = "Depth"]
+[geo:height = "Height"]
+
+[md:government = "Government"]
+[md:percentage = "Percentage"]
+[md:established = "Established"]
+[md:membership-type = "Membership type"]
+
+[md:agriculture = "Agriculture"]
+[md:service = "Service"]
+[md:industry = "Industry"]
+[islands = "Islands" @"http://mondial.ontopia.net/ontology/islands"]
+
+/* association types */
+[geo:is-capital-of = "Capital of" = "Has capital" / geo:region]
+[geo:located-in = "Contained in" = "Contains" / geo:container]
+[geo:located-by = "Located by"]
+[geo:has-coast-to = "Has coast to" = "Has coast" / geo:sea]
+[geo:runs-through = "Runs through" = "Has rivers" / geo:province]
+[geo:ends-in = "Ends in" = "Rivers running into" / geo:end]
+[md:member-of = "Membership" 
+              = "Members" / md:organization 
+              = "Member of" / cnt:country]
+[md:seated-in = "Seat in" 
+              = "Seated in" / md:organization 
+              = "Is seat of" / md:seat]
+[geo:borders-with = "Borders with"]
+[geo:belongs-to = "Belongs to" = "Has jurisdiction over" / geo:owner]
+
+[geo:spoken-in = "Spoken in" = "Has languages" / cnt:country]
+[md:lives-in = "Lives in" = "Has ethnic groups" / cnt:country]
+[md:practised-in = "Practised in" = "Has religions" / cnt:country]
+
+/* role types */
+[geo:containee = "Containee"]
+[geo:container = "Container"]
+[geo:source = "Source"]
+[geo:end = "End"]
+[geo:region = "Region"]
+[geo:capital = "Capital"]
+[geo:owner = "Owner"]
+[geo:owned = "Owned"]
+[md:seat = "Seat"]

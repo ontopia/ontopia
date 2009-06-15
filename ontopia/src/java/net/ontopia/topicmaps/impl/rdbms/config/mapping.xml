@@ -1,0 +1,359 @@
+<mapping>
+
+  <!-- $Id: mapping.xml,v 1.32 2008/07/23 13:29:16 geir.gronmo Exp $ -->
+
+  <!-- TopicMap -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.TopicMap" 
+         immutable="net.ontopia.topicmaps.impl.rdbms.ReadOnlyTopicMap" 
+         table="TM_TOPIC_MAP" identity="id" indicator="M">
+
+    <!-- 1:1 (primary key) --> 
+    <field name="id" columns="id"
+           type="1:1" class="long" required="true"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="sources" join-table="TM_ITEM_IDENTIFIERS" join-keys="tmobject_id"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SourceLocator" collection="set"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="title" columns="title"
+           type="1:1" class="string" required="true"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="base_address" columns="base_address"
+           type="1:1" class="string" required="true"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="comments" columns="comments"
+           type="1:1" class="string" required="false"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="reifier" columns="reifier_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+  </class>
+
+  <!-- Topic -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.Topic" 
+         immutable="net.ontopia.topicmaps.impl.rdbms.ReadOnlyTopic" 
+         table="TM_TOPIC" identity="id" indicator="T">
+
+    <!-- 1:1 (primary key) --> 
+    <field name="id" columns="id"
+           type="1:1" class="long" required="true"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="sources" join-table="TM_ITEM_IDENTIFIERS" join-keys="tmobject_id" get-method="getSourceLocators"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SourceLocator" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="topicmap" columns="topicmap_id" get-method="getTopicMap"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="subjects" join-table="TM_SUBJECT_LOCATORS" join-keys="topic_id"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SubjectLocator" collection="set"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="indicators" join-table="TM_SUBJECT_IDENTIFIERS" join-keys="topic_id"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SubjectIndicatorLocator" collection="set"/>
+
+    <!-- M:M (reference) -->
+    <field name="types" join-table="TM_TOPIC_TYPES" join-keys="topic_id" many-keys="type_id"
+           type="M:M" class="net.ontopia.topicmaps.impl.rdbms.Topic" collection="set"/>
+
+    <!-- 1:M (reference) -->
+    <field name="names" readonly="yes" join-table="TM_TOPIC_NAME" join-keys="topic_id"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.TopicName" collection="set"/>
+
+    <!-- 1:M (reference) -->
+    <field name="occurs" readonly="yes" join-table="TM_OCCURRENCE" join-keys="topic_id"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.Occurrence" collection="set"/>
+
+    <!-- 1:M (reference) -->
+    <field name="roles" readonly="yes" join-table="TM_ASSOCIATION_ROLE" join-keys="player_id"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.AssociationRole" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="reified" columns="reified_id"
+           type="1:1" class="string" />
+      
+  </class>
+
+  <!-- TopicName -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.TopicName"
+         immutable="net.ontopia.topicmaps.impl.rdbms.ReadOnlyTopicName" 
+         table="TM_TOPIC_NAME" identity="id" indicator="B">
+
+    <!-- 1:1 (primary key) --> 
+    <field name="id" columns="id"
+           type="1:1" class="long" required="true"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="sources" join-table="TM_ITEM_IDENTIFIERS" join-keys="tmobject_id" get-method="getSourceLocators"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SourceLocator" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="topicmap" columns="topicmap_id" get-method="getTopicMap"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="topic" columns="topic_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"
+           inverse-class="net.ontopia.topicmaps.impl.rdbms.Topic" inverse-field="names"/>
+
+    <!-- M:M (reference) -->
+    <field name="scope" join-table="TM_TOPIC_NAME_SCOPE" join-keys="scoped_id" many-keys="theme_id"
+           type="M:M" class="net.ontopia.topicmaps.impl.rdbms.Topic" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="type" columns="type_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="value" columns="content"
+           type="1:1" class="string" required="true"/>
+
+    <!-- 1:M (reference) -->
+    <field name="variants" readonly="yes" join-table="TM_VARIANT_NAME" join-keys="name_id"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.VariantName" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="reifier" columns="reifier_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+  </class>
+
+  <!-- VariantName -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.VariantName"
+         immutable="net.ontopia.topicmaps.impl.rdbms.ReadOnlyVariantName"
+         table="TM_VARIANT_NAME" identity="id" indicator="N">
+
+    <!-- 1:1 (primary key) --> 
+    <field name="id" columns="id"
+           type="1:1" class="long" required="true"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="sources" join-table="TM_ITEM_IDENTIFIERS" join-keys="tmobject_id" get-method="getSourceLocators"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SourceLocator" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="topicmap" columns="topicmap_id" get-method="getTopicMap"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="name" columns="name_id" get-method="getTopicName"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.TopicName"
+           inverse-class="net.ontopia.topicmaps.impl.rdbms.TopicName" inverse-field="variants"/>
+
+    <!-- M:M (reference) -->
+    <field name="scope" join-table="TM_VARIANT_NAME_SCOPE" join-keys="scoped_id" many-keys="theme_id"
+           type="M:M" class="net.ontopia.topicmaps.impl.rdbms.Topic" collection="set"/>
+
+    <!-- 1:1 (aggregate) --> 
+    <field name="datatype" get-method="getDataType"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.DataTypeLocator"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="length" columns="length"
+           type="1:1" class="long"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="hashcode" columns="hashcode"
+           type="1:1" class="long"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="value" columns="content"
+           type="1:1" class="clob"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="reifier" columns="reifier_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+  </class>
+
+  <!-- Occurrence -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.Occurrence"
+         immutable="net.ontopia.topicmaps.impl.rdbms.ReadOnlyOccurrence" 
+         table="TM_OCCURRENCE" identity="id" indicator="O">
+
+    <!-- 1:1 (primary key) --> 
+    <field name="id" columns="id"
+           type="1:1" class="long" required="true"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="sources" join-table="TM_ITEM_IDENTIFIERS" join-keys="tmobject_id" get-method="getSourceLocators"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SourceLocator" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="topicmap" columns="topicmap_id" get-method="getTopicMap"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="topic" columns="topic_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"
+           inverse-class="net.ontopia.topicmaps.impl.rdbms.Topic" inverse-field="occurs"/>
+
+    <!-- M:M (reference) -->
+    <field name="scope" join-table="TM_OCCURRENCE_SCOPE" join-keys="scoped_id" many-keys="theme_id"
+           type="M:M" class="net.ontopia.topicmaps.impl.rdbms.Topic" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="type" columns="type_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <!-- 1:1 (aggregate) --> 
+    <field name="datatype" get-method="getDataType"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.DataTypeLocator"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="length" columns="length"
+           type="1:1" class="long"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="hashcode" columns="hashcode"
+           type="1:1" class="long"/>
+
+    <!-- 1:1 (primitive) --> 
+    <field name="value" columns="content"
+           type="1:1" class="clob"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="reifier" columns="reifier_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+  </class>
+
+  <!-- Association -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.Association"
+         immutable="net.ontopia.topicmaps.impl.rdbms.ReadOnlyAssociation" 
+         table="TM_ASSOCIATION" identity="id" indicator="A">
+
+    <!-- 1:1 (primary key) --> 
+    <field name="id" columns="id"
+           type="1:1" class="long" required="true"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="sources" join-table="TM_ITEM_IDENTIFIERS" join-keys="tmobject_id" get-method="getSourceLocators"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SourceLocator" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="topicmap" columns="topicmap_id" get-method="getTopicMap"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <!-- M:M (reference) -->
+    <field name="scope" join-table="TM_ASSOCIATION_SCOPE" join-keys="scoped_id" many-keys="theme_id"
+           type="M:M" class="net.ontopia.topicmaps.impl.rdbms.Topic" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="type" columns="type_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <!-- 1:M (reference) -->
+    <field name="roles" readonly="yes" join-table="TM_ASSOCIATION_ROLE" join-keys="assoc_id"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.AssociationRole" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="reifier" columns="reifier_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+  </class>
+
+  <!-- AssociationRole -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.AssociationRole"
+         immutable="net.ontopia.topicmaps.impl.rdbms.ReadOnlyAssociationRole" 
+         table="TM_ASSOCIATION_ROLE" identity="id" indicator="R">
+
+    <!-- 1:1 (primary key) --> 
+    <field name="id" columns="id"
+           type="1:1" class="long" required="true"/>
+
+    <!-- 1:M (aggregate) -->
+    <field name="sources" join-table="TM_ITEM_IDENTIFIERS" join-keys="tmobject_id" get-method="getSourceLocators"
+           type="1:M" class="net.ontopia.topicmaps.impl.rdbms.SourceLocator" collection="set"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="topicmap" columns="topicmap_id" get-method="getTopicMap"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="assoc" columns="assoc_id" get-method="getAssociation"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Association"
+           inverse-class="net.ontopia.topicmaps.impl.rdbms.Association" inverse-field="roles"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="type" columns="type_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="player" columns="player_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"
+           inverse-class="net.ontopia.topicmaps.impl.rdbms.Topic" inverse-field="roles"/>
+
+    <!-- 1:1 (reference) -->
+    <field name="reifier" columns="reifier_id"
+           type="1:1" class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+  </class>
+
+  <!-- SourceLocator -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.SourceLocator"
+         immutable="net.ontopia.topicmaps.impl.rdbms.SourceLocator"
+         type="aggregate" interfaces="net.ontopia.infoset.core.LocatorIF">
+
+    <field type="1:1" name="class" columns="class" class="string"
+           get-method="_getClassIndicator" set-method="_setClassIndicator"/>
+
+                <!-- FIXME: The class indicator should be part of the foreign key instead -->
+                
+    <field type="1:1" name="topicmap" columns="topicmap_id" class="long"
+           get-method="_getTopicMap" set-method="_setTopicMap"/>
+
+    <!--
+     Note: this field / column is actually the 1:M aggregate join key,
+                       so it should not be part of the mapping itself.
+
+    <field type="1:1" name="tmobject" columns="tmobject_id" class="long"
+           get-method="_getTMObject" set-method="_setTMObject"/>
+      -->
+
+    <field type="1:1" name="address" columns="address" class="string"
+           get-method="getAddress" set-method="_setAddress"/>
+  </class>
+
+  <!-- SubjectLocator -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.SubjectLocator"
+         immutable="net.ontopia.topicmaps.impl.rdbms.SubjectLocator"
+         type="aggregate" interfaces="net.ontopia.infoset.core.LocatorIF">
+
+    <field type="1:1" name="address" columns="address" class="string"
+           get-method="getAddress" set-method="_setAddress"/>
+  </class>
+
+  <!-- SubjectIndicatorLocator -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.SubjectIndicatorLocator"
+         immutable="net.ontopia.topicmaps.impl.rdbms.SubjectIndicatorLocator"
+         type="aggregate" interfaces="net.ontopia.infoset.core.LocatorIF">
+
+    <field type="1:1" name="address" columns="address" class="string"
+           get-method="getAddress" set-method="_setAddress"/>
+  </class>
+
+  <!-- RDBMSLocator -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.RDBMSLocator"
+         immutable="net.ontopia.topicmaps.impl.rdbms.RDBMSLocator"
+         type="aggregate" interfaces="net.ontopia.infoset.core.LocatorIF">
+
+    <field type="1:1" name="address" columns="address" class="string"
+           get-method="getAddress" set-method="_setAddress"/>
+  </class>
+
+  <!-- DataTypeLocator -->
+  <class name="net.ontopia.topicmaps.impl.rdbms.DataTypeLocator"
+         immutable="net.ontopia.topicmaps.impl.rdbms.DataTypeLocator"
+         type="aggregate" interfaces="net.ontopia.infoset.core.LocatorIF">
+    <field type="1:1" name="address" columns="datatype_address" class="string"
+           get-method="getAddress" set-method="_setAddress"/>
+  </class>
+
+</mapping>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+          PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+    "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- $Id: tolog.tld,v 1.10 2007/04/30 09:16:09 grove Exp $ -->
+
+<taglib>
+  <tlib-version>$Date: 2007/04/30 09:16:09 $ [$Revision: 1.10 $]</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>tolog</short-name>
+  <uri>http://psi.ontopia.net/jsp/taglib/tolog</uri>
+  <description>
+    Tag Library which is describing the tolog tags
+    belonging to the Ontopia Navigator Framework.
+  </description>
+
+  <!-- ======================= Logic Tags ======================= -->
+
+  <!-- context tag -->
+  <tag>
+    <name>context</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag</tag-class>
+    <tei-class>net.ontopia.topicmaps.nav2.taglibs.logic.ContextExtraInfo</tei-class>
+    <body-content>JSP</body-content>
+    <description>
+      Establishes the outermost lexical scope in which
+      computation happens.
+    </description>
+    <attribute>
+      <name>topicmap</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>readonly</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- declare tag -->
+  <tag>
+    <name>declare</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.DeclareTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Makes reuseable declarations.
+    </description>
+  </tag>
+
+  <!-- foreach tag -->
+  <tag>
+    <name>foreach</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.ForEachTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Iterate over each object in a collection, creating new
+      content for each iteration.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>separator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>groupBy</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- if tag -->
+  <tag>
+    <name>if</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.IfTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Instantiates its contents provided that a given value
+      evaluates as true.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- out tag -->
+  <tag>
+    <name>out</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.OutTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Evaluates a variable or the first row of a query with a
+      single column result.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>escape</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- id tag -->
+  <tag>
+    <name>id</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.SymbolicIdTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Output a symbolic ID.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- oid tag -->
+  <tag>
+    <name>oid</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.ObjectIdTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Output an object ID.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- query tag -->
+  <tag>
+    <name>query</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.QueryTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Creates a reusable query result.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- choose tag -->
+  <tag>
+    <name>choose</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.ChooseTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Instantiates the first of it's child tolog:when tags that evaluates to true.
+      If none evaluate to true, then otherwise (optional) is instantiated.
+    </description>
+  </tag>
+
+  <!-- when tag -->
+  <tag>
+    <name>when</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.WhenTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Instantiates its contents provided that a given value evaluates as true,
+      however  is not instantiated if any earlier  tolog:when tags within the
+      parent tolog:choose evaluated to true.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- otherwise tag -->
+  <tag>
+    <name>otherwise</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.OtherwiseTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Instantiates its contents provided no earlier  tolog:when tags within the
+      parent tolog:choose evaluated to true.
+    </description>
+  </tag>
+
+  <!-- set tag -->
+  <tag>
+    <name>set</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.SetTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Executes a query and connects it to names.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>var</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>reqparam</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>scope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- normalize tag -->
+  <tag>
+    <name>normalize</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.tolog.NormalizeWhitespaceTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Normalizes the whitespace used inside the body. Repeated white
+      space characters are replaced by a single space character.
+    </description>
+  </tag>
+
+ </taglib>

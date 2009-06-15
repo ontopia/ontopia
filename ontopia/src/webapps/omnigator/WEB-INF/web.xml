@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE web-app
+          PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+          "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<!-- $Id: web.xml,v 1.39 2007/09/14 11:14:41 geir.gronmo Exp $ -->
+<web-app> 
+
+  <display-name>Omnigator</display-name>
+  <description>
+    The Ontopia Topic Map Navigator also known as Omnigator
+    which is a generic web-application using Ontopia's Topic Map
+    specific Tag Libraries for accessing the OKS Topic Map Engine.
+  </description>
+
+
+  <!-- General web application initialization parameters -->
+
+  <context-param>
+    <param-name>app_config</param-name>
+    <param-value>WEB-INF/config/application.xml</param-value>
+    <description>
+      Tells the navigator framework where to find the
+      application configuration file.
+    </description>
+  </context-param>
+
+  <context-param>
+    <param-name>plugins_rootdir</param-name>
+    <param-value>plugins</param-value>
+    <description>
+      Tells the navigator framework where to start looking for the
+      plugin configuration files.
+    </description>
+  </context-param>
+
+  <!-- Declare servlets -->
+
+  <servlet>
+    <servlet-name>PNGTreeServlet</servlet-name>
+    <servlet-class>
+      net.ontopia.topicmaps.nav2.plugins.PNGTreeServlet
+    </servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>TMRAPServlet</servlet-name>
+    <servlet-class>
+      net.ontopia.topicmaps.utils.tmrap.RAPServlet
+    </servlet-class>
+    <init-param>
+      <param-name>view_uri</param-name>
+      <param-value>http://localhost:8080/omnigator/models/topic_complete.jsp?tm=&#37;tmid&#37;&amp;id=&#37;topicid&#37;</param-value>
+    </init-param>
+  </servlet>
+
+  <!-- include start %(WEB_COMPILED)s include end --> 
+
+  <servlet-mapping>
+    <servlet-name>PNGTreeServlet</servlet-name>
+    <url-pattern>/models/pngtree.jsp</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TMRAPServlet</servlet-name>
+    <url-pattern>/plugins/viz/get-topic</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TMRAPServlet</servlet-name>
+    <url-pattern>/plugins/viz/get-topic-page</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TMRAPServlet</servlet-name>
+    <url-pattern>/plugins/viz/get-tolog</url-pattern>
+  </servlet-mapping>
+
+  <!-- Session parameters for this web application -->
+  <session-config>
+    <session-timeout>30</session-timeout>    
+  </session-config>
+
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+
+  <!-- Mappings between exeception types and error pages -->
+
+  <error-page>
+    <exception-type>net.ontopia.topicmaps.nav2.core.NonexistentObjectException</exception-type>
+    <location>/no-topic.jsp</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>javax.servlet.ServletException</exception-type>
+    <location>/error.jsp</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/error.jsp</location>
+  </error-page>
+
+  <error-page>
+    <error-code>500</error-code> <!-- Internal Error: Servlet Exception -->
+    <location>/error.jsp</location>
+  </error-page>
+
+  <error-page>
+    <error-code>404</error-code> <!-- File not found Error -->
+    <location>/error-file-not-found.jsp</location>
+  </error-page>
+  
+</web-app>

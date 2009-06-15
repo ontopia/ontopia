@@ -1,0 +1,6 @@
+<plugin id="export" groups="topic,topicmap">
+  <title>Export</title>
+  <descr>Export this topic map.</descr>
+  <activated>yes</activated>
+  <uri>${plugins_rootdir}/export/config.jsp</uri>
+</plugin>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+          PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+          "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- $Id: nav2-framework.tld,v 1.2 2005/12/01 08:24:14 grove Exp $ -->
+
+<taglib>
+  <tlib-version>$Date: 2005/12/01 08:24:14 $ [$Revision: 1.2 $]</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>logic</short-name>
+  <uri>http://psi.ontopia.net/jsp/taglib/framework</uri>
+  <description>
+    Tag Library which is describing the specific framework related
+    tags belonging to the Ontopia Navigator Framework.
+  </description>
+
+  <!-- ======================= Framework Tags ===================== -->
+
+  <!-- checkUser tag -->
+  <tag>
+    <name>checkUser</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.framework.CheckUserTag</tag-class>
+    <tei-class>net.ontopia.topicmaps.nav2.taglibs.framework.CheckUserExtraInfo</tei-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Checks if a valid user object exists in the session
+      scope, otherwise creates one.
+    </description>
+  </tag>
+
+
+  <!-- getcontext tag -->
+  <tag>
+    <name>getcontext</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.framework.GetContextTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Gets the user context filter rules.
+    </description>
+    <attribute>
+      <name>context</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- setcontext tag -->
+  <tag>
+    <name>setcontext</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.framework.SetContextTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Sets the user context filter rules.
+    </description>
+    <attribute>
+      <name>basename</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>association</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>occurrence</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>variant</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- modifyUserHistory tag -->
+  <tag>
+    <name>modifyUserHistory</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.framework.ModifyUserHistoryTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Add or Remove an arbitrary object to/from the history stack, which
+      is bound to the user session object.
+    </description>
+    <attribute>
+      <name>operation</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>object</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- response tag -->
+  <tag>
+    <name>response</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.framework.ResponseTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Sets response headers using specified attribute
+      values or using the application defaults. The defaults are
+      specified in application.xml.
+    </description>
+    <attribute>
+      <name>contentType</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>charset</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- pluginList tag -->
+  <tag>
+    <name>pluginList</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.framework.PluginListTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      create list of plugins by generating HTML output of each
+      activated plugin.
+    </description>
+    <attribute>
+      <name>separator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>preSeparator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>group</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>exclude</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- meminfo tag -->
+  <tag>
+    <name>meminfo</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.framework.MemInfoTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Logs the time and memory consumed by evaluation
+      of the childrens.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+</taglib>

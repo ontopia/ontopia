@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE web-app
+          PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN"
+          "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
+
+<web-app>
+
+  <display-name>Scripts and languages</display-name>
+  <description>
+    A web site about scripts and the languages they are used to write.
+    This site is an experimental playground for working with topic maps
+    on the web.
+  </description>
+
+  <context-param>
+    <param-name>app_config</param-name>
+    <param-value>../omnigator/WEB-INF/config/application.xml</param-value>
+    <description>
+      Tells the web application where to find the
+      application configuration file.
+    </description>
+  </context-param>
+
+  <servlet>
+    <servlet-name>PNGTreeServlet</servlet-name>
+    <servlet-class>net.ontopia.topicmaps.nav2.plugins.PNGTreeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>PNGTreeServlet</servlet-name>
+      <url-pattern>/pngtree.jsp</url-pattern>
+  </servlet-mapping>
+
+  <session-config>
+    <session-timeout>30</session-timeout>    
+  </session-config>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+</web-app>

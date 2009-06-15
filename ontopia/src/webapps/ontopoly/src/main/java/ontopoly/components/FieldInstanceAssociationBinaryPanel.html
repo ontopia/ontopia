@@ -1,0 +1,22 @@
+<wicket:panel>
+<tr class="fieldRow"> 
+  <td class="fieldLabel"><span wicket:id="fieldLabel"/>:</td>
+  <td class="fieldValuesContainer" wicket:id="fieldValuesContainer">
+    <div wicket:id="feedback"></div>
+    <div wicket:id="confirm"></div>
+    <div wicket:id="fieldValuesList"> 
+      <div wicket:id="fieldValues">
+        <span wicket:id="fieldIconContainer"><img wicket:id="fieldIcon"/></span> 
+        <span class="fieldValue" wicket:id="fieldValue"></span> 
+        <span class="fieldValueButtons" wicket:id="fieldValueButtons"><a href="#" wicket:id="remove"></a></span>
+      </div>
+    </div>
+  </td>
+  <td class="fieldInstanceButtons" wicket:id="fieldInstanceButtons">
+    <a href="#" wicket:id="add"></a>
+    <a href="#" wicket:id="find"></a>
+    <span wicket:id="create"/>
+    <span wicket:id="findModal" class="popupWindow"/>
+  </td>
+</tr>
+</wicket:panel>

@@ -1,0 +1,39 @@
+# ============================================================
+#
+# TM/XML
+#
+# A RELAX-NG schema for TM/XML.
+#
+# ============================================================
+
+default namespace = "http://psi.ontopia.net/xml/tm-xml/"
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+start = topicmap
+
+topicmap = element * { reifier?, topic* }
+  reifier = attribute reifier { text }
+
+topic = element * { ((id, identifier*, locator*) |
+                     (id?, ((identifier+, locator*) |
+                            (identifier*, locator+)))),
+                    topicname*, occurrence*, association* }
+  id = attribute id { xsd:ID }
+identifier = element identifier { xsd:anyURI }
+locator = element locator { xsd:anyURI }
+
+topicname = element * { reifier?, scope?, value, variant* }
+  scope = attribute scope { text }
+value = element value { text }
+variant = element variant { scope, reifier?, datatype?, text }
+occurrence = element * { reifier?, scope?, datatype?, text }
+  datatype = attribute datatype { xsd:anyURI }
+
+association = unary | binary | nary
+unary = element * { reifier?, scope?, role }
+  role = attribute role { text }
+binary = element * { reifier?, scope?, role, otherrole, topicref }
+  otherrole = attribute otherrole { text }
+nary = element * { reifier?, scope?, role, assocrole, assocrole+ }
+assocrole = element * { topicref }
+  topicref = attribute topicref { text }

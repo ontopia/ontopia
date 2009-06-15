@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+          PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+	  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- $Id: nav2-TMvalue.tld,v 1.4 2006/05/04 13:19:03 grove Exp $ -->
+
+<taglib>
+  <tlib-version>$Date: 2006/05/04 13:19:03 $ [$Revision: 1.4 $]</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>value</short-name>
+  <uri>http://psi.ontopia.net/jsp/taglib/tmvalue</uri>
+  <description>
+    Tag Library which is describing the topic map value producing tags
+    belonging to the Ontopia Navigator Framework.
+  </description>
+
+  <!-- =============== Topic Map Value-Producing Tags ================= -->
+
+  <!-- names tag -->
+  <tag>
+    <name>names</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.NamesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the base names of all the topics in a
+      collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>contextFilter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>uniqueValues</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- name tag -->
+  <tag>
+    <name>name</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.NameTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Finds the most appropiate name for each of all 
+      the topics in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>grabber</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>basenameScope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>variantScope</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- variants tag -->
+  <tag>
+    <name>variants</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.VariantsTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all variant names related to the objects in a
+      collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>contextFilter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- occurrences tag -->
+  <tag>
+    <name>occurrences</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.OccurrencesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the occurrences of all the topics 
+      in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>contextFilter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- associations tag -->
+  <tag>
+    <name>associations</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.AssociationsTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the associations of all the topics 
+      in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>contextFilter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- associated tag -->
+  <tag>
+    <name>associated</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.AssociatedTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the topics associated with all the topics 
+      in a collection.
+    </description>
+    <attribute>
+      <name>from</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>startrole</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>type</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>endrole</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>to</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>contextFilter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>produce</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- associationTypeLoop tag -->
+  <tag>
+    <name>associationTypeLoop</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.AssociationTypeLoopTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Special INTERNAL Tag for iterating over a sorted collection of
+      triples (Association Type, Association Role Type, Association),
+      creating new content for each iteration.
+    </description>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>setAssociations</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>setAT</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>setART</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>contextFilter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- classes tag -->
+  <tag>
+    <name>classes</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.ClassesTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Finds all topics that define classes, either in general,
+      or of a specific kind of object.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- locator tag -->
+  <tag>
+    <name>locator</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.LocatorTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds the locators (as LocatorIF objects) of all the
+      occurrences and variant names in a collection. Any strings in
+      the input collection will be parses as URIs. Invalid URI strings
+      will be ignored.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- instances tag -->
+  <tag>
+    <name>instances</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.InstancesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all instances of the topics in the input collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>as</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- subjectAddress tag -->
+  <tag>
+    <name>subjectAddress</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.SubjectAddressTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds the subject addresses (as LocatorIF objects) of all the
+      topics in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- indicators tag -->
+  <tag>
+    <name>indicators</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.IndicatorsTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the subject indicators (as LocatorIF objects) of all
+      the topics in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- sourceLocators tag -->
+  <tag>
+    <name>sourceLocators</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.SourceLocatorsTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the source locators (as LocatorIF objects) of all
+      the topic map objects in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- classesOf tag -->
+  <tag>
+    <name>classesOf</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.ClassesOfTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the classes of all the objects in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- roles tag -->
+  <tag>
+    <name>roles</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.RolesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the association roles of all the topics and
+      associations in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>remove</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>cardinality</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>contextFilter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- reifier tag -->
+  <tag>
+    <name>reifier</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.ReifierTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds the reifying topic of each topic map object in a
+      collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- reified tag -->
+  <tag>
+    <name>reified</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.ReifiedTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds the topic map objects which are reified by topics in
+      the input collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- superclasses tag -->
+  <tag>
+    <name>superclasses</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.SuperclassesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the superclasses of the topics in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>level</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- subclasses tag -->
+  <tag>
+    <name>subclasses</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.SubclassesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the subclasses of the topics in a collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>level</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- scope tag -->
+  <tag>
+    <name>scope</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.ScopeTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all themes in the scope of all the objects in a
+      collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>effective</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- themes tag -->
+  <tag>
+    <name>themes</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.ThemesTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all topics that are used as themes in scopes.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- filter tag -->
+  <tag>
+    <name>filter</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.FilterTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Takes an input collection and filters it, passing only
+      some of the elements on to its parent.
+    </description>
+    <attribute>
+      <name>decider</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>instanceOf</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>inScopeOf</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>is</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>invert</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>randomElement</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- lookup tag -->
+  <tag>
+    <name>lookup</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.LookupTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Looks up objects by their subject address, subject
+      indicator, source locator, or object id.
+    </description>
+    <attribute>
+      <name>indicator</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>subject</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>source</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>parameter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>objectid</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>as</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>parameter</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>basename</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>variant</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>expect</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- topics tag -->
+  <tag>
+    <name>topics</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.TopicsTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Finds all the topics of all the topic map objects 
+      in a collection (for example player in a association role).
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- topicmapReferences tag -->
+  <tag>
+    <name>topicmapReferences</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.TopicMapReferencesTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Finds all the topicmap references available
+      to the web application.
+    </description>
+  </tag>
+
+  <!-- splitter tag -->
+  <tag>
+    <name>splitter</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.SplitterTag</tag-class>
+    <body-content>JSP</body-content>
+    <description> 
+     Create a sorted collection of a collection of BaseNameIF objects
+     starting each with the same first character.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- fulltext tag -->
+  <tag>
+    <name>fulltext</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.FulltextTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Performs a fulltext query and returns a list containing the
+      topic map objects referenced in the fulltext search result.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>index</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>idField</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- tolog tag -->
+  <tag>
+    <name>tolog</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.TMvalue.TologQueryTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Executes a tolog query.
+    </description>
+    <attribute>
+      <name>query</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>select</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>rulesfile</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>implementation</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+</taglib>

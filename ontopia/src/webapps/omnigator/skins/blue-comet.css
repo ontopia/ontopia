@@ -1,0 +1,218 @@
+/* $Id: blue-comet.css,v 1.10 2002/07/24 13:50:54 niko Exp $ */
+
+/* ---- Document wide general Layout ---- */
+
+body {
+  color: #000000;
+  background-color: #FFFF99;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+body, p, h1, h2, h3, h4, ul, ol, li, div, td, th, address, blockquote, nobr, b, i {
+  font-family: Verdana, Geneva, Arial, sans-serif;
+}
+
+/* ---- Definition of Specific Font-Related classes ---- */
+
+h1 {
+  font-size: 150%;
+  margin: 2px;
+}
+
+h2 {
+  font-size: 130%;
+  margin: 2px;
+}
+
+h3 {
+  font-size: 120%;
+  background-color: #FF9900;
+  color: #FFFFFF;
+  padding: 2px;
+  margin-bottom: 6px;
+}
+
+h4 {
+  font-size: 110%;
+  margin: 2px;
+}
+
+
+body, p, td, th, address, nobr, b, i {
+  font-size: 94%;
+}
+
+input, textarea {
+  font-size: 90%;
+}
+
+pre {
+  font-family: Courier New, Courier;
+  font-size: 94%;
+  color: #0000C0;
+}
+
+tt {
+  font-family: Courier New, Courier;
+  font-size: 94%;
+  color: #0000C0;
+}
+
+/* ---- List Item Properties ---- */
+
+ul {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 22px;
+}
+
+li {
+  margin-top: 2px;
+  margin-left: 0px;
+}
+
+/* ---- Boxes ---- */
+
+.boxed {
+  background-color: #FFFFCC;
+  border-bottom: 1px solid #999999;
+  border-right: 1px solid #999999;
+  padding: 4pt
+}
+
+.shboxed {
+  background-color: #FFFFCC;
+  border-bottom: 1px solid #999999;
+  border-right: 1px solid #999999;
+  padding: 4pt
+}
+
+.nary {
+}
+
+.nary-row {
+  padding: 2px
+}
+
+.reified {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.modLink {
+  font-weight: bold;
+  color: #FCFCFC;
+}
+
+.description {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 7px;
+  margin-right: 6px;
+}
+
+/* ---- Table Formatting  ---- */
+
+.headerTable {
+  background-color: #204263;
+  background-image: url(../images/blueheaderBG.gif);
+  border-left: 1px solid #204263;
+  border-right: 1px solid #204263;
+}
+
+.contentTable {
+  background-color: #FFEF80;
+  background-image: url(../images/yellowTargetBG.gif);
+  border-left: 1px solid #204263;
+  border-right: 1px solid #204263;
+}
+
+.footerTable {
+  background-color: #336699;
+}
+
+.titleRow {
+  background-color: #FFFFE2;
+}
+
+/* ---- Table Cells ---- */
+
+.appName {
+  font-size: 160%;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin: 8px;
+}
+
+.logoSpace {
+}
+
+.tagLine {
+  font-size: 90%;
+  font-weight: normal;
+  color: #FFEF80;
+}
+
+
+.topLinks {
+  background-color: #336699;
+  font-size: 80%;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.intro {
+  padding-top: 20px;
+}
+
+.navigation {
+}
+
+.content {
+}
+
+.outro {
+}
+
+.comment {
+  color: #999;
+  font-size: 80%;
+}
+
+.footer {
+  background-color: #204263;
+  color: #FFFFFF;
+}
+
+
+/* ---- Link Style Definition ---- */
+
+.topLinks a:link {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.topLinks a:visited {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+a:link {
+  color: #000088;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #4B0041;
+  text-decoration: none;
+}
+
+a:active {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+<body>
+	<wicket:extend>
+     
+  <div wicket:id="titlePartPanel" />
+  
+  <div id="leftContentContainer">
+	<p><wicket:message key="ConvertPage.information" /> <span wicket:id="action" /></p>
+
+	<form wicket:id="form">    	
+    <p wicket:id="exchangeableComponent"/>
+	  <div wicket:id="sourcesDropDownContainer">
+      <span wicket:id="sourcesDropDown"></span>
+    </div>
+	  <p><wicket:message key="name.colon" /><span wicket:id="filename" /></p>
+	  <p>
+	    <input wicket:id="ok" type="submit"/>
+	    <input wicket:id="cancel" type="button"/>
+	  </p>
+  </form>
+  </div>
+  <br/>
+  
+	</wicket:extend>
+</body>
+</html>

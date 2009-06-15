@@ -1,0 +1,1 @@
+<%= pageContext.getRequest().getParameter("result") %>

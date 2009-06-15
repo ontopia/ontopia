@@ -1,0 +1,19 @@
+<wicket:panel>
+<wicket:extend>
+<div id="tabMenuContainer">
+  <wicket:child />
+</div>
+<div id="editingPanelContainer">	
+	<div id="editingPanel">
+		<p><wicket:message key="editing" />&nbsp;<span wicket:id="topicMap"></span></p>
+		<form wicket:id="searchForm">
+			<span id="tmfuncopen"><a wicket:id="open" href="#"><span wicket:id="label"/></a></span>
+			<span id="tmfuncsave"><a wicket:id="save" href="#" title="Save topic map to disk file."><span wicket:id="label"/></a></span>			
+			<input wicket:id="searchField" type="text" size="8" value=""/>
+			<input wicket:id="searchButton" type="submit" name="Find" value="Find"/> 
+		</form>	
+	</div>
+</div>
+<div class="clear"></div>
+</wicket:extend>
+</wicket:panel>

@@ -1,0 +1,14 @@
+net.ontopia.topicmaps.impl.rdbms.Database=sapdb
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:sapdb://localhost/TOPICMAPS
+net.ontopia.topicmaps.impl.rdbms.DriverClass=com.sap.dbtech.jdbc.DriverSapDB
+
+net.ontopia.topicmaps.impl.rdbms.UserName=foo
+net.ontopia.topicmaps.impl.rdbms.Password=bar
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=true
+net.ontopia.topicmaps.impl.rdbms.BatchUpdates=false
+
+net.ontopia.topicmaps.impl.rdbms.Cache.identitymap.lru=300
+net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.srcloc.lru=100
+net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subind.lru=100
+net.ontopia.topicmaps.impl.rdbms.Cache.subjectidentity.subloc.lru=20

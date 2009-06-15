@@ -1,0 +1,6 @@
+<plugin id="customise" groups="topic,topicmap">
+  <title>Customize</title>
+  <descr>Customize the look of the Omnigator.</descr>
+  <activated>yes</activated>
+  <uri>${plugins_rootdir}/customise/user.jsp</uri>
+</plugin>

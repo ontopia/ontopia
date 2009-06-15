@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+          PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+	  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- $Id: nav2-value.tld,v 1.2 2005/12/01 08:24:14 grove Exp $ -->
+
+<taglib>
+  <tlib-version>$Date: 2005/12/01 08:24:14 $ [$Revision: 1.2 $]</tlib-version>
+  <jsp-version>1.2</jsp-version>
+  <short-name>value</short-name>
+  <uri>http://psi.ontopia.net/jsp/taglib/value</uri>
+  <description>
+    Tag Library which is describing the general value producing tags
+    belonging to the Ontopia Navigator Framework.
+  </description>
+
+  <!-- ======================= Value-Producing Tags ======================= -->
+
+  <!-- string tag -->
+  <tag>
+    <name>string</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.value.StringTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Generates a string value.
+    </description>
+  </tag>
+
+  <!-- copy tag -->
+  <tag>
+    <name>copy</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.value.CopyTag</tag-class>
+    <body-content>EMPTY</body-content>
+    <description>
+      Copies another collection.
+    </description>
+    <attribute>
+      <name>of</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <!-- union tag -->
+  <tag>
+    <name>union</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.value.UnionTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Computes the union of two collections.
+    </description>
+  </tag>
+
+  <!-- sequence tag -->
+  <tag>
+    <name>sequence</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.value.SequenceTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Produces a sequential list of all the values passed to it.
+    </description>
+  </tag>
+
+  <!-- intersection tag -->
+  <tag>
+    <name>intersection</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.value.IntersectionTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Computes the intersection of two collections.
+    </description>
+  </tag>
+
+  <!-- difference tag -->
+  <tag>
+    <name>difference</name>
+    <tag-class>net.ontopia.topicmaps.nav2.taglibs.value.DifferenceTag</tag-class>
+    <body-content>JSP</body-content>
+    <description>
+      Computes the set difference of two collections.
+    </description>
+  </tag>
+
+</taglib>

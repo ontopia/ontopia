@@ -1,0 +1,9 @@
+<plugin id="validator" groups="topic,topicmap"
+	  class="net.ontopia.topicmaps.schema.impl.osl.nav.plugins.ValidationPlugin">
+  <title>Validate</title>
+  <descr>Validate the topic map against a schema.</descr>
+  <!--target>none</target-->
+  <activated>yes</activated>
+  <uri>${plugins_rootdir}/validator/validate.jsp</uri>
+  <!--parameter name="foo" value="bar"/-->
+</plugin>

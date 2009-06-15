@@ -1,0 +1,22 @@
+<html xmlns:wicket>
+<head>
+  <script type="text/javascript">
+    function showProgressWheel() {
+      document.images[0].style.display = 'block';
+      // delay the wheel a bit so it can locally shine
+      setTimeout(function() { document.forms[0].submit() }, 800);
+      return false;
+    }
+  </script>
+</head>
+<body>
+  <div wicket:id="container">
+  <form wicket:id="form">
+    <input wicket:id="file" type="file"/>
+    <input type="submit" value="Upload" onclick="return showProgressWheel()"/>
+    <img src="images/upload-indicator.gif" style="display:none"/>    
+  </form>
+  <script wicket:id="onUploaded" type="text/javascript"></script>
+  </div>
+</body>
+</html>

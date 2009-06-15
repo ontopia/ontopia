@@ -1,0 +1,481 @@
+
+// $Id: AbstractRWPersistent.java,v 1.3 2008/04/30 19:43:36 geir.gronmo Exp $
+
+package net.ontopia.persistence.proxy;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
+import net.ontopia.utils.OntopiaRuntimeException;
+
+/**
+ * INTERNAL: An abstract PersistentIF implementation that handles most
+ * of the machinery needed to implement persistent objects. Note that
+ * other persistent classes should extend this class.
+ */
+
+public abstract class AbstractRWPersistent implements PersistentIF {
+  
+  protected IdentityIF id;
+  protected TransactionIF txn;
+
+  public AbstractRWPersistent() {
+  }
+
+  public AbstractRWPersistent(TransactionIF txn) {
+    _p_setTransaction(txn);
+  }
+  
+  // -----------------------------------------------------------------------------
+  // PersistentIF implementation
+  // -----------------------------------------------------------------------------
+
+  public IdentityIF _p_getIdentity() {
+    return id;
+  }
+
+  public Object _p_getType() {
+    return getClass();
+  }
+  
+  public void _p_setIdentity(IdentityIF identity) {
+    this.id = identity;
+  }
+  
+  public TransactionIF _p_getTransaction() {
+    return txn;
+  }
+
+  public void _p_setTransaction(TransactionIF txn) {
+    if (this.txn != null)
+      throw new OntopiaRuntimeException("Cannot change the transaction of a persistent object.");
+    this.txn = txn;
+  }
+  
+  // -----------------------------------------------------------------------------
+  // PersistentIF machinery
+  // -----------------------------------------------------------------------------
+
+  /**
+   * INTERNAL: Called when the instance requests the initialization of
+   * the specified field value. This call will lead to the value being
+   * retrieved from the data repository if the instance is managed by
+   * a transaction, otherwise a default value will be set.
+   *
+   * @return FIXME: only loaded values will be returned. if the
+   * default value is being set, the return value is null.
+   */
+  protected Object loadField(int field) {
+    // load field from storage
+    if (isLoaded(field)) {
+      return getValue(field);
+
+    } else if (isNewObject() || !isInDatabase()) {
+      return null;
+
+    } else {
+      // get identity
+      IdentityIF identity = _p_getIdentity();
+      if (identity == null) return null;
+      // load from storage
+      Object value = null;
+      try { 
+        value = txn.loadField(identity, field);
+      } catch (IdentityNotFoundException e) {
+        // let value be null
+      }
+      // set value and mark field as loaded
+      setValue(field, value);
+      return value;
+    }
+  }
+
+  // NOTE: method will throw IdentityNotFoundException if value object
+  // not found
+  protected Object loadFieldNoCheck(int field) throws IdentityNotFoundException {
+    // load field from storage
+    if (isLoaded(field)) {
+      return getValue(field);
+
+    } else if (isNewObject() || !isInDatabase()) {
+      return null;
+
+    } else {
+      // get identity
+      IdentityIF identity = _p_getIdentity();
+      if (identity == null) return null;
+      // load from storage
+      Object value = txn.loadField(identity, field);
+      // set value and mark field as loaded
+      setValue(field, value);
+      return value;
+    }
+  }
+
+  protected Collection loadCollectionField(int field) {
+    // load field from storage
+    if (isLoaded(field)) {
+      Object o = getValue(field);
+      return (o == null ? Collections.EMPTY_SET : (Collection)o);
+
+    } else if (isNewObject() || !isInDatabase()) {
+      return Collections.EMPTY_SET;
+
+    } else {
+      // get identity
+      IdentityIF identity = _p_getIdentity();
+      if (identity == null) return Collections.EMPTY_SET;
+      // load from storage
+      Object coll = null; 
+      try {
+        coll = txn.loadField(identity, field);
+      } catch (IdentityNotFoundException e) {
+        // let coll be null
+      }
+      if (coll == null) {
+        setValue(field, coll);
+        return Collections.EMPTY_SET;
+      } else {
+        // set value and mark field as loaded
+        coll = new TrackableSet(txn, (Collection)coll);
+        setValue(field, coll);
+        return (Collection)coll;
+      }
+    }
+  }
+
+  public abstract void detach();
+
+  protected void detachField(int field) {
+    if (!isLoaded(field)) loadField(field);
+  }
+
+  protected void detachCollectionField(int field) {
+    if (!isLoaded(field)) loadCollectionField(field);
+  }
+
+  /**
+   * INTERNAL: Called when a field value has been changed. The
+   * managing transaction will be notified.
+   */
+  protected void valueChanged(int field, Object value, boolean dchange) {
+    // initialize state
+    if (pstate == STATE_HOLLOW) { 
+      IdentityIF identity = _p_getIdentity();
+      if (identity != null) txn._getObject(identity); 
+    }
+
+    //! System.out.println(">>  " + field + " " + _p_getIdentity() + " " + value);    
+    setValue(field, value); // set new value / replace value
+
+    setDirty(field, true);      
+    if (isPersistent()) txn.objectDirty(this);
+
+    // if value is ContentReader then flush transaction immediately
+    if (value instanceof OnDemandValue)
+      txn.flush();
+  }
+
+  protected void valueAdded(int field, Object value, boolean dchange) {
+    TrackableCollectionIF coll;
+    if (isLoaded(field)) {
+      coll = (TrackableCollectionIF)getValue(field);      
+      if (coll == null) {
+        coll = new TrackableSet(txn, null); // null == empty set
+        setValue(field, coll);
+      }
+    } else if (isNewObject() || !isInDatabase()) {
+      coll = new TrackableSet(txn, null); // null == empty set
+      setValue(field, coll);
+      
+    } else {
+      if (dchange) {
+        Collection _coll = null;
+        try {
+          _coll = (Collection)txn.loadField(_p_getIdentity(), field);
+        } catch (IdentityNotFoundException e) {
+          // let coll be null
+        }
+        
+        coll = new TrackableSet(txn, _coll);
+      } else {
+        coll = new TrackableLazySet(txn, _p_getIdentity(), field);
+      }
+      setValue(field, coll);
+    }
+
+    if (coll.addWithTracking(value)) {
+      //! System.out.println(">>+ " + field + " " + _p_getIdentity() + " " + value);      
+      setDirty(field, true);      
+      if (isPersistent()) txn.objectDirty(this);
+    }
+  }
+
+  protected void valueRemoved(int field, Object value, boolean dchange) {
+    TrackableCollectionIF coll = null;
+    if (isLoaded(field)) {
+      coll = (TrackableCollectionIF)getValue(field);      
+
+    } else if (isInDatabase()) {
+      if (dchange) {
+        Collection _coll = null;
+        try {
+          _coll = (Collection)txn.loadField(_p_getIdentity(), field);
+        } catch (IdentityNotFoundException e) {
+          // let coll be null
+        }
+        
+        coll = new TrackableSet(txn, _coll);
+      } else {
+        coll = new TrackableLazySet(txn, _p_getIdentity(), field);
+      }
+      
+      setValue(field, coll);
+    }
+
+    if (coll != null && coll.removeWithTracking(value)) {
+      //! System.out.println(">>- " + field + " " + _p_getIdentity() + " " + value);
+      setDirty(field, true);
+      if (isPersistent()) txn.objectDirty(this);
+    }
+  }
+
+  // -----------------------------------------------------------------------------
+  // Queries
+  // -----------------------------------------------------------------------------
+
+  protected Object executeQuery(String name, Object[] params) {
+    return txn.executeQuery(name, params);
+  }
+  
+  // -----------------------------------------------------------------------------
+  // Object data and metadata
+  // -----------------------------------------------------------------------------
+
+  protected static final int[] MASKS;
+
+  static {
+    int[] masks = new int[32];
+    for (int i=0; i < 32; i++) {
+      masks[i] = (int)Math.pow(2, i);
+    }
+    MASKS = masks;
+  }
+
+  private static final byte STATE_NEW = 1; // object exists in database
+  private static final byte STATE_IN_DATABASE = 2; // object exists in database
+  private static final byte STATE_PERSISTENT = 4; // object persistent/created in transaction
+  private static final byte STATE_DELETED = 8; // object deleted in transaction
+  private static final byte STATE_HOLLOW = 16; // object retrieved in previous transaction(s)
+
+  // bit-masks
+  private int lflags; // is field specified (loaded)
+  private int dflags; // is field dirty (not flushed)
+  private int fflags; // is field dirty (flushed)
+  private byte pstate; // new OR persistent/deleted OR in-database
+
+  public Object[] values = new Object[_p_getFieldCount()]; // field values
+
+  // -- persistent state
+
+  public boolean isTransient() {
+    return !(isPersistent() || isDeleted());
+  }
+
+  public boolean isNewObject() {
+    return ((pstate & STATE_NEW) == STATE_NEW);
+  }
+  
+  public void setNewObject(boolean newObject) {
+    if (newObject) {
+      pstate = STATE_NEW; // new (note == NEW)
+    } else {
+      pstate &= ~(STATE_NEW); // -new
+    }
+  }
+
+  public boolean isInDatabase() {
+    return ((pstate & STATE_IN_DATABASE) == STATE_IN_DATABASE);
+  }
+  
+  public void setInDatabase(boolean inDatabase) {
+    if (inDatabase) {
+      pstate |= STATE_IN_DATABASE; // +new
+    } else {
+      pstate &= ~(STATE_IN_DATABASE); // -new
+    }
+  }
+
+  public boolean isPersistent() {
+    return ((pstate & STATE_PERSISTENT) == STATE_PERSISTENT);
+  }
+  
+  public void setPersistent(boolean persistent) {
+    if (persistent) {
+      pstate |= STATE_PERSISTENT; // +persistent
+      pstate &= ~(STATE_DELETED); // -deleted
+    } else {
+      pstate &= ~(STATE_PERSISTENT); // -persistent
+    }
+  }
+
+  public boolean isDeleted() {
+    return ((pstate & STATE_DELETED) == STATE_DELETED);
+  }
+  
+  public void setDeleted(boolean deleted) {
+    if (deleted) {
+      pstate |= STATE_DELETED; // +deleted
+      pstate &= ~(STATE_PERSISTENT); //a -persistent
+    } else {
+      pstate &= ~(STATE_DELETED); // -deleted
+    }
+  }
+
+  // -- loaded
+
+  public boolean isLoaded(int field) {
+    // initialize state
+    if (pstate == STATE_HOLLOW) { 
+      IdentityIF identity = _p_getIdentity();
+      if (identity != null) txn._getObject(identity); 
+    }
+
+    return ((lflags & MASKS[field]) == MASKS[field]);
+  }
+
+  // -- values
+
+  public Object loadValue(FieldInfoIF finfo) {
+    if (finfo.isCollectionField()) 
+      return loadCollectionField(finfo.getIndex());
+    else
+      return loadField(finfo.getIndex());
+  }
+  
+  protected Object getValue(int field) {
+    return values[field];
+  }
+  
+  protected void setValue(int field, Object value) {
+    lflags |= MASKS[field]; // set flag    
+    values[field] = value;
+  }
+  
+  protected void unsetValue(int field, Object value) {
+    lflags &= ~(MASKS[field]); // unset flags
+    dflags &= ~(MASKS[field]);
+    fflags &= ~(MASKS[field]);
+    values[field] = null;
+  }
+
+  // -- dirty (unflushed)
+
+  public boolean isDirty() {
+    return (dflags != 0);
+  }
+
+  public boolean isDirty(int field) {
+    return ((dflags & MASKS[field]) == MASKS[field]);
+  }
+
+  public int nextDirty(int start) {
+    for (int i=start; i < values.length; i++) {
+      if ((dflags & MASKS[i]) == MASKS[i]) return i;
+    }
+    return -1;
+  }
+
+  public int nextDirty(int start, int end) {
+    for (int i=start; i < end; i++) {
+      if ((dflags & MASKS[i]) == MASKS[i]) return i;
+    }
+    return -1;
+  }
+  
+  public void setDirty(int field, boolean dirty) {
+    if (dirty)
+      dflags |= MASKS[field]; // set flag    
+    else
+      dflags &= ~(MASKS[field]); // unset flag
+  }
+
+  // -- dirty (flushed)
+
+  public boolean isDirtyFlushed() {
+    return (fflags != 0);
+  }
+
+  public boolean isDirtyFlushed(int field) {
+    return ((fflags & MASKS[field]) == MASKS[field]);
+  }
+
+  public int nextDirtyFlushed(int start) {
+    for (int i=start; i < values.length; i++) {
+      if ((fflags & MASKS[i]) == MASKS[i]) return i;
+    }
+    return -1;
+  }
+
+  public int nextDirtyFlushed(int start, int end) {
+    for (int i=start; i < end; i++) {
+      if ((fflags & MASKS[i]) == MASKS[i]) return i;
+    }
+    return -1;
+  }
+  
+  public void setDirtyFlushed(int field, boolean dirty) {
+            
+    if (values[field] instanceof OnDemandValue) {
+      OnDemandValue odv = (OnDemandValue)values[field];
+      IdentityIF identity = _p_getIdentity();
+      RDBMSMapping mapping = txn.getStorageAccess().getStorage().getMapping();
+      ClassInfoIF cinfo = mapping.getClassInfo(identity.getType());
+      FieldInfoIF finfo = cinfo.getValueFieldInfos()[field];
+      odv.setContext(identity, finfo);
+    }
+    
+    if (dirty) {
+      fflags |= MASKS[field]; // set flag    
+      dflags &= ~(MASKS[field]); // unset flag
+    } else {
+      fflags &= ~(MASKS[field]); // unset flag
+    }
+  }
+
+  // -- misc
+
+  public void clearAll() {
+    // reset flags
+    lflags = 0;
+    dflags = 0;
+    fflags = 0;
+    // reset state
+    pstate = STATE_HOLLOW; // hollow / transient
+
+    // clear field values
+    for (int i=0; i < values.length; i++) {
+      values[i] = null;
+    }
+  }
+
+  public String _p_toString() {
+    return states() + "\n  l:" + list(lflags) + "\n  d:" + list(dflags) + "\n  f:" + list(fflags) + "\n    " + 
+      (values == null ? null : Arrays.asList(values).toString());
+  }
+  
+  private String states() {
+    return isNewObject() + "-" + isPersistent() + "-" + isDeleted() + "-" + isInDatabase();
+  }
+
+  private String list(int bitmask) {
+    StringBuffer sb = new StringBuffer();
+    for (int i=0; i < values.length; i++) {
+      if (i > 0) sb.append(", ");
+      sb.append((bitmask & MASKS[i]) == MASKS[i]);
+    }
+    return sb.toString();
+  }
+  
+}

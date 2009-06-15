@@ -1,0 +1,187 @@
+/* $Id: grellgruen.css,v 1.3 2001/10/10 10:36:48 niko Exp $ */
+
+/* ---- Document wide general Layout ---- */
+
+body { 
+  color: black;
+  background-color: #006e7d;
+  margin-top: 12px; 
+  margin-bottom: 12px; 
+}
+
+body, p, h1, h2, h3, h4, ul, ol, li, div, td, th, address, blockquote, nobr, b, i { 
+  font-family: Verdana, Geneva, Arial, sans-serif;
+}
+
+/* ---- Definition of Specific Font-Related classes ---- */
+
+h1 { 
+  font-size: 16pt;
+}
+
+h2 {
+  font-size: 14pt;
+}
+
+h3 { 
+  font-size: 12pt;
+}
+
+h4 { 
+  font-size: 10pt; 
+}
+
+
+body, p, ul, ol, li, div, td, th, address, nobr, b, i { 
+  font-size: 10pt;
+}
+
+pre { 
+  font-family: Courier New, Courier; 
+  font-size: 10pt; 
+  /* color: #0000C0; */
+}
+
+tt { 
+  font-family: Courier New, Courier; 
+  font-size: 10pt; 
+  /* color: #0000C0; */
+}
+
+/* ---- List Item Properties ---- */
+
+XXul {
+  padding-left: 0px;
+  margin-top: 4px;
+  margin-bottom: -2px;
+  margin-left: 10px;
+}
+
+li {
+  margin-left: -20px;
+  padding-left: 0px;
+}
+
+/* ---- Boxes ---- */
+
+.boxed {
+  background-color: #00EE99;
+  color: #034;
+  border-right: 1px solid #002200; /* #003399 */
+  border-bottom: 1px solid #002200;
+  padding: 4pt
+}
+
+.shboxed {
+  background-color: #00EE66; 
+  color: #034;
+  border-right: 1px solid #002200;
+  border-bottom: 1px solid #002200;
+  padding: 4pt
+}
+
+.nary {
+}
+
+.nary-row {
+  padding: 4pt
+}
+
+.reified {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.modLink {
+  font-weight: bold;
+  color: #FCFCFC;
+}
+
+/* ---- Table Formatting  ---- */
+
+.headerTable {
+  /* background-color: #FFCC66; */
+}
+
+.contentTable {
+  color: #66FFCC;
+  background-color: #006e66;
+  border-left: 1px solid #003344;
+  border-right: 1px solid #003344;
+}
+
+.footerTable {
+  /* background-color: #6699CC; */
+}
+
+/* ---- Table Cells ---- */
+
+.appName {
+  background-color: #034;
+  font-size: 16pt;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.logoSpace {
+  background-color: #034;
+}
+
+.tagLine {
+  background-color: #034;
+  font-size: 10pt;
+  font-weight: normal;
+  color: #FFFFFF;
+}
+
+.topLinks {
+  background-color: #66FFCC;
+  font-size: 10pt;
+  font-weight: bold;
+  border-left: 1px solid #034;
+  border-right: 1px solid #034;
+  border-bottom: 1px solid #034;
+}
+
+.intro {
+  /* background-color: #034; */
+}
+
+.navigation {
+ /* background-color: #034; */
+}
+
+.content {
+  /* background-color: #034; */
+}
+
+.outro {
+ /*  background-color: #034; */
+}
+
+.footer {
+  background-color: #034;
+  color: #FFFFFF;
+}
+
+
+/* ---- Link Style Definition ---- */
+
+a:link { 
+  color: #003300; 
+  text-decoration: none;
+}
+
+a:visited { 
+  color: #006600; 
+  text-decoration: none;
+}
+
+a:active {
+  color: #000000; 
+  text-decoration: none; 
+}
+
+a:hover {
+  text-decoration: underline
+}

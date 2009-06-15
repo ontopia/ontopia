@@ -1,0 +1,6 @@
+<plugin id="filter" groups="topic,topicmap">
+  <title>Filter</title>
+  <descr>Configure a context filter for this topic map.</descr>
+  <activated>yes</activated>
+  <uri>${plugins_rootdir}/filter/userContextFilter.jsp</uri>
+</plugin>

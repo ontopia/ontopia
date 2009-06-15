@@ -1,0 +1,6 @@
+<plugin id="merge" groups="topic,topicmap">
+  <title>Merge</title>
+  <descr>Merge another topic map into this one.</descr>
+  <activated>no</activated>
+  <uri>${plugins_rootdir}/merge/select.jsp</uri>
+</plugin>

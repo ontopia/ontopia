@@ -1,0 +1,27 @@
+// $ANTLR 2.7.7 (2006-11-01): ltm.g -> LTMParserTokenTypes.txt$
+LTMParser    // output token vocab name
+PREFIX("prefix directive")=4
+NAME=5
+AT("@")=6
+STRING=7
+PERCENT("%")=8
+MERGEMAP("mergemap directive")=9
+VERSION("version directive")=10
+INCLUDE("include directive")=11
+BASEURI("base URI directive")=12
+TOPICMAPID("topic map directive")=13
+TILDE("~")=14
+LBRACKET("[")=15
+COLON(":")=16
+RBRACKET("]")=17
+EQUALS("=")=18
+SEMICOL(";")=19
+SLASH("/")=20
+LPAREN("(")=21
+RPAREN(")")=22
+LCURLY("{")=23
+COMMA(",")=24
+DATA("inline occurrence data")=25
+RCURLY("}")=26
+WS=27
+COMMENT=28

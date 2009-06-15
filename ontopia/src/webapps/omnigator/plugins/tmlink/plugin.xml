@@ -1,0 +1,6 @@
+<plugin id="tmlink" groups="topic,topicmap" class="net.ontopia.topicmaps.nav2.plugins.TopicMapLinkPlugin">
+  <title>Topic map link</title>
+  <descr>Link to the current topic map page.</descr>
+  <activated>yes</activated>
+  <uri>/omnigator</uri>
+</plugin>

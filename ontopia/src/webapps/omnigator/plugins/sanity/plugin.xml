@@ -1,0 +1,6 @@
+<plugin id="sanity" groups="topic,topicmap">
+  <title>Sanity Check</title>
+  <descr>Get a sanity check of the topicmap.</descr>
+  <activated>no</activated>
+  <uri>${plugins_rootdir}/sanity/sanity.jsp</uri>
+</plugin>

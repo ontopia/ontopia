@@ -1,0 +1,6 @@
+<plugin id="ltm" groups="topic,topicmap">
+  <title>Add</title>
+  <descr>Add new content to the topic map using LTM syntax.</descr>
+  <activated>no</activated>
+  <uri>${plugins_rootdir}/ltm/ltm_form.jsp</uri>
+</plugin>

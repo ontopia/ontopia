@@ -1,0 +1,7 @@
+<plugin id="edit" groups="topic,topicmap">
+  <title>Edit</title>
+  <descr>Edit this topic map with Ontopoly.</descr>
+  <activated>yes</activated>
+  <uri>/plugins/edit/edit.jsp</uri>
+  <!--uri>${plugins_rootdir}/edit/edit.jsp</uri-->
+</plugin>

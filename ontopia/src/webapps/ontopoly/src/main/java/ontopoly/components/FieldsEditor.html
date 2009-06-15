@@ -1,0 +1,31 @@
+<wicket:panel>
+<table>
+<tr><td colspan="2">
+  <b><wicket:message key="FieldsEditor.fields"/>:</b>
+  <span wicket:id="actions">
+  <a href="#" wicket:id="names"><wicket:message key="FieldsEditor.typelink.names"/></a> 
+  <a href="#" wicket:id="create-name-field"></a> | 
+  <a href="#" wicket:id="occurrences"><wicket:message key="FieldsEditor.typelink.occurrences"/></a> 
+  <a href="#" wicket:id="create-occurrence-field"></a> | 
+  <a href="#" wicket:id="associations"><wicket:message key="FieldsEditor.typelink.associations"/></a> 
+  <a href="#" wicket:id="create-role-field"></a>  | 
+  <a href="#" wicket:id="identities"><wicket:message key="FieldsEditor.typelink.identities"/></a>
+  </span>
+</td></tr>
+<tr><td>
+  <table class="fieldsEditorExistingTable">
+    <!--tr><th>&nbsp;</th><th>Field</th><th>Value type</th><th>Cardinality</th><th>&nbsp;</th></tr-->
+    <div wicket:id="existingFields">
+      <div wicket:id="field"/>
+    </div>
+  </table>
+</td><td>
+  <table class="fieldsEditorAddTable" wicket:id="addFieldsContainer">
+    <!--tr><th>&nbsp;</th><th>Field</th><th>Value type</th><th>Cardinality</th><th>&nbsp;</th></tr-->
+    <div wicket:id="addFields">
+      <div wicket:id="field"/>
+    </div>
+  </table>
+</td></tr>
+</table>
+</wicket:panel>		

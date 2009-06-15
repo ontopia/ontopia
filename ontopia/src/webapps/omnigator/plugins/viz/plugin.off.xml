@@ -1,0 +1,6 @@
+<plugin id="viz" groups="topic">
+  <title>Vizigate</title>
+  <descr>Shows a graphical view of the topic map.</descr>
+  <activated>no</activated>
+  <uri>${plugins_rootdir}/viz/viz.jsp</uri>
+</plugin>

@@ -1,0 +1,398 @@
+
+<!--
+FIXME:
+ - why is cam pha not in a province?
+
+-->
+
+<db2tm name="mondial">
+ 
+  <using prefix="geo"  subject-identifier="http://psi.ontopia.net/geography/"/>
+  <using prefix="md"   subject-identifier="http://psi.ontopia.net/mondial/"/>
+  <using prefix="lang" subject-identifier="http://psi.oasis-open.org/iso/639/#"/>
+  <using prefix="cnt"  subject-identifier="http://psi.oasis-open.org/iso/3166/#"/>
+  <using prefix="xsd"  subject-identifier="http://www.w3.org/2001/XMLSchema#"/>
+
+  <sources>
+    <csv id="cvsfiles" path="./csv"/>
+  </sources>
+  
+  <!-- ## CONTINENT ================================================ -->
+ 
+  <relation name="continent.csv" columns="name area">
+    <topic type="geo:continent" primary="true">
+      <item-identifier>http://mondial.ontopia.net/continent/$1</item-identifier>
+      <topic-name>$1</topic-name>
+      <occurrence column="area" type="geo:area" />
+    </topic>
+  </relation>
+
+  <!-- ## COUNTRY ================================================== -->
+ 
+  <relation name="country.csv" columns="name code capital province population
+                                        area">
+    <topic id="capital">
+      <item-identifier>http://mondial.ontopia.net/city/$3</item-identifier>
+    </topic>
+    <topic type="cnt:country" primary="true">
+      <item-identifier>http://mondial.ontopia.net/country/$2</item-identifier>
+      <topic-name column="name"/>
+      <occurrence column="code" type="md:code"/>   
+      <player rtype="geo:region" atype="geo:is-capital-of">
+        <other rtype="geo:capital" player="#capital"/>
+      </player>
+      <occurrence column="area" type="geo:area"/>
+      <occurrence column="population" type="geo:population"/>
+    </topic>
+  </relation>
+  
+  <!-- ECONOMY -->
+  <relation name="economy.csv" columns="country gdp agriculture service industry inflation">
+    <topic>
+      <item-identifier>http://mondial.ontopia.net/country/$1</item-identifier>
+      <occurrence column="gdp" type="geo:gdp"/>
+      <occurrence column="agriculture" type="md:agriculture"/>
+      <occurrence column="service" type="md:service"/>
+      <occurrence column="industry" type="md:industry"/>
+      <occurrence column="inflation" type="geo:inflation"/>
+    </topic>
+  </relation>
+ 
+  <!-- POPULATION -->
+  <relation name="population.csv" columns="country population_growth infant_mortality">
+    <topic>
+      <item-identifier>http://mondial.ontopia.net/country/$1</item-identifier>
+      <occurrence column="population_growth" type="geo:population-growth"/>
+      <occurrence column="infant_mortality" type="geo:infant-mortality"/>
+    </topic>
+  </relation>
+ 
+  <!-- POLITICS -->
+  <relation name="politics.csv" columns="country independence government">
+    <topic>
+      <item-identifier>http://mondial.ontopia.net/country/$1</item-identifier>
+      <occurrence column="independence" type="geo:independence"/>
+      <occurrence column="government" type="md:government"/>
+    </topic>
+  </relation>
+
+  <!-- ## CITY ===================================================== -->
+ 
+  <relation name="city.csv" columns="name country province population longitude
+                                     latitude">
+    <topic id="province">
+      <item-identifier>http://mondial.ontopia.net/province/$3</item-identifier>
+    </topic>
+    <topic type="geo:city" primary="true">
+      <item-identifier>http://mondial.ontopia.net/city/$1</item-identifier>
+      <topic-name column="name"/>
+      <player rtype="geo:containee" atype="geo:located-in">
+        <other rtype="geo:container" player="#province"/>
+      </player>
+      <occurrence column="population" type="geo:population"/>
+      <occurrence column="longitude" type="geo:longitude"/>
+      <occurrence column="latitude" type="geo:latitude"/>
+    </topic>
+  </relation>
+
+  <!-- ## PROVINCE ================================================= -->
+ 
+  <relation name="province.csv" columns="name country area population capital
+                                         capprov">
+    <topic id="country">
+      <item-identifier>http://mondial.ontopia.net/country/$2</item-identifier>
+    </topic>
+    <topic id="city">
+      <item-identifier>http://mondial.ontopia.net/city/$5</item-identifier>
+    </topic>
+    <topic type="geo:province" primary="true">
+      <item-identifier>http://mondial.ontopia.net/province/$2/$1</item-identifier>
+      <topic-name column="name"/>
+      <player rtype="geo:containee" atype="geo:located-in">
+        <other rtype="geo:container" player="#country"/>
+      </player>
+      <occurrence column="area" type="geo:area"/>
+      <occurrence column="population" type="geo:population"/>
+      <player rtype="geo:region" atype="geo:is-capital-of">
+        <other rtype="geo:capital" player="#city"/>
+      </player>
+      <!-- IGNORED: capprov -->
+    </topic>
+  </relation>
+  
+  <!-- ## ORGANIZATION ============================================= -->
+
+  <relation name="organization.csv" columns="name abbreviation city country
+                                             province established">
+    <topic id="city">
+      <item-identifier>http://mondial.ontopia.net/city/$3</item-identifier>
+    </topic>
+    <topic type="md:organization" primary="true">
+      <item-identifier>http://mondial.ontopia.net/organization/$2</item-identifier>
+      <topic-name column="name"/>
+      <topic-name column="abbreviation" type="md:abbreviation"/>
+      <player rtype="md:organization" atype="md:seated-in">
+        <other rtype="md:seat" player="#city"/>
+      </player>
+      <occurrence column="established" type="md:established"/>
+    </topic>
+  </relation>
+  
+  <!-- ## LANGUAGE ================================================= -->
+ 
+  <!-- TODO: choose one of the next two -->
+  <relation name="language.csv" columns="country name percentage">
+    <topic id="country">
+      <item-identifier>http://mondial.ontopia.net/country/$1</item-identifier>
+    </topic>
+    <topic type="lang:language" primary="true">
+      <item-identifier>http://mondial.ontopia.net/language/$2</item-identifier>
+      <topic-name column="name"/>
+      <player rtype="lang:language" atype="geo:spoken-in">
+        <other rtype="cnt:country" player="#country"/>
+      </player>
+      <!--occurrence column="percentage" type="md:percentage"/-->
+    </topic>
+  </relation>
+  
+   <!-- ## RELIGION ================================================= -->
+
+  <relation name="religion.csv" columns="country name percentage">
+    <topic id="country">
+      <item-identifier>http://mondial.ontopia.net/country/$1</item-identifier>
+    </topic>
+    <topic type="md:religion" primary="true">
+      <item-identifier>http://mondial.ontopia.net/religion/$2</item-identifier>
+      <topic-name column="name"/>
+      <player rtype="md:religion" atype="md:practised-in">
+        <other rtype="cnt:country" player="#country"/>
+      </player>
+      <!--occurrence column="percentage" type="md:percentage"/-->
+    </topic>
+  </relation>
+ 
+  <!-- ## ETHNIC_GROUP============================================== -->
+
+  <relation name="ethnic_group.csv" columns="country name percentage">
+    <topic id="country">
+      <item-identifier>http://mondial.ontopia.net/country/$1</item-identifier>
+    </topic>
+    <topic type="md:ethnic-group" primary="true">
+      <item-identifier>http://mondial.ontopia.net/ethnic-group/$2</item-identifier>
+      <topic-name column="name"/>
+      <player rtype="md:ethnic-group" atype="md:lives-in">
+        <other rtype="cnt:country" player="#country"/>
+      </player>
+      <!--occurrence column="percentage" type="md:percentage"/-->
+    </topic>
+  </relation>
+ 
+  <!-- ## LAKE ===================================================== -->
+ 
+  <relation name="lake.csv" columns="name area">
+    <topic type="geo:lake" primary="true">
+      <item-identifier>http://mondial.ontopia.net/lake/$1</item-identifier>
+      <topic-name column="name"/>
+      <occurrence column="area" type="geo:area"/>
+    </topic>
+  </relation>
+ 
+  <relation name="geo_lake.csv" columns="lake country province">
+    <topic id="lake">
+      <item-identifier>http://mondial.ontopia.net/lake/$1</item-identifier>
+    </topic>
+    <topic id="province">
+      <item-identifier>http://mondial.ontopia.net/province/$3</item-identifier>
+    </topic>
+    <association type="geo:located-by" primary="true">
+      <role type="geo:lake" player="#lake"/>
+      <role type="geo:province" player="#province"/>
+    </association>
+  </relation>
+ 
+  <!-- ## RIVER ==================================================== -->
+ 
+  <relation name="river.csv" columns="name length river lake sea">
+    <topic id="oriver">
+      <item-identifier>http://mondial.ontopia.net/river/$3</item-identifier>
+    </topic>
+    <topic id="lake">
+      <item-identifier>http://mondial.ontopia.net/lake/$4</item-identifier>
+    </topic>
+    <topic id="sea">
+      <item-identifier>http://mondial.ontopia.net/sea/$5</item-identifier>
+    </topic>
+    <topic type="geo:river" primary="true">
+      <item-identifier>http://mondial.ontopia.net/river/$1</item-identifier>
+      <topic-name column="name"/>
+      <occurrence column="length" type="geo:length"/>
+      <player rtype="geo:source" atype="geo:ends-in">
+        <other rtype="geo:end" player="#oriver"/>
+      </player>
+      <player rtype="geo:source" atype="geo:ends-in">
+        <other rtype="geo:end" player="#lake"/>
+      </player>
+      <player rtype="geo:source" atype="geo:ends-in">
+        <other rtype="geo:end" player="#sea"/>
+      </player>
+    </topic>
+  </relation>
+ 
+  <relation name="geo_river.csv" columns="river country province">
+    <topic id="river">
+      <item-identifier>http://mondial.ontopia.net/river/$1</item-identifier>
+    </topic>
+    <topic id="province">
+      <item-identifier>http://mondial.ontopia.net/province/$3</item-identifier>
+    </topic>
+    <association type="geo:runs-through" primary="true">
+      <role type="geo:river" player="#river"/>
+      <role type="geo:province" player="#province"/> 
+    </association>
+  </relation>
+ 
+  <!-- ## SEA ====================================================== -->
+ 
+  <relation name="sea.csv" columns="name depth">
+    <topic type="geo:sea" primary="true">
+      <item-identifier>http://mondial.ontopia.net/sea/$1</item-identifier>
+      <topic-name column="name"/>
+      <occurrence column="depth" type="geo:depth"/>
+    </topic>
+  </relation>
+ 
+  <relation name="geo_sea.csv" columns="sea country province">
+    <topic id="sea">
+      <item-identifier>http://mondial.ontopia.net/sea/$1</item-identifier>
+    </topic>
+    <topic id="province">
+      <item-identifier>http://mondial.ontopia.net/province/$3</item-identifier>
+    </topic>
+    <association type="geo:has-coast-to" primary="true">
+      <role type="geo:sea" player="#sea"/>
+      <role type="geo:province" player="#province"/>
+    </association>
+  </relation>
+ 
+  <!-- ## ISLAND =================================================== -->
+ 
+  <relation name="island.csv" columns="name islands area longitude latitude">
+    <topic type="geo:island" primary="true">
+      <item-identifier>http://mondial.ontopia.net/island/$1</item-identifier>
+      <topic-name column="name"/>
+      <!--occurrence column="islands" type="md:islands"/-->
+      <occurrence column="area" type="geo:area"/>
+      <occurrence column="longitude" type="geo:longitude"/>
+      <occurrence column="latitude" type="geo:latitude"/>
+    </topic>
+  </relation>
+ 
+  <relation name="geo_island.csv" columns="island country province">
+    <topic id="island">
+      <item-identifier>http://mondial.ontopia.net/island/$1</item-identifier>
+    </topic>
+    <topic id="province">
+      <item-identifier>http://mondial.ontopia.net/province/$3</item-identifier>
+    </topic>
+    <association type="geo:belongs-to" primary="true">
+      <role type="geo:owned" player="#island"/>
+      <role type="geo:owner" player="#province"/>
+    </association>
+  </relation>
+ 
+  <!-- ## MOUNTAIN ================================================= -->
+ 
+  <relation name="mountain.csv" columns="name height longitude latitude">
+    <topic type="geo:mountain" primary="true">
+      <item-identifier>http://mondial.ontopia.net/mountain/$1</item-identifier>
+      <topic-name column="name"/>
+      <occurrence column="height" type="geo:height"/>
+      <occurrence column="longitude" type="geo:longitude"/>
+      <occurrence column="latitude" type="geo:latitude"/>
+    </topic>
+  </relation>
+ 
+  <relation name="geo_mountain.csv" columns="mountain country province">
+    <topic id="mountain">
+      <item-identifier>http://mondial.ontopia.net/mountain/$1</item-identifier>
+    </topic>
+    <topic id="province">
+      <item-identifier>http://mondial.ontopia.net/province/$3</item-identifier>
+    </topic>
+    <association type="geo:located-in" primary="true">
+      <role type="geo:containee" player="#mountain"/>
+      <role type="geo:container" player="#province"/>
+    </association>
+  </relation>
+ 
+  <!-- ## DESERT =================================================== -->
+ 
+  <relation name="desert.csv" columns="name area">
+    <topic type="geo:desert" primary="true">
+      <item-identifier>http://mondial.ontopia.net/desert/$1</item-identifier>
+      <topic-name column="name"/>
+      <occurrence column="area" type="geo:area"/>
+    </topic>
+  </relation>
+ 
+  <relation name="geo_desert.csv" columns="desert country province">
+    <topic id="desert">
+      <item-identifier>http://mondial.ontopia.net/desert/$1</item-identifier>
+    </topic>
+    <topic id="province">
+      <item-identifier>http://mondial.ontopia.net/province/$3</item-identifier>
+    </topic>
+    <association type="geo:located-in" primary="true">
+      <role type="geo:containee" player="#desert"/>
+      <role type="geo:container" player="#province"/>
+    </association>
+  </relation>
+ 
+  <!-- TODO: LOCATED -->
+ 
+  <!-- BORDERS ==================================================== -->
+  <relation name="borders.csv" columns="country1 country2 length">
+    <topic id="country1">
+      <item-identifier>http://mondial.ontopia.net/country/$1</item-identifier>
+    </topic>
+    <topic id="country2">
+      <item-identifier>http://mondial.ontopia.net/country/$2</item-identifier>
+    </topic>
+    <association type="geo:borders-with" primary="true">
+      <occurrence column="length" type="geo:length"/>
+      <role type="cnt:country" player="#country1"/>
+      <role type="cnt:country" player="#country2"/>
+    </association>
+  </relation>
+ 
+  <!-- IS_MEMBER ================================================== -->
+  <relation name="is_member.csv" columns="organization country type">
+    <topic id="organization">
+      <item-identifier>http://mondial.ontopia.net/organization/$1</item-identifier>
+    </topic>
+    <topic id="country">
+      <item-identifier>http://mondial.ontopia.net/country/$2</item-identifier>
+    </topic>
+    <association type="md:member-of" primary="true">
+      <occurrence column="type" type="md:membership-type"/>
+      <role type="cnt:country" player="#country"/>
+      <role type="md:organization" player="#organization"/>
+    </association>
+  </relation>
+ 
+  <!-- ENCOMPASSES ================================================ -->
+  <relation name="encompasses.csv" columns="country continent percentage">
+    <topic id="country">
+      <item-identifier>http://mondial.ontopia.net/country/$1</item-identifier>
+    </topic>
+    <topic id="continent">
+      <item-identifier>http://mondial.ontopia.net/continent/$2</item-identifier>
+    </topic>
+    <association type="geo:located-in" primary="true">
+      <occurrence column="percentage" type="md:percentage"/>
+      <role type="geo:containee" player="#country"/>
+      <role type="geo:container" player="#continent"/>
+    </association>
+  </relation>
+   
+</db2tm>

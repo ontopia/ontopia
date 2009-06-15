@@ -1,0 +1,2 @@
+Class-Path: ontopia-cmdline.jar jaxp.jar crimson.jar getopt.jar commons-logging.jar log4j.jar antlr.jar commons-collections.jar jakarta-oro.jar jing.jar xerces.jar jena.jar icu4j.jar concurrent.jar trove.jar backport-util-concurrent.jar tmapi.jar GraphLayout.jar lucene.jar velocity.jar commons-fileupload.jar opencsv.jar commons-dbcp.jar commons-pool.jar jgroups-all.jar
+Main-Class: net.ontopia.products.TopicMapEngine

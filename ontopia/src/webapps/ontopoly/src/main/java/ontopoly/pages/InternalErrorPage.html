@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+  <body>    
+<wicket:extend> 
+<div wicket:id="titlePartPanel" />
+
+<p><wicket:message key="internal.error.text1a" />
+<a href="#" wicket:id="link"><wicket:message key="topic.map.index.page" /></a>
+<wicket:message key="internal.error.text1b" /></p>
+<span id="errorReportForm"><wicket:message key="error.report.form" /></span>
+<p><wicket:message key="internal.error.text2" /></p>
+
+<form method="post" action="http://www.ontopia.net/cgi-bin/formmail.py">
+  
+  
+  <input type="hidden" name="formtype" value="Ontopoly Bug Report">
+  <input type="hidden" name="EMAIL" value="support@ontopia.net">
+  <input type="hidden" name="REQUIRED" value="user_email">
+  <input type="hidden" name="SPAMFILTER" value="clever">
+  
+  <input wicket:id="java_version" type="hidden" name="java_version" />
+  <input wicket:id="os_version" type="hidden" name="os_version" />
+  
+  <input wicket:id="oks_version" type="hidden" name="oks_version" />
+  
+  <input wicket:id="server_name" type="hidden" name="server_name" />
+  <input wicket:id="server_info" type="hidden" name="server_info" />
+  <input wicket:id="server_port" type="hidden" name="server_port" />
+  <input wicket:id="remote_address" type="hidden" name="remote_address" />
+  <input wicket:id="remote_host" type="hidden" name="remote_host" />
+     
+  <table>
+    <tr>
+      <td>Email:</td>
+            <td><input type="text" name="user_email" size="40" maxlength="255" /></td>
+    </tr>
+    <tr>
+            <td valign="top">Description:</td>
+      <td><textarea name="user_comments" cols="60" rows="5"></textarea></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Submit Report" /></td>
+    </tr>
+
+    <tr id=spam style="display: normal"><td><span title="As in, 'is this comment spam?'">Spam</span></td><td><input type=checkbox name=clever checked><span class=hint><b>do not</b> check this if you want to be posted</span></td></tr>
+    <tr id=spam2 style="display: normal"><td><span title="As in, 'please confirm that this is not comment spam'">Not spam</span></td><td><input type=checkbox name=clever2><span class=hint><b>do</b> check this if you want to be posted</span></td></tr>
+  </table>
+</form>
+
+<script type="text/javascript">
+  document.forms[0].clever.checked = false;
+  document.forms[0].clever2.checked = true;
+  document.getElementById("spam").style.display = "none";
+  document.getElementById("spam2").style.display = "none";
+</script>
+        
+</wicket:extend>
+
+  </body>
+</html>

@@ -1,0 +1,8 @@
+<plugins>
+  <plugin id="pluginAdmin" groups="topicmap">
+    <title>Plug-ins</title>
+    <descr>Manage the plug-ins available to the Omnigator.</descr>
+    <activated>yes</activated>
+    <uri>${plugins_rootdir}/plugins/plugins.jsp</uri>
+  </plugin>
+</plugins>

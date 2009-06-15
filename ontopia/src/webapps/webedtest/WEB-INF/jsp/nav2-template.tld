@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+         "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>  
+  <tlibversion>$Date: 2005/12/01 08:24:14 $ [$Revision: 1.3 $]</tlibversion>  
+  <jspversion>1.2</jspversion>
+  <shortname>output</shortname>          
+  <uri>http://psi.ontopia.net/jsp/taglib/template</uri>
+
+  <tag>  
+    <name>insert</name>
+    <tagclass>net.ontopia.topicmaps.nav.taglibs.template.InsertTag</tagclass>
+    <bodycontent> JSP</bodycontent>
+    <attribute>
+      <name>template</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+   </tag>
+
+  <tag>
+    <name>put</name>
+    <tagclass>net.ontopia.topicmaps.nav.taglibs.template.PutTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>content</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+     <name>direct</name>
+     <required>false</required>
+     <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>body</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>get</name>
+    <tagclass>net.ontopia.topicmaps.nav.taglibs.template.GetTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>split</name>
+    <tagclass>net.ontopia.topicmaps.nav.taglibs.template.SplitTag</tagclass>
+    <bodycontent>empty</bodycontent>
+  </tag>
+
+</taglib>

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+	<body>
+	
+<wicket:extend>
+
+<div wicket:id="titlePartPanel" />
+
+<p><wicket:message key="AdminPage.export.information" /></p>
+
+<form wicket:id="form">
+	<table id="exportFormTable">
+	<tr>
+		<th><wicket:message key="AdminPage.export.content" /></th>
+		<th><wicket:message key="AdminPage.export.syntax" /></th>
+		<th><wicket:message key="AdminPage.export.action" /></th>
+		<th></th>
+	</tr>
+	<tr>
+		<td><span wicket:id="content"></span></td>				
+		<td><span wicket:id="syntax"></span></td>	
+		<td><span wicket:id="action"></span></td>
+		<td><input wicket:id="fileNameTextField" type="text" cols="30" /></td>
+		
+	</tr>
+	</table>
+	
+	<input wicket:id="export" type="button" />
+	</form>
+</wicket:extend>
+
+	</body>
+</html>

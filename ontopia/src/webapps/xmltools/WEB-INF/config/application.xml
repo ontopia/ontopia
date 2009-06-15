@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<configuration type="application">
+  <properties>
+    <property name="allowLoadOnRequest" value="true"/>
+  </properties>
+
+  <classmap>
+    <class shortcut="nameComparator"
+	   fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparator"/>
+  </classmap>
+</configuration>

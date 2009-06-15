@@ -1,0 +1,11 @@
+<plugins>
+
+  <plugin id="fulltext" groups="topic,topicmap"
+	  class="net.ontopia.infoset.fulltext.topicmaps.nav.plugins.FulltextPlugin">
+    <title>Full-text</title>
+    <descr>Full-text search of the topic map resources.</descr>
+    <activated>no</activated>
+    <uri>${plugins_rootdir}/fulltext/search.jsp</uri>
+  </plugin>
+
+</plugins>
