@@ -1,0 +1,114 @@
+<link rel="stylesheet" type="text/css" href="ted.css">
+
+<script language="JavaScript">
+  function chooser(field) {
+    var search = '';
+
+    window.open('chooser.html','searchpopup','scrollbars=yes,resizable=yes,width=300, height=300, screenX=30, screenY=30, left=30, right=30');
+    return false; // don't submit just because we pressed this button
+  }
+</script>
+
+<p>BEER PRODUCT</p>
+<h1>Bah Humbug</h1>
+
+<p><a href="start-page.html">Welcome</a> | 
+   <a href="topicmap-cfg.html">Topic Map</a> |
+   <a href="topic-type-cfg.html">Ontology</a> |
+   <a href="topic-type.html">Instances</a> |
+   <a href="...">Save</a> | 
+   <a href="...">Omnigate</a> |
+   <a href="...">Vizigate</a> |
+   <input type=text size=10> |
+   <a href="../design.xml.html">Help</a>
+</p>
+   
+<table>
+<tr><td>Name:
+    <td><input size=40 value="Bah Humbug">
+
+<tr><td>Description:
+    <td><textarea rows=5 cols=60>Medium head, dark brown colour. Lovely sweet, malty smell of spice. Taste rather like the smell, with burnt notes and fruitiness. Aftertaste has slight hops bitterness, and more burntness. Very nice!</textarea>
+
+<tr><td>Belongs to type:
+    <td><select>
+          <option selected="true">English strong ale</option>
+          <option>India Pale Ale</option>
+          <option>Mild</option>
+          <option>Northern Brown Ale</option>
+          <option>Ordinary Bitter</option>
+          <option>Southern Brown Ale</option>
+        </select>
+        <a href="topic-create-topic.html"><input type=image src=btn-left.png></a>
+        <a href="instance.html"><input type=image src=btn-right.png></a>
+        </td></tr>
+
+<tr><td>Brewed by:
+    <td><table>
+        <tr><td><a href="">Refresh UK</a></td><td>
+        <input type=image src=btn-minus.png>
+        <a href="topic-associate-topic.html"><input type=image src=btn-plus.png></a></td></tr>
+        <tr><td><a href="">Wychwood Brewery</a></td><td>
+        <input type=image src=btn-minus.png></td></tr>
+        </table>
+    
+<tr><td>Alcohol by volume:
+    <td><input size=5 value="6.2">
+
+<tr><td>Homepage:
+    <td><input size=60 value="http://www.refreshuk.com/pr04/pr_04_wychwood_051104.htm">
+        <a href="http://www.refreshuk.com/pr04/pr_04_wychwood_051104.htm"><input type=image src=btn-right.png></a>
+    
+<tr><td>Review:
+    <td><input size=60 value="http://thatweasel.com/single.php?id=1314">
+        <a href="http://thatweasel.com/single.php?id=1314"><input type=image src=btn-right.png></a>
+        <input type=image src=btn-plus.png>
+
+<tr><td>Tasted by:
+    <td><table class="rbox">
+          <tr><td>Person: 
+              <td><a href="">John Doe</a>
+                  <input type=image src=btn-left.png
+                         onclick="return chooser('new-person')"><br>
+          <tr><td>Event:  
+              <td><select>
+                    <option>Great British Beer Festival 2003</option>
+                    <option selected="true">Great British Beer Festival 2004</option>
+                    <option>Great British Beer Festival 2005</option>
+                  </select>              
+              <input type=image src=btn-left.png>
+              <a href="..."><input type=image src=btn-right.png></a>
+              <br>
+        </table>
+    <td>
+      <a href="..." title="Remove association"><input type=image src=btn-minus.png></a>
+      <a href="..." title="Add association"><input type=image src=btn-plus.png></a>
+    <tr><td><td><table class="rbox">
+          <tr><td>Person: 
+              <td><a href="">Barry McBeer</a>
+                  <input type=image src=btn-left.png><br>
+          <tr><td>Event:  
+              <td><select>
+                    <option>Great British Beer Festival 2003</option>
+                    <option>Great British Beer Festival 2004</option>
+                    <option selected="true">Great British Beer Festival 2005</option>
+                  </select>              
+              <input type=image src=btn-left.png>
+              <a href="..."><input type=image src=btn-right.png></a>
+              <br>
+        </table>
+    <td>
+      <a href="..." title="Remove association"><input type=image src=btn-minus.png></a>
+</table>
+   
+<p>
+<input type=submit value="OK">
+<input type=submit value="Cancel">
+<input type=submit value="Delete">
+<select>
+  <option>-- select type --</option>
+  <option>Cider product</option>
+  <option>City</option>
+  <option>Country</option>
+  <option>Pub</option>
+</select> <input type=submit value="Change type">

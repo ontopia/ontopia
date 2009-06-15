@@ -1,0 +1,130 @@
+
+body {
+  background-color: #D0D0FF;
+  font-family: Arial;
+}
+
+body.ontology {
+  background-color: #D0D0FF;
+  font-family: Arial;
+}
+
+a:link {
+	color:blue;
+}
+a:visited {
+	color:blue;
+}
+a:hover {
+	color:blue; text-decoration:underline;
+}
+a:active {
+	color:blue;
+}
+
+ul {
+  margin-left: 18pt;
+}
+
+table.main { 
+  width: 60%;
+}
+
+table.rbox  { 
+  width: 100%;
+}
+
+.wbox {
+  /* width: 40%; */
+  border: 1px solid black;
+  padding-left: 8pt;
+  padding-right: 8pt;
+  padding-bottom: 10pt;
+}
+
+.rbox {
+  border: 1px solid black;
+  padding-top: 5pt;
+  padding-left: 5pt;
+  padding-right: 4pt;
+  padding-bottom: 5pt;
+}
+
+.xrbox  { 
+  border-left: 1px solid black;  
+  padding-left: 5pt;
+  width: 40%;
+}
+
+.xlbox  { 
+  padding-right: 5pt;
+  width: 40%;
+}
+
+.tblheader { 
+  font-weight: bold;
+  font-size: 18pt;
+  padding-bottom: 6pt;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  vertical-align: top;
+}
+td .currenttab, td .othertab {
+  vertical-align: middle;
+}
+.currenttab {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  padding: 0 15px;
+}
+.othertab {
+  border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px 15px;
+  border-top: 3px solid transparent;
+  border-right: 1px solid transparent;
+  background: silver;
+}
+.bottom {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-top: 10pt;
+  padding-bottom: 10pt;
+}
+.bottom {
+  border-left: 1px solid black;
+  border-left: 1px solid black;
+  padding-left: 4mm;
+  border-right: 1px solid black;
+  border-right: 1px solid black;
+  padding-right: 4mm;
+}
+.othertab a {
+  text-decoration: none;
+  color: #333366;
+}
+.main, .currenttab {
+  background: #cccc99;
+  background: #e3e0e0;
+  background: #f0f0f0;
+  background: #f0e7e7;
+  background: #e0dcdc
+}
+.currenttab {
+  text-decoration: none;
+  font-weight: bold;
+  color: #333300;
+}

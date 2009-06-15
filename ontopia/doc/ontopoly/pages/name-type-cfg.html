@@ -1,0 +1,124 @@
+<link rel="stylesheet" type="text/css" href="ted.css">
+
+<body class="ontology">
+
+<p>NAME FIELD CONFIGURATION</p>
+<h1>English</h1>
+
+<p><a href="start-page.html">Welcome</a> | 
+   <a href="topicmap-cfg.html">Topic Map</a> |
+   <a href="ontology-top-scope.html">Ontology</a> |
+   <a href="instances-top.html">Instances</a> |
+   <a href="...">Save</a> |
+   <input type=text size=10> |
+   <a href="../design.xml.html">Help</a>
+</p>
+
+<table class="fbox"> 
+
+<!--
+<tr><td width="8%">Type:      
+    <td><select>
+           <option selected="true">(untyped)</option>
+         </select>         
+
+<tr><td width="8%">Scope:       
+    <td><select>
+          <option></option>
+          <option selected="true">English</option>
+          <option>Norwegian</option>
+         </select>
+         <a href="scoping-topic-edit.html"><input type=image src=btn-right.png></a>
+         <a href="topic-associate-topic.html"><input type=image src=btn-left.png></a>
+-->
+
+<tr><td>Name:
+    <td><input type=text size="40" value="English">
+<tr><td>PSI:       
+     <td><input type=text size="50" value="http://www.topicmaps.org/xtm/1.0/language.xtm#en">
+         <input type=image src=btn-right.png>
+         <input type=image src=btn-minus.png>
+         <input type=image src=btn-plus.png><br>
+<tr><td>Description:
+    <td><textarea rows=3 cols=50></textarea>
+
+<tr><td>Read-only:       <td><input type=checkbox>
+<tr><td>Hidden:       <td><input type=checkbox>
+
+</table>
+
+<h3>Used by</h3>
+
+<ul>
+  <li><a href="topic-type-cfg.html">Beer product</a>
+</ul>
+
+<!--
+<h3>Variants</h3>
+
+<table width="40%"> 
+<tr><td>
+
+<table class="rbox">
+<tr><td width="30%">Scope:       
+    <td><select>
+          <option selected="true">Short name</option>
+         </select>
+         <a href="scoping-topic-edit.html"><input type=image src=btn-right.png></a>
+         <a href="topic-associate-topic.html"><input type=image src=btn-left.png></a>
+<tr><td>Data type: 
+    <td><select>
+          <option>Date</option>
+          <option>Number</option>
+          <option selected="true">String</option>
+          <option>URI</option>
+        </select>
+<tr><td>Cardinality: 
+    <td><select>
+         <option>Exactly one</option>
+         <option selected="true">Zero or one</option>
+        </select><tr><td colspan=2>
+</table>    
+
+</td><td>
+  <a href="..."><input type=image src=btn-minus.png></a>
+  <a href="..."><input type=image src=btn-plus.png></a>
+</td></tr>
+
+<tr><td>
+
+<table class="rbox">
+<tr><td width="30%">Scope:       
+    <td><select>
+          <option selected="true">Pronounciation</option>
+         </select>
+         <a href="scoping-topic-edit.html"><input type=image src=btn-right.png></a>
+         <a href="topic-associate-topic.html"><input type=image src=btn-left.png></a>
+<tr><td>Data type: 
+    <td><select>
+          <option>Date</option>
+          <option>Number</option>
+          <option>String</option>
+          <option selected="true">URI</option>
+        </select>
+<tr><td>Cardinality: 
+    <td><select>
+         <option>Exactly one</option>
+         <option selected="true">Zero or one</option>
+        </select><tr><td colspan=2>
+</table>    
+
+</td><td>
+  <a href="..."><input type=image src=btn-minus.png></a>
+</td></tr>
+</table>
+
+-->
+
+<p>
+  <input type=button value="OK" onclick="javascript:history.go(-1)">
+  <input type=button value="Cancel" onclick="javascript:history.go(-1)">
+  <input type=button value="Delete" onclick="javascript:history.go(-1)">
+</p>
+
+</body>

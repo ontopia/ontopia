@@ -1,0 +1,2441 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Do not delete the External ID. It is needed for validation. -->
+<!DOCTYPE article
+   PUBLIC "-//OASIS//DTD DocBook XML V4.1//EN" "../../dtds/docbook/docbookx.dtd"
+[
+  <!ENTITY ted '<productname>Ontopoly</productname>'>
+  <!ENTITY ots '<productname>Ontopia | OKS Samplers</productname>'>
+  <!ENTITY expand '<graphic role="Expand" fileref="pages/expand.gif"/>'>
+  <!ENTITY collapse '<graphic role="Collapse" fileref="pages/collapse.gif"/>'>
+  <!ENTITY box '<graphic role="Blank Box" fileref="pages/boxed.gif"/>'>
+  <!ENTITY next '<graphic role="Next" fileref="pages/nav_next.gif"/>'>
+  <!ENTITY up '<graphic role="Up" fileref="pages/up.gif"/>'>
+  <!ENTITY down '<graphic role="Down" fileref="pages/down.gif"/>'>
+  <!ENTITY add-field '<graphic role="Add field" fileref="pages/expand_all.gif"/>'>
+  <!ENTITY add-to-fields '<graphic role="Add to fields" fileref="pages/add_to_fields.png"/>'>
+  <!ENTITY remove-field '<graphic role="Remove field" fileref="pages/collapse_all.gif"/>'>
+  <!ENTITY inherited '<graphic role="Inherited field" fileref="pages/blank.gif"/>'>
+  <!ENTITY create '<graphic role="Create" fileref="pages/create.gif"/>'>
+  <!ENTITY help '<graphic role="Contextual help" fileref="pages/help.gif"/>'>
+]>
+<!-- $Id: user-guide.xml,v 1.46 2008/05/29 07:01:13 geir.gronmo Exp $ -->
+<!--
+     markup conventions:
+
+     * terms like "Topic Map Index Page": first occurrence <firstterm>,
+       thereafter just capitalisation
+     * filenames, directory names: <filename>
+     * button names: <guibutton>
+     * syntax: <symbol>
+-->
+<article>
+<title>&ted;: The Topic Map Editor</title>
+<subtitle>User&#8217;s Guide</subtitle>
+
+<!--Additions for future:
+    - localization support;
+    - up/down arrows affect spinner - other keystrokes affect search
+      box;
+    - load config menu item;
+    - instance editor embedding
+-->
+
+<articleinfo>
+<author>
+<affiliation><orgname>Ontopia</orgname>
+</affiliation>
+</author>
+<pubdate>$Date: 2008/05/29 07:01:13 $</pubdate>
+<releaseinfo>4.0 ($Revision: 1.46 $) </releaseinfo>
+
+<abstract>
+<para>This is the user guide for Ontopia&#8217;s self-configuring, ontology-driven
+Topic Maps editor, &ted;. A topic map consists of both an ontology
+and an instance of that ontology; with &ted;, you can edit each of these.
+The ontology defines the rules for what can go into the instance, and
+these rules are used by &ted; to automatically generate the interface
+for creating and maintaining the instance. This document provides guidance
+for creating both ontologies and instances.</para>
+
+<para>Reading this document assumes some basic knowledge about Topic
+Maps. If you are not familiar with Topic Maps, try reading one of the
+simple introductions, such as <ulink
+url="http://www.ontopia.net/topicmaps/materials/tao.html">The TAO of
+Topic Maps</ulink>, available from the Ontopia web site. If you are
+technically minded, you might also want to look at the <ulink
+url="http://www.topicmaps.org/xtm/1.0/">XTM Specification</ulink> or
+the new version of ISO 13250, especially the <ulink
+url="http://www.isotopicmaps.org/sam/sam-model/">Data
+Model</ulink>.</para>
+
+<para> We welcome any suggestions you might have on ways of improving
+this User Guide. Please send them to
+<email>dev@ontopia.net</email>.</para>
+
+<para>We hope you enjoy using &ted;!</para>
+
+</abstract>
+</articleinfo>
+
+<section>
+<title>Getting started</title>
+
+<para>&ted; is built as a client/server application. As a client, you
+use your web browser, while the server is a web server bundled with the
+distribution. The server-side application is built using the
+<productname>Navigator Framework</productname> and <productname>Web
+Editor Framework</productname>, which are parts of the
+<productname>Ontopia Knowledge Suite&#x2122;</productname>. &ted; is
+accessible within &ots;, an application that provides easy access to
+&ted;, <productname>Omnigator</productname>, and
+<productname>Vizigator</productname>.</para>
+
+<figure id="ots-home-pg-fig">
+<title>&ots; Home Page</title>
+<graphic fileref="pages/doc_home_page.png" width="75%"/>
+</figure>
+
+<para>To install and start up &ots;, please see
+<command>install.html</command>. Once you have accessed &ots;, choose
+&ted; from the available options.</para>
+</section>
+
+<section id="gen-concepts">
+<title>General concepts</title>
+
+<section id="overview">
+<title>Application architecture</title>
+
+<para>&ted;&#8217;s primary purpose is to enable the manual creation and
+maintenance of topic maps that may be based on a variety of ontologies.
+In order to be able to provide the most intuitive possible user
+interface for such a generic application, &ted; is
+<emphasis>ontology-driven</emphasis>. What this means is that the
+forms-based interface for creating and maintaining a topic map is
+generated automatically from the underlying ontology and the rules that
+are defined for it.</para>
+
+<para>For this reason, you need to create an ontology before you can
+edit a topic map instance in &ted;. Often the tasks of creating the
+ontology and editing the topic map instance (that is, populating the
+ontology) will be carried out by different people. &ted; is therefore
+divided into two main parts: the ontology editor and the instance
+editor. The application also has an administration interface, i.e., a
+page for adding metadata to the topic map (description, creator,
+version, etc.), validating it, etc.; and an interface for exporting to
+various interchange syntaxes.</para>
+
+<para>The Topic Map Index Page allows you to open an existing topic map, create
+a new one, or import one from outside &ted;. Once you have selected one
+of these actions, you are taken to the application pages. The overall
+architecture and the navigation paths between the various parts of the
+application are shown in <xref linkend="int-ovr"/>.</para>
+
+<figure id="int-ovr">
+<title>Overview of &ted;&#8217;s architecture</title>
+<graphic fileref="pages/interface_overview.png"/>
+</figure>
+</section>
+
+<section id="components">
+<title>Configuring and populating topic maps</title>
+
+<para>&ted;&#8217;s two primary functions provide a comprehensive Topic Maps
+editing environment.</para>
+
+<orderedlist>
+<listitem>
+<para><emphasis role="bold">Configuring a topic map</emphasis>: ontology
+and schema creation</para>
+<para>&ted;&#8217;s Type Configuration Pages are used by the ontology
+designer to define the topic, name, association, association role, and
+occurrence types that will be available to creators of the instance
+topics. To take an example, when an author creates a topic of type
+<command>composer</command>, the Instance Editing Page will show the
+fields that apply to a <command>composer</command>, such as name, date
+of birth, and works; but when editing an <command>opera</command>, the
+fields will be different.</para>
+<para>As the ontology designer assigns fields (such as associations and
+occurrences) to a topic type, the designer is also creating the schema.
+The creation of the ontology and the schema are seamless and appear to
+the designer as a cohesive operation. For further detail on ontology
+creation, see <xref linkend="OE"/>.</para>
+</listitem>
+
+<listitem>
+<para><emphasis role="bold">Populating a topic map</emphasis>: instance
+creation</para>
+<para>Once an ontology is created, it can be used to guide populating
+the topic map. The Instance Editing Pages are used by the person
+authoring the topic map instance. The available topic types are provided
+from the ontology. The schema constraints give the instance author
+further support by allowing only specific association types and
+occurrence types to be used with an instance of a given topic type. For
+further detail on instance editing, see <xref linkend="IE"/>.</para>
+</listitem>
+</orderedlist>
+
+</section>
+
+<section>
+<title>User interface conventions</title>
+
+<para>&ted; has a web-based interface. For a discussion of the various
+areas of the &ted; interface and a complete list of icons, tabs and
+buttons used in the interface, please see <ulink url="#appA">Appendix
+A</ulink>.</para>
+</section>
+
+<section id="start-page">
+<title>Topic Map Index Page</title>
+
+<para>Before you can create either the ontology or the instance, you
+have to open a topic map, so let&#8217;s start there.</para>
+
+<para>When you first access &ted; from &ots;, you are taken to the
+Topic Map Index Page, see <xref linkend="wel-pg-fig"/>. On the left, is a column
+for <guilabel>Ontopoly Topic Maps</guilabel>, in the middle is the list
+of <guilabel>Other Topic Maps</guilabel> (also referred to as
+&#8220;non-&ted; topic maps&#8221;), and on the right is the area for
+creating new topic maps. Another column, <guilabel>Missing Topic
+Maps</guilabel>, will also appear on this page if an &ted; topic map has
+been deleted from outside &ted;. For more information on deleting &ted;
+topic maps, please see <xref linkend="del-tm"/>.</para>
+
+<figure id="wel-pg-fig">
+<title>&ted; Topic Map Index Page</title>
+<graphic fileref="pages/doc_welcome_page.png" width="75%"/>
+</figure>
+
+<para>&ted; imports topic maps in the HyTM, XTM, LTM, and TM/XML
+syntaxes; it will also import RDF. By default &ted; creates topic maps
+as XTM files in the Omnigator&#8217;s <filename>topicmaps/</filename>
+directory. For information on exporting from &ted;, see <xref
+linkend="export"/>.</para>
+
+<section>
+<title>&ted; topic maps</title>
+
+<para>A topic map created in &ted; (an <firstterm>&ted; topic
+map</firstterm>) will differ from one created outside of it (a
+<firstterm>non-&ted; topic map</firstterm>). An &ted; topic map carries
+along with it topics that let it interact with the &ted; application and
+topics that define the schema (the <firstterm>system
+topics</firstterm>). You can always export a topic map from &ted; to
+remove the system topics, but they are needed for the topic map to be
+understood within the application. (It&#8217;s the system topics that
+make it possible for &ted; to automatically configure its instance
+editor for maximum ease of use.) Similarly, pre-existing non-&ted; topic
+maps will need these system topics to be added. &ted; automatically adds
+them when opening a non-&ted; topic map.</para>
+
+</section>
+
+<section>
+<title>Opening a non-&ted; topic map</title>
+
+<para>Opening a non-&ted; topic map converts it to an &ted; topic map
+and creates an index in the process (which may take several minutes).
+When you click on a non-&ted; topic map, you will get information about
+the conversion process. If the topic map contains features not supported
+by &ted; (see <xref linkend="appB"/>), you will see a warning and a list
+of the unsupported features that are used in the topic map. There are
+options to over-write your existing topic map or rename it. After this
+decision, you are taken to the Topic Type Configuration Page.</para>
+
+<para>During the conversion, &ted; makes decisions about the ontology,
+based on what it finds in the topic map, and generates the strictest
+possible schema. Sometimes it will be stricter than necessary. For
+example, if occurrences of a particular type (say,
+<command>email</command>) never occur more than once for any
+<command>person</command> topic, then &ted; will create a rule allowing
+a maximum of one <command>email</command> occurrence per
+<command>person</command> topic. You may want to relax the rule,
+however, using &ted;&#8217;s ontology editor, in order to allow for the
+possibility of multiple <command>email</command> occurrences in the
+future. For this reason you should always examine the ontology generated
+by &ted; when importing an external topic map, and adjust it to reflect
+the true intent behind the topic map.</para>
+
+</section>
+
+<section>
+<title>Creating a new &ted; topic map</title>
+
+<para>Use the <command>Name</command> field in the right hand column of
+the page to create a new topic map. After naming the topic map, you are
+taken to the Topic Type Configuration Page. The name you enter will be
+used for the name of the topic map and will appear in the left-hand
+column on the Topic Map Index Page when subsequently accessed. (You will be able to change it later, if you
+like, see <xref linkend="topic-map-config"/>.) The name will also be
+used to generate a file name, with the extension
+<filename>.xtm</filename> being added automatically.</para>
+</section>
+</section>
+
+<section>
+<title>Our example topic map</title>
+
+<para>A simple topic map example will be used throughout the next two
+sections to illustrate &ted;&#8217;s functionality. It is a topic map
+that captures information about artists, the albums they have made, and
+tracks on the album. We've called it <citetitle>Jill&#8217;s
+Music</citetitle> and it&#8217;s based on an ontology called
+<citetitle>MyMusic</citetitle>; both are included in the Ontopoly
+distribution.</para>
+
+<para>So, why wait? Go on now to section <xref linkend="OE"/> and start
+creating your first topic map in &ted;!</para>
+</section>
+</section>
+
+<section id="OE">
+<title>Using the Type Configuration Pages</title>
+
+
+<para>Each topic map you create will be about some domain of knowledge,
+such as your corporate intranet, medical research, recording artists,
+the works of Shakespeare, etc. A topic map identifies subjects and the
+relationships between those subjects. Each of the subjects will be of a
+certain type, e.g., Puccini and Verdi are composers, La Scala and Fenice
+are opera houses, Milan and Venice are cities, etc.</para>
+
+<para>Using &ted;&#8217;s Type Configuration Pages, you will create the
+<firstterm>typing topics</firstterm> that will control your topic map: topic,
+association, occurrence, role and name types. You will also create the rules
+for how the typing topics are used together.</para>
+
+<para>To provide a practical introduction to &ted;&#8217;s
+functionality, we&#8217;ve created an ontology for a music organization
+topic map, <citetitle>MyMusic</citetitle>, and an example topic map that
+uses that ontology, <citetitle>Jill&#8217;s Music</citetitle>.</para>
+
+<para>Here are the topic types we will be working with:</para>
+
+<blockquote>
+<literallayout>Album
+Artist
+   Group
+   Individual Artist
+Track</literallayout>
+</blockquote>
+
+<para>The indentation indicates that Group and Individual Artist are subtypes
+(or subclasses) of Artist.</para>
+
+<para>In addition, we have defined the following association
+types:</para>
+
+<blockquote>
+<literallayout>Album created by
+Belongs to album
+Is a Member of</literallayout>
+</blockquote>
+
+<section id="onto-indexes">
+<title>Type Index Pages</title>
+
+<para>When you open an existing or newly created topic map, you are
+taken to the Topic Type Index Page, see <xref linkend="tt1"/>. Here
+you&#8217;ll see menu buttons for each kind of typing topic: topic
+types, occurrence types, association types, role types, and name types.
+The <emphasis role="bold">Ontology</emphasis> tab is available on every
+page in &ted;. Clicking on it will always bring you to the Topic Type
+Index Page. From there you can quickly access the corresponding Type
+Index Pages for other kinds of typing topics, which are typically used
+less often.</para>
+
+<para>All of the Type Index Pages are more-or-less the same. Each one
+presents a list of existing types and a field for creating a new type.
+Only the Topic Type Index Page is slightly different: it displays the
+list of topic types as a type hierarchy and includes buttons for
+expanding and collapsing the tree structure.</para>
+
+<para>Clicking on any of the typing topics (or creating a new one) takes
+you to the appropriate Configuration Page, as described below.</para>
+
+<figure id="tt1">
+<title>Topic Type Index Page</title>
+<graphic fileref="pages/doc_onto_topic_types_1.png" width="75%"/>
+</figure>
+
+<para>Creating an ontology is an iterative process. Through
+&ted;&#8217;s interface, you can navigate easily between the Type Index
+Pages and the Type Configuration Pages. In the following we describe
+each kind of Type Configuration Page in turn, but in your work you will
+find yourself moving back and forth throughout the process.</para>
+
+</section>
+<section id="config-pages">
+<title>Type Configuration Pages</title>
+<para>There are five kinds of types in Topic Maps: topic types,
+occurrence types, association types, role types, and name types. Each of
+these has its own kind of Type Configuration Page, which is accessed via
+the buttons on the Type Index Pages. Each Type Configuration Page is
+unique, but some fields are common to all of them (see <xref
+linkend="tt-config-1"/>):</para>
+
+<itemizedlist>
+<listitem id="tt-config-name">
+<para><guilabel>Name</guilabel>: Editable name of the typing
+topic.</para>
+</listitem>
+<listitem id="tt-config-PSI">
+<para><guilabel>PSI</guilabel>: The Published Subject Identifier of the
+typing topic. Its value must be a URI. The &add-field; icon following
+this field indicates that you can create more than one. A PSI is not
+required, but is good practice. For more information on using PSIs,
+please see the <ulink
+url="http://www.oasis-open.org/committees/download.php/3050/pubsubj-pt1-1.02-cs.pdf">OASIS
+Recommendations</ulink>.</para>
+</listitem>
+<listitem id="tt-config-description">
+<para><guilabel>Description</guilabel>: Field for defining and
+documenting the topic type. We recommend that you use this field
+extensively to capture your intentions regarding the role of this type
+in your ontology.</para>
+</listitem>
+</itemizedlist>
+
+<para>The following two fields appear on all but the Role Type
+Configuration Page:</para>
+
+<itemizedlist>
+<listitem id="tt-config-read-only">
+<para><guilabel>Read-only</guilabel>: You may create typing topics that
+can only be read. The instance author will be able to choose such a
+topic type and read what is in it, but no instances may be
+created.</para>
+</listitem>
+<listitem id="tt-config-hidden">
+<para><guilabel>Hidden</guilabel>: In some cases topic types should only
+be seen by the ontology designer, and that&#8217;s the perfect use of
+this choice as the topic will not be available in the instance
+editor.</para>
+</listitem>
+</itemizedlist>
+
+<para>The following sections provide more detail on each kind of Type
+Configuration Page.</para>
+</section>
+
+<section id="create-tt">
+<title>Configuring topic types</title>
+<para>The Topic Type Index is shown in <xref linkend="tt1"/>. From here
+you can enter a name for a new topic type in the field and then click
+<guibutton>Create</guibutton>, or you can choose an existing topic type
+to view or edit. Our example already contains an ontology which has been
+partially populated, so we will go straight to the Topic Type
+Configuration Page for a pre-existing type,
+<command>Artist</command>.</para>
+
+<section id="tt-config-page">
+<title>Topic Type Configuration Page</title>
+<para>Configuration pages control what the instance authors will see as
+they create topics of a given type. Let&#8217;s look at the Topic Type
+Configuration Page in <xref linkend="tt-config-1"/>. Some standard
+components appear that are available on all pages. The page type
+(&#8220;Topic Type Configuration&#8221;) appears at the end of the
+Breadcrumbs, and the topic type being created
+(<command>Artist</command>) is just above that in red.</para>
+
+<para>The main portion of the page is divided into three parts: the top
+part lists the core properties of the typing topic (its supertype, name,
+PSI, and description); the middle part of the page lists those
+properties, or &#8220;fields&#8221; (i.e., names, identifiers,
+occurrences, and associations), that will apply to instances of the
+type; and the lower part contains additional (less often used) system
+properties for the topic type.</para>
+
+<figure id="tt-config-1">
+<title>Topic Type Configuration Page</title>
+<graphic fileref="pages/doc_topic_types_config.png" width="75%"/>
+</figure>
+</section>
+
+<section id="tt-config-standard">
+<title>Properties of the typing topic</title>
+<para>The properties that are common to all typing topics and thus occur
+on all Configuration Pages were described above in <xref
+linkend="config-pages"/>. This applies to <guilabel>Name</guilabel>,
+<guilabel>PSI</guilabel>, <guilabel>Description</guilabel>,
+<guilabel>Read-only</guilabel>, and <guilabel>Hidden</guilabel>. The
+following additional properties are specific to topic types:</para>
+
+<itemizedlist>
+<listitem id="tt-config-supertype">
+<para><guilabel>Supertype</guilabel>: A drop down list of topics from
+which to choose a supertype (i.e., a parent in the type hierarchy) for
+the current topic. (In our example there is no supertype, because
+<command>Artist</command> is at the top of the hierarchy and thus has no
+parent.)</para>
+</listitem>
+
+<listitem id="tt-config-abstract">
+<para><guilabel>Abstract</guilabel>: Check this box if you
+want to use this typing topic as a model for other topics, but don't
+want a user to create any instances of it directly. Typically, an
+abstract topic will be a supertype in a hierarchy of topics. In our
+example, we have a two-tier hierarchy where <command>Artist</command> is
+the supertype and <command>Individual Artist</command> and
+<command>Group</command> are subtypes. We will not want authors to
+create instances of <emphasis>Artist</emphasis>, only of its subtypes.
+However, having the <emphasis>Artist</emphasis> supertype is useful
+because, once we define it, its subtypes will inherit all of its fields.
+If one subtype requires fields not needed by the other subtypes, those
+fields can be added at subtype level.</para>
+</listitem>
+
+<listitem id="tt-config-role-type">
+<para><guilabel>Use as role type</guilabel>: If you would like to use
+this topic not only as a topic type, but also as a role type in
+associations (see <xref linkend="assoc-types"/> and <xref
+linkend="role-types"/>), you can check this box, rather than create a
+separate role type. In our example, we want to use
+<command>Artist</command> as a role type in associations of type
+&#8220;Album created by&#8221;, so this box is checked.</para>
+</listitem>
+
+<listitem id="tt-config-subtype">
+<para><guilabel>Direct subtypes</guilabel>: A list of topics of which
+this topic is the supertype (i.e., parent in the type hierarchy). In our
+example, although <command>Artist</command> has no supertype, it does
+have two subtypes, each of which is highlighted as a link that can take
+you to the corresponding Type Configuration Page. After the last
+subtype, there is a &create; icon that can be used to create another
+topic type which will automatically become a subtype of the current
+topic type.</para>
+</listitem>
+
+<listitem>
+<para><guilabel>Large instance set</guilabel>: Some topic types have
+such a large set of instances that you do not want the user to be able
+to display the entire list, because this would take too long to
+render, and the pages would be too big. Checking this box makes
+Ontopoly turn off the listing feature, and would require the user to
+search for instance topics instead.</para>
+</listitem>
+</itemizedlist>
+
+<para>Note that the type hierarchy can be constructed from two
+directions: upwards (by assigning the supertype of each topic type), or
+downwards (by specifying its subtypes). You can also use a combination
+of the two approaches. This hierarchy can be made visible on the Topic
+Type Index Page by clicking on <guilabel>Expand all nodes</guilabel>
+(see <xref linkend="tt1"/>).</para>
+
+<para>
+At the bottom of the page there is a section called "Topic hierarchy"
+where you can select a number of association types that together form
+a hierarchy of the instances of this type. The only association types
+which can be selected here are those which on the Association Type
+Configuration Page (see <xref linkend="at-config-page"/>) are defined
+as being hierarchical. The effect of this setting is to get topics of
+this type presented in a tree view on the Instance Index Page
+(see <xref linkend="inst-index"/>) and in the
+Topic Selection Dialog (see <xref linkend="topic-select-dialog"/>).
+</para>
+</section>
+
+<section id="tt-config-add-fields">
+<title>Add fields</title>
+<para>In the middle part of the page, you can define and add fields to
+the topic for use in the Instance Editing Pages. Under
+<guilabel>Existing fields</guilabel> are shown fields that are already
+assigned to the topic. <guilabel>Add fields</guilabel> lists additional
+fields defined in the ontology that can be assigned to the topic.</para>
+
+<para>The <guilabel>Add fields</guilabel> section on the right side of
+the screen displays up to four kinds of field that can be added to a
+topic. In each case there is a drop-down list with choices. The
+&add-to-fields; icon adds the visible choice to the list of
+<guilabel>Existing fields</guilabel> and removes it from the list of
+available choices.</para>
+
+<itemizedlist>
+<listitem id="tt-config-add-fields-name">
+<para><guilabel>Name</guilabel>: The values available in the drop-down
+correlate to name type topics. By default, there is just one name type:
+<guilabel>Name</guilabel>, which is for general-purpose,
+&#8220;untyped&#8221; names. You can create new name types by using the
+&create; icon, which will take you to the Name Type Configuration Page,
+see <xref linkend="name-types"/>.</para>
+</listitem>
+
+<listitem id="tt-config-add-fields-occurrence">
+<para><guilabel>Occurrence</guilabel>: The values available in the
+drop-down correlate to occurrence type topics. By default, there are
+three predefined occurrence types:
+<command role="bold">Creator</command>,
+<command role="bold">Description</command>, and
+<command role="bold">Version</command>. You can create new occurrence
+types by using the &create; icon, which will take you to a new
+Occurrence Type Configuration Page, see <xref
+linkend="occur-types"/>.</para>
+</listitem>
+
+<listitem id="tt-config-add-fields-association">
+<para><guilabel>Association</guilabel>: The values available in the
+drop-down correlate to those names of association type topics that are
+connected to specific role types. There are no predefined associations.
+You can create new association types by using the &create; icon, which
+will take you to a new Association Type Configuration Page, see <xref
+linkend="assoc-types"/>. In the case where a topic might play both
+roles, such as <command>parent</command> and <command>child</command> in
+a <command>parent-child</command> association, each role should be
+selected in turn so that both are available fields on the Instance
+Editing Page.</para>
+</listitem>
+
+<listitem id="tt-config-add-fields-other">
+<para><guilabel>Other</guilabel>: Two predefined values are available:
+<emphasis>Subject identifier</emphasis> and <emphasis>Subject
+locator</emphasis>. If topics of this type represent information
+resources (which would probably be the case for the topic type
+<command>Document</command>, for example), the type can be assigned a
+<emphasis>Subject locator</emphasis> field, otherwise the type can
+(and, in many cases, should) be assigned a <emphasis>Subject
+identifier</emphasis> field. For more information on the use of
+subject identifiers and subject locators, see the <ulink
+url="http://www.oasis-open.org/committees/download.php/3050/pubsubj-pt1-1.02-cs.pdf">OASIS
+Recommendations</ulink>.</para>
+</listitem>
+</itemizedlist>
+
+</section>
+<section id="tt-config-existing-fields">
+<title>Existing fields</title>
+<para>Now let&#8217;s move on to the left side, <guilabel>Existing
+fields</guilabel>. The first column reflects the name of the type or
+label chosen from the <guilabel>Add fields</guilabel> column. All but
+the <emphasis>Subject identifier</emphasis> or <emphasis>Subject
+locator</emphasis> are highlighted as links to the corresponding Type
+Configuration Page.</para>
+
+<para>The second column displays the datatype accepted in the field, or
+in the case of binary associations, the name of the topic type that can
+play the other role in associations of this type. (In our example,
+topics of type <command>Artist</command> are allowed to play roles in
+topics of type <command>Created album</command> with topics of type
+<command>Album</command>.)</para>
+
+<para>The third column provides drop-down lists with cardinality choices
+for the number of times the field can or must be used in the Instance
+Editing Page. There are four possible choices: Exactly one, One or more,
+Zero or more, and Zero or one.</para>
+
+<para>You can rearrange the order in which these fields will appear to
+the instance author using the &up; and &down; icons.</para>
+
+<para>Each line ends with the &remove-field; icon, which is used to
+remove fields. Removing a field under <guilabel>Existing
+fields</guilabel> will make it once more available as a option under
+<guilabel>Add fields</guilabel>.</para>
+
+<para>We now know how to add fields to a topic type. However, most of
+these fields have to be defined by the ontology designer through the use
+of the other Configuration Pages, so let&#8217;s move on.</para>
+</section>
+</section>
+
+<section id="occur-types">
+<title>Configuring occurrence types</title>
+<para>Occurrences can refer to resources external to the topic map, such
+as a web page, or they can be internal to the topic map, in which case
+they can be thought of as attributes (or properties) of the subject that
+the topic represents. You can create new occurrence types or choose one
+for edit from the Occurrence Type Index, see <xref linkend="ot1"/>,
+which will take you to the Occurrence Type Configuration Page, see <xref
+linkend="occur-config-page-1"/>.</para>
+
+<figure id="ot1">
+<title>Occurrence Type Index Page</title>
+<graphic fileref="pages/doc_onto_occur_types_1.png" width="75%"/>
+</figure>
+
+<section id="ot-config-page">
+<title>Occurrence Type Configuration Page</title>
+
+<para>The Occurrence Type Configuration Page for
+<command>Description</command> looks as follows:</para>
+
+<figure id="occur-config-page-1">
+<title>Occurrence Type Configuration Page</title>
+<graphic fileref="pages/doc_occur_config_1.png" width="75%"/>
+</figure>
+
+<para>The core properties of the typing topic are shown in the upper
+part of the page; the lower part contains information about how fields
+of this type will be used when editing instances.</para>
+</section>
+
+<section id="occur-config-standard">
+<title>Properties of the typing topic</title>
+<para>The Occurrence Type Configuration Page contains a new field in the
+top portion of the form: <guilabel>Datatype</guilabel>. The choices in
+the drop down list allow you to specify the datatype that fields of this
+type must contain. They are:</para>
+
+<itemizedlist>
+<listitem>
+<para><guilabel>Date</guilabel>: Internal occurrence, matching
+YYYY-MM-DD. Instance authors are given a calendar widget.</para>
+</listitem>
+<listitem>
+<para><guilabel>Datetime</guilabel>: Internal occurrence, matching
+YYYY-MM-DD hh:mm:ss. Instance authors are given a calendar
+widget.</para>
+</listitem>
+<listitem>
+<para><guilabel>Number</guilabel>: Internal occurrence, either an
+integer (like 42) or a decimal (like 4.2), with optional sign in
+front.</para>
+</listitem>
+<listitem>
+<para><guilabel>String</guilabel>: Internal occurrence (the
+default).</para>
+<!--Note for more technical doc - there is no max string length. With
+the RDBMS backend there may be maximums, but they will depend on the DB
+schema.-->
+</listitem>
+<listitem>
+<para><emphasis role="bold">URI</emphasis>: External occurrence.</para>
+</listitem>
+</itemizedlist>
+
+<para>Core properties common to all typing topics are described in
+<xref linkend="config-pages"/>.</para>
+</section>
+
+<section id="occur-config-interface">
+<title>Interface control</title>
+
+<para>As the occurrence fields are ones in which the author will be
+providing content rather than picking topic names or role labels, it is
+necessary for the ontology designer to describe the space that the field
+will be given on the Instance Editing Page. Two fields are provided for
+this purpose:</para>
+
+<itemizedlist>
+<listitem>
+<para><guilabel>Width</guilabel>: in characters (the default is
+50)</para>
+</listitem>
+<listitem>
+<para><guilabel>Depth</guilabel>: in rows (the default is 1)</para>
+</listitem>
+</itemizedlist>
+</section>
+
+<section id="occur-config-used-by">
+<title>Used by</title>
+
+<para>If the occurrence type has been used by any topic types, they are
+listed here, highlighted as links to their Configuration Pages.</para>
+</section>
+</section>
+
+<section id="assoc-types">
+<title>Configuring association types</title>
+
+<para>Associations describe a relationship that can or must exist
+between topics. You can create new association types or choose one for
+edit from the Association Type Index, see <xref linkend="at1"/>, which
+will take you to the Association Type Configuration Page, see <xref
+linkend="assoc-config-page-1"/></para>
+
+<figure id="at1">
+<title>Association Type Index Page</title>
+<graphic fileref="pages/doc_onto_assoc_types_1.png" width="75%"/>
+</figure>
+<para>Most associations are binary, that is, there are two role players,
+such as in parent-child or employer-employee relationships. You can also
+create associations with only one role player, or with more than two
+role players. We will focus on binary associations for the scope of this
+document.</para>
+
+<para>Binary associations are bi-directional. For example, an association
+named <command>composed-by</command> might sound like it is only
+uni-directional, i.e., Tosca is composed by Puccini. However, it also
+represents the relationship expressed as, for example, Puccini composed
+Tosca. Topic Maps accomplishes this bi-directionality, unambiguously, by
+assigning roles to the players. The relationship expressed in
+<xref linkend="assoc-bidirectional"/> can be described as, &#8220;In the
+composed-by relationship, the role of composer is played by Puccini and
+the role of work is played by Tosca.&#8221;</para>
+
+<!--
+<note>
+<para>Even though the relationship is bi-directional, the number of
+times each role player can use the relationship, i.e., the cardinality,
+can be set individually from the Topic Type Configuration Page for each
+role player.</para>
+</note>
+-->
+
+<figure id="assoc-bidirectional">
+<title>Associations are bi-directional</title>
+<graphic fileref="pages/doc_assoc_bidirectional.png"/>
+</figure>
+<para>&ted;&#8217;s Association Type Configuration Page helps you to
+define the association type, its role types and their corresponding role
+player types, and the labels for the association type as seen from the
+perspective of each role player.</para>
+
+<section id="at-config-page">
+<title>Association Type Configuration Page</title>
+
+<para>The Association Type Configuration Page for
+<command>Album created by</command> looks as follows:</para>
+
+<figure id="assoc-config-page-1">
+<title>Association Type Configuration Page</title>
+<graphic fileref="pages/doc_assoc_config_1.png" width="75%"/>
+</figure>
+
+<para>The core properties of the typing topic are again shown in the
+upper part of the page; the lower part contains information relating to
+the individual role types; and the final part of the page contains the
+remaining core properties, as well as the hierarchy settings
+(see <xref linkend="assoc-hierarchy"/>).</para>
+</section>
+
+<section id="assoc-config-standard">
+<title>Properties of the typing topic</title>
+
+<para>The Association Type Configuration Page contains one new checkbox
+in the top portion of the form, <guilabel>Symmetric</guilabel>. A
+symmetric relation is one which is the same from both (or all)
+directions. The teacher/pupil relation is not symmetric, because the two
+participants are doing different things, whereas the is-neighbour
+relation is symmetric, since there&#8217;s no difference between the two
+neighbours. In one sense, you can say the participants in a symmetric
+relationship are equal, which does not hold for created-by, killed-by,
+eaten-by, but does hold for works-with, is-a-friend-of, is-a-sibling-of,
+is-the-spouse-of, etc.</para>
+
+<para>Core properties common to all typing topics are described in
+<xref linkend="config-pages"/>.</para>
+</section>
+
+<section id="assoc-config-roles">
+<title>Roles</title>
+
+<para>In general, there is one role box for each role player. In most
+cases, there will be two role players and therefore two role boxes. In
+symmetric associations (and unary associations), there is only one role
+box. It is also possible to have more than two role players (in what are
+known as &#8220;n-ary associations&#8221;); an example of a ternary
+association (one with three role players) would be a perpetrator, a
+victim, and a cause of death in a "killed / killed-by"
+association.</para>
+
+<para>Each role box has four fields:</para>
+
+<itemizedlist>
+<listitem>
+<para><guilabel>Type</guilabel>: The values available in the drop-down
+correlate to role type topics. You can create new role types directly
+from this page by using the &create; icon, which will take you to a new
+Role Type Configuration Page, see <xref linkend="role-types"/>.</para>
+</listitem>
+<listitem>
+<para><guilabel>Allowed players</guilabel>: Use the drop-down list to
+choose the appropriate topic type to play this role. Note that this is a
+repeatable field as multiple topic types may play the same role. New
+topic types can be created directly from this page using the &create;
+icon. Once you choose <guilabel>Confirm</guilabel>, the drop-down box is
+replaced by a link to the chosen topic type. The &add-field; icon
+generates another drop-down box for additional choices.</para>
+</listitem>
+<listitem>
+<para><guilabel>Label</guilabel>: You can define a string as the label
+that will be seen from the perspective of this role. For example, in a
+parent-child relationship, from the perspective of the parent role, the
+label might be "is the parent of", while from the perspective of the
+child role, the label would be "is the child of".</para>
+</listitem>
+<listitem>
+<para><guilabel>Interface control</guilabel>: Choose between providing
+instance authors with a drop-down list of valid topic types or a search
+box.</para>
+</listitem>
+</itemizedlist>
+
+<para>Once you have created an association type, visit the Topic Type
+Configuration Pages of the topics that play roles to make sure the
+cardinality for the use of the association is correct. These should be
+reviewed from the perspective of each role player as they may differ,
+e.g., a student goes to one school (<command>Exactly one</command>), but
+a school may have many students (<command>One or more</command>).</para>
+</section>
+
+<section id="assoc-hierarchy">
+<title>Hierarchical associations</title>
+
+<para>
+This section, at the bottom of the Association Type Configuration
+Page, allows you to configure an association type as being
+hierarchical. To do this, you must also set the role types correctly,
+so that Ontopoly knows which role is the parent role and which is the
+child role. The purpose of this to enable Ontopoly to show you the
+hierarchy formed by these associations. 
+</para>
+
+<para>
+An example might be the hierarchy formed by the geographical
+"contained in" association. The parent role here would be "container"
+and the child role would be "containee". Setting this up would allow
+you to browse your collection of geographic places as a tree on the
+Instance Index Page (see <xref linkend="inst-index"/>) and in the
+Topic Selection Dialog (see <xref linkend="topic-select-dialog"/>).
+Another example might be the broader/narrower relationship from
+taxonomies and thesauri, which you can find in the UK Government
+Category List, which comes with Ontopoly.
+</para>
+</section>
+</section>
+
+<section id="role-types">
+<title>Configuring role types</title>
+
+<para>Role types are used in associations. You can create new role types
+or choose one for edit from the Role Type Index, see
+<xref linkend="rt1"/>, which will take you to the Role Type
+Configuration Page, see <xref linkend="role-config-page-1"/>. Role types
+should be as generic as possible so that they can easily be reused
+across association types. For example, whether you have a
+"composer/opera", "author/book", or "artist/painting" association, the
+roles the topics play in all three of these examples might be "creator"
+and "creation", even though the association types could be
+different.</para>
+
+<figure id="rt1">
+<title>Role Type Index Page</title>
+<graphic fileref="pages/doc_onto_role_types_1.png" width="75%"/>
+</figure>
+
+<section id="rt-config-page">
+<title>Role Type Configuration Page</title>
+
+<para>The Role Type Configuration Page for <command>Artist</command>
+looks as follows:</para>
+
+<figure id="role-config-page-1">
+<title>Role Type Configuration Page</title>
+<graphic fileref="pages/doc_role_config_1.png" width="75%"/>
+</figure>
+</section>
+
+<section id="role-config-standard">
+<title>Properties of the typing topic</title>
+<para>The Role Type Configuration Page contains a new checkbox,
+<emphasis role="bold">Use as topic type</emphasis>. If you would like to
+use this topic not only as a role type, but also as a topic type, you
+can check this box, rather than create a separate topic type.</para>
+
+<note>
+<para>When we created the <command>Artist</command> topic type, we chose
+the <guilabel>Use as role type</guilabel> box. In our example in <xref
+linkend="role-config-page-1"/>, the core properties use the same values
+as on the topic type and the <guilabel>Use as topic type</guilabel> box
+is already checked.</para>
+</note>
+
+<para>Core properties common to all typing topics are described in
+<xref linkend="config-pages"/>.</para>
+</section>
+
+<section id="role-config-used-by">
+<title>Used by</title>
+
+<para>If the role type has been used by any topic types, they are
+listed here, highlighted as links to their Configuration Pages.</para>
+
+</section>
+</section>
+<section id="name-types">
+<title>Configuring name types</title>
+<para>Name types are used to define the names of topics in various
+contexts. Frequently used name types include <emphasis
+role="bold">nickname</emphasis> and <emphasis
+role="bold">short</emphasis>, but one of the most popular uses is to
+provide the name of the topic in multiple languages. You can create new
+name types or choose one for edit from the Name Type Index, see <xref
+linkend="nt1"/>, which will take you to the Name Type Configuration
+Page, see <xref linkend="name-config-page-1"/></para>
+
+<figure id="nt1">
+<title>Name Type Index Page</title>
+<graphic fileref="pages/doc_onto_name_types_1.png" width="75%"/>
+</figure>
+
+<section id="nt-config-page">
+<title>Name Type Configuration Page</title>
+
+<para>The Name Type Configuration Page for <command>Name</command> (the
+pre-defined name that all topic types get by default) looks as
+follows:</para>
+
+<figure id="name-config-page-1">
+<title>Name Type Configuration Page</title>
+<graphic fileref="pages/doc_name_config_1.png" width="75%"/>
+</figure>
+</section>
+
+<section id="name-config-standard">
+<title>Properties of the typing topic</title>
+
+<para>The Name Type Configuration Page has no unique properties.
+Core properties common to all typing topics are described in
+<xref linkend="config-pages"/>.</para>
+</section>
+
+<section id="name-config-used-by">
+<title>Used by</title>
+
+<para>If the name type has been used by any topic types, they are listed
+here, highlighted as links to their Configuration Pages.</para>
+</section>
+</section>
+
+<section id="topic-map-config">
+<title>Topic Map Description Page</title>
+
+<para>Once you are within a topic map, you can choose to enter
+descriptive information about it. Use the
+<guilabel>Description</guilabel> tab to access the Description Page (see
+<xref linkend="config"/>).</para>
+
+<para>This page can be used to change the name of the topic map, but the
+file name will remain the same as assigned when creating it.</para>
+
+<figure id="config">
+<title>Topic Map Description Page</title>
+<graphic fileref="pages/doc_config_page.png" width="75%"/>
+</figure>
+
+<para>There are four editable fields:</para>
+
+<itemizedlist>
+<listitem>
+<para><guilabel>Name</guilabel> &#8212; of the topic map</para>
+</listitem>
+<listitem>
+<para><guilabel>Description</guilabel> &#8212; of the topic map as a
+whole</para>
+</listitem>
+<listitem>
+<para><guilabel>Creator</guilabel> &#8212; person, group, or company
+creating the ontology or topic map</para>
+</listitem>
+<listitem>
+<para><guilabel>Version</guilabel> &#8212; user-designated version
+number</para>
+</listitem>
+</itemizedlist>
+
+<para>There are also two non-editable fields:</para>
+
+<itemizedlist>
+<listitem>
+<para><guilabel>ID</guilabel> &#8212; the file name</para>
+</listitem>
+<listitem>
+<para><guilabel>Ontology version</guilabel> &#8212; this refers to the
+version of the &ted; system topics ontology.</para>
+</listitem>
+</itemizedlist>
+
+<section id="valid">
+<title>Validating a topic map</title>
+<para>The <guibutton>Validation Report</guibutton> button initiates a
+validation pass, that is, it checks the topic map instance against the
+rules defined in its ontology. The number of errors found, if any, is
+reported, along with links to their location and an indication of the
+problem, see <xref linkend="val-rpt"/>.</para>
+
+<figure id="val-rpt">
+<title>Validation report</title>
+<graphic fileref="pages/doc_validation_rpt.png" width="75%"/>
+</figure>
+
+<para>In this example, <command>Bruce Springsteen</command> is a link to
+the Instance Editing Page for a topic that has been found to be invalid,
+and <command>Individual Artist</command> is a link to the Topic Type
+Configuration Page for the invalid topic. <command>Create
+album</command> is the invalid field and the reason is given as being a
+&#8220;missing required field&#8221;. To fix this error, an instance
+author can add a value for this field. Alternatively, although less
+common, an ontology designer might decide that the field was erroneously
+given a required cardinality and adjust the rules via the Topic Type
+Configuration Page.</para>
+</section>
+
+<section id="del-tm">
+<title>Deleting a topic map</title>
+
+<para>The <guibutton>Delete</guibutton> button on the Description Page
+removes the topic map from the list of &ted; Topic Maps and physically
+removes the file from the disk.</para>
+
+<note>
+<para>&ted; keeps track of your &ted; topic maps. Manually deleting an
+&ted; topic map from the file system (as opposed to using the
+<guibutton>Delete</guibutton> button on the Description Page) will
+result in the display of a <guilabel>Missing Topic Maps</guilabel>
+column on the Topic Map Index Page. Therefore, it is best practice only to
+delete &ted; topic maps through the <guilabel>Delete</guilabel> button
+on the <guilabel>Description</guilabel> tab.</para>
+</note>
+</section>
+
+<section id="ontology-annotation">
+<title>Ontology annotation</title>
+
+<para>
+The last button on the right-hand side of the page turns on ontology
+annotation, which is a very powerful feature, but one that can be a
+little confusing at first. The basic idea is that the normal Ontopoly
+(without this feature) allows you to say anything you want about
+instance topics, but for typing topics you are pretty much restricted
+to names, PSIs, and the description field. This may not sound like
+much of a problem, but there are a lot of useful things that can be
+done if you can annotate your ontology topics.
+</para>
+
+<para>
+Generally, ontology annotation enables you to build more dynamic
+applications, by moving logic out of your code and into the topic
+map. To take a trivial example, imagine building a search page for
+your topic map. On this page you'll need to display things like "found
+X people", "found Y documents", etc, and to do this you need to
+display the plural names of the topic types. You can of course do this
+with a big multi-way test (if current topic type is "person", display
+"people"). But the easiest way is to make a name type "Plural name"
+and to give each topic type such a name.
+</para>
+
+<para>
+With ontology annotation this is easy. Once you turn ontology
+annotation on, the topic types "Topic type", "Association type", etc
+show up in the list of topic types. This lets you give them fields in
+the same way as normal topic types, and you can edit them on the
+instance pages in the normal way.
+</para>
+</section>
+</section>
+
+<section id="export">
+<title>Exporting a topic map</title>
+
+<para>The Export Page (see <xref linkend="export-page"/>) is accessed
+via the <guilabel>Export</guilabel> tab. The desired export format
+(LTM, XTM, TM/XML, or RDF) is chosen via radio buttons.</para>
+
+<figure id="export-page">
+<title>Export Page</title>
+<graphic fileref="pages/doc_export_page.png" width="75%"/>
+</figure>
+
+<para>You can choose to export the topic map with or without the system
+topics (those topics that make up the constraints or rules for using the
+ontology). In general, other downstream applications such as browsers
+will neither understand nor need the schema topics. The export is done
+to a browser window and can be saved from there.</para>
+</section>
+
+<section>
+<title>Saving a topic map</title>
+
+<para>Pressing any button other than <guibutton>Reset</guibutton> (or
+the buttons that open popup search dialogs) will cause any modifications
+made in the page to be sent to the server and written into the topic
+map. If an error occurs during form submission the user may be
+redirected to a page showing the errors instead of the intended
+destination.</para>
+
+<para>The back button will work in the way it generally does on the web;
+it will not save changes made in the current page, and will return to
+the previous page or to the previous state of the current page, much
+like <guibutton>Reset</guibutton>.</para>
+
+<important>
+<para>Changes to your topic map are <emphasis>not</emphasis>
+automatically persisted unless you are using &ted; with the relational
+database backend of the Ontopia Knowledge Suite. With the free version
+of &ted;, which operates in-memory, it is necessary to press the
+<guibutton>Save</guibutton> button in order to save the topic map to
+disk: pressing the <guibutton>Confirm</guibutton> does
+<emphasis>not</emphasis> save to disk; it merely submits the current
+page and updates the topic map <emphasis>in memory</emphasis>.</para>
+</important>
+</section>
+</section>
+
+<section id="IE">
+<title>Using Instance Editing Pages</title>
+
+<para>The Instance Editing Pages are used to create instances conforming
+to the ontology and constraints developed using the Type Configuration
+Pages.</para>
+
+<section id="inst-indexes">
+<title>Topic Type Index Page</title>
+
+<para>When you choose the <guilabel>Instances</guilabel> tab, you will
+land at the instance index of all topic types. If your ontology includes
+a type hierarchy, you will be able to show the complete tree by clicking
+on <guilabel>Expand all nodes</guilabel>, with the result as shown in
+<xref linkend="inst-topic-types-index"/>. Topic types that are allowed
+to have instances are shown as links; those that are not allowed to have
+instances (like <symbol>Artist</symbol>) are shown as plain text.</para>
+
+<figure id="inst-topic-types-index">
+<title>Topic Type Index Page</title>
+<graphic fileref="pages/doc_inst_topic_types_1.png" width="75%"/>
+</figure>
+
+<para>From this index, you can choose a topic type to see a list of
+instance topics of that type (see <xref
+linkend="inst-single-type-index"/>).</para>
+
+<section id="inst-index">
+<title>Instance Index Pages</title>
+
+<figure id="inst-single-type-index">
+<title>Instance Index Page</title>
+<graphic fileref="pages/doc_inst_topic_types_2.png" width="75%"/>
+</figure>
+
+<para>Choose an existing instance topic from the Instance Index, or
+<guibutton>Create</guibutton> a new instance, to access the Instance
+Editing Page.</para>
+</section>
+
+<section id="instance-page">
+<title>Instance Editing Page</title>
+
+<para>The Instance Editing Page is used to edit individual instance
+topics, and is the most central page in &ted;, since most editing will
+happen here. The contents on the page are entirely determined by the
+ontology and schema for the topic type (see <xref
+linkend="tt-config-page"/> for more on the Topic Type Configuration
+Page). All the allowable fields for a topic type are available on the
+Instance Editing Page, along with the allowable values for those
+fields.</para>
+
+<figure id="inst-topic">
+<title>Instance Editing Page</title>
+<graphic fileref="pages/doc_inst_topic_types_3.png" width="75%"/>
+</figure>
+
+<para>At the start of working on a new instance topic, or if there are
+any validation errors for the topic against the current &ted; schema, a
+list of <guilabel>Required Edits</guilabel> will be generated below the
+fields, see <xref linkend="req-edits"/>. The topic map can be saved
+while there are validation errors.</para>
+
+<figure id="req-edits">
+<title>Instance Editing Page with required edits</title>
+<graphic fileref="pages/doc_required_edits.png" width="75%"/>
+</figure>
+</section>
+
+<section>
+<title>Changing a topic&#8217;s type</title>
+
+<para>Frequently, it is easier to create a new instance from another
+instance, rather than going back to the Instance Index Page. However
+the next instance to be created might be of a different type than the
+current one. In such cases, the instance author can use the
+<guilabel>Change the type of this instance </guilabel> choice in the
+Action Items Panel immediately upon accessing the new Instance Editing
+Page, picking the new type from the drop-down box.</para>
+
+<para>There are other times when changing the topic type will be useful.
+For example, in an employee database, employees might be typed by their
+status, such as probationary, tenured, retired, etc. As their status
+changes, their topic type might change as well.</para>
+
+<para>Changing a topic&#8217;s type can lead to a number of knock-on
+effects that require action. For illustration purposes in <xref
+linkend="change-type"/>, the
+<command>Individual Artist</command> type topic
+<command>Sir Paul McCartney</command> has been changed to an
+<command>Album</command> type topic. &ted; provides</para>
+
+<itemizedlist>
+<listitem>
+<para>a list of the <guilabel>Required Edits</guilabel> needed to
+validate the topic;</para>
+</listitem>
+<listitem>
+<para>a list of <guilabel>Fields found, but not allowed</guilabel>, i.e.
+fields that this topic has that are not allowed by its new type. For
+each item in this list, you can choose to delete the field or visit the
+link associated with the field to make sure that you understand the
+knock-on effects of making the change.</para>
+</listitem>
+</itemizedlist>
+
+<figure id="change-type">
+<title>Messages when changing a topic&#8217;s type</title>
+<graphic fileref="pages/doc_change_type.png" width="75%"/>
+</figure>
+</section>
+
+<section id="topic-select-dialog">
+<title>The Topic Selection Dialog</title>
+
+<para>
+By default topics at the other end of associations are selected using
+drop-down boxes, but this can be changed in the configuration of the
+association type. The other alternative is to use a popup dialog where
+the user can either search for the topic to associate with, or browse
+for it. If we change the example topic map so that to select an album
+created by an artist you have to use the dialog, the instance editing
+page from <xref linkend="inst-topic"/> would have a little search
+button instead of the drop-down box. Pressing the search button would
+open a new window as shown in the figure below.
+</para>
+
+<figure>
+  <title>The search dialog</title>
+  <graphic fileref="pages/search-dialog.png"/>
+</figure>
+
+<para>
+Here you can do a search, and create associations to the topics you
+find, or you can click "Browse" and see a list of the topics you could
+create an association to. Below is shown the screen you get in this
+case by clicking "Browse".
+</para>
+
+<figure>
+  <title>The browse dialog</title>
+  <graphic fileref="pages/browse-dialog.png"/>
+</figure>
+
+<para>
+Note that it's possible to control what shows on the browse screen by
+configuring the topic type. It's possible to make the topics be shown
+in a hierarchy, or to make it impossible to display the list of topics
+(because the list is too big). See <xref
+linkend="tt-config-standard"/> for more information.
+</para>
+</section>
+</section>
+</section>
+
+<section>
+<title>Plug-ins</title>
+
+<para>Ontopoly is extensible and comes with a set of pre-configured
+plug-ins. These are described in this section.</para>
+
+<section>
+<title>Automatic classification</title>
+
+<para>This section describes the plug-in used for semi-automatic
+classification of information resources against a topic map. The
+plug-in requires some setup and configuration before use, which is
+described. <xref linkend="sect-classify-use"/> describes how to use
+the plug-in once configured.</para>
+
+<note>
+  <para>This feature is not included in the OKS Samplers, only in the
+  commercial editions of the OKS. If you do not have an OKS license
+  but would like to evaluate this feature, please contact
+  <email>sales@ontopia.net</email>, and we can arrange an evaluation
+  license for you.</para>
+</note>
+
+<section id="classify-config01">
+<title>Setup</title>
+
+<para>
+For the plug-in to work the ontology must be annotated (see <xref
+linkend="ontology-annotation"/>) in order for the plug-in to know
+which topic types can be classified, and which association types are
+used for classification. This is done by associating the topic type to
+be classified with the association type used for classification. In
+other words, if you have a topic type "Document" and an association
+type "is about" you will make an association of type "classification
+type for" between "is about" and "Document". This will tell the
+plug-in that topics of type "Document" are to be classified, and that
+the "is about" association type is used for this.
+</para>
+
+<para>
+There are two steps to the setup of the plug-in:
+</para>
+
+<orderedlist>
+  <listitem>
+    <para>Add the plug-in ontology to the topic map. (Described in
+    this section.)</para>
+  </listitem>
+  <listitem>
+    <para>Annotate the ontology as described above. (Described in
+    <xref linkend="classify-config02"/>.)</para>
+  </listitem>
+</orderedlist>
+
+<para>The first step is to import the following LTM fragment into the
+topic map. The fragment contains the declarations of the
+classification ontology. Importing can easily be done through the
+<emphasis>Add</emphasis> plug-in in the Omnigator. Note that this
+plug-in is not enabled by default, so you need to activate the plug-in
+in the Omnigator <emphasis>Plug-ins</emphasis> plug-in first. The
+<emphasis>Plug-ins</emphasis> plug-in can be found on the topic map
+page.</para>
+
+<figure id="classify-setup01">
+<title>Enabling the Add plug-in</title>
+<graphic fileref="pages/classify-setup01.png" width="75%"/>
+</figure>
+
+<literallayout><![CDATA[#PREFIX on @"http://psi.ontopia.net/ontology/"
+#PREFIX xsd @"http://www.w3.org/2001/XMLSchema#"
+#PREFIX cl @"http://psi.ontopia.net/classify/"
+
+[cl:score-threshold : on:occurrence-type = "Classification score threshold"]
+[cl:score-threshold-with-candidates : on:occurrence-type = "Classification score threshold (with candidate topics)"]
+on:has-datatype(cl:score-threshold : on:field, xsd:decimal : on:datatype)
+on:has-datatype(cl:score-threshold-with-candidates : on:field, xsd:decimal : on:datatype)
+
+on:has-field(on:association-type : on:topic-type, cl:score-threshold : on:field)
+on:has-field(on:association-type : on:topic-type, cl:score-threshold-with-candidates : on:field)
+
+on:has-cardinality(cl:score-threshold : on:field, on:cardinality-0-1 : on:cardinality, on:association-type : on:topic-type)
+on:has-cardinality(cl:score-threshold-with-candidates : on:field, on:cardinality-0-1 : on:cardinality, on:association-type : on:topic-type)
+
+[cl:classification-type : on:association-type = "Classification type"
+                         = "Classification type" / cl:classified-topic-type
+                         = "Classification type for" / cl:classified-association-type]
+  [cl:classified-association-type : on:role-type = "Classified association type"]
+  [cl:classified-topic-type : on:role-type = "Classified topic type"]
+
+on:has-role(cl:classification-type : on:association-type, cl:classified-association-type : on:role-type)
+on:has-role(cl:classification-type : on:association-type, cl:classified-topic-type : on:role-type)
+on:has-field(cl:classification-type : on:field, on:topic-type : on:topic-type, cl:classified-topic-type : on:role-type)
+on:has-field(cl:classification-type : on:field, on:association-type : on:topic-type, cl:classified-association-type : on:role-type)
+on:has-cardinality(cl:classification-type : on:field, on:cardinality-0-M : on:cardinality, on:topic-type : on:topic-type, cl:classified-topic-type : on:role-type)
+on:has-cardinality(cl:classification-type : on:field, on:cardinality-0-M : on:cardinality, on:association-type : on:topic-type, cl:classified-association-type : on:role-type)
+on:use-control(cl:classification-type : on:association-type, cl:classified-topic-type : on:role-type, on:drop-down-list : on:interface-control)
+on:use-control(cl:classification-type : on:association-type, cl:classified-association-type : on:role-type, on:drop-down-list : on:interface-control)
+]]></literallayout>
+
+<para>Copy the above LTM fragment into the text box in the plug-in as
+seen below and click the <guibutton>Apply</guibutton> button. This
+will import the LTM fragment into the current topic map. Make sure
+that you save the topic map once you've done this to make sure that
+the changes are made persistent. You only have to import this fragment
+once per topic map.</para>
+
+<figure id="classify-setup02">
+<title>Importing the LTM fragment</title>
+<graphic fileref="pages/classify-setup02.png" width="75%"/>
+</figure>
+
+<para>The LTM fragment will add a new association type,
+<emphasis>Classification type</emphasis>, and two new occurrence
+types, <emphasis>Classification score threshold</emphasis> and
+<emphasis>Classification score threshold (with candidate
+topics)</emphasis> to the topic map. The new types should now be found
+in Ontopoly.</para>
+</section>
+
+<section id="classify-config02">
+<title>Configuration</title>
+
+<para>Once the topic map has been prepared for classification, as
+described in the previous section, the next step is to configure the
+topic map. This means telling Ontopoly which association types can be
+used to classify which topic types.</para>
+
+<para>First we need to enable ontology annotation. This can be enabled
+by clicking the <emphasis>Enable ontology annotation</emphasis> button
+on the <emphasis>Description</emphasis> tab. After the button has been
+clicked it should say <guibutton>Disable</guibutton>.</para>
+
+<figure id="classify-setup03">
+<title>Enabling ontology annotation</title>
+<graphic fileref="pages/classify-setup03.png" width="75%"/>
+</figure>
+
+<para>Then we can go to the <emphasis>Instances</emphasis> tab to
+check that ontology annotation really has been enabled. On the
+screenshot below you can see that it has indeed been enabled because
+of the entries in italic font.</para>
+
+<figure id="classify-setup04">
+<title>Ontology annotation has been enabled </title>
+<graphic fileref="pages/classify-setup04.png" width="75%"/>
+</figure>
+
+<para>Now follow the link to <emphasis>Assocation
+type</emphasis>. This brings us to the list of association types in
+the topic map. Click the link to the association type you want to make
+a classification type.</para>
+
+<figure id="classify-setup05">
+<title>Making 'requires task' and 'Goal' classifiable</title>
+<graphic fileref="pages/classify-setup05.png" width="75%"/>
+</figure>
+
+<para>On the screenshot you can see that we chose the
+<emphasis>requires task</emphasis> association type. We can now make
+this association a classification association type by selecting the
+topic type that should be classifiable through this association
+type. Select the topic type from the drop-download called
+<emphasis>Classification type for:</emphasis>. In our example we
+selected the <emphasis>Goal</emphasis> topic type. This should make
+the classification plug-in show up on the instance editing page for
+instances of that topic type.</para>
+
+<para>Next we should specifiy the score thresholds for which the
+association type should be defaulted. These thresholds are used by the
+classification plug-in to automatically propose association types
+given the score of keywords. The score threshold means that keywords
+with a relevance score equal to or higher than the threshold will be
+automatically selected, and the second threshold is used in cases
+where a topic already exists in the topic map for the keyword.</para>
+
+<figure id="classify-setup06">
+<title>Instance with classification plug-in enabled</title>
+<graphic fileref="pages/classify-setup06.png" width="75%"/>
+</figure>
+
+<para>We can now verify that instances of the
+<emphasis>Goal</emphasis> topic type are classifiable. It is in this
+case because the <emphasis>Classify</emphasis> plug-in is
+visible on the instance pages for topics of this type.</para>
+
+<para>If you now go to the <emphasis>Classify</emphasis> plug-in
+you'll get the document upload form. Upload a document and you'll be
+presented with a classification proposal. You'll see that the
+<emphasis>requires task</emphasis> association type has been proposed
+for some of the keywords as they have a score above the
+threshold.</para>
+
+<para>This concludes the neccessary configuration. You may repeat the
+configuration steps for all the association types and topic types that
+you want to be classifiable. Make sure that you save your topic map
+when you're done.</para>
+</section>
+
+<section id="sect-classify-use">
+<title>Using the plug-in</title>
+
+<para>The plug-in lets the user upload a document and have it
+automatically classified against the topic map. The user is presented
+with a proposal for what associations can be created between the
+current topic and the concepts represented by keywords extracted from
+the classified document.</para>
+
+<para>The supported document formats are: HTML, XML, Acrobat PDF,
+Microsoft Word, Microsoft PowerPoint and plain-text. If the document
+format cannot be recognized the document will be loaded as
+plain-text. If the result shows up as garbled characters, then the
+document format was not properly recognized. If that happens try
+changing the file name extension to help the format detector.</para>
+
+<para>Two languages, English and Norwegian, are currently
+supported. Documents in other languages may also be processed, but
+results are likely to be poor. If you need support for another
+language, please contact Ontopia.</para>
+
+<figure id="classify-plugin01">
+<title>Instance editing page with link to classification plug-in</title>
+<graphic fileref="pages/classify-plugin01.png" width="75%"/>
+</figure>
+
+<para>The plug-in is only visible on the instance editing page, see
+<xref linkend="instance-page"/>, and only for instances of topic types
+that have been registered as classifiable topic types. On the above
+screenshot the topic type "paper" has been registered as such a
+classifiable type and for that reason the "Upload and classify
+document" menu item shows up in the menu on the right-hand
+side.</para>
+
+<figure id="classify-plugin02">
+<title>Document upload form</title>
+<graphic fileref="pages/classify-plugin02.png" width="75%"/>
+</figure>
+
+<para>The user can select the "Classify" link and is then presented
+with a page for uploading a document. Once the document file has been
+chosen and the <guibutton>OK</guibutton> button has been clicked the
+document is classified and the user presented with the classification
+result, such as the one seen below. (Note that it is possible to add
+code to do the upload automatically. For more information on this,
+please contact Ontopia.)</para>
+
+<figure id="classify-plugin03">
+<title>Classification page with keywords and proposed associations</title>
+<graphic fileref="pages/classify-plugin03.png" width="75%"/>
+</figure>
+
+<para>The classification result is a proposal for how the keywords in
+the document can be associated with the current topic. The user is
+presented with a ranked list of keywords that were found in the
+document. Seven items are displayed for each keyword, each in its
+separate column. Below we describe each column in sequence from left
+to right.
+</para>
+
+<orderedlist>
+  <listitem>
+    <para>The initial checkbox controls whether or not to make an
+    association for the keyword on that row. If the checkbox is
+    checked an association will be created; if not, nothing happens
+    with that row.</para>
+  </listitem>
+  <listitem>
+    <para>The drop-down list is used to select which type of
+    association should connect the document topic with the keyword
+    topic. The choices shown here are the classification association
+    types for the document topic type. </para>
+  </listitem>
+  <listitem>
+    <para>The "Keyword" text field is used to set the name of new
+    topics. Note that if a topic is selected in the drop-down box
+    under the heading "Topic" this text box has no effect.</para>
+  </listitem>
+  <listitem>
+    <para>The search button can be used to blacklist the current term,
+    in case it is a term we never want to create a topic for. It can
+    also be used to find an already existing topic to create an
+    association to, in case the topic already exists, but was not
+    found by the classifier.</para>
+  </listitem>
+  <listitem>
+    <para>If the classifier has found an existing topic for the
+    keyword, then this is shown in the "Topic" drop-down list. If no
+    existing topic has been found, but you want to create one, you
+    need to set the name correctly in the "Keyword" text field, and
+    then select the correct topic type in this drop-down list.</para>
+  </listitem>
+  <listitem>
+    <para>The count column shows the number of times the term occurred
+    in the processed document. This has no particular significance,
+    and is just shown for your information.</para>
+  </listitem>
+  <listitem>
+    <para>The score is a value between 0 and 100% which indicates the
+    estimate of the relative relevance of each keyword given by the
+    classifier. A higher value means that the keyword is thought more
+    relevant by the classifier.</para>
+  </listitem>
+</orderedlist>
+
+<para>To complete the classification and create the associations the
+<guibutton>OK</guibutton> must be clicked. Only keywords with the
+initial checkbox checked will be created. In the figure below can be
+seen the result of having pressed <guibutton>OK</guibutton> in the
+above example. Two new associations were added.</para>
+
+<figure id="classify-plugin04">
+<title>Result of having classified a document</title>
+<graphic fileref="pages/classify-plugin04.png" width="75%"/>
+</figure>
+
+<para>The classification can be cancelled by clicking the
+<guibutton>Cancel</guibutton> button. This will bring the client back
+to the instance editing page.  If the wrong document was selected it
+is possible to correct this by clicking the "New document"
+button.</para>
+
+<para>The plug-in maintains a custom persistent list of black-listed
+keywords. Such keywords will be filtered out automatically. It is
+possible to add keywords to this list by selecting the keywords (using
+the checkboxes on the left-hand side) and clicking the <guibutton>Add
+to Blacklist</guibutton> button. Be careful not to add any preselected
+keywords. The black-list is stored in a file called
+<filename>.oks/classify/blacklist.<emphasis>&lt;topicmap-id&gt;</emphasis></filename>
+in the user's home directory. Note that the user is the operating
+system user that executes the application server. The file is a
+plain-text file with each black-listed keyword on a separate line. It
+can be edited in an editor. If the file has been modified it will be
+reloaded when the next document is classified.</para>
+
+</section>
+</section>
+</section>
+
+<section>
+<title>Using Ontopoly with multiple users</title>
+
+<para>Although &ted; ships in a single-user configuration, there is
+support for multiple users under the hood. This support consists
+of:</para>
+
+<itemizedlist>
+<listitem>
+<para>Support for storing the topic map in a relational database using
+the RDBMS backend. This enables Ontopoly to scale to much larger topic
+maps, avoids having to explicitly save the topic map, and ensures that
+multiple users can work against the same topic map without causing data
+to become corrupt. To make use of this support the OKS Enterprise
+Edition is required.</para>
+</listitem>
+
+<listitem>
+<para>Support for concurrent editing. This support is always enabled in
+all Ontopoly versions, and ensures through locking that two different
+users cannot edit the same topic at the same time.</para>
+</listitem>
+
+<listitem>
+<para>Support for access control. The commercial editions of the OKS
+ship with support for requiring username/password login, and also
+support for assigning any combination of three different privileges to
+users. It is possible to store the user data in a topic map and to
+manage it with a web application included in the OKS; alternatively some
+third-party authentication mechanism may be used. The use of a topic map
+to store the users is described below.</para>
+</listitem>
+</itemizedlist>
+
+<section>
+<title>Access control</title>
+
+<para>To start using Ontopoly with user access control, the first
+thing that needs to be done is to turn access control on. This is done
+by changing the <symbol>access_control</symbol> parameter in
+<filename>web.xml</filename> to the state shown below. This will
+effectively cause Ontopoly to perform
+<emphasis>authorization</emphasis> checks for the current user.</para>
+
+<literallayout><![CDATA[  <context-param>
+    <param-name>access_control</param-name>
+    <param-value>true</param-value>
+    <description>
+      Tells Ontopoly whether or not to use access control.
+    </description>
+  </context-param>]]></literallayout>
+
+<para>In addition, <emphasis>authentication</emphasis> needs to be
+turned on so that the application server starts actually enabling the
+authentication. How to do this is described in the document called
+<citetitle>User Management in the OKS - Developer's
+Guide</citetitle>. The JAAS login module will expose the names of
+user-groups and privileges as J2EE roles so that they can be used by
+Ontopoly to authorize the user.</para>
+
+<para>Ontopoly supports the following privileges:</para>
+
+<informaltable>
+<tgroup cols="2">
+<tbody>
+<row>
+  <entry>administrator</entry>
+  <entry>Ontopoly administrator. This user has full rights to the entire application, including the admin pages.</entry>
+</row>
+<row>
+  <entry>ontology-editor</entry>
+  <entry>Ontopoly ontology editor. Users with this privilege has full rights to the Ontopoly ontology editor.</entry>
+</row>
+<row>
+  <entry>ontology-reader</entry>
+  <entry>Ontopoly ontology reader. Users with this privilege has read-only access rights to the Ontopoly ontology editor.</entry>
+</row>
+<row>
+  <entry>instance-editor</entry>
+  <entry>Ontopoly instance editor. Users with this privilege has full rights to the Ontopoly instance editor.</entry>
+</row>
+<row>
+  <entry>instance-reader</entry>
+  <entry>Ontopoly instance reader. Users with this privilege has read-only access rights to the Ontopoly instance editor.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para>Ontopoly will check privileges and user-group membership through
+the <symbol>HttpServletRequest.isUserInRole(String roleName)</symbol>
+method by default. The JAAS module does this transparently from data
+in stored in the configured topic map, but you are free to use any
+other authentication modules/realms as long as you expose the above
+privileges.</para> </section> </section>
+
+<appendix id="appA">
+<title>User interface conventions</title>
+<para>This section describes general aspects of &ted;&#8217;s user
+interface.</para>
+
+<section>
+<title>&ted; page layout</title>
+<para>Most &ted; pages have a similar layout. The major sections are
+identified in <xref linkend="genlayout"/> and described below.</para>
+
+<figure id="genlayout">
+<title>Page layout</title>
+<graphic fileref="pages/general_layout-annotated.png" width="100%"/>
+</figure>
+
+<section>
+<title>Application navigation</title>
+
+<para>In the upper right hand corner of all &ted; pages and on the
+&ots; Home Page, there is an application navigation bar.</para>
+
+<table>
+<title>Application navigation bar</title>
+<tgroup cols="2">
+<colspec colnum="1" colname="one" colwidth="1*"/>
+<colspec colnum="2" colname="two" colwidth="3*"/>
+<thead>
+<row>
+<entry>Item</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry><guilabel>Home</guilabel></entry>
+<entry>Returns you to the &ots; Home Page.</entry>
+</row>
+<row>
+<entry><guilabel>Manage</guilabel></entry>
+<entry>Accesses the Omnigator Manage page.
+<note>
+<para>This item will eventually take the user to an common Manage Page,
+that can be used for &ted; or Omnigator.</para>
+</note></entry>
+</row>
+<row>
+<entry><guilabel>Feedback</guilabel></entry>
+<entry>As you use &ted;, we hope that you will use this feedback form to
+send us comments as they occur to you. However, please do not use the
+<guilabel>feedback</guilabel> mechanism to report bugs. &ots; provides a
+direct link to Ontobugs.</entry>
+</row>
+<row>
+<entry><guilabel>Support</guilabel></entry>
+<entry>If you need an answer to a question, please use this form or send
+email to <email>support@ontopia.net</email>.</entry>
+</row>
+<row>
+<entry><guilabel>About</guilabel></entry>
+<entry>Information about the version of &ted; currently in use.</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</section>
+
+<section>
+<title>Tabbed navigation</title>
+<para>Once inside a topic map, there are four major tabs.</para>
+
+<table>
+<title>Tabbed items</title>
+<tgroup cols="2"><colspec colnum="1" colname="one"
+colwidth="1*"/><colspec colnum="2" colname="two" colwidth="3*"/>
+<thead>
+<row>
+<entry>Item</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry><guilabel>Description</guilabel></entry>
+<entry>Page where descriptive information about the current topic map as
+a whole can be captured, see <xref linkend="topic-map-config"/>.</entry>
+</row>
+<row>
+<entry><guilabel>Export</guilabel></entry>
+<entry>Use this page to export the topic map into a preferred
+serialization syntax, see
+<xref linkend="export"/>.</entry>
+</row>
+<row>
+<entry><guilabel>Ontology</guilabel></entry>
+<entry>Set of pages for configuring the ontology, i.e., defining the
+topic, occurrence, association, role, and name type topics. When in
+Ontology area, a secondary set of buttons occur that provide discrete
+access to the preferred page, e.g., topic type, association type, etc.,
+see <xref linkend="OE"/>.</entry>
+</row>
+<row>
+<entry><guilabel>Instances</guilabel></entry>
+<entry>Set of pages for creating and editing instances of topic types
+defined in the Ontology, see <xref linkend="IE"/>.</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+<para>The items in the tabs are also repeated at the bottom of each page
+upon which the tabs occur.</para>
+</section>
+
+<section>
+<title>Editing box</title>
+
+<para>There are three items in the Editing Box:</para>
+
+<table>
+<title>Editing box items</title>
+<tgroup cols="2">
+<colspec colnum="1" colname="one" colwidth="1*"/>
+<colspec colnum="2" colname="two" colwidth="3*"/>
+<thead>
+<row>
+<entry>Item</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry><guilabel>Open...</guilabel></entry>
+<entry>Takes you back to the Topic Map Index Page. If you do not save
+before you use this button, all edits since your previous save will
+<emphasis role="bold">not</emphasis> be written to disk.</entry>
+</row>
+<row>
+<entry><guilabel>Save</guilabel></entry>
+<entry>Saves the current topic map to disk. <note><para>Only available in the
+in-memory edition of &ted;.</para></note></entry>
+</row>
+<row>
+<entry>Search box and <guibutton>Find</guibutton> button</entry>
+<entry>Use to find the uses of a term within the open topic map.
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</section>
+
+<section>
+<title>Topic title</title>
+
+<para>The name of the current topic type or topic instance appears in
+red.</para>
+</section>
+
+<section>
+<title>Breadcrumbs</title>
+<para>Breadcrumbs are used to provide orientation and navigation links
+from within Instance Index, Instance Editing, and Type Configuration
+Pages. They take the form:</para>
+
+<variablelist>
+<varlistentry>
+<term>Instance Index Page</term>
+<listitem>
+<para><literallayout><command>Topic Types &gt; Instances</command> (see <xref linkend="inst-single-type-index"/>).</literallayout></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Instance Editing Page</term>
+<listitem>
+<para><literallayout><command>Topic Types &gt; [topic type]</command> (see <xref linkend="inst-topic"/>).</literallayout></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Type Configuration Page</term>
+<listitem>
+<literallayout><command>Ontology &gt; Topic Types &gt; Topic Type Configuration</command> (<xref linkend="tt-config-1"/>), or</literallayout>
+<literallayout><command>Ontology &gt; Occurrence Types &gt; Occurrence Type Configuration</command> (<xref linkend="occur-config-page-1"/>), or</literallayout>
+<literallayout><command>Ontology &gt; Association Types &gt; Association Type Configuration</command> (<xref linkend="assoc-config-page-1"/>), or</literallayout>
+<literallayout><command>Ontology &gt; Role Types &gt; Role Type Configuration</command> (<xref linkend="role-config-page-1"/>), or</literallayout>
+<literallayout><command>Ontology &gt; Name Types &gt; Name Type Configuration</command> (<xref linkend="name-config-page-1"/>).</literallayout>
+</listitem>
+</varlistentry>
+</variablelist>
+</section>
+
+<section>
+<title>Edit actions</title>
+
+<para>Two edit actions, <guibutton>Confirm</guibutton> and
+<guibutton>Reset</guibutton>, affect the values in a form and have a
+relationship to the use of <guibutton>Save</guibutton>.</para>
+
+<table>
+<title>Edit actions and the <guibutton>Save</guibutton> button</title>
+<tgroup cols="2">
+<colspec colnum="1" colname="one" colwidth="1*"/>
+<colspec colnum="2" colname="two" colwidth="3*"/>
+<thead>
+<row>
+<entry>Item</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry><guibutton>Confirm</guibutton></entry>
+<entry>Choosing <guibutton>Confirm</guibutton> or navigating to another
+page confirms the values of the fields on the page in memory, but does
+<emphasis>not</emphasis> save the topic map to disk.</entry>
+</row>
+<row>
+<entry><guibutton>Reset</guibutton></entry>
+<entry>Resets the value of the fields on the page to the last confirmed
+or saved point (which ever is later).</entry>
+</row>
+<row>
+<entry><guibutton>Save</guibutton></entry>
+<entry>Found in the Editing Box when using an in-memory version of &ted;,
+it is used to save the topic map to disk.
+</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</section>
+
+<section>
+<title>Action items panel</title>
+
+<para>The item choices available in grey boxes on the right hand side of
+the screen are dependent on the type of page you are viewing. The
+following table includes all possible items as a reference.</para>
+
+<table>
+<title>Action items</title>
+<tgroup cols="2">
+<colspec colnum="1" colname="one" colwidth="1*"/>
+<colspec colnum="2" colname="two" colwidth="3*"/>
+<thead>
+<row>
+<entry>Item</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>
+<para><command>New [typing_topic] type</command> field</para>
+<para><command>New instance</command> field</para>
+</entry>
+<entry>
+<para>Available on the Topic, Association, Occurrence, Role,
+and Name Type Pages. Supply a name to create a new one of the same type.
+You will be taken to the appropriate Type Configuration Page, which will
+have the <emphasis role="bold">Name</emphasis> you fill in here.</para>
+<para>Also available on Instance Editing Pages. You will be taken to a
+new Instance Editing Page, which will have the <guilabel>Name</guilabel>
+you fill in here.</para>
+</entry>
+</row>
+<row>
+<entry><command>Create new [typing_topic] type</command></entry>
+<entry>Provides a blank Type Configuration Page for the current kind of
+typing topic (i.e., topic, occurrence, association, role, or name).
+Similar to the previous, but is accessed from a Type Configuration Page.
+No <guilabel>Name</guilabel> is filled in.</entry>
+</row>
+<row>
+<entry><command>Create new instance of this type</command></entry>
+<entry>Moves you from a Type Configuration Page to an Instance Editing
+Page. Provides a blank Instance Editing Page for a topic of this type.
+No <guilabel>Name</guilabel> is filled in.</entry>
+</row>
+<row>
+<entry><command>Create new instance of same type</command></entry>
+<entry>Provides a blank Instance Editing Page for the current instance
+type. Similar to the previous item, but is accessed from an Instance
+Editing Page.</entry>
+</row>
+<row>
+<entry>
+<para><command>Delete this topic</command></para>
+<para><command>Delete this instance</command></para></entry>
+<entry>Deletes the current topic.</entry>
+</row>
+<row>
+<entry><command>View instances of this type</command></entry>
+<entry>Moves you from a Type Configuration Page to an Instance Index
+Page. Provides the index of instances of the current type.</entry>
+</row>
+<row>
+<entry>
+<para><command>Browse this topic in the Omnigator</command></para>
+<para><command>Browse this instance in Omnigator</command></para>
+</entry>
+<entry>Opens a new browser window at the Topic Page for the current
+topic in the Omnigator. As you make changes to the current topic, you
+will be able to see the changes in the Omnigator window following a
+browser refresh. If you move away from the topic in &ted;, the Omnigator
+will remain on the original topic even after refreshing the
+browser.</entry>
+</row>
+<row>
+<entry>
+<para><command>Browse this topic in Vizigator</command></para>
+<para><command>Browse this instance in Vizigator</command></para>
+</entry>
+<entry>Opens a new browser window with the current topic as the focus
+topic in Vizigator.</entry>
+</row>
+<row>
+<entry><command>Change the type of this instance</command> drop-down
+list</entry>
+<entry>Available from Instance Editing Pages, it provides an easy way to
+change the type of the current topic. You will be notified of fields
+used on the current topic that are not available when you change type,
+so that you can make the necessary decisions and edits.</entry>
+</row>
+<row>
+<entry><command>Edit the type of this instance</command></entry>
+<entry>Moves you from an Instance Editing Page to a Type Configuration
+Page. Provides the Topic Type Configuration Page for the type of the
+current instance.</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</section>
+
+<section>
+<title>Topic fields</title>
+<para>The fields specific to the topic being edited are dynamic. These
+fields are covered in detail in sections <xref linkend="OE"/> and
+<xref linkend="IE"/>.</para>
+</section>
+
+<section>
+<title>Ontology typing topics access</title>
+
+<para>Not shown in <xref linkend="genlayout"/>, but available on all the
+Type Index Pages is a secondary navigation bar to facilitate navigation
+from one Type Index Page to another (see <xref linkend="ot1"/> for an
+example).</para>
+
+<table width="100%">
+<title>Access to typing topics</title>
+<tgroup cols="2">
+<colspec colnum="1" colname="one" colwidth="1*"/>
+<colspec colnum="2" colname="two" colwidth="3*"/>
+<thead>
+<row>
+<entry>Item</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry><command>Topic Types</command></entry>
+<entry>Access to the Topic Type Index.</entry>
+</row>
+<row>
+<entry><command>Occurrence Types</command></entry>
+<entry>Access to the Occurrence Type Index</entry>
+</row>
+<row>
+<entry><command>Association Types</command></entry>
+<entry>Access to the Association Type Index</entry>
+</row>
+<row>
+<entry><command> Role Types</command></entry>
+<entry>Access to the Role Type Index</entry>
+</row>
+<row>
+<entry><command>Name Types</command></entry>
+<entry>Access to the Name Type Index</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</section>
+</section>
+
+<section>
+<title>Icons</title>
+
+<para>The icons described in the table below occur throughout all &ted;
+pages.</para>
+
+<table>
+<title>Icon conventions</title>
+<tgroup cols="3"><colspec colnum="1" colname="one"
+colwidth="1*"/><colspec colnum="2" colname="two" colwidth="2*"/><colspec
+colnum="3" colname="three" colwidth="4*"/>
+<thead>
+<row>
+<entry>Icon</entry>
+<entry>Name</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>&expand;</entry>
+<entry>Expand</entry>
+<entry>The boxed plus sign expands the supertype/subtype hierarchy under
+the current topic type.</entry>
+</row>
+<row>
+<entry>&collapse;</entry>
+<entry>Collapse</entry>
+<entry>The boxed minus sign collapses the supertype/subtype hierarchy
+under the current topic type.</entry>
+</row>
+<row>
+<entry>&box;</entry>
+<entry>Blank Box</entry>
+<entry>The empty box precedes a topic type that does not participate in
+a supertype/subtype hierarchy, and so, cannot be expanded or
+collapsed.</entry>
+</row>
+<row>
+<entry>&next;</entry>
+<entry>Next</entry>
+<entry>The right arrow icon is always used to navigate to another page.
+If the icon is located next to a text field that contains a URL, the
+client browser will open the page pointed to by the URL. If the icon is
+located next to a drop-down field containing topics, the client browser
+will open the corresponding Instance Editing Page.</entry>
+</row>
+<row>
+<entry>&up;</entry>
+<entry>Up</entry>
+<entry>The up arrow icon is used on the Topic Type Configuration Page to
+change the order of the Existing Fields. Clicking the up arrow will move
+the associated field one step up.</entry>
+</row>
+<row>
+<entry>&down;</entry>
+<entry>Down</entry>
+<entry>The down arrow icon is used on the Topic Type Configuration Page
+to change the order of the Existing Fields. Clicking the down arrow will
+move the associated field one step down.</entry>
+</row>
+<!-- These are not icons and they are in any case self-explanatory -->
+<!--
+<row>
+<entry><command>Expand all nodes</command></entry>
+<entry>Expand All</entry>
+<entry>Expands the entire supertype/subtype hierarchy under topic
+types.</entry>
+</row>
+<row>
+<entry><command>Collapse all nodes</command></entry>
+<entry>Collapse All</entry>
+<entry>Collapses the entire supertype/subtype hierarchy under topic
+types.</entry>
+</row>
+-->
+<row>
+<entry>&add-field;</entry>
+<entry>Add Field</entry>
+<entry>
+<para>On an Instance Editing Page, the circled plus sign is used to add
+a new value to a field that can have multiple values.</para> </entry>
+</row>
+<row>
+<entry>&add-to-fields;</entry>
+<entry>Add to Existing Fields</entry>
+<entry>
+<para>On a Topic Type Configuration Page, the left-facing arrows are
+used to add an available field to the topic type&#8217;s <guilabel>Existing
+Fields</guilabel>.</para></entry>
+</row>
+<row>
+<entry>&remove-field;</entry>
+<entry>Remove Field</entry>
+<entry>
+<para>When used on the Instance Editing Page, the circled minus sign is
+used to remove a value from a field.</para>
+
+<para>When used on the Topic Type Configuration Page, it is used to
+remove a value from an existing field or the use of the field
+itself.</para></entry>
+</row>
+<row>
+<entry>&inherited;</entry>
+<entry>Inherited Field</entry>
+<entry>The empty circle, used on Topic Type Configuration Pages,
+designates an uneditable existing field as inherited from the
+supertype.</entry>
+</row>
+<row>
+<entry>&create;</entry>
+<entry>Create</entry>
+<entry>The circled asterisk is always used to create a new topic. Where
+it occurs will control what type of topic is created at that point.
+Where a choice of topic types is available, a pop-up menu will be
+presented.</entry>
+</row>
+<row>
+<entry>&help;</entry>
+<entry>Contextual help</entry>
+<entry>The question mark in a green circle provides access to this User
+Guide.</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+</section>
+
+<section>
+<title>Keyboard navigation</title>
+
+<para>&ted; has no special support for keyboard navigation. In other
+words, the keyboard navigation is as provided by your browser. This
+means the following:</para>
+
+<itemizedlist>
+
+<listitem>
+<formalpara>
+<title>Opera 8.0/8.5</title>
+<para>First tab key press puts the cursor into the first control on the
+page. Following tab presses go to following controls, including buttons.
+Drop-down lists can be navigated with the arrow keys, and pressing a
+letter will jump to the first item whose name begins with that
+letter.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title>Mozilla 1.4.3</title>
+<para>As for Opera, except that links are included in the tab
+cycle.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title>Internet Explorer 6.0</title>
+<para>As for Mozilla, except that URL bar is first in tab cycle.</para>
+</formalpara>
+</listitem>
+
+</itemizedlist>
+</section>
+</appendix>
+
+<appendix id="appB">
+<title>Scope of use</title>
+
+<para>&ted; is designed for creating and editing topic maps conforming
+to ISO/IEC 13250:2003.</para>
+
+<para>The initial release of &ted; does not have support for all of the
+features defined in the ISO standard. As more is known of user
+requirements, some of these features may be added. We encourage users to
+provide feedback using the
+<guibutton>Feedback</guibutton> button available on all &ted; pages.
+Unsupported features and usage constraints currently include:</para>
+
+<itemizedlist>
+<listitem>
+<formalpara>
+<title>Scope</title>
+<para>Not supported.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title>Variant names</title>
+<para>Not supported.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title>Reification</title>
+<para>Not supported.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title>Merging</title>
+<para>Not supported.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title>One and only one type for a topic</title>
+<para>It is not possible to create topics that do not have a type.
+Further, it is not possible to designate a topic as being of more than
+one type.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title>Only one supertype for a topic type</title>
+<para>It is not possible to give a topic type more than one supertype.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title>Item identifiers</title>
+<para>Item identifiers (previously called source locators) cannot be
+edited at all. These have no end-user significance, and so this feature
+is unlikely to be added in the future.</para>
+</formalpara>
+</listitem>
+</itemizedlist>
+</appendix>
+
+<!--<appendix id="appC">
+<title>License configurations</title>
+<para>&ted; is licensed for use within other Ontopia products:
+<itemizedlist>
+<title>standalone version of &ted;</title>
+<listitem>
+<para>&ted; is part of the Omnigator free download and available for
+use by a single user. There is no user management available in this
+configuration</para>
+
+</listitem>
+</itemizedlist>
+<itemizedlist>
+<title>toolkit version of &ted;</title>
+<listitem>
+<para>&ted; wil also become part of the Developer and Runtime
+licenses. In a Developer license, &ted; may be used by a single user. More
+significantly, &ted; can be built into a complete application that would be
+available to mutliple users using a Runtime license of the OKS. Application
+designers may also modify &ted;&#8217;s look-and-feel. User management is available
+to grant or restrict access to the specific components, see
+<xref linkend="components"/></para>
+
+<para>In the Professional Edition, the edits to the topic map are
+held in memory until the user presses the
+<command>Save</command> button, when the topic map is written to
+file storage.</para>
+
+<para>In the Enterprise Edition, the edits are continually saved to
+the user&#8217;s choice of RDBMS.</para>
+
+</listitem>
+</itemizedlist></para>
+
+</appendix>-->
+
+<appendix>
+<title>About this document</title>
+
+<para>This user guide provides a general theory of operation of &ted;.
+It gives an introduction to its use and guidance on how to access the
+various functions of the product, but is not meant to be an exhaustive
+reference manual. Portions of this document serve as the target of links
+from the contextual help within the product.</para>
+
+<para>This document is focused on the use of &ted; and does not provide
+training on the development of ontologies and topic maps in general. To
+read more about those subjects, please see the
+<ulink url="http://www.ontopia.net/">Ontopia Website</ulink>,
+particularly the areas on <emphasis role="bold">topic
+mapping</emphasis>.</para>
+
+</appendix>
+</article>
