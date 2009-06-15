@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1//EN" ""-->
+<article>
+<title>The Ontopia Navigator Framework</title>
+<subtitle>Tag library reference card</subtitle>
+
+<articleinfo>
+<author>
+<affiliation>Ontopia</affiliation>
+</author>
+<pubdate>$Date: 2003/12/22 18:45:25 $</pubdate>
+<releaseinfo>2.0 ($Revision: 1.3 $)</releaseinfo>
+
+<abstract>
+<para>
+This document contains a graphical reference guide to the tag
+libraries, which should help developers wondering how to traverse
+topic map structures using the tag libraries.
+</para>
+</abstract>
+</articleinfo>
+
+<section>
+<title>The topic map object</title>
+
+<figure>
+<title>The topic map object</title>
+<graphic fileref="taglib2-overview-topicmap.png"/>
+</figure>
+</section>
+
+<section>
+<title>Topics</title>
+
+<figure>
+<title>Topic objects</title>
+<graphic fileref="taglib2-overview-topic.png"/>
+</figure>
+</section>
+
+<section>
+<title>Associations</title>
+<figure>
+<title>Association objects</title>
+<graphic fileref="taglib2-overview-association.png"/>
+</figure>
+</section>
+
+</article>
