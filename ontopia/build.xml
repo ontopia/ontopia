@@ -38,6 +38,7 @@
     <!-- Set project properties -->
     <property name="project.root" value="${basedir}" />
     <property name="src.path" value="${project.root}/src" />
+    <property name="test.path" value="${project.root}/src/test-data" />
     <property name="java.path" value="${src.path}/java" />
     <property name="doc.path" value="${project.root}/doc" />
     <property name="topicmaps.path" value="${project.root}/topicmaps" />
@@ -90,7 +91,7 @@
   
     <path refid="project.class.path.nolog4j"/>
     <!--pathelement location="${3rdparty.path}/log4j.jar" /-->
-    <pathelement location="${build.classes}" />
+    <pathelement location="${basedir}/build/classes" />
   
   </path>
 
@@ -977,13 +978,13 @@
        ====================================================================== -->
 
   <target name="test" depends="init">
-    <property name="test.config" value="${java.path}/test-data/config/${user.name}.xml" />
+    <property name="test.config" value="${test.path}/config/${user.name}.xml" />
     <property name="test.name" value="default" />
     <echo>Using configuration file ${test.config}</echo>
     <!--runtest testfile="${test.config}"/-->
-    <java classname="net.ontopia.test.TestRunner" fork="true" classpath="project.class.path">
+    <java classname="net.ontopia.test.TestRunner" fork="true" classpathref="project.class.path">
       <jvmarg value="-Dnet.ontopia.xml.Log4jSaxErrorHandler.ignoreNamespaceErrors=true" />
-      <jvmarg value="-Dnet.ontopia.test.root=${java.path}/test-data" />
+      <jvmarg value="-Dnet.ontopia.test.root=${test.path}" />
       <arg value="--loglevel=ERROR" />
       <arg value="${test.config}" />
       <arg value="${test.name}" />
