@@ -50,7 +50,7 @@
     <group-ref>webed</group-ref>
     <group-ref>schema</group-ref>
     <group-ref>db2tm</group-ref>
-    <group-ref>classify</group-ref>
+    <!--group-ref>classify</group-ref-->
   </group>
   
   <group>
