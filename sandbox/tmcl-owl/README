@@ -1,0 +1,9 @@
+
+This is the conversion scripts that were written together with Lars
+Marius Garshol's "TMCL and OWL" paper from TMRA 2008:
+  http://tmra.de/2008/talks/tmcl-and-owl.html
+
+The scripts are written in Jython and can convert both from TMCL to
+OWL, and vice versa. However, they are somewhat out of date, as they
+rely on an old TMCL draft. They need to be updated to the latest
+draft.
