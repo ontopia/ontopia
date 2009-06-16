@@ -978,8 +978,8 @@
        ====================================================================== -->
 
   <target name="test" depends="init">
-    <property name="test.config" value="${test.path}/config/${user.name}.xml" />
-    <property name="test.name" value="default" />
+    <property name="test.config" value="${test.path}/config/tests.xml" />
+    <property name="test.name" value="complete-non-rdbms" />
     <echo>Using configuration file ${test.config}</echo>
     <!--runtest testfile="${test.config}"/-->
     <java classname="net.ontopia.test.TestRunner" fork="true" classpathref="project.class.path">
