@@ -1,0 +1,132 @@
+# ......................................................................
+
+# Ontopia Schema Language DTD  .........................................
+
+# ......................................................................
+
+# 
+# This is OSL, an XML interchange syntax for the Ontopia Schema
+# Language. The copyright in this DTD is held by Ontopia. The DTD
+# may be used and distributed freely, as long as it is not changed.
+# 
+# Version:  1.0.
+# Revision: $Revision: 1.1 $
+# Date:     $Date: 2005/12/16 10:16:58 $
+# 
+# Recommended public identifier:
+#   '+//IDN ontopia.net//DTD Ontopia Schema Language (1.0)//EN'
+# More information at:
+#   <URL: http://www.ontopia.net/ >
+#
+
+# %ref: Topic identification elements ........................
+
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+ref = topicRef | subjectIndicatorRef | internalTopicRef | any
+# tm-schema: Topic map schema element ........................
+tm-schema =
+  element tm-schema {
+    attlist.tm-schema, (ruleset | topic | association)*
+  }
+attlist.tm-schema &=
+  [ a:defaultValue = "loose" ] attribute match { "loose" | "strict" }?
+# ruleset: Named rule set element ............................
+ruleset =
+  element ruleset {
+    attlist.ruleset, ruleref*, (baseName | occurrence | playing)*
+  }
+attlist.ruleset &= attribute id { xsd:ID }
+# topic: Topic class definition element ......................
+topic =
+  element topic {
+    attlist.topic,
+    instanceOf,
+    otherClass*,
+    (ruleref | superclass)*,
+    (baseName | occurrence | playing)*
+  }
+attlist.topic &=
+  [ a:defaultValue = "strict" ] attribute match { "loose" | "strict" }?,
+  attribute id { xsd:ID }?
+# otherClass: Definition of allowed classes of topics ........
+otherClass = element otherClass { attlist.otherClass, ref }
+attlist.otherClass &= empty
+# other classes of which topics of this class are allowed to be instances.
+# if this element is empty or not given topics of this class can be
+# instances of no other class.
+
+# ruleref: Reference to named rule set .......................
+ruleref = element ruleref { attlist.ruleref, empty }
+attlist.ruleref &= attribute rule { xsd:IDREF }
+# superclass: Reference to superclass of class ...............
+superclass = element superclass { attlist.superclass, empty }
+attlist.superclass &= attribute ref { xsd:IDREF }
+# instanceOf: Reference to class from instance ...............
+instanceOf = element instanceOf { attlist.instanceOf, ref? }
+attlist.instanceOf &=
+  [ a:defaultValue = "yes" ] attribute subclasses { "yes" | "no" }?
+# topicRef: Direct reference to <topic> element ..............
+topicRef = element topicRef { attlist.topicRef, empty }
+# refers to an external topic which defines the class which this
+# element constrains
+attlist.topicRef &= attribute href { text }
+# subjectIndicatorRef: Refers to topic by subject indicator ..
+subjectIndicatorRef =
+  element subjectIndicatorRef { attlist.subjectIndicatorRef, empty }
+attlist.subjectIndicatorRef &= attribute href { text }
+# internalTopicRef: Refers to <topic> relative to TM doc .....
+internalTopicRef =
+  element internalTopicRef { attlist.internalTopicRef, empty }
+attlist.internalTopicRef &= attribute href { text }
+# any: Refers to any topic ...................................
+any = element any { attlist.any, empty }
+attlist.any &= empty
+# baseName: Constraint for base names ........................
+baseName = element baseName { attlist.baseName, scope, variant* }
+attlist.baseName &=
+  [ a:defaultValue = "0" ] attribute min { text }?,
+  [ a:defaultValue = "Inf" ] attribute max { text }?
+# min: minimum number of base names according to this spec (0 - )
+# max: maximum number of base names according to this spec (0 - , Inf)
+
+# scope: Defines allowed scope ...............................
+scope = element scope { attlist.scope, (ref | instanceOf)* }
+attlist.scope &=
+  [ a:defaultValue = "exact" ]
+  attribute match { "subset" | "superset" | "exact" }?
+# variant: Variant name constraint ...........................
+variant = element variant { attlist.variant, scope }
+attlist.variant &=
+  [ a:defaultValue = "0" ] attribute min { text }?,
+  [ a:defaultValue = "Inf" ] attribute max { text }?
+# occurrence: Occurrence constraint ..........................
+occurrence =
+  element occurrence { attlist.occurrence, instanceOf, scope? }
+attlist.occurrence &=
+  [ a:defaultValue = "0" ] attribute min { text }?,
+  [ a:defaultValue = "Inf" ] attribute max { text }?,
+  [ a:defaultValue = "either" ]
+  attribute internal { "yes" | "no" | "either" }?
+# playing: Association role of topic constraint ..............
+playing = element playing { attlist.playing, instanceOf, in? }
+attlist.playing &=
+  [ a:defaultValue = "0" ] attribute min { text }?,
+  [ a:defaultValue = "Inf" ] attribute max { text }?
+# in: Specifies association type of role .....................
+in = element in { attlist.in, instanceOf* }
+attlist.in &= empty
+# association: Association class definition ..................
+association =
+  element association { attlist.association, instanceOf, scope?, role+ }
+attlist.association &= empty
+# role: Association role constraint ..........................
+role = element role { attlist.role, instanceOf, player* }
+attlist.role &=
+  [ a:defaultValue = "0" ] attribute min { text }?,
+  [ a:defaultValue = "Inf" ] attribute max { text }?
+# player: Definition of role player type .....................
+player = element player { attlist.player, ref? }
+attlist.player &=
+  [ a:defaultValue = "yes" ] attribute subclasses { "yes" | "no" }?
+start = tm-schema

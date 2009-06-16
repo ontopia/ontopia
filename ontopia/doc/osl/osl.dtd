@@ -1,0 +1,170 @@
+
+<!-- ...................................................................... -->
+<!-- Ontopia Schema Language DTD  ......................................... -->
+<!-- ...................................................................... -->
+<!-- 
+
+    This is OSL, an XML interchange syntax for the Ontopia Schema
+    Language. The copyright in this DTD is held by Ontopia. The DTD
+    may be used and distributed freely, as long as it is not changed.
+
+    Version:  1.0.
+    Revision: $Revision: 1.3 $
+    Date:     $Date: 2001/09/21 12:09:34 $
+
+    Recommended public identifier:
+      '+//IDN ontopia.net//DTD Ontopia Schema Language (1.0)//EN'
+    More information at:
+      <URL: http://www.ontopia.net/ >
+
+-->
+
+
+<!-- %ref: Topic identification elements ........................ -->
+
+<!ENTITY % ref "topicRef | subjectIndicatorRef | internalTopicRef | any">
+
+
+<!-- tm-schema: Topic map schema element ........................ -->
+
+<!ELEMENT tm-schema (ruleset | topic | association)*>
+<!ATTLIST tm-schema match (loose | strict) "loose">
+
+
+<!-- ruleset: Named rule set element ............................ -->
+
+<!ELEMENT ruleset (ruleref*, (baseName | occurrence | playing)*)>
+<!ATTLIST ruleset id ID #REQUIRED>
+
+
+<!-- topic: Topic class definition element ...................... -->
+
+<!ELEMENT topic (instanceOf, otherClass*, (ruleref | superclass)*, 
+                 (baseName | occurrence | playing)*)>
+<!ATTLIST topic
+  match (loose | strict) "strict"
+  id    ID               #IMPLIED>
+
+
+<!-- otherClass: Definition of allowed classes of topics ........ -->
+
+<!ELEMENT otherClass (%ref;)>
+<!-- other classes of which topics of this class are allowed to be instances.
+     if this element is empty or not given topics of this class can be
+     instances of no other class. -->
+
+
+<!-- ruleref: Reference to named rule set ....................... -->
+
+<!ELEMENT ruleref EMPTY>
+<!ATTLIST ruleref rule IDREF #REQUIRED>
+
+
+<!-- superclass: Reference to superclass of class ............... -->
+
+<!ELEMENT superclass EMPTY>
+<!ATTLIST superclass ref IDREF #REQUIRED>
+
+
+<!-- instanceOf: Reference to class from instance ............... -->
+
+<!ELEMENT instanceOf (%ref;)?>
+<!ATTLIST instanceOf
+  subclasses (yes | no) "yes">
+
+
+<!-- topicRef: Direct reference to <topic> element .............. -->
+
+<!ELEMENT topicRef EMPTY>
+<!-- refers to an external topic which defines the class which this
+     element constrains -->
+
+<!ATTLIST topicRef
+  href CDATA #REQUIRED>
+
+
+<!-- subjectIndicatorRef: Refers to topic by subject indicator .. -->
+
+<!ELEMENT subjectIndicatorRef EMPTY>
+<!ATTLIST subjectIndicatorRef
+  href CDATA #REQUIRED>
+
+
+<!-- internalTopicRef: Refers to <topic> relative to TM doc ..... -->
+
+<!ELEMENT internalTopicRef EMPTY>
+<!ATTLIST internalTopicRef
+  href CDATA #REQUIRED>
+
+
+<!-- any: Refers to any topic ................................... -->
+
+<!ELEMENT any EMPTY>
+
+
+<!-- baseName: Constraint for base names ........................ -->
+
+<!ELEMENT baseName (scope, variant*)>
+<!ATTLIST baseName 
+  min CDATA "0"
+  max CDATA "Inf">
+  
+<!-- min: minimum number of base names according to this spec (0 - )
+     max: maximum number of base names according to this spec (0 - , Inf) -->
+
+
+<!-- scope: Defines allowed scope ............................... -->
+
+<!ELEMENT scope (%ref; | instanceOf)*>
+<!ATTLIST scope
+  match (subset | superset | exact) "exact">
+
+
+<!-- variant: Variant name constraint ........................... -->
+
+<!ELEMENT variant (scope)>
+<!ATTLIST variant
+  min CDATA "0"
+  max CDATA "Inf">
+
+
+<!-- occurrence: Occurrence constraint .......................... -->
+
+<!ELEMENT occurrence (instanceOf, scope?)>
+<!ATTLIST occurrence
+  min      CDATA       	       "0"
+  max      CDATA       	       "Inf"
+  internal (yes | no | either) "either">
+
+
+<!-- playing: Association role of topic constraint .............. -->
+
+<!ELEMENT playing (instanceOf, in?)>
+<!ATTLIST playing
+  min      CDATA       	       "0"
+  max      CDATA       	       "Inf">
+
+
+<!-- in: Specifies association type of role ..................... -->
+
+<!ELEMENT in (instanceOf*)>
+
+
+<!-- association: Association class definition .................. -->
+
+<!ELEMENT association (instanceOf, scope?, role+)>
+
+
+<!-- role: Association role constraint .......................... -->
+
+<!ELEMENT role (instanceOf, player*)>
+<!ATTLIST role
+  min CDATA "0"
+  max CDATA "Inf">
+
+
+<!-- player: Definition of role player type ..................... -->
+
+<!ELEMENT player (%ref;)?>
+<!ATTLIST player
+  subclasses (yes | no) "yes">

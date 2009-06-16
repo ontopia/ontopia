@@ -1,0 +1,249 @@
+<!-- $Id: schema-dtd-doc.xml,v 1.5 2004/11/30 18:22:02 larsga Exp $ -->
+<dtddoc>
+  <dtd-info>
+    <name>Ontopia Schema Language</name>
+    <shortname>OSL</shortname>
+    <version>1.0</version>
+    <pubid>+//IDN ontopia.net//DTD Ontopia Schema Language (1.0)//EN</pubid>
+
+    <creator>
+      <name>Ontopia</name>
+      <email>support@ontopia.net</email>
+      <homep>http://www.ontopia.net</homep>
+    </creator>
+
+    <descr>
+    <one-line>The Ontopia Schema Language is a schema language for
+    topic maps.</one-line> Schemas using the OSL can constrain and
+    document the structure of topic maps, and can be used to
+    validate topic maps as well as to provide users with better
+    interfaces for editing them.
+    </descr>
+  </dtd-info>
+
+  <root-elements>
+    <name>tm-schema</name>
+  </root-elements>
+
+  <attribute-group>
+    <name>minmax</name>
+    <attribute>
+      <name>min</name>
+      <descr><one-line>The minimum number of matches allowed on this
+      constraint for each instance of the class.</one-line></descr>
+    </attribute>
+
+    <attribute>
+      <name>max</name>
+      <descr><one-line>The maximum number of matches allowed on this
+      constraint for each instance of the class.</one-line></descr>
+    </attribute>
+  </attribute-group>
+
+  <element>
+    <name>association</name>
+    <descr><one-line>Defines an association class.</one-line> Contains
+    the constraints on a class of associations.</descr>
+  </element>
+
+  <element>
+    <name>any</name>
+    <descr><one-line>Any topic.</one-line> Used as a wildcard to specify
+    any topic whatsoever.</descr>
+  </element>
+
+  <element>
+    <name>otherClass</name>
+    <descr><one-line>Controls what classes a topic may be instances
+    of</one-line></descr>
+  </element>
+
+  <element>
+    <name>playing</name>
+    <descr><one-line>Defines a constraint on the roles a topic may play
+    in associations.</one-line></descr>
+
+    <attribute-group-ref>minmax</attribute-group-ref>
+  </element>
+
+  <element>
+    <name>scope</name>
+    <descr><one-line>Controls the allowed scope of a topic characteristic.
+    </one-line></descr>
+
+    <attribute>
+      <name>match</name>
+      <descr><one-line>Controls how the specified scope is matched
+      against the scope of actual topic characteristics.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>in</name>
+    <descr><one-line>Controls what association types an association
+    role may appear in.</one-line></descr>
+  </element>
+
+  <element>
+    <name>superclass</name>
+    <descr><one-line>Refers to the superclass of the topic class being
+    defined.</one-line></descr>
+
+    <attribute>
+      <name>ref</name>
+      <descr><one-line>The ID of the superclass topic class
+      definition.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>role</name>
+    <descr><one-line>Contains a constraint on the association roles
+    in an association.</one-line></descr>
+
+    <attribute-group-ref>minmax</attribute-group-ref>
+  </element>
+
+  <element>
+    <name>ruleset</name>
+    <descr><one-line>Contains a set of reusable named
+    constraints.</one-line></descr>
+
+    <attribute>
+      <name>id</name>
+      <descr><one-line>The ID of the ruleset, by which it may be
+      referred to.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>player</name>
+    <descr><one-line>Controls the allowed types of the topic that may play
+    a particular role in an association.</one-line></descr>
+
+    <attribute>
+      <name>subclasses</name>
+      <descr><one-line>Whether subclasses of the specified types are
+      accepted or not.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>topic</name>
+    <descr><one-line>Defines a topic class.</one-line></descr>
+
+    <attribute>
+      <name>match</name>
+      <descr><one-line>Whether matching of constraints is loose or
+      strict.</one-line></descr>
+    </attribute>
+
+    <attribute>
+      <name>id</name>
+      <descr><one-line>The ID of the class by which it may be referred
+      to.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>tm-schema</name>
+    <descr><one-line>The container element for the schema.</one-line></descr>
+
+    <attribute>
+      <name>match</name>
+      <descr><one-line>Controls whether the schema uses loose or strict
+      matching.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>variant</name>
+    <descr><one-line>A constraint on the variant names of a base
+    name.</one-line></descr>
+
+    <attribute-group-ref>minmax</attribute-group-ref>
+  </element>
+
+  <element>
+    <name>subjectIndicatorRef</name>
+    <descr><one-line>Identifies a topic by its subject
+    indicator.</one-line></descr>
+
+    <attribute>
+      <name>href</name>
+      <descr><one-line>The URI that is the subject
+      indicator.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>baseName</name>
+    <descr><one-line>A constraint on the base names of a
+    topic.</one-line></descr>
+
+    <attribute-group-ref>minmax</attribute-group-ref>
+  </element>
+
+  <element>
+    <name>topicRef</name>
+    <descr><one-line>Identifies a topic by its source
+    locator.</one-line></descr>
+
+    <attribute>
+      <name>href</name>
+      <descr><one-line>The URI that is the source locator of the
+      topic.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>internalTopicRef</name>
+    <descr><one-line>Identifies a topic by its source
+    locator.</one-line></descr>
+
+    <attribute>
+      <name>href</name>
+      <descr><one-line>The URI that is the source locator of the
+      topic.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>occurrence</name>
+    <descr><one-line>A constraint on the occurrences of a
+    topic.</one-line></descr>
+
+    <attribute-group-ref>minmax</attribute-group-ref>
+
+    <attribute>
+      <name>internal</name>
+      <descr><one-line>Whether the occurrence must be internal or
+      external, or whether it can be both.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>ruleref</name>
+    <descr><one-line>A reference to a ruleset that is to be included
+    in a topic class.</one-line></descr>
+
+    <attribute>
+      <name>rule</name>
+      <descr><one-line>The ID of the ruleset being referred
+      to.</one-line></descr>
+    </attribute>
+  </element>
+
+  <element>
+    <name>instanceOf</name>
+    <descr><one-line>Specifies the type of a topic map
+    object.</one-line></descr>
+
+    <attribute>
+      <name>subclasses</name>
+      <descr><one-line>Whether instances of subclasses are
+      accepted.</one-line></descr>
+    </attribute>
+  </element>
+
+</dtddoc>
