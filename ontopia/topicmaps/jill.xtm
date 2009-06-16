@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          id="jillstm">
+
+<!-- ...................... ONTOLOGY TOPICS ...................... -->
+
+<!-- .................... THE TOPIC MAP TOPIC .................... -->
+
+<topic id="jillstm-topic">
+  <!-- Reifies the topic map and gives it a name -->
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#jillstm"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Jill's First Topic Map</baseNameString>
+  </baseName>
+  <baseName>
+    <scope>
+      <subjectIndicatorRef
+        xlink:href="http://psi.ontopia.net/basename/#short-name"/>
+    </scope>
+    <baseNameString>Jill's 1st TM</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ........................ THEMES (SCOPING TOPICS) ............ -->
+
+<topic id="short-name">
+  <subjectIdentity>
+      <subjectIndicatorRef
+        xlink:href="http://psi.ontopia.net/basename/#short-name"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Short name</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ........................ TOPIC TYPES ........................ -->
+
+<topic id="developer">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/jill/#developer"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Developer</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="company">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xmltools/#Company"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Company</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ..................... OCCURRENCE TYPES ...................... -->
+
+<topic id="description">
+  <!-- Uses Ontopia's "description occurrence" PSI -->
+  <subjectIdentity>
+    <subjectIndicatorRef
+      xlink:href="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Description</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="kudo">
+  <!-- An instance of the "description occurrence" class -->
+  <instanceOf>
+    <topicRef xlink:href="#description"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>Kudo</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="website">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/jill/#website"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Web site</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="contract">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/jill/#contract"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Contract</baseNameString>
+  </baseName>
+</topic>
+
+<!-- ..................... ASSOCIATION TYPES ..................... -->
+
+<topic id="employment">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/jill/#employment"/>
+  </subjectIdentity>
+  <!-- Illustrates the use of names scoped by roles -->
+  <baseName>
+    <baseNameString>Employment</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#employer"/></scope>
+    <baseNameString>Employs</baseNameString>
+  </baseName>
+  <baseName>
+    <scope><topicRef xlink:href="#employee"/></scope>
+    <baseNameString>Employed by</baseNameString>
+  </baseName>
+</topic>
+
+<!-- .................. ASSOCIATION ROLE TYPES.................... -->
+
+<topic id="employer">
+  <baseName>
+    <baseNameString>Employer</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="employee">
+  <baseName>
+    <baseNameString>Employee</baseNameString>
+  </baseName>
+</topic>
+
+
+<!-- ..................... INDIVIDUAL TOPICS ..................... -->
+
+
+<topic id="ontopia">
+  <instanceOf>
+    <topicRef xlink:href="#company"/>
+  </instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/ontopia/#ontopia"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Ontopia</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#website"/>
+    </instanceOf>
+    <resourceRef xlink:href="http://www.ontopia.net/"/>
+  </occurrence>
+</topic>
+
+<topic id="jill">
+  <instanceOf>
+    <topicRef xlink:href="#developer"/>
+  </instanceOf>
+  <baseName>
+    <baseNameString>Jill Hacker</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#kudo"/>
+    </instanceOf>
+    <resourceData>Jill's a cool girl and a great hacker</resourceData>
+  </occurrence>
+</topic>
+
+<!-- .................... ADDRESSABLE SUBJECT .................... -->
+
+<topic id="ontopias-website">
+  <instanceOf>
+    <topicRef xlink:href="#website"/>
+  </instanceOf>
+  <subjectIdentity>
+    <resourceRef xlink:href="http://www.ontopia.net/"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Ontopia's Web Site</baseNameString>
+  </baseName>
+</topic>
+
+
+<!-- ....................... ASSOCIATIONS ........................ -->
+
+
+<association id="jill-ontopia-association">
+  <instanceOf>
+    <topicRef xlink:href="#employment"/>
+  </instanceOf>
+  <member>
+    <roleSpec><topicRef xlink:href="#employee"/></roleSpec>
+    <topicRef xlink:href="#jill"/>
+  </member>
+  <member>
+    <roleSpec><topicRef xlink:href="#employer"/></roleSpec>
+    <topicRef xlink:href="#ontopia"/>
+  </member>
+</association>
+
+
+<!-- ................... REIFICATION EXAMPLES .................... -->
+
+
+<!-- ................... REIFIED ASSOCIATIONS .................... -->
+
+<topic id="jill-ontopia-topic">
+  <!-- reifies the Jill/Ontopia association -->
+  <instanceOf>
+    <topicRef xlink:href="#employment"/>
+  </instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#jill-ontopia-association"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Jill's position with Ontopia</baseNameString>
+  </baseName>
+  <occurrence id="jills-contract-occurrence">
+    <instanceOf>
+      <topicRef xlink:href="#contract"/>
+    </instanceOf>
+    <resourceRef
+      xlink:href="http://www.ontopia.net/internal/employees/contracts/jill.htm"/>
+  </occurrence>
+</topic>
+
+<!-- .................... REIFIED OCCURRENCES .................... -->
+
+<topic id="jills-contract-topic">
+  <!-- Reifies the occurrence of the reified Jill/Ontopia association -->
+  <instanceOf>
+    <topicRef xlink:href="#contract"/>
+  </instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#jills-contract-occurrence"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Jill's contract with Ontopia</baseNameString>
+  </baseName>
+  <occurrence>
+    <instanceOf>
+      <topicRef xlink:href="#contract"/>
+    </instanceOf>
+    <resourceRef
+      xlink:href="http://www.ontopia.net/internal/employees/contracts/jill.htm"/>
+  </occurrence>
+</topic>
+
+<!-- .................... DUBLIN CORE METADATA ................... -->
+
+<!-- Merge DC ontology and related controlled vocabulary -->
+
+<mergeMap xlink:href="dc.xtmm"/>
+
+<!-- Another topic that reifies the topic map. This will be merged with the topic
+     whose ID is "jillstm-topic" because they have the same subject indicator. -->
+
+<topic id="tm-topic">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="#jillstm"/>
+  </subjectIdentity>
+
+  <!-- dc:Rights modelled as occurrence -->
+  <occurrence>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/rights"/>
+    </instanceOf>
+    <resourceData>(C) Copyright 2003 Ontopia</resourceData>
+  </occurrence>
+
+  <!-- dc:Date modelled as occurrence -->
+  <occurrence>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/date"/>
+    </instanceOf>
+    <resourceData>$Date: 2004/06/29 01:34:39 $</resourceData>
+  </occurrence>
+
+  <!-- dc:Description modelled as occurrence -->
+  <occurrence>
+    <instanceOf>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/description"/>
+    </instanceOf>
+    <resourceData>Example topic map from Omnigator User Guide.</resourceData>
+  </occurrence>
+</topic>
+
+<!-- dc:Creator modelled as an association -->
+
+<association>
+  <instanceOf>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/creator"/>
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#resource"/>
+    </roleSpec>
+    <topicRef xlink:href="#tm-topic"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#value"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/ontopia/#pepper"/>
+  </member>
+</association>
+
+<!-- add topic for value of dc:Creator -->
+
+<topic id="pepper">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/ontopia/#pepper"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Steve Pepper</baseNameString>
+  </baseName>
+</topic>
+
+<!-- dc:Publisher modelled as an association -->
+
+<association>
+  <instanceOf>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/publisher"/>
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#resource"/>
+    </roleSpec>
+    <topicRef xlink:href="#tm-topic"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#value"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/ontopia/#ontopia"/>
+  </member>
+</association>
+
+<!-- Ontopia is already a topic in this topic map, so no need to add it again -->
+
+<!-- dc:Subject modelled as an association -->
+
+<association>
+  <instanceOf>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/subject"/>
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#resource"/>
+    </roleSpec>
+    <topicRef xlink:href="#tm-topic"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#value"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/ontopia/#ontopia"/>
+  </member>
+</association>
+
+<!-- Ontopia is already a topic in this topic map, so no need to add it again -->
+
+<!-- dc:Type modelled as an association -->
+
+<association>
+  <instanceOf>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/type"/>
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#resource"/>
+    </roleSpec>
+    <topicRef xlink:href="#tm-topic"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#value"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#topicmap"/>
+  </member>
+</association>
+
+<!-- dc:Format modelled as an association -->
+
+<association>
+  <instanceOf>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/format"/>
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#resource"/>
+    </roleSpec>
+    <topicRef xlink:href="#tm-topic"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#value"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#XTM"/>
+  </member>
+</association>
+
+<!-- dc:Language modelled as an association -->
+
+<association>
+  <instanceOf>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/language"/>
+  </instanceOf>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#resource"/>
+    </roleSpec>
+    <topicRef xlink:href="#tm-topic"/>
+  </member>
+  <member>
+    <roleSpec>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#value"/>
+    </roleSpec>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"/>
+  </member>
+</association>
+
+<!-- add topic for value of dc:Language -->
+
+<topic id="english">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>English</baseNameString>
+  </baseName>
+</topic>
+
+</topicMap>

@@ -1,0 +1,2164 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <topic id="id1330"></topic>
+  <topic id="id1222"></topic>
+  <topic id="id112"></topic>
+  <topic id="id424"></topic>
+  <topic id="id1123"></topic>
+  <topic id="id1001"></topic>
+  <topic id="id622"></topic>
+  <topic id="id642"></topic>
+  <topic id="id651"></topic>
+  <topic id="id945"></topic>
+  <topic id="id49"></topic>
+  <topic id="id563"></topic>
+  <topic id="id1303"></topic>
+  <topic id="id965"></topic>
+  <topic id="id753"></topic>
+  <topic id="id255"></topic>
+  <topic id="id1335"></topic>
+  <topic id="id126"></topic>
+  <topic id="id131"></topic>
+  <topic id="id192"></topic>
+  <topic id="id346"></topic>
+  <topic id="id605"></topic>
+  <topic id="id812"></topic>
+  <topic id="id766"></topic>
+  <topic id="id1030"></topic>
+  <topic id="id901"></topic>
+  <topic id="id560"></topic>
+  <topic id="id832"></topic>
+  <topic id="id1184"></topic>
+  <topic id="id308"></topic>
+  <topic id="id1107"></topic>
+  <topic id="id1089"></topic>
+  <topic id="id529"></topic>
+  <topic id="id205"></topic>
+  <topic id="id435">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#has-coast-to"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>92 114 250</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1148"></topic>
+  <topic id="id1309"></topic>
+  <topic id="id1395"></topic>
+  <topic id="id894"></topic>
+  <topic id="id107"></topic>
+  <topic id="id93"></topic>
+  <topic id="id920"></topic>
+  <topic id="id236"></topic>
+  <topic id="id473"></topic>
+  <topic id="id237"></topic>
+  <topic id="id1427"></topic>
+  <topic id="id850"></topic>
+  <topic id="id675"></topic>
+  <topic id="id312"></topic>
+  <topic id="id311"></topic>
+  <topic id="id1390"></topic>
+  <topic id="id135"></topic>
+  <topic id="id150"></topic>
+  <topic id="id174">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id924"></topic>
+  <topic id="id1403"></topic>
+  <topic id="id1393"></topic>
+  <topic id="id1345"></topic>
+  <topic id="id1509">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://xmlns.com/foaf/0.1/Organization"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id783"></topic>
+  <topic id="id261">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-line-weight"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id500"></topic>
+  <topic id="id666"></topic>
+  <topic id="id958"></topic>
+  <topic id="id269"></topic>
+  <topic id="id57"></topic>
+  <topic id="id853"></topic>
+  <topic id="id1355"></topic>
+  <topic id="id1035"></topic>
+  <topic id="id1298"></topic>
+  <topic id="id191"></topic>
+  <topic id="id1143"></topic>
+  <topic id="id1275"></topic>
+  <topic id="id655"></topic>
+  <topic id="id1269"></topic>
+  <topic id="id206"></topic>
+  <topic id="id433"></topic>
+  <topic id="id188"></topic>
+  <topic id="id669"></topic>
+  <topic id="id1301"></topic>
+  <topic id="id1132"></topic>
+  <topic id="id281"></topic>
+  <topic id="id849"></topic>
+  <topic id="id383"></topic>
+  <topic id="id223"></topic>
+  <topic id="id1398"></topic>
+  <topic id="id844"></topic>
+  <topic id="id1352"></topic>
+  <topic id="id1006"></topic>
+  <topic id="id147"></topic>
+  <topic id="id1180"></topic>
+  <topic id="id280"></topic>
+  <topic id="id1410"></topic>
+  <topic id="id130"></topic>
+  <topic id="id687"></topic>
+  <topic id="id336"></topic>
+  <topic id="id471"></topic>
+  <topic id="id1153"></topic>
+  <topic id="id271"></topic>
+  <topic id="id1361"></topic>
+  <topic id="id1141"></topic>
+  <topic id="id1385"></topic>
+  <topic id="id1090"></topic>
+  <topic id="id674"></topic>
+  <topic id="id363"></topic>
+  <topic id="id1015"></topic>
+  <topic id="id759"></topic>
+  <topic id="id1447"></topic>
+  <topic id="id6"></topic>
+  <topic id="id437"></topic>
+  <topic id="id734"></topic>
+  <topic id="id246"></topic>
+  <topic id="id84"></topic>
+  <topic id="id1291"></topic>
+  <topic id="id258">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id113"></topic>
+  <topic id="id442"></topic>
+  <topic id="id1444"></topic>
+  <topic id="id875"></topic>
+  <topic id="id1021"></topic>
+  <topic id="id1470"></topic>
+  <topic id="id1250"></topic>
+  <topic id="id342"></topic>
+  <topic id="id8"></topic>
+  <topic id="id908"></topic>
+  <topic id="id349"></topic>
+  <topic id="id86"></topic>
+  <topic id="id1168"></topic>
+  <topic id="id554"></topic>
+  <topic id="id736"></topic>
+  <topic id="id862"></topic>
+  <topic id="id593"></topic>
+  <topic id="id406"></topic>
+  <topic id="id83"></topic>
+  <topic id="id878"></topic>
+  <topic id="id486"></topic>
+  <topic id="id1251"></topic>
+  <topic id="id1324"></topic>
+  <topic id="id807"></topic>
+  <topic id="id972"></topic>
+  <topic id="id559"></topic>
+  <topic id="id143"></topic>
+  <topic id="id1166"></topic>
+  <topic id="id692"></topic>
+  <topic id="id1289"></topic>
+  <topic id="id1005"></topic>
+  <topic id="id96"></topic>
+  <topic id="id1505"></topic>
+  <topic id="id425"></topic>
+  <topic id="id498"></topic>
+  <topic id="id1279"></topic>
+  <topic id="id332"></topic>
+  <topic id="id1105"></topic>
+  <topic id="id12"></topic>
+  <topic id="id162"></topic>
+  <topic id="id1055"></topic>
+  <topic id="id599"></topic>
+  <topic id="id786"></topic>
+  <topic id="id1068"></topic>
+  <topic id="id1241"></topic>
+  <topic id="id1088"></topic>
+  <topic id="id1054"></topic>
+  <topic id="id900"></topic>
+  <topic id="id167"></topic>
+  <topic id="id594"></topic>
+  <topic id="id1422"></topic>
+  <topic id="id906"></topic>
+  <topic id="id749"></topic>
+  <topic id="id184"></topic>
+  <topic id="id1018"></topic>
+  <topic id="id836"></topic>
+  <topic id="id645"></topic>
+  <topic id="id186"></topic>
+  <topic id="id217"></topic>
+  <topic id="id774"></topic>
+  <topic id="id1360"></topic>
+  <topic id="id338"></topic>
+  <topic id="id453"></topic>
+  <topic id="id561"></topic>
+  <topic id="id1320"></topic>
+  <topic id="id270"></topic>
+  <topic id="id480"></topic>
+  <topic id="id568"></topic>
+  <topic id="id169"></topic>
+  <topic id="id1249"></topic>
+  <topic id="id299">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/vizigator-general"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>240 240 240</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id55"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id301"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1278"></topic>
+  <topic id="id511"></topic>
+  <topic id="id822"></topic>
+  <topic id="id986"></topic>
+  <topic id="id1394"></topic>
+  <topic id="id1151"></topic>
+  <topic id="id464"></topic>
+  <topic id="id265"></topic>
+  <topic id="id1460"></topic>
+  <topic id="id1170"></topic>
+  <topic id="id431"></topic>
+  <topic id="id789"></topic>
+  <topic id="id678"></topic>
+  <topic id="id1389"></topic>
+  <topic id="id1207"></topic>
+  <topic id="id264"></topic>
+  <topic id="id1190"></topic>
+  <topic id="id1371"></topic>
+  <topic id="id1237"></topic>
+  <topic id="id1227"></topic>
+  <topic id="id1175"></topic>
+  <topic id="id88"></topic>
+  <topic id="id544"></topic>
+  <topic id="id1420"></topic>
+  <topic id="id314"></topic>
+  <topic id="id1214"></topic>
+  <topic id="id1299"></topic>
+  <topic id="id51"></topic>
+  <topic id="id741"></topic>
+  <topic id="id389"></topic>
+  <topic id="id322"></topic>
+  <topic id="id892"></topic>
+  <topic id="id795"></topic>
+  <topic id="id710"></topic>
+  <topic id="id139"></topic>
+  <topic id="id1452"></topic>
+  <topic id="id971"></topic>
+  <topic id="id818"></topic>
+  <topic id="id990"></topic>
+  <topic id="id562"></topic>
+  <topic id="id275"></topic>
+  <topic id="id77"></topic>
+  <topic id="id536"></topic>
+  <topic id="id1079"></topic>
+  <topic id="id1416"></topic>
+  <topic id="id1094"></topic>
+  <topic id="id1284"></topic>
+  <topic id="id140"></topic>
+  <topic id="id17"></topic>
+  <topic id="id961"></topic>
+  <topic id="id883"></topic>
+  <topic id="id539"></topic>
+  <topic id="id1062"></topic>
+  <topic id="id717"></topic>
+  <topic id="id1106"></topic>
+  <topic id="id110"></topic>
+  <topic id="id1077"></topic>
+  <topic id="id997"></topic>
+  <topic id="id245"></topic>
+  <topic id="id543"></topic>
+  <topic id="id32"></topic>
+  <topic id="id798"></topic>
+  <topic id="id1103"></topic>
+  <topic id="id15"></topic>
+  <topic id="id154"></topic>
+  <topic id="id81"></topic>
+  <topic id="id1009"></topic>
+  <topic id="id1045"></topic>
+  <topic id="id1003"></topic>
+  <topic id="id1125"></topic>
+  <topic id="id601"></topic>
+  <topic id="id608"></topic>
+  <topic id="id570"></topic>
+  <topic id="id887"></topic>
+  <topic id="id252"></topic>
+  <topic id="id1000"></topic>
+  <topic id="id145"></topic>
+  <topic id="id355"></topic>
+  <topic id="id410"></topic>
+  <topic id="id1029"></topic>
+  <topic id="id776"></topic>
+  <topic id="id24"></topic>
+  <topic id="id547"></topic>
+  <topic id="id316"></topic>
+  <topic id="id1501"></topic>
+  <topic id="id1188"></topic>
+  <topic id="id115"></topic>
+  <topic id="id1325"></topic>
+  <topic id="id398"></topic>
+  <topic id="id1402"></topic>
+  <topic id="id478"></topic>
+  <topic id="id1327"></topic>
+  <topic id="id1337"></topic>
+  <topic id="id1025"></topic>
+  <topic id="id1376"></topic>
+  <topic id="id220"></topic>
+  <topic id="id1034"></topic>
+  <topic id="id1232"></topic>
+  <topic id="id228"></topic>
+  <topic id="id1351"></topic>
+  <topic id="id673"></topic>
+  <topic id="id422"></topic>
+  <topic id="id468"></topic>
+  <topic id="id731"></topic>
+  <topic id="id1401"></topic>
+  <topic id="id1074"></topic>
+  <topic id="id724"></topic>
+  <topic id="id930"></topic>
+  <topic id="id551"></topic>
+  <topic id="id1477"></topic>
+  <topic id="id1348"></topic>
+  <topic id="id210"></topic>
+  <topic id="id376"></topic>
+  <topic id="id648"></topic>
+  <topic id="id1049"></topic>
+  <topic id="id691"></topic>
+  <topic id="id707"></topic>
+  <topic id="id956"></topic>
+  <topic id="id995"></topic>
+  <topic id="id72"></topic>
+  <topic id="id851"></topic>
+  <topic id="id55">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/display-scoped-assoc-names"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id1378"></topic>
+  <topic id="id386"></topic>
+  <topic id="id421"></topic>
+  <topic id="id744"></topic>
+  <topic id="id873"></topic>
+  <topic id="id350"></topic>
+  <topic id="id1313"></topic>
+  <topic id="id319"></topic>
+  <topic id="id105"></topic>
+  <topic id="id1482"></topic>
+  <topic id="id1072"></topic>
+  <topic id="id225"></topic>
+  <topic id="id811"></topic>
+  <topic id="id918"></topic>
+  <topic id="id203"></topic>
+  <topic id="id250"></topic>
+  <topic id="id636"></topic>
+  <topic id="id1404"></topic>
+  <topic id="id413">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#lake"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id417"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhIAAgAGYAACH5BAEAAGEALAAAAAAgACAAhv///2bM/2TJ/GDC8/7LmFGhyOHMglmlylOY
+uV6XtFiXs2GQo2CImYGKhZCRhMmlgaaSel27616/7vLBkZyRfY6Ng4STkFiq01iSrmOTqFmhxevM
+ivLMjfjHle6/jsGmhditgtqwhXCRm2qKlGuQnKqjbLbKYraYd6uScLOXe8+3eNXCfcqlf8OdeWPG
++FC5YIeFdYSTZYWSXHCScWqRf66dZ2PM8aOcZJ6NeKuPc+W4iOq7jOG1iNatg+CyhXptWnRcRPfM
+ky+gK0Jxg06rPIGTj2qNm0qjQNPMetbMe5yYh6OWgZiTgVO4J5aVin+RjViOqXiQlXiQk1/M3FrD
+11LMnlq04Vyz3Fmt2HOBgl6+7FOo0lau2nKIi2LL7VGgx1CfxQAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAf/gGGCg4SFhoeIiYqLjIMbHI2IUhQEhB1DL0QlkYU5AhFMhD0FNgIa
+IZyDCAICGZVhEzABswEYOqkWrAESDSgUUC60swsgSJEKwgG6ybMFDTcrBgaQiBkCzNjXAQMIC1Ez
+MioGhg7Y5sratAUxhwzp5/BHhywD8OcDYAoPhyBb7/a7RpzwMAEREAT1lClLiO0AhFeJhFD5d07D
+vkQ/Khyo4gXgLCsfFHFhdY2iOSOLijhIoM2ksAFdeDTyAGGBS2EiIDbqwOCcFmVKUgkKcQBbggBY
+AiwRKijFhZcjZpEQ4ISpoAcOLghAgIOAAB8FAiSwOugDhB2DJnxRhoHsoRYRMWZJcDuogggSRZUV
+oCsoy5V0AhrwFfRkCq0IgwWZaELDAgMFicMEIbAhiYEakTO7DQQAOw==</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id306"></topicRef>
+      </instanceOf>
+      <resourceData>C:\Doc\graphics\viz\icons\lake.gif</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id688"></topic>
+  <topic id="id1022"></topic>
+  <topic id="id1016"></topic>
+  <topic id="id1097"></topic>
+  <topic id="id915"></topic>
+  <topic id="id1382"></topic>
+  <topic id="id968"></topic>
+  <topic id="id458"></topic>
+  <topic id="id1268"></topic>
+  <topic id="id588"></topic>
+  <topic id="id1182"></topic>
+  <topic id="id553"></topic>
+  <topic id="id64"></topic>
+  <topic id="id893"></topic>
+  <topic id="id1230"></topic>
+  <topic id="id360"></topic>
+  <topic id="id26"></topic>
+  <topic id="id178"></topic>
+  <topic id="id266"></topic>
+  <topic id="id735"></topic>
+  <topic id="id532"></topic>
+  <topic id="id209"></topic>
+  <topic id="id353"></topic>
+  <topic id="id1339"></topic>
+  <topic id="id1179"></topic>
+  <topic id="id89"></topic>
+  <topic id="id448"></topic>
+  <topic id="id742"></topic>
+  <topic id="id1306"></topic>
+  <topic id="id656"></topic>
+  <topic id="id791"></topic>
+  <topic id="id1430"></topic>
+  <topic id="id946"></topic>
+  <topic id="id380"></topic>
+  <topic id="id514"></topic>
+  <topic id="id787"></topic>
+  <topic id="id1413"></topic>
+  <topic id="id1271"></topic>
+  <topic id="id757"></topic>
+  <topic id="id784"></topic>
+  <topic id="id201"></topic>
+  <topic id="id1457"></topic>
+  <topic id="id706"></topic>
+  <topic id="id864"></topic>
+  <topic id="id1491"></topic>
+  <topic id="id1292"></topic>
+  <topic id="id1277"></topic>
+  <topic id="id881"></topic>
+  <topic id="id1259"></topic>
+  <topic id="id1489"></topic>
+  <topic id="id469"></topic>
+  <topic id="id175">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#belongs-to"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id444"></topic>
+  <topic id="id606"></topic>
+  <topic id="id621"></topic>
+  <topic id="id1353"></topic>
+  <topic id="id73"></topic>
+  <topic id="id449"></topic>
+  <topic id="id1305"></topic>
+  <topic id="id931"></topic>
+  <topic id="id521"></topic>
+  <topic id="id1051"></topic>
+  <topic id="id214"></topic>
+  <topic id="id1258"></topic>
+  <topic id="id1163"></topic>
+  <topic id="id939"></topic>
+  <topic id="id976"></topic>
+  <topic id="id925"></topic>
+  <topic id="id1429"></topic>
+  <topic id="id966"></topic>
+  <topic id="id531"></topic>
+  <topic id="id1388"></topic>
+  <topic id="id538"></topic>
+  <topic id="id1156"></topic>
+  <topic id="id1484">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/mondial/#member-of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id174"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id702"></topic>
+  <topic id="id1316"></topic>
+  <topic id="id1267">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/single-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id903"></topic>
+  <topic id="id418"></topic>
+  <topic id="id993"></topic>
+  <topic id="id649"></topic>
+  <topic id="id1459"></topic>
+  <topic id="id1380"></topic>
+  <topic id="id466"></topic>
+  <topic id="id987"></topic>
+  <topic id="id1467">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#located-by"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1264"></topic>
+  <topic id="id1236"></topic>
+  <topic id="id313"></topic>
+  <topic id="id1017"></topic>
+  <topic id="id513"></topic>
+  <topic id="id954"></topic>
+  <topic id="id821"></topic>
+  <topic id="id97"></topic>
+  <topic id="id1066"></topic>
+  <topic id="id1002"></topic>
+  <topic id="id1122"></topic>
+  <topic id="id1456"></topic>
+  <topic id="id662"></topic>
+  <topic id="id1381"></topic>
+  <topic id="id153"></topic>
+  <topic id="id824"></topic>
+  <topic id="id247"></topic>
+  <topic id="id743"></topic>
+  <topic id="id912"></topic>
+  <topic id="id388"></topic>
+  <topic id="id19"></topic>
+  <topic id="id1280"></topic>
+  <topic id="id1215"></topic>
+  <topic id="id991"></topic>
+  <topic id="id291"></topic>
+  <topic id="id1329"></topic>
+  <topic id="id1500"></topic>
+  <topic id="id1274"></topic>
+  <topic id="id1053"></topic>
+  <topic id="id732"></topic>
+  <topic id="id1216"></topic>
+  <topic id="id177">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id295"></topic>
+  <topic id="id1093"></topic>
+  <topic id="id940"></topic>
+  <topic id="id1270"></topic>
+  <topic id="id1142"></topic>
+  <topic id="id1426"></topic>
+  <topic id="id1176"></topic>
+  <topic id="id101"></topic>
+  <topic id="id117"></topic>
+  <topic id="id133"></topic>
+  <topic id="id794"></topic>
+  <topic id="id1234"></topic>
+  <topic id="id120"></topic>
+  <topic id="id810"></topic>
+  <topic id="id372"></topic>
+  <topic id="id535"></topic>
+  <topic id="id545"></topic>
+  <topic id="id978"></topic>
+  <topic id="id723"></topic>
+  <topic id="id41"></topic>
+  <topic id="id137"></topic>
+  <topic id="id973"></topic>
+  <topic id="id845"></topic>
+  <topic id="id397"></topic>
+  <topic id="id1243"></topic>
+  <topic id="id815"></topic>
+  <topic id="id897"></topic>
+  <topic id="id652"></topic>
+  <topic id="id747"></topic>
+  <topic id="id796"></topic>
+  <topic id="id91"></topic>
+  <topic id="id455"></topic>
+  <topic id="id520"></topic>
+  <topic id="id1061"></topic>
+  <topic id="id668"></topic>
+  <topic id="id781"></topic>
+  <topic id="id92"></topic>
+  <topic id="id365"></topic>
+  <topic id="id76"></topic>
+  <topic id="id438"></topic>
+  <topic id="id670"></topic>
+  <topic id="id1112"></topic>
+  <topic id="id59"></topic>
+  <topic id="id14"></topic>
+  <topic id="id187"></topic>
+  <topic id="id1108"></topic>
+  <topic id="id932"></topic>
+  <topic id="id1511"></topic>
+  <topic id="id979">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/start-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id67"></topicRef>
+      </instanceOf>
+      <resourceData>#cid-cia-Norway</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1136"></topic>
+  <topic id="id981"></topic>
+  <topic id="id1257"></topic>
+  <topic id="id390"></topic>
+  <topic id="id98"></topic>
+  <topic id="id146"></topic>
+  <topic id="id537"></topic>
+  <topic id="id256">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#located-in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id261"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id258"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id23"></topic>
+  <topic id="id664"></topic>
+  <topic id="id826"></topic>
+  <topic id="id384"></topic>
+  <topic id="id222"></topic>
+  <topic id="id1110"></topic>
+  <topic id="id369"></topic>
+  <topic id="id597"></topic>
+  <topic id="id1098"></topic>
+  <topic id="id1476"></topic>
+  <topic id="id90"></topic>
+  <topic id="id1443"></topic>
+  <topic id="id1155"></topic>
+  <topic id="id1099"></topic>
+  <topic id="id317"></topic>
+  <topic id="id30"></topic>
+  <topic id="id1359"></topic>
+  <topic id="id1302"></topic>
+  <topic id="id231"></topic>
+  <topic id="id229"></topic>
+  <topic id="id713"></topic>
+  <topic id="id1178"></topic>
+  <topic id="id957"></topic>
+  <topic id="id434"></topic>
+  <topic id="id503">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#continent"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>75 248 75</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id381"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id494"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-1-12</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id417"></topicRef>
+      </instanceOf>
+      <resourceData>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
+RxFIEYC80xUVEAA7</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id306"></topicRef>
+      </instanceOf>
+      <resourceData>C:\Doc\graphics\viz\icons\continent.gif</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id633"></topic>
+  <topic id="id454"></topic>
+  <topic id="id746"></topic>
+  <topic id="id856"></topic>
+  <topic id="id1290"></topic>
+  <topic id="id1384"></topic>
+  <topic id="id75"></topic>
+  <topic id="id481"></topic>
+  <topic id="id1091"></topic>
+  <topic id="id1076"></topic>
+  <topic id="id124"></topic>
+  <topic id="id583"></topic>
+  <topic id="id1046"></topic>
+  <topic id="id1113"></topic>
+  <topic id="id714"></topic>
+  <topic id="id922"></topic>
+  <topic id="id379"></topic>
+  <topic id="id698"></topic>
+  <topic id="id1356">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#desert"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>11 85 14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id592"></topic>
+  <topic id="id232"></topic>
+  <topic id="id582"></topic>
+  <topic id="id42"></topic>
+  <topic id="id1010"></topic>
+  <topic id="id788"></topic>
+  <topic id="id852"></topic>
+  <topic id="id994"></topic>
+  <topic id="id129"></topic>
+  <topic id="id1200"></topic>
+  <topic id="id1513"></topic>
+  <topic id="id1285"></topic>
+  <topic id="id242"></topic>
+  <topic id="id1186"></topic>
+  <topic id="id913"></topic>
+  <topic id="id1488"></topic>
+  <topic id="id1326"></topic>
+  <topic id="id52"></topic>
+  <topic id="id1358"></topic>
+  <topic id="id211"></topic>
+  <topic id="id1347"></topic>
+  <topic id="id364"></topic>
+  <topic id="id189"></topic>
+  <topic id="id13"></topic>
+  <topic id="id841"></topic>
+  <topic id="id200"></topic>
+  <topic id="id907"></topic>
+  <topic id="id263"></topic>
+  <topic id="id1004"></topic>
+  <topic id="id4"></topic>
+  <topic id="id226"></topic>
+  <topic id="id25"></topic>
+  <topic id="id829"></topic>
+  <topic id="id428"></topic>
+  <topic id="id1458"></topic>
+  <topic id="id1406"></topic>
+  <topic id="id22"></topic>
+  <topic id="id116"></topic>
+  <topic id="id3"></topic>
+  <topic id="id1461"></topic>
+  <topic id="id1463"></topic>
+  <topic id="id969"></topic>
+  <topic id="id1311"></topic>
+  <topic id="id1031"></topic>
+  <topic id="id704"></topic>
+  <topic id="id1363"></topic>
+  <topic id="id785"></topic>
+  <topic id="id600"></topic>
+  <topic id="id409"></topic>
+  <topic id="id663"></topic>
+  <topic id="id1052"></topic>
+  <topic id="id740"></topic>
+  <topic id="id813"></topic>
+  <topic id="id817"></topic>
+  <topic id="id886"></topic>
+  <topic id="id557"></topic>
+  <topic id="id654"></topic>
+  <topic id="id417">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id762">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#borders-with"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>153 153 153</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id174"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id261"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id950"></topic>
+  <topic id="id35"></topic>
+  <topic id="id1328"></topic>
+  <topic id="id876"></topic>
+  <topic id="id465"></topic>
+  <topic id="id1503"></topic>
+  <topic id="id82"></topic>
+  <topic id="id820"></topic>
+  <topic id="id1228"></topic>
+  <topic id="id301">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/show-role-hover-help"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id27"></topic>
+  <topic id="id323"></topic>
+  <topic id="id447"></topic>
+  <topic id="id1238"></topic>
+  <topic id="id11"></topic>
+  <topic id="id218"></topic>
+  <topic id="id273"></topic>
+  <topic id="id683"></topic>
+  <topic id="id779"></topic>
+  <topic id="id1343"></topic>
+  <topic id="id919"></topic>
+  <topic id="id294"></topic>
+  <topic id="id1506"></topic>
+  <topic id="id46"></topic>
+  <topic id="id1449"></topic>
+  <topic id="id555"></topic>
+  <topic id="id279"></topic>
+  <topic id="id106"></topic>
+  <topic id="id963"></topic>
+  <topic id="id262"></topic>
+  <topic id="id499"></topic>
+  <topic id="id967"></topic>
+  <topic id="id1019"></topic>
+  <topic id="id9"></topic>
+  <topic id="id467"></topic>
+  <topic id="id1131"></topic>
+  <topic id="id923"></topic>
+  <topic id="id1224"></topic>
+  <topic id="id173"></topic>
+  <topic id="id610"></topic>
+  <topic id="id613"></topic>
+  <topic id="id1319"></topic>
+  <topic id="id1369"></topic>
+  <topic id="id457"></topic>
+  <topic id="id1341"></topic>
+  <topic id="id1350"></topic>
+  <topic id="id748"></topic>
+  <topic id="id1445"></topic>
+  <topic id="id20"></topic>
+  <topic id="id429"></topic>
+  <topic id="id638"></topic>
+  <topic id="id1512"></topic>
+  <topic id="id644"></topic>
+  <topic id="id1203"></topic>
+  <topic id="id47"></topic>
+  <topic id="id1246"></topic>
+  <topic id="id970"></topic>
+  <topic id="id1211"></topic>
+  <topic id="id635"></topic>
+  <topic id="id777"></topic>
+  <topic id="id276"></topic>
+  <topic id="id103"></topic>
+  <topic id="id988"></topic>
+  <topic id="id179"></topic>
+  <topic id="id441"></topic>
+  <topic id="id456"></topic>
+  <topic id="id1192">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#mountain"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>102 0 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id381"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id417"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhIAAgAFUAACH5BAEAADAALAAAAAAgACAAhfj4+PDw+GBgsNDQ6GpqtbCw2Nvb8ODg8MDA
+45GRyKGh0Whosejo9IKCwpub0F1dsHBwuLq64Kys2Kmp0omJwMnJ6H19wOzs+NjY6FhYqIuLyMjI
+4nl5uZCQxdXV6bS03rm52ZiYy6Sk1Ofn86amz3R0vmZmtUVFpVZWqYmJxo+PyeDg7rKy11ZWrsHB
+3IKCvgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/QJhw
+SCwaj8ikcskUAiQiSaDZDCRUGJACQFUGHAtMaPSRcLtGQEHgCBxIiNIBXQREBIICFwHqFKZ0QgMP
+BAIRMAAAGyQOeoEABAsLFFMeHhcRCBYVZ11rCxYMQ20uHRYJF0UDShsQEAIcq0IOEAYUCQ4fFQcA
+AWtJIw0CBA0ZFnMwCgIDFRwUDAMUIRYmEEgXCcMEBgoZjgNsAQoWBmoO2Q9HARraAg0GLA2iFxkL
+EwwUBjAMFRcHh3WyFWqAAQWEAwjmAKBAKEKEDYgCdCLi64E7AVsSZJhwBoCHBQLIATpiwIGFgQEG
+YABgQAAEWYhEDIsw0UmADxAWEHjA4UIAqAaJAEyodWAAFwMcXgEkIsGizgfPEFSY0OAPgwIDECTg
+IlSAiQUjhWRoQWCnggMFFATQqkFtgRMaaAoxUOLBAwVFKoDMAILlCwQAEITooGHC2g0TLyBosKAC
+kaADJPAaAJRtAgoSfB5Y+RhDAQPl6nRSNGFCAQkTFDhQkCIBpyJuaqZJNCSAbQMSGhg9wMC2bDoB
+JKyyHWDFgAESAylfzry58+fQo0cPAgA7</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id306"></topicRef>
+      </instanceOf>
+      <resourceData>C:\Doc\graphics\viz\icons\mountain.gif</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id935"></topic>
+  <topic id="id419"></topic>
+  <topic id="id612"></topic>
+  <topic id="id65"></topic>
+  <topic id="id1276"></topic>
+  <topic id="id128"></topic>
+  <topic id="id1206"></topic>
+  <topic id="id885"></topic>
+  <topic id="id1181"></topic>
+  <topic id="id114"></topic>
+  <topic id="id427"></topic>
+  <topic id="id708"></topic>
+  <topic id="id1517"></topic>
+  <topic id="id1137"></topic>
+  <topic id="id227"></topic>
+  <topic id="id620"></topic>
+  <topic id="id1135"></topic>
+  <topic id="id459">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#river"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>255 153 51</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id381"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id306"></topicRef>
+      </instanceOf>
+      <resourceData>c:\doc\graphics\viz\icons\river.gif</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id417"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODdhEAAQAHcAACwAAAAAEAAQAIf4y5iY+fjwwYnxxZPYpXPRmG/Y9/XcqXTZqHnMm2LhtILI
+oWui8fLToGnI+/f68d3hrnnhtHrQpHCV+vzquYfxuo341LLru4vpwYvRsIj4x5T7zJLR8PeQ+/Tv
+zKXewo3vvpPQ+Pmn+vbY3sq76ffF7/PK7/j517Hrt4eZ+fbL9/Op7fWtzsrPlmjNmGf6/fjdqWrT
+nWvLk2fr5dLbp3jKm1608/q6+Pi2+fi39vffs4fBuqbK6unLr4rbr4Or+fqz6eys8vTN8uTPpnu7
+7e297Paw+e3WnWqz6Pe94vTk07jOyq7wz6XsvJP51qrM17fzxZ73zJv9zZvcwaLvwIHS3OLc18rl
+r4fRvKbgroDhuIXvu4XhvpDLnWzA3dHotonq+Pnc8eXq+fLRo3jS9+zdsHvW4+ae9vb17uXhsHW9
+uJqoqKW6uZa9uZjltXvUq3S8yai2s6C5taeo092p4tKi3cT5+vXfu3bA9PPM9u3m6d6h6Pju5tLN
++Pngq3Haom3a+Pb24cHA+fTh5dr7+O3o3MUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI/wAfWAAA
+YIMTNGY8EARg4cGLNQsZgrGyISLBB4QKApByQoyBQUwsngg0QMOAAVCi6DEAKMyIAQI0aABQAQOG
+Cls+DChkwASHKSAEDMAg4AIVEF8EeCATwoGBJRWaCBBAAYUCNxdGOAhRwkGVD1cuUKgaQQsXIXlU
+cFDBA4uCOwoipEEQwccTQSRM4AGSQQcECFnKKBhzAIaXPgxu/NhBAAICBAcQ0PBDgAYcETiKGJkD
+g8AbCQQkHDhQoAEBOgFEEAnAYsGRPxIaFEhQoMCCNkECBEgRQM6CGKW7uEhQo0WdJClKMJiwJ0aN
+BBmGyBjOJseKAEhsLI/TQgYfJTMyqA/pcCbAhOskOrDoMeOFnYAAOw==</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1213"></topic>
+  <topic id="id1307"></topic>
+  <topic id="id1400"></topic>
+  <topic id="id494">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-font"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id916"></topic>
+  <topic id="id445"></topic>
+  <topic id="id816"></topic>
+  <topic id="id1208"></topic>
+  <topic id="id884"></topic>
+  <topic id="id1059"></topic>
+  <topic id="id56"></topic>
+  <topic id="id1120"></topic>
+  <topic id="id1431"></topic>
+  <topic id="id403"></topic>
+  <topic id="id1365"></topic>
+  <topic id="id181"></topic>
+  <topic id="id705"></topic>
+  <topic id="id127"></topic>
+  <topic id="id1453"></topic>
+  <topic id="id603"></topic>
+  <topic id="id671"></topic>
+  <topic id="id641"></topic>
+  <topic id="id870"></topic>
+  <topic id="id574"></topic>
+  <topic id="id616"></topic>
+  <topic id="id1240"></topic>
+  <topic id="id190"></topic>
+  <topic id="id1202"></topic>
+  <topic id="id1118"></topic>
+  <topic id="id770"></topic>
+  <topic id="id834"></topic>
+  <topic id="id866"></topic>
+  <topic id="id1288"></topic>
+  <topic id="id28"></topic>
+  <topic id="id619"></topic>
+  <topic id="id1333"></topic>
+  <topic id="id278"></topic>
+  <topic id="id10"></topic>
+  <topic id="id720"></topic>
+  <topic id="id640"></topic>
+  <topic id="id1244"></topic>
+  <topic id="id855"></topic>
+  <topic id="id623"></topic>
+  <topic id="id758"></topic>
+  <topic id="id863"></topic>
+  <topic id="id163"></topic>
+  <topic id="id470"></topic>
+  <topic id="id1171">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#is-capital-of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id258"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id261"></topicRef>
+      </instanceOf>
+      <resourceData>7</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>255 0 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id329"></topic>
+  <topic id="id1058"></topic>
+  <topic id="id109"></topic>
+  <topic id="id451"></topic>
+  <topic id="id578">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/mondial/#religion"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id306"></topicRef>
+      </instanceOf>
+      <resourceData>C:\Doc\graphics\viz\icons\religion.gif</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id417"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhIAAgAFUAACH5BAEAADgALAAAAAAgACAAhfn5+aCgoGBgYJiYmHBwcIiIiODg4NDQ0Hh4
+eLi4uKioqICAgGhoaDg4OOjo6MjIyLCwsNjY2JCQkBAQEMDAwPHx8VBQUFhYWDMzM0hISENDQygo
+KO/v72FgX/Ly8iIiIj8/P0dHRzY2NsfHx6enp39/f4CCf8/Pz7+/v9HR0ff399fX16mpqY6PjoiJ
+iJiYl5+fn56enR8fH09PTwwMDDk5OS4uLicnJwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAb/QJxw
+SCwaj8ikcslsOp/PisFQOUQij1PC8IA8Hgero8I8JFCGliKwKAgSi8yiXSA9IoaII0mwKAwQEAcV
+KhVyERUVEWsJBA0fBAZICAIUDgkFAwkJABYFeRQBEgopBAIfAgdIohwAEA0bFhkADAEGAwwNbw4S
+FBkXFEgQAREAGAIEDAgAF7YBDAQLCR4DAxgXCiRHCQEHxhfRAcwDDhBtCxAV1Q0gBARHFAreFscK
+xTMSDg8UAwQDFSwGhJhAQ8YRBdIA9MvUAICAGAYkaCggIUEFCQE0ZBiw4kgAE5zgUGwowJbENtMK
+BGgAbBU6AAYQ+JNAK4ADBQoYlHSAYIAu/1UeEXDiNyDAsmYGEFLKR6DAMaBGBiCgACBBtQAExt1s
+w4Bc059ICiAwAGDEAgQFGIyrEAqCBAgcXMAAwQBqEQkIvD0gcEFAiJoOAghAm4CDyhodHoTNC4CC
+TgEaaP0Z0GEwBA8qRaRCwpfssxcPBNRMqsCCDQIcSihoEImzgGJcED0AQEABTAMjEhzguZLBniOU
+vAEYDqACbdvEh3NAEEBzmCNpqRK/aYAABJjJeTfAYGFC0KIUrCJAIKFBBvIE3h540ACChQ0NGBxs
+46/ABRDIPkzAwCAWOgg3JCAAfAMcIdUmTSlAwXUZTKDBAwpQwsACu1lQAgC/FVFABhZY0EGARhdY
+kN4C0AggwHYNVLbBMhFAt8EEMMYIIwUPONXAezJOsIAiR2ARhl2haeBJPGAoNgQeUEQAwQAKJADF
+k0oEAQA7</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id639"></topic>
+  <topic id="id527"></topic>
+  <topic id="id1226"></topic>
+  <topic id="id123"></topic>
+  <topic id="id1150"></topic>
+  <topic id="id118"></topic>
+  <topic id="id156"></topic>
+  <topic id="id1287">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id439">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#runs-through"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>17 235 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id63"></topic>
+  <topic id="id244"></topic>
+  <topic id="id1487"></topic>
+  <topic id="id809"></topic>
+  <topic id="id944"></topic>
+  <topic id="id287"></topic>
+  <topic id="id212"></topic>
+  <topic id="id344"></topic>
+  <topic id="id277"></topic>
+  <topic id="id36"></topic>
+  <topic id="id768"></topic>
+  <topic id="id1233"></topic>
+  <topic id="id315"></topic>
+  <topic id="id793"></topic>
+  <topic id="id1064"></topic>
+  <topic id="id756"></topic>
+  <topic id="id761"></topic>
+  <topic id="id721"></topic>
+  <topic id="id62"></topic>
+  <topic id="id871"></topic>
+  <topic id="id769"></topic>
+  <topic id="id347"></topic>
+  <topic id="id233"></topic>
+  <topic id="id44"></topic>
+  <topic id="id152"></topic>
+  <topic id="id1498"></topic>
+  <topic id="id285"></topic>
+  <topic id="id119"></topic>
+  <topic id="id1157"></topic>
+  <topic id="id1502"></topic>
+  <topic id="id541"></topic>
+  <topic id="id267"></topic>
+  <topic id="id1026"></topic>
+  <topic id="id149"></topic>
+  <topic id="id321"></topic>
+  <topic id="id1295"></topic>
+  <topic id="id204"></topic>
+  <topic id="id803"></topic>
+  <topic id="id837"></topic>
+  <topic id="id512"></topic>
+  <topic id="id385"></topic>
+  <topic id="id1479"></topic>
+  <topic id="id921"></topic>
+  <topic id="id1310"></topic>
+  <topic id="id166"></topic>
+  <topic id="id684"></topic>
+  <topic id="id800"></topic>
+  <topic id="id549"></topic>
+  <topic id="id1024"></topic>
+  <topic id="id790"></topic>
+  <topic id="id1111"></topic>
+  <topic id="id1260"></topic>
+  <topic id="id292">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/mondial/#has-seat-in"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id1263"></topic>
+  <topic id="id374"></topic>
+  <topic id="id426"></topic>
+  <topic id="id1177"></topic>
+  <topic id="id890"></topic>
+  <topic id="id1344"></topic>
+  <topic id="id523"></topic>
+  <topic id="id354"></topic>
+  <topic id="id1495"></topic>
+  <topic id="id835"></topic>
+  <topic id="id485"></topic>
+  <topic id="id927"></topic>
+  <topic id="id377"></topic>
+  <topic id="id309"></topic>
+  <topic id="id509"></topic>
+  <topic id="id1169"></topic>
+  <topic id="id399"></topic>
+  <topic id="id567"></topic>
+  <topic id="id1514"></topic>
+  <topic id="id1102"></topic>
+  <topic id="id1145"></topic>
+  <topic id="id1386"></topic>
+  <topic id="id1165"></topic>
+  <topic id="id1020"></topic>
+  <topic id="id882"></topic>
+  <topic id="id40"></topic>
+  <topic id="id522"></topic>
+  <topic id="id411"></topic>
+  <topic id="id121"></topic>
+  <topic id="id472"></topic>
+  <topic id="id99"></topic>
+  <topic id="id1471"></topic>
+  <topic id="id394"></topic>
+  <topic id="id1425"></topic>
+  <topic id="id1362"></topic>
+  <topic id="id122"></topic>
+  <topic id="id1262"></topic>
+  <topic id="id1399"></topic>
+  <topic id="id1446"></topic>
+  <topic id="id401"></topic>
+  <topic id="id33"></topic>
+  <topic id="id79"></topic>
+  <topic id="id1218"></topic>
+  <topic id="id960"></topic>
+  <topic id="id1432"></topic>
+  <topic id="id215"></topic>
+  <topic id="id1187"></topic>
+  <topic id="id828"></topic>
+  <topic id="id1133"></topic>
+  <topic id="id598"></topic>
+  <topic id="id595">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#runs-into"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1042"></topic>
+  <topic id="id31"></topic>
+  <topic id="id1129"></topic>
+  <topic id="id575"></topic>
+  <topic id="id867"></topic>
+  <topic id="id1494"></topic>
+  <topic id="id1405"></topic>
+  <topic id="id996"></topic>
+  <topic id="id165"></topic>
+  <topic id="id483"></topic>
+  <topic id="id827"></topic>
+  <topic id="id254"></topic>
+  <topic id="id366"></topic>
+  <topic id="id1161"></topic>
+  <topic id="id842"></topic>
+  <topic id="id565"></topic>
+  <topic id="id660"></topic>
+  <topic id="id1164"></topic>
+  <topic id="id307"></topic>
+  <topic id="id488"></topic>
+  <topic id="id510"></topic>
+  <topic id="id693">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#province"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id306"></topicRef>
+      </instanceOf>
+      <resourceData>C:\Doc\graphics\viz\icons\province.gif</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id381"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id417"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhEAAQAFUAACH5BAEAACgALAAAAAAQABAAhfj4+AAAAaCgoMDAwFpaW7S0tAgICmhoaPDw
+8JKSktra2qioqOHh4R4eIAcHCU5OT8fHx3FxcWRkZF5eYDY2Nzs7PCoqK7u7u9HR0RUVF0ZGSD09
+P4CAgHp6ex0dHoWFhaampklJSuXl5VRUVC4uMBERE+np6ZiYmAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaGQJRw
+KFQIiEgiouJRJIecwaKSKTUSA8EBGQhQBIrB4NE1IB2BRmEAKYS6AW5AcxkUCpGAw0wkTAgHBxES
+EgQEG0gYAIsJD4uLH0gFiwJdI4sMEEgLAAIGcBMABUkDCZ8UBF0HIE8kARYiAKkGDE8XFgyPBB1P
+QgIIj0e9vsALJsNDAicISEEAOw==</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>204 255 204</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1146"></topic>
+  <topic id="id502"></topic>
+  <topic id="id1013"></topic>
+  <topic id="id39"></topic>
+  <topic id="id831"></topic>
+  <topic id="id1128"></topic>
+  <topic id="id806"></topic>
+  <topic id="id814"></topic>
+  <topic id="id780"></topic>
+  <topic id="id933"></topic>
+  <topic id="id170"></topic>
+  <topic id="id1242"></topic>
+  <topic id="id591"></topic>
+  <topic id="id151"></topic>
+  <topic id="id450"></topic>
+  <topic id="id711"></topic>
+  <topic id="id879"></topic>
+  <topic id="id362"></topic>
+  <topic id="id804"></topic>
+  <topic id="id910"></topic>
+  <topic id="id564"></topic>
+  <topic id="id1247"></topic>
+  <topic id="id898"></topic>
+  <topic id="id858"></topic>
+  <topic id="id198"></topic>
+  <topic id="id326"></topic>
+  <topic id="id573"></topic>
+  <topic id="id617"></topic>
+  <topic id="id1408"></topic>
+  <topic id="id420"></topic>
+  <topic id="id1372"></topic>
+  <topic id="id615"></topic>
+  <topic id="id1441"></topic>
+  <topic id="id1114"></topic>
+  <topic id="id848"></topic>
+  <topic id="id801"></topic>
+  <topic id="id1126"></topic>
+  <topic id="id546"></topic>
+  <topic id="id701"></topic>
+  <topic id="id1082"></topic>
+  <topic id="id1217"></topic>
+  <topic id="id572"></topic>
+  <topic id="id207"></topic>
+  <topic id="id526"></topic>
+  <topic id="id136"></topic>
+  <topic id="id1282"></topic>
+  <topic id="id699"></topic>
+  <topic id="id861"></topic>
+  <topic id="id382"></topic>
+  <topic id="id402"></topic>
+  <topic id="id902"></topic>
+  <topic id="id38"></topic>
+  <topic id="id293"></topic>
+  <topic id="id1149"></topic>
+  <topic id="id352"></topic>
+  <topic id="id66"></topic>
+  <topic id="id1212"></topic>
+  <topic id="id1454"></topic>
+  <topic id="id823"></topic>
+  <topic id="id577"></topic>
+  <topic id="id387"></topic>
+  <topic id="id1342"></topic>
+  <topic id="id21"></topic>
+  <topic id="id479"></topic>
+  <topic id="id739"></topic>
+  <topic id="id239"></topic>
+  <topic id="id1205"></topic>
+  <topic id="id552"></topic>
+  <topic id="id1158"></topic>
+  <topic id="id1014"></topic>
+  <topic id="id1007"></topic>
+  <topic id="id868"></topic>
+  <topic id="id1100">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#lives-in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1037"></topic>
+  <topic id="id983"></topic>
+  <topic id="id755"></topic>
+  <topic id="id516"></topic>
+  <topic id="id686"></topic>
+  <topic id="id775"></topic>
+  <topic id="id288"></topic>
+  <topic id="id1308"></topic>
+  <topic id="id524"></topic>
+  <topic id="id1266"></topic>
+  <topic id="id1199"></topic>
+  <topic id="id1304"></topic>
+  <topic id="id1167"></topic>
+  <topic id="id643"></topic>
+  <topic id="id1067"></topic>
+  <topic id="id1375"></topic>
+  <topic id="id943"></topic>
+  <topic id="id357"></topic>
+  <topic id="id29"></topic>
+  <topic id="id802"></topic>
+  <topic id="id989"></topic>
+  <topic id="id43"></topic>
+  <topic id="id1300"></topic>
+  <topic id="id1418"></topic>
+  <topic id="id1323"></topic>
+  <topic id="id934"></topic>
+  <topic id="id1412"></topic>
+  <topic id="id5"></topic>
+  <topic id="id895"></topic>
+  <topic id="id484"></topic>
+  <topic id="id1336"></topic>
+  <topic id="id132"></topic>
+  <topic id="id249"></topic>
+  <topic id="id754"></topic>
+  <topic id="id1231"></topic>
+  <topic id="id339">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/mondial/#practiced-in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id261"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id144"></topic>
+  <topic id="id327">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/null"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id296"></topic>
+  <topic id="id54"></topic>
+  <topic id="id838"></topic>
+  <topic id="id1041"></topic>
+  <topic id="id50"></topic>
+  <topic id="id1397"></topic>
+  <topic id="id530"></topic>
+  <topic id="id955"></topic>
+  <topic id="id1085"></topic>
+  <topic id="id1104"></topic>
+  <topic id="id1338"></topic>
+  <topic id="id111"></topic>
+  <topic id="id830"></topic>
+  <topic id="id343"></topic>
+  <topic id="id1474"></topic>
+  <topic id="id914"></topic>
+  <topic id="id1428"></topic>
+  <topic id="id1144"></topic>
+  <topic id="id367"></topic>
+  <topic id="id1140"></topic>
+  <topic id="id959"></topic>
+  <topic id="id653"></topic>
+  <topic id="id70"></topic>
+  <topic id="id274"></topic>
+  <topic id="id1185"></topic>
+  <topic id="id1469"></topic>
+  <topic id="id602"></topic>
+  <topic id="id351"></topic>
+  <topic id="id1221"></topic>
+  <topic id="id1159"></topic>
+  <topic id="id487"></topic>
+  <topic id="id373"></topic>
+  <topic id="id982"></topic>
+  <topic id="id877"></topic>
+  <topic id="id1162"></topic>
+  <topic id="id534"></topic>
+  <topic id="id37"></topic>
+  <topic id="id625"></topic>
+  <topic id="id183"></topic>
+  <topic id="id1433">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.oasis-open.org/iso/3166/#country"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id417"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhIAAgABEAACH5BAEAAAMALAAAAAAgACAAgf7//9LS0v4AAAAAAAJ+nI+py+0Po5y0roBz
+AEB4roViYIycJ4DjWornB6zsYHawPLbhm8Z4qNPwVL9MMDP0FTEGjvOJekqnzibV1rteDaiu9wv2
+csPksmdsTosH2qh2y76639MjJrk00lxY4tK+0af0t7cjmMdUKHSICIjXqIjEmGdRaXmJmam5iVkAADs=</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>216 216 216</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id306"></topicRef>
+      </instanceOf>
+      <resourceData>C:\Doc\graphics\viz\icons\country.gif</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id494"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-1-12</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id1421"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id381"></topicRef>
+      </instanceOf>
+      <resourceData>5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id859"></topic>
+  <topic id="id792"></topic>
+  <topic id="id1183"></topic>
+  <topic id="id799"></topic>
+  <topic id="id196"></topic>
+  <topic id="id767"></topic>
+  <topic id="id515"></topic>
+  <topic id="id407"></topic>
+  <topic id="id737"></topic>
+  <topic id="id240"></topic>
+  <topic id="id1152"></topic>
+  <topic id="id1065"></topic>
+  <topic id="id1515"></topic>
+  <topic id="id584"></topic>
+  <topic id="id985"></topic>
+  <topic id="id501"></topic>
+  <topic id="id865"></topic>
+  <topic id="id587"></topic>
+  <topic id="id1253"></topic>
+  <topic id="id909"></topic>
+  <topic id="id193"></topic>
+  <topic id="id1283"></topic>
+  <topic id="id297"></topic>
+  <topic id="id634"></topic>
+  <topic id="id854"></topic>
+  <topic id="id482"></topic>
+  <topic id="id672"></topic>
+  <topic id="id408"></topic>
+  <topic id="id78"></topic>
+  <topic id="id34"></topic>
+  <topic id="id637"></topic>
+  <topic id="id1312"></topic>
+  <topic id="id1220"></topic>
+  <topic id="id381">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-shape-padding"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id1050"></topic>
+  <topic id="id926"></topic>
+  <topic id="id194"></topic>
+  <topic id="id1134"></topic>
+  <topic id="id889"></topic>
+  <topic id="id1518">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/double-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id773"></topic>
+  <topic id="id589"></topic>
+  <topic id="id1027"></topic>
+  <topic id="id69"></topic>
+  <topic id="id782"></topic>
+  <topic id="id941"></topic>
+  <topic id="id333"></topic>
+  <topic id="id1414"></topic>
+  <topic id="id1366"></topic>
+  <topic id="id1235"></topic>
+  <topic id="id230"></topic>
+  <topic id="id1075"></topic>
+  <topic id="id1115"></topic>
+  <topic id="id334"></topic>
+  <topic id="id324"></topic>
+  <topic id="id68"></topic>
+  <topic id="id650"></topic>
+  <topic id="id709"></topic>
+  <topic id="id1322"></topic>
+  <topic id="id833"></topic>
+  <topic id="id477"></topic>
+  <topic id="id1450"></topic>
+  <topic id="id808"></topic>
+  <topic id="id899"></topic>
+  <topic id="id195"></topic>
+  <topic id="id745"></topic>
+  <topic id="id94"></topic>
+  <topic id="id213"></topic>
+  <topic id="id104"></topic>
+  <topic id="id298"></topic>
+  <topic id="id576"></topic>
+  <topic id="id330"></topic>
+  <topic id="id947"></topic>
+  <topic id="id1349"></topic>
+  <topic id="id917"></topic>
+  <topic id="id771"></topic>
+  <topic id="id1497"></topic>
+  <topic id="id1294"></topic>
+  <topic id="id716"></topic>
+  <topic id="id586"></topic>
+  <topic id="id1071"></topic>
+  <topic id="id1083"></topic>
+  <topic id="id682"></topic>
+  <topic id="id243"></topic>
+  <topic id="id423"></topic>
+  <topic id="id1478"></topic>
+  <topic id="id869"></topic>
+  <topic id="id607"></topic>
+  <topic id="id283"></topic>
+  <topic id="id1130"></topic>
+  <topic id="id1507"></topic>
+  <topic id="id1490"></topic>
+  <topic id="id1379"></topic>
+  <topic id="id286"></topic>
+  <topic id="id1451"></topic>
+  <topic id="id1346"></topic>
+  <topic id="id680"></topic>
+  <topic id="id1008"></topic>
+  <topic id="id715"></topic>
+  <topic id="id1039"></topic>
+  <topic id="id1480"></topic>
+  <topic id="id1419"></topic>
+  <topic id="id361"></topic>
+  <topic id="id1472"></topic>
+  <topic id="id320"></topic>
+  <topic id="id1044"></topic>
+  <topic id="id7"></topic>
+  <topic id="id585"></topic>
+  <topic id="id1442"></topic>
+  <topic id="id1092"></topic>
+  <topic id="id1377"></topic>
+  <topic id="id1464"></topic>
+  <topic id="id891"></topic>
+  <topic id="id1117"></topic>
+  <topic id="id1407"></topic>
+  <topic id="id1383"></topic>
+  <topic id="id533"></topic>
+  <topic id="id1040"></topic>
+  <topic id="id690"></topic>
+  <topic id="id722"></topic>
+  <topic id="id738"></topic>
+  <topic id="id253"></topic>
+  <topic id="id185"></topic>
+  <topic id="id85"></topic>
+  <topic id="id371"></topic>
+  <topic id="id665"></topic>
+  <topic id="id760"></topic>
+  <topic id="id496"></topic>
+  <topic id="id1032"></topic>
+  <topic id="id1073"></topic>
+  <topic id="id1475"></topic>
+  <topic id="id679"></topic>
+  <topic id="id331"></topic>
+  <topic id="id221"></topic>
+  <topic id="id896"></topic>
+  <topic id="id1492"></topic>
+  <topic id="id725">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#ethnic-group"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id381"></topicRef>
+      </instanceOf>
+      <resourceData>5</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id417"></topicRef>
+      </instanceOf>
+      <resourceData>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</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id306"></topicRef>
+      </instanceOf>
+      <resourceData>C:\Doc\graphics\viz\icons\people2.gif</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>5 3 227</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id378"></topic>
+  <topic id="id1255"></topic>
+  <topic id="id750"></topic>
+  <topic id="id1069"></topic>
+  <topic id="id241"></topic>
+  <topic id="id667"></topic>
+  <topic id="id1229"></topic>
+  <topic id="id216"></topic>
+  <topic id="id1334"></topic>
+  <topic id="id1080"></topic>
+  <topic id="id860"></topic>
+  <topic id="id358"></topic>
+  <topic id="id1160"></topic>
+  <topic id="id1368"></topic>
+  <topic id="id304"></topic>
+  <topic id="id658"></topic>
+  <topic id="id1370"></topic>
+  <topic id="id846"></topic>
+  <topic id="id1286"></topic>
+  <topic id="id16"></topic>
+  <topic id="id1095"></topic>
+  <topic id="id542"></topic>
+  <topic id="id624"></topic>
+  <topic id="id1198"></topic>
+  <topic id="id681"></topic>
+  <topic id="id1254"></topic>
+  <topic id="id825"></topic>
+  <topic id="id1154"></topic>
+  <topic id="id1409"></topic>
+  <topic id="id975"></topic>
+  <topic id="id929"></topic>
+  <topic id="id1423"></topic>
+  <topic id="id1321"></topic>
+  <topic id="id318"></topic>
+  <topic id="id475"></topic>
+  <topic id="id1374"></topic>
+  <topic id="id476"></topic>
+  <topic id="id733"></topic>
+  <topic id="id712"></topic>
+  <topic id="id1364"></topic>
+  <topic id="id197"></topic>
+  <topic id="id400"></topic>
+  <topic id="id1314">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-excluded"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id1219"></topic>
+  <topic id="id53"></topic>
+  <topic id="id1516"></topic>
+  <topic id="id1197"></topic>
+  <topic id="id1"></topic>
+  <topic id="id1519"></topic>
+  <topic id="id1473"></topic>
+  <topic id="id208"></topic>
+  <topic id="id1297"></topic>
+  <topic id="id1127"></topic>
+  <topic id="id1331"></topic>
+  <topic id="id1504"></topic>
+  <topic id="id1296"></topic>
+  <topic id="id87"></topic>
+  <topic id="id936"></topic>
+  <topic id="id393"></topic>
+  <topic id="id953"></topic>
+  <topic id="id1245"></topic>
+  <topic id="id164"></topic>
+  <topic id="id528"></topic>
+  <topic id="id1223"></topic>
+  <topic id="id95"></topic>
+  <topic id="id718"></topic>
+  <topic id="id797"></topic>
+  <topic id="id964"></topic>
+  <topic id="id558"></topic>
+  <topic id="id614"></topic>
+  <topic id="id432"></topic>
+  <topic id="id74"></topic>
+  <topic id="id290"></topic>
+  <topic id="id676"></topic>
+  <topic id="id752"></topic>
+  <topic id="id305"></topic>
+  <topic id="id1483"></topic>
+  <topic id="id1011"></topic>
+  <topic id="id657"></topic>
+  <topic id="id1057"></topic>
+  <topic id="id1043"></topic>
+  <topic id="id359"></topic>
+  <topic id="id1281"></topic>
+  <topic id="id234">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#sea"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1462"></topic>
+  <topic id="id1047"></topic>
+  <topic id="id751"></topic>
+  <topic id="id647"></topic>
+  <topic id="id977"></topic>
+  <topic id="id556"></topic>
+  <topic id="id604"></topic>
+  <topic id="id1332"></topic>
+  <topic id="id1225"></topic>
+  <topic id="id1033"></topic>
+  <topic id="id1272"></topic>
+  <topic id="id100"></topic>
+  <topic id="id159"></topic>
+  <topic id="id443"></topic>
+  <topic id="id719"></topic>
+  <topic id="id219"></topic>
+  <topic id="id141"></topic>
+  <topic id="id1417"></topic>
+  <topic id="id1261"></topic>
+  <topic id="id847"></topic>
+  <topic id="id948"></topic>
+  <topic id="id58"></topic>
+  <topic id="id251"></topic>
+  <topic id="id155"></topic>
+  <topic id="id938"></topic>
+  <topic id="id405"></topic>
+  <topic id="id1138"></topic>
+  <topic id="id569"></topic>
+  <topic id="id689"></topic>
+  <topic id="id391"></topic>
+  <topic id="id677"></topic>
+  <topic id="id375"></topic>
+  <topic id="id1201"></topic>
+  <topic id="id627">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-instance"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id174"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1256"></topic>
+  <topic id="id1481"></topic>
+  <topic id="id984"></topic>
+  <topic id="id872"></topic>
+  <topic id="id490">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#city"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id381"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>255 0 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id174"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id494"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id272"></topic>
+  <topic id="id525"></topic>
+  <topic id="id452"></topic>
+  <topic id="id519"></topic>
+  <topic id="id160"></topic>
+  <topic id="id1239"></topic>
+  <topic id="id888"></topic>
+  <topic id="id1248"></topic>
+  <topic id="id1070"></topic>
+  <topic id="id618"></topic>
+  <topic id="id1396"></topic>
+  <topic id="id202"></topic>
+  <topic id="id180"></topic>
+  <topic id="id392"></topic>
+  <topic id="id1367"></topic>
+  <topic id="id646"></topic>
+  <topic id="id1210"></topic>
+  <topic id="id1048"></topic>
+  <topic id="id571"></topic>
+  <topic id="id772"></topic>
+  <topic id="id550"></topic>
+  <topic id="id911"></topic>
+  <topic id="id2"></topic>
+  <topic id="id289"></topic>
+  <topic id="id1493"></topic>
+  <topic id="id566"></topic>
+  <topic id="id1191"></topic>
+  <topic id="id700"></topic>
+  <topic id="id1496"></topic>
+  <topic id="id962">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject-indicator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id45"></topic>
+  <topic id="id590"></topic>
+  <topic id="id238"></topic>
+  <topic id="id548"></topic>
+  <topic id="id974"></topic>
+  <topic id="id1139"></topic>
+  <topic id="id843"></topic>
+  <topic id="id928"></topic>
+  <topic id="id937"></topic>
+  <topic id="id1448"></topic>
+  <topic id="id396"></topic>
+  <topic id="id540"></topic>
+  <topic id="id1252"></topic>
+  <topic id="id840"></topic>
+  <topic id="id661"></topic>
+  <topic id="id1036"></topic>
+  <topic id="id1265"></topic>
+  <topic id="id839"></topic>
+  <topic id="id337"></topic>
+  <topic id="id1293"></topic>
+  <topic id="id1466"></topic>
+  <topic id="id125"></topic>
+  <topic id="id730"></topic>
+  <topic id="id148"></topic>
+  <topic id="id904"></topic>
+  <topic id="id1421">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id412"></topic>
+  <topic id="id1455"></topic>
+  <topic id="id626"></topic>
+  <topic id="id1012"></topic>
+  <topic id="id942"></topic>
+  <topic id="id102"></topic>
+  <topic id="id80"></topic>
+  <topic id="id48"></topic>
+  <topic id="id1508"></topic>
+  <topic id="id1078"></topic>
+  <topic id="id992"></topic>
+  <topic id="id284"></topic>
+  <topic id="id1373"></topic>
+  <topic id="id949"></topic>
+  <topic id="id497"></topic>
+  <topic id="id474"></topic>
+  <topic id="id1119"></topic>
+  <topic id="id168"></topic>
+  <topic id="id1340"></topic>
+  <topic id="id1317">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/geography/#island"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id177"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1063"></topic>
+  <topic id="id282"></topic>
+  <topic id="id171"></topic>
+  <topic id="id368"></topic>
+  <topic id="id18"></topic>
+  <topic id="id1038"></topic>
+  <topic id="id142"></topic>
+  <topic id="id1023"></topic>
+  <topic id="id609"></topic>
+  <topic id="id395"></topic>
+  <topic id="id1499"></topic>
+  <topic id="id1189"></topic>
+  <topic id="id1116"></topic>
+  <topic id="id325"></topic>
+  <topic id="id1087"></topic>
+  <topic id="id71"></topic>
+  <topic id="id1096"></topic>
+  <topic id="id1084"></topic>
+  <topic id="id356"></topic>
+  <topic id="id348"></topic>
+  <topic id="id1440"></topic>
+  <topic id="id370"></topic>
+  <topic id="id632"></topic>
+  <topic id="id172"></topic>
+  <topic id="id778"></topic>
+  <topic id="id1060"></topic>
+  <topic id="id1147"></topic>
+  <topic id="id1086"></topic>
+  <topic id="id1028"></topic>
+  <topic id="id1124"></topic>
+  <topic id="id1315"></topic>
+  <topic id="id951"></topic>
+  <topic id="id952"></topic>
+  <topic id="id489"></topic>
+  <topic id="id1424"></topic>
+  <topic id="id1204"></topic>
+  <topic id="id998"></topic>
+  <topic id="id108"></topic>
+  <topic id="id61"></topic>
+  <topic id="id199"></topic>
+  <topic id="id703"></topic>
+  <topic id="id182"></topic>
+  <topic id="id161"></topic>
+  <topic id="id1411"></topic>
+  <topic id="id880"></topic>
+  <topic id="id138"></topic>
+  <topic id="id1465"></topic>
+  <topic id="id60"></topic>
+  <topic id="id1273"></topic>
+  <topic id="id685"></topic>
+  <topic id="id1081"></topic>
+  <topic id="id268"></topic>
+  <topic id="id517"></topic>
+  <topic id="id805"></topic>
+  <topic id="id158"></topic>
+  <topic id="id1387"></topic>
+  <topic id="id857"></topic>
+  <topic id="id404"></topic>
+  <topic id="id310"></topic>
+  <topic id="id430"></topic>
+  <topic id="id67">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/source-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id248"></topic>
+  <topic id="id999"></topic>
+  <topic id="id134"></topic>
+  <topic id="id1056"></topic>
+  <topic id="id446"></topic>
+  <topic id="id306">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon-filename"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id157"></topic>
+  <topic id="id819"></topic>
+  <topic id="id1121"></topic>
+  <topic id="id1209"></topic>
+  <topic id="id1354"></topic>
+  <topic id="id611"></topic>
+  <topic id="id1391"></topic>
+  <topic id="id224"></topic>
+  <topic id="id1415"></topic>
+  <topic id="id1392"></topic>
+  <topic id="id874"></topic>
+  <topic id="id335"></topic>
+  <topic id="id659"></topic>
+  <topic id="id345"></topic>
+  <topic id="id1109"></topic>
+  <topic id="id905"></topic>
+  <topic id="id518"></topic>
+</topicMap>

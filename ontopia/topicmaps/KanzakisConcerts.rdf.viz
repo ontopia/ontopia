@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <topic id="id88">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-instance"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id70"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 102</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id74"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id48"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://ebiquity.umbc.edu/v2.1/ontology/event.owl#location"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>255 153 51</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id71">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/start-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id73"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="x-anon:_128"></resourceRef>
+    </occurrence>
+  </topic>
+  <topic id="id40">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#Concerto"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id25"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>0 0 204</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id47"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhEwAhALMJAP//zP/MmczMmcyZmcyZZplmZplmM5kzM2YAAP//zAAAAAAAAAAAAAAAAAAA
+AAAAACH5BAEAAAkALAAAAAATACEAAASSMMmZgBE061TQ2WCAjBiYEYgQEGZWFJLRUgcmfLOEF3LO
+JQIEy1e4IQI+4AiXAxxIPudomHt6kh0hATkTCYGDXAcGyF5MB5x1dAR9B4hXOe7GFD4FpAEBOhNg
+AmFwIH8VMmVATBoHSAIwj1QaZSUchTN/LwaRPgOUSSs+jlwwXUsSpC1ZfD8zQXSgYheWUSpJthEAOw==</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id44"></topicRef>
+      </instanceOf>
+      <resourceData>L:\omnigator\WEB-INF\topicmaps\images\clef.gif</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id73">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/source-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id57">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/vizigator-general"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id37"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>240 240 240</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id25">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-shape-padding"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id10">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject-indicator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id32">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#performer"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>255 0 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id68">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/single-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id47">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id48">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id126">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#Orchestra"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id25"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id7">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-font"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id3">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id13">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id110">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#Symphony"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id25"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id44"></topicRef>
+      </instanceOf>
+      <resourceData>L:\omnigator\WEB-INF\topicmaps\images\clef.gif</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>0 0 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id47"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhEwAhALMJAP//zP/MmczMmcyZmcyZZplmZplmM5kzM2YAAP//zAAAAAAAAAAAAAAAAAAA
+AAAAACH5BAEAAAkALAAAAAATACEAAASSMMmZgBE061TQ2WCAjBiYEYgQEGZWFJLRUgcmfLOEF3LO
+JQIEy1e4IQI+4AiXAxxIPudomHt6kh0hATkTCYGDXAcGyF5MB5x1dAR9B4hXOe7GFD4FpAEBOhNg
+AmFwIH8VMmVATBoHSAIwj1QaZSUchTN/LwaRPgOUSSs+jlwwXUsSpC1ZfD8zQXSgYheWUSpJthEAOw==</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id15">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#program"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>255 153 153</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id36">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/rdf2tm/#subject"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id99">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id37">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/show-role-hover-help"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id29">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/double-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id61">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#composer"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>7</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>0 0 204</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id67">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-excluded"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id39">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id103">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#Concert"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id99"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>204 204 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id25"></topicRef>
+      </instanceOf>
+      <resourceData>3</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id56">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id122">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/null"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 102</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id39"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id70">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id65">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id20">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#performs"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>0 153 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id44">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon-filename"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id116">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#Violinist"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>255 51 51</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id44"></topicRef>
+      </instanceOf>
+      <resourceData>L:\omnigator\WEB-INF\topicmaps\images\person.gif</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id47"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhDgAeAMQVAG5ubm9vb93d3URERNXV1ZeXl1NTUxcXFyYmJqSkpKOjo1JSUsXFxZubm8TE
+xJqamtPT05aWltTU1P///wAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEA
+ABUALAAAAAAOAB4AAAWkYCWOZEkeBzWYIyIwz3Cw7jQJykCZh2ALCcOuhEgIBI6GjjdQJBSLJYlC
+oBgMA2GJQhVyKRHuiCKxRc6RQqQqIkvKE4KcEG6/7+bz0H1/o/d3EHd/dhKCg2mAhosQaXUVFIKH
+fmqKhxCNEQCKb4eaQ4UAdwEBoJBvAagAm1NvohJnBaaREAGYhGOot3pTmKmZj6F+ia0Sv7htka/I
+Y27ELJBfJCEAOw==</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id49">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#conductor"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>7</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id74">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id131">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/rdf2tm/#object"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id28">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/display-scoped-assoc-names"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id82">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.kanzaki.com/ns/music#Venue"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id44"></topicRef>
+      </instanceOf>
+      <resourceData>L:\omnigator\WEB-INF\topicmaps\images\temple.gif</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>140 203 203</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id25"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id47"></topicRef>
+      </instanceOf>
+      <resourceData>R0lGODlhEAAQAFUAACH5BAEAACcALAAAAAAQABAAhf///2aZ/2ABGbIBL5nM//8AAH/M/2ay/0yy
+/0x//3LM/2W//2bM/2aM/zN/5ZnY/wAAAIzM/2bY/zN/u2aMv0yZ/zN//3LY/z9/u2Z/u1lyvwAA
+TD9//wAAWUxyv0yl/3Ky/1m//1ml/3+//z+M/3+y/3K//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaOwJNw
+SCwaTxCBAHIcCiiR0QGkERSfBAPC8qkUCpyDxyogmLOGxQJRIVkcDmvJbDAo7ox8XiQ8JAp+gH+B
+fkIEAQWHiYiKEQFCBoiRBZOVjycmAQMKmpybnZcLmqIDpKaXB5qpA6utlw0JA7CysbOwQg8EGQ8G
+GBcKExIMwQyGdAYhCMrLykJKz9DPHRsnQQA7</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id7"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id5">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-line-weight"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+</topicMap>

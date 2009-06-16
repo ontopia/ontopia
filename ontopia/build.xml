@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<!--DOCTYPE project SYSTEM "ant-project.dtd"-->
 <!-- 
   $Id: build.xml,v 1.769 2009/05/25 05:48:16 geir.gronmo Exp $ 
 
@@ -43,6 +42,8 @@
     <property name="doc.path" value="${project.root}/doc" />
     <property name="topicmaps.path" value="${project.root}/topicmaps" />
     <property name="3rdparty.path" value="${project.root}/3rdparty" />
+    <property name="lib.path" value="${project.root}/lib" />
+    <echo>:${doc.path}:</echo>
 
     <!-- Compiler properties -->
     <property name="build.compiler" value="modern" />
@@ -94,71 +95,6 @@
     <pathelement location="${basedir}/build/classes" />
   
   </path>
-
-  <!--path id="_project.class.path.nolog4j">
-
-    <pathelement location="${java.home}/jre/lib/rt.jar" />
-    <pathelement location="${java.home}/jre/lib/tools.jar" />
-
-    <pathelement location="${3rdparty.path}/j2ee131.jar" />
-
-    <pathelement location="${3rdparty.path}/ontoboot.jar" />
-    <pathelement location="${3rdparty.path}/crimson.jar" />
-    <pathelement location="${3rdparty.path}/brownell.jar" />
-    <pathelement location="${3rdparty.path}/jaxp.jar" />
-    <pathelement location="${3rdparty.path}/antlr.jar" />
-    <pathelement location="${3rdparty.path}/junit.jar" />
-    <pathelement location="${3rdparty.path}/getopt.jar" />
-    <pathelement location="${3rdparty.path}/lucene.jar" />
-    <pathelement location="${3rdparty.path}/snowball.jar" />
-    <pathelement location="${3rdparty.path}/saxon.jar" />
-    <pathelement location="${3rdparty.path}/trove.jar" />
-    <pathelement location="${3rdparty.path}/backport-util-concurrent.jar" />
-    <pathelement location="${3rdparty.path}/jena.jar" />
-    <pathelement location="${3rdparty.path}/jakarta-oro.jar" />
-    <pathelement location="${3rdparty.path}/jing.jar" />
-    <pathelement location="${3rdparty.path}/icu4j.jar" />
-    <pathelement location="${3rdparty.path}/jdbm.jar" />
-    <pathelement location="${3rdparty.path}/xerces.jar" />
-    <pathelement location="${3rdparty.path}/concurrent.jar" />
-    <pathelement location="${3rdparty.path}/tmapi.jar" />
-    <pathelement location="${3rdparty.path}/jgroups-all.jar" />
-    <pathelement location="${3rdparty.path}/JFlex.jar" />
-
-    <pathelement location="${3rdparty.path}/commons-collections.jar" />
-    <pathelement location="${3rdparty.path}/commons-fileupload.jar" />
-    <pathelement location="${3rdparty.path}/commons-dbcp.jar" />
-    <pathelement location="${3rdparty.path}/commons-pool.jar" />
-    <pathelement location="${3rdparty.path}/commons-logging.jar" />
-
-    <pathelement location="${3rdparty.path}/catalina.jar" />
-
-    <pathelement location="${3rdparty.path}/velocity.jar" />
-    <pathelement location="${3rdparty.path}/logkit.jar" />
-
-    <pathelement location="${3rdparty.path}/httpunit.jar" />
-    <pathelement location="${3rdparty.path}/touchgraph.jar" />
-    <pathelement location="${3rdparty.path}/Tidy.jar" />
-    <pathelement location="${3rdparty.path}/acmeenc.jar" />
-    <pathelement location="${3rdparty.path}/opencsv.jar" />
-
-    <pathelement location="${3rdparty.path}/tagsoup.jar" />
-    <pathelement location="${3rdparty.path}/poi.jar" />
-    <pathelement location="${3rdparty.path}/poi-scratchpad.jar" />
-    <pathelement location="${3rdparty.path}/pdfbox.jar" />
-    <pathelement location="${3rdparty.path}/fontbox.jar" />
-    <pathelement location="${3rdparty.path}/bcprov.jar" />
-    <pathelement location="${3rdparty.path}/bcmail.jar" />
-
-    <pathelement location="${3rdparty.path}/jstl.jar" />
-    <pathelement location="${3rdparty.path}/servlet.jar" />
-    <pathelement location="${3rdparty.path}/standard.jar" />
-
-    <pathelement location="/usr/local/jython/jython.jar" />
-
-    <pathelement location="${build.classes}" />
-
-  </path-->
   
   <path id="jasper.class.path">
     <pathelement location="${dist.path}/apache-tomcat/bin/commons-logging-api.jar" />
@@ -172,7 +108,7 @@
     <pathelement location="${dist.path}/apache-tomcat/common/lib/commons-el.jar" />
     <pathelement location="${dist.path}/apache-tomcat/common/lib/jstl.jar" />
     <pathelement location="${dist.path}/apache-tomcat/common/lib/standard.jar" />
-    <pathelement location="${build.jars}/oks-resources.jar" />
+    <pathelement location="${build.jars}/ontopia-resources.jar" />
     <path refid="project.class.path" />
   </path>
 
@@ -224,7 +160,7 @@
     <mkdir dir="${build.doc}" />
   </target>
 
-  <target name="bootstrap" depends="dist.oks.init">
+  <target name="bootstrap" depends="dist.ontopia.init">
     <!-- This target prepares build system. The target should be called when 
          checking out the source code to a new system -->
 
@@ -522,14 +458,6 @@
        net.ontopia.topicmaps.impl.rdbms, 
        net.ontopia.topicmaps.impl.rdbms.index" />
 
-  <target name="javadoc.rdbms" depends="init">
-    <delete dir="${build.javadoc}/rdbms" />
-    <mkdir dir="${build.javadoc}/rdbms" />
-    <javadoc packagenames="${dev.rdbms.packagenames}" sourcepath="${java.path}" destdir="${build.javadoc}/rdbms" author="true" version="true" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="&lt;align=center&gt;Ontopia RDBMS Backend Connector API documentation&lt;align=right&gt;&lt;img src='logo.gif'&gt;&lt;br&gt;&lt;br&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-    </javadoc>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/rdbms" />
-  </target>
-
   <!-- ======================================================================
         RDBMS tests (proxy)
        ====================================================================== -->
@@ -558,38 +486,6 @@
         <patternset refid="classes.test.rdbms" />
       </fileset>
     </delete>
-  </target>
-
-  <!-- ======================================================================
-        Virtual merge
-       ====================================================================== -->
-
-  <target name="compile.virtual" depends="compile.engine">
-    <echo>Compiling virtual merge classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset>
-        <include name="net/ontopia/topicmaps/impl/virtual/**/*.java" />
-      </patternset>
-    </javac>
-  </target>
-
-  <target name="clean.virtual" depends="init">
-    <echo>Cleaning up virtual merge classes...</echo>
-    <delete>
-      <fileset dir="${build.classes}/net/ontopia/topicmaps/impl/virtual">
-        <patternset>
-          <include name="**/*.class" />
-        </patternset>
-      </fileset>
-    </delete>
-  </target>
-
-  <target name="jar.virtual" depends="compile.virtual">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-vmerge.jar">
-      <patternset>
-        <include name="net/ontopia/topicmaps/impl/virtual/**/*.class" />
-      </patternset>
-    </jar>
   </target>
 
   <!-- ======================================================================
@@ -665,14 +561,6 @@
        net.ontopia.infoset.fulltext.utils, 
              ${dist.fulltext.packagenames},
              ${dist.fulltext.packagenames.other}" />
-
-  <target name="javadoc.fulltext" depends="init">
-    <delete dir="${build.javadoc}/fulltext" />
-    <mkdir dir="${build.javadoc}/fulltext" />
-    <javadoc packagenames="${dev.fulltext.packagenames}" sourcepath="${java.path}" destdir="${build.javadoc}/fulltext" author="true" version="true" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="&lt;align=center&gt;Ontopia Full-text Integration API documentation&lt;align=right&gt;&lt;img src='logo.gif'&gt;&lt;br&gt;&lt;br&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-    </javadoc>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/fulltext" />
-  </target>
 
   <!-- ======================================================================
         DB2TM
@@ -783,14 +671,6 @@
     </delete>
   </target>
 
-  <target name="javadoc.classify" depends="init">
-    <delete dir="${build.javadoc}/classify" />
-    <mkdir dir="${build.javadoc}/classify" />
-    <javadoc packagenames="net.ontopia.topicmaps.classify" sourcepath="${java.path}" destdir="${build.javadoc}/classify" author="true" version="true" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="&lt;align=center&gt;Ontopia Topic Map Engine API documentation&lt;align=right&gt;&lt;img src='logo.gif'&gt;&lt;br&gt;&lt;br&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-    </javadoc>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/classify" />
-  </target>  
-
   <target name="compile.test.classify" depends="compile.test.engine,compile.classify">
     <echo>Compiling CLASSIFY test classes...</echo>
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
@@ -842,134 +722,6 @@
   <target name="jar.tmrap" depends="compile.engine">
     <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-tmrap.jar">
       <patternset refid="classes.tmrap"/>
-    </jar>
-  </target>
-
-  <!-- ======================================================================
-        Experimental topic map editor framework
-       ====================================================================== -->
-
-  <target name="compile.editor" depends="compile.engine">
-    <echo>Compiling editor classes...</echo>
-    <javac srcdir="${java.path}/net/ontopia/editor" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset>
-        <include name="**/*.java" />
-      </patternset>
-    </javac>
-  </target>
-
-  <target name="clean.editor" depends="init">
-    <echo>Cleaning up editor classes...</echo>
-    <delete>
-      <fileset dir="${build.classes}/net/ontopia/editor">
-        <patternset>
-          <include name="**/*.class" />
-        </patternset>
-      </fileset>
-    </delete>
-  </target>
-
-  <target name="jar.editor" depends="compile.engine">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-editor.jar">
-      <patternset>
-        <include name="net/ontopia/reflect/**/*.class" />
-        <include name="net/ontopia/editor/**/*.class" />
-      </patternset>
-    </jar>
-  </target>
-
-  <target name="dist.editor" depends="jar.editor">
-    <property name="dist.path.editor" value="${build.root}/editor" />
-    <copy file="${java.path}/net/ontopia/editor/config.xml" todir="${dist.path.editor}" />
-    <copy file="${java.path}/net/ontopia/editor/editor.sh" todir="${dist.path.editor}" />
-    <copy todir="${dist.path.editor}/icons">
-      <fileset dir="${java.path}/net/ontopia/editor/icons" />
-    </copy>
-  </target>
-
-
-  <target name="compile.schema.editor" depends="compile.engine">
-    <echo>Compiling schema editor classes...</echo>
-    <delete>
-      <fileset dir="${build.classes}/net/ontopia/topicmaps/schema">
-        <patternset>
-          <include name="**/*.class" />
-        </patternset>
-      </fileset>
-    </delete>
-    <javac srcdir="${java.path}/net/ontopia/topicmaps/schema" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset>
-        <include name="**/*.java" />
-      </patternset>
-    </javac>
-  </target>
-
-  <!-- ======================================================================
-        Virtual topic map demo (jdbcwrap)
-       ====================================================================== -->
-
-  <target name="compile.jdbcwrap" depends="compile.engine">
-    <echo>Compiling jdbcwrap classes...</echo>
-    <javac srcdir="${java.path}/net/ontopia/jdbcwrap" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset>
-        <include name="**/*.java" />
-      </patternset>
-    </javac>
-  </target>
-
-  <target name="clean.jdbcwrap" depends="init">
-    <echo>Cleaning up jdbcwrap classes...</echo>
-    <delete>
-      <fileset dir="${build.classes}/net/ontopia/jdbcwrap">
-        <patternset>
-          <include name="**/*.class" />
-        </patternset>
-      </fileset>
-    </delete>
-  </target>
-
-  <target name="jar.jdbcwrap" depends="compile.engine">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-jdbcwrap.jar">
-      <patternset>
-        <include name="net/ontopia/jdbcwrap/**/*.class" />
-      </patternset>
-    </jar>
-  </target>
-
-
-  <!-- ======================================================================
-        Brain Navigator integration (Prototype)
-       ====================================================================== -->
-
-  <target name="compile.tmnav" depends="compile.engine">
-    <echo>Compiling tmnav classes...</echo>
-    <javac srcdir="${java.path}/net/ontopia/kal/nav" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset>
-        <include name="**/*.java" />
-      </patternset>
-      <classpath>
-        <pathelement location="${3rdparty.path}/BrainSDK.jar" />
-        <pathelement location="${build.classes}" />
-      </classpath>
-    </javac>
-  </target>
-
-  <target name="clean.tmnav" depends="init">
-    <echo>Cleaning up tmnav classes...</echo>
-    <delete>
-      <fileset dir="${build.classes}/net/ontopia/kal/nav">
-        <patternset>
-          <include name="**/*.class" />
-        </patternset>
-      </fileset>
-    </delete>
-  </target>
-
-  <target name="jar.tmnav" depends="compile.tmnav">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-tmnav.jar">
-      <patternset>
-        <include name="net/ontopia/kal/nav/**/*.class" />
-      </patternset>
     </jar>
   </target>
 
@@ -1140,18 +892,6 @@
        net.ontopia.topicmaps.classify,
        net.ontopia.topicmaps.cmdlineutils" />
 
-  <target name="javadoc.engine" depends="init">
-    <delete dir="${build.javadoc}/engine" />
-    <mkdir dir="${build.javadoc}/engine" />
-    <javadoc packagenames="${dev.engine.packagenames}" sourcepath="${java.path}" destdir="${build.javadoc}/engine" author="true" version="true" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="&lt;align=center&gt;Ontopia Topic Map Engine API documentation&lt;align=right&gt;&lt;img src='logo.gif'&gt;&lt;br&gt;&lt;br&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-      <group title="Core Topic Map Packages" packages="net.ontopia.topicmaps.core:net.ontopia.topicmaps.core.index:net.ontopia.topicmaps.core.events:net.ontopia.topicmaps.entry:net.ontopia.topicmaps.utils:net.ontopia.topicmaps.xml" />
-      <group title="Core Information Set Packages" packages="net.ontopia.infoset.core:net.ontopia.infoset.impl.basic" />
-      <group title="Basic Implementation" packages="net.ontopia.topicmaps.impl.basic:net.ontopia.topicmaps.impl.basic.index" />
-      <!--link href="http://java.sun.com/products/jdk/1.2/docs/api/"/-->
-    </javadoc>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/engine" />
-  </target>
-
   <!-- ====================================================================
        Navigator 2nd generation: compile, jar, clean
        ==================================================================== -->
@@ -1276,21 +1016,8 @@
        net.ontopia.topicmaps.nav2.taglibs.framework,
        net.ontopia.topicmaps.nav2.impl.framework,
        net.ontopia.topicmaps.nav2.servlets,
-       net.ontopia.topicmaps.nav2.webapps.ontopoly.model,
-       net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel,
-       net.ontopia.topicmaps.nav2.webapps.ontopoly.utils,
        net.ontopia.topicmaps.nav2.realm
        " />
-
-  <target name="javadoc.navigator" depends="init">
-    <delete dir="${build.javadoc}/navigator" />
-    <mkdir dir="${build.javadoc}/navigator" />
-    <javadoc packagenames="${dev.navigator.packagenames}" sourcepath="${java.path}" destdir="${build.javadoc}/navigator" author="true" version="true" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="&lt;align=center&gt;Ontopia Navigator Framework documentation&lt;align=right&gt;&lt;img src='logo.gif'&gt;&lt;br&gt;&lt;br&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-
-      <!--link href="http://java.sun.com/products/jdk/1.2/docs/api/"/-->
-    </javadoc>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${java.path}/build/javadoc/navigator" />
-  </target>
 
   <!-- ====================================================================
        Test-Environment for the Navigator 2nd Generation
@@ -1302,8 +1029,6 @@
     <include name="net/ontopia/topicmaps/nav2/impl/framework/test/*.java" />
     <include name="net/ontopia/topicmaps/nav2/plugins/test/*.java" />
     <include name="net/ontopia/topicmaps/nav2/utils/test/*.java" />
-    <include name="net/ontopia/topicmaps/nav2/webapps/ted/test/**/*.java"/>
-    <!--include name="net/ontopia/topicmaps/nav2/webapps/ontopoly/*/test/**/*.java"/-->
     <include name="net/ontopia/topicmaps/nav2/portlets/pojos/test/*.java" />
   </patternset>
 
@@ -1313,8 +1038,6 @@
     <include name="net/ontopia/topicmaps/nav2/impl/framework/test/*.class" />
     <include name="net/ontopia/topicmaps/nav2/plugins/test/*.class" />
     <include name="net/ontopia/topicmaps/nav2/utils/test/*.class" />
-    <include name="net/ontopia/topicmaps/nav2/webapps/ted/test/**/*.class"/>
-    <!--include name="net/ontopia/topicmaps/nav2/webapps/ontopoly/**/test/**/*.class"/-->
     <include name="net/ontopia/topicmaps/nav2/portlets/pojos/test/*.class" />
   </patternset>
 
@@ -1413,7 +1136,7 @@
     </javac>
     <echo>Copying velocity macros...</echo>
     <copy todir="${build.classes}/" overwrite="yes">
-      <fileset refid="oks.vms" />
+      <fileset refid="ontopia.vms" />
     </copy>
   </target>
 
@@ -1461,66 +1184,56 @@
              net.ontopia.topicmaps.nav2.webapps.ted.actions,
              ${dist.webed.packagenames}" />
 
-  <target name="javadoc.webed" depends="init">
-    <delete dir="${build.javadoc}/webed" />
-    <mkdir dir="${build.javadoc}/webed" />
-    <javadoc packagenames="${dev.webed.packagenames}" sourcepath="${java.path}" destdir="${build.javadoc}/webed" author="true" version="true" verbose="false" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="Ontopia Web Editor Framework API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-      <!--link href="http://java.sun.com/products/jdk/1.2/docs/api/"/-->
-    </javadoc>
-    <replace file="${java.path}/build/javadoc/webed/overview-frame.html" token="{@docroot}" value="." />
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${java.path}/build/javadoc/webed" />
-  </target>
-
   <!-- ======================================================================
-       Distribute current OKS release
+       Distribute current Ontopia release
        ==================================================================== -->
 
-  <target name="distribute.oks" depends="dist.oks.init">
-    <antcall target="distribute.oks.local" />
-    <antcall target="distribute.oks.web.current" />
-    <antcall target="distribute.oks.web.freedownload" />
+  <target name="distribute.ontopia" depends="dist.ontopia.init">
+    <antcall target="distribute.ontopia.local" />
+    <antcall target="distribute.ontopia.web.current" />
+    <antcall target="distribute.ontopia.web.freedownload" />
   </target>
 
-  <target name="distribute.oks.props" depends="dist.oks.init">
+  <target name="distribute.ontopia.props" depends="dist.ontopia.init">
     <property name="dist.local.path" value="/Volumes/ontopia/graph/data/dev/releases"/>
     <property name="dist.host.web" value="www.ontopia.net"/>
     <property name="dist.host.web.user" value="webadmin"/>
     <property name="dist.host.web.path" value="/home/webadmin/ontopia.net/html"/>
   </target>
 
-  <target name="distribute.oks.local" depends="dist.oks.init,distribute.oks.props">
+  <target name="distribute.ontopia.local" depends="dist.ontopia.init,distribute.ontopia.props">
 
-    <echo>1. Creating release directory: '${dist.local.path}/oks-${dist.version}'</echo>
+    <echo>1. Creating release directory: '${dist.local.path}/ontopia-${dist.version}'</echo>
     <exec executable="mkdir">
       <arg value="-p" />
-      <arg value="${dist.local.path}/oks-${dist.version}" />
+      <arg value="${dist.local.path}/ontopia-${dist.version}" />
     </exec>
 
     <echo>2. Copying distributions...</echo>
     <exec executable="cp">
-      <arg value="${build.dists}/oks-enterprise-${dist.full.version}.zip" />
-      <arg value="${build.dists}/installers/oks-samplers.jar" />
-      <arg value="${dist.local.path}/oks-${dist.version}" />
+      <arg value="${build.dists}/ontopia-${dist.full.version}.zip" />
+      <arg value="${build.dists}/installers/ontopia-samplers.jar" />
+      <arg value="${dist.local.path}/ontopia-${dist.version}" />
     </exec>
 
   </target>
 
-  <target name="distribute.oks.web.current" depends="dist.oks.init,distribute.oks.props">
+  <target name="distribute.ontopia.web.current" depends="dist.ontopia.init,distribute.ontopia.props">
     <property name="dist.host.web.products.category" value="current" />
-    <antcall target="_distribute.oks.web.products" />
+    <antcall target="_distribute.ontopia.web.products" />
   </target>
 
-  <target name="distribute.oks.web.previous" depends="dist.oks.init,distribute.oks.props">
+  <target name="distribute.ontopia.web.previous" depends="dist.ontopia.init,distribute.ontopia.props">
     <property name="dist.host.web.products.category" value="previous" />
-    <antcall target="_distribute.oks.web.products" />
+    <antcall target="_distribute.ontopia.web.products" />
   </target>
 
-  <target name="distribute.oks.web.beta" depends="dist.oks.init,distribute.oks.props">
+  <target name="distribute.ontopia.web.beta" depends="dist.ontopia.init,distribute.ontopia.props">
     <property name="dist.host.web.products.category" value="beta2" />
-    <antcall target="_distribute.oks.web.products" />
+    <antcall target="_distribute.ontopia.web.products" />
   </target>
 
-  <target name="_distribute.oks.web.products" depends="dist.oks.init,distribute.oks.props">
+  <target name="_distribute.ontopia.web.products" depends="dist.ontopia.init,distribute.ontopia.props">
 
     <property name="dist.host.web.products.category" value="invalid" />
     <property name="dist.host.web.products.path" value="${dist.host.web.path}/customers/${dist.host.web.products.category}" />
@@ -1528,56 +1241,56 @@
     <echo>1. Removing releases from: '${dist.host.web.user}@${dist.host.web}:${dist.host.web.products.path}'</echo>
     <exec executable="ssh">
       <arg value="${dist.host.web.user}@${dist.host.web}" />
-      <arg value="rm ${dist.host.web.products.path}/oks-*" />
+      <arg value="rm ${dist.host.web.products.path}/ontopia-*" />
     </exec>
 
     <echo>2. Copying distributions...</echo>
     <exec executable="scp" output="scp.log">
       <arg value="-v" />
-      <arg value="${build.dists}/oks-enterprise-${dist.full.version}.zip" />
-      <arg value="${build.dists}/oks-samplers-${dist.full.version}.zip" />
+      <arg value="${build.dists}/ontopia-${dist.full.version}.zip" />
+      <arg value="${build.dists}/ontopia-samplers-${dist.full.version}.zip" />
       <arg value="${dist.host.web.user}@${dist.host.web}:${dist.host.web.products.path}/" />
     </exec>
 
     <echo>3. Generating what's new document...</echo>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/oks/whatsnew.xml" />
+      <param name="file" value="${doc.path}/ontopia/whatsnew.xml" />
     </antcall>
-    <copy file="${doc.path}/developer/oks/whatsnew.xml.html" tofile="${build.doc}/whatsnew-oks.html" />
+    <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${build.doc}/whatsnew-ontopia.html" />
 
     <echo>4. Copying what's new document to customers page...</echo>
     <exec executable="scp">
       <!-- If public key files are present on client and server
            it is possible to avoid the prompt for the password phrase -->
       <!-- arg value="-B"/-->
-      <arg path="${build.doc}/whatsnew-oks.html" />
+      <arg path="${build.doc}/whatsnew-ontopia.html" />
       <arg path="${doc.path}/stylesheets/whitepapers.css" />
       <arg line="${dist.host.web.user}@${dist.host.web}:${dist.host.web.products.path}/" />
     </exec>
 
   </target>
 
-  <target name="distribute.oks.web.freedownload" depends="dist.oks.init,distribute.oks.props">
+  <target name="distribute.ontopia.web.freedownload" depends="dist.ontopia.init,distribute.ontopia.props">
 
     <echo>1. Copying free download...</echo>
     <exec executable="scp">
-      <arg value="${build.dists}/installers/oks-samplers.jar" />
+      <arg value="${build.dists}/installers/ontopia-samplers.jar" />
       <arg value="${dist.host.web.user}@${dist.host.web}:${dist.host.web.path}/../cgi-data/" />
     </exec>
     <exec executable="scp">
-      <arg value="${build.dists}/oks-samplers/doc/install.html" />
-      <arg value="${dist.host.web.user}@${dist.host.web}:${dist.host.web.path}/download/oks-samplers-install.html" />
+      <arg value="${build.dists}/ontopia-samplers/doc/install.html" />
+      <arg value="${dist.host.web.user}@${dist.host.web}:${dist.host.web.path}/download/ontopia-samplers-install.html" />
     </exec>
 
     <echo>2. Generating what's new document...</echo>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/oks/whatsnew.xml" />
+      <param name="file" value="${doc.path}/ontopia/whatsnew.xml" />
     </antcall>
-    <copy file="${doc.path}/developer/oks/whatsnew.xml.html" tofile="${build.doc}/whatsnew-oks.html" />
+    <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${build.doc}/whatsnew-ontopia.html" />
 
     <echo>3. Copying what's new document to free downloads page...</echo>
     <exec executable="scp">
-      <arg path="${build.doc}/whatsnew-oks.html" />
+      <arg path="${build.doc}/whatsnew-ontopia.html" />
       <arg path="${doc.path}/stylesheets/whitepapers.css" />
       <arg line="${dist.host.web.user}@${dist.host.web}:${dist.host.web.path}/download/" />
     </exec>
@@ -1585,7 +1298,7 @@
   </target>
 
   <!-- ======================================================================
-       Ontopia Knowledge Suite distributions
+       Ontopia distributions
        ==================================================================== -->
 
   <target name="check-jvm">
@@ -1596,41 +1309,36 @@
     </java>
   </target>
 
-  <target name="dist.oks.init" depends="init">
+  <target name="dist.ontopia.init" depends="init">
     <!-- Distribution properties -->
     <property name="dist.version.major" value="4"/>
     <property name="dist.version.minor" value="1"/>
     <property name="dist.version.micro" value="0"/>
     <property name="dist.is.beta"       value="0"/> <!-- beta if greater than zero -->
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}"/>
-    <property name="oks.version" value="{'MAJOR_VERSION': ${dist.version.major}, 'MINOR_VERSION': ${dist.version.minor}, 'MICRO_VERSION': ${dist.version.micro}, 'BETA_VERSION': ${dist.is.beta}}"/>
+    <property name="ontopia.version" value="{'MAJOR_VERSION': ${dist.version.major}, 'MINOR_VERSION': ${dist.version.minor}, 'MICRO_VERSION': ${dist.version.micro}, 'BETA_VERSION': ${dist.is.beta}}"/>
     <tstamp><format property="dist.date" pattern="yyyyMMdd" /></tstamp>
     <tstamp><format property="dist.full.date" pattern="yyyy-MM-dd" /></tstamp>
     <property name="dist.full.version" value="${dist.version}-${dist.date}"/>
   </target>
 
-  <target name="dist.ontopia" depends="clean.build, dist.oks.init">
-    <antcall target="dist.oks.enterprise" />
-  </target>
-
-  <target name="dist.oks.echo">
+  <target name="dist.ontopia.echo">
     <echo>Building ${dist.title}...</echo>
     <echo> - version is '${dist.version}'</echo>
     <echo> - compiler is '${build.compiler}'</echo>
     <echo> - jvm is '${ant.java.version}'</echo>
   </target>
 
-  <!-- - - - OKS Enterprise Edition  - - - - - - - - - - - - - - - - - - - - -->
+  <!-- - - - Ontopia distribution  - - - - - - - - - - - - - - - - - - - - -->
 
-  <target name="dist.oks.enterprise" depends="dist.oks.init,check-jvm">
+  <target name="dist.ontopia" depends="dist.ontopia.init,check-jvm">
     <!-- Build properties -->
-    <property name="dist.title" value="OKS Enterprise Edition" />
-    <property name="dist.name" value="oks-enterprise" />
-    <property name="dist.shortname" value="enterprise" />
+    <property name="dist.title" value="Ontopia" />
+    <property name="dist.name" value="ontopia" />
     <property name="dist.path" value="${build.root}/dists/${dist.name}-${dist.version}" />
     <property name="dist.condition" value="ent" />
 
-    <antcall target="dist.oks.echo"/>
+    <antcall target="dist.ontopia.echo"/>
     <antcall target="clean.classes"/>
 
     <!-- Clean distribution directory -->
@@ -1666,10 +1374,6 @@
     <antcall target="dist.rdbms.collect" />
     <antcall target="dist.classify.collect" />
 
-    <!-- Collect jar files -->
-    <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
     <!-- Collect product tests -->
     <antcall target="dist.engine.test.collect" />
     <antcall target="dist.navigator.test.collect" />
@@ -1683,34 +1387,34 @@
     <antcall target="dist.rdbms.test.collect" />
 
     <!-- Test configuration -->
-    <copy file="${java.path}/test-data/config/tests.xml" todir="${dist.path}/tests/test-data" />
-    <copy file="${java.path}/dist/tests/tests-oks-enterprise.xml" tofile="${dist.path}/tests/test-data/tests-oks.xml" />
+    <copy file="${test.path}/config/tests.xml" todir="${dist.path}/tests/test-data" />
+    <copy file="${src.path}/dist/tests/tests-ontopia.xml" tofile="${dist.path}/tests/test-data/tests-ontopia.xml" />
 
     <!-- Test scripts -->
-    <copy file="${java.path}/dist/tests/runtests-engine.sh" tofile="${dist.path}/tests/runtests-engine.sh" />
-    <copy file="${java.path}/dist/tests/runtests-engine.bat" tofile="${dist.path}/tests/runtests-engine.bat" />
-    <copy file="${java.path}/dist/tests/runtests-navigator.sh" tofile="${dist.path}/tests/runtests-navigator.sh" />
-    <copy file="${java.path}/dist/tests/runtests-navigator.bat" tofile="${dist.path}/tests/runtests-navigator.bat" />
-    <copy file="${java.path}/dist/tests/runtests-webed.sh" tofile="${dist.path}/tests/runtests-webed.sh" />
-    <copy file="${java.path}/dist/tests/runtests-webed.bat" tofile="${dist.path}/tests/runtests-webed.bat" />
-    <copy file="${java.path}/dist/tests/runtests-rdbms.sh" tofile="${dist.path}/tests/runtests-rdbms.sh" />
-    <copy file="${java.path}/dist/tests/runtests-rdbms.bat" tofile="${dist.path}/tests/runtests-rdbms.bat" />
+    <copy file="${src.path}/dist/tests/runtests-engine.sh" tofile="${dist.path}/tests/runtests-engine.sh" />
+    <copy file="${src.path}/dist/tests/runtests-engine.bat" tofile="${dist.path}/tests/runtests-engine.bat" />
+    <copy file="${src.path}/dist/tests/runtests-navigator.sh" tofile="${dist.path}/tests/runtests-navigator.sh" />
+    <copy file="${src.path}/dist/tests/runtests-navigator.bat" tofile="${dist.path}/tests/runtests-navigator.bat" />
+    <copy file="${src.path}/dist/tests/runtests-webed.sh" tofile="${dist.path}/tests/runtests-webed.sh" />
+    <copy file="${src.path}/dist/tests/runtests-webed.bat" tofile="${dist.path}/tests/runtests-webed.bat" />
+    <copy file="${src.path}/dist/tests/runtests-rdbms.sh" tofile="${dist.path}/tests/runtests-rdbms.sh" />
+    <copy file="${src.path}/dist/tests/runtests-rdbms.bat" tofile="${dist.path}/tests/runtests-rdbms.bat" />
 
     <!-- Fix permissions -->
     <chmod dir="${dist.path}/tests" perm="a+rx" includes="*.sh" />
 
     <!-- Build jar files -->
-    <antcall target="jar.oks.enterprise" />
-    <antcall target="jar.oks.enterprise.test" />
+    <antcall target="jar.ontopia" />
+    <antcall target="jar.ontopia.test" />
 
     <copy file="${build.jars}/${dist.name}.jar" todir="${dist.path}/lib" />
-    <copy file="${build.jars}/${dist.name}-test.jar" todir="${dist.path}/lib" />
+    <copy file="${build.jars}/${dist.name}-tests.jar" todir="${dist.path}/lib" />
     <copy file="${build.jars}/${dist.name}.jar" todir="${dist.path}/apache-tomcat/common/lib" />
 
     <!-- Collect index.html -->
     <antcall target="dist.index.html">
-      <param name="index.file" value="docindex-index-enterprise.html" />
-      <param name="index.product" value="Enterprise Edition" />
+      <param name="index.file" value="docindex-index-ontopia.html" />
+      <param name="index.product" value="Ontopia" />
     </antcall>
     <!-- Copy templates -->
     <mkdir dir="${dist.path}/config/vm-templates" />
@@ -1727,20 +1431,20 @@
 
     <!-- Vizigator -->
     <mkdir dir="${dist.path}/bin" />
-    <copy file="${java.path}/dist/vizigator/vizdesktop-ent.bat" tofile="${dist.path}/bin/vizdesktop.bat" />
-    <copy file="${java.path}/dist/vizigator/vizdesktop-ent.sh" tofile="${dist.path}/bin/vizdesktop.sh" />
+    <copy file="${src.path}/dist/vizigator/vizdesktop.bat" tofile="${dist.path}/bin/vizdesktop.bat" />
+    <copy file="${src.path}/dist/vizigator/vizdesktop.sh" tofile="${dist.path}/bin/vizdesktop.sh" />
     <chmod dir="${dist.path}/bin" perm="a+rx" includes="*.sh" />
 
     <!-- Add accessctl web application -->
-    <antcall target="dist.oks.webapp.accessctl" />
+    <antcall target="dist.ontopia.webapp.accessctl" />
 
     <!-- Replace ROOT web application -->
-    <antcall target="dist.oks.webapp.root" />
+    <antcall target="dist.ontopia.webapp.root" />
 
     <!-- Generate javadoc -->
-    <antcall target="javadoc.oks.enterprise" />
+    <antcall target="javadoc.ontopia" />
     <copy todir="${dist.path}/doc/api">
-      <fileset dir="${build.javadoc}/enterprise" />
+      <fileset dir="${build.javadoc}/ontopia" />
     </copy>
 
     <!-- Generate jardigests -->
@@ -1755,9 +1459,9 @@
 
   </target>
 
-  <target name="javadoc.oks.enterprise" depends="init">
-    <delete dir="${build.javadoc}/enterprise" />
-    <mkdir dir="${build.javadoc}/enterprise" />
+  <target name="javadoc.ontopia" depends="init">
+    <delete dir="${build.javadoc}/ontopia" />
+    <mkdir dir="${build.javadoc}/ontopia" />
     <javadoc packagenames="
              ${dist.engine.packagenames},
              ${dist.navigator.packagenames},
@@ -1767,7 +1471,7 @@
              ${dist.webed.packagenames},
              ${dist.db2tm.packagenames},
              ${dist.rdbms.packagenames}
-             " sourcepath="${java.path}" destdir="${build.javadoc}/enterprise" author="true" version="true" use="true" public="true" windowtitle="Ontopia Knowledge Suite - Enterprise Edition" doctitle="Ontopia Knowledge Suite API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;" classpathref="project.class.path">
+             " sourcepath="${java.path}" destdir="${build.javadoc}/ontopia" author="true" version="true" use="true" public="true" windowtitle="Ontopia" doctitle="Ontopia API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;" classpathref="project.class.path">
       <group title="Core Topic Map Packages" packages="net.ontopia.topicmaps.*" />
       <group title="Core Information Set Packages" packages="net.ontopia.infoset.*" />
       <group title="Query Engine Packages" packages="net.ontopia.topicmaps.query.*" />
@@ -1777,13 +1481,13 @@
       <group title="Navigator Framework Packages" packages="net.ontopia.topicmaps.nav.*:net.ontopia.topicmaps.nav2.*" />
       <group title="RDBMS Backend Connector Packages" packages="net.ontopia.topicmaps.impl.rdbms" />
     </javadoc>
-    <replace file="${build.javadoc}/enterprise/overview-frame.html" token="{@docroot}" value="." />
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/enterprise" />
+    <replace file="${build.javadoc}/ontopia/overview-frame.html" token="{@docroot}" value="." />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${build.javadoc}/ontopia" />
   </target>
 
-  <target name="javadoc.oks.enterprise.dev" depends="init">
-    <delete dir="${build.javadoc}/enterprise-dev" />
-    <mkdir dir="${build.javadoc}/enterprise-dev" />
+  <target name="javadoc.ontopia.dev" depends="init">
+    <delete dir="${build.javadoc}/ontopia-dev" />
+    <mkdir dir="${build.javadoc}/ontopia-dev" />
     <javadoc packagenames="
              ${dev.engine.packagenames},
              ${dev.navigator.packagenames},
@@ -1792,7 +1496,7 @@
              ${dev.schema.packagenames},
              ${dev.webed.packagenames},
              ${dev.rdbms.packagenames}
-             " sourcepath="${java.path}" destdir="${build.javadoc}/enterprise-dev" author="true" version="true" use="true" public="true" windowtitle="Ontopia Knowledge Suite - Enterprise Edition" doctitle="Ontopia Knowledge Suite API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;" classpathref="project.class.path">
+             " sourcepath="${java.path}" destdir="${build.javadoc}/ontopia-dev" author="true" version="true" use="true" public="true" windowtitle="Ontopia" doctitle="Ontopia API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;" classpathref="project.class.path">
       <group title="Core Topic Map Packages" packages="net.ontopia.topicmaps.*" />
       <group title="Core Information Set Packages" packages="net.ontopia.infoset.*" />
       <group title="Query Engine Packages" packages="net.ontopia.topicmaps.query.*" />
@@ -1802,14 +1506,14 @@
       <group title="Navigator Framework Packages" packages="net.ontopia.topicmaps.nav.*:net.ontopia.topicmaps.nav2.*" />
       <group title="RDBMS Backend Connector Packages" packages="net.ontopia.topicmaps.impl.rdbms" />
     </javadoc>
-    <replace file="${build.javadoc}/enterprise-dev/overview-frame.html" token="{@docroot}" value="." />
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/enterprise-dev" />
+    <replace file="${build.javadoc}/ontopia-dev/overview-frame.html" token="{@docroot}" value="." />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${build.javadoc}/ontopia-dev" />
   </target>
 
-  <target name="dist.jar.oks.enterprise" depends="dist.oks.init,check-jvm,bootstrap,clean.classes,compile.test.oks.enterprise,jar.oks.enterprise"/>
-  <target name="dist.jar.oks.enterprise.test" depends="dist.oks.init,check-jvm,bootstrap,clean.classes,compile.test.oks.enterprise,jar.oks.enterprise,jar.oks.enterprise.test"/>
+  <target name="dist.jar.ontopia" depends="dist.ontopia.init,check-jvm,bootstrap,clean.classes,compile.test.ontopia,jar.ontopia"/>
+  <target name="dist.jar.ontopia.test" depends="dist.ontopia.init,check-jvm,bootstrap,clean.classes,compile.test.ontopia,jar.ontopia,jar.ontopia.test"/>
 
-  <target name="dist.jar.oks.enterprise.noclean" depends="dist.oks.init,check-jvm,compile.test.oks.enterprise,jar.oks.enterprise"/>
+  <target name="dist.jar.ontopia.noclean" depends="dist.ontopia.init,check-jvm,compile.test.ontopia,jar.ontopia"/>
 
   <target name="jar.digests">
     <exec dir="${dist.path}/lib" executable="sh" output="${dist.path}/lib/digests.txt">
@@ -1819,62 +1523,45 @@
     </exec>
   </target>
 
-  <target name="jar.oks.enterprise" depends="dist.oks.init,check-jvm">
-    <property name="dist.name" value="oks-enterprise" />
+  <target name="jar.ontopia" depends="dist.ontopia.init,check-jvm">
+    <property name="dist.name" value="ontopia" />
     <delete file="${build.jars}/${dist.name}.jar" />
     <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}.jar" manifest="${src.path}/manifests/manifest-ontopia.mf">
-      <!-- engine -->
       <patternset refid="classes.engine" />
       <patternset refid="classes.tmapi" />
       <patternset refid="classes.cmdlineutils" />
-      <!-- navigator -->
       <patternset refid="classes.navigator" />
-      <!-- fulltext -->
       <patternset refid="classes.fulltext" />
-      <!-- query -->
       <patternset refid="classes.query" />
-      <!-- schema -->
       <patternset refid="classes.schema" />
-      <!-- webed -->
       <patternset refid="classes.webed" />
-      <!-- vizigator -->
       <patternset refid="classes.viz" />
       <patternset refid="images.viz" />
       <patternset refid="resources.viz" />
-      <!-- db2tm -->
       <patternset refid="classes.db2tm" />
-      <!-- rdbms -->
       <patternset refid="classes.rdbms" />
     </jar>
   </target>
 
-  <!-- Makes sure that all neccessary classes are compiled before packaging oks-enterprise.jar -->
-  <target name="compile.oks.enterprise" depends="compile.engine,compile.cmdlineutils,compile.navigator,compile.fulltext,compile.query,compile.schema,compile.webed,compile.db2tm,compile.rdbms,compile.viz" />
+  <!-- Makes sure that all neccessary classes are compiled before packaging ontopia.jar -->
+  <target name="compile.ontopia" depends="compile.engine,compile.cmdlineutils,compile.navigator,compile.fulltext,compile.query,compile.schema,compile.webed,compile.db2tm,compile.rdbms,compile.viz" />
 
-  <target name="compile.test.oks.enterprise" depends="compile.test.engine,compile.cmdlineutils,compile.test.navigator,compile.test.fulltext,compile.test.query,compile.test.schema,compile.test.webed,compile.test.db2tm,compile.test.rdbms,compile.viz" />
+  <target name="compile.test.ontopia" depends="compile.test.engine,compile.cmdlineutils,compile.test.navigator,compile.test.fulltext,compile.test.query,compile.test.schema,compile.test.webed,compile.test.db2tm,compile.test.rdbms,compile.viz" />
 
-  <target name="jar.compile.oks.enterprise" depends="compile.oks.enterprise,jar.oks.enterprise" />
+  <target name="jar.compile.ontopia" depends="compile.ontopia,jar.ontopia" />
 
-  <target name="jar.oks.enterprise.test" depends="dist.oks.init">
-    <property name="dist.name" value="oks-enterprise" />
-    <delete file="${build.jars}/${dist.name}-test.jar" />
-    <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}-test.jar" manifest="${java.path}/dist/manifests/manifest-test.mf">
-      <!-- engine -->
+  <target name="jar.ontopia.test" depends="dist.ontopia.init">
+    <property name="dist.name" value="ontopia" />
+    <delete file="${build.jars}/${dist.name}-tests.jar" />
+    <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}-tests.jar" manifest="${src.path}/manifests/manifest-ontopia-tests.mf">
       <patternset refid="classes.test.engine" />
       <patternset refid="classes.test.tmapi" />
-      <!-- navigator -->
       <patternset refid="classes.test.navigator" />
-      <!-- fulltext -->
       <patternset refid="classes.test.fulltext" />
-      <!-- query -->
       <patternset refid="classes.test.query" />
-      <!-- schema -->
       <patternset refid="classes.test.schema" />
-      <!-- webed -->
       <patternset refid="classes.test.webed" />
-      <!-- db2tm -->
       <patternset refid="classes.test.db2tm" />
-      <!-- rdbms -->
       <patternset refid="classes.test.rdbms" />
     </jar>
   </target>
@@ -1902,145 +1589,10 @@
       </fileset>
     </delete>
   </target>
-        
-  <target name="jar.oks.webed.test" depends="init">
-    <delete file="${build.jars}/oks-webed-test.jar" />
-    <jar basedir="${build.classes}" jarfile="${build.jars}/oks-webed-test.jar">
-      <patternset refid="classes.test.webed.actions" />
-    </jar>
-  </target>
-  
-  <target name="dist.oks.test.webed" depends="init">
-    <antcall target="clean.test.webed.actions" />
-    <antcall target="compile.test.webed.actions" />
-    <antcall target="jar.oks.webed.test" />
-  </target>
-      
-  <!-- abstract target: do not call on it's own -->
-  <target name="dist.oks.enterprise.war" depends="dist.oks.init">
-    <property name="omnigator" value="${dist.path}/apache-tomcat/webapps/omnigator" />
-    <war warfile="${dist.path}/omnigator.war" webxml="${omnigator}/WEB-INF/web.xml">
-      <fileset dir="${omnigator}" />
-      <lib dir="${dist.path}/apache-tomcat/common/lib" />
-    </war>
-  </target>
-
-  <!-- - - - OKS Online Demo  - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  <target name="dist.oks.demo.online" depends="dist.oks.init">
-
-    <property name="dist.name" value="oks-online-demo" />
-    <property name="dist.name.source" value="oks-enterprise-${dist.version}" />
-    <property name="dist.path" value="${build.root}/dists/${dist.name}" />
-    <property name="dist.path.source" value="${build.root}/dists/${dist.name.source}" />
-
-    <!-- Make a copy of an existing build -->
-    <delete dir="${dist.path}" />
-    <copy todir="${dist.path}">
-      <fileset dir="${dist.path.source}" />
-    </copy>
-
-    <!-- Remove everything we don't need -->
-    <delete file="${dist.path}/index.html" />
-    <delete dir="${dist.path}/doc" />
-    <delete dir="${dist.path}/lib" />
-    <delete dir="${dist.path}/utils" />
-    <delete dir="${dist.path}/tests" />
-    <delete dir="${dist.path}/samples" />
-
-    <delete dir="${dist.path}/apache-tomcat/webapps/accessctl" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/balancer" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/jsp-examples" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/ontopoly" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/ROOT" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/servlets-examples" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/tomcat-docs" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/webdav" />
-
-    <delete dir="${dist.path}/apache-tomcat/webapps/manage" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/edit" />
-
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/ADL-FTT.xtm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/GCL-2-1.xtm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/JillsMusic.xtm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/KevinsPlan.xtm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/MyConcerts.xtm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/MyMusic.xtm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/MyPlan.xtm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/MyThesaurus.xtm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/TapsasConcerts.xtm" />
-
-    <!-- Generate fulltext indexes for all topic maps -->
-    <echo>Generating fulltext indexes...</echo>
-    <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/indexes" />
-    <exec dir="${java.path}" executable="jython">
-      <arg value="${java.path}/dist/scripts/generate-fulltext-indexes.py" />
-      <arg value="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps" />
-      <arg value="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/indexes" />
-    </exec>
-
-    <!-- Add operamap web application -->
-    <antcall target="dist.oks.webapp.operamap" />
-
-    <!-- Add logsearcher web application -->
-    <echo>Adding logsearcher web application...</echo>
-    <copy todir="${dist.path}/apache-tomcat/webapps/logsearcher">
-      <fileset dir="${src.path}/webapps/logsearcher" />
-    </copy>
-
-    <!-- Tweak omnigator web application (disable some plugins) -->
-    <copy file="${src.path}/webapps/omnigator/plugins/plugins/plugin.off.xml" tofile="${dist.path}/apache-tomcat/webapps/omnigator/plugins/plugins/plugin.xml" overwrite="yes" />
-    <copy file="${src.path}/webapps/omnigator/plugins/validator/plugin.off.xml" tofile="${dist.path}/apache-tomcat/webapps/omnigator/plugins/validator/plugin.xml" overwrite="yes" />
-    <copy file="${src.path}/webapps/omnigator/plugins/merge/plugin.off.xml" tofile="${dist.path}/apache-tomcat/webapps/omnigator/plugins/merge/plugin.xml" overwrite="yes" />
-    <copy file="${src.path}/webapps/omnigator/plugins/tolog/plugin.off.xml" tofile="${dist.path}/apache-tomcat/webapps/omnigator/plugins/tolog/plugin.xml" overwrite="yes" />
-    <copy file="${src.path}/webapps/omnigator/plugins/samples/plugin.off.xml" tofile="${dist.path}/apache-tomcat/webapps/omnigator/plugins/samples/plugin.xml" overwrite="yes" />
-
-    <!-- Replace server.xml -->
-    <copy file="${java.path}/dist/tomcat/tomcat55/server-online-demo.xml" 
-        tofile="${dist.path}/apache-tomcat/conf/server.xml" overwrite="yes" />
-
-    <!-- Enable Tomcat-Apache connector -->
-    <mkdir dir="${dist.path}/apache-tomcat/conf/jk" />
-    <copy file="${java.path}/dist/tomcat/tomcat55/workers.properties" 
-        tofile="${dist.path}/apache-tomcat/conf/jk/workers.properties" overwrite="yes" />
-
-    <delete file="${dist.path}/apache-tomcat/conf/Catalina/localhost/balancer.xml" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/license.jsp" />
-
-    <!-- Package it -->
-    <exec dir="${build.dists}" executable="zip">
-      <arg value="-r" />
-      <arg value="${dist.name}-${dist.full.version}.zip" />
-      <arg value="${dist.name}" />
-    </exec>
-
-    <!--echo>1. Copying new release to: 'sandbox:/tmp'</echo>
-    <exec executable="scp">
-      <arg value="${build.dists}/${dist.name}-${dist.full.version}.zip" />
-      <arg value="sandbox.ontopia.net:/tmp/" />
-    </exec-->
-
-    <!--
-    <echo>2. Removing old online demo</echo>
-    <exec executable="ssh">
-      <arg value="sandbox.ontopia.net"/>
-      <arg value="rm -rf /usr/local/oks-online-demo"/>
-    </exec>
-
-    <echo>3. Untarring new release to /usr/local/oks-online-demo</echo>
-
-    <echo>4. Changing ownership  'chown -R omnigator:ontopia /usr/local/oks-online-demo'</echo>
-
-    <echo>4. Restarting online demo '/etc/init.d/omnigator restart'</echo>
-
-    <echo>5. Restarting apache '/etc/init.d/apace restart'</echo>
-      -->
-
-  </target>
 
   <!-- - - - Collect web applications - - - - - - - - - - - - - - - - - - - -->
 
-  <target name="dist.oks.webapp.i18n">
+  <target name="dist.ontopia.webapp.i18n">
     <!-- Add i18n web application -->
     <echo>Adding i18n web application...</echo>
     <copy todir="${dist.path}/apache-tomcat/webapps/i18n">
@@ -2054,32 +1606,7 @@
     <antcall target="compile.fulltext" />
   </target>
 
-  <target name="dist.oks.webapp.operamap">
-    <!-- Add operamap web application -->
-    <echo>Adding operamap web application...</echo>
-    <copy todir="${dist.path}/apache-tomcat/webapps/operamap">
-      <fileset dir="${src.path}/webapps/operamap" />
-    </copy>
-    <!-- Copy operamap information resources -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/operamap/occurs/composer">
-      <fileset dir="${topicmaps.path}/opera/occurs/composer" />
-    </copy>
-    <copy todir="${dist.path}/apache-tomcat/webapps/operamap/occurs/librettist">
-      <fileset dir="${topicmaps.path}/opera/occurs/librettist" />
-    </copy>
-    <copy todir="${dist.path}/apache-tomcat/webapps/operamap/occurs/opera">
-      <fileset dir="${topicmaps.path}/opera/occurs/opera" />
-    </copy>
-    <copy todir="${dist.path}/apache-tomcat/webapps/operamap/occurs/theatre">
-      <fileset dir="${topicmaps.path}/opera/occurs/theatre" />
-    </copy>
-    <!-- Copy fulltext index -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/operamap/WEB-INF/indexes/opera.ltm">
-      <fileset dir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/indexes/opera.ltm" />
-    </copy>
-  </target>
-
-  <target name="dist.oks.webapp.xmltools">
+  <target name="dist.ontopia.webapp.xmltools">
     <!-- Add xmltools web application -->
     <copy todir="${dist.path}/apache-tomcat/webapps/xmltools">
       <fileset dir="${src.path}/webapps/xmltools" />
@@ -2088,14 +1615,14 @@
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/xmltools/WEB-INF/lib" />
   </target>
 
-  <target name="dist.oks.webapp.manage">
+  <target name="dist.ontopia.webapp.manage">
     <!-- Add manage web application -->
     <copy todir="${dist.path}/apache-tomcat/webapps/manage">
       <fileset dir="${src.path}/webapps/manage" />
     </copy>
   </target>
 
-  <target name="dist.oks.webapp.accessctl">
+  <target name="dist.ontopia.webapp.accessctl">
     <!-- Add accessctl web application -->
     <copy todir="${dist.path}/apache-tomcat/webapps/accessctl">
       <fileset dir="${src.path}/webapps/accessctl" />
@@ -2105,42 +1632,11 @@
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/accessctl/WEB-INF/lib" />
     <copy file="${src.path}/webapps/accessctl/WEB-INF/topicmaps/userman.ltm"
         tofile="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/userman.ltm" overwrite="yes"/>
-    <copy file="${doc.path}/developer/NAVIGATOR/userman.xml.html" 
-        tofile="${dist.path}/doc/navigator/userman.html" />
-
-    <!-- Replace server.xml -->
-    <copy file="${java.path}/dist/tomcat/tomcat55/server-proent.xml" 
-        tofile="${dist.path}/apache-tomcat/conf/server.xml" overwrite="yes" />
-  </target>
-
-  <target name="dist.oks.webapp.contacts">
-    <!-- Add contacts web application -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/contacts">
-      <fileset dir="${src.path}/webapps/contacts" />
-    </copy>
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/contacts/WEB-INF/classes" />
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/contacts/WEB-INF/lib" />
-  </target>
-
-  <target name="dist.oks.webapp.xmlconf">
-    <!-- Add xmlconf web application -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/xmlconf">
-      <fileset dir="${src.path}/webapps/xmlconf" />
-    </copy>
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/xmlconf/WEB-INF/classes" />
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/xmlconf/WEB-INF/lib" />
-  </target>
-
-  <target name="dist.oks.webapp.ontoed">
-    <!-- Add ontoed web application -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/ontoed">
-      <fileset dir="${src.path}/webapps/ontoed" />
-    </copy>
   </target>
 
   <!-- - - - Update taglib descriptors  - - - - - - - - - - - - - - - - - - -->
 
-  <target name="jar.oks.resources" depends="init">
+  <target name="jar.ontopia.resources" depends="init">
     <echo>Copying TLDs to META-INF...</echo>
     <copy todir="${build.classes}/META-INF/" overwrite="yes">
       <fileset dir="${src.path}/webapps/webedtest/WEB-INF/jsp/">
@@ -2149,10 +1645,10 @@
     </copy>
     <echo>Copying VMs to build.classes...</echo>
     <copy todir="${build.classes}/" overwrite="yes">
-      <fileset refid="oks.vms" />
+      <fileset refid="ontopia.vms" />
     </copy>
     <echo>Building jar-file...</echo>
-    <jar basedir="${build.classes}" jarfile="${build.jars}/oks-resources.jar">
+    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-resources.jar">
       <patternset>
         <include name="*.vm" />
         <include name="META-INF/*.tld" />
@@ -2160,26 +1656,13 @@
     </jar>
   </target>
 
-  <fileset id="oks.tlds" dir="${src.path}/webapps/webedtest/WEB-INF/jsp/">
+  <fileset id="ontopia.tlds" dir="${src.path}/webapps/webedtest/WEB-INF/jsp/">
     <include name="*.tld" />
   </fileset>
 
-  <!-- Make sure TLDs are up to date -->
-  <target name="prepare.tlds">
-    <copy todir="${src.path}/webapps/contacts/WEB-INF/jsp/" overwrite="yes">
-      <fileset refid="oks.tlds" />
-    </copy>
-    <copy todir="${src.path}/webapps/operamap/WEB-INF/jsp/" overwrite="yes">
-      <fileset refid="oks.tlds" />
-    </copy>
-    <copy todir="${src.path}/webapps/xmlconf/WEB-INF/jsp/" overwrite="yes">
-      <fileset refid="oks.tlds" />
-    </copy>
-  </target>
-
   <!-- - - - Update velocity macros - - - - - - - - - - - - - - - - - - - - -->
 
-  <fileset id="oks.vms" dir="${basedir}/src/webapps/webedtest/WEB-INF/templates/">
+  <fileset id="ontopia.vms" dir="${basedir}/src/webapps/webedtest/WEB-INF/templates/">
     <include name="*.vm" />
   </fileset>
 
@@ -2200,11 +1683,11 @@
     <antcall target="compile.engine" />
     <antcall target="compile.cmdlineutils" />
     <antcall target="compile.test.engine" />
-    <antcall target="jar.oks.resources" />
+    <antcall target="jar.ontopia.resources" />
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/engine-api/engine-api.xml" />
+      <param name="file" value="${doc.path}/engine/devguide.xml" />
     </antcall>
 
   </target>
@@ -2214,9 +1697,9 @@
     <echo>Collecting engine components...</echo>
 
     <!-- Collect engine documentation -->
-    <copy file="${doc.path}/developer/engine-api/engine-api.xml.html" tofile="${dist.path}/doc/engine/devguide.html" />
+    <copy file="${doc.path}/engine/devguide.xml.html" tofile="${dist.path}/doc/engine/devguide.html" />
     <copy todir="${dist.path}/doc/engine">
-      <fileset dir="${doc.path}/developer/engine-api">
+      <fileset dir="${doc.path}/engine">
         <patternset>
           <include name="*.gif" />
         </patternset>
@@ -2227,8 +1710,8 @@
     </copy>
   
     <!-- Compile code examples -->
-    <javac srcdir="${doc.path}/developer/engine-api" 
-          destdir="${doc.path}/developer/engine-api" optimize="${optimize}" 
+    <javac srcdir="${doc.path}/engine" 
+          destdir="${doc.path}/engine" optimize="${optimize}" 
           deprecation="${deprecation}" debug="${debug}" 
           debuglevel="${debuglevel}" classpathref="project.class.path">
       <patternset>
@@ -2237,7 +1720,7 @@
     </javac>
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/engine" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/engine" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/engine" />
 
   </target>
@@ -2246,76 +1729,76 @@
 
     <!-- Test data -->
     <copy todir="${dist.path}/tests/test-data/canonical/baseline">
-      <fileset dir="${java.path}/test-data/canonical/baseline" />
+      <fileset dir="${test.path}/canonical/baseline" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/canonical/in">
-      <fileset dir="${java.path}/test-data/canonical/in" />
+      <fileset dir="${test.path}/canonical/in" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/canonical/extra">
-      <fileset dir="${java.path}/test-data/canonical/extra" />
+      <fileset dir="${test.path}/canonical/extra" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/canonical/errors">
-      <fileset dir="${java.path}/test-data/canonical/errors" />
+      <fileset dir="${test.path}/canonical/errors" />
     </copy>
     <mkdir dir="${dist.path}/tests/test-data/canonical/out" />
 
     <copy todir="${dist.path}/tests/test-data/merge/baseline">
-      <fileset dir="${java.path}/test-data/merge/baseline" />
+      <fileset dir="${test.path}/merge/baseline" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/merge/in">
-      <fileset dir="${java.path}/test-data/merge/in" />
+      <fileset dir="${test.path}/merge/in" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/metadata">
-      <fileset dir="${java.path}/test-data/metadata" />
+      <fileset dir="${test.path}/metadata" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/various">
-      <fileset dir="${java.path}/test-data/various" />
+      <fileset dir="${test.path}/various" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/ltm/baseline">
-      <fileset dir="${java.path}/test-data/ltm/baseline" />
+      <fileset dir="${test.path}/ltm/baseline" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/ltm/in">
-      <fileset dir="${java.path}/test-data/ltm/in" />
+      <fileset dir="${test.path}/ltm/in" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/ltm/extra">
-      <fileset dir="${java.path}/test-data/ltm/extra" />
+      <fileset dir="${test.path}/ltm/extra" />
     </copy>
 
     <copy todir="${dist.path}/tests/test-data/rdf/baseline">
-      <fileset dir="${java.path}/test-data/rdf/baseline" />
+      <fileset dir="${test.path}/rdf/baseline" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/rdf/err">
-      <fileset dir="${java.path}/test-data/rdf/err" />
+      <fileset dir="${test.path}/rdf/err" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/rdf/in">
-      <fileset dir="${java.path}/test-data/rdf/in" />
+      <fileset dir="${test.path}/rdf/in" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/rdf/various">
-      <fileset dir="${java.path}/test-data/rdf/various" />
+      <fileset dir="${test.path}/rdf/various" />
     </copy>
     <mkdir dir="${dist.path}/tests/test-data/rdf/out" />
 
     <copy todir="${dist.path}/tests/test-data/tm2rdf/in">
-      <fileset dir="${java.path}/test-data/rdf/in" />
+      <fileset dir="${test.path}/rdf/in" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/tm2rdf/baseline">
-      <fileset dir="${java.path}/test-data/tm2rdf/baseline" />
+      <fileset dir="${test.path}/tm2rdf/baseline" />
     </copy>
     <mkdir dir="${dist.path}/tests/test-data/rm2rdf/tmp" />
 
     <copy todir="${dist.path}/tests/test-data/tmrap">
-      <fileset dir="${java.path}/test-data/tmrap" />
+      <fileset dir="${test.path}/tmrap" />
     </copy>
 
     <copy todir="${dist.path}/tests/test-data/tmsync">
-      <fileset dir="${java.path}/test-data/tmsync" />
+      <fileset dir="${test.path}/tmsync" />
     </copy>
 
     <copy todir="${dist.path}/tests/test-data/xtm2">
-      <fileset dir="${java.path}/test-data/xtm2" />
+      <fileset dir="${test.path}/xtm2" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/cxtm">
-      <fileset dir="${java.path}/test-data/cxtm" />
+      <fileset dir="${test.path}/cxtm" />
     </copy>
 
   </target>
@@ -2334,88 +1817,68 @@
     <!-- Create lib directory -->
     <mkdir dir="${collect.path}/lib" />
 
-    <!-- Collect common jar files -->
-    <copy file="${3rdparty.path}/jaxp.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/crimson.jar" todir="${collect.path}/lib" />
+    <!-- Collect 3rdparty jar files -->
+    <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/lib" />
+    <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/apache-tomcat/common/lib" />
 
-    <copy file="${3rdparty.path}/getopt.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/log4j.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/antlr.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/junit.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/jing.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/jena.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/jakarta-oro.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/icu4j.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/xerces.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/trove.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/retrotranslator-runtime.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/backport-util-concurrent.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/acmeenc.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/touchgraph.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/commons-collections.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/commons-logging.jar" todir="${collect.path}/lib"/>
+    <!-- Collect jar files -->
+    <copy file="${3rdparty.path}/touchgraph.jar" todir="${dist.path}/lib" />
+
+    <!-- Collect lib jar files -->
+    <copy todir="${dist.path}/lib" overwrite="yes">
+      <fileset dir="${lib.path}">
+         <include name="*.jar" /> <!-- TODO: replace by ivy conf -->
+      </fileset>
+     </copy>
 
     <!-- Create samples directory -->
     <mkdir dir="${collect.path}/samples" />
 
     <!-- Collect topic maps -->
-    <copy file="${topicmaps.path}/xmltools/xmltools-tm.xtm" todir="${collect.path}/samples" />
-    <copy file="${topicmaps.path}/i18n/i18n.ltm" todir="${collect.path}/samples" />
-    <copy file="${topicmaps.path}/ONTOPIA/jill.xtm" todir="${collect.path}/samples" />
-    <copy file="${topicmaps.path}/ONTOPIA/support-kb.ltm" todir="${collect.path}/samples" />
-    <copy file="${topicmaps.path}/opera/opera.ltm" todir="${collect.path}/samples" />
-    <copy file="${doc.path}/developer/webeditor/tasks.ltm" todir="${collect.path}/samples/" />
-    <copy file="${topicmaps.path}/3rdparty/pokemon.ltm" todir="${collect.path}/samples/" />
-    <copy file="${topicmaps.path}/ted/MyMusic.xtm" todir="${collect.path}/samples/" />
+    <copy file="${topicmaps.path}/xmltools-tm.xtm" todir="${collect.path}/samples" />
+    <copy file="${topicmaps.path}/i18n.ltm" todir="${collect.path}/samples" />
+    <copy file="${topicmaps.path}/jill.xtm" todir="${collect.path}/samples" />
+    <copy file="${topicmaps.path}/support-kb.ltm" todir="${collect.path}/samples" />
+    <copy file="${topicmaps.path}/opera.ltm" todir="${collect.path}/samples" />
+    <!--copy file="${doc.path}/webed/tasks.ltm" todir="${collect.path}/samples/" /-->
+    <copy file="${topicmaps.path}/pokemon.ltm" todir="${collect.path}/samples/" />
+    <copy file="${topicmaps.path}/MyMusic.xtm" todir="${collect.path}/samples/" />
 
-    <copy file="${topicmaps.path}/metadata/dc.xtmm" todir="${collect.path}/samples/" />
-    <copy file="${topicmaps.path}/metadata/dc.ltmm" todir="${collect.path}/samples/" />
+    <copy file="${topicmaps.path}/dc.xtmm" todir="${collect.path}/samples/" />
+    <copy file="${topicmaps.path}/dc.ltmm" todir="${collect.path}/samples/" />
 
-    <copy file="${topicmaps.path}/rdf/mapping.rdff" todir="${collect.path}/samples/" />
-    <copy file="${topicmaps.path}/3rdparty/music/KanzakisConcerts.rdf" todir="${collect.path}/samples/" />
+    <copy file="${topicmaps.path}/mapping.rdff" todir="${collect.path}/samples/" />
+    <copy file="${topicmaps.path}/KanzakisConcerts.rdf" todir="${collect.path}/samples/" />
 
-    <!-- tm-standards.xtm  -->
-    <gunzip src="${topicmaps.path}/autogen/tm-standards.xtm.gz" dest="${topicmaps.path}/autogen/tm-standards.xtm" />
-    <copy file="${topicmaps.path}/autogen/tm-standards.xtm" todir="${collect.path}/samples" overwrite="yes" />
+    <copy file="${topicmaps.path}/tm-standards.xtm" todir="${collect.path}/samples" overwrite="yes" />
 
     <!-- Collect OSL schemas -->
-    <copy file="${topicmaps.path}/i18n/i18n-schema.xml" tofile="${collect.path}/samples/i18n.ltm.osl" />
-    <copy file="${topicmaps.path}/opera/opera.ltm.osl" tofile="${collect.path}/samples/opera.ltm.osl" />
-    <copy file="${topicmaps.path}/ONTOPIA/jill-schema.xml" tofile="${collect.path}/samples/jill.xtm.osl" />
-    <copy file="${topicmaps.path}/xmltools/xmltools-schema.xml" tofile="${collect.path}/samples/xmltools-tm.xtm.osl" />
-
-    <!-- Collect DTDs -->
-    <copy file="${java.path}/dtds/tmstrict.dtd" todir="${collect.path}/samples" />
-    <copy file="${doc.path}/xtm/1.0/xtm1.dtd" todir="${collect.path}/samples" />
+    <copy file="${topicmaps.path}/i18n.ltm.osl" tofile="${collect.path}/samples/i18n.ltm.osl" />
+    <copy file="${topicmaps.path}/opera.ltm.osl" tofile="${collect.path}/samples/opera.ltm.osl" />
+    <copy file="${topicmaps.path}/jill.xtm.osl" tofile="${collect.path}/samples/jill.xtm.osl" />
+    <copy file="${topicmaps.path}/xmltools-tm.xtm.osl" tofile="${collect.path}/samples/xmltools-tm.xtm.osl" />
 
     <!-- Create doc directory -->
     <mkdir dir="${collect.path}/doc" />
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/oks/whatsnew.xml" />
+      <param name="file" value="${doc.path}/ontopia/whatsnew.xml" />
     </antcall>
-    <copy file="${doc.path}/developer/oks/whatsnew.xml.html" tofile="${collect.path}/doc/whatsnew.html" />
+    <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${collect.path}/doc/whatsnew.html" />
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/startup/startup.xml" />
+      <param name="file" value="${doc.path}/ontopia/startup.xml" />
     </antcall>
-    <copy file="${doc.path}/developer/startup/startup.xml.html" tofile="${collect.path}/doc/install.html" />
+    <copy file="${doc.path}/ontopia/startup.xml.html" tofile="${collect.path}/doc/install.html" />
+
+    <copy file="${doc.path}/ontopia/copyrights.txt" todir="${collect.path}/doc" />
 
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/oks/welcome.xml" />
-      <param name="make-toc" value="false" />
-      <!-- do not create table of contents -->
+      <param name="file" value="${doc.path}/ontopia/overview.xml" />
     </antcall>
-    <copy file="${doc.path}/developer/oks/welcome.xml.html" tofile="${collect.path}/doc/welcome.html" />
-
-    <copy file="${doc.path}/developer/oks/copyrights.txt" todir="${collect.path}/doc" />
-
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/whitepapers/atlas-tech/atlas-tech.xml" />
-    </antcall>
-    <copy file="${doc.path}/whitepapers/atlas-tech/atlas-tech.xml.html" tofile="${collect.path}/doc/misc/atlas-tech.html" />
+    <copy file="${doc.path}/ontopia/overview.xml.html" tofile="${collect.path}/doc/misc/overview.html" />
     <copy todir="${collect.path}/doc/misc">
-      <fileset dir="${doc.path}/whitepapers/atlas-tech">
+      <fileset dir="${doc.path}/ontopia">
         <patternset>
           <include name="*.gif" />
         </patternset>
@@ -2424,40 +1887,33 @@
         </patternset>
       </fileset>
     </copy>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${collect.path}/doc/misc" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${collect.path}/doc/misc" />
 
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/tech-reports/ltm/ltm.xml" />
+      <param name="file" value="${doc.path}/ltm/tutorial.xml" />
     </antcall>
-    <copy file="${doc.path}/tech-reports/ltm/ltm.xml.html" tofile="${collect.path}/doc/misc/ltm.html" />
+    <copy file="${doc.path}/ltm/tutorial.xml.html" tofile="${collect.path}/doc/misc/ltm.html" />
 
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/tech-reports/rdf2tm/rdf2tm.xml" />
+      <param name="file" value="${doc.path}/rdf2tm/spec.xml" />
     </antcall>
-    <copy file="${doc.path}/tech-reports/rdf2tm/rdf2tm.xml.html" tofile="${collect.path}/doc/misc/rdf2tm.html" />
+    <copy file="${doc.path}/rdf2tm/spec.xml.html" tofile="${collect.path}/doc/misc/rdf2tm.html" />
 
-    <!-- Include LTM 1.1 - 1.2 converter script -->
-    <copy file="${java.path}/python/utils/ltmfix.py" todir="${collect.path}/utils" />
     <!-- Include LTM emacs mode -->
-    <copy file="${java.path}/elisp/ltm-mode.el" todir="${collect.path}/utils" />
-
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/xtm/cxtm/cxtm.xml" />
-    </antcall>
-    <copy file="${doc.path}/xtm/cxtm/cxtm.xml.html" tofile="${collect.path}/doc/misc/cxtm.html" />
+    <!--copy file="${java.path}/elisp/ltm-mode.el" todir="${collect.path}/utils" /-->
 
     <!-- Copy stylesheets -->
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${collect.path}/doc" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${collect.path}/doc/misc" />
 
     <!-- Collect documentation -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${collect.path}/doc" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${collect.path}/doc" />
 
     <!-- Generate index pages -->
     <echo message="Generating HTML index pages..." />
-    <copy file="${java.path}/dist/doc/index-template.vm" overwrite="yes" 
-        tofile="${build.tmp}/docindex-index-template.vm" />
-    <copy file="${java.path}/dist/doc/control.vm" overwrite="yes" 
+    <copy file="${src.path}/dist/doc/docindex-template.vm" overwrite="yes" 
+        tofile="${build.tmp}/docindex-template.vm" />
+    <copy file="${src.path}/dist/doc/docindex-control.vm" overwrite="yes" 
         tofile="${build.tmp}/docindex-control.vm" />
     <texen controlTemplate="docindex-control.vm" outputDirectory="${build.tmp}" 
            templatePath="${build.tmp}/" outputFile="generation.report" productName="" 
@@ -2465,146 +1921,15 @@
 
   </target>
 
-  <!-- - - - OKS Samplers  - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  <target name="dist.oks.samplers" depends="dist.oks.init,check-jvm">
-
-    <!-- Build properties -->
-    <property name="dist.title" value="Ontopia Omnigator" />
-    <property name="dist.name" value="oks-samplers" />
-    <property name="dist.shortname" value="samplers" />
-    <property name="dist.path" value="${build.root}/dists/${dist.name}" />
-
-    <antcall target="dist.oks.echo"/>
-    <antcall target="clean.classes"/>
-
-    <!-- Clean distribution directory -->
-    <delete dir="${build.tmp}" />
-    <delete dir="${dist.path}" />
-    <mkdir dir="${dist.path}" />
-
-    <!-- Build components -->
-    <antcall target="dist.product.build" />
-    <antcall target="dist.engine.build" />
-    <antcall target="dist.navigator.build" />
-    <antcall target="dist.fulltext.build" />
-    <antcall target="dist.query.build" />
-    <antcall target="dist.schema.build" />
-    <antcall target="dist.webed.build" />
-    <antcall target="dist.viz.build" />
-
-    <!-- Collect components -->
-    <antcall target="dist.product.collect" />
-    <antcall target="dist.engine.collect" />
-    <antcall target="dist.navigator.collect" />
-    <antcall target="dist.viz.collect" />
-
-    <!-- Include omnigator plugins -->
-    <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/plugins" />
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
-      <fileset dir="${src.path}/webapps/omnigator/plugins">
-        <include name="tolog/*/**" />
-        <include name="fulltext/*/**" />
-        <include name="validator/*/**" />
-        <exclude name="classify/*/**" />
-      </fileset>
-    </copy>
-
-    <!-- Collect jar files -->
-    <copy file="${3rdparty.path}/lucene.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/velocity.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/commons-fileupload.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/tasks.ltm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/factbook.hytm" />
-
-    <echo>Generating fulltext indexes...</echo>
-    <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/indexes" />
-    <exec dir="${java.path}" executable="jython">
-      <arg value="${java.path}/dist/scripts/generate-fulltext-indexes.py" />
-      <arg value="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps" />
-      <arg value="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/indexes" />
-    </exec>
-
-    <!-- Compile web applications -->
-    <antcall target="dist.oks.omnigator.strip" />
-    <antcall target="dist.oks.omnigator.compile" />
-    <antcall target="dist.oks.ontopoly.compile" />
-
-    <!-- Replace ROOT web application -->
-    <antcall target="dist.oks.webapp.root.samplers" />
-
-    <!-- Build jar files -->
-    <antcall target="jar.oks.samplers" />
-    <copy file="${build.jars}/${dist.name}.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
-    <!-- Collect index.html -->
-    <antcall target="dist.index.html">
-      <param name="index.file" value="docindex-index-samplers.html" />
-      <param name="index.product" value="OKS Samplers" />
-    </antcall>
-
-    <!-- Generate and collect install guide (samplers specific) -->
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/startup/startup-samplers.xml" />
-    </antcall>
-    <copy file="${doc.path}/developer/startup/startup-samplers.xml.html" 
-        tofile="${dist.path}/doc/install.html" overwrite="yes" />
-    <copy todir="${dist.path}/doc/images/">
-      <fileset dir="${doc.path}/developer/startup/images" />
-    </copy>
-
-    <!-- Collect query documentation -->
-    <copy file="${doc.path}/developer/query-lang/tolog-tutorial.xml.html" 
-        tofile="${dist.path}/doc/query/tutorial.html" />
-    <copy file="${doc.path}/developer/query-lang/predicate-reference.xml.html" 
-        tofile="${dist.path}/doc/query/predicate-reference.html" />
-    <!-- Collect schema documentation -->
-    <copy file="${doc.path}/developer/schema-tools/schemaspec.xml.html" 
-        tofile="${dist.path}/doc/schema/spec.html" />
-    <copy file="${doc.path}/developer/schema-tools/schema-lang-tut.xml.html" 
-        tofile="${dist.path}/doc/schema/tutorial.html" />
-    <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/query" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/query" />
-    <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/schema" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/schema" />
-
-    <!-- Delete developer docs -->
-    <delete dir="${dist.path}/doc/engine" />
-    <delete file="${dist.path}/doc/navigator/tolog-taglib.html" />
-    <delete file="${dist.path}/doc/navigator/taglib2.html" />
-    <delete file="${dist.path}/doc/navigator/navguide.html" />
-    <delete file="${dist.path}/doc/navigator/refcard.html" />
-    <delete file="${dist.path}/doc/navigator/taglib2-overview-*.png" />
-
-    <!-- Delete superfluous directories -->
-    <delete dir="${dist.path}/lib" />
-    <delete dir="${dist.path}/samples" />
-    <delete dir="${dist.path}/tests" />
-
-    <!-- Build installer -->
-    <antcall target="dist.oks.samplers.installer" />
-
-    <!-- Package it -->
-    <exec dir="${build.dists}" executable="zip">
-      <arg value="-r" />
-      <arg value="${dist.name}-${dist.full.version}.zip" />
-      <arg value="${dist.name}" />
-    </exec>
-
-  </target>
-
-  <target name="dist.oks.omnigator.strip" depends="init">
+  <target name="dist.ontopia.omnigator.strip" depends="init">
     <!-- Delete not needed web apps -->
     <delete dir="${dist.path}/apache-tomcat/webapps/i18n" />
     <delete dir="${dist.path}/apache-tomcat/webapps/xmltools" />
   </target>
 
-  <target name="dist.oks.omnigator.compile" depends="init">
+  <target name="dist.ontopia.omnigator.compile" depends="init">
     <!-- compile web application -->
-    <antcall target="dist.oks.webapp.compile">
+    <antcall target="dist.ontopia.webapp.compile">
       <param name="dist.webapp" value="omnigator" />
     </antcall>
 
@@ -2627,65 +1952,6 @@
     </java>
   </target>
 
-  <!-- abstract target: do not call on its own -->
-  <target name="dist.oks.samplers.war" depends="dist.oks.samplers">
-    <property name="omnigator" value="${dist.path}/apache-tomcat/webapps/omnigator" />
-    <war warfile="${dist.path}/omnigator.war" webxml="${omnigator}/WEB-INF/web.xml">
-      <fileset dir="${omnigator}" />
-      <!-- Due to a bug in Tomcat the TLDs are necessary, even 
-           if they are not going to be used, because of the compiled JSPs -->
-      <fileset dir="${src.path}/webapps/omnigator">
-        <include name="WEB-INF/jsp/*.tld" />
-      </fileset>
-      <lib dir="${dist.path}/apache-tomcat/common/lib" />
-    </war>
-  </target>
-
-  <!-- abstract target: do not call on it's own -->
-  <target name="dist.oks.samplers.installer" depends="init">
-    <copy file="${java.path}/dist/installer/install.xml" overwrite="true"
-          todir="${build.dists}/installers" />
-    <copy file="${java.path}/dist/installer/Licence.txt" overwrite="true"
-          todir="${build.dists}/installers" />
-    <copy file="${java.path}/dist/installer/startup.html" overwrite="true" 
-          todir="${build.dists}/installers" />
-
-    <!-- Insert current version number -->
-    <replace file="${build.dists}/installers/install.xml" token="[version]" value="${dist.version}" />
-
-    <!-- These commands are here because the packaging system skips
-         empty directories. -->
-    <mkdir dir="${build.dists}/oks-samplers/apache-tomcat/logs/" />
-    <exec dir="${build.dists}/oks-samplers/apache-tomcat/logs/" executable="touch">
-      <arg value="file.tmp" />
-    </exec>
-    <exec dir="${build.dists}/oks-samplers/apache-tomcat/webapps/omnigator/models/" executable="touch">
-      <arg value="file.tmp" />
-    </exec>
-
-    <!-- Use the IzPack installer to create the distributable jar file -->
-    <!-- Run the jar file directly rather than batch/shell scripts (compile) -->
-
-    <delete quiet="true" failonerror="false" dir="${build.tmp}/izpack-src" />
-    <unzip src="${3rdparty.path}/izpack-src.zip" dest="${build.tmp}/" />
-
-    <!-- NOTES: 
-         - built from CVS, but changed to source=1.3 in 
-         $IZPACK_HOME/src/ant.properties and do ant clean + ant all -->
-
-    <exec dir="${build.tmp}/izpack-src/bin" executable="${j2se14.home}/bin/java">
-      <env key="JAVA_HOME" value="${j2se14.home}"/>
-      <arg value="-jar" />
-      <arg value="${build.tmp}/izpack-src/lib/compiler.jar" />
-      <arg line="-HOME ${build.tmp}/izpack-src" />
-      <arg line="${build.dists}/installers/install.xml" />
-      <arg line="-b ${build.dists}/installers" />
-      <arg line="-o ${build.dists}/installers/oks-samplers.jar" />
-      <arg line="-k standard-kunststoff" />
-    </exec>
-
-  </target>
-
   <!-- - - - Build navigator components  - - - - - - - - - - - - - - - - - - -->
   <target name="dist.navigator.build">
     <echo>Building navigator components...</echo>
@@ -2696,32 +1962,24 @@
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/NAVIGATOR/userguide.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/NAVIGATOR/navguide.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/NAVIGATOR/config.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/NAVIGATOR/plugins.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/NAVIGATOR/tolog-taglib.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/NAVIGATOR/taglib2.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/NAVIGATOR/refcard.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/NAVIGATOR/userman.xml" />
+      <param name="file" value="${doc.path}/omnigator/user-guide.xml" />
     </antcall>
 
-    <!-- Make sure taglib descriptors and velocity macros are up to date -->
-    <antcall target="prepare.tlds" />
+    <antcall target="makehtml">
+      <param name="file" value="${doc.path}/navigator/config.xml" />
+    </antcall>
+    <antcall target="makehtml">
+      <param name="file" value="${doc.path}/navigator/devguide.xml" />
+    </antcall>
+    <antcall target="makehtml">
+      <param name="file" value="${doc.path}/navigator/refcard.xml" />
+    </antcall>
+    <antcall target="makehtml">
+      <param name="file" value="${doc.path}/navigator/taglib-reference.xml" />
+    </antcall>
+    <antcall target="makehtml">
+      <param name="file" value="${doc.path}/navigator/userman.xml" />
+    </antcall>
 
   </target>
 
@@ -2731,36 +1989,33 @@
     <echo>Collecting navigator runtime components...</echo>
 
     <!-- Unpack jakarta tomcat -->
-    <gunzip src="${3rdparty.path}/apache-tomcat55.tar.gz" dest="${3rdparty.path}/apache-tomcat55.tar" />
-    <exec dir="${dist.path}" executable="tar">
-      <arg value="xpf" />
-      <arg value="${3rdparty.path}/apache-tomcat55.tar" />
-    </exec>
-    <delete quiet="true" file="${3rdparty.path}/apache-tomcat55.tar" />
+    <unzip src="${3rdparty.path}/apache-tomcat-5.5.27.zip" dest="${dist.path}" />
+    <move file="${dist.path}/apache-tomcat-5.5.27" 
+        tofile="${dist.path}/apache-tomcat"/>
 
     <!-- creating empty file in TOMCAT_HOME/temp -->
-    <copy file="${java.path}/dist/tomcat/README.Ontopia" 
+    <copy file="${src.path}/dist/tomcat/README.Ontopia" 
         todir="${dist.path}/apache-tomcat/" overwrite="yes" />
     <copy file="${dist.path}/apache-tomcat/README.Ontopia" 
         tofile="${dist.path}/apache-tomcat/temp/trash" overwrite="yes" />
 
-    <!-- Copy Windows little startup icon [FIXME->dist/tomcat] -->
-    <copy file="${3rdparty.path}/startup.pif" todir="${dist.path}/apache-tomcat/bin" />
+    <!-- Copy Windows little startup icon -->
+    <copy file="${src.path}/dist/tomcat/startup.pif" todir="${dist.path}/apache-tomcat/bin" />
 
     <!-- Replace server.xml -->
-    <copy file="${java.path}/dist/tomcat/tomcat55/server-triper.xml" 
+    <copy file="${src.path}/dist/tomcat/server.xml" 
         tofile="${dist.path}/apache-tomcat/conf/server.xml" overwrite="yes" />
 
     <!-- Copy tomcat log4j configuration -->
-    <copy file="${java.path}/dist/tomcat/tomcat55/log4j.properties" 
+    <copy file="${src.path}/dist/tomcat/log4j.properties" 
         tofile="${dist.path}/apache-tomcat/common/classes/log4j.properties" overwrite="yes" />
 
     <!-- Copy startup scripts -->
-    <copy file="${java.path}/dist/tomcat/tomcat55/setclasspath.bat" 
+    <copy file="${src.path}/dist/tomcat/setclasspath.bat" 
         tofile="${dist.path}/apache-tomcat/bin/setclasspath.bat" overwrite="yes" />
-    <copy file="${java.path}/dist/tomcat/tomcat55/catalina.bat" 
+    <copy file="${src.path}/dist/tomcat/catalina.bat" 
         tofile="${dist.path}/apache-tomcat/bin/catalina.bat" overwrite="yes" />
-    <copy file="${java.path}/dist/tomcat/tomcat55/catalina.sh" 
+    <copy file="${src.path}/dist/tomcat/catalina.sh" 
         tofile="${dist.path}/apache-tomcat/bin/catalina.sh" overwrite="yes" />
 
     <!-- Fix permissions -->
@@ -2771,40 +2026,14 @@
     <delete quiet="true" file="${dist.path}/apache-tomcat/conf/Catalina/localhost/manager.xml" />
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/webdav" />
 
-    <!-- Build OKS realm -->
+    <!-- Build Ontopia realm -->
     <antcall target="jar.topicmaprealm"/>
-    <copy file="${build.jars}/oks-realm.jar" 
-        tofile="${dist.path}/apache-tomcat/server/lib/oks-realm.jar" overwrite="yes" />
+    <copy file="${build.jars}/ontopia-realm.jar" 
+        tofile="${dist.path}/apache-tomcat/server/lib/ontopia-realm.jar" overwrite="yes" />
 
     <!-- Copy JAAS config file -->
-    <copy file="${java.path}/dist/tomcat/tomcat55/jaas.config" 
+    <copy file="${src.path}/dist/tomcat/jaas.config" 
         tofile="${dist.path}/apache-tomcat/conf/jaas.config" overwrite="yes" />
-
-    <!-- Replace xerces with crimson -->
-    <delete quiet="true" file="${dist.path}/apache-tomcat/common/lib/xerces.jar" />
-    <copy file="${3rdparty.path}/jaxp.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/crimson.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
-    <!-- Libraries used by all web applications -->
-    <copy file="${3rdparty.path}/getopt.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/log4j.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/antlr.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/jing.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/jena.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/jakarta-oro.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/icu4j.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/xerces.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/trove.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/retrotranslator-runtime.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/backport-util-concurrent.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/acmeenc.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/commons-collections.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/commons-logging.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/jaas.jar" todir="${dist.path}/apache-tomcat/server/lib" />
-
-    <!-- Copy JSTL tag libraries -->
-    <copy file="${3rdparty.path}/jstl.jar" todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes" />
-    <copy file="${3rdparty.path}/standard.jar" todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes" />
 
     <!-- Collect omnigator web application -->
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator">
@@ -2843,14 +2072,13 @@
     </copy>
 
     <!-- Collect omnigator documentation -->
-    <copy file="${doc.path}/developer/NAVIGATOR/config.xml.html" tofile="${dist.path}/doc/navigator/config.html" />
-    <copy file="${doc.path}/developer/NAVIGATOR/plugins.xml.html" tofile="${dist.path}/doc/navigator/plugins.html" />
-    <copy file="${doc.path}/developer/NAVIGATOR/tolog-taglib.xml.html" tofile="${dist.path}/doc/navigator/tolog-taglib.html" />
-    <copy file="${doc.path}/developer/NAVIGATOR/taglib2.xml.html" tofile="${dist.path}/doc/navigator/taglib2.html" />
-    <copy file="${doc.path}/developer/NAVIGATOR/refcard.xml.html" tofile="${dist.path}/doc/navigator/refcard.html" />
-    <copy file="${doc.path}/developer/NAVIGATOR/navguide.xml.html" tofile="${dist.path}/doc/navigator/navguide.html" />
+    <copy file="${doc.path}/navigator/config.xml.html" tofile="${dist.path}/doc/navigator/config.html" />
+    <copy file="${doc.path}/navigator/devguide.xml.html" tofile="${dist.path}/doc/navigator/navguide.html" />
+    <copy file="${doc.path}/navigator/refcard.xml.html" tofile="${dist.path}/doc/navigator/refcard.html" />
+    <copy file="${doc.path}/navigator/taglib-reference.xml.html" tofile="${dist.path}/doc/navigator/taglib2.html" />
+    <copy file="${doc.path}/navigator/userman.xml.html" tofile="${dist.path}/doc/navigator/userman.html" />
     <copy todir="${dist.path}/doc/navigator">
-      <fileset dir="${doc.path}/developer/NAVIGATOR">
+      <fileset dir="${doc.path}/navigator">
         <patternset>
           <include name="*.png" />
         </patternset>
@@ -2861,20 +2089,18 @@
     </copy>
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/navigator" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/navigator" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/navigator" />
 
     <!-- Copy the user guide to the web application -->
     <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator" />
-    <copy file="${doc.path}/developer/NAVIGATOR/userguide.xml.html" 
+    <copy file="${doc.path}/omnigator/user-guide.xml.html" 
         tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator/userguide.html" />
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator/graphics">
-      <fileset dir="${doc.path}/developer/NAVIGATOR/graphics" />
+      <fileset dir="${doc.path}/omnigator/graphics" />
     </copy>
-    <copy file="${doc.path}/developer/NAVIGATOR/plugins.xml.html" 
-        tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator/plugins.html" />
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator">
-      <fileset dir="${doc.path}/developer/NAVIGATOR">
+      <fileset dir="${doc.path}/navigator">
         <patternset>
           <include name="*.png" />
         </patternset>
@@ -2883,37 +2109,30 @@
         </patternset>
       </fileset>
     </copy>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator" />
 
     <!-- Collect query documentation -->
-    <copy file="${doc.path}/developer/query-lang/tolog-tutorial.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/query/tutorial.html" />
-    <copy file="${doc.path}/developer/query-lang/predicate-reference.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/query/predicate-reference.html" />
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/query" />
+    <copy file="${doc.path}/tolog/tutorial.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/query/tutorial.html" />
+    <copy file="${doc.path}/tolog/predicate-ref.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/query/predicate-reference.html" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/query" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/query" />
 
     <!-- Collect schema documentation -->
-    <copy file="${doc.path}/developer/schema-tools/schemaspec.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/schema/spec.html" />
-    <copy file="${doc.path}/developer/schema-tools/schema-lang-tut.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/schema/tutorial.html" />
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/schema" />
+    <copy file="${doc.path}/osl/schemaspec.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/schema/spec.html" />
+    <copy file="${doc.path}/osl/tutorial.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/schema/tutorial.html" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/schema" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/schema" />
 
     <!-- Copy example topic maps to the web application documentation dir -->
-    <copy file="${topicmaps.path}/opera/opera.ltm" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator" />
-    <copy file="${topicmaps.path}/i18n/i18n.ltm" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs" />
-    <copy file="${topicmaps.path}/ONTOPIA/jill.xtm" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs" />
+    <copy file="${topicmaps.path}/opera.ltm" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/navigator" />
+    <copy file="${topicmaps.path}/i18n.ltm" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs" />
+    <copy file="${topicmaps.path}/jill.xtm" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs" />
 
     <!-- Replace topic map files which will be used by omnigator -->
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps" />
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps">
       <fileset dir="${dist.path}/samples" />
-    </copy>
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps" overwrite="true">
-      <fileset dir="${topicmaps.path}/ted">
-        <patternset>
-          <include name="*.xtm" />
-        </patternset>
-      </fileset>
     </copy>
     <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/tasks.ltm" />
     <move todir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/schemas">
@@ -2923,25 +2142,24 @@
     </move>
 
     <!-- mondial.xtm  -->
-    <gunzip src="${topicmaps.path}/autogen/mondial.xtm.gz" dest="${topicmaps.path}/autogen/mondial.xtm" />
-    <copy file="${topicmaps.path}/autogen/mondial.xtm" todir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps" overwrite="yes" />
+    <gunzip src="${topicmaps.path}/mondial.xtm.gz" dest="${topicmaps.path}/mondial.xtm" />
+    <copy file="${topicmaps.path}/mondial.xtm" todir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps" overwrite="yes" />
 
     <!-- Insert Versionnumber and Builddate for display into omnigator -->
     <replace file="${dist.path}/apache-tomcat/webapps/omnigator/fragments/tagline-header.jsp" token="@VERSION@" value="${dist.version}" />
     <replace file="${dist.path}/apache-tomcat/webapps/omnigator/fragments/tagline-header.jsp" token="@DATE@" value="${build.date}" />
 
     <!-- Add i18n web application -->
-    <antcall target="dist.oks.webapp.i18n" />
+    <antcall target="dist.ontopia.webapp.i18n" />
 
     <!-- Add xmltools web application -->
-    <antcall target="dist.oks.webapp.xmltools" />
+    <antcall target="dist.ontopia.webapp.xmltools" />
 
     <!-- Add manage web application -->
-    <antcall target="dist.oks.webapp.manage" />
+    <antcall target="dist.ontopia.webapp.manage" />
 
     <!-- Add ontopoly web application -->
-    <antcall target="dist.oks.webapp.ontopoly" />
-    <antcall target="dist.oks.webapp.ontopoly0" />
+    <antcall target="dist.ontopia.webapp.ontopoly" />
 
   </target>
 
@@ -2949,11 +2167,11 @@
 
     <!-- Navigator test files and configuration -->
     <copy todir="${dist.path}/tests/test-data/nav2">
-      <fileset dir="${java.path}/test-data/nav2" />
+      <fileset dir="${test.path}/nav2" />
     </copy>
 
     <copy todir="${dist.path}/tests/test-data/ontopoly">
-      <fileset dir="${java.path}/test-data/ontopoly" />
+      <fileset dir="${test.path}/ontopoly" />
     </copy>
 
   </target>
@@ -2966,45 +2184,37 @@
     <antcall target="compile.test.fulltext" />
 
     <!-- Generate documentation -->
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/fulltext/fulltext-api.xml" />
+    <!--antcall target="makehtml">
+      <param name="file" value="${doc.path}/fulltext/fulltext-api.xml" />
     </antcall>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/fulltext/fulltext-faq.xml" />
-    </antcall>
+      <param name="file" value="${doc.path}/fulltext/fulltext-faq.xml" />
+    </antcall-->
 
   </target>
 
   <!-- - - - Collect fulltext components - - - - - - - - - - - - - - - - - - -->
   <target name="dist.fulltext.collect">
 
-    <!-- Collect jar files -->
-    <copy file="${3rdparty.path}/lucene.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/concurrent.jar" todir="${dist.path}/lib" />
-
-    <!-- Collect jar files for the navigator -->
-    <copy file="${dist.path}/lib/lucene.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${dist.path}/lib/concurrent.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
     <!-- Collect documentation -->
-    <copy file="${doc.path}/developer/fulltext/fulltext-api.xml.html" tofile="${dist.path}/doc/fulltext/devguide.html" />
-    <copy file="${doc.path}/developer/fulltext/SampleIndexer.java" todir="${dist.path}/doc/fulltext" />
-    <copy file="${doc.path}/developer/fulltext/SampleSearcher.java" todir="${dist.path}/doc/fulltext" />
-    <copy file="${doc.path}/developer/fulltext/fulltext-faq.xml.html" tofile="${dist.path}/doc/fulltext/faq.html" />
+    <!--copy file="${doc.path}/fulltext/fulltext-api.xml.html" tofile="${dist.path}/doc/fulltext/devguide.html" />
+    <copy file="${doc.path}/fulltext/SampleIndexer.java" todir="${dist.path}/doc/fulltext" />
+    <copy file="${doc.path}/fulltext/SampleSearcher.java" todir="${dist.path}/doc/fulltext" />
+    <copy file="${doc.path}/fulltext/fulltext-faq.xml.html" tofile="${dist.path}/doc/fulltext/faq.html" /-->
   
     <!-- Compile code examples -->
-    <javac srcdir="${doc.path}/developer/fulltext" 
-          destdir="${doc.path}/developer/fulltext" optimize="${optimize}" 
+    <!--javac srcdir="${doc.path}/fulltext" 
+          destdir="${doc.path}/fulltext" optimize="${optimize}" 
           deprecation="${deprecation}" debug="${debug}" 
           debuglevel="${debuglevel}" classpathref="project.class.path">
       <patternset>
         <include name="*.java" />
       </patternset>
-    </javac>
+    </javac-->
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/fulltext" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/fulltext" />
+    <!--copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/fulltext" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/fulltext" /-->
 
     <!-- Copy plugin-->
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
@@ -3032,21 +2242,17 @@
   <!-- - - - Collect db2tm components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.db2tm.collect">
 
-    <!-- copy jar files -->
-    <copy file="${3rdparty.path}/opencsv.jar" todir="${dist.path}/lib" />
-    <copy file="${dist.path}/lib/opencsv.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
     <!-- build and copy documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/db2tm/user-guide.xml" />
+      <param name="file" value="${doc.path}/db2tm/devguide.xml" />
     </antcall>
-    <copy file="${doc.path}/developer/db2tm/user-guide.xml.html" 
+    <copy file="${doc.path}/db2tm/devguide.xml.html" 
          tofile="${dist.path}/doc/db2tm/user-guide.html" />
     <copy file="${java.path}/net/ontopia/topicmaps/db2tm/db2tm.rnc" 
          tofile="${dist.path}/doc/db2tm/db2tm.rnc" />
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/db2tm" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/db2tm" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/db2tm" />
 
   </target>
@@ -3058,19 +2264,15 @@
   <!-- - - - Build tmrap components  - - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.tmrap.build">
 
-    <!-- Build jar files -->
-    <!--antcall target="compile.tmrap" /-->
-    <!--antcall target="compile.test.tmrap" /-->
-
     <!-- build and copy documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/tmrap/dev-guide.xml" />
+      <param name="file" value="${doc.path}/tmrap/devguide.xml" />
     </antcall>
-    <copy file="${doc.path}/developer/tmrap/dev-guide.xml.html" 
+    <copy file="${doc.path}/tmrap/devguide.xml.html" 
          tofile="${dist.path}/doc/tmrap/dev-guide.html" />
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/tmrap" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/tmrap" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/tmrap" />
 
   </target>
@@ -3091,13 +2293,6 @@
 
   <target name="dist.classify.collect">
     <echo>Collecting classify components...</echo>
-
-    <!-- Ontopoly plug-in -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/ontopoly0">
-      <fileset dir="${src.path}/webapps/ted">
-        <include name="plugins/classify/*/**" />
-      </fileset>
-    </copy>
 
     <!-- Libraries used by classify plug-in -->
     <copy file="${3rdparty.path}/snowball.jar" todir="${dist.path}/apache-tomcat/common/lib" />
@@ -3124,15 +2319,15 @@
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/rdbms/rdbms-install.xml" />
+      <param name="file" value="${doc.path}/rdbms/install.xml" />
     </antcall>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/rdbms/rdbms-guide.xml" />
+      <param name="file" value="${doc.path}/rdbms/devguide.xml" />
     </antcall>
   
     <!-- Compile code examples -->
-    <javac srcdir="${doc.path}/developer/rdbms" 
-          destdir="${doc.path}/developer/rdbms" optimize="${optimize}" 
+    <javac srcdir="${doc.path}/rdbms" 
+          destdir="${doc.path}/rdbms" optimize="${optimize}" 
           deprecation="${deprecation}" debug="${debug}" 
           debuglevel="${debuglevel}" classpathref="project.class.path">
       <patternset>
@@ -3152,31 +2347,17 @@
   <!-- - - - Collect rdbms components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.rdbms.collect">
 
-    <!-- Collect jar files -->
-    <copy file="${3rdparty.path}/commons-pool.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/commons-dbcp.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/jgroups-all.jar" todir="${dist.path}/lib" />
-
-    <!-- Collect jar files for the navigator -->
-    <copy file="${dist.path}/lib/commons-pool.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${dist.path}/lib/commons-dbcp.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${dist.path}/lib/jgroups-all.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
     <!-- Collect documentation -->
     <mkdir dir="${dist.path}/doc/rdbms" />
-    <copy file="${doc.path}/developer/rdbms/rdbms-install.xml.html" tofile="${dist.path}/doc/rdbms/install.html" />
-    <copy file="${doc.path}/developer/rdbms/rdbms-guide.xml.html" tofile="${dist.path}/doc/rdbms/devguide.html" />
+    <copy file="${doc.path}/rdbms/install.xml.html" tofile="${dist.path}/doc/rdbms/install.html" />
+    <copy file="${doc.path}/rdbms/dev-guide.xml.html" tofile="${dist.path}/doc/rdbms/devguide.html" />
 
-    <copy file="${doc.path}/developer/rdbms/RdbmsImport.java" todir="${dist.path}/doc/rdbms" />
-    <copy file="${doc.path}/developer/rdbms/RdbmsExport.java" todir="${dist.path}/doc/rdbms" />
-    <copy file="${doc.path}/developer/rdbms/RdbmsList.java" todir="${dist.path}/doc/rdbms" />
-
-    <!--copy todir="${dist.path}/doc/rdbms/schema">
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/schema/druid/db-html" />
-    </copy-->
+    <copy file="${doc.path}/rdbms/RdbmsImport.java" todir="${dist.path}/doc/rdbms" />
+    <copy file="${doc.path}/rdbms/RdbmsExport.java" todir="${dist.path}/doc/rdbms" />
+    <copy file="${doc.path}/rdbms/RdbmsList.java" todir="${dist.path}/doc/rdbms" />
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/rdbms" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/rdbms" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/rdbms" />
 
     <!-- Collect database scripts -->
@@ -3200,7 +2381,7 @@
 
     <!-- Collection clustering configuration -->
     <mkdir dir="${dist.path}/rdbms/clustering" />
-    <copy file="${java.path}/net/ontopia/topicmaps/impl/rdbms/config/oks-terracotta.xml" todir="${dist.path}/rdbms/clustering" />
+    <copy file="${java.path}/net/ontopia/topicmaps/impl/rdbms/config/ontopia-terracotta.xml" todir="${dist.path}/rdbms/clustering" />
 
   </target>
 
@@ -3236,7 +2417,7 @@
 
     <!-- Generate TLD files -->
     <exec executable="python">
-      <arg value="${java.path}/dist/scripts/tld-downgrade.py" />
+      <arg value="${src.path}/dist/scripts/tld-downgrade.py" />
       <arg value="${src.path}/webapps/webedtest/WEB-INF/jsp" />
       <arg value="${dist.path}/config/jsp-11" />
     </exec>
@@ -3248,7 +2429,7 @@
     <!-- Bump build numbers and update product version information -->
     <exec dir="${src.path}" executable="python">
       <arg value="scripts/newbuild.py" />
-      <arg value="update(${oks.version}, {})" />
+      <arg value="update(${ontopia.version}, {})" />
       <!-- product information dictionary -->
       <arg value="java/net/ontopia/Ontopia.java" />
     </exec>
@@ -3263,19 +2444,10 @@
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/schema-tools/schemaspec.xml" />
+      <param name="file" value="${doc.path}/osl/schemaspec.xml" />
     </antcall>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/schema-tools/schema-lang-tut.xml" />
-    </antcall>
-  </target>
-
-  <target name="make.schema.doc" depends="init">
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/schema-tools/schemaspec.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/schema-tools/schema-lang-tut.xml" />
+      <param name="file" value="${doc.path}/osl/tutorial.xml" />
     </antcall>
   </target>
 
@@ -3284,20 +2456,13 @@
 
     <!-- Collect documentation -->
     <mkdir dir="${dist.path}/doc/schema" />
-    <copy file="${doc.path}/developer/schema-tools/schemaspec.xml.html" tofile="${dist.path}/doc/schema/spec.html" />
-    <copy file="${doc.path}/developer/schema-tools/schema-lang-tut.xml.html" tofile="${dist.path}/doc/schema/tutorial.html" />
-    <copy file="${doc.path}/developer/schema-tools/schema.dtd" todir="${dist.path}/doc/schema" />
+    <copy file="${doc.path}/osl/schemaspec.xml.html" tofile="${dist.path}/doc/schema/spec.html" />
+    <copy file="${doc.path}/osl/tutorial.xml.html" tofile="${dist.path}/doc/schema/tutorial.html" />
+    <copy file="${doc.path}/osl/osl.dtd" tofile="${dist.path}/doc/schema/schema.dtd" />
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/schema" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/schema" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/schema" />
-
-    <!-- Copy samples -->
-    <copy todir="${dist.path}/doc/schema">
-      <fileset dir="${doc.path}/developer/schema-tools">
-        <include name="*.java" />
-      </fileset>
-    </copy>
 
     <!-- Copy plugin -->
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
@@ -3312,7 +2477,7 @@
 
     <!-- Test data -->
     <copy todir="${dist.path}/tests/test-data/schema">
-      <fileset dir="${java.path}/test-data/schema" />
+      <fileset dir="${test.path}/schema" />
     </copy>
 
   </target>
@@ -3326,11 +2491,10 @@
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/query-lang/tolog-tutorial.xml" />
+      <param name="file" value="${doc.path}/tolog/tutorial.xml" />
     </antcall>
-    <!--antcall target="makehtml"><param name="file" value="${doc.path}/developer/query-lang/qlspec.xml"/></antcall-->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/query-lang/predicate-reference.xml" />
+      <param name="file" value="${doc.path}/tolog/predicate-ref.xml" />
     </antcall>
 
   </target>
@@ -3339,13 +2503,13 @@
   <target name="dist.query.collect">
 
     <!-- Collect documentation -->
-    <copy file="${doc.path}/developer/query-lang/tolog-tutorial.xml.html" 
+    <copy file="${doc.path}/tolog/tutorial.xml.html" 
         tofile="${dist.path}/doc/query/tutorial.html" />
-    <copy file="${doc.path}/developer/query-lang/predicate-reference.xml.html" 
+    <copy file="${doc.path}/tolog/predicate-ref.xml.html" 
         tofile="${dist.path}/doc/query/predicate-reference.html" />
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/query" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/query" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/query" />
 
     <!-- Copy plugin -->
@@ -3361,7 +2525,7 @@
 
     <!-- Test data -->
     <copy todir="${dist.path}/tests/test-data/query">
-      <fileset dir="${java.path}/test-data/query" />
+      <fileset dir="${test.path}/query" />
     </copy>
 
   </target>
@@ -3375,13 +2539,16 @@
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/webeditor/action-ref.xml" />
+      <param name="file" value="${doc.path}/webed/action-ref.xml" />
     </antcall>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/webeditor/devguide.xml" />
+      <param name="file" value="${doc.path}/webed/devguide.xml" />
     </antcall>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/webeditor/taglib.xml" />
+      <param name="file" value="${doc.path}/webed/taglib.xml" />
+    </antcall>
+    <antcall target="makehtml">
+      <param name="file" value="${doc.path}/webed/config.xml" />
     </antcall>
 
   </target>
@@ -3389,24 +2556,17 @@
   <!-- - - - Collect webed components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.webed.collect">
 
-    <!-- Collect jar files -->
-    <copy file="${3rdparty.path}/velocity.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/commons-fileupload.jar" todir="${dist.path}/lib" />
-
-    <!-- Collect jar files for the navigator -->
-    <copy file="${3rdparty.path}/velocity.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/commons-fileupload.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
     <!-- Collect documentation -->
     <mkdir dir="${dist.path}/doc/webed" />
-    <copy file="${doc.path}/developer/webeditor/action-ref.xml.html" tofile="${dist.path}/doc/webed/action-ref.html" />
-    <copy file="${doc.path}/developer/webeditor/devguide.xml.html" tofile="${dist.path}/doc/webed/devguide.html" />
-    <copy file="${doc.path}/developer/webeditor/taglib.xml.html" tofile="${dist.path}/doc/webed/taglib.html" />
+    <copy file="${doc.path}/webed/action-ref.xml.html" tofile="${dist.path}/doc/webed/action-ref.html" />
+    <copy file="${doc.path}/webed/devguide.xml.html" tofile="${dist.path}/doc/webed/devguide.html" />
+    <copy file="${doc.path}/webed/taglib.xml.html" tofile="${dist.path}/doc/webed/taglib.html" />
+    <copy file="${doc.path}/webed/config.xml.html" tofile="${dist.path}/doc/webed/taglib.html" />
     <copy file="${src.path}/webapps/webedtest/WEB-INF/config/actionConfig.dtd" tofile="${dist.path}/doc/webed/actionConfig.dtd" />
     <copy file="${src.path}/webapps/webedtest/WEB-INF/config/actionConfig.rnc" tofile="${dist.path}/doc/webed/actionConfig.rnc" />
 
     <copy todir="${dist.path}/doc/webed">
-      <fileset dir="${doc.path}/developer/webeditor">
+      <fileset dir="${doc.path}/webed">
         <patternset>
           <include name="*.gif" />
         </patternset>
@@ -3417,7 +2577,7 @@
     </copy>
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/doc/webed" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/webed" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/webed" />
 
   </target>
@@ -3426,7 +2586,7 @@
 
     <!-- Test data -->
     <copy todir="${dist.path}/tests/test-data/webed">
-      <fileset dir="${java.path}/test-data/webed" />
+      <fileset dir="${test.path}/webed" />
     </copy>
 
   </target>
@@ -3439,12 +2599,12 @@
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/vizzigator/viz_userguide.xml" />
+      <param name="file" value="${doc.path}/vizigator/user-guide.xml" />
     </antcall>
 
     <!-- Validate properties files -->
-    <exec dir="${java.path}" executable="jython">
-      <arg value="${java.path}/dist/scripts/check-properties.py" />
+    <exec dir="${java.path}" executable="python">
+      <arg value="${src.path}/scripts/check-properties.py" />
       <arg value="${java.path}/net/ontopia/topicmaps/viz" />
     </exec>
 
@@ -3453,16 +2613,13 @@
   <!-- - - - Collect viz components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.viz.collect">
 
-    <!-- Collect jar files -->
-    <copy file="${3rdparty.path}/touchgraph.jar" todir="${dist.path}/lib" />
-
     <!-- Collect documentation -->
     <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
-    <copy file="${doc.path}/developer/vizzigator/viz_userguide.xml.html" 
+    <copy file="${doc.path}/vizigator/user-guide.xml.html" 
       tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator/userguide.html" />
 
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator">
-      <fileset dir="${doc.path}/developer/vizzigator">
+      <fileset dir="${doc.path}/vizigator">
         <patternset>
           <include name="*.gif" />
         </patternset>
@@ -3473,7 +2630,7 @@
     </copy>
 
     <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
 
     <!-- Copy plugin -->
@@ -3493,14 +2650,14 @@
 
     <!-- VizPlugin configurations -->
     <property name="vizcfg" value="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/" />
-    <copy file="${topicmaps.path}/i18n/i18n.ltm.viz" todir="${vizcfg}" />
-    <copy file="${topicmaps.path}/autogen/mondial.xtm.viz" todir="${vizcfg}" />
-    <copy file="${topicmaps.path}/autogen/tm-standards.xtm.viz" todir="${vizcfg}" />
-    <copy file="${topicmaps.path}/opera/opera.ltm.viz" todir="${vizcfg}" />
-    <copy file="${topicmaps.path}/xmltools/xmltools-tm.xtm.viz" todir="${vizcfg}" />
-    <copy file="${topicmaps.path}/3rdparty/music/KanzakisConcerts.rdf.viz" todir="${vizcfg}" />
-    <copy file="${topicmaps.path}/3rdparty/pokemon.ltm.viz" todir="${vizcfg}" />
-    <copy file="${topicmaps.path}/ONTOPIA/support-kb.ltm.viz" todir="${vizcfg}" />
+    <copy file="${topicmaps.path}/i18n.ltm.viz" todir="${vizcfg}" />
+    <copy file="${topicmaps.path}/mondial.xtm.viz" todir="${vizcfg}" />
+    <copy file="${topicmaps.path}/tm-standards.xtm.viz" todir="${vizcfg}" />
+    <copy file="${topicmaps.path}/opera.ltm.viz" todir="${vizcfg}" />
+    <copy file="${topicmaps.path}/xmltools-tm.xtm.viz" todir="${vizcfg}" />
+    <copy file="${topicmaps.path}/KanzakisConcerts.rdf.viz" todir="${vizcfg}" />
+    <copy file="${topicmaps.path}/pokemon.ltm.viz" todir="${vizcfg}" />
+    <copy file="${topicmaps.path}/support-kb.ltm.viz" todir="${vizcfg}" />
 
   </target>
 
@@ -3508,7 +2665,7 @@
   </target>
 
   <!-- - - - Ontopoly web application  - - - - - - - - - - - - - - - - - - -->
-  <target name="dist.oks.webapp.ontopoly" depends="init">
+  <target name="dist.ontopia.webapp.ontopoly" depends="init">
     <exec dir="${src.path}/webapps/ontopoly" executable="mvn">
       <env key="JAVA_HOME" value="${j2se15.home}"/>
       <arg value="-Dmaven.test.skip=true" />
@@ -3519,123 +2676,59 @@
     <copy file="${src.path}/webapps/ontopoly/target/ontopoly_war-${dist.version.major}.${dist.version.minor}-SNAPSHOT.war" 
          tofile="${dist.path}/apache-tomcat/webapps/ontopoly.war" />
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/generic-editor/user-guide.xml" />
+      <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
     </antcall>
   </target>
 
-  <target name="dist.oks.webapp.ontopoly.docs" depends="init">
+  <target name="dist.ontopia.webapp.ontopoly.docs" depends="init">
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/generic-editor/user-guide.xml" />
+      <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
     </antcall>
     <property name="ontopoly.path" value="${src.path}/webapps/ontopoly/src/main/webapp" />
     <mkdir dir="${ontopoly.path}/doc/" />
-    <copy file="${doc.path}/developer/generic-editor/user-guide.xml.html" 
+    <copy file="${doc.path}/ontopoly/user-guide.xml.html" 
          tofile="${ontopoly.path}/doc/user-guide.html" />
-    <copy file="${3rdparty.path}/images/logo.gif" 
+    <copy file="${doc.path}/ontopia/logo.gif" 
          todir="${ontopoly.path}/doc/" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" 
          todir="${ontopoly.path}/doc/" />
     <copy todir="${ontopoly.path}/doc/pages/">
-      <fileset dir="${doc.path}/developer/generic-editor/pages" />
+      <fileset dir="${doc.path}/ontopoly/pages" />
     </copy>
   </target>
 
-  <target name="dist.oks.webapp.ontopoly0">
-    <echo>Copying Ontopoly web application...</echo>
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/ontopoly0" />
-    <copy todir="${dist.path}/apache-tomcat/webapps/ontopoly0">
-      <fileset dir="${src.path}/webapps/ted">
-        <exclude name="plugins/*/**" />
-      </fileset>
-    </copy>
-    <copy todir="${dist.path}/apache-tomcat/webapps/ontopoly0">
-      <fileset dir="${src.path}/webapps/ted">
-        <include name="plugins/oksmenu/*/**" />
-        <include name="plugins/omnigate/*/**" />
-        <include name="plugins/vizigate/*/**" />
-      </fileset>
-    </copy>
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/ontopoly0/META-INF" />
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/developer/generic-editor/user-guide.xml" />
-    </antcall>
-    <copy file="${doc.path}/developer/generic-editor/user-guide.xml.html" 
-         tofile="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/user-guide.html" />
-    <copy file="${3rdparty.path}/images/logo.gif" 
-         todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" 
-         todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/" />
-
-    <copy todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/pages/">
-      <fileset dir="${doc.path}/developer/generic-editor/pages" />
-    </copy>
-  </target>
-
-  <patternset id="sources.webapp.ontopoly">
-    <include name="net/ontopia/topicmaps/nav2/webapps/ted/**/*.java"/>
-  </patternset>
-
-  <patternset id="classes.webapp.ontopoly">
-    <include name="net/ontopia/topicmaps/nav2/webapps/ted/**/*.class"/>
-  </patternset>
-
-  <target name="compile.webapp.ontopoly" depends="init">
-    <echo>Compiling Ontopoly web application classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" 
-           deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}"
-           classpathref="project.class.path" source="1.3">
-      <patternset refid="sources.webapp.ontopoly"/>
-    </javac>
-  </target>
-
-  <target name="dist.oks.webapp.root.samplers" depends="init">
-    <antcall target="dist.oks.webapp.root" />
-    <copy file="${src.path}/webapps/freedownload/oks-samplers-header.gif" overwrite="yes" 
+  <target name="dist.ontopia.webapp.root.samplers" depends="init">
+    <antcall target="dist.ontopia.webapp.root" />
+    <copy file="${src.path}/webapps/toplevel/ontopia-samplers-header.gif" overwrite="yes" 
         tofile="${dist.path}/apache-tomcat/webapps/ROOT/new_header.gif" />
   </target>
 
-  <target name="dist.oks.webapp.root" depends="init">
+  <target name="dist.ontopia.webapp.root" depends="init">
      
     <echo>Generating ROOT index page...</echo>
-    <copy file="${src.path}/webapps/freedownload/index-template.vm" overwrite="yes" 
-        tofile="${build.tmp}/freedownload-index-template.vm" />
-    <copy file="${src.path}/webapps/freedownload/control.vm" overwrite="yes" 
-        tofile="${build.tmp}/freedownload-control.vm" />
-    <texen controlTemplate="freedownload-control.vm" outputDirectory="${build.tmp}" 
+    <copy file="${src.path}/webapps/toplevel/index-template.vm" overwrite="yes" 
+        tofile="${build.tmp}/index-template.vm" />
+    <copy file="${src.path}/webapps/toplevel/index-control.vm" overwrite="yes" 
+        tofile="${build.tmp}/index-control.vm" />
+    <texen controlTemplate="index-control.vm" outputDirectory="${build.tmp}" 
            templatePath="${build.tmp}" outputFile="generation.report" />
 
     <echo>Replacing ROOT web application...</echo>
     <delete dir="${dist.path}/apache-tomcat/webapps/ROOT" />
     <copy todir="${dist.path}/apache-tomcat/webapps/ROOT">
-      <fileset dir="${src.path}/webapps/freedownload" />
+      <fileset dir="${src.path}/webapps/toplevel" />
     </copy>
-    <delete file="${dist.path}/apache-tomcat/webapps/ROOT/control.vm" />
+    <delete file="${dist.path}/apache-tomcat/webapps/ROOT/index-control.vm" />
     <delete file="${dist.path}/apache-tomcat/webapps/ROOT/index-template.vm" />
-    <copy file="${build.tmp}/freedownload-index-${dist.shortname}.html" overwrite="yes" 
+    <copy file="${build.tmp}/index.html" overwrite="yes" 
         tofile="${dist.path}/apache-tomcat/webapps/ROOT/index.html" />
-    <copy file="${dist.path}/apache-tomcat/webapps/ROOT/oks-header.gif" overwrite="yes" 
+    <copy file="${dist.path}/apache-tomcat/webapps/ROOT/ontopia-header.gif" overwrite="yes" 
         tofile="${dist.path}/apache-tomcat/webapps/ROOT/new_header.gif" />
   </target>
 
-  <target name="dist.oks.ontopoly.compile" depends="init">
+  <target name="dist.ontopia.accessctl.compile" depends="init">
     <!-- compile web application -->
-    <antcall target="dist.oks.webapp.compile">
-      <param name="dist.webapp" value="ontopoly0" />
-    </antcall>
-
-    <echo>delete (java and jsps) Sources from the distribution</echo>
-    <delete failonerror="false">
-      <fileset dir="${dist.path}/apache-tomcat/webapps/ontopoly0" includes="**/*.jsp" />
-      <fileset dir="${dist.path}/apache-tomcat/webapps/ontopoly0/WEB-INF/classes" includes="**/*.java" />
-      <fileset dir="${dist.path}/apache-tomcat/webapps/ontopoly0/WEB-INF/jsp" includes="**/*.tld" />
-    </delete>
-    <delete file="${dist.path}/apache-tomcat/webapps/ontopoly0/WEB-INF/web_compiled.xml" />
-    
-  </target>
-
-  <target name="dist.oks.accessctl.compile" depends="init">
-    <!-- compile web application -->
-    <antcall target="dist.oks.webapp.compile">
+    <antcall target="dist.ontopia.webapp.compile">
       <param name="dist.webapp" value="accessctl" />
     </antcall>
 
@@ -3648,7 +2741,7 @@
     <delete file="${dist.path}/apache-tomcat/webapps/accessctl/WEB-INF/web_compiled.xml" />
   </target>
 
-  <target name="dist.oks.webapp.compile" depends="init">
+  <target name="dist.ontopia.webapp.compile" depends="init">
     <echo>Compiling ${dist.webapp} web application...</echo>
 
     <echo>Generate source code from jsp pages</echo>
@@ -3673,34 +2766,11 @@
 
     <echo>insert autogenerated web.xml fragment</echo>
     <exec dir="${java.path}" executable="python">
-      <arg value="${java.path}/dist/scripts/template.py" />
+      <arg value="${src.path}/dist/scripts/template.py" />
       <arg value="{'WEB_COMPILED': '--&gt;' + open('${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/web_compiled.xml').read() + '&lt;!--'}" />
       <arg value="${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/web.xml" />
       <arg value="${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/web.xml" />
     </exec>
-  </target>
-
-  <target name="dist.ontopoly.embedded" depends="init">
-    <property name="pages_dir" value="WEB-INF/ontopoly-pages" />
-    <property name="web_dir" value="/ontopoly" />
-    <mkdir dir="${build.root}/ontopoly" />
-    <copy todir="${build.root}/ontopoly" overwrite="yes">
-      <fileset dir="${src.path}/webapps/ted/">
-        <include name="**/*" />
-      </fileset>
-    </copy>
-    <mkdir dir="${build.root}/ontopoly/embedded" />
-    <copy todir="${build.root}/ontopoly/embedded/" overwrite="yes">
-      <fileset dir="${build.root}/ontopoly/">
-        <include name="images/**/*" />
-        <include name="styles/**/*" />
-        <include name="doc/**/*" />
-        <include name="javascript/**/*" />
-      </fileset>
-    </copy>
-    <zip destfile="${build.dists}/ontopoly-embedded.zip">
-      <fileset dir="${build.root}/ontopoly"/>
-    </zip>
   </target>
 
   <!-- ================================================
@@ -3723,29 +2793,6 @@
     <jflex file="${java.path}/net/ontopia/topicmaps/utils/ctm/ctm.flex"
            destdir="${java.path}"/>
     <antlr target="${java.path}/net/ontopia/topicmaps/utils/ctm/ctm.g" />
-  </target>
-  
-  <!-- ================================================
-        JDO Query parser
-     ================================================ -->
-
-  <target name="compile.jdoquery.parser" depends="init">
-    <antlr target="${java.path}/net/ontopia/persistence/query/parser/jdoquery.g" />
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset>
-        <include name="net/ontopia/persistence/query/parser/*.java" />
-      </patternset>
-    </javac>
-  </target>
-
-  <target name="compile.jdoquery" depends="init">
-    <!-- Note:also included in the pattern classes.rdbms -->
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset>
-        <include name="net/ontopia/persistence/query/jdo/*.java" />
-        <include name="net/ontopia/persistence/query/sql/*.java" />
-      </patternset>
-    </javac>
   </target>
 
   <!-- ======================================================================
@@ -3831,14 +2878,6 @@
        net.ontopia.topicmaps.query.impl.utils, 
        net.ontopia.topicmaps.query.spi" />
 
-  <target name="javadoc.query" depends="init">
-    <delete dir="${build.javadoc}/query" />
-    <mkdir dir="${build.javadoc}/query" />
-    <javadoc packagenames="${dev.query.packagenames}" sourcepath="${java.path}" destdir="${build.javadoc}/query" author="true" version="true" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="&lt;align=center&gt;Ontopia Query Engine API documentation&lt;align=right&gt;&lt;img src='logo.gif'&gt;&lt;br&gt;&lt;br&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-    </javadoc>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/query" />
-  </target>
-
   <!-- ======================================================================
         Schema tools
        ==================================================================== -->
@@ -3893,14 +2932,6 @@
 
   <property name="dev.schema.packagenames" value="
        ${dist.schema.packagenames}" />
-
-  <target name="javadoc.schema" depends="init">
-    <delete dir="${build.javadoc}/schema" />
-    <mkdir dir="${build.javadoc}/schema" />
-    <javadoc packagenames="${dev.schema.packagenames}" sourcepath="${java.path}" destdir="${build.javadoc}/schema" author="true" version="true" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="&lt;align=center&gt;Ontopia Schema Tools API documentation&lt;align=right&gt;&lt;img src='logo.gif'&gt;&lt;br&gt;&lt;br&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-    </javadoc>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/schema" />
-  </target>
 
   <!-- ======================================================================
         TMAPI support
@@ -4083,7 +3114,7 @@
     <unjar src="${3rdparty.path}/crimson.jar" dest="${build.tmp}" />
     <unjar src="${3rdparty.path}/touchgraph.jar" dest="${build.tmp}" />
 
-    <unjar src="${3rdparty.path}/backport-util-concurrent.jar" dest="${build.tmp}" />
+    <unjar dest="${build.tmp}"><fileset file="${lib.path}/backport-util-concurrent-*.jar"/></unjar>
     <delete dir="${build.tmp}/edu/emory/mathcs/backport/java/util/concurrent"/>
     <delete includeemptydirs="true">
       <fileset dir="${build.tmp}/edu/emory/mathcs/backport/java/util">
@@ -4100,7 +3131,7 @@
     <delete file="${build.jars}/signed-vizlet.jar" />
 
     <mkdir dir="${build.classes}/META-INF/services"/>
-    <copy file="${java.path}/dist/vizigator/services/com.sun.org.apache.xerces.internal.xni.parser.XMLParserConfiguration" 
+    <copy file="${src.path}/dist/vizigator/services/com.sun.org.apache.xerces.internal.xni.parser.XMLParserConfiguration" 
          todir="${build.classes}/META-INF/services"/>
 
     <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-vizlet.jar">
@@ -4135,7 +3166,7 @@
     <echo>Signing vizlet jar-file...</echo>
     <exec executable="jarsigner">
       <arg value="-keystore" />
-      <arg value="${java.path}/dist/signing/ontopiastore" />
+      <arg value="${src.path}/dist/signing/ontopiastore" />
       <arg value="-storepass" />
       <arg value="ontopia" />
       <arg value="-keypass" />
@@ -4152,16 +3183,17 @@
     <echo>Creating vizdesk jar file...</echo>
 
     <unjar src="${3rdparty.path}/touchgraph.jar" dest="${build.tmp}" />
-    <unjar src="${3rdparty.path}/log4j.jar" dest="${build.tmp}" />
-    <unjar src="${3rdparty.path}/antlr.jar" dest="${build.tmp}" />
     <unjar src="${3rdparty.path}/crimson.jar" dest="${build.tmp}" />
-    <unjar src="${3rdparty.path}/jena.jar" dest="${build.tmp}" />
-    <unjar src="${3rdparty.path}/jakarta-oro.jar" dest="${build.tmp}" />
     <unjar src="${3rdparty.path}/jing.jar" dest="${build.tmp}" />
-    <unjar src="${3rdparty.path}/commons-logging.jar" dest="${build.tmp}" />
+
+    <unjar dest="${build.tmp}"><fileset file="${lib.path}/log4j-*.jar"/></unjar>
+    <unjar dest="${build.tmp}"><fileset file="${lib.path}/antlr-*.jar"/></unjar>
+    <unjar dest="${build.tmp}"><fileset file="${lib.path}/jena-*.jar"/></unjar>
+    <unjar dest="${build.tmp}"><fileset file="${lib.path}/oro-*.jar"/></unjar>
+    <unjar dest="${build.tmp}"><fileset file="${lib.path}/commons-logging-*.jar"/></unjar>
 
     <delete file="${build.jars}/ontopia-vizdesk.jar" />
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-vizdesk.jar" manifest="${java.path}/dist/manifests/manifest-vizdesk.mf">
+    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-vizdesk.jar" manifest="${src.path}/manifests/manifest-vizdesk.mf">
       <patternset refid="classes.vizdesktop" />
       <patternset refid="classes.engine" />
       <patternset refid="images.viz" />
@@ -4172,128 +3204,6 @@
       <fileset dir="${build.classes}">
         <include name="net/ontopia/topicmaps/nav/utils/**/*.class" />
       </fileset>
-    </jar>
-  </target>
-
-  <!-- ======================================================================
-        TMTL interpreter
-       ==================================================================== -->
-
-  <patternset id="sources.tmtl">
-    <include name="net/ontopia/topicmaps/tmtl/**/*.java" />
-  </patternset>
-
-  <patternset id="classes.tmtl">
-    <include name="net/ontopia/topicmaps/tmtl/**/*.class" />
-  </patternset>
-
-  <patternset id="sources.test.tmtl">
-  </patternset>
-
-  <patternset id="classes.test.tmtl">
-  </patternset>
-
-  <target name="compile.tmtl" depends="compile.engine">
-    <echo>Compiling TMTL interpreter...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset refid="sources.tmtl" />
-    </javac>
-  </target>
-
-  <target name="compile.test.tmtl" depends="compile.test.engine,compile.tmtl">
-    <echo>Compiling TMTL test cases...</echo>
-  </target>
-
-  <target name="clean.tmtl" depends="clean.engine">
-    <echo>Cleaning up TMTL classes...</echo>
-    <delete>
-      <fileset dir="${build.classes}">
-        <patternset refid="classes.tmtl" />
-      </fileset>
-    </delete>
-  </target>
-
-  <target name="jar.tmtl" depends="clean.tmtl,compile.tmtl">
-    <echo>Creating TMTL runtime jar file...</echo>
-    <delete file="${build.jars}/ontopia-tmtl.jar" />
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-tmtl.jar" manifest="${java.path}/dist/manifests/manifest-tmtl.mf">
-      <patternset refid="classes.tmtl" />
-      <patternset refid="classes.engine" />
-      <patternset refid="classes.query" />
-    </jar>
-  </target>
-
-  <target name="dist.tmtl" depends="jar.tmtl">
-    <echo>Creating TMTL distribution...</echo>
-    <property name="collect.path" value="${build.dists}/tmtl" />
-    <property name="doc.path" value="${java.path}/../../doc" />
-
-    <delete dir="${build.dists}/tmtl" />
-    <mkdir dir="${build.dists}/tmtl" />
-    <mkdir dir="${build.dists}/tmtl/doc" />
-    <mkdir dir="${build.dists}/tmtl/lib" />
-
-    <copy file="${java.path}/../../doc/developer/tmtl/distro-intro.html" tofile="${build.dists}/tmtl/index.html" overwrite="yes" />
-    <copy file="${java.path}/../../doc/developer/query-lang/qlspec.html" todir="${build.dists}/tmtl/doc/" overwrite="yes" />
-    <copy file="${java.path}/../../doc/developer/query-lang/tolog-tutorial.html" todir="${build.dists}/tmtl/doc/" overwrite="yes" />
-    <copy file="${java.path}/../../doc/tech-reports/tmtl/tmtl.html" tofile="${build.dists}/tmtl/doc/tmtl.html" overwrite="yes" />
-    <copy file="${build.jars}/ontopia-tmtl.jar" todir="${build.dists}/tmtl/lib" overwrite="yes" />
-
-    <!-- Copy logo and stylesheet -->
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${collect.path}/doc" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${collect.path}/doc" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${collect.path}" />
-
-    <!-- Collect common jar files -->
-    <copy file="${3rdparty.path}/jaxp.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/crimson.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/getopt.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/log4j.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/antlr.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/jing.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/jena.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/icu4j.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/xerces.jar" todir="${collect.path}/lib" />
-    <copy file="${3rdparty.path}/commons-logging.jar" todir="${collect.path}/lib"/>
-
-    <tar tarfile="${build.dists}/tmtl.tar" basedir="${build.dists}" includes="tmtl/**" />
-    <gzip src="${build.dists}/tmtl.tar" zipfile="${build.dists}/tmtl.tar.gz" />
-    <delete file="${build.dists}/tmtl.tar" />
-  </target>
-
-  <!-- ======================================================================
-        IRC experiments
-       ==================================================================== -->
-
-  <patternset id="sources.irc">
-    <include name="net/ontopia/net/irc/**/*.java" />
-  </patternset>
-
-  <patternset id="classes.irc">
-    <include name="net/ontopia/net/irc/**/*.class" />
-  </patternset>
-
-  <target name="compile.irc" depends="compile.engine">
-    <echo>Compiling IRC code...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset refid="sources.irc" />
-    </javac>
-  </target>
-
-  <target name="clean.irc" depends="clean.engine">
-    <echo>Cleaning up IRC classes...</echo>
-    <delete>
-      <fileset dir="${build.classes}">
-        <patternset refid="classes.irc" />
-      </fileset>
-    </delete>
-  </target>
-
-  <target name="jar.irc" depends="clean.irc,compile.irc">
-    <echo>Creating IRC runtime jar file...</echo>
-    <delete file="${build.jars}/ontopia-irc.jar" />
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-irc.jar">
-      <patternset refid="classes.irc" />
     </jar>
   </target>
 
@@ -4326,21 +3236,13 @@
   </target>
 
   <target name="jar.cstore" depends="compile.cstore">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-cstore.jar" manifest="${java.path}/dist/manifests/manifest-cstore.mf">
+    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-cstore.jar" manifest="${src.path}/manifests/manifest-cstore.mf">
       <patternset refid="classes.cstore" />
     </jar>
   </target>
 
   <property name="dev.cstore.packagenames" value="
        net.ontopia.infoset.content" />
-
-  <target name="javadoc.cstore" depends="init">
-    <delete dir="${build.javadoc}/cstore" />
-    <mkdir dir="${build.javadoc}/cstore" />
-    <javadoc packagenames="${dev.cstore.packagenames}" sourcepath="${java.path}" destdir="${build.javadoc}/cstore" author="true" version="true" use="true" public="true" windowtitle="Ontopia API documentation" doctitle="&lt;align=center&gt;Ontopia Content Store API documentation&lt;align=right&gt;&lt;img src='logo.gif'&gt;&lt;br&gt;&lt;br&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;">
-    </javadoc>
-    <copy file="${3rdparty.path}/images/logo.gif" todir="${build.javadoc}/cstore" />
-  </target>
 
   <!-- ======================================================================
         ContentStore tests
@@ -4369,102 +3271,6 @@
       </fileset>
     </delete>
   </target>
-
-  <!-- ======================================================================
-        TMAPI TOLOG INTERFACE
-       ====================================================================== -->
-
-  <patternset id="sources.tmapi.tolog">
-    <include name="net/ontopia/tmapi/query/*.java" />
-  </patternset>
-
-  <target name="javadoc.tmapi.tolog">
-    <property name="whatever" value="net.ontopia.tmapi.query" />
-    <javadoc packagenames="${whatever}" sourcepath="${java.path}" destdir="${build.javadoc}/tmapi" author="true" version="true" use="true" public="true" windowtitle="TMAPI tolog interrface">
-    </javadoc>
-  </target>
-
-  <!-- ======================================================================
-        XMLTOOLS DEMO APP    
-       ====================================================================== -->
-  <target name="jar.webapp.xmltools" depends="init">
-    <echo>Creating xmltools jar file...</echo>
-    <delete file="${build.jars}/xmltools.jar" />
-    <jar jarfile="${build.jars}/xmltools.jar">
-      <fileset dir="${build.classes}">
-        <include name="net/ontopia/topicmaps/nav2/webapps/XmlTools*.class" />
-      </fileset>
-    </jar>
-  </target>
-
-  <target name="dist.webapp.xmltools" depends="jar.webapp.xmltools">
-    <echo>Creating xmltools webapp distribution...</echo>
-    <delete file="${build.dists}/xmltools.tar.gz" />
-    <delete dir="${build.dists}/xmltools"/>
-    <copy todir="${build.dists}/xmltools">
-      <fileset dir="${src.path}/webapps/xmltools"/>
-    </copy>
-    <move tofile="${build.dists}/xmltools/WEB-INF/web.xml"
-          file  ="${build.dists}/xmltools/WEB-INF/web.sandbox.xml"/>
-    <mkdir dir="${build.dists}/xmltools/WEB-INF/topicmaps"/>
-    <copy todir="${build.dists}/xmltools/WEB-INF/topicmaps"
-          file ="${src.path}/webapps/omnigator/WEB-INF/topicmaps/xmltools.xtm"/>
-    <mkdir dir="${build.dists}/xmltools/WEB-INF/lib"/>
-    <copy todir="${build.dists}/xmltools/WEB-INF/lib"
-          file ="${build.jars}/xmltools.jar"/>
-    <copy todir="${build.dists}/xmltools/WEB-INF/lib"
-          file ="${3rdparty.path}/standard.jar"/>
-    <copy todir="${build.dists}/xmltools/WEB-INF/lib"
-          file ="${3rdparty.path}/xalan.jar"/>
-    <tar tarfile="${build.dists}/xmltools.tar" basedir="${build.dists}"
-         includes="xmltools/**"/>
-    <gzip src="${build.dists}/xmltools.tar" 
-          zipfile="${build.dists}/xmltools.tar.gz" />
-    <delete file="${build.dists}/xmltools.tar" />
-  </target>
-
-  <!-- ======================================================================
-        JCOVERAGE STUFF
-       ====================================================================== -->
-
-  <!--path id="cobertura.classpath">
-    <fileset dir="/Users/larsga/Desktop/cobertura-1.9">
-      <include name="cobertura.jar" />
-      <include name="lib/**/*.jar" />
-    </fileset>
-  </path-->
-  <!--taskdef classpath="cobertura.classpath" resource="tasks.properties"/-->
-  <!--taskdef classpath="jcoverage.jar" resource="tasks.properties"/-->
-
-  <!--target name="cobertura.instrument" depends="init">
-    <echo>Instrumenting classes</echo>
-    <delete dir="${build.root}/instrumented-classes" />
-    <cobertura-instrument todir="build/instrumented-classes">
-      <fileset dir="build/classes">
-        <patternset refid="classes.db2tm" />
-      </fileset>
-    </cobertura-instrument>
-  </target-->
-
-  <!--target name="jcoverage.instrument" depends="init">
-    <echo>Instrumenting classes</echo>
-    <delete dir="${build.root}/instrumented-classes" />
-    <delete file="jcoverage.ser" />
-    <instrument todir="build/instrumented-classes">
-      <fileset dir="build/classes">
-        <patternset refid="classes.query" />
-      </fileset>
-    </instrument>
-  </target-->
-
-  <!--target name="cobertura.report">
-    <cobertura-report srcdir="." destdir="build/cobertura"/>
-  </target-->
-
-  <!--target name="jcoverage.report">
-    <report srcdir="." destdir="build/jcoverage"/>
-  </target>
--->
 
   <!-- ======================================================================
         jdbcspy
@@ -4496,7 +3302,7 @@
   </target>
 
   <!-- ======================================================================
-        OKS topic map realm
+        Ontopia topic map realm
        ==================================================================== -->
 
   <!-- Patterns -->
@@ -4527,7 +3333,7 @@
   </target>
 
   <target name="jar.topicmaprealm" depends="compile.topicmaprealm">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/oks-realm.jar">
+    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-realm.jar">
       <patternset refid="classes.topicmaprealm" />
     </jar>
   </target>
@@ -4556,7 +3362,7 @@
         Clustering tests
        ======================================================================-->
   
-  <!-- Note: to build call dist.jar.oks.enterprise.test -->
+  <!-- Note: to build call dist.jar.ontopia.test -->
 
   <target name="distribute.cluster" depends="init">
     <echo>Building clustering test code...</echo>
@@ -4567,70 +3373,40 @@
   <target name="distribute.cluster.config" depends="init">
     <echo>Copying clustering test configuration files to host ${hostname}...</echo>
     <exec executable="scp">
-      <arg value="${java.path}/test-data/clustering/tm-sources.xml" />
-      <arg value="${java.path}/test-data/clustering/tm-sources-force.xml" />
-      <arg value="${java.path}/test-data/clustering/db.postgresql.props" />
-      <arg value="${java.path}/test-data/clustering/db.oracle.props" />
-      <arg value="${java.path}/test-data/clustering/oks-terracotta.xml" />
+      <arg value="${test.path}/clustering/tm-sources.xml" />
+      <arg value="${test.path}/clustering/tm-sources-force.xml" />
+      <arg value="${test.path}/clustering/db.postgresql.props" />
+      <arg value="${test.path}/clustering/db.oracle.props" />
+      <arg value="${test.path}/clustering/ontopia-terracotta.xml" />
       <arg value="oks@${hostname}:/home/oks/" />
     </exec>
     <exec executable="scp">
-      <arg value="${java.path}/test-data/clustering/dot_profile" />
+      <arg value="${test.path}/clustering/dot_profile" />
       <arg value="oks@${hostname}:/home/oks/.profile" />
     </exec>
     <exec executable="scp">
-      <arg value="${java.path}/test-data/clustering/postgresql.jar" />
-      <arg value="oks@${hostname}:/home/oks/oks-enterprise/apache-tomcat/common/lib/" />
+      <arg value="${test.path}/clustering/postgresql.jar" />
+      <arg value="oks@${hostname}:/home/oks/ontopia/apache-tomcat/common/lib/" />
     </exec>
     <exec executable="scp" output="scp.log">
-      <arg value="${java.path}/test-data/clustering/test01.jsp" />
-      <arg value="${java.path}/test-data/clustering/test02.jsp" />
-      <arg value="${java.path}/test-data/clustering/test03.jsp" />
-      <arg value="oks@${hostname}:/home/oks/oks-enterprise/apache-tomcat/webapps/omnigator/" />
+      <arg value="${test.path}/clustering/test01.jsp" />
+      <arg value="${test.path}/clustering/test02.jsp" />
+      <arg value="${test.path}/clustering/test03.jsp" />
+      <arg value="oks@${hostname}:/home/oks/ontopia/apache-tomcat/webapps/omnigator/" />
     </exec>
   </target>
 
   <target name="distribute.cluster.code" depends="init">
     <echo>Copying jar files to host ${hostname}...</echo>
     <exec executable="scp" output="scp.log">
-      <arg value="${build.jars}/oks-enterprise.jar" />
-      <arg value="${build.jars}/oks-enterprise-test.jar" />
-      <arg value="oks@${hostname}:/home/oks/oks-enterprise/lib/" />
+      <arg value="${build.jars}/ontopia.jar" />
+      <arg value="${build.jars}/ontopia-tests.jar" />
+      <arg value="oks@${hostname}:/home/oks/ontopia/lib/" />
     </exec>
     <exec executable="scp" output="scp.log">
-      <arg value="${build.jars}/oks-enterprise.jar" />
-      <arg value="oks@${hostname}:/home/oks/oks-enterprise/apache-tomcat/common/lib/" />
+      <arg value="${build.jars}/ontopia.jar" />
+      <arg value="oks@${hostname}:/home/oks/ontopia/apache-tomcat/common/lib/" />
     </exec>
   </target>
 
-  <!-- ======================================================================
-        Ontopoly model
-       ==================================================================== -->
-
-  <patternset id="sources.ontopoly">
-    <include name="net/ontopia/topicmaps/nav2/webapps/ontopoly/sysmodel/*.java" />
-  </patternset>
-  <patternset id="classes.ontopoly">
-    <include name="net/ontopia/topicmaps/nav2/webapps/ontopoly/sysmodel/*.class" />
-  </patternset>
-  <patternset id="sources.test.ontopoly">
-    <include name="net/ontopia/topicmaps/nav2/webapps/ontopoly/sysmodel/test/*.java" />
-  </patternset>
-  <patternset id="classes.test.ontopoly">
-    <include name="net/ontopia/topicmaps/nav2/webapps/ontopoly/sysmodel/test/*.class" />
-  </patternset>
-
-  <target name="compile.ontopoly" depends="compile.navigator">
-    <echo>Compiling Ontopoly model...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset refid="sources.ontopoly" />
-    </javac>
-  </target>
-
-  <target name="compile.test.ontopoly" depends="compile.test.navigator, compile.ontopoly">
-    <echo>Compiling Ontopoly model tests...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset refid="sources.test.ontopoly" />
-    </javac>
-  </target>  
 </project>

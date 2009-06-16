@@ -6,7 +6,7 @@
         <artifact pattern="${ivy.settings.dir}/3rdparty/[artifact].[ext]" />
       </filesystem-->
       <ibiblio name="ibiblio" m2compatible="true" />
-      <url name="two-patterns-example" m2compatible="true">
+      <url name="jboss-repository" m2compatible="true">
         <artifact pattern="http://repository.jboss.com/maven2/[module]/[artifact]/[revision]/[artifact]-[revision].[ext]"/>
       </url>
     </chain>

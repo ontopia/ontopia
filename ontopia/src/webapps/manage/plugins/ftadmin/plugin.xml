@@ -1,0 +1,9 @@
+<plugins>
+
+  <plugin id="fulltext-admin" groups="manage">
+    <title>Full-text indexing</title>
+    <descr>Index administration for the full-text search.</descr>
+    <activated>yes</activated>
+    <uri>${plugins_rootdir}/ftadmin/index_admin.jsp</uri>
+  </plugin>
+</plugins>

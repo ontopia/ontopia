@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  This RDF document is based on an example by Masahide Kanzaki
+  of his Music Vocabulary published at
+
+     http://www.kanzaki.com/ns/music
+     http://www.kanzaki.com/courier/xs/ns/music.rdf.html
+
+  Used by kind permission of the author, Kanzaki-san.
+
+  Made a slight modification of the original because of a bug in
+  Jena ("ARP doesn't support rdf:nodeID"):
+
+    http://sourceforge.net/tracker/index.php?func=detail&aid=1082269&group_id=40417&atid=430288
+
+  The modification will be removed once the bug has been fixed.
+
+  Steve Pepper, 2004-12-09
+
+-->
+
+<rdf:RDF
+xmlns:music="http://www.kanzaki.com/ns/music#"
+xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:foaf="http://xmlns.com/foaf/0.1/"
+xmlns:ev="http://ebiquity.umbc.edu/v2.1/ontology/event.owl#"
+xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+xml:base="http://www.kanzaki.com/ns/music"
+>
+<music:Concert>
+ <dc:title>TGSO Concert 12</dc:title>
+ <dc:date>2003-11-02T14:00+09:00</dc:date>
+ <music:conductor foaf:name="Yuri Nitta"/>
+ <music:performer>
+  <music:Violinist>
+   <foaf:name>Tomoko Kawada</foaf:name>
+   <!--music:performs rdf:nodeID="p1"/-->
+   <music:performs rdf:resource="http://tmp.ontopia.net/music/bruch/violin-concerto-no-1"/>
+  </music:Violinist>
+ </music:performer>
+ <music:performer>
+  <music:Orchestra foaf:name="Tokyo Green Symphony Orchestra"/>
+ </music:performer>
+ <music:program>
+  <!--music:Concerto rdf:nodeID="p1"-->
+  <music:Concerto rdf:about="http://tmp.ontopia.net/music/bruch/violin-concerto-no-1">
+   <music:composer>
+     <music:Composer about="http://en.wikipedia.org/wiki/Max_Bruch">
+       <foaf:name>Bruch</foaf:name>
+     </music:Composer>
+   </music:composer>
+   <dc:title>Violin Concerto No.1 g minor</dc:title>
+   <music:opus>op.26</music:opus>
+  </music:Concerto>
+ </music:program>
+ <music:program>
+  <music:Symphony>
+   <music:composer>
+     <music:Composer about="http://en.wikipedia.org/wiki/Johannes_Brahms">
+       <foaf:name>Brahms</foaf:name>
+     </music:Composer>
+   </music:composer>
+   <dc:title>Symphony No.2 D major</dc:title>
+   <music:opus>op.73</music:opus>
+  </music:Symphony>
+ </music:program>
+ <ev:location>
+  <music:Venue geo:lat="35.69" geo:long="139.81">
+   <dc:title>Sumida Triphony</dc:title>
+  </music:Venue>
+ </ev:location>
+</music:Concert>
+
+<!-- Names for classes and properties from the music ontology -->
+ <rdf:Description rdf:ID="Symphony"><rdfs:label>Symphony</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="Concerto"><rdfs:label>Concerto</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="Concert"><rdfs:label>Concert</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="Venue"><rdfs:label>Venue</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="Conductor"><rdfs:label>Conductor</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="Composer"><rdfs:label>Composer</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="Violinist"><rdfs:label>Violinist</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="Orchestra"><rdfs:label>Orchestra</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="composer"><rdfs:label>Composer</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="opus"><rdfs:label>Opus</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="performer"><rdfs:label>Performer</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="conductor"><rdfs:label>Conductor</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="performs"><rdfs:label>Performs</rdfs:label></rdf:Description>
+ <rdf:Description rdf:ID="program"><rdfs:label>Program</rdfs:label></rdf:Description>
+
+<!-- Names for classes and properties from other ontologies -->
+<rdf:Description rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#lat"><rdfs:label>latitude</rdfs:label></rdf:Description>
+<rdf:Description rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#long"><rdfs:label>longitude</rdfs:label></rdf:Description>
+<rdf:Description rdf:about="http://ebiquity.umbc.edu/v2.1/ontology/event.owl#location"><rdfs:label>Event Location</rdfs:label></rdf:Description>
+</rdf:RDF>

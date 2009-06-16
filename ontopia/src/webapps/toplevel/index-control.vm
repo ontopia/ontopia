@@ -1,0 +1,13 @@
+#* 
+    $Id: control.vm,v 1.4 2007/07/25 08:03:03 geir.gronmo Exp $ 
+
+    This is the control template for the
+    documentation index HTML page generator.
+*# 
+
+#set ($dists = ["personal", "professional", "enterprise", "samplers", "ontopoly-runtime"])
+
+#foreach ($dist in $dists)
+    #set ( $outFile = $strings.concat(["freedownload-index-", $dist, ".html"]) )
+    $generator.parse("freedownload-index-template.vm", $outFile, "dist", $dist) 
+#end

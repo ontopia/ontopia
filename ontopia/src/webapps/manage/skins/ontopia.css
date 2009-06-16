@@ -1,0 +1,457 @@
+/* $Id: ontopia.css,v 1.1 2006/12/21 23:03:54 opland Exp $ */
+  /* ---- Document wide general Layout ---- */
+body {
+  color: #000000;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+body, p, h1, h2, h3, h4, ul, ol, li, div, td, th, address, blockquote, nobr, b, i {
+  font-family: Verdana, Geneva, Arial, sans-serif;
+}
+
+/* ---- Definition of Specific Font-Related classes ---- */
+h1 {
+  font-size: 140%;
+  margin: 2px;
+}
+
+h2 {
+  font-size: 125%;
+  margin: 2px;
+}
+
+h3 {
+  font-size: 115%;
+  background-color: #FF0000;
+  color: #FFFFFF;
+  padding: 2px;
+  margin-bottom: 6px;
+}
+
+table.shboxed h3 {
+  margin-top: 0;
+}
+
+h4 {
+  font-size: 105%;
+  margin: 2px;
+}
+
+
+body, p, td, th, address, nobr, b, i {
+  font-size: 94%;
+}
+
+input, textarea {
+  font-size: 90%;
+}
+
+pre {
+  font-family: Courier New, Courier;
+  font-size: 94%;
+  color: #0000C0;
+}
+
+tt {
+  font-family: Courier New, Courier;
+  font-size: 94%;
+  color: #0000C0;
+}
+
+/* ---- List Item Properties ---- */
+ul {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 18px;
+  padding-left: 1px;
+}
+
+li {
+  margin-top: 2px;
+  margin-left: 0px;
+}
+
+.multiline-text {
+  font-family: Verdana, Geneva, Arial, sans-serif;
+  font-size: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #000000;
+}
+
+.code-text {
+  font-size: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #000000;
+}
+
+/* ---- Boxes ---- */
+.boxed {
+}
+
+.shboxed {
+  background-color: white;
+  border: 1px solid #666;
+  padding: 4pt;
+  margin-bottom: 8pt;
+}
+
+.nary {
+}
+
+.nary-row {
+  padding: 2px
+}
+
+.reified {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.modLink {
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.description {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 7px;
+  margin-right: 6px;
+}
+
+/* ---- Table Formatting  ---- */
+#linkTable {
+  border-collapse: collapse;
+}
+
+#header {
+  background: url(../images/new_header.gif) no-repeat left top;
+  background-color: #FF0000;
+  padding-top: 16px;
+}
+
+#oksmenu {
+  background: url(../images/new_topmenubg.gif) no-repeat right top;
+  height: 28px;
+  color: #fbb;
+  padding: 0 10px;
+}
+
+#oksmenu a {
+  font-size: 75%;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#oksmenu a:hover {
+  text-decoration: underline;
+}
+
+#activetm {
+  border-collapse: collapse;
+  border: 1px solid black;
+  margin: 20px 0 0 20px;
+}
+
+#activetmtitle {
+  padding: 1px 5px;
+  background-color: #e0e0e0;
+  font-weight: bold;
+  font-size: 80%;
+  border-bottom: 1px solid black;
+  font-family: Arial, sans-serif;
+}
+
+#activetmtitle a {
+  color: black;
+}
+
+#activetmfunc {
+  padding: 5px 5px 3px 5px;
+  background-color: #f20000;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+#tmfuncopen {
+  background: url(../images/new_tmopen.gif) no-repeat left top;
+  padding: 4px 10px 4px 21px;
+}
+
+#tmfuncsave {
+  background: url(../images/new_tmsave.gif) no-repeat left top;
+  padding: 4px 10px 4px 18px;
+}
+
+#tmfuncreload {
+  background: url(../images/new_tmreload.gif) no-repeat left top;
+  padding: 4px 10px 4px 14px;
+}
+
+.headerTable {
+
+}
+
+#contentarea {
+  background: url("../images/contentbg.gif") repeat left top;
+}
+
+.contentTable {
+  background: url(../images/contentbgtop.gif) repeat-x left top;
+}
+
+.footerTable {
+  background-color: #336699;
+}
+
+.titleRow {
+  background-color: #A0A0A0;
+}
+
+/* ---- Table Cells ---- */
+
+.appName {
+  font-size: 160%;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin: 8px;
+}
+
+.logoSpace {
+}
+
+.tagLine {
+  font-size: 90%;
+  font-weight: normal;
+  color: #FFFFFF;
+}
+
+
+.topLinks {
+  color: #000000;
+  background-color: #F0F0F0;
+  font-size: 80%;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.intro {
+  padding-top: 20px;
+}
+
+.navigation {
+}
+
+.content {
+}
+
+.outro {
+}
+
+.comment {
+  color: #999;
+  font-size: 80%;
+}
+
+.footer {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+
+/* ---- Header ---- */
+.topLinks {
+  color: black;
+  font-size: 80%;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding: 0 0 0 10px;
+  background: url("../images/new_topmenubgcorner.gif") no-repeat right top;
+}
+
+.topLinks tr {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topLinks td {
+  margin: 0;
+  padding: 0;
+  height: 25px;
+  padding: 0 0 0 13px;
+  vertical-align: bottom;
+}
+
+.topLinks a {
+  display: block;
+  color: #555;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  padding: 5px 16px 0 0;
+  height: 25px;
+}
+
+.topLinks a:visited {
+  color: #555;
+  text-decoration: none;
+}
+
+.topLinks a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+
+/* ---- Link Style Definition ---- */
+a:link {
+  color: #202020;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #202020;
+  text-decoration: none;
+}
+
+a:active {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover, h3 a:hover {
+  text-decoration: underline
+}
+
+h3 a:link {
+  color: white;
+  text-decoration: none;
+}
+
+h3 a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+/* ---- Tabs ---- */
+.topLinks .tab-first-active a,.topLinks .tab-mid-active a,.topLinks .tab-last-active a
+  {
+  color: black;
+}
+
+.topLinks .tab-first-inactive {
+  background: url("../images/tab_first_inactive_left.gif") no-repeat left
+    bottom;
+}
+
+.topLinks .tab-first-inactive a {
+  background: url("../images/tab_mid_inactive_right.gif") no-repeat right
+    bottom;
+  padding: 5px 16px 0 1px;
+}
+
+.topLinks .tab-first-active {
+  background: url("../images/tab_first_active_left.gif") no-repeat left
+    bottom;
+}
+
+.topLinks .tab-first-active a {
+  background: url("../images/tab_mid_active_right.gif") no-repeat right
+    bottom;
+  padding: 5px 16px 0 1px;
+}
+
+.topLinks .tab-first-beforeactive {
+  background: url("../images/tab_first_inactive_left.gif") no-repeat left
+    bottom;
+}
+
+.topLinks .tab-first-beforeactive a {
+  background: url("../images/tab_mid_beforeactive_right.gif") no-repeat right
+    bottom;
+  padding: 5px 16px 0 1px;
+}
+
+.topLinks .tab-mid-active {
+  background: url("../images/tab_mid_active_left.gif") no-repeat left bottom;
+}
+
+.topLinks .tab-mid-active a {
+  background: url("../images/tab_mid_active_right.gif") no-repeat right
+    bottom;
+}
+
+.topLinks .tab-mid-inactive {
+  background: url("../images/tab_mid_inactive_left.gif") no-repeat left
+    bottom;
+  height: 25px;
+}
+
+.topLinks .tab-mid-inactive a {
+  background: url("../images/tab_mid_inactive_right.gif") no-repeat right
+    bottom;
+}
+
+.topLinks .tab-mid-beforeactive {
+  background: url("../images/tab_mid_inactive_left.gif") no-repeat left
+    bottom;
+}
+
+.topLinks .tab-mid-beforeactive a {
+  background: url("../images/tab_mid_beforeactive_right.gif") no-repeat right
+    bottom;
+}
+
+.topLinks .tab-mid-afteractive {
+  background: url("../images/tab_mid_afteractive_left.gif") no-repeat left
+    bottom;
+}
+
+.topLinks .tab-mid-afteractive a {
+  background: url("../images/tab_mid_inactive_right.gif") no-repeat right
+    bottom;
+}
+
+.topLinks .tab-last-active {
+  background: url("../images/tab_mid_active_left.gif") no-repeat left bottom;
+}
+
+.topLinks .tab-last-active a {
+  background: url("../images/tab_last_active_right.gif") no-repeat right
+    bottom;
+  padding: 5px 30px 0 0;
+}
+
+.topLinks .tab-last-inactive {
+  background: url("../images/tab_mid_inactive_left.gif") no-repeat left
+    bottom;
+}
+
+.topLinks .tab-last-inactive a {
+  background: url("../images/tab_last_inactive_right.gif") no-repeat right
+    bottom;
+  padding: 5px 24px 0 0;
+}
+
+.topLinks .tab-last-afteractive {
+  background: url("../images/tab_mid_afteractive_left.gif") no-repeat left
+    bottom;
+  padding-right: 24px;
+}
+
+.topLinks .tab-last-afteractive a {
+  background: url("../images/tab_last_inactive_right.gif") no-repeat right
+    bottom;
+  padding-right: 24px;
+}
+
+/* ---- Page layout ---- */
+.plugins {
+  font-size: 80%;
+}

@@ -34,8 +34,8 @@ public final class Ontopia {
     beta_version = 0;
 
     build_date = Calendar.getInstance();
-    build_date.set(2009, 5, 15, 19, 18);
-    build_number = 20;
+    build_date.set(2009, 5, 16, 15, 51);
+    build_number = 30;
   }
 
   private Ontopia() {

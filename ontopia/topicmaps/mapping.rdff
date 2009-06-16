@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rtm="http://psi.ontopia.net/rdf2tm/#">
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/firstName">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+    <rtm:in-scope rdf:resource="http://xmlns.com/foaf/0.1/firstName"></rtm:in-scope>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/made">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/interest">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#broader">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/skos/narrower-concept"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/skos/broader-concept"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/title">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.kanzaki.com/ns/music#performer">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#comment">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/page">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/depiction">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.kanzaki.com/ns/music#conductor">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#definition">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.kanzaki.com/ns/music#composer">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/knows">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#narrower">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/skos/broader-concept"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/skos/narrower-concept"></rtm:object-role>
+    <rtm:type rdf:resource="http://www.w3.org/2004/02/skos/core#broader"></rtm:type>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/schoolHomepage">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#altLabel">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+    <rtm:in-scope rdf:resource="http://www.w3.org/2004/02/skos/core#altLabel"></rtm:in-scope>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/title">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/weblog">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/creator">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/description">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/wot/0.1/accountDescription">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/workInfoHomepage">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/nearestAirport">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://ebiquity.umbc.edu/v2.1/ontology/event.owl#location">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#related">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#subjectIndicator">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#subject-identifier"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/workplaceHomepage">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.kanzaki.com/ns/music#performs">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/worksWith">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/depicts">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/mbox_sha1sum">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2002/07/owl#versionInfo">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/wot/0.1/cryptedPassword">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.megginson.com/exp/ns/airports#iata">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#prefLabel">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/date">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/friend">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#scopeNote">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#lat">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/surname">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+    <rtm:in-scope rdf:resource="http://xmlns.com/foaf/0.1/surname"></rtm:in-scope>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/wot/0.1/userid">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+    <rtm:in-scope rdf:resource="http://xmlns.com/wot/0.1/userid"></rtm:in-scope>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#label">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/topic">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#hasTopConcept">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/mbox">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#subject-identifier"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/subscribesTo">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.megginson.com/exp/ns/airports#icao">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/wot/0.1/accountName">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#instance-of"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#inScheme">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://www.w3.org/2004/02/skos/core#ConceptScheme"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/homepage">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#long">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.kanzaki.com/ns/music#program">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/10/swap/pim/contact#nearestAirport">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/name">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.kanzaki.com/ns/music#opus">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/wot/0.1/passwordHint">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/wot/0.1/accountInfo">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#association"></rtm:maps-to>
+    <rtm:subject-role rdf:resource="http://psi.ontopia.net/rdf2tm/#subject"></rtm:subject-role>
+    <rtm:object-role rdf:resource="http://psi.ontopia.net/rdf2tm/#object"></rtm:object-role>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/nick">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#basename"></rtm:maps-to>
+    <rtm:in-scope rdf:resource="http://xmlns.com/foaf/0.1/nick"></rtm:in-scope>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#seeAlso">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://xmlns.com/foaf/0.1/phone">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/terms/issued">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/format">
+    <rtm:maps-to rdf:resource="http://psi.ontopia.net/rdf2tm/#occurrence"></rtm:maps-to>
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,8 @@
+Ontopia's Knowledge Suite (OKS) uses Tomcat @VERSION@ (part of the Jakarta
+project from the Apache Group, see http://jakarta.apache.org/tomcat/ for
+more information) as default Servlet/JSP container.
+
+In order to minimize the download size of our software we have decided to
+remove the original (demo) web applications which comes with the Tomcat
+distribution.  Please see README.txt for more information about Tomcat and
+where to retrieve a complete distribution.

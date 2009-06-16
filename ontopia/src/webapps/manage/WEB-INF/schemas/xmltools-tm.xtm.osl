@@ -1,0 +1,384 @@
+
+<!--
+  Schema for the 'Free XML Tools' topic map. This schema is not
+  complete.
+  $Id: xmltools-tm.xtm.osl,v 1.1 2006/12/21 23:01:32 opland Exp $
+-->
+
+
+<tm-schema>
+
+  <!-- ===== STANDARD ======================================================-->
+
+  <topic match="strict">
+    <instanceOf>
+      <internalTopicRef href="#TMTT_Standard"/>
+    </instanceOf>
+
+    <baseName min="1" max="2">
+      <scope></scope>
+    </baseName>
+
+    <occurrence external="yes">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_Specification"/>
+      </instanceOf>
+    </occurrence>
+
+    <occurrence external="yes">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_Homepage"/>
+      </instanceOf>
+    </occurrence>
+
+    <occurrence external="yes">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_Site"/>
+      </instanceOf>
+    </occurrence>
+
+    <occurrence external="yes">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_Links"/>
+      </instanceOf>
+    </occurrence>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Standard"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_StandardImplemented"/>
+        </instanceOf>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_ProductUse"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- ===== SUBCATEGORY ===================================================-->
+
+  <topic match="strict">
+    <instanceOf>
+      <internalTopicRef href="#TMTT_Subcategory"/>
+    </instanceOf>
+
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Subcategory"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_InCategory"/>
+        </instanceOf>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_InSubcategory"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- ===== PRODUCT =======================================================-->
+
+  <topic match="strict">
+    <instanceOf>
+      <internalTopicRef href="#TMTT_Product"/>
+    </instanceOf>
+
+    <baseName min="1" max="3">
+      <scope></scope>
+    </baseName>
+
+    <occurrence min="1" max="1" external="yes">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_IndexDescr"/>
+      </instanceOf>
+    </occurrence>
+
+    <occurrence min="1" max="1" external="yes">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_Homepage"/>
+      </instanceOf>
+    </occurrence>
+
+    <occurrence external="yes">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_Resource"/>
+      </instanceOf>
+    </occurrence>
+
+    <occurrence min="0" max="1" external="yes">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_DownloadLocation"/>
+      </instanceOf>
+    </occurrence>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_InSubcategory"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMAR_UsedIn"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_ProductUse"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMAR_UsedBy"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_ProductUse"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_ProductVendor"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_ProductUse"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_StandardImplemented"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- ===== VENDOR =======================================================-->
+
+  <topic match="strict">
+    <instanceOf>
+      <internalTopicRef href="#TMTT_Vendor"/>
+    </instanceOf>
+
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+
+    <occurrence external="yes" min="0" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMOR_Homepage"/>
+      </instanceOf>
+    </occurrence>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Vendor"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_ProductVendor"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- ===== CATEGORY ======================================================-->
+
+  <topic match="strict">
+    <instanceOf>
+      <internalTopicRef href="#TMTT_Category"/>
+    </instanceOf>
+
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+
+    <playing>
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Category"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+    	  <internalTopicRef href="#TMAT_InCategory"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- ===== OCCURRENCE ROLE ===============================================-->
+
+  <topic match="strict">
+    <instanceOf>
+      <internalTopicRef href="#TMTT_OccRole"/>
+    </instanceOf>
+
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+  </topic>
+
+  <!-- ===== TOPIC TYPE ====================================================-->
+
+  <topic match="strict">
+    <instanceOf>
+      <internalTopicRef href="#TMTT_TopicType"/>
+    </instanceOf>
+
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+
+    <baseName min="0" max="1">
+      <scope><internalTopicRef href="#plural"/></scope>
+    </baseName>
+  </topic>
+
+  <!-- ===== TYPELESS ======================================================-->
+
+  <topic match="strict">
+    <instanceOf>
+    </instanceOf>
+
+    <baseName>
+      <scope></scope>
+    </baseName>
+  </topic>
+
+  <!-- ===== STANDARD IMPLEMENTED ==========================================-->
+
+  <association>
+    <instanceOf>
+      <internalTopicRef href="#TMAT_StandardImplemented"/>
+    </instanceOf>
+
+    <role min="1" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </instanceOf>
+      <player>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </player>
+    </role>
+
+    <role min="1" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Standard"/>
+      </instanceOf>
+      <player>
+  	<internalTopicRef href="#TMTT_Standard"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ===== SUBCAT IN CAT =================================================-->
+
+  <association>
+    <instanceOf>
+      <internalTopicRef href="#TMAT_InCategory"/>
+    </instanceOf>
+
+    <role min="1" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Category"/>
+      </instanceOf>
+      <player>
+  	<internalTopicRef href="#TMTT_Category"/>
+      </player>
+    </role>
+
+    <role min="1" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Subcategory"/>
+      </instanceOf>
+      <player>
+  	<internalTopicRef href="#TMTT_Subcategory"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ===== PRODUCT IN SUBCAT =============================================-->
+
+  <association>
+    <instanceOf>
+      <internalTopicRef href="#TMAT_InSubcategory"/>
+    </instanceOf>
+
+    <role min="1" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </instanceOf>
+      <player>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </player>
+    </role>
+
+    <role min="1" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_Subcategory"/>
+      </instanceOf>
+      <player>
+  	<internalTopicRef href="#TMTT_Subcategory"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ===== PRODUCT USE ===================================================-->
+
+  <!--association>
+    <instanceOf>
+      <internalTopicRef href="#TMAT_ProductUse"/>
+    </instanceOf>
+
+    <role min="1" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMAR_UsedBy"/>
+      </instanceOf>
+      <player>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </player>
+    </role>
+
+    <role min="1" max="1">
+      <instanceOf>
+  	<internalTopicRef href="#TMTT_UsedIn"/>
+      </instanceOf>
+      <player>
+  	<internalTopicRef href="#TMTT_Product"/>
+      </player>
+    </role>
+  </association-->
+
+</tm-schema>

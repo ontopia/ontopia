@@ -1,0 +1,991 @@
+
+<!--
+  Schema for the i18n.ltm topic map.
+  $Id: i18n-schema.xml,v 1.5 2003/12/23 08:37:03 larsga Exp $
+-->
+
+<!--DOCTYPE tm-schema SYSTEM "/home/larsga/cvs-co/doc/developer/schema-tools/schema.dtd"-->
+<tm-schema match="strict">
+
+<!-- ===== GENERIC STUFF ================================================== -->
+
+<association>
+<instanceOf><subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/></instanceOf>
+</role>
+
+<role min="1" max="1">
+<instanceOf><subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/></instanceOf>
+</role>
+</association>
+
+
+<!-- ===== REUSABLE RULE SETS ============================================= -->
+
+<ruleset id="basic-topic">
+
+<baseName min="1" max="Inf">
+<scope></scope>
+
+<variant min="0" max="1">
+<scope>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"/>
+</scope>
+</variant>
+</baseName>
+
+<baseName min="0" max="Inf">
+<scope><internalTopicRef href="#old-name"/></scope>
+</baseName>
+
+<baseName min="0" max="Inf">
+<scope><instanceOf><internalTopicRef href="#language"/></instanceOf></scope>
+</baseName>
+
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#article-about"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#site-about"/></instanceOf>
+</occurrence>
+
+</ruleset>
+
+
+<!-- ===== TOPIC CLASSES ================================================== -->
+
+<!-- SCRIPT -->
+
+<topic match="strict">
+<instanceOf><subjectIndicatorRef href="http://psi.ontopia.net/i18n/#script"/>
+  </instanceOf>
+<ruleref rule="basic-topic"/>
+
+<baseName min="0" max="Inf">
+<scope><internalTopicRef href="#native-name"/></scope>
+</baseName>
+
+<baseName min="0" max="2">
+<scope><internalTopicRef href="#iso-15924"/></scope>
+</baseName>
+
+<baseName min="0" max="Inf">
+<scope><instanceOf><internalTopicRef href="#country"/></instanceOf></scope>
+</baseName>
+
+<baseName min="0" max="Inf">
+<scope><internalTopicRef href="#other-name"/></scope>
+</baseName>
+
+
+<occurrence min="0" max="1" internal="yes">
+<instanceOf><internalTopicRef href="#period-of-use"/></instanceOf>
+</occurrence>
+
+<occurrence min="0" max="1" internal="yes">
+<instanceOf><internalTopicRef href="#writing-direction"/></instanceOf>
+</occurrence>
+
+<occurrence min="0" max="1" internal="yes">
+<instanceOf><internalTopicRef href="#number-of-characters"/></instanceOf>
+</occurrence>
+
+<occurrence min="0" max="1" internal="yes">
+<instanceOf>
+  <subjectIndicatorRef href="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+</instanceOf>
+</occurrence>
+
+<occurrence internal="yes">
+<instanceOf>
+  <internalTopicRef href="#bibref"/>
+</instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#site-using"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#test-page"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#forum"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#mentioned-in"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#tutorial"/></instanceOf>
+</occurrence>
+
+
+<playing min="0" max="Inf">
+  <instanceOf><internalTopicRef href="#script"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#written-in"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="1">
+  <instanceOf><internalTopicRef href="#containee"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#belongs-to"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="1">
+  <instanceOf><internalTopicRef href="#successor"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#derived-from"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+  <instanceOf><internalTopicRef href="#predecessor"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#derived-from"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="1">
+  <instanceOf><internalTopicRef href="#creation"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#created-by"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+  <instanceOf><internalTopicRef href="#script"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#written-in"/></instanceOf></in>
+</playing>
+
+<playing>
+  <instanceOf><internalTopicRef href="#script"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#deciphered-by"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="1">
+  <instanceOf><internalTopicRef href="#script"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#writing-direction"/></instanceOf></in>
+</playing>
+
+<playing>
+  <instanceOf><internalTopicRef href="#influenced"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#influenced-by"/></instanceOf></in>
+</playing>
+
+<playing>
+  <instanceOf><internalTopicRef href="#influence"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#influenced-by"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+  <instanceOf><internalTopicRef href="#supported"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#supports"/></instanceOf></in>
+</playing>
+
+<playing>
+  <instanceOf><internalTopicRef href="#target"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#transforms-to"/></instanceOf></in>
+</playing>
+
+<playing>
+  <instanceOf><internalTopicRef href="#source"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#transforms-from"/></instanceOf></in>
+</playing>
+
+
+</topic>
+
+
+<!-- LANGUAGE -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#language"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<baseName min="0" max="Inf">
+<scope><internalTopicRef href="#native-name"/></scope>
+</baseName>
+
+<baseName min="0" max="2">
+<scope><internalTopicRef href="#iso-639"/></scope>
+</baseName>
+
+<baseName min="0" max="Inf">
+<scope><instanceOf><internalTopicRef href="#script"/></instanceOf></scope>
+</baseName>
+
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#tutorial"/></instanceOf>
+</occurrence>
+
+<occurrence min="0" max="1" internal="yes">
+<instanceOf>
+  <subjectIndicatorRef href="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+</instanceOf>
+</occurrence>
+
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#language"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#written-in"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#language"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#spoken-in"/></instanceOf></in>
+</playing>
+
+<playing>
+  <instanceOf><internalTopicRef href="#source"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#transforms-from"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- REGION -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#region"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<baseName min="0" max="Inf">
+<scope><internalTopicRef href="#official-name"/></scope>
+</baseName>
+
+<baseName min="0" max="2">
+<scope><internalTopicRef href="#iso-3166"/></scope>
+</baseName>
+
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#container"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#part-of"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#country"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#defines-standards-for"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#containee"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#part-of"/></instanceOf></in>
+</playing>
+
+<!-- implement subclassing here -->
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#province"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#spoken-in"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#country"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#spoken-in"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- PERSON -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#person"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<baseName min="0" max="Inf">
+<scope><internalTopicRef href="#other-name"/></scope>
+</baseName>
+
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#biography"/></instanceOf>
+</occurrence>
+
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#creator"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#created-by"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#person"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#deciphered-by"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- TRANSCRIPTION -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#transcription"/>
+  </instanceOf>
+<ruleref rule="basic-topic"/>
+
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#article-about"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#tables-for"/></instanceOf>
+</occurrence>
+
+<occurrence internal="yes">
+<instanceOf><internalTopicRef href="#description"/></instanceOf>
+</occurrence>
+
+
+<playing min="1" max="1">
+  <instanceOf><internalTopicRef href="#method"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#transforms-to"/></instanceOf></in>
+</playing>
+
+<playing min="1" max="1">
+  <instanceOf><internalTopicRef href="#method"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#transforms-from"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- TRANSLITERATION -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#transliteration"/>
+  </instanceOf>
+<ruleref rule="basic-topic"/>
+
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#article-about"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#tables-for"/></instanceOf>
+</occurrence>
+
+<occurrence internal="yes">
+<instanceOf><internalTopicRef href="#description"/></instanceOf>
+</occurrence>
+
+
+<playing min="1" max="1">
+  <instanceOf><internalTopicRef href="#method"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#transforms-to"/></instanceOf></in>
+</playing>
+
+<playing min="1" max="1">
+  <instanceOf><internalTopicRef href="#method"/></instanceOf>
+  <in><instanceOf><internalTopicRef href="#transforms-from"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- SCRIPT CATEGORY -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#script-category"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<occurrence internal="yes">
+<instanceOf><internalTopicRef href="#definition"/></instanceOf>
+</occurrence>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#container"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#belongs-to"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- SCRIPT GROUP -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#script-group"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<occurrence internal="yes">
+<instanceOf><internalTopicRef href="#definition"/></instanceOf>
+</occurrence>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#container"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#belongs-to"/></instanceOf></in>
+</playing>
+
+<playing min="1" max="1">
+<instanceOf><internalTopicRef href="#containee"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#belongs-to"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- SCRIPT FAMILY -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#script-family"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<occurrence internal="yes">
+<instanceOf><internalTopicRef href="#definition"/></instanceOf>
+</occurrence>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#container"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#belongs-to"/></instanceOf></in>
+</playing>
+
+<playing min="1" max="1">
+<instanceOf><internalTopicRef href="#containee"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#belongs-to"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- STANDARD -->
+
+<topic id="standard" match="strict">
+<instanceOf><internalTopicRef href="#standard"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#official-site"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#specification"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#site-using"/></instanceOf>
+</occurrence>
+
+<!-- FIXME: this is not strict enough. only charset & charenc can
+            have these -->
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#mapping-table"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#chartable"/></instanceOf>
+</occurrence>
+
+
+
+<playing min="0" max="1">
+<instanceOf><internalTopicRef href="#standard"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#contains-codes-for"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="1">
+<instanceOf><internalTopicRef href="#standard"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#defined-by"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#extended"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#extension-of"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#original"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#extension-of"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#supporter"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#supports"/></instanceOf></in>
+</playing>
+
+<playing>
+<instanceOf><internalTopicRef href="#standard"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#defined-by"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- CHARACTER SET -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#charset"/></instanceOf>
+<otherClass><internalTopicRef href="#charenc"/></otherClass>
+<superclass ref="standard"/>
+
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#test-page"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#forum"/></instanceOf>
+</occurrence>
+
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#charset"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#encodes"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- CHARACTER ENCODING -->
+
+<topic>
+<instanceOf><internalTopicRef href="#charenc"/></instanceOf>
+<otherClass><internalTopicRef href="#charset"/></otherClass>
+<superclass ref="standard"/>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#charenc"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#encodes"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- STANDARDS BODY -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#std-body"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#official-site"/></instanceOf>
+</occurrence>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#std-body"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#defined-by"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#std-body"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#defines-standards-for"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- COMPANY -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#company"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#official-site"/></instanceOf>
+</occurrence>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#std-body"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#defined-by"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- SOFTWARE PRODUCT -->
+
+<topic match="strict">
+<instanceOf><internalTopicRef href="#software"/></instanceOf>
+<ruleref rule="basic-topic"/>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#official-site"/></instanceOf>
+</occurrence>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#supporter"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#supports"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- TYPELESS -->
+
+<topic>
+<instanceOf></instanceOf>
+
+<baseName min="1" max="Inf">
+<scope></scope>
+</baseName>
+
+<baseName min="0" max="Inf">
+<scope><any/></scope>
+</baseName>
+
+<occurrence internal="yes">
+<instanceOf><internalTopicRef href="#definition"/></instanceOf>
+</occurrence>
+
+<occurrence internal="yes">
+<instanceOf><internalTopicRef href="#date"/></instanceOf>
+</occurrence>
+
+<occurrence internal="yes">
+<instanceOf><internalTopicRef href="#version"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#article-about"/></instanceOf>
+</occurrence>
+
+<occurrence internal="no">
+<instanceOf><internalTopicRef href="#site-about"/></instanceOf>
+</occurrence>
+
+
+<playing min="0" max="1">
+<instanceOf><internalTopicRef href="#subclass"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#subclass-of"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#superclass"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#subclass-of"/></instanceOf></in>
+</playing>
+
+<playing min="0" max="Inf">
+<instanceOf><internalTopicRef href="#item-type"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#contains-codes-for"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- WRITING DIRECTION -->
+
+<topic>
+<instanceOf><internalTopicRef href="#direction"/></instanceOf>
+
+<baseName min="1" max="1">
+<scope></scope>
+</baseName>
+
+
+<occurrence min="1" max="1" internal="yes">
+<instanceOf>
+  <subjectIndicatorRef href="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+</instanceOf>
+</occurrence>
+
+
+<playing>
+<instanceOf><internalTopicRef href="#direction"/></instanceOf>
+<in><instanceOf><internalTopicRef href="#writing-direction"/></instanceOf></in>
+</playing>
+
+</topic>
+
+
+<!-- HIERARCHICAL RELATION TYPE -->
+
+<topic>
+<instanceOf>
+  <subjectIndicatorRef href="http://www.techquila.com/psi/hierarchy/#hierarchical-relation-type"/>
+</instanceOf>
+
+<baseName min="1" max="1">
+<scope></scope>
+</baseName>
+
+<baseName>
+<scope><any/></scope>
+</baseName>
+
+</topic>
+
+<!-- SUBORDINATE ROLE TYPE -->
+
+<topic>
+<instanceOf>
+  <subjectIndicatorRef href="http://www.techquila.com/psi/hierarchy/#subordinate-role-type"/>
+</instanceOf>
+
+<baseName min="1" max="1">
+<scope></scope>
+</baseName>
+
+</topic>
+
+<!-- SUPERORDINATE ROLE TYPE -->
+
+<topic>
+<instanceOf>
+  <subjectIndicatorRef href="http://www.techquila.com/psi/hierarchy/#superordinate-role-type"/>
+</instanceOf>
+
+<baseName min="1" max="1">
+<scope></scope>
+</baseName>
+
+</topic>
+
+
+<!-- ===== ASSOC CLASSES ================================================== -->
+
+<association>
+<instanceOf><internalTopicRef href="#spoken-in"/></instanceOf>
+
+<role min="0" max="1">
+<instanceOf><internalTopicRef href="#country"/></instanceOf>
+<player><internalTopicRef href="#country"/></player>
+</role>
+
+<role min="0" max="1">
+<instanceOf><internalTopicRef href="#province"/></instanceOf>
+<player><internalTopicRef href="#province"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#language"/></instanceOf>
+<player><internalTopicRef href="#language"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#written-in"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#language"/></instanceOf>
+<player><internalTopicRef href="#language"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#script"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#belongs-to"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#container"/></instanceOf>
+<player><internalTopicRef href="#script-family"/></player>
+<player><internalTopicRef href="#script-category"/></player>
+<player><internalTopicRef href="#script-group"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#containee"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+<player><internalTopicRef href="#script-family"/></player>
+<player><internalTopicRef href="#script-group"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#derived-from"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#predecessor"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#successor"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#part-of"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#container"/></instanceOf>
+<player><internalTopicRef href="#country"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#containee"/></instanceOf>
+<player><internalTopicRef href="#province"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#deciphered-by"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#script"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+</role>
+
+<role min="1" max="Inf">
+<instanceOf><internalTopicRef href="#person"/></instanceOf>
+<player><internalTopicRef href="#person"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#created-by"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#creation"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+</role>
+
+<role min="1">
+<instanceOf><internalTopicRef href="#creator"/></instanceOf>
+<player><internalTopicRef href="#person"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#supports"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#supported"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+<player><internalTopicRef href="#language"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#supporter"/></instanceOf>
+<player><internalTopicRef href="#standard"/></player>
+<player><internalTopicRef href="#software"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#encodes"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#charset"/></instanceOf>
+<player><internalTopicRef href="#charset"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#charenc"/></instanceOf>
+<player><internalTopicRef href="#charenc"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#defined-by"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#standard"/></instanceOf>
+<player><internalTopicRef href="#standard"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#std-body"/></instanceOf>
+<player><internalTopicRef href="#std-body"/></player>
+<player><internalTopicRef href="#company"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#contains-codes-for"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#standard"/></instanceOf>
+<player><internalTopicRef href="#standard"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#item-type"/></instanceOf>
+<player></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#extension-of"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#extended"/></instanceOf>
+<player><internalTopicRef href="#standard"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#original"/></instanceOf>
+<player><internalTopicRef href="#standard"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#defines-standards-for"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#country"/></instanceOf>
+<player><internalTopicRef href="#country"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#std-body"/></instanceOf>
+<player><internalTopicRef href="#std-body"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#transforms-from"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#method"/></instanceOf>
+<player><internalTopicRef href="#transliteration"/></player>
+<player><internalTopicRef href="#transcription"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#source"/></instanceOf>
+<player><internalTopicRef href="#language"/></player>
+<player><internalTopicRef href="#script"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#transforms-to"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#method"/></instanceOf>
+<player><internalTopicRef href="#transliteration"/></player>
+<player><internalTopicRef href="#transcription"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#target"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+</role>
+</association>
+
+
+<association>
+<instanceOf><internalTopicRef href="#writing-direction"/></instanceOf>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#script"/></instanceOf>
+<player><internalTopicRef href="#script"/></player>
+</role>
+
+<role min="1" max="1">
+<instanceOf><internalTopicRef href="#direction"/></instanceOf>
+<player><internalTopicRef href="#direction"/></player>
+</role>
+</association>
+
+</tm-schema>

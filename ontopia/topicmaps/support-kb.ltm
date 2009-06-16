@@ -1,0 +1,408 @@
+
+/* Support knowledge base for the OKS
+   $Id: support-kb.ltm,v 1.25 2007/11/05 08:53:24 lars.garshol Exp $ */
+
+/* metadata */
+
+#TOPICMAP support-kb
+
+[support-kb-tm = "OKS Support KB"
+ @"#support-kb"]
+{support-kb-tm, description, [[This topic map describes common problems
+with the OKS, especially the Omnigator, and can be used by users to
+resolve problems with their installations.]]}
+{support-kb-tm, copyright, [[The copyright in this topic map is owned by
+Ontopia, and the right to copy or distribute it for any purpose is
+restricted.]]}
+{support-kb-tm, version, [[$Revision: 1.25 $]]}
+{support-kb-tm, date, [[$Date: 2007/11/05 08:53:24 $]]}
+
+/* ===== ONTOLOGY ========================================================== */
+
+/* topic types */
+[product   = "Product"
+ @"http://psi.ontopia.net/xmltools/#Product"]
+[envar     = "Environment variable"
+ @"http://psi.ontopia.net/support/#environment-variable"]
+[error     = "Error"
+ @"http://psi.ontopia.net/support/#error"]
+[problem   = "Problem"
+ @"http://psi.ontopia.net/support/#problem"]
+[topicmap  = "Topic map"
+ @"http://psi.ontopia.net/support/#topicmap"]
+[java-prop = "Java property"
+ @"http://psi.ontopia.net/support/#java-property"]
+[file      = "File"
+ @"http://psi.ontopia.net/support/#file"]
+[task      = "Task"
+ @"http://psi.ontopia.net/support/#task"]
+
+/* association types */
+[caused-by = "Caused by" = "Causes" / cause
+ @"http://psi.ontopia.net/support/#caused-by"]
+  [cause = "Cause"]
+  [effect = "Effect"]
+
+[problem-with = "Problem with" = "Problems" / cause
+ @"http://psi.ontopia.net/support/#problem-with"]
+
+[produced-by = "Produced by" = "Produces" / producer
+ @"http://psi.ontopia.net/support/#produced-by"]
+  [producer = "Producer"]
+  [produced = "Produced"]
+
+[solution-to = "Solution to" = "Solve by" / problem
+ @"http://psi.ontopia.net/support/#solution-to"]
+
+/* occurrence types */
+[applies  = "Applies when"]
+[solution = "Solution"]
+[note     = "Note"]
+[background = "Background"]
+[description   = "Description"
+ @"http://psi.ontopia.net/xtm/occurrence-type/description"]
+[copyright     = "Copyright"
+ @"http://psi.ontopia.net/xtm/occurrence-type/copyright"]
+[version       = "Version"
+ @"http://psi.ontopia.net/xtm/occurrence-type/version"]
+[date          = "Last changed"
+ @"http://psi.ontopia.net/xtm/occurrence-type/last-changed-date"]
+
+/* name types */
+[fthelp = "Fulltext-help"]
+
+/* ===== METAMETA ========================================================== */
+
+/* software */
+[tomcat : product = "Tomcat"]
+[omnigator : product = "Omnigator"]
+[vizlet : product = "Vizlet"]
+[oks : product = "OKS"]
+[crimson : product = "Crimson"]
+[jre : product = "JRE" = "Java Runtime Edition"]
+[mssql : product = "MS SQL Server"]
+[oracle : product = "Oracle"]
+[installer : product = "OKS installer"]
+
+/* settings */
+[java-home : envar = "JAVA_HOME"]
+[http.proxyHost : java-prop = "http.proxyHost"]
+
+/* topic map */
+[core.xtm : topicmap = "core.xtm"]
+[country.xtm : topicmap = "country.xtm"]
+[language.xtm : topicmap = "language.xtm"]
+
+/* files */
+[setclasspath.bat : file = "setclasspath.bat"]
+
+/* ===== ERRORS ============================================================ */
+
+/* errors */
+[endorsed : error = "The system cannot find the file -Djava.endorsed.dirs=."
+                  = "endorsed" / fthelp]
+produced-by(endorsed : produced, tomcat : producer)
+
+[endorsed2 : error = "'-Djava.endorsed.dirs' is not recognized as an
+internal or external command, operable program or batch file."
+                   = "endorsed" / fthelp]
+produced-by(endorsed2 : produced, tomcat : producer)
+
+[no-tms-in-doc : error = "No topic maps in document"]
+produced-by(no-tms-in-doc : produced, omnigator : producer)
+
+[no-route-to-host : error = "java.net.NoRouteToHostException: No route to host: connect"]
+produced-by(no-route-to-host : produced, omnigator : producer)
+
+[illegal-target : error = "Illegal target of jump or branch"]
+produced-by(illegal-target : produced, tomcat : producer)
+
+[not-found : error = "Not Found (404)"]
+produced-by(not-found : produced, tomcat : producer)
+
+[http-404 : error = "HTTP Status 404 - /omnigator"]
+produced-by(http-404 : produced, tomcat : producer)
+
+[no-javac : error = "javax.servlet.ServletException: sun/tools/javac/Main"]
+produced-by(no-javac : produced, omnigator : producer)
+
+[manual-mode : error = "java.sql.SQLException: [Microsoft][SQLServer
+2000 Driver for JDBC]Can't start a cloned connection while in manual
+transaction mode."]
+produced-by(manual-mode : produced, mssql : producer)
+
+[cannot-find : error = "Cannot find
+This file is needed to run this program
+Press any key to continue . . ."]
+produced-by(cannot-find : produced, tomcat : producer)
+
+[x-server : error = "Can't connect to X11 window server using ':0.0'
+as the value of the DISPLAY variable."]
+produced-by(x-server : produced, omnigator : producer)
+
+/* Poolman now removed
+[validated-object : error = "Cannot get a connection, pool exhausted, cause: Could not create a validated object"]
+produced-by(x-server : produced, oks : producer)
+*/
+
+[undeclared-prefix : error = "Nicht deklariertes Präfix im Namen: ""xlink:href"""
+ = "The prefix ""xlink"" for attribute ""xlink:href"" associated with an element type ""resourceRef"" is not bound."]
+{undeclared-prefix, note, [[If you get this in the test suite the only
+"problem" is these error messages in the output. The software itself
+works fine, so there is no real need to "solve" this "problem".]]}
+produced-by(undeclared-prefix : produced, oks : producer)
+
+[object-clone : error = "java.lang.IllegalAccessError: try to access method [Ljava.lang.Object;.clone()Ljava/lang/Object; from class net.ontopia.topicmaps.query.impl.basic.PredicateUtils"]
+produced-by(object-clone : produced, omnigator : producer)
+
+[ora-00905 : error = "ORA-00905: missing keyword"]
+produced-by(ora-00905 : produced, oracle : producer)
+
+[no-oks-navigator-trial-class : error = "Exception in thread ""main"" java.lang.NoClassDefFoundError: oks-navigator-trial/jar"]
+produced-by(no-oks-navigator-trial-class : produced, installer : producer)
+
+[attribute-not-allowed : error = "XML parsing problem:
+org.xml.sax.SAXParseException: attribute """" not allowed at this
+point; ignored at: file:/...xtm"]
+{attribute-not-allowed, background, [[This appears to be caused by
+Jing (the RELAX-NG validator we use to validate XTM), which for some
+reason does not work with some Xerces versions.]]}
+produced-by(attribute-not-allowed : produced, omnigator : producer)
+
+[applet-entityExpansionLimit : error = "access denied (java.util.PropertyPermission 
+entity.ExpansionLimit read)"]
+produced-by(applet-entityExpansionLimit : produced, vizlet : producer)
+
+[basedir-not-set : error = "The BASEDIR environment variable is not defined correctly
+This environment variable is needed to run this program"]
+produced-by(basedir-not-set : produced, tomcat : producer)
+
+[cnfe-japplet : error = "java.lang.ClassNotFoundException: javax.swing.JApplet"]
+produced-by(cnfe-japplet : produced, vizlet : producer)
+
+[macos-jnilib : error = "error: error reading
+/System/Library/Java/Extensions/libJ3D.jnilib;
+java.util.zip.ZipException: error in opening zip file"]
+produced-by(macos-jnilib : produced, tomcat : producer)
+
+[jaas-config : error = "Windows cannot find '-Djava.security.auth.login.config=C:\path\to\oks-enterprise-2.2.1\jakarta-tomcat\conf\jaas.config'"]
+produced-by(tomcat : producer, jaas-config : produced)
+
+/* ----- problem ----- */
+[javac-bug : problem = "javac can't load MacOS binaries"]
+{javac-bug, applies, [[Only seems to apply to JDK 1.5 on MacOS X.]]}
+{javac-bug, description, [[Tomcat puts all files in
+/System/Library/Java/Extensions/ on the classpath, and javac then
+tries to load them as .jar files and fails when some of them turn out
+to be native binaries.]]}
+{javac-bug, solution, [[Remove all *.jnilib files, use JDK 1.4, or
+switch to the Jikes compiler.]]}
+{javac-bug, background, "http://issues.apache.org/bugzilla/show_bug.cgi?id=34856"}
+caused-by(macos-jnilib : effect, javac-bug : cause)
+
+[jhome-wrong : problem = "JAVA_HOME set incorrectly"]
+{jhome-wrong, applies, [[Will make it impossible to start Tomcat.]]}
+{jhome-wrong, solution, [[Set the variable to point to the directory
+where Java is installed, but not to the "bin" directory inside the
+root directory. Make sure you point to the root directory.]]}
+caused-by(endorsed : effect, jhome-wrong : cause)
+problem-with(java-home : cause, jhome-wrong : problem)
+
+[setclasspath.bat-bug : problem = "Bug in setclasspath.bat"]
+{setclasspath.bat-bug, applies, [[Makes Omnigator fail to run with JRE.]]}
+{setclasspath.bat-bug, solution, [[Edit setclasspath.bat to remove the
+tests for jdb.exe and javac.exe or install the full JDK.]]}
+caused-by(endorsed2 : effect, setclasspath.bat-bug : cause)
+problem-with(setclasspath.bat : cause, setclasspath.bat-bug : problem)
+
+[wrong-xml-parser : problem = "Wrong XML parser used"]
+{wrong-xml-parser, applies, [[Applies only to XTM documents, but will
+cause all XTM documents to fail to load.]]}
+caused-by(no-tms-in-doc : effect, wrong-xml-parser : cause)
+problem-with(crimson : cause, wrong-xml-parser : problem)
+solution-to(wrong-xml-parser : problem, use-crimson : solution)
+
+[incorrect-namespace : problem = "Incorrect namespace in document"]
+{incorrect-namespace, applies, [[Applies only to XTM documents, and will
+only cause a single document to fail loading.]]}
+{incorrect-namespace, solution, [[Make sure the 'xmlns' attribute on the
+<topicMap> element is set to the correct XTM 1.0 namespace URI, which is
+http://www.topicmaps.org/xtm/1.0/]]}
+caused-by(no-tms-in-doc : effect, incorrect-namespace : cause)
+
+[firewall-and-proxy : problem = "Behind firewall, using proxy"]
+{firewall-and-proxy, applies, [[Error appears when loading core.xtm,
+country.xtm, or language.xtm.]]}
+{firewall-and-proxy, solution, [[You are behind a firewall and use
+a proxy for browsing the internet. Java is trying to download a remote
+topic map, but since it doesn't use the proxy, it fails. Set the
+http.proxyHost Java property to make Java use your proxy.]]}
+caused-by(no-route-to-host : effect, firewall-and-proxy : cause)
+problem-with(core.xtm : cause, firewall-and-proxy : problem)
+problem-with(country.xtm : cause, firewall-and-proxy : problem)
+problem-with(language.xtm : cause, firewall-and-proxy : problem)
+problem-with(http.proxyHost : cause, firewall-and-proxy : problem)
+
+[jsp-too-big : problem = "JSP page is too big"]
+{jsp-too-big, applies, [[Happens when the JSP page is too big so that
+the produced byte code is above the 64k limit for methods.]]}
+{jsp-too-big, solution, [[Move parts of the page out into framework
+functions, or switch to a better application server.]]}
+caused-by(illegal-target : effect, jsp-too-big : cause)
+
+[class-files-broken : problem = "Class files broken"]
+{class-files-broken, applies, [[The class files in the
+omnigator/WEB-INF/classes directory are destroyed, and so Tomcat
+can't find the compiled versions of the JSP pages. This only happens
+with the free download of the Omnigator and the Personal Edition.]]}
+caused-by(not-found : effect, jsp-too-big : cause)
+
+[winzip-bug : problem = "WinZip bug"]
+{winzip-bug, applies, [[WinZip version 6.3 and earlier truncates long
+file names, this corrupting installations of the OKS Personal Edition.]]}
+{winzip-bug, solution, [[Upgrade to version 8.0 or later.]]}
+caused-by(class-files-broken : effect, winzip-bug : cause)
+
+[using-jre : problem = "Using JRE instead of JDK"]
+{using-jre, applies, [[Does not apply to the free download, only to the
+full OKS versions.]]}
+{using-jre, solution, [[Switch to using the full Java JDK]]}
+caused-by(no-javac : effect, using-jre : cause)
+caused-by(jaas-config : effect, using-jre : cause)
+
+[not-cursor : problem = "Not using 'cursor' select method"]
+{not-cursor, applies, [[Occurs when running the test suite, but only on
+43 of the tests.]]}
+{not-cursor, solution, [[Append ';SelectMethod=cursor' to the
+connection string in the properties file to make the RDBMS server use
+the 'cursor' select method.]]}
+{not-cursor, background, "http://www.websina.com/bugzero/faq/exception-sql2000.html"}
+caused-by(manual-mode : effect, not-cursor : cause)
+
+[win98-quotes : problem = "Quotes in Windows 98/ME shell"]
+{win98-quotes, applies, [[Occurs when running startup.bat on Windows 98/ME.]]}
+{win98-quotes, solution, [[Remove the quotes around line 21 in startup.bat
+and run the script again.]]}
+caused-by(cannot-find : effect, win98-quotes : cause)
+
+[no-x-server : problem = "No X server running"]
+{no-x-server, applies, [[Occurs when running Omnigator on a UNIX server which
+has no X server running.]]}
+{no-x-server, solution, [[Set up to run with PJA and "headless AWT". If you are using unix with the Sun JDK 1.4, it can run in the headless environment, but you still must have X libraries installed. Use the following system property on startup to enable headless support: java.awt.headless=true]]}
+{no-x-server, background, "http://java.sun.com/j2se/1.4.2/docs/guide/awt/AWTChanges.html#headless"}
+caused-by(x-server : effect, no-x-server : cause)
+
+/* NOTE: poolman no longer available in > 2.1.0
+[dbcp-bug : problem = "Bug in DBCP connection pool"]
+{dbcp-bug, applies, [[When ConnectionPool is set to 'dbcp'.]]}
+{dbcp-bug, solution, [[Switch to using PoolMan by changing the ConnectionPool
+setting in the properties file to 'poolman'.]]}
+caused-by(validated-object : effect, dbcp-bug : cause)
+*/
+
+[xerces-parser : problem = "Using Xerces XML parser"]
+{xerces-parser, description, [[The Xerces parser complains about undeclared
+namespace prefixes, and cannot be made to stop. In some situations parsing
+will still succeed, and in others it will not.]]}
+caused-by(undeclared-prefix : effect, xerces-parser : cause)
+solution-to(xerces-parser : problem, use-crimson : solution)
+
+[wrong-tomcat : problem = "Using wrong Tomcat"]
+{wrong-tomcat, applies, [[When you have another Tomcat installation.]]}
+{wrong-tomcat, solution, [[Stop the other Tomcat, then start the one that
+came with the Omnigator installer.]]}
+caused-by(http-404 : effect, wrong-tomcat : cause)
+
+[jvm-bug : problem = "JVM bug"]
+{jvm-bug, solution, [[The problem is a bug in the Java
+version. Upgrade to another JDK version, but not 1.4.1, which also has
+this bug.]]}
+caused-by(object-clone : effect, jvm-bug : cause)
+
+[wrong-select-suffix : problem = "Incorrect select suffix setting"]
+{wrong-select-suffix, solution, [[The problem is that in the RDBMS
+backend property file the setting for
+net.ontopia.topicmaps.impl.rdbms.HighLowKeyGenerator.SelectSuffix is
+incorrect, causing the RDBMS backend to generate syntactically
+incorrect SQL. The value should be the suffix added to a SQL select
+statement to make it lock a table for update. On Oracle this would be
+'for update'.]]}
+
+[wrong-java-arguments : problem = "Wrong command-line arguments"]
+{wrong-java-arguments, solution, [[The "-jar" argument has been left out.
+The correct command-line is: "java -jar oks-navigator-trial.jar".]]}
+
+[jing-xerces-conflict : problem = "Jing/Xerces conflict"]
+{jing-xerces-conflict, description, [[Some reasons of Jing and Xerces
+appear to conflict for reasons unknown.]]}
+caused-by(attribute-not-allowed : effect, jing-xerces-conflict : cause)
+solution-to(jing-xerces-conflict : problem, use-crimson : solution)
+solution-to(jing-xerces-conflict : problem, turn-off-validation : solution)
+
+[java-bug-4814720 : problem = "Java bug 4814720"]
+{java-bug-4814720, description, [[JDK 1.4.1_03 to 1.4.2-beta has a
+bug (4814720) that makes it attempt to read a Java property when
+parsing XML, which crashes in applets. The solution is to upgrade to a
+higher Java version.]]}
+{java-bug-4814720, background, "http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4814720"}
+caused-by(applet-entityExpansionLimit : effect, java-bug-4814720 : cause)
+
+[oks-bug-1366 : problem = "*.sh scripts not executable"]
+{oks-bug-1366, description, [[This happens with the free download of the
+Omnigator on Linux and MacOS X because the installer does not set the
+permissions of the *.sh scripts to executable.]]}
+{oks-bug-1366, background, "http://www.ontopia.net/bugs/showbug.cgi?id=1366"}
+caused-by(basedir-not-set : effect, oks-bug-1366 : cause)
+{oks-bug-1366, solution, [[Run the command "chmod 755
+$OKS_DIR/jakarta-tomcat/bin/*.sh"]]}
+
+[using-ms-jvm : problem = "Using the Microsoft JVM"]
+{using-ms-jvm, description, [[The Microsoft JVM supports only JDK 1.1, and
+this does not include Swing, which is required by the Vizlet.]]}
+{using-ms-jvm, background, "http://java.sun.com/products/plugin/index.jsp"}
+caused-by(cnfe-japplet : effect, using-ms-jvm : cause)
+{using-ms-jvm, solution, [[Install the Sun JVM.]]}
+
+[local-file-links : problem = "Links to local files don't work"
+ = "Link to local file doesn't work" / fthelp]
+{local-file-links, description, [[Links to files on the local disk
+from the topic map have no effect when clicked in the Omnigator, but
+work when copied and pasted into the URL bar. Newer browsers disallow
+this for security reasons, but many allow the security restriction to
+be turned off.]]}
+{local-file-links, background, "http://kb.mozillazine.org/Firefox_:_Issues_:_Links_to_Local_Pages_Don't_Work"}
+{local-file-links, background, "http://windowsxp.mvps.org/ie/elevlocalfile.htm"}
+{local-file-links, background, "https://bugs.opera.com/show_bug.cgi?id=168834"}
+problem-with(omnigator : cause, local-file-links : problem)
+
+[dbcp : product = "DBCP"]
+
+[dbcp-hides-error : problem = "DBCP hides the real error"]
+{dbcp-hides-error,  description, [[The DBCP connection pooling tool
+will often swallow JDBC errors, and only report that it cannot make
+any connections for the pool. The solution is to edit the database
+properties file, and set
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=false
+The real error will then become visible.]]}
+problem-with(dbcp : cause, dbcp-hides-error : problem)
+
+[cannot-get-connection : error = "org.apache.commons.dbcp.SQLNestedException: Cannot get a connection, pool error Could not create a validated object, cause: ValidateObject failed"]
+caused-by(cannot-get-connection : effect, dbcp-hides-error : cause)
+produced-by(dbcp : producer, cannot-get-connection : produced)
+
+/* ===== TASKS ============================================================ */
+
+[use-crimson : task = "Make OKS use the Crimson XML parser"]
+{use-crimson, description, [[To do this, set the org.xml.sax.driver
+Java system property to org.apache.crimson.parser.XMLReaderImpl, and
+make sure crimson.jar is on the CLASSPATH. It is OK if other XML
+parsers are also on the CLASSPATH. This will make the OKS prefer
+Crimson. Sometimes this will cause other XML-dependent packages to
+fail, and in these cases net.ontopia.xml.sax.driver can be set
+instead, since only OKS will use this property.]]}
+
+[turn-off-validation : task = "Turn off XTM validation"]
+{turn-off-validation, description, [[To do this, edit the
+tm-sources.xml property to set the 'validation' property on all XTM
+sources to 'false'. This will mean that Jing isn't used for validation
+any more, and no XTM validation will happen.]]}

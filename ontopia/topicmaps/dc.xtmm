@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topicMap
+  xmlns="http://www.topicmaps.org/xtm/1.0/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+<!--
+
+   XTM template for Dublin Core metadata
+   .....................................
+
+   $Id: dc.xtmm,v 1.1 2003/09/18 12:04:29 pepper Exp $
+
+-->
+
+<!-- Topics for DC Metadata Elements -->
+
+<topic id="Title">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/title"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Title</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Creator">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/creator"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Creator</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Subject">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/subject"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Subject</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Description">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/description"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Description</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Publisher">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/publisher"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Publisher</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Contributor">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/contributor"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Contributor</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Date">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/date"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Date</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Type">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/type"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Type</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Format">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/format"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Format</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Identifier">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/identifier"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Identifier</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Source">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/source"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Source</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Language">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/language"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Language</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Relation">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/relation"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Relation</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Coverage">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/coverage"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Coverage</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="Rights">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/rights"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Rights</baseNameString>
+  </baseName>
+</topic>
+
+<!-- Topics used as association role types -->
+
+<topic id="resource">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#resource"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Resource</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="value">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#value"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Value</baseNameString>
+  </baseName>
+</topic>
+
+<!-- Topics used as standard property values -->
+
+<topic id="topicmap-type">
+  <instanceOf>
+    <topicRef xlink:href="#Type"></topicRef>
+  </instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#topicmap"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>Topic Map</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="XTM-format">
+  <instanceOf>
+    <topicRef xlink:href="#Format"></topicRef>
+  </instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#XTM"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>XTM</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="HyTM-format">
+  <instanceOf>
+    <topicRef xlink:href="#Format"></topicRef>
+  </instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#HyTM"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>HyTM</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="LTM-format">
+  <instanceOf>
+    <topicRef xlink:href="#Format"></topicRef>
+  </instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#LTM"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>LTM</baseNameString>
+  </baseName>
+</topic>
+
+<topic id="AsTMa-format">
+  <instanceOf>
+    <topicRef xlink:href="#Format"></topicRef>
+  </instanceOf>
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.ontopia.net/metadata/#AsTMa"/>
+  </subjectIdentity>
+  <baseName>
+    <baseNameString>AsTMa</baseNameString>
+  </baseName>
+</topic>
+
+</topicMap>

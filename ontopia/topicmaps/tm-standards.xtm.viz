@@ -1,0 +1,1424 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <topic id="id177">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-empty-set"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id265">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#dtd"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id121">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-occurrence-type"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id208">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#assoc-role-player-type"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id165">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-href-xpointer"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id175"></topic>
+  <topic id="id162">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-deserialization"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id237">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#meta-uml-normative"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id104">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-subject-address"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id123"></topic>
+  <topic id="id236">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#string-normalization"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id52">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/display-scoped-assoc-names"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id101">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-subj-address-class"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id95">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="file:/home/larsga/cvs-co/iso-13250/sam/sam-xtm.xml"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id102">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-subject-address-def"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id253"></topic>
+  <topic id="id76">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-subject-indicator-def"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id226">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-variant-scope-superset"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id119">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-published-subject-identifier"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id255"></topic>
+  <topic id="id44">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id66">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-association-type"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id151">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-normative-schema"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id112">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#scope-unconstrained-rep"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id172">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-def-occurrence-type"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id74">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#resolved"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id197">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-association-role-type"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id260"></topic>
+  <topic id="id240">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#op-topic-map-compare"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id238">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-schema"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id152">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-xtm-topic-map"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id137">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-mergemap-reference"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id203">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-locator-notation"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id21">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#defines"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id42"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>102 0 102</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id45"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id148">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-unused-ids"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id270">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#alternative"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id252"></topic>
+  <topic id="id247">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/language.xtm#ja"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id227">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-subject-indicator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id114">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-topic-characteristic-reified"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id109">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-variantname-deprecate"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id251">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#paper"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id145">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-topicref-xtmwrap"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id186">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-reifier-computed"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id267">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#opinion"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id46">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-font"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id257"></topic>
+  <topic id="id78">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#locator-reference"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id188">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#err-constraint-violations"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id229">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-base-name"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id136"></topic>
+  <topic id="id183">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-publishing"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id19">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#State"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id46"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id10"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id139">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#merge-use-of-schemas"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id179">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-type"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id92">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-subject-identity"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id39">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id90">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#locator-normalization"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id142">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-topicref-fragment"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id212">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-equal"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id234">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-association-role"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id135">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id209">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-subject"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id210">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-subject-def"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id113">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-type-instance-scope"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id184">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id40">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id105">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-parameters-deprecate"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id3">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id192">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#locator-notation-support"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id220">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#scope-extension"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id83"></topic>
+  <topic id="id96"></topic>
+  <topic id="id87">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-classes"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id50">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/double-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id10">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id239">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-theme"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id110">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#strings-as-subjects"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id266">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#resolution"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id191">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-display-name"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id224">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#string-bidi"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id131">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-xtm-document"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id199">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-topic-characteristic-assignment"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id84">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#names-as-subjects"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id194">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xml-data-representation"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id134">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-reserialization-recommendation"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id207">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#merge-same-subj-ind-addr"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id256"></topic>
+  <topic id="id107">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#dependent"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id128">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-base-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id150">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-serialization"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id8">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#issue"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id10"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id46"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id47"></topicRef>
+      </instanceOf>
+      <resourceData>7</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>255 204 102</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id41">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id176">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#infinite-subject-spaces"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id58">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="file:/home/larsga/cvs-co/iso-13250/cxtm/cxtm.xml"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id153">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-xlink-actuate"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id159">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-unused-ids-interpretation"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id205">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-subj-address-values"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id42">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id99">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-base-name-def"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id193">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#sam-conformance"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id100">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-fixed-attributes"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id17">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#issue-with"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id231">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#reification-effects"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id125"></topic>
+  <topic id="id51">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/show-role-hover-help"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id166">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#occurrence-traversal"></subjectIndicatorRef>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#association-traversal"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id115">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#open"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id223">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-reifier-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id68">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="file:/home/larsga/cvs-co/iso-13250/sam/sam-model.xml"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id38">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/source-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id250"></topic>
+  <topic id="id200">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-scope-structure"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id243">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#prerequisite"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id49">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/single-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id264">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#ElementType"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id232">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-srcloc-interchange"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id70"></topic>
+  <topic id="id169"></topic>
+  <topic id="id195">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#type-vs-class"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id215">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-generics"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id173">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-variant-name"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id204">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-source-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id127">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-subj-address-name"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id140">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-information-item"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id43">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon-filename"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id261"></topic>
+  <topic id="id230">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-scope"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id33">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.oasis-open.org/iso/639/#language"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id10"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id106">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#subject-identity-establish"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id170">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#occurrence-variants"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id82">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-value-null"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id118">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-topic-name"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id168">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#merge-prop-srclocs"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id120">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-external-ref-failure"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id45">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-line-weight"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id116">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-topic-name"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id187">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-application"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id129">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-topic-characteristic-assignment"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id146">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-subjectidentity-children"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id143">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-namespace-uri"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id5">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id57"></topic>
+  <topic id="id158">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-topicmap-version"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id185">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-supertype-subtype-relationship"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id29">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#issue-in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>204 204 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id42"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id45"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id7">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id198">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#variant-in-basename"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id213">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-information-resource"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id71">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#topic-identity-required"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id89">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-topicmaps.org"></subjectIndicatorRef>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-topicmapsorg"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id147">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-mergemap-and-topicref"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id124">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-where-resourceref"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id64">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#cxtm-resource-data-normalization"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id180">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#item-parent-required"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id23">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#spec"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>102 0 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id47"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id10"></topicRef>
+      </instanceOf>
+      <resourceData>153 0 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id46"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id235">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-merging"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id63">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#cxtm-topic-roles-played-order"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id98">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-value"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id155">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-unknown-elements"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id259">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#background"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id211">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#constr-single-subject-address"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id25">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#Person"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id46"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id10"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id262">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#homepage"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id154">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-same-doc-refs"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id94">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-member-id"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id249">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#discussion"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id171">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#op-sorting"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id93">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#Property"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id141">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-topicref-notatopic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id245">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id47"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id46"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id189">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-subject-identifier"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id269">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#proposal"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id268">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#spec-text"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id149">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-version"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id144">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-data-model"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id13">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-instance"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id45"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id42"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 102</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id225">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-identification"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id156">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-href-whitespace"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id36">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject-indicator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id174">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#reifier-merging"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id97">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#topic-naming-constraint"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id91">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/occurrence-type/description"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id181">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-topic-map"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id241">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-occurrence"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id108">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#ItemType"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id233">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-subject-addresses"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id31">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#depends-on"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>255 153 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>255 0 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id45"></topicRef>
+      </instanceOf>
+      <resourceData>8</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id201">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#merge-srcloc-vs-subjid"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id164">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-xmlbase-everywhere"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id217">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-association"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id126">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-subject-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id1">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#state-of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id45"></topicRef>
+      </instanceOf>
+      <resourceData>3</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id5"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id3"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id161">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-namespace-support"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id6">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/start-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id36"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="file:/home/larsga/cvs-co/iso-13250/sam/sam-xtm.xml"></resourceRef>
+    </occurrence>
+  </topic>
+  <topic id="id27">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/null"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id46"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id10"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>153 153 153</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id130">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#container-props"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id222">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-parent"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id133">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#construct"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id157">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-resourcedata-markup"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id248">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#std-definition"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id11">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#term"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id46"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id10"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id138">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-type-properties"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id254"></topic>
+  <topic id="id132">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-tm-processor"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id228">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#subject-vs-resource"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id62">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#cxtm-namespace"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id35">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/vizigator-general"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id52"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id51"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id40"></topicRef>
+      </instanceOf>
+      <resourceData>240 240 240</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id86">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#tm"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id216">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#op-modifications"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id182">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-association-role-player"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id48">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-excluded"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id167">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#names-with-types"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id218">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-statement"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id219">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-reification"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id202">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-instance"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id190">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-published-subject"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id178">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-notation-interp"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id196">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#mnemonic-representation"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id244"></topic>
+  <topic id="id206">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-set-psi"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id258"></topic>
+  <topic id="id160">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-schema-uri"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id79"></topic>
+  <topic id="id37">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id221">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#prop-subj-address-scope"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id81">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#use-case"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id47">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-shape-padding"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id263">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#requirements"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id88">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#psi-subclassing-loops"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id103">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-unconstrained-scope"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id80">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-empty-string"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id122">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-published-subject-indicator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id61">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#cxtm-topicmap-id"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id75">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#definition"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id214">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/term/#def-topic-characteristic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id242">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/#use-case-doc"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id111">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#term-scope-def"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id163">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-reference-non-xtm"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id85">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/iso13250/issue/#xtm-implicit-constraints"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+</topicMap>

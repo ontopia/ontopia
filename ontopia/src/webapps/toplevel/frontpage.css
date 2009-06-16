@@ -1,0 +1,199 @@
+
+/* ---- Document-wide layout ---- */
+body {
+  color: #000000;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+body,p,h1,h2,h3,h4,ul,ol,li,div,td,th,address,blockquote,nobr,b,i {
+  font-family: Verdana, Geneva, Arial, sans-serif;
+}
+
+/* ---- Definition of specific font-related classes ---- */
+h2 {
+  font-size: 125%;
+  margin: 2px;
+}
+
+body,p,td,th,address,nobr,b,i {
+  font-size: 94%;
+}
+
+/* ---- List Item Properties ---- */
+ul {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 22px;
+}
+
+li {
+  margin-top: 2px;
+  margin-left: 0px;
+}
+
+/* ---- Table Formatting  ---- */
+#header {
+  background: url("new_header.gif") no-repeat left top;
+  background-color: #FF0000;
+  padding-top: 16px;
+}
+
+#contentarea {
+  padding: 0;
+}
+
+#contentarea a {
+ color: blue;
+}
+
+#inner-contentarea {
+  background: url("contentb.gif") repeat left top;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 12pt;
+  padding-bottom: 24pt;
+}
+
+table.frontboxes {
+  width: 93%;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-bottom: 24pt;
+}
+
+table.frontboxes td {
+  width: 25%;
+  vertical-align: top;
+}
+
+table.frontbox {
+  margin-top: 24pt;
+  margin-left: 12pt;
+  margin-right: 12pt;
+  border: solid 1px black;
+  padding-left: 6pt;
+  height: 10em;
+  background: url("contentb.gif") repeat left top;
+}
+
+tr.toprow table.frontbox {
+  height: 15em;
+}
+
+table.anglelink {
+  margin-top: 6pt;
+  margin-bottom: 12pt;
+}
+
+table.frontbox table.anglelink td {
+  width: 90%;
+}
+
+table.frontbox table.anglelink td.angles {
+  width: 10%;
+}
+
+/* ---- Table Cells ---- */
+#footer {
+  background-color: #000000;
+  padding: 5px;
+}
+
+#footerTable {
+  color: white;
+}
+
+#footerTable a {
+  color: white;
+  font-weight: bold;
+}
+
+#oksmenu {
+  background: url("new_topmenubg.gif") no-repeat right top;
+  height: 28px;
+  color: #fbb;
+  padding: 0 10px;
+}
+
+#oksmenu a {
+  font-size: 75%;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#oksmenu a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Tab styles ---- */
+.topLinks {
+  color: black;
+  font-size: 80%;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding: 0 0 0 10px;
+  background: url("new_topn.gif") no-repeat right top;
+}
+
+.topLinks tr {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topLinks td {
+  margin: 0;
+  padding: 0;
+  height: 25px;
+  padding: 0 0 0 13px;
+  vertical-align: bottom;
+}
+
+.topLinks a {
+  display: block;
+  color: #555;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  padding: 5px 16px 0 0;
+  height: 25px;
+}
+
+.topLinks a:visited {
+  color: #555;
+  text-decoration: none;
+}
+
+.topLinks a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+/* ---- Link style definition ---- */
+a:link {
+  color: #202020;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #202020;
+  text-decoration: none;
+}
+
+a:active {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover,h3 a:hover {
+  text-decoration: underline
+}
+
+/* ---- Text detail ---- */
+.disable {
+  color: gray;
+  font-style: italic;
+}

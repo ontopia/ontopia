@@ -1,0 +1,1621 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <topic id="Pinsir"></topic>
+  <topic id="id51">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-excluded"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id49">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id218">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>209 160 15</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Geodude"></topic>
+  <topic id="Poliwhirl"></topic>
+  <topic id="Exeggcute"></topic>
+  <topic id="id320">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>153 245 242</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Vileplume"></topic>
+  <topic id="id74">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Blastoise"></topic>
+  <topic id="Shellder"></topic>
+  <topic id="id382">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>92 114 250</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id365">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>17 235 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Primeape"></topic>
+  <topic id="id60">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>17 235 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="evolution">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id408">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>92 114 250</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Spearow"></topic>
+  <topic id="Pikachu"></topic>
+  <topic id="id425">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="water">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>166 215 215</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="psychic">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>255 153 153</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id470">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="ice">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2 157 182</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id302">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/single-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Kabutops"></topic>
+  <topic id="bug">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>176 252 139</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Electrode"></topic>
+  <topic id="id170">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id361">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id379">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#superordinate-role-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>151 247 244</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Raichu"></topic>
+  <topic id="id307">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>1 34 233</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Paras"></topic>
+  <topic id="id126">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>153 204 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Parasect"></topic>
+  <topic id="id191">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id388">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Poliwag"></topic>
+  <topic id="id215">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id43">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id452">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Venomoth"></topic>
+  <topic id="Dugtrio"></topic>
+  <topic id="id352">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 238 22</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Diglett"></topic>
+  <topic id="Golem"></topic>
+  <topic id="Sandslash"></topic>
+  <topic id="id242">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Ekans"></topic>
+  <topic id="Gyarados"></topic>
+  <topic id="id97">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="fire">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>255 102 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id2">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>255 204 102</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id428">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>250 248 150</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Squirtle"></topic>
+  <topic id="id480">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>17 235 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id193">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>101 77 52</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Poliwrath"></topic>
+  <topic id="Golduck"></topic>
+  <topic id="id160">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Bulbasaur"></topic>
+  <topic id="id174">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Slowpoke"></topic>
+  <topic id="ghost">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>117 68 134</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Farfetchd"></topic>
+  <topic id="Pokemon"></topic>
+  <topic id="id14">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/source-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Grimer"></topic>
+  <topic id="id13">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id233">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>229 255 5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id85">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>255 204 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id246">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>106 106 143</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Rhydon"></topic>
+  <topic id="id214">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject-indicator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Victreebel"></topic>
+  <topic id="Mr_Mime"></topic>
+  <topic id="id359">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id34">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>238 191 1</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id64">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id254">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>1 34 233</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Lapras"></topic>
+  <topic id="id448">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 238 22</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id163">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id363">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>153 153 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id336">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id180">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 102 51</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id148"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Machop"></topic>
+  <topic id="id333">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id322">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>11 85 14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id396">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id166">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#hierarchical-relation-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>229 255 5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Tangela"></topic>
+  <topic id="id464">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Rattata"></topic>
+  <topic id="Omastar"></topic>
+  <topic id="Gengar"></topic>
+  <topic id="unofficial-site">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>229 255 5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Ponyta"></topic>
+  <topic id="id297">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id118"></topicRef>
+      </instanceOf>
+      <resourceData>5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Oddish"></topic>
+  <topic id="id148">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="poison">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>206 136 252</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Metapod"></topic>
+  <topic id="Venonat"></topic>
+  <topic id="Weepinbell"></topic>
+  <topic id="Aerodactyl"></topic>
+  <topic id="id347">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Scyther"></topic>
+  <topic id="id238">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id342">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>250 248 150</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id331">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>17 235 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Seel"></topic>
+  <topic id="Growlithe"></topic>
+  <topic id="Porygon"></topic>
+  <topic id="rock">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>142 142 187</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id346">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/display-scoped-assoc-names"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id222">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>175 252 138</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id118">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-line-weight"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Seaking"></topic>
+  <topic id="Ditto"></topic>
+  <topic id="id295">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 238 22</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Onix"></topic>
+  <topic id="Alakazam"></topic>
+  <topic id="Kakuna"></topic>
+  <topic id="Slowbro"></topic>
+  <topic id="Starmie"></topic>
+  <topic id="flying">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>1 143 143</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Snorlax"></topic>
+  <topic id="Nidoran-male"></topic>
+  <topic id="Cloyster"></topic>
+  <topic id="Koffing"></topic>
+  <topic id="id356">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#subordinate-role-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>255 71 21</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id349">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Caterpie"></topic>
+  <topic id="Wigglytuff"></topic>
+  <topic id="Abra"></topic>
+  <topic id="Weedle"></topic>
+  <topic id="Arcanine"></topic>
+  <topic id="Tentacool"></topic>
+  <topic id="id256">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 153 153</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id172">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>11 85 14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id227">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>229 255 5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id135">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id266">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>176 252 139</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Pidgeotto"></topic>
+  <topic id="id432">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id236">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>250 248 150</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Mew"></topic>
+  <topic id="Persian"></topic>
+  <topic id="id413">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Bellsprout"></topic>
+  <topic id="id466">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>102 255 102</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="dark"></topic>
+  <topic id="Kingdra"></topic>
+  <topic id="Rhyhorn"></topic>
+  <topic id="Hitmonlee"></topic>
+  <topic id="Beedrill"></topic>
+  <topic id="id310">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>251 183 183</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id478">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>17 235 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Dodrio"></topic>
+  <topic id="Electabuzz"></topic>
+  <topic id="ground">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>115 115 92</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id300">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>1 34 233</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id110">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/start-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id14"></topicRef>
+      </instanceOf>
+      <resourceData>#Pokemon</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Cubone"></topic>
+  <topic id="id385">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>204 204 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="electric">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>238 208 83</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Meowth"></topic>
+  <topic id="id420">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>153 245 242</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Raticate"></topic>
+  <topic id="id11">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-font"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Sandshrew"></topic>
+  <topic id="Charmeleon"></topic>
+  <topic id="id197">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>11 85 14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id9">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-shape-padding"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Moltres"></topic>
+  <topic id="Dragonite"></topic>
+  <topic id="Vaporeon"></topic>
+  <topic id="id440">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>153 102 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Haunter"></topic>
+  <topic id="Pidgey"></topic>
+  <topic id="Magneton"></topic>
+  <topic id="id88">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>153 245 242</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id128">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>229 255 5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Omanyte"></topic>
+  <topic id="id474">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>176 252 139</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Chansey"></topic>
+  <topic id="Hitmonchan"></topic>
+  <topic id="Mankey"></topic>
+  <topic id="id377">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id391">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>255 51 51</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id375">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Nidorina"></topic>
+  <topic id="Wartortle"></topic>
+  <topic id="Kadabra"></topic>
+  <topic id="id244">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon-filename"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Fearow"></topic>
+  <topic id="Ninetales"></topic>
+  <topic id="Nidoqueen"></topic>
+  <topic id="Mewtwo"></topic>
+  <topic id="id133">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>92 114 250</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id55">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Butterfree"></topic>
+  <topic id="Rapidash"></topic>
+  <topic id="Flareon"></topic>
+  <topic id="id438">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Magnemite"></topic>
+  <topic id="id263">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>153 245 242</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Tentacruel"></topic>
+  <topic id="id139">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>250 248 150</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Seadra"></topic>
+  <topic id="Zubat"></topic>
+  <topic id="Doduo"></topic>
+  <topic id="Dewgong"></topic>
+  <topic id="Ivysaur"></topic>
+  <topic id="Arbok"></topic>
+  <topic id="Psyduck"></topic>
+  <topic id="Eevee"></topic>
+  <topic id="id120">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>229 255 5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id436">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Dragonair"></topic>
+  <topic id="id94">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Hypno"></topic>
+  <topic id="Kingler"></topic>
+  <topic id="fighting">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>45 80 115</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id405">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>255 102 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Taurus"></topic>
+  <topic id="Gloom"></topic>
+  <topic id="Magmar"></topic>
+  <topic id="id293">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Jynx"></topic>
+  <topic id="grass">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>156 217 126</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Voltorb"></topic>
+  <topic id="Goldeen"></topic>
+  <topic id="Weezing"></topic>
+  <topic id="Charizard"></topic>
+  <topic id="id178">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Kangaskhan"></topic>
+  <topic id="Machamp"></topic>
+  <topic id="Krabby"></topic>
+  <topic id="Nidoking"></topic>
+  <topic id="Staryu"></topic>
+  <topic id="Pidgeot"></topic>
+  <topic id="Lickitung"></topic>
+  <topic id="id199">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>229 255 5</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id130">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Muk"></topic>
+  <topic id="Exeggutor"></topic>
+  <topic id="Golbat"></topic>
+  <topic id="id143">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/null"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id43"></topicRef>
+      </instanceOf>
+      <resourceData>3</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>255 255 204</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id148"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Comic Sans MS-0-16</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id430">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>1 34 233</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id106">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>134 206 254</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id183">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Articuno"></topic>
+  <topic id="Vulpix"></topic>
+  <topic id="id411">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>92 114 250</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Horsea"></topic>
+  <topic id="id21">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>11 85 14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id5">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>153 245 242</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id275">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>1 34 233</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id367">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/show-role-hover-help"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Nidoran-female"></topic>
+  <topic id="Dratini"></topic>
+  <topic id="id370">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 102 153</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id44">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Kabuto"></topic>
+  <topic id="Magikarp"></topic>
+  <topic id="Clefairy"></topic>
+  <topic id="id4">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id154">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-instance"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id118"></topicRef>
+      </instanceOf>
+      <resourceData>5</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id13"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Nidorino"></topic>
+  <topic id="id273">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>250 248 150</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id277">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 238 22</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id325">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/double-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Venusaur"></topic>
+  <topic id="id47">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>11 85 14</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id31">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="Graveler"></topic>
+  <topic id="Charmander"></topic>
+  <topic id="Drowzee"></topic>
+  <topic id="id27">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>92 114 250</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Machoke"></topic>
+  <topic id="Jigglypuff"></topic>
+  <topic id="id116">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id118"></topicRef>
+      </instanceOf>
+      <resourceData>5</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 0 153</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Zapdos"></topic>
+  <topic id="id329">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id39">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="dragon">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>98 170 217</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="steel"></topic>
+  <topic id="id53">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>0 238 22</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Marowak"></topic>
+  <topic id="id279">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Clefable"></topic>
+  <topic id="Gastly"></topic>
+  <topic id="id176">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/scoping-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id203">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/vizigator-general"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>240 240 240</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="normal">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id11"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-1-11</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>247 205 205</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id9"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="Jolteon"></topic>
+</topicMap>

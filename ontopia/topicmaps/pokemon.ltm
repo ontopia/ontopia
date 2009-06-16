@@ -1,0 +1,1810 @@
+/*
+Pokemon
+$Id: pokemon.ltm,v 1.3 2005/05/18 13:27:06 pepper Exp $
+*/
+
+/* metadata */
+#TOPICMAP pokemon
+
+[pokemon-tm = "Pokemon Topic Map"
+ @"#pokemon"]
+{pokemon-tm, description, [[This is a topic map representation of Pokemon by Joshua Lownsbery with enhancements suggested by Steve Pepper.]]}
+{pokemon-tm, version, [[Revision: 1.3 ]]}
+{pokemon-tm, date, [[Date: 2005/05/18 ]]}
+
+{pokemon-tm, unofficial-site, [[Pokemon Village Pokedex: http://www.pokemonvillage.com/pokedex/]]}
+{pokemon-tm, unofficial-site, [[The Original Pojodex: http://www.pojo.com/pokedex/pokedex-Original.html]]}
+{pokemon-tm, unofficial-site, [[Pokemon Dungeon - Online Pokedex Contest 2002: http://www.pokemondungeon.com/contest.htm]]}
+
+/* ===== LTM Notation Summary ====
+Non-addressable topic with subject indicator
+[topic : type = basename ; sortname ; displayname @subjectindicator]
+
+Directly addressable topic with URI subject locator
+[topic : type = basename ; sortname ; displayname %subjectlocator]
+
+Association
+assoc_type (topic1 : role1, topic2 : role2, ... , topicN : roleN) / scope
+
+Occurrence with a URI location
+{topic, occ_type, "occ_loc"} / scope
+
+Occurrence with inline data
+{topic, occ_type, [[some data for the topic]]} / scope
+============= */
+
+/* ===== Omnigator Supported PSIs ===== */
+
+/* Hierarchy PSIs are shown in Omnigator with a tree structure */
+
+[hierarchical-relation-type = "{Hierarchical relation type}"
+ @"http://www.techquila.com/psi/hierarchy/#hierarchical-relation-type"]
+[superordinate-role-type = "{Superordinate role type}"
+ @"http://www.techquila.com/psi/hierarchy/#superordinate-role-type"]
+[subordinate-role-type = "{Subordinate role type}"
+ @"http://www.techquila.com/psi/hierarchy/#subordinate-role-type"]
+
+/* ===== GENERAL PSIS ===== */
+
+[sort = "Sort name"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#sort"]
+[copyright = "Copyright"
+ @"http://psi.ontopia.net/xtm/occurrence-type/copyright"
+ @"http://purl.org/dc/elements/1.1/rights"]
+
+/*
+
+All Pokemons are now instances of Pokemon. The relationship
+to various kinds of Pokomen (e.g. Grass) is no longer represented
+by the type-instance relationship. Since Grass, etc. are no longer
+types, the supertype-subtype relationship becomes unnecessary.
+
+[subtype-of : hierarchical-relation-type
+  = "Subtype of"
+  = "Subtypes" / supertype
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+ [supertype : superordinate-role-type = "Supertype"
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+ [subtype : subordinate-role-type = "Subtype"
+  @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+*/
+
+/* ================================================= */
+
+[Pokemon = "Pokemon"]
+
+[evolution : hierarchical-relation-type
+  = "Evolves From"
+  = "Evolves To" / eb ]
+ [eb : superordinate-role-type = "Descendant"]
+ [ef : subordinate-role-type = "Ancestor"]
+
+[related-type = "Related Type"]
+
+[fullname =  "Fullname"]
+
+/* ===== ONTOLOGY ========================================================== */
+
+/* ----- scoping types --------------------- */
+
+[Kanto-Johto = "Kanto-Johto"]
+{Kanto-Johto, description, [[Kanto-Johto are regions where Pokemon live ...  This is where Red, Blue, Yellow, Gold, Silver, and Crystal versions take place.]]}
+
+[Hoenn = "Hoenn"]
+{Hoenn, description, [[Hoenn is a region where Pokemon live ...  This is where Ruby and Saphire versions take place.]]}
+
+[red-blue = "Red/Blue Version"]
+{red-blue, description, [[Red and Blue versions are the first two versions of the Pokemon series.]]}
+
+
+/* ========================== */
+[elements = "Element Types"]
+{elements, description, [[The Element Types describe the Pokemon and what they do, what their strengths and weaknesses are and what attacks they use.]]}
+/* element-types(Pokemon : bte, elements : nte) */
+
+/*
+See note on subtype-of relationship, above.
+
+subtype-of(Pokemon : supertype, grass : subtype)
+subtype-of(Pokemon : supertype, poison : subtype)
+subtype-of(Pokemon : supertype, water : subtype)
+subtype-of(Pokemon : supertype, fire : subtype)
+subtype-of(Pokemon : supertype, bug : subtype)
+subtype-of(Pokemon : supertype, dragon : subtype)
+subtype-of(Pokemon : supertype, electric : subtype)
+subtype-of(Pokemon : supertype, fighting : subtype)
+subtype-of(Pokemon : supertype, flying : subtype)
+subtype-of(Pokemon : supertype, ghost : subtype)
+subtype-of(Pokemon : supertype, ground : subtype)
+subtype-of(Pokemon : supertype, ice : subtype)
+subtype-of(Pokemon : supertype, dark : subtype)
+subtype-of(Pokemon : supertype, normal : subtype)
+subtype-of(Pokemon : supertype, psychic : subtype)
+subtype-of(Pokemon : supertype, rock : subtype)
+subtype-of(Pokemon : supertype, steel : subtype)
+*/
+
+[grass = "Grass"]
+{grass, description, [[Grass Pokemon prefer to get tons of sunlight.]]}
+
+[poison = "Poison"]
+{poison, description, [[Poison Pokemon prefer to live in dumps and can poison other Pokemon.]]}
+
+[water = "Water"]
+{water, description, [[Water Pokemon prefer to live in lakes, rivers, or oceans  and can shoot water at their opponents.]]}
+
+[fire = "Fire"]
+{fire, description, [[Fire Pokemon prefer to live in hot dry places and can scorch their enemies.]]}
+
+[bug = "Bug"]
+{bug, description, [[Bug Pokemon prefer to live in forests and resemble overgrown insects.]]}
+
+[dragon = "Dragon"]
+{dragon, description, [[Dragon Pokemon live in many places with varying characteristics and resemble dragons and serpents.]]}
+
+[electric = "Electric"]
+{electric, description, [[Electric Pokemon live in fields and power plants and can shoot electric blasts at their foes.]]}
+
+[fighting = "Fighting"]
+{fighting, description, [[Fighting Pokemon live in caves and fields and are very strong.]]}
+
+[flying = "Flying"]
+{flying, description, [[Flying Pokemon live in fields and up trees and can fly.]]}
+
+[ghost = "Ghost"]
+{ghost, description, [[Ghost Pokemon live in deserted mansions and towers and other buildings.]]}
+
+[ground = "Ground"]
+{ground, description, [[Ground Pokemon live in caves, tunnels, and underground.]]}
+
+[ice = "Ice"]
+{ice, description, [[Ice Pokemon like to live in areas that are extremely cold.]]}
+
+[dark = "Dark"]
+{dark, description, [[Dark Pokemon are noctournal and live in fields and caves.]]}
+
+[normal = "Normal"]
+{normal, description, [[Normal Pokemon prefer to live in fields and use only physical attacks]]}
+
+[psychic = "Psychic"]
+{psychic, description, [[Psychic Pokemon like to live in fields and caves and possess telepathic and telekenetic abilities.]]}
+
+[rock = "Rock"]
+{rock, description, [[Rock Pokemon like to live in caves or on mountain trails and use mainly physical attacks.]]}
+
+[steel = "Steel"]
+{steel, description, [[Steel Pokemon like to live in caves or fields and have a steel exoskeleton.]]}
+
+/* ----- Association Types --------------------- */
+
+/* ------------ Occurrence Types ---------------- */
+
+/* Special Omnigator occurrences based on PSI sets above */
+[description = "Description"]
+[date = "Date"]
+[version = "Version"]
+
+/* Generally Applicable occurrence types */
+[unofficial-site = "Unofficial site"]
+
+
+/* ------- Pokemon Specific ------- */
+[typeimg = "Image of Type"]
+[height = "Height"]
+[weight = "Weight (lbs)"]
+[poketype = "Pokemon Type"]
+[pokedex = "Pokedex Entry"]
+
+/* ----- topic types --------------------- */
+
+
+
+/* ======================================================== */
+
+[Bulbasaur : Pokemon = "Bulbasaur"
+  = "001 Bulbasaur" / Kanto-Johto]
+{Bulbasaur, description, [[Bulbasaur is a strong, manageable Pokemon for beginner trainers.  No one's sure whether bulbasaur and its evolutions are plant or animal.  The seem to have the chacteristics of both.  A strange bulb was planted on its back at birth.  As Bulbasaur grows, the bulb becomes a large, leafy plant.  Bulbasaur is in better shape than the other starting Pokemon, charmander and squirtle, so it is harder to defeat and capture.]]}
+{Bulbasaur, poketype, [[Seed]]}
+{Bulbasaur, height, [[2'4"]]}
+{Bulbasaur, weight, [[15]]}
+{Bulbasaur, pokedex, [[A strange seed was planted on its back at birth. The plant grows and sprouts with this Pokémon.]]} / red-blue
+
+[Ivysaur : Pokemon = "Ivysaur"
+  = "002 Ivysaur" / Kanto-Johto]
+{Ivysaur, description, [[Ivysaur and its other evolutions have twice as many strengths and weaknesses because it has two element types.  As the bulb on its back grows, it gets harder for Ivysaur to stand on its hind legs.]]}
+{Ivysaur, poketype,  [[Seed]]}
+{Ivysaur, height, [[3'3"]]}
+{Ivysaur, weight, [[29]]}
+{Ivysaur, pokedex, [[When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.]]} / red-blue
+
+evolution(Ivysaur: ef, Bulbasaur: eb)
+
+[Venusaur : Pokemon = "Venusaur"
+  = "003 Venusaur" / Kanto-Johto]
+{Venusaur, description, [[Venusaur is the final evolutionary stage of bulbasaur.  When the bulb on its back blooms, the flower begins to absorb sunlight.  Because of this, Venusaur must keep moving to find more sunlight.  Venusaur's favorite attack is Leech Seed, which absorbs the opponents power.]]}
+{Venusaur, poketype,  [[Seed]]}
+{Venusaur, height, [[6'7"]]}
+{Venusaur, weight, [[221]]}
+{Venusaur, pokedex, [[The plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.]]} / red-blue
+
+evolution(Venusaur: ef, Ivysaur: eb)
+
+[Charmander : Pokemon = "Charmander"
+  = "004 Charmander" / Kanto-Johto]
+{Charmander, description, [[Charmander]]}
+{Charmander, poketype,  [[Lizard]]}
+{Charmander, height, [[2']]}
+{Charmander, weight, [[19]]}
+{Charmander, pokedex, [[Obviously prefers hot places. When it rains, steam is said to spout from the tip of its tail.]]} / red-blue
+
+[Charmeleon : Pokemon = "Charmeleon"
+  = "005 Charmeleon" / Kanto-Johto]
+{Charmeleon, description, [[Charmeleon]]}
+{Charmeleon, poketype,  [[Lizard]]}
+{Charmeleon, height, [[3'7"]]}
+{Charmeleon, weight, [[42]]}
+{Charmeleon, pokedex, [[When it swings its burning tail, it elevates the temperature to unbearably high levels.]]} / red-blue
+
+evolution(Charmeleon: ef, Charmander: eb)
+
+[Charizard : Pokemon = "Charizard"
+  = "006 Charizard" / Kanto-Johto]
+{Charizard, description, [[Charizard]]}
+{Charizard, poketype,  [[Lizard]]}
+{Charizard, height, [[5'7"]]}
+{Charizard, weight, [[200]]}
+{Charizard, pokedex, [[Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.]]} / red-blue
+
+evolution(Charizard: ef, Charmeleon: eb)
+
+[Squirtle : Pokemon = "Squirtle"
+  = "007 Squirtle" / Kanto-Johto]
+{Squirtle, description, [[Squirtle]]}
+{Squirtle, poketype,  [[Tiny Turtle]]}
+{Squirtle, height, [[1'8"]]}
+{Squirtle, weight, [[20]]}
+{Squirtle, pokedex, [[After birth, its back swells and hardens into a shell. Powerfully sprays foam from its mouth.]]} / red-blue
+
+[Wartortle : Pokemon = "Wartortle"
+  = "008 Wartortle" / Kanto-Johto]
+{Wartortle, description, [[Wartortle]]}
+{Wartortle, poketype,  [[Turtle]]}
+{Wartortle, height, [[3'3"]]}
+{Wartortle, weight, [[50]]}
+{Wartortle, pokedex, [[Often hides in water to stalk unweary prey. For swimming fast. it moves its ears to maintain balance.]]} / red-blue
+
+evolution(Wartortle: ef, Squirtle: eb)
+
+[Blastoise : Pokemon = "Blastoise"
+  = "009 Blastoise" / Kanto-Johto]
+{Blastoise, description, [[Blastoise]]}
+{Blastoise, poketype,  [[Shellfish]]}
+{Blastoise, height, [[5'3"]]}
+{Blastoise, weight, [[189]]}
+{Blastoise, pokedex, [[A brutal Pokemon with pressurized water jets on its shell. They are used for high speed tackles.]]} / red-blue
+
+evolution(Blastoise: ef, Wartortle: eb)
+
+[Caterpie : Pokemon = "Caterpie"
+  = "010 Caterpie" / Kanto-Johto]
+{Caterpie, description, [[Caterpie]]}
+{Caterpie, poketype,  [[Worm]]}
+{Caterpie, height, [[1']]}
+{Caterpie, weight, [[6]]}
+{Caterpie, pokedex, [[Its short feet are tipped with suction pads that enable it to tirelessly climb slopes and walls.]]} / red-blue
+
+[Metapod : Pokemon = "Metapod"
+  = "011 Metapod" / Kanto-Johto]
+{Metapod, description, [[Metapod]]}
+{Metapod, poketype,  [[Cocoon]]}
+{Metapod, height, [[2'4"]]}
+{Metapod, weight, [[22]]}
+{Metapod, pokedex, [[This Pokemon is vulnerable to attack while its shell is soft, exposing its weak and tender body.]]} / red-blue
+
+
+evolution(Metapod: ef, Caterpie: eb)
+
+[Butterfree : Pokemon = "Butterfree"
+  = "012 Butterfree" / Kanto-Johto]
+{Butterfree, description, [[Butterfree]]}
+{Butterfree, poketype,  [[Butterfly]]}
+{Butterfree, height, [[3'7"]]}
+{Butterfree, weight, [[71]]}
+{Butterfree, pokedex, [[In battle, it flaps its wings at high speed to release highly toxic dust into the air.]]} / red-blue
+
+
+evolution(Butterfree: ef, Metapod: eb)
+
+[Weedle : Pokemon = "Weedle"
+  = "013 Weedle" / Kanto-Johto]
+{Weedle, description, [[Weedle]]}
+{Weedle, poketype,  [[Hair Bug]]}
+{Weedle, height, [[1']]}
+{Weedle, weight, [[7]]}
+{Weedle, pokedex, [[Often found in forests, eating leaves. It has a sharp venomous stinger on its head.]]} / red-blue
+
+[Kakuna : Pokemon = "Kakuna"
+  = "014 Kakuna" / Kanto-Johto]
+{Kakuna, description, [[Kakuna]]}
+{Kakuna, poketype,  [[Cocoon]]}
+{Kakuna, height, [[2']]}
+{Kakuna, weight, [[22]]}
+{Kakuna, pokedex, [[Almost incapable of moving, this Pokemon can only harden its shell to protect itself from predators.]]} / red-blue
+
+
+evolution(Kakuna: ef, Weedle: eb)
+
+[Beedrill : Pokemon = "Beedrill"
+  = "015 Beedrill" / Kanto-Johto]
+{Beedrill, description, [[Beedrill]]}
+{Beedrill, poketype,  [[Poison Bee]]}
+{Beedrill, height, [[3'3"]]}
+{Beedrill, weight, [[65]]}
+{Beedrill, pokedex, [[Flies at high speed and attacks using its large venomous stingers on its forelegs and tail.]]} / red-blue
+
+
+evolution(Beedrill: ef, Kakuna: eb)
+
+[Pidgey : Pokemon = "Pidgey"
+  = "016 Pidgey" / Kanto-Johto]
+{Pidgey, description, [[Pidgey]]}
+{Pidgey, poketype,  [[Tiny Bird]]}
+{Pidgey, height, [[1']]}
+{Pidgey, weight, [[4]]}
+{Pidgey, pokedex, [[A common sight in forests and woods. It flaps its wings at ground level to kick up blinding sand.]]} / red-blue
+
+[Pidgeotto : Pokemon = "Pidgeotto"
+  = "017 Pidgeotto" / Kanto-Johto]
+{Pidgeotto, description, [[Pidgeotto]]}
+{Pidgeotto, poketype,  [[Bird]]}
+{Pidgeotto, height, [[3'7"]]}
+{Pidgeotto, weight, [[66]]}
+{Pidgeotto, pokedex, [[Very protective of its sprawling territorial area, this Pokemon will fiercely peck any intruder.]]} / red-blue
+
+
+evolution(Pidgeotto: ef, Pidgey: eb)
+
+[Pidgeot : Pokemon = "Pidgeot"
+  = "018 Pidgeot" / Kanto-Johto]
+{Pidgeot, description, [[Pidgeot]]}
+{Pidgeot, poketype,  [[Bird]]}
+{Pidgeot, height, [[4' 11"]]}
+{Pidgeot, weight, [[87]]}
+{Pidgeot, pokedex, [[When hunting, it skims the surface of water at high speed to pick off unwary prey such as Magikarp.]]} / red-blue
+
+
+evolution(Pidgeot: ef, Pidgeotto: eb)
+
+[Rattata : Pokemon = "Rattata"
+  = "019 Rattata" / Kanto-Johto]
+{Rattata, description, [[Rattata]]}
+{Rattata, poketype,  [[Rat]]}
+{Rattata, height, [[1']]}
+{Rattata, weight, [[8]]}
+{Rattata, pokedex, [[Bites anything when it attacks. Small and very quick, it is a common sight in many places.]]} / red-blue
+
+[Raticate : Pokemon = "Raticate"
+  = "020 Raticate" / Kanto-Johto]
+{Raticate, description, [[Raticate]]}
+{Raticate, poketype,  [[Rat]]}
+{Raticate, height, [[2'4"]]}
+{Raticate, weight, [[41]]}
+{Raticate, pokedex, [[It uses its whiskers to maintain its balance. It apparently slows down if they are cut off.]]} / red-blue
+
+
+evolution(Raticate: ef, Rattata: eb)
+
+[Spearow : Pokemon = "Spearow"
+  = "021 Spearow" / Kanto-Johto]
+{Spearow, description, [[Spearow]]}
+{Spearow, poketype,  [[Tiny Bird]]}
+{Spearow, height, [[1']]}
+{Spearow, weight, [[4]]}
+{Spearow, pokedex, [[Eats bugs in grassy areas. It has to flap its short wings at high speed to stay airborne.]]} / red-blue
+
+[Fearow : Pokemon = "Fearow"
+  = "022 Fearow" / Kanto-Johto]
+{Fearow, description, [[Fearow]]}
+{Fearow, poketype,  [[Beak]]}
+{Fearow, height, [[3'11"]]}
+{Fearow, weight, [[84]]}
+{Fearow, pokedex, [[With its huge and magnificent wings, it can keep aloft without ever having to land for a rest.]]} / red-blue
+
+
+evolution(Fearow: ef, Spearow: eb)
+
+[Ekans : Pokemon = "Ekans"
+  = "023 Ekans" / Kanto-Johto]
+{Ekans, description, [[Ekans]]}
+{Ekans, poketype,  [[Snake]]}
+{Ekans, height, [[6'7"]]}
+{Arbok, weight, [[15]]}
+{Ekans, pokedex, [[Moves silently and stealthily. Eats the eggs of birds, such as Pidgey and Spearow, whole.]]} / red-blue
+
+[Arbok : Pokemon = "Arbok"
+  = "024 Arbok" / Kanto-Johto]
+{Arbok, description, [[Arbok]]}
+{Arbok, poketype,  [[Cobra]]}
+{Arbok, height, [[11'6"]]}
+{Arbok, weight, [[143]]}
+{Arbok, pokedex, [[It is rumored that the ferocious warning markings on its belly differ from area to area.]]} / red-blue
+
+
+evolution(Arbok: ef, Ekans: eb)
+
+[Pikachu : Pokemon = "Pikachu"
+  = "025 Pikachu" / Kanto-Johto]
+{Pikachu, description, [[Pikachu]]}
+{Pikachu, poketype,  [[Mouse]]}
+{Pikachu, height, [[1'4"]]}
+{Pikachu, weight, [[13]]}
+{Pikachu, pokedex, [[When several of these Pokemon gather, their electricity could build and cause
+lightning storms.]]} / red-blue
+
+[Raichu : Pokemon = "Raichu"
+  = "026 Raichu" / Kanto-Johto]
+{Raichu, description, [[Raichu]]}
+{Raichu, poketype,  [[Mouse]]}
+{Raichu, height, [[2'7"]]}
+{Raichu, weight, [[66]]}
+{Raichu, pokedex, [[Its long tail serves as a ground to protect itself from its own high voltage power.]]} / red-blue
+
+
+evolution(Raichu: ef, Pikachu: eb)
+
+[Sandshrew : Pokemon = "Sandshrew"
+  = "027 Sandshrew" / Kanto-Johto]
+{Sandshrew, description, [[Sandshrew]]}
+{Sandshrew, poketype,  [[Mouse]]}
+{Sandshrew, height, [[2']]}
+{Sandshrew, weight, [[26:]]}
+{Sandshrew, pokedex, [[Burrows deep underground in arid locations far from water. It only emerges to hunt for food.]]} / red-blue
+
+[Sandslash : Pokemon = "Sandslash"
+  = "028 Sandslash" / Kanto-Johto]
+{Sandslash, description, [[Sandslash]]}
+{Sandslash, poketype,  [[Mouse]]}
+{Sandslash, height, [[3'3"]]}
+{Sandslash, weight, [[65]]}
+{Sandslash, pokedex, [[Curls up into a spiny ball when threatened. It can roll while curled up to attack or escape.]]} / red-blue
+
+
+evolution(Sandslash: ef, Sandshrew: eb)
+
+[Nidoran-female : Pokemon = "Nidoran-female"
+  = "029 Nidoran-female" / Kanto-Johto]
+{Nidoran-female, description, [[Nidoran-female]]}
+{Nidoran-female, poketype,  [[Poison Pin]]}
+{Nidoran-female, height, [[1'4"]]}
+{Nidoran-female, weight, [[15]]}
+{Nidoran-female, pokedex, [[Although small, its venomous barbs render this Pokemon dangerous. The female has smaller horns.]]} / red-blue
+
+[Nidorina : Pokemon = "Nidorina"
+  = "030 Nidorina" / Kanto-Johto]
+{Nidorina, description, [[Nidorina]]}
+{Nidorina, poketype,  [[Poison Pin]]}
+{Nidorina, height, [[2'7"]]}
+{Nidorina, weight, [[44]]}
+{Nidorina, pokedex, [[The female's horn develops more slowly. Prefers physical attacks such as clawing and biting.]]} / red-blue
+
+
+evolution(Nidorina: ef, Nidoran-female: eb)
+
+[Nidoqueen : Pokemon = "Nidoqueen"
+  = "031 Nidoqueen" / Kanto-Johto]
+{Nidoqueen, description, [[Nidoqueen]]}
+{Nidoqueen, poketype,  [[Drill]]}
+{Nidoqueen, height, [[4'3"]]}
+{Nidoqueen, weight, [[132]]}
+{Nidoqueen, pokedex, [[Its hard scales provide strong protection. It uses its hefty bulk to execute powerful moves.]]} / red-blue
+
+
+evolution(Nidoqueen: ef, Nidorina: eb)
+
+[Nidoran-male : Pokemon = "Nidoran-male"
+  = "032 Nidoran-male" / Kanto-Johto]
+{Nidoran-male, description, [[Nidoran-male]]}
+{Nidoran-male, poketype,  [[Poison Pin]]}
+{Nidoran-male, height, [[1'8"]]}
+{Nidoran-male, weight, [[20]]}
+{Nidoran-male, pokedex, [[Stiffens its ears to sense danger. The larger its horns, the more powerful its secreted venom.]]} / red-blue
+
+[Nidorino : Pokemon = "Nidorino"
+  = "033 Nidorino" / Kanto-Johto]
+{Nidorino, description, [[Nidorino]]}
+{Nidorino, poketype,  [[Poison Pin]]}
+{Nidorino, height, [[2'11"]]}
+{Nidorino, weight, [[43]]}
+{Nidorino, pokedex, [[An aggresive Pokemon that is quick to attack. The horn on its head secretes a powerful venom.]]} / red-blue
+
+
+evolution(Nidorino: ef, Nidoran-male: eb)
+
+[Nidoking : Pokemon = "Nidoking"
+  = "034 Nidoking" / Kanto-Johto]
+{Nidoking, description, [[Nidoking]]}
+{Nidoking, poketype,  [[Drill]]}
+{Nidoking, height, [[4'7"]]}
+{Nidoking, weight, [[137]]}
+{Nidoking, pokedex, [[It uses its powerful tail in battle to smash, constrict, then break the prey's bones.]]} / red-blue
+
+
+evolution(Nidoking: ef, Nidorino: eb)
+
+[Clefairy : Pokemon = "Clefairy"
+  = "035 Clefairy" / Kanto-Johto]
+{Clefairy, description, [[Clefairy]]}
+{Clefairy, poketype,  [[Fairy]]}
+{Clefairy, height, [[2']]}
+{Clefairy, weight, [[17]]}
+{Clefairy, pokedex, [[Its magical and cute appeal has many admirers. It is rare and found only in certain areas.]]} / red-blue
+
+[Clefable : Pokemon = "Clefable"
+  = "036 Clefable" / Kanto-Johto]
+{Clefable, description, [[Clefable]]}
+{Clefable, poketype,  [[Fairy]]}
+{Clefable, height, [[4'3"]]}
+{Clefable, weight, [[88]]}
+{Clefable, pokedex, [[A timid and rare fairy Pokemon that is rarely seen. It will run and hide the moment it senses people.]]} / red-blue
+
+evolution(Clefable: ef, Clefairy: eb)
+
+[Vulpix : Pokemon = "Vulpix"
+  = "037 Vulpix" / Kanto-Johto]
+{Vulpix, description, [[Vulpix]]}
+{Vulpix, poketype,  [[Fox]]}
+{Vulpix, height, [[2']]}
+{Vulpix, weight, [[22]]}
+{Vulpix, pokedex, [[At the time of birth, it has just one tail. The tail splits from its tip as it grows older.]]} / red-blue
+
+[Ninetales : Pokemon = "Ninetales"
+  = "038 Ninetales" / Kanto-Johto]
+{Ninetales, description, [[Ninetales]]}
+{Ninetales, poketype,  [[Fox]]}
+{Ninetales, height, [[3'7"]]}
+{Ninetales, weight, [[44]]}
+{Ninetales, pokedex, [[Very smart and very vengeful. Grabbing one of its many tails could result in a 1000-year curse.]]} / red-blue
+
+evolution(Ninetales: ef, Vulpix: eb)
+
+[Jigglypuff : Pokemon = "Jigglypuff"
+  = "039 Jigglypuff" / Kanto-Johto]
+{Jigglypuff, description, [[Jigglypuff]]}
+{Jigglypuff, poketype,  [[Balloon]]}
+{Jigglypuff, height, [[1'8"]]}
+{Jigglypuff, weight, [[12]]}
+{Jigglypuff, pokedex, [[When its huge eyes light up, it sings a mysteriously soothing melody that lulls its enemies to sleep.]]} / red-blue
+
+[Wigglytuff : Pokemon = "Wigglytuff"
+  = "040 Wigglytuff" / Kanto-Johto]
+{Wigglytuff, description, [[Wigglytuff]]}
+{Wigglytuff, poketype,  [[Balloon]]}
+{Wigglytuff, height, [[3'3"]]}
+{Wigglytuff, weight, [[26]]}
+{Wigglytuff, pokedex, [[The body is soft and rubbery. When angered, it will suck in air and inflate itself to enormous size.]]} / red-blue
+
+evolution(Wigglytuff: ef, Jigglypuff: eb)
+
+[Zubat : Pokemon = "Zubat"
+  = "041 Zubat" / Kanto-Johto]
+{Zubat, description, [[Zubat]]}
+{Zubat, poketype,  [[Bat]]}
+{Zubat, height, [[2'7"]]}
+{Zubat, weight, [[17]]}
+{Zubat, pokedex, [[Forms colonies in perpetually dark places. Uses ultrasonic sound waves to identify and approach targets.]]} / red-blue
+
+[Golbat : Pokemon = "Golbat"
+  = "042 Golbat" / Kanto-Johto]
+{Golbat, description, [[Golbat]]}
+{Golbat, poketype,  [[Bat]]}
+{Golbat, height, [[5'3"]]}
+{Golbat, weight, [[121]]}
+{Golbat, pokedex, [[Once it strikes it will not stop draining energy from its victim even if it gets too heavy to fly.]]} / red-blue
+
+evolution(Golbat: ef, Zubat: eb)
+
+[Oddish : Pokemon = "Oddish"
+  = "043 Oddish" / Kanto-Johto]
+{Oddish, description, [[Oddish]]}
+{Oddish, poketype,  [[Weed]]}
+{Oddish, height, [[1'8"]]}
+{Oddish, weight, [[12]]}
+{Oddish, pokedex, [[During the day, it keeps its face buried in the ground. At night, it wanders around sowing its seeds.]]} / red-blue
+
+[Gloom : Pokemon = "Gloom"
+  = "044 Gloom" / Kanto-Johto]
+{Gloom, description, [[Gloom]]}
+{Gloom, poketype,  [[Weed]]}
+{Gloom, height, [[2'7"]]}
+{Gloom, weight, [[19]]}
+{Gloom, pokedex, [[The fluid that oozes from its mouth isn't drool. It is nectar that is used to attract pray.]]} / red-blue
+
+evolution(Gloom: ef, Oddish: eb)
+
+[Vileplume : Pokemon = "Vileplume"
+  = "045 Vileplume" / Kanto-Johto]
+{Vileplume, description, [[Vileplume]]}
+{Vileplume, poketype,  [[Flower]]}
+{Vileplume, height, [[3'11"]]}
+{Vileplume, weight, [[41]]}
+{Vileplume, pokedex, [[The larger its petals, the more toxic pollen it contains. Its big head is heavy and hard to hold up.]]} / red-blue
+
+evolution(Vileplume: ef, Gloom: eb)
+
+[Paras : Pokemon = "Paras"
+  = "046 Paras" / Kanto-Johto]
+{Paras, description, [[Paras]]}
+{Paras, poketype,  [[Mushroom]]}
+{Paras, height, [[1']]}
+{Paras, weight, [[12]]}
+{Paras, pokedex, [[Burrows to suck tree roots. The mushrooms on its back grow by drawing nutrients from the bug host.]]} / red-blue
+
+[Parasect : Pokemon = "Parasect"
+  = "047 Parasect" / Kanto-Johto]
+{Parasect, description, [[Parasect]]}
+{Parasect, poketype,  [[Mushroom]]}
+{Parasect, height, [[3'3"]]}
+{Parasect, weight, [[65]]}
+{Parasect, pokedex, [[A host-parasite pair in which the mushroom has taken over the host bug. Prefers damp places.]]} / red-blue
+
+evolution(Parasect: ef, Paras: eb)
+
+[Venonat : Pokemon = "Venonat"
+  = "048 Venonat" / Kanto-Johto]
+{Venonat, description, [[Venonat]]}
+{Venonat, poketype,  [[Insect]]}
+{Venonat, height, [[3'3"]]}
+{Venonat, weight, [[66]]}
+{Venonat, pokedex, [[Lives in the shadows of tail trees where it eats insects. it is attracted by light at night.]]} / red-blue
+
+[Venomoth : Pokemon = "Venomoth"
+  = "049 Venomoth" / Kanto-Johto]
+{Venomoth, description, [[Venomoth]]}
+{Venomoth, poketype,  [[Poison Moth]]}
+{Venomoth, height, [[4'11"]]}
+{Venomoth, weight, [[28]]}
+{Venomoth, pokedex, [[The dust-like scales covering its wings are color coded to indicate the kinds of poison it has.]]} / red-blue
+
+evolution(Venomoth: ef, Venonat: eb)
+
+[Diglett : Pokemon = "Diglett"
+  = "050 Diglett" / Kanto-Johto]
+{Diglett, description, [[Diglett]]}
+{Diglett, poketype,  [[Mole]]}
+{Diglett, height, [[8"]]}
+{Diglett, weight, [[2]]}
+{Diglett, pokedex, [[Lives about on yard underground where it feeds on plant roots. It appears sometimes above ground.]]} / red-blue
+
+[Dugtrio : Pokemon = "Dugtrio"
+  = "051 Dugtrio" / Kanto-Johto]
+{Dugtrio, description, [[Dugtrio]]}
+{Dugtrio, poketype,  [[Mole]]}
+{Dugtrio, height, [[2'4"]]}
+{Dugtrio, weight, [[73]]}
+{Dugtrio, pokedex, [[A team of Diglett triplets. It triggers huge earthquakes by burrowing 60 miles underground.]]} / red-blue
+
+evolution(Dugtrio: ef, Diglett: eb)
+
+[Meowth : Pokemon = "Meowth"
+  = "052 Meowth" / Kanto-Johto]
+{Meowth, description, [[Meowth]]}
+{Meowth, poketype,  [[Scratch Cat]]}
+{Meowth, height, [[1'4"]]}
+{Meowth, weight, [[9]]}
+{Meowth, pokedex, [[Adores circular objects. Wanders the streets on a nightly basis to look for dropped lose change.]]} / red-blue
+
+
+[Persian : Pokemon = "Persian"
+  = "053 Persian" / Kanto-Johto]
+{Persian, description, [[Persian]]}
+{Persian, poketype,  [[Classy Cat]]}
+{Persian, height, [[3'3"]]}
+{Persian, weight, [[71]]}
+{Persian, pokedex, [[Although its fur has many admirers, it is tough to raise as a pet because of its fickle meanness.]]} / red-blue
+
+evolution(Persian: ef, Meowth: eb)
+
+[Psyduck : Pokemon = "Psyduck"
+  = "054 Psyduck" / Kanto-Johto]
+{Psyduck, description, [[Psyduck]]}
+{Psyduck, poketype,  [[Duck]]}
+{Psyduck, height, [[2'7"]]}
+{Psyduck, weight, [[43]]}
+{Psyduck, pokedex, [[While lulling its enemies with its vacant look, this wily Pokemon will use psychokintic powers.]]} / red-blue
+
+[Golduck : Pokemon = "Golduck"
+  = "055 Golduck" / Kanto-Johto]
+{Golduck, description, [[Golduck]]}
+{Golduck, poketype,  [[Duck]]}
+{Golduck, height, [[5'7"]]}
+{Golduck, weight, [[169]]}
+{Golduck, pokedex, [[Often seen elegantly by lake shores. It is often mistaken for the Japanese monster, Kappa.]]} / red-blue
+
+evolution(Golduck: ef, Psyduck: eb)
+
+[Mankey : Pokemon = "Mankey"
+  = "056 Mankey" / Kanto-Johto]
+{Mankey, description, [[Mankey]]}
+{Mankey, poketype,  [[Pig Monkey]]}
+{Mankey, height, [[1'8"]]}
+{Mankey, weight, [[62]]}
+{Mankey, pokedex, [[Extremely quick to anger. It could be docile one moment then thrashing away the next instant.]]} / red-blue
+
+[Primeape : Pokemon = "Primeape"
+  = "057 Primeape" / Kanto-Johto]
+{Primeape, description, [[Primeape]]}
+{Primeape, poketype,  [[Pig Monkey]]}
+{Primeape, height, [[3'3"]]}
+{Primeape, weight, [[71]]}
+{Primeape, pokedex, [[Always furiousa and tenacious to boot. It will not abandon chasing its quarry until it is caught.]]} / red-blue
+
+evolution(Primeape: ef, Mankey: eb)
+
+[Growlithe : Pokemon = "Growlithe"
+  = "058 Growlithe" / Kanto-Johto]
+{Growlithe, description, [[Growlithe]]}
+{Growlithe, poketype,  [[Puppy]]}
+{Growlithe, height, [[2'4"]]}
+{Growlithe, weight, [[42]]}
+{Growlithe, pokedex, [[Very protective of its territtory. It will bark and bite to repel intruders from its space.]]} / red-blue
+
+[Arcanine : Pokemon = "Arcanine"
+  = "059 Arcanine" / Kanto-Johto]
+{Arcanine, description, [[Arcanine]]}
+{Arcanine, poketype,  [[Legendary]]}
+{Arcanine, height, [[6'3"]]}
+{Arcanine, weight, [[342]]}
+{Arcanine, pokedex, [[A Pokemon that has been admired since the past for its beauty. It runs agilely as if on wings.]]} / red-blue
+
+evolution(Arcanine: ef, Growlithe: eb)
+
+[Poliwag : Pokemon = "Poliwag"
+  = "060 Poliwag" / Kanto-Johto]
+{Poliwag, description, [[Poliwag]]}
+{Poliwag, poketype,  [[Tadpole]]}
+{Poliwag, height, [[2']]}
+{Poliwag, weight, [[27]]}
+{Poliwag, pokedex, [[Its newly grown legs prevent it from running. It appears to prefer swimming than trying to stand.]]} / red-blue
+
+[Poliwhirl : Pokemon = "Poliwhirl"
+  = "061 Poliwhirl" / Kanto-Johto]
+{Poliwhirl, description, [[Poliwhirl]]}
+{Poliwhirl, poketype,  [[Tadpole]]}
+{Poliwhirl, height, [[3'3"]]}
+{Poliwhirl, weight, [[44]]}
+{Poliwhirl, pokedex, [[Capable of living in or out of water. When out of water, it sweats to keep its body slimy.]]} / red-blue
+
+evolution(Poliwhirl: ef, Poliwag: eb)
+
+[Poliwrath : Pokemon = "Poliwrath"
+  = "062 Poliwrath" / Kanto-Johto]
+{Poliwrath, description, [[Poliwrath]]}
+{Poliwrath, poketype,  [[Tadpole]]}
+{Poliwrath, height, [[4'3"]]}
+{Poliwrath, weight, [[119]]}
+{Poliwrath, pokedex, [[An adept swimmer at both the front crawl and breast stroke. Easily overtakes the best human swimmers.]]} / red-blue
+
+evolution(Poliwrath: ef, Poliwhirl: eb)
+
+[Abra : Pokemon = "Abra"
+  = "063 Abra" / Kanto-Johto]
+{Abra, description, [[Abra]]}
+{Abra, poketype,  [[Psychic]]}
+{Abra, height, [[2'11"]]}
+{Poliwrath, weight, [[43]]}
+{Abra, pokedex, [[Using its ability to read minds, it will identify impending danger and teleport to safety.]]} / red-blue
+
+[Kadabra : Pokemon = "Kadabra"
+  = "064 Kadabra" / Kanto-Johto]
+{Kadabra, description, [[Kadabra]]}
+{Kadabra, poketype,  [[Psychic]]}
+{Kadabra, height, [[4'3"]]}
+{Kadabra, weight, [[125]]}
+{Kadabra, pokedex, [[It emits special alpha waves from its body that induce headaches just by being close by.]]} / red-blue
+
+evolution(Kadabra: ef, Abra: eb)
+
+[Alakazam : Pokemon = "Alakazam"
+  = "065 Alakazam" / Kanto-Johto]
+{Alakazam, description, [[Alakazam]]}
+{Alakazam, poketype,  [[Psychic]]}
+{Alakazam, height, [[4'11"]]}
+{Alakazam, weight, [[106]]}
+{Alakazam, pokedex, [[Its brain can outperform a supercomputer. Its intelligence quotient is said to be 5,000.]]} / red-blue
+
+evolution(Alakazam: ef, Kadabra: eb)
+
+[Machop : Pokemon = "Machop"
+  = "066 Machop" / Kanto-Johto]
+{Machop, description, [[Machop]]}
+{Machop, poketype,  [[Superpower]]}
+{Machop, height, [[2'7"]]}
+{Machop, weight, [[43]]}
+{Machop, pokedex, [[Loves to build its muscles. It trains in all styles of martial arts to become even stronger.]]} / red-blue
+
+[Machoke : Pokemon = "Machoke"
+  = "067 Machoke" / Kanto-Johto]
+{Machoke, description, [[Machoke]]}
+{Machoke, poketype,  [[Superpower]]}
+{Machoke, height, [[4'11"]]}
+{Machoke, weight, [[155]]}
+{Machoke, pokedex, [[Its muscular body is so powerful, it must wear a power save belt to be able to regulate its motions.]]} / red-blue
+
+evolution(Machoke: ef, Machop: eb)
+
+[Machamp : Pokemon = "Machamp"
+  = "068 Machamp" / Kanto-Johto]
+{Machamp, description, [[Machamp]]}
+{Machamp, poketype,  [[Superpower]]}
+{Machamp, height, [[5'3"]]}
+{Machamp, weight, [[287]]}
+{Machamp, pokedex, [[Using its heavy muscles, it throws powerful punches that can send the victim clear over the horizon.]]} / red-blue
+
+evolution(Machamp: ef, Machoke: eb)
+
+[Bellsprout : Pokemon = "Bellsprout"
+  = "069 Bellsprout" / Kanto-Johto]
+{Bellsprout, description, [[Bellsprout]]}
+{Bellsprout, poketype,  [[Flower]]}
+{Bellsprout, height, [[2'4"]]}
+{Bellsprout, weight, [[9]]}
+{Bellsprout, pokedex, [[A carnivorous Pokemon that traps and eats bugs. It uses its root feet to soak up needed moisture.]]} / red-blue
+
+[Weepinbell : Pokemon = "Weepinbell"
+  = "070 Weepinbell" / Kanto-Johto]
+{Weepinbell, description, [[Weepinbell]]}
+{Weepinbell, poketype,  [[Flycatcher]]}
+{Weepinbell, height, [[3'3"]]}
+{Weepinbell, weight, [[14]]}
+{Weepinbell, pokedex, [[It spits out Poisonpowder to immobilize the enemy and then finishes it with a spray of Acid.]]} / red-blue
+
+evolution(Weepinbell: ef, Bellsprout: eb)
+
+[Victreebel : Pokemon = "Victreebel"
+  = "071 Victreebel" / Kanto-Johto]
+{Victreebel, description, [[Victreebel]]}
+{Victreebel, poketype,  [[Flycatcher]]}
+{Victreebel, height, [[5'7"]]}
+{Victreebel, weight, [[34]]}
+{Victreebel, pokedex, [[Said to live in huge colonies deep in the jungle, although no one has ever returned from there.]]} / red-blue
+
+evolution(Victreebel: ef, Weepinbell: eb)
+
+[Tentacool : Pokemon = "Tentacool"
+  = "072 Tentacool" / Kanto-Johto]
+{Tentacool, description, [[Tentacool]]}
+{Tentacool, poketype,  [[Jellyfish]]}
+{Tentacool, height, [[2'11"]]}
+{Tentacool, weight, [[100]]}
+{Tentacool, pokedex, [[Drifts in shallow seas. Anglers who hook them accident by are often punished by its stinging acid.]]} / red-blue
+
+[Tentacruel : Pokemon = "Tentacruel"
+  = "073 Tentacruel" / Kanto-Johto]
+{Tentacruel, description, [[Tentacruel]]}
+{Tentacruel, poketype,  [[Jellyfish]]}
+{Tentacruel, height, [[5'3"]]}
+{Tentacruel, weight, [[121]]}
+{Tentacruel, pokedex, [[The tentacles are normally kept short. On hunts, they are extended to ensnare and immobilize prey.]]} / red-blue
+
+evolution(Tentacruel: ef, Tentacool: eb)
+
+[Geodude : Pokemon = "Geodude"
+  = "074 Geodude" / Kanto-Johto]
+{Geodude, description, [[Geodude]]}
+{Geodude, poketype,  [[Rock]]}
+{Geodude, height, [[1'4"]]}
+{Geodude, weight, [[44]]}
+{Geodude, pokedex, [[Found in fields and mountains. Mistaking them for boulders, people often step or trip on them.]]} / red-blue
+
+[Graveler : Pokemon = "Graveler"
+  = "075 Graveler" / Kanto-Johto]
+{Graveler, description, [[Graveler]]}
+{Graveler, poketype,  [[Rock]]}
+{Graveler, height, [[3'3"]]}
+{Graveler, weight, [[232]]}
+{Graveler, pokedex, [[Rolls down slopes to move. It rolls over any obstacle without slowing or changing its direction.]]}
+
+evolution(Graveler: ef, Geodude: eb)
+
+[Golem : Pokemon = "Golem"
+  = "076 Golem" / Kanto-Johto]
+{Golem, description, [[Golem]]}
+{Golem, poketype,  [[Megaton]]}
+{Golem, height, [[4'7"]]}
+{Golem, weight, [[662]]}
+{Golem, pokedex, [[Its boulder like body is extremely hard. It can easily withstand dynamite blasts without damage.]]} / red-blue
+
+evolution(Golem: ef, Graveler: eb)
+
+[Ponyta : Pokemon = "Ponyta"
+  = "077 Ponyta" / Kanto-Johto]
+{Ponyta, description, [[Ponyta]]}
+{Ponyta, poketype,  [[Fire Horse]]}
+{Ponyta, height, [[3'3"]]}
+{Ponyta, weight, [[66]]}
+{Ponyta, pokedex, [[Its hooves are 10 times harder than diamonds. It can trample anything completely flat in little time.]]} / red-blue
+
+[Rapidash : Pokemon = "Rapidash"
+  = "078 Rapidash" / Kanto-Johto]
+{Rapidash, description, [[Rapidash]]}
+{Rapidash, poketype,  [[Fire Horse]]}
+{Rapidash, height, [[5'7"]]}
+{Rapidash, weight, [[209]]}
+{Rapidash, pokedex, [[Very competitive, this Pokemon will chase anything that moves fast in the hopes of racing it.]]} / red-blue
+
+evolution(Rapidash: ef, Ponyta: eb)
+
+[Slowpoke : Pokemon = "Slowpoke"
+  = "079 Slowpoke" / Kanto-Johto]
+{Slowpoke, description, [[Slowpoke]]}
+{Slowpoke, poketype,  [[Dopey]]}
+{Slowpoke, height, [[3'11"]]}
+{Slowpoke, weight, [[79]]}
+{Slowpoke, pokedex, [[Incredibly slow and dopey. It takes 5 seconds for it to feel pain when under attack.]]} / red-blue
+
+[Slowbro : Pokemon = "Slowbro"
+  = "080 Slowbro" / Kanto-Johto]
+{Slowbro, description, [[Slowbro]]}
+{Slowbro, poketype,  [[Hermit Crab]]}
+{Slowbro, height, [[5'3"]]}
+{Slowbro, weight, [[173]]}
+{Slowbro, pokedex, [[The Shellder that is latched onto Slowpoke's tail is said to feed on the host's left over scraps.]]} / red-blue
+
+evolution(Slowbro: ef, Slowpoke: eb)
+
+[Magnemite : Pokemon = "Magnemite"
+  = "081 Magnemite" / Kanto-Johto]
+{Magnemite, description, [[Magnemite]]}
+{Magnemite, poketype,  [[Magnet]]}
+{Magnemite, height, [[1']]}
+{Magnemite, weight, [[13]]}
+{Magnemite, pokedex, [[Uses anti-gravity to stay suspended. Appears without warning and uses Thunder Wave and similar moves.]]} / red-blue
+
+[Magneton : Pokemon = "Magneton"
+  = "082 Magneton" / Kanto-Johto]
+{Magneton, description, [[Magneton]]}
+{Magneton, poketype,  [[Magnet]]}
+{Magneton, height, [[3'3"]]}
+{Magneton, weight, [[132]]}
+{Magneton, pokedex, [[Formed by several Magnemites linked together. They frequently appear when sunspots flare up.]]} / red-blue
+
+evolution(Magneton: ef, Magnemite: eb)
+
+[Farfetchd : Pokemon = "Farfetch'd"
+  = "083 Farfetch'd" / Kanto-Johto]
+{Farfetchd, description, [[Farfetch'd]]}
+{Farfetchd, poketype,  [[Wild Duck]]}
+{Farfetchd, height, [[2'7"]]}
+{Farfetchd, weight, [[33]]}
+{Farfetchd, pokedex, [[The sprig of green onions it holds is its weapon. It is used much like a metal sword.]]} / red-blue
+
+[Doduo : Pokemon = "Doduo"
+  = "084 Doduo" / Kanto-Johto]
+{Doduo, description, [[Doduo]]}
+{Doduo, poketype,  [[Twin Bird]]}
+{Doduo, height, [[4'7"]]}
+{Doduo, weight, [[86]]}
+{Doduo, pokedex, [[A bird that makes up for its poor flying with its fast foot speed. Leaves giant footprints.]]} / red-blue
+
+[Dodrio : Pokemon = "Dodrio"
+  = "085 Dodrio" / Kanto-Johto]
+{Dodrio, description, [[Dodrio]]}
+{Dodrio, poketype,  [[Triple Bird]]}
+{Dodrio, height, [[5'11"]]}
+{Dodrio, weight, [[188]]}
+{Dodrio, pokedex, [[Uses its three brains to execute complex plans. While the two heads sleep, one head stays awake.]]} / red-blue
+
+evolution(Dodrio: ef, Doduo: eb)
+
+[Seel : Pokemon = "Seel"
+  = "086 Seel" / Kanto-Johto]
+{Seel, description, [[Seel]]}
+{Seel, poketype,  [[Sea Lion]]}
+{Seel, height, [[3'7"]]}
+{Seel, weight, [[198]]}
+{Seel, pokedex, [[The protruding horn on its head is very hard. It is used for bashing through thick ice.]]} / red-blue
+
+[Dewgong : Pokemon = "Dewgong"
+  = "087 Dewgong" / Kanto-Johto]
+{Dewgong, description, [[Dewgong]]}
+{Dewgong, poketype,  [[Sea Lion]]}
+{Dewgong, height, [[5'7"]]}
+{Dewgong, weight, [[265]]}
+{Dewgong, pokedex, [[Stores thermal energy in its body. Swims at a steady 8 knots even in intensely cold waters.]]} / red-blue
+
+evolution(Dewgong: ef, Seel: eb)
+
+[Grimer : Pokemon = "Grimer"
+  = "088 Grimer" / Kanto-Johto]
+{Grimer, description, [[Grimer]]}
+{Grimer, poketype,  [[Sludge]]}
+{Grimer, height, [[2'11"]]}
+{Grimer, weight, [[66]]}
+{Grimer, pokedex, [[Appears in filty areas. Thrives by sucking up polluted sludge that is pumped out of factories.]]} / red-blue
+
+[Muk : Pokemon = "Muk"
+  = "089 Muk" / Kanto-Johto]
+{Muk, description, [[Muk]]}
+{Muk, poketype,  [[Sludge]]}
+{Muk, height, [[3'11"]]}
+{Muk, weight, [[66]]}
+{Muk, pokedex, [[Thickly covered with a filthy, vile sludge. It is so toxic, even its footprints contain poison.]]} / red-blue
+
+evolution(Muk: ef, Grimer: eb)
+
+[Shellder : Pokemon = "Shellder"
+  = "090 Shellder" / Kanto-Johto]
+{Shellder, description, [[Shellder]]}
+{Shellder, poketype,  [[Bivalve]]}
+{Shellder, height, [[1']]}
+{Shellder, weight, [[9]]}
+{Shellder, pokedex, [[Its hard shell repels any kind of attack. It is vunerable only when its shell is open.]]} / red-blue
+
+[Cloyster : Pokemon = "Cloyster"
+  = "091 Cloyster" / Kanto-Johto]
+{Cloyster, description, [[Cloyster]]}
+{Cloyster, poketype,  [[Bivalve]]}
+{Cloyster, height, [[4'11"]]}
+{Cloyster, weight, [[292]]}
+{Cloyster, pokedex, [[When attacked, it launches its horns in quick volleys. Its innards have never been seen.]]} / red-blue
+
+evolution(Cloyster: ef, Shellder: eb)
+
+[Gastly : Pokemon = "Gastly"
+  = "092 Gastly" / Kanto-Johto]
+{Gastly, description, [[Gastly]]}
+{Gastly, poketype,  [[Gas]]}
+{Gastly, height, [[4'3"]]}
+{Gastly, weight, [[.2]]}
+{Gastly, pokedex, [[Almost invisible, this gaseous Pokemon cloaks the target and puts it to sleep without notice.]]} / red-blue
+
+[Haunter : Pokemon = "Haunter"
+  = "093 Haunter" / Kanto-Johto]
+{Haunter, description, [[Haunter]]}
+{Haunter, poketype,  [[Gas]]}
+{Haunter, height, [[5'3"]]}
+{Haunter, weight, [[.2]]}
+{Haunter, pokedex, [[Because of its ability to slip through block walls, it is said to be from another dimension.]]} / red-blue
+
+evolution(Haunter: ef, Gastly: eb)
+
+[Gengar : Pokemon = "Gengar"
+  = "094 Gengar" / Kanto-Johto]
+{Gengar, description, [[Gengar]]}
+{Gengar, poketype,  [[Shadow]]}
+{Gengar, height, [[4'11"]]}
+{Gengar, weight, [[89]]}
+{Gengar, pokedex, [[Under a full moon, this Pokemon likes to mimic the shadows of people and laugh at their fright.]]} / red-blue
+
+evolution(Gengar: ef, Haunter: eb)
+
+[Onix : Pokemon = "Onix"
+  = "095 Onix" / Kanto-Johto]
+{Onix, description, [[Onix]]}
+{Onix, poketype,  [[Rock Snake]]}
+{Onix, height, [[28'10"]]}
+{Onix, weight, [[463]]}
+{Onix, pokedex, [[As it grows, the stone portions of its body harden to become similar to a diamond, but colored black.]]} / red-blue
+
+[Drowzee : Pokemon = "Drowzee"
+  = "096 Drowzee" / Kanto-Johto]
+{Drowzee, description, [[Drowzee]]}
+{Drowzee, poketype,  [[Hypnosis]]}
+{Drowzee, height, [[3'3"]]}
+{Drowzee, weight, [[71]]}
+{Drowzee, pokedex, [[Puts enemies to sleep then eats their dreams. Occasionally gets sick from eating bad dreams.]]} / red-blue
+
+[Hypno : Pokemon = "Hypno"
+  = "097 Hypno" / Kanto-Johto]
+{Hypno, description, [[Hypno]]}
+{Hypno, poketype,  [[Hypnosis]]}
+{Hypno, height, [[5'3"]]}
+{Hypno, weight, [[167]]}
+{Hypno, pokedex, [[When it locks eyes with an enemy, it will use a mix of Psi moves such as Hypnosis and Confusion.]]} / red-blue
+
+evolution(Hypno: ef, Drowzee: eb)
+
+[Krabby : Pokemon = "Krabby"
+  = "098 Krabby" / Kanto-Johto]
+{Krabby, description, [[Krabby]]}
+{Krabby, poketype,  [[River Crab]]}
+{Krabby, height, [[1'4"]]}
+{Krabby, weight, [[14]]}
+{Krabby, pokedex, [[Its pincers are not only powerful as weapons, they are used for balance when walking sideways.]]} / red-blue
+
+[Kingler : Pokemon = "Kingler"
+  = "099 Kingler" / Kanto-Johto]
+{Kingler, description, [[Kingler]]}
+{Kingler, poketype,  [[Pincer Crab]]}
+{Kingler, height, [[4'3"]]}
+{Kingler, weight, [[132]]}
+{Kingler, pokedex, [[The large pincer has 10,000 hp of crushing power. However, its huge size makes it unwieldy to use.]]} / red-blue
+
+evolution(Kingler: ef, Krabby: eb)
+
+[Voltorb : Pokemon = "Voltorb"
+  = "100 Voltorb" / Kanto-Johto]
+{Voltorb, description, [[Voltorb]]}
+{Voltorb, poketype,  [[Ball]]}
+{Voltorb, height, [[1'8"]]}
+{Voltorb, weight, [[23]]}
+{Voltorb, pokedex, [[Usually found in power plants. Easily mistaken for a Poké Ball, they have zapped many people.]]} / red-blue
+
+[Electrode : Pokemon = "Electrode"
+  = "101 Electrode" / Kanto-Johto]
+{Electrode, description, [[Electrode]]}
+{Electrode, poketype,  [[Ball]]}
+{Electrode, height, [[3'11"]]}
+{Electrode, weight, [[147]]}
+{Electrode, pokedex, [[It stores electric energy under very high pressure. It often explodes with little or no provocation.]]} / red-blue
+
+evolution(Electrode: ef, Voltorb: eb)
+
+[Exeggcute : Pokemon = "Exeggcute"
+  = "102 Exeggcute" / Kanto-Johto]
+{Exeggcute, description, [[Exeggcute]]}
+{Exeggcute, poketype,  [[Egg]]}
+{Exeggcute, height, [[1'4"]]}
+{Exeggcute, weight, [[6]]}
+{Exeggcute, pokedex, [[Often mistaken for eggs. When disturbed, they quickly gather and attack in swarms.]]} / red-blue
+
+[Exeggutor : Pokemon = "Exeggutor"
+  = "103 Exeggutor" / Kanto-Johto]
+{Exeggutor, description, [[Exeggutor]]}
+{Exeggutor, poketype,  [[Coconut]]}
+{Exeggutor, height, [[6'7"]]}
+{Exeggutor, weight, [[265]]}
+{Exeggutor, pokedex, [[Legend has it that on rare occasions, one of its heads will drop off and continue as an Exeggcute.]]} / red-blue
+evolution(Exeggutor: ef, Exeggcute: eb)
+
+[Cubone : Pokemon = "Cubone"
+  = "104 Cubone" / Kanto-Johto]
+{Cubone, description, [[Cubone]]}
+{Cubone, poketype,  [[Lonely]]}
+{Cubone, height, [[1'4"]]}
+{Cubone, weight, [[14]]}
+{Cubone, pokedex, [[Because it never removes its skull helmet, no one has ever seen this Pokémon's real face.]]} / red-blue
+
+[Marowak : Pokemon = "Marowak"
+  = "105 Marowak" / Kanto-Johto]
+{Marowak, description, [[Marowak]]}
+{Marowak, poketype,  [[Bone Keeper]]}
+{Marowak, height, [[3'3"]]}
+{Marowak, weight, [[99]]}
+{Marowak, pokedex, [[The bone it holds is its key weapon. It throws the bone skillfully like a boomerang to KO targets.]]} / red-blue
+
+evolution(Marowak: ef, Cubone: eb)
+
+[Hitmonlee : Pokemon = "Hitmonlee"
+  = "106 Hitmonlee" / Kanto-Johto]
+{Hitmonlee, description, [[Hitmonlee]]}
+{Hitmonlee, poketype,  [[Kicking]]}
+{Hitmonlee, height, [[4'11"]]}
+{Hitmonlee, weight, [[110]]}
+{Hitmonlee, pokedex, [[When in a hurry, its legs lengthen progressively. It runs smoothly with extra long, loping strides.]]} / red-blue
+
+[Hitmonchan : Pokemon = "Hitmonchan"
+  = "107 Hitmonchan" / Kanto-Johto]
+{Hitmonchan, description, [[Hitmonchan]]}
+{Hitmonchan, poketype, [[Punching]]}
+{Hitmonchan, height, [[4'7"]]}
+{Hitmonchan, weight, [[111]]}
+{Hitmonchan, pokedex, [[While apparently doing nothing, it fires punches in lightning fast volleys that are impossible to see.]]} / red-blue
+
+[Lickitung : Pokemon = "Lickitung"
+  = "108 Lickitung" / Kanto-Johto]
+{Lickitung, description, [[Lickitung]]}
+{Lickitung, poketype,  [[Licking]]}
+{Lickitung, height, [[3'11"]]}
+{Lickitung, weight, [[144]]}
+{Lickitung, pokedex, [[Its tongue can be extended like a chameleon's. It leaves a tingling sensation when it licks enemies.]]} / red-blue
+
+[Koffing : Pokemon = "Koffing"
+  = "109 Koffing" / Kanto-Johto]
+{Koffing, description, [[Koffing]]}
+{Koffing, poketype,  [[Poison Gas]]}
+{Koffing, height, [[2']]}
+{Koffing, weight, [[2]]}
+{Koffing, pokedex, [[Because it stores several kinds of toxic gases in its body, it is prone to exploding without warning.]]} / red-blue
+
+[Weezing : Pokemon = "Weezing"
+  = "110 Weezing" / Kanto-Johto]
+{Weezing, description, [[Weezing]]}
+{Weezing, poketype,  [[Poison Gas]]}
+{Weezing, height, [[3'11"]]}
+{Weezing, weight, [[22]]}
+{Weezing, pokedex, [[Where two kinds of poison gases meet, 2 Koffings can fuse into a Weezing over many years.]]} / red-blue
+
+evolution(Weezing: ef, Koffing: eb)
+
+[Rhyhorn : Pokemon = "Rhyhorn"
+  = "111 Rhyhorn" / Kanto-Johto]
+{Rhyhorn, description, [[Rhyhorn]]}
+{Rhyhorn, poketype,  [[Spikes]]}
+{Rhyhorn, height, [[3'3"]]}
+{Rhyhorn, weight, [[254]]}
+{Rhyhorn, pokedex, [[Its massive bones are 1,000 times harder than human bones. It can easily knock a trailer flying.]]} / red-blue
+
+[Rhydon : Pokemon = "Rhydon"
+  = "112 Rhydon" / Kanto-Johto]
+{Rhydon, description, [[Rhydon]]}
+{Rhydon, poketype,  [[Drill]]}
+{Rhydon, height, [[6'3"]]}
+{Rhydon, weight, [[265]]}
+{Rhydon, pokedex, [[Protected by an armor-like hide, it is capable of living in molten lava of 3,600 degrees.]]} / red-blue
+
+evolution(Rhydon: ef, Rhyhorn: eb)
+
+[Chansey : Pokemon = "Chansey"
+  = "113 Chansey" / Kanto-Johto]
+{Chansey, description, [[Chansey]]}
+{Chansey, poketype,  [[Egg]]}
+{Chansey, height, [[3'7"]]}
+{Chansey, weight, [[76]]}
+{Chansey, pokedex, [[A rare and elusive Pokemon that is said to bring happiness to those who manage to get it.]]} / red-blue
+
+[Tangela : Pokemon = "Tangela"
+  = "114 Tangela" / Kanto-Johto]
+{Tangela, description, [[Tangela]]}
+{Tangela, poketype,  [[Vine]]}
+{Tangela, height, [[3'3"]]}
+{Tangela, weight, [[77]]}
+{Tangela, pokedex, [[The whole body is swathed with vines that are similar to seaweed. Its vines shake as it walks.]]} / red-blue
+
+[Kangaskhan : Pokemon = "Kangaskhan"
+  = "115 Kangaskhan" / Kanto-Johto]
+{Kangaskhan, description, [[Kangaskhan]]}
+{Kangaskhan, poketype,  [[Parent]]}
+{Kangaskhan, height, [[7'3"]]}
+{Kangaskhan, weight, [[176]]}
+{Kangaskhan, pokedex, [[The infant rarely ventures out of its mother's protective pouch until it is 3 years old.]]} / red-blue
+
+[Horsea : Pokemon = "Horsea"
+  = "116 Horsea" / Kanto-Johto
+  = "184 Horsea" / Hoenn]
+{Horsea, description, [[Horsea is a little fragile.  Its good at defense, but that doesn't mean it can take a major attack.  It has been known to shoot down bugs from the  surface of the water with blasts of ink, so it is very acurrate.]]}
+{Horsea, poketype,  [[Dragon]]}
+{Horsea, height, [[1'4"]]}
+{Horsea, weight, [[18]]}
+{Horsea, pokedex, [[Known to shoot down flying bugs with precision blasts of ink from the surface of the water.]]} / red-blue
+
+[Seadra : Pokemon = "Seadra"
+  = "117 Seadra" / Kanto-Johto
+  = "185 Seadra" / Hoenn]
+{Seadra, description, [[As it evolves, Horsea's feather-like wings turn into Seadra's spiky fins.  Seadra uses its fins to pierce its enemy's skin and to swim backwards.]]}
+{Seadra, poketype,  [[Dragon]]}
+{Seadra, height, [[3'11"]]}
+{Seadra, weight, [[55]]}
+{Seadra, pokedex, [[Capable of swimming backwards by rapidly flapping its wing-like pectoral and stout tail.]]} / red-blue
+
+evolution(Seadra: ef, Horsea: eb)
+
+[Goldeen : Pokemon = "Goldeen"
+  = "118 Goldeen" / Kanto-Johto
+  = "50 Goldeen" / Hoenn]
+{Goldeen, description, [[Goldeen is known as the Water Queen.  Its rippled tail fins flow like a ball gown.  Though it is beautiful, it is somewhat useless in battle, for it cannot use the horn on its head.]]}
+{Goldeen, poketype,  [[Goldfish]]}
+{Goldeen, height, [[2'0"]]}
+{Goldeen, weight, [[33]]}
+{Goldeen, pokedex, [[Its tail fin billows like an elegant ballroom dress, giving it the nickname of the Water Queen.]]} / red-blue
+
+[Seaking : Pokemon = "Seaking"
+  = "119 Seaking" / Kanto-Johto
+  = "51 Seaking" / Hoenn]
+{Seaking, description, [[As Goldeen evolves, it's skill with its horn increases.  In the fall, Seaking can be seen swimming up rivers and streams for the spawnning season.]]}
+{Seaking, poketype,  [[Goldfish]]}
+{Seaking, height, [[4'3"]]}
+{Seaking, weight, [[86]]}
+{Seaking, pokedex, [[In the autumn spawning season they can be seen swimming powerfully up rivers and creeks.]]} / red-blue
+
+evolution(Seaking: ef, Goldeen: eb)
+
+[Staryu : Pokemon = "Staryu"
+  = "120 Staryu" / Kanto-Johto]
+{Staryu, description, [[Staryu]]}
+{Staryu, poketype,  [[Star Shape]]}
+{Staryu, height, [[2'7"]]}
+{Staryu, weight, [[76]]}
+{Staryu, pokedex, [[An enigmatic Pokemon that can effortlessly regenerate any appendage it loses in battle.]]} / red-blue
+
+[Starmie : Pokemon = "Starmie"
+  = "121 Starmie" / Kanto-Johto]
+{Starmie, description, [[Starmie]]}
+{Starmie, poketype,  [[Mysterious]]}
+{Starmie, height, [[3'7"]]}
+{Starmie, weight, [[176]]}
+{Starmie, pokedex, [[Its central core glows with the seven colors of the rainbow. Some people value the core as a gem.]]} / red-blue
+
+evolution(Starmie: ef, Staryu: eb)
+
+[Mr_Mime : Pokemon = "Mr. Mime"
+  = "122 Mr_Mime" / Kanto-Johto]
+{Mr_Mime, description, [[Mr_Mime]]}
+{Mr_Mime, poketype,  [[Barrier]]}
+{Mr_Mime, height, [[4'3"]]}
+{Mr_Mime, weight, [[120]]}
+{Mr_Mime, pokedex, [[If interrupted while it is miming, it will slap around the offender with its broad hands.]]} / red-blue
+
+[Scyther : Pokemon = "Scyther"
+  = "123 Scyther" / Kanto-Johto]
+{Scyther, description, [[Scyther]]}
+{Scyther, poketype,  [[Mantis]]}
+{Scyther, height, [[4'11"]]}
+{Scyther, weight, [[123]]}
+{Scyther, pokedex, [[With ninja-like agility and speed, it can create the illusion that there is more than one.]]} / red-blue
+
+[Jynx : Pokemon = "Jynx"
+  = "124 Jynx" / Kanto-Johto]
+{Jynx, description, [[Jynx]]}
+{Jynx, poketype,  [[Human Shape]]}
+{Jynx, height, [[4'7"]]}
+{Jynx, weight, [[90]]}
+{Jynx, pokedex, [[It seductively wiggles its hips as it walks. It can cause people to dance in unison with it.]]} / red-blue
+
+[Electabuzz : Pokemon = "Electabuzz"
+  = "125 Electabuzz" / Kanto-Johto]
+{Electabuzz, description, [[Electabuzz]]}
+{Electabuzz, poketype,  [[Electric]]}
+{Electabuzz, height, [[3'7"]]}
+{Electabuzz, weight, [[66]]}
+{Electabuzz, pokedex, [[Normally found near power plants, they can wander away and cause major blackouts in cities.]]} / red-blue
+
+[Magmar : Pokemon = "Magmar"
+  = "126 Magmar" / Kanto-Johto]
+{Magmar, description, [[Magmar]]}
+{Magmar, poketype,  [[Spit Fire]]}
+{Magmar, height, [[4'3"]]}
+{Magmar, weight, [[98]]}
+{Magmar, pokedex, [[Its body always burns with an orange glow that enables it to hide perfectly among flames.]]} / red-blue
+
+[Pinsir : Pokemon = "Pinsir"
+  = "127 Pinsir" / Kanto-Johto]
+{Pinsir, description, [[Pinsir]]}
+{Pinsir, poketype,  [[Stag Beetle]]}
+{Pinsir, height, [[4'11"]]}
+{Pinsir, weight, [[121]]}
+{Pinsir, pokedex, [[If it fails to crush the victim in its pincers, it will swing it around and toss it hard.]]} / red-blue
+
+[Taurus : Pokemon = "Taurus"
+  = "128 Taurus" / Kanto-Johto]
+{Taurus, description, [[Taurus]]}
+{Taurus, poketype,  [[Wild Bull]]}
+{Taurus, height, [[4'7"]]}
+{Taurus, weight, [[195]]}
+{Taurus, pokedex, [[When it targets an enemy, it charges furiously while whipping its body with its long tails.]]} / red-blue
+
+[Magikarp : Pokemon = "Magikarp"
+  = "129 Magikarp" / Kanto-Johto]
+{Magikarp, description, [[Magikarp]]}
+{Magikarp, poketype,  [[Fish]]}
+{Magikarp, height, [[2'11"]]}
+{Magikarp, weight, [[22]]}
+{Magikarp, pokedex, [[In the distant past, it was somewhat stronger than the horribly weak descendants of today.]]} / red-blue
+
+[Gyarados : Pokemon = "Gyarados"
+  = "130 Gyarados" / Kanto-Johto]
+{Gyarados, description, [[Gyarados]]}
+{Gyarados, poketype,  [[Atrocious]]}
+{Gyarados, height, [[21'4"]]}
+{Gyarados, weight, [[518]]}
+{Gyarados, pokedex, [[Rarely seen in the wild. Huge and vicious, it is capable of destroying entire cities in rage.]]} / red-blue
+
+evolution(Gyarados: ef, Magikarp: eb)
+
+[Lapras : Pokemon = "Lapras"
+  = "131 Lapras" / Kanto-Johto]
+{Lapras, description, [[Lapras]]}
+{Lapras, poketype,  [[Transport]]}
+{Lapras, height, [[8'2"]]}
+{Lapras, weight, [[485]]}
+{Lapras, pokedex, [[A Pokemon that has been overhunted almost to extinction. It can ferry people across the water.]]} / red-blue
+
+[Ditto : Pokemon = "Ditto"
+  = "132 Ditto" / Kanto-Johto]
+{Ditto, description, [[Ditto]]}
+{Ditto, poketype,  [[Transform]]}
+{Ditto, height, [[1']]}
+{Ditto, weight, [[9]]}
+{Ditto, pokedex, [[Capable of copying an enemy's genetic code to instantly transform itself into a duplicate of the enemy.]]} / red-blue
+
+[Eevee : Pokemon = "Eevee"
+  = "133 Eevee" / Kanto-Johto]
+{Eevee, description, [[Eevee]]}
+{Eevee, poketype,  [[Evolution]]}
+{Eevee, height, [[1']]}
+{Eevee, weight, [[14]]}
+{Eevee, pokedex, [[Its genetic code is irregular. It may mutate if it is exposed to radiation from the element Stones.]]} / red-blue
+
+[Vaporeon : Pokemon = "Vaporeon"
+  = "134 Vaporeon" / Kanto-Johto]
+{Vaporeon, description, [[Vaporeon]]}
+{Vaporeon, poketype,  [[Bubble Jet]]}
+{Vaporeon, height, [[3'3"]]}
+{Vaporeon, weight, [[64]]}
+{Vaporeon, pokedex, [[Lives close to water. Its long tail is ridged with a fin which is often mistaken for a mermaid's.]]} / red-blue
+
+evolution(Vaporeon: ef, Eevee: eb)
+
+[Jolteon : Pokemon = "Jolteon"
+  = "135 Jolteon" / Kanto-Johto]
+{Jolteon, description, [[Jolteon]]}
+{Jolteon, poketype,  [[Lightning]]}
+{Jolteon, height, [[2'7"]]}
+{Jolteon, weight, [[54]]}
+{Jolteon, pokedex, [[It accumulates negative ions in the atmosphere to blast out 10,000-volt lightning bolts.]]} / red-blue
+
+evolution(Jolteon: ef, Eevee: eb)
+
+[Flareon : Pokemon = "Flareon"
+  = "136 Flareon" / Kanto-Johto]
+{Flareon, description, [[Flareon]]}
+{Flareon, poketype,  [[Flame]]}
+{Flareon, height, [[2'11"]]}
+{Flareon, weight, [[55]]}
+{Flareon, pokedex, [[When storing thermal energy in its body, its temperature could soar to over 1,600 degrees.]]} / red-blue
+
+evolution(Flareon: ef, Eevee: eb)
+
+[Porygon : Pokemon = "Porygon"
+  = "137 Porygon" / Kanto-Johto]
+{Porygon, description, [[Porygon]]}
+{Porygon, poketype,  [[Virtual]]}
+{Porygon, height, [[2'7"]]}
+{Porygon, weight, [[80]]}
+{Porygon, pokedex, [[A Pokemon that consists entirely of programming code. Capable of moving freely in cyberspace.]]} / red-blue
+
+[Omanyte : Pokemon = "Omanyte"
+  = "138 Omanyte" / Kanto-Johto]
+{Omanyte, description, [[Omanyte]]}
+{Omanyte, poketype,  [[Spiral]]}
+{Omanyte, height, [[1'4"]]}
+{Omanyte, weight, [[17]]}
+{Omanyte, pokedex, [[Although long extinct, in rare cases, it can be genetically ressurrected from fossils.]]} / red-blue
+
+[Omastar : Pokemon = "Omastar"
+  = "139 Omastar" / Kanto-Johto]
+{Omastar, description, [[Omastar]]}
+{Omastar, poketype,  [[Spiral]]}
+{Omastar, height, [[3'3"]]}
+{Omastar, weight, [[77]]}
+{Omastar, pokedex, [[A prehistoric Pokemon that died out when its heavy shell made it impossible to catch prey.]]} / red-blue
+
+evolution(Omastar: ef, Omanyte: eb)
+
+[Kabuto : Pokemon = "Kabuto"
+  = "140 Kabuto" / Kanto-Johto]
+{Kabuto, description, [[Kabuto]]}
+{Kabuto, poketype,  [[Shellfish]]}
+{Kabuto, height, [[1'8"]]}
+{Kabuto, weight, [[25]]}
+{Kabuto, pokedex, [[A Pokemon that was ressurected from a fossil found in what was once the ocean floor eons ago.]]} / red-blue
+
+[Kabutops : Pokemon = "Kabutops"
+  = "141 Kabutops" / Kanto-Johto]
+{Kabutops, description, [[Kabutops]]}
+{Kabutops, poketype,  [[Shellfish]]}
+{Kabutops, height, [[4'3"]]}
+{Kabutops, weight, [[89]]}
+{Kabutops, pokedex, [[Its sleek shape it perfect for swimming. It slashes prey with its claws and drains the body fluids.]]} / red-blue
+
+evolution(Kabutops: ef, Kabuto: eb)
+
+[Aerodactyl : Pokemon = "Aerodactyl"
+  = "142 Aerodactyl" / Kanto-Johto]
+{Aerodactyl, description, [[Aerodactyl]]}
+{Aerodactyl, poketype,  [[Fossil]]}
+{Aerodactyl, height, [[5'11"]]}
+{Aerodactyl, weight, [[130]]}
+{Aerodactyl, pokedex, [[A ferocious prehistoric Pokemon that goes for the enemy's throat with its serrated saw-like fangs.]]} / red-blue
+
+[Snorlax : Pokemon = "Snorlax"
+  = "143 Snorlax" / Kanto-Johto]
+{Snorlax, description, [[Snorlax]]}
+{Snorlax, poketype,  [[Sleeping]]}
+{Snorlax, height, [[6'11"]]}
+{Snorlax, weight, [[1014]]}
+{Snorlax, pokedex, [[Very lazy. Just eats and sleeps. As its rotund bulk builds, it becomes steadily more slothful.]]} / red-blue
+
+[Articuno : Pokemon = "Articuno"
+  = "144 Articuno" / Kanto-Johto]
+{Articuno, description, [[Articuno]]}
+{Articuno, poketype,  [[Freeze]]}
+{Articuno, height, [[5'7"]]}
+{Articuno, weight, [[122]]}
+{Articuno, pokedex, [[A legendary bird Pokemon that is said to appear to doomed people who are lost in icy mountains.]]} / red-blue
+
+[Zapdos : Pokemon = "Zapdos"
+  = "145 Zapdos" / Kanto-Johto]
+{Zapdos, description, [[Zapdos]]}
+{Zapdos, poketype,  [[Electric]]}
+{Zapdos, height, [[5'3"]]}
+{Zapdos, weight, [[116]]}
+{Zapdos, pokedex, [[A legendary bird Pokemon that is said to appear from clouds while dropping enormous lightning bolts.]]} / red-blue
+
+[Moltres : Pokemon = "Moltres"
+  = "146 Moltres" / Kanto-Johto]
+{Moltres, description, [[Moltres]]}
+{Moltres, poketype,  [[Flame]]}
+{Moltres, height, [[6'7"]]}
+{Moltres, weight, [[132]]}
+{Moltres, pokedex, [[Known as the legendary bird of fire. Every flap of its wings creates a dazzling flash of flames.]]} / red-blue
+
+[Dratini : Pokemon = "Dratini"
+  = "147 Dratini" / Kanto-Johto]
+{Dratini, description, [[Dratini]]}
+{Dratini, poketype,  [[Dragon]]}
+{Dratini, height, [[5'11"]]}
+{Dratini, weight, [[7]]}
+{Dratini, pokedex, [[Long considered a mythical Pokemon until recently when a small colony was found living underwater.]]} / red-blue
+
+[Dragonair : Pokemon = "Dragonair"
+  = "148 Dragonair" / Kanto-Johto]
+{Dragonair, description, [[Dragonair]]}
+{Dragonair, poketype,  [[Dragon]]}
+{Dragonair, height, [[13'1"]]}
+{Dragonair, weight, [[36]]}
+{Dragonair, pokedex, [[A mystical Pokemon that eludes a gentle aura. Has the ability to change climate conditions.]]} / red-blue
+
+evolution(Dragonair: ef, Dratini: eb)
+
+[Dragonite : Pokemon = "Dragonite"
+  = "149 Dragonite" / Kanto-Johto]
+{Dragonite, description, [[Dragonite]]}
+{Dragonite, poketype,  [[Dragon]]}
+{Dragonite, height, [[7'3"]]}
+{Dragonite, weight, [[463]]}
+{Dragonite, pokedex, [[An extremely rarely seen marine Pokémon. Its intelligence is said to match that of humans.]]} / red-blue
+
+evolution(Dragonite: ef, Dragonair: eb)
+
+[Mewtwo : Pokemon = "Mewtwo"
+  = "150 Mewtwo" / Kanto-Johto]
+{Mewtwo, description, [[Mewtwo]]}
+{Mewtwo, poketype,  [[Genetic]]}
+{Mewtwo, height, [[6'7"]]}
+{Mewtwo, weight, [[269]]}
+{Mewtwo, pokedex, [[It was created by a scientist after years of horrific gene splicing and DNA engineering experiments.]]} / red-blue
+
+[Mew : Pokemon = "Mew"
+  = "151 Mew" / Kanto-Johto]
+{Mew, description, [[Mew]]}
+{Mew, poketype,  [[New Species]]}
+{Mew, height, [[1'4"]]}
+{Mew, weight, [[9]]}
+{Mew, pokedex, [[So rare that it is still said to be a mirage by many experts. Only a few people have seen it worldwide.]]}
+/* Higher entries */
+
+[Kingdra : Pokemon = "Kingdra"
+  = "230 Kingdra" / Kanto-Johto
+  = "186 Kingdra" / Hoenn]
+{Kingdra, description, [[Kingdra is the final evolutionary stage of Horsea.  Its sleeps and hides on the ocean floor in underwater caves to build up energy.  It is said that it can create tornadoes and whirlpools when it wakes and yawns.]]}
+{Kingdra, height, [[5'11"]]}
+{Kingdra, weight, [[335]]}
+
+evolution(Kingdra: ef, Seadra: eb)
+
+/* AT: kind-of */
+
+[kind-of = "Kind of"
+         = "Example(s)" / kind ]
+[kind    = "Kind"]
+[example = "Example"]
+
+kind-of( Bulbasaur : example, grass : kind )
+kind-of( Bulbasaur : example, poison : kind )
+kind-of( Ivysaur : example, grass : kind )
+kind-of( Ivysaur : example, poison : kind )
+kind-of( Venusaur : example, grass : kind )
+kind-of( Venusaur : example, poison : kind )
+kind-of( Charmander : example, fire : kind )
+kind-of( Charmeleon : example, fire : kind )
+kind-of( Charizard : example, fire : kind )
+kind-of( Charizard : example, flying : kind )
+kind-of( Squirtle : example, water : kind )
+kind-of( Wartortle : example, water : kind )
+kind-of( Blastoise : example, water : kind )
+kind-of( Caterpie : example, bug : kind )
+kind-of( Metapod : example, bug : kind )
+kind-of( Butterfree : example, bug : kind )
+kind-of( Butterfree : example, flying : kind )
+kind-of( Weedle : example, bug : kind )
+kind-of( Weedle : example, poison : kind )
+kind-of( Kakuna : example, bug : kind )
+kind-of( Kakuna : example, poison : kind )
+kind-of( Beedrill : example, bug : kind )
+kind-of( Beedrill : example, poison : kind )
+kind-of( Pidgey : example, normal : kind )
+kind-of( Pidgey : example, flying : kind )
+kind-of( Pidgeotto : example, normal : kind )
+kind-of( Pidgeotto : example, flying : kind )
+kind-of( Pidgeot : example, normal : kind )
+kind-of( Pidgeot : example, flying : kind )
+kind-of( Rattata : example, normal : kind )
+kind-of( Raticate : example, normal : kind )
+kind-of( Spearow : example, normal : kind )
+kind-of( Spearow : example, flying : kind )
+kind-of( Fearow : example, normal : kind )
+kind-of( Fearow : example, flying : kind )
+kind-of( Ekans : example, poison : kind )
+kind-of( Arbok : example, poison : kind )
+kind-of( Pikachu : example, electric : kind )
+kind-of( Raichu : example, electric : kind )
+kind-of( Sandshrew : example, ground : kind )
+kind-of( Sandslash : example, ground : kind )
+kind-of( Nidoran-female : example, poison : kind )
+kind-of( Nidorina : example, poison : kind )
+kind-of( Nidoqueen : example, poison : kind )
+kind-of( Nidoqueen : example, ground : kind )
+kind-of( Nidoran-male : example, poison : kind )
+kind-of( Nidorino : example, poison : kind )
+kind-of( Nidoking : example, poison : kind )
+kind-of( Nidoking : example, ground : kind )
+kind-of( Clefairy : example, normal : kind )
+kind-of( Clefable : example, normal : kind )
+kind-of( Vulpix : example, fire : kind )
+kind-of( Ninetales : example, fire : kind )
+kind-of( Jigglypuff : example, normal : kind )
+kind-of( Wigglytuff : example, normal : kind )
+kind-of( Zubat : example, poison : kind )
+kind-of( Zubat : example, flying : kind )
+kind-of( Golbat : example, poison : kind )
+kind-of( Golbat : example, flying : kind )
+kind-of( Oddish : example, grass : kind )
+kind-of( Oddish : example, poison : kind )
+kind-of( Gloom : example, grass : kind )
+kind-of( Gloom : example, poison : kind )
+kind-of( Vileplume : example, grass : kind )
+kind-of( Vileplume : example, poison : kind )
+kind-of( Paras : example, bug : kind )
+kind-of( Paras : example, grass : kind )
+kind-of( Parasect : example, bug : kind )
+kind-of( Parasect : example, grass : kind )
+kind-of( Venonat : example, bug : kind )
+kind-of( Venonat : example, poison : kind )
+kind-of( Venomoth : example, bug : kind )
+kind-of( Venomoth : example, poison : kind )
+kind-of( Diglett : example, ground : kind )
+kind-of( Dugtrio : example, ground : kind )
+kind-of( Meowth : example, normal : kind )
+kind-of( Persian : example, normal : kind )
+kind-of( Psyduck : example, water : kind )
+kind-of( Golduck : example, water : kind )
+kind-of( Mankey : example, fighting : kind )
+kind-of( Primeape : example, fighting : kind )
+kind-of( Growlithe : example, fire : kind )
+kind-of( Arcanine : example, fire : kind )
+kind-of( Poliwag : example, water : kind )
+kind-of( Poliwhirl : example, water : kind )
+kind-of( Poliwrath : example, water : kind )
+kind-of( Poliwrath : example, fighting : kind )
+kind-of( Abra : example, psychic : kind )
+kind-of( Kadabra : example, psychic : kind )
+kind-of( Alakazam : example, psychic : kind )
+kind-of( Machop : example, fighting : kind )
+kind-of( Machoke : example, fighting : kind )
+kind-of( Machamp : example, fighting : kind )
+kind-of( Bellsprout : example, grass : kind )
+kind-of( Bellsprout : example, poison : kind )
+kind-of( Weepinbell : example, grass : kind )
+kind-of( Weepinbell : example, poison : kind )
+kind-of( Victreebel : example, grass : kind )
+kind-of( Victreebel : example, poison : kind )
+kind-of( Tentacool : example, water : kind )
+kind-of( Tentacool : example, poison : kind )
+kind-of( Tentacruel : example, water : kind )
+kind-of( Tentacruel : example, poison : kind )
+kind-of( Geodude : example, rock : kind )
+kind-of( Geodude : example, ground : kind )
+kind-of( Graveler : example, rock : kind )
+kind-of( Graveler : example, ground : kind )
+kind-of( Golem : example, rock : kind )
+kind-of( Golem : example, ground : kind )
+kind-of( Ponyta : example, fire : kind )
+kind-of( Rapidash : example, fire : kind )
+kind-of( Slowpoke : example, water : kind )
+kind-of( Slowpoke : example, psychic : kind )
+kind-of( Slowbro : example, water : kind )
+kind-of( Slowbro : example, psychic : kind )
+kind-of( Magnemite : example, electric : kind )
+kind-of( Magneton : example, electric : kind )
+kind-of( Farfetchd : example, normal : kind )
+kind-of( Farfetchd : example, flying : kind )
+kind-of( Doduo : example, normal : kind )
+kind-of( Doduo : example, flying : kind )
+kind-of( Dodrio : example, normal : kind )
+kind-of( Dodrio : example, flying : kind )
+kind-of( Seel : example, water : kind )
+kind-of( Dewgong : example, water : kind )
+kind-of( Dewgong : example, ice : kind )
+kind-of( Grimer : example, poison : kind )
+kind-of( Muk : example, poison : kind )
+kind-of( Shellder : example, water : kind )
+kind-of( Cloyster : example, water : kind )
+kind-of( Cloyster : example, ice : kind )
+kind-of( Gastly : example, ghost : kind )
+kind-of( Gastly : example, poison : kind )
+kind-of( Haunter : example, ghost : kind )
+kind-of( Haunter : example, poison : kind )
+kind-of( Gengar : example, ghost : kind )
+kind-of( Gengar : example, poison : kind )
+kind-of( Onix : example, rock : kind )
+kind-of( Onix : example, ground : kind )
+kind-of( Drowzee : example, psychic : kind )
+kind-of( Hypno : example, psychic : kind )
+kind-of( Krabby : example, water : kind )
+kind-of( Kingler : example, water : kind )
+kind-of( Voltorb : example, electric : kind )
+kind-of( Electrode : example, electric : kind )
+kind-of( Exeggcute : example, grass : kind )
+kind-of( Exeggcute : example, psychic : kind )
+kind-of( Exeggutor : example, grass : kind )
+kind-of( Exeggutor : example, psychic : kind )
+kind-of( Cubone : example, ground : kind )
+kind-of( Marowak : example, ground : kind )
+kind-of( Hitmonlee : example, fighting : kind )
+kind-of( Hitmonchan : example, fighting : kind )
+kind-of( Lickitung : example, normal : kind )
+kind-of( Koffing : example, poison : kind )
+kind-of( Weezing : example, poison : kind )
+kind-of( Rhyhorn : example, ground : kind )
+kind-of( Rhyhorn : example, rock : kind )
+kind-of( Rhydon : example, ground : kind )
+kind-of( Rhydon : example, rock : kind )
+kind-of( Chansey : example, normal : kind )
+kind-of( Tangela : example, grass : kind )
+kind-of( Kangaskhan : example, normal : kind )
+kind-of( Horsea : example, water : kind )
+kind-of( Seadra : example, water : kind )
+kind-of( Goldeen : example, water : kind )
+kind-of( Seaking : example, water : kind )
+kind-of( Staryu : example, water : kind )
+kind-of( Starmie : example, water : kind )
+kind-of( Starmie : example, psychic : kind )
+kind-of( Mr_Mime : example, psychic : kind )
+kind-of( Scyther : example, bug : kind )
+kind-of( Scyther : example, flying : kind )
+kind-of( Jynx : example, ice : kind )
+kind-of( Jynx : example, psychic : kind )
+kind-of( Electabuzz : example, electric : kind )
+kind-of( Magmar : example, fire : kind )
+kind-of( Pinsir : example, bug : kind )
+kind-of( Taurus : example, normal : kind )
+kind-of( Magikarp : example, water : kind )
+kind-of( Gyarados : example, water : kind )
+kind-of( Gyarados : example, flying : kind )
+kind-of( Lapras : example, water : kind )
+kind-of( Lapras : example, ice : kind )
+kind-of( Ditto : example, normal : kind )
+kind-of( Eevee : example, normal : kind )
+kind-of( Vaporeon : example, water : kind )
+kind-of( Jolteon : example, electric : kind )
+kind-of( Flareon : example, fire : kind )
+kind-of( Porygon : example, normal : kind )
+kind-of( Omanyte : example, rock : kind )
+kind-of( Omanyte : example, water : kind )
+kind-of( Omastar : example, rock : kind )
+kind-of( Omastar : example, water : kind )
+kind-of( Kabuto : example, rock : kind )
+kind-of( Kabuto : example, water : kind )
+kind-of( Kabutops : example, rock : kind )
+kind-of( Kabutops : example, water : kind )
+kind-of( Aerodactyl : example, rock : kind )
+kind-of( Aerodactyl : example, flying : kind )
+kind-of( Snorlax : example, normal : kind )
+kind-of( Articuno : example, ice : kind )
+kind-of( Articuno : example, flying : kind )
+kind-of( Zapdos : example, electric : kind )
+kind-of( Zapdos : example, flying : kind )
+kind-of( Moltres : example, fire : kind )
+kind-of( Moltres : example, flying : kind )
+kind-of( Dratini : example, dragon : kind )
+kind-of( Dragonair : example, dragon : kind )
+kind-of( Dragonite : example, dragon : kind )
+kind-of( Dragonite : example, flying : kind )
+kind-of( Mewtwo : example, psychic : kind )
+kind-of( Mew : example, psychic : kind )
+kind-of( Kingdra : example, water : kind )
+
+
+
+/* end of file */

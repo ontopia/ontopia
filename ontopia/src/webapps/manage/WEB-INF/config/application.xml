@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+
+<!--
+  Configuration File for the Omnigator Web Application
+  =====================================================================
+  $Id: application.xml,v 1.1 2006/12/21 23:02:26 opland Exp $
+  =====================================================================
+  This configuration file contains information which is loaded into
+  application scope when the first page with a context tag is requested.
+  Note: The location of this file needs to be recorded in web.xml.
+-->
+<configuration type="application">
+
+  <!--
+    AUTOLOAD
+    ==================================================================
+    Allows administrator control over what topic maps are loaded when
+    the application first starts. If a map isn't on this list then the
+    administrator must load it manually on the "manage.jsp" page in
+    order for it to be loaded.  Loading an id of "~all" will mean that
+    all topic maps are pre loaded on startup.
+  -->
+  <autoloads>
+  <!--
+    <autoload topicmapid="opera.xtm" />
+    <autoload topicmapid="xmltools-tm.xtm" />
+    <autoload topicmapid="~all" />
+  -->
+  </autoloads>
+
+
+  <!--
+    MODEL-VIEW-SKIN
+    ==================================================================
+    Application settings for models, views and skins.
+  -->
+  <mvs>
+    <!--model name="basic"         title="Basic model"/-->
+    <model name="complete"      title="Complete model (default)" default="yes"/>
+    <model name="nontopoly"     title="Nontopoly model" default="no"/>
+    <!--model name="simple"        title="Simple model (incompl.)"/-->
+    <view  name="no_frames"     title="Two columns (default)" default="yes"/>
+    <!--view  name="single_column" title="Single column"/-->
+    <!--skin  name="standard"      title="Orange"/-->
+    <!--skin  name="standard-big"  title="Orange (big text)"/-->
+    <!--skin  name="grellgruen"    title="Schrillgreen"/-->
+    <!--skin  name="blue-comet"    title="Blue Comet"/-->
+    <skin  name="ontopia"       title="Ontopia Colours (default)" default="yes"/>
+    <skin  name="winter"        title="Norwegian Winter"/>
+    <!--skin  name="compact"       title="Compact"/-->
+  </mvs>
+
+
+  <!--
+    CLASSMAP
+    ==================================================================
+    Frequently used objects which go into application scope. These
+    objects will must provide an empty constructor. Currently used for
+    default stringifiers and grabbers and comparators.
+  -->
+  <classmap>
+    <!-- Comparator mappings ================================== -->
+    <class shortcut="defaultComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicComparator"/>
+    <class shortcut="topicComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicComparator"/>
+    <class shortcut="nameComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparator"/>
+    <class shortcut="basenameComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.BaseNameComparator"/>
+    <class shortcut="nameComparatorWithGenerality"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.NameComparatorWithGenerality"/>
+    <class shortcut="assocComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationIDComparator"/>
+    <class shortcut="assocTypeComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationComparator"/>
+    <class shortcut="assocRoleComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationRoleComparator"/>
+    <class shortcut="assocRoleTypeComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.AssociationRoleTypeComparator"/>
+    <class shortcut="occComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.OccurrenceComparator"/>
+    <class shortcut="locComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.LocatorComparator"/>
+    <class shortcut="facetValueComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.FacetValueComparator"/>
+    <class shortcut="topicMapRefComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.TopicMapReferenceComparator"/>
+    <class shortcut="ontopiaOccTypeComparator"
+           fullname="net.ontopia.topicmaps.nav.utils.comparators.OccTypeComparator"/>
+    <!-- NB these two classes are used for the XMLconf application and are not (yet) part
+         of any general distribution -->
+    <class shortcut="lower"
+           fullname="net.ontopia.topicmaps.utils.LowercaseStringifier"/>
+    <class shortcut="initial"
+           fullname="net.ontopia.topicmaps.utils.InitialCapStringifier"/>
+
+    <!-- Decider mappings ===================================== -->
+    <class shortcut="defaultDecider"
+           fullname="net.ontopia.topicmaps.nav2.impl.basic.DefaultIfDecider"/>
+
+    <!-- Grabber mappings ===================================== -->
+    <class shortcut="nameGrabber"
+           fullname="net.ontopia.topicmaps.utils.NameGrabber"/>
+
+    <!-- Link Generator mappings ============================== -->
+    <class shortcut="universalLinkGenerator"
+           fullname="net.ontopia.topicmaps.nav2.impl.basic.DefaultUniversalLinkGenerator"/>
+
+    <!-- when using the MVS Framework approach -->
+    <class shortcut="modelLinkGenerator"
+           fullname="net.ontopia.topicmaps.nav2.impl.framework.ModelLinkGenerator"/>
+
+  </classmap>
+
+  <!--
+    PROPERTIES
+    ==================================================================
+    Provides default values to the application.
+  -->
+  <properties>
+    <!-- Ontopia extensions: occurrence role types ============== -->
+    <!-- Ontopia uses these subject indicators to customise the operation of
+         the Navigator. XTM subject indicators must be URIs. -->
+
+    <property name="ontopiaOccurrenceTypeMetadata"
+              value="http://psi.ontopia.net/xtm/occurrence-type/metadata"/>
+    <property name="ontopiaOccurrenceTypeDefault"
+              value="http://psi.ontopia.net/xtm/occurrence-type/default"/>
+    <property name="ontopiaOccurrenceTypeDescription"
+              value="http://psi.ontopia.net/xtm/occurrence-type/description"/>
+
+
+    <!-- other ================================================= -->
+
+    <!-- defaultCharacterEncoding: sets the default character encoding
+     (example values are "utf-8", "iso-8859-1") for the response output
+     stream send to the client (browser). -->
+    <property name="defaultCharacterEncoding" value="utf-8"/>
+
+    <!-- defaultContentType: sets the default output HTTP content-type -->
+    <property name="defaultContentType" value="text/html"/>
+
+    <!-- allowLoadOnRequest: if true, topicmaps will be loaded automatically
+     when requested by the user. Use this setting if you do not need to
+     control access to your topicmaps. If the value is "false" the user will
+     be transferred to an error page telling them that the topicmap is not
+     available. -->
+    <property name="allowLoadOnRequest" value="true"/>
+
+    <!-- maxListLength: default value for paging of long lists (see related
+         tag logic:foreach) can be overwritten by user session. -->
+    <property name="maxListLength" value="500"/>
+
+    <!-- defaultFunctionOnTruncate: name of function that will be called
+     if long lists (see logic:foreach-tag) are truncated. -->
+    <property name="defaultFunctionOnTruncate" value="warningOnTruncate"/>
+
+    <!-- nameStringNonExistent: string which should be displayed when
+      a basename or variant is not existent (Default: [No name]). -->
+    <!--
+      <property name="nameStringNonExistent" value="[Warning: No name]"/>
+    -->
+
+    <!-- nameStringNullValue: string which should be displayed when
+      a basename or variant is null (Default: [Null name]). -->
+    <!--
+      <property name="nameStringNullValue" value="[Warning: Null name]"/>
+    -->
+
+    <!-- nameStringEmptyValue: string which should be displayed when
+      a basename or variant is empty (Default: [Empty name]). -->
+    <!--
+      <property name="nameStringEmptyValue" value="[Warning: Empty name]"/>
+    -->
+
+    <!-- msg.UntypedAssoc: string which should be displayed when
+      no type is available for an association -->
+    <property name="msg.UntypedAssoc" value="untyped"/>
+
+    <!-- occurrenceEmptyValue: string which should be displayed when
+      a value of an occurrence is empty (Default: [Empty resource string]). -->
+    <property name="occurrenceEmptyValue" value=""/>
+
+    <!-- occurrenceNullValue: string which should be displayed when
+      a value of an occurrence is null (Default: [Null resource string]). -->
+    <property name="occurrenceNullValue" value=""/>
+
+    <!-- occurrenceEmptyLocator: string which should be displayed when
+      a locator of an occurrence is empty (Default: [Empty resource locator]). -->
+    <property name="occurrenceEmptyLocator" value=""/>
+
+    <!-- occurrenceNullLocator: string which should be displayed when
+      a locator of an occurrence is null (Default: [Null resource locator]). -->
+    <property name="occurrenceNullLocator" value=""/>
+
+
+    <!-- pluginsOrder: used to order the plugins in the plugin list.
+     Whitespace-separated list of plugin IDs. Plugins will be shown
+     in the order listed here, with any plugins present but not mentioned
+     added at the end. For each plugin group there has to be a separate
+     order list (for the property name append underscore and plugin group Id) -->
+    <property name="pluginsOrder_welcome"
+              value="customise"/>
+    <property name="pluginsOrder_topic"
+              value="customise filter export merge statistics"/>
+    <property name="pluginsOrder_topicmap"
+              value="customise filter export merge statistics"/>
+
+    <!-- checkForChangedModules: if true a <logic:include> tag refreshes
+      (reloads) the related module from the originating file if this has
+      changed in the meantime. -->
+    <property name="checkForChangedModules" value="true"/>
+
+    <!-- ===== Specify which Decider to use for context filtering ===== -->
+    <!-- Allowed values for the decider type:
+         * "applicableIn": all selected themes are required to be used for
+                           scoping a characteristic to be displayed.
+         * "intersection": one or more selected themes are required to be used
+                           for scoping an occurrence to be displayed.
+         * "within"        The context must be identical or a subset of the
+                           scopes (see "applicableIn").
+         * "superset"      Characteristic scope has to be a superset of the
+                           user context.
+         * "subset"        Characteristic scope has to be a subset of the
+                           user context.
+    -->
+    <property name="baseNameContextDecider"    value="intersection" />
+    <property name="variantNameContextDecider" value="intersection" />
+    <property name="occurrenceContextDecider"  value="intersection" />
+    <property name="associationContextDecider" value="intersection" />
+
+    <!-- Number of log entries from the last executed actions that should be
+         displayed in the interface. -->
+    <property name="userActionLogLength" value="5" />
+
+    <!-- Property for setting the type of the module reader -->
+    <property name="moduleReader" value="PlainModuleReader"/>
+
+  </properties>
+
+</configuration>

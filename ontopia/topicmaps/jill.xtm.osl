@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--
+  ==========================================================
+  Constraints expressed in the Ontopia Schema Language (OSL)
+  for "Jill's First Topic Map" written for learning purposes
+  ..........................................................
+  Niko Schmuck <niko@ontopia.net>, 19-Sept-2001
+  $Id: jill-schema.xml,v 1.1 2001/09/19 11:54:17 niko Exp $
+  ==========================================================
+-->
+
+<tm-schema match="loose">
+
+  <!-- Rules for a topic instance of developer -->
+  <topic>
+    <instanceOf>
+      <internalTopicRef href="#developer"/>
+    </instanceOf>
+
+    <!-- require at least one basename in the unconstrained scope -->
+    <baseName min="1" max="inf">
+      <scope></scope>
+    </baseName>
+
+    <!-- may have an occurrence of type kudo -->
+    <occurrence min="0" max="inf">
+      <instanceOf>
+        <internalTopicRef href="#kudo"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- may play a role in an employment association -->
+    <playing>
+      <instanceOf>
+        <internalTopicRef href="#employee"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <internalTopicRef href="#employment"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+  </topic>
+
+
+  <!-- Rules for a topic instance of company -->
+  <topic>
+    <instanceOf>
+      <internalTopicRef href="#company"/>
+    </instanceOf>
+
+    <!-- require at least one basename in the unconstrained scope -->
+    <baseName min="1" max="inf">
+      <scope></scope>
+    </baseName>
+
+    <!-- may have an occurrence of type website -->
+    <occurrence min="0" max="inf">
+      <instanceOf>
+        <internalTopicRef href="#website"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- may play a role in an employment association -->
+    <playing>
+      <instanceOf>
+        <internalTopicRef href="#employer"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <internalTopicRef href="#employment"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+  </topic>
+
+
+  <!-- Rules for an association instance of employment -->
+  <association>
+    <instanceOf>
+      <internalTopicRef href="#employment"/>
+    </instanceOf>
+
+    <!-- binary association between an employee (developer)... -->
+    <role min="1" max="1">
+      <instanceOf>
+        <internalTopicRef href="#employee"/>
+      </instanceOf>
+      <player>
+        <internalTopicRef href="#developer"/>
+      </player>
+    </role>
+
+    <!-- ... and normally also an employer (company) -->
+    <role min="1" max="1">
+      <instanceOf>
+        <internalTopicRef href="#employer"/>
+      </instanceOf>
+      <player>
+        <internalTopicRef href="#company"/>
+      </player>
+    </role>
+
+  </association>
+
+
+</tm-schema>

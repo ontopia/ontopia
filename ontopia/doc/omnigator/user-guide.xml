@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><?xar docbook?>
 <!-- $Id: userguide.xml,v 1.88 2008/05/29 07:01:12 geir.gronmo Exp $ -->
-<!DOCTYPE article
-   PUBLIC "-//OASIS//DTD DocBook XML V4.1//EN" "../../dtds/docbook/docbookx.dtd">
+<!--DOCTYPE article
+   PUBLIC "-//OASIS//DTD DocBook XML V4.1//EN" "../../dtds/docbook/docbookx.dtd"-->
 <article>
 <title>Omnigator: The Topic Map Browser</title>
 <subtitle>User&#8217;s Guide</subtitle>
