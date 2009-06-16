@@ -54,9 +54,8 @@ for you.
 </para> 
 
 <para> 
-In version 2.1 the suite consists of five main products, with
-several smaller add-on components. These can be purchased in three different
-configurations, which are described below. The main products are:
+In version 3.1 Ontopia consists of five main products, with several
+smaller add-on components:
 </para> 
 
 <variablelist> 
@@ -126,7 +125,7 @@ configurations, which are described below. The main products are:
 </variablelist> 
 
 <para> 
-In addition to these main products, the OKS contains some smaller
+In addition to these main products, Ontopia contains some smaller
 components which add important functionality to the suite. These are:
 </para>
 
@@ -175,121 +174,16 @@ components which add important functionality to the suite. These are:
         it a <quote>topic map debugger</quote>.)</para> 
    </listitem> 
     </varlistentry> 
-  </variablelist> 
+  </variablelist>
+  
   <para> Below is a diagram that shows the structure of the OKS, and the
     relationship between the different parts. </para> 
   <figure> 
     <title>The OKS at version 2.1</title>
     <graphic fileref="oks-now.png" format="PNG"/> 
   </figure> 
-  <para> Future versions will add more products and components. </para> 
-  <section> 
-    <title>Editions of the Suite</title> 
-    <para> The OKS comes in three different editions: </para> 
-    <variablelist> 
-   <varlistentry> 
-    <term>Personal edition</term> 
-    <listitem> 
-        <para>This edition contains the Engine, which means that it is
-       mostly useful for integration and visualization projects, and for adding topic
-       map functionality to existing products.</para> 
-    </listitem> 
-   </varlistentry> 
-   <varlistentry> 
-    <term>Professional edition</term> 
-    <listitem> 
-        <para>This edition contains the Engine with the three add-on
-       components, the Navigator Framework, as well as the Web Editor Framework. It is
-       useful for prototype web projects, smaller web projects, and for adding topic
-       map-capabilities to existing products which need a web interface.</para> 
-    </listitem> 
-   </varlistentry> 
-   <varlistentry> 
-    <term>Enterprise edition</term> 
-    <listitem> 
-        <para>This edition adds the RDBMS backend to the professional
-       edition, and is thus the edition of choice for deployment of full-scale
-       projects.</para> 
-    </listitem> 
-   </varlistentry> 
-    </variablelist> 
-    <para> The table below shows more precisely which components are included
-   in what editions of the OKS. The prices of the different editions as well as an
-   online purchasing system can be found 
-   <ulink url="http://www.ontopia.net/solutions/products.html">on our web
-    site</ulink>. </para> 
-
-    <table> 
-      <title>OKS editions</title> 
-      
-      <tgroup cols="4"> 
-        <thead> 
-          <row> 
-            <entry>Component</entry> 
-            <entry>Personal</entry> 
-            <entry>Professional</entry> 
-            <entry>Enterprise</entry> 
-          </row> 
-        </thead> 
-        <tbody> 
-          <row> 
-            <entry>Engine</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-          </row> 
-          <row> 
-            <entry>Omnigator</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-          </row> 
-          <row> 
-            <entry>Query engine</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-          </row> 
-          <row> 
-            <entry>Schema tools</entry> 
-            <entry>&#160;</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-          </row>
-          <row> 
-            <entry>Full-text search</entry> 
-            <entry>&#160;</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-          </row> 
-          <row> 
-            <entry>Navigator</entry> 
-            <entry>&#160;</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-          </row> 
-          <row> 
-            <entry>Web Editor Framework</entry> 
-            <entry>&#160;</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-          </row> 
-          <row> 
-            <entry>Vizigator</entry> 
-            <entry>&#160;</entry> 
-            <entry>Yes</entry> 
-            <entry>Yes</entry> 
-          </row>    
-          <row> 
-            <entry>RDBMS Backend</entry> 
-            <entry>&#160;</entry> 
-            <entry>&#160;</entry> 
-            <entry>Yes</entry> 
-          </row> 
-        </tbody> 
-      </tgroup> 
-    </table> 
-  </section> 
+  <para> Future versions will add more products and components. </para>
+ 
   <section> 
     <title>Application areas for the Suite</title> 
     <para> The Ontopia Knowledge Suite is not an end-user product, but a set
