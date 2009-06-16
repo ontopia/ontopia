@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<!--
+
+  Hi! This is a text file. If you're making a simple change, please
+  don't use an editor which reindents the entire file. Thank you. 
+
+  TODO
+
+    - update oks-now.png
+
+    - rewrite all the content
+
+    - add vizigator
+
+-->
+
+<!--?xml-stylesheet href="../docbook.css" type="text/css"?-->
+<!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" ""-->
+<article class="whitepaper"> 
+<title>The Ontopia Knowledge Suite</title>
+<subtitle>An Introduction</subtitle> 
+
+<articleinfo> 
+  <author> 
+    <affiliation> 
+   <orgname>Ontopia A/S</orgname> 
+    </affiliation> 
+  </author> 
+  <pubdate>$Date: 2006/05/07 13:05:53 $</pubdate> 
+  <releaseinfo>3.1 ($Revision: 1.41 $)</releaseinfo> 
+  <abstract> 
+    <para> This whitepaper gives a quick introduction to version 3.1 of the
+   Ontopia Knowledge Suite (OKS), describing the architecture, functionality, and
+   composition of the suite. There is also some discussion of the possible usage
+   areas of the suite. </para> 
+    <para> A basic understanding of the main concepts of topic maps is
+   assumed; for explanations of these, please see 
+   <ulink url="http://www.ontopia.net/topicmaps/articles.html">the topic
+    map introductions on our web site</ulink>. </para> 
+  </abstract> 
+</articleinfo> 
+
+<!-- ===== OVERVIEW ============================================================-->
+<section> 
+<title>An overview of the OKS</title> 
+
+<para>
+The Ontopia Knowledge Suite is a well-designed suite of products
+that together enable the development of diverse types of topic map-enabled
+applications. The suite is designed to be integrated into any application to
+provide it with topic map capabilities. It is stable, performant, and highly
+advanced; it handles all the difficult aspects of developing with topic maps
+for you.
+</para> 
+
+<para> 
+In version 2.1 the suite consists of five main products, with
+several smaller add-on components. These can be purchased in three different
+configurations, which are described below. The main products are:
+</para> 
+
+<variablelist> 
+  <varlistentry> 
+    <term>The Ontopia Topic Map Engine</term> 
+    <listitem> 
+      <para>This is the heart of the suite: a Java SDK which has all
+      the functionality needed for writing software that works with
+      topic maps. The engine loads, stores and keeps track of the
+      topic maps, and provides interfaces through which applications
+      can access and manage the topic maps. The other products in the
+      OKS are built on the engine and use its functionality.</para>
+
+      <para>Three add-on components to the Engine provide additional
+      power for advanced applications. These are the query engine,
+      which supports a topic map query language, the schema tools,
+      which support a topic map schema language, and the full-text
+      integration, which adds support for full-text search of topic
+      map data.</para>
+    </listitem> 
+  </varlistentry> 
+  <varlistentry> 
+    <term>The Ontopia Navigator Framework</term> 
+    <listitem> 
+    <para>The Ontopia Navigator Framework greatly simplifies the
+    development of topic map driven web applications. It is based on
+    Java Servlets and Java Server Pages (JSP), and provides a set of
+    tag libraries and Java components that make developing scalable
+    topic map web applications with advanced functionality fast and
+    easy. Using it can be compared with using a kind of XSLT specially
+    designed for topic maps.</para>
+    </listitem> 
+  </varlistentry> 
+  <varlistentry> 
+    <term>The Ontopia Web Editor Framework</term> 
+    <listitem> 
+    <para>The Ontopia Web Editor Framework is based on the same
+    technology than the Ontopia Navigator Framework.  It is designed
+    to enable customers to build user-friendly web editing
+    applications based on customer-specific requirements. Instead of
+    providing a generic interface where the user has to be familiar
+    with the topic map concept the framework makes it possible to edit
+    topic maps without knowing that you are working with topic
+    maps.</para>
+    </listitem> 
+  </varlistentry>
+  <varlistentry> 
+    <term>The Ontopia Vizigator</term> 
+    <listitem> 
+    <para>The Ontopia Vizigator provides graphical visualization of
+    topic maps making it possible to see connections and structures in
+    an intuitive display of the topic map. Application developers can
+    use a graphical tool to configure the display by filtering
+    associations and topics and fine-tuning their visual appearance.
+    The visualizations can then be deployed on the web using Java
+    applets.</para>
+    </listitem> 
+  </varlistentry> 
+  <varlistentry> 
+    <term>The Ontopia RDBMS Backend Connector</term> 
+    <listitem> 
+    <para>This add-on to the engine enables it to store topic maps in
+    relational databases, and to access and modify topic maps stored
+    in such databases. Most RDBMS servers are supported.</para>
+    </listitem> 
+  </varlistentry> 
+</variablelist> 
+
+<para> 
+In addition to these main products, the OKS contains some smaller
+components which add important functionality to the suite. These are:
+</para>
+
+  <variablelist> 
+    <varlistentry> 
+   <term>The query engine</term> 
+   <listitem> 
+    <para>Using the query engine you can easily specify complex criteria
+        for retrieving information from the topic map. This greatly simplifies
+        application development, since much can be accomplished with very little code,
+        and significantly lowers the learning curve for developers.</para> 
+    <para>Since queries specify retrieval actions at a very high level
+        they also provide great scope for optimization, allowing the query engine to
+        perform retrieval very efficiently.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>The Ontopia Full-text Search Integration</term> 
+   <listitem> 
+    <para>The full-text integration allows users to look up topics by
+        name (and text appearing in occurrences) easily and quickly. This allows users
+        to jump to a specific point in a topic map immediately, without knowing the
+        topic map structure at all, which makes it enormously much easier to find
+        information.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>The Ontopia Schema Tools</term> 
+   <listitem> 
+    <para>Certain tasks can only be performed by humans, but humans make
+        mistakes. If your topic maps are written by human authors, in whole or in part,
+        you will want some way of ensuring that the authors use the correct topic map
+        structure. Using the Ontopia Schema Language you can easily and concisely
+        define the correct topic map structure and use the schema tools to enforce that
+        structure.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>The Omnigator</term> 
+   <listitem> 
+    <para>The Omnigator is a demonstration tool built using the Navigator
+        Framework. It is a topic map browser that can be used to browse any topic map.
+        Ontopia has made the Omnigator freely available in order to promote topic map
+        awareness, but it is also distributed as part of the OKS, as many customers
+        have found it useful for looking at their own topic maps. (One customer called
+        it a <quote>topic map debugger</quote>.)</para> 
+   </listitem> 
+    </varlistentry> 
+  </variablelist> 
+  <para> Below is a diagram that shows the structure of the OKS, and the
+    relationship between the different parts. </para> 
+  <figure> 
+    <title>The OKS at version 2.1</title>
+    <graphic fileref="oks-now.png" format="PNG"/> 
+  </figure> 
+  <para> Future versions will add more products and components. </para> 
+  <section> 
+    <title>Editions of the Suite</title> 
+    <para> The OKS comes in three different editions: </para> 
+    <variablelist> 
+   <varlistentry> 
+    <term>Personal edition</term> 
+    <listitem> 
+        <para>This edition contains the Engine, which means that it is
+       mostly useful for integration and visualization projects, and for adding topic
+       map functionality to existing products.</para> 
+    </listitem> 
+   </varlistentry> 
+   <varlistentry> 
+    <term>Professional edition</term> 
+    <listitem> 
+        <para>This edition contains the Engine with the three add-on
+       components, the Navigator Framework, as well as the Web Editor Framework. It is
+       useful for prototype web projects, smaller web projects, and for adding topic
+       map-capabilities to existing products which need a web interface.</para> 
+    </listitem> 
+   </varlistentry> 
+   <varlistentry> 
+    <term>Enterprise edition</term> 
+    <listitem> 
+        <para>This edition adds the RDBMS backend to the professional
+       edition, and is thus the edition of choice for deployment of full-scale
+       projects.</para> 
+    </listitem> 
+   </varlistentry> 
+    </variablelist> 
+    <para> The table below shows more precisely which components are included
+   in what editions of the OKS. The prices of the different editions as well as an
+   online purchasing system can be found 
+   <ulink url="http://www.ontopia.net/solutions/products.html">on our web
+    site</ulink>. </para> 
+
+    <table> 
+      <title>OKS editions</title> 
+      
+      <tgroup cols="4"> 
+        <thead> 
+          <row> 
+            <entry>Component</entry> 
+            <entry>Personal</entry> 
+            <entry>Professional</entry> 
+            <entry>Enterprise</entry> 
+          </row> 
+        </thead> 
+        <tbody> 
+          <row> 
+            <entry>Engine</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+          </row> 
+          <row> 
+            <entry>Omnigator</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+          </row> 
+          <row> 
+            <entry>Query engine</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+          </row> 
+          <row> 
+            <entry>Schema tools</entry> 
+            <entry>&#160;</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+          </row>
+          <row> 
+            <entry>Full-text search</entry> 
+            <entry>&#160;</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+          </row> 
+          <row> 
+            <entry>Navigator</entry> 
+            <entry>&#160;</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+          </row> 
+          <row> 
+            <entry>Web Editor Framework</entry> 
+            <entry>&#160;</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+          </row> 
+          <row> 
+            <entry>Vizigator</entry> 
+            <entry>&#160;</entry> 
+            <entry>Yes</entry> 
+            <entry>Yes</entry> 
+          </row>    
+          <row> 
+            <entry>RDBMS Backend</entry> 
+            <entry>&#160;</entry> 
+            <entry>&#160;</entry> 
+            <entry>Yes</entry> 
+          </row> 
+        </tbody> 
+      </tgroup> 
+    </table> 
+  </section> 
+  <section> 
+    <title>Application areas for the Suite</title> 
+    <para> The Ontopia Knowledge Suite is not an end-user product, but a set
+   of tools useful for building such products. In general, the Suite can be used
+   to advantage in nearly any application that manages information. The problem
+   solved by the Ontopia Knowledge Suite is the perennial problem of information
+   management: the problem of navigating the information ocean to find the
+   knowledge you seek. </para> 
+    <para> We all know how difficult it can be to find the information you
+   are looking for. The reasons for this are many and deep-rooted, and not the
+   least of them is that creating appropriate information structures is in itself
+   difficult. Topic maps, the product of decades of work and experience in
+   information management, provide a model for the organization of information
+   that can make creating appropriate structures much easier. If your information
+   repository is organized with a topic map, structuring it becomes much easier,
+   and so locating the document or piece of information you want also becomes much
+   easier. </para> 
+    <para> An important aspect of topic maps is that they do not require you
+   to replace your information repository with one based on topic maps. Instead,
+   you can maintain a topic map <emphasis>separately</emphasis> from your
+   repository and have the topic map refer into the repository. The topic map can
+   then be navigated to locate the information you need from the repository.
+   </para> 
+    <para> With the Ontopia Knowledge Suite you have what you need to create
+   and manage topic maps for your repositories, as well as to build the interfaces
+   used to navigate the resulting topic maps. Using the Ontopia Knowledge Suite
+   all the difficult problems of topic map management, persistence, concurrency,
+   transactions, and scalability are taken care of for you. </para> 
+    <para> Some of the most important and interesting areas where the
+   Knowledge Suite can simplify development and improve the result are: </para> 
+    <itemizedlist> 
+   <listitem> 
+    <formalpara> 
+        <title>Web portals</title> 
+        <para>Portals, being essentially large information repositories,
+       are perfect use cases for the OKS. Using topic maps for the portal contents you
+       will find yourself guided by the topic map model into creating a well-organized
+       portal. Using the OKS developing the actual portal is greatly simplified,
+       thanks to the Ontopia Topic Map Navigator SDK.</para> 
+    </formalpara> 
+   </listitem> 
+   <listitem> 
+    <formalpara> 
+        <title>Knowledge-base intranets</title> 
+        <para>Using topic maps you can capture and manage the knowledge
+       that constitutes the corporate memory in a kind of semantic network that
+       represents people, products, roles, procedures, and other artefacts of your
+       organization; the relationships between these entities; and the links to the
+       documentation that describe them in detail. With the OKS you can enrich your
+       intranet with topic maps and turn it into a real collaborative knowledge
+       base.</para> 
+    </formalpara> 
+   </listitem> 
+   <listitem> 
+    <formalpara> 
+        <title>Content management systems</title> 
+        <para>Any content management system can benefit from a better and
+       more flexible way of organizing information, which is what topic maps provide.
+       Using the Ontopia Topic Map Engine you can integrate topic mapping capabilities
+       into your content management system. The integration could take the form of
+       making the entire system topic map-based, or it could create a virtual topic
+       map of the system. And with the Ontopia Topic Map Navigator the web interface
+       is there almost out of the box. For more information about how content
+       management issues can be applied using the topic map paradigm please see 
+       <ulink
+       url="http://www.ontopia.net/topicmaps/materials/itms.html">here</ulink>.</para>
+        
+    </formalpara> 
+   </listitem> 
+   <listitem> 
+    <formalpara> 
+        <title>Enterprise Application Integration (EAI)</title> 
+        <para>The topic map data model is designed to allow automated
+       merging of information from diverse sources. Using the Ontopia Topic Map
+       Engine's support for merging, you can easily integrate information from many
+       different sources into a coherent whole. This can be used to integrate the
+       products in a product suite, as well as to finally allow the many separated
+       applications of an enterprise to appear as a single whole. A web interface to
+       this unified information can be developed using the Navigator framework.</para>
+        
+    </formalpara> 
+   </listitem> 
+    </itemizedlist> 
+    <para> The list of possible application areas for this technology is
+   endless, and as topic map technology is still new and fresh exciting new uses
+   for it will undoubtedly continue to be found. </para> 
+    <para> Below is a figure that shows how the Ontopia Knowledge Suite might
+   be used to build a web site based on topic maps, storing the topic map data in
+   a relational database. </para> 
+    <figure> 
+   <title>Web application built on the OKS</title>
+   <graphic fileref="current-arch.gif" format="GIF89a"/> 
+    </figure> 
+    <para> In this example the web application is deployed in a Java 2
+   Platform, Enterprise Edition (J2EE) web server, together with the Ontopia
+   Engine and Navigator. The topic map is stored in a relational database server,
+   managed by the engine, and the web application is built using the navigator
+   framework. </para> 
+  </section> 
+</section> 
+
+<!-- ===== NAVIGATOR ==================================================-->
+<section> 
+<title>The Ontopia Topic Map Navigator</title> 
+
+<para> The most natural way to access the information in a topic map today
+  is through the web, and the Ontopia Topic Map Navigator greatly simplifies
+  development of topic map web applications. The Navigator is a general
+  development framework based on the engine that lets you create your own web
+  interfaces to your topic maps. </para> 
+<para> The framework consists of a set of Java utility APIs designed for
+  web development, and a set of JSP tag libraries. The tag libraries allow much
+  of the logic in each web page to be written using XSLT-like tags, thus
+  dramatically simplifying the development process. The tag libraries are very
+  high-level and allow developers to do scope filtering and other advanced
+  operations simply by tweaking the attributes of tags. </para> 
+<para> Another important benefit to the tag libraries is that since they
+  operate at a high level of abstraction, they allow for many advanced
+  optimizations, like caching of the most frequently retrieved topic names,
+  object pooling, and so on. Thread-safety, session management, and so on is also
+  handled automatically by the framework. Applications using the tag libraries
+  get these benefits with no extra effort. The tag library is also integrated
+  with the tolog query language, allowing you to use tolog queries to build your
+  web applications. </para> 
+<para> The framework is fully internationalized and can correctly render
+  topic maps written in any script. We have successfully viewed both Chinese and
+  Japanese topic maps in our navigator applications. Applications built using the
+  navigator inherit these features with no extra effort required. </para> 
+<para> The navigator framework is based on the Java 2 Platform, Enterprise
+  Edition (J2EE), and applications developed with it can be deployed into any
+  J2EE container. The 
+  <ulink url="http://jakarta.apache.org/tomcat/">Tomcat</ulink> web server
+  was used during development, but using an automated test suite it is easy to
+  verify that the navigator works in other containers as well. We have verified
+  that the Navigator works in the 
+  <ulink url="http://www.caucho.com/products/resin/">Resin</ulink>
+  application server as well. </para> 
+<section> 
+  <title>The Omnigator</title> 
+  <para> As a demonstration of the power of the navigator framework we have
+ developed the Omnigator, which is short for 'the omnivorous topic map
+ navigator'. This is a topic map web application that can be used to navigate
+ any topic map. You can access an online demo of the Omnigator at 
+ <ulink url="http://www.ontopia.net/omnigator/models/index.jsp">the
+  Ontopia web site</ulink>. </para> 
+  <para> Although written for demonstration purposes, the Generic Navigator
+ is a useful tool in its own right, since it turns any topic map into a web site
+ with no need for programming at all. This makes it very useful as a tool for
+ quickly creating topic map prototype applications that can be used to test out
+ the applicability of topic maps to specific problems (and also to convince
+ management that topic maps are the correct approach). All that is needed is to
+ generate your topic maps as XML documents, load them into the Navigator, and
+ you have a simple but convincing topic map demo.</para> 
+  <para> Below is shown a screenshot from the Omnigator, showing the
+ automatically generated page for a topic in Steve Pepper's Italian Opera topic
+ map. The topic shown is Puccini, a well-known composer. </para> 
+  <figure> 
+ <title>The Omnigator</title>
+ <graphic fileref="navigator-shot.gif" format="GIF89a"/> 
+  </figure> 
+  <para> The Omnigator is an advanced topic map application, supporting all
+ aspects of both the XTM 1.0 and ISO 13250 standards. Some of the more advanced
+ concepts supported are listed below. </para> 
+  <itemizedlist> 
+ <listitem> 
+  <formalpara> 
+      <title>Reification</title> 
+      <para>Refification allows topics to represent identifiable
+     resources within a computer, such as a web resource or a construct in a topic
+     map. This can be used to make statements about associations, topic names,
+     resources, and even occurrences (that is, the relationship between a topic and
+     a resource). The navigator recognizes reification and uses it to optimize its
+     presentation of the topic map. (See 
+     <citetitle>The Omnigator User's Guide</citetitle> for examples of
+     reification.)</para> 
+  </formalpara> 
+ </listitem> 
+ <listitem> 
+  <formalpara> 
+      <title>Scope</title> 
+      <para>Scope can be attached to occurrences, names and associations
+     to say what contexts they are valid. This can be used to enable multiple views
+     on single topic map, for example by language or in other ways. The Omnigator
+     includes a User Context Filter plug-in (described below) that automatically
+     builds user preference forms based on the use of scope in the topic map.</para>
+      
+  </formalpara> 
+ </listitem> 
+  </itemizedlist> 
+  <para> These concepts are also supported by the underlying framework,
+ which makes it easy to develop topic map web applications using these
+ constructs. </para> 
+</section> 
+<section> 
+  <title>Using the Navigator Framework</title> 
+  <para> The screenshot from the Opera topic map above shows the same view
+ that is presented by the Omnigator for <emphasis>all</emphasis> topics. This is
+ so because the Omnigator is designed to display any topic map, and so does not
+ know the difference between a composer, a country, or an engine part. Using the
+ Navigator Framework you can develop web applications that are specific to your
+ topic maps, and this allows you to give the applications a user interface
+ designed for your topic map. Below is shown the page for Puccini in the
+ Operamap web application, which is written with the Navigator Framework, and
+ designed for the Opera topic map. </para> 
+  <figure> 
+ <title>The Operamap application</title>
+ <graphic fileref="operamap-shot.gif" format="GIF89a"/> 
+  </figure> 
+  <para> The application is simple, and yet it shows that a topic
+ map-driven web site can look just like any other web site, except that it is
+ easier to find your way around. Using the navigator framework, writing this
+ page is very simple. Most of the page is produced by a template, which is used
+ to ensure that the site has a common look and feel. The rest of the page is
+ produced by the <filename>composer.jsp</filename> file, which produces the
+ pages for composers. It fills the area with the main content by pulling
+ information from the topic map and writing it out as HTML. </para> 
+  <para> Below is shown the JSP code used to produce the list of operas.
+ Like XSLT the code is a mix of HTML elements (which are written out as output)
+ and logic elements, which are executed to produce the output. </para> 
+  <example> 
+ <title>List of operas</title> 
+ <literallayout><![CDATA[ <logic:set name="composed">
+  <tm:associated from="composer" type="composed-by"/> </logic:set>
+  <p><b>Operas:</b><br /> <logic:foreach name="composed"> <li><a
+  href="opera.jsp?id<output:objectid/>"><output:name/></a> <logic:set
+  name="date"> <tm:filter
+  instanceOf="premiere-date"><tm:occurrences/></tm:filter> </logic:set>
+  <logic:if name="date"> <logic:then> <output:content of="date"/> </logic:then>
+  </logic:if> </li> </logic:foreach> </p> ]]></literallayout> 
+  </example> 
+  <para> The code first finds all topics associated with the composer via
+ the <symbol>composed-by</symbol> association, which gives us the list of operas
+ (automatically sorted by name). We then loop over the operas (using
+ <symbol>logic:foreach</symbol>), and write an HTML list item for each opera,
+ with a link to that opera. We also find the <symbol>premiere-date</symbol>
+ occurrence of the opera, and, if there is one, we write out its contents. This
+ is the white text you see after the name of each opera. </para> 
+  <para> In this way, creating a web application for a topic map becomes a
+ matter of no more than writing some HTML and topic map tags. No Java
+ development is necessary, although if desired it is possible to integrate Java
+ code into the framework in various ways. The full power of the topic map
+ engine, the tolog query language, and the full-text search is available to
+ application developers. </para> 
+</section> 
+<section> 
+  <title>User context filter</title> 
+  <para> The navigator framework as well as the Omnigator support a user
+ context filter. The user can set to control what parts of the topic map the web
+ application is to show them. This filter uses the scopes defined in the topic
+ map, and lets users decide which names they prefer to see, and what occurrences
+ and associations they do not wish to see. </para> 
+  <para> This feature can be used to let users decide which language they
+ want to see a topic map in, if the topic map has names in several languages for
+ each topic. They can also decide whether they want to see the full names of
+ topics, for example, or just the abbreviated forms. </para> 
+  <para> In very information-rich topic maps, with many occurrences and
+ associations for each topic, the filter may be used to remove occurrences and
+ associations that are less interesting to the user, in order to keep the amount
+ of information presented to a manageable level. </para> 
+  <para> Users can control the settings of the user context filter by
+ following the 'Filter' link shown in the screenshot above. </para> 
+</section> 
+<section> 
+  <title>Rendering with Model-View-Skin</title> 
+  <para> The Navigator Framework uses a Model-View-Skin approach to
+ rendering topic maps, cleanly separating graphical layout from information
+ extraction. This simplifies application development, and allows application
+ developers and graphic designers to collaborate more easily. </para> 
+  <itemizedlist> 
+ <listitem> 
+  <formalpara> 
+      <title>View</title> 
+      <para>A view is essentially a web page template, written as a JSP
+     page, with a set of named slots where content can be filled in. This makes it
+     easy for graphic designers to create a single template for all pages in an
+     application, thus simplifying the development, and at the same time separating
+     application development from graphic design.</para> 
+  </formalpara> 
+ </listitem> 
+ <listitem> 
+  <formalpara> 
+      <title>Model</title> 
+      <para>The model is a JSP page that generates blocks of content and
+     attaches them to the named slots defined by the view. The model pages are
+     generally written by application developers, and do all the hard work of
+     extracting information from the topic map and other sources, and turning it
+     into web page content.</para> 
+  </formalpara> 
+ </listitem> 
+ <listitem> 
+  <formalpara> 
+      <title>Skin</title> 
+      <para>The last piece of the puzzle, the skin, is simply a 
+     <ulink url="http://www.w3.org/Style/CSS/">CSS stylesheet</ulink>
+     that is applied to the generated page to produce the page style. This will
+     generally define aspects such as the colors, background, fonts and text size.
+     </para> 
+  </formalpara> 
+ </listitem> 
+  </itemizedlist> 
+  <para> The end-user using the web application sees the combination of a
+ model, a view and a skin, and each user can freely select whichever combination
+ is found the most appealing. For example, the Omnigator has both a frame-view
+ and a no-frames-view. Each user can freely select which view to use. Similarly,
+ the Omnigator has a detail model, displaying as much information as possible,
+ and a simple model, showing only essential information. </para> 
+  <para> A set of skins are provided with the Omnigator, ranging from the
+ tasteful to the less so. New skins can be added simply by copying them into a
+ specific directory. Users can freely combine views, models, and skins as
+ desired. </para> 
+</section> 
+<section> 
+  <title>Extending the Navigator with plug-ins</title> 
+  <para> The Navigator has a concept of <firstterm>plug-ins</firstterm>,
+ which allows extensions to topic map web applications to be developed
+ separately from the applications and easily plugged in. The plug-ins can be
+ deployed by simply dropping them into a directory, and the navigator will
+ automatically detect their presence and include them in the interface. </para> 
+  <para> Essentially, a plug-in is a web page that is linked to from every
+ page of a topic map web application. When users follow this link, the web page
+ is informed about the current topic map and topic, and can thus present
+ relevant information. The topic map statistics plug-in, for example, will use
+ these parameters to display statistics about the current topic map. </para> 
+  <para> This mechanism allows plug-ins to be developed separately from
+ specific topic map web applications and yet to be easily integrated into them.
+ The result is greatly simplified development, installation, and administration.
+ </para> 
+</section> 
+<section> 
+  <title>The Navigator plug-ins</title> 
+  <para> The Omnigator comes with a set of plug-ins which can be helpful
+ when creating topic maps and developing web applications. These plug-ins are:
+ </para> 
+  <itemizedlist> 
+ <listitem> 
+  <formalpara> 
+      <title>Statistics reporter</title> 
+      <para>The statistics reporter is a simple plug-in that provides
+     statistics about a topic map, such as the number of topics, the number of
+     topics of each type, the association structure of the topic map, and so
+     on.</para> 
+  </formalpara> 
+ </listitem> 
+ <listitem> 
+  <formalpara> 
+      <title>Merge plug-in</title> 
+      <para>The merge plug-in allows you to merge any topic map in the
+     navigator's topic map registry with the current topic map, and enters the
+     merged topic map into the navigator as a new topic map. You can then browse the
+     resulting topic map in the navigator. This allows you to easily and quickly
+     test the effects of automatically merging topic maps.</para> 
+  </formalpara> 
+ </listitem> 
+ <listitem> 
+  <formalpara> 
+      <title>Export</title> 
+      <para>The export plug-in allows topic maps to be exported in either
+     ISO 13250 or XTM 1.0 format, and to be viewed or downloaded. Two topic maps can
+     be merged using the merge plug-in and then exported in merged form using the
+     export plug-in. Topic maps can also be loaded in one format (XTM, ISO, or LTM)
+     and exported in another.</para> 
+  </formalpara> 
+ </listitem> 
+ <listitem> 
+  <formalpara> 
+      <title>Full-text search</title> 
+      <para>This plug-in comes with the full-text integration product and
+     makes it very easy to do full-text searches on the topic map. Results are
+     displayed in an intuitive manner, with links both into the topic maps and to
+     any external resources in which matches were found.</para> 
+  </formalpara> 
+ </listitem> 
+  </itemizedlist> 
+  <para> More plug-ins are likely to be developed in the near future, since
+ the simplicity of the plug-in concept makes it very easy to develop new
+ plug-ins. A number of trivial examples in addition to those mentioned here are
+ distributed with the Omnigator. </para> 
+</section> 
+</section> 
+  
+
+<section> 
+  <title>The Web Editor Framework</title> 
+  <para>Often topic maps can be generated automatically from existing data
+    sources, but sometimes they may not be sufficient. Sometimes, the knowledge
+    required by an application simply doesn't already exist in the system. In
+    situations like this manual topic map creation and maintenance is used to add
+    value to the autogenerated topic map.The Ontopia Web Editor Framework is a
+    component of the Professional Edition and Enterprise Edition.</para> 
+  <para>The Web Editor Framework provides the functionality to build
+    user-friendly editing environments. Instead of subjecting users to all the
+    complexities of topic map, custom applications can be developed that doesn't
+    require users to know that they are working with topic maps.</para> 
+  <figure> 
+    <title>Editing application built using the Web Editor
+   Framework</title><graphic fileref="edit-screen.png"/> 
+  </figure> 
+  <section> 
+    <title>Customized vs generic editing interfaces</title>
+
+    <para>The Web Editor Framework enables you to build a customized
+    editor for your specific ontology. However, not all users wish to
+    do this, and for such users Ontopia is developing a generic
+    editor. This editor (OmniEditor) will let users define their own
+    ontologies, which will then be used to drive the editing
+    interface. OmniEditor should be adequate for any users who do not
+    require highly customized interfaces, and which do not require
+    complex updating logic. If you are interested in beta-testing the
+    OmniEditor, please send an email to <email>sales@ontopia.net</email>.
+    </para>
+  </section> 
+  <section> 
+    <title>Applying the Web Editor Framework</title> 
+    <para>The Web Editor Framework is an extension of the Navigator
+   Framework. It is assumed that you have read through the previous chapter where
+   the Navigator Framework was discussed.</para> 
+    <para>The Web Editor Framework includes tag libraries for the tasks of
+   adding, modifying and deleting topic map constructs. Applications built using
+   the Navigator Framework can be easily reused and just extended with the adding
+   functionality. The interface to the user is form-based. </para> 
+    <para>The web developer writes JSP pages which produce HTML pages
+   containing HTML forms. The forms and fields included in the HTML are connected
+   to actions on the server which are triggered when the form is submitted. The
+   input fields, e.g. text input fields, buttons and lists are connected with
+   topic map objects, e.g. topics, associations, occurrences etc. </para> 
+    <para>Furthermore the following features are supported</para> 
+    <variablelist> 
+   <varlistentry> 
+    <term></term> 
+    <listitem> 
+        <para>Declarative specification of application control flow</para> 
+    </listitem> 
+   </varlistentry> 
+   <varlistentry> 
+    <term></term> 
+    <listitem> 
+        <para>Concurrent authoring and transaction handling</para> 
+    </listitem> 
+   </varlistentry> 
+   <varlistentry> 
+    <term></term> 
+    <listitem> 
+        <para>File- und RDBMS-based storage</para> 
+    </listitem> 
+   </varlistentry> 
+   <varlistentry> 
+    <term></term> 
+    <listitem> 
+        <para>The libraries provide you with the most common actions but it
+       is possible to create your own custom actions</para> 
+    </listitem> 
+   </varlistentry> 
+    </variablelist> 
+  </section> 
+  </section>
+
+  <section> 
+  <title>The Ontopia Topic Map Engine</title> 
+  <para> The Ontopia Topic Map Engine is what topic map applications and
+    products use to work with topic maps. This SDK lets applications load topic
+    maps from XML documents, store topic maps in databases, modify and access topic
+    maps, and generally do all an application may need to do with a topic map. The
+    engine has a core topic map API, which all applications use to access topic map
+    data, regardless of where those data are stored. Thus, whether the topic map is
+    in-memory, in a database, or a virtual view is all the same to the application.
+    </para> 
+  <para> The Ontopia Topic Map Engine is the product of three years of topic
+    map software development and sports a number of impressive features, as well as
+    some powerful add-on components. The features are described immediately below,
+    while the components are described in separate sections below. </para> 
+  <variablelist> 
+    <varlistentry> 
+   <term>A well-designed API</term> 
+   <listitem> 
+    <para>The core API of the engine has been carefully designed to be
+        consistent, intuitive, and scalable. A number of well-considered policies
+        describing the rules topic map data must abide by have been designed and
+        documented. The result is an API that is quickly learned, and that protects the
+        integrity of the underlying topic map data. The core API consists only of data
+        objects, with all action objects separated out. This separation means that the
+        core API is essentially only a thin layer over the underlying data.</para> 
+    <para>The core APIs provide an object model that fully supports both
+        the ISO 13250 standard and the XTM 1.0 specification. All aspects of the models
+        of both standards are supported, as are extensions for other addressing
+        syntaxes than URIs.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>Extensive utilities</term> 
+   <listitem> 
+    <para>A rich set of utilities built on the core API is provided.
+        These utilities provide functions like topic map-wide deletion of topics,
+        association walking, filtering characteristics by scope, name selection, and
+        topic map merging. The utilities are general and will work for any
+        implementation of the core API.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>The index API</term> 
+   <listitem> 
+    <para>The engine also has an index API which can be used for quickly
+        and efficiently looking up information about the topic map, such as all
+        instances of a given type, all topics that have been used as topic types, all
+        topics used as scopes for occurrences, and so on. This API enables applications
+        to quickly and efficiently locate the information they need, and also provides
+        a mechanism for inferring information about the design of the topic map.</para>
+    
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>XML import and export</term> 
+   <listitem> 
+    <para>The engine has APIs for importing and exporting topic maps to
+        and from XML documents. There is full support for the XTM 1.0 format and all
+        its features, as well as for an XML version of the ISO 13250 format. Topic maps
+        can easily be imported from one format and exported into the other. There is
+        also support for validating XTM topic maps against a DTD and verifying that
+        there are no dead references.</para> 
+    <para>There is also support for importing topic maps from the compact
+        and easy-to-author 
+        <ulink url="http://www.ontopia.net/download/ltm.html">LTM
+       format</ulink> developed by Ontopia. This can be used to author and demo simple
+        topic maps very quickly.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>Cross-platform support</term> 
+   <listitem> 
+    <para>The Engine is written in pure Java (though not certified as
+        such), and has been tested with the Java 2 Software Development Kit (SDK) 1.3
+        on Windows 98, Windows 2000, RedHat Linux 7.0, SuSE Linux 7.1, Debian Linux
+        2.2, and Solaris SunOS 5.7. No known platform dependencies are in the code, and
+        so it should run on any platform that has a Java 1.3 environment.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>Internationalization support</term> 
+   <listitem> 
+    <para>The Engine correctly imports and exports topic maps to and from
+        any legacy encodings supported by Java, which means that most character
+        encodings are supported. Use is also made of the internationalization features
+        of Java to provide internationalized sorting and similar operations.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>Comprehensive test suite</term> 
+   <listitem> 
+    <para>To support the development and maintainance of the engine we
+        have developed an extensive automated test suite for the engine. This test
+        suite consists of more than 1000 test cases and verifies that all aspects of
+        the engine are working correctly. All aspects of the core APIs, the utilities,
+        the XML import/export, and the index API are tested. This ensures that the
+        quality of the engine is high and that it remains so over time.</para> 
+    <para>The test suite is shipped with the product, which enables
+        customers to quickly verify that the engine works correctly in their particular
+        environment. The test suite is also used to verify that the various
+        implementations of the core APIs behave identically.</para> 
+   </listitem> 
+    </varlistentry> 
+    <varlistentry> 
+   <term>Enterprise-level robustness</term> 
+   <listitem> 
+    <para>The engine has been tested extensively to verify that it is
+        thread-safe, scalable, and performant. A collection of automated testing tools
+        has been developed to verify that the engine maintains these properties as new
+        features continue to be added.</para> 
+   </listitem> 
+    </varlistentry> 
+  </variablelist> 
+  <section> 
+    <title>The architecture of the engine</title> 
+    <para> As is shown in the diagram below topic map applications access the
+   topic map data through the core APIs and the topic map utilities. The utilities
+   also use the core APIs, and so all interaction with the topic map data happen
+   passes through the core interfaces. Import and export of topic maps serialized
+   as XML, whether in XTM 1.0 or ISO 13250 format, is also done through the core
+   interfaces. </para> 
+    <figure> 
+   <title>The engine architecture</title>
+   <graphic fileref="EngineArch.png"/> 
+    </figure> 
+    <para> This architecture allows applications and utilities to be
+   implemented independently of how topic map data are represented. The data can
+   be an in-memory object structure (which is what this diagram shows), a special
+   implementation that stores its data in a relational database, or even a virtual
+   view onto another data source. All applications and utilities will still work
+   with the topic map in the same way. </para> 
+  </section> 
+  <section> 
+    <title>The Query Engine</title> 
+    <para> The Query Engine is an implementation of the tolog query language
+   for topic maps. This language can query topic maps for topics of specific
+   types, which participate in certain combinations of associations, and supports
+   inference rules. You can sort query results, and there is also support for
+   counting query matches, and sorting by counts. </para> 
+    <para> Using tolog allows complex retrieval operations to be expressed
+   compactly and easily, making it easier to develop and maintain applications.
+   tolog is <emphasis>not</emphasis> a standardized query language, but is
+   provided while ISO completes its standardized TMQL query language. Once
+   completed, Ontopia will provide full support for TMQL. </para> 
+    <para> The query engine analyzes queries in order to find the most
+   efficient way to perform the query, which means that using queries generally
+   yields much more efficient code than implementing the query yourself on top of
+   the APIs. The effort of writing a query is also of course at least an order of
+   magnitude smaller. </para> 
+    <para> More information on the tolog query language is available in 
+   <ulink url="http://www.ontopia.net/topicmaps/materials/tolog.html">an
+    early paper</ulink> presented at XML Europe 2001, as well as 
+   <ulink
+      url="http://www.ontopia.net/omnigator/docs/query/tutorial.html">the tolog
+    language tutorial</ulink>. </para> 
+  </section> 
+  <section> 
+    <title>The Schema Tools</title> 
+    <para> The Schema Tools are an implementation of the Ontopia Schema
+   Language (OSL), which is a schema language for topic maps that allows the
+   expression of constraints on a topic map. For example, it can be used to say
+   that composers must have only a single name, they must have a date of death and
+   of birth, and they must have composed at least one opera. </para> 
+    <para> Using the Schema Tools applications can easily validate whether or
+   not the topic maps they work with follow the prescribed topic map structure or
+   not. Schemas are also useful as compact and precise documentation of the
+   structure of a topic map. </para> 
+    <para> The main use for the Schema Tools is to ensure that human authors
+   follow the editorial guidelines laid down in a particular topic map project,
+   but they can also be used to guard against unpleasant surprises in
+   automatically generated topic maps. </para> 
+    <para> OSL is described in 
+   <ulink
+      url="http://www.ontopia.net/omnigator/docs/schema/tutorial.html">the OSL
+    tutorial</ulink>. </para> 
+  </section> 
+  <section> 
+    <title>The Full-text Search Integration</title> 
+    <para> The Full-Text Integration allows topic maps to be indexed and then
+   searched for topics by their names and the contents of their occurrences. This
+   can be very helpful for users new to topic maps who need to find something
+   quickly in a topic map. Using the full-text search they can type the name of
+   what they are looking for and immediately be presented with a list of
+   alternative topics. From the topics they can then easily find the information
+   they are looking for. </para> 
+    <para> Using full-text searching in this way gives users an entirely
+   different user experience, since although they are doing an unstructured search
+   the users get a result set that is anything but unstructured. Since users are
+   shown their search results in terms of topic map constructs it is much easier
+   to judge <emphasis>what</emphasis> they have found, and one can more easily
+   search for obscure or vague concepts by searching for related topics and then
+   navigating around. </para> 
+    <para> The Java-based search engine 
+   <ulink url="http://jakarta.apache.org/lucene/docs/">Lucene</ulink>
+   comes bundled with the integration. Lucene is open source, powerful, robust,
+   scalable, and lightning fast. A plug-in for the Omnigator providing an
+   easy-to-use user interface is also part of the distribution. Other full-text
+   search engines can also be plugged in. You can try this out in 
+   <ulink url="http://www.ontopia.net/omnigator/">the online demo</ulink>.
+   For more information about Lucene please see the 
+   <ulink url="http://jakarta.apache.org/lucene/docs/index.html">Lucene
+    homepage</ulink>.</para> 
+  </section> 
+  <section> 
+    <title>The RDBMS backend</title> 
+    <para> The RDBMS backend is an add-on to the Ontopia Topic Map Engine
+   that uses the architecture described in the previous section to store topic
+   maps persistently in relational databases. The applications access the topic
+   map data through a different implementation of the core interfaces, which means
+   that applications (as well as the engine utilities) need not care how the topic
+   map data are stored. The test suite is used to verify that the two API
+   implementations behave in precisely the same way. </para> 
+    <para> The diagram below shows the architecture of the engine with the
+   RDBMS backend. </para> 
+    <figure> 
+   <title>The engine architecture (with RDBMS)</title>
+   <graphic fileref="RdbmsArch.png"/> 
+    </figure> 
+    <para> Using this backend topic map application can scale to handle
+   enormous topic maps, and also get benefits such as transactions and concurrency
+   management between different processes. The architecture of the engine allows
+   prototypes to be developed quickly using topic maps generated by scripts and
+   stored in XML files. The prototype can then be upgraded to production quality
+   by switching to the RDBMS backend and upgrading the generation scripts. The
+   applications themselves do not need to change, since they are independent of
+   where the topic maps are stored. </para> 
+    <para>The RDBMS backend has been tested with Oracle 8i, PostgreSQL 7.1,
+   and hsql 1.61, and is known to work with these databases. It can also be used
+   with MySQL 3.23 (with the InnoDB transaction support). Whether the backend
+   works on a given server or not can easily be verified using the test
+   suite.</para> 
+  </section> 
+  </section> 
+ 
+</article> 
