@@ -97,10 +97,10 @@ public class QueryOptimizer {
       if (options.getBooleanValue("optimizer.prefix-search", true))
         optimizer.addOptimizer(new QueryOptimizer.StringPrefixOptimizer());
       if (options.getBooleanValue("optimizer.role-player-type", 
-																	storeImplementation == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION))
+                 storeImplementation == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION))
         optimizer.addOptimizer(new QueryOptimizer.AddTypeToRolePlayer());
       if (options.getBooleanValue("optimizer.next-previous", 
-																	storeImplementation == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION))
+                 storeImplementation == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION))
         optimizer.addOptimizer(new QueryOptimizer.NextPreviousOptimizer());
     }
     return optimizer;
@@ -542,9 +542,9 @@ public class QueryOptimizer {
       if (or.getAlternatives().size() != 2)
         return null;
 
-			// OR clause must not be short-circuiting
-			if (or.getShortCircuit())
-				return null;
+      // OR clause must not be short-circuiting
+      if (or.getShortCircuit())
+        return null;
 
       List bottom = filter((List) or.getAlternatives().get(0)); // one clause
       List pump = filter((List) or.getAlternatives().get(1));   // two clauses
