@@ -15,7 +15,7 @@ import net.ontopia.utils.StringUtils;
  */
 public class OrClause extends AbstractClause {
   protected List alternatives;
-	protected boolean shortcircuit;
+  protected boolean shortcircuit;
   public OrClause() {
     alternatives = new ArrayList();
   }
@@ -24,13 +24,13 @@ public class OrClause extends AbstractClause {
     this.alternatives = alternatives;
   }
 
-	public boolean getShortCircuit() {
-		return shortcircuit;
-	}
+  public boolean getShortCircuit() {
+    return shortcircuit;
+  }
 
-	public void setShortCircuit(boolean shortcircuit) {
-		this.shortcircuit = shortcircuit;
-	}
+  public void setShortCircuit(boolean shortcircuit) {
+    this.shortcircuit = shortcircuit;
+  }
 
   public void addClauseList(List alternative) {
     alternatives.add(alternative);
