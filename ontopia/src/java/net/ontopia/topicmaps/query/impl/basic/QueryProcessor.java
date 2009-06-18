@@ -76,49 +76,6 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     context = new LocalParseContext(context);
     parser = new TologParser(context);
   }
-
-  private Collator getCollator(TopicMapIF tm) {
-    if (tm.getStore().getImplementation() == TopicMapStoreIF.RDBMS_IMPLEMENTATION) {
-      // look up locale settings in properties file
-      RDBMSTopicMapStore store = (RDBMSTopicMapStore) tm.getStore();
-      String locale = store.getProperty("net.ontopia.topicmaps.query.core.QueryProcessorIF.locale");
-      Collator c = getCollator(locale);
-      if (c != null) return c;
-    }
-    // fallback to using system property
-    try {
-      return getCollator(System.getProperty("net.ontopia.topicmaps.query.core.QueryProcessorIF.locale"));
-    } catch (SecurityException e) {
-      return null;
-    }
-  }
-
-  private Locale getLocale(String _locale) {
-    if (_locale == null) return null;
-
-    String language = null;
-    String country = null;
-    String variant = null;
-    
-    String[] locale = StringUtils.split(_locale, "_");
-    if (locale.length >= 1)
-      language = locale[0];
-    if (locale.length >= 2)
-      country = locale[1];
-    if (locale.length >= 3)
-      variant = locale[2];
-    
-    if (country == null) country = "";
-    if (variant == null) variant = "";
-
-    return new Locale(language, country, variant);    
-  }
-  
-  private Collator getCollator(String _locale) {
-    Locale locale = getLocale(_locale);
-    if (locale == null) return null;
-    return Collator.getInstance(locale);
-  }
   
   // / query processor implementation
 
@@ -494,10 +451,10 @@ public class QueryProcessor extends AbstractQueryProcessor implements
                         name1.compareTo(name2));
             }
           } else {
-					  Object x1 = row1[orderColumns[ix]];
-					  Object x2 = row2[orderColumns[ix]];
-					  String id1 = (x1 instanceof TMObjectIF ? ((TMObjectIF) x1).getObjectId() : ObjectUtils.toString(x1));
-					  String id2 = (x2 instanceof TMObjectIF ? ((TMObjectIF) x2).getObjectId() : ObjectUtils.toString(x2));
+            Object x1 = row1[orderColumns[ix]];
+            Object x2 = row2[orderColumns[ix]];
+            String id1 = (x1 instanceof TMObjectIF ? ((TMObjectIF) x1).getObjectId() : ObjectUtils.toString(x1));
+            String id2 = (x2 instanceof TMObjectIF ? ((TMObjectIF) x2).getObjectId() : ObjectUtils.toString(x2));
             comp = id1.compareTo(id2);
           }
           break;
@@ -623,4 +580,48 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   private final static boolean[] Prefetcher_OB_traverse = new boolean[] {
       false, false };
 
+  // -- Collation handling
+
+  private Collator getCollator(TopicMapIF tm) {
+    if (tm.getStore().getImplementation() == TopicMapStoreIF.RDBMS_IMPLEMENTATION) {
+      // look up locale settings in properties file
+      RDBMSTopicMapStore store = (RDBMSTopicMapStore) tm.getStore();
+      String locale = store.getProperty("net.ontopia.topicmaps.query.core.QueryProcessorIF.locale");
+      Collator c = getCollator(locale);
+      if (c != null) return c;
+    }
+    // fallback to using system property
+    try {
+      return getCollator(System.getProperty("net.ontopia.topicmaps.query.core.QueryProcessorIF.locale"));
+    } catch (SecurityException e) {
+      return null;
+    }
+  }
+
+  private Locale getLocale(String _locale) {
+    if (_locale == null) return null;
+
+    String language = null;
+    String country = null;
+    String variant = null;
+    
+    String[] locale = StringUtils.split(_locale, "_");
+    if (locale.length >= 1)
+      language = locale[0];
+    if (locale.length >= 2)
+      country = locale[1];
+    if (locale.length >= 3)
+      variant = locale[2];
+    
+    if (country == null) country = "";
+    if (variant == null) variant = "";
+
+    return new Locale(language, country, variant);    
+  }
+  
+  private Collator getCollator(String _locale) {
+    Locale locale = getLocale(_locale);
+    if (locale == null) return null;
+    return Collator.getInstance(locale);
+  }  
 }
