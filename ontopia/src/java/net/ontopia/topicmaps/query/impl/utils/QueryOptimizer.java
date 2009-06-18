@@ -85,9 +85,9 @@ public class QueryOptimizer {
       if (options.getBooleanValue("optimizer.inliner", true))
         optimizer.addOptimizer(new QueryOptimizer.RuleInliner());
       if (options.getBooleanValue("optimizer.reorder", true)) {
-        // NOTE: new optimizer off by default -- for now
+        // NOTE: new optimizer is now on by default
         boolean newapproach =
-          options.getBooleanValue("optimizer.reorder.predicate-based", false);
+          options.getBooleanValue("optimizer.reorder.predicate-based", true);
         optimizer.addOptimizer(new QueryOptimizer.Reorderer(newapproach));
       }
       if (options.getBooleanValue("optimizer.typeconflict", true))
@@ -1186,7 +1186,10 @@ public class QueryOptimizer {
     }
 
     public int getCost(boolean[] boundparams) {
-      throw new UnsupportedOperationException();
+      // after the optimization, this is the only top-level predicate,
+      // so what we return doesn't much matter. in any case, we'll
+      // produce at most this.limit hits, so SMALL_RESULT seems fair
+      return PredicateDrivenCostEstimator.SMALL_RESULT;
     }
 
     public QueryMatches satisfy(QueryMatches input, Object[] arguments)
