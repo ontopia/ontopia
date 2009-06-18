@@ -237,10 +237,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   /**
    * INTERNAL: Replaces count($A) variables by their relevant counts.
    * 
-   * @param query
-   *          The parsed query.
-   * @param matches
-   *          The query result.
+   * @param query The parsed query.
+   * @param matches The query result.
    */
   public QueryMatches count(TologQuery query, QueryMatches matches) {
     // WARNING: method used by rdbms tolog
@@ -289,10 +287,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   /**
    * INTERNAL: Sorts the query result as requested.
    * 
-   * @param query
-   *          The parsed query.
-   * @param matches
-   *          The query result.
+   * @param query The parsed query.
+   * @param matches The query result.
    */
   public void sort(TologQuery query, QueryMatches matches) {
     // WARNING: method used by rdbms tolog
