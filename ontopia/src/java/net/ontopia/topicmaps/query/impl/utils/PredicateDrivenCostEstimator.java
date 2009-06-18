@@ -56,7 +56,7 @@ public class PredicateDrivenCostEstimator extends CostEstimator {
     else if (clause instanceof OrClause &&
              ((OrClause) clause).getAlternatives().size() == 1)
       // set the cost to something big
-      cost = INFINITE_RESULT + 1;
+      cost = INFINITE_RESULT - 1; // avoid crashes because of unbound vars
     else if (clause instanceof OrClause) 
       cost = computeCost((OrClause) clause, context, literalvars, rulename);
     
