@@ -257,7 +257,7 @@
                            association-role($A, $R1),
                            role-player($R1, %topic%),
                            not(association-role($A, $R2), $R1 /= $R2),
-                           not( {type($A, ont:is-abstract)|type($A, ont:is-hidden)} )
+                           not( {type($A, ont:is-abstract)|type($A, ont:is-hidden-type)} )
                            order by $T?' select="A"/>
         </logic:set>
         <logic:if name="unaryAssocs"><logic:then>
