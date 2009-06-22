@@ -63,7 +63,6 @@
 
     <!-- Specific build properties -->
     <property name="ant.home" value="NOTE:please-specify-this-property-in-file-build.properties" />
-    <property name="j2se14.home" value="NOTE:please-specify-this-property-in-file-build.properties" />
     <property name="j2se15.home" value="NOTE:please-specify-this-property-in-file-build.properties" />
     <property name="j2se16.home" value="NOTE:please-specify-this-property-in-file-build.properties" />
 
@@ -339,7 +338,7 @@
 
   <target name="compile.engine" depends="compile.ltm,compile.ctm">
     <echo>Compiling engine classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.engine" />
     </javac>
     <!-- copy configuration files -->
@@ -358,14 +357,6 @@
     <antcall target="clean.tmapi" />
   </target>
 
-  <target name="jar.net" depends="compile.engine">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-net.jar">
-      <patternset>
-        <include name="net/ontopia/net/**/*.class" />
-      </patternset>
-    </jar>
-  </target>
-
   <!-- =====================================================================
         Cmdlineutils
        ====================================================================== -->
@@ -381,7 +372,7 @@
 
   <target name="compile.cmdlineutils" depends="compile.engine">
     <echo>Compiling command line utilities...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.cmdlineutils" />
     </javac>
   </target>
@@ -405,7 +396,6 @@
     <include name="net/ontopia/persistence/query/jdo/*.java" />
     <include name="net/ontopia/persistence/rdbms/*.java" />
     <include name="net/ontopia/persistence/jdbcspy/*.java" />
-    <include name="net/ontopia/products/RDBMSBackend.java" />
     <include name="net/ontopia/topicmaps/impl/rdbms/*.java" />
     <include name="net/ontopia/topicmaps/impl/rdbms/index/*.java" />
     <include name="net/ontopia/topicmaps/cmdlineutils/rdbms/*.java" />
@@ -417,7 +407,6 @@
     <include name="net/ontopia/persistence/query/jdo/*.class" />
     <include name="net/ontopia/persistence/rdbms/*.class" />
     <include name="net/ontopia/persistence/jdbcspy/*.class" />
-    <include name="net/ontopia/products/RDBMSBackend.class" />
     <include name="net/ontopia/topicmaps/impl/rdbms/*.class" />
     <include name="net/ontopia/topicmaps/impl/rdbms/index/*.class" />
     <include name="net/ontopia/topicmaps/cmdlineutils/rdbms/*.class" />
@@ -429,7 +418,7 @@
 
   <target name="compile.rdbms" depends="compile.engine">
     <echo>Compiling rdbms implementation classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3"> 
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5"> 
       <patternset refid="sources.rdbms" />
     </javac>
     <!-- copy configuration files -->
@@ -475,7 +464,7 @@
 
   <target name="compile.test.rdbms" depends="compile.test.engine,compile.rdbms">
     <echo>Compiling test cases for rdbms proxy...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.rdbms" />
     </javac>
   </target>
@@ -494,7 +483,6 @@
        ====================================================================== -->
 
   <patternset id="sources.fulltext">
-    <include name="net/ontopia/products/FulltextIntegration.java" />
     <include name="net/ontopia/infoset/fulltext/core/*.java" />
     <include name="net/ontopia/infoset/fulltext/impl/lucene/*.java" />
     <include name="net/ontopia/infoset/fulltext/impl/rdbms/*.java" />
@@ -505,7 +493,6 @@
   </patternset>
 
   <patternset id="classes.fulltext">
-    <include name="net/ontopia/products/FulltextIntegration.class" />
     <include name="net/ontopia/infoset/fulltext/core/*.class" />
     <include name="net/ontopia/infoset/fulltext/impl/lucene/*.class" />
     <include name="net/ontopia/infoset/fulltext/impl/rdbms/*.class" />
@@ -527,14 +514,14 @@
 
   <target name="compile.fulltext" depends="compile.engine">
     <echo>Compiling fulltext classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.fulltext" />
     </javac>
   </target>
 
   <target name="compile.test.fulltext" depends="compile.test.engine,compile.fulltext">
     <echo>Compiling fulltext test suite...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.fulltext" />
     </javac>
   </target>
@@ -586,7 +573,7 @@
 
   <target name="compile.db2tm" depends="compile.engine">
     <echo>Compiling DB2TM classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.db2tm" />
     </javac>
     <!-- copy configuration files -->
@@ -606,7 +593,7 @@
 
   <target name="compile.test.db2tm" depends="compile.test.engine,compile.db2tm">
     <echo>Compiling DB2TM test classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.db2tm" />
     </javac>
     <!-- copy mapping files -->
@@ -615,12 +602,6 @@
          <include name="*.xml" />
       </fileset>
      </copy>
-  </target>
-
-  <target name="jar.db2tm" depends="clean.db2tm,compile.db2tm">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-db2tm.jar">
-      <patternset refid="classes.db2tm"/>
-    </jar>
   </target>
 
   <property name="dist.db2tm.packagenames" value="
@@ -652,7 +633,7 @@
 
   <target name="compile.classify" depends="compile.engine">
     <echo>Compiling CLASSIFY classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.classify" />
     </javac>
     <!-- copy configuration files -->
@@ -674,7 +655,7 @@
 
   <target name="compile.test.classify" depends="compile.test.engine,compile.classify">
     <echo>Compiling CLASSIFY test classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.classify" />
     </javac>
   </target>
@@ -715,15 +696,9 @@
 
   <target name="compile.test.tmrap" depends="compile.test.engine">
     <echo>Compiling TMRAP test classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.tmrap" />
     </javac>
-  </target>
-
-  <target name="jar.tmrap" depends="compile.engine">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-tmrap.jar">
-      <patternset refid="classes.tmrap"/>
-    </jar>
   </target>
 
   <!-- ======================================================================
@@ -750,7 +725,7 @@
 
   <target name="compile.test.engine" depends="compile.engine">
     <echo>Compiling test cases for engine...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.engine" />
       <patternset refid="sources.test.tmapi" />
     </javac>
@@ -854,7 +829,6 @@
        ====================================================================== -->
 
   <property name="dist.engine.packagenames" value="
-       net.ontopia.products,
        net.ontopia.utils, 
        net.ontopia.infoset.core, 
        net.ontopia.infoset.impl.basic, 
@@ -871,7 +845,6 @@
        net.ontopia.topicmaps.impl.basic" />
 
   <property name="dev.engine.packagenames" value="
-       net.ontopia.products,
        net.ontopia.utils, 
        net.ontopia.xml, 
        net.ontopia.infoset.core, 
@@ -898,7 +871,6 @@
        ==================================================================== -->
 
   <patternset id="sources.navigator">
-    <include name="net/ontopia/products/GenericNavigator.java" />
     <include name="net/ontopia/utils/ontojsp/*.java" />
     <include name="net/ontopia/topicmaps/nav2/core/*.java" />
     <include name="net/ontopia/topicmaps/nav2/utils/*.java" />
@@ -934,7 +906,6 @@
   </patternset>
 
   <patternset id="classes.navigator">
-    <include name="net/ontopia/products/GenericNavigator.class" />
     <include name="net/ontopia/utils/ontojsp/*.class" />
     <include name="net/ontopia/topicmaps/nav2/core/*.class" />
     <include name="net/ontopia/topicmaps/nav2/utils/*.class" />
@@ -973,7 +944,7 @@
     <echo>Compiling navigator 2nd generation classes...</echo>
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" 
            deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" 
-           classpathref="project.class.path" source="1.3">
+           classpathref="project.class.path" source="1.5">
       <patternset refid="sources.navigator" />
     </javac>
     <echo>Copying TLDs to META-INF...</echo>
@@ -1044,7 +1015,7 @@
 
   <target name="compile.test.navigator" depends="compile.test.engine,compile.navigator">
     <echo>Compiling test cases for navigator 2nd generation...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.navigator" />
     </javac>
   </target>
@@ -1064,7 +1035,6 @@
        ==================================================================== -->
 
   <patternset id="sources.webed">
-    <include name="net/ontopia/products/WebEditor.java" />
     <include name="net/ontopia/topicmaps/webed/core/*.java" />
     <include name="net/ontopia/topicmaps/webed/impl/basic/*.java" />
     <include name="net/ontopia/topicmaps/webed/impl/utils/*.java" />
@@ -1085,7 +1055,6 @@
   </patternset>
 
   <patternset id="classes.webed">
-    <include name="net/ontopia/products/WebEditor.class" />
     <include name="net/ontopia/topicmaps/webed/core/*.class" />
     <include name="net/ontopia/topicmaps/webed/impl/basic/*.class" />
     <include name="net/ontopia/topicmaps/webed/impl/utils/*.class" />
@@ -1132,7 +1101,7 @@
 
   <target name="compile.webed" depends="compile.navigator">
     <echo>Compiling web editor classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.webed" />
     </javac>
     <echo>Copying velocity macros...</echo>
@@ -1143,7 +1112,7 @@
 
   <target name="compile.test.webed" depends="compile.test.navigator,compile.webed">
     <echo>Compiling web editor test classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.webed" />
     </javac>
   </target>
@@ -1312,8 +1281,8 @@
 
   <target name="dist.ontopia.init" depends="init">
     <!-- Distribution properties -->
-    <property name="dist.version.major" value="4"/>
-    <property name="dist.version.minor" value="1"/>
+    <property name="dist.version.major" value="5"/>
+    <property name="dist.version.minor" value="0"/>
     <property name="dist.version.micro" value="0"/>
     <property name="dist.is.beta"       value="0"/> <!-- beta if greater than zero -->
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}"/>
@@ -1412,13 +1381,6 @@
     <mkdir dir="${dist.path}/config/vm-templates" />
     <copy todir="${dist.path}/config/vm-templates">
       <fileset dir="${src.path}/webapps/webedtest/WEB-INF/templates" />
-    </copy>
-    <!-- Generate JSP 1.1 TLD files -->
-    <antcall target="dist.tld.1.1" />
-    <!-- Copy JSP 1.2 TLD files -->
-    <mkdir dir="${dist.path}/config/jsp-12" />
-    <copy todir="${dist.path}/config/jsp-12">
-      <fileset dir="${src.path}/webapps/webedtest/WEB-INF/jsp" />
     </copy>
 
     <!-- Vizigator -->
@@ -1568,7 +1530,7 @@
 
   <target name="compile.test.webed.actions" depends="init">
     <echo>Compiling web editor test action classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.webed.actions" />
     </javac>
   </target>
@@ -1810,16 +1772,42 @@
     <mkdir dir="${collect.path}/lib" />
 
     <!-- Collect 3rdparty jar files -->
+    <copy file="${3rdparty.path}/jing.jar" todir="${dist.path}/lib" />
     <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/apache-tomcat/common/lib" />
     <copy file="${3rdparty.path}/touchgraph.jar" todir="${dist.path}/lib" />
 
     <!-- Collect lib jar files -->
-    <copy todir="${dist.path}/lib" overwrite="yes">
-      <fileset dir="${lib.path}">
-         <include name="*.jar" /> <!-- TODO: replace by ivy conf -->
+    <copy file="${lib.path}/antlr-2.7.7.jar" tofile="${dist.path}/lib/antlr.jar" />
+    <copy file="${lib.path}/backport-util-concurrent-3.1.jar" tofile="${dist.path}/lib/backport-util-concurrent.jar" />
+    <copy file="${lib.path}/commons-collections-3.2.1.jar" tofile="${dist.path}/lib/commons-collections.jar" />
+    <copy file="${lib.path}/commons-dbcp-1.2.2.jar" tofile="${dist.path}/lib/commons-dbcp.jar" />
+    <copy file="${lib.path}/commons-fileupload-1.1.jar" tofile="${dist.path}/lib/commons-fileupload.jar" />
+    <copy file="${lib.path}/commons-logging-1.1.1.jar" tofile="${dist.path}/lib/commons-logging.jar" />
+    <copy file="${lib.path}/commons-pool-1.3.jar" tofile="${dist.path}/lib/commons-pool.jar" />
+    <copy file="${lib.path}/concurrent-1.3.4.jar" tofile="${dist.path}/lib/concurrent.jar" />
+    <copy file="${lib.path}/crimson-1.1.3.jar" tofile="${dist.path}/lib/crimson.jar" />
+    <copy file="${lib.path}/icu4j-3.4.4.jar" tofile="${dist.path}/lib/icu4j.jar" /> <!-- jaxp.jar?-->
+    <copy file="${lib.path}/java-getopt-1.0.9.jar" tofile="${dist.path}/lib/java-getopt.jar" />
+    <copy file="${lib.path}/oro-2.0.8.jar" tofile="${dist.path}/lib/oro.jar" />
+    <copy file="${lib.path}/jena-2.3.jar" tofile="${dist.path}/lib/jena.jar" />
+    <copy file="${lib.path}/jgroups-2.6.10.GA.jar" tofile="${dist.path}/lib/jgroups.jar" />
+    <copy file="${lib.path}/junit-3.8.2.jar" tofile="${dist.path}/lib/junit.jar" />
+    <copy file="${lib.path}/log4j-1.2.14.jar" tofile="${dist.path}/lib/log4j.jar" />
+    <copy file="${lib.path}/lucene-1.4.3.jar" tofile="${dist.path}/lib/lucene.jar" />
+    <copy file="${lib.path}/opencsv-1.8.jar" tofile="${dist.path}/lib/opencsv.jar" />
+    <copy file="${lib.path}/trove-2.1.1.jar" tofile="${dist.path}/lib/trove.jar" />
+    <copy file="${lib.path}/velocity-1.3.jar" tofile="${dist.path}/lib/velocity.jar" />
+    <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
+
+    <copy todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes">
+      <fileset dir="${dist.path}/lib">
+         <include name="*.jar" />
+         <exclude name="ontopia-tests.jar"/>
+         <exclude name="junit.jar"/>
       </fileset>
      </copy>
+    <copy file="${lib.path}/jstl-1.1.2.jar" tofile="${dist.path}/apache-tomcat/common/lib/jstl.jar" />
+    <copy file="${lib.path}/standard-1.1.2.jar" tofile="${dist.path}/apache-tomcat/common/lib/standard.jar" />
 
     <!-- Create doc directory -->
     <mkdir dir="${collect.path}/doc" />
@@ -2093,22 +2081,32 @@
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps" />
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps">
       <fileset dir="${topicmaps.path}"> 
-        <include name="xmltools-tm.xtm"/>
-        <include name="i18n.ltm"/>
-        <include name="jill.xtm"/>
-        <include name="support-kb.ltm"/>
-        <include name="opera.ltm"/>
-        <include name="pokemon.ltm"/>
-        <include name="MyMusic.xtm"/>
-        <include name="dc.xtmm"/>
-        <include name="dc.ltmm"/>
-        <include name="mapping.rdff"/>
+        <!-- omnigator -->
         <include name="KanzakisConcerts.rdf"/>
-        <include name="tm-standards.xtm"/>
+        <include name="MyMusic.xtm"/>
+        <include name="dc.ltmm"/>
+        <include name="dc.xtmm"/>
+        <include name="i18n.ltm"/>
         <include name="i18n.ltm.osl"/>
-        <include name="opera.ltm.osl"/>
+        <include name="jill.xtm"/>
         <include name="jill.xtm.osl"/>
+        <include name="mapping.rdff"/>
+        <include name="opera.ltm"/>
+        <include name="opera.ltm.osl"/>
+        <include name="pokemon.ltm"/>
+        <include name="support-kb.ltm"/>
+        <include name="tm-standards.xtm"/>
+        <include name="xmltools-tm.xtm"/>
         <include name="xmltools-tm.xtm.osl"/>
+        <!-- ontopoly -->
+        <include name="ADL-FTT.xtm"/>
+        <include name="GCL-2-1.xtm"/>
+        <include name="JillsMusic.xtm"/>
+        <include name="KevinsPlan.xtm"/>
+        <include name="MyConcerts.xtm"/>
+        <include name="MyPlan.xtm"/>
+        <include name="MyThesaurus.xtm"/>
+        <include name="TapsasConcerts.xtm"/>
       </fileset>
     </copy>
     <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/tasks.ltm" />
@@ -2313,9 +2311,9 @@
     </javac>
 
     <!-- Generate database scripts -->
-    <mkdir dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/schema/setup" />
-    <exec dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/schema/" executable="sh">
-      <env key="CLASSPATH" path="${build.classes}:${3rdparty.path}/getopt.jar:${3rdparty.path}/crimson.jar"/>
+    <mkdir dir="${src.path}/dist/rdbms/schema" />
+    <exec dir="${src.path}/dist/rdbms/" executable="sh">
+      <env key="CLASSPATH" path="${build.classes}:${lib.path}/java-getopt-1.0.9.jar:${lib.path}/crimson-1.1.3.jar:${lib.path}/log4j-1.2.14.jar"/>
       <arg value="${src.path}/scripts/rdbms-schema.sh" />
     </exec>
 
@@ -2340,20 +2338,20 @@
     <!-- Collect database scripts -->
     <mkdir dir="${dist.path}/rdbms/setup" />
     <copy todir="${dist.path}/rdbms/setup">
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/schema/setup" includes="*.sql" />
+      <fileset dir="${src.path}/dist/rdbms/schema" includes="*.sql" />
     </copy>
     <!-- Collect sample database property -->
     <mkdir dir="${dist.path}/rdbms/config" />
-    <copy todir="${dist.path}/rdbms/config">
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.oracle8.props" />
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.oracle9i.props" />
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.oracle10g.props" />
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.postgresql.props" />
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.sqlserver.props" />
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.mysql.props" />
-      <fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.h2.props" />
-      <!--fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.firebird.props" /-->
-      <!--fileset dir="${java.path}/net/ontopia/topicmaps/impl/rdbms/config" includes="db.sapdb.props" /-->
+    <copy todir="${dist.path}/rdbms/config/">
+      <fileset dir="${src.path}/dist/rdbms/">
+        <include name="db.oracle8.props" />
+        <include name="db.oracle9i.props" />
+        <include name="db.oracle10g.props" />
+        <include name="db.postgresql.props" />
+        <include name="db.sqlserver.props" />
+        <include name="db.mysql.props" />
+        <include name="db.h2.props" />
+      </fileset>
     </copy>
 
     <!-- Collection clustering configuration -->
@@ -2364,33 +2362,6 @@
 
   <target name="dist.rdbms.test.collect">
 
-  </target>
-
-  <!-- - - - Generate TLD files for JSP 1.1 containers  - - - - - - - - - - -->
-
-  <target name="dist.tld.1.1">
-    <mkdir dir="${dist.path}/config/jsp-11" />
-
-    <!-- Compile and package JSP interface stubs -->
-    <javac srcdir="${java.path}" optimize="${optimize}" deprecation="${deprecation}" 
-           debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path">
-      <patternset>
-        <include name="javax/servlet/**/*.java" />
-      </patternset>
-    </javac>
-
-    <jar basedir="${java.path}" jarfile="${dist.path}/config/jsp-11/jsp12-compat.jar">
-      <patternset>
-        <include name="javax/servlet/**/*.class" />
-      </patternset>
-    </jar>
-
-    <!-- Generate TLD files -->
-    <exec executable="python">
-      <arg value="${src.path}/dist/scripts/tld-downgrade.py" />
-      <arg value="${src.path}/webapps/webedtest/WEB-INF/jsp" />
-      <arg value="${dist.path}/config/jsp-11" />
-    </exec>
   </target>
 
   <!-- - - - Update product class - - - - - - - - - - - - - - - - - - - - - -->
@@ -2677,12 +2648,11 @@
      
     <echo>Generating ROOT index page...</echo>
     <texen controlTemplate="index-control.vm" templatePath="${dist.path}/apache-tomcat/webapps/ROOT" 
-           outputFile="toplevel.report" outputDirectory="${build.tmp}" />
+           outputFile="toplevel.report" outputDirectory="${dist.path}/apache-tomcat/webapps/ROOT" />
 
+    <delete file="${dist.path}/apache-tomcat/webapps/ROOT/toplevel.report" />
     <delete file="${dist.path}/apache-tomcat/webapps/ROOT/index-control.vm" />
     <delete file="${dist.path}/apache-tomcat/webapps/ROOT/index-template.vm" />
-    <copy file="${dist.path}/apache-tomcat/webapps/ROOT/ontopia-header.gif" overwrite="yes" 
-        tofile="${dist.path}/apache-tomcat/webapps/ROOT/new_header.gif" />
   </target>
 
   <target name="dist.ontopia.accessctl.compile" depends="init">
@@ -2708,7 +2678,7 @@
 
     <java classname="org.apache.jasper.JspC" dir="${dist.path}/apache-tomcat" 
           failonerror="yes" classpathref="jasper.class.path"
-          fork="true" jvm="${j2se14.home}/bin/java">
+          fork="true" jvm="${j2se15.home}/bin/java">
       <arg line="-v" />
       <arg line="-d webapps/${dist.webapp}/WEB-INF/classes" />
       <arg line="-p net.ontopia.jsp" />
@@ -2720,8 +2690,8 @@
     <echo>Compile ${dist.webapp} jsp source code</echo>
     <javac srcdir="${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/classes" 
          optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" 
-         debuglevel="${debuglevel}" classpathref="jasper.class.path" source="1.3"
-         fork="true" executable="${j2se14.home}/bin/javac"/>
+         debuglevel="${debuglevel}" classpathref="jasper.class.path" source="1.5"
+         fork="true" executable="${j2se15.home}/bin/javac"/>
 
     <echo>insert autogenerated web.xml fragment</echo>
     <exec dir="${java.path}" executable="python">
@@ -2760,7 +2730,6 @@
 
   <!-- Patterns -->
   <patternset id="sources.query">
-    <include name="net/ontopia/products/QueryEngine.java" />
     <include name="net/ontopia/topicmaps/query/core/*.java" />
     <include name="net/ontopia/topicmaps/query/parser/*.java" />
     <include name="net/ontopia/topicmaps/query/utils/*.java" />
@@ -2772,7 +2741,6 @@
   </patternset>
 
   <patternset id="classes.query">
-    <include name="net/ontopia/products/QueryEngine.class" />
     <include name="net/ontopia/topicmaps/query/core/*.class" />
     <include name="net/ontopia/topicmaps/query/parser/*.class" />
     <include name="net/ontopia/topicmaps/query/utils/*.class" />
@@ -2794,14 +2762,14 @@
   <target name="compile.query" depends="compile.engine">
     <echo>Compiling query engine classes...</echo>
     <antlr target="${java.path}/net/ontopia/topicmaps/query/parser/tolog.g" />
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.query" />
     </javac>
   </target>
 
   <target name="compile.test.query" depends="compile.test.engine,compile.query">
     <echo>Compiling query engine test cases...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.query" />
     </javac>
   </target>
@@ -2842,13 +2810,11 @@
        ==================================================================== -->
 
   <patternset id="sources.schema">
-    <include name="net/ontopia/products/SchemaTools.java" />
     <include name="net/ontopia/topicmaps/schema/**/*.java" />
     <exclude name="net/ontopia/topicmaps/schema/**/test/*.java" />
   </patternset>
 
   <patternset id="classes.schema">
-    <include name="net/ontopia/products/SchemaTools.class" />
     <include name="net/ontopia/topicmaps/schema/**/*.class" />
     <exclude name="net/ontopia/topicmaps/schema/**/test/*.class" />
   </patternset>
@@ -2863,14 +2829,14 @@
 
   <target name="compile.schema" depends="compile.engine">
     <echo>Compiling schema tools classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.schema" />
     </javac>
   </target>
 
   <target name="compile.test.schema" depends="compile.test.engine,compile.schema">
     <echo>Compiling schema tools test cases...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.schema" />
     </javac>
   </target>
@@ -2920,14 +2886,14 @@
          tofile="${build.classes}/META-INF/services/org.tmapi.core.TopicMapSystemFactory"/>
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" 
            deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}"
-           classpathref="project.class.path" source="1.3">
+           classpathref="project.class.path" source="1.5">
       <patternset refid="sources.tmapi"/>
     </javac>
   </target>
 
   <target name="compile.test.tmapi" depends="compile.test.engine,compile.tmapi">
     <echo>Compiling TMAPI support test cases...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.test.tmapi" />
     </javac>
   </target>
@@ -2965,7 +2931,7 @@
 
   <target name="compile.dummyLog4j" depends="init">
     <echo>Compiling dummy log4j classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" source="1.5">
       <patternset refid="sources.dummyLog4j" />
     </javac>
   </target>
@@ -2984,13 +2950,11 @@
        ==================================================================== -->
 
   <patternset id="sources.viz">
-    <include name="net/ontopia/products/Vizigator.java" />
     <include name="net/ontopia/topicmaps/viz/*.java" />
   </patternset>
 
     
   <patternset id="classes.viz">
-    <include name="net/ontopia/products/Vizigator.class" />
     <include name="net/ontopia/topicmaps/viz/*.class" />
   </patternset>
 
@@ -3013,7 +2977,7 @@
 
   <target name="compile.viz" depends="init">
     <echo>Compiling viz classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path" source="1.5">
       <patternset refid="sources.viz" />
     </javac>
     <echo>Copying Vizigator Resources ... </echo>
@@ -3031,7 +2995,7 @@
   </target>
 
   <target name="compile.vizlet" depends="init,compile.dummyLog4j">
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path.nolog4j" source="1.3">
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.class.path.nolog4j" source="1.5">
       <patternset refid="sources.viz" />
     </javac>
     <echo>Compiling viz classes...</echo>
@@ -3277,7 +3241,7 @@
     <echo>Compiling topicmaprealm classes...</echo>
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" 
            deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" 
-           classpathref="project.class.path" source="1.3">
+           classpathref="project.class.path" source="1.5">
       <patternset refid="sources.topicmaprealm" />
     </javac>
   </target>

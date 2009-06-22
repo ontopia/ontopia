@@ -21,7 +21,7 @@
     <dependencies>
         <dependency org="commons-dbcp" name="commons-dbcp" rev="1.2.2" conf="*->*,!sources,!javadoc" />
         <dependency org="commons-collections" name="commons-collections" rev="3.2.1" conf="*->*,!sources,!javadoc" />
-        <dependency org="commons-logging" name="commons-logging" rev="1.1" conf="*->*,!sources,!javadoc" />
+        <dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="*->*,!sources,!javadoc" />
         <dependency org="commons-fileupload" name="commons-fileupload" rev="1.1" conf="*->*,!sources,!javadoc" />
         <dependency org="crimson" name="crimson" rev="1.1.3" conf="*->*,!sources,!javadoc" />
         <dependency org="urbanophile" name="java-getopt" rev="1.0.9" conf="*->*,!sources,!javadoc" />
@@ -33,11 +33,8 @@
         <dependency org="oro" name="oro" rev="2.0.8" conf="*->*,!sources,!javadoc" />
         <dependency org="concurrent" name="concurrent" rev="1.3.4" conf="*->*,!sources,!javadoc" />
 
-        <dependency org="junit" name="junit" rev="3.8.1" conf="*->*,!sources,!javadoc" />
+        <dependency org="junit" name="junit" rev="3.8.2" conf="*->*,!sources,!javadoc" />
         <dependency org="httpunit" name="httpunit" rev="1.6.1" conf="*->*,!sources,!javadoc"/>
-
-        <!--dependency org="thaiopensource" name="jing" rev="20030619"/-->
-        <!--dependency org="org.tmapi" name="tmapi" rev="1.0"/-->
 
         <dependency org="net.sourceforge.jena" name="jena" rev="2.3" conf="*->*,!sources,!javadoc" >
           <exclude org="xmlbeans"/>
@@ -63,6 +60,9 @@
         <dependency org="org.apache.poi" name="poi-scratchpad" rev="3.2-FINAL" conf="*->*,!sources,!javadoc" />
         <dependency org="pdfbox" name="pdfbox" rev="0.7.3" conf="*->*,!sources,!javadoc" />
         <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2" conf="*->*,!sources,!javadoc" />
+
+        <!--dependency org="thaiopensource" name="jing" rev="20030619"/-->
+        <!--dependency org="org.tmapi" name="tmapi" rev="1.0"/-->
 
     </dependencies>
 </ivy-module>
