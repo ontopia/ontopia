@@ -2,7 +2,7 @@
          import="java.io.StringWriter, java.io.PrintWriter,
             java.util.Properties, net.ontopia.utils.OntopiaRuntimeException,
             org.xml.sax.SAXParseException,
-            net.ontopia.products.*" %>
+            net.ontopia.Ontopia" %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
 <framework:response/>
@@ -46,8 +46,6 @@ if (exception != null) {
   
   exceptionStackTrace = sw.toString();
 }
-
-GenericNavigator prod = GenericNavigator.getInstance();
 %>
 
 <template:insert template='/views/template_no_frames.jsp'>
@@ -81,7 +79,7 @@ GenericNavigator prod = GenericNavigator.getInstance();
       <input type="hidden" name="SPAMFILTER" value="clever">
       <input type="hidden" name="java_version" value="<%= sys_props.getProperty("java.vm.vendor") %>, <%= sys_props.getProperty("java.vm.version") %>">
       <input type="hidden" name="os_version" value="<%= sys_props.getProperty("os.name") %>, <%= sys_props.getProperty("os.version") %> (<%= sys_props.getProperty("os.arch") %>)">
-      <input type="hidden" name="oks_version" value="<%= net.ontopia.products.TopicMapEngine.getInstance().getVersion() %> (<%= net.ontopia.products.TopicMapEngine.getInstance().getBuild() %>)">
+      <input type="hidden" name="oks_version" value="<%= Ontopia.getVersion() %> (<%= Ontopia.getBuild() %>)">
       <input type="hidden" name="server_name" value="<%= request.getServerName() %>">
       <input type="hidden" name="server_info" value="<%= application.getServerInfo() %>">
       <input type="hidden" name="server_port" value="<%= request.getServerPort() %>">
@@ -89,7 +87,7 @@ GenericNavigator prod = GenericNavigator.getInstance();
       <input type="hidden" name="remote_host" value="<%= request.getRemoteHost() %>">
       <input type="hidden" name="stack_trace" value="<%= exceptionStackTrace %>"/ >
       <input type="hidden" name="error_message" value="<%= exceptionMessage %>"/ >
-      <input type="hidden" name="oks_version" value="<%= prod.toString() %>"/ >
+      <input type="hidden" name="oks_version" value="<%= Ontopia.getInfo() %>"/ >
           <table>
             <tr>
               <td>Email:</td>

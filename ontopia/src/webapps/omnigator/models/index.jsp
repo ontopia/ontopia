@@ -1,4 +1,4 @@
-<%@ page language="java" import="net.ontopia.topicmaps.nav2.impl.basic.NavigatorApplication, net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag, net.ontopia.topicmaps.nav2.plugins.PluginIF, java.util.Calendar,java.text.SimpleDateFormat,net.ontopia.products.*,net.ontopia.products.license.*" %>
+<%@ page language="java" import="net.ontopia.topicmaps.nav2.impl.basic.NavigatorApplication, net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag, net.ontopia.topicmaps.nav2.plugins.PluginIF, java.util.Calendar,java.text.SimpleDateFormat,net.ontopia.Ontopia" %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic'     %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/output'    prefix='output'    %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/value'     prefix='value'     %>
@@ -46,37 +46,20 @@
       <table class="shboxed" width="100%"><tr><td>
       <h3>Version</h3>
       <%
-        GenericNavigator prod = GenericNavigator.getInstance();
-        LicenseKey key = LicenseKeyManager.getLicenseKey(prod);
-        // -- get expiry date
-        Calendar expiry = key.getExpiryDate();
-        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-        String expires = null;
-        if (expiry != null)
-          expires = dateformat.format(expiry.getTime());
         // -- get information about when the product was build
-        Calendar build = prod.getBuildDate();
+        Calendar build = Ontopia.getBuildDate();
         SimpleDateFormat dateformat_exact = new SimpleDateFormat("yyyy-MM-dd");
-        String buildinfo = dateformat_exact.format(build.getTime()) + " #" + prod.getBuildNumber();
+        String buildinfo = dateformat_exact.format(build.getTime()) + " #" + Ontopia.getBuildNumber();
       %>
 
         <table>
         <tr valign="top"><th align=left>Version</th>
-            <td><%= prod.getVersion() %>
+            <td><%= Ontopia.getVersion() %>
 
         <tr valign="top"><th align=left>Build</th>
             <td><%= buildinfo %>
-
-        <tr valign="top"><th align=left><a href="../license.jsp" title="Check license key details">Expires</a>&nbsp;&nbsp;&nbsp;</th>
-            <td>
-            <% if (expires != null) { %>
-              <a href="http://www.ontopia.net/download/freedownload.html" title="Download a new version when this one expires!"><%= expires %></a>
-            <% } else { %>
-            <a href="http://www.ontopia.net/download/freedownload.html" title="You might want to download a later version anyway!">No expiry</a>
-            <% } %>
         </table>
-
-      </td></tr></table>
+      </table>
 
       <table class="shboxed" width="100%"><tr><td>
       <h3>Further Information</h3>
