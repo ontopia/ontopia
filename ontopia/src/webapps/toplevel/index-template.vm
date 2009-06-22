@@ -2,11 +2,7 @@
 <!-- $Id: index-template.vm,v 1.16 2009/05/25 05:48:16 geir.gronmo Exp $ -->
 <html>
 <head>
-#if ($dist == "samplers")
-<title>Ontopia | oks samplers</title>
-#else
-<title>Ontopia | knowledge suite</title>
-#end
+<title>Ontopia</title>
 <link rel="stylesheet" type="text/css" href="frontpage.css">
 
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
@@ -119,12 +115,8 @@
       <p>
       <ul>
         <li><a href="manage/manage.jsp">Administration Console</a>
-#if ($dist == "samplers" || $dist == "personal")
-        <li><span class=disable title="Only in full OKS">User Administration</span>
-#else
-        <li><a href="accessctl/">User Administration</a>
-#end
-        <li><a href="manage/plugins/ftadmin/index_admin.jsp">Full-Text Indexes</a>
+       <li><a href="accessctl/">User Administration</a>
+       <li><a href="manage/plugins/ftadmin/index_admin.jsp">Full-Text Indexes</a>
       </ul>
     </table>
   </table>

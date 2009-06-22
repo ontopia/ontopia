@@ -5,4 +5,4 @@
     documentation index HTML page generator.
 *# 
 
-$generator.parse("docindex-template.vm", "docindex-ontopia.html", "dist", $dist)
+$generator.parse("docindex-template.vm", "docindex.html")

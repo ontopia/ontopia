@@ -5,16 +5,13 @@
 <link rel="stylesheet" href="doc/whitepapers.css" type="text/css">
 </head>
 <body>
-<h1>The Ontopia Knowledge Suite</h1>
-<h2 class="subtitle">@[ProductName] - documentation</h2>
-<!-- license Type: $dist -->
+<h1>Ontopia</h1>
+<h2 class="subtitle">Documentation</h2>
 
 <table width="100%">
 <tr><td><i>($productVersion)</i></td><td align="right"><a href="http://www.ontopia.net"><img src="doc/logo.gif" border="0"></a></td></tr>
 </table>
 <hr>
-
-#if ($dist == "samplers" || $dist == "ontopoly-runtime" || $dist == "personal" || $dist == "professional" || $dist == "enterprise")
 
 <h3>General documents</h3>
 
@@ -22,10 +19,8 @@
   <li><a href="doc/welcome.html">Welcome!</a></li>
   <li><a href="doc/whatsnew.html">What's new in this release?</a>
   <li><a href="doc/install.html">Installation and getting started</a></li>
-#if ($dist == "personal" || $dist == "professional" || $dist == "enterprise")
-  <li><a href="doc/oks-license-development.pdf">OKS Developer License</a></li>
-#end
-  <li><a href="doc/copyrights.txt">Third-party license Information</a></li>
+ <li><a href="doc/oks-license-development.pdf">OKS Developer License</a></li>
+ <li><a href="doc/copyrights.txt">Third-party license Information</a></li>
 </ul>
 
 
@@ -34,12 +29,8 @@
 <ul>
   <li><a href="apache-tomcat/webapps/ontopoly0/doc/user-guide.html">The Ontopoly Topic Maps Editor, User's Guide</a></li>
   <li><a href="apache-tomcat/webapps/omnigator/docs/navigator/userguide.html">The Ontopia Omnigator, User's Guide</a></li>
-  #if ($dist == "professional" || $dist == "enterprise")
-  <li><a href="apache-tomcat/webapps/omnigator/docs/vizigator/userguide.html">The Ontopia Vizigator, User's Guide</a></li>
-  #end
+ <li><a href="apache-tomcat/webapps/omnigator/docs/vizigator/userguide.html">The Ontopia Vizigator, User's Guide</a></li>
 </ul>
-
-#if ($dist == "personal" || $dist == "professional" || $dist == "enterprise")
 
 <h3>Engine-specific documents</h3>
 
@@ -47,29 +38,15 @@
   <li><a href="doc/engine/devguide.html">The Ontopia Topic Map Engine, Developer's Guide</a></li>
 </ul>
 
-#end
-
-#if ($dist == "samplers" || $dist == "ontopoly-runtime" || $dist == "personal" || $dist == "professional" || $dist == "enterprise")
 
 <h3>Navigator-specific documents</h3>
 
 <ul>
   <li><a href="doc/navigator/config.html">The Ontopia Navigator, Configuration Guide</a></li>
-  
-  #if ($dist == "professional" || $dist == "enterprise")
-
-  <li><a href="doc/navigator/navguide.html">The Ontopia Navigator, Developer's Guide</a></li>
+ <li><a href="doc/navigator/navguide.html">The Ontopia Navigator, Developer's Guide</a></li>
   <li><a href="doc/navigator/tolog-taglib.html">The Ontopia Navigator, Tag Library Reference</a></li>
-  #end
-
-  #if ($dist == "ontopoly-runtime" || $dist == "professional" || $dist == "enterprise")
   <li><a href="doc/navigator/userman.html">The Ontopia Navigator, User Management Guide</a></li>
-  #end
 </ul>
-
-#end
-
-#if ($dist == "professional" || $dist == "enterprise")
 
 <h3>Web Editor-specific documents</h3>
 
@@ -79,20 +56,12 @@
   <li><a href="doc/webed/action-ref.html">The Ontopia Web Editor Framework, Action Library Reference Documentation</a></li>
 </ul>
 
-#end
-
-#if ($dist == "ontopoly-runtime" || $dist == "enterprise")
-
 <h3>RDBMS Backend Connector</h3>
 
 <ul>
   <li><a href="doc/rdbms/install.html">The Ontopia RDBMS Backend Connector, Installation Guide</a></li>
   <li><a href="doc/rdbms/devguide.html">The Ontopia RDBMS Backend Connector, Developer's Guide</a></li>
 </ul>
-
-#end
-
-#if ($dist == "samplers" || $dist == "ontopoly-runtime" || $dist == "personal" || $dist == "professional" || $dist == "enterprise")
 
 <h3>Query language</h3>
 
@@ -102,20 +71,12 @@
 
 </ul>
 
-#end
-
-#if ($dist == "professional" || $dist == "enterprise")
-
 <h3>Fulltext Integration</h3>
 
 <ul>
   <li><a href="doc/fulltext/devguide.html">The Ontopia Full-text Integration, Developer's Guide</a></li>
   <li><a href="doc/fulltext/faq.html">The Ontopia Full-text Integration, Frequently Asked Questions</a></li>
 </ul>
-
-#end
-
-#if ($dist == "samplers" || $dist == "ontopoly-runtime" || $dist == "professional" || $dist == "enterprise")
 
 <h3>Schema language</h3>
 
@@ -124,19 +85,11 @@
   <li><a href="doc/schema/spec.html">The Ontopia Schema Language, Reference Guide</a></li>
 </ul>
 
-#end
-
-#if ($dist == "professional" || $dist == "enterprise")
-
 <h3>DB2TM</h3>
 
 <ul>
   <li><a href="doc/db2tm/user-guide.html">DB2TM, User's Guide</a></li>
 </ul>
-
-#end
-
-#if ($dist == "professional" || $dist == "enterprise")
 
 <h3>TMRAP</h3>
 
@@ -144,17 +97,11 @@
   <li><a href="doc/tmrap/dev-guide.html">TMRAP, Developer's Guide</a></li>
 </ul>
 
-#end
-
-#if ($dist == "personal" || $dist == "professional" || $dist == "enterprise")
-
 <h3>API documentation</h3>
 
 <ul>
   <li><a href="doc/api/index.html">The Ontopia Knowledge Suite, Javadoc API</a></li>
 </ul>
-
-#end
 
 <h3>Whitepapers</h3>
 
@@ -169,29 +116,6 @@
   <li><a href="doc/misc/cxtm.html">Canonical XTM, A canonical serialization format for topic maps</a></li>
   <li><a href="doc/misc/rdf2tm.html">The RTM RDF to topic maps mapping, Definition and introduction</a></li>
 </ul>
-
-#end
-
-#if ($dist == "personal" || $dist == "professional" || $dist == "enterprise")
-
-<h3>Document Type Definitions (DTD)</h3>
-
-<ul>
-  <li><a href="samples/xtm1.dtd ">XTM 1.0 DTD</a></li>
-</ul>
-
-
-<h3>Sample Topicmaps</h3>
-
-<ul>
-  <li><a href="samples/opera.ltm">Italian Opera (LTM 1.3)</a></li>
-  <li><a href="samples/i18n.ltm">Scripts and languages (LTM 1.3)</a></li>
-  <li><a href="samples/xmltools-tm.xtm">Free XML Tools (XTM 1.0)</a></li>
-  <li><a href="samples/jill.xtm">Jill's First Topic Map (XTM 1.0)</a></li>
-</ul>
-
-#end
-
 
 <hr>
 </body>

@@ -170,6 +170,7 @@
     <mkdir dir="${build.classes}" />
     <mkdir dir="${build.jars}" />
     <mkdir dir="${build.doc}" />
+    <mkdir dir="${build.tmp}" />
     <!-- Prepare product classes -->
     <antcall target="prepare.product.class"/>
   </target>
@@ -1391,12 +1392,8 @@
     <copy file="${src.path}/dist/tests/tests-ontopia.xml" tofile="${dist.path}/tests/test-data/tests-ontopia.xml" />
 
     <!-- Test scripts -->
-    <copy file="${src.path}/dist/tests/runtests-engine.sh" tofile="${dist.path}/tests/runtests-engine.sh" />
-    <copy file="${src.path}/dist/tests/runtests-engine.bat" tofile="${dist.path}/tests/runtests-engine.bat" />
-    <copy file="${src.path}/dist/tests/runtests-navigator.sh" tofile="${dist.path}/tests/runtests-navigator.sh" />
-    <copy file="${src.path}/dist/tests/runtests-navigator.bat" tofile="${dist.path}/tests/runtests-navigator.bat" />
-    <copy file="${src.path}/dist/tests/runtests-webed.sh" tofile="${dist.path}/tests/runtests-webed.sh" />
-    <copy file="${src.path}/dist/tests/runtests-webed.bat" tofile="${dist.path}/tests/runtests-webed.bat" />
+    <copy file="${src.path}/dist/tests/runtests-ontopia.sh" tofile="${dist.path}/tests/runtests-ontopia.sh" />
+    <copy file="${src.path}/dist/tests/runtests-ontopia.bat" tofile="${dist.path}/tests/runtests-ontopia.bat" />
     <copy file="${src.path}/dist/tests/runtests-rdbms.sh" tofile="${dist.path}/tests/runtests-rdbms.sh" />
     <copy file="${src.path}/dist/tests/runtests-rdbms.bat" tofile="${dist.path}/tests/runtests-rdbms.bat" />
 
@@ -1411,11 +1408,6 @@
     <copy file="${build.jars}/${dist.name}-tests.jar" todir="${dist.path}/lib" />
     <copy file="${build.jars}/${dist.name}.jar" todir="${dist.path}/apache-tomcat/common/lib" />
 
-    <!-- Collect index.html -->
-    <antcall target="dist.index.html">
-      <param name="index.file" value="docindex-index-ontopia.html" />
-      <param name="index.product" value="Ontopia" />
-    </antcall>
     <!-- Copy templates -->
     <mkdir dir="${dist.path}/config/vm-templates" />
     <copy todir="${dist.path}/config/vm-templates">
@@ -1439,7 +1431,7 @@
     <antcall target="dist.ontopia.webapp.accessctl" />
 
     <!-- Replace ROOT web application -->
-    <antcall target="dist.ontopia.webapp.root" />
+    <antcall target="dist.ontopia.webapp.toplevel" />
 
     <!-- Generate javadoc -->
     <antcall target="javadoc.ontopia" />
@@ -1526,7 +1518,7 @@
   <target name="jar.ontopia" depends="dist.ontopia.init,check-jvm">
     <property name="dist.name" value="ontopia" />
     <delete file="${build.jars}/${dist.name}.jar" />
-    <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}.jar" manifest="${src.path}/manifests/manifest-ontopia.mf">
+    <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}.jar" manifest="${src.path}/dist/manifests/manifest-ontopia.mf">
       <patternset refid="classes.engine" />
       <patternset refid="classes.tmapi" />
       <patternset refid="classes.cmdlineutils" />
@@ -1553,7 +1545,7 @@
   <target name="jar.ontopia.test" depends="dist.ontopia.init">
     <property name="dist.name" value="ontopia" />
     <delete file="${build.jars}/${dist.name}-tests.jar" />
-    <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}-tests.jar" manifest="${src.path}/manifests/manifest-ontopia-tests.mf">
+    <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}-tests.jar" manifest="${src.path}/dist/manifests/manifest-ontopia-tests.mf">
       <patternset refid="classes.test.engine" />
       <patternset refid="classes.test.tmapi" />
       <patternset refid="classes.test.navigator" />
@@ -1820,8 +1812,6 @@
     <!-- Collect 3rdparty jar files -->
     <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/lib" />
     <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-
-    <!-- Collect jar files -->
     <copy file="${3rdparty.path}/touchgraph.jar" todir="${dist.path}/lib" />
 
     <!-- Collect lib jar files -->
@@ -1830,33 +1820,6 @@
          <include name="*.jar" /> <!-- TODO: replace by ivy conf -->
       </fileset>
      </copy>
-
-    <!-- Create samples directory -->
-    <mkdir dir="${collect.path}/samples" />
-
-    <!-- Collect topic maps -->
-    <copy file="${topicmaps.path}/xmltools-tm.xtm" todir="${collect.path}/samples" />
-    <copy file="${topicmaps.path}/i18n.ltm" todir="${collect.path}/samples" />
-    <copy file="${topicmaps.path}/jill.xtm" todir="${collect.path}/samples" />
-    <copy file="${topicmaps.path}/support-kb.ltm" todir="${collect.path}/samples" />
-    <copy file="${topicmaps.path}/opera.ltm" todir="${collect.path}/samples" />
-    <!--copy file="${doc.path}/webed/tasks.ltm" todir="${collect.path}/samples/" /-->
-    <copy file="${topicmaps.path}/pokemon.ltm" todir="${collect.path}/samples/" />
-    <copy file="${topicmaps.path}/MyMusic.xtm" todir="${collect.path}/samples/" />
-
-    <copy file="${topicmaps.path}/dc.xtmm" todir="${collect.path}/samples/" />
-    <copy file="${topicmaps.path}/dc.ltmm" todir="${collect.path}/samples/" />
-
-    <copy file="${topicmaps.path}/mapping.rdff" todir="${collect.path}/samples/" />
-    <copy file="${topicmaps.path}/KanzakisConcerts.rdf" todir="${collect.path}/samples/" />
-
-    <copy file="${topicmaps.path}/tm-standards.xtm" todir="${collect.path}/samples" overwrite="yes" />
-
-    <!-- Collect OSL schemas -->
-    <copy file="${topicmaps.path}/i18n.ltm.osl" tofile="${collect.path}/samples/i18n.ltm.osl" />
-    <copy file="${topicmaps.path}/opera.ltm.osl" tofile="${collect.path}/samples/opera.ltm.osl" />
-    <copy file="${topicmaps.path}/jill.xtm.osl" tofile="${collect.path}/samples/jill.xtm.osl" />
-    <copy file="${topicmaps.path}/xmltools-tm.xtm.osl" tofile="${collect.path}/samples/xmltools-tm.xtm.osl" />
 
     <!-- Create doc directory -->
     <mkdir dir="${collect.path}/doc" />
@@ -1911,13 +1874,10 @@
 
     <!-- Generate index pages -->
     <echo message="Generating HTML index pages..." />
-    <copy file="${src.path}/dist/doc/docindex-template.vm" overwrite="yes" 
-        tofile="${build.tmp}/docindex-template.vm" />
-    <copy file="${src.path}/dist/doc/docindex-control.vm" overwrite="yes" 
-        tofile="${build.tmp}/docindex-control.vm" />
-    <texen controlTemplate="docindex-control.vm" outputDirectory="${build.tmp}" 
-           templatePath="${build.tmp}/" outputFile="generation.report" productName="" 
+    <texen controlTemplate="docindex-control.vm" templatePath="${src.path}/dist/doc/"
+           outputFile="docindex.report" outputDirectory="${build.tmp}"
            productVersion="Version ${dist.version} builddate ${dist.full.date}" />
+    <copy file="${build.tmp}/docindex.html" overwrite="yes" tofile="${dist.path}/index.html" />
 
   </target>
 
@@ -2132,7 +2092,24 @@
     <!-- Replace topic map files which will be used by omnigator -->
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps" />
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps">
-      <fileset dir="${dist.path}/samples" />
+      <fileset dir="${topicmaps.path}"> 
+        <include name="xmltools-tm.xtm"/>
+        <include name="i18n.ltm"/>
+        <include name="jill.xtm"/>
+        <include name="support-kb.ltm"/>
+        <include name="opera.ltm"/>
+        <include name="pokemon.ltm"/>
+        <include name="MyMusic.xtm"/>
+        <include name="dc.xtmm"/>
+        <include name="dc.ltmm"/>
+        <include name="mapping.rdff"/>
+        <include name="KanzakisConcerts.rdf"/>
+        <include name="tm-standards.xtm"/>
+        <include name="i18n.ltm.osl"/>
+        <include name="opera.ltm.osl"/>
+        <include name="jill.xtm.osl"/>
+        <include name="xmltools-tm.xtm.osl"/>
+      </fileset>
     </copy>
     <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/tasks.ltm" />
     <move todir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/schemas">
@@ -2280,7 +2257,7 @@
   <!-- - - - Collect tmrap components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.tmrap.collect">
 
-    <unzip src="${src.path}/webapps/tmrap/axis2/tmrap.zip" 
+    <unzip src="${src.path}/webapps/tmrap/tmrap.zip" 
           dest="${dist.path}/apache-tomcat/webapps/" />
 
   </target>
@@ -2295,18 +2272,18 @@
     <echo>Collecting classify components...</echo>
 
     <!-- Libraries used by classify plug-in -->
-    <copy file="${3rdparty.path}/snowball.jar" todir="${dist.path}/apache-tomcat/common/lib" />
+    <!--copy file="${3rdparty.path}/snowball.jar" todir="${dist.path}/apache-tomcat/common/lib" />
     <copy file="${3rdparty.path}/poi.jar" todir="${dist.path}/apache-tomcat/common/lib" />
     <copy file="${3rdparty.path}/poi-scratchpad.jar" todir="${dist.path}/apache-tomcat/common/lib" />
     <copy file="${3rdparty.path}/pdfbox.jar" todir="${dist.path}/apache-tomcat/common/lib" />
     <copy file="${3rdparty.path}/fontbox.jar" todir="${dist.path}/apache-tomcat/common/lib" />
     <copy file="${3rdparty.path}/tagsoup.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/opencsv.jar" todir="${dist.path}/apache-tomcat/common/lib" />
+    <copy file="${3rdparty.path}/opencsv.jar" todir="${dist.path}/apache-tomcat/common/lib" /-->
 
     <antcall target="clean.classify"/>
     <antcall target="compile.test.classify"/>
     <antcall target="jar.classify"/>
-    <copy file="${java.path}/build/jars/ontopia-classify.jar" todir="${dist.path}/apache-tomcat/common/lib" />
+    <copy file="${build.jars}/ontopia-classify.jar" todir="${dist.path}/apache-tomcat/common/lib" />
 
   </target>
 
@@ -2350,7 +2327,7 @@
     <!-- Collect documentation -->
     <mkdir dir="${dist.path}/doc/rdbms" />
     <copy file="${doc.path}/rdbms/install.xml.html" tofile="${dist.path}/doc/rdbms/install.html" />
-    <copy file="${doc.path}/rdbms/dev-guide.xml.html" tofile="${dist.path}/doc/rdbms/devguide.html" />
+    <copy file="${doc.path}/rdbms/devguide.xml.html" tofile="${dist.path}/doc/rdbms/devguide.html" />
 
     <copy file="${doc.path}/rdbms/RdbmsImport.java" todir="${dist.path}/doc/rdbms" />
     <copy file="${doc.path}/rdbms/RdbmsExport.java" todir="${dist.path}/doc/rdbms" />
@@ -2381,19 +2358,12 @@
 
     <!-- Collection clustering configuration -->
     <mkdir dir="${dist.path}/rdbms/clustering" />
-    <copy file="${java.path}/net/ontopia/topicmaps/impl/rdbms/config/ontopia-terracotta.xml" todir="${dist.path}/rdbms/clustering" />
+    <copy file="${src.path}/dist/rdbms/ontopia-terracotta.xml" todir="${dist.path}/rdbms/clustering" />
 
   </target>
 
   <target name="dist.rdbms.test.collect">
 
-  </target>
-
-  <!-- - - - Index file - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  <target name="dist.index.html">
-    <copy file="${build.tmp}/${index.file}" overwrite="yes" tofile="${dist.path}/index.html" />
-    <replace file="${dist.path}/index.html" token="@[ProductName]" value="${index.product}" />
   </target>
 
   <!-- - - - Generate TLD files for JSP 1.1 containers  - - - - - - - - - - -->
@@ -2545,7 +2515,7 @@
       <param name="file" value="${doc.path}/webed/devguide.xml" />
     </antcall>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/webed/taglib.xml" />
+      <param name="file" value="${doc.path}/webed/taglib-ref.xml" />
     </antcall>
     <antcall target="makehtml">
       <param name="file" value="${doc.path}/webed/config.xml" />
@@ -2560,7 +2530,7 @@
     <mkdir dir="${dist.path}/doc/webed" />
     <copy file="${doc.path}/webed/action-ref.xml.html" tofile="${dist.path}/doc/webed/action-ref.html" />
     <copy file="${doc.path}/webed/devguide.xml.html" tofile="${dist.path}/doc/webed/devguide.html" />
-    <copy file="${doc.path}/webed/taglib.xml.html" tofile="${dist.path}/doc/webed/taglib.html" />
+    <copy file="${doc.path}/webed/taglib-ref.xml.html" tofile="${dist.path}/doc/webed/taglib.html" />
     <copy file="${doc.path}/webed/config.xml.html" tofile="${dist.path}/doc/webed/taglib.html" />
     <copy file="${src.path}/webapps/webedtest/WEB-INF/config/actionConfig.dtd" tofile="${dist.path}/doc/webed/actionConfig.dtd" />
     <copy file="${src.path}/webapps/webedtest/WEB-INF/config/actionConfig.rnc" tofile="${dist.path}/doc/webed/actionConfig.rnc" />
@@ -2697,31 +2667,20 @@
     </copy>
   </target>
 
-  <target name="dist.ontopia.webapp.root.samplers" depends="init">
-    <antcall target="dist.ontopia.webapp.root" />
-    <copy file="${src.path}/webapps/toplevel/ontopia-samplers-header.gif" overwrite="yes" 
-        tofile="${dist.path}/apache-tomcat/webapps/ROOT/new_header.gif" />
-  </target>
-
-  <target name="dist.ontopia.webapp.root" depends="init">
-     
-    <echo>Generating ROOT index page...</echo>
-    <copy file="${src.path}/webapps/toplevel/index-template.vm" overwrite="yes" 
-        tofile="${build.tmp}/index-template.vm" />
-    <copy file="${src.path}/webapps/toplevel/index-control.vm" overwrite="yes" 
-        tofile="${build.tmp}/index-control.vm" />
-    <texen controlTemplate="index-control.vm" outputDirectory="${build.tmp}" 
-           templatePath="${build.tmp}" outputFile="generation.report" />
+  <target name="dist.ontopia.webapp.toplevel" depends="init">
 
     <echo>Replacing ROOT web application...</echo>
     <delete dir="${dist.path}/apache-tomcat/webapps/ROOT" />
     <copy todir="${dist.path}/apache-tomcat/webapps/ROOT">
       <fileset dir="${src.path}/webapps/toplevel" />
     </copy>
+     
+    <echo>Generating ROOT index page...</echo>
+    <texen controlTemplate="index-control.vm" templatePath="${dist.path}/apache-tomcat/webapps/ROOT" 
+           outputFile="toplevel.report" outputDirectory="${build.tmp}" />
+
     <delete file="${dist.path}/apache-tomcat/webapps/ROOT/index-control.vm" />
     <delete file="${dist.path}/apache-tomcat/webapps/ROOT/index-template.vm" />
-    <copy file="${build.tmp}/index.html" overwrite="yes" 
-        tofile="${dist.path}/apache-tomcat/webapps/ROOT/index.html" />
     <copy file="${dist.path}/apache-tomcat/webapps/ROOT/ontopia-header.gif" overwrite="yes" 
         tofile="${dist.path}/apache-tomcat/webapps/ROOT/new_header.gif" />
   </target>
@@ -3174,7 +3133,7 @@
       <arg value="-signedjar" />
       <arg value="${build.jars}/signed-vizlet.jar" />
       <arg value="${build.jars}/ontopia-vizlet.jar" />
-      <arg value="signFiles" />
+      <arg value="ontopia" />
     </exec>
 
   </target>
@@ -3193,7 +3152,7 @@
     <unjar dest="${build.tmp}"><fileset file="${lib.path}/commons-logging-*.jar"/></unjar>
 
     <delete file="${build.jars}/ontopia-vizdesk.jar" />
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-vizdesk.jar" manifest="${src.path}/manifests/manifest-vizdesk.mf">
+    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-vizdesk.jar" manifest="${src.path}/dist/manifests/manifest-vizdesk.mf">
       <patternset refid="classes.vizdesktop" />
       <patternset refid="classes.engine" />
       <patternset refid="images.viz" />
@@ -3236,7 +3195,7 @@
   </target>
 
   <target name="jar.cstore" depends="compile.cstore">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-cstore.jar" manifest="${src.path}/manifests/manifest-cstore.mf">
+    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-cstore.jar" manifest="${src.path}/dist/manifests/manifest-cstore.mf">
       <patternset refid="classes.cstore" />
     </jar>
   </target>
