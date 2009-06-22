@@ -77,7 +77,7 @@ public class FunctionVirtualColumn implements ValueIF {
   
   public String getValue(String[] tuple) {
     // get method argument values
-    String[] args = new String[params.size()];
+    Object[] args = new String[params.size()];
     for (int i=0; i < args.length; i++) {
       args[i] = ((ValueIF)params.get(i)).getValue(tuple);
     }

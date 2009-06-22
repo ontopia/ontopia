@@ -303,12 +303,12 @@ public class XMLConfigSource {
             if (props[i].getName().equals(param_name)) {
               Method setter = props[i].getWriteMethod();
               if (props[i].getPropertyType().equals(String.class)) {
-                setter.invoke(source, new String[] {param_value});
+                setter.invoke(source, new Object[] {param_value});
                 found_property = true;
                 break;
               }
               else if (props[i].getPropertyType().equals(boolean.class)) {
-                setter.invoke(source, new Boolean[] {new Boolean(PropertyUtils.isTrue(param_value))});
+                setter.invoke(source, new Object[] {new Boolean(PropertyUtils.isTrue(param_value))});
                 found_property = true;
                 break;
               }

@@ -64,7 +64,7 @@ public class CollectionPropertiesTest extends AbstractTopicMapTest
     parms[0] = null;
         
     try {
-      method.invoke(obj, null);
+      method.invoke(obj, (Object[])null);
 
       // If we get to here without an exception, the test failed.
       fail("Allowed to pass null to " + cls.getName() + "." + methodName);

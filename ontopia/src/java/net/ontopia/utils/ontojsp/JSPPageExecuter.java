@@ -145,7 +145,7 @@ public class JSPPageExecuter {
         key.substring(1);
       Class[] strparam = { String.class };
       Class[] objparam = { Object.class };
-      String[] params = { (String) values.get(key) };
+      Object[] params = { values.get(key) };
 
       // get setter method
       Method setter = null;

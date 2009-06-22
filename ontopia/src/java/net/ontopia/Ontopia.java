@@ -28,14 +28,14 @@ public final class Ontopia {
   static {
     name = "Ontopia Topic Map Engine";
 
-    major_version = 4;
-    minor_version = 1;
+    major_version = 5;
+    minor_version = 0;
     micro_version = 0;
     beta_version = 0;
 
     build_date = Calendar.getInstance();
-    build_date.set(2009, 5, 19, 12, 16);
-    build_number = 31;
+    build_date.set(2009, 5, 22, 14, 1);
+    build_number = 32;
   }
 
   private Ontopia() {
