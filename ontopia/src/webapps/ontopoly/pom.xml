@@ -4,7 +4,7 @@
 	<groupId>net.ontopia.ontopoly</groupId>
 	<artifactId>ontopoly_war</artifactId>
 	<packaging>war</packaging>
-	<version>4.1-SNAPSHOT</version>
+	<version>5.0-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
@@ -42,8 +42,8 @@
 		</dependency>
 		<dependency> 
 			<groupId>net.ontopia</groupId> 
-			<artifactId>oks</artifactId>
-			<version>4.1.0-SNAPSHOT</version>
+			<artifactId>ontopia</artifactId>
+			<version>5.0.0-SNAPSHOT</version>
 			<type>jar</type> 
 			<scope>provided</scope>
 		</dependency>
@@ -149,7 +149,7 @@
           </execution>
         </executions>
       </plugin-->
-      <plugin>
+      <!--plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>retrotranslator-maven-plugin</artifactId>
         <executions>
@@ -170,7 +170,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin> 	
+      </plugin--> 	
     </plugins> 
 		<resources>
 			<resource>

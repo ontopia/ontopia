@@ -5,7 +5,7 @@ import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.ontopia.products.TopicMapEngine;
+import net.ontopia.Ontopia;
 import ontopoly.components.TitleHelpPanel;
 
 import org.apache.wicket.Page;
@@ -49,7 +49,7 @@ public class InternalErrorPageWithException extends AbstractOntopolyErrorPage {
       @Override
       protected void onComponentTag(ComponentTag tag) {
       super.onComponentTag(tag);
-      tag.put("value", TopicMapEngine.getInstance().getVersion());
+      tag.put("value", Ontopia.getVersion());
       }  
     });
     

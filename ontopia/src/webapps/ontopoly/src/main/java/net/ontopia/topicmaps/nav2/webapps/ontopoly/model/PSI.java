@@ -34,11 +34,11 @@ public class PSI {
   public static final LocatorIF ON_SUBJECT_IDENTIFIER = PSI.ON.resolveAbsolute("subject-identifier");
   public static final LocatorIF ON_ITEM_IDENTIFIER = PSI.ON.resolveAbsolute("item-identifier");
 
+  public static final LocatorIF ON_ASSOCIATION_FIELD = PSI.ON.resolveAbsolute("association-field");
   public static final LocatorIF ON_IDENTITY_FIELD = PSI.ON.resolveAbsolute("identity-field");
   public static final LocatorIF ON_NAME_FIELD = PSI.ON.resolveAbsolute("name-field");
   public static final LocatorIF ON_OCCURRENCE_FIELD = PSI.ON.resolveAbsolute("occurrence-field");
   public static final LocatorIF ON_ROLE_FIELD = PSI.ON.resolveAbsolute("role-field");
-
 
   public static final LocatorIF ON_INTERFACE_CONTROL_DROP_DOWN_LIST = PSI.ON.resolveAbsolute("drop-down-list");
   public static final LocatorIF ON_INTERFACE_CONTROL_SEARCH_DIALOG = PSI.ON.resolveAbsolute("search-dialog");
@@ -67,5 +67,9 @@ public class PSI {
 
   public static final LocatorIF ON_FIELDS_VIEW = PSI.ON.resolveAbsolute("fields-view");
   public static final LocatorIF ON_IS_EMBEDDED_VIEW = PSI.ON.resolveAbsolute("is-embedded-view");
+
+  public static final LocatorIF XTM_SUPERCLASS_SUBCLASS = XTM.resolveAbsolute("superclass-subclass");
+  public static final LocatorIF XTM_SUPERCLASS = XTM.resolveAbsolute("superclass");
+  public static final LocatorIF XTM_SUBCLASS = XTM.resolveAbsolute("subclass");
 
 }
