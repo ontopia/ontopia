@@ -1586,13 +1586,13 @@
   <!-- - - - Collect navigator runtime components  - - - - - - - - - - - - - -->
 
   <target name="checkfiles-apache-tomcat" description="checks if files have already been downloaded">
-      <available file="${3rdparty.path}/apache-tomcat-5.5.27.zip" property="apache-tomcat.exists" />
+      <available file="${lib.path}/apache-tomcat-5.5.27.zip" property="apache-tomcat.exists" />
   </target>
 
   <target name="download-apache-tomcat" description="download apache-tomcat" 
           depends="checkfiles-apache-tomcat" unless="apache-tomcat.exists">
       <get src="http://www.urlstructure.com/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.zip" 
-           dest="${3rdparty.path}/apache-tomcat-5.5.27.zip" usetimestamp="true" />
+           dest="${lib.path}/apache-tomcat-5.5.27.zip" usetimestamp="true" />
   </target>
 
   <target name="dist.navigator.collect" depends="download-apache-tomcat">
@@ -1617,8 +1617,8 @@
       <param name="file" value="${doc.path}/navigator/userman.xml" />
     </antcall>
 
-    <!-- Unpack jakarta tomcat -->
-    <unzip src="${3rdparty.path}/apache-tomcat-5.5.27.zip" dest="${dist.path}" />
+    <!-- Unpack and rename apache tomcat -->
+    <unzip src="${lib.path}/apache-tomcat-5.5.27.zip" dest="${dist.path}" />
     <move file="${dist.path}/apache-tomcat-5.5.27" 
         tofile="${dist.path}/apache-tomcat"/>
 
