@@ -1082,7 +1082,7 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${build.javadoc}/ontopia-dev" />
   </target>
 
-  <target name="dist.jar.ontopia">
+  <target name="dist.jar.ontopia" depends="init">
     <antcall target="dist.ontopia.init"/>
     <antcall target="check-jvm"/>
     <antcall target="bootstrap"/>
