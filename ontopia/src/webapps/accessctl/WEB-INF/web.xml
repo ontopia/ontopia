@@ -1,0 +1,94 @@
+<!DOCTYPE web-app
+          PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+          "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<!-- $Id: web.xml,v 1.13 2007/07/23 12:19:02 geir.gronmo Exp $ -->
+
+<web-app>
+
+  <display-name></display-name>
+  <description></description>
+
+  <!-- General web application initialization parameters -->
+
+  <context-param>
+    <param-name>app_config</param-name>
+    <param-value>WEB-INF/config/application.xml</param-value>
+    <description>
+      Tells the web editor where to find the application configuration file.
+    </description>
+  </context-param>
+
+  <context-param>
+    <param-name>action_config</param-name>
+    <param-value>WEB-INF/config/actions.xml</param-value>
+    <description>
+      Tells the web editor where to find the action configuration file.
+    </description>
+  </context-param>
+
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.fallbackLocale</param-name>
+    <param-value>en</param-value>
+    <description>
+      Tells accessctl which language to use as default when no language is
+      selected in the browser or in the requested URL.
+      This language is also used when accessctl is not supported for any of
+      the chosen languages.
+    </description>
+  </context-param>
+
+  <!-- Declare servlets -->
+
+  <servlet>
+    <servlet-name>WebEditorProcessServlet</servlet-name>
+    <description>Controller Servlet getting in all requests</description>
+    <servlet-class>
+      net.ontopia.topicmaps.webed.servlets.ProcessServlet
+    </servlet-class>
+  </servlet>
+
+  <!-- include start %(WEB_COMPILED)s include end --> 
+
+  <servlet-mapping>
+    <servlet-name>WebEditorProcessServlet</servlet-name>
+    <url-pattern>/process</url-pattern>
+  </servlet-mapping>
+
+  <!-- Session parameters for this web application -->
+  <session-config>
+    <session-timeout>30</session-timeout><!-- in minutes -->
+  </session-config>
+
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <security-constraint>
+    <display-name>TM Admin Area</display-name>
+    <web-resource-collection>
+      <web-resource-name>TM admin area</web-resource-name>
+      <url-pattern>/protected</url-pattern>
+      <url-pattern>/protected/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>user</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>Form-Based Authenticiation Area</realm-name>
+    <form-login-config>
+      <form-login-page>/login.jsp</form-login-page>
+      <form-error-page>/login.jsp?error=true</form-error-page>
+    </form-login-config>
+  </login-config>
+
+  <security-role>
+    <role-name>user</role-name>
+  </security-role>
+
+</web-app>

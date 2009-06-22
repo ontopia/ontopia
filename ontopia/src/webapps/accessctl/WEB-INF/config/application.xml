@@ -1,0 +1,5 @@
+<configuration type="application">
+  <properties>
+    <property name="allowLoadOnRequest" value="true"/>
+  </properties>
+</configuration>

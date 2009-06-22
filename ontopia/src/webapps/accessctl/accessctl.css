@@ -1,0 +1,248 @@
+/* $Id: accessctl.css,v 1.4 2005/06/14 08:45:19 grove Exp $ */
+
+/* ---- Document wide general Layout ---- */
+
+body {
+  color: #000000;
+  background-color: #F0F0F0;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+body, p, h1, h2, h3, h4, ul, ol, li, div, td, th, address, blockquote, nobr, b, i {
+  font-family: Verdana, Geneva, Arial, sans-serif;
+}
+
+/* ---- Definition of Specific Font-Related classes ---- */
+
+h1 {
+  font-size: 150%;
+  margin: 2px;
+}
+
+h2 {
+  font-size: 130%;
+  margin: 2px;
+}
+
+h3 {
+  font-size: 120%;
+  background-color: #FF0000;
+  color: #FFFFFF;
+  padding: 2px;
+  margin-bottom: 6px;
+}
+
+h4 {
+  font-size: 110%;
+  margin: 2px;
+}
+
+
+body, p, td, th, address, nobr, b, i {
+  font-size: 94%;
+}
+
+input, textarea {
+  font-size: 90%;
+}
+
+pre {
+  font-family: Courier New, Courier;
+  font-size: 94%;
+  color: #0000C0;
+}
+
+tt {
+  font-family: Courier New, Courier;
+  font-size: 94%;
+  color: #0000C0;
+}
+
+/* ---- List Item Properties ---- */
+
+ul {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 22px;
+}
+
+li {
+  margin-top: 2px;
+  margin-left: 0px;
+}
+
+.multiline-text {
+  font-family: Verdana, Geneva, Arial, sans-serif;
+  font-size: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #000000;
+}
+
+.code-text {
+  font-size: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #000000;
+}
+
+/* ---- Boxes ---- */
+
+.boxed {
+  background-color: #E0E0E0;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  padding: 4pt
+}
+
+.shboxed {
+  background-color: #F0F0F0;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  padding: 4pt
+}
+
+.nary {
+}
+
+.nary-row {
+  padding: 2px
+}
+
+.reified {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.modLink {
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.description {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 7px;
+  margin-right: 6px;
+}
+
+/* ---- Table Formatting  ---- */
+
+.headerTable {
+  background-color: #FF0000;
+  background-image: url(../images/blueheaderBG.gifx);
+  border-left: 1px solid #204263;
+  border-right: 1px solid #204263;
+}
+
+.contentTable {
+  background-color: #F0F0F0;
+  background-image: url(../images/mapBG2.gif);
+  border-left: 1px solid #000000;
+  border-right: 1px solid #000000;
+}
+
+.footerTable {
+  background-color: #336699;
+}
+
+.titleRow {
+  background-color: #A0A0A0;
+}
+
+/* ---- Table Cells ---- */
+
+.appName {
+  font-size: 160%;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin: 8px;
+}
+
+.logoSpace {
+}
+
+.tagLine {
+  font-size: 90%;
+  font-weight: normal;
+  color: #FFFFFF;
+}
+
+
+.topLinks {
+  color: #000000;
+  background-color: #F0F0F0;
+  font-size: 80%;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.intro {
+  padding-top: 20px;
+}
+
+.navigation {
+}
+
+.content {
+}
+
+.outro {
+}
+
+.comment {
+  color: #999;
+  font-size: 80%;
+}
+
+.footer {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+
+/* ---- Link Style Definition ---- */
+
+.topLinks a:link {
+  color: #FF0000;
+  text-decoration: none;
+}
+
+.topLinks a:visited {
+  color: #FF0000;
+  text-decoration: none;
+}
+
+a:link {
+  color: #202020;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #202020;
+  text-decoration: none;
+}
+
+a:active {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover, h3 a:hover {
+  text-decoration: underline
+}
+
+h3 a:link {
+  color: white;
+  text-decoration: none;
+}
+
+h3 a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+img { 
+  border: none;
+}

@@ -1,0 +1,62 @@
+AndLogInAsAdministrator=und als Administrator einloggen.
+
+Cancel=Abbrechen
+CannotDeleteUser=Sie können diesen Benutzer nicht löschen, da er der letzte mit administrativen Rechten ist. Das System würde andernfalls unbrauchbar.
+CannotDeleteUserGroup=Sie können diese Benutzergruppe nicht löschen, weil keine weiteren Benutzer mit administrativen Rechten vorhanden sind. Das System würde andernfalls unbrauchbar.
+CannotDeletePrivilege=Sie können dieses Privileg nicht löschen, weil keine weiteren Benutzer mit administrativen Rechten vorhanden sind. Das System würde andernfalls unbrauchbar.
+ChangePassword=Paßwort ändern
+ChangedPassword=Das Paßwort ist geändert.
+ClickEnterAdminPage=Klicken Sie hier um auf die Administrationshauptseite zu gelangen.
+ClickEnterPasswordPage=Klicken Sie hier um Ihr Paßwort zu ändern.
+CreateNew=Neu erstellen
+CreateNewPrivilege=Neues Privileg erstellen
+CreateNewUser=Neuen Benutzer erstellen
+CreateNewUserGroup=Neue Benutzergruppe erstellen
+
+Delete=Löschen
+
+Login=Einloggen
+Logout=Ausloggen
+logout=Ausloggen
+IncorrectLogin=Falscher Benutzername und/oder Paßwort
+
+MainPage=Hauptseite
+Maintain=Erhalten
+MaintainUsers=Benutzer erhalten
+MaintainUserGroups=Benutzergruppen erhalten
+MaintainPrivileges=Privilegien erhalten
+Modify=Ändern
+ModifyPrivilege=Privileg ändern
+ModifyUser=Benutzer ändern
+ModifyUserGroup=Benutzergruppe ändern
+
+Name_Colon=Name:
+NewPrivilege=Neues Privileg
+NewUser=Neue Benutzer
+NewUserGroup=Neue Benutzergruppe
+NoPermission=Sie haben leider kein Zugang zu dieser Seite.
+
+Password=Paßwort
+Password_Colon=Paßwort:
+Please=Bitte
+Privilege=Privileg
+PrivilegeName=Privilegname
+PrivilegeName_Colon=Privilegname:
+Privileges=Privilegien
+Privileges_Colon=Privilegien:
+
+Reset=Zurücksetzen
+
+Save=Speichern
+SI_Colon=Subjektindikator (SI):
+Submit=Absenden
+
+User=Benutzer
+Users=Benutzer
+UserGroup=Benutzergruppe
+UserGroupName_Colon=Name der Benutzergruppe:
+UserGroups=Benutzergruppen
+UserGroups_Colon=Benutzergruppen:
+UserName=Benutzername
+UserName_Colon=Benutzername:
+

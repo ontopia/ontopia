@@ -1,0 +1,51 @@
+Cancel=Cancel
+ChangePassword=Change Password
+ChangedPassword=Successfully Changed Password
+ClickEnterAdminPage=Click here to enter the Administrator Main Page.
+ClickEnterPasswordPage=Click here to change your password.
+CreateNew=Create New
+CreateNewPrivilege=Create New Privilege
+CreateNewUser=Create New User
+CreateNewUserGroup=Create New User Group
+
+Delete=Delete
+
+Login=Login
+Logout=Logout
+IncorrectLogin=Incorrect user name and/or password.
+
+MainPage=Main Page
+Maintain=Maintain
+MaintainUsers=Maintain Users
+MaintainUserGroups=Maintain User Groups
+MaintainPrivileges=Maintain Privileges
+Modify=Modify
+ModifyUser=Modify User
+ModifyUserGroup=Modify User Group
+ModifyPrivilege=Modify Privilege
+
+NewPrivilege=New Privilege
+NewUser=New User
+NewUserGroup=New User Group
+
+Password=Password
+Password_Colon=Password:
+Privilege=Privilege
+PrivilegeName=Privilege Name
+PrivilegeName_Colon=Privilege Name:
+Privileges=Privileges
+
+Reset=Reset
+
+Save=Save
+Submit=Submit
+
+User=User
+Users=Users
+UserGroup=User Group
+UserGroupName_Colon=Name of user group:
+UserGroups=User Groups
+UserName=User Name
+UserName_Colon=User Name:
+
+__UserFriendly=I'm user friendly. :-)

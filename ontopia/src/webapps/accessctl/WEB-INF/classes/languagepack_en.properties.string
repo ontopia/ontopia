@@ -1,0 +1,64 @@
+AndLogInAsAdministrator=and log in as administrator.
+
+Cancel=Cancel
+CannotDeleteUser=Cannot delete this user, since it is the only user with administrative permissions and would make the system unusable.
+CannotDeleteUserGroup=Cannot delete this user group, since all it would leave no users with administrative perissions and would make the system unusable.
+CannotDeletePrivilege=Cannot delete this privilege, since it would leave no users with administrative permissions and it would make the system unusable.
+ChangePassword=Change Password
+ChangedPassword=Successfully Changed Password
+ClickEnterAdminPage=Click here to enter the Administrator Main Page.
+ClickEnterPasswordPage=Click here to change your password.
+CreateNew=Create New
+CreateNewPrivilege=Create New Privilege
+CreateNewUser=Create New User
+CreateNewUserGroup=Create New User Group
+
+Delete=Delete
+
+Login=Login
+Logout=Logout
+logout=logout
+IncorrectLogin=Incorrect user name and/or password.
+
+MainPage=Main Page
+Maintain=Maintain
+MaintainUsers=Maintain Users
+MaintainUserGroups=Maintain User Groups
+MaintainPrivileges=Maintain Privileges
+Modify=Modify
+ModifyUser=Modify User
+ModifyUserGroup=Modify User Group
+ModifyPrivilege=Modify Privilege
+
+Name_Colon=Name:
+NewPrivilege=New Privilege
+NewUser=New User
+NewUserGroup=New User Group
+NoPermission=Sorry! You don't have permission to access this page.
+
+Password=Password
+Password_Colon=Password:
+Please=Please
+PleaseChooseDifferentUsername=Please choose a different username.
+Privilege=Privilege
+PrivilegeName=Privilege Name
+PrivilegeName_Colon=Privilege Name:
+Privileges=Privileges
+Privileges_Colon=Privileges:
+
+Reset=Reset
+
+Save=Save
+SI_Colon=Subject Indicator (SI):
+Submit=Submit
+
+User=User
+Users=Users
+UserGroup=User Group
+UserGroupName_Colon=Name of user group:
+UserGroups=User Groups
+UserGroups_Colon=User Groups:
+UserName=User Name
+UsernameAlreadyInUse=The username you chose is already in use.
+UserName_Colon=User Name:
+

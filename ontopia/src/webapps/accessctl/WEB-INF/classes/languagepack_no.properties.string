@@ -1,0 +1,64 @@
+AndLogInAsAdministrator=og logg deretter inn som administrator.
+
+Cancel=Avbryt
+CannotDeleteUser=Kan ikke slette denne brukeren, fordi det er den eneste med administrative rettigheter, og det ville gjort systemet ubrukelig.
+CannotDeleteUserGroup=Kan ikke slette denne bruker gruppen, siden det ikke ville bli igjen noen brukere med administrative rettigheter og systemet da ville bli ubrukelig.
+CannotDeletePrivilege=Kan ikke slette dette privilegiet, siden det ikke ville bli igjen noen brukere med administrative rettigheter og systemet da ville bli ubrukelig.
+ChangePassword=Endre passord
+ChangedPassword=Passordet ble endret.
+ClickEnterAdminPage=Klikk her for å gå til administrator-hovedsiden.
+ClickEnterPasswordPage=Klikk her for å endre passord.
+CreateNew=Lage ny
+CreateNewPrivilege=Lage nytt privilegium
+CreateNewUser=Lage ny bruker
+CreateNewUserGroup=Lage ny brukergruppe
+
+Delete=Slett
+
+Login=Logg inn
+Logout=Logg ut
+logout=logg ut
+IncorrectLogin=Galt brukernavn og/eller passord.
+
+MainPage=Hovedside
+Maintain=Vedlikeholde
+MaintainUsers=Vedlikeholde brukere
+MaintainUserGroups=Vedlikeholde brukergrupper
+MaintainPrivileges=Vedlikeholde privilegier
+Modify=Endre
+ModifyPrivilege=Endre privilegium
+ModifyUser=Endre bruker
+ModifyUserGroup=Endre brukergruppe
+
+Name_Colon=Navn:
+NewPrivilege=Nytt privilegium
+NewUser=Ny bruker
+NewUserGroup=Ny brukergruppe
+NoPermission=Beklager! Du har ikke tilgang til denne siden.
+
+Password=Passord
+Password_Colon=Passord:
+Please=Vennligst
+PleaseChooseDifferentUsername=Vennligst velg et nytt brukernavn.
+Privilege=Privilegium
+PrivilegeName=Privilegiumnavn
+PrivilegeName_Colon=Privilegiumnavn:
+Privileges=Privilegier
+Privileges_Colon=Privilegier:
+
+Reset=Nullstill
+
+Save=Lagre
+SI_Colon=Subjektindikator (SI):
+Submit=Send
+
+User=Bruker
+Users=Brukere
+UserGroup=Brukergruppe
+UserGroupName_Colon=Navn på brukergruppe:
+UserGroups=Brukergrupper
+UserGroups_Colon=Brukergrupper:
+UserName=Brukernavn
+UsernameAlreadyInUse=Brukernavnet du valgte er allerede i bruk.
+UserName_Colon=Brukernavn:
+

@@ -1,0 +1,193 @@
+<actionConfig>
+  <classMap>
+    <class shortcut="dummy" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.DefaultAction"/>
+    <class shortcut="ltm" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.tmobject.EvaluateLTM"/>
+    <class shortcut="assign-role-player"
+      fullname="net.ontopia.topicmaps.webed.impl.actions.association.AssignRolePlayer"/>
+    <class shortcut="add-si" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.topic.AddSubjectIndicator"/>
+    <class shortcut="set-si" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.topic.SetSubjectIndicator"/>
+    <class shortcut="set-name" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.basename.SetValue"/>
+    <class shortcut="set-type" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.topic.SetType"/>
+    <class shortcut="set-value" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.occurrence.SetValue"/>
+    <class shortcut="set-value-unique" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.occurrence.SetValueUnique"/>
+    <class shortcut="delete" 
+      fullname="net.ontopia.topicmaps.webed.impl.actions.tmobject.Delete"/>
+  </classMap>
+
+  <fieldMap>
+    <field name="short" type="text"     columns="40"/>
+    <field name="long"  type="textarea" columns="40" rows="5"/>
+    <field name="uri"   type="text"     columns="70"/>
+    <field name="password" type="password" columns="12" maxlength="12"/>
+  </fieldMap>
+
+  <actionGroup name="index">
+    <action name="delete" class="delete"/>
+        
+    <forwardRules>
+      <forwardDefault path="protected/main.jsp">
+        <reqParam name="maintainPrivileges"/>
+        <reqParam name="maintainUsers"/>
+        <reqParam name="maintainUserGroups"/>
+        <reqParam name="language"/>
+      </forwardDefault>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="main">
+    <action name="delete" class="delete"/>
+        
+    <forwardRules>
+      <forwardDefault path="protected/main.jsp">
+        <reqParam name="maintainPrivileges"/>
+        <reqParam name="maintainUsers"/>
+        <reqParam name="maintainUserGroups"/>
+        <reqParam name="language"/>
+      </forwardDefault>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="old_main">
+    <action name="delete" class="delete"/>
+        
+    <forwardRules>
+      <forwardDefault path="protected/old_main.jsp">
+        <reqParam name="language"/>
+      </forwardDefault>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="password">
+    <action name="cancel" class="dummy"/>
+    <action name="submit" class="dummy"/>
+    
+    <inputField name="set-name"  class="set-name"/>
+    <inputField name="set-value" class="set-value"/>
+
+    <forwardRules>
+      <forwardDefault path="index.jsp">
+        <reqParam name="language"/>
+      </forwardDefault>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="privilege">
+    <action name="delete" class="delete"/>
+    <action name="submit" class="dummy"/>
+    
+    <inputField name="add-si"    class="add-si"/>
+    <inputField name="set-name"  class="set-name"/>
+    <inputField name="set-si"    class="set-si"/>
+    <inputField name="set-value" class="set-value"/>
+
+    <forwardRules>
+      <forwardDefault path="protected/privileges.jsp">
+        <reqParam name="language"/>
+      </forwardDefault>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="privileges">
+    <action name="create" class="ltm"/>
+    <action name="delete" class="delete"/>
+    <action name="modify" class="dummy"/>
+
+    <inputField name="set-name"  class="set-name"/>
+    <inputField name="set-value" class="set-value"/>
+        
+    <forward name="privilege" path="protected/privilege.jsp">
+      <reqParam name="language"/>
+    </forward>
+    <forwardRules>
+      <forwardDefault path="protected/privileges.jsp">
+        <reqParam name="language"/>
+      </forwardDefault>
+      
+      <forwardRule action="create" forward="privilege"/>
+      <forwardRule action="modify" forward="privilege"/>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="user">
+    <action name="delete" class="delete"/>
+    <action name="submit" class="dummy"/>
+    <action name="assign" class="assign-role-player"/>
+    
+    <inputField name="set-name"  class="set-name"/>
+    <inputField name="set-value" class="set-value"/>
+    <inputField name="set-value-unique" class="set-value-unique"/>
+
+    <forwardRules>
+      <forwardDefault path="protected/users.jsp">
+        <reqParam name="language"/>
+      </forwardDefault>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="users">
+    <action name="create" class="ltm"/>
+    <action name="delete" class="delete"/>
+    <action name="modify" class="dummy"/>
+
+    <inputField name="set-name"  class="set-name"/>
+    <inputField name="set-type" class="set-type"/>
+    <inputField name="set-value" class="set-value"/>
+        
+    <forward name="user" path="protected/user.jsp">
+      <reqParam name="language"/>
+    </forward>
+    <forwardRules>
+      <forwardDefault path="protected/users.jsp">
+        <reqParam name="language"/>
+      </forwardDefault>
+      
+      <forwardRule action="create" forward="user"/>
+      <forwardRule action="modify" forward="user"/>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="userGroup">
+    <action name="delete" class="delete"/>
+    <action name="submit" class="dummy"/>
+    <action name="assign" class="assign-role-player"/>
+    
+    <inputField name="set-name"  class="set-name"/>
+    <inputField name="set-value" class="set-value"/>
+
+    <forwardRules>
+      <forwardDefault path="protected/userGroups.jsp">
+        <reqParam name="language"/>
+      </forwardDefault>
+    </forwardRules>
+  </actionGroup>
+  
+  <actionGroup name="userGroups">
+    <action name="create" class="ltm"/>
+    <action name="delete" class="delete"/>
+    <action name="modify" class="dummy"/>
+
+    <inputField name="set-name"  class="set-name"/>
+    <inputField name="set-type" class="set-type"/>
+    <inputField name="set-value" class="set-value"/>
+        
+    <forward name="userGroup" path="protected/userGroup.jsp">
+      <reqParam name="language"/>
+    </forward>
+    <forwardRules>
+      <forwardDefault path="protected/userGroups.jsp">
+        <reqParam name="language"/>
+      </forwardDefault>
+      
+      <forwardRule action="create" forward="userGroup"/>
+      <forwardRule action="modify" forward="userGroup"/>
+    </forwardRules>
+  </actionGroup>
+</actionConfig>

@@ -1,0 +1,106 @@
+/* ===================================================================================
+ 
+   USER MANAGEMENT
+ 
+   Core Ontopia ontology for managing users, roles, and privileges.
+   (C) Ontopia 2003
+ 
+   $Id: userman.ltm,v 1.10 2006/10/26 11:28:33 grove Exp $
+ 
+=================================================================================== */
+#VERSION "1.3"
+#TOPICMAP ~tm
+
+/* ----- REIFICATION -------------------------------------------------------------- */
+[tm = "User Management Example TM"]
+{tm, definition, [[This topic map has example data in the Ontopia
+ontology for managing users and privileges. See the user management
+documentation for more information]]}
+
+/* ----- REUSED ------------------------------------------------------------------- */
+ 
+[definition = "Definition" @"http://psi.ontopia.net/xtm/occurrence-type/description"]
+ 
+/* ----- TOPIC TYPES -------------------------------------------------------------- */
+ 
+[user = "User" @"http://psi.ontopia.net/userman/user"]
+{user, definition, [[A user account in the system, possibly, but not necessarily
+corresponding to a person. It may be a group account and one person may have more
+than a single account.]]}
+ 
+[role = "Role" @"http://psi.ontopia.net/userman/role"]
+{role, definition, [[A role is a set of privileges that is extended to all users
+which play that role. A role often corresponds to a particular position or
+responsibility, but need not necessarily do so.]]}
+ 
+[privilege = "Privilege" @"http://psi.ontopia.net/userman/privilege"]
+{privilege, definition, [[A privilege is a right extended to a user or a role,
+which enables those users who have the privilege to perform a certain task or
+access certain kinds of information.]]}
+ 
+[user-group = "User Group" @"http://psi.ontopia.net/userman/user-group"]
+       
+/* ----- NAME SCOPES -------------------------------------------------------------- */
+ 
+[username = "Username" @"http://psi.ontopia.net/userman/username"]
+ 
+/* ----- OCCURRENCE TYPES --------------------------------------------------------- */
+ 
+[password = "Password" @"http://psi.ontopia.net/userman/password"]
+
+ 
+/* ----- ASSOCIATION TYPES -------------------------------------------------------- */
+ 
+[plays-role = "Plays role" = "Role played by" / role
+ @"http://psi.ontopia.net/userman/plays-role"]
+  /* user <-> role */
+ 
+[has-privilege = "Has privilege" @"http://psi.ontopia.net/userman/has-privilege"]
+  [receiver = "Receiver" @"http://psi.ontopia.net/userman/receiver"] 
+  /* whoever receives the privilege */
+
+
+/* ************************************************************ */
+/* ********************* DATA / INSTANCES ********************* */
+/* ************************************************************ */
+
+
+/* ----- TOPICS WITH OCCURRENCES -------------------------------------------------------- */
+
+/* Users */
+
+[johndoe : user = "John Doe"]
+{johndoe, username, [[johndoe]]}
+{johndoe, password, [[secret]]}
+plays-role(johndoe : user, gold-users : role)
+plays-role(johndoe : user, ontopoly-users : role)
+
+/* User Groups */
+
+[gold-users : user-group = "gold-users"]
+has-privilege(gold-users : receiver, priv-admin-users : privilege)
+
+[silver-users : user-group = "silver-users"]
+
+[bronze-users : user-group = "bronze-users"]
+
+[ontopoly-users : user-group = "ontopoly-editor"]
+has-privilege(ontopoly-users : receiver, administrator : privilege)
+has-privilege(ontopoly-users : receiver, instance-editor : privilege)
+has-privilege(ontopoly-users : receiver, ontology-editor : privilege)
+
+/* Privileges */
+
+[administrator : privilege = "administrator"
+ @"http://psi.ontopia.net/tm-editor/administrator"]
+[instance-editor : privilege = "instance-editor"
+ @"http://psi.ontopia.net/tm-editor/instance-editor"]
+[instance-reader : privilege = "instance-reader"
+ @"http://psi.ontopia.net/tm-editor/instance-reader"]
+[ontology-editor : privilege = "ontology-editor"
+ @"http://psi.ontopia.net/tm-editor/ontology-editor"]
+[ontology-reader : privilege = "ontology-reader"
+ @"http://psi.ontopia.net/tm-editor/ontology-reader"]
+
+[priv-admin-users : privilege = "priv-administrative-users"
+ @"http://psi.ontopia.net/userman/priv-admin-users"]

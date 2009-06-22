@@ -1,0 +1,4 @@
+native2ascii languagepack_de.properties.string languagepack_de.properties
+native2ascii languagepack_en.properties.string languagepack_en.properties
+native2ascii languagepack_nl.properties.string languagepack_nl.properties
+native2ascii languagepack_no.properties.string languagepack_no.properties
