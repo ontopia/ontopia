@@ -1,0 +1,20 @@
+<test-collection>
+
+  <include>tests.xml</include>
+
+  <group>
+    <name>ontopia</name>
+    <group-ref>engine</group-ref>
+    <group-ref>fulltext</group-ref>
+    <group-ref>query</group-ref>
+    <group-ref>schema</group-ref>
+    <group-ref>navigator</group-ref>
+    <group-ref>webed</group-ref>
+  </group>
+	
+  <group>
+    <name>ontopia-rdbms</name>
+    <group-ref>rdbms</group-ref>
+  </group>
+
+</test-collection>
