@@ -32,6 +32,7 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
 import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
+import net.ontopia.topicmaps.query.utils.TologSpy;
 import net.ontopia.topicmaps.query.parser.GlobalParseContext;
 import net.ontopia.topicmaps.query.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.parser.ParseContextIF;
@@ -136,6 +137,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   public QueryResultIF execute(TologQuery query, Map arguments)
       throws InvalidQueryException {
 
+    long start = System.currentTimeMillis();
     QueryAnalyzer.verifyParameters(query, arguments);
 
     if (logger.isDebugEnabled())
@@ -158,7 +160,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     } finally {
       QueryTracer.endQuery();
     }
-
+    TologSpy.recordExecute(query, start, System.currentTimeMillis());
+    
     return new QueryResult(matches, query.getLimit(), query.getOffset());
   }
 
