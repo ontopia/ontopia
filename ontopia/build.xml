@@ -660,12 +660,6 @@
     </javac>
   </target>
 
-  <target name="jar.classify" depends="clean.classify,compile.classify">
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-classify.jar">
-      <patternset refid="classes.classify"/>
-    </jar>
-  </target>
-
   <property name="dist.classify.packagenames" value="
        net.ontopia.topicmaps.classify" />
 
@@ -1494,13 +1488,14 @@
       <patternset refid="resources.viz" />
       <patternset refid="classes.db2tm" />
       <patternset refid="classes.rdbms" />
+      <patternset refid="classes.classify" />
     </jar>
   </target>
 
   <!-- Makes sure that all neccessary classes are compiled before packaging ontopia.jar -->
-  <target name="compile.ontopia" depends="compile.engine,compile.cmdlineutils,compile.navigator,compile.fulltext,compile.query,compile.schema,compile.webed,compile.db2tm,compile.rdbms,compile.viz" />
+  <target name="compile.ontopia" depends="compile.engine,compile.cmdlineutils,compile.navigator,compile.fulltext,compile.query,compile.schema,compile.webed,compile.db2tm,compile.rdbms,compile.viz,compile.classify" />
 
-  <target name="compile.test.ontopia" depends="compile.test.engine,compile.cmdlineutils,compile.test.navigator,compile.test.fulltext,compile.test.query,compile.test.schema,compile.test.webed,compile.test.db2tm,compile.test.rdbms,compile.viz" />
+  <target name="compile.test.ontopia" depends="compile.test.engine,compile.cmdlineutils,compile.test.navigator,compile.test.fulltext,compile.test.query,compile.test.schema,compile.test.webed,compile.test.db2tm,compile.test.rdbms,compile.viz,compile.test.classify" />
 
   <target name="jar.compile.ontopia" depends="compile.ontopia,jar.ontopia" />
 
@@ -1517,6 +1512,7 @@
       <patternset refid="classes.test.webed" />
       <patternset refid="classes.test.db2tm" />
       <patternset refid="classes.test.rdbms" />
+      <patternset refid="classes.test.classify" />
     </jar>
   </target>
 
@@ -2280,8 +2276,6 @@
 
     <antcall target="clean.classify"/>
     <antcall target="compile.test.classify"/>
-    <antcall target="jar.classify"/>
-    <copy file="${build.jars}/ontopia-classify.jar" todir="${dist.path}/apache-tomcat/common/lib" />
 
   </target>
 
