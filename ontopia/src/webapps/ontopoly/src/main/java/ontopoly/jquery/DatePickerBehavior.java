@@ -1,11 +1,8 @@
 package ontopoly.jquery;
 
-import ontopoly.images.ImageResource;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.PackageResource;
 
 public class DatePickerBehavior extends JQueryBehavior {
   
