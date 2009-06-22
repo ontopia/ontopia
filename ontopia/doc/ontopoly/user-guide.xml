@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- Do not delete the External ID. It is needed for validation. -->
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
 <!DOCTYPE article
-   PUBLIC "-//OASIS//DTD DocBook XML V4.1//EN" "../../dtds/docbook/docbookx.dtd"
 [
   <!ENTITY ted '<productname>Ontopoly</productname>'>
   <!ENTITY ots '<productname>Ontopia | OKS Samplers</productname>'>
