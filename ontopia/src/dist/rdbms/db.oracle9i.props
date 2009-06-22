@@ -1,0 +1,8 @@
+net.ontopia.topicmaps.impl.rdbms.Database=oracle9i
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:oracle:thin:@127.0.0.1:1521:TOPICMAPS
+net.ontopia.topicmaps.impl.rdbms.DriverClass=oracle.jdbc.driver.OracleDriver
+
+net.ontopia.topicmaps.impl.rdbms.UserName=foo
+net.ontopia.topicmaps.impl.rdbms.Password=bar
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=true

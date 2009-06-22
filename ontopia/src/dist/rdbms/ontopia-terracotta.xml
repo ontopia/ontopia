@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tc:tc-config xmlns:tc="http://www.terracotta.org/config">
+  <clients>
+    <!--dso>
+      <debugging>
+        <instrumentation-logging>
+          <class>true</class>
+          <hierarchy>true</hierarchy>
+          <locks>true</locks>
+          <transient-root>true</transient-root>
+          <roots>true</roots>
+          <distributed-methods>true</distributed-methods>
+        </instrumentation-logging>
+        <runtime-logging>
+          <lock-debug>true</lock-debug>  
+          <field-change-debug>true</field-change-debug>  
+          <wait-notify-debug>true</wait-notify-debug>
+          <distributed-method-debug>true</distributed-method-debug>
+          <new-object-debug>true</new-object-debug>
+        </runtime-logging>
+      </debugging>
+    </dso-->
+  </clients>  
+  <application>
+    <dso>
+      <roots>
+        <root><field-name>net.ontopia.topicmaps.webed.impl.utils.LockManagers.lockManagers</field-name></root>
+      </roots>
+      <locks>
+         <autolock>
+          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.LockManagers.getLockManager(..)</method-expression>
+          <lock-level>read</lock-level>
+         </autolock>
+         <autolock>
+          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.LockManagers.createLockManager(..)</method-expression>
+          <lock-level>write</lock-level>
+         </autolock>
+         <autolock>
+          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.NamedLockManager.*(..)</method-expression>
+          <lock-level>write</lock-level>
+        </autolock>
+        <autolock>
+          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.NamedLock.*(..)</method-expression>
+          <lock-level>read</lock-level>
+        </autolock>
+        <autolock>
+          <method-expression>* net.ontopia.topicmaps.webed.impl.utils.LockResult.*(..)</method-expression>
+          <lock-level>read</lock-level>
+        </autolock>
+        <autolock>
+          <method-expression>* java.util.HashMap.*(..)</method-expression>
+          <lock-level>write</lock-level>
+        </autolock>
+        <autolock>
+          <method-expression>* java.util.HashSet.*(..)</method-expression>
+          <lock-level>write</lock-level>
+        </autolock>
+        <autolock>
+          <method-expression>* java.util.concurrent.ConcurrentHashMap.*(..)</method-expression>
+          <lock-level>write</lock-level>
+        </autolock>
+        <autolock>
+          <method-expression>* EDU.oswego.cs.dl.util.concurrent.ConcurrentHashMap.*(..)</method-expression>
+          <lock-level>write</lock-level>
+        </autolock>
+        <autolock>
+          <method-expression>* EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArraySet.*(..)</method-expression>
+          <lock-level>write</lock-level>
+        </autolock>
+        <autolock>
+          <method-expression>* EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArrayList.*(..)</method-expression>
+          <lock-level>write</lock-level>
+        </autolock>
+      </locks>
+      <instrumented-classes>
+        <include>
+          <class-expression>net.ontopia.topicmaps.webed.impl.utils.LockManagers</class-expression>
+        </include>
+        <include>
+          <class-expression>net.ontopia.topicmaps.webed.impl.utils.NamedLockManager</class-expression>
+        </include>
+        <include>
+          <class-expression>net.ontopia.topicmaps.webed.impl.utils.NamedLockManager$TMObjectIFHandle</class-expression>
+        </include>
+        <include>
+          <class-expression>net.ontopia.topicmaps.webed.impl.utils.NamedLock</class-expression>
+        </include>
+        <include>
+          <class-expression>net.ontopia.topicmaps.webed.impl.utils.LockResult</class-expression>
+        </include>
+        <include>
+          <class-expression>java.util.HashSet</class-expression>
+        </include>
+        <include>
+          <class-expression>EDU.oswego.cs.dl.util.concurrent.ConcurrentHashMap</class-expression>
+        </include>
+        <include>
+          <class-expression>EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArraySet</class-expression>
+        </include>
+        <include>
+          <class-expression>EDU.oswego.cs.dl.util.concurrent.CopyOnWriteArrayList</class-expression>
+        </include>
+         <include>
+           <class-expression>net.ontopia.topicmaps.nav2.impl.framework.User</class-expression>
+           <honor-transient>true</honor-transient>
+         </include>
+      </instrumented-classes>
+    </dso>
+  </application>
+</tc:tc-config>

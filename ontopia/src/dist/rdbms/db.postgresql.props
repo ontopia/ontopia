@@ -1,0 +1,8 @@
+net.ontopia.topicmaps.impl.rdbms.Database=postgresql
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:postgresql:topicmaps
+net.ontopia.topicmaps.impl.rdbms.DriverClass=org.postgresql.Driver
+
+net.ontopia.topicmaps.impl.rdbms.UserName=foo
+net.ontopia.topicmaps.impl.rdbms.Password=bar
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=true

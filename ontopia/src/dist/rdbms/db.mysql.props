@@ -1,0 +1,8 @@
+net.ontopia.topicmaps.impl.rdbms.Database=mysql
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:mysql://localhost/topicmaps?useUnicode=yes&characterEncoding=utf8&relaxAutoCommit=true
+net.ontopia.topicmaps.impl.rdbms.DriverClass=com.mysql.jdbc.Driver
+
+net.ontopia.topicmaps.impl.rdbms.UserName=foo
+net.ontopia.topicmaps.impl.rdbms.Password=bar
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=true

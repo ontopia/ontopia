@@ -1,0 +1,8 @@
+net.ontopia.topicmaps.impl.rdbms.Database=derby
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:derby:/usr/local/db-derby-10.1.2.1-bin/test
+net.ontopia.topicmaps.impl.rdbms.DriverClass=org.apache.derby.jdbc.EmbeddedDriver
+
+net.ontopia.topicmaps.impl.rdbms.UserName=
+net.ontopia.topicmaps.impl.rdbms.Password=
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=true

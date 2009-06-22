@@ -1,0 +1,8 @@
+net.ontopia.topicmaps.impl.rdbms.Database=sqlserver
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbcspy:jdbc:sqlserver://127.0.0.1\\ONTOPIA;databaseName=topicmaps;lockTimeout=60000
+net.ontopia.topicmaps.impl.rdbms.DriverClass=com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+net.ontopia.topicmaps.impl.rdbms.UserName=foo
+net.ontopia.topicmaps.impl.rdbms.Password=bar
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=true
