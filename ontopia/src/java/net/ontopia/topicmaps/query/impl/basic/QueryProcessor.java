@@ -428,7 +428,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
         case ORDER_STRING:          
           comp = (collator != null ?
                   collator.compare((String)row1[orderColumns[ix]], (String)row2[orderColumns[ix]]) :
-                  ((String) row1[orderColumns[ix]]).compareTo(row2[orderColumns[ix]]));
+                  ((Comparable) row1[orderColumns[ix]]).compareTo(row2[orderColumns[ix]]));
           break;
         case ORDER_OBJECT:
           // if both objects are topic then sort them as topics
