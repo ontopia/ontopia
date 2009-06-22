@@ -140,6 +140,31 @@ public class OntopolyModelUtils {
     return result;
   }
   
+  public static Collection findBinaryPlayers(TopicMap tm, TopicIF aType, 
+      TopicIF player1, TopicIF rType1, TopicIF rType2, TopicIF theme) {
+    List result = new ArrayList();
+    Iterator iter = player1.getRoles().iterator();
+    while (iter.hasNext()) {
+      AssociationRoleIF role1 = (AssociationRoleIF)iter.next();
+      AssociationIF assoc = role1.getAssociation();
+      Collection scope = assoc.getScope();
+      if (!(scope.size() == 1 && scope.contains(theme))) continue;
+      Collection roles = assoc.getRoles();
+      if (roles.size() != 2) continue;
+      if (ObjectUtils.equals(role1.getType(), rType1) &&
+          ObjectUtils.equals(assoc.getType(), aType)) {
+        Iterator riter = roles.iterator();
+        while (riter.hasNext()) {
+          AssociationRoleIF role2 = (AssociationRoleIF)riter.next();
+          if (ObjectUtils.different(role1, role2)) {
+            result.add(role2.getPlayer());
+          }
+        }
+      }
+    }
+    return result;
+  }
+
   public static AssociationIF findBinaryAssociation(
       TopicMap tm, TopicIF aType, 
       TopicIF player1, TopicIF rType1, TopicIF player2, TopicIF rType2) {
