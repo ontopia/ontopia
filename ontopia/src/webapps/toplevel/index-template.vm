@@ -16,7 +16,7 @@
         <tr>
           <!-- this image is transparent, but needed for the layout. the text is
                really part of the background -->
-          <td class="topLinks"><img src="oks-samplers.gif"
+          <td class="topLinks"><img src="ontopia-transparent.gif"
             width="550" height="86"><br></td>
           <td align="right" valign="top">
             <div id="oksmenu">
