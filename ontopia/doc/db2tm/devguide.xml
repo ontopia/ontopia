@@ -7,7 +7,7 @@
   <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>$Date: 2008/05/29 07:01:13 $</pubdate> 
-<releaseinfo>4.0 $Revision: 1.20 $</releaseinfo> 
+<releaseinfo>5.0 $Revision: 1.20 $</releaseinfo> 
 
 <abstract>
 <para>
@@ -465,7 +465,7 @@ something like this:
 
 <literallayout>package net.ontopia.utils;
 
-// WARNING: this class does not actually exist in the OKS!
+// WARNING: this class does not actually exist in Ontopia!
 public class ExampleUtils {
 
   public static String correctURI(String baduri) {
@@ -611,7 +611,7 @@ attributes accepted by this element are listed in the table below.
     <entry>propfile</entry>
     <entry>The path to the RDBMS properties file that tells DB2TM how
     to connect to the database. This property file uses the same set
-    of properties as the OKS RDBMS backend does (except that it
+    of properties as the Ontopia RDBMS backend does (except that it
     doesn't make use of all the properties that tune the backend cache
     etc). The path is relative to the location of the XML file.</entry>
     <entry>Yes</entry>
@@ -968,8 +968,8 @@ Still left to document:
 
 <para>
 In general it is not recommended to use the command-line tool to
-synchronize topic maps while a web application is running, since the
-object cache of the OKS inside the web application will not notice
+synchronize topic maps while a web application is running, since
+Ontopia's object cache inside the web application will not notice
 changes made by the command-line tool. (This will change once
 clustering support arrives.) Instead, the synchronization should be
 run from inside the web server. There are three ways to do this:
@@ -984,7 +984,7 @@ run from inside the web server. There are three ways to do this:
 
   <listitem>
     <para>Use the Ontopoly plug-in to run the synchronization
-    manually.  This plug-in is not yet part of the OKS, but is
+    manually.  This plug-in is not yet part of Ontopia, but is
     available on request.</para>
   </listitem>
 
