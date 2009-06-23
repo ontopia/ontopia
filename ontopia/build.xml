@@ -74,11 +74,7 @@
          CLASSPATH
         ====================================================================== -->
 
-  <target name="clean.ivy">
-    <ivy:cleancache organisation="net.ontopia" module="ontopia" />
-  </target>
-
-  <ivy:cachepath pathid="project.classpath.ivy" organisation="net.ontopia" module="ontopia" conf="build" />
+  <ivy:cachepath pathid="project.classpath.ivy" organisation="net.ontopia" module="ontopia" conf="build"/>
 
   <path id="project.classpath.nolog4j">
     <pathelement location="${basedir}/3rdparty/ontoboot.jar" />

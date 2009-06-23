@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<project name="ontopia.ivy" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+  <target name="clean.ivy">
+    <ivy:cleancache />
+    <ivy:resolve file="ivy.xml" />
+    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" />
+  </target>
+</project>
