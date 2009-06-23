@@ -948,16 +948,16 @@
     <!-- Collect product structures -->
     <antcall target="dist.product.collect" />
     <antcall target="dist.engine.collect" />
-    <antcall target="dist.navigator.collect" />
-    <antcall target="dist.fulltext.collect" />
     <antcall target="dist.query.collect" />
+    <antcall target="dist.fulltext.collect" />
     <antcall target="dist.schema.collect" />
     <antcall target="dist.webed.collect" />
     <antcall target="dist.viz.collect" />
     <antcall target="dist.db2tm.collect" />
-    <antcall target="dist.tmrap.collect" />
     <antcall target="dist.rdbms.collect" />
     <antcall target="dist.classify.collect" />
+    <antcall target="dist.navigator.collect" />
+    <antcall target="dist.tmrap.collect" />
 
     <!-- Collect product tests -->
     <antcall target="dist.engine.test.collect" />
@@ -2195,6 +2195,16 @@
 
   <!-- - - - Ontopoly web application  - - - - - - - - - - - - - - - - - - -->
   <target name="dist.ontopia.webapp.ontopoly" depends="init">
+    <!-- have to install ontopia.jar in maven repository -->
+    <exec dir="${src.path}/webapps/ontopoly" executable="mvn">
+      <env key="JAVA_HOME" value="${j2se15.home}"/>
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=net.ontopia" />
+      <arg value="-DartifactId=ontopia" />
+      <arg value="-Dversion=${dist.version.major}.${dist.version.minor}.${dist.version.micro}-SNAPSHOT" />
+      <arg value="-Dpackaging=jar" />
+      <arg value="-Dfile=${build.jars}/ontopia.jar" />
+    </exec>
     <exec dir="${src.path}/webapps/ontopoly" executable="mvn">
       <env key="JAVA_HOME" value="${j2se15.home}"/>
       <arg value="-Dmaven.test.skip=true" />
@@ -2233,14 +2243,6 @@
     <copy todir="${dist.path}/apache-tomcat/webapps/ROOT">
       <fileset dir="${src.path}/webapps/toplevel" />
     </copy>
-     
-    <echo>Generating ROOT index page...</echo>
-    <texen controlTemplate="index-control.vm" templatePath="${dist.path}/apache-tomcat/webapps/ROOT" 
-           outputFile="toplevel.report" outputDirectory="${dist.path}/apache-tomcat/webapps/ROOT" />
-
-    <delete file="${dist.path}/apache-tomcat/webapps/ROOT/toplevel.report" />
-    <delete file="${dist.path}/apache-tomcat/webapps/ROOT/index-control.vm" />
-    <delete file="${dist.path}/apache-tomcat/webapps/ROOT/index-template.vm" />
   </target>
 
   <target name="dist.ontopia.accessctl.compile" depends="init">
