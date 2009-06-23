@@ -9,7 +9,7 @@
 <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>$Date: 2008/11/03 12:11:47 $</pubdate>
-<releaseinfo>4.0 ($Revision: 1.43 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.43 $)</releaseinfo>
 
 <abstract>
 <para>
@@ -345,7 +345,7 @@ Below is shown an example configuration element.
 <literallayout format="linespecific" class="normal">
 <![CDATA[
     <source class="net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource">
-      <param name="propertyFile" value="/usr/local/oks-enterprise/jdbc.prop"/>
+      <param name="propertyFile" value="/usr/local/ontopia/jdbc.prop"/>
       <param name="baseAddress" value="http://www.ontopia.net/topicmaps/foo.ltm"/>
     </source>
 ]]>
@@ -420,7 +420,7 @@ Below is shown an example configuration element.
       <param name="topicMapId" value="5001"/>
       <param name="title" value="The Foo Topic Map"/>
       <param name="referenceId" value="foo"/>
-      <param name="propertyFile" value="/usr/local/oks-enterprise/jdbc.prop"/>
+      <param name="propertyFile" value="/usr/local/ontopia/jdbc.prop"/>
       <param name="baseAddress" value="http://www.ontopia.net/topicmaps/foo.ltm"/>
     </source>
 ]]>
@@ -506,15 +506,15 @@ class.
 <title>Log4j logging</title>
 
 <para>
-The OKS uses the <ulink
+Ontopia uses <ulink
 url="http://jakarta.apache.org/log4j/docs/manual.html">log4j</ulink>
 for its logging. You can also find a little more information on log4j
-and how the Ontopia Knowledge Suite uses it in the <citetitle><ulink
-url="../devguide.html">The Ontopia Topic Map Engine - Developer's
+and how Ontopia uses it in the <citetitle><ulink
+url="../devguide.html">The Ontopia Topic Maps Engine - Developer's
 Guide</ulink></citetitle>. If you want to configure the log4j logging
 in Navigator Framework applications, just put a
-<filename>log4j.properties</filename> file on the classpath, and the
-OKS will automatically pick it up.
+<filename>log4j.properties</filename> file on the classpath, and
+Ontopia will automatically pick it up.
 </para>
 </section>
 
@@ -685,8 +685,8 @@ several locations on which one can put resources to make them visible
 for the application servers' class loaders. In Tomcat one should
 normally put the <filename>tm-sources.xml</filename> file in the
 <filename>common/classes</filename> directory. In most situations one
-would put the file in the same class loader context as the
-oks-professional.jar or oks-enterprise.jar files.
+would put the file in the same class loader context as the ontopia.jar
+file.
 </para>
 
 <para>
