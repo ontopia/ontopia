@@ -17,52 +17,57 @@
    under the License.    
 -->
 <ivy-module version="2.0">
-    <info organisation="net.ontopia" module="ontopia"/>
-    <dependencies>
-        <dependency org="commons-dbcp" name="commons-dbcp" rev="1.2.2" conf="*->*,!sources,!javadoc" />
-        <dependency org="commons-collections" name="commons-collections" rev="3.2.1" conf="*->*,!sources,!javadoc" />
-        <dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="*->*,!sources,!javadoc" />
-        <dependency org="commons-fileupload" name="commons-fileupload" rev="1.1" conf="*->*,!sources,!javadoc" />
-        <dependency org="crimson" name="crimson" rev="1.1.3" conf="*->*,!sources,!javadoc" />
-        <dependency org="urbanophile" name="java-getopt" rev="1.0.9" conf="*->*,!sources,!javadoc" />
-        <dependency org="velocity" name="velocity" rev="1.3" conf="*->*,!sources,!javadoc" />
+  <info organisation="net.ontopia" module="ontopia"/>
+  <configurations>
+    <conf name="build"  description="build dependancies"/>
+    <conf name="runtime" description="runtime dependancies"/>
+    <conf name="test" extends="build, runtime" description="test dependances"/>
+  </configurations>
+  <dependencies defaultconfmapping="*->default">
+    <dependency org="commons-dbcp" name="commons-dbcp" rev="1.2.2" conf="build, runtime" />
+    <dependency org="commons-collections" name="commons-collections" rev="3.2.1" conf="build, runtime" />
+    <dependency org="commons-logging" name="commons-logging" rev="1.1.1" conf="build, runtime" />
+    <dependency org="commons-fileupload" name="commons-fileupload" rev="1.1" conf="build, runtime" />
+    <dependency org="crimson" name="crimson" rev="1.1.3" conf="build, runtime" />
+    <dependency org="urbanophile" name="java-getopt" rev="1.0.9" conf="build, runtime" />
+    <dependency org="velocity" name="velocity" rev="1.3" conf="build, runtime" />
 
-        <dependency org="antlr" name="antlr" rev="2.7.7" conf="*->*,!sources,!javadoc" />
+    <dependency org="antlr" name="antlr" rev="2.7.7" conf="build, runtime" />
 
-        <dependency org="log4j" name="log4j" rev="1.2.14" conf="*->*,!sources,!javadoc" />
-        <dependency org="oro" name="oro" rev="2.0.8" conf="*->*,!sources,!javadoc" />
-        <dependency org="concurrent" name="concurrent" rev="1.3.4" conf="*->*,!sources,!javadoc" />
+    <dependency org="log4j" name="log4j" rev="1.2.14" conf="build, runtime" />
+    <dependency org="oro" name="oro" rev="2.0.8" conf="build, runtime" />
+    <dependency org="concurrent" name="concurrent" rev="1.3.4" conf="build, runtime" />
 
-        <dependency org="junit" name="junit" rev="3.8.2" conf="*->*,!sources,!javadoc" />
-        <dependency org="httpunit" name="httpunit" rev="1.6.1" conf="*->*,!sources,!javadoc"/>
+    <dependency org="junit" name="junit" rev="3.8.2" conf="build, runtime, test" />
+    <dependency org="httpunit" name="httpunit" rev="1.6.1" conf="build, runtime, test" />
 
-        <dependency org="net.sourceforge.jena" name="jena" rev="2.3" conf="*->*,!sources,!javadoc" >
-          <exclude org="xmlbeans"/>
-        </dependency>
-        <dependency org="trove" name="trove" rev="2.1.1" conf="*->*,!sources,!javadoc" />
-        <dependency org="backport-util-concurrent" name="backport-util-concurrent" rev="3.1" conf="*->*,!sources,!javadoc" />
+    <dependency org="net.sourceforge.jena" name="jena" rev="2.3" >
+      <exclude org="xmlbeans"/>
+    </dependency>
+    <dependency org="trove" name="trove" rev="2.1.1" conf="build, runtime" />
+    <dependency org="backport-util-concurrent" name="backport-util-concurrent" rev="3.1" conf="build, runtime" />
 
-        <dependency org="jgroups" name="jgroups" rev="2.6.10.GA" conf="*->*,!sources,!javadoc" />
-        <dependency org="org.hibernate" name="jtidy" rev="r8-20060801" conf="*->*,!sources,!javadoc" />
-        <dependency org="de.jflex" name="jflex" rev="1.4.3" conf="*->*,!sources,!javadoc" />
-        <dependency org="net.sf.opencsv" name="opencsv" rev="1.8" conf="*->*,!sources,!javadoc" />
+    <dependency org="jgroups" name="jgroups" rev="2.6.10.GA" conf="build, runtime" />
+    <dependency org="org.hibernate" name="jtidy" rev="r8-20060801" conf="build, runtime" />
+    <dependency org="de.jflex" name="jflex" rev="1.4.3" conf="build, runtime"/>
+    <dependency org="net.sf.opencsv" name="opencsv" rev="1.8" conf="build, runtime" />
 
-        <dependency org="javax.servlet" name="servlet-api" rev="2.4" conf="*->*,!sources,!javadoc" />
-        <dependency org="javax.servlet" name="jsp-api" rev="2.0" conf="*->*,!sources,!javadoc" />
-        <dependency org="javax.servlet" name="jstl" rev="1.1.2" conf="*->*,!sources,!javadoc" />
-        <dependency org="taglibs" name="standard" rev="1.1.2" conf="*->*,!sources,!javadoc" />
+    <dependency org="javax.servlet" name="servlet-api" rev="2.4" conf="build, runtime" />
+    <dependency org="javax.servlet" name="jsp-api" rev="2.0" conf="build, runtime" />
+    <dependency org="javax.servlet" name="jstl" rev="1.1.2" conf="build, runtime" />
+    <dependency org="taglibs" name="standard" rev="1.1.2" conf="build, runtime" />
 
-        <dependency org="saxon" name="saxon" rev="6.5.3" conf="*->*,!sources,!javadoc" />
+    <dependency org="saxon" name="saxon" rev="6.5.3" conf="build, runtime" />
 
-        <dependency org="lucene" name="lucene" rev="1.4.3" conf="*->*,!sources,!javadoc" />
-        <dependency org="org.apache.lucene" name="lucene-snowball" rev="2.0.0" conf="*->*,!sources,!javadoc" />
-        <dependency org="org.apache.poi" name="poi" rev="3.2-FINAL" conf="*->*,!sources,!javadoc" />
-        <dependency org="org.apache.poi" name="poi-scratchpad" rev="3.2-FINAL" conf="*->*,!sources,!javadoc" />
-        <dependency org="pdfbox" name="pdfbox" rev="0.7.3" conf="*->*,!sources,!javadoc" />
-        <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2" conf="*->*,!sources,!javadoc" />
+    <dependency org="lucene" name="lucene" rev="1.4.3" conf="build, runtime" />
+    <dependency org="org.apache.lucene" name="lucene-snowball" rev="2.0.0" conf="build, runtime" />
+    <dependency org="org.apache.poi" name="poi" rev="3.2-FINAL" conf="build, runtime" />
+    <dependency org="org.apache.poi" name="poi-scratchpad" rev="3.2-FINAL" conf="build, runtime" />
+    <dependency org="pdfbox" name="pdfbox" rev="0.7.3" conf="build, runtime" />
+    <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2" conf="build, runtime" />
 
-        <!--dependency org="thaiopensource" name="jing" rev="20030619"/-->
-        <!--dependency org="org.tmapi" name="tmapi" rev="1.0"/-->
+    <!--dependency org="thaiopensource" name="jing" rev="20030619"/-->
+    <!--dependency org="org.tmapi" name="tmapi" rev="1.0"/-->
 
-    </dependencies>
+  </dependencies>
 </ivy-module>

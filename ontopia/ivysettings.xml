@@ -1,7 +1,7 @@
 <ivysettings>
-  <settings defaultResolver="chain-example"/>
+  <settings defaultResolver="chained"/>
   <resolvers>
-    <chain name="chain-example">
+    <chain name="chained">
       <!--filesystem name="libraries">
         <artifact pattern="${ivy.settings.dir}/3rdparty/[artifact].[ext]" />
       </filesystem-->

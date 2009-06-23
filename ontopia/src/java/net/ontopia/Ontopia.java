@@ -1,3 +1,4 @@
+
 // $Id: AbstractProduct.java,v 1.28 2008/05/16 12:10:33 geir.gronmo Exp $
 
 package net.ontopia;
@@ -26,7 +27,7 @@ public final class Ontopia {
   private static final int build_number;
 
   static {
-    name = "Ontopia Topic Map Engine";
+    name = "Ontopia Topic Maps Engine";
 
     major_version = 5;
     minor_version = 0;
@@ -34,8 +35,8 @@ public final class Ontopia {
     beta_version = 0;
 
     build_date = Calendar.getInstance();
-    build_date.set(2009, 5, 22, 14, 1);
-    build_number = 32;
+    build_date.set(2009, 5, 23, 8, 0);
+    build_number = 86;
   }
 
   private Ontopia() {
