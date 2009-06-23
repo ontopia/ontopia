@@ -88,9 +88,7 @@
         </li>
         <li><b>Specifications</b>
           <ul>
-            <li><a href="http://www.y12.doe.gov/sgml/sc34/document/0129.pdf" title="The original ISO standard: Not an easy read!">ISO/IEC 13250:2000</a></li>
-            <li><a href="http://www.topicmaps.org/xtm/1.0/" title="A much more readable introduction to XML Topic Maps">XTM 1.0 Specification</a></li>
-            <li><a href="http://www.isotopicmaps.org/sam/" title="The upcoming new edition of the Topic Maps standard">ISO 13250, new edition</a></li>
+            <li><a href="http://www.isotopicmaps.org/" title="The current edition of the Topic Maps standard">ISO 13250</a></li>
             <li><a href="http://www.ontopia.net/download/ltm.html" title="For people with an aversion to typing angle brackets">LTM Notation Specification</a></li>
             <li><a href="../docs/schema/spec.html" title="All the gen on the Ontopia Schema Language">OSL Reference Guide</a></li>
             <li><a href="http://www.ontopia.net/topicmaps/materials/rdf2tm.html" title="Ontopia's vocabulary for mapping RDF to Topic Maps">RTM: RDF to topic maps mapping</a></li>
