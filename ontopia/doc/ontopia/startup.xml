@@ -1,46 +1,26 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
 <!-- DOCTYPE article PUBLIC '-//OASIS//DTD DocBook XML V4.1//EN' '' -->
 
-<!--
-
-  WARNING!
-
-  This document uses the 'condition' attribute throughout to create
-  four different versions of this document; one for each distribution
-  of the OKS. The possible tokens that can be included in 'condition'
-  are:
-
-    - pers
-    - prof
-    - ent
-    - ont (for ontopoly runtime)
-
-  (Note: I intend to work the Omnigator install document in here at
-  some point as well, but am not yet ready for it.)
-
--->
-
-
 <article class="techreport">
-  <title>The Ontopia Knowledge Suite</title>
+  <title>Ontopia</title>
   <subtitle>Installation and getting started</subtitle>
   <articleinfo>
     <author>
       <affiliation>
-        <shortaffil>Ontopia AS</shortaffil>
+        <shortaffil>Ontopia</shortaffil>
       </affiliation>
     </author>
     <pubdate>$Date: 2009/05/22 09:34:38 $</pubdate>
-    <releaseinfo>4.1 ($Revision: 1.123 $)</releaseinfo>
+    <releaseinfo>5.0 ($Revision: 1.123 $)</releaseinfo>
   </articleinfo>
 
 <abstract>
 <para>
-This is a guide to installing and getting started with using the
-Ontopia Knowledge Suite. It is assumed that the reader is familiar
-with the basics of the host platform and of Java development.  See the
-<citetitle>What's new in this release?</citetitle> document for
-information about this release.
+This is a guide to installing and getting started with using
+Ontopia. It is assumed that the reader is familiar with the basics of
+the host platform and of Java development.  See the <citetitle>What's
+new in this release?</citetitle> document for information about this
+release.
 </para>
 </abstract>
 
@@ -54,7 +34,7 @@ Software Development Kit (SDK) version 1.4 or newer. There should be
 no platform dependencies in the code, so the software should run on
 all operating systems for which there is a supported JDK available.</para>
 
-<para condition="prof ent">
+<para>
 We have verified that the Navigator Framework runs in Tomcat versions
 3.3, 4.1, 5.0, and 5.5, Oracle9i AS 9.0.3, WebLogic 7.0, and WebSphere
 versions 4.0 and 5.0. It is quite likely that the framework also works
@@ -62,7 +42,7 @@ in other application servers than these, but this has not been
 verified.
 </para>
 
-<para condition="ent ont">
+<para>
 The RDBMS backend has been verified to work with Oracle 8.1.7, 9i, and
 10g, PostgreSQL 8.1, 8.2 and 8.3, MySQL 5.0, H2 Database 1.0.74 and
 Microsoft SQL Server 2005.
@@ -80,25 +60,25 @@ components:
 </para>
 
 <itemizedlist>
-  <listitem condition="pers prof ent"><para>The Ontopia Topic Map Engine</para>
-  <itemizedlist condition="pers prof ent">
-    <listitem condition="prof ent"><para>Full-text Integration</para></listitem>
-    <listitem condition="pers prof ent"><para>Query Engine</para></listitem>
-    <listitem condition="prof ent"><para>Schema Tools</para></listitem>
+  <listitem><para>The Ontopia Topic Maps Engine</para>
+  <itemizedlist>
+    <listitem><para>Full-text Integration</para></listitem>
+    <listitem><para>Query Engine</para></listitem>
+    <listitem><para>Schema Tools</para></listitem>
   </itemizedlist></listitem>
 
-  <listitem condition="prof ent"><para>The Ontopia Navigator Framework</para>
-  <itemizedlist condition="prof ent">
-    <listitem condition="prof ent"><para>TMRAP</para></listitem>
+  <listitem><para>The Ontopia Navigator Framework</para>
+  <itemizedlist>
+    <listitem><para>TMRAP</para></listitem>
   </itemizedlist>
   </listitem>
-<listitem condition="prof ent"><para>The Ontopia Web Editor Framework</para></listitem>
-  <listitem condition="prof ent"><para>The Ontopia Vizigator</para></listitem>
-  <listitem condition="prof ent"><para>DB2TM</para></listitem>
-  <listitem condition="ent ont"><para>The Ontopia RDBMS Backend Connector,
+<listitem><para>The Ontopia Web Editor Framework</para></listitem>
+  <listitem><para>The Ontopia Vizigator</para></listitem>
+  <listitem><para>DB2TM</para></listitem>
+  <listitem><para>The Ontopia RDBMS Backend Connector,
   with SQL implementation of Query Engine</para></listitem>
   <listitem><para>The Ontopia Omnigator</para></listitem>
-  <listitem><para>The Ontopoly Topic Map Editor</para></listitem>
+  <listitem><para>The Ontopoly Topic Maps Editor</para></listitem>
 </itemizedlist>
 </section>
 
@@ -113,32 +93,26 @@ file, which you have presumably already done, since you are reading
 this document. The topmost directory created by uncompressing the
 distribution, the file called
 
-  <symbol condition="pers">oks-personal-X.X.X.zip</symbol>
-  <symbol condition="prof">oks-professional-X.X.X.zip</symbol>
-  <symbol condition="ent" >oks-enterprise-X.X.X.zip</symbol>
+  <filename>ontopia-X.X.X.zip</filename>
 
 , will from now on be referred to as
 <symbol>basedir</symbol>.</para>
 
-<section condition="pers prof ent">
+<section>
 <title>Setting the CLASSPATH</title>
 
 <para>
-If you want to use the OKS class libraries to write Java software, or
-just run the test suite, you will have to set up the
-<envar>CLASSPATH</envar> environment variable. 
-
-<phrase condition="prof ent">If you only want to run the Navigator
-Framework this is not necessary, and you can skip this
-section.</phrase>
+If you want to use the Ontopia APIs to write Java software, or just
+run the test suite, you will have to set up the
+<envar>CLASSPATH</envar> environment variable. If you only want to run
+the Navigator Framework this is not necessary, and you can skip this
+section.
 </para>
 
 <para>
 To set up the <envar>CLASSPATH</envar>, put the
 
-  <filename condition="pers">${basedir}/lib/oks-personal.jar</filename>
-  <filename condition="prof">${basedir}/lib/oks-professional.jar</filename>
-  <filename condition="ent" >${basedir}/lib/oks-enterprise.jar</filename>
+  <filename>${basedir}/lib/ontopia.jar</filename>
 
 file in your <envar>CLASSPATH</envar>. If this does not work, or you
 want more detailed control over the jar files being used, please see
@@ -160,89 +134,7 @@ jar-files to your <envar>CLASSPATH</envar>.</emphasis></para>
 </warning>
 </section>
 
-
-<section condition="pers prof ent ont">
-<title>The License Key</title>
-
-<para>
-The Ontopia Knowledge Suite requires a license key file in order to
-run, and in order to provide maximum flexibility there are many
-different ways to provide this license key. Your license key will be
-available from <ulink url="http://www.ontopia.net/customers/">the
-Ontopia customer pages</ulink>. If you have problems, please contact
-<email>support@ontopia.net</email>.
-</para>
-
-<para>
-Below are listed various ways you can provide the OKS with the license
-key. You don't need to use all of them; one is enough. Note that the
-OKS will try these steps in the order given, so a license file
-provided according to step 2 will override one provided according to
-step 3.
-</para>
-
-<note>
-<para>We recommend using step 3; that is, putting the license file in
-your home directory, since this is usually the easiest way to do it,
-and this solution will also continue to work when you upgrade your OKS
-to a newer version.</para>
-</note>
-
-<orderedlist>
-<listitem>        
-  <para>Set the <symbol>net.ontopia.products.license.key</symbol>
-  system property to contain the license key string (i.e. the contents
-  of your license key file).</para>
-</listitem>        
-<listitem>        
-  <para>Set the <symbol>net.ontopia.products.license.key.file</symbol>
-  system property to point to the license key file.</para>
-</listitem>        
-<listitem>        
-  <para>Put the license key file in the home directory of the current
-  user (as indicated by the 'user.home' system property). Note that
-  the file must be called <filename>ontopia.lic</filename>, e.g.
-  <filename>/home/grove/ontopia.lic</filename></para>
-
-  <para>On Unix machines this will be the home directory of the user
-  running the Java process, but on Windows there is no home directory
-  concept in the same way. On Windows NT, 2000 and XP you can put it
-  where the user's settings are stored (one alternative is
-  <filename>C:\Documents and Settings\&lt;username&gt;</filename>); on
-  Windows 98 in <filename>C:\Windows\System</filename>.</para>
-</listitem>        
-<listitem>        
-  <para>Put the license key file in the current working directory (as
-  indicated by the 'user.dir' system property). Note that the file
-  must be called <filename>ontopia.lic</filename>, e.g.
-  <filename>/data/projects/myproject/ontopia.lic</filename>. Usually
-  this will be the directory where you start the Java Virtual
-  Machine. When running Tomcat, this will often be the
-  <filename>${basedir}/apache-tomcat/bin</filename> directory.</para>
-</listitem>        
-<listitem>        
-  <para>Put the license key file in a directory on the CLASSPATH. Note
-  that the file must be called <filename>ontopia.lic</filename>. Also
-  note that Tomcat does not use the <envar>CLASSPATH</envar> set in
-  the environment you start Tomcat from.
-  </para>
-</listitem>        
-</orderedlist>
-
-<para>
-If the system can't find the license key by any of these methods it
-will refuse to run. For instructions on how to set Java properties,
-see <xref linkend="sect-set-java-props"/>.
-</para>
-
-<para> You can run the following command to verify that the license
-key was found. The output will also tell you where it tried to look
-for the key.</para>
-
-<screen>java net.ontopia.products.license.LicenseInfo</screen>
-</section>
-
-<section condition="pers prof ent">
+<section>
 <title>Verifying</title>
 
 <para>
@@ -256,64 +148,35 @@ The <emphasis>Topic Map Engine</emphasis> component can be verified by
 issuing the following command:
 </para>
 
-<screen>java net.ontopia.products.TopicMapEngine</screen>
+<screen>java net.ontopia.Ontopia</screen>
 
 <para>It will run and produce the following output if it can find all
 the classes required:
 </para>
 
 <screen>
-Ontopia Topic Map Engine [version]
+Ontopia Topic Maps Engine [version]
 License: [licence info]
 Success: All required classes found.</screen>
 
 <para>If it fails you will get output similar to the following:</para>
 
 <screen>
-Ontopia Topic Map Engine [version]
+Ontopia Topic Maps Engine [version]
 License: [licence info]
 Class 'org.apache.log4j.BasicConfigurator' not found. Please add log4j.jar to your CLASSPATH.</screen>
 
 <para>The message is hopefully self-explanatory.</para>
 
-<para condition="pers prof ent">
-The other Ontopia Knowledge Suite components can also be verified
-individually. The procedure is the same as for the Topic Map Engine.
+<para>
 Note that the Navigator and Web Editor Frameworks require two
 additional jar files from
 <filename>${basedir}/apache-tomcat/common/lib/</filename>:
 <filename>servlet-api.jar</filename> and <filename>jsp-api.jar</filename>.
 </para>
-
-<itemizedlist condition="pers prof ent">
-  <listitem condition="prof ent">
-          <para>Full-text Integration</para>
-    <screen>java net.ontopia.products.FulltextIntegration</screen>
-  </listitem>
-  <listitem condition="pers prof ent">
-          <para>Query Engine</para>
-    <screen>java net.ontopia.products.QueryEngine</screen>
-  </listitem>
-  <listitem condition="prof ent">
-          <para>Schema Tools</para>
-    <screen>java net.ontopia.products.SchemaTools</screen>
-  </listitem>
-  <listitem condition="prof ent">
-          <para>Navigator Framework</para>
-    <screen>java net.ontopia.products.GenericNavigator</screen>
-  </listitem>
-  <listitem condition="prof ent">
-          <para>Web Editor Framework</para>
-    <screen>java net.ontopia.products.WebEditor</screen>
-  </listitem>
-  <listitem condition="ent">
-          <para>RDBMS Backend Connector</para>
-    <screen>java net.ontopia.products.RDBMSBackend</screen>
-  </listitem>
-</itemizedlist>
 </section>
 
-<section condition="pers prof ent">
+<section>
 <title>Testing</title>
 
 <para>
@@ -336,15 +199,12 @@ quickest way to test whether it has been installed correctly or not.
 <para>
 You need to add the
 
- <filename condition="pers">${basedir}/lib/oks-personal-test.jar</filename>
- <filename condition="prof">${basedir}/lib/oks-professional-test.jar</filename>
- <filename condition="ent" >${basedir}/lib/oks-enterprise-test.jar</filename>
+ <filename>${basedir}/lib/ontopia.jar</filename>
 
 jar-file to your <envar>CLASSPATH</envar> to run the test suite. This
 jar-file automatically includes the <filename>junit.jar</filename>
 jar-file. Note that you only need these two jar-files when running the
-test suite. They are not required when you are using the Ontopia
-Knowledge Suite.</para>
+test suite. They are not required when you are using the Ontopia.</para>
 
 <para>You can now run the <emphasis>Topic Map Engine</emphasis> test
 suite by following the instructions below:</para>
@@ -441,13 +301,13 @@ If the test runs without errors, as it should do, you can be confident
 that you have a working version of the Ontopia Topic Map Engine.
 </para>
 
-<para condition="prof ent">
-The other Ontopia Knowledge Suite components can also be tested
-individually. The procedure is the same as for the Topic Map Engine,
-except that the test scripts have different names.
+<para>
+The other Ontopia components can also be tested individually. The
+procedure is the same as for the Topic Maps Engine, except that the
+test scripts have different names.
 </para>
 
-<variablelist condition="prof ent">
+<variablelist>
 <varlistentry>
 <term>Ontopia Navigator Framework</term>
 <listitem>
@@ -474,7 +334,7 @@ to the <envar>CLASSPATH</envar>, then run
 <command>tests/runtests-webed.sh</command></para>
 </listitem>
 </varlistentry>
-<varlistentry condition="ent">
+<varlistentry>
 <term>Ontopia RDBMS Backend</term>
 <listitem>
 <para>Set up your database (as described further down), then run
@@ -485,12 +345,13 @@ to the <envar>CLASSPATH</envar>, then run
 </variablelist>
 </section>
 
-<section id="INSTALL_rdbms" condition="ent">
+<section id="INSTALL_rdbms">
 <title>Installing the RDBMS Backend Connector</title>
 
 <para>See the <citetitle>The RDBMS Backend Connector - Installation
 Guide</citetitle> document for information about how to install and
-setup the relational database backend.</para>
+setup the relational database backend. Note that it's possible to run
+Ontopia and the web applications without using the RDBMS backend.</para>
 </section>
 </section>
 
@@ -502,12 +363,11 @@ setup the relational database backend.</para>
 <para>Following is a short introduction to the end-user applications
 that come with the Ontopia Knowledge Suite.</para>
 
-<para condition="pers prof ent">For more information about developing
-with the Ontopia Knowledge Suite you can find a complete list of
-developer documentation <ulink
+<para>For more information about developing with Ontopia you can find
+a complete list of developer documentation <ulink
 url="../index.html">here</ulink>.</para>
 
-<section condition="pers prof ent">
+<section>
 <title>The engine</title>
 
 <para>
@@ -531,7 +391,7 @@ HyTM, and LTM topic maps.
 </para>
 </section>
 
-<section condition="pers prof ent">
+<section>
 <title>The command-line utilities</title>
 
 <para>
@@ -593,9 +453,9 @@ output.</para>
 <title>The Web Applications</title>
 
 <para>
-The OKS comes with a number of useful web applications built with the
-OKS already set up and configured in a Tomcat installation. The main
-applications are:
+Ontopia comes with a number of useful web applications built with
+Ontopia already set up and configured in a Tomcat installation. The
+main applications are:
 </para>
 
       <itemizedlist> 
@@ -658,7 +518,7 @@ See <xref linkend="sect-set-java-home"/> for details.
 <title>Try it out</title>
 
 <para>
-To try out the OKS you can use any of the applications listed
+To try out Ontopia you can use any of the applications listed
 below. The first time you're accessing a page it may take some time
 since the web application server needs to compile the JavaServer
 Pages. If you are able to see the front page of the application then
@@ -676,7 +536,7 @@ connect to the application server if you are working 'Offline'.
 <listitem>
 <formalpara>
 <title><ulink url="http://localhost:8080/">Overview Page</ulink></title>
-<para>This link takes you to an OKS Overview Page, which can be very
+<para>This link takes you to an Ontopia Overview Page, which can be very
 useful for getting started.</para>
 </formalpara>
 </listitem>
@@ -695,7 +555,7 @@ application.</para>
 </formalpara>
 </listitem>
 
-<listitem condition="prof ent">
+<listitem>
 <formalpara>
 <title><ulink url="http://localhost:8080/ontopoly/">Ontopoly</ulink></title>
 <para>Ontopoly is a user-friendly Topic Maps editor, which can be used
@@ -703,7 +563,7 @@ to create and populate an ontology.</para>
 </formalpara>
 </listitem>
 
-<listitem condition="prof ent">
+<listitem>
 <formalpara>
 <title><ulink url="http://localhost:8080/i18n/">Scripts and languages</ulink></title>
 <para>This is a web application written specifically for the i18n.ltm
@@ -713,7 +573,7 @@ for learning to use the tag libraries.</para>
 </formalpara>
 </listitem>
 
-<listitem condition="prof ent">
+<listitem>
 <formalpara>
 <title><ulink url="http://localhost:8080/xmltools/">Free XML Tools</ulink></title>
 <para>This is the beginnings of a web application for the 'Free XML
@@ -761,16 +621,6 @@ Ontopia Knowledge Suite.
 </para>
 
 <variablelist>
-<varlistentry>
-<term>Why can't the OKS find my license key?</term>
-<listitem>
-<para>If you are running on Windows it may be that you have
-inadvertently saved the file as <filename>ontopia.lic.txt</filename>
-rather than as <filename>ontopia.lic</filename>. Check this, and try
-again.</para>
-</listitem>
-</varlistentry>
-
 <varlistentry>
 <term>Why do I get Not Found (404) when accessing the Omnigator?</term>
 <listitem>
@@ -864,7 +714,7 @@ present.</para>
 </listitem>
 </varlistentry-->
 
-<varlistentry condition="prof ent">
+<varlistentry>
 <term>Installing the Omnigator in another Tomcat instance</term>
 <listitem>
 <para>To install the Omnigator in another Tomcat instance than the one
@@ -932,14 +782,7 @@ dependencies. The files can be found in the
     </orderedlist>
   </listitem>        
 </itemizedlist>
-<itemizedlist condition="prof ent">
-  <listitem><para>Navigator Framework:</para>
-    <orderedlist>
-      <listitem><para><filename>acmeenc.jar</filename>, J. M. G. Elliott's improved version,  (<ulink url="http://jmge.net/java/gifenc/">Gif89Encoder</ulink>)</para></listitem>
-    </orderedlist>
-  </listitem>        
-</itemizedlist>
-<itemizedlist condition="prof ent">
+<itemizedlist>
   <listitem><para>Web Editor Framework:</para>
     <orderedlist>
       <listitem><para><filename>velocity.jar</filename>, version 1.3, (<ulink url="http://jakarta.apache.org/velocity/">Jakarta - Velocity</ulink>)</para></listitem>
@@ -947,24 +790,24 @@ dependencies. The files can be found in the
     </orderedlist>
   </listitem>        
 </itemizedlist>
-<itemizedlist condition="prof ent">
+<itemizedlist>
   <listitem><para>Full-text Integration:</para>
     <orderedlist>
       <listitem><para><filename>lucene.jar</filename>, version 1.4.3, (<ulink url="http://jakarta.apache.org/lucene/">Jakarta - Lucene</ulink>)</para></listitem>
     </orderedlist>
   </listitem>        
 </itemizedlist>
-<itemizedlist condition="prof ent">
+<itemizedlist>
   <listitem><para>DB2TM:</para>
     <orderedlist>
       <listitem><para><filename>opencsv.jar</filename>, version 1.3, (<ulink url="http://opencsv.sourceforge.net/">opencsv</ulink>)</para></listitem>
     </orderedlist>
   </listitem>        
 </itemizedlist>
-<itemizedlist condition="prof ent">
+<itemizedlist>
   <listitem><para>TMRAP (AXIS+SOAP support):</para>
     <orderedlist>
-      <listitem><para>The OKS uses AXIS2 version 1.2, (<ulink
+      <listitem><para>Ontopia uses AXIS2 version 1.2, (<ulink
       url="http://ws.apache.org/axis/">Apache Web Services -
       Axis</ulink>), to provide support for SOAP. The jar files used
       can be found in
@@ -972,7 +815,7 @@ dependencies. The files can be found in the
     </orderedlist>
   </listitem>        
 </itemizedlist>
-<itemizedlist condition="ent">
+<itemizedlist>
   <listitem><para>RDBMS Backend Connector:</para>
     <orderedlist>
       <listitem><para><filename>commons-pool.jar</filename>, version 1.4, (<ulink url="http://jakarta.apache.org/commons/pool/">Jakarta - Commons Pool</ulink>)</para></listitem>
@@ -983,7 +826,7 @@ dependencies. The files can be found in the
 </itemizedlist>
 
 
-<para condition="prof ent">
+<para>
 The Query Engine and the Schema Tools require no jar files beyond the
 ones needed for the Topic Map Engine.
 </para>
@@ -1030,7 +873,7 @@ file and insert the line below near the top of it.</para>
 
 <warning>
 <para><emphasis>Note that by default there should be no need to
-specify any system properties to get the OKS
+specify any system properties to get Ontopia
 working.</emphasis></para>
 </warning>
 
