@@ -9,7 +9,7 @@
 <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>$Date: 2008/11/03 12:12:48 $</pubdate>
-<releaseinfo>4.0 ($Revision: 1.57 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.57 $)</releaseinfo>
 
 <abstract>
 <para>
@@ -982,9 +982,9 @@ to explain what these are.
 </para>
 
 <para>
-When using the RDBMS backend, the OKS maintains a pool of topic map
+When using the RDBMS backend, Ontopia maintains a pool of topic map
 stores, and everything that is done with a topic map is done
-using one of these stores. For the OKS to be able to maintain
+using one of these stores. For Ontopia to be able to maintain
 the pool properly, topic maps have to be explicitly returned to the
 pool. This is done by calling the <methodname>close</methodname>
 method on the <interfacename>TopicMapStoreIF</interfacename>
@@ -1048,7 +1048,7 @@ Implementing this interface causes problems for JSP 1.1, of course,
 since the JSP 1.1 jar files do not contain a class file for this
 interface. This is worked around by means of a special jar file named
 <filename>config/jsp-11/jsp12-compat.jar</filename>, which is included
-in the OKS distribution. This means the tags can run, but does
+in the Ontopia distribution. This means the tags can run, but does
 <emphasis>not</emphasis> provide the desired try/catch/finally
 behaviour, since JSP 1.1 does not support this. The only known
 solution to this problem in JSP 1.1 is to manually add a try/finally
@@ -1130,13 +1130,13 @@ How it works is perhaps best shown with an example, shown below.
 
 <para>
 Basically, how this works is that variable references can not only
-refer to OKS variables, but also to JSP attributes. Lookups are done
+refer to Ontopia variables, but also to JSP attributes. Lookups are done
 as follows:
 </para>
 
 <itemizedlist>
   <listitem>
-    <para>First the reference is looked up as an OKS variable.</para>
+    <para>First the reference is looked up as an Ontopia variable.</para>
   </listitem>
   <listitem>
     <para>If this fails the reference is truncated at the first ".",
@@ -1171,16 +1171,16 @@ attributes; see the tag library reference documentation of the
 </section>
 
 <section>
-<title>Accessing OKS variables from the JSP EL</title>
+<title>Accessing Ontopia variables from the JSP EL</title>
 
 <para>
 When the Navigator Framework is used together with other tag
 libraries, especially the JSTL tag libraries, there is very often a
-need to access OKS variables from the other tag libraries. To support
+need to access Ontopia variables from the other tag libraries. To support
 this, the <symbol>tolog:context</symbol> tag registers a Map attribute
 named "oks" in the request scope. This Map can be used to access all
-OKS variables in effect at the time of access. This means that using
-the JSP Expression Language you can access OKS variables using an
+Ontopia variables in effect at the time of access. This means that using
+the JSP Expression Language you can access Ontopia variables using an
 expression like <symbol>${oks.foo}</symbol>.
 </para>
 
