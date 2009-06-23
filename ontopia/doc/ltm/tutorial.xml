@@ -34,9 +34,10 @@ specification given in <xref linkend="sect-formal-spec"/>.
 Please note that this document is not a formal specification from any
 recognized standards body, but a Technical Report published by <ulink
 url="http://www.ontopia.net">Ontopia</ulink>, a commercial company,
-for the convenience of all interested parties. The specification may
-be taken up by some standards body at some point, but nothing suggests
-that this will happen soon.
+for the convenience of all interested parties. ISO is currently
+finishing standardization of an alternative standardized syntax called
+CTM. For more information, see <ulink url="http://www.isotopicmaps.org/ctm/"
+>the CTM home page</ulink>.
 </para>
 </abstract>
 </articleinfo>
