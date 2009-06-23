@@ -16,7 +16,7 @@
  - http://www.eki.ee/wgrs/
 */
 
-#TOPICMAP topicmap
+#TOPICMAP ~topicmap-topic
 #INCLUDE "dc.ltmm"
 
 /* ===== REIFICATION ===== */
@@ -24,8 +24,7 @@
 [version = "Version"
  @"http://psi.ontopia.net/i18n/#version"]
 
-[topicmap-topic = "Scripts and languages"
- @"#topicmap"]
+[topicmap-topic = "Scripts and languages"]
 {topicmap-topic, description, [[This is a topic map with information
 about languages and the scripts used to write them. It has been
 authored by hand by Lars Marius Garshol.]]}
