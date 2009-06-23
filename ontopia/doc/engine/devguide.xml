@@ -9,7 +9,7 @@
 </affiliation>
 </author>
 <pubdate>$Date: 2008/06/13 08:47:20 $</pubdate>
-<releaseinfo>4.0 ($Revision: 1.53 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.53 $)</releaseinfo>
 </articleinfo>
 <abstract>
 
@@ -74,31 +74,30 @@ assumed in this guide.
 <title>Introduction</title>
 
 <para>
-The Ontopia Topic Maps Engine is the heart of the Ontopia Knowledge
-Suite on which all the other components are based. The job of
-representing, storing, and making available topic maps to the rest of
-the product suite is its job, and without this crucial function none
-of the OKS can do its work.
+The Ontopia Topic Maps Engine is the heart of Ontopia, on which all
+the other components are based. The job of representing, storing, and
+making available topic maps to the rest of the product suite is its
+job, and without this crucial function none of Ontopia can do its
+work.
 </para>
 
 <para>
-In addition to providing a service internally within the OKS the
+In addition to providing a service internally within Ontopia the
 engine also provides a rich API against which Topic Maps-based
 applications may be built. However, despite the centrality of the
 engine within the product suite, the engine should not be used for all
 kinds of application development. For example, for web applications
-the OKS provides the Navigator and Web Editor Frameworks (Professional
-and Enterprise editions only), which are much more appropriate for
-this purpose.
+Ontopia provides the Navigator and Web Editor Frameworks, which are
+much more appropriate for this purpose.
 </para>
 
 <para>
-All editions of the OKS also include the Query Engine, which
-implements the tolog query language. For retrieving information from
-the topic maps the query language is far better suited than the API. It
-makes the task enormously much easier, while at the same time enabling
-far better performance, since the query engine can take shortcuts not
-available to applications working through the API.
+Ontopia also includes the Query Engine, which implements the tolog
+query language. For retrieving information from the topic maps the
+query language is far better suited than the API. It makes the task
+enormously much easier, while at the same time enabling far better
+performance, since the query engine can take shortcuts not available
+to applications working through the API.
 </para>
 
 <section>
@@ -285,27 +284,27 @@ follow later.
 <title>Support for TMAPI</title>
 
 <para>
-The OKS now supports <ulink url="http://www.tmapi.org">TMAPI
-1.0</ulink>, which is a de-facto standard Java API for topic map
-engines. The API is supported by wrapping the OKS core interface in
-TMAPI interface implementations.
+Ontopia now supports <ulink url="http://www.tmapi.org">TMAPI
+1.0</ulink>, which is a de-facto standard Java API for Topic Maps
+engines. The API is supported by wrapping the Ontopia core interfaces
+in TMAPI interface implementations.
 </para>
 
 <para>
-To use the TMAPI support, all that's needed is to put the OKS .jar
+To use the TMAPI support, all that's needed is to put the ontopia.jar
 file on your <envar>CLASSPATH</envar> and the
 <classname>TopicMapSystemFactory</classname> class will automatically
-detect the OKS and start using it.
+detect Ontopia and start using it.
 </para>
 
 <para>
-If you need direct access to it, the OKS implementation of the
+If you need direct access to it, the Ontopia implementation of the
 <classname>TopicMapSystemFactory</classname> is called
 <classname>net.ontopia.topicmaps.impl.oks2tmapi.TopicMapSystemFactory</classname>.
 </para>
 
 <para>
-The rest of this document will describe the OKS native interfaces.
+The rest of this document will describe the Ontopia native interfaces.
 If you would like to use the TMAPI interfaces instead, please see the 
 <ulink url="http://www.tmapi.org">TMAPI</ulink> web site for
 documentation of TMAPI.
@@ -385,7 +384,7 @@ engine:
     <term>net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore</term>
     <listitem>
       <para>This is the relational database backend, which is used to
-      persist topic maps in RDBMSs, using JDBC. (Enterprise edition only.)</para>
+      persist topic maps in RDBMSs, using JDBC.</para>
     </listitem>
   </varlistentry>
 </variablelist>
