@@ -1,2 +1,2 @@
-Class-Path: ontopia-cmdline.jar jaxp.jar crimson.jar getopt.jar commons-logging.jar log4j.jar antlr.jar commons-collections.jar oro.jar jing.jar xerces.jar jena.jar icu4j.jar concurrent.jar trove.jar backport-util-concurrent.jar tmapi.jar GraphLayout.jar lucene.jar velocity.jar commons-fileupload.jar opencsv.jar commons-dbcp.jar commons-pool.jar jgroups-all.jar
+Class-Path: antlr.jar backport-util-concurrent.jar commons-collections.jar commons-dbcp.jar commons-fileupload.jar commons-logging.jar commons-pool.jar concurrent.jar crimson.jar getopt.jar icu4j.jar jena.jar jgroups.jar jing.jar log4j.jar lucene.jar opencsv.jar oro.jar tmapi.jar touchgraph.jar trove.jar velocity.jar xerces.jar
 Main-Class: net.ontopia.Ontopia

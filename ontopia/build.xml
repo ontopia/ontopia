@@ -1336,9 +1336,9 @@
     <mkdir dir="${collect.path}/lib" />
 
     <!-- Collect 3rdparty jar files -->
-    <copy file="${3rdparty.path}/jing.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/tmapi-2.0a2.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/touchgraph.jar" todir="${dist.path}/lib" />
+    <copy file="${3rdparty.path}/jing.jar" tofile="${dist.path}/lib/jing.jar" />
+    <copy file="${3rdparty.path}/tmapi-2.0a2.jar" tofile="${dist.path}/lib/tmapi.jar" />
+    <copy file="${3rdparty.path}/touchgraph.jar" tofile="${dist.path}/lib/touchgraph.jar" />
 
     <!-- Collect lib jar files -->
     <copy file="${lib.path}/antlr-2.7.7.jar" tofile="${dist.path}/lib/antlr.jar" />
@@ -1350,15 +1350,15 @@
     <copy file="${lib.path}/commons-pool-1.3.jar" tofile="${dist.path}/lib/commons-pool.jar" />
     <copy file="${lib.path}/concurrent-1.3.4.jar" tofile="${dist.path}/lib/concurrent.jar" />
     <copy file="${lib.path}/crimson-1.1.3.jar" tofile="${dist.path}/lib/crimson.jar" />
-    <copy file="${lib.path}/icu4j-3.4.4.jar" tofile="${dist.path}/lib/icu4j.jar" />
     <copy file="${lib.path}/java-getopt-1.0.9.jar" tofile="${dist.path}/lib/getopt.jar" />
-    <copy file="${lib.path}/oro-2.0.8.jar" tofile="${dist.path}/lib/oro.jar" />
+    <copy file="${lib.path}/icu4j-3.4.4.jar" tofile="${dist.path}/lib/icu4j.jar" />
     <copy file="${lib.path}/jena-2.3.jar" tofile="${dist.path}/lib/jena.jar" />
     <copy file="${lib.path}/jgroups-2.6.10.GA.jar" tofile="${dist.path}/lib/jgroups.jar" />
     <copy file="${lib.path}/junit-3.8.2.jar" tofile="${dist.path}/lib/junit.jar" />
     <copy file="${lib.path}/log4j-1.2.14.jar" tofile="${dist.path}/lib/log4j.jar" />
     <copy file="${lib.path}/lucene-1.4.3.jar" tofile="${dist.path}/lib/lucene.jar" />
     <copy file="${lib.path}/opencsv-1.8.jar" tofile="${dist.path}/lib/opencsv.jar" />
+    <copy file="${lib.path}/oro-2.0.8.jar" tofile="${dist.path}/lib/oro.jar" />
     <copy file="${lib.path}/trove-2.1.1.jar" tofile="${dist.path}/lib/trove.jar" />
     <copy file="${lib.path}/velocity-1.3.jar" tofile="${dist.path}/lib/velocity.jar" />
     <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
@@ -1705,7 +1705,7 @@
     <copy file="${doc.path}/navigator/config.xml.html" tofile="${dist.path}/doc/navigator/config.html" />
     <copy file="${doc.path}/navigator/devguide.xml.html" tofile="${dist.path}/doc/navigator/navguide.html" />
     <copy file="${doc.path}/navigator/refcard.xml.html" tofile="${dist.path}/doc/navigator/refcard.html" />
-    <copy file="${doc.path}/navigator/taglib-reference.xml.html" tofile="${dist.path}/doc/navigator/taglib2.html" />
+    <copy file="${doc.path}/navigator/taglib-reference.xml.html" tofile="${dist.path}/doc/navigator/tolog-taglib.html" />
     <copy file="${doc.path}/navigator/userman.xml.html" tofile="${dist.path}/doc/navigator/userman.html" />
     <copy todir="${dist.path}/doc/navigator">
       <fileset dir="${doc.path}/navigator">
@@ -2223,25 +2223,18 @@
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/ontopoly" />
     <copy file="${src.path}/webapps/ontopoly/target/ontopoly_war-${dist.version.major}.${dist.version.minor}-SNAPSHOT.war" 
          tofile="${dist.path}/apache-tomcat/webapps/ontopoly.war" />
+    <!-- documentation -->
     <antcall target="makehtml">
       <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
     </antcall>
-  </target>
-
-  <target name="dist.ontopia.webapp.ontopoly.docs" depends="init">
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
-    </antcall>
-    <property name="ontopoly.path" value="${src.path}/webapps/ontopoly/src/main/webapp" />
-    <mkdir dir="${ontopoly.path}/doc/" />
-    <copy file="${doc.path}/ontopoly/user-guide.xml.html" 
-         tofile="${ontopoly.path}/doc/user-guide.html" />
+    <copy file="${doc.path}/developer/ontopoly/user-guide.xml.html" 
+         tofile="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/user-guide.html" />
     <copy file="${doc.path}/ontopia/logo.gif" 
-         todir="${ontopoly.path}/doc/" />
+         todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" 
-         todir="${ontopoly.path}/doc/" />
-    <copy todir="${ontopoly.path}/doc/pages/">
-      <fileset dir="${doc.path}/ontopoly/pages" />
+         todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/" />
+    <copy todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/pages/">
+      <fileset dir="${doc.path}/developer/generic-editor/pages" />
     </copy>
   </target>
 
