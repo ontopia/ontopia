@@ -938,7 +938,6 @@
 
     <!-- compile and build jar files -->
     <antcall target="dist.jar.ontopia"/>
-    <antcall target="dist.jar.ontopia.test"/>
 
     <!-- Clean distribution directory -->
     <delete dir="${build.tmp}" />
@@ -1080,16 +1079,9 @@
     <antcall target="bootstrap"/>
     <antcall target="clean.classes"/>
     <antcall target="compile.ontopia"/>
-    <antcall target="jar.ontopia"/>
-  </target>
-
-  <target name="dist.jar.ontopia.test" depends="dist.ontopia.init">
-    <antcall target="dist.ontopia.init"/>
-    <antcall target="check-jvm"/>
-    <antcall target="bootstrap"/>
-    <antcall target="clean.classes"/>
     <antcall target="compile.ontopia.test"/>
     <antcall target="jar.ontopia.test"/>
+    <antcall target="jar.ontopia"/>
   </target>
 
   <target name="jar.digests">
@@ -1138,21 +1130,29 @@
     <copy file="${java.path}/net/ontopia/topicmaps/impl/tmapi2/tmsf.service" 
          tofile="${build.classes}/META-INF/services/org.tmapi.core.TopicMapSystemFactory"/>
 
-    <echo>Compiling net.ontopia classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+    <patternset id="sources.ontopia.core">
       <patternset refid="sources.engine" />
       <patternset refid="sources.tmapi" />
       <patternset refid="sources.query" />
-      <patternset refid="sources.rdbms" />
-    </javac>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
       <patternset refid="sources.schema" />
       <patternset refid="sources.fulltext" />
+      <patternset refid="sources.rdbms" />
+    </patternset>
+
+    <patternset id="sources.ontopia.aux">
       <patternset refid="sources.db2tm" />
       <patternset refid="sources.viz" />
       <patternset refid="sources.navigator" />
       <patternset refid="sources.webed" />
       <patternset refid="sources.classify" />
+    </patternset>
+
+    <echo>Compiling net.ontopia classes...</echo>
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+      <patternset refid="sources.ontopia.core" />
+    </javac>
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+      <patternset refid="sources.ontopia.aux" />
     </javac>
     <echo>Copy RelaxNG schemas</echo>
     <copy file="${java.path}/net/ontopia/topicmaps/xml/tmxml.rnc" 
@@ -1198,20 +1198,29 @@
 
   </target>
 
+  <patternset id="sources.test.ontopia.core">
+    <patternset refid="sources.test.engine" />
+    <patternset refid="sources.test.tmapi" />
+    <patternset refid="sources.test.query" />
+    <patternset refid="sources.test.schema" />
+    <patternset refid="sources.test.fulltext" />
+    <patternset refid="sources.test.rdbms" />
+  </patternset>
+  <patternset id="sources.test.ontopia.aux">
+    <patternset refid="sources.test.db2tm" />
+    <patternset refid="sources.test.viz" />
+    <patternset refid="sources.test.navigator" />
+    <patternset refid="sources.test.webed" />
+    <patternset refid="sources.test.classify" />
+  </patternset>
+
   <target name="compile.ontopia.test">
     <echo>Compiling test cases for net.ontopia...</echo>
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
-      <patternset refid="sources.test.engine" />
-      <patternset refid="sources.test.tmapi" />
-      <patternset refid="sources.test.query" />
-      <patternset refid="sources.test.schema" />
-      <patternset refid="sources.test.fulltext" />
-      <patternset refid="sources.test.db2tm" />
-      <patternset refid="sources.test.viz" />
-      <patternset refid="sources.test.rdbms" />
-      <patternset refid="sources.test.navigator" />
-      <patternset refid="sources.test.webed" />
-      <patternset refid="sources.test.classify" />
+      <patternset refid="sources.test.ontopia.core" />
+    </javac>
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+      <patternset refid="sources.test.ontopia.aux" />
     </javac>
     <!-- copy db2tm mapping files -->
     <copy todir="${build.classes}/net/ontopia/topicmaps/db2tm/test" overwrite="yes">
@@ -2594,8 +2603,6 @@
   <!-- ======================================================================
         Clustering tests
        ======================================================================-->
-  
-  <!-- Note: to build call dist.jar.ontopia.test -->
 
   <target name="distribute.cluster" depends="init">
     <echo>Building clustering test code...</echo>
