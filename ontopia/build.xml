@@ -79,7 +79,7 @@
   <path id="project.classpath.nolog4j">
     <pathelement location="${basedir}/3rdparty/ontoboot.jar" />
     <pathelement location="${basedir}/3rdparty/jing.jar" />
-    <pathelement location="${basedir}/3rdparty/tmapi.jar" />
+    <pathelement location="${basedir}/3rdparty/tmapi-2.0a2.jar" />
     <pathelement location="${basedir}/3rdparty/touchgraph.jar" />
     <path refid="project.classpath.ivy"/>
   </path>
@@ -1135,7 +1135,7 @@
 
     <echo>Compiling TMAPI code...</echo>
     <mkdir dir="${build.classes}/META-INF/services"/>
-    <copy file="${java.path}/net/ontopia/topicmaps/impl/oks2tmapi/tmsf.service" 
+    <copy file="${java.path}/net/ontopia/topicmaps/impl/tmapi2/tmsf.service" 
          tofile="${build.classes}/META-INF/services/org.tmapi.core.TopicMapSystemFactory"/>
 
     <echo>Compiling net.ontopia classes...</echo>
@@ -1328,7 +1328,7 @@
 
     <!-- Collect 3rdparty jar files -->
     <copy file="${3rdparty.path}/jing.jar" todir="${dist.path}/lib" />
-    <copy file="${3rdparty.path}/tmapi.jar" todir="${dist.path}/lib" />
+    <copy file="${3rdparty.path}/tmapi-2.0a2.jar" todir="${dist.path}/lib" />
     <copy file="${3rdparty.path}/touchgraph.jar" todir="${dist.path}/lib" />
 
     <!-- Collect lib jar files -->
@@ -2391,22 +2391,22 @@
        ==================================================================== -->
 
   <patternset id="sources.tmapi">
-    <include name="net/ontopia/topicmaps/impl/oks2tmapi/**/*.java" />
-    <exclude name="net/ontopia/topicmaps/impl/oks2tmapi/test/**/*.java"/>
+    <include name="net/ontopia/topicmaps/impl/tmapi2/**/*.java" />
+    <exclude name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.java"/>
   </patternset>
 
   <patternset id="classes.tmapi">
-    <include name="net/ontopia/topicmaps/impl/oks2tmapi/**/*.class"/>
-    <exclude name="net/ontopia/topicmaps/impl/oks2tmapi/test/**/*.class"/>
+    <include name="net/ontopia/topicmaps/impl/tmapi2/**/*.class"/>
+    <exclude name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.class"/>
     <include name="META-INF/services/org.tmapi.core.TopicMapSystemFactory"/>
   </patternset>
 
   <patternset id="sources.test.tmapi">
-    <include name="net/ontopia/topicmaps/impl/oks2tmapi/test/**/*.java"/>
+    <include name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.java"/>
   </patternset>
 
   <patternset id="classes.test.tmapi">
-    <include name="net/ontopia/topicmaps/impl/oks2tmapi/test/**/*.class"/>
+    <include name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.class"/>
   </patternset>
 
   <!-- ======================================================================
