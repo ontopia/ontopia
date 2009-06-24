@@ -1083,7 +1083,7 @@
     <antcall target="jar.ontopia"/>
   </target>
 
-  <target name="dist.jar.ontopia.test">
+  <target name="dist.jar.ontopia.test" depends="dist.ontopia.init">
     <antcall target="dist.ontopia.init"/>
     <antcall target="check-jvm"/>
     <antcall target="bootstrap"/>
