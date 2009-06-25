@@ -13,7 +13,7 @@ import org.tmapi.core.Topic;
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-public class OccurrenceImpl extends DatatypeAwareImpl implements org.tmapi.core.Occurrence {
+public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
 
   private OccurrenceIF wrapped;
 
@@ -99,6 +99,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements org.tmapi.core.
         return getTopicMap().createLocator(getValue());
       }
       catch (MalformedIRIException ex) {
+        // according to Lars Marius not a goot choice, but specified in TMAPI 2.0
         throw new IllegalArgumentException("The value cannot be represented as Locator");
       }
     }
@@ -121,7 +122,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements org.tmapi.core.
    * @see org.tmapi.core.DatatypeAware#setValue(org.tmapi.core.Locator)
    */
   
-  public void setValue(org.tmapi.core.Locator value) {
+  public void setValue(Locator value) {
     Check.valueNotNull(this, value);
     wrapped.setLocator(topicMap.unwrapLocator(value));
   }

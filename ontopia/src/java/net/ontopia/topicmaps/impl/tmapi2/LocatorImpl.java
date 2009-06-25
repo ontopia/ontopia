@@ -2,13 +2,15 @@
 
 package net.ontopia.topicmaps.impl.tmapi2;
 
+import org.tmapi.core.Locator;
+
 import net.ontopia.infoset.core.LocatorIF;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-public class LocatorImpl implements org.tmapi.core.Locator {
+public class LocatorImpl implements Locator {
 
   private LocatorIF wrapped;
 
@@ -36,7 +38,7 @@ public class LocatorImpl implements org.tmapi.core.Locator {
    * @see org.tmapi.core.Locator#resolve(java.lang.String)
    */
   
-  public org.tmapi.core.Locator resolve(String ref) {
+  public Locator resolve(String ref) {
     return new LocatorImpl(wrapped.resolveAbsolute(ref));
   }
 

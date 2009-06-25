@@ -5,13 +5,15 @@ package net.ontopia.topicmaps.impl.tmapi2;
 import net.ontopia.topicmaps.core.ReifiableIF;
 
 import org.tmapi.core.ModelConstraintException;
+import org.tmapi.core.Reifiable;
+import org.tmapi.core.Topic;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
 public abstract class ReifiableImpl extends ConstructImpl implements
-    org.tmapi.core.Reifiable {
+    Reifiable {
 
   public ReifiableImpl(TopicMapImpl topicMap) {
     super(topicMap);
@@ -33,7 +35,7 @@ public abstract class ReifiableImpl extends ConstructImpl implements
    * @see org.tmapi.core.Reifiable#setReifier(org.tmapi.core.Topic)
    */
   
-  public void setReifier(org.tmapi.core.Topic reifier)
+  public void setReifier(Topic reifier)
       throws ModelConstraintException {
     if (reifier != null && reifier.getReified() != null && !reifier.getReified().equals(this)) {
       throw new ModelConstraintException(this, "The reifier reifies another construct");

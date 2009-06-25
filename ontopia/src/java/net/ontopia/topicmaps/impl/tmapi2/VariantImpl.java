@@ -12,13 +12,14 @@ import org.tmapi.core.Locator;
 import org.tmapi.core.MalformedIRIException;
 import org.tmapi.core.Name;
 import org.tmapi.core.Topic;
+import org.tmapi.core.Variant;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
 public class VariantImpl extends DatatypeAwareImpl implements
-    org.tmapi.core.Variant {
+    Variant {
 
   private VariantNameIF wrapped;
 
@@ -27,7 +28,7 @@ public class VariantImpl extends DatatypeAwareImpl implements
    * this set contains all themes from the parent, which were in the scope list
    * of the variant
    */
-  private Collection<Topic> explicitScope = new ArrayList<Topic>();// Collections.emptySet();
+  private Collection<Topic> explicitScope = new ArrayList<Topic>();
 
   public VariantImpl(TopicMapImpl topicMap, NameImpl parent,
       VariantNameIF variant) {

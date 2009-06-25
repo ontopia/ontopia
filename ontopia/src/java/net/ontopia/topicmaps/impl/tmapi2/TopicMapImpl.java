@@ -22,26 +22,40 @@ import net.ontopia.topicmaps.impl.tmapi2.index.ScopedIndexImpl;
 import net.ontopia.topicmaps.impl.tmapi2.index.TypeInstanceIndexImpl;
 import net.ontopia.topicmaps.utils.MergeUtils;
 
+import org.tmapi.core.Association;
 import org.tmapi.core.Locator;
 import org.tmapi.core.Name;
+import org.tmapi.core.Occurrence;
+import org.tmapi.core.TMAPIRuntimeException;
+import org.tmapi.core.Topic;
+import org.tmapi.core.TopicMap;
 import org.tmapi.core.Variant;
 import org.tmapi.index.Index;
+import org.tmapi.index.LiteralIndex;
+import org.tmapi.index.ScopedIndex;
+import org.tmapi.index.TypeInstanceIndex;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
 public class TopicMapImpl extends ReifiableImpl implements
-    org.tmapi.core.TopicMap {
+    TopicMap {
 
   private TopicMapSystemImpl tmsystem;
   private TopicMapIF wrapped;
   private TopicImpl defaultNameType = null;
-  private org.tmapi.index.ScopedIndex scopedIndex = null;
-  private org.tmapi.index.TypeInstanceIndex typeInstanceIndex = null;
-  private org.tmapi.index.LiteralIndex literalIndex = null;
+
+  // TMAPI indexes - lazy created when needed
+  private ScopedIndex scopedIndex = null;
+  private TypeInstanceIndex typeInstanceIndex = null;
+  private LiteralIndex literalIndex = null;
+
+  // the name index is for internal use and is definitely needed so we
+  // instantiate it right now
   private NameIndex nameIndex = new NameIndex(this);
-  private static final String TMDM_TOPIC_NAME = "http://psi.topicmaps.org/iso13250/model/topic-name";
+
+  // this is used for the automatic item identifier creation in createTopic()
   private static AtomicLong lastId = new AtomicLong(0);
 
   public TopicMapImpl(TopicMapSystemImpl tmsystem, TopicMapStoreIF store) {
@@ -53,7 +67,8 @@ public class TopicMapImpl extends ReifiableImpl implements
 
   TopicImpl getDefaultNameType() {
     if (defaultNameType == null) {
-      defaultNameType = createTopicBySubjectIdentifier(createLocator(TMDM_TOPIC_NAME));
+      String psi = net.ontopia.topicmaps.utils.PSI.SAM_NAMETYPE;
+      defaultNameType = createTopicBySubjectIdentifier(createLocator(psi));
     }
     return defaultNameType;
   }
@@ -69,14 +84,14 @@ public class TopicMapImpl extends ReifiableImpl implements
   }
 
   public TopicNameIF unwrapName(Name name) {
-    return ((NameImpl)name).getWrapped();
+    return ((NameImpl) name).getWrapped();
   }
-  
+
   public VariantNameIF unwrapVariant(Variant variant) {
-    return ((VariantImpl)variant).getWrapped();
+    return ((VariantImpl) variant).getWrapped();
   }
-  
-  public LocatorIF unwrapLocator(org.tmapi.core.Locator loc) {
+
+  public LocatorIF unwrapLocator(Locator loc) {
     return ((LocatorImpl) loc).getWrapped();
   }
 
@@ -98,13 +113,12 @@ public class TopicMapImpl extends ReifiableImpl implements
    * org.tmapi.core.Topic[])
    */
 
-  public org.tmapi.core.Association createAssociation(
-      org.tmapi.core.Topic type, org.tmapi.core.Topic... scope) {
+  public Association createAssociation(Topic type, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.scopeNotNull(this, scope);
     AssociationIF assoc = wrapped.getBuilder().makeAssociation(
         unwrapTopic(type));
-    for (org.tmapi.core.Topic theme : scope) {
+    for (Topic theme : scope) {
       assoc.addTheme(unwrapTopic(theme));
     }
     return wrapAssociation(assoc);
@@ -117,10 +131,9 @@ public class TopicMapImpl extends ReifiableImpl implements
    * java.util.Collection)
    */
 
-  public org.tmapi.core.Association createAssociation(
-      org.tmapi.core.Topic type, Collection<org.tmapi.core.Topic> scope) {
+  public Association createAssociation(Topic type, Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
-    return createAssociation(type, scope.toArray(new org.tmapi.core.Topic[0]));
+    return createAssociation(type, scope.toArray(new Topic[0]));
   }
 
   /*
@@ -129,7 +142,7 @@ public class TopicMapImpl extends ReifiableImpl implements
    * @see org.tmapi.core.TopicMap#createLocator(java.lang.String)
    */
 
-  public org.tmapi.core.Locator createLocator(String reference) {
+  public Locator createLocator(String reference) {
     return tmsystem.createLocator(reference);
   }
 
@@ -155,11 +168,13 @@ public class TopicMapImpl extends ReifiableImpl implements
    * org.tmapi.core.TopicMap#createTopicByItemIdentifier(org.tmapi.core.Locator)
    */
 
-  public TopicImpl createTopicByItemIdentifier(org.tmapi.core.Locator iid) {
+  public TopicImpl createTopicByItemIdentifier(Locator iid) {
     Check.itemIdentifierNotNull(this, iid);
     ConstructImpl tmc = getConstructByItemIdentifier(iid);
-    TopicImpl topic = (tmc != null && tmc instanceof TopicImpl) ? (TopicImpl) tmc
-        : null;
+    TopicImpl topic = null;
+    if (tmc != null && tmc instanceof TopicImpl) {
+      topic = (TopicImpl) tmc;
+    }
     if (topic != null) {
       return topic;
     }
@@ -179,14 +194,16 @@ public class TopicMapImpl extends ReifiableImpl implements
    * )
    */
 
-  public TopicImpl createTopicBySubjectIdentifier(org.tmapi.core.Locator sid) {
+  public TopicImpl createTopicBySubjectIdentifier(Locator sid) {
     Check.itemIdentifierNotNull(this, sid);
     TopicImpl topic = getTopicBySubjectIdentifier(sid);
     if (topic != null) {
       return topic;
     }
     ConstructImpl tmc = getConstructByItemIdentifier(sid);
-    topic = (tmc != null && tmc instanceof TopicImpl) ? (TopicImpl) tmc : null;
+    if (tmc != null && tmc instanceof TopicImpl) {
+      topic = (TopicImpl) tmc;
+    }
     if (topic == null) {
       topic = wrapTopic(wrapped.getBuilder().makeTopic());
     }
@@ -201,7 +218,7 @@ public class TopicMapImpl extends ReifiableImpl implements
    * org.tmapi.core.TopicMap#createTopicBySubjectLocator(org.tmapi.core.Locator)
    */
 
-  public TopicImpl createTopicBySubjectLocator(org.tmapi.core.Locator slo) {
+  public TopicImpl createTopicBySubjectLocator(Locator slo) {
     Check.itemIdentifierNotNull(this, slo);
     TopicImpl topic = getTopicBySubjectLocator(slo);
     if (topic == null) {
@@ -217,7 +234,7 @@ public class TopicMapImpl extends ReifiableImpl implements
    * @see org.tmapi.core.TopicMap#getAssociations()
    */
 
-  public Set<org.tmapi.core.Association> getAssociations() {
+  public Set<Association> getAssociations() {
     return wrapSet(wrapped.getAssociations());
   }
 
@@ -242,7 +259,7 @@ public class TopicMapImpl extends ReifiableImpl implements
    * )
    */
 
-  public ConstructImpl getConstructByItemIdentifier(org.tmapi.core.Locator iid) {
+  public ConstructImpl getConstructByItemIdentifier(Locator iid) {
     if (iid == null) {
       throw new IllegalArgumentException("The item identifier must not be null");
     }
@@ -270,14 +287,13 @@ public class TopicMapImpl extends ReifiableImpl implements
 
       return (I) typeInstanceIndex;
     }
-    
+
     if (idx == org.tmapi.index.LiteralIndex.class) {
       if (literalIndex == null)
         literalIndex = new LiteralIndexImpl(this);
 
       return (I) literalIndex;
     }
-    // TODO: Implement me
     throw new UnsupportedOperationException();
   }
 
@@ -298,10 +314,8 @@ public class TopicMapImpl extends ReifiableImpl implements
    * org.tmapi.core.TopicMap#getTopicBySubjectIdentifier(org.tmapi.core.Locator)
    */
 
-  public TopicImpl getTopicBySubjectIdentifier(org.tmapi.core.Locator sid) {
-    if (sid == null) {
-      throw new IllegalArgumentException("The subject locator must not be null");
-    }
+  public TopicImpl getTopicBySubjectIdentifier(Locator sid) {
+    Check.subjectIdentifierNotNull(sid);
     return wrapTopic(wrapped.getTopicBySubjectIdentifier(unwrapLocator(sid)));
   }
 
@@ -312,10 +326,8 @@ public class TopicMapImpl extends ReifiableImpl implements
    * org.tmapi.core.TopicMap#getTopicBySubjectLocator(org.tmapi.core.Locator)
    */
 
-  public TopicImpl getTopicBySubjectLocator(org.tmapi.core.Locator slo) {
-    if (slo == null) {
-      throw new IllegalArgumentException("The subject locator must not be null");
-    }
+  public TopicImpl getTopicBySubjectLocator(Locator slo) {
+    Check.subjectLocatorNotNull(slo);
     return wrapTopic(wrapped.getTopicBySubjectLocator(unwrapLocator(slo)));
   }
 
@@ -325,7 +337,7 @@ public class TopicMapImpl extends ReifiableImpl implements
    * @see org.tmapi.core.TopicMap#getTopics()
    */
 
-  public Set<org.tmapi.core.Topic> getTopics() {
+  public Set<Topic> getTopics() {
     return wrapSet(wrapped.getTopics());
   }
 
@@ -335,7 +347,7 @@ public class TopicMapImpl extends ReifiableImpl implements
    * @see org.tmapi.core.TopicMap#mergeIn(org.tmapi.core.TopicMap)
    */
 
-  public void mergeIn(org.tmapi.core.TopicMap tm) {
+  public void mergeIn(TopicMap tm) {
     if (tm == null) {
       throw new IllegalArgumentException("The topic map must not be null");
     }
@@ -362,7 +374,7 @@ public class TopicMapImpl extends ReifiableImpl implements
     return topic == null ? null : new TopicImpl(this, topic);
   }
 
-  public TopicIF unwrapTopic(org.tmapi.core.Topic topic) {
+  public TopicIF unwrapTopic(Topic topic) {
     return topic == null ? null : ((TopicImpl) topic).getWrapped();
   }
 
@@ -398,8 +410,8 @@ public class TopicMapImpl extends ReifiableImpl implements
     } else if (tmobject instanceof VariantNameIF) {
       return wrapVariant((VariantNameIF) tmobject);
     } else {
-      throw new org.tmapi.core.TMAPIRuntimeException(
-          "Invalid topic map object type: " + tmobject);
+      throw new TMAPIRuntimeException("Invalid topic map object type: "
+          + tmobject);
     }
   }
 
@@ -409,7 +421,7 @@ public class TopicMapImpl extends ReifiableImpl implements
     return new LazySet<T>(this, coll);
   }
 
-  public org.tmapi.core.Occurrence wrapOccurrence(OccurrenceIF occ) {
+  public Occurrence wrapOccurrence(OccurrenceIF occ) {
     return new OccurrenceImpl(this, occ);
   }
 
@@ -425,7 +437,7 @@ public class TopicMapImpl extends ReifiableImpl implements
     return wrapper;
   }
 
-  public org.tmapi.core.Locator wrapLocator(LocatorIF loc) {
+  public Locator wrapLocator(LocatorIF loc) {
     return tmsystem.wrapLocator(loc);
   }
 
@@ -440,16 +452,16 @@ public class TopicMapImpl extends ReifiableImpl implements
       if (((VariantImpl) tmp).getWrapped() == variant)
         return (VariantImpl) tmp;
     }
-    if (v==null)
+    if (v == null)
       v = new VariantImpl(this, name, variant);
-    
+
     return v;
   }
 
   public boolean equals(Object o) {
     // NOTE: overriding this method because it is slightly different
     // than for other topic map objects.
-    if (o == null || !(o instanceof org.tmapi.core.TopicMap))
+    if (o == null || !(o instanceof TopicMap))
       return false;
     return this.wrapped == ((TopicMapImpl) o).wrapped;
   }

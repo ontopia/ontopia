@@ -10,9 +10,7 @@ import org.tmapi.core.ModelConstraintException;
 import org.tmapi.core.Topic;
 
 /**
- * INTERNAL: OKS->TMAPI 2 object wrapper.
- * 
- * Provides various argument constraint checks.
+ * INTERNAL: Provides various argument constraint checks.
  */
 public final class Check {
 
@@ -21,22 +19,26 @@ public final class Check {
   }
 
   /**
-   * Throws a {@link ModelConstraintException} with the specified <tt>sender</tt>
-   * and <tt>msg</tt>
-   *
-   * @param sender The sender
-   * @param msg The error message
+   * Throws a {@link ModelConstraintException} with the specified
+   * <tt>sender</tt> and <tt>msg</tt>
+   * 
+   * @param sender
+   *          The sender
+   * @param msg
+   *          The error message
    */
   private static void reportError(Construct sender, String msg) {
     throw new ModelConstraintException(sender, msg);
   }
 
   /**
-   * Throws a {@link ModelConstraintException} iff the <tt>scope</tt> is 
+   * Throws a {@link ModelConstraintException} iff the <tt>scope</tt> is
    * <tt>null</tt>.
-   *
-   * @param sender The sender.
-   * @param scope The scope.
+   * 
+   * @param sender
+   *          The sender.
+   * @param scope
+   *          The scope.
    */
   public static void scopeNotNull(Construct sender, Topic[] scope) {
     if (scope == null) {
@@ -45,11 +47,28 @@ public final class Check {
   }
 
   /**
-   * Throws a {@link ModelConstraintException} iff the <tt>scope</tt> is 
+   * Throws a {@link ModelConstraintException} iff the <tt>theme</tt> is
    * <tt>null</tt>.
-   *
-   * @param sender The sender.
-   * @param scope The scope.
+   * 
+   * @param sender
+   *          The sender.
+   * @param theme
+   *          The theme.
+   */
+  public static void themeNotNull(Construct sender, Topic theme) {
+    if (theme == null) {
+      throw new ModelConstraintException(sender, "The theme must not be null");
+    }
+  }
+
+  /**
+   * Throws a {@link ModelConstraintException} iff the <tt>scope</tt> is
+   * <tt>null</tt>.
+   * 
+   * @param sender
+   *          The sender.
+   * @param scope
+   *          The scope.
    */
   public static void scopeNotNull(Construct sender, Collection<Topic> scope) {
     if (scope == null) {
@@ -58,11 +77,13 @@ public final class Check {
   }
 
   /**
-   * Throws a {@link ModelConstraintException} iff the <tt>type</tt> is 
+   * Throws a {@link ModelConstraintException} iff the <tt>type</tt> is
    * <tt>null</tt>.
-   *
-   * @param sender The sender.
-   * @param type The type.
+   * 
+   * @param sender
+   *          The sender.
+   * @param type
+   *          The type.
    */
   public static void typeNotNull(Construct sender, Topic type) {
     if (type == null) {
@@ -71,11 +92,13 @@ public final class Check {
   }
 
   /**
-   * Throws a {@link ModelConstraintException} iff the <tt>value</tt> is 
+   * Throws a {@link ModelConstraintException} iff the <tt>value</tt> is
    * <tt>null</tt>.
-   *
-   * @param sender The sender.
-   * @param value The value.
+   * 
+   * @param sender
+   *          The sender.
+   * @param value
+   *          The value.
    */
   public static void valueNotNull(Construct sender, Object value) {
     if (value == null) {
@@ -84,12 +107,15 @@ public final class Check {
   }
 
   /**
-   * Throws a {@link ModelConstraintException} iff the <tt>value</tt> or
-   * the <tt>datatype</tt> is <tt>null</tt>.
-   *
-   * @param sender The sender.
-   * @param value The value.
-   * @param datatype The datatype.
+   * Throws a {@link ModelConstraintException} iff the <tt>value</tt> or the
+   * <tt>datatype</tt> is <tt>null</tt>.
+   * 
+   * @param sender
+   *          The sender.
+   * @param value
+   *          The value.
+   * @param datatype
+   *          The datatype.
    */
   public static void valueNotNull(Construct sender, Object value,
       Locator datatype) {
@@ -99,19 +125,23 @@ public final class Check {
     }
   }
 
+  
+  
   /**
-   * Throws a {@link ModelConstraintException} iff the <tt>player</tt> is 
+   * Throws a {@link ModelConstraintException} iff the <tt>player</tt> is
    * <tt>null</tt>.
-   *
-   * @param sender The sender.
-   * @param player The player.
+   * 
+   * @param sender
+   *          The sender.
+   * @param player
+   *          The player.
    */
   public static void playerNotNull(Construct sender, Topic player) {
     if (player == null) {
       reportError(sender, "The role player must not be null");
     }
   }
-  
+
   public static void subjectIdentifierNotNull(Construct sender, Locator loc) {
     if (loc == null) {
       reportError(sender, "The subject identifier must not be null");
@@ -130,4 +160,79 @@ public final class Check {
     }
   }
 
+  /**
+   * Throws a IllegalArgumentException if the subject locator is <code>null</code>
+   * @param loc the locator to check
+   */
+  public static void subjectLocatorNotNull(Locator loc) {
+    if (loc == null) {
+      throw new IllegalArgumentException("The subject locator must not be null");
+    }
+  }
+  
+  /**
+   * Throws a IllegalArgumentException if the subject identifier is <code>null</code>
+   * @param sid the identifier to check
+   */
+  public static void subjectIdentifierNotNull(Locator sid) {
+    if (sid == null) {
+      throw new IllegalArgumentException("The subject locator must not be null");
+    }
+  }
+  
+  /**
+   * Throws a IllegalArgumentException if the value is <code>null</code>
+   * @param value the value to check
+   */
+  public static void valueNotNull(Object value) {
+    if (value == null) {
+      throw new IllegalArgumentException("value is null");
+    }
+  }
+  
+  /**
+   * Throws a IllegalArgumentException if the  locator is <code>null</code>
+   * @param loc the locator to check
+   */
+  public static void locatorNotNull(Locator loc) {
+    if (loc == null) {
+      throw new IllegalArgumentException("The locator must not be null");
+    }
+  }
+  
+  /**
+   * Throws a IllegalArgumentException if the  datatype is <code>null</code>
+   * @param datatype the locator to check
+   */
+  public static void datatypeNotNull(Locator loc) {
+    if (loc == null) {
+      throw new IllegalArgumentException("The datatype must not be null");
+    }
+  }
+  
+  /**
+   * Throws a {@link IllegalArgumentException} iff the <tt>theme</tt> is
+   * <tt>null</tt>.
+   * 
+   * @param theme
+   *          The theme.
+   */
+  public static void themeNotNull(Topic theme) {
+    if (theme == null) {
+      throw new IllegalArgumentException("The theme must not be null");
+    }
+  }
+  
+  /**
+   * Throws a {@link IllegalArgumentException} iff the <tt>theme</tt> is
+   * <tt>null</tt>.
+   * 
+   * @param themes
+   *          The array of themes.
+   */
+  public static void themeNotNull(Topic... themes) {
+    if (themes == null) {
+      throw new IllegalArgumentException("The theme must not be null");
+    }
+  }
 }

@@ -2,15 +2,15 @@
 
 package net.ontopia.topicmaps.impl.tmapi2.index;
 
-import java.net.MalformedURLException;
+
 import java.util.Collection;
 
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.core.index.OccurrenceIndexIF;
+import net.ontopia.topicmaps.impl.tmapi2.Check;
 import net.ontopia.topicmaps.impl.tmapi2.LazySet;
 import net.ontopia.topicmaps.impl.tmapi2.TopicMapImpl;
+import net.ontopia.topicmaps.utils.PSI;
 
 import org.tmapi.core.Locator;
 import org.tmapi.core.Name;
@@ -20,16 +20,13 @@ import org.tmapi.index.LiteralIndex;
 
 /**
  * Implementation of the {@link LiteralIndex}
- * 
- * @author Hannes Niederhausens
+ * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
 public class LiteralIndexImpl implements LiteralIndex {
   private final TopicMapImpl topicMap;
   private final OccurrenceIndexIF occurrenceIndex;
   private final NameIndexIF nameIndex;
-
-  private LocatorIF xsdString;
 
   public LiteralIndexImpl(TopicMapImpl topicMap) {
     this.topicMap = topicMap;
@@ -38,11 +35,6 @@ public class LiteralIndexImpl implements LiteralIndex {
     nameIndex = (NameIndexIF) topicMap.getWrapped().getIndex(
         "net.ontopia.topicmaps.core.index.NameIndexIF");
 
-    try {
-      xsdString = new URILocator("http://www.w3.org/2001/XMLSchema#string");
-    } catch (MalformedURLException e) {
-      // never happening
-    }
   }
 
   /*
@@ -63,11 +55,10 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.LiteralIndex#getOccurrences(java.lang.String)
    */
   public Collection<Occurrence> getOccurrences(String value) {
-    if (value == null)
-      throw new IllegalArgumentException("value is null");
+    Check.valueNotNull(value);
 
     return new LazySet<Occurrence>(topicMap, occurrenceIndex.getOccurrences(
-        value, xsdString));
+        value, PSI.getXSDString()));
   }
 
   /*
@@ -76,8 +67,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.LiteralIndex#getOccurrences(org.tmapi.core.Locator)
    */
   public Collection<Occurrence> getOccurrences(Locator value) {
-    if (value == null)
-      throw new IllegalArgumentException("value is null");
+    Check.valueNotNull(value);
 
     if (value == null)
       throw new IllegalArgumentException("value is null");
@@ -93,10 +83,8 @@ public class LiteralIndexImpl implements LiteralIndex {
    * org.tmapi.core.Locator)
    */
   public Collection<Occurrence> getOccurrences(String value, Locator locator) {
-    if (value == null)
-      throw new IllegalArgumentException("value is null");
-    if (locator == null)
-      throw new IllegalArgumentException("locator is null");
+    Check.valueNotNull(value);
+    Check.locatorNotNull(locator);
 
     return new LazySet<Occurrence>(topicMap, occurrenceIndex.getOccurrences(
         value, topicMap.unwrapLocator(locator)));
@@ -108,10 +96,9 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.LiteralIndex#getVariants(java.lang.String)
    */
   public Collection<Variant> getVariants(String value) {
-    if (value == null)
-      throw new IllegalArgumentException("value is null");
+    Check.valueNotNull(value);
 
-    return new LazySet<Variant>(topicMap, nameIndex.getVariants(value, xsdString));
+    return new LazySet<Variant>(topicMap, nameIndex.getVariants(value, PSI.getXSDString()));
   }
 
   /*
@@ -120,8 +107,7 @@ public class LiteralIndexImpl implements LiteralIndex {
    * @see org.tmapi.index.LiteralIndex#getVariants(org.tmapi.core.Locator)
    */
   public Collection<Variant> getVariants(Locator value) {
-    if (value == null)
-      throw new IllegalArgumentException("value is null");
+    Check.valueNotNull(value);
 
     return new LazySet<Variant>(topicMap, nameIndex.getVariants(value.toExternalForm()));
   }
@@ -133,10 +119,8 @@ public class LiteralIndexImpl implements LiteralIndex {
    * org.tmapi.core.Locator)
    */
   public Collection<Variant> getVariants(String value, Locator datatype) {
-    if (value == null)
-      throw new IllegalArgumentException("value is null");
-    if (datatype == null)
-      throw new IllegalArgumentException("datatype is null");
+    Check.valueNotNull(value);
+    Check.datatypeNotNull(datatype);
 
     return new LazySet<Variant>(topicMap, nameIndex.getVariants(value, topicMap
         .unwrapLocator(datatype)));

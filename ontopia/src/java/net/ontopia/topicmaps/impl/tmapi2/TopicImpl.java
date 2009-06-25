@@ -17,11 +17,13 @@ import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 
 import org.tmapi.core.IdentityConstraintException;
+import org.tmapi.core.Locator;
 import org.tmapi.core.ModelConstraintException;
 import org.tmapi.core.Name;
 import org.tmapi.core.Occurrence;
 import org.tmapi.core.Reifiable;
 import org.tmapi.core.Role;
+import org.tmapi.core.Topic;
 import org.tmapi.core.TopicInUseException;
 import org.tmapi.index.ScopedIndex;
 import org.tmapi.index.TypeInstanceIndex;
@@ -30,7 +32,7 @@ import org.tmapi.index.TypeInstanceIndex;
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
+public class TopicImpl extends ConstructImpl implements Topic {
 
   private TopicIF wrapped;
 
@@ -55,7 +57,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#getSubjectIdentifiers()
    */
 
-  public Set<org.tmapi.core.Locator> getSubjectIdentifiers() {
+  public Set<Locator> getSubjectIdentifiers() {
     return topicMap.wrapSet(wrapped.getSubjectIdentifiers());
   }
 
@@ -65,7 +67,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#addSubjectIdentifier(org.tmapi.core.Locator)
    */
 
-  public void addSubjectIdentifier(org.tmapi.core.Locator sid) {
+  public void addSubjectIdentifier(Locator sid) {
     try {
       wrapped.addSubjectIdentifier(topicMap.unwrapLocator(sid));
     } catch (ConstraintViolationException ex) {
@@ -85,7 +87,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#removeSubjectIdentifier(org.tmapi.core.Locator)
    */
 
-  public void removeSubjectIdentifier(org.tmapi.core.Locator sid) {
+  public void removeSubjectIdentifier(Locator sid) {
     if (sid == null) {
       throw new ModelConstraintException(this,
           "The subject identifier must not be null");
@@ -99,7 +101,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#getSubjectLocators()
    */
 
-  public Set<org.tmapi.core.Locator> getSubjectLocators() {
+  public Set<Locator> getSubjectLocators() {
     return topicMap.wrapSet(wrapped.getSubjectLocators());
   }
 
@@ -109,7 +111,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#addSubjectLocator(org.tmapi.core.Locator)
    */
 
-  public void addSubjectLocator(org.tmapi.core.Locator slo) {
+  public void addSubjectLocator(Locator slo) {
     try {
       wrapped.addSubjectLocator(topicMap.unwrapLocator(slo));
     } catch (ConstraintViolationException ex) {
@@ -128,7 +130,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#removeSubjectLocator(org.tmapi.core.Locator)
    */
 
-  public void removeSubjectLocator(org.tmapi.core.Locator slo) {
+  public void removeSubjectLocator(Locator slo) {
     if (slo == null) {
       throw new ModelConstraintException(this,
           "The subject locator must not be null");
@@ -142,7 +144,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#getTypes()
    */
 
-  public Set<org.tmapi.core.Topic> getTypes() {
+  public Set<Topic> getTypes() {
     return topicMap.wrapSet(wrapped.getTypes());
   }
 
@@ -152,7 +154,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#addType(org.tmapi.core.Topic)
    */
 
-  public void addType(org.tmapi.core.Topic type) {
+  public void addType(Topic type) {
     Check.typeNotNull(this, type);
     wrapped.addType(topicMap.unwrapTopic(type));
   }
@@ -163,7 +165,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#removeType(org.tmapi.core.Topic)
    */
 
-  public void removeType(org.tmapi.core.Topic type) {
+  public void removeType(Topic type) {
     Check.typeNotNull(this, type);
     wrapped.removeType(topicMap.unwrapTopic(type));
   }
@@ -175,7 +177,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * org.tmapi.core.Topic[])
    */
 
-  public Name createName(String value, org.tmapi.core.Topic... scope) {
+  public Name createName(String value, Topic... scope) {
     return createName(topicMap.getDefaultNameType(), value, scope);
   }
 
@@ -186,10 +188,9 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * java.util.Collection)
    */
 
-  public Name createName(String value, Collection<org.tmapi.core.Topic> scope) {
+  public Name createName(String value, Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
-    return createName(value, scope.toArray(new org.tmapi.core.Topic[scope
-        .size()]));
+    return createName(value, scope.toArray(new Topic[scope.size()]));
   }
 
   /*
@@ -199,8 +200,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * java.lang.String, org.tmapi.core.Topic[])
    */
 
-  public Name createName(org.tmapi.core.Topic type, String value,
-      org.tmapi.core.Topic... scope) {
+  public Name createName(Topic type, String value, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
@@ -217,11 +217,9 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * java.lang.String, java.util.Collection)
    */
 
-  public Name createName(org.tmapi.core.Topic type, String value,
-      Collection<org.tmapi.core.Topic> scope) {
+  public Name createName(Topic type, String value, Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
-    return createName(type, value, scope.toArray(new org.tmapi.core.Topic[scope
-        .size()]));
+    return createName(type, value, scope.toArray(new Topic[scope.size()]));
   }
 
   /*
@@ -231,8 +229,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * java.lang.String, org.tmapi.core.Topic[])
    */
 
-  public Occurrence createOccurrence(org.tmapi.core.Topic type, String value,
-      org.tmapi.core.Topic... scope) {
+  public Occurrence createOccurrence(Topic type, String value, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
@@ -249,11 +246,10 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * java.lang.String, java.util.Collection)
    */
 
-  public Occurrence createOccurrence(org.tmapi.core.Topic type, String value,
-      Collection<org.tmapi.core.Topic> scope) {
+  public Occurrence createOccurrence(Topic type, String value,
+      Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
-    return createOccurrence(type, value, scope
-        .toArray(new org.tmapi.core.Topic[scope.size()]));
+    return createOccurrence(type, value, scope.toArray(new Topic[scope.size()]));
   }
 
   /*
@@ -263,8 +259,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * org.tmapi.core.Locator, org.tmapi.core.Topic[])
    */
 
-  public Occurrence createOccurrence(org.tmapi.core.Topic type,
-      org.tmapi.core.Locator value, org.tmapi.core.Topic... scope) {
+  public Occurrence createOccurrence(Topic type, Locator value, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
@@ -281,11 +276,10 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * org.tmapi.core.Locator, java.util.Collection)
    */
 
-  public Occurrence createOccurrence(org.tmapi.core.Topic type,
-      org.tmapi.core.Locator value, Collection<org.tmapi.core.Topic> scope) {
+  public Occurrence createOccurrence(Topic type, Locator value,
+      Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
-    return createOccurrence(type, value, scope
-        .toArray(new org.tmapi.core.Topic[scope.size()]));
+    return createOccurrence(type, value, scope.toArray(new Topic[scope.size()]));
   }
 
   /*
@@ -295,8 +289,8 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * java.lang.String, org.tmapi.core.Locator, org.tmapi.core.Topic[])
    */
 
-  public Occurrence createOccurrence(org.tmapi.core.Topic type, String value,
-      org.tmapi.core.Locator datatype, org.tmapi.core.Topic... scope) {
+  public Occurrence createOccurrence(Topic type, String value,
+      Locator datatype, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value, datatype);
     Check.scopeNotNull(this, scope);
@@ -314,11 +308,11 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * java.lang.String, org.tmapi.core.Locator, java.util.Collection)
    */
 
-  public Occurrence createOccurrence(org.tmapi.core.Topic type, String value,
-      org.tmapi.core.Locator datatype, Collection<org.tmapi.core.Topic> scope) {
+  public Occurrence createOccurrence(Topic type, String value,
+      Locator datatype, Collection<Topic> scope) {
     Check.scopeNotNull(this, scope);
     return createOccurrence(type, value, datatype, scope
-        .toArray(new org.tmapi.core.Topic[scope.size()]));
+        .toArray(new Topic[scope.size()]));
   }
 
   /*
@@ -337,7 +331,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#getNames(org.tmapi.core.Topic)
    */
   @SuppressWarnings("unchecked")
-  public Set<Name> getNames(org.tmapi.core.Topic type) {
+  public Set<Name> getNames(Topic type) {
     if (type == null) {
       throw new IllegalArgumentException("The type must not be null");
     }
@@ -369,7 +363,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#getOccurrences(org.tmapi.core.Topic)
    */
   @SuppressWarnings("unchecked")
-  public Set<Occurrence> getOccurrences(org.tmapi.core.Topic type) {
+  public Set<Occurrence> getOccurrences(Topic type) {
     if (type == null) {
       throw new IllegalArgumentException("The type must not be null");
     }
@@ -421,10 +415,8 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#getRolesPlayed(org.tmapi.core.Topic)
    */
 
-  public Set<Role> getRolesPlayed(org.tmapi.core.Topic type) {
-    if (type == null) {
-      throw new IllegalArgumentException("The type must not be null");
-    }
+  public Set<Role> getRolesPlayed(Topic type) {
+    Check.typeNotNull(this, type);
     return topicMap.wrapSet(wrapped.getRolesByType(topicMap.unwrapTopic(type)));
   }
 
@@ -435,8 +427,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * org.tmapi.core.Topic)
    */
 
-  public Set<Role> getRolesPlayed(org.tmapi.core.Topic type,
-      org.tmapi.core.Topic assocType) {
+  public Set<Role> getRolesPlayed(Topic type, Topic assocType) {
     if (type == null) {
       throw new IllegalArgumentException("The type must not be null");
     }
@@ -454,7 +445,7 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @see org.tmapi.core.Topic#mergeIn(org.tmapi.core.Topic)
    */
 
-  public void mergeIn(org.tmapi.core.Topic topic) {
+  public void mergeIn(Topic topic) {
     if (topicMap.unwrapTopic(topic) == getWrapped())
       return;
     try {
@@ -528,8 +519,8 @@ public class TopicImpl extends ConstructImpl implements org.tmapi.core.Topic {
    * @param scope
    *          The scope, must not be <tt>null</tt>.
    */
-  private void applyScope(ScopedIF scoped, org.tmapi.core.Topic... scope) {
-    for (org.tmapi.core.Topic theme : scope) {
+  private void applyScope(ScopedIF scoped, Topic... scope) {
+    for (Topic theme : scope) {
       scoped.addTheme(topicMap.unwrapTopic(theme));
     }
   }

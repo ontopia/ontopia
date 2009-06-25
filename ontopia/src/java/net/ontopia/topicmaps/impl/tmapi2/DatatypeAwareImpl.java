@@ -9,6 +9,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 
+import org.tmapi.core.DatatypeAware;
 import org.tmapi.core.Locator;
 
 /**
@@ -16,7 +17,7 @@ import org.tmapi.core.Locator;
  */
 
 public abstract class DatatypeAwareImpl extends ScopedImpl implements
-    org.tmapi.core.DatatypeAware {
+    DatatypeAware {
 
   private static final LocatorIF XSD_INT = URILocator.create("http://www.w3.org/2001/XMLSchema#int");
 
@@ -111,6 +112,7 @@ public abstract class DatatypeAwareImpl extends ScopedImpl implements
    */
   
   public void setValue(int value) {
+	  // the TMAPI  demands a xsd:int for int
     setValue(Integer.toString(value), XSD_INT);
   }
 

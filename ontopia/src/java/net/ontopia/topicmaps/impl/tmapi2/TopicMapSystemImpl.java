@@ -12,16 +12,18 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 import org.tmapi.core.FeatureNotRecognizedException;
+import org.tmapi.core.Locator;
 import org.tmapi.core.MalformedIRIException;
 import org.tmapi.core.TopicMapExistsException;
+import org.tmapi.core.TopicMapSystem;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
-public class TopicMapSystemImpl implements org.tmapi.core.TopicMapSystem {
+public class TopicMapSystemImpl implements TopicMapSystem {
 
   private TopicMapSystemFactory sf;
-  private Map<org.tmapi.core.Locator, TopicMapImpl> loc2tm = new HashMap<org.tmapi.core.Locator, TopicMapImpl>();
+  private Map<Locator, TopicMapImpl> loc2tm = new HashMap<Locator, TopicMapImpl>();
 
   public TopicMapSystemImpl(TopicMapSystemFactory topicMapSystemFactory) {
     sf = topicMapSystemFactory;
@@ -52,11 +54,11 @@ public class TopicMapSystemImpl implements org.tmapi.core.TopicMapSystem {
    * @see org.tmapi.core.TopicMapSystem#createLocator(java.lang.String)
    */
   
-  public org.tmapi.core.Locator createLocator(String reference) {
+  public Locator createLocator(String reference) {
     return wrapLocator(createLocatorIF(reference));
   }
 
-  org.tmapi.core.Locator wrapLocator(LocatorIF loc) {
+  Locator wrapLocator(LocatorIF loc) {
     return new LocatorImpl(loc);
   }
 
@@ -66,9 +68,9 @@ public class TopicMapSystemImpl implements org.tmapi.core.TopicMapSystem {
    * @see org.tmapi.core.TopicMapSystem#createTopicMap(org.tmapi.core.Locator)
    */
   
-  public TopicMapImpl createTopicMap(org.tmapi.core.Locator loc) throws TopicMapExistsException {
+  public TopicMapImpl createTopicMap(Locator loc) throws TopicMapExistsException {
     if (loc2tm.containsKey(loc)) {
-      throw new org.tmapi.core.TopicMapExistsException("Topic map with base locator " + loc + " already exists.");
+      throw new TopicMapExistsException("Topic map with base locator " + loc + " already exists.");
     }
     else {
       // create new topic map
@@ -107,8 +109,8 @@ public class TopicMapSystemImpl implements org.tmapi.core.TopicMapSystem {
    * @see org.tmapi.core.TopicMapSystem#getLocators()
    */
   
-  public Set<org.tmapi.core.Locator> getLocators() {
-    return new HashSet<org.tmapi.core.Locator>(loc2tm.keySet());
+  public Set<Locator> getLocators() {
+    return new HashSet<Locator>(loc2tm.keySet());
   }
 
   /*
@@ -137,7 +139,7 @@ public class TopicMapSystemImpl implements org.tmapi.core.TopicMapSystem {
    * @see org.tmapi.core.TopicMapSystem#getTopicMap(org.tmapi.core.Locator)
    */
   
-  public TopicMapImpl getTopicMap(org.tmapi.core.Locator loc) {
+  public TopicMapImpl getTopicMap(Locator loc) {
     return loc2tm.get(loc);
   }
 

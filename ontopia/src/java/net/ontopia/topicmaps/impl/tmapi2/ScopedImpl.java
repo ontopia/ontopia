@@ -6,14 +6,14 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.core.ScopedIF;
 
-import org.tmapi.core.ModelConstraintException;
+import org.tmapi.core.Scoped;
 import org.tmapi.core.Topic;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-public abstract class ScopedImpl extends ReifiableImpl implements org.tmapi.core.Scoped {
+public abstract class ScopedImpl extends ReifiableImpl implements Scoped {
 
   public ScopedImpl(TopicMapImpl topicMap) {
     super(topicMap);
@@ -36,9 +36,7 @@ public abstract class ScopedImpl extends ReifiableImpl implements org.tmapi.core
    */
   
   public void addTheme(Topic theme) {
-    if (theme == null) {
-      throw new ModelConstraintException(this, "The theme must not be null");
-    }
+    Check.themeNotNull(this, theme);
     ((ScopedIF) getWrapped()).addTheme(topicMap.unwrapTopic(theme));
   }
 
@@ -49,9 +47,7 @@ public abstract class ScopedImpl extends ReifiableImpl implements org.tmapi.core
    */
   
   public void removeTheme(Topic theme) {
-    if (theme == null) {
-      throw new ModelConstraintException(this, "The theme must not be null");
-    }
+    Check.themeNotNull(this, theme);
     ((ScopedIF) getWrapped()).removeTheme(topicMap.unwrapTopic(theme));
   }
 

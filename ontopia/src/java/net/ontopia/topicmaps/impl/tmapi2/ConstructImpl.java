@@ -7,6 +7,7 @@ import java.util.Set;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.TMObjectIF;
 
+import org.tmapi.core.Construct;
 import org.tmapi.core.IdentityConstraintException;
 import org.tmapi.core.Locator;
 
@@ -14,7 +15,7 @@ import org.tmapi.core.Locator;
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-abstract class ConstructImpl implements org.tmapi.core.Construct {
+abstract class ConstructImpl implements Construct {
 
   protected TopicMapImpl topicMap;
 
@@ -97,8 +98,11 @@ abstract class ConstructImpl implements org.tmapi.core.Construct {
    */
   
   public boolean equals(Object obj) {
-    return obj instanceof org.tmapi.core.Construct
-        && getId().equals(((org.tmapi.core.Construct) obj).getId());
+    if (obj instanceof Construct) {
+    	String objId = ((Construct) obj).getId();
+        return getId().equals(objId);
+    }
+    return false;
   }
   
   public int hashCode() {

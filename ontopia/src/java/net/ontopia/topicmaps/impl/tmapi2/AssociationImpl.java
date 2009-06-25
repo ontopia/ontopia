@@ -7,13 +7,15 @@ import java.util.Set;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 
+import org.tmapi.core.Association;
+import org.tmapi.core.Role;
 import org.tmapi.core.Topic;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-public class AssociationImpl extends ScopedImpl implements org.tmapi.core.Association {
+public class AssociationImpl extends ScopedImpl implements Association {
 
   private AssociationIF wrapped;
 
@@ -53,7 +55,7 @@ public class AssociationImpl extends ScopedImpl implements org.tmapi.core.Associ
    * @see org.tmapi.core.Association#getRoleTypes()
    */
   
-  public Set<org.tmapi.core.Topic> getRoleTypes() {
+  public Set<Topic> getRoleTypes() {
     return topicMap.wrapSet(wrapped.getRoleTypes());
   }
 
@@ -61,7 +63,7 @@ public class AssociationImpl extends ScopedImpl implements org.tmapi.core.Associ
    * @see org.tmapi.core.Association#getRoles()
    */
   
-  public Set<org.tmapi.core.Role> getRoles() {
+  public Set<Role> getRoles() {
     return topicMap.wrapSet(wrapped.getRoles());
   }
 
@@ -69,10 +71,8 @@ public class AssociationImpl extends ScopedImpl implements org.tmapi.core.Associ
    * @see org.tmapi.core.Association#getRoles(org.tmapi.core.Topic)
    */
   
-  public Set<org.tmapi.core.Role> getRoles(org.tmapi.core.Topic type) {
-    if (type == null) {
-      throw new IllegalArgumentException("The type must not be null");
-    }
+  public Set<Role> getRoles(Topic type) {
+    Check.typeNotNull(this, type);
     return topicMap.wrapSet(wrapped.getRolesByType(topicMap.unwrapTopic(type)));
   }
 

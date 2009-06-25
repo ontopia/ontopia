@@ -13,6 +13,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
+import net.ontopia.topicmaps.impl.tmapi2.Check;
 import net.ontopia.topicmaps.impl.tmapi2.LazySet;
 import net.ontopia.topicmaps.impl.tmapi2.TopicMapImpl;
 
@@ -25,8 +26,7 @@ import org.tmapi.index.ScopedIndex;
 
 /**
  * This is the implementation for the TMAPI2 {@link ScopedIndex} interface.
- * 
- * @author Hannes Niederhausen
+ * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
 public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
@@ -62,7 +62,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
   @SuppressWarnings("unchecked")
   public Collection<Association> getAssociations(Topic[] themes,
       boolean matchAll) {
-    checkThemeNotNull(themes);
+    Check.themeNotNull(themes);
 
     Set<AssociationIF> resultSet = new HashSet<AssociationIF>();
     boolean first = true;
@@ -112,7 +112,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    */
   @SuppressWarnings("unchecked")
   public Collection<Name> getNames(Topic[] themes, boolean matchAll) {
-    checkThemeNotNull(themes);
+    Check.themeNotNull(themes);
     Set<TopicNameIF> resultSet = new HashSet<TopicNameIF>();
     boolean first = true;
     for (Topic theme : themes) {
@@ -162,7 +162,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    */
   @SuppressWarnings("unchecked")
   public Collection<Occurrence> getOccurrences(Topic[] themes, boolean matchAll) {
-    checkThemeNotNull(themes);
+    Check.themeNotNull(themes);
     Set<OccurrenceIF> resultSet = new HashSet<OccurrenceIF>();
     boolean first = true;
     for (Topic theme : themes) {
@@ -212,7 +212,7 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    */
   @SuppressWarnings("unchecked")
   public Collection<Variant> getVariants(Topic[] themes, boolean matchAll) {
-    checkThemeNotNull(themes);
+    Check.themeNotNull(themes);
 
     Set<VariantNameIF> resultSet = new HashSet<VariantNameIF>();
     boolean first = true;
@@ -256,7 +256,6 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.Index#isOpen()
    */
   public boolean isOpen() {
-    // TODO Auto-generated method stub
     return true;
   }
 
@@ -266,8 +265,6 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.Index#open()
    */
   public void open() {
-    // TODO Auto-generated method stub
-
   }
 
   /*
@@ -276,13 +273,6 @@ public class ScopedIndexImpl implements org.tmapi.index.ScopedIndex {
    * @see org.tmapi.index.Index#reindex()
    */
   public void reindex() {
-    // TODO Auto-generated method stub
-
-  }
-
-  private void checkThemeNotNull(Topic[] themes) {
-    if (themes == null)
-      throw new IllegalArgumentException("Themes may not be null!!");
   }
 
   public ScopeIndexIF getWrapped() {

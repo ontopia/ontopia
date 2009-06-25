@@ -83,7 +83,7 @@
 
   <group>
     <name>tmapi</name>
-    <test>net.ontopia.topicmaps.impl.oks2tmapi.test.TopicMapSystemFactoryTest</test>
+    <test>net.ontopia.topicmaps.impl.tmapi2.test.TopicMapSystemFactoryTest</test>
   </group>
 
   <group>

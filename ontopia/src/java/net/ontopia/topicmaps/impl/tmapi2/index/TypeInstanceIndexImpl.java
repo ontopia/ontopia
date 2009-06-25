@@ -21,13 +21,10 @@ import org.tmapi.index.TypeInstanceIndex;
 
 /**
  * Implementation of the {@link TypeInstanceIndex} interface
- * 
- * @author Hannes Niederhausen
+ * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
 public class TypeInstanceIndexImpl implements TypeInstanceIndex {
-
-  // private final ScopeIndexIF wrapped;
 
   private final TopicMapImpl topicMap;
 

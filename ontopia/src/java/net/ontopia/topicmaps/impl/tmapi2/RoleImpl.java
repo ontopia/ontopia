@@ -5,13 +5,14 @@ package net.ontopia.topicmaps.impl.tmapi2;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 
 import org.tmapi.core.Association;
+import org.tmapi.core.Role;
 import org.tmapi.core.Topic;
 
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-public class RoleImpl extends ReifiableImpl implements org.tmapi.core.Role {
+public class RoleImpl extends ReifiableImpl implements Role {
 
   private AssociationRoleIF wrapped;
 
