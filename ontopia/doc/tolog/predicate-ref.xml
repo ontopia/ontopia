@@ -10,7 +10,7 @@
     <affiliation><orgname>Ontopia</orgname></affiliation>
   </author>
   <pubdate>$Date: 2008/06/13 12:06:19 $</pubdate>
-  <releaseinfo>4.0 ($Revision: 1.28 $)</releaseinfo>
+  <releaseinfo>5.0 ($Revision: 1.28 $)</releaseinfo>
 </articleinfo>
 
 
@@ -28,9 +28,9 @@ language.
 
 <para>
 This document is quite difficult to read without a thorough
-understanding of the Topic Maps model. It is recommended to study
-either <ulink url="http://www.topicmaps.org/xtm./1.0">XTM 1.0</ulink>
-or <ulink url="http://www.isotopicmaps.org/sam/sam-model/">TMDM</ulink>.
+understanding of the Topic Maps model. It is recommended to study the
+<ulink url="http://www.isotopicmaps.org/sam/sam-model/">Topic Maps
+Data Model</ulink>.
 </para>
 </section>
   
@@ -2209,7 +2209,7 @@ select $A, $RELEVANCE from
 order by $RELEVANCE?</literallayout>
 
 <para>
-The class name in the import URI is enough for the OKS to instantiate
+The class name in the import URI is enough for Ontopia to instantiate
 the class and use it. The actual predicate name
 (<symbol>fulltext:search</symbol> in the example above) does not need
 to be significant. The name is passed into the
