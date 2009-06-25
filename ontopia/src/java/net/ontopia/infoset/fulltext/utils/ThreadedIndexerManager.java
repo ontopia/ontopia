@@ -13,7 +13,8 @@ import net.ontopia.infoset.fulltext.core.DocumentProcessorIF;
 import net.ontopia.infoset.fulltext.core.IndexerIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import EDU.oswego.cs.dl.util.concurrent.Callable;
 import EDU.oswego.cs.dl.util.concurrent.LinkedQueue;
@@ -38,7 +39,7 @@ import EDU.oswego.cs.dl.util.concurrent.TimeoutException;
 public class ThreadedIndexerManager implements IndexerIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ThreadedIndexerManager.class.getName());
+  static Logger log = LoggerFactory.getLogger(ThreadedIndexerManager.class.getName());
   
   protected IndexerIF se_indexer;
   protected DocumentProcessorIF doc_processor;

@@ -8,14 +8,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.io.Writer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Helper class for providing some more convenience for time
  * measurement. Based on system clock in milliseconds.
  */
 public class TimeMeasureUtils {
-  static Logger logger = Logger.getLogger(TimeMeasureUtils.class.getName());
+  static Logger logger = LoggerFactory.getLogger(TimeMeasureUtils.class.getName());
   private static Map timeTable = new HashMap();
 
   public static void startAction(String key) {

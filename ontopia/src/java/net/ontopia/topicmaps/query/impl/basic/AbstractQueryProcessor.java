@@ -19,7 +19,8 @@ import net.ontopia.topicmaps.query.parser.PredicateClause;
 import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A collection of utility methods used by classes which need
@@ -29,7 +30,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractQueryProcessor {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(AbstractQueryProcessor.class.getName());
+  private static Logger log = LoggerFactory.getLogger(AbstractQueryProcessor.class.getName());
   private static BasicPredicateIF NOT_PREDICATE = new NotPredicate();
 
   /**

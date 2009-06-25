@@ -10,7 +10,8 @@ import java.util.Map;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The indicator field handler implementation that is able
@@ -20,7 +21,7 @@ import org.apache.log4j.Logger;
 public class IndicatorFieldHandler implements FieldHandlerIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(IndicatorFieldHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(IndicatorFieldHandler.class.getName());
 
   protected ObjectRelationalMappingIF mapping;
   protected Map indicators;

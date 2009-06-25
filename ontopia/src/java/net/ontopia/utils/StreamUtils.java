@@ -6,7 +6,8 @@ package net.ontopia.utils;
 import java.io.*;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Utilities for working with streams and readers.
@@ -15,7 +16,7 @@ import org.apache.log4j.Logger;
 public class StreamUtils {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(StreamUtils.class.getName());
+  static Logger log = LoggerFactory.getLogger(StreamUtils.class.getName());
   
   static final int BUFFER_SIZE = 16384;
   

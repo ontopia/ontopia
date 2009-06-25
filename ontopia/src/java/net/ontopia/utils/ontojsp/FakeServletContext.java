@@ -23,7 +23,8 @@ import javax.servlet.ServletException;
 import net.ontopia.utils.NullObject;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Fake the ServletContext, needed for execution of servlets.
@@ -31,7 +32,7 @@ import org.apache.log4j.Logger;
 public class FakeServletContext implements ServletContext {
 
   // initialization of log facility
-  private static Logger logger = Logger
+  private static Logger logger = LoggerFactory
     .getLogger(FakeServletContext.class.getName());
   
   private File rootpath;

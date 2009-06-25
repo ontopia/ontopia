@@ -11,7 +11,8 @@ import java.util.Map;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A key generator using the HIGH/LOW key generator
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public final class HighLowKeyGenerator implements KeyGeneratorIF {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(HighLowKeyGenerator.class.getName());
+  static Logger log = LoggerFactory.getLogger(HighLowKeyGenerator.class.getName());
   
   protected ConnectionFactoryIF connfactory;
   

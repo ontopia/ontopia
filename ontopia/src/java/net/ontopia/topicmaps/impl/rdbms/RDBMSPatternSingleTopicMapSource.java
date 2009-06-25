@@ -15,7 +15,8 @@ import net.ontopia.infoset.core.Locators;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: A topic map source that refers to single reference that is
@@ -41,7 +42,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
   protected RDBMSTopicMapReference reference;
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(RDBMSPatternSingleTopicMapSource.class.getName());
+  static Logger log = LoggerFactory.getLogger(RDBMSPatternSingleTopicMapSource.class.getName());
 
   // --- TopicMapSourceIF implementation
 

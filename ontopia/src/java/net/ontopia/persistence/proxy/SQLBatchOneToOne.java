@@ -5,7 +5,8 @@ package net.ontopia.persistence.proxy;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class that performs the task of accessing and
@@ -15,7 +16,7 @@ import org.apache.log4j.Logger;
 public class SQLBatchOneToOne extends SQLOneToOne implements FlushableIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SQLBatchOneToOne.class.getName());
+  static Logger log = LoggerFactory.getLogger(SQLBatchOneToOne.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected PreparedStatement stm_set;

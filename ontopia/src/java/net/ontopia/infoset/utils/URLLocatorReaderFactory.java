@@ -6,7 +6,8 @@ import java.io.*;
 import java.net.URL;
 import net.ontopia.infoset.core.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Creates a Reader for a LocatorIF that contains a URL in

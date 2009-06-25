@@ -40,7 +40,8 @@ import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.SynchronizedLookupIndex;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A storage definition implementation for relational
@@ -50,7 +51,7 @@ import org.apache.log4j.Logger;
 public class RDBMSStorage implements StorageIF {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(RDBMSStorage.class.getName());
+  static Logger log = LoggerFactory.getLogger(RDBMSStorage.class.getName());
 
   static final Set known_properties;
   static {

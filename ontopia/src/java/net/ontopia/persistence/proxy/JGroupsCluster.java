@@ -28,7 +28,8 @@ import org.jgroups.MessageListener;
 import org.jgroups.blocks.PullPushAdapter;
 
 import EDU.oswego.cs.dl.util.concurrent.LinkedQueue;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class that represents a cluster of OKS instances.
@@ -37,7 +38,7 @@ import org.apache.log4j.Logger;
 public class JGroupsCluster implements ClusterIF, MessageListener {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(JGroupsCluster.class.getName());
+  static Logger log = LoggerFactory.getLogger(JGroupsCluster.class.getName());
 
   final static Integer DATA = new Integer(1); 
   

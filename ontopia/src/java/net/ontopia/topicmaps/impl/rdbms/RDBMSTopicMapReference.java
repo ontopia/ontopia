@@ -17,7 +17,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: RDBMS database topic map reference.
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 public class RDBMSTopicMapReference extends AbstractTopicMapReference {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(RDBMSTopicMapReference.class.getName());
+  static Logger log = LoggerFactory.getLogger(RDBMSTopicMapReference.class.getName());
 
   protected StorageIF storage;
 

@@ -9,7 +9,8 @@ import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.DocumentProcessorIF;
 import net.ontopia.infoset.fulltext.core.IndexerIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 /**
  * INTERNAL: A standalone index manager that performs document
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class DefaultIndexerManager implements IndexerIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DefaultIndexerManager.class.getName());
+  static Logger log = LoggerFactory.getLogger(DefaultIndexerManager.class.getName());
   
   protected IndexerIF indexer;
   protected DocumentProcessorIF processor;

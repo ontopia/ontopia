@@ -12,7 +12,8 @@ import net.ontopia.utils.*;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class that performs the actual db2tm processing.
@@ -26,7 +27,7 @@ public class Processor {
   }
   
   // --- define a logging category.
-  static Logger log = Logger.getLogger(Processor.class.getName());
+  static Logger log = LoggerFactory.getLogger(Processor.class.getName());
 
   /**
    * INTERNAL: Runs a DB2TM process by adding tuples to the topic map.

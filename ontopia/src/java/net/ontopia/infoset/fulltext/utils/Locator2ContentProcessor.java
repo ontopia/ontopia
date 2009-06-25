@@ -9,7 +9,8 @@ import net.ontopia.infoset.core.LocatorReaderFactoryIF;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.GenericField;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A document processor that replaces notation and address
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 public class Locator2ContentProcessor extends AbstractLocatorDocumentProcessor {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(Locator2ContentProcessor.class.getName());
+  static Logger log = LoggerFactory.getLogger(Locator2ContentProcessor.class.getName());
 
   protected String content_field;
 

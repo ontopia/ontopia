@@ -7,7 +7,8 @@ import java.sql.*;
 import java.util.Properties;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
 public class SpyDriver implements Driver {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SpyDriver.class.getName());
+  static Logger log = LoggerFactory.getLogger(SpyDriver.class.getName());
 
   static SpyStats stats = new SpyStats();
   

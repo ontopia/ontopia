@@ -8,7 +8,8 @@ import java.util.Properties;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: JDBC driver for Tolog.<br>
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class TologDriver implements Driver {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(TologDriver.class.getName());
+  static Logger log = LoggerFactory.getLogger(TologDriver.class.getName());
   
   public TologDriver() {
   }

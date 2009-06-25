@@ -21,7 +21,8 @@ import org.apache.commons.pool.KeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
 import org.apache.commons.pool.impl.GenericKeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 /** 
  * INTERNAL: Jakarta DBCP connection factory implementation.
@@ -30,7 +31,7 @@ import org.apache.log4j.Logger;
 public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DBCPConnectionFactory.class.getName());
+  static Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
 
   protected GenericObjectPool pool;
   protected DataSource datasource;  

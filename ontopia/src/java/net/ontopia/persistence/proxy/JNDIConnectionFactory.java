@@ -15,7 +15,8 @@ import javax.sql.DataSource;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 /** 
  * INTERNAL: Connection factory that retrieves javax.sql.DataSource
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class JNDIConnectionFactory implements ConnectionFactoryIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(JNDIConnectionFactory.class.getName());
+  static Logger log = LoggerFactory.getLogger(JNDIConnectionFactory.class.getName());
 
   protected static final String propname = "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.JNDIDataSource";
   protected String jndiname;

@@ -12,14 +12,15 @@ import net.ontopia.topicmaps.query.parser.AbstractClause;
 import net.ontopia.topicmaps.query.parser.NotClause;
 import net.ontopia.topicmaps.query.parser.OrClause;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Used for testing and timing of queries.
  */
 public class QueryTracer {
   // --- initialize logging facility.
-  static Logger logger = Logger.getLogger(QueryTracer.class.getName());
+  static Logger logger = LoggerFactory.getLogger(QueryTracer.class.getName());
   
   private static List listeners = new java.util.ArrayList();
 

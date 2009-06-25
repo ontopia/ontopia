@@ -11,7 +11,8 @@ import java.util.Set;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-//! import org.apache.log4j.*;
+//! import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class containing utility methods for processing
@@ -21,7 +22,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 public class FieldUtils {
 
   //! // Define a logging category.
-  //! static Logger log = Logger.getLogger(FieldUtils.class.getName());
+  //! static Logger log = LoggerFactory.getLogger(FieldUtils.class.getName());
 
   /**
    * INTERNAL: Returns an array containing the tables in which the

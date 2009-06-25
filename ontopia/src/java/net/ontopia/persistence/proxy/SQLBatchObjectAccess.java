@@ -8,7 +8,8 @@ import java.sql.SQLException;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class that performs the task of creating new objects in
@@ -18,7 +19,7 @@ import org.apache.log4j.Logger;
 public class SQLBatchObjectAccess extends SQLObjectAccess implements FlushableIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SQLBatchObjectAccess.class.getName());
+  static Logger log = LoggerFactory.getLogger(SQLBatchObjectAccess.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected PreparedStatement stm_create;

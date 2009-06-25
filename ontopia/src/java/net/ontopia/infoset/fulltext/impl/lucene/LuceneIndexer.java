@@ -25,7 +25,8 @@ import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -43,7 +44,7 @@ import org.apache.lucene.store.FSDirectory;
 public class LuceneIndexer implements IndexerIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(LuceneIndexer.class.getName());
+  static Logger log = LoggerFactory.getLogger(LuceneIndexer.class.getName());
 
   static {
     try {

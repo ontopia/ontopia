@@ -4,7 +4,8 @@
 package net.ontopia.utils;
 
 import java.io.File;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Check every now and then that a certain file has not
@@ -15,7 +16,7 @@ import org.apache.log4j.Logger;
 public abstract class FileWatchdog extends Thread {
 
   // initialization of logging facility
-  static Logger log = Logger.getLogger(FileWatchdog.class.getName());
+  static Logger log = LoggerFactory.getLogger(FileWatchdog.class.getName());
   
   /**
    * The default delay between every file modification check, set to 6

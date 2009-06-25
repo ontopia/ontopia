@@ -8,7 +8,8 @@ import java.util.Map;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: An object relational mapping wrapper class used by the
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
 public class RDBMSMapping implements ObjectRelationalMappingIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(RDBMSMapping.class.getName());
+  static Logger log = LoggerFactory.getLogger(RDBMSMapping.class.getName());
 
   protected ObjectRelationalMapping mapping;
   protected Map class_infos;

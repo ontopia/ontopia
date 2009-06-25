@@ -13,7 +13,8 @@ import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * INTERNAL: Command line tool for creating and dropping database
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class DDLExecuter {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DDLExecuter.class.getName());
+  static Logger log = LoggerFactory.getLogger(DDLExecuter.class.getName());
   
   public static void main(String[] argv) throws Exception {
 

@@ -22,7 +22,7 @@ import net.ontopia.topicmaps.query.parser.TologQuery;
 public class BasicQueryComponent implements QueryComponentIF {
 
   //! // Define a logging category.
-  //! static Logger log = Logger.getLogger(BasicQueryComponent.class.getName());
+  //! static Logger log = LoggerFactory.getLogger(BasicQueryComponent.class.getName());
 
   protected TologQuery query;
   protected List clauses;

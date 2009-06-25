@@ -18,7 +18,8 @@ import java.util.List;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -28,7 +29,7 @@ import au.com.bytecode.opencsv.CSVReader;
 public class CSVDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = Logger.getLogger(CSVDataSource.class.getName());
+  static Logger log = LoggerFactory.getLogger(CSVDataSource.class.getName());
 
   protected RelationMapping mapping;
 

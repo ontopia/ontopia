@@ -26,7 +26,8 @@ import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.xml.PrettyPrinter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.DocumentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributeListImpl;
@@ -35,7 +36,7 @@ import org.xml.sax.helpers.AttributeListImpl;
  * INTERNAL: Exports topic maps to the XTM 1.0 interchange format.
  */
 public class XTMTopicMapExporter extends AbstractTopicMapExporter {
-  static Logger log = Logger.getLogger(XTMTopicMapExporter.class.getName());
+  static Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
 
   protected AttributeListImpl atts;
 

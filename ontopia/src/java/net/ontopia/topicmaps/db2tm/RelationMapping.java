@@ -24,7 +24,8 @@ import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.xml.SAXTracker;
 import net.ontopia.xml.ValidatingContentHandler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DocumentHandler;
@@ -43,7 +44,7 @@ import org.xml.sax.helpers.AttributeListImpl;
 public class RelationMapping extends SAXTracker {
 
   // --- define a logging category.
-  static Logger log = Logger.getLogger(RelationMapping.class.getName());
+  static Logger log = LoggerFactory.getLogger(RelationMapping.class.getName());
 
   protected XMLReader reader;
 
@@ -200,7 +201,7 @@ public class RelationMapping extends SAXTracker {
       // Parse input source
       parser.parse(new InputSource(istream));
     } catch (FileNotFoundException e) {
-      log.fatal("Resource not found: " + e.getMessage());
+      log.error("Resource not found: " + e.getMessage());
       throw e;
     } catch (SAXParseException e) {
       throw new OntopiaRuntimeException("XML parsing problem: " + e.toString() + " at: "+

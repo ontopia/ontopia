@@ -17,7 +17,8 @@ import org.jgroups.Message;
 import org.jgroups.MessageListener;
 import org.jgroups.blocks.PullPushAdapter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Client test class that receives events from a master. The
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 public class ClusterClientTest extends AbstractClusterTest {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ClusterClientTest.class.getName());
+  static Logger log = LoggerFactory.getLogger(ClusterClientTest.class.getName());
 
   Map tests;
   TopicMapIF topicmap;

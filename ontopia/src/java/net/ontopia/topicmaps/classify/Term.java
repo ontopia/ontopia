@@ -9,7 +9,8 @@ import net.ontopia.utils.*;
 import gnu.trove.TObjectIntHashMap;
 import gnu.trove.TObjectIntIterator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 /**
  * INTERNAL: 
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
 public class Term {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(Term.class.getName());
+  static Logger log = LoggerFactory.getLogger(Term.class.getName());
   
   public static Comparator SCORE_COMPARATOR =
     new Comparator() {

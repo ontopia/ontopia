@@ -20,7 +20,8 @@ import net.ontopia.topicmaps.query.parser.TologParser;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 import org.apache.commons.collections.ReferenceMap;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Utility methods for getting QueryProcessorIFs for a topic
@@ -29,7 +30,7 @@ import org.apache.log4j.Logger;
  * @since 1.4
  */
 public class QueryUtils {
-  static Logger log = Logger.getLogger(QueryUtils.class.getName());
+  static Logger log = LoggerFactory.getLogger(QueryUtils.class.getName());
 
   // QueryProcessorIF cache structure {TopicMapIF : {LocatorIF : SoftReference(QueryProcessorIF)}}
   private static Map qpcache = new ReferenceMap(ReferenceMap.SOFT, ReferenceMap.HARD);

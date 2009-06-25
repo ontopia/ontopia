@@ -6,7 +6,8 @@ package net.ontopia.xml;
 import org.xml.sax.*;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: An XML reader factory that uses a JaxpXMLReaderFactory
@@ -24,7 +25,7 @@ import org.apache.log4j.*;
 public class DefaultXMLReaderFactory implements XMLReaderFactoryIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DefaultXMLReaderFactory.class.getName());
+  static Logger log = LoggerFactory.getLogger(DefaultXMLReaderFactory.class.getName());
     
   public XMLReader createXMLReader() throws SAXException {
     try {

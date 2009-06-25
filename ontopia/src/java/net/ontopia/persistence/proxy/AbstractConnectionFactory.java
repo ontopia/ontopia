@@ -8,7 +8,8 @@ import java.util.Map;
 
 import net.ontopia.utils.PropertyUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 /** 
  * INTERNAL: Abstract connection factory implementation that holds
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractConnectionFactory implements ConnectionFactoryIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(AbstractConnectionFactory.class.getName());
+  static Logger log = LoggerFactory.getLogger(AbstractConnectionFactory.class.getName());
 
   static {
     // Register jdbcspy driver

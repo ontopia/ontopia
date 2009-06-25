@@ -44,7 +44,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.ObjectUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // FIXME: we should lose this dependency. 
 import org.apache.oro.text.regex.MalformedPatternException;
@@ -57,7 +58,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
  * @since 2.2
  */
 public class LTMTopicMapWriter implements TopicMapWriterIF {
-  static Logger log = Logger.getLogger(LTMTopicMapWriter.class.getName());
+  static Logger log = LoggerFactory.getLogger(LTMTopicMapWriter.class.getName());
 
   protected String encoding; // the encoding reported on the first line
   

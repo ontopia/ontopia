@@ -8,7 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A field that references objects. A reference field is a
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class ReferenceFieldInfo extends AbstractFieldInfo {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ReferenceFieldInfo.class.getName());
+  static Logger log = LoggerFactory.getLogger(ReferenceFieldInfo.class.getName());
 
   protected ClassInfoIF value_cinfo;
   protected Class value_class;

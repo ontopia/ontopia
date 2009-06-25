@@ -8,14 +8,15 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import net.ontopia.utils.ObjectUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A collection of DB2TM functions intended to be used in
  * the function-column element.
  */
 public class Functions {
-  static Logger log = Logger.getLogger(Functions.class.getName());
+  static Logger log = LoggerFactory.getLogger(Functions.class.getName());
 
   /**
    * INTERNAL: Returns the string argument as-is. This is useful

@@ -19,7 +19,8 @@ import net.ontopia.topicmaps.impl.utils.AbstractSubjectIdentityCache;
 import net.ontopia.utils.CollectionFactoryIF;
 import net.ontopia.utils.PropertyUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL:
@@ -30,7 +31,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
   private static final long serialVersionUID = 4342065742305830481L;
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SubjectIdentityCache.class.getName());
+  static Logger log = LoggerFactory.getLogger(SubjectIdentityCache.class.getName());
 
   protected TopicMapTransactionIF txn;  
   protected TransactionIF ptxn;

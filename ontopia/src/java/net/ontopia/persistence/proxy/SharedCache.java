@@ -21,7 +21,8 @@ import net.ontopia.utils.SoftValueHashMapIndex;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.SynchronizedLookupIndex;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A shared storage cache implementation. The cache uses a
@@ -32,7 +33,7 @@ import org.apache.log4j.Logger;
 public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SharedCache.class.getName());
+  static Logger log = LoggerFactory.getLogger(SharedCache.class.getName());
   
   protected StorageIF storage;
   protected Map datacache;

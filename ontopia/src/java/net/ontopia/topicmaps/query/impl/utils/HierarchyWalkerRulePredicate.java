@@ -18,14 +18,15 @@ import net.ontopia.topicmaps.query.parser.PredicateClause;
 import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.utils.CompactHashSet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
  */
 public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
   private static Logger log =
-    Logger.getLogger(HierarchyWalkerRulePredicate.class.getName());
+    LoggerFactory.getLogger(HierarchyWalkerRulePredicate.class.getName());
   
   protected RulePredicate rule;
   protected Variable firstvar;

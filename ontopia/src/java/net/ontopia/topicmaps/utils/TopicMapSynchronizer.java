@@ -32,7 +32,8 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Implementation of the TMSync algorithm.
@@ -41,7 +42,7 @@ import org.apache.log4j.Logger;
 public class TopicMapSynchronizer {
   
   // --- define a logging category.
-  static Logger log = Logger.getLogger(TopicMapSynchronizer.class.getName());
+  static Logger log = LoggerFactory.getLogger(TopicMapSynchronizer.class.getName());
 
   /**
    * PUBLIC: Updates the target topic map against the source topic,

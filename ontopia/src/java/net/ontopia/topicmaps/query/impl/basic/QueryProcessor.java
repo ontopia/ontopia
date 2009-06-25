@@ -47,7 +47,8 @@ import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.ObjectUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: This query processor implementation can be used to query any topic
@@ -62,7 +63,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   protected TologParser parser; // the default parser (may have state)
 
   // --- initialize logging facility.
-  static Logger logger = Logger.getLogger(QueryProcessor.class.getName());
+  static Logger logger = LoggerFactory.getLogger(QueryProcessor.class.getName());
 
   public QueryProcessor(TopicMapIF topicmap) {
     this(topicmap, topicmap.getStore().getBaseAddress());

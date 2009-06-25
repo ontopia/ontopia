@@ -17,7 +17,8 @@ import net.ontopia.topicmaps.impl.utils.AbstractIndex;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: A generic RDBMS fulltext searcher implementation. Note that the class
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
 public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(RDBMSSearcher.class.getName());
+  static Logger log = LoggerFactory.getLogger(RDBMSSearcher.class.getName());
 
   protected final static int FT_PLATFORM_GENERIC = 1;
   protected final static int FT_PLATFORM_ORACLE_TEXT = 2;

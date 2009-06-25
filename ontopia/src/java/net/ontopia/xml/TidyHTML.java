@@ -10,7 +10,8 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import org.w3c.tidy.Tidy;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generate tidied HTML from a URL stream.
@@ -27,7 +28,7 @@ public class TidyHTML implements Runnable {
 
   protected Logger log;
   {
-    log = Logger.getLogger(this.getClass());
+    log = LoggerFactory.getLogger(this.getClass());
   }
   
 

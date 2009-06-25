@@ -17,12 +17,13 @@ import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
 import net.ontopia.topicmaps.schema.impl.osl.OSLSchemaReader;
 import net.ontopia.topicmaps.schema.utils.TextValidationHandler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Validate {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(Validate.class.getName());
+  static Logger log = LoggerFactory.getLogger(Validate.class.getName());
 
   public static void main(String[] args) {
     // Initialize logging

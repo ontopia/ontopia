@@ -12,11 +12,12 @@ import java.util.*;
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.ontopia.utils.*;
 import net.ontopia.xml.DefaultXMLReaderFactory;
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 
 /**
  * PUBLIC: Reads store configuration parameters from an XML
@@ -83,7 +84,7 @@ import net.ontopia.xml.Log4jSaxErrorHandler;
 public class XMLConfigSource {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(XMLConfigSource.class.getName());
+  static Logger log = LoggerFactory.getLogger(XMLConfigSource.class.getName());
 
   /**
    * INTERNAL: Don't call constructor directly. Instead used static
@@ -239,7 +240,7 @@ public class XMLConfigSource {
     try {
       XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
       parser.setContentHandler(handler);
-      parser.setErrorHandler(new Log4jSaxErrorHandler(log));
+      parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(inp_source);
     } catch (SAXParseException e) {
       String msg = "" + e.getSystemId() + ":" + e.getLineNumber() + ":" +

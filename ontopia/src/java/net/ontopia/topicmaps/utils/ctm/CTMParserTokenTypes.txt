@@ -1,4 +1,4 @@
-// $ANTLR 2.7.7 (2006-11-01): ctm.g -> CTMParserTokenTypes.txt$
+// $ANTLR 2.7.5 (20050128): ctm.g -> CTMParserTokenTypes.txt$
 CTMParser    // output token vocab name
 LEFTPAREN=4
 COLON=5

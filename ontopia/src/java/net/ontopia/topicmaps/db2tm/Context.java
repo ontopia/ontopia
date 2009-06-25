@@ -28,7 +28,8 @@ import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Object used to hold contextual information while
@@ -38,7 +39,7 @@ import org.apache.log4j.Logger;
 public class Context {
   
   // --- define a logging category.
-  static Logger log = Logger.getLogger(Context.class.getName());
+  static Logger log = LoggerFactory.getLogger(Context.class.getName());
 
   protected RelationMapping rmapping;
 

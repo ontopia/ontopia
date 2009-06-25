@@ -7,7 +7,8 @@ import java.util.*;
 
 import net.ontopia.utils.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
@@ -15,7 +16,7 @@ import org.apache.log4j.Logger;
 public class CharacterAnalyzer implements TermAnalyzerIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(CharacterAnalyzer.class.getName());
+  static Logger log = LoggerFactory.getLogger(CharacterAnalyzer.class.getName());
 
   private static final CharacterAnalyzer INSTANCE = new CharacterAnalyzer();
   private static double FACTOR_NO_LETTERS = 0.05d;

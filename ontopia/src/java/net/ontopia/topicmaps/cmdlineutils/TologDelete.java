@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Command-line that deletes topic map objects returned by
@@ -30,7 +31,7 @@ import org.apache.log4j.Logger;
 public class TologDelete {
   
   // --- define a logging category.
-  static Logger log = Logger.getLogger(TologDelete.class.getName());
+  static Logger log = LoggerFactory.getLogger(TologDelete.class.getName());
 
   TologDelete() {
   }

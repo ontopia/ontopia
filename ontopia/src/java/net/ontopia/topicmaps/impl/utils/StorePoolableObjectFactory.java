@@ -8,7 +8,8 @@ import java.util.HashSet;
 
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A commons-pool PoolableObjectFactory that uses a
@@ -22,7 +23,7 @@ public class StorePoolableObjectFactory
   implements org.apache.commons.pool.PoolableObjectFactory {
 
   // define a logging category.
-  static Logger log = Logger.getLogger(StorePoolableObjectFactory.class.getName());
+  static Logger log = LoggerFactory.getLogger(StorePoolableObjectFactory.class.getName());
   
   // topic map store factory
   protected TopicMapStoreFactoryIF sfactory;

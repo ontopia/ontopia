@@ -9,9 +9,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
@@ -26,7 +27,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class JSPContentHandler extends DefaultHandler {
 
   // initialize logging facility
-  static Logger log = Logger.getLogger(JSPContentHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(JSPContentHandler.class.getName());
 
   protected JSPTreeNodeIF root;
   protected JSPTreeNodeIF current;
@@ -56,7 +57,7 @@ public class JSPContentHandler extends DefaultHandler {
   }
 
   protected ErrorHandler getDefaultErrorHandler() {
-    Log4jSaxErrorHandler ehandler = new Log4jSaxErrorHandler(log);
+    Slf4jSaxErrorHandler ehandler = new Slf4jSaxErrorHandler(log);
     ehandler.setIgnoreNamespaceError(true);
     return ehandler;
   }

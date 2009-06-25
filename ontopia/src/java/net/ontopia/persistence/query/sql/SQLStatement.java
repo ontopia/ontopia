@@ -14,7 +14,8 @@ import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.ObjectAccessIF;
 import net.ontopia.persistence.proxy.TicketIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class SQLStatement implements SQLStatementIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SQLStatement.class.getName());
+  static Logger log = LoggerFactory.getLogger(SQLStatement.class.getName());
 
   // TODO: Would be useful to get at parameter information from outside.
   

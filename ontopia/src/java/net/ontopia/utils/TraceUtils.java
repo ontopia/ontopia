@@ -4,7 +4,8 @@
 package net.ontopia.utils;
 
 import java.util.*;
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Useful tracing methods. This class can be used to
@@ -15,7 +16,7 @@ import org.apache.log4j.*;
 public class TraceUtils {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(TraceUtils.class.getName());
+  static Logger log = LoggerFactory.getLogger(TraceUtils.class.getName());
 
   private static Map syncs = new HashMap();
 

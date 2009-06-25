@@ -11,7 +11,8 @@ import java.util.Properties;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 /** 
  * INTERNAL: Connection factory that uses
@@ -22,7 +23,7 @@ import org.apache.log4j.Logger;
 public class DefaultConnectionFactory extends AbstractConnectionFactory {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DefaultConnectionFactory.class.getName());
+  static Logger log = LoggerFactory.getLogger(DefaultConnectionFactory.class.getName());
 
   protected boolean readOnly;
   

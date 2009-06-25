@@ -9,7 +9,8 @@ import java.util.Map;
 
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The Ontopia JSPTreeNode class. This class is the node of
@@ -21,7 +22,7 @@ public class JSPContentTreeNode implements JSPTreeNodeIF {
 
   // initialization of logging facility
   private static Logger logger =
-    Logger.getLogger(JSPContentTreeNode.class.getName());
+    LoggerFactory.getLogger(JSPContentTreeNode.class.getName());
   
   protected String content;
   protected JSPTreeNodeIF parent;

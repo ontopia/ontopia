@@ -18,7 +18,8 @@ import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * INTERNAL: Command line tool for exporting comma- or semicolon
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
 public class CSVExport {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(CSVExport.class.getName());
+  static Logger log = LoggerFactory.getLogger(CSVExport.class.getName());
 
   protected Connection conn;
   protected String separator = ";";

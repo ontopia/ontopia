@@ -10,7 +10,8 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.impl.utils.*;
 import net.ontopia.persistence.proxy.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 

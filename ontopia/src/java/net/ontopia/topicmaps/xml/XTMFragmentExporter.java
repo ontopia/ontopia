@@ -17,7 +17,8 @@ import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.infoset.core.LocatorIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Exports partial topic maps using an approach inspired
@@ -33,7 +34,7 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   protected Set alreadyExported;   // objids topics & assocs already exported
   protected boolean use_local_ids; // see setUseLocalIds
   private String tmid;
-  private static Logger log = Logger.getLogger(XTMTopicMapExporter.class.getName());
+  private static Logger log = LoggerFactory.getLogger(XTMTopicMapExporter.class.getName());
   
   /**
    * PUBLIC: Initializes the exporter.

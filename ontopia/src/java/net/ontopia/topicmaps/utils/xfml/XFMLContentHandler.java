@@ -20,7 +20,8 @@ import net.ontopia.utils.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: SAX2 content handler used for importing XFML documents.
@@ -43,7 +44,7 @@ public class XFMLContentHandler extends AbstractTopicMapContentHandler {
   static final String EL_OCCURRENCE  = "occurrence";
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(XFMLContentHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(XFMLContentHandler.class.getName());
 
   protected TopicMapStoreFactoryIF stores;
   protected XMLReaderFactoryIF xrfactory;

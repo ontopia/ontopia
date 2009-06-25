@@ -7,7 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The default field handler implementation that is able to
@@ -20,7 +21,7 @@ import org.apache.log4j.Logger;
 public class DefaultFieldHandler implements FieldHandlerIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DefaultFieldHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(DefaultFieldHandler.class.getName());
 
   protected int sql_type;
 

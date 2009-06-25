@@ -6,7 +6,8 @@ package net.ontopia.persistence.proxy;
 import gnu.trove.TObjectIntHashMap;
 import gnu.trove.TObjectIntProcedure;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A data structure that keeps track of the objects that has
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
 public class ObjectStates {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ObjectStates.class.getName());
+  static Logger log = LoggerFactory.getLogger(ObjectStates.class.getName());
 
   public static final int STATE_CREATED = 1;
   public static final int STATE_DELETED = 2;

@@ -13,7 +13,8 @@ import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -31,7 +32,7 @@ import org.apache.lucene.store.FSDirectory;
 public class LuceneSearcher implements SearcherIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(LuceneSearcher.class.getName());
+  static Logger log = LoggerFactory.getLogger(LuceneSearcher.class.getName());
 
   protected String path;
   protected Analyzer analyzer;

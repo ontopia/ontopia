@@ -9,7 +9,8 @@ import java.util.Collection;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class that performs the task of accessing and
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 public class SQLOneToOne implements FieldAccessIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SQLOneToOne.class.getName());
+  static Logger log = LoggerFactory.getLogger(SQLOneToOne.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;  

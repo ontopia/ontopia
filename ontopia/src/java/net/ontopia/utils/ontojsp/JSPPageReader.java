@@ -9,7 +9,8 @@ import java.io.IOException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
@@ -20,7 +21,7 @@ public class JSPPageReader {
 
   // initialization of logging facility
   private static Logger logger =
-    Logger.getLogger(JSPPageReader.class.getName());
+    LoggerFactory.getLogger(JSPPageReader.class.getName());
 
   protected File source;
 

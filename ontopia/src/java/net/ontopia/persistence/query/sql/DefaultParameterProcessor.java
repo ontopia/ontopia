@@ -12,7 +12,8 @@ import java.util.Map;
 import net.ontopia.persistence.proxy.FieldHandlerIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Parameter processor that binds parameters to SQL
@@ -22,7 +23,7 @@ import org.apache.log4j.Logger;
 public class DefaultParameterProcessor implements ParameterProcessorIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DefaultParameterProcessor.class.getName());
+  static Logger log = LoggerFactory.getLogger(DefaultParameterProcessor.class.getName());
 
   protected FieldHandlerIF[] param_fields;
   protected String[] param_names;

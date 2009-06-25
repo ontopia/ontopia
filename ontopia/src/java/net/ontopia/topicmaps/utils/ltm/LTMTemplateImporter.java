@@ -20,7 +20,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringTemplateUtils;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 * PUBLIC: Imports an LTM fragment with references to parameter values

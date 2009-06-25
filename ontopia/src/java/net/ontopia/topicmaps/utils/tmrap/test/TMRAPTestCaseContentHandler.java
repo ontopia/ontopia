@@ -7,10 +7,11 @@ import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.SAXTracker;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
@@ -34,7 +35,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class TMRAPTestCaseContentHandler extends SAXTracker {
 
-  static Logger log = Logger
+  static Logger log = LoggerFactory
     .getLogger(TMRAPTestCaseContentHandler.class.getName());
 
   protected ErrorHandler ehandler;
@@ -48,7 +49,7 @@ public class TMRAPTestCaseContentHandler extends SAXTracker {
   }
 
   protected ErrorHandler getDefaultErrorHandler() {
-    return new Log4jSaxErrorHandler(log);
+    return new Slf4jSaxErrorHandler(log);
   }
 
   public void register(XMLReader parser) {

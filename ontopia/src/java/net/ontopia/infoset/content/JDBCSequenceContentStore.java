@@ -9,7 +9,8 @@ import java.util.*;
 import net.ontopia.utils.*;
 import net.ontopia.persistence.proxy.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Content store implementation on top of JDBC that uses

@@ -8,7 +8,8 @@ import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.DocumentProcessorIF;
 import net.ontopia.infoset.fulltext.core.GenericField;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A document processor that preloads an external document
@@ -18,7 +19,7 @@ import org.apache.log4j.Logger;
 public class DocumentPreloaderProcessor extends AbstractLocatorDocumentProcessor {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DocumentPreloaderProcessor.class.getName());
+  static Logger log = LoggerFactory.getLogger(DocumentPreloaderProcessor.class.getName());
 
   // protected String content_field;
 

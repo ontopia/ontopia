@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Helper class for storing elements up to a certain amount,
@@ -23,8 +24,7 @@ public class HistoryMap extends HashMap {
   private int counter;
   
   // initialization of logging facility
-  private static Logger log = Logger
-    .getLogger(HistoryMap.class.getName());
+  private static Logger log = LoggerFactory.getLogger(HistoryMap.class.getName());
   
   /**
    * Default constructor which uses 20 entries as the default history

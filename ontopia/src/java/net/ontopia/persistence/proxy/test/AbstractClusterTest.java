@@ -17,12 +17,13 @@ import org.jgroups.Message;
 import org.jgroups.MessageListener;
 import org.jgroups.blocks.PullPushAdapter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 public abstract class AbstractClusterTest implements MessageListener {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(AbstractClusterTest.class.getName());
+  static Logger log = LoggerFactory.getLogger(AbstractClusterTest.class.getName());
   
   transient protected JChannel channel;
   transient protected PullPushAdapter adapter;

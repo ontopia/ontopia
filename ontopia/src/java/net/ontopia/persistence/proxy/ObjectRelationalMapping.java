@@ -10,9 +10,10 @@ import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
@@ -27,7 +28,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class ObjectRelationalMapping {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ObjectRelationalMapping.class.getName());
+  static Logger log = LoggerFactory.getLogger(ObjectRelationalMapping.class.getName());
   
   class MappingHandler extends DefaultHandler {
 
@@ -294,7 +295,7 @@ public class ObjectRelationalMapping {
     try {
       XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
       parser.setContentHandler(handler);
-      parser.setErrorHandler(new Log4jSaxErrorHandler(log));
+      parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(isource);
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);

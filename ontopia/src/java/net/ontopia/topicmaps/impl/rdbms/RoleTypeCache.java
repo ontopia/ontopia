@@ -25,7 +25,8 @@ import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.utils.PropertyUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL:
@@ -34,7 +35,7 @@ import org.apache.log4j.Logger;
 public class RoleTypeCache {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(RoleTypeCache.class.getName());
+  static Logger log = LoggerFactory.getLogger(RoleTypeCache.class.getName());
 
   protected TopicMapIF tm;
 

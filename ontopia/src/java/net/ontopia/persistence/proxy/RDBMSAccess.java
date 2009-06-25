@@ -17,7 +17,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.TraceUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A storage access implementation accessing relational
@@ -27,7 +28,7 @@ import org.apache.log4j.Logger;
 public class RDBMSAccess implements StorageAccessIF {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(RDBMSAccess.class.getName());
+  static Logger log = LoggerFactory.getLogger(RDBMSAccess.class.getName());
   
   protected boolean debug = log.isDebugEnabled();
   

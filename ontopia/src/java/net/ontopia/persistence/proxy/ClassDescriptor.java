@@ -12,7 +12,8 @@ import java.util.Map;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class used for holding object relational mapping class
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 public class ClassDescriptor {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ClassDescriptor.class.getName());
+  static Logger log = LoggerFactory.getLogger(ClassDescriptor.class.getName());
     
   protected ObjectRelationalMapping mapping;
   protected Class klass;

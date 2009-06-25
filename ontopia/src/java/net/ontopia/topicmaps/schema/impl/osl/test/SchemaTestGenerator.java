@@ -11,7 +11,7 @@ import java.util.Iterator;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.SAXTracker;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -21,10 +21,11 @@ import net.ontopia.topicmaps.schema.impl.osl.*;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.test.AbstractXMLTestCase;
 import net.ontopia.test.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SchemaTestGenerator implements TestCaseGeneratorIF {
-  static Logger log = Logger.getLogger(SchemaTestGenerator.class.getName());
+  static Logger log = LoggerFactory.getLogger(SchemaTestGenerator.class.getName());
 
   public Iterator generateTests() {
     String root = AbstractOntopiaTestCase.getTestDirectory();
@@ -46,7 +47,7 @@ public class SchemaTestGenerator implements TestCaseGeneratorIF {
     
       TestCaseContentHandler handler = new TestCaseContentHandler(base);
       parser.setContentHandler(handler);
-      parser.setErrorHandler(new Log4jSaxErrorHandler(log));
+      parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       parser.parse(config.toURL().toString());
       return handler.getTests();
     } catch (SAXException e) {

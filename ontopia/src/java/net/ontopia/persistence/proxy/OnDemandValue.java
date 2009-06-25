@@ -13,7 +13,8 @@ import java.sql.SQLException;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class OnDemandValue {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(OnDemandValue.class.getName());
+  static Logger log = LoggerFactory.getLogger(OnDemandValue.class.getName());
 
   protected IdentityIF identity;
   protected FieldInfoIF finfo;

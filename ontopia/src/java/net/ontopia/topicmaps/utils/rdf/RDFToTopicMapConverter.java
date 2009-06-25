@@ -40,7 +40,8 @@ import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.mem.ModelMem;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * EXPERIMENTAL: Converts an RDF model to a topic map using a
@@ -52,7 +53,7 @@ public class RDFToTopicMapConverter {
   private TopicMapBuilderIF builder;
   private boolean lenient;
 
-  static Logger logger = Logger.getLogger(RDFToTopicMapConverter.class.getName());
+  static Logger logger = LoggerFactory.getLogger(RDFToTopicMapConverter.class.getName());
 
   static final String RTM_PREFIX = "http://psi.ontopia.net/rdf2tm/#";
   public static final String RTM_MAPSTO             = RTM_PREFIX + "maps-to";

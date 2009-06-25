@@ -17,7 +17,8 @@ import org.jgroups.Message;
 import org.jgroups.MessageListener;
 import org.jgroups.blocks.PullPushAdapter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 public abstract class MasterTest implements java.io.Serializable {
   

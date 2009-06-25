@@ -8,7 +8,8 @@ import net.ontopia.infoset.fulltext.core.DocumentProcessorIF;
 import net.ontopia.infoset.fulltext.core.FieldIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: An abstract document processor class that can be subclassed
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractLocatorDocumentProcessor implements DocumentProcessorIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(AbstractLocatorDocumentProcessor.class.getName());
+  static Logger log = LoggerFactory.getLogger(AbstractLocatorDocumentProcessor.class.getName());
 
   protected String notation_field;
   protected String address_field;

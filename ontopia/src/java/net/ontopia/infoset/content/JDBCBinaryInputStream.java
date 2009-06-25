@@ -8,7 +8,8 @@ import java.sql.*;
 import java.util.*;
 import net.ontopia.utils.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 

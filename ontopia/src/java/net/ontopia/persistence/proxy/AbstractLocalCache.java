@@ -5,7 +5,8 @@ package net.ontopia.persistence.proxy;
 
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A transactional storage cache implementation. The cache
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractLocalCache implements StorageCacheIF, AccessRegistrarIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(AbstractLocalCache.class.getName());
+  static Logger log = LoggerFactory.getLogger(AbstractLocalCache.class.getName());
 
   protected AbstractTransaction txn;
   protected StorageCacheIF pcache;

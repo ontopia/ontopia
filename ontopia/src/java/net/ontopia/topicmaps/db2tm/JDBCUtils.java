@@ -13,7 +13,8 @@ import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.persistence.proxy.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Data source that reads tables via JDBC.

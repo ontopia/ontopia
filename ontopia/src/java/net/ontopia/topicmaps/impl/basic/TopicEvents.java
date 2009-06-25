@@ -8,7 +8,8 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.events.*;
 import net.ontopia.topicmaps.impl.utils.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Internal event listener class that handles topic events.<p>
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
 public class TopicEvents implements EventListenerIF {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(TopicEvents.class.getName());
+  static Logger log = LoggerFactory.getLogger(TopicEvents.class.getName());
 
   protected  InMemoryTopicMapStore store;
 

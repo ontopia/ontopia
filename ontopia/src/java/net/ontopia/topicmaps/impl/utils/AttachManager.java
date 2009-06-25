@@ -15,7 +15,8 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A class that configures event listeners for an object
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 public class AttachManager extends AbstractAttachManager {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(AttachManager.class.getName());
+  static Logger log = LoggerFactory.getLogger(AttachManager.class.getName());
   
   protected Map ahandlers;
   protected Map dhandlers;

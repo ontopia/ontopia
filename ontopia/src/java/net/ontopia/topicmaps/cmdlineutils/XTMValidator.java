@@ -9,7 +9,8 @@ import net.ontopia.utils.*;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.xml.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: A topic map validator that is capable of reading the
@@ -18,7 +19,7 @@ import org.apache.log4j.*;
 public class XTMValidator {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(XTMValidator.class.getName());
+  static Logger log = LoggerFactory.getLogger(XTMValidator.class.getName());
 
   public static void main(String [] argv) {
 

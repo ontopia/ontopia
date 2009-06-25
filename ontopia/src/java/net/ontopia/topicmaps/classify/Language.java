@@ -8,7 +8,8 @@ import java.io.*;
 
 import net.ontopia.utils.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Object representing a particular language. The object is
@@ -18,7 +19,7 @@ import org.apache.log4j.Logger;
 public class Language {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(Language.class.getName());
+  static Logger log = LoggerFactory.getLogger(Language.class.getName());
 
   // Initializer
   private static List languages;

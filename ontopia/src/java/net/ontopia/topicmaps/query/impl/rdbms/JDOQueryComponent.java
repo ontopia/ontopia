@@ -19,7 +19,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 public class JDOQueryComponent implements QueryComponentIF {
 
   //! // Define a logging category.
-  //! static Logger log = Logger.getLogger(JDOQueryComponent.class.getName());
+  //! static Logger log = LoggerFactory.getLogger(JDOQueryComponent.class.getName());
 
   protected QueryIF jdoquery;
   protected String[] colnames;

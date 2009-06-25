@@ -14,7 +14,8 @@ import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A servlet implementation that returns content stored in a

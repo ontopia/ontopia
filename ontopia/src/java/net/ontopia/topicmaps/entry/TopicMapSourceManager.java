@@ -15,7 +15,8 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.utils.CachedIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: This is the primary implementation of the
@@ -36,7 +37,7 @@ import org.apache.log4j.Logger;
 public class TopicMapSourceManager implements TopicMapRepositoryIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(TopicMapSourceManager.class.getName());
+  static Logger log = LoggerFactory.getLogger(TopicMapSourceManager.class.getName());
 
   protected Set sources = new HashSet();
 

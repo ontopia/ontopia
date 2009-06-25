@@ -18,7 +18,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A class that executes a jsp page from a given root node.
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 public class JSPPageExecuter {
 
   // initialize logging facility
-  static Logger logger = Logger.getLogger(JSPPageExecuter.class.getName());
+  static Logger logger = LoggerFactory.getLogger(JSPPageExecuter.class.getName());
 
   // internal variables for generating nice debug output
   private final static String INDENTOR = "  ";

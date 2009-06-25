@@ -6,13 +6,14 @@ package net.ontopia.topicmaps.query.impl.basic;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.parser.Variable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The query result representation used by the basic implementation.
  */
 public class QueryResult implements QueryResultIF {
-  private static Logger log = Logger.getLogger(QueryResult.class.getName());
+  private static Logger log = LoggerFactory.getLogger(QueryResult.class.getName());
 
   QueryMatches matches;
 

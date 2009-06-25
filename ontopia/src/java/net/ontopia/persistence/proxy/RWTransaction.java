@@ -13,7 +13,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.SoftValueHashMapIndex;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.collections.map.LRUMap;
 
 /**
@@ -23,7 +24,7 @@ import org.apache.commons.collections.map.LRUMap;
 public class RWTransaction extends AbstractTransaction {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(RWTransaction.class.getName());
+  static Logger log = LoggerFactory.getLogger(RWTransaction.class.getName());
   
   // Changes tracked for cache invalidation
   public boolean trackall;

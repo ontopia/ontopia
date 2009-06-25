@@ -41,7 +41,8 @@ import net.ontopia.utils.ObjectUtils;
 import net.ontopia.xml.XMLReaderFactoryIF;
 import net.ontopia.topicmaps.impl.utils.ReificationUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -153,7 +154,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   static final String SAX_DECL_HANDLER = "http://xml.org/sax/properties/declaration-handler";
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(XTMContentHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(XTMContentHandler.class.getName());
   
   protected TopicMapStoreFactoryIF stores;
   protected XMLReaderFactoryIF xrfactory;

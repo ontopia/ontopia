@@ -15,7 +15,8 @@ import net.ontopia.utils.*;
 import net.ontopia.xml.*;
 
 import org.xml.sax.*;
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: A topic map reader that reads the XTM 1.0 interchange
@@ -31,7 +32,7 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
   protected boolean validate;
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(XTMTopicMapReader.class.getName());
+  static Logger log = LoggerFactory.getLogger(XTMTopicMapReader.class.getName());
 
   /**
    * PUBLIC: Creates a topic map reader bound to the URL given in the
@@ -222,10 +223,10 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
         if (source.getEncoding() != null) log.info("Encoding: " + source.getEncoding());
         log.info("Parser: " + parser + " (namespace support: " + parser.getFeature("http://xml.org/sax/features/namespaces") + ")");
       }
-			parser.parse(source);
+      parser.parse(source);
       // log.info("Done.");
     } catch (FileNotFoundException e) {
-      log.fatal("Resource not found: " + e.getMessage());
+      log.error("Resource not found: " + e.getMessage());
       throw e;
     } catch (SAXParseException e) {
       throw new OntopiaRuntimeException("XML parsing problem: " + e.toString() + " at: "+

@@ -13,7 +13,8 @@ import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -25,7 +26,7 @@ import au.com.bytecode.opencsv.CSVReader;
 public class CSVImport {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(CSVImport.class.getName());
+  static Logger log = LoggerFactory.getLogger(CSVImport.class.getName());
   
   protected Connection conn;
 

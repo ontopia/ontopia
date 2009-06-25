@@ -11,7 +11,8 @@ import java.util.Iterator;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class that performs the task of accessing and
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class SQLObjectAccess implements ClassAccessIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SQLObjectAccess.class.getName());
+  static Logger log = LoggerFactory.getLogger(SQLObjectAccess.class.getName());
   protected boolean debug = log.isDebugEnabled();
 
   protected RDBMSAccess access;  

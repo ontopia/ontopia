@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.schema.core.*;
 import net.ontopia.topicmaps.schema.impl.osl.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Generate {
 

@@ -24,7 +24,8 @@ import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.persistence.proxy.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Data source that reads tables via JDBC.
@@ -32,7 +33,7 @@ import org.apache.log4j.Logger;
 public class JDBCDataSource implements DataSourceIF {
 
   // --- define a logging category.
-  static Logger log = Logger.getLogger(JDBCDataSource.class.getName());
+  static Logger log = LoggerFactory.getLogger(JDBCDataSource.class.getName());
 
   protected RelationMapping mapping;
   protected File propfile;

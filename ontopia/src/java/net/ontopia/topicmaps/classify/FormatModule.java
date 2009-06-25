@@ -8,7 +8,8 @@ import java.util.*;
 
 import net.ontopia.utils.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
 public class FormatModule implements FormatModuleIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(FormatModule.class.getName());
+  static Logger log = LoggerFactory.getLogger(FormatModule.class.getName());
   
   protected List modules;
   protected FormatModuleIF fallout_module;

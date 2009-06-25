@@ -10,7 +10,8 @@ import java.util.List;
 import net.ontopia.persistence.query.sql.SQLNull;
 import net.ontopia.persistence.query.sql.SQLPrimitive;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A field that references a primitive value class.
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 public class PrimitiveFieldInfo extends AbstractFieldInfo {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(PrimitiveFieldInfo.class.getName());
+  static Logger log = LoggerFactory.getLogger(PrimitiveFieldInfo.class.getName());
 
   protected String colname;
   protected int sqltype;

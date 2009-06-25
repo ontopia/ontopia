@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: The default topic map indexer manager. This indexer is
@@ -44,7 +45,7 @@ import org.apache.log4j.Logger;
 public class DefaultTopicMapIndexer {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DefaultTopicMapIndexer.class.getName());
+  static Logger log = LoggerFactory.getLogger(DefaultTopicMapIndexer.class.getName());
 
   protected IndexerIF indexer;
   protected boolean index_external;

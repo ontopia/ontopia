@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.ontopia.topicmaps.core.TopicIF;
 
@@ -17,7 +18,7 @@ import net.ontopia.topicmaps.core.TopicIF;
  */
 public class TopicTreeNode {
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(TopicTreeNode.class
+  private static Logger log = LoggerFactory.getLogger(TopicTreeNode.class
       .getName());
 
   protected TopicTreeNode parent;

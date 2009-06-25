@@ -11,7 +11,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class that performs the task of accessing and
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class SQLManyToManyReference implements FieldAccessIF {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(SQLManyToManyReference.class.getName());
+  static Logger log = LoggerFactory.getLogger(SQLManyToManyReference.class.getName());
   protected boolean debug = log.isDebugEnabled();
   
   protected RDBMSAccess access;

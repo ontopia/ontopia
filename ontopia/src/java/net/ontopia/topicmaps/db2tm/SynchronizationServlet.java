@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Servlet that sets up and schedules DB2TM synchronization
@@ -66,7 +67,7 @@ import org.apache.log4j.*;
 
 public class SynchronizationServlet extends HttpServlet {
 
-  static Logger log = Logger.getLogger(SynchronizationServlet.class.getName());
+  static Logger log = LoggerFactory.getLogger(SynchronizationServlet.class.getName());
 
   static DateFormat df = new SimpleDateFormat("HH:mm");
   

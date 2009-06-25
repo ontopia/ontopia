@@ -11,7 +11,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A TaglibTagFactory that creates the correct tags from the
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class TaglibTagFactory implements JSPTagFactoryIF {
 
   // initialize logging facility
-  static Logger log = Logger.getLogger(TaglibTagFactory.class.getName());
+  static Logger log = LoggerFactory.getLogger(TaglibTagFactory.class.getName());
 
   // Map between tag names (with namespace prefix) and Java Classes
   static Map classes;

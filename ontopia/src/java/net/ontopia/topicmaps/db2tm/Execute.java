@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Command-line driver for DB2TM.
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 public class Execute {
   
   // --- define a logging category.
-  static Logger log = Logger.getLogger(Execute.class.getName());
+  static Logger log = LoggerFactory.getLogger(Execute.class.getName());
 
   Execute() {
   }

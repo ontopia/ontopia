@@ -6,7 +6,8 @@ package net.ontopia.topicmaps.entry;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Registry of topicmap repositories that are to be shared
@@ -18,7 +19,7 @@ import org.apache.log4j.Logger;
 public class SharedStoreRegistry {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(SharedStoreRegistry.class.getName());
+  static Logger log = LoggerFactory.getLogger(SharedStoreRegistry.class.getName());
 
   // Create default registry, which has registryName == null
   protected static final SharedStoreRegistry defaultRegistry = new SharedStoreRegistry();

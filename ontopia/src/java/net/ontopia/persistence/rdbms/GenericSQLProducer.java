@@ -15,7 +15,8 @@ import java.util.List;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * INTERNAL: Class that generates DDL statements for the generic
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class GenericSQLProducer {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(GenericSQLProducer.class.getName());
+  static Logger log = LoggerFactory.getLogger(GenericSQLProducer.class.getName());
     
   protected Project project;
   protected String[] platforms = new String[] { "generic" };

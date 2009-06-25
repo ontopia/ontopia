@@ -17,7 +17,8 @@ import net.ontopia.utils.*;
 import net.ontopia.xml.*;
 
 import org.xml.sax.*;
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: A topic map reader that is capable of reading the XFML format
@@ -27,7 +28,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
   protected TopicMapStoreFactoryIF store_factory;
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(XFMLTopicMapReader.class.getName());
+  static Logger log = LoggerFactory.getLogger(XFMLTopicMapReader.class.getName());
 
   /**
    * Creates an XFML reader.
@@ -142,7 +143,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
       parser.parse(source);
       // log.info("Done.");
     } catch (FileNotFoundException e) {
-      log.fatal("Resource not found: " + e.getMessage());
+      log.error("Resource not found: " + e.getMessage());
       throw e;
     } catch (SAXParseException e) {
       throw new OntopiaRuntimeException("XML parsing problem: " + e.toString() + " at: "+

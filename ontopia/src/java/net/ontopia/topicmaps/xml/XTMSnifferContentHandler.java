@@ -19,7 +19,8 @@ import org.xml.sax.helpers.AttributesImpl;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: This content handler is used to detect whether the XTM
@@ -31,7 +32,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
   implements DeclHandler, LexicalHandler {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(XTMSnifferContentHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(XTMSnifferContentHandler.class.getName());
 
   private XTMTopicMapReader reader;
   private XMLReader parser;

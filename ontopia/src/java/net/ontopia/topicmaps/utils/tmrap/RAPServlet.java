@@ -31,7 +31,8 @@ import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.xml.PrettyPrinter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * EXPERIMENTAL: Implements the TMRAP protocol.
@@ -42,7 +43,7 @@ public class RAPServlet extends HttpServlet {
   private static final long serialVersionUID = 3585458045457498992l;
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(RAPServlet.class.getName());
+  private static Logger log = LoggerFactory.getLogger(RAPServlet.class.getName());
   
   // Static names for request parameters
   public static final String CLIENT_PARAMETER_NAME    = "client";

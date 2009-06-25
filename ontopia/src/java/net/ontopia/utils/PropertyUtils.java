@@ -10,7 +10,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
   
 /** 
  * INTERNAL: Utility class for handling properties and their values.
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 public class PropertyUtils {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(PropertyUtils.class.getName());
+  static Logger log = LoggerFactory.getLogger(PropertyUtils.class.getName());
   
   /**
    * INTERNAL: Helper method used to get better error messages with

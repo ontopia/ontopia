@@ -7,7 +7,8 @@ import java.net.URL;
 import net.ontopia.infoset.core.*;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A preloader that stores its preloaded documents on the file
@@ -28,7 +29,7 @@ import org.apache.log4j.*;
 public class DiskPreloader implements PreloaderIF, LocatorReaderFactoryIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(DiskPreloader.class.getName());
+  static Logger log = LoggerFactory.getLogger(DiskPreloader.class.getName());
 
   static String NOTATION = "RFILE";
 

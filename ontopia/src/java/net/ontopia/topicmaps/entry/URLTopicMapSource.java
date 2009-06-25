@@ -7,7 +7,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import org.xml.sax.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.ontopia.utils.*;
 import net.ontopia.topicmaps.xml.*;
@@ -27,8 +28,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 public class URLTopicMapSource implements TopicMapSourceIF {
 
   // initialization of log facility
-  private static Logger log = Logger
-    .getLogger(URLTopicMapSource.class.getName());
+  private static Logger log = LoggerFactory.getLogger(URLTopicMapSource.class.getName());
   
   protected String id;
   protected String refid;

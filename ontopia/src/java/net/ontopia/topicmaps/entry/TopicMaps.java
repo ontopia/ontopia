@@ -9,7 +9,8 @@ import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.entry.*;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: The primary access point to your topic maps. The topic map

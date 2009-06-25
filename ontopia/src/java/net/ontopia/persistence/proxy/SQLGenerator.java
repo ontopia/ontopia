@@ -7,7 +7,8 @@ import java.util.Iterator;
 
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Utility class that can generate SQL statements.
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
 public class SQLGenerator {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(SQLGenerator.class.getName());
+  static Logger log = LoggerFactory.getLogger(SQLGenerator.class.getName());
   
   // -----------------------------------------------------------------------------
   // Statement generators

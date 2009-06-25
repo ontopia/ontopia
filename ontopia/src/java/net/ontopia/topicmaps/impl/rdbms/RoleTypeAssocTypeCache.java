@@ -39,7 +39,8 @@ import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
@@ -48,7 +49,7 @@ import org.apache.log4j.Logger;
 public class RoleTypeAssocTypeCache {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(RoleTypeAssocTypeCache.class.getName());
+  static Logger log = LoggerFactory.getLogger(RoleTypeAssocTypeCache.class.getName());
   
   protected RDBMSAccess access;
   protected AccessRegistrarIF registrar;

@@ -12,7 +12,8 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Abstract class which provides access to filtering themes
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class BasenameUserThemeFilter extends AbstractUserThemeFilter {
 
   // initialize logging category
-  static Logger log = Logger.getLogger(BasenameUserThemeFilter.class.getName());
+  static Logger log = LoggerFactory.getLogger(BasenameUserThemeFilter.class.getName());
 
   // members
   protected ScopeIndexIF scopeIndex;

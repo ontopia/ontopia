@@ -39,7 +39,8 @@ import net.ontopia.topicmaps.query.parser.TologQuery;
 import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class used to represent parsed queries. The class wraps a query
@@ -49,7 +50,7 @@ import org.apache.log4j.Logger;
 public final class ParsedQuery implements ParsedQueryIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ParsedQuery.class.getName());
+  static Logger log = LoggerFactory.getLogger(ParsedQuery.class.getName());
 
   protected TologQuery query;
 

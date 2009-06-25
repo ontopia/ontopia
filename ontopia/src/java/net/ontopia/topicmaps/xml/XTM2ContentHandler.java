@@ -25,7 +25,8 @@ import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.topicmaps.impl.utils.ReificationUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Reads XTM 2.0.
@@ -38,7 +39,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(XTM2ContentHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(XTM2ContentHandler.class.getName());
   
   private TopicMapIF topicmap;
   private LocatorIF doc_address;

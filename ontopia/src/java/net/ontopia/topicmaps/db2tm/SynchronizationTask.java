@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: TimerTask that runs DB2TM synchronization.
@@ -26,7 +27,7 @@ import org.apache.log4j.*;
 
 public class SynchronizationTask extends TimerTask {
 
-  static Logger log = Logger.getLogger(SynchronizationTask.class.getName());
+  static Logger log = LoggerFactory.getLogger(SynchronizationTask.class.getName());
 
   protected static Map lastExecutions = Collections.synchronizedMap(new HashMap());
     

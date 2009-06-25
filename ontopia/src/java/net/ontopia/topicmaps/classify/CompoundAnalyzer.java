@@ -8,7 +8,8 @@ import java.util.*;
 import net.ontopia.utils.*;
 import gnu.trove.TObjectIntHashMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: 
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
 public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAnalyzerIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(CompoundAnalyzer.class.getName());
+  static Logger log = LoggerFactory.getLogger(CompoundAnalyzer.class.getName());
   
   TermDatabase tdb;
   TermStemmerIF termStemmer;

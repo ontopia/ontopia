@@ -1,4 +1,4 @@
-// $ANTLR 2.7.7 (2006-11-01): "ctm.g" -> "CTMParser.java"$
+// $ANTLR 2.7.5 (20050128): "ctm.g" -> "CTMParser.java"$
  package net.ontopia.topicmaps.utils.ctm; 
 import antlr.TokenBuffer;
 import antlr.TokenStreamException;
@@ -297,7 +297,7 @@ public CTMParser(ParserSharedInputState state) {
 							synPredMatched8 = false;
 						}
 						rewind(_m8);
-inputState.guessing--;
+						inputState.guessing--;
 					}
 					if ( synPredMatched8 ) {
 						association();
@@ -524,7 +524,7 @@ inputState.guessing--;
 						synPredMatched73 = false;
 					}
 					rewind(_m73);
-inputState.guessing--;
+					inputState.guessing--;
 				}
 				if ( synPredMatched73 ) {
 					association();

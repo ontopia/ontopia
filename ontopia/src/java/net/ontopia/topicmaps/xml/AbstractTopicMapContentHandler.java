@@ -12,7 +12,8 @@ import net.ontopia.infoset.core.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Abstract SAX2 content handler used for reading various
@@ -52,7 +53,7 @@ public abstract class AbstractTopicMapContentHandler extends DefaultHandler {
   protected ErrorHandler ehandler;
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(AbstractTopicMapContentHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(AbstractTopicMapContentHandler.class.getName());
   
   public AbstractTopicMapContentHandler(LocatorIF base_address) {
     this(base_address, new HashSet());
@@ -130,7 +131,7 @@ public abstract class AbstractTopicMapContentHandler extends DefaultHandler {
   }
 
   protected ErrorHandler getDefaultErrorHandler() {
-    return new Log4jSaxErrorHandler(log);
+    return new Slf4jSaxErrorHandler(log);
   }
   
 }

@@ -16,7 +16,8 @@ import org.jgroups.Message;
 import org.jgroups.MessageListener;
 import org.jgroups.blocks.PullPushAdapter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Server test class that sends events to clients. The tests
@@ -33,7 +34,7 @@ import org.apache.log4j.Logger;
 public class ClusterMasterTest extends AbstractClusterTest implements java.io.Serializable {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ClusterMasterTest.class.getName());
+  static Logger log = LoggerFactory.getLogger(ClusterMasterTest.class.getName());
 
   transient List tests;
 

@@ -20,7 +20,8 @@ import net.ontopia.utils.StringUtils;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.SoftValueHashMapIndex;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The default proxy transaction implementation.
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractTransaction implements TransactionIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(AbstractTransaction.class.getName());
+  static Logger log = LoggerFactory.getLogger(AbstractTransaction.class.getName());
 
   protected boolean debug = log.isDebugEnabled();
 
