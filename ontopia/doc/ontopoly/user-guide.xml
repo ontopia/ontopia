@@ -2,7 +2,6 @@
 <!DOCTYPE article
 [
   <!ENTITY ted '<productname>Ontopoly</productname>'>
-  <!ENTITY ots '<productname>Ontopia | OKS Samplers</productname>'>
   <!ENTITY expand '<graphic role="Expand" fileref="pages/expand.gif"/>'>
   <!ENTITY collapse '<graphic role="Collapse" fileref="pages/collapse.gif"/>'>
   <!ENTITY box '<graphic role="Blank Box" fileref="pages/boxed.gif"/>'>
@@ -61,14 +60,13 @@ simple introductions, such as <ulink
 url="http://www.ontopia.net/topicmaps/materials/tao.html">The TAO of
 Topic Maps</ulink>, available from the Ontopia web site. If you are
 technically minded, you might also want to look at the <ulink
-url="http://www.topicmaps.org/xtm/1.0/">XTM Specification</ulink> or
-the new version of ISO 13250, especially the <ulink
-url="http://www.isotopicmaps.org/sam/sam-model/">Data
+url="http://www.isotopicmaps.org/sam/sam-model/">Topic Maps Data
 Model</ulink>.</para>
 
-<para> We welcome any suggestions you might have on ways of improving
-this User Guide. Please send them to
-<email>dev@ontopia.net</email>.</para>
+<para>We welcome any suggestions you might have on ways of improving
+this User Guide. Please send them to <ulink
+url="http://groups.google.com/group/ontopia">the mailing
+list</ulink>.</para>
 
 <para>We hope you enjoy using &ted;!</para>
 
@@ -79,23 +77,19 @@ this User Guide. Please send them to
 <title>Getting started</title>
 
 <para>&ted; is built as a client/server application. As a client, you
-use your web browser, while the server is a web server bundled with the
-distribution. The server-side application is built using the
-<productname>Navigator Framework</productname> and <productname>Web
-Editor Framework</productname>, which are parts of the
-<productname>Ontopia Knowledge Suite&#x2122;</productname>. &ted; is
-accessible within &ots;, an application that provides easy access to
-&ted;, <productname>Omnigator</productname>, and
-<productname>Vizigator</productname>.</para>
+use your web browser, while the server is a web server bundled with
+the distribution. The server-side application is built using the
+Apache Wicket framework, on top of the Ontopia Topic Maps Engine.
+</para>
 
 <figure id="ots-home-pg-fig">
-<title>&ots; Home Page</title>
+<title>Ontopia Home Page</title>
 <graphic fileref="pages/doc_home_page.png" width="75%"/>
 </figure>
 
-<para>To install and start up &ots;, please see
-<command>install.html</command>. Once you have accessed &ots;, choose
-&ted; from the available options.</para>
+<para>To install and start up the server, please see
+<command>install.html</command>. Once you have accessed the server,
+choose &ted; from the available options.</para>
 </section>
 
 <section id="gen-concepts">
@@ -190,7 +184,7 @@ A</ulink>.</para>
 <para>Before you can create either the ontology or the instance, you
 have to open a topic map, so let&#8217;s start there.</para>
 
-<para>When you first access &ted; from &ots;, you are taken to the
+<para>When you first access &ted;, you are taken to the
 Topic Map Index Page, see <xref linkend="wel-pg-fig"/>. On the left, is a column
 for <guilabel>Ontopoly Topic Maps</guilabel>, in the middle is the list
 of <guilabel>Other Topic Maps</guilabel> (also referred to as
@@ -1161,8 +1155,7 @@ like <guibutton>Reset</guibutton>.</para>
 <important>
 <para>Changes to your topic map are <emphasis>not</emphasis>
 automatically persisted unless you are using &ted; with the relational
-database backend of the Ontopia Knowledge Suite. With the free version
-of &ted;, which operates in-memory, it is necessary to press the
+database backend. With the in-memory backend it is necessary to press the
 <guibutton>Save</guibutton> button in order to save the topic map to
 disk: pressing the <guibutton>Confirm</guibutton> does
 <emphasis>not</emphasis> save to disk; it merely submits the current
@@ -1340,14 +1333,6 @@ classification of information resources against a topic map. The
 plug-in requires some setup and configuration before use, which is
 described. <xref linkend="sect-classify-use"/> describes how to use
 the plug-in once configured.</para>
-
-<note>
-  <para>This feature is not included in the OKS Samplers, only in the
-  commercial editions of the OKS. If you do not have an OKS license
-  but would like to evaluate this feature, please contact
-  <email>sales@ontopia.net</email>, and we can arrange an evaluation
-  license for you.</para>
-</note>
 
 <section id="classify-config01">
 <title>Setup</title>
@@ -1676,24 +1661,23 @@ of:</para>
 the RDBMS backend. This enables Ontopoly to scale to much larger topic
 maps, avoids having to explicitly save the topic map, and ensures that
 multiple users can work against the same topic map without causing data
-to become corrupt. To make use of this support the OKS Enterprise
-Edition is required.</para>
+to become corrupt.</para>
 </listitem>
 
 <listitem>
-<para>Support for concurrent editing. This support is always enabled in
-all Ontopoly versions, and ensures through locking that two different
-users cannot edit the same topic at the same time.</para>
+<para>Support for concurrent editing. This ensures through locking
+that two different users cannot edit the same topic at the same
+time.</para>
 </listitem>
 
 <listitem>
-<para>Support for access control. The commercial editions of the OKS
-ship with support for requiring username/password login, and also
-support for assigning any combination of three different privileges to
-users. It is possible to store the user data in a topic map and to
-manage it with a web application included in the OKS; alternatively some
-third-party authentication mechanism may be used. The use of a topic map
-to store the users is described below.</para>
+<para>Support for access control. Ontopia includes support for
+requiring username/password login, and also support for assigning any
+combination of three different privileges to users. It is possible to
+store the user data in a topic map and to manage it with a web
+application included in Ontopia; alternatively some third-party
+authentication mechanism may be used. The use of a topic map to store
+the users is described below.</para>
 </listitem>
 </itemizedlist>
 
@@ -1718,7 +1702,7 @@ effectively cause Ontopoly to perform
 <para>In addition, <emphasis>authentication</emphasis> needs to be
 turned on so that the application server starts actually enabling the
 authentication. How to do this is described in the document called
-<citetitle>User Management in the OKS - Developer's
+<citetitle>User Management in Ontopia - Developer's
 Guide</citetitle>. The JAAS login module will expose the names of
 user-groups and privileges as J2EE roles so that they can be used by
 Ontopoly to authorize the user.</para>
@@ -1778,7 +1762,7 @@ identified in <xref linkend="genlayout"/> and described below.</para>
 <title>Application navigation</title>
 
 <para>In the upper right hand corner of all &ted; pages and on the
-&ots; Home Page, there is an application navigation bar.</para>
+Ontopia Home Page, there is an application navigation bar.</para>
 
 <table>
 <title>Application navigation bar</title>
@@ -1794,7 +1778,7 @@ identified in <xref linkend="genlayout"/> and described below.</para>
 <tbody>
 <row>
 <entry><guilabel>Home</guilabel></entry>
-<entry>Returns you to the &ots; Home Page.</entry>
+<entry>Returns you to the Ontopia Home Page.</entry>
 </row>
 <row>
 <entry><guilabel>Manage</guilabel></entry>
@@ -1806,10 +1790,12 @@ that can be used for &ted; or Omnigator.</para>
 </row>
 <row>
 <entry><guilabel>Feedback</guilabel></entry>
-<entry>As you use &ted;, we hope that you will use this feedback form to
-send us comments as they occur to you. However, please do not use the
-<guilabel>feedback</guilabel> mechanism to report bugs. &ots; provides a
-direct link to Ontobugs.</entry>
+<entry>As you use &ted;, we hope that you will use this feedback form
+to send us comments as they occur to you. However, please do not use
+the <guilabel>feedback</guilabel> mechanism to report bugs. Instead,
+please report those on <ulink
+url="http://code.google.com/p/ontopia/issues/list">Google
+Code</ulink>.</entry>
 </row>
 <row>
 <entry><guilabel>Support</guilabel></entry>
@@ -1896,8 +1882,8 @@ before you use this button, all edits since your previous save will
 </row>
 <row>
 <entry><guilabel>Save</guilabel></entry>
-<entry>Saves the current topic map to disk. <note><para>Only available in the
-in-memory edition of &ted;.</para></note></entry>
+<entry>Saves the current topic map to disk. <note><para>Only available with
+the in-memory backend.</para></note></entry>
 </row>
 <row>
 <entry>Search box and <guibutton>Find</guibutton> button</entry>
@@ -1982,7 +1968,7 @@ or saved point (which ever is later).</entry>
 </row>
 <row>
 <entry><guibutton>Save</guibutton></entry>
-<entry>Found in the Editing Box when using an in-memory version of &ted;,
+<entry>Found in the Editing Box when using the in-memory backend,
 it is used to save the topic map to disk.
 </entry>
 </row>
@@ -2382,42 +2368,6 @@ is unlikely to be added in the future.</para>
 </listitem>
 </itemizedlist>
 </appendix>
-
-<!--<appendix id="appC">
-<title>License configurations</title>
-<para>&ted; is licensed for use within other Ontopia products:
-<itemizedlist>
-<title>standalone version of &ted;</title>
-<listitem>
-<para>&ted; is part of the Omnigator free download and available for
-use by a single user. There is no user management available in this
-configuration</para>
-
-</listitem>
-</itemizedlist>
-<itemizedlist>
-<title>toolkit version of &ted;</title>
-<listitem>
-<para>&ted; wil also become part of the Developer and Runtime
-licenses. In a Developer license, &ted; may be used by a single user. More
-significantly, &ted; can be built into a complete application that would be
-available to mutliple users using a Runtime license of the OKS. Application
-designers may also modify &ted;&#8217;s look-and-feel. User management is available
-to grant or restrict access to the specific components, see
-<xref linkend="components"/></para>
-
-<para>In the Professional Edition, the edits to the topic map are
-held in memory until the user presses the
-<command>Save</command> button, when the topic map is written to
-file storage.</para>
-
-<para>In the Enterprise Edition, the edits are continually saved to
-the user&#8217;s choice of RDBMS.</para>
-
-</listitem>
-</itemizedlist></para>
-
-</appendix>-->
 
 <appendix>
 <title>About this document</title>
