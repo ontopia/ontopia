@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
 <article class="techreport">
-<title>The RTM RDF to topic maps mapping</title>
+<title>The RTM RDF to Topic Maps mapping</title>
 <subtitle>Definition and introduction</subtitle>
 
 <articleinfo>
 <author>
-<affiliation><orgname>Ontopia A/S</orgname></affiliation>
+<affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 
 <pubdate>$Date: 2004/12/08 16:52:27 $</pubdate>
@@ -13,7 +13,7 @@
 
 <abstract>
 <para>
-This technical report defines version 0.2 of the RTM RDF to topic maps
+This technical report defines version 0.2 of the RTM RDF to Topic Maps
 mapping vocabulary.
 </para>
 
