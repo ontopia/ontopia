@@ -6,10 +6,10 @@
 
 <articleinfo>
 <author>
-<affiliation><orgname>Ontopia A/S</orgname></affiliation>
+<affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>$Date: 2008/06/13 12:06:19 $</pubdate>
-<releaseinfo>4.0 ($Revision: 1.38 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.38 $)</releaseinfo>
 
 <abstract>
 <para>
@@ -1468,7 +1468,7 @@ for more information.)</para>
 <title>Running tolog queries</title>
 
 <para>
-This section explains how you can run tolog queries in the OKS.
+This section explains how you can run tolog queries with Ontopia.
 </para>
 
 <section id="sect-plugin">
@@ -1514,7 +1514,7 @@ interfaces are all in the
 </para>
 
 <para>
-There are two tolog implementations in the OKS. One of these works
+There are two tolog implementations in Ontopia. One of these works
 directly against the API, and thus works for all the topic map engine
 backends. However, it does not perform optimally for very large topic
 maps stored in RDBMSs, and so there is a special implementation for
