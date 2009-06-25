@@ -9,7 +9,7 @@
       <affiliation><shortaffil>Ontopia</shortaffil></affiliation>
     </author>
     <pubdate>$Date: 2008/07/21 08:18:34 $</pubdate>
-    <releaseinfo>4.0 ($Revision: 1.92 $)</releaseinfo>
+    <releaseinfo>5.0 ($Revision: 1.92 $)</releaseinfo>
 
     <abstract>
       <para>This document is a guide to installing and configuring the
@@ -39,7 +39,7 @@
     <para>Before you can install and start using the RDBMS Backend
     Connector you must have an RDBMS server installed, and you must
     have created a database inside it. (The database can have any name
-    since OKS finds the database name from the JDBC URL.) You also
+    since Ontopia finds the database name from the JDBC URL.) You also
     need a JDBC 2.0 driver, and to have set everything up so that you
     can connect to the database through the JDBC driver. If you want
     to use batch writing or connection pooling you will also have to
@@ -64,7 +64,7 @@
     <section>
       <title>Unicode support</title>
 
-      <para>The Ontopia Knowledge Suite fully supports Unicode, but
+      <para>Ontopia fully supports Unicode, but
       for the RDBMS Connector to support Unicode the database must
       support storing Unicode text. Most databases do not enable this
       by default, and require special options to be set when creating
@@ -124,7 +124,7 @@ SHUTDOWN NORMAL;
       <para>The next step is to create the topic map database schema
       in the database. This is done by executing the SQL scripts
       provided in one of the <filename>*.create.sql</filename> files,
-      found in the <filename>$OKS_HOME/rdbms/setup</filename>
+      found in the <filename>$ONTOPIA_HOME/rdbms/setup</filename>
       directory. If there is no script for the database you are using,
       use the <filename>generic.create.sql</filename> script.</para>
 
@@ -155,7 +155,7 @@ supported. Older versions may work, but there will be contention in
 the database if used in a concurrent environment.</para>
 
         <para>In order to enable the snapshot isolation and row
-versioning features (both needed by the OKS) the following two
+versioning features (both needed by Ontopia) the following two
 statements need to be executed in the database. Replace the
 <symbol>topicmaps</symbol> name with the name of your database. Note
 that this will not work with the <symbol>master</symbol> database as
@@ -183,7 +183,7 @@ alter database topicmaps set read_committed_snapshot on;
       information. Below are listed the properties that need to be
       defined. You can put the properties file anywhere you like, but
       it is recommended to place it together with other configuration
-      files. For the OKS to find this file you have to point to it
+      files. For Ontopia to find this file you have to point to it
       from the <filename>tm-sources.xml</filename> file. (See the
       Navigator Congiguration guide for details.)</para>
 
@@ -194,7 +194,7 @@ alter database topicmaps set read_committed_snapshot on;
       can always be overridden through the APIs.</para>
 
       <para>A collection of sample database properties files can be
-      found in the <symbol>$OKS_HOME/rdbms/config</symbol>
+      found in the <symbol>$ONTOPIA_HOME/rdbms/config</symbol>
       directory.</para>
               
     <section>
@@ -357,7 +357,7 @@ alter database topicmaps set read_committed_snapshot on;
       the backing relational database. The communication with the
       database is relatively fast, but can introduce a big performance
       hit when the network traffic is high. In order to offer high
-      performance the OKS provides a number of client-caches that
+      performance Ontopia provides a number of client-caches that
       makes it possible to avoid repeated reads from the database.
       </para>
 
@@ -369,7 +369,7 @@ alter database topicmaps set read_committed_snapshot on;
 
             <para>Because the RDBMS Backend Connector supports
             concurrent transactions the database communication needs
-            to be effective and non-redundant. The OKS provides a
+            to be effective and non-redundant. Ontopia provides a
             cache implementation that transactions can share, so that
             redundant database access is avoided. This cache is
             enabled by default when using the Navigator and Web Editor
@@ -414,7 +414,7 @@ alter database topicmaps set read_committed_snapshot on;
             it uses it to avoid having to create object instances too
             often.</para>
 
-            <para>This property tells the OKS that it should hold hard
+            <para>This property tells Ontopia that it should hold hard
             references to the most recently used objects and for how
             many objects it should do so. Note that the property
             specifies the number of hard references per transaction,
@@ -653,7 +653,7 @@ alter database topicmaps set read_committed_snapshot on;
     <section>
       <title>Topic map store pooling</title>
 
-      <para>The OKS supports pooling of topic map stores in the same
+      <para>Ontopia supports pooling of topic map stores in the same
       way as you can pool JDBC connections with the provided
       connection pool implementations. The topic map store pooling is
       currently only available via the topic map reference
@@ -917,11 +917,11 @@ cause the following property to be ignored.
       <title>Setting the CLASSPATH</title>
 
       <para>In order for the Java Virtual Machine to be able to load
-      the RDBMS Backend Connector classes you need to add the Ontopia
-      Knowledge Suite jar-file to your <envar>CLASSPATH</envar>
-      environment variable. See the <citetitle>Ontopia Knowledge
-      Suite, Installation and getting started</citetitle> document for
-      more information.</para>
+      the RDBMS Backend Connector classes you need to add the
+      ontopia.jar file to your <envar>CLASSPATH</envar> environment
+      variable. See the <citetitle>Ontopia
+      Installation and getting started</citetitle> document for more
+      information.</para>
 
                      <para>Note that you also need to put your selected JDBC-driver
                      classes on the <envar>CLASSPATH</envar>.</para>
@@ -941,10 +941,9 @@ cause the following property to be ignored.
       feel free to skip this section.</para>
 
       <para>Before you can run the RDBMS Backend Connector test suite
-      make sure that you have the Ontopia Knowledge Suite test
-      environment correctly set up. This includes having the Ontopia
-      Knowledge Suite and test suite jar-files on the CLASSPATH. See
-      the <citetitle>Ontopia Knowledge Suite, Installation and getting
+      make sure that you have the Ontopia test
+      environment correctly set up. This includes having the ontopia.jar and ontopia-test.jar-files on the CLASSPATH. See
+      the <citetitle>Ontopia, Installation and getting
       started</citetitle> document for more information.</para>
                      
       <para>You can now run the test suite by following the procedure
@@ -956,9 +955,9 @@ cause the following property to be ignored.
                             <listitem>
         <para>Go to the <filename>${basedir}</filename>
         directory. Set the environment variable
-        <envar>OKS_HOME</envar> to the <symbol>${basedir}</symbol>,
+        <envar>ONTOPIA_HOME</envar> to the <symbol>${basedir}</symbol>,
         using the command
-        <command>set OKS_HOME=${basedir}</command>. Then run the
+        <command>set ONTOPIA_HOME=${basedir}</command>. Then run the
         <command>tests\runtests-rdbms.bat</command> script passing the
         property file as an argument.</para>
                             </listitem>
