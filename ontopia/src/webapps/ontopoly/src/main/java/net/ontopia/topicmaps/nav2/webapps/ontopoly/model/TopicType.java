@@ -248,26 +248,25 @@ public class TopicType extends AbstractTypingTopic {
 //  }
 
   public FieldAssignment addField(FieldDefinition fieldDefinition) {
+    TopicMap tm = getTopicMap();
+    final TopicIF HAS_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-field");
+    final TopicIF HAS_CARDINALITY = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-cardinality");
+    final TopicIF FIELD_DEFINITION = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
+    final TopicIF FIELD_OWNER = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-owner");
+    final TopicIF CARDINALITY = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "cardinality");
 
-		TopicMap tm = getTopicMap();
-		final TopicIF HAS_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-field");
-		final TopicIF HAS_CARDINALITY = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-cardinality");
-		final TopicIF FIELD_DEFINITION = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-		final TopicIF FIELD_OWNER = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-owner");
-		final TopicIF CARDINALITY = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "cardinality");
-
-		TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
-		TopicIF topicTypeTopic = getTopicIF();
+    TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
+    TopicIF topicTypeTopic = getTopicIF();
 
     fieldOrderMaintainance(this);
     // on:has-field($TT : on:field-owner, $FD : on:field-definition)
     OntopolyModelUtils.makeBinaryAssociation(HAS_FIELD, 
-				topicTypeTopic, FIELD_OWNER,
-        fieldDefinitionTopic, FIELD_DEFINITION);
+      topicTypeTopic, FIELD_OWNER,
+      fieldDefinitionTopic, FIELD_DEFINITION);
 
     // on:has-cardinality($TT : on:field-owner, $FD : on:field-definition, $C : on:cardinality)
     OntopolyModelUtils.makeTernaryAssociation(HAS_CARDINALITY, 
-				topicTypeTopic, FIELD_OWNER, 
+        topicTypeTopic, FIELD_OWNER, 
         fieldDefinitionTopic, FIELD_DEFINITION, 
         Cardinality.getDefaultCardinality(tm).getTopicIF(), CARDINALITY);
 
@@ -278,15 +277,15 @@ public class TopicType extends AbstractTypingTopic {
   }
 
   public void removeField(FieldDefinition fieldDefinition) {
-		TopicMap tm = getTopicMap();
-		final TopicIF HAS_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-field");
-		final TopicIF HAS_CARDINALITY = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-cardinality");
-		final TopicIF FIELD_DEFINITION = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-		final TopicIF CARDINALITY = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "cardinality");
-		final TopicIF FIELD_OWNER = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-owner");
+    TopicMap tm = getTopicMap();
+    final TopicIF HAS_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-field");
+    final TopicIF HAS_CARDINALITY = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-cardinality");
+    final TopicIF FIELD_DEFINITION = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
+    final TopicIF CARDINALITY = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "cardinality");
+    final TopicIF FIELD_OWNER = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-owner");
 
-		TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
-		TopicIF topicTypeTopic = getTopicIF();
+    TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
+    TopicIF topicTypeTopic = getTopicIF();
 
     // find and remove has-cardinality association
     AssociationIF associationIF = OntopolyModelUtils.findTernaryAssociation(tm, HAS_CARDINALITY, 
@@ -324,7 +323,7 @@ public class TopicType extends AbstractTypingTopic {
   }
 
   public NameType createNameType() {
-		TopicMap tm = getTopicMap();
+    TopicMap tm = getTopicMap();
     TopicMapBuilderIF builder = tm.getTopicMapIF().getBuilder();
 
     // create name field
@@ -352,7 +351,7 @@ public class TopicType extends AbstractTypingTopic {
   }
 
   public OccurrenceType createOccurrenceType() {
-		TopicMap tm = getTopicMap();
+    TopicMap tm = getTopicMap();
     TopicMapBuilderIF builder = tm.getTopicMapIF().getBuilder();
 
     // create occurrence field
@@ -380,7 +379,7 @@ public class TopicType extends AbstractTypingTopic {
   }
 
   public AssociationType createAssociationType() {
-		TopicMap tm = getTopicMap();
+    TopicMap tm = getTopicMap();
     TopicMapBuilderIF builder = tm.getTopicMapIF().getBuilder();
 
     // create role field
@@ -395,7 +394,7 @@ public class TopicType extends AbstractTypingTopic {
     //! final TopicIF ROLE_TYPE = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-type");
     //! final TopicIF ROLE_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-field");
     //! OntopolyModelUtils.makeBinaryAssociation(HAS_ROLE_TYPE, 
-		//! 		roleTypeTopic, ROLE_TYPE,
+    //! 		roleTypeTopic, ROLE_TYPE,
     //!     roleFieldTopic, ROLE_FIELD);
 
     // create association field
@@ -418,7 +417,7 @@ public class TopicType extends AbstractTypingTopic {
     final TopicIF HAS_ASSOCIATION_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-association-field");
     final TopicIF ROLE_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-field");
     OntopolyModelUtils.makeBinaryAssociation(HAS_ASSOCIATION_FIELD, 
-				roleFieldTopic, ROLE_FIELD,
+        roleFieldTopic, ROLE_FIELD,
         associationFieldTopic, ASSOCIATION_FIELD);
 
     // TODO: add default cardinality
@@ -475,8 +474,8 @@ public class TopicType extends AbstractTypingTopic {
     final TopicIF FIELD_ORDER = OntopolyModelUtils.getTopicIF(tt.getTopicMap(), PSI.ON, "field-order");
 
     TopicIF topicTypeTopic = tt.getTopicIF();
-		TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
-		Collection scope = Collections.singleton(fieldDefinitionTopic);
+    TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
+    Collection scope = Collections.singleton(fieldDefinitionTopic);
 
     // see if field-order occurrence already exist for the same field
     OccurrenceIF occurrenceIF = OntopolyModelUtils.findOccurrence(FIELD_ORDER,
@@ -503,9 +502,9 @@ public class TopicType extends AbstractTypingTopic {
     final TopicIF FIELD_OWNER = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-owner");
 
     TopicIF topicTypeTopic = tt.getTopicIF();
-		TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
+    TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
 
-		AssociationIF associationIF = OntopolyModelUtils.findBinaryAssociation(
+    AssociationIF associationIF = OntopolyModelUtils.findBinaryAssociation(
       tt.getTopicMap(), HAS_FIELD, 
       topicTypeTopic, FIELD_OWNER,
       fieldDefinitionTopic, FIELD_DEFINITION);
@@ -516,7 +515,7 @@ public class TopicType extends AbstractTypingTopic {
       return;
 
     // find field-order occurrence
-		Collection scope = Collections.singleton(fieldDefinitionTopic);
+    Collection scope = Collections.singleton(fieldDefinitionTopic);
     OccurrenceIF occurrenceIF = OntopolyModelUtils.findOccurrence(
         OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-order"), 
         tt.getTopicIF(), DataTypes.TYPE_STRING, scope);
@@ -535,14 +534,14 @@ public class TopicType extends AbstractTypingTopic {
 
   public List getFieldViews(boolean includeHiddenViews, boolean includeEmbeddedViews) {
     String query = 
-			"subclasses-of($SUP, $SUB) :- { " +
+      "subclasses-of($SUP, $SUB) :- { " +
       "  xtm:superclass-subclass($SUP : xtm:superclass, $SUB : xtm:subclass) | " +
       "  xtm:superclass-subclass($SUP : xtm:superclass, $MID : xtm:subclass), subclasses-of($MID, $SUB) " +
       "}. " +
       "select $FV from " +
       "{ $TT = %tt% | subclasses-of($TT, %tt%) }, " +
       "on:has-field($TT : on:field-owner, $FD : on:field-definition), " +
-			"{ on:field-in-view($FD : on:field-definition, $FV : on:fields-view)" +
+      "{ on:field-in-view($FD : on:field-definition, $FV : on:fields-view)" +
       (includeHiddenViews ? "" : ", not(on:is-hidden-view($FV : on:fields-view))") +
       (includeEmbeddedViews ? "" : ", not(on:is-embedded-view($FV : on:fields-view))") +
       " } order by $FV?";
@@ -551,7 +550,7 @@ public class TopicType extends AbstractTypingTopic {
     List list = getTopicMap().getQueryWrapper().queryForList(query,
         new RowMapperIF() {
           public Object mapRow(QueryResultIF result, int rowno) {
-						TopicIF viewTopic = (TopicIF)result.getValue(0);
+            TopicIF viewTopic = (TopicIF)result.getValue(0);
             if (viewTopic == null)
               return FieldsView.getDefaultFieldsView(getTopicMap());
             else
@@ -559,7 +558,7 @@ public class TopicType extends AbstractTypingTopic {
           }
         }, params);
     return CollectionUtils.removeDuplicates(list);
-	}
+  }
 
   /**
    * Returns the FieldAssignments for this topic type. These are sorted by the
@@ -571,8 +570,8 @@ public class TopicType extends AbstractTypingTopic {
    * default name type with the "exactly one" cardinality at the very top
    */
   public List getFieldAssignments() {
-		return getFieldAssignments(null);
-	}
+    return getFieldAssignments(null);
+  }
 
   public List getFieldAssignments(FieldsView view) {
     String viewClause = "";
@@ -584,7 +583,7 @@ public class TopicType extends AbstractTypingTopic {
     }
 
     String query = 
-			"subclasses-of($SUP, $SUB) :- { " +
+      "subclasses-of($SUP, $SUB) :- { " +
       "  xtm:superclass-subclass($SUP : xtm:superclass, $SUB : xtm:subclass) | " +
       "  xtm:superclass-subclass($SUP : xtm:superclass, $MID : xtm:subclass), subclasses-of($MID, $SUB) " +
       "}. " +
@@ -596,34 +595,34 @@ public class TopicType extends AbstractTypingTopic {
       "select $TT, $FD, $FT, $FO from " +
       "{ $TT = %tt% | subclasses-of($TT, %tt%) }, " +
       "on:has-field($TT : on:field-owner, $FD : on:field-definition), " +
-			viewClause +
+      viewClause +
       "direct-instance-of($FD, $FT), xtm:superclass-subclass($FT : xtm:subclass, on:field-definition : xtm:superclass), " +
       "{ field-order(%tt%, $FD, $FO) }?";
     Map params;
-		if (view == null)
-			params = Collections.singletonMap("tt", getTopicIF());
-		else {
-			params = new HashMap(2);
-			params.put("tt", getTopicIF());
-			params.put("view", view.getTopicIF());
-		}
+    if (view == null)
+      params = Collections.singletonMap("tt", getTopicIF());
+    else {
+      params = new HashMap(2);
+      params.put("tt", getTopicIF());
+      params.put("view", view.getTopicIF());
+    }
     List fieldAssignments = getTopicMap().getQueryWrapper().queryForList(query,
         new RowMapperIF() {
           public Object mapRow(QueryResultIF result, int rowno) {
-						TopicIF topicType = (TopicIF)result.getValue(0);
-						TopicIF fieldDefinitionTopic = (TopicIF)result.getValue(1);
-						TopicIF fieldDefinitionType = (TopicIF)result.getValue(2);
-						
-						// OPTIMIZATION: retrieving field order here so we can pass it to the constructor
-						String foValue = (String)result.getValue(3);
-						int fieldOrder = (foValue != null ? Integer.parseInt(foValue) : Integer.MAX_VALUE);
-						
-						TopicMap tm = getTopicMap();
-						TopicType tt = new TopicType(topicType, tm);
-						FieldDefinition fd = findFieldDefinitionImpl(tm, fieldDefinitionTopic, fieldDefinitionType);
+            TopicIF topicType = (TopicIF)result.getValue(0);
+            TopicIF fieldDefinitionTopic = (TopicIF)result.getValue(1);
+            TopicIF fieldDefinitionType = (TopicIF)result.getValue(2);
+            
+            // OPTIMIZATION: retrieving field order here so we can pass it to the constructor
+            String foValue = (String)result.getValue(3);
+            int fieldOrder = (foValue != null ? Integer.parseInt(foValue) : Integer.MAX_VALUE);
 
-						return new FieldAssignment(TopicType.this, tt, fd, fieldOrder);
-					}
+            TopicMap tm = getTopicMap();
+            TopicType tt = new TopicType(topicType, tm);
+            FieldDefinition fd = findFieldDefinitionImpl(tm, fieldDefinitionTopic, fieldDefinitionType);
+
+            return new FieldAssignment(TopicType.this, tt, fd, fieldOrder);
+          }
         }, params);
     Collections.sort(fieldAssignments, FieldAssignmentComparator.INSTANCE);
     return fieldAssignments;
