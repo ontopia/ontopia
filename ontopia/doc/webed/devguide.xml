@@ -8,7 +8,7 @@
 <articleinfo>
 <author><affiliation><orgname>Ontopia</orgname></affiliation></author>
 <pubdate>$Date: 2009/05/22 09:34:39 $</pubdate>
-<releaseinfo>4.1 ($Revision: 1.44 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.44 $)</releaseinfo>
 
 <!--
 
@@ -287,7 +287,7 @@ the example below into a file called <filename>application.xml</filename>.
 <para>
 Once this is done, the next step is to take the
 <filename>tasks.ltm</filename> file from
-<filename>${OKS_HOME}/samples</filename> and copy it into the
+<filename>${ONTOPIA_HOME}/samples</filename> and copy it into the
 Omnigator's topic maps directory, since we have told our web
 application to get its topic maps from there. Now everything is ready,
 and we can start using the tag libraries.
@@ -1545,7 +1545,7 @@ Editor locks will also have to be clustered, so that locks are being
 properly synchronized across the cluster. To do this one can use a
 tool called <ulink url="http://www.terracotta.org/">Open
 Terracotta</ulink>. No code changes are required, but an active
-Terracotta server must be running. The JVM(s) running the OKS must
+Terracotta server must be running. The JVM(s) running Ontopia must
 also be Terracotta-enabled.</para>
 
 <para>To start the Terracotta server, first download and install the
@@ -1561,13 +1561,13 @@ sh ./bin/start-tc-server.sh
 configuration to your needs. You may also want to have additional
 passive servers running so that you get failover support.</para>
 
-<para>To make the JVM(s) running the OKS Terracotta-enabled a few
+<para>To make the JVM(s) running the Ontopia Terracotta-enabled a few
 system properties need to be passed on to the JVM on startup:</para>
 
 <literallayout><![CDATA[
 -Xbootclasspath/p:${TERRACOTTA_HOME}/lib/dso-boot/dso-boot-hotspot_XX_YYY_ZZ.jar
 -Dtc.install-root=${TERRACOTTA_HOME}
--Dtc.config=${OKS_HOME}/rdbms/clustering/oks-terracotta.xml
+-Dtc.config=${ONTOPIA_HOME}/rdbms/clustering/ontopia-terracotta.xml
 ]]></literallayout>
 
 <para>Before you start the JVM make sure that you have created a boot
@@ -1581,8 +1581,8 @@ sh /bin/make-boot-jar.sh
 ]]></literallayout>
 
 <para>You may also want to make some changes to the default Terracotta
-client configuraton file that is shipped with the OKS:
-<filename>${OKS_HOME}/rdbms/clustering/oks-terracotta.xml</filename>.</para>
+client configuraton file that is shipped with Ontopia:
+<filename>${ONTOPIA_HOME}/rdbms/clustering/ontopia-terracotta.xml</filename>.</para>
 
 </section>
 

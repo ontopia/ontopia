@@ -10,7 +10,7 @@
       <affiliation><orgname>Ontopia</orgname></affiliation>
     </author>
     <pubdate>$Date: 2009/05/22 09:34:39 $</pubdate>
-    <releaseinfo>4.1 ($Revision: 1.34 $)</releaseinfo>
+    <releaseinfo>5.0 ($Revision: 1.34 $)</releaseinfo>
     
   </articleinfo>
   
@@ -790,7 +790,7 @@
 
       <para>
         If a default installation is used, the templates will reside
-        in the OKS jar files, but it is possible to override this and
+        in the ontopia.jar file, but it is possible to override this and
         place the templates whereever you like. The following
         summarizes the configuration trail: First lookup in your web
         application descriptor file
