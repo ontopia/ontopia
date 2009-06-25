@@ -187,33 +187,57 @@ public class MD5 {
     zeroIntArray(inint);
   }
 
-  public static void main(String args[]) {
+  public static void main(String args[]) throws Exception {
     // This main() method was created to easily test
     // this class. It hashes whatever's on System.in.
 
-    byte buf[] = new byte[397];
-    // arbitrary buffer length designed to irritate update()
-    int rc;
-    MD5 md = new MD5();
-    byte out[] = new byte[16];
-    int i;
-    int len = 0;
+    for (int i=0; i < args.length; i++) {
+      String filename = args[i];
+      InputStream istream = new FileInputStream(filename);
 
-    try {
-      while ((rc = System.in.read(buf, 0, 397)) > 0) {
-        md.update(buf, rc);
-        len += rc;
+      byte buf[] = new byte[397];
+      // arbitrary buffer length designed to irritate update()
+      int rc;
+      MD5 md = new MD5();
+      byte out[] = new byte[16];
+      int len = 0;
+      
+      try {
+        while ((rc = istream.read(buf, 0, 397)) > 0) {
+          md.update(buf, rc);
+          len += rc;
+        }
+      } finally {
+        try { istream.close(); } catch (Exception e) {}
       }
-    } catch (IOException ex) {
-      ex.printStackTrace();
-      return;
+      md.md5final(out);
+      
+      System.out.println(dumpBytes(out) + "  " + filename);
     }
-    md.md5final(out);
-
-    System.out.println("file length: "+len);
-    System.out.println("hash: "+dumpBytes(out));
   }
 
+  /**
+   * INTERNAL:
+   */
+  public String getDigest(InputStream istream) throws Exception {
+      byte buf[] = new byte[397];
+      // arbitrary buffer length designed to irritate update()
+      int rc;
+      MD5 md = new MD5();
+      byte out[] = new byte[16];
+      int len = 0;
+      
+      try {
+        while ((rc = istream.read(buf, 0, 397)) > 0) {
+          md.update(buf, rc);
+          len += rc;
+        }
+      } finally {
+        try { istream.close(); } catch (Exception e) {}
+      }
+      md.md5final(out);
+      return dumpBytes(out);
+  }
 
   /////////////////////////////////////////////////////////////////////
   // Below here ye will only finde private functions                 //

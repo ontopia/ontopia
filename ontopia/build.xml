@@ -94,8 +94,6 @@
         Bootstrap
        ====================================================================== -->
 
-  <!--taskdef name="runtest" classname="net.ontopia.ant.TestTask"/ -->
-
   <!--taskdef name="jalopy" classname="de.hunsicker.jalopy.plugin.ant.AntPlugin" /-->
  
   <taskdef classname="JFlex.anttask.JFlexTask" name="jflex">
@@ -340,10 +338,6 @@
        net.ontopia.topicmaps.impl.rdbms, 
        net.ontopia.topicmaps.impl.rdbms.index" />
 
-  <!-- ======================================================================
-        RDBMS tests (proxy)
-       ====================================================================== -->
-
   <patternset id="sources.test.rdbms">
     <include name="net/ontopia/persistence/proxy/test/*.java" />
     <include name="net/ontopia/topicmaps/impl/rdbms/test/*.java" />
@@ -353,6 +347,16 @@
     <include name="net/ontopia/persistence/proxy/test/*.class" />
     <include name="net/ontopia/topicmaps/impl/rdbms/test/*.class" />
   </patternset>
+
+  <target name="generate-rdbms-schema">
+    <java classname="net.ontopia.persistence.rdbms.DDLWriter" fork="true" classpathref="project.classpath">
+      <arg value="${src.path}/dist/rdbms/rdbms-schema.xml" />
+      <arg value="${database}" />
+      <arg value="${platforms}" />
+      <arg value="${dist.path}/rdbms/setup/${id}.create.sql" />
+      <arg value="${dist.path}/rdbms/setup/${id}.drop.sql" />
+    </java>
+  </target>
 
   <!-- ======================================================================
         Fulltext search engine integration
@@ -485,7 +489,6 @@
     <property name="test.config" value="${test.path}/config/tests.xml" />
     <property name="test.name" value="complete-non-rdbms" />
     <echo>Using configuration file ${test.config}</echo>
-    <!--runtest testfile="${test.config}"/-->
     <java classname="net.ontopia.test.TestRunner" fork="true" classpathref="project.classpath">
       <jvmarg value="-Dnet.ontopia.xml.Log4jSaxErrorHandler.ignoreNamespaceErrors=true" />
       <jvmarg value="-Dnet.ontopia.test.root=${test.path}" />
@@ -1011,10 +1014,14 @@
       <fileset dir="${build.javadoc}/ontopia" />
     </copy>
 
-    <!-- Generate jardigests -->
-    <antcall target="jar.digests" />
+    <echo>Generating jar digests...</echo>
+    <java classname="net.ontopia.net.JarDigests" fork="true" classpathref="project.classpath">
+      <arg value="${dist.path}/lib/" />
+      <arg value=".*\.jar" />
+      <arg value="${dist.path}/lib/digests.txt" />
+    </java>
 
-    <!-- Package it -->
+    <echo>Packaging distribution: ${dist.name}-${dist.full.version}.zip</echo>
     <exec dir="${build.dists}" executable="zip">
       <arg value="-r" />
       <arg value="${dist.name}-${dist.full.version}.zip" />
@@ -1082,14 +1089,6 @@
     <antcall target="compile.ontopia.test"/>
     <antcall target="jar.ontopia.test"/>
     <antcall target="jar.ontopia"/>
-  </target>
-
-  <target name="jar.digests">
-    <exec dir="${dist.path}/lib" executable="sh" output="${dist.path}/lib/digests.txt">
-      <arg value="${3rdparty.path}/jardigests.sh" />
-      <arg value="*.jar" />
-      <arg value="${dist.title} ${dist.version}" />
-    </exec>
   </target>
 
   <target name="jar.ontopia">
@@ -1430,6 +1429,9 @@
            outputFile="docindex.report" outputDirectory="${build.tmp}"
            productVersion="Version ${dist.version} builddate ${dist.full.date}" />
     <copy file="${build.tmp}/docindex.html" overwrite="yes" tofile="${dist.path}/index.html" />
+
+    <!-- Copy license -->
+    <copy file="${doc.path}/ontopia/license.txt" tofile="${dist.path}/doc/license.txt" overwrite="yes" />
 
     <echo>Collecting product components...</echo>
     <copy todir="${dist.path}">
@@ -1832,33 +1834,6 @@
   <!-- - - - Collect fulltext components - - - - - - - - - - - - - - - - - - -->
   <target name="dist.fulltext.collect">
 
-    <!--antcall target="makehtml">
-      <param name="file" value="${doc.path}/fulltext/fulltext-api.xml" />
-    </antcall>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/fulltext/fulltext-faq.xml" />
-    </antcall-->
-
-    <!-- Collect documentation -->
-    <!--copy file="${doc.path}/fulltext/fulltext-api.xml.html" tofile="${dist.path}/doc/fulltext/devguide.html" />
-    <copy file="${doc.path}/fulltext/SampleIndexer.java" todir="${dist.path}/doc/fulltext" />
-    <copy file="${doc.path}/fulltext/SampleSearcher.java" todir="${dist.path}/doc/fulltext" />
-    <copy file="${doc.path}/fulltext/fulltext-faq.xml.html" tofile="${dist.path}/doc/fulltext/faq.html" /-->
-  
-    <!-- Compile code examples -->
-    <!--javac srcdir="${doc.path}/fulltext" 
-          destdir="${doc.path}/fulltext" optimize="${optimize}" 
-          deprecation="${deprecation}" debug="${debug}" 
-          debuglevel="${debuglevel}" classpathref="project.classpath">
-      <patternset>
-        <include name="*.java" />
-      </patternset>
-    </javac-->
-
-    <!-- Copy logo and stylesheet -->
-    <!--copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/fulltext" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/fulltext" /-->
-
     <!-- Copy plugin-->
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
       <fileset dir="${src.path}/webapps/omnigator/plugins">
@@ -1919,15 +1894,6 @@
   <target name="dist.classify.collect">
     <echo>Collecting classify components...</echo>
 
-    <!-- Libraries used by classify plug-in -->
-    <!--copy file="${3rdparty.path}/snowball.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/poi.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/poi-scratchpad.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/pdfbox.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/fontbox.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/tagsoup.jar" todir="${dist.path}/apache-tomcat/common/lib" />
-    <copy file="${3rdparty.path}/opencsv.jar" todir="${dist.path}/apache-tomcat/common/lib" /-->
-
   </target>
 
   <!-- - - - Collect rdbms components  - - - - - - - - - - - - - - - - - - - -->
@@ -1948,11 +1914,48 @@
       </patternset>
     </javac>
 
-    <mkdir dir="${src.path}/dist/rdbms/schema" />
-    <exec dir="${src.path}/dist/rdbms/" executable="sh">
-      <env key="CLASSPATH" path="${build.classes}:${lib.path}/java-getopt-1.0.9.jar:${lib.path}/crimson-1.1.3.jar:${lib.path}/log4j-1.2.14.jar"/>
-      <arg value="${src.path}/scripts/rdbms-schema.sh" />
-    </exec>
+    <echo>Generating database schemas...</echo>
+    <mkdir dir="${dist.path}/rdbms/setup" />
+    <antcall target="generate-rdbms-schema">
+      <param name="id" value="generic" />
+      <param name="database" value="generic" />
+      <param name="platforms" value="generic" />
+    </antcall>
+    <antcall target="generate-rdbms-schema">
+      <param name="id" value="oracle8" />
+      <param name="database" value="oracle" />
+      <param name="platforms" value="oracle8,oracle,generic" />
+    </antcall>
+    <antcall target="generate-rdbms-schema">
+      <param name="id" value="oracle9i" />
+      <param name="database" value="oracle" />
+      <param name="platforms" value="oracle9i,oracle,generic" />
+    </antcall>
+    <antcall target="generate-rdbms-schema">
+      <param name="id" value="oracle10g" />
+      <param name="database" value="oracle" />
+      <param name="platforms" value="oracle10g,oracle,generic" />
+    </antcall>
+    <antcall target="generate-rdbms-schema">
+      <param name="id" value="postgresql" />
+      <param name="database" value="postgresql" />
+      <param name="platforms" value="postgresql,generic" />
+    </antcall>
+    <antcall target="generate-rdbms-schema">
+      <param name="id" value="sqlserver" />
+      <param name="database" value="sqlserver" />
+      <param name="platforms" value="sqlserver,generic" />
+    </antcall>
+    <antcall target="generate-rdbms-schema">
+      <param name="id" value="mysql" />
+      <param name="database" value="mysql" />
+      <param name="platforms" value="mysql,generic" />
+    </antcall>
+    <antcall target="generate-rdbms-schema">
+      <param name="id" value="h2" />
+      <param name="database" value="generic" />
+      <param name="platforms" value="generic" />
+    </antcall>
 
     <!-- Collect documentation -->
     <mkdir dir="${dist.path}/doc/rdbms" />
@@ -1967,11 +1970,6 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/rdbms" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/rdbms" />
 
-    <!-- Collect database scripts -->
-    <mkdir dir="${dist.path}/rdbms/setup" />
-    <copy todir="${dist.path}/rdbms/setup">
-      <fileset dir="${src.path}/dist/rdbms/schema" includes="*.sql" />
-    </copy>
     <!-- Collect sample database property -->
     <mkdir dir="${dist.path}/rdbms/config" />
     <copy todir="${dist.path}/rdbms/config/">
