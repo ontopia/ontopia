@@ -19,7 +19,7 @@
 <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>$Date: 2008/05/29 07:01:12 $</pubdate>
-<releaseinfo>4.0 ($Revision: 1.88 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.88 $)</releaseinfo>
 
 <abstract>
 <para>This document is the user's guide to the Ontopia Omnigator, the
@@ -41,9 +41,7 @@ name is a contraction of "omnivorous navigator", and was chosen to
 underline the application's principal design goal, which is to be able
 to make sense of <emphasis>any</emphasis> conforming topic map. The
 Omnigator is intended as a teaching aid, to help you understand topic
-map concepts, and as an aid in developing your own topic maps. It is
-built using <ulink url="http://www.ontopia.net/solutions/products.html">the
-Ontopia Knowledge Suite</ulink> (OKS).</para>
+map concepts, and as an aid in developing your own topic maps.</para>
 
 <section>
 <title>A word about the user interface</title>
@@ -70,7 +68,7 @@ applications you will build can hide the technicalities while at the
 same time harnessing the power of Topic Maps to provide an even more
 exhilarating experience for your end users! The <ulink
 url="http://www.ontopia.net/solutions/navigator.html">Ontopia
-Navigator Framework</ulink> (part of the OKS) is the toolkit you need
+Navigator Framework</ulink> (part of Ontopia) is the toolkit you need
 for building that kind of application. The Omnigator is just a generic
 browser implemented using the Navigator Framework. (For examples of other,
 jargon-free interfaces see the <ulink
@@ -734,8 +732,7 @@ in the normal Omnigator interface.</para>
 <para>The Vizigate plug-in will work with any topic map, including your
 own. However, most of the topic maps that are bundled with the Omnigator
 use predefined configurations created using the VizDesktop, which is
-part of the Ontopia Knowledge Suite (OKS), Ontopia&#8217;s full-featured
-commercial product. The VizDesktop provides an interface for defining
+part of Ontopia. The VizDesktop provides an interface for defining
 shapes, colours and fonts, and for designating which topic types and
 association types should be filtered out of the display in order to
 make the visualization more manageable.</para>
@@ -934,16 +931,16 @@ permission of the author.</para>
 <section id="manage-page">
 <title>The Manage Page</title>
 
-<para>The <firstterm>Manage Page</firstterm> is used to control various
-aspects of the Omnigator&#8217;s configuration, and to load, reload, and drop
-topic maps. (Note: The Manage Page is not accessible in the online demo,
-and may also have been disabled by your system administrator.) The
-functionality available via this page is described in detail in the
-documentation that accompanies the Developer&#8217;s Edition of the Ontopia
-Navigator. Users of the Omnigator will primarily be interested in two
-Manage Page functions: controlling which topic maps are loaded and
-controlling which plug-ins are activated. (The configuration files
-mentioned in this section are found in the
+<para>The <firstterm>Manage Page</firstterm> is used to control
+various aspects of the Omnigator&#8217;s configuration, and to load,
+reload, and drop topic maps. (Note: The Manage Page is not accessible
+in the online demo, and may also have been disabled by your system
+administrator.) The functionality available via this page is described
+in detail in the Ontopia Navigator Framework Developer Guide. Users of
+the Omnigator will primarily be interested in two Manage Page
+functions: controlling which topic maps are loaded and controlling
+which plug-ins are activated. (The configuration files mentioned in
+this section are found in the
 <filename>$TOMCAT_HOME/&#x200b;webapps/&#x200b;omnigator/&#x200b;WEB-INF/&#x200b;config/</filename>
 directory.)</para>
 
@@ -1692,9 +1689,7 @@ Notepad, etc.), and save it under a name with the extension
 this is
 <filename>$TOMCAT_HOME/webapps/omnigator/WEB-INF/topicmaps/</filename>,
 where <filename>${basedir}</filename> is the Omnigator base directory,
-which is usually called oks-samplers or some such (see the
-installation documentation or your technical support team for further
-information).</para>
+which is usually called ontopia.</para>
 
 <para>Once the topic map file is in the correct place, start the
 Omnigator, go to the Manage Page, and there you will see your XTM
