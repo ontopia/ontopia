@@ -1341,6 +1341,7 @@
 
     <!-- Collect lib jar files -->
     <copy file="${lib.path}/antlr-2.7.7.jar" tofile="${dist.path}/lib/antlr.jar" />
+    <copy file="${lib.path}/commons-collections-3.2.1.jar" tofile="${dist.path}/lib/commons-collections.jar" />
     <copy file="${lib.path}/backport-util-concurrent-3.1.jar" tofile="${dist.path}/lib/backport-util-concurrent.jar" />
     <copy file="${lib.path}/commons-dbcp-1.2.2.jar" tofile="${dist.path}/lib/commons-dbcp.jar" />
     <copy file="${lib.path}/commons-fileupload-1.1.jar" tofile="${dist.path}/lib/commons-fileupload.jar" />
