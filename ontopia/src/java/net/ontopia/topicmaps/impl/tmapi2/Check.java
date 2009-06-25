@@ -243,7 +243,7 @@ public final class Check {
    * @param type
    *          The type.
    */
-  public static void typeNotNull(Topic... type) {
+  public static void typeNotNull(Topic type) {
     if (type == null) {
       throw new IllegalArgumentException("The type must not be null");
     }

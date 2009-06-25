@@ -6,6 +6,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 
 import org.tmapi.core.Locator;
+import org.tmapi.core.Occurrence;
 import org.tmapi.core.MalformedIRIException;
 import org.tmapi.core.Topic;
 
