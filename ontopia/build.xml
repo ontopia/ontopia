@@ -2223,14 +2223,14 @@
     <antcall target="makehtml">
       <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
     </antcall>
-    <copy file="${doc.path}/developer/ontopoly/user-guide.xml.html" 
+    <copy file="${doc.path}/ontopoly/user-guide.xml.html" 
          tofile="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/user-guide.html" />
     <copy file="${doc.path}/ontopia/logo.gif" 
          todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" 
          todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/" />
     <copy todir="${dist.path}/apache-tomcat/webapps/ontopoly0/doc/pages/">
-      <fileset dir="${doc.path}/developer/generic-editor/pages" />
+      <fileset dir="${doc.path}/ontopoly/pages" />
     </copy>
   </target>
 
