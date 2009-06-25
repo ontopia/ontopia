@@ -332,9 +332,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    */
   @SuppressWarnings("unchecked")
   public Set<Name> getNames(Topic type) {
-    if (type == null) {
-      throw new IllegalArgumentException("The type must not be null");
-    }
+    Check.typeNotNull(type);
     TopicIF type_ = topicMap.unwrapTopic(type);
     Collection<TopicNameIF> names = new ArrayList<TopicNameIF>();
     for (Iterator<TopicNameIF> iter = wrapped.getTopicNames().iterator(); iter
@@ -364,9 +362,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    */
   @SuppressWarnings("unchecked")
   public Set<Occurrence> getOccurrences(Topic type) {
-    if (type == null) {
-      throw new IllegalArgumentException("The type must not be null");
-    }
+    Check.typeNotNull(type);
     TopicIF type_ = topicMap.unwrapTopic(type);
     Collection<OccurrenceIF> occs = new ArrayList<OccurrenceIF>();
     for (Iterator<OccurrenceIF> iter = wrapped.getOccurrences().iterator(); iter
@@ -416,7 +412,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
    */
 
   public Set<Role> getRolesPlayed(Topic type) {
-    Check.typeNotNull(this, type);
+    Check.typeNotNull(type);
     return topicMap.wrapSet(wrapped.getRolesByType(topicMap.unwrapTopic(type)));
   }
 
@@ -428,9 +424,8 @@ public class TopicImpl extends ConstructImpl implements Topic {
    */
 
   public Set<Role> getRolesPlayed(Topic type, Topic assocType) {
-    if (type == null) {
-      throw new IllegalArgumentException("The type must not be null");
-    }
+    Check.typeNotNull(type);
+    
     if (assocType == null) {
       throw new IllegalArgumentException(
           "The association type must not be null");

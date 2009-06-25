@@ -235,4 +235,18 @@ public final class Check {
       throw new IllegalArgumentException("The theme must not be null");
     }
   }
+  
+  /**
+   * Throws a {@link IllegalArgumentException} iff the <tt>type</tt> is
+   * <tt>null</tt>.
+   * 
+   * @param type
+   *          The type.
+   */
+  public static void typeNotNull(Topic... type) {
+    if (type == null) {
+      throw new IllegalArgumentException("The type must not be null");
+    }
+  }
+
 }

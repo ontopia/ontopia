@@ -72,7 +72,7 @@ public class AssociationImpl extends ScopedImpl implements Association {
    */
   
   public Set<Role> getRoles(Topic type) {
-    Check.typeNotNull(this, type);
+    Check.typeNotNull(type);
     return topicMap.wrapSet(wrapped.getRolesByType(topicMap.unwrapTopic(type)));
   }
 
