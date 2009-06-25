@@ -9,13 +9,13 @@
 <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>$Date: 2008/05/29 07:01:13 $</pubdate>
-<releaseinfo>4.0 ($Revision: 1.19 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.19 $)</releaseinfo>
 
 <abstract>
 <para>
-This document introduces the support for managing users in the OKS
+This document introduces the support for managing users in the Ontopia
 Navigator Framework. It describes the user management topic map
-vocabulary, the OKS JAAS module, and the user management interface.
+vocabulary, the Ontopia JAAS module, and the user management interface.
 </para>
 </abstract>
 </articleinfo>
@@ -26,16 +26,16 @@ vocabulary, the OKS JAAS module, and the user management interface.
 <title>Introduction</title>
 
 <para>
-The OKS has built-in support for storing user information in the topic
+Ontopia has built-in support for storing user information in the topic
 map being used by the web application. Applications that do not use
 authentication and applications which want to use directory
 information stored elsewhere have no need for this functionality, but
 for those who really do want to maintain user information in the topic
-map the OKS provides some useful functionality.
+map Ontopia provides some useful functionality.
 </para>
 
 <para>
-The OKS has a topic map vocabulary for representing users, their user
+Ontopia has a topic map vocabulary for representing users, their user
 names, their passwords, user groups, privileges, and the relationships
 between these. This vocabulary is used by a JAAS (Java Authentication
 and Authorization Service) module that can be used to authenticate
@@ -94,7 +94,7 @@ url="http://psi.ontopia.net/userman/">userman</ulink> PSI set.
 JAAS is a standard Java API for authentication, which is implemented
 by modules providing authentication services. JAAS modules can then be
 plugged into systems that need authentication, like a web application.
-The OKS provides a JAAS implementation that allows users to
+Ontopia provides a JAAS implementation that allows users to
 authenticate themselves against user names and passwords stored in a
 topic map using the above vocabulary. The most common usage for the
 JAAS module is to use it to provide authentication support in a
@@ -169,7 +169,7 @@ doing this with Tomcat is to set the value of the
 </para>
 
 <literallayout><![CDATA[
--Djava.security.auth.login.config=${OKS_HOME}/apache-tomcat/conf/jaas.config
+-Djava.security.auth.login.config=${ONTOPIA_HOME}/apache-tomcat/conf/jaas.config
 ]]></literallayout>
 
 <para>
@@ -341,7 +341,7 @@ the user name.
 <title>The administration interface</title>
 
 <para>
-The OKS comes with an application that can be used to administrate
+Ontopia comes with an application that can be used to administrate
 topic maps containing users, roles, and privileges represented with
 the userman vocabulary. The application can be found in the
 <filename>$TOMCAT_HOME/webapps/accessctl</filename>
@@ -355,13 +355,6 @@ will open the example topic map <filename>userman.ltm</filename> in
 the application, which is useful for trying it out. (Note that to
 access the application you need a user name and password; you can find
 this in the userman.ltm topic map by looking at it in the Omnigator.)
-</para>
-
-<para>
-OKS users are allowed to modify this application any way they like and
-to create new applications from it. However, once it has been modified
-new updates to the application included in new OKS versions will not
-be automatically applicable to your version of the application.
 </para>
 </section>
 
