@@ -1609,9 +1609,6 @@
       <param name="file" value="${doc.path}/navigator/devguide.xml" />
     </antcall>
     <antcall target="makehtml">
-      <param name="file" value="${doc.path}/navigator/refcard.xml" />
-    </antcall>
-    <antcall target="makehtml">
       <param name="file" value="${doc.path}/navigator/taglib-reference.xml" />
     </antcall>
     <antcall target="makehtml">
@@ -1704,7 +1701,6 @@
     <!-- Collect omnigator documentation -->
     <copy file="${doc.path}/navigator/config.xml.html" tofile="${dist.path}/doc/navigator/config.html" />
     <copy file="${doc.path}/navigator/devguide.xml.html" tofile="${dist.path}/doc/navigator/navguide.html" />
-    <copy file="${doc.path}/navigator/refcard.xml.html" tofile="${dist.path}/doc/navigator/refcard.html" />
     <copy file="${doc.path}/navigator/taglib-reference.xml.html" tofile="${dist.path}/doc/navigator/tolog-taglib.html" />
     <copy file="${doc.path}/navigator/userman.xml.html" tofile="${dist.path}/doc/navigator/userman.html" />
     <copy todir="${dist.path}/doc/navigator">
