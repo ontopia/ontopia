@@ -9,12 +9,12 @@
       <affiliation><shortaffil>Ontopia</shortaffil></affiliation>
     </author>
     <pubdate>$Date: 2008/05/29 07:01:13 $</pubdate>
-    <releaseinfo>4.0 ($Revision: 1.53 $)</releaseinfo>
+    <releaseinfo>5.0 ($Revision: 1.53 $)</releaseinfo>
 
     <abstract>
-      <para>This document is a guide to using the Ontopia Topic Map
+      <para>This document is a guide to using the Ontopia Topic Maps
       Engine with the RDBMS Backend Connector. It assumes that the
-      reader is already familiar with the Topic Map Engine, and wishes
+      reader is already familiar with the Topic Maps Engine, and wishes
       to use it with a relational database backend.</para>
     </abstract>
   </articleinfo>
@@ -23,7 +23,7 @@
     <title>Introduction</title>
 
     <para>The RDBMS Backend Connector adds relational database
-    persistence to the Ontopia Topic Map Engine. The persistence is
+    persistence to the Ontopia Topic Maps Engine. The persistence is
     transparent and users of the topic map interfaces don't have to
     take any additional steps in order to persist topic maps.</para>
 
@@ -100,14 +100,14 @@ approach is also less intrusive and will make your application a lot
 easier to test as all topic map access is done through the same access
 point.</para>
 
-    <important>If you get hold of your RDBMSTopicMapStore instances
+    <important><para>If you get hold of your RDBMSTopicMapStore instances
     through either ImportExportUtils or create them yourself you will
     <emphasis>not</emphasis> be able to take advantage of a shared
     cache and store pooling. Use the <symbol>TopicMapSourceIF</symbol>
     implementations, or access the topic maps stores through the
-    mechanisms in the Navigator Framework instead.</important>
+    mechanisms in the Navigator Framework instead.</para>
 
-    <important>It is very important that you close the
+    <para>It is very important that you close the
     <symbol>TopicMapStoreIF</symbol> instance when you are done with
     it, i.e. call the <symbol>TopicMapStoreIF.close()</symbol>
     method. You <emphasis>must</emphasis> do this, because otherwise
@@ -115,7 +115,7 @@ point.</para>
     have enabled store pooling the topic map stores will actually not
     reclaimed by the garbage collector, but rather returned to the
     topic map store pool, so that it can be reused the next time
-    somebody asks for a topic map store.</important>
+    somebody asks for a topic map store.</para></important>
 
     <para>The Navigator and Web Editor Frameworks always use store
     pooling because they are implemented on top of a
@@ -604,11 +604,11 @@ this topic map source:</para>
     and the URL the identifies the topic map. Note that both these
     values are required to successfully locate the topic map.</para>
 
-    <warning>If you get hold of your RDBMSTopicMapStore instances
+    <warning><para>If you get hold of your RDBMSTopicMapStore instances
     through ImportExportUtils you will <emphasis>not</emphasis> be
     able to take advantage of a shared cache and store pooling. Use
     the <symbol>XMLConfigSource</symbol> or
-    <symbol>TopicMapSourceIF</symbol>s instead.</warning>
+    <symbol>TopicMapSourceIF</symbol>s instead.</para></warning>
 
     <section>
       <title>RDBMS URI syntax</title>
