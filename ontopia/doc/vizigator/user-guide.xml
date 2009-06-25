@@ -2,7 +2,7 @@
 <!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1//EN" ""-->
 <!-- $Id: viz_userguide.xml,v 1.58 2008/06/13 12:06:19 geir.gronmo Exp $ -->
 <article> 
-  <title>The Ontopia Vizigator&#x2122;</title> 
+  <title>The Ontopia Vizigator</title> 
   <subtitle>User's Guide</subtitle>
   <!-- markup conventions:
      terms like "Welcome Page": first occurrence <firstterm>, thereafter just capitalisation
@@ -18,7 +18,7 @@ other keystrokes affect search box; load config menu item; -->
       </affiliation> 
     </author> 
     <pubdate>$Date: 2008/06/13 12:06:19 $</pubdate> 
-    <releaseinfo>4.0 ($Revision: 1.58 $) </releaseinfo> 
+    <releaseinfo>5.0 ($Revision: 1.58 $) </releaseinfo> 
     <abstract> 
       <!--The documentation must be updated to describe the support
            for scope filtering of associations. The localization
@@ -35,7 +35,7 @@ other keystrokes affect search box; load config menu item; -->
           </listitem> 
           <listitem> 
             <para>embed a visualization window in web applications built using
-              the OKS.</para> 
+              Ontopia.</para> 
           </listitem> 
         </itemizedlist></para> 
       <para>Reading this document assumes some basic knowledge about topic
@@ -49,9 +49,10 @@ other keystrokes affect search box; load config menu item; -->
         especially the 
         <ulink url="http://www.isotopicmaps.org/sam/sam-model/">Data
           Model</ulink>.</para> 
-      <para> We welcome any suggestions you might have on ways of improving
-        this User Guide. Please send them to 
-        <email>dev@ontopia.net</email>.</para> 
+      <para> We welcome any suggestions you might have on ways of
+      improving this User Guide. Please send them to <ulink
+      url="http://groups.google.com/group/ontopia">the mailing
+      list</ulink>.</para>
       <para>Happy Vizigating! </para> 
     </abstract> 
   </articleinfo> 
@@ -77,31 +78,27 @@ other keystrokes affect search box; load config menu item; -->
         on each other. 
         <itemizedlist> 
           <listitem> 
-            <para><emphasis role="bold">VizDesktop&#x2122;</emphasis> -
+            <para><emphasis role="bold">VizDesktop</emphasis> -
               designer's configuration tool</para> 
-            <para> Licensing: Available in all Developer and Runtime License
-              editions. </para> 
-            <para> VizDesktop can be used without any other OKS browsing
+            <para> VizDesktop can be used without any other Ontopia browsing
               environment. However, it is primarily a configuration tool for application
               designers to determine whether and/or how various topic types and associations
               will be graphically displayed. This is the entry point to the entire Ontopia
               Vizigator. To get started, see <xref linkend="vd01"/></para> 
           </listitem> 
           <listitem> 
-            <para><emphasis role="bold">VizLet&#x2122;</emphasis> - reusable
+            <para><emphasis role="bold">VizLet</emphasis> - reusable
               applet component</para> 
-            <para> Licensing: Available in all Developer and Runtime License
-              editions. </para> 
+
             <para> All of the visualization capability of VizDesktop, but
               without the configuration toolkit, VizLet can be used within other web
               applications. To bring topic map visualization to any web site, see
               <xref linkend="vl01"/></para> 
           </listitem> 
           <listitem> 
-            <para><emphasis role="bold">VizPlugin&#x2122;</emphasis> -
+            <para><emphasis role="bold">VizPlugin</emphasis> -
               Omnigator plug-in</para> 
-            <para> Licensing: Available within OKS Samplers and in all
-              Developer and Runtime License editions. </para> 
+
             <para> Based on VizLet, VizPlugin can be used to visualize any
               topic currently under view in Omnigator. To find out more about navigating
               visually in Omnigator, see <xref linkend="vp01"/></para> 
@@ -170,14 +167,15 @@ other keystrokes affect search box; load config menu item; -->
       </table> 
       <note> 
         <para>Users interested in translating the interface to an unsupported
-          language should contact Ontopia at 
-          <email>dev@ontopia.net</email> .</para> 
+          language should contact the Ontopia project 
+          <ulink url="http://groups.google.com/group/ontopia">mailing
+          list</ulink>.</para> 
       </note> 
     </section> 
   </section>
  
   <section id="vd01"> 
-    <title>VizDesktop&#x2122; - Getting started with Vizigator</title> 
+    <title>VizDesktop - Getting started with Vizigator</title> 
 
       <para>VizDesktop provides: 
         <itemizedlist> 
@@ -190,11 +188,12 @@ other keystrokes affect search box; load config menu item; -->
           </listitem> 
         </itemizedlist></para> 
       <note> 
-        <para>The VizDesktop application is developed using the GUI toolkit
-          (Java Foundation Classes(JFC)/Swing) provided with Java platform 2 standard
-          edition (J2SE). The general look and feel of the user interface is according to
-          the Java&#x2122; Swing controls in order to run on both Windows and Unix/Linux
-          clients.</para> 
+        <para>The VizDesktop application is developed using the GUI
+        toolkit (Java Foundation Classes(JFC)/Swing) provided with
+        Java platform 2 standard edition (J2SE). The general look and
+        feel of the user interface is according to the Java Swing
+        controls in order to run on both Windows and Unix/Linux
+        clients.</para>
       </note> 
 
     <section id="startvizdesktop"> 
@@ -208,12 +207,12 @@ other keystrokes affect search box; load config menu item; -->
           <listitem> 
             <para><emphasis role="bold">On Windows</emphasis> execute the
               <filename>vizdesktop.bat</filename> file in
-              <filename>${OKS_HOME}\bin</filename>.</para> 
+              <filename>${ONTOPIA_HOME}\bin</filename>.</para> 
           </listitem> 
           <listitem> 
             <para><emphasis role="bold">On UNIX/Linux</emphasis> execute the
               <filename>vizdesktop.sh</filename> file in
-              <filename>${OKS_HOME}/bin</filename>.</para> 
+              <filename>${ONTOPIA_HOME}/bin</filename>.</para> 
           </listitem> 
         </orderedlist></para> 
       <para> To set the language used in the VizDesktop interface, you can edit
@@ -1048,7 +1047,7 @@ which is comes first in the precedence order.
   </section>
  
   <section id="vl01"> 
-    <title>VizLet&#x2122; - Vizigating in web applications</title> 
+    <title>VizLet - Vizigating in web applications</title> 
 
       <para> VizLet is an applet that provides the same visualization
         functionality as VizDesktop, except that the menu bar (and all the
@@ -1260,7 +1259,7 @@ example of how this can be done can be found in VizPlugin for
 Omnigator; looking at its source code may be instructive.</para>
 
 <para>The first step is to make the
-<filename>${OKS_HOME}/extras/ontopia-vizlet.jar</filename> file available on the server
+<filename>${ONTOPIA_HOME}/extras/ontopia-vizlet.jar</filename> file available on the server
 side. Put it anywhere you want, then make the <symbol>applet</symbol>
 element refer to it. Use the Java console of your web browser to check
 whether you have succeeded or not. For more information consult <ulink
@@ -1406,7 +1405,7 @@ it with unwelcome content.)
 
 <para>
 To solve this, there is another version of the VizLet in the
-<filename>${OKS_HOME}/extras/signed-vizlet.jar</filename> file, which is
+<filename>${ONTOPIA_HOME}/extras/signed-vizlet.jar</filename> file, which is
 cryptographically signed. This gives the VizLet access to the
 clipboard, provided users accept the certificate with which it was
 signed. In order to avoid bothering users with certificates the
@@ -1422,7 +1421,7 @@ parameter to VizLet as described in <xref linkend="sect-menufile"/>.
 </section>
  
   <section id="vp01"> 
-    <title>VizPlugin&#x2122; - Vizigating in Omnigator</title> 
+    <title>VizPlugin - Vizigating in Omnigator</title> 
 
       <para> VizPlugin is an Omnigator plug-in that adds support for graphic
         visual navigation of topic maps. It uses VizLet (described in
