@@ -10,7 +10,7 @@
     <affiliation><orgname>Ontopia</orgname></affiliation>
   </author>
   <pubdate>$Date: 2008/06/13 12:06:19 $</pubdate>
-  <releaseinfo>4.0 ($Revision: 1.27 $)</releaseinfo>
+  <releaseinfo>5.0 ($Revision: 1.27 $)</releaseinfo>
 </articleinfo>
 
 
@@ -30,7 +30,8 @@ The Web Editor Framework consists of some more actions than those
 documented here, and we are aware that this library of actions is
 unlikely to satisfy all needs. If you cannot find the action you need
 or cannot make one of the actions do what you want them to do, please
-send an email to <email>support@ontopia.net</email> and let us know.
+send an email to <ulink url="http://groups.google.com/group/ontopia"
+>the mailing list</ulink> and let us know.
 </para>
 </section>
   
