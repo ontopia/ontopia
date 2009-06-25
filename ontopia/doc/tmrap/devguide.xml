@@ -7,11 +7,11 @@
   <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>$Date: 2008/05/29 07:01:14 $</pubdate> 
-<releaseinfo>4.0 $Revision: 1.14 $</releaseinfo> 
+<releaseinfo>5.0 $Revision: 1.14 $</releaseinfo> 
 
 <abstract>
 <para>
-This document introduces the TMRAP web services interface to the OKS
+This document introduces the TMRAP web services interface to Ontopia
 and shows how to develop solutions using it. It introduces both the
 plain HTTP interface and the SOAP interface.
 </para>
@@ -24,7 +24,7 @@ plain HTTP interface and the SOAP interface.
 <title>Introduction</title>
 
 <para>
-TMRAP is a web service interface to the OKS which makes it possible to
+TMRAP is a web service interface to Ontopia which makes it possible to
 retrieve Topic Maps fragments from a remote Topic Maps server and also
 to modify the topic maps stored on the server. The interface consists
 of a number of methods which can be accessed either using plain HTTP
@@ -111,7 +111,7 @@ linkend="sect-soap"/>.
 <para>
 For many of the methods it's possible to specify which syntax the
 result should be returned in. The identifiers used for the syntaxes
-supported by the OKS are given below.
+supported by Ontopia are given below.
 </para>
 
 <itemizedlist>
@@ -281,22 +281,22 @@ listed below.
 <para>
 The set of topics found is produced in the same way as for the
 <symbol>get-topic</symbol> method (see <xref
-linkend="sect-get-topic"/>), but the topics are not merged.
-Instead, a small topic map describing the topics and the web pages
-they can be accessed through is returned. The topic map is best
-explained with an example. Let's say we start the Tomcat server in the
-OKS distribution, load <filename>opera.ltm</filename>, and ask for the
+linkend="sect-get-topic"/>), but the topics are not merged.  Instead,
+a small topic map describing the topics and the web pages they can be
+accessed through is returned. The topic map is best explained with an
+example. Let's say we start the Tomcat server in the Ontopia
+distribution, load <filename>opera.ltm</filename>, and ask for the
 topic page for Russia. The result would be the following topic map
 (except the IDs, which have been edited to make them more readable).
 </para>
 
 <literallayout>#PREFIX tmrap @"http://psi.ontopia.net/tmrap/"
 
-[oks : tmrap:server = "OKS Samplers local installation"]
+[ontopia : tmrap:server = "Ontopia local installation"]
 
 [opera : tmrap:topicmap = "The Italian Opera Topic Map"]
    {opera, tmrap:handle, [[opera.ltm]]}
-tmrap:contained-in(oks :  tmrap:container, opera : tmrap:containee)
+tmrap:contained-in(ontopia :  tmrap:container, opera : tmrap:containee)
 tmrap:contained-in(opera : tmrap:container, view : tmrap:containee)
 tmrap:contained-in(opera : tmrap:container, edit : tmrap:containee)
 
@@ -479,13 +479,13 @@ class.
 <title>The HTTP interface</title>
 
 <para>
-In the OKS distribution the plain HTTP interface is included as a
+In Ontopia distribution the plain HTTP interface is included as a
 servlet (implemented by the Java class
 <classname>net.ontopia.topicmaps.utils.tmrap.RAPServlet</classname>).
 This servlet can be made available in any web application by adding
 the appropriate mappings in the <filename>web.xml</filename> file, and
 this has been done in the <symbol>/tmrap/</symbol> web application in
-the OKS distribution. This means that each TMRAP method is available
+the Ontopia distribution. This means that each TMRAP method is available
 in plain HTTP style at the URL
 <symbol>http://localhost:8080/tmrap/tmrap/method-name</symbol>.
 </para>
@@ -503,7 +503,7 @@ to <symbol>http://localhost:8080/tmrap/tmrap/get-foo?bar=baz</symbol>.
 </para>
 
 <para>
-As an example, let's say we've got the OKS running, and we want
+As an example, let's say we've got Ontopia running, and we want
 information about Russia. We go into <filename>opera.ltm</filename>
 using the Omnigator, so that the topic map is loaded on the server.
 To get information about Russia using TMRAP we could use the following
@@ -565,12 +565,12 @@ should also be relatively straightforward to use.
 <section id="sect-soap">
 <title>The SOAP interface</title>
 
-<para>The SOAP interface to TMRAP has been created using Apache
-Axis2, the second-generation SOAP implementation from the Apache
+<para>The SOAP interface to TMRAP has been created using Apache Axis2,
+the second-generation SOAP implementation from the Apache
 Foundation. This interface is also located in the
-<symbol>/tmrap/</symbol> web application in the default OKS
-distribution. You can access this web application with a web browser
-to see the available web services and get the WSDL describing the SOAP
+<symbol>/tmrap/</symbol> web application in the Ontopia distribution.
+You can access this web application with a web browser to see the
+available web services and get the WSDL describing the SOAP
 interface.</para>
 
 <para>To access a SOAP interface you need a SOAP client for your
