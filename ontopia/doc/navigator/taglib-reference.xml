@@ -8,7 +8,7 @@
 <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>$Date: 2008/05/29 07:01:12 $</pubdate>
-<releaseinfo>4.0 ($Revision: 1.27 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.27 $)</releaseinfo>
 
 </articleinfo>
 
@@ -834,7 +834,7 @@ the topic with no link if it's not of one of the recognized types.
 <para>
 Sets the value of a navigator framework variable. This is generally
 used when working with the Web Editor Framework, or to interact with
-non-OKS tags and code. The tolog:set set tag must always be empty.
+non-Ontopia tags and code. The tolog:set set tag must always be empty.
 </para>
 
 <para>
