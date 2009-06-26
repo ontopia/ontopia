@@ -66,8 +66,6 @@
     <property name="build.doc" value="${build.root}/doc" />
     <property name="build.tmp" value="${build.root}/tmp" />
 
-    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" />
-
   </target>
 
   <!-- ======================================================================
@@ -75,8 +73,11 @@
         ====================================================================== -->
 
   <target name="ivy.resolve">
-    <ivy:resolve/>
+    <ivy:resolve />
+    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" />
   </target>
+
+  <ivy:settings id="ivy.instance" file="${basedir}/ivysettings.xml" />
 
   <ivy:cachepath pathid="project.classpath.ivy" organisation="net.ontopia" module="ontopia" conf="build"/>
 
@@ -1317,10 +1318,10 @@
   </target>
 
   <target name="dist.jar.ontopia" depends="dist.ontopia.init">
+    <antcall target="ivy.resolve"/>
     <antcall target="check-jvm"/>
     <antcall target="bootstrap"/>
     <antcall target="clean.classes"/>
-    <antcall target="ivy.resolve"/>
     <antcall target="compile.ontopia"/>
     <antcall target="compile.ontopia.test"/>
     <antcall target="jar.ontopia.test"/>
