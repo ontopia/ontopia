@@ -213,9 +213,9 @@ suite by following the instructions below:</para>
 <varlistentry>
 <term>Windows</term>
 <listitem><para>Go to the <filename>${basedir}</filename>
-directory. Set the environment variable <envar>OKS_HOME</envar> to
+directory. Set the environment variable <envar>ONTOPIA_HOME</envar> to
 <filename>${basedir}</filename>, using the command
-<command>set OKS_HOME=${basedir}</command>. Then run the
+<command>set ONTOPIA_HOME=${basedir}</command>. Then run the
 <command>tests\runtests-engine.bat</command> script.</para>
 </listitem>
 </varlistentry>
@@ -718,7 +718,7 @@ present.</para>
 <term>Installing the Omnigator in another Tomcat instance</term>
 <listitem>
 <para>To install the Omnigator in another Tomcat instance than the one
-which comes with the OKS, follow these steps:</para>
+which comes with Ontopia, follow these steps:</para>
 
 <orderedlist>
 <listitem>
