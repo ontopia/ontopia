@@ -16,10 +16,76 @@
 
 <abstract>
 <para>
-This document describes what has changed in the Ontopia Knowledge
-Suite between releases, both at a higher level, and in more detail.
+This document describes what has changed in Ontopia between releases,
+both at a higher level, and in more detail.
 </para>
 </abstract>
+
+<!-- ======================================================================
+     5.0.0                                                              -->
+<section>
+<title>Ontopia 5.0.0 release notes</title>
+
+<para>The biggest change with this release is a business change: the
+product is now open source, and the name has changed from the Ontopia
+Knowledge Suite to just Ontopia. A consequence of this change is that
+the license key restrictions are now completely gone from the product.
+You no longer need a valid license key to run Ontopia.</para>
+
+<para>The following changes have been made:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>The old TMAPI 1.0 support has been removed, and support for
+    TMAPI 2.0 added in its place.</para>
+  </listitem>
+  <listitem>
+    <para>The tolog query engine now has a new optimizer. See
+    <ulink url="http://ontopia.wordpress.com/2009/06/18/new-reordering-optimizer/"
+    >the blog</ulink> for more details.</para>
+  </listitem>
+  <listitem>
+    <para>The <classname>net.ontopia.topicmaps.query.utils.TologSpy</classname>
+    class has been added, providing a jdbcspy-like query profiler for
+    tolog queries.</para>
+  </listitem>
+  <listitem>
+    <para>The <classname>net.ontopia.topicmaps.utils.QNameRegistry</classname>
+    and <classname>QNameLookup</classname> classes have been added, providing
+    convenient lookup of topics using qnames.</para>
+  </listitem>  
+  <listitem>
+    <para>The old net.ontopia.product classes have been removed, in
+    favour of a single new class named
+    <classname>net.ontopia.Ontopia</classname>.</para>
+  </listitem>
+</itemizedlist>
+
+<para>The following bugs have been fixed:</para>
+
+<itemizedlist>  
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=2"
+     >Issue 2:</ulink> template definitions crash CTM parser</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=9"
+     >Issue 9:</ulink> Nontopoly model in Omnigator broken
+    </para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=20"
+     >Issue 20:</ulink> Exporting topic maps without schema broken in Ontopoly
+    </para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=28"
+     >Issue 28:</ulink> Merging lost item identifiers if they were the
+    same as some subject identifier    
+    </para>
+  </listitem>
+</itemizedlist>
+</section>
 
 <!-- ======================================================================
      4.1.0                                                              -->

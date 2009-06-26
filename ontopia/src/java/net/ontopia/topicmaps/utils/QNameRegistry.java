@@ -16,26 +16,16 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  * QName prefixes to be registered, and has a set of predefined QName
  * prefixes. Also allows topics to be looked up, via the QNameLookup
  * class.
- * @since %NEXT%
+ * @since 5.0.0
  */
 public class QNameRegistry {
   private Map prefixes;
   
   /**
-   * PUBLIC: Creates a registry populated with the default bindings.
+   * PUBLIC: Creates an empty registry.
    */
   public QNameRegistry() {
-    this(true);
-  }
-
-  /**
-   * PUBLIC: Creates a new registry.
-   * @param populate Populate with default bindings or not.
-   */
-  public QNameRegistry(boolean populate) {
     this.prefixes = new HashMap();
-    if (populate)
-      addDefaultPrefixes();
   }
 
   /**
@@ -76,15 +66,5 @@ public class QNameRegistry {
    */
   public QNameLookup getLookup(TopicMapIF topicmap) {
     return new QNameLookup(this, topicmap);
-  }
-
-  // --- Internal
-
-  private void addDefaultPrefixes() {
-    // xsd
-    // tmdm
-    // xtm
-    // dc
-    // op -> ontopedia?
   }
 }

@@ -12,7 +12,7 @@ import net.ontopia.topicmaps.query.parser.TologQuery;
  * PUBLIC: Query profiler for tolog. Note that it must be turned on by
  * a call to setIsRecording() in order to start recording data.
  *
- * @since %NEXT%
+ * @since 5.0.0
  */
 public class TologSpy {
   private static boolean is_recording = false;

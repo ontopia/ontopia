@@ -12,7 +12,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  * QName prefixes to be registered, and has a set of predefined QName
  * prefixes. Also allows topics to be looked up, via the QNameLookup
  * class.
- * @since %NEXT%
+ * @since 5.0.0
  */
 public class QNameLookup {
   private QNameRegistry registry;
