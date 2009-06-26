@@ -330,7 +330,8 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
         throw new UniquenessViolationException("Another object " + existing
             + " already has this item identifier: " + new_value + " (" + object
             + ") " + (existing == object));
-      // Check for subject indicator clash
+      
+      // Check for subject identifier clash
       existing = _getTopicBySubjectIdentifier(new_value);
       if (existing != null && existing != object && (object instanceof TopicIF))
         throw new UniquenessViolationException("Another topic " + existing

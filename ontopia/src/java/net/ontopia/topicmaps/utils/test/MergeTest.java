@@ -124,7 +124,7 @@ public class MergeTest extends AbstractTopicMapTestCase {
     t2.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
         
     assertTrue("claims topics should not merge when one is subject indicator of other",
-           MergeUtils.shouldMerge(t1, t2));
+               MergeUtils.shouldMerge(t1, t2));
   }
   
   public void testShouldTopicIsSubjectIndicatorReverse() {
@@ -854,17 +854,17 @@ public class MergeTest extends AbstractTopicMapTestCase {
     // its reifier
 
     // check
-		AssociationRoleIF newnrole = (AssociationRoleIF)target.getRoles().iterator().next();
-		// locate distant role
-		AssociationRoleIF newdrole = null;
-		Iterator iter = newnrole.getAssociation().getRoles().iterator();
-		while (iter.hasNext()) {
-			AssociationRoleIF role = (AssociationRoleIF)iter.next();
-			if (ObjectUtils.different(newnrole, role)) {
-				newdrole = role;
-				break;
-			}
-		}
+    AssociationRoleIF newnrole = (AssociationRoleIF)target.getRoles().iterator().next();
+    // locate distant role
+    AssociationRoleIF newdrole = null;
+    Iterator iter = newnrole.getAssociation().getRoles().iterator();
+    while (iter.hasNext()) {
+      AssociationRoleIF role = (AssociationRoleIF)iter.next();
+      if (ObjectUtils.different(newnrole, role)) {
+        newdrole = role;
+        break;
+      }
+    }
     assertTrue("Distant role lost reifier on merge",
                newdrole.getReifier() == reifier);
     assertTrue("Topic lost reified on merge",

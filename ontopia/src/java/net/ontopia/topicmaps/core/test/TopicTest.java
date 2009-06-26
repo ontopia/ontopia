@@ -116,7 +116,7 @@ public class TopicTest extends AbstractTMObjectTest {
                topic.getOccurrences().size() == 0);
 
     // STATE 2
-		TopicIF otype = builder.makeTopic();
+    TopicIF otype = builder.makeTopic();
     OccurrenceIF occurrence = builder.makeOccurrence(topic, otype, "");
     // added by builder
 
@@ -178,11 +178,11 @@ public class TopicTest extends AbstractTMObjectTest {
     assertTrue("duplicate not rejected",
                topic.getRoles().size() == 1);
 
-		try {
-			role.setPlayer(null);
-			fail("player could be set to null");
-		} catch (NullPointerException e) {
-		}
+    try {
+      role.setPlayer(null);
+      fail("player could be set to null");
+    } catch (NullPointerException e) {
+    }
     assertTrue("player not retained", role.getPlayer().equals(topic));
   }
   
@@ -309,9 +309,7 @@ public class TopicTest extends AbstractTMObjectTest {
   }
 
   public void testSourceLocatorTopicSubjectIndicator() {
-    // this is overridden from AbstractTMObject, because in this case
-    // the collision is not allowed, but for all other TMObjectIFs it
-    // is allowed (to provide reification)
+    // this is forbidden, according to the TMDM
     try {
       URILocator loc = new URILocator("http://www.ontopia.net");
 
@@ -319,7 +317,8 @@ public class TopicTest extends AbstractTMObjectTest {
       topic2.addSubjectIdentifier(loc);
                         
       topic.addItemIdentifier(loc);
-      fail("allowed subject indicator of one topic to be source locator of another");
+      fail("subject identifier of one topic allowed to be item identifier " +
+           "of another");
     }
     catch (MalformedURLException e) {
       fail("(INTERNAL) bad URL given" + e);
@@ -328,6 +327,25 @@ public class TopicTest extends AbstractTMObjectTest {
     }
   }
 
+  public void testSourceLocatorTopicSubjectIndicator2() {
+    // this is forbidden, according to the TMDM
+    try {
+      URILocator loc = new URILocator("http://www.ontopia.net");
+      topic.addItemIdentifier(loc);
+
+      TopicIF topic2 = builder.makeTopic();
+      topic2.addSubjectIdentifier(loc);
+                        
+      fail("item identifier of one topic allowed to be subject identifier " +
+           "of another");
+    }
+    catch (MalformedURLException e) {
+      fail("(INTERNAL) bad URL given" + e);
+    }
+    catch (ConstraintViolationException e) {
+    }
+  }
+  
   public void testBug652a() {
     try {
       TopicIF topic = builder.makeTopic();
@@ -358,6 +376,23 @@ public class TopicTest extends AbstractTMObjectTest {
     }
   }
 
+  public void testBug652c() {
+    try {
+      TopicIF t1 = builder.makeTopic();
+      URILocator loc = new URILocator("http://www.ontopia.net/B");
+      t1.addSubjectIdentifier(loc);
+
+      TopicIF t2 = builder.makeTopic();
+      t2.addItemIdentifier(loc);
+      fail("subject identifier of one topic allowed to be item identifier of " +
+           "another");
+    } catch (MalformedURLException e) {
+      fail("(INTERNAL) bad URL given" + e);
+    } catch (UniquenessViolationException e) {
+      // this is the expected outcome
+    }
+  }
+  
   // --- Internal methods
 
   public void setUp() {

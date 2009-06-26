@@ -298,7 +298,7 @@ public class MergeUtils {
    * @since 2.0
    */
   public static TopicIF mergeInto(TopicMapIF targettm, TopicIF source,
-                               DeciderIF decider) {
+                                  DeciderIF decider) {
     if (source.getTopicMap() == targettm)
       return source;
 
@@ -417,9 +417,9 @@ public class MergeUtils {
                                                  "the same source locator (" + loc +
                                                  "): " + target + " and " + object);
         } else {
-					target.remove();
+          target.remove();
           return object; // this is a duplicate
-				}
+        }
       } else
         target.addItemIdentifier(loc);
     }
@@ -465,7 +465,7 @@ public class MergeUtils {
   public static TopicIF copyIdentifiers(TopicIF target, TopicIF source) {
     TopicMapIF targettm = target.getTopicMap();
 
-    // merging subject locators
+    // merging on subject locators
     Iterator it = source.getSubjectLocators().iterator();
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
@@ -479,21 +479,31 @@ public class MergeUtils {
         target.addSubjectLocator(loc);
     }
 
-    // merging subject indicators
+    // merging on subject identifiers
     it = source.getSubjectIdentifiers().iterator();
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
       TopicIF found = targettm.getTopicBySubjectIdentifier(loc);
+
+      if (found == null) {
+        TMObjectIF f = targettm.getObjectByItemIdentifier(loc);
+        if (f instanceof TopicIF)
+          found = (TopicIF) f;
+      }
+      
       if (found != null) {
         if (found != target) {
           mergeInto(found, target);
           target = found;
         }
-      } else
-        target.addSubjectIdentifier(loc);
+      }
+
+      // have to copy subject identifier across, in case we merged via item
+      // identifier
+      target.addSubjectIdentifier(loc);
     }
 
-    // merging source locators
+    // merging on item identifiers
     it = source.getItemIdentifiers().iterator();
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
@@ -504,13 +514,19 @@ public class MergeUtils {
                                                " " + f);
       
       TopicIF found = (TopicIF) f;
+      if (found == null)
+        found = targettm.getTopicBySubjectIdentifier(loc);
+      
       if (found != null) {
         if (found != target) {
           mergeInto(found, target);
           target = found;
         }
-      } else
-        target.addItemIdentifier(loc);
+      }
+
+      // have to copy item identifier across, in case we merged via subject
+      // identifier
+      target.addItemIdentifier(loc); 
     }
     
     return target;
@@ -620,7 +636,7 @@ public class MergeUtils {
           registerMerge(targetT, sourceT, mergemap, mergemapRev);
       }
 
-      // subject indicators
+      // subject identifiers
       it2 = new ArrayList(sourceT.getSubjectIdentifiers()).iterator();
       while (it2.hasNext()) {
         LocatorIF ind = (LocatorIF) it2.next();
@@ -642,13 +658,8 @@ public class MergeUtils {
         TMObjectIF object = target.getObjectByItemIdentifier(loc);
         if (object != null && object instanceof TopicIF) 
           targetT = (TopicIF) object;
-        else {
+        else
           targetT = target.getTopicBySubjectIdentifier(loc);
-          if (targetT != null)
-            // topic can't have same locator as sourceloc & subjectind, so
-            // we remove the indicator. (mergemap will ensure things work out)
-            targetT.removeSubjectIdentifier(loc);
-        }
 
         if (targetT != null)
           registerMerge(targetT, sourceT, mergemap, mergemapRev);
@@ -848,7 +859,7 @@ public class MergeUtils {
       OccurrenceIF occ1 = builder.makeOccurrence(target, copyTopic(builder.getTopicMap(), occ2.getType()), "");
       CopyUtils.copyOccurrenceData(occ1, occ2);
       copyScope(occ1, occ2, mergemap);
-			copyReifier(occ1, occ2, mergemap);
+      copyReifier(occ1, occ2, mergemap);
 
       if (keys.contains(KeyGenerator.makeOccurrenceKey(occ1))) 
         occ1.remove();
