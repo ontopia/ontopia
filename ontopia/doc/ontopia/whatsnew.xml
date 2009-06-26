@@ -11,7 +11,7 @@
 </affiliation>
 </author>
 <pubdate>$Date: 2008/08/19 12:21:07 $</pubdate>
-<releaseinfo>4.0 ($Revision: 1.144 $)</releaseinfo>
+<releaseinfo>5.0 ($Revision: 1.144 $)</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -24,11 +24,220 @@ Suite between releases, both at a higher level, and in more detail.
 <!-- ======================================================================
      4.1.0                                                              -->
 <section>
-<title>OKS 4.0.2 release notes</title>
+<title>OKS 4.1.0 release notes</title>
+
+<para>This release contains a major upgrade of Ontopoly, the Topic
+Maps editor. The internals of the editor has to a major extent been
+rewritten and modularized. Most of the old functionality is still
+there, and we have also added a lot new features:</para>
+
+<itemizedlist>
+  <listitem>
+    <para></para>
+  </listitem>
+  <listitem>
+    <para>The ontology model used by the editor is now represented in
+    a way that allows it to be edited by Ontopoly itself. All editing
+    of topic maps data, including the Ontopoly schema, now happen
+    through the same editor components. The rationale for doing this
+    has been to make it easier to extend the editor and repurpose its
+    components in new contexts. Improving the embeddability of the
+    editor has been an important goal of this release.</para>
+  </listitem>
+  <listitem>
+    <para>Fields are now first class citizens, and this makes it
+    possible to say things about them. The fields are now represented
+    as topics in the ontology model. This makes the model a lot more
+    flexible as one can now say things about the fields and ask
+    questions about them more easily.</para>
+  </listitem>
+  <listitem>
+    <para>Support for field views has been added. This lets you assign
+    a field to one or more views, so that if you edit a topic in a
+    particular view, only the fields declared on the topic type in
+    that view are shown. This can be specified on the "Part of views"
+    field on the name field, identity field, occurrence field, or role
+    field topics.</para>
+  </listitem>
+  <listitem>
+    <para>One can now customize how a field is rendered in the
+    different views, e.g. it can be read-only in one view, but
+    editable in another. Links to topics can be traversable in some
+    views, not not others, and so on. This can be specified on the
+    "View mode" field on the name field, identity field, occurrence
+    field, or role field topics. The available options are "Embedded",
+    "Hidden", "Not traversable", and "Read-only".</para>
+  </listitem>
+  <listitem>
+    <para>Topics in association fields can now be edited in embedded
+    mode. This lets you edit the referenced topics on the same page as
+    the current one. There are no restrictions on how many nested
+    embedded topics there can be. This can be configured per field and
+    view. This feature has been used extensively in the Ontopoly
+    ontology editor. All the grey boxes with borders are actually
+    embedded field values, and thus topics in the topic map.</para>
+  </listitem>
+  <listitem>
+    <para>Given a field in a particular view, it is possible to
+    specify the view referenced by the links to other topics. This
+    allows one to change the view as the user navigates from topic to
+    topic in the editor. This is specified through the "Value view"
+    field on the role field topic.</para>
+  </listitem>
+  <listitem>
+    <para>Reordering fields in the topic type fields editor is now
+    done through drag-and-drop.</para>
+  </listitem>
+  <listitem>
+    <para>Binary association field values are now sortable. The user
+    can reorder field values using drag-and-drop. This can be enabled
+    by checking the "Sortable" field on the role field topic.</para>
+  </listitem>
+  <listitem>
+    <para>One can now specify the create and selection policies on
+    association fields. This lets one restrict how topics are selected
+    for the field, and also how they are created and deleted. This is
+    done through the "Edit modes" field on the role field topic. The
+    options are "Existing values only", "New values only", "No edit",
+    "Normal", "Owned values"</para>
+  </listitem>
+  <listitem>
+    <para>One can now define what happens when a new player topic is
+    created on a field. This is done through the "Create actions"
+    field on the role field topic. The options are: "Edit new topic in
+    popup window", "Go to new topic", and "None".</para>
+  </listitem>
+  <listitem>
+    <para>It is possible to fully customize what topic types one can
+    select or create instances of in a given context for a given
+    field. This is done through the "Players query", "Players search
+    query", and "Players types query" fields on the role field
+    topic.</para>
+  </listitem>
+  <listitem>
+    <para></para>
+  </listitem>
+  <listitem>
+    <para></para>
+  </listitem>
+</itemizedlist>
+
+<para>Other minor changes in this release are:</para>
+
+<itemizedlist>
+  <!--listitem>
+    <para>A <emphasis>short circuiting or</emphasis> clause has been
+    added to tolog. The syntax is the same as for regular
+    <emphasis>or</emphasis> clauses, except that <command>||</command>
+    is used as the separator instead of <command>|</command>. This
+    clause behaves similarly to an if-then-else operator. Only the
+    first clause that evaluates to true will be part of the
+    result.</para>
+  </listitem-->
+  <listitem>
+    <para>Ordering by tolog variable that contains objects of
+    different types will now order topics relatively by name, the same
+    behavour as when ordering a topic-only variable. The old behavior
+    in this case was to order by object id. This has been done to
+    reduce the confusion that occurs when topics suddenly appear
+    unordered even though one said that they should be ordered.</para>
+  </listitem>
+  <listitem>
+    <para>The tolog query tracer is now properly thread safe and will
+    keep a query trace stack per thread. This prevents multiple
+    threads to interfere with each others query traces.</para>
+  </listitem>
+  <listitem>
+    <para><filename>jgroups-all.jar</filename> has been upgraded to
+    the JGroups 2.6.10.merge release.</para>
+  </listitem>
+</itemizedlist>
+
+</section>
+
+<!-- ======================================================================
+     4.0.5                                                              -->
+<section>
+<title>OKS 4.0.5 release notes</title>
+
+<para>This release fixes several bugs and adds support for importing
+CTM files (ISO 13250-6: CTM (Compact Notation)). The following bugs
+have been fixed:</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=1963"
+    >Bug #1963:</ulink> TMXMLWriter does not seem to support multityped topics.</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2161"
+    >Bug #2161:</ulink> Broken encoding when exporting from Ontopoly</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2162"
+    >Bug #2162:</ulink> Ontopoly User Guide: broken link</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2167"
+    >Bug #2167:</ulink> MergeUtils overwrites existing topic map reifier</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2168"
+    >Bug #2168:</ulink> Merging causes "Cannot reassign object" error</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2171"
+    >Bug #2171:</ulink> Symmetric association types broken</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2173"
+    >Bug #2173:</ulink> Instances tab should be default </para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2175"
+    >Bug #2175:</ulink> IndexOutOfBoundsException on association type config</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2178"
+    >Bug #2178:</ulink> Multiple changes to same topic not handled correctly</para>
+  </listitem>
+</itemizedlist>
+
+</section>
+
+<!-- ======================================================================
+     4.0.4                                                              -->
+<section>
+<title>OKS 4.0.4 release notes</title>
+
+<para>This release is a security release.</para>
+
+<warning><para>There is a security hole in earlier releases that made
+it possible to upload web archive files (.war) files remotely. Please
+upgrade to releases 3.4.7 or 4.0.4 as these do not have this
+problem.</para>
+
+<para>As an alternative to upgrading one can delete the directory
+<filename>$OKS_HOME/apache-tomcat/server/webapps/manager</filename>
+and the files
+<filename>$OKS_HOME/apache-tomcat/conf/Catalina/localhost/manager.xml</filename>
+and <filename>$OKS_HOME/apache-tomcat/conf/tomcat-users.xml</filename>
+before restarting the Apache Tomcat server.</para></warning>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2166"
+    >Bug #2166:</ulink> Tomcat allows remote exceution of arbitrary code</para>
+  </listitem>
+</itemizedlist>
+</section>
+
+<!-- ======================================================================
+     4.0.3                                                              -->
+<section>
+<title>OKS 4.0.3 release notes</title>
 
 <para>This release is a bug fix release.</para>
-
-ontopoly performance improvements
 
 <itemizedlist>
   <listitem>
@@ -36,12 +245,8 @@ ontopoly performance improvements
     >Bug #2146:</ulink> Symmetric checkbox is disabled on unary association</para>
   </listitem>
   <listitem>
-    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2147"
+		<para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2147"
     >Bug #2147:</ulink> Omnigator export plug-in exports topic maps with the name null.xml</para>
-  </listitem>
-  <listitem>
-    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2148"
-    >Bug #2148:</ulink> Symmetric association not editable</para>
   </listitem>
   <listitem>
     <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2149"
@@ -50,6 +255,25 @@ ontopoly performance improvements
   <listitem>
     <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2150"
     >Bug #2150:</ulink> jing.jar is broken on Java 6, MacOSX</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2151"
+    >Bug #2151:</ulink> TopicIF.remove() does not remove scoped objects</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2152"
+    >Bug #2152:</ulink> Oracle Text full-text query fails because of datatype issue</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2158"
+    >Bug #2158:</ulink> Oracle CLOB indexes does not work properly</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://www.ontopia.net/bugs/showbug.cgi?id=2160"
+    >Bug #2160:</ulink> Negation fails with a NullPointerException</para>
+  </listitem>
+  <listitem>
+    <para>Apache Tomcat has been upgraded to version 5.5.27.</para>
   </listitem>
 </itemizedlist>
 </section>
