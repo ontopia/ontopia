@@ -164,9 +164,9 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   }
 
   /**
-   * Set a variable in the oks environment to a given value.
+   * Set a variable in the ontopia environment to a given value.
    */
-  private void setOks(String var, Object val) {
+  private void setOntopia(String var, Object val) {
     if (val instanceof Object[]) {
 
       Object[] jstlArray = (Object[])val;
@@ -176,11 +176,11 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
       contextManager.setValue(var, (jstlArray.length == 0)
               ? null
               : jstlArray[0]);
-      Collection oksValue = contextManager.getValue(var);
+      Collection ontopiaValue = contextManager.getValue(var);
 
-      // Add the rest of the values in jstlArray to oksValue.
+      // Add the rest of the values in jstlArray to ontopiaValue.
       for (int i = 1; i < jstlArray.length; i++)
-        oksValue.add(jstlArray[i]);
+        ontopiaValue.add(jstlArray[i]);
     } else if (val instanceof Collection) {
       contextManager.setValue(var, (Collection)val);
     } else {
@@ -229,8 +229,8 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
    */
   public int doEndTag() throws JspException {
     // Bind 'outValue' to var in appropriate scope.
-    if (scope == null || scope.equals("oks"))
-      setOks(var, outValue);
+    if (scope == null || scope.equals("ontopia") || scope.equals("oks"))
+      setOntopia(var, outValue);
     else
       setJstl(var, outValue, mapScope(scope));
 

@@ -924,12 +924,12 @@ scope.
     <row> 
       <entry>scope</entry> 
       <entry>no</entry> 
-      <entry>application | session | request | page | oks</entry> 
+      <entry>application | session | request | page | ontopia</entry> 
       <entry>Controls where the variable is set. If value is
-      <literal>oks</literal> (which is the default) the variable is
+      <literal>ontopia</literal> (which is the default) the variable is
       set as a Navigator Framework variable. If not, it is set as a
       JSP container attribute, and not as a Navigator Framework
-      variable at all.  The values other than <literal>oks</literal>
+      variable at all.  The values other than <literal>ontopia</literal>
       indicate which scope in the JSP container the attribute is to be
       set in.</entry>
     </row>
@@ -940,7 +940,7 @@ scope.
       url="http://java.sun.com/j2ee/1.4/docs/tutorial/doc/JSPIntro7.html">JSP
       expression</ulink></entry>
       <entry>The JSP expression computes the value to be set. Note
-      that when scope is <literal>oks</literal> values that are arrays
+      that when scope is <literal>ontopia</literal> values that are arrays
       will be converted to collections, collections will stay as
       collections, and anything else (including null) will become
       singleton collections. (This is done because Navigator Framework
