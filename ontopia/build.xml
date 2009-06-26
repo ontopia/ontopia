@@ -43,7 +43,9 @@
     <property name="topicmaps.path" value="${project.root}/topicmaps" />
     <property name="3rdparty.path" value="${project.root}/3rdparty" />
     <property name="lib.path" value="${project.root}/lib" />
-    <echo>:${doc.path}:</echo>
+
+    <!-- User information -->
+    <property name="build.user" value="${user.name}" />
 
     <!-- Compiler properties -->
     <property name="build.compiler" value="modern" />
@@ -112,7 +114,7 @@
     <echo>Creating engine runtime jar file...</echo>
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
       <patternset>
-        <include name="net/ontopia/test/TestRunner.java" />
+        <!--include name="net/ontopia/test/TestRunner.java" /-->
         <include name="net/ontopia/ant/TestTask.java" />
         <include name="net/ontopia/ant/TemplateTexenTask.java" />
       </patternset>
@@ -120,7 +122,7 @@
     <delete file="${3rdparty.path}/ontoboot.jar" />
     <jar basedir="${build.classes}" jarfile="${3rdparty.path}/ontoboot.jar">
       <patternset>
-        <include name="net/ontopia/test/TestRunner.java" />
+        <!--include name="net/ontopia/test/TestRunner.class" /-->
         <include name="net/ontopia/ant/TestTask.class" />
         <include name="net/ontopia/ant/TemplateTexenTask.class" />
       </patternset>
@@ -175,6 +177,7 @@
   <!-- Patterns -->
   <patternset id="sources.engine">
     <include name="net/ontopia/Ontopia.java" />
+    <include name="net/ontopia/product/*.java" />
     <include name="net/ontopia/net/*.java" />
     <include name="net/ontopia/net/data/*.java" />
     <include name="net/ontopia/utils/*.java" />
@@ -204,6 +207,7 @@
 
   <patternset id="classes.engine">
     <include name="net/ontopia/Ontopia.class" />
+    <include name="net/ontopia/product/*.class" />
     <include name="net/ontopia/net/*.class" />
     <include name="net/ontopia/net/data/*.class" />
     <include name="net/ontopia/utils/*.class" />
@@ -1015,7 +1019,8 @@
     </copy>
 
     <echo>Generating jar digests...</echo>
-    <java classname="net.ontopia.net.JarDigests" fork="true" classpathref="project.classpath">
+    <java classname="net.ontopia.product.JarDigests" 
+          fork="true" classpathref="project.classpath">
       <arg value="${dist.path}/lib/" />
       <arg value=".*\.jar" />
       <arg value="${dist.path}/lib/digests.txt" />
@@ -1996,16 +2001,35 @@
 
   </target>
 
+  <target name="oo" depends="init">
+    <echo>I: ${build.user}</echo>
+  </target>
+
   <!-- - - - Update product class - - - - - - - - - - - - - - - - - - - - - -->
+
+  <patternset id="sources.product">
+    <include name="net/ontopia/utils/StreamUtils.java" />
+    <include name="net/ontopia/net/MD5.java" />
+    <include name="net/ontopia/product/CreateProductClass.java" />
+  </patternset>
 
   <target name="prepare.product.class">
     <!-- Bump build numbers and update product version information -->
-    <exec dir="${src.path}" executable="python">
-      <arg value="scripts/newbuild.py" />
-      <arg value="update(${ontopia.version}, {})" />
-      <!-- product information dictionary -->
-      <arg value="java/net/ontopia/Ontopia.java" />
-    </exec>
+    <delete file="${build.classes}/net/ontopia/Ontopia.class" />
+    <delete file="${src.path}/java/net/ontopia/Ontopia.java" />
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+      <patternset refid="sources.product" />
+    </javac>
+    <java classname="net.ontopia.product.CreateProductClass" 
+          fork="true" classpathref="project.classpath">      
+      <arg value="${src.path}/java/net/ontopia/" /> <!-- product information dictionary -->
+      <arg value="Ontopia" />
+      <arg value="${dist.version.major}" />
+      <arg value="${dist.version.minor}" />
+      <arg value="${dist.version.micro}" />
+      <arg value="${dist.is.beta}" />
+      <arg value="${build.user}" />
+    </java>
   </target>
 
   <!-- - - - Collect schema components  - - - - - - - - - - - - - - - - - - - -->

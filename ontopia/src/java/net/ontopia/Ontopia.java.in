@@ -24,7 +24,7 @@ public final class Ontopia {
   private static final int micro_version;
   private static final int beta_version;
   private static final Calendar build_date;
-  private static final int build_number;
+  private static final String build_user;
 
   static {
     name = "Ontopia Topic Maps Engine";
@@ -36,7 +36,7 @@ public final class Ontopia {
 
     build_date = Calendar.getInstance();
     build_date.set(%(BUILD_DATE)s);
-    build_number = %(BUILD_NUMBER)s;
+    build_user = "%(BUILD_USER)s";
   }
 
   private Ontopia() {
@@ -107,15 +107,15 @@ public final class Ontopia {
   }
 
   /**
-   * PUBLIC: Returns the product build number.
+   * PUBLIC: Returns the product build user.
    */
-  public static int getBuildNumber() {
-    return build_number;
+  public static String getBuildUser() {
+    return build_user;
   }
 
   /**
    * PUBLIC: Returns a formatted string with product the build date
-   * and build number.
+   * and build user.
    */
   public static String getBuild() {
     int year = getBuildDate().get(Calendar.YEAR);
@@ -124,14 +124,14 @@ public final class Ontopia {
     int hour = getBuildDate().get(Calendar.HOUR_OF_DAY);
     int minute = getBuildDate().get(Calendar.MINUTE);
 
-    int bno = getBuildNumber();
+    String user = getBuildUser();
 
     return year + "-"
       + (month < 10 ? "0" + month : String.valueOf(month)) + "-"
       + (day < 10 ? "0" + day : String.valueOf(day))
       + " " +  (hour < 10 ? "0" + hour : String.valueOf(hour)) + ":"
       + (minute < 10 ? "0" + minute : String.valueOf(minute))
-      + " #" + (bno < 10 ? "0000" + bno : (bno < 100 ? "000" + bno : (bno < 1000 ? "00" + bno : (bno < 10000 ? "0" + bno : String.valueOf(bno)))));
+      + (user == null ? "" : " by " + getBuildUser());
   }
 
   private static void checkClass(String class_name, String jar_file) {
