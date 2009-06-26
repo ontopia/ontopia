@@ -1008,7 +1008,7 @@ This section provides additional information about the topic map
 utility package (<symbol>net.ontopia.topicmaps.utils</symbol>).  The
 discussions below not only provide information about individual
 utilities, but hopefully also insight into the general design and
-coding style used throughout the Ontopia Knowledge Suite.
+coding style used throughout the Ontopia code.
 </para>
 
 <para>
