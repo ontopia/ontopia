@@ -245,6 +245,7 @@
     <test>net.ontopia.topicmaps.utils.test.TopicMapSynchronizerTests</test>
     <test>net.ontopia.topicmaps.utils.test.TopicMapSynchronizerBKTest</test>
     <test>net.ontopia.topicmaps.utils.test.ImportExportUtilsTest</test>
+    <test>net.ontopia.topicmaps.utils.test.QNameTests</test>
   </group>
 
   <group>
