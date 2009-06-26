@@ -4,12 +4,7 @@
 
   <group>
     <name>ontopia</name>
-    <group-ref>engine</group-ref>
-    <group-ref>fulltext</group-ref>
-    <group-ref>query</group-ref>
-    <group-ref>schema</group-ref>
-    <group-ref>navigator</group-ref>
-    <group-ref>webed</group-ref>
+    <group-ref>complete-non-rdbms</group-ref>
   </group>
 	
   <group>
