@@ -197,15 +197,15 @@ it has been installed correctly or not.
 <para>
 You need to add the
 
- <filename>${basedir}/lib/ontopia.jar</filename>
+ <filename>${basedir}/lib/ontopia-tests.jar</filename>
 
 jar-file to your <envar>CLASSPATH</envar> to run the test suite. This
 jar-file automatically includes the <filename>junit.jar</filename>
 jar-file. Note that you only need these two jar-files when running the
 test suite. They are not required when you are using the Ontopia.</para>
 
-<para>You can now run the <emphasis>Topic Map Engine</emphasis> test
-suite by following the instructions below:</para>
+<para>You can now run the test suite by following the instructions
+below:</para>
 
 <variablelist>
 <varlistentry>
@@ -214,7 +214,7 @@ suite by following the instructions below:</para>
 directory. Set the environment variable <envar>ONTOPIA_HOME</envar> to
 <filename>${basedir}</filename>, using the command
 <command>set ONTOPIA_HOME=${basedir}</command>. Then run the
-<command>tests\runtests-engine.bat</command> script.</para>
+<command>tests\runtests-ontopia.bat</command> script.</para>
 </listitem>
 </varlistentry>
 
@@ -222,7 +222,7 @@ directory. Set the environment variable <envar>ONTOPIA_HOME</envar> to
 <term>Unix</term>
 <listitem>
 <para>Go to the <filename>${basedir}</filename> directory. Then run
-the <command>tests/runtests-engine.sh</command> script.</para>
+the <command>tests/runtests-ontopia.sh</command> script.</para>
 </listitem>
 </varlistentry>
 </variablelist>
@@ -232,7 +232,7 @@ You should see the following output:
 </para>
 
 <screen>
-Ontopia Topic Map Engine [version]
+Ontopia Topic Maps Engine [version]
 License: [license info]
 Success: All required classes found.
 Running tests
@@ -290,57 +290,22 @@ send an email to <email>support@ontopia.net</email> including:
 </listitem>
 <listitem>
 <para>the output from the command
-<command>java net.ontopia.products.TopicMapEngine</command>.</para>
+<command>java net.ontopia.Ontopia</command>.</para>
 </listitem>
 </itemizedlist>
 
 <para>
 If the test runs without errors, as it should do, you can be confident
-that you have a working version of the Ontopia Topic Map Engine.
+that you have a working version of the Ontopia Topic Maps Engine.
 </para>
 
 <para>
-The other Ontopia components can also be tested individually. The
-procedure is the same as for the Topic Maps Engine, except that the
-test scripts have different names.
-</para>
-
-<variablelist>
-<varlistentry>
-<term>Ontopia Navigator Framework</term>
-<listitem>
-<para>Add the following jar files from the
-<filename>${basedir}/apache-tomcat/common/lib/</filename> directory to
-your <envar>CLASSPATH</envar>:
-<filename>servlet-api.jar</filename>,
-<filename>jsp-api.jar</filename>,
-<filename>standard.jar</filename>, and
-<filename>jstl.jar</filename>.
-Then run
-<command>tests\runtests-navigator.bat</command> or
-<command>tests/runtests-navigator.sh</command></para>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term>Ontopia Web Editor Framework</term>
-<listitem>
-<para>Add
-<filename>${basedir}/apache-tomcat/common/lib/servlet-api.jar</filename>
-and <filename>${basedir}/apache-tomcat/common/lib/jsp-api.jar</filename>
-to the <envar>CLASSPATH</envar>, then run
-<command>tests\runtests-webed.bat</command> or
-<command>tests/runtests-webed.sh</command></para>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term>Ontopia RDBMS Backend</term>
-<listitem>
-<para>Set up your database (as described further down), then run
+The tests for the RDBMS backend have been separated out, since they
+require a database to be set up and configured, and so require quite a
+bit of initial setup. To run these tests set up your database (as
+described further down), then run
 <command>tests\runtests-rdbms.bat</command> or
-<command>tests/runtests-rdbms.sh</command></para>
-</listitem>
-</varlistentry>
-</variablelist>
+<command>tests/runtests-rdbms.sh</command>.</para>
 </section>
 
 <section id="INSTALL_rdbms">
@@ -383,9 +348,10 @@ details of the APIs.
 </para>
 
 <para>
-To provide you with example data we have included the
-<filename>${basedir}/samples</filename> directory, which contains XTM,
-HyTM, and LTM topic maps.
+You can find example topic maps in the
+<filename>${basedir}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps</filename>
+directory, which contains topic maps in the XTM 1.0, 2.0, CTM, and LTM
+formats.
 </para>
 </section>
 
