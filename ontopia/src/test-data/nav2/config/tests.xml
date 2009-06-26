@@ -462,6 +462,7 @@
     <jsp file="ttl-query-oid.jsp"/>
     <jsp file="ttl-query-set.jsp"/>
     <jsp file="ttl-set-body.jsp"/>
+    <jsp file="ttl-set-ontopia.jsp"/>
     <jsp file="ttl-set-query.jsp"/>
     <jsp file="ttl-set-query-qname.jsp"/>
     <jsp file="ttl-set-query-twice.jsp"/>
