@@ -23,12 +23,12 @@
 
 <abstract>
 <para>This document is the user's guide to the Ontopia Omnigator, the
-omnivorous topic map navigator built using components of the Ontopia
-Knowledge Suite. It explains how to navigate topic maps using the
-Omnigator, and also provides some guidance on how to create and load
-your own topic maps. It assumes some basic knowledge about topic maps.
-We welcome any suggestions you might have on ways of improving this User
-Guide. Please send them to <email>dev@ontopia.net</email>.</para>
+omnivorous topic map navigator built using Ontopia. It explains how to
+navigate topic maps using the Omnigator, and also provides some
+guidance on how to create and load your own topic maps. It assumes
+some basic knowledge about topic maps.  We welcome any suggestions you
+might have on ways of improving this User Guide. Please send them to
+<email>dev@ontopia.net</email>.</para>
 </abstract>
 </articleinfo>
 
@@ -89,7 +89,7 @@ you have some basic knowledge about topic maps. If you don&#8217;t,
 try reading one of the simple introductions, such as <ulink
 url="http://www.ontopia.net/topicmaps/materials/tao.html">The TAO of
 Topic Maps</ulink>, available from the Ontopia web site, or the
-chapter <quote>Topic maps: Knowledge navigation aids</quote> in the
+chapter <quote>Topic Maps: Knowledge navigation aids</quote> in the
 <ulink url="http://www.xmlbooks.com/xhb.htm">XML Handbook</ulink>. If
 you are technically minded you might also want to look at the <ulink
 url="http://www.topicmaps.org/xtm/1.0">XTM Specification</ulink>, the
@@ -125,14 +125,14 @@ standard http protocol.</para>
 </figure>
 
 <para>On the server side there is a J2EE web application built using
-the Ontopia Knowledge Suite, that runs in the Tomcat web server. This
-application reads (and writes) topic maps and generates HTML pages on
-the fly. On the client, a standard web browser receives these HTML
-pages and displays a view of some portion of the topic map. This view
-is rich in links, built from the data structures that constitute the
-topic map. Each time the user clicks on a link, a request is sent to
-the server application, resulting in a new set of information
-extracted from the topic map.</para>
+Ontopia, that runs in the Tomcat web server. This application reads
+(and writes) topic maps and generates HTML pages on the fly. On the
+client, a standard web browser receives these HTML pages and displays
+a view of some portion of the topic map. This view is rich in links,
+built from the data structures that constitute the topic map. Each
+time the user clicks on a link, a request is sent to the server
+application, resulting in a new set of information extracted from the
+topic map.</para>
 
 <para>If you have a standard installation of the free Omnigator
 download, the Tomcat server will be running on the same machine as the
@@ -643,9 +643,8 @@ both the latter roles are played by the same character.)</para>
 </figure>
 
 <para>On this gory note, we used to end our guided tour of the basic
-Omnigator interface. But as of Version 2.1 of the Ontopia Knowledge
-Suite (and version eight of the Omnigator) there is a new way to view
-your topic maps: Using the Vizigator.</para>
+Omnigator interface. But there is another way to view your topic maps:
+Using the Vizigator.</para>
 
 </section>
 
