@@ -76,6 +76,10 @@
          CLASSPATH
         ====================================================================== -->
 
+  <target name="ivy.resolve">
+    <ivy:resolve/>
+  </target>
+
   <ivy:cachepath pathid="project.classpath.ivy" organisation="net.ontopia" module="ontopia" conf="build"/>
 
   <path id="project.classpath.nolog4j">
@@ -1090,6 +1094,7 @@
     <antcall target="check-jvm"/>
     <antcall target="bootstrap"/>
     <antcall target="clean.classes"/>
+    <antcall target="ivy.resolve"/>
     <antcall target="compile.ontopia"/>
     <antcall target="compile.ontopia.test"/>
     <antcall target="jar.ontopia.test"/>
