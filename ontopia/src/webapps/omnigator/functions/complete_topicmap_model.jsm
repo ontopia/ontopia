@@ -92,19 +92,6 @@
        sorted by topic (HyTM), name, occurrence and association themes.
        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <function name="view_themes" params="topicmap">
-      <!-- ============== List of topic themes ================ -->
-      <logic:set name="topicThemes"><tm:themes of="topic"/></logic:set>
-      <logic:if name="topicThemes"><logic:then>
-      <table class="shboxed" width="100%"><tr><td>
-      <h3>Topic Themes (<output:count/>)</h3>
-      <ul>
-        <logic:foreach>
-          <li><output:element name="a"><output:attribute name="href"><output:link template="topic_%model%.jsp?tm=%topicmap%&amp;id=%id%" generator="modelLinkGenerator"/></output:attribute><output:name /></output:element></li>
-        </logic:foreach>
-      </ul>
-      </td></tr></table>
-      </logic:then></logic:if>
-
       <!-- ============== List of basename themes ================ -->
       <logic:set name="basenameThemes"><tm:themes of="basename"/></logic:set>
       <logic:if name="basenameThemes"><logic:then>
