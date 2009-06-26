@@ -119,7 +119,7 @@ public class MergeTMTest extends AbstractTopicMapTestCase {
     TopicIF t1 = builder1.makeTopic();
     t1.addItemIdentifier(makeLocator("http://www.ontopia.net"));
     TopicIF t2 = builder2.makeTopic();
-    t2.addSubjectIdentifier(makeLocator("http://www.ontopia.net")); // removed
+    t2.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
     t2.addSubjectIdentifier(makeLocator("ftp://www.ontopia.net"));
 
     MergeUtils.mergeInto(topicmap1, topicmap2);
@@ -130,13 +130,47 @@ public class MergeTMTest extends AbstractTopicMapTestCase {
            topicmap1.getTopics().contains(t1));
 
     // NOTE: According to bug #652 it is now allowed for topics to
-    // have the same locator in their source locators and subject
+    // have the same locator in their item identifiers and subject
     // indicators properties. Thus the following test has been updated
     // to check for 2 locators.
-    assertTrue("topic has wrong number of subject indicators",
-           ((TopicIF) topicmap1.getTopics().iterator().next()).getSubjectIdentifiers().size() == 2);
+    TopicIF topic = (TopicIF) topicmap1.getTopics().iterator().next();
+    assertTrue("topic has wrong number of subject identifiers",
+               topic.getSubjectIdentifiers().size() == 2);
+
+    // Of course, the item identifier should not be lost
+    // http://code.google.com/p/ontopia/issues/detail?id=28
+    assertTrue("topic lost item identifier in merge",
+               topic.getItemIdentifiers().size() == 1);
   }    
-    
+
+  public void testTopicIsSubjectIndicatorMerge2() {
+    TopicIF t1 = builder1.makeTopic();
+    t1.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
+    t1.addSubjectIdentifier(makeLocator("ftp://www.ontopia.net"));
+    TopicIF t2 = builder2.makeTopic();
+    t2.addItemIdentifier(makeLocator("http://www.ontopia.net"));
+
+    MergeUtils.mergeInto(topicmap1, topicmap2);
+
+    assertTrue("topics merged incorrectly",
+           topicmap1.getTopics().size() == 1);
+    assertTrue("original topic lost in merge",
+           topicmap1.getTopics().contains(t1));
+
+    // NOTE: According to bug #652 it is now allowed for topics to
+    // have the same locator in their item identifiers and subject
+    // indicators properties. Thus the following test has been updated
+    // to check for 2 locators.
+    TopicIF topic = (TopicIF) topicmap1.getTopics().iterator().next();
+    assertTrue("topic has wrong number of subject identifiers",
+               topic.getSubjectIdentifiers().size() == 2);
+
+    // Of course, the item identifier should not be lost
+    // http://code.google.com/p/ontopia/issues/detail?id=28
+    assertTrue("topic lost item identifier in merge",
+               topic.getItemIdentifiers().size() == 1);
+  }    
+
   public void testNoSubjectConflict() {
     try {
       TopicIF t1 = builder1.makeTopic();
