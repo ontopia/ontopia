@@ -27,7 +27,8 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Special Tag for iterating over a sorted collection of
@@ -37,7 +38,7 @@ import org.apache.log4j.Logger;
 public class AssociationTypeLoopTag extends BodyTagSupport implements ScopeSupportIF {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(AssociationTypeLoopTag.class.getName());
   
   // members

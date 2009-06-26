@@ -16,7 +16,8 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Output-Producing Tag which retrieves the value of a given
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class PropertyTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(PropertyTag.class.getName());
 
   // tag attributes

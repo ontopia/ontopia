@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorConfigurationContentHandler;
@@ -17,7 +17,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Provide easy access for reading in an action
@@ -27,7 +28,7 @@ import org.apache.log4j.Logger;
 public class NavigatorConfigFactory {
 
   // initialization of log facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(NavigatorConfigFactory.class.getName());
 
   public static NavigatorConfigurationIF getConfiguration(InputStream stream)
@@ -61,7 +62,7 @@ public class NavigatorConfigFactory {
     NavigatorConfigurationContentHandler handler =
       new NavigatorConfigurationContentHandler();
     parser.setContentHandler(handler);
-    parser.setErrorHandler(new Log4jSaxErrorHandler(log));
+    parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
 
     parser.parse(src);
 

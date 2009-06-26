@@ -16,7 +16,8 @@ import net.ontopia.topicmaps.nav2.core.OutputProducingTagIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Framework related tag for logging information about
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public final class MemInfoTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(MemInfoTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(MemInfoTag.class.getName());
 
   // constants
   private final static NumberFormat formatter =

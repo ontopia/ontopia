@@ -10,7 +10,8 @@ import net.ontopia.utils.HistoryMap;
 import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Framework related tag for modifying (means right now:
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class ModifyUserHistoryTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(ModifyUserHistoryTag.class.getName());
 
   // constants

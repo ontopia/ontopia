@@ -15,7 +15,8 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL.
@@ -25,7 +26,7 @@ public class QueryTag extends BodyTagSupport {
   private static final long serialVersionUID = -2505209031791690173L;
 
   // initialization of logging facility
-  protected static Logger log = Logger.getLogger(QueryTag.class.getName());
+  protected static Logger log = LoggerFactory.getLogger(QueryTag.class.getName());
 
   // tag attributes
   protected String query;

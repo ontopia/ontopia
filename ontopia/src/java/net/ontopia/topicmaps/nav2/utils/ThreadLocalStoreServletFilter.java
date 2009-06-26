@@ -8,7 +8,8 @@ import javax.servlet.*;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.entry.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Servlet filter that creates a new topic map store for
@@ -27,7 +28,7 @@ import org.apache.log4j.*;
 
 public class ThreadLocalStoreServletFilter implements Filter {
 
-  static Logger log = Logger.getLogger(ThreadLocalStoreServletFilter.class.getName());
+  static Logger log = LoggerFactory.getLogger(ThreadLocalStoreServletFilter.class.getName());
 
   private static ThreadLocal data = new ThreadLocal();
   

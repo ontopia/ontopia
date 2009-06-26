@@ -14,7 +14,8 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Tolog Tag for making a set of tolog declarations
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class DeclareTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(DeclareTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(DeclareTag.class.getName());
   
   protected String declarations;
   

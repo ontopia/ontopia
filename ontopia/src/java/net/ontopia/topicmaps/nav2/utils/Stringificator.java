@@ -28,7 +28,8 @@ import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.impl.basic.CustomNameStringifier;
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Utility class to provide easy access to a stringified
@@ -38,7 +39,7 @@ import org.apache.log4j.Logger;
 public final class Stringificator {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(Stringificator.class.getName());
   
   // default stringifier
@@ -150,7 +151,7 @@ public final class Stringificator {
       else
         msg.append("First element in input collection is null. ");
       
-      log.error(msg);
+      log.error(msg.toString());
       throw new NavigatorRuntimeException(msg.toString());
     }
 

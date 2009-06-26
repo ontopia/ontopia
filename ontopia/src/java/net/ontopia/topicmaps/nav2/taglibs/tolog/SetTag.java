@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Tolog Tag for executing a query,
@@ -30,7 +31,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   private static final long serialVersionUID = -3009179502068590303L;
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(SetTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(SetTag.class.getName());
 
   // FIXME: replace this ugliness with a Map (but wait for tests)
   private static final String scopeNames[] = {

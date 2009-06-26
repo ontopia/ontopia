@@ -13,7 +13,8 @@ import java.util.StringTokenizer;
 import javax.servlet.jsp.PageContext;
 
 import net.ontopia.topicmaps.nav2.utils.ContextUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL.
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class InteractionELSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(InteractionELSupport.class.getName());
 
   /**

@@ -17,7 +17,8 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Abstract super-class of an Output-Producing Tag.
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public abstract class BaseOutputProducingTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(BaseOutputProducingTag.class.getName());
 
   // members

@@ -25,7 +25,8 @@ import net.ontopia.topicmaps.nav2.core.ScopeSupportIF;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Framework related utility class providing some helper
@@ -34,7 +35,7 @@ import org.apache.log4j.Logger;
 public final class ScopeUtils implements ScopeSupportIF {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(FrameworkUtils.class.getName());
   
   /**

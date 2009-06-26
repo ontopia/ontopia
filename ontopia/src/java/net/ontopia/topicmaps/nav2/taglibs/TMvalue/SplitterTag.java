@@ -11,7 +11,8 @@ import net.ontopia.topicmaps.core.*;
 
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Value Producing Tag for creating a collection of strings
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class SplitterTag extends BaseValueProducingAndAcceptingTag {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(SplitterTag.class.getName());
 
   public Collection process(Collection names) throws JspTagException {

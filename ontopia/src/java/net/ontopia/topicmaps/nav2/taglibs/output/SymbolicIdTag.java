@@ -14,7 +14,8 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Outputs a stable identifier to the object if possible,
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class SymbolicIdTag extends BaseOutputProducingTag {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(ObjectIdTag.class.getName());
   
   public final void generateOutput(JspWriter out, Iterator iter)

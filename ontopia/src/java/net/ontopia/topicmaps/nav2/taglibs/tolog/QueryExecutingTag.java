@@ -20,7 +20,8 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Generic Tolog Tag that has support for executing one query.
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
 public abstract class QueryExecutingTag extends BodyTagSupport {
   // initialization of logging facility
   private static Logger log
-          = Logger.getLogger(QueryExecutingTag.class.getName());
+          = LoggerFactory.getLogger(QueryExecutingTag.class.getName());
 
   // members
   protected String columnNames[];

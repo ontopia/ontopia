@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.nav2.core.*;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.infoset.core.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -27,7 +28,7 @@ import org.apache.log4j.Logger;
 public class BindTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(BindTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(BindTag.class.getName());
 
   // members
   private ContextManagerIF ctxtMgr;

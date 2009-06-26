@@ -13,7 +13,8 @@ import net.ontopia.topicmaps.nav2.plugins.PluginIF;
 import net.ontopia.topicmaps.nav2.plugins.PluginUtils;
 import net.ontopia.topicmaps.nav2.plugins.PluginComparator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A configuration holder class for storing
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class NavigatorConfiguration implements NavigatorConfigurationIF {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(NavigatorConfiguration.class.getName());
 
   // constants

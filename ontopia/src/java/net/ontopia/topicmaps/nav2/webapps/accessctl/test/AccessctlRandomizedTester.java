@@ -8,7 +8,8 @@ import com.meterware.httpunit.*;
 import java.io.IOException;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import net.ontopia.utils.StringUtils;
@@ -23,7 +24,7 @@ import net.ontopia.utils.StringUtils;
  */
 public class AccessctlRandomizedTester extends AbstractWebBasedTestCase {
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(AccessctlRandomizedTester.class.getName());
+  private static Logger log = LoggerFactory.getLogger(AccessctlRandomizedTester.class.getName());
 
   // The number of webpages visited so far.
   protected int visitCount;

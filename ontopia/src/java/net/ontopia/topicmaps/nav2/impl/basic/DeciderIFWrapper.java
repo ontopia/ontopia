@@ -6,7 +6,8 @@ import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorDeciderIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A NavigatorDeciderIF implementation which wraps DeciderIF,

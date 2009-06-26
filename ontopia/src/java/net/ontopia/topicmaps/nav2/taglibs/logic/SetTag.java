@@ -26,7 +26,8 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.utils.StringifierIF;
   
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Logic Tag for establishing the outermost
@@ -35,7 +36,7 @@ import org.apache.log4j.Logger;
 public class SetTag extends TagSupport implements ValueAcceptingTagIF {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(SetTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(SetTag.class.getName());
 
   // constants
   private static final StringifierIF DEF_TOPIC_STRINGIFIER = TopicStringifiers

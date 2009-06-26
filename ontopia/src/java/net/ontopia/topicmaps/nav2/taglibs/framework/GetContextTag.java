@@ -17,7 +17,8 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.core.TopicMapIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: The implementation of <framework:getcontext>.
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class GetContextTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(GetContextTag.class.getName());
   
   // tag attributes

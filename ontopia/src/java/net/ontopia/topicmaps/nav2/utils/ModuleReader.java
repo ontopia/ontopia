@@ -17,7 +17,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.EncryptedInputStream;
 import net.ontopia.topicmaps.nav2.core.ModuleReaderIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Default implementation of the interface ModuleReaderIF
@@ -26,7 +27,7 @@ public class ModuleReader implements ModuleReaderIF {
 
   // initialization of logging facility
   private static Logger logger =
-    Logger.getLogger(ModuleReader.class.getName());
+    LoggerFactory.getLogger(ModuleReader.class.getName());
   
   protected boolean encrypted;
   protected XMLReader parser;

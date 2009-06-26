@@ -13,7 +13,8 @@ import java.util.StringTokenizer;
 
 import net.ontopia.test.AbstractOntopiaTestCase;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Abstract class for handling a test case related to the
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
  */
 public class AbstractTaglibTestCase extends AbstractOntopiaTestCase {
 
-  static Logger log = Logger.getLogger(AbstractTaglibTestCase.class.getName());
+  static Logger log = LoggerFactory.getLogger(AbstractTaglibTestCase.class.getName());
   protected String base;
   protected String jspfile;
   protected String topicmapId;

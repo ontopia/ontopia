@@ -19,7 +19,8 @@ import net.ontopia.infoset.fulltext.topicmaps.*;
 import net.ontopia.infoset.fulltext.impl.lucene.*;
 import net.ontopia.infoset.fulltext.impl.rdbms.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Tag used for executing fulltext queries and producing
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
 public class FulltextTag extends BaseValueProducingTag {
 
   // initialization of logging facility
-  protected static Logger log = Logger.getLogger(FulltextTag.class.getName());
+  protected static Logger log = LoggerFactory.getLogger(FulltextTag.class.getName());
 
   // tag attributes
   protected String index_path;

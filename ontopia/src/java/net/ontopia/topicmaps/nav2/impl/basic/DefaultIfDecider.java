@@ -12,7 +12,8 @@ import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: class which implements interface NavigatorDeciderIF.
@@ -30,7 +31,7 @@ import org.apache.log4j.Logger;
 public class DefaultIfDecider implements NavigatorDeciderIF {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(DefaultIfDecider.class.getName());
   
   // members

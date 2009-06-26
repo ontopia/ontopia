@@ -14,7 +14,8 @@ import net.ontopia.test.*;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Genric Navigator Framework Testing tools.  Used to create
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class TaglibFrameworkTestCaseGenerator implements TestCaseGeneratorIF {
 
   // initialise logging facility
-  static Logger log = Logger
+  static Logger log = LoggerFactory
     .getLogger(TaglibFrameworkTestCaseGenerator.class.getName());
 
   protected String root;

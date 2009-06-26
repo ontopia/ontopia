@@ -9,7 +9,8 @@ import javax.servlet.jsp.JspTagException;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Tolog Tag for testing if a variable is bound and non-null
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class IfTag extends QueryExecutingTag {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(IfTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(IfTag.class.getName());
 
   // tag attributes
   protected String var;

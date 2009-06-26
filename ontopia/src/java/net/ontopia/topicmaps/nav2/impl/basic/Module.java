@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.nav2.utils.ModuleReader;
   
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: ModuleIF implementation that reads functions from an XML
@@ -27,7 +28,7 @@ import org.apache.log4j.Logger;
 public class Module implements ModuleIF {
 
   // initialization of log facility
-  private static Logger log = Logger.getLogger(Module.class.getName());
+  private static Logger log = LoggerFactory.getLogger(Module.class.getName());
 
   // types of module encodings
   public static final String TYPE_ENCRYPTED = "EncryptedModuleReader";

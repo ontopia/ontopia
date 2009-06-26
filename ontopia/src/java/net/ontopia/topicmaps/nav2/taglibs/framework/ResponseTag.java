@@ -16,7 +16,8 @@ import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Framework related tag used for setting response headers.
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class ResponseTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(ResponseTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(ResponseTag.class.getName());
 
   // tag attributes
   protected String content_type;

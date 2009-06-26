@@ -18,7 +18,8 @@ import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Output-producing tag used for debugging. It calls
@@ -31,7 +32,7 @@ public class DebugTag extends TagSupport
   implements OutputProducingTagIF {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(DebugTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(DebugTag.class.getName());
 
   // members
   protected ContextTag contextTag;  

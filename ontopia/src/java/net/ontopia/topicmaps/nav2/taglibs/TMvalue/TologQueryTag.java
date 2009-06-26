@@ -25,14 +25,15 @@ import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.StringTemplateUtils;
 import net.ontopia.topicmaps.nav2.impl.basic.JSPEngineWrapper;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: TologQueryTag evalutes a tolog query and returns a
  * collection of maps.
  */
 public class TologQueryTag extends BaseValueProducingTag {
-  private static Logger log = Logger.getLogger(TologQueryTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(TologQueryTag.class.getName());
   
   // tag attributes
   private String query;

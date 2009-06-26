@@ -14,7 +14,8 @@ import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
   
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Output Producing Tag for selecting the ID of the topicmap
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class TopicMapIdTag extends BaseOutputProducingTag {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(TopicMapIdTag.class.getName());
   
   public final void generateOutput(JspWriter out, Iterator iter)

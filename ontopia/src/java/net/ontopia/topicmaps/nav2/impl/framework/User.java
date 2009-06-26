@@ -16,14 +16,15 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.RingBuffer;
 
 import org.apache.commons.collections.map.LRUMap;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: implementation of UserIF for holding data relevant to one
  * user session.
  */
 public class User implements UserIF {
-  private static Logger logger = Logger.getLogger(User.class.getName());
+  private static Logger logger = LoggerFactory.getLogger(User.class.getName());
   private static final int DEFAULT_MAX_BUNDLES   = 5; // max working bundles per user
   private static final int DEFAULT_BUNDLE_EXPIRY = 1800; // user bundle expiry time
 

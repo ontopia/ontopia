@@ -6,12 +6,13 @@ package net.ontopia.topicmaps.nav2.realm;
 import java.io.Serializable;
 import java.security.Principal;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserPrincipal implements Principal, java.io.Serializable {
   
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(UserPrincipal.class.getName());
+  private static Logger log = LoggerFactory.getLogger(UserPrincipal.class.getName());
   
   private String name;
 

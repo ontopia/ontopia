@@ -15,7 +15,8 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Like a WhenTag with no condition. 
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class OtherwiseTag extends BodyTagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(WhenTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(WhenTag.class.getName());
 
   // members
   protected ChooseTag parentChooser;

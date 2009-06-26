@@ -8,7 +8,8 @@ import net.ontopia.topicmaps.nav2.impl.basic.NavigatorConfiguration;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A Content Handler for reading in an application
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class NavigatorConfigurationContentHandler extends SAXTracker {
 
   // Define a logging category.
-  static Logger log = Logger
+  static Logger log = LoggerFactory
     .getLogger(NavigatorConfigurationContentHandler.class.getName());
 
   // member

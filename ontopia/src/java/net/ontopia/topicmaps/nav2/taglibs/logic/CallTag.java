@@ -22,7 +22,8 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.utils.ontojsp.TaglibTagFactory;
 
 import org.xml.sax.SAXException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Logic Tag for calling a template function and instantiates
@@ -33,7 +34,7 @@ import org.apache.log4j.Logger;
 public class CallTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(CallTag.class.getName());
   
   // members

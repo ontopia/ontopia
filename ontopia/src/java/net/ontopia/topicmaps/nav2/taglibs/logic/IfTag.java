@@ -28,7 +28,8 @@ import net.ontopia.topicmaps.nav2.impl.basic.DeciderIFWrapper;
 
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Logic Tag for iterating over each object in a collection,
@@ -38,7 +39,7 @@ public class IfTag extends TagSupport
   implements ValueProducingTagIF, ValueAcceptingTagIF {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(IfTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(IfTag.class.getName());
 
   // members
   private NavigatorPageIF contextTag;

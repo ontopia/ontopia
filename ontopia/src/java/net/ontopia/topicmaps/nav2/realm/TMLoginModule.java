@@ -50,7 +50,8 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: TMLoginModule provides authentication to web applications by 
@@ -59,7 +60,7 @@ import org.apache.log4j.Logger;
 public class TMLoginModule implements LoginModule {
   
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(TMLoginModule.class.getName());
+  private static Logger log = LoggerFactory.getLogger(TMLoginModule.class.getName());
   
   // state obtained in the initialize() method
   private Subject subject;

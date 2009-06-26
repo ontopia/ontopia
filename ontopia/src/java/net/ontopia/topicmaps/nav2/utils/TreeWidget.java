@@ -17,7 +17,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -70,7 +71,7 @@ public class TreeWidget {
   private boolean addAnchor = true;
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(TreeWidget.class
+  private static Logger log = LoggerFactory.getLogger(TreeWidget.class
       .getName());
 
   // --- External interface

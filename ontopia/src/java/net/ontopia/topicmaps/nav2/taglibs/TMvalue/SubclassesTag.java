@@ -15,7 +15,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Value Producing Tag for finding all the subclasses
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class SubclassesTag extends BaseValueProducingAndAcceptingTag {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(SubclassesTag.class.getName());
 
   private final static TypeHierarchyUtils hierUtils = new TypeHierarchyUtils();

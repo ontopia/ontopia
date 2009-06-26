@@ -12,7 +12,6 @@ import java.util.StringTokenizer;
 import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.ontopia.xml.Log4jSaxErrorHandler;
 import net.ontopia.topicmaps.nav2.core.FunctionIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.impl.basic.Function;
@@ -21,7 +20,8 @@ import net.ontopia.utils.ontojsp.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A content handler for module specification files (root
@@ -32,7 +32,7 @@ import org.apache.log4j.Logger;
 public class ModuleContentHandler extends JSPContentHandler {
 
   // initialize logging facility
-  static Logger log = Logger
+  static Logger log = LoggerFactory
     .getLogger(ModuleContentHandler.class.getName());
 
   /** Map with function names as keys and FunctionIF objects as values */

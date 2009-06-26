@@ -24,7 +24,8 @@ import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A class which represents a single testcase of the nav2
@@ -33,7 +34,7 @@ import org.apache.log4j.Logger;
 public class TaglibTestCase extends AbstractTaglibTestCase {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(TaglibTestCase.class.getName());
 
   // navigator environment (app-scope) shared by all test cases

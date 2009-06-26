@@ -13,7 +13,8 @@ import java.util.Collections;
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
   
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Default Implementation of ContextManagerIF.
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class ContextManager implements ContextManagerIF {
   
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(ContextManager.class.getName());
   
   /**

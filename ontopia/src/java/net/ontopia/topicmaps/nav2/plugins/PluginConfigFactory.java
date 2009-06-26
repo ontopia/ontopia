@@ -12,10 +12,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.SAXException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 
 /**
  * INTERNAL.
@@ -23,7 +24,7 @@ import net.ontopia.xml.Log4jSaxErrorHandler;
 public class PluginConfigFactory {
 
   // initialization of log facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(PluginConfigFactory.class.getName());
 
   /**
@@ -40,7 +41,7 @@ public class PluginConfigFactory {
       PluginContentHandler handler =
         new PluginContentHandler(pluginsRootURI);
       parser.setContentHandler(handler);
-      parser.setErrorHandler(new Log4jSaxErrorHandler(log));
+      parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       // parse the XML instance, now.
       parser.parse(new InputSource(pluginspec));
       // pick out the plugin config objects

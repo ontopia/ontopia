@@ -13,7 +13,8 @@ import javax.servlet.jsp.tagext.BodyContent;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A custom JSP tag which allows to create an attribute
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class AttributeTag extends BodyTagSupport {
   
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(AttributeTag.class.getName());
 
   // tag attributes

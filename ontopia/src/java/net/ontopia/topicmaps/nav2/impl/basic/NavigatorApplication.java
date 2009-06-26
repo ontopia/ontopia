@@ -41,8 +41,10 @@ import net.ontopia.topicmaps.nav2.plugins.PluginIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorConfigFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -57,7 +59,7 @@ import org.xml.sax.SAXParseException;
 public final class NavigatorApplication implements NavigatorApplicationIF {
 
   // initialization of log facility
-  private static Logger log = Logger.getLogger(NavigatorApplication.class.getName());
+  private static Logger log = LoggerFactory.getLogger(NavigatorApplication.class.getName());
 
   // the name of a plug-in specification file in a plug-in directory
   private static final String PLUGIN_SPEC = "plugin.xml";
@@ -333,6 +335,11 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
    * of the property file containing configuration issues..
    */
   private synchronized void configureLogging() {
+    //! Does the removal of this code cause probelems?
+    //! SLF4J is not meant to be configured
+    
+    /*
+    
     // load in properties
     String filePathLog4J = servlet_context.getInitParameter(LOG4J_CONFIG_KEY);
     if (filePathLog4J == null)
@@ -368,6 +375,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
       PropertyConfigurator.configure(props);
       log.info("Configured Logging with properties from " + filePathLog4J);
     }
+    */
   }
   
   /**
@@ -379,11 +387,11 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
       if (filePathAppConfig == null)
         filePathAppConfig = APP_CONFIG_DEFAULT_VALUE;
       log.info("Start to load application configuration from " + filePathAppConfig);
-			InputStream istream = getInputStream(filePathAppConfig);
-			if (istream != null) {
-				this.navConfig = NavigatorConfigFactory.getConfiguration(istream);
-				return;
-			}
+      InputStream istream = getInputStream(filePathAppConfig);
+      if (istream != null) {
+        this.navConfig = NavigatorConfigFactory.getConfiguration(istream);
+        return;
+      }
     }
     catch (SAXParseException e) {
       log.error("Couldn't parse application configuration.", e);

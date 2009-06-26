@@ -20,7 +20,8 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.utils.ontojsp.TaglibTagFactory;
 
 import org.xml.sax.SAXException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Logic Tag for loading and registering an external function.
@@ -30,7 +31,7 @@ import org.apache.log4j.Logger;
 public class ExternalFunctionTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(ExternalFunctionTag.class.getName());
   
   // tag attributes

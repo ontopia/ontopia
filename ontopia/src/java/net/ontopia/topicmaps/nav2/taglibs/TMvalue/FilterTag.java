@@ -24,7 +24,8 @@ import net.ontopia.topicmaps.nav2.core.*;
 import net.ontopia.topicmaps.nav2.taglibs.value.BaseValueProducingAndAcceptingTag;
 import net.ontopia.topicmaps.nav2.impl.basic.DeciderIFWrapper;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Value Producing Tag for taking an input collection
@@ -44,7 +45,7 @@ public class FilterTag extends BaseValueProducingAndAcceptingTag {
   public static final String CLASS_LOCATOR  = "locator";
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(FilterTag.class.getName());
 
   // constants

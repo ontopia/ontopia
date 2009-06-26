@@ -10,13 +10,14 @@ import java.util.Iterator;
 import java.util.Collection;
 import java.util.ArrayList;
 
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.SAXTracker;
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A class which reads in the framework test configuration
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
  */
 public class TestCaseContentHandler extends SAXTracker {
 
-  static Logger log = Logger
+  static Logger log = LoggerFactory
     .getLogger(TestCaseContentHandler.class.getName());
 
   protected ErrorHandler ehandler;
@@ -43,7 +44,7 @@ public class TestCaseContentHandler extends SAXTracker {
   }
 
   protected ErrorHandler getDefaultErrorHandler() {
-    return new Log4jSaxErrorHandler(log);
+    return new Slf4jSaxErrorHandler(log);
   }
 
   public void register(XMLReader parser) {

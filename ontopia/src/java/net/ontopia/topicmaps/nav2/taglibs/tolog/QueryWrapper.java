@@ -24,14 +24,15 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.utils.ObjectUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Generic Tolog Tag that has support for executing one query.
  */
 public class QueryWrapper {
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(QueryWrapper.class.getName());
+  private static Logger log = LoggerFactory.getLogger(QueryWrapper.class.getName());
 
   private Collection users;
   

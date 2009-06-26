@@ -12,7 +12,8 @@ import net.ontopia.xml.SAXTracker;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A Content Handler for reading in a Plug-in Configuration
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class PluginContentHandler extends SAXTracker {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(PluginContentHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(PluginContentHandler.class.getName());
 
   // constants
   public static final String PLUGINS_ROOTDIR_PLACEHOLDER =
