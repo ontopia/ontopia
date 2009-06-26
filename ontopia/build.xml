@@ -2337,7 +2337,7 @@
     <copy file="${doc.path}/webed/action-ref.xml.html" tofile="${dist.path}/doc/webed/action-ref.html" />
     <copy file="${doc.path}/webed/devguide.xml.html" tofile="${dist.path}/doc/webed/devguide.html" />
     <copy file="${doc.path}/webed/taglib-ref.xml.html" tofile="${dist.path}/doc/webed/taglib.html" />
-    <copy file="${doc.path}/webed/config.xml.html" tofile="${dist.path}/doc/webed/taglib.html" />
+    <copy file="${doc.path}/webed/config.xml.html" tofile="${dist.path}/doc/webed/config.html" />
     <copy file="${src.path}/webapps/webedtest/WEB-INF/config/actionConfig.dtd" tofile="${dist.path}/doc/webed/actionConfig.dtd" />
     <copy file="${src.path}/webapps/webedtest/WEB-INF/config/actionConfig.rnc" tofile="${dist.path}/doc/webed/actionConfig.rnc" />
 

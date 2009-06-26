@@ -53,6 +53,8 @@
   <li><a href="doc/webed/devguide.html">The Ontopia Web Editor Framework, Developer's Guide</a></li>
   <li><a href="doc/webed/taglib.html">The Ontopia Web Editor Framework, Tag Library Reference</a></li>
   <li><a href="doc/webed/action-ref.html">The Ontopia Web Editor Framework, Action Library Reference Documentation</a></li>
+  <li><a href="doc/webed/config.html">The Ontopia Web Editor
+  Framework, Configuration Guide</a></li>
 </ul>
 
 <h3>RDBMS Backend Connector</h3>
