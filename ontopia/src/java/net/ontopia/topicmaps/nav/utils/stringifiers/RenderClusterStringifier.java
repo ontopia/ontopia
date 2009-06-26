@@ -8,7 +8,8 @@ import net.ontopia.topicmaps.nav.utils.*;
 import net.ontopia.topicmaps.nav.utils.structures.*;
 import net.ontopia.utils.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * INTERNAL: Stringifier for a ClusterIF which takes a render object. 
@@ -27,7 +28,7 @@ import org.apache.log4j.*;
 public class RenderClusterStringifier implements StringifierIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(RenderClusterStringifier.class.getName());
+  static Logger log = LoggerFactory.getLogger(RenderClusterStringifier.class.getName());
 
   final static String OPEN_BRACKET  = "(";
   final static String CLOSE_BRACKET = ")";

@@ -16,7 +16,8 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A utility class with miscellaneous methods used by the
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class NavUtils {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(NavUtils.class.getName());
+  static Logger log = LoggerFactory.getLogger(NavUtils.class.getName());
 
   /**
    * INTERNAL: Escapes XML's predefined entities.

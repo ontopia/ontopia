@@ -16,7 +16,8 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.test.AbstractUtilsTestCase;
 import net.ontopia.topicmaps.nav.context.ThemeCategorizer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * test case for class ThemeCategorizer
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class ThemeCategorizerTest extends AbstractUtilsTestCase {
 
   // initialize logging category
-  static Logger log = Logger.getLogger(ThemeCategorizerTest.class.getName());
+  static Logger log = LoggerFactory.getLogger(ThemeCategorizerTest.class.getName());
 
   
   public ThemeCategorizerTest(String name) {

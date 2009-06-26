@@ -16,7 +16,8 @@ import net.ontopia.topicmaps.nav.utils.stringifiers.ComparatorNameStringifier;
 
 import net.ontopia.topicmaps.nav2.impl.basic.TypeDecider;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: A Comparator for ordering topics alphabetically. Note that
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 public class OccTypeComparator extends TopicComparator implements Comparator {
 
   // initialization of logging facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(OccTypeComparator.class.getName());
 
   // members

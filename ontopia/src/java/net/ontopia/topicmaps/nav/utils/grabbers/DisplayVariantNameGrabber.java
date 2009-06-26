@@ -12,7 +12,8 @@ import net.ontopia.topicmaps.utils.*;
 import net.ontopia.topicmaps.nav.utils.deciders.*;
 import net.ontopia.utils.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Grabs the best variant name for a basename and will
@@ -21,7 +22,7 @@ import org.apache.log4j.*;
 public class DisplayVariantNameGrabber implements GrabberIF {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(DisplayVariantNameGrabber.class.getName());
+  static Logger log = LoggerFactory.getLogger(DisplayVariantNameGrabber.class.getName());
 
   protected Collection context;
   protected DeciderIF decider;

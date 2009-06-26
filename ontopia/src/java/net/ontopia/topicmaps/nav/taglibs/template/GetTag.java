@@ -8,7 +8,8 @@ import java.util.Stack;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 
@@ -30,7 +31,7 @@ import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 public class GetTag extends AbstractTemplateTag {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(GetTag.class.getName());
+  static Logger log = LoggerFactory.getLogger(GetTag.class.getName());
 
   /**
    * Sets the name of the string to "get". It must match a value set

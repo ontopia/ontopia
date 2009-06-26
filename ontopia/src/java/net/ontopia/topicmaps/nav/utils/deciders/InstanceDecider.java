@@ -9,7 +9,8 @@ import net.ontopia.utils.DeciderIF;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.ClassInstanceUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Decider that takes either TypedIF or TopicIF and
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 public class InstanceDecider implements DeciderIF {
 
   // Define a logging category.
-  protected static Logger log = Logger
+  protected static Logger log = LoggerFactory
     .getLogger(InstanceDecider.class.getName());
 
   protected Collection types;

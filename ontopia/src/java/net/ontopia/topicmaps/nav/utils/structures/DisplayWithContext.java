@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 import net.ontopia.topicmaps.core.TopicIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * INTERNAL: A wrapper class which carries a Display and an Map of Contexts.
@@ -21,7 +22,7 @@ import org.apache.log4j.Logger;
 public class DisplayWithContext implements DisplayIF {
 
   // Define a logging category.
-  protected static Logger log = Logger.getLogger(DisplayWithContext.class.getName());
+  protected static Logger log = LoggerFactory.getLogger(DisplayWithContext.class.getName());
 
   protected Display display;
   /** Map defined by key: String,

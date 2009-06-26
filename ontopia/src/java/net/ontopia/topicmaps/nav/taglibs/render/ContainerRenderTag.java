@@ -11,7 +11,8 @@ import javax.servlet.jsp.tagext.*;
 import java.io.*;
 import java.util.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * PUBLIC: Used to output an information block which has a title,
@@ -28,7 +29,7 @@ import org.apache.log4j.*;
 public class ContainerRenderTag extends BodyTagSupport {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(ContainerRenderTag.class.getName());
+  static Logger log = LoggerFactory.getLogger(ContainerRenderTag.class.getName());
 
   // attributes
   String renderName="";

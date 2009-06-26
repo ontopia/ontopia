@@ -10,7 +10,8 @@ import java.util.Stack;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.nav2.core.UserIF;
@@ -27,7 +28,7 @@ import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 public class InsertTag extends TagSupport {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(InsertTag.class.getName());
+  static Logger log = LoggerFactory.getLogger(InsertTag.class.getName());
 
   
   public final static String TEMPL_STACK_KEY = "template-stack";

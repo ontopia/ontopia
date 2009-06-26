@@ -14,7 +14,8 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav.utils.NavUtils;
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * INTERNAL: A wrapper class which carries a Cluster and an Map of
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class ClusterWithContext implements ClusterIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ClusterWithContext.class.getName());
+  static Logger log = LoggerFactory.getLogger(ClusterWithContext.class.getName());
 
   protected ClusterIF cluster;
   /** Map with key: String, value: DisplayIF instance (could be Display or DisplayWithContext) */

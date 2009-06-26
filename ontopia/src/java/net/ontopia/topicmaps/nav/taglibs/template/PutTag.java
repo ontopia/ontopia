@@ -7,7 +7,8 @@ import java.util.Map;
 import java.util.Stack;
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Labels a string on a JSP content (model) page which can be
@@ -32,7 +33,7 @@ import org.apache.log4j.Logger;
 public class PutTag extends AbstractTemplateTag {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(PutTag.class.getName());
+  static Logger log = LoggerFactory.getLogger(PutTag.class.getName());
 
   // tag attributes
   private String content;

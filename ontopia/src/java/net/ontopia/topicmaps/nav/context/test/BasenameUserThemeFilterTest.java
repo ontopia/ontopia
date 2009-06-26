@@ -13,7 +13,8 @@ import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.utils.test.AbstractUtilsTestCase;
 import net.ontopia.topicmaps.nav.context.BasenameUserThemeFilter;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test case for class BasenameUserThemeFilter
@@ -23,7 +24,7 @@ import org.apache.log4j.Logger;
 public class BasenameUserThemeFilterTest extends AbstractUtilsTestCase {
 
   // initialize logging category
-  static Logger log = Logger.getLogger(BasenameUserThemeFilterTest.class.getName());
+  static Logger log = LoggerFactory.getLogger(BasenameUserThemeFilterTest.class.getName());
 
   
   public BasenameUserThemeFilterTest(String name) {

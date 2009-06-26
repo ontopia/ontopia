@@ -8,7 +8,8 @@ import net.ontopia.topicmaps.nav.utils.*;
 import net.ontopia.topicmaps.nav.utils.structures.*;
 import net.ontopia.utils.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * INTERNAL: Stringifier for a Block object which takes a Render object.
@@ -28,7 +29,7 @@ import org.apache.log4j.*;
 public class RenderBlockStringifier implements StringifierIF {
  
   // Define a logging category.
-  static Logger log = Logger.getLogger(RenderBlockStringifier.class.getName());
+  static Logger log = LoggerFactory.getLogger(RenderBlockStringifier.class.getName());
 
   /** 
    * Empty constructor used by configuration objects on application startup.

@@ -8,7 +8,8 @@ import java.util.Comparator;
 
 import net.ontopia.utils.StringifierIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * INTERNAL: A stringifier which stringies a collection, given a
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
 public class ListStringifier implements StringifierIF {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(ListStringifier.class.getName());
+  static Logger log = LoggerFactory.getLogger(ListStringifier.class.getName());
 
   public final static int DEFAULT_PAGE_SIZE = 1000;  // should make use of applicationConfig: property listMaxSize
   

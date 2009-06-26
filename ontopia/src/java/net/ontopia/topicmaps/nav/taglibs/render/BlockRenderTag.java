@@ -11,7 +11,8 @@ import javax.servlet.jsp.tagext.*;
 import java.io.*;
 import java.util.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * PUBLIC: Retuns a block which contains the contents of the tag.
@@ -23,7 +24,7 @@ import org.apache.log4j.*;
 public class BlockRenderTag extends BodyTagSupport {
   
   // Define a logging category.
-  static Logger log = Logger.getLogger(BlockRenderTag.class.getName());
+  static Logger log = LoggerFactory.getLogger(BlockRenderTag.class.getName());
 
   // attributes
   String renderName="";

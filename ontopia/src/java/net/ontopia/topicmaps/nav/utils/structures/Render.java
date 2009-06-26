@@ -2,9 +2,7 @@
 
 package net.ontopia.topicmaps.nav.utils.structures;
 
-import java.util.*;
-
-import org.apache.log4j.*;
+import java.util.Map;
 
 /** 
  * INTERNAL: Provides a structure to allow string generation using
@@ -55,8 +53,3 @@ public class Render {
     return strings;
   }
 }
-
-
-
-
-

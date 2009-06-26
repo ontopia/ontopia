@@ -2,7 +2,8 @@
 
 package net.ontopia.topicmaps.nav.conf;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * PUBLIC: Provides model, view and skin information for the application
@@ -14,7 +15,7 @@ import org.apache.log4j.Logger;
 public class ControlConfig implements ControlConfigIF {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ControlConfig.class.getName());
+  static Logger log = LoggerFactory.getLogger(ControlConfig.class.getName());
 
   // defaults designed to be overriden by implementors
   String model = "simple";

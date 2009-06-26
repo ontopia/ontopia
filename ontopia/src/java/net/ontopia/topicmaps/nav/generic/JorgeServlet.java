@@ -7,7 +7,8 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  * Servlet which implements a JSP interpreter. It generates a JSP
@@ -16,7 +17,7 @@ import org.apache.log4j.*;
 public class JorgeServlet extends HttpServlet {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(JorgeServlet.class.getName());
+  static Logger log = LoggerFactory.getLogger(JorgeServlet.class.getName());
 
   /**
    * Handles get requests.
