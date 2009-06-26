@@ -366,6 +366,29 @@
   </target>
 
   <!-- ======================================================================
+        TMAPI support
+       ==================================================================== -->
+
+  <patternset id="sources.tmapi">
+    <include name="net/ontopia/topicmaps/impl/tmapi2/**/*.java" />
+    <exclude name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.java"/>
+  </patternset>
+
+  <patternset id="classes.tmapi">
+    <include name="net/ontopia/topicmaps/impl/tmapi2/**/*.class"/>
+    <exclude name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.class"/>
+    <include name="META-INF/services/org.tmapi.core.TopicMapSystemFactory"/>
+  </patternset>
+
+  <patternset id="sources.test.tmapi">
+    <include name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.java"/>
+  </patternset>
+
+  <patternset id="classes.test.tmapi">
+    <include name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.class"/>
+  </patternset>
+
+  <!-- ======================================================================
         Fulltext search engine integration
        ====================================================================== -->
 
@@ -415,6 +438,84 @@
              ${dist.fulltext.packagenames.other}" />
 
   <!-- ======================================================================
+        Query engine
+       ==================================================================== -->
+
+  <!-- Patterns -->
+  <patternset id="sources.query">
+    <include name="net/ontopia/topicmaps/query/core/*.java" />
+    <include name="net/ontopia/topicmaps/query/parser/*.java" />
+    <include name="net/ontopia/topicmaps/query/utils/*.java" />
+    <include name="net/ontopia/topicmaps/query/impl/utils/*.java" />
+    <include name="net/ontopia/topicmaps/query/impl/basic/*.java" />
+    <include name="net/ontopia/topicmaps/query/impl/rdbms/*.java" />
+    <include name="net/ontopia/topicmaps/query/spi/*.java" />
+    <exclude name="net/ontopia/topicmaps/query/jdbc/*.java" />
+  </patternset>
+
+  <patternset id="classes.query">
+    <include name="net/ontopia/topicmaps/query/core/*.class" />
+    <include name="net/ontopia/topicmaps/query/parser/*.class" />
+    <include name="net/ontopia/topicmaps/query/utils/*.class" />
+    <include name="net/ontopia/topicmaps/query/impl/utils/*.class" />
+    <include name="net/ontopia/topicmaps/query/impl/basic/*.class" />
+    <include name="net/ontopia/topicmaps/query/impl/rdbms/*.class" />
+    <include name="net/ontopia/topicmaps/query/spi/*.class" />
+    <exclude name="net/ontopia/topicmaps/query/jdbc/*.class" />
+  </patternset>
+
+  <patternset id="sources.test.query">
+    <include name="net/ontopia/topicmaps/query/**/test/*.java" />
+  </patternset>
+
+  <patternset id="classes.test.query">
+    <include name="net/ontopia/topicmaps/query/**/test/*.class" />
+  </patternset>
+
+  <property name="dist.query.packagenames" value="
+       net.ontopia.topicmaps.query.core, 
+       net.ontopia.topicmaps.query.utils,
+       net.ontopia.topicmaps.query.spi" />
+
+  <property name="dev.query.packagenames" value="
+       ${dist.query.packagenames}, 
+       net.ontopia.topicmaps.query.parser,
+       net.ontopia.topicmaps.query.impl.basic,
+       net.ontopia.topicmaps.query.impl.rdbms, 
+       net.ontopia.topicmaps.query.impl.utils, 
+       net.ontopia.topicmaps.query.spi" />
+
+  <!-- ======================================================================
+        Schema tools
+       ==================================================================== -->
+
+  <patternset id="sources.schema">
+    <include name="net/ontopia/topicmaps/schema/**/*.java" />
+    <exclude name="net/ontopia/topicmaps/schema/**/test/*.java" />
+  </patternset>
+
+  <patternset id="classes.schema">
+    <include name="net/ontopia/topicmaps/schema/**/*.class" />
+    <exclude name="net/ontopia/topicmaps/schema/**/test/*.class" />
+  </patternset>
+
+  <patternset id="sources.test.schema">
+    <include name="net/ontopia/topicmaps/schema/**/test/*.java" />
+  </patternset>
+
+  <patternset id="classes.test.schema">
+    <include name="net/ontopia/topicmaps/schema/**/test/*.class" />
+  </patternset>
+
+  <property name="dist.schema.packagenames" value="
+       net.ontopia.topicmaps.schema.core, 
+       net.ontopia.topicmaps.schema.impl.osl,
+       net.ontopia.topicmaps.schema.utils" />
+
+  <property name="dev.schema.packagenames" value="
+       ${dist.schema.packagenames}" />
+
+  <!-- ======================================================================
         DB2TM
        ====================================================================== -->
 
@@ -440,6 +541,132 @@
 
   <property name="dev.db2tm.packagenames" value="
        net.ontopia.topicmaps.db2tm" />
+
+  <!-- ======================================================================
+        Vizigator
+       ==================================================================== -->
+
+  <patternset id="sources.viz">
+    <include name="net/ontopia/topicmaps/viz/*.java" />
+  </patternset>
+    
+  <patternset id="classes.viz">
+    <include name="net/ontopia/topicmaps/viz/*.class" />
+  </patternset>
+
+  <patternset id="sources.test.viz">
+  </patternset>
+    
+  <patternset id="classes.test.viz">
+  </patternset>
+
+  <patternset id="classes.vizlet">
+    <patternset refid="classes.viz" />
+  </patternset>
+
+  <patternset id="classes.vizdesktop">
+    <patternset refid="classes.viz" />
+  </patternset>
+
+  <patternset id="images.viz">
+    <include name="net/ontopia/topicmaps/viz/logo.gif" />
+  </patternset>
+
+  <patternset id="resources.viz">
+    <include name="net/ontopia/topicmaps/viz/messages.properties" />
+    <include name="net/ontopia/topicmaps/viz/messages_*.properties" />
+  </patternset>
+
+  <target name="jar.vizlet" depends="init,compile.dummyLog4j">
+    <echo>Creating vizlet jar file...</echo>
+
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j" source="1.5">
+      <patternset refid="sources.viz" />
+    </javac>
+    <echo>Compiling viz classes...</echo>
+    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j">
+      <patternset refid="sources.viz" />
+    </javac>
+    <echo>Copying Vizigator Resources ... </echo>
+    <!-- "About" image file -->
+    <copy file="${java.path}/net/ontopia/topicmaps/viz/logo.gif" tofile="${build.classes}/net/ontopia/topicmaps/viz/logo.gif" />
+    <!-- base nls support for Vizigator -->
+    <copy todir="${build.classes}/net/ontopia/topicmaps/viz/" overwrite="yes">
+      <fileset dir="${java.path}/net/ontopia/topicmaps/viz/">
+        <patternset>
+          <include name="messages.properties" />
+          <include name="messages_*.properties" />
+        </patternset>
+      </fileset>
+    </copy>
+
+    <unjar src="${3rdparty.path}/crimson.jar" dest="${build.tmp}" />
+    <unjar src="${3rdparty.path}/touchgraph.jar" dest="${build.tmp}" />
+
+    <unjar dest="${build.tmp}"><fileset file="${lib.path}/backport-util-concurrent-*.jar"/></unjar>
+    <delete dir="${build.tmp}/edu/emory/mathcs/backport/java/util/concurrent"/>
+    <delete includeemptydirs="true">
+      <fileset dir="${build.tmp}/edu/emory/mathcs/backport/java/util">
+        <include name="concurrent/**"/>
+        <include name="Array*"/>
+        <include name="Deque*"/>
+        <include name="Linked*"/>
+        <include name="Priority*"/>
+        <include name="Queue*"/>
+      </fileset>
+    </delete>
+
+    <delete file="${build.jars}/ontopia-vizlet.jar" />
+    <delete file="${build.jars}/signed-vizlet.jar" />
+
+    <mkdir dir="${build.classes}/META-INF/services"/>
+    <copy file="${src.path}/dist/vizigator/services/com.sun.org.apache.xerces.internal.xni.parser.XMLParserConfiguration" 
+         todir="${build.classes}/META-INF/services"/>
+
+    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-vizlet.jar">
+      <patternset includes="META-INF/services/com.sun.org.apache.xerces.internal.xni.parser.XMLParserConfiguration"/>
+      <patternset refid="classes.vizlet" />
+      <patternset refid="resources.viz" />
+      <patternset>
+        <patternset refid="classes.engine"/>
+        <exclude name="net/ontopia/topicmaps/entry/*.class"/>
+        <exclude name="net/ontopia/topicmaps/utils/ltm/*.class"/>
+        <exclude name="net/ontopia/topicmaps/utils/rdf/*.class"/>
+        <exclude name="net/ontopia/topicmaps/utils/xfml/*.class"/>
+        <exclude name="net/ontopia/topicmaps/xml/ISO13250*.class"/>
+        <exclude name="net/ontopia/topicmaps/xml/XTMExporter.class"/>
+        <exclude name="net/ontopia/topicmaps/xml/XTMTopicMapWriter.class"/>
+        <exclude name="net/ontopia/topicmaps/xml/XTMFragmentExporter*.class"/>
+        <exclude name="net/ontopia/topicmaps/xml/*Canonical*.class"/>
+        <exclude name="net/ontopia/topicmaps/xml/XTMPathTopicMapSource*.class"/>
+        <exclude name="net/ontopia/topicmaps/xml/XTMValidationHandler*.class"/>
+        <!-- NOTE: some navigator classes are needed too -->
+        <include name="net/ontopia/topicmaps/nav/utils/comparators/TopicComparator.class"/>
+        <include name="net/ontopia/topicmaps/nav/utils/grabbers/ContextNameGrabber.class"/>
+        <include name="net/ontopia/topicmaps/nav/utils/stringifiers/ComparatorNameStringifier.class"/>        
+      </patternset>
+      <patternset refid="classes.dummyLog4j"/>
+      <fileset dir="${build.tmp}">
+        <include name="**/*.class" />
+      </fileset>
+    </jar>
+
+    <!-- create signed jar-file -->
+    <echo>Signing vizlet jar-file...</echo>
+    <exec executable="jarsigner">
+      <arg value="-keystore" />
+      <arg value="${src.path}/dist/signing/ontopiastore" />
+      <arg value="-storepass" />
+      <arg value="ontopia" />
+      <arg value="-keypass" />
+      <arg value="ontopia" />
+      <arg value="-signedjar" />
+      <arg value="${build.jars}/signed-vizlet.jar" />
+      <arg value="${build.jars}/ontopia-vizlet.jar" />
+      <arg value="ontopia" />
+    </exec>
+
+  </target>
 
   <!-- ======================================================================
         Classify (chew)
@@ -2310,107 +2537,6 @@
   </target>
 
   <!-- ======================================================================
-        Query engine
-       ==================================================================== -->
-
-  <!-- Patterns -->
-  <patternset id="sources.query">
-    <include name="net/ontopia/topicmaps/query/core/*.java" />
-    <include name="net/ontopia/topicmaps/query/parser/*.java" />
-    <include name="net/ontopia/topicmaps/query/utils/*.java" />
-    <include name="net/ontopia/topicmaps/query/impl/utils/*.java" />
-    <include name="net/ontopia/topicmaps/query/impl/basic/*.java" />
-    <include name="net/ontopia/topicmaps/query/impl/rdbms/*.java" />
-    <include name="net/ontopia/topicmaps/query/spi/*.java" />
-    <exclude name="net/ontopia/topicmaps/query/jdbc/*.java" />
-  </patternset>
-
-  <patternset id="classes.query">
-    <include name="net/ontopia/topicmaps/query/core/*.class" />
-    <include name="net/ontopia/topicmaps/query/parser/*.class" />
-    <include name="net/ontopia/topicmaps/query/utils/*.class" />
-    <include name="net/ontopia/topicmaps/query/impl/utils/*.class" />
-    <include name="net/ontopia/topicmaps/query/impl/basic/*.class" />
-    <include name="net/ontopia/topicmaps/query/impl/rdbms/*.class" />
-    <include name="net/ontopia/topicmaps/query/spi/*.class" />
-    <exclude name="net/ontopia/topicmaps/query/jdbc/*.class" />
-  </patternset>
-
-  <patternset id="sources.test.query">
-    <include name="net/ontopia/topicmaps/query/**/test/*.java" />
-  </patternset>
-
-  <patternset id="classes.test.query">
-    <include name="net/ontopia/topicmaps/query/**/test/*.class" />
-  </patternset>
-
-  <property name="dist.query.packagenames" value="
-       net.ontopia.topicmaps.query.core, 
-       net.ontopia.topicmaps.query.utils,
-       net.ontopia.topicmaps.query.spi" />
-
-  <property name="dev.query.packagenames" value="
-       ${dist.query.packagenames}, 
-       net.ontopia.topicmaps.query.parser,
-       net.ontopia.topicmaps.query.impl.basic,
-       net.ontopia.topicmaps.query.impl.rdbms, 
-       net.ontopia.topicmaps.query.impl.utils, 
-       net.ontopia.topicmaps.query.spi" />
-
-  <!-- ======================================================================
-        Schema tools
-       ==================================================================== -->
-
-  <patternset id="sources.schema">
-    <include name="net/ontopia/topicmaps/schema/**/*.java" />
-    <exclude name="net/ontopia/topicmaps/schema/**/test/*.java" />
-  </patternset>
-
-  <patternset id="classes.schema">
-    <include name="net/ontopia/topicmaps/schema/**/*.class" />
-    <exclude name="net/ontopia/topicmaps/schema/**/test/*.class" />
-  </patternset>
-
-  <patternset id="sources.test.schema">
-    <include name="net/ontopia/topicmaps/schema/**/test/*.java" />
-  </patternset>
-
-  <patternset id="classes.test.schema">
-    <include name="net/ontopia/topicmaps/schema/**/test/*.class" />
-  </patternset>
-
-  <property name="dist.schema.packagenames" value="
-       net.ontopia.topicmaps.schema.core, 
-       net.ontopia.topicmaps.schema.impl.osl,
-       net.ontopia.topicmaps.schema.utils" />
-
-  <property name="dev.schema.packagenames" value="
-       ${dist.schema.packagenames}" />
-
-  <!-- ======================================================================
-        TMAPI support
-       ==================================================================== -->
-
-  <patternset id="sources.tmapi">
-    <include name="net/ontopia/topicmaps/impl/tmapi2/**/*.java" />
-    <exclude name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.java"/>
-  </patternset>
-
-  <patternset id="classes.tmapi">
-    <include name="net/ontopia/topicmaps/impl/tmapi2/**/*.class"/>
-    <exclude name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.class"/>
-    <include name="META-INF/services/org.tmapi.core.TopicMapSystemFactory"/>
-  </patternset>
-
-  <patternset id="sources.test.tmapi">
-    <include name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.java"/>
-  </patternset>
-
-  <patternset id="classes.test.tmapi">
-    <include name="net/ontopia/topicmaps/impl/tmapi2/test/**/*.class"/>
-  </patternset>
-
-  <!-- ======================================================================
         Dummy log4j classes
        ==================================================================== -->
 
@@ -2438,132 +2564,6 @@
         <patternset refid="classes.dummyLog4j" />
       </fileset>
     </delete>
-  </target>
-
-  <!-- ======================================================================
-        Vizigator
-       ==================================================================== -->
-
-  <patternset id="sources.viz">
-    <include name="net/ontopia/topicmaps/viz/*.java" />
-  </patternset>
-    
-  <patternset id="classes.viz">
-    <include name="net/ontopia/topicmaps/viz/*.class" />
-  </patternset>
-
-  <patternset id="sources.test.viz">
-  </patternset>
-    
-  <patternset id="classes.test.viz">
-  </patternset>
-
-  <patternset id="classes.vizlet">
-    <patternset refid="classes.viz" />
-  </patternset>
-
-  <patternset id="classes.vizdesktop">
-    <patternset refid="classes.viz" />
-  </patternset>
-
-  <patternset id="images.viz">
-    <include name="net/ontopia/topicmaps/viz/logo.gif" />
-  </patternset>
-
-  <patternset id="resources.viz">
-    <include name="net/ontopia/topicmaps/viz/messages.properties" />
-    <include name="net/ontopia/topicmaps/viz/messages_*.properties" />
-  </patternset>
-
-  <target name="jar.vizlet" depends="init,compile.dummyLog4j">
-    <echo>Creating vizlet jar file...</echo>
-
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j" source="1.5">
-      <patternset refid="sources.viz" />
-    </javac>
-    <echo>Compiling viz classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j">
-      <patternset refid="sources.viz" />
-    </javac>
-    <echo>Copying Vizigator Resources ... </echo>
-    <!-- "About" image file -->
-    <copy file="${java.path}/net/ontopia/topicmaps/viz/logo.gif" tofile="${build.classes}/net/ontopia/topicmaps/viz/logo.gif" />
-    <!-- base nls support for Vizigator -->
-    <copy todir="${build.classes}/net/ontopia/topicmaps/viz/" overwrite="yes">
-      <fileset dir="${java.path}/net/ontopia/topicmaps/viz/">
-        <patternset>
-          <include name="messages.properties" />
-          <include name="messages_*.properties" />
-        </patternset>
-      </fileset>
-    </copy>
-
-    <unjar src="${3rdparty.path}/crimson.jar" dest="${build.tmp}" />
-    <unjar src="${3rdparty.path}/touchgraph.jar" dest="${build.tmp}" />
-
-    <unjar dest="${build.tmp}"><fileset file="${lib.path}/backport-util-concurrent-*.jar"/></unjar>
-    <delete dir="${build.tmp}/edu/emory/mathcs/backport/java/util/concurrent"/>
-    <delete includeemptydirs="true">
-      <fileset dir="${build.tmp}/edu/emory/mathcs/backport/java/util">
-        <include name="concurrent/**"/>
-        <include name="Array*"/>
-        <include name="Deque*"/>
-        <include name="Linked*"/>
-        <include name="Priority*"/>
-        <include name="Queue*"/>
-      </fileset>
-    </delete>
-
-    <delete file="${build.jars}/ontopia-vizlet.jar" />
-    <delete file="${build.jars}/signed-vizlet.jar" />
-
-    <mkdir dir="${build.classes}/META-INF/services"/>
-    <copy file="${src.path}/dist/vizigator/services/com.sun.org.apache.xerces.internal.xni.parser.XMLParserConfiguration" 
-         todir="${build.classes}/META-INF/services"/>
-
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-vizlet.jar">
-      <patternset includes="META-INF/services/com.sun.org.apache.xerces.internal.xni.parser.XMLParserConfiguration"/>
-      <patternset refid="classes.vizlet" />
-      <patternset refid="resources.viz" />
-      <patternset>
-        <patternset refid="classes.engine"/>
-        <exclude name="net/ontopia/topicmaps/entry/*.class"/>
-        <exclude name="net/ontopia/topicmaps/utils/ltm/*.class"/>
-        <exclude name="net/ontopia/topicmaps/utils/rdf/*.class"/>
-        <exclude name="net/ontopia/topicmaps/utils/xfml/*.class"/>
-        <exclude name="net/ontopia/topicmaps/xml/ISO13250*.class"/>
-        <exclude name="net/ontopia/topicmaps/xml/XTMExporter.class"/>
-        <exclude name="net/ontopia/topicmaps/xml/XTMTopicMapWriter.class"/>
-        <exclude name="net/ontopia/topicmaps/xml/XTMFragmentExporter*.class"/>
-        <exclude name="net/ontopia/topicmaps/xml/*Canonical*.class"/>
-        <exclude name="net/ontopia/topicmaps/xml/XTMPathTopicMapSource*.class"/>
-        <exclude name="net/ontopia/topicmaps/xml/XTMValidationHandler*.class"/>
-        <!-- NOTE: some navigator classes are needed too -->
-        <include name="net/ontopia/topicmaps/nav/utils/comparators/TopicComparator.class"/>
-        <include name="net/ontopia/topicmaps/nav/utils/grabbers/ContextNameGrabber.class"/>
-        <include name="net/ontopia/topicmaps/nav/utils/stringifiers/ComparatorNameStringifier.class"/>        
-      </patternset>
-      <patternset refid="classes.dummyLog4j"/>
-      <fileset dir="${build.tmp}">
-        <include name="**/*.class" />
-      </fileset>
-    </jar>
-
-    <!-- create signed jar-file -->
-    <echo>Signing vizlet jar-file...</echo>
-    <exec executable="jarsigner">
-      <arg value="-keystore" />
-      <arg value="${src.path}/dist/signing/ontopiastore" />
-      <arg value="-storepass" />
-      <arg value="ontopia" />
-      <arg value="-keypass" />
-      <arg value="ontopia" />
-      <arg value="-signedjar" />
-      <arg value="${build.jars}/signed-vizlet.jar" />
-      <arg value="${build.jars}/ontopia-vizlet.jar" />
-      <arg value="ontopia" />
-    </exec>
-
   </target>
 
   <!-- ======================================================================
