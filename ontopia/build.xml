@@ -6,20 +6,14 @@
                      system after you've checked out the source 
                      code for the first time.
 
-  Actions:
-    clean
-    compile
-    jar
-    javadoc
+  Main targets:
 
-  Modules:
-    engine
-    query
-    fulltext
-    schema
-    navigator
-    webed
-    rdbms
+    dist.jar.ontopia - builds the ontopia.jar file
+    dist.ontopia - builds the full ontopia distribution
+
+  If you'd like to do the compile targets manually execute them in this order:
+
+    ant init ivy.resolve clean.classes compile.ontopia jar.ontopia compile.ontopia.test jar.ontopia.test
 
 -->
 
