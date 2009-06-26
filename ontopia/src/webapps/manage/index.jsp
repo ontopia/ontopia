@@ -1,4 +1,4 @@
-<%@ page import="java.util.Calendar,java.text.SimpleDateFormat,net.ontopia.products.*,net.ontopia.products.license.*" %>
+<%@ page import="java.util.Calendar,java.text.SimpleDateFormat,net.ontopia.products.*,net.ontopia.Ontopia" %>
 <html>
 <head>
 <meta http-equiv="Refresh" content="0;URL=manage.jsp" />
@@ -18,28 +18,8 @@ body {
 <h1>Welcome to the Admin console</h1>
 <h2>Ontopia's Admin console is starting up. Please wait a few moments.</h2>
 
-<%
-  GenericNavigator prod = GenericNavigator.getInstance();
-  LicenseKey key = LicenseKeyManager.getLicenseKey(prod);
-  // -- get expiry date
-  Calendar expiry = key.getExpiryDate();
-  SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-  String expires = null;
-  if (expiry != null)
-    dateformat.format(expiry.getTime());
-  // -- get information about when the product was built
-  Calendar build = prod.getBuildDate();
-  SimpleDateFormat dateformat_exact = new SimpleDateFormat("yyyy-MM-dd H:m:s");
-  String buildinfo = dateformat_exact.format(build.getTime()) + " #" + prod.getBuildNumber();
-%>
-
-<% if (expires != null) { %>
-<p>Please note that this version of the Admin console will expire on
-  <strong><%= expires %></strong>.</p>
-<% } %>
-
 <p>
-  The version you are using was built on: <%= buildinfo %>.
+  The version you are using was built on: <%= Ontopia.getBuild() %>.
   A current version can be downloaded from
   <a href="http://www.ontopia.net/download/freedownload.html">here</a>.
 </p>

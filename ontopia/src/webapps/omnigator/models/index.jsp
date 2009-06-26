@@ -44,20 +44,14 @@
       <p>
 
       <table class="shboxed" width="100%"><tr><td>
-      <h3>Version</h3>
-      <%
-        // -- get information about when the product was build
-        Calendar build = Ontopia.getBuildDate();
-        SimpleDateFormat dateformat_exact = new SimpleDateFormat("yyyy-MM-dd");
-        String buildinfo = dateformat_exact.format(build.getTime()) + " #" + Ontopia.getBuildNumber();
-      %>
+        <h3>Version</h3>
 
         <table>
         <tr valign="top"><th align=left>Version</th>
             <td><%= Ontopia.getVersion() %>
 
         <tr valign="top"><th align=left>Build</th>
-            <td><%= buildinfo %>
+            <td><%= Ontopia.getBuild() %>
         </table>
       </table>
 
