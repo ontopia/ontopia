@@ -13,7 +13,7 @@
 
     <abstract>
       <para>This document is a guide to installing and configuring the
-      Ontopia Topic Map Engine RDBMS Backend Connector. It assumes
+      Ontopia Topic Maps Engine RDBMS Backend Connector. It assumes
       that the reader is familiar with relational databases and has
       some knowledge of how to configure them.</para>
     </abstract>
@@ -23,7 +23,7 @@
     <title>Introduction</title>
 
     <para>The RDBMS Backend Connector adds relational database
-    persistence support to the Ontopia Topic Map Engine. The
+    persistence support to the Ontopia Topic Maps Engine. The
     persistence is transparent and users of the topic map interfaces
     don't have to take any additional steps in order to persist topic
     maps. Applications that uses the RDBMS Backend Connector must
@@ -373,7 +373,7 @@ alter database topicmaps set read_committed_snapshot on;
             cache implementation that transactions can share, so that
             redundant database access is avoided. This cache is
             enabled by default when using the Navigator and Web Editor
-            Frameworks. Note that when using the Topic Map Engine API
+            Frameworks. Note that when using the Topic Maps Engine API
             one must access the topic map store through one of the
             topic map source implementations in the RDBMS Backend to
             make use of the shared cache. Warning: If one does not use
@@ -660,7 +660,7 @@ alter database topicmaps set read_committed_snapshot on;
       implementation in the RDBMS Backend Connector. When using the
       RDBMS Backend Connector with the Navigator and Web Editor
       frameworks the topic map store pooling is always enabled. Note
-      that when using the Topic Map Engine API one must access the
+      that when using the Topic Maps Engine API one must access the
       topic map stores through one of the topic map source
       implementations in the RDBMS Backend to make use store
       pooling. These topic map source implementations always use store
