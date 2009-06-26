@@ -26,7 +26,7 @@
      * syntax: <symbol>
 -->
 <article>
-<title>&ted;: The Topic Map Editor</title>
+<title>&ted;: The Topic Maps Editor</title>
 <subtitle>User&#8217;s Guide</subtitle>
 
 <!--Additions for future:
@@ -117,7 +117,7 @@ page for adding metadata to the topic map (description, creator,
 version, etc.), validating it, etc.; and an interface for exporting to
 various interchange syntaxes.</para>
 
-<para>The Topic Map Index Page allows you to open an existing topic map, create
+<para>The Topic Maps Index Page allows you to open an existing topic map, create
 a new one, or import one from outside &ted;. Once you have selected one
 of these actions, you are taken to the application pages. The overall
 architecture and the navigation paths between the various parts of the
@@ -179,13 +179,13 @@ A</ulink>.</para>
 </section>
 
 <section id="start-page">
-<title>Topic Map Index Page</title>
+<title>Topic Maps Index Page</title>
 
 <para>Before you can create either the ontology or the instance, you
 have to open a topic map, so let&#8217;s start there.</para>
 
 <para>When you first access &ted;, you are taken to the
-Topic Map Index Page, see <xref linkend="wel-pg-fig"/>. On the left, is a column
+Topic Maps Index Page, see <xref linkend="wel-pg-fig"/>. On the left, is a column
 for <guilabel>Ontopoly Topic Maps</guilabel>, in the middle is the list
 of <guilabel>Other Topic Maps</guilabel> (also referred to as
 &#8220;non-&ted; topic maps&#8221;), and on the right is the area for
@@ -195,7 +195,7 @@ been deleted from outside &ted;. For more information on deleting &ted;
 topic maps, please see <xref linkend="del-tm"/>.</para>
 
 <figure id="wel-pg-fig">
-<title>&ted; Topic Map Index Page</title>
+<title>&ted; Topic Maps Index Page</title>
 <graphic fileref="pages/doc_welcome_page.png" width="75%"/>
 </figure>
 
@@ -258,7 +258,7 @@ the true intent behind the topic map.</para>
 the page to create a new topic map. After naming the topic map, you are
 taken to the Topic Type Configuration Page. The name you enter will be
 used for the name of the topic map and will appear in the left-hand
-column on the Topic Map Index Page when subsequently accessed. (You will be able to change it later, if you
+column on the Topic Maps Index Page when subsequently accessed. (You will be able to change it later, if you
 like, see <xref linkend="topic-map-config"/>.) The name will also be
 used to generate a file name, with the extension
 <filename>.xtm</filename> being added automatically.</para>
