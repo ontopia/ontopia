@@ -921,7 +921,7 @@
     <property name="dist.version.major" value="5"/>
     <property name="dist.version.minor" value="0"/>
     <property name="dist.version.micro" value="0"/>
-    <property name="dist.is.beta"       value="0"/> <!-- beta if greater than zero -->
+    <property name="dist.is.beta"       value="1"/> <!-- beta if greater than zero -->
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}"/>
     <property name="ontopia.version" value="{'MAJOR_VERSION': ${dist.version.major}, 'MINOR_VERSION': ${dist.version.minor}, 'MICRO_VERSION': ${dist.version.micro}, 'BETA_VERSION': ${dist.is.beta}}"/>
     <tstamp><format property="dist.date" pattern="yyyyMMdd" /></tstamp>
@@ -1694,21 +1694,23 @@
     <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/plugins" />
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
       <fileset dir="${src.path}/webapps/omnigator/plugins">
-        <include name="tmlink/*/**" />
         <include name="customise/*/**" />
-        <include name="feedback/*/**" />
         <include name="edit/*/**" />
         <include name="export/*/**" />
+        <include name="feedback/*/**" />
         <include name="filter/*/**" />
+        <include name="fulltext/*/**" />
         <include name="hello/*/**" />
         <include name="ltm/*/**" />
-        <include name="manage/*/**" />
         <include name="merge/*/**" />
         <include name="plugins/*/**" />
+        <include name="rdf2tm/*/**" />
         <include name="samples/*/**" />
         <include name="statistics/*/**" />
-        <include name="rdf2tm/*/**" />
-        <include name="tmrap/*/**" />
+        <include name="tmlink/*/**" />
+        <include name="tolog/*/**" />
+        <include name="validator/*/**" />
+        <include name="viz/*/**" />
       </fileset>
     </copy>
 
@@ -1845,14 +1847,6 @@
 
   <!-- - - - Collect fulltext components - - - - - - - - - - - - - - - - - - -->
   <target name="dist.fulltext.collect">
-
-    <!-- Copy plugin-->
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
-      <fileset dir="${src.path}/webapps/omnigator/plugins">
-        <include name="fulltext/*/**" />
-        <include name="ftadmin/*/**" />
-      </fileset>
-    </copy>
 
   </target>
 
@@ -2057,13 +2051,6 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/schema" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/schema" />
 
-    <!-- Copy plugin -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
-      <fileset dir="${src.path}/webapps/omnigator/plugins">
-        <include name="validator/*/**" />
-      </fileset>
-    </copy>
-
   </target>
 
   <target name="dist.schema.test.collect">
@@ -2094,13 +2081,6 @@
     <!-- Copy logo and stylesheet -->
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/query" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/query" />
-
-    <!-- Copy plugin -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
-      <fileset dir="${src.path}/webapps/omnigator/plugins">
-        <include name="tolog/*/**" />
-      </fileset>
-    </copy>
 
   </target>
 
@@ -2196,16 +2176,9 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
 
-    <!-- Copy plugin -->
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins">
-      <fileset dir="${src.path}/webapps/omnigator/plugins">
-        <include name="viz/*/**" />
-      </fileset>
-    </copy>
+    <!-- Copy jar-files -->
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
            file="${build.jars}/ontopia-vizlet.jar" overwrite="yes" />
-
-    <!-- Copy jar-files -->
     <copy file="${build.jars}/ontopia-vizlet.jar" 
         tofile="${dist.path}/extras/ontopia-vizlet.jar" />
     <copy file="${build.jars}/signed-vizlet.jar" 
