@@ -55,8 +55,7 @@ Microsoft SQL Server 2005.
 <title>What the release contains</title>
 
 <para>
-This edition of the Ontopia Knowledge Suite contains the following
-components: 
+Ontopia has the following components:
 </para>
 
 <itemizedlist>
@@ -181,19 +180,18 @@ additional jar files from
 
 <para>
 Once you've set up your <envar>CLASSPATH</envar> environment variable
-and installed your license key, you can check that the Ontopia
-Knowledge Suite is indeed working correctly on your system. This step
-is optional.
+and installed your license key, you can check that Ontopia is indeed
+working correctly on your system. This step is optional.
 </para>
 
-<para>The Ontopia Knowledge Suite comes with a set of test suites, so
-you can check that it is working correctly on your system. Each test
-suite is a set of <ulink url="http://www.junit.org">JUnit</ulink> test
-cases that exercise most aspects of the Ontopia Knowledge Suite to
-verify that it works as it should. This includes testing all engine
-policies, all engine methods, testing import and export of topic map
-documents and so on. Running the test suite is therefore the best and
-quickest way to test whether it has been installed correctly or not.
+<para>Ontopia comes with a set of test suites, so you can check that
+it is working correctly on your system. Each test suite is a set of
+<ulink url="http://www.junit.org">JUnit</ulink> test cases that
+exercise most aspects of Ontopia to verify that it works as it
+should. This includes testing all engine policies, all engine methods,
+testing import and export of topic map documents and so on. Running
+the test suite is therefore the best and quickest way to test whether
+it has been installed correctly or not.
 </para>
 
 <para>
@@ -361,7 +359,7 @@ Ontopia and the web applications without using the RDBMS backend.</para>
 <title>Getting started</title>
 
 <para>Following is a short introduction to the end-user applications
-that come with the Ontopia Knowledge Suite.</para>
+that come with Ontopia.</para>
 
 <para>For more information about developing with Ontopia you can find
 a complete list of developer documentation <ulink
@@ -616,8 +614,8 @@ it instructive to complete it on your own.</para>
 <title>Frequently asked questions</title>
 
 <para>
-This section contains answers to frequently asked questions about the
-Ontopia Knowledge Suite.
+This section contains answers to frequently asked questions about
+Ontopia.
 </para>
 
 <variablelist>
@@ -749,9 +747,8 @@ other Tomcat installation.</para>
 <section id="reqjars">
 <title>Required jar-files</title>
 
-<para>The Ontopia Knowledge Suite has the following jar-file
-dependencies. The files can be found in the
-<filename>${basedir}/lib</filename> directory.</para>
+<para>Ontopia has the following jar-file dependencies. The files can
+be found in the <filename>${basedir}/lib</filename> directory.</para>
 
 <itemizedlist>
   <listitem><para>Topic Map Engine:</para>
