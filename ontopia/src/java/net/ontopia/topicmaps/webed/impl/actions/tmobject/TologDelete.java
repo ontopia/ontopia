@@ -21,7 +21,8 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -34,7 +35,7 @@ import org.apache.log4j.Logger;
 public class TologDelete implements ActionIF {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(TologDelete.class.getName());
+  private static Logger log = LoggerFactory.getLogger(TologDelete.class.getName());
 
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     //test params

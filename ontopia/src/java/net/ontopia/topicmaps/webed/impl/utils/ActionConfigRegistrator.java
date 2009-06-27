@@ -6,7 +6,8 @@ package net.ontopia.topicmaps.webed.impl.utils;
 import javax.servlet.ServletContext;
 import net.ontopia.topicmaps.webed.impl.basic.*;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Keeps track with registering the action registry object
@@ -15,7 +16,7 @@ import org.apache.log4j.Logger;
 public class ActionConfigRegistrator implements ConfigurationObserverIF {
 
   // initialization of log facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(ActionConfigRegistrator.class.getName());
   
   protected ServletContext ctxt;

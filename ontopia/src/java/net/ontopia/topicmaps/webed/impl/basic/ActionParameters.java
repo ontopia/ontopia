@@ -15,7 +15,8 @@ import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.FileValueIF;
 import net.ontopia.topicmaps.webed.core.WebEdRequestIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Default implementation of ActionParametersIF.
@@ -27,7 +28,7 @@ public class ActionParameters implements ActionParametersIF {
   private WebEdRequestIF request;
   private FileValueIF filevalue;
   
-  static Logger logger = Logger.getLogger(ActionParameters.class.getName());
+  static Logger logger = LoggerFactory.getLogger(ActionParameters.class.getName());
 
   public ActionParameters(String fieldname, String[] fieldvalues,
                           FileValueIF filevalue,

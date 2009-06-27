@@ -16,7 +16,8 @@ import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.actions.topicmap.AbstractTopicMapAction;
 import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Action for setting a player of an association. If the
@@ -38,7 +39,7 @@ import org.apache.log4j.Logger;
 public class AssignRolePlayer extends AbstractTopicMapAction {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(AssignRolePlayer.class.getName());
+  private static Logger log = LoggerFactory.getLogger(AssignRolePlayer.class.getName());
   
   public void perform(ActionParametersIF params, ActionResponseIF response) {
 

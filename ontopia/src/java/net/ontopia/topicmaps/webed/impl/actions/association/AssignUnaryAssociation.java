@@ -11,7 +11,8 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.impl.actions.topicmap.AbstractTopicMapAction;
 import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Action for setting up a unary association. If the association does
@@ -22,7 +23,7 @@ import org.apache.log4j.Logger;
 public class AssignUnaryAssociation extends AbstractTopicMapAction {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(AssignUnaryAssociation.class
+  private static Logger log = LoggerFactory.getLogger(AssignUnaryAssociation.class
       .getName());
 
   public void perform(ActionParametersIF params, ActionResponseIF response) {

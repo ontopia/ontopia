@@ -19,7 +19,8 @@ import net.ontopia.topicmaps.webed.impl.utils.Parameters;
 import net.ontopia.topicmaps.webed.impl.utils.ReqParamUtils;
 import net.ontopia.utils.DebugUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Servlet for unregistering form action data.
@@ -27,7 +28,7 @@ import org.apache.log4j.Logger;
 public final class FormUnregisterServlet extends HttpServlet {
 
   // --- initialize logging facility.
-  static Logger logger = Logger.getLogger(FormUnregisterServlet.class.getName());
+  static Logger logger = LoggerFactory.getLogger(FormUnregisterServlet.class.getName());
 
   /**
    * INTERNAL: Handles an HTTP GET request.

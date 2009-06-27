@@ -26,7 +26,8 @@ import net.ontopia.topicmaps.webed.impl.basic.ParamRuleIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.SAXTracker;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 
 /**
@@ -39,7 +40,7 @@ import org.xml.sax.Attributes;
 public class ActionConfigContentHandler extends SAXTracker {
 
   // --- define a logging category.
-  static Logger log = Logger.getLogger(ActionConfigContentHandler.class.getName());
+  static Logger log = LoggerFactory.getLogger(ActionConfigContentHandler.class.getName());
 
   // --- global storage
   ActionRegistryIF registry;

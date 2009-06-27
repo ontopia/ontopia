@@ -15,7 +15,8 @@ import net.ontopia.topicmaps.webed.impl.utils.Parameters;
 import net.ontopia.utils.DebugUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Implementation of the ActionContextIF interface. This
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 public class ActionContext implements ActionContextIF {
 
   // --- define a logging category.
-  private static Logger log = Logger.getLogger(ActionContext.class.getName());
+  private static Logger log = LoggerFactory.getLogger(ActionContext.class.getName());
   
   protected Parameters params;
   protected UserIF user;

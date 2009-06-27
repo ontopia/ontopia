@@ -14,7 +14,8 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.VelocityContext;
 
 /**
@@ -23,7 +24,7 @@ import org.apache.velocity.VelocityContext;
  */
 public class LinkTag extends BodyTagSupport {
   private static final String CATEGORY_NAME = LinkTag.class.getName();
-  private static Logger log = Logger.getLogger(LinkTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(LinkTag.class.getName());
   
   /**
    * The location where the velocity template can be retrieved from.

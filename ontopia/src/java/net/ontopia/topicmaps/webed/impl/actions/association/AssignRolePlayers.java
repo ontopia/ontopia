@@ -16,7 +16,8 @@ import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.actions.topicmap.AbstractTopicMapAction;
 import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Action for setting up a Ternary association. If the association
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
 public class AssignRolePlayers extends AbstractTopicMapAction {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(AssignRolePlayers.class
+  private static Logger log = LoggerFactory.getLogger(AssignRolePlayers.class
       .getName());
 
   public void perform(ActionParametersIF params, ActionResponseIF response) {
@@ -36,20 +37,15 @@ public class AssignRolePlayers extends AbstractTopicMapAction {
 
     // get parameters
     AssociationIF association = (AssociationIF) params.get(0);
-    log.debug("Association:");
-    log.debug(association);
+    log.debug("Association: {}", association);
     TopicIF assocType = (TopicIF) params.get(1);
-    log.debug("Association Type:");
-    log.debug(assocType);
+    log.debug("Association Type: {}", assocType);
     List roleTypes = (List) params.getCollection(2);
-    log.debug("Role Types:");
-    log.debug(roleTypes);
+    log.debug("Role Types: {}", roleTypes);
     List topics = (List) params.getCollection(3);
-    log.debug("Topics:");
-    log.debug(topics);
+    log.debug("Topics: {}", topics);
     TopicIF fieldInput = (TopicIF) params.getTMObjectValue();
-    log.debug("Field Input:");
-    log.debug(fieldInput);
+    log.debug("Field Input: {}", fieldInput);
 
     if (topics.contains(null) & fieldInput == null)
       throw new ActionRuntimeException(

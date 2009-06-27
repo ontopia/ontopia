@@ -17,13 +17,14 @@ import net.ontopia.topicmaps.webed.impl.basic.ImageInformation;
 import net.ontopia.topicmaps.webed.impl.basic.ImageInformationIF;
 import net.ontopia.topicmaps.webed.impl.utils.ActionConfigurator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 public class ActionConfigContentHandlerTest extends AbstractOntopiaTestCase {
   
   // initialization of log facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(ActionConfigContentHandlerTest.class.getName());
 
   ActionRegistryIF registry;  

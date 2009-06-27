@@ -14,7 +14,8 @@ import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.topicmaps.nav2.impl.basic.NavigatorConfiguration;
 import net.ontopia.topicmaps.nav2.impl.framework.User;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Test class for testing distributed NamedLockManager locks.
@@ -31,7 +32,7 @@ import org.apache.log4j.Logger;
 public class ClusteredNamedLockManagerTest {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(ClusteredNamedLockManagerTest.class.getName());
+  static Logger log = LoggerFactory.getLogger(ClusteredNamedLockManagerTest.class.getName());
 
   private boolean master;
   private int participantCount;

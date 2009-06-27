@@ -15,7 +15,8 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Action for setting the string value of a topic name. Creates
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class SetValue implements ActionIF {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(SetValue.class.getName());
+  private static Logger log = LoggerFactory.getLogger(SetValue.class.getName());
 
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     // test params

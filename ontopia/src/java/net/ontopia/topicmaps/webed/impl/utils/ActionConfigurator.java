@@ -17,10 +17,11 @@ import net.ontopia.topicmaps.webed.impl.basic.ConfigurationObservableIF;
 import net.ontopia.topicmaps.webed.impl.basic.ConfigurationObserverIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
-import net.ontopia.xml.Log4jSaxErrorHandler;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.ValidatingContentHandler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -34,7 +35,7 @@ import org.xml.sax.XMLReader;
 public class ActionConfigurator implements ConfigurationObservableIF {
 
   // initialization of log facility
-  private static Logger log = Logger
+  private static Logger log = LoggerFactory
     .getLogger(ActionConfigurator.class.getName());
 
   protected String contextPath;
@@ -63,8 +64,7 @@ public class ActionConfigurator implements ConfigurationObservableIF {
    */
   public ActionConfigurator(String contextPath, String realPath, String fileName,
                             long delay) {
-    log.debug("ActionConfigurator initialised for '"+fileName+"', "+
-              "delay: '"+delay+"' ms.");
+    log.debug("ActionConfigurator initialised for '{}' delay: '{}' ms.", fileName, delay);
     this.contextPath = contextPath;
     this.realPath = realPath;
     this.fileName = fileName;
@@ -124,24 +124,24 @@ public class ActionConfigurator implements ConfigurationObservableIF {
       istream = cl.getResourceAsStream(resourceName);
       if (istream == null)
         throw new IOException("Resource '" + resourceName + "' not found through class loader.");
-      log.debug("File loaded through class loader: " + name);
+      log.debug("File loaded through class loader: {}", name);
     } else if (name.startsWith("file:")) {
       File f =  new File(name.substring("file:".length()));
       if (f.exists()) {
-        log.debug("File loaded from file system: " + name);
+        log.debug("File loaded from file system: {}", name);
         istream = new FileInputStream(f);
       } else
         throw new IOException("File '" + f + "' not found.");
     } else {
       File f = (realPath == null ? null : new File(realPath, name));
       if (f != null && f.exists()) {
-        log.debug("File loaded from file system: " + f);
+        log.debug("File loaded from file system: {}", f);
         istream = new FileInputStream(f);
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         istream = cl.getResourceAsStream(name);
         if (istream != null)
-          log.debug("File loaded through class loader: " + name);
+          log.debug("File loaded through class loader: {}", name);
       }
     }
     return istream;    
@@ -162,13 +162,13 @@ public class ActionConfigurator implements ConfigurationObservableIF {
       ValidatingContentHandler ch = new ValidatingContentHandler(handler, src,
                                                                  false);
       parser.setContentHandler(ch);
-      parser.setErrorHandler(new Log4jSaxErrorHandler(log));
+      parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
       // parse the XML instance, now.
       InputStream istream = getInputStream(realPath, fileName);
       parser.parse(new InputSource(istream));
       if (log.isDebugEnabled()) {
-        log.debug("Read in action configuration from " + fileName);
-        log.debug(handler.getRegistry());
+        log.debug("Read in action configuration from {}", fileName);
+        log.debug("{}", handler.getRegistry());
       }
       freshRegistry = handler.getRegistry();
     }

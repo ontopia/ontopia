@@ -15,7 +15,8 @@ import net.ontopia.topicmaps.webed.core.ActionParametersIF;
 import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -29,7 +30,7 @@ import org.apache.log4j.Logger;
 public class SetValueUnique extends SetValue {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(SetValueUnique.class.getName());
+  private static Logger log = LoggerFactory.getLogger(SetValueUnique.class.getName());
 
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     log.debug("occurrence.SetValueUnique.perform() executing");

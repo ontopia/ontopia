@@ -36,7 +36,8 @@ import net.ontopia.topicmaps.webed.impl.utils.NamedLockManager;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.VelocityContext;
 
 /**
@@ -46,7 +47,7 @@ import org.apache.velocity.VelocityContext;
 public class FormTag extends BodyTagSupport {
   // initialization of logging facility
   private static final String CATEGORY_NAME = FormTag.class.getName();
-  private static Logger logger = Logger.getLogger(CATEGORY_NAME);
+  private static Logger logger = LoggerFactory.getLogger(CATEGORY_NAME);
 
   /**
    * The default location where the velocity template can be retrieved from.

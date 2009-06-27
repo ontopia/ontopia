@@ -8,7 +8,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Enclosing tag to specify which action group the nested
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
 public class ActionGroupTag extends TagSupport {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(ActionGroupTag.class.getName());
+  private static Logger log = LoggerFactory.getLogger(ActionGroupTag.class.getName());
 
   // tag attributes
   private String actiongroup_name;

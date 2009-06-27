@@ -28,7 +28,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringTemplateUtils;
 import net.ontopia.utils.StringUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: Action for adding information to a topic map by evaluating
@@ -39,7 +40,7 @@ import org.apache.log4j.Logger;
 public class EvaluateLTM implements ActionIF {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(EvaluateLTM.class.getName());
+  private static Logger log = LoggerFactory.getLogger(EvaluateLTM.class.getName());
 
   public void perform(ActionParametersIF params, ActionResponseIF response) {
     

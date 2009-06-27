@@ -22,7 +22,8 @@ import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.CollectionUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Factory class for getting hold of lock managers.

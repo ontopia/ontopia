@@ -22,7 +22,8 @@ import net.ontopia.topicmaps.nav2.core.UserIF;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.CollectionUtils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class to handle basic lock controlling for objects in the web
@@ -31,7 +32,7 @@ import org.apache.log4j.Logger;
 public class NamedLockManager {
 
   // initialization of logging facility
-  private static Logger logger = Logger.getLogger(NamedLockManager.class
+  private static Logger logger = LoggerFactory.getLogger(NamedLockManager.class
       .getName());
 
   private Map locked;  // key: Object(locked object), value: UserIF

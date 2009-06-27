@@ -57,7 +57,8 @@ import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
 import net.ontopia.utils.DebugUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.Perl5Compiler;
@@ -73,7 +74,7 @@ public final class ProcessServlet extends HttpServlet {
   private static final long serialVersionUID = 1115457802266399626L;
 
   // --- initialize logging facility.
-  static Logger logger = Logger.getLogger(ProcessServlet.class.getName());
+  static Logger logger = LoggerFactory.getLogger(ProcessServlet.class.getName());
 
   /**
    * INTERNAL: Handles a HTTP GET request.

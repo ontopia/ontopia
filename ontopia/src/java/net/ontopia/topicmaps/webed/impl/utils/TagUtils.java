@@ -49,7 +49,8 @@ import net.ontopia.utils.StringUtils;
 import net.ontopia.topicmaps.impl.utils.TMRevitalizer;
 import net.ontopia.topicmaps.impl.utils.TMRevitalizerIF;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
@@ -61,7 +62,7 @@ import org.xml.sax.Locator;
 public final class TagUtils {
 
   // initialization of logging facility
-  private static Logger log = Logger.getLogger(TagUtils.class.getName());
+  private static Logger log = LoggerFactory.getLogger(TagUtils.class.getName());
 
   /**
    * This variable is used to assign unique IDs to requests and
