@@ -7,8 +7,6 @@ import java.util.*;
 import gnu.getopt.LongOpt;
 import gnu.getopt.Getopt;
 
-import org.apache.log4j.*;
-
 /**
  * INTERNAL: A class that parses command line options.
  */
