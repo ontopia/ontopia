@@ -570,7 +570,7 @@
     <include name="net/ontopia/topicmaps/viz/messages_*.properties" />
   </patternset>
 
-  <target name="jar.vizlet" depends="init,compile.dummyLog4j">
+  <target name="jar.vizlet" depends="init,compile.dummyLoggers">
     <echo>Creating vizlet jar file...</echo>
 
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j" source="1.5">
@@ -638,7 +638,7 @@
         <include name="net/ontopia/topicmaps/nav/utils/comparators/ContextNameGrabber.class"/>
         <include name="net/ontopia/topicmaps/nav/utils/stringifiers/ComparatorNameStringifier.class"/>        
       </patternset>
-      <patternset refid="classes.dummyLog4j"/>
+      <patternset refid="classes.dummyLoggers"/>
       <fileset dir="${build.tmp}">
         <include name="**/*.class" />
       </fileset>
@@ -1179,11 +1179,11 @@
     <antcall target="dist.fulltext.collect" />
     <antcall target="dist.schema.collect" />
     <antcall target="dist.webed.collect" />
-    <antcall target="dist.viz.collect" />
+    <antcall target="dist.navigator.collect" /> <!-- viz and tmrap must be placed after this task -->
     <antcall target="dist.db2tm.collect" />
     <antcall target="dist.rdbms.collect" />
     <antcall target="dist.classify.collect" />
-    <antcall target="dist.navigator.collect" />
+    <antcall target="dist.viz.collect" />
     <antcall target="dist.tmrap.collect" />
 
     <!-- Collect product tests -->
@@ -2401,6 +2401,15 @@
     <!-- Copy jar-files -->
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
            file="${build.jars}/ontopia-vizlet.jar" overwrite="yes" />
+    <!--copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
+           file="${dist.path}/lib/log4j.jar" overwrite="yes" />
+    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
+           file="${dist.path}/lib/slf4j-api.jar" overwrite="yes" />
+    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
+           file="${dist.path}/lib/slf4j-log4j12.jar" overwrite="yes" />
+    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
+           file="${dist.path}/lib/jcl-over-slf4j.jar" overwrite="yes" /-->
+
     <copy file="${build.jars}/ontopia-vizlet.jar" 
         tofile="${dist.path}/extras/ontopia-vizlet.jar" />
     <copy file="${build.jars}/signed-vizlet.jar" 
@@ -2531,31 +2540,33 @@
   </target>
 
   <!-- ======================================================================
-        Dummy log4j classes
+        Dummy logger classes - used by vizlet
        ==================================================================== -->
 
-  <patternset id="sources.dummyLog4j">
+  <patternset id="sources.dummyLoggers">
     <include name="org/apache/log4j/*.java" />
     <include name="org/apache/log4j/spi/*.java" />
+    <include name="org/slf4j/*.java" />
   </patternset>
   
-  <patternset id="classes.dummyLog4j">
+  <patternset id="classes.dummyLoggers">
     <include name="org/apache/log4j/*.class" />
     <include name="org/apache/log4j/spi/*.class" />
+    <include name="org/slf4j/*.class" />
   </patternset>
 
-  <target name="compile.dummyLog4j" depends="init">
-    <echo>Compiling dummy log4j classes...</echo>
+  <target name="compile.dummyLoggers" depends="init">
+    <echo>Compiling dummy logger classes...</echo>
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" source="1.5">
-      <patternset refid="sources.dummyLog4j" />
+      <patternset refid="sources.dummyLoggers" />
     </javac>
   </target>
 
-  <target name="clean.dummyLog4j" depends="init">
-    <echo>Cleaning up dummy log4j classes...</echo>
+  <target name="clean.dummyLoggers" depends="init">
+    <echo>Cleaning up dummy logger classes...</echo>
     <delete>
       <fileset dir="${build.classes}">
-        <patternset refid="classes.dummyLog4j" />
+        <patternset refid="classes.dummyLoggers" />
       </fileset>
     </delete>
   </target>
