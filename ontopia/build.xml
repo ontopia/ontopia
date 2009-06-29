@@ -151,6 +151,18 @@
     <mkdir dir="${build.jars}" />
     <mkdir dir="${build.doc}" />
     <mkdir dir="${build.tmp}" />
+
+    <!-- Deploy dependencies to local Maven repository -->
+    <exec dir="${basedir}" executable="mvn">
+      <env key="JAVA_HOME" value="${java.home}"/>
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=gnu.trove" />
+      <arg value="-DartifactId=trove4j" />
+      <arg value="-Dversion=2.0.4" />
+      <arg value="-Dpackaging=jar" />
+      <arg value="-Dfile=${3rdparty.path}/trove.jar" />
+    </exec>
+
     <!-- Prepare product classes -->
     <antcall target="prepare.product.class"/>
   </target>
@@ -1311,7 +1323,8 @@
           description="builds the ontopia.jar file">
     <antcall target="ivy.resolve"/>
     <antcall target="check-jvm"/>
-    <antcall target="bootstrap"/>
+    <!--antcall target="bootstrap"/-->
+    <antcall target="prepare.product.class"/>
     <antcall target="clean.classes"/>
     <antcall target="compile.ontopia"/>
     <antcall target="compile.ontopia.test"/>
