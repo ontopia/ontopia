@@ -1,4 +1,0 @@
-i'm some test text from an separate include
-file ... it's a little bit cold here, please
-can i come into your warm JavaServer-Page?
-Öder söll ick mir die Beine abfrühren?

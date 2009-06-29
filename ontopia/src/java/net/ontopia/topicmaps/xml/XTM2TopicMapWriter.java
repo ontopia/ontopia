@@ -14,8 +14,6 @@ import java.io.Writer;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
-import net.ontopia.topicmaps.nav.utils.deciders.TMDecider;
-import net.ontopia.topicmaps.nav.utils.deciders.TMExporterDecider;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.PrettyPrinter;

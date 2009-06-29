@@ -445,7 +445,6 @@
     <include name="net/ontopia/topicmaps/query/impl/basic/*.java" />
     <include name="net/ontopia/topicmaps/query/impl/rdbms/*.java" />
     <include name="net/ontopia/topicmaps/query/spi/*.java" />
-    <exclude name="net/ontopia/topicmaps/query/jdbc/*.java" />
   </patternset>
 
   <patternset id="classes.query">
@@ -456,7 +455,6 @@
     <include name="net/ontopia/topicmaps/query/impl/basic/*.class" />
     <include name="net/ontopia/topicmaps/query/impl/rdbms/*.class" />
     <include name="net/ontopia/topicmaps/query/spi/*.class" />
-    <exclude name="net/ontopia/topicmaps/query/jdbc/*.class" />
   </patternset>
 
   <patternset id="sources.test.query">

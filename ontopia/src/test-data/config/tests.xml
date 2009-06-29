@@ -255,32 +255,6 @@
   </group>
 
   <group>
-    <name>net.ontopia.topicmaps.nav.context</name>
-    <test>net.ontopia.topicmaps.nav.context.test.BasenameUserThemeFilterTest</test>
-    <test>net.ontopia.topicmaps.nav.context.test.ThemeCategorizerTest</test>
-  </group>
-
-  <group>
-    <name>net.ontopia.topicmaps.nav.generic</name>
-    <test>net.ontopia.topicmaps.nav.generic.test.NavigatorSpy</test>
-  </group>
-
-  <group>
-    <name>net.ontopia.topicmaps.nav.taglibs.template</name>
-    <test>net.ontopia.topicmaps.nav.taglibs.template.test.TemplateTLTestGenerator</test>
-  </group>
-
-  <group>
-    <name>net.ontopia.topicmaps.nav.taglibs.render</name>
-    <test>net.ontopia.topicmaps.nav.taglibs.render.test.RenderTLTestGenerator</test>
-  </group>
-
-  <group>
-    <name>net.ontopia.topicmaps.nav.taglibs.topicmap</name>
-    <test>net.ontopia.topicmaps.nav.taglibs.topicmap.test.TopicmapTLTestGenerator</test>
-  </group>
-
-  <group>
     <name>net.ontopia.topicmaps.nav2.impl.basic</name>
     <test>net.ontopia.topicmaps.nav2.impl.basic.test.EncryptedModuleTest</test>
   </group>

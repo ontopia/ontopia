@@ -8,7 +8,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import net.ontopia.test.*;
+import net.ontopia.test.AbstractOntopiaTestCase;
 import net.ontopia.topicmaps.xml.*;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.*;
