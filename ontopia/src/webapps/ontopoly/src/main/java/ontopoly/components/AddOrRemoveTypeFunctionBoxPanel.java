@@ -50,8 +50,9 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
     addButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        Topic instance = topicModel.getTopic();
         TopicType topicType = (TopicType)selectedModel.getObject();
+        if (topicType == null) return;
+        Topic instance = topicModel.getTopic();
         instance.addTopicType(topicType);
         Map pageParametersMap = new HashMap();
         pageParametersMap.put("topicMapId", instance.getTopicMap().getId());
@@ -65,8 +66,9 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
     removeButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        Topic instance = topicModel.getTopic();
         TopicType topicType = (TopicType)selectedModel.getObject();
+        if (topicType == null) return;
+        Topic instance = topicModel.getTopic();
         Collection topicTypes = instance.getTopicTypes();
         if (!(topicTypes.size() == 1 && topicTypes.contains(topicType)))
           // only remove topic type if it won't end up without a type at all
