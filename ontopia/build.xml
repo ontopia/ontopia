@@ -162,6 +162,15 @@
       <arg value="-Dpackaging=jar" />
       <arg value="-Dfile=${3rdparty.path}/trove.jar" />
     </exec>
+    <exec dir="${basedir}" executable="mvn">
+      <env key="JAVA_HOME" value="${java.home}"/>
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=jing" />
+      <arg value="-DartifactId=jing" />
+      <arg value="-Dversion=2003-01-31" />
+      <arg value="-Dpackaging=jar" />
+      <arg value="-Dfile=${3rdparty.path}/jing.jar" />
+    </exec>
 
     <!-- Prepare product classes -->
     <antcall target="prepare.product.class"/>
