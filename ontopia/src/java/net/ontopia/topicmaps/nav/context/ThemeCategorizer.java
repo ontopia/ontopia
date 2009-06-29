@@ -15,7 +15,7 @@ import net.ontopia.topicmaps.utils.*;
 import net.ontopia.topicmaps.core.index.*;
 
 import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
-import net.ontopia.topicmaps.nav.utils.grabbers.ContextNameGrabber;
+import net.ontopia.topicmaps.nav.utils.comparators.ContextNameGrabber;
 
 /**
  * INTERNAL: Class for categorizing a collection of themes according to

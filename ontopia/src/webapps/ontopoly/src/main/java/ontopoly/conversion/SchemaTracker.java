@@ -38,7 +38,7 @@ public class SchemaTracker {
   protected Map nscopes = new HashMap(); // nscope : [ ttypes ]
   
   private class TopicType {
-   protected TopicIF type;
+//   protected TopicIF type;
    protected int count;
   
    protected IdentityType subloc = new IdentityType();
@@ -67,9 +67,9 @@ public class SchemaTracker {
   private class IdentityType extends AbstractProperty {
   }
   private class PlayerType extends AbstractProperty {
-   protected TopicIF atype;
-   protected TopicIF rtype;
-   protected TopicIF ptype;
+//   protected TopicIF atype;
+//   protected TopicIF rtype;
+//   protected TopicIF ptype;
   }
   
   public void trackTopics(Collection topics) {
@@ -471,7 +471,7 @@ public class SchemaTracker {
    TopicType t = (TopicType)ttypes.get(ttype);
    if (t == null) {
      t = new TopicType();
-     t.type = ttype;
+//     t.type = ttype;
      ttypes.put(ttype, t);
    }
    return t;
@@ -513,9 +513,9 @@ public class SchemaTracker {
    PlayerType t = (PlayerType)pmap.get(ptype);
    if (t == null) {
      t = new PlayerType();
-     t.atype = atype;
-     t.rtype = rtype;
-     t.ptype = ptype;
+//     t.atype = atype;
+//     t.rtype = rtype;
+//     t.ptype = ptype;
      pmap.put(ptype, t);
    }
    return t;

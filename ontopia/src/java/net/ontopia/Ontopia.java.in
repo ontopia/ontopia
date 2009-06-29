@@ -161,18 +161,16 @@ public final class Ontopia {
    * correctly for this product.
    */
   public static void checkClasses() {
-    checkClass("net.ontopia.topicmaps.core.TopicMapIF",        "ontopia-engine.jar");
-    checkClass("javax.xml.parsers.SAXParserFactory",           "jaxp.jar");
-    checkClass("org.xml.sax.ContentHandler",                   "crimson.jar or sax.jar");
+    checkClass("net.ontopia.topicmaps.core.TopicMapIF",        "ontopia.jar");
     checkClass("org.apache.crimson.jaxp.SAXParserFactoryImpl", "crimson.jar");
     checkClass("org.apache.log4j.BasicConfigurator",           "log4j.jar");
-    checkClass("org.apache.commons.collections.map.LRUMap",  "commons-collections.jar");
+    checkClass("org.apache.commons.collections.map.LRUMap",    "commons-collections.jar");
     checkClass("gnu.getopt.Getopt",                            "getopt.jar");
     checkClass("antlr.Parser",                                 "antlr.jar");
     checkClass("com.hp.hpl.jena.graph.Node",                   "jena.jar");
     checkClass("com.ibm.icu.util.Calendar",                    "icu4j.jar");
     checkClass("com.thaiopensource.relaxng.Schema",            "jing.jar");
-    checkClass("org.apache.oro.text.regex.MalformedPatternException", "jakarta-oro.jar");
+    checkClass("org.apache.oro.text.regex.MalformedPatternException", "oro.jar");
   }
 
   /**

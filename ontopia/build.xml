@@ -637,7 +637,7 @@
         <exclude name="net/ontopia/topicmaps/xml/XTMValidationHandler*.class"/>
         <!-- NOTE: some navigator classes are needed too -->
         <include name="net/ontopia/topicmaps/nav/utils/comparators/TopicComparator.class"/>
-        <include name="net/ontopia/topicmaps/nav/utils/grabbers/ContextNameGrabber.class"/>
+        <include name="net/ontopia/topicmaps/nav/utils/comparators/ContextNameGrabber.class"/>
         <include name="net/ontopia/topicmaps/nav/utils/stringifiers/ComparatorNameStringifier.class"/>        
       </patternset>
       <patternset refid="classes.dummyLog4j"/>
@@ -830,7 +830,6 @@
     <include name="net/ontopia/topicmaps/nav/utils/comparators/*.java" />
     <include name="net/ontopia/topicmaps/nav/utils/deciders/*.java" />
     <include name="net/ontopia/topicmaps/nav/utils/stringifiers/ComparatorNameStringifier.java" />
-    <include name="net/ontopia/topicmaps/nav/utils/grabbers/ContextNameGrabber.java" />
 
     <!-- New portal toolkit packages -->
     <include name="net/ontopia/topicmaps/nav2/portlets/taglib/*.java" />
@@ -865,7 +864,6 @@
     <include name="net/ontopia/topicmaps/nav/utils/comparators/*.class" />
     <include name="net/ontopia/topicmaps/nav/utils/deciders/*.class" />
     <include name="net/ontopia/topicmaps/nav/utils/stringifiers/ComparatorNameStringifier.class" />
-    <include name="net/ontopia/topicmaps/nav/utils/grabbers/ContextNameGrabber.class" />
 
     <!-- New portal toolkit packages -->
     <include name="net/ontopia/topicmaps/nav2/portlets/taglib/*.class" />
@@ -885,7 +883,6 @@
   <property name="dev.navigator.packagenames" value="
        ${dist.navigator.packagenames},
        net.ontopia.topicmaps.nav.context,
-       net.ontopia.topicmaps.nav.utils.grabbers,
        net.ontopia.topicmaps.nav.utils.stringifiers,
        net.ontopia.topicmaps.nav.utils.comparators,
        net.ontopia.topicmaps.nav.utils.deciders,
@@ -1159,7 +1156,8 @@
 
   <!-- - - - Ontopia distribution  - - - - - - - - - - - - - - - - - - - - -->
 
-  <target name="dist.ontopia" depends="dist.ontopia.init,check-jvm">
+  <target name="dist.ontopia" depends="dist.ontopia.init,check-jvm"
+          description="builds the full ontopia distribution">
     <!-- Build properties -->
     <property name="dist.title" value="Ontopia" />
     <property name="dist.name" value="ontopia" />
@@ -1311,7 +1309,8 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${build.javadoc}/ontopia-dev" />
   </target>
 
-  <target name="dist.jar.ontopia" depends="dist.ontopia.init">
+  <target name="dist.jar.ontopia" depends="dist.ontopia.init" 
+          description="builds the ontopia.jar file">
     <antcall target="ivy.resolve"/>
     <antcall target="check-jvm"/>
     <antcall target="bootstrap"/>
@@ -1821,14 +1820,16 @@
 
   <!-- - - - Collect navigator runtime components  - - - - - - - - - - - - - -->
 
-  <target name="checkfiles-apache-tomcat" description="checks if files have already been downloaded">
-      <available file="${lib.path}/apache-tomcat-5.5.27.zip" property="apache-tomcat.exists" />
+  <target name="checkfiles-apache-tomcat">
+    <!-- checks if files have already been downloaded -->
+    <available file="${lib.path}/apache-tomcat-5.5.27.zip" property="apache-tomcat.exists" />
   </target>
 
-  <target name="download-apache-tomcat" description="download apache-tomcat" 
+  <target name="download-apache-tomcat"
           depends="checkfiles-apache-tomcat" unless="apache-tomcat.exists">
-      <get src="http://www.urlstructure.com/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.zip" 
-           dest="${lib.path}/apache-tomcat-5.5.27.zip" usetimestamp="true" />
+    <!-- download apache-tomcat -->
+    <get src="http://www.urlstructure.com/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.zip" 
+         dest="${lib.path}/apache-tomcat-5.5.27.zip" usetimestamp="true" />
   </target>
 
   <target name="dist.navigator.collect" depends="download-apache-tomcat">

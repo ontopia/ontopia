@@ -11,7 +11,6 @@ import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.utils.DeciderIF;
 
-import net.ontopia.topicmaps.nav.utils.grabbers.ContextNameGrabber;
 import net.ontopia.topicmaps.nav.utils.stringifiers.ComparatorNameStringifier;
 
 import net.ontopia.topicmaps.nav2.impl.basic.TypeDecider;

@@ -48,7 +48,6 @@
     <dependency org="net.sourceforge.jena" name="jena" rev="2.3" conf="build">
       <exclude org="xmlbeans" />
     </dependency>
-    <!--dependency org="gnu.trove" name="trove4j" rev="2.0.4" conf="build" /-->
     <dependency org="backport-util-concurrent" name="backport-util-concurrent" rev="3.1" conf="build" />
 
     <dependency org="jgroups" name="jgroups" rev="2.6.10.GA" conf="build" />
@@ -70,8 +69,12 @@
     <dependency org="pdfbox" name="pdfbox" rev="0.7.3" conf="build" />
     <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2" conf="build" />
 
+    <!-- dependencies that do not exist in maven repositories -->
+    <!--dependency org="gnu.trove" name="trove4j" rev="2.0.4" conf="build" /-->
     <!--dependency org="thaiopensource" name="jing" rev="20030619" conf="build"/-->
     <!--dependency org="org.tmapi" name="tmapi" rev="1.0" conf="build"/-->
+
+    <!--dependency org="org.python" name="jython" rev="2.5" conf="build" /-->
 
   </dependencies>
 </ivy-module>

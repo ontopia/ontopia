@@ -1,6 +1,6 @@
 // $Id: ContextNameGrabber.java,v 1.10 2008/06/12 14:37:18 geir.gronmo Exp $
 
-package net.ontopia.topicmaps.nav.utils.grabbers;
+package net.ontopia.topicmaps.nav.utils.comparators;
 
 import java.util.Arrays;
 import java.util.Collection;

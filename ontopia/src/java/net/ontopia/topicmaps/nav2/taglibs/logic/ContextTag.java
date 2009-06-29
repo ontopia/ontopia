@@ -66,8 +66,8 @@ public class ContextTag extends TagSupport
   private DeclarationContextIF declarationContext;
 
   private Object pcontext; // parent context tag
-  private Object poks; // parent oks attribute
-  private Object pokscontext; // parent okscontext attribute
+  private Object pontopia; // parent ontopia attribute
+  private Object pontopiacontext; // parent ontopiacontext attribute
 
   // tag attributes
   private String tmParamName;
@@ -88,11 +88,11 @@ public class ContextTag extends TagSupport
     // --- try to retrieve application wide configuration
     navApp = getNavigatorApplication();
 
-    // retrieve parent context tag and parent oks attribute
+    // retrieve parent context tag and parent ontopia attribute
     pcontext = pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY, 
                                         PageContext.REQUEST_SCOPE);
-    poks = pageContext.getAttribute("oks", PageContext.REQUEST_SCOPE);
-    pokscontext = pageContext.getAttribute("okscontext", PageContext.REQUEST_SCOPE);
+    pontopia = pageContext.getAttribute("ontopia", PageContext.REQUEST_SCOPE);
+    pontopiacontext = pageContext.getAttribute("ontopiacontext", PageContext.REQUEST_SCOPE);
     
     // set this instance to page context, so normal JSPs can access information
     pageContext.setAttribute(NavigatorApplicationIF.CONTEXT_KEY, this,
@@ -146,13 +146,13 @@ public class ContextTag extends TagSupport
                                             "maybe wrong topicmap ID.");
     }
     
-    // Make the oks variables available to the PageContext and hence to JSTL.
-    pageContext.setAttribute("oks", 
+    // Make the ontopia variables available to the PageContext and hence to JSTL.
+    pageContext.setAttribute("ontopia", 
                              new ContextManagerMapWrapper(contextManager),
                              PageContext.REQUEST_SCOPE);
 
-    // Make the okscontext request attribute is available
-    pageContext.setAttribute("okscontext", new Context(this), PageContext.REQUEST_SCOPE);
+    // Make the ontopiacontext request attribute is available
+    pageContext.setAttribute("ontopiacontext", new Context(this), PageContext.REQUEST_SCOPE);
 
     // --- try to retrieve topic object(s) belonging to object ID(s)
     if (topicmap != null) {
@@ -205,7 +205,7 @@ public class ContextTag extends TagSupport
       queryProcessor = null;
     }
 
-    // put back parent context tag and oks attribute
+    // put back parent context tag and ontopia attribute
     // NOTE: null values to setAttribute not allowed! bug #1551
     if (pcontext != null)
       pageContext.setAttribute(NavigatorApplicationIF.CONTEXT_KEY, pcontext,
@@ -213,14 +213,14 @@ public class ContextTag extends TagSupport
     else
       pageContext.removeAttribute(NavigatorApplicationIF.CONTEXT_KEY, 
                                   PageContext.REQUEST_SCOPE);
-    if (poks != null)
-      pageContext.setAttribute("oks", poks, PageContext.REQUEST_SCOPE);
+    if (pontopia != null)
+      pageContext.setAttribute("ontopia", pontopia, PageContext.REQUEST_SCOPE);
     else
-      pageContext.removeAttribute("oks", PageContext.REQUEST_SCOPE);
-    if (pokscontext != null)
-      pageContext.setAttribute("okscontext", pokscontext, PageContext.REQUEST_SCOPE);
+      pageContext.removeAttribute("ontopia", PageContext.REQUEST_SCOPE);
+    if (pontopiacontext != null)
+      pageContext.setAttribute("ontopiacontext", pontopiacontext, PageContext.REQUEST_SCOPE);
     else
-      pageContext.removeAttribute("okscontext", PageContext.REQUEST_SCOPE);
+      pageContext.removeAttribute("ontopiacontext", PageContext.REQUEST_SCOPE);
     
     // reset members
     contextManager = null;
@@ -418,7 +418,7 @@ public class ContextTag extends TagSupport
       queryProcessor = null;
     }
 
-    // put back parent context tag and oks attribute
+    // put back parent context tag and ontopia attribute
     if (pcontext != null)
       pageContext.setAttribute(NavigatorApplicationIF.CONTEXT_KEY, pcontext,
                                PageContext.REQUEST_SCOPE);
@@ -426,14 +426,14 @@ public class ContextTag extends TagSupport
       pageContext.removeAttribute(NavigatorApplicationIF.CONTEXT_KEY,
                                   PageContext.REQUEST_SCOPE);
 
-    if (poks != null)
-      pageContext.setAttribute("oks", poks, PageContext.REQUEST_SCOPE);
+    if (pontopia != null)
+      pageContext.setAttribute("ontopia", pontopia, PageContext.REQUEST_SCOPE);
     else
-      pageContext.removeAttribute("oks", PageContext.REQUEST_SCOPE);
-    if (pokscontext != null)
-      pageContext.setAttribute("okscontext", pokscontext, PageContext.REQUEST_SCOPE);
+      pageContext.removeAttribute("ontopia", PageContext.REQUEST_SCOPE);
+    if (pontopiacontext != null)
+      pageContext.setAttribute("ontopiacontext", pontopiacontext, PageContext.REQUEST_SCOPE);
     else
-      pageContext.removeAttribute("okscontext", PageContext.REQUEST_SCOPE);
+      pageContext.removeAttribute("ontopiacontext", PageContext.REQUEST_SCOPE);
   }
 
   // -----------------------------------------------------------------
