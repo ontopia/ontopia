@@ -5,9 +5,6 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Level;
 
 /**
  * EXAMPLE: A simple command line tool that imports an XTM topic map
@@ -23,10 +20,6 @@ public class RdbmsImport {
     //    java RdbmsImport <propfile> <xtmfile>
     //    java RdbmsImport /tmp/myprops.xml /tmp/hello.xtm
 
-    // Configure logging
-    BasicConfigurator.configure();
-    LogManager.getLoggerRepository().setThreshold(Level.WARN);
-    
     System.err.println("Connecting...");
     String propfile = argv[0];
     String xtmfile = argv[1];

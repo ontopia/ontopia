@@ -3,9 +3,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Level;
 
 /**
  * EXAMPLE: A simple command line tool that exports an topic map
@@ -22,10 +19,6 @@ public class RdbmsExport {
     //    java RdbmsExport <propfile> <topicmap-id>
     //    java RdbmsExport /tmp/myprops.xml 8552
 
-    // Configure log4j logging
-    BasicConfigurator.configure();
-    LogManager.getLoggerRepository().setThreshold(Level.WARN);
-    
     System.err.println("Connecting...");
     String propfile = argv[0];
     int topicmap_id = Integer.parseInt(argv[1]);

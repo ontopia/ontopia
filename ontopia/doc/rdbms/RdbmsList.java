@@ -4,9 +4,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Level;
 
 /**
  * EXAMPLE: A simple command line tool that lists the topic maps that
@@ -22,10 +19,6 @@ public class RdbmsList {
     //    java RdbmsList <propfile>
     //    java RdbmsList /tmp/myprops.xml 
 
-    // Configure log4j logging
-    BasicConfigurator.configure();
-    LogManager.getLoggerRepository().setThreshold(Level.WARN);
-
     System.err.println("Connecting...");
     String propfile = argv[0];
 
@@ -39,18 +32,18 @@ public class RdbmsList {
       TopicMapStoreIF store = null;
 
       try {
-	ref = (TopicMapReferenceIF) tms.next();
-	store = ref.createStore(true);
-	TopicMapIF tm = store.getTopicMap();
-	
-	System.err.println("Topic Map ID: " + tm.getObjectId());
-	System.err.println("  Topics: " + tm.getTopics().size());
-	System.err.println("  Associations: " + tm.getAssociations().size());
-	store.close();
-
-      } finally {
-	if (store != null) store.close();
-	if (ref != null) ref.close();
+        ref = (TopicMapReferenceIF) tms.next();
+        store = ref.createStore(true);
+        TopicMapIF tm = store.getTopicMap();
+        
+        System.err.println("Topic Map ID: " + tm.getObjectId());
+        System.err.println("  Topics: " + tm.getTopics().size());
+        System.err.println("  Associations: " + tm.getAssociations().size());
+        store.close();
+      } 
+      finally {
+        if (store != null) store.close();
+        if (ref != null) ref.close();
       }
     }
     
