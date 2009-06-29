@@ -8,11 +8,11 @@ Ontopia Knowledge Suite, as required by the licenses of those software
 packages.
 
 -------------------------------------------------------------------------------
-Apache Jakarta: Crimson, Xerces, Log4J, Lucene, Velocity, FileUpload, 
-Taglibs, Collections, ORO, Pool and DBCP, Apache Tomcat, 
-Axis/Java, POI
+Tomcat, Crimson, Xerces, Log4J, Lucene, Velocity, FileUpload, Taglibs, 
+Collections, ORO, Pool and DBCP, Axis/Java, POI, OpenCSV
 -------------------------------------------------------------------------------
 URL: http://jakarta.apache.org/
+URL: http://opencsv.sourceforge.net/
 
                                  Apache License
                            Version 2.0, January 2004
@@ -254,9 +254,11 @@ http://www.jGuru.com
 parrt@jguru.com
 
 -------------------------------------------------------------------------------
-GNU Java getopt
+Java getopt, SLF4J, JGroups
 -------------------------------------------------------------------------------
 URL: http://www.urbanophile.com/arenn/hacking/download.html
+URL: http://www.slf4j.org/
+URL: http://www.jgroups.org/
 
 		  GNU LIBRARY GENERAL PUBLIC LICENSE
 		       Version 2, June 1991
