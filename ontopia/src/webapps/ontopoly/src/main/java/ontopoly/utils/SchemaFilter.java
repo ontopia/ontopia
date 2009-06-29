@@ -3,7 +3,6 @@
 
 package ontopoly.utils;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -17,36 +16,31 @@ import net.ontopia.utils.DeciderIF;
 public class SchemaFilter implements DeciderIF {
   
   public boolean ok(Object object) {
-    boolean isOntopolyTopic = false;
+    boolean include = true;
     if (object instanceof TopicIF) {
       TopicIF topic = (TopicIF)object;
-
-      // check system topic types first
-      Collection types = topic.getTypes();      
-      TopicIF systemTopic = topic.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_SYSTEM_TOPIC);
-      if (systemTopic != null && types.contains(systemTopic)) return false;
-      TopicIF publicSystemTopic = topic.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_PUBLIC_SYSTEM_TOPIC);
-      if (publicSystemTopic != null && types.contains(publicSystemTopic)) return false;
       
       // check subject identifiers first
       Iterator it = topic.getSubjectIdentifiers().iterator();
       while (it.hasNext()) {
         LocatorIF psi = (LocatorIF) it.next();
+
+        // There are some exceptions
+        if (PSI.ON_DESCRIPTION.equals(psi) ||
+            PSI.ON_CREATOR.equals(psi) ||
+            PSI.ON_VERSION.equals(psi) ||
+            PSI.ON_SUPERCLASS_SUBCLASS.equals(psi) ||
+            PSI.ON_SUPERCLASS.equals(psi) ||
+            PSI.ON_SUBCLASS.equals(psi))
+          return true;
         
         // If one PSI is an Ontopoly system PSI, then the topic should be filtered out
-        // unless it's the supertype/subtype PSIs
-        if (!isOntopolyTopic)
-          isOntopolyTopic = psi.getAddress().startsWith("http://psi.ontopia.net/ontopoly/");
-        
-        if (isOntopolyTopic) {
-           if (PSI.XTM_SUPERCLASS_SUBCLASS.equals(psi) ||
-               PSI.XTM_SUPERCLASS.equals(psi) ||
-               PSI.XTM_SUBCLASS.equals(psi))
-             isOntopolyTopic = false;
-        }
+        // unless if there is an exception
+        if (psi.getAddress().startsWith("http://psi.ontopia.net/ontology/"))
+          include = false;
       }
-   }
-   return !isOntopolyTopic;
+    }
+    return include;
   }
     
 }

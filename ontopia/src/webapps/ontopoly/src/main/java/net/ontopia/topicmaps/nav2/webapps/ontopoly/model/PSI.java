@@ -68,8 +68,12 @@ public class PSI {
   public static final LocatorIF ON_FIELDS_VIEW = PSI.ON.resolveAbsolute("fields-view");
   public static final LocatorIF ON_IS_EMBEDDED_VIEW = PSI.ON.resolveAbsolute("is-embedded-view");
 
-  public static final LocatorIF XTM_SUPERCLASS_SUBCLASS = XTM.resolveAbsolute("superclass-subclass");
-  public static final LocatorIF XTM_SUPERCLASS = XTM.resolveAbsolute("superclass");
-  public static final LocatorIF XTM_SUBCLASS = XTM.resolveAbsolute("subclass");
+  public static final LocatorIF ON_DESCRIPTION = PSI.ON.resolveAbsolute("description");
+  public static final LocatorIF ON_CREATOR = PSI.ON.resolveAbsolute("creator");
+  public static final LocatorIF ON_VERSION = PSI.ON.resolveAbsolute("version");
+
+  public static final LocatorIF ON_SUPERCLASS_SUBCLASS = PSI.ON.resolveAbsolute("superclass-subclass");
+  public static final LocatorIF ON_SUPERCLASS = PSI.ON.resolveAbsolute("superclass");
+  public static final LocatorIF ON_SUBCLASS = PSI.ON.resolveAbsolute("subclass");
 
 }
