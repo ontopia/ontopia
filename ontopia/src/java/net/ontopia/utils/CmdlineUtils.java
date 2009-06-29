@@ -6,10 +6,12 @@ package net.ontopia.utils;
 import java.io.File;
 import java.util.*;
 import java.net.*;
+import java.lang.reflect.Method;
 
 import net.ontopia.infoset.core.LocatorIF;
 
-import org.apache.log4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Class that contains useful stuff for command line utilities.
@@ -17,20 +19,30 @@ import org.apache.log4j.*;
 public class CmdlineUtils {
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(CmdlineUtils.class.getName());
+  static Logger log = LoggerFactory.getLogger(CmdlineUtils.class.getName());
 
+  private static boolean isLog4JAvailable() {
+    return log.getClass().getName().equals("org.slf4j.impl.Log4jLoggerAdapter");
+  }
+
+  /**
+   * Returns if SLF4J uses Log4J
+   */
   public static void initializeLogging() {
+    if (!isLog4JAvailable()) {
+        log.warn("Log4J is not available, logging configuration will be ignored");
+        return;
+    }
     String propfile = null;
     try {
       propfile = System.getProperty("log4j.configuration");
     } catch (SecurityException e) {
-      log.warn(e.toString());      
+      log.warn(e.toString());
     }
       
     if (propfile == null) {
       // Reset and initialize logging configuration
-      BasicConfigurator.resetConfiguration();
-      BasicConfigurator.configure();
+      resetLoggingConfiguration();
       try {
         String priority = System.getProperty("net.ontopia.utils.CmdlineUtils.priority");
         setLoggingPriority((priority == null ? "INFO" : priority));
@@ -39,43 +51,59 @@ public class CmdlineUtils {
       }
     } else {
       // Use the specified log4j property file
-      PropertyConfigurator.configure(propfile);
+      configureByFile(propfile);
+    }
+  }
+
+  private static void resetLoggingConfiguration() {
+    try {
+      Class basicConfiguratorClass = Class.forName("org.apache.log4j.BasicConfigurator");
+      basicConfiguratorClass.getDeclaredMethod("resetConfiguration").invoke(null);
+      basicConfiguratorClass.getDeclaredMethod("configure").invoke(null);
+    }
+    catch (Exception ex) {
+      log.warn("Resetting basic configuration failed: {}", ex);
+    }
+  }
+
+  private static void configureByFile(String propfile) {
+    try {
+      Class propertyConfiguratorClass = Class.forName("org.apache.log4j.PropertyConfigurator");
+      propertyConfiguratorClass.getDeclaredMethod("configure", String.class).invoke(null, propfile);
+    }
+    catch (Exception ex) {
+      log.warn("Configuring Log4J with property file '{}' failed: {}", propfile, ex);
     }
   }
 
   public static void setLoggingPriority(String priority) {
+    if (!isLog4JAvailable()) {
+        log.warn("Log4J is not available, logging configuration will be ignored");
+        return;
+    }
     if (priority == null) priority = "INFO";
-    
-    if (priority.equals("ALL"))
-      LogManager.getLoggerRepository().setThreshold((Level) Level.ALL);
-    else if (priority.equals("DEBUG")) {
-      LogManager.getLoggerRepository().setThreshold((Level) Level.DEBUG);
-      //Category.getDefaultHierarchy().enableAll();
-    } else if (priority.equals("INFO")) {
-      //Category.getDefaultHierarchy().disable(Priority.DEBUG);
-      LogManager.getLoggerRepository().setThreshold((Level) Level.INFO);
-    } else if (priority.equals("WARN")) {
-      //Category.getDefaultHierarchy().disable(Priority.INFO);
-      LogManager.getLoggerRepository().setThreshold((Level) Level.WARN);
-    } else if (priority.equals("ERROR")) {
-      //Category.getDefaultHierarchy().disable(Priority.WARN);
-      LogManager.getLoggerRepository().setThreshold((Level) Level.ERROR);
-    } else if (priority.equals("FATAL")) {
-      //Category.getDefaultHierarchy().disable(Priority.ERROR);
-      LogManager.getLoggerRepository().setThreshold((Level) Level.FATAL);
-    } else if (priority.equals("NONE")) {
-      //Category.getDefaultHierarchy().disableAll();
-      LogManager.getLoggerRepository().setThreshold((Level) Level.OFF);
-    } else {
-      // Default is INFO
-      //Category.getDefaultHierarchy().disable(Priority.INFO);     
-      LogManager.getLoggerRepository().setThreshold((Level) Level.INFO);
+    priority = priority.toUpperCase();
+    // Must be done to translate NONE to the correct Log4J level OFF
+    if ("NONE".equals(priority)) {
+      priority = "OFF";
+    }
+    try {
+      Class log4jManagerClass = Class.forName("org.apache.log4j.LogManager");
+      Class levelClass = Class.forName("org.apache.log4j.Level");
+      Object loggerRepository = log4jManagerClass.getDeclaredMethod("getLoggerRepository").invoke(null);
+      Method setThreshold = loggerRepository.getClass().getDeclaredMethod("setThreshold", levelClass);
+      Method toLevel = levelClass.getDeclaredMethod("toLevel", String.class);
+      setThreshold.invoke(loggerRepository, toLevel.invoke(null, priority));
+    }
+    catch (Exception ex) {
+      log.warn("Configuring Log4J through reflection failed: {}", ex);
     }
   }
+
   
-  public static void registerLoggingOptions(CmdlineOptions options) {    
+  public static void registerLoggingOptions(CmdlineOptions options) {
     // Configure option listeners
-    LoggingOptionsListener listener = new LoggingOptionsListener();    
+    LoggingOptionsListener listener = new LoggingOptionsListener();
     options.addLong(listener, "logargs", '9', true);
     options.addLong(listener, "loglevel", '8', true);
     //options.addLong(listener, "logfile", '7', true);
@@ -88,24 +116,11 @@ public class CmdlineUtils {
       switch (option)
         {
         case '9':
-          PropertyConfigurator.configure(value);
+          configureByFile(value);
           break;
         case '8':
           if (value == null) break;
-          if (value.equals("DEBUG"))
-            LogManager.getLoggerRepository().setThreshold((Level) Level.DEBUG);
-          else if (value.equals("INFO"))
-            LogManager.getLoggerRepository().setThreshold((Level) Level.INFO);
-          else if (value.equals("WARN"))
-            LogManager.getLoggerRepository().setThreshold((Level) Level.WARN);
-          else if (value.equals("ERROR"))
-            LogManager.getLoggerRepository().setThreshold((Level) Level.ERROR);
-          else if (value.equals("FATAL"))
-            LogManager.getLoggerRepository().setThreshold((Level) Level.FATAL);
-          else if (value.equals("NONE"))
-            LogManager.getLoggerRepository().setThreshold((Level) Level.OFF);
-          else if (value.equals("ALL"))
-            LogManager.getLoggerRepository().setThreshold((Level) Level.ALL);
+          setLoggingPriority(value);
           break;
         }
     }

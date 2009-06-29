@@ -11,9 +11,8 @@ import junit.framework.TestSuite;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The class used to run tests from the command-line.
@@ -24,7 +23,7 @@ public class TestRunner extends junit.textui.TestRunner {
   protected Class generatorIF;
 
   // Define a logging category.
-  static Logger log = Logger.getLogger(TestRunner.class.getName());
+  static Logger log = LoggerFactory.getLogger(TestRunner.class.getName());
 
   public static void main(String[] argv) {
     // Set up test runner (includes logging initialization)
@@ -75,7 +74,7 @@ public class TestRunner extends junit.textui.TestRunner {
     CmdlineUtils.initializeLogging();
                                
     if (System.getProperty("log4j.configuration") == null) 
-      LogManager.getLoggerRepository().setThreshold((Level) Level.WARN);
+      CmdlineUtils.setLoggingPriority("WARN");
 
     try {
       generatorIF = Class.forName("net.ontopia.test.TestCaseGeneratorIF");

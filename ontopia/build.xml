@@ -738,7 +738,7 @@
     <property name="test.name" value="complete-non-rdbms" />
     <echo>Using configuration file ${test.config}</echo>
     <java classname="net.ontopia.test.TestRunner" fork="true" classpathref="project.classpath">
-      <jvmarg value="-Dnet.ontopia.xml.Log4jSaxErrorHandler.ignoreNamespaceErrors=true" />
+      <jvmarg value="-Dnet.ontopia.xml.Slf4jSaxErrorHandler.ignoreNamespaceErrors=true" />
       <jvmarg value="-Dnet.ontopia.test.root=${test.path}" />
       <arg value="--loglevel=ERROR" />
       <arg value="${test.config}" />
