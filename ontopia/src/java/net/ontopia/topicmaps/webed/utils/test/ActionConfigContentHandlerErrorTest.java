@@ -26,6 +26,7 @@ public class ActionConfigContentHandlerErrorTest extends AbstractOntopiaTestCase
     String baseDir = getTestDirectory() + File.separator + "webed";
     String configFile = baseDir + File.separator + "errorActionConfig.xml";
     ActionConfigurator ac = new ActionConfigurator("omnieditor", "/", configFile);
+    ac.logErrors(false); // disable error logging while running test
     boolean failOccurred = false;
     try {
       ac.readRegistryConfiguration();

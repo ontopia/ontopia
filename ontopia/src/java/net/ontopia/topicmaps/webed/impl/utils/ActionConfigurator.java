@@ -46,6 +46,8 @@ public class ActionConfigurator implements ConfigurationObservableIF {
 
   protected Collection observers;
 
+  protected boolean logErrors = true;
+
   /**
    * Constructor which allows to specify the path of the servlet
    * context and the configuration file name. No further file change
@@ -72,7 +74,11 @@ public class ActionConfigurator implements ConfigurationObservableIF {
     this.observers = new ArrayList();
     this.registry = null;
   }
-  
+
+  public void logErrors(boolean logErrors) {
+    this.logErrors = logErrors;
+  }
+
   public void readAndWatchRegistry() {
     ActionConfigWatchdog cfgdog = new ActionConfigWatchdog(this);
     cfgdog.setDelay(delay);
@@ -173,9 +179,10 @@ public class ActionConfigurator implements ConfigurationObservableIF {
       freshRegistry = handler.getRegistry();
     }
     catch (SAXParseException e) {
-      log.error("Error in actions config file: " + e.toString() + " at: "+
-                e.getSystemId() + ":" + e.getLineNumber() + ":" +
-                e.getColumnNumber());
+      if (logErrors)
+        log.error("Error in actions config file: " + e.toString() + " at: "+
+                  e.getSystemId() + ":" + e.getLineNumber() + ":" +
+                  e.getColumnNumber());
       throw new OntopiaRuntimeException(e);
     }
     catch (SAXException se) {

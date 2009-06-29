@@ -2094,6 +2094,12 @@
 
   <target name="dist.db2tm.test.collect">
 
+    <copy todir="${dist.path}/tests/test-data/db2tm">
+      <fileset dir="${test.path}/db2tm">
+        <exclude name="out" />
+      </fileset>
+    </copy>
+
   </target>
 
   <!-- - - - Collect tmrap components  - - - - - - - - - - - - - - - - - - - -->
