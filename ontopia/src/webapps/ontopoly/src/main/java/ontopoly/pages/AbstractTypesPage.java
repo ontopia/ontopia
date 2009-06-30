@@ -50,10 +50,10 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     add(form);
     form.setOutputMarkupId(true);
 
-    // Adding part containing title and help link
+    // add part containing title and help link
     createMenuPanel();
 
-    // Topic types title
+    // topic types title
     add(new Label("typesTitle", getNameModelForType(getSubMenuIndex())));
 
     // function boxes
