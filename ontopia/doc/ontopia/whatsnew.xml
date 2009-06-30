@@ -67,6 +67,12 @@ You no longer need a valid license key to run Ontopia.</para>
     supported and will be removed soon. The full-text search in tolog
     will continue to work.</para>
   </listitem>
+  <listitem>
+    <para>The command-line tool
+    <classname>net.ontopia.topicmaps.cmdlineutils.Canonicalizer</classname>
+    has been updated to output ISO CXTM instead of Ontopia's old
+    non-standard canonical format.</para>
+  </listitem>
 </itemizedlist>
 
 <para>The following bugs have been fixed:</para>
