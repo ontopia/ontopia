@@ -36,6 +36,9 @@ You no longer need a valid license key to run Ontopia.</para>
 
 <itemizedlist>
   <listitem>
+    <para>Ontopia now requires Java 1.5.</para>
+  </listitem>
+  <listitem>
     <para>The old TMAPI 1.0 support has been removed, and support for
     TMAPI 2.0 added in its place.</para>
   </listitem>
