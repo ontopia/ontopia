@@ -3,6 +3,9 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
@@ -10,23 +13,18 @@ import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
+import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.URIUtils;
 
 /**
- * PUBLIC: Reads a topic map and writes it out in canonical form.
+ * PUBLIC: Reads a topic map and writes it out in ISO CXTM.
  */
-
 public class Canonicalizer {
-
-  /**
-   * @param argv
-   */
+  
   public static void main(String [] argv) {
-
     // Initialize logging
     CmdlineUtils.initializeLogging();
       
@@ -64,11 +62,11 @@ public class Canonicalizer {
       // Canonicalize document
       canonicalize(url, args[1], ohandler.readall);
     }
-    catch (java.net.MalformedURLException e) {
+    catch (MalformedURLException e) {
       System.err.println(e);
       System.exit(2);
     }
-    catch (java.io.IOException e) {
+    catch (IOException e) {
       System.err.println(e);
       System.exit(2);
     }
@@ -89,7 +87,7 @@ public class Canonicalizer {
   }
 
   protected static void canonicalize(LocatorIF stm, String ctm, boolean readall) 
-    throws java.io.IOException, java.net.MalformedURLException {
+    throws IOException, MalformedURLException {
     TopicMapIF source;
     
     try {
@@ -108,10 +106,11 @@ public class Canonicalizer {
       System.err.println("ERROR reading file: " + e.getMessage());
       return;
     }
-      
-    CanonicalTopicMapWriter cwriter = new CanonicalTopicMapWriter(ctm);
-    cwriter.setBaseLocator(stm);
+
+    FileOutputStream out = new FileOutputStream(ctm);
+    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(out);
     cwriter.write(source);
+    out.close();
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
