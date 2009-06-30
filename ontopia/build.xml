@@ -2313,34 +2313,6 @@
       <include name="**/*.java"/>
     </javac>
 
-    <!-- copy resources -->
-    <!--copy todir="${build.ontopoly}/classes" overwrite="yes">
-      <fileset dir="${webapps.path}/ontopoly/src/main/java">
-        <patternset>
-          <exclude name="**/*.java" />
-        </patternset>
-      </fileset>
-    </copy>
-
-    <war destfile="${build.ontopoly}/ontopoly.war" 
-         webxml="${webapps.path}/ontopoly/src/main/webapp/WEB-INF/web.xml">
-      <fileset dir="${webapps.path}/ontopoly/src/main/webapp"/>
-      <fileset dir="${build.ontopoly}">
-        <include name="doc/**/*"/>
-      </fileset>
-      <lib dir="${lib.path}">
-        <include name="wicket-1.3.6.jar"/>
-        <include name="wicket-datetime-1.3.6.jar"/>
-        <include name="wicket-extensions-1.3.6.jar"/>
-      </lib>
-      <classes dir="${build.ontopoly}/classes"/>
-      <classes dir="${build.ontopoly}/classes"/>
-    </war>
-
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/ontopoly" />
-    <copy file="${build.ontopoly}/ontopoly.war" 
-         tofile="${dist.path}/apache-tomcat/webapps/ontopoly.war" /-->
-
   </target>
 
   <target name="dist.ontopia.webapp.toplevel" depends="init">
