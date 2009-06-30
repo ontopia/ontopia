@@ -366,11 +366,11 @@ had by running the utilities with no arguments.
 <term>net.ontopia.topicmaps.cmdlineutils.Canonicalizer</term>
 <listitem>
 <para>This application reads in a topic map and creates a canonical
-representation of it. The canonical representation has the property
-that logically equivalent topic maps will always have byte-by-byte
-identical canonical representations.</para>
-<para>Documentation of the canonical representation can be found
-<ulink url="misc/cxtm.html">here</ulink>.</para>
+representation of it using CXTM. CXTM has the property that logically
+equivalent topic maps will always have byte-by-byte identical
+canonical representations.</para>
+<para>For more information on CXTM, see
+<ulink url="http://www.isotopicmaps.org/cxtm/">the home page</ulink>.</para>
 </listitem>
 </varlistentry>
 
