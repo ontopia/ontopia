@@ -62,6 +62,11 @@ You no longer need a valid license key to run Ontopia.</para>
     favour of a single new class named
     <classname>net.ontopia.Ontopia</classname>.</para>
   </listitem>
+  <listitem>
+    <para>The old net.ontopia.infoset.fulltext API is no longer
+    supported and will be removed soon. The full-text search in tolog
+    will continue to work.</para>
+  </listitem>
 </itemizedlist>
 
 <para>The following bugs have been fixed:</para>
