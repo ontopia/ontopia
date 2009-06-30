@@ -137,7 +137,7 @@ public class CSVImport {
           stm.execute();
         }
       } catch (Exception e) {
-        throw new OntopiaRuntimeException("Problemer med å laste inn linje " + reader.getLineNumber() + ": " + Arrays.asList(tuple), e);
+        throw new OntopiaRuntimeException("Cannot read line " + reader.getLineNumber() + ": " + Arrays.asList(tuple), e);
       }
       conn.commit();
         
