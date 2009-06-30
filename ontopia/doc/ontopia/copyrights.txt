@@ -3,9 +3,8 @@
   COPYRIGHTS
 ===============================================================================
 
-This document includes the copyright notices of software used by the
-Ontopia Knowledge Suite, as required by the licenses of those software
-packages.
+This document includes the copyright notices of software used by
+Ontopia, as required by the licenses of those software packages.
 
 -------------------------------------------------------------------------------
 Tomcat, Crimson, Xerces, Log4J, Lucene, Velocity, FileUpload, Taglibs, 
