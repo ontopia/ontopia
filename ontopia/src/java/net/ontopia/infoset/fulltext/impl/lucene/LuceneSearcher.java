@@ -24,7 +24,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 /**
- * PUBLIC: The Lucene search engine implementation. This searcher searches
+ * INTERNAL: The Lucene search engine implementation. This searcher searches
  * documents using the Lucene search engine.
  * <p>
  */
@@ -40,7 +40,7 @@ public class LuceneSearcher implements SearcherIF {
   protected String default_field = "content";
 
   /**
-   * PUBLIC: Creates a searcher that will search a lucene index stored at the
+   * INTERNAL: Creates a searcher that will search a lucene index stored at the
    * given file system path location. Tokenization will be done using the
    * StandardAnalyzer.
    * <p>
@@ -52,7 +52,7 @@ public class LuceneSearcher implements SearcherIF {
   }
 
   /**
-   * PUBLIC: Creates a searcher that will search a lucene index stored at the
+   * INTERNAL: Creates a searcher that will search a lucene index stored at the
    * given path location. Tokenization will be done using the specified
    * analyzer.
    * <p>
@@ -66,7 +66,7 @@ public class LuceneSearcher implements SearcherIF {
   }
 
   /**
-   * PUBLIC: Creates a searcher that will search a lucene index stored in the
+   * INTERNAL: Creates a searcher that will search a lucene index stored in the
    * given lucene directory. Tokenization will be done using the default
    * analyzer.
    * <p>
@@ -80,7 +80,7 @@ public class LuceneSearcher implements SearcherIF {
   }
 
   /**
-   * PUBLIC: Creates a searcher that will search a lucene index stored in the
+   * INTERNAL: Creates a searcher that will search a lucene index stored in the
    * given lucene directory. Tokenization will be done using the specified
    * analyzer.
    * <p>
@@ -103,14 +103,14 @@ public class LuceneSearcher implements SearcherIF {
   }
 
   /**
-   * PUBLIC: Returns the default field that lucene uses when searching.
+   * INTERNAL: Returns the default field that lucene uses when searching.
    */
   public String getDefaultField() {
     return default_field;
   }
 
   /**
-   * PUBLIC: Sets the default field that lucene is to use when searching.
+   * INTERNAL: Sets the default field that lucene is to use when searching.
    */
   public void setDefaultField(String default_field) {
     this.default_field = default_field;

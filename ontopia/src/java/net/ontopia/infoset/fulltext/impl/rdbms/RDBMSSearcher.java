@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PUBLIC: A generic RDBMS fulltext searcher implementation. Note that the class
+ * INTERNAL: A generic RDBMS fulltext searcher implementation. Note that the class
  * only accepts an RDBMS topic map in its constructor.
  * <p>
  */

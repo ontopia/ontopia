@@ -6,7 +6,7 @@ package net.ontopia.infoset.fulltext.core;
 import java.io.Reader;
   
 /**
- * PUBLIC: A generic document field.<p>
+ * INTERNAL: A generic document field.<p>
  */
 
 public class GenericField implements FieldIF {

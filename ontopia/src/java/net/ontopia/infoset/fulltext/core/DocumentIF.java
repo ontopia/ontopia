@@ -6,7 +6,7 @@ package net.ontopia.infoset.fulltext.core;
 import java.util.Collection;
 
 /**
- * PUBLIC: Represents an indexable unit of information. A document
+ * INTERNAL: Represents an indexable unit of information. A document
  * contains named fields which can have values of the types String or
  * Reader.<p>
  */
@@ -14,24 +14,24 @@ import java.util.Collection;
 public interface DocumentIF {
   
   /**
-   * PUBLIC: Returns the field with the specified name.
+   * INTERNAL: Returns the field with the specified name.
    */
   public FieldIF getField(String name);
   
   /**
-   * PUBLIC: Returns all the fields of this document.
+   * INTERNAL: Returns all the fields of this document.
    *
    * @return A collection of FieldIF objects.
    */
   public Collection getFields();
 
   /**
-   * PUBLIC: Adds the given field to the document.
+   * INTERNAL: Adds the given field to the document.
    */
   public void addField(FieldIF field);
 
   /**
-   * PUBLIC: Removes the given field from the document.
+   * INTERNAL: Removes the given field from the document.
    */
   public void removeField(FieldIF field);
   

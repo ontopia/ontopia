@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
   
 /**
- * PUBLIC: The default document implementation. This class contains a
+ * INTERNAL: The default document implementation. This class contains a
  * single straightforward implementation of the DocumentIF
  * interfaces. The class uses a map internally to hold its FieldIF
  * elements.<p>

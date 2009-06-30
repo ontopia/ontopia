@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PUBLIC: The default topic map indexer manager. This indexer is
+ * INTERNAL: The default topic map indexer manager. This indexer is
  * preconfigured in a way that it should be suitable for most cases
  * when topic maps need to be indexed.<p>
  *
@@ -110,14 +110,14 @@ public class DefaultTopicMapIndexer {
   }
 
   /**
-   * PUBLIC: Gets the nested indexer manager.
+   * INTERNAL: Gets the nested indexer manager.
    */
   public IndexerIF getNestedIndexer() {
     return imanager;
   }
   
   /**
-   * PUBLIC: Indexes the given topic map.
+   * INTERNAL: Indexes the given topic map.
    */
   public void index(TopicMapIF topicmap) throws IOException {
       
@@ -133,35 +133,35 @@ public class DefaultTopicMapIndexer {
   }
   
   /**
-   * PUBLIC: Indexes the given topic name.
+   * INTERNAL: Indexes the given topic name.
    */
   public void index(TopicNameIF name) throws IOException {
     imanager.index(docgen.generate(name));
   }
     
   /**
-   * PUBLIC: Indexes the given variant name.
+   * INTERNAL: Indexes the given variant name.
    */
   public void index(VariantNameIF variant) throws IOException {
     imanager.index(docgen.generate(variant));
   }
     
   /**
-   * PUBLIC: Indexes the given occurrence.
+   * INTERNAL: Indexes the given occurrence.
    */
   public void index(OccurrenceIF occurs) throws IOException {
     imanager.index(docgen.generate(occurs));
   }
     
   /**
-   * PUBLIC: Deletes the given topic map object.
+   * INTERNAL: Deletes the given topic map object.
    */
   public void delete(TMObjectIF tmobject) throws IOException {
     imanager.delete("object_id", tmobject.getObjectId());
   }
 
   /**
-   * PUBLIC: Flushes the index.
+   * INTERNAL: Flushes the index.
    */
   public void flush() throws IOException {
     // Flush the index
@@ -169,7 +169,7 @@ public class DefaultTopicMapIndexer {
   }
   
   /**
-   * PUBLIC: Closes the indexer manager. Note that the wrapped indexer
+   * INTERNAL: Closes the indexer manager. Note that the wrapped indexer
    * is not closed, only flushed, since this class isn't managing the
    * indexer.
    */

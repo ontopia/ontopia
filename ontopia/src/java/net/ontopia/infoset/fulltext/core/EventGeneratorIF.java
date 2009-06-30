@@ -11,7 +11,7 @@ public interface EventGeneratorIF {
   // FIXME: Not entirely sure whether we need any public methods here or not.
   //        They can probably be added at a later stage if we see the need.
   // /**
-  //  * PUBLIC: Starts the generation of events. <p>
+  //  * INTERNAL: Starts the generation of events. <p>
   //  */
   // public void generate() throws Exception;
   

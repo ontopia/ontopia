@@ -37,7 +37,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 /**
- * PUBLIC: The Lucene indexer implementation. This indexer uses the
+ * INTERNAL: The Lucene indexer implementation. This indexer uses the
  * Lucene search engine to index documents.<p>
  */
 
@@ -62,7 +62,7 @@ public class LuceneIndexer implements IndexerIF {
   protected IndexReader reader;
   
   /**
-   * PUBLIC: Creates an indexer instance that will store its index in
+   * INTERNAL: Creates an indexer instance that will store its index in
    * the given file system directory. Tokenization will be done using
    * the StandardAnalyzer.<p>
    *
@@ -76,7 +76,7 @@ public class LuceneIndexer implements IndexerIF {
   }
   
   /**
-   * PUBLIC: Creates an indexer instance that will store its index in
+   * INTERNAL: Creates an indexer instance that will store its index in
    * the given file system directory and use the specified token
    * stream analyzer.<p>
    *
@@ -92,7 +92,7 @@ public class LuceneIndexer implements IndexerIF {
   }
   
   /**
-   * PUBLIC: Creates an indexer instance that will store its index in
+   * INTERNAL: Creates an indexer instance that will store its index in
    * the given lucene directory and use the default token stream
    * analyzer.<p>
    *
@@ -107,7 +107,7 @@ public class LuceneIndexer implements IndexerIF {
   }
   
   /**
-   * PUBLIC: Creates an indexer instance that will store its index in
+   * INTERNAL: Creates an indexer instance that will store its index in
    * the given lucene directory and use the specified token stream
    * analyzer.<p>
    *
