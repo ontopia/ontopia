@@ -919,6 +919,16 @@ convenience methods for creating and configuring objects in a single
 method call, which makes building a bit easier.
 </para>
 
+<para>Many methods in the API take
+<interfacename>LocatorIF</interfacename> arguments, and it may not be
+obvious how to create such objects. A straightforward approach is to
+use the constructor on the
+<classname>net.ontopia.infoset.impl.basic.URILocator</classname> class
+and pass in the URI as a string. Another approch is to use the
+<classname>net.ontopia.topicmaps.utils.QNameRegistry</classname> class
+to create the locators via qnames (such as
+<literal>"tmdm:topic-name"</literal>).</para>
+
 <para>
 Below is an example program that creates a topic map with topics for
 the numbers 1-10 and exports it to XTM format.
