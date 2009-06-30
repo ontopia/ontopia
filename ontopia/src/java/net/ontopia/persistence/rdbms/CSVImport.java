@@ -220,7 +220,7 @@ public class CSVImport {
           stm.execute();
         } catch (Exception e) {
           conn.rollback();
-          throw new OntopiaRuntimeException("Problemer med å laste inn linje " + lineno + ": '" + line + "'", e);
+          throw new OntopiaRuntimeException("Cannot read line " + lineno + ": '" + line + "'", e);
         }
       }
       conn.commit();
