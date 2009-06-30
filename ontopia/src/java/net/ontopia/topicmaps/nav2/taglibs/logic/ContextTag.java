@@ -92,8 +92,13 @@ public class ContextTag extends TagSupport
     pcontext = pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY, 
                                         PageContext.REQUEST_SCOPE);
     pontopia = pageContext.getAttribute("ontopia", PageContext.REQUEST_SCOPE);
+    if (pontopia == null)
+      pontopia = pageContext.getAttribute("oks", PageContext.REQUEST_SCOPE);
+      
     pontopiacontext = pageContext.getAttribute("ontopiacontext", PageContext.REQUEST_SCOPE);
-    
+    if (pontopiacontext == null)
+      pontopia = pageContext.getAttribute("okscontext", PageContext.REQUEST_SCOPE);
+
     // set this instance to page context, so normal JSPs can access information
     pageContext.setAttribute(NavigatorApplicationIF.CONTEXT_KEY, this,
                              PageContext.REQUEST_SCOPE);
@@ -147,12 +152,14 @@ public class ContextTag extends TagSupport
     }
     
     // Make the ontopia variables available to the PageContext and hence to JSTL.
-    pageContext.setAttribute("ontopia", 
-                             new ContextManagerMapWrapper(contextManager),
-                             PageContext.REQUEST_SCOPE);
+    ContextManagerMapWrapper cmw = new ContextManagerMapWrapper(contextManager);
+    pageContext.setAttribute("ontopia",  cmw, PageContext.REQUEST_SCOPE);
+    pageContext.setAttribute("oks",  cmw, PageContext.REQUEST_SCOPE);
 
     // Make the ontopiacontext request attribute is available
-    pageContext.setAttribute("ontopiacontext", new Context(this), PageContext.REQUEST_SCOPE);
+    Context ctx = new Context(this);
+    pageContext.setAttribute("ontopiacontext", ctx, PageContext.REQUEST_SCOPE);
+    pageContext.setAttribute("okscontext", ctx, PageContext.REQUEST_SCOPE);
 
     // --- try to retrieve topic object(s) belonging to object ID(s)
     if (topicmap != null) {
@@ -213,15 +220,21 @@ public class ContextTag extends TagSupport
     else
       pageContext.removeAttribute(NavigatorApplicationIF.CONTEXT_KEY, 
                                   PageContext.REQUEST_SCOPE);
-    if (pontopia != null)
+    if (pontopia != null) {
       pageContext.setAttribute("ontopia", pontopia, PageContext.REQUEST_SCOPE);
-    else
+      pageContext.setAttribute("oks", pontopia, PageContext.REQUEST_SCOPE);
+    } else {
       pageContext.removeAttribute("ontopia", PageContext.REQUEST_SCOPE);
-    if (pontopiacontext != null)
+      pageContext.removeAttribute("oks", PageContext.REQUEST_SCOPE);
+    }
+    if (pontopiacontext != null) {
       pageContext.setAttribute("ontopiacontext", pontopiacontext, PageContext.REQUEST_SCOPE);
-    else
+      pageContext.setAttribute("okscontext", pontopiacontext, PageContext.REQUEST_SCOPE);
+    } else {
       pageContext.removeAttribute("ontopiacontext", PageContext.REQUEST_SCOPE);
-    
+      pageContext.removeAttribute("okscontext", PageContext.REQUEST_SCOPE);
+    }
+
     // reset members
     contextManager = null;
     functions = null;
@@ -426,14 +439,20 @@ public class ContextTag extends TagSupport
       pageContext.removeAttribute(NavigatorApplicationIF.CONTEXT_KEY,
                                   PageContext.REQUEST_SCOPE);
 
-    if (pontopia != null)
+    if (pontopia != null) {
       pageContext.setAttribute("ontopia", pontopia, PageContext.REQUEST_SCOPE);
-    else
+      pageContext.setAttribute("oks", pontopia, PageContext.REQUEST_SCOPE);
+    } else {
       pageContext.removeAttribute("ontopia", PageContext.REQUEST_SCOPE);
-    if (pontopiacontext != null)
+      pageContext.removeAttribute("oks", PageContext.REQUEST_SCOPE);
+    }
+    if (pontopiacontext != null) {
       pageContext.setAttribute("ontopiacontext", pontopiacontext, PageContext.REQUEST_SCOPE);
-    else
+      pageContext.setAttribute("okscontext", pontopiacontext, PageContext.REQUEST_SCOPE);
+    } else {
       pageContext.removeAttribute("ontopiacontext", PageContext.REQUEST_SCOPE);
+      pageContext.removeAttribute("okscontext", PageContext.REQUEST_SCOPE);
+    }
   }
 
   // -----------------------------------------------------------------
