@@ -61,6 +61,20 @@
     <property name="build.doc" value="${build.root}/doc" />
     <property name="build.tmp" value="${build.root}/tmp" />
 
+    <!-- Distribution properties -->
+    <property name="dist.title" value="Ontopia" />
+    <property name="dist.name" value="ontopia" />
+    <property name="dist.version.major" value="5"/>
+    <property name="dist.version.minor" value="0"/>
+    <property name="dist.version.micro" value="0"/>
+    <property name="dist.is.beta"       value="1"/> <!-- beta if greater than zero -->
+    <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}"/>
+    <property name="ontopia.version" value="{'MAJOR_VERSION': ${dist.version.major}, 'MINOR_VERSION': ${dist.version.minor}, 'MICRO_VERSION': ${dist.version.micro}, 'BETA_VERSION': ${dist.is.beta}}"/>
+    <tstamp><format property="dist.date" pattern="yyyyMMdd" /></tstamp>
+    <tstamp><format property="dist.full.date" pattern="yyyy-MM-dd" /></tstamp>
+    <property name="dist.full.version" value="${dist.version}-${dist.date}"/>
+    <property name="dist.path" value="${build.root}/dists/${dist.name}-${dist.version}" />
+
   </target>
 
   <!-- ======================================================================
@@ -141,7 +155,7 @@
     <mkdir dir="${build.doc}" />
   </target>
 
-  <target name="bootstrap" depends="dist.ontopia.init">
+  <target name="bootstrap" depends="init">
     <!-- This target prepares build system. The target should be called when 
          checking out the source code to a new system -->
 
@@ -755,7 +769,6 @@
 
       <arg value="number-sects=${number-sects}" />
       <arg value="make-toc=${make-toc}" />
-      <arg value="condition=${dist.condition}" />
     </java>
   </target>
 
@@ -1010,119 +1023,6 @@
              ${dist.webed.packagenames}" />
 
   <!-- ======================================================================
-       Distribute current Ontopia release
-       ==================================================================== -->
-
-  <target name="distribute.ontopia" depends="dist.ontopia.init">
-    <antcall target="distribute.ontopia.local" />
-    <antcall target="distribute.ontopia.web.current" />
-    <antcall target="distribute.ontopia.web.freedownload" />
-  </target>
-
-  <target name="distribute.ontopia.props" depends="dist.ontopia.init">
-    <property name="dist.local.path" value="/Volumes/ontopia/graph/data/dev/releases"/>
-    <property name="dist.host.web" value="www.ontopia.net"/>
-    <property name="dist.host.web.user" value="webadmin"/>
-    <property name="dist.host.web.path" value="/home/webadmin/ontopia.net/html"/>
-  </target>
-
-  <target name="distribute.ontopia.local" depends="dist.ontopia.init,distribute.ontopia.props">
-
-    <echo>1. Creating release directory: '${dist.local.path}/ontopia-${dist.version}'</echo>
-    <exec executable="mkdir">
-      <arg value="-p" />
-      <arg value="${dist.local.path}/ontopia-${dist.version}" />
-    </exec>
-
-    <echo>2. Copying distributions...</echo>
-    <exec executable="cp">
-      <arg value="${build.dists}/ontopia-${dist.full.version}.zip" />
-      <arg value="${build.dists}/installers/ontopia-samplers.jar" />
-      <arg value="${dist.local.path}/ontopia-${dist.version}" />
-    </exec>
-
-  </target>
-
-  <target name="distribute.ontopia.web.current" depends="dist.ontopia.init,distribute.ontopia.props">
-    <property name="dist.host.web.products.category" value="current" />
-    <antcall target="_distribute.ontopia.web.products" />
-  </target>
-
-  <target name="distribute.ontopia.web.previous" depends="dist.ontopia.init,distribute.ontopia.props">
-    <property name="dist.host.web.products.category" value="previous" />
-    <antcall target="_distribute.ontopia.web.products" />
-  </target>
-
-  <target name="distribute.ontopia.web.beta" depends="dist.ontopia.init,distribute.ontopia.props">
-    <property name="dist.host.web.products.category" value="beta2" />
-    <antcall target="_distribute.ontopia.web.products" />
-  </target>
-
-  <target name="_distribute.ontopia.web.products" depends="dist.ontopia.init,distribute.ontopia.props">
-
-    <property name="dist.host.web.products.category" value="invalid" />
-    <property name="dist.host.web.products.path" value="${dist.host.web.path}/customers/${dist.host.web.products.category}" />
-
-    <echo>1. Removing releases from: '${dist.host.web.user}@${dist.host.web}:${dist.host.web.products.path}'</echo>
-    <exec executable="ssh">
-      <arg value="${dist.host.web.user}@${dist.host.web}" />
-      <arg value="rm ${dist.host.web.products.path}/ontopia-*" />
-    </exec>
-
-    <echo>2. Copying distributions...</echo>
-    <exec executable="scp" output="scp.log">
-      <arg value="-v" />
-      <arg value="${build.dists}/ontopia-${dist.full.version}.zip" />
-      <arg value="${build.dists}/ontopia-samplers-${dist.full.version}.zip" />
-      <arg value="${dist.host.web.user}@${dist.host.web}:${dist.host.web.products.path}/" />
-    </exec>
-
-    <echo>3. Generating what's new document...</echo>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/ontopia/whatsnew.xml" />
-    </antcall>
-    <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${build.doc}/whatsnew-ontopia.html" />
-
-    <echo>4. Copying what's new document to customers page...</echo>
-    <exec executable="scp">
-      <!-- If public key files are present on client and server
-           it is possible to avoid the prompt for the password phrase -->
-      <!-- arg value="-B"/-->
-      <arg path="${build.doc}/whatsnew-ontopia.html" />
-      <arg path="${doc.path}/stylesheets/whitepapers.css" />
-      <arg line="${dist.host.web.user}@${dist.host.web}:${dist.host.web.products.path}/" />
-    </exec>
-
-  </target>
-
-  <target name="distribute.ontopia.web.freedownload" depends="dist.ontopia.init,distribute.ontopia.props">
-
-    <echo>1. Copying free download...</echo>
-    <exec executable="scp">
-      <arg value="${build.dists}/installers/ontopia-samplers.jar" />
-      <arg value="${dist.host.web.user}@${dist.host.web}:${dist.host.web.path}/../cgi-data/" />
-    </exec>
-    <exec executable="scp">
-      <arg value="${build.dists}/ontopia-samplers/doc/install.html" />
-      <arg value="${dist.host.web.user}@${dist.host.web}:${dist.host.web.path}/download/ontopia-samplers-install.html" />
-    </exec>
-
-    <echo>2. Generating what's new document...</echo>
-    <antcall target="makehtml">
-      <param name="file" value="${doc.path}/ontopia/whatsnew.xml" />
-    </antcall>
-    <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${build.doc}/whatsnew-ontopia.html" />
-
-    <echo>3. Copying what's new document to free downloads page...</echo>
-    <exec executable="scp">
-      <arg path="${build.doc}/whatsnew-ontopia.html" />
-      <arg path="${doc.path}/stylesheets/whitepapers.css" />
-      <arg line="${dist.host.web.user}@${dist.host.web}:${dist.host.web.path}/download/" />
-    </exec>
-
-  </target>
-
-  <!-- ======================================================================
        Ontopia distributions
        ==================================================================== -->
 
@@ -1134,19 +1034,6 @@
     </java>
   </target>
 
-  <target name="dist.ontopia.init" depends="init">
-    <!-- Distribution properties -->
-    <property name="dist.version.major" value="5"/>
-    <property name="dist.version.minor" value="0"/>
-    <property name="dist.version.micro" value="0"/>
-    <property name="dist.is.beta"       value="1"/> <!-- beta if greater than zero -->
-    <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}"/>
-    <property name="ontopia.version" value="{'MAJOR_VERSION': ${dist.version.major}, 'MINOR_VERSION': ${dist.version.minor}, 'MICRO_VERSION': ${dist.version.micro}, 'BETA_VERSION': ${dist.is.beta}}"/>
-    <tstamp><format property="dist.date" pattern="yyyyMMdd" /></tstamp>
-    <tstamp><format property="dist.full.date" pattern="yyyy-MM-dd" /></tstamp>
-    <property name="dist.full.version" value="${dist.version}-${dist.date}"/>
-  </target>
-
   <target name="dist.ontopia.echo">
     <echo>Building ${dist.title}...</echo>
     <echo> - version is '${dist.version}'</echo>
@@ -1156,13 +1043,8 @@
 
   <!-- - - - Ontopia distribution  - - - - - - - - - - - - - - - - - - - - -->
 
-  <target name="dist.ontopia" depends="dist.ontopia.init,check-jvm"
+  <target name="dist.ontopia" depends="init,check-jvm"
           description="builds the full ontopia distribution">
-    <!-- Build properties -->
-    <property name="dist.title" value="Ontopia" />
-    <property name="dist.name" value="ontopia" />
-    <property name="dist.path" value="${build.root}/dists/${dist.name}-${dist.version}" />
-    <property name="dist.condition" value="ent" />
 
     <antcall target="dist.ontopia.echo"/>
 
@@ -1309,7 +1191,7 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${build.javadoc}/ontopia-dev" />
   </target>
 
-  <target name="dist.jar.ontopia" depends="dist.ontopia.init" 
+  <target name="dist.jar.ontopia" depends="init" 
           description="builds the ontopia.jar file">
     <antcall target="ivy.resolve"/>
     <antcall target="check-jvm"/>
@@ -1459,7 +1341,7 @@
      </copy>
   </target>
 
-  <target name="jar.ontopia.test" depends="dist.ontopia.init">
+  <target name="jar.ontopia.test" depends="init">
     <property name="dist.name" value="ontopia" />
     <delete file="${build.jars}/${dist.name}-tests.jar" />
     <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}-tests.jar" manifest="${src.path}/dist/manifests/manifest-ontopia-tests.mf">
@@ -1782,38 +1664,6 @@
       <fileset dir="${test.path}/cxtm" />
     </copy>
 
-  </target>
-
-  <!-- - - - Common product tasks  - - - - - - - - - - - - - - - - - - - - - -->
-  <target name="dist.ontopia.omnigator.strip" depends="init">
-    <!-- Delete not needed web apps -->
-    <delete dir="${dist.path}/apache-tomcat/webapps/i18n" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/xmltools" />
-  </target>
-
-  <target name="dist.ontopia.omnigator.compile" depends="init">
-    <!-- compile web application -->
-    <antcall target="dist.ontopia.webapp.compile">
-      <param name="dist.webapp" value="omnigator" />
-    </antcall>
-
-    <echo>delete (java and jsps) sources from the distribution</echo>
-    <delete failonerror="false">
-      <fileset dir="${dist.path}/apache-tomcat/webapps/omnigator" includes="**/*.jsp" />
-      <fileset dir="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/classes" includes="**/*.java" />
-      <fileset dir="${dist.path}/apache-tomcat/webapps/omnigator/models" includes="**/*" />
-    </delete>
-    <delete file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/web_compiled.xml" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/omnigator/views" />
-    <delete dir="${dist.path}/apache-tomcat/webapps/omnigator/fragments" />
-
-    <!-- Use EncryptedModuleReader instead of plain for the samplers distribution -->
-    <replace file="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/config/application.xml" token="PlainModuleReader" value="EncryptedModuleReader" />
-
-    <!-- Encrypt the module files -->
-    <java classname="net.ontopia.topicmaps.cmdlineutils.ModuleEncrypter" fork="true" classpathref="project.classpath">
-      <arg value="${dist.path}/apache-tomcat/webapps/omnigator/functions" />
-    </java>
   </target>
 
   <!-- - - - Collect navigator runtime components  - - - - - - - - - - - - - -->
@@ -2226,12 +2076,6 @@
 
   </target>
 
-  <target name="oo" depends="init">
-    <echo>I: ${build.user}</echo>
-    <echo>I: ${ant.home} </echo>
-    <echo>I: ${java.home} </echo>
-  </target>
-
   <!-- - - - Update product class - - - - - - - - - - - - - - - - - - - - - -->
 
   <patternset id="sources.product">
@@ -2407,14 +2251,6 @@
     <!-- Copy jar-files -->
     <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
            file="${build.jars}/ontopia-vizlet.jar" overwrite="yes" />
-    <!--copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
-           file="${dist.path}/lib/log4j.jar" overwrite="yes" />
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
-           file="${dist.path}/lib/slf4j-api.jar" overwrite="yes" />
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
-           file="${dist.path}/lib/slf4j-log4j12.jar" overwrite="yes" />
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/plugins/viz" 
-           file="${dist.path}/lib/jcl-over-slf4j.jar" overwrite="yes" /-->
 
     <copy file="${build.jars}/ontopia-vizlet.jar" 
         tofile="${dist.path}/extras/ontopia-vizlet.jar" />
@@ -2502,69 +2338,6 @@
     </copy>
   </target>
 
-  <target name="dist.ontopia.accessctl.compile" depends="init">
-    <!-- compile web application -->
-    <antcall target="dist.ontopia.webapp.compile">
-      <param name="dist.webapp" value="accessctl" />
-    </antcall>
-
-    <echo>delete (java and jsps) Sources from the distribution</echo>
-    <delete failonerror="false">
-      <fileset dir="${dist.path}/apache-tomcat/webapps/accessctl" includes="**/*.jsp" />
-      <fileset dir="${dist.path}/apache-tomcat/webapps/accessctl/WEB-INF/classes" includes="**/*.java" />
-      <fileset dir="${dist.path}/apache-tomcat/webapps/accessctl/WEB-INF/jsp" includes="**/*.tld" />
-    </delete>
-    <delete file="${dist.path}/apache-tomcat/webapps/accessctl/WEB-INF/web_compiled.xml" />
-  </target>
-
-  <target name="dist.ontopia.webapp.compile" depends="init">
-    <echo>Compiling ${dist.webapp} web application...</echo>
-
-    <echo>Generate source code from jsp pages</echo>
-    <mkdir dir="${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/classes" />
-  
-    <path id="jasper.classpath">
-      <pathelement location="${dist.path}/apache-tomcat/bin/commons-logging-api.jar" />
-      <pathelement location="${dist.path}/apache-tomcat/common/lib/jasper-runtime.jar" />
-      <pathelement location="${dist.path}/apache-tomcat/common/lib/jasper-compiler.jar" />
-      <pathelement location="${dist.path}/apache-tomcat/common/lib/jasper-compiler-jdt.jar" />
-      <pathelement location="${dist.path}/apache-tomcat/common/lib/jsp-api.jar" />
-      <pathelement location="${dist.path}/apache-tomcat/common/lib/servlet-api.jar" />
-      <pathelement location="${ant.home}/lib/ant.jar" />
-      <pathelement location="${ant.home}/lib/ant-launcher.jar" />
-      <pathelement location="${dist.path}/apache-tomcat/common/lib/commons-el.jar" />
-      <pathelement location="${dist.path}/apache-tomcat/common/lib/jstl.jar" />
-      <pathelement location="${dist.path}/apache-tomcat/common/lib/standard.jar" />
-      <pathelement location="${build.jars}/ontopia-resources.jar" />
-      <path refid="project.classpath" />
-    </path>
-
-    <java classname="org.apache.jasper.JspC" dir="${dist.path}/apache-tomcat" 
-          failonerror="yes" classpathref="jasper.classpath"
-          fork="true" jvm="${java.home}/bin/java">
-      <arg line="-v" />
-      <arg line="-d webapps/${dist.webapp}/WEB-INF/classes" />
-      <arg line="-p net.ontopia.jsp" />
-      <arg line="-die" />
-      <arg line="-webinc webapps/${dist.webapp}/WEB-INF/web_compiled.xml" />
-      <arg line="-webapp webapps/${dist.webapp}" />
-    </java>
-
-    <echo>Compile ${dist.webapp} jsp source code</echo>
-    <javac srcdir="${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/classes" 
-         optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" 
-         debuglevel="${debuglevel}" classpathref="jasper.classpath" source="1.5"
-         fork="true" executable="${java.home}/bin/javac"/>
-
-    <echo>insert autogenerated web.xml fragment</echo>
-    <exec dir="${java.path}" executable="python">
-      <arg value="${src.path}/dist/scripts/template.py" />
-      <arg value="{'WEB_COMPILED': '--&gt;' + open('${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/web_compiled.xml').read() + '&lt;!--'}" />
-      <arg value="${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/web.xml" />
-      <arg value="${dist.path}/apache-tomcat/webapps/${dist.webapp}/WEB-INF/web.xml" />
-    </exec>
-  </target>
-
   <!-- ======================================================================
         Dummy logger classes - used by vizlet
        ==================================================================== -->
@@ -2621,55 +2394,6 @@
     <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-realm.jar">
       <patternset refid="classes.topicmaprealm" />
     </jar>
-  </target>
-
-  <!-- ======================================================================
-        Clustering tests
-       ======================================================================-->
-
-  <target name="distribute.cluster" depends="init">
-    <echo>Building clustering test code...</echo>
-    <antcall target="distribute.cluster.config" />
-    <antcall target="distribute.cluster.code" />
-  </target>
-
-  <target name="distribute.cluster.config" depends="init">
-    <echo>Copying clustering test configuration files to host ${hostname}...</echo>
-    <exec executable="scp">
-      <arg value="${test.path}/clustering/tm-sources.xml" />
-      <arg value="${test.path}/clustering/tm-sources-force.xml" />
-      <arg value="${test.path}/clustering/db.postgresql.props" />
-      <arg value="${test.path}/clustering/db.oracle.props" />
-      <arg value="${test.path}/clustering/ontopia-terracotta.xml" />
-      <arg value="oks@${hostname}:/home/oks/" />
-    </exec>
-    <exec executable="scp">
-      <arg value="${test.path}/clustering/dot_profile" />
-      <arg value="oks@${hostname}:/home/oks/.profile" />
-    </exec>
-    <exec executable="scp">
-      <arg value="${test.path}/clustering/postgresql.jar" />
-      <arg value="oks@${hostname}:/home/oks/ontopia/apache-tomcat/common/lib/" />
-    </exec>
-    <exec executable="scp" output="scp.log">
-      <arg value="${test.path}/clustering/test01.jsp" />
-      <arg value="${test.path}/clustering/test02.jsp" />
-      <arg value="${test.path}/clustering/test03.jsp" />
-      <arg value="oks@${hostname}:/home/oks/ontopia/apache-tomcat/webapps/omnigator/" />
-    </exec>
-  </target>
-
-  <target name="distribute.cluster.code" depends="init">
-    <echo>Copying jar files to host ${hostname}...</echo>
-    <exec executable="scp" output="scp.log">
-      <arg value="${build.jars}/ontopia.jar" />
-      <arg value="${build.jars}/ontopia-tests.jar" />
-      <arg value="oks@${hostname}:/home/oks/ontopia/lib/" />
-    </exec>
-    <exec executable="scp" output="scp.log">
-      <arg value="${build.jars}/ontopia.jar" />
-      <arg value="oks@${hostname}:/home/oks/ontopia/apache-tomcat/common/lib/" />
-    </exec>
   </target>
 
 </project>
