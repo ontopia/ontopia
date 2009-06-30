@@ -2271,9 +2271,8 @@
   <!-- - - - Ontopoly web application  - - - - - - - - - - - - - - - - - - -->
   <target name="dist.ontopia.webapp.ontopoly" depends="init">
 
-    <property name="build.ontopoly" value="${build.root}/webapps/ontopoly" />
+    <property name="build.ontopoly" value="${dist.path}/apache-tomcat/webapps/ontopoly" />
     <delete dir="${build.ontopoly}" />
-    <mkdir dir="${build.ontopoly}/classes" />
     <mkdir dir="${build.ontopoly}/doc" />
 
     <!-- documentation -->
@@ -2290,12 +2289,32 @@
       <fileset dir="${doc.path}/ontopoly/pages" />
     </copy>
 
-    <javac srcdir="${webapps.path}/ontopoly/src/main/java" destdir="${build.ontopoly}/classes" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
+    <copy todir="${build.ontopoly}" overwrite="yes">
+      <fileset dir="${webapps.path}/ontopoly/src/main/webapp"/>
+    </copy>
+    <copy todir="${build.ontopoly}/WEB-INF/classes" overwrite="yes">
+      <fileset dir="${webapps.path}/ontopoly/src/main/java">
+        <patternset>
+          <exclude name="**/*.java" />
+        </patternset>
+      </fileset>
+    </copy>
+    <copy todir="${build.ontopoly}/WEB-INF/lib" overwrite="yes">
+      <fileset dir="${lib.path}">
+        <patternset>
+          <include name="wicket-1.3.6.jar"/>
+          <include name="wicket-datetime-1.3.6.jar"/>
+          <include name="wicket-extensions-1.3.6.jar"/>
+        </patternset>
+      </fileset>
+    </copy>
+
+    <javac srcdir="${webapps.path}/ontopoly/src/main/java" destdir="${build.ontopoly}/WEB-INF/classes" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
       <include name="**/*.java"/>
     </javac>
 
     <!-- copy resources -->
-    <copy todir="${build.ontopoly}/classes" overwrite="yes">
+    <!--copy todir="${build.ontopoly}/classes" overwrite="yes">
       <fileset dir="${webapps.path}/ontopoly/src/main/java">
         <patternset>
           <exclude name="**/*.java" />
@@ -2320,7 +2339,7 @@
 
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/ontopoly" />
     <copy file="${build.ontopoly}/ontopoly.war" 
-         tofile="${dist.path}/apache-tomcat/webapps/ontopoly.war" />
+         tofile="${dist.path}/apache-tomcat/webapps/ontopoly.war" /-->
 
   </target>
 
