@@ -64,15 +64,17 @@
     <!-- Distribution properties -->
     <property name="dist.title" value="Ontopia" />
     <property name="dist.name" value="ontopia" />
+
+    <tstamp><format property="dist.date" pattern="yyyyMMdd" /></tstamp>
+    <tstamp><format property="dist.full.date" pattern="yyyy-MM-dd" /></tstamp>
+
     <property name="dist.version.major" value="5"/>
     <property name="dist.version.minor" value="0"/>
     <property name="dist.version.micro" value="0"/>
     <property name="dist.is.beta"       value="1"/> <!-- beta if greater than zero -->
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}"/>
-    <property name="ontopia.version" value="{'MAJOR_VERSION': ${dist.version.major}, 'MINOR_VERSION': ${dist.version.minor}, 'MICRO_VERSION': ${dist.version.micro}, 'BETA_VERSION': ${dist.is.beta}}"/>
-    <tstamp><format property="dist.date" pattern="yyyyMMdd" /></tstamp>
-    <tstamp><format property="dist.full.date" pattern="yyyy-MM-dd" /></tstamp>
     <property name="dist.full.version" value="${dist.version}-${dist.date}"/>
+
     <property name="dist.path" value="${build.root}/dists/${dist.name}-${dist.version}" />
 
   </target>
@@ -408,7 +410,6 @@
     <include name="net/ontopia/infoset/fulltext/impl/lucene/*.java" />
     <include name="net/ontopia/infoset/fulltext/impl/rdbms/*.java" />
     <include name="net/ontopia/infoset/fulltext/topicmaps/*.java" />
-    <include name="net/ontopia/infoset/fulltext/topicmaps/taglibs/*.java" />
     <include name="net/ontopia/infoset/fulltext/topicmaps/nav/plugins/*.java" />
     <include name="net/ontopia/infoset/fulltext/utils/*.java" />
   </patternset>
@@ -418,7 +419,6 @@
     <include name="net/ontopia/infoset/fulltext/impl/lucene/*.class" />
     <include name="net/ontopia/infoset/fulltext/impl/rdbms/*.class" />
     <include name="net/ontopia/infoset/fulltext/topicmaps/*.class" />
-    <include name="net/ontopia/infoset/fulltext/topicmaps/taglibs/*.class" />
     <include name="net/ontopia/infoset/fulltext/topicmaps/nav/plugins/*.class" />
     <include name="net/ontopia/infoset/fulltext/utils/*.class" />
   </patternset>
@@ -435,7 +435,6 @@
 
   <property name="dist.fulltext.packagenames" value="
        net.ontopia.infoset.fulltext.core, 
-       net.ontopia.infoset.fulltext.topicmaps, 
        net.ontopia.infoset.fulltext.impl.lucene,
        net.ontopia.infoset.fulltext.impl.rdbms" />
 
@@ -1146,13 +1145,12 @@
     <javadoc packagenames="
              ${dist.engine.packagenames},
              ${dist.navigator.packagenames},
-             ${dist.fulltext.packagenames},
              ${dist.query.packagenames},
              ${dist.schema.packagenames},
              ${dist.webed.packagenames},
              ${dist.db2tm.packagenames},
              ${dist.rdbms.packagenames}
-             " sourcepath="${java.path}" destdir="${build.javadoc}/ontopia" author="true" version="true" use="true" public="true" windowtitle="Ontopia" doctitle="Ontopia API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;" classpathref="project.classpath">
+             " sourcepath="${java.path}" destdir="${build.javadoc}/ontopia" author="true" version="true" use="true" public="true" windowtitle="Ontopia" doctitle="Ontopia API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;.&lt;/i&gt;" classpathref="project.classpath">
       <group title="Core Topic Map Packages" packages="net.ontopia.topicmaps.*" />
       <group title="Core Information Set Packages" packages="net.ontopia.infoset.*" />
       <group title="Query Engine Packages" packages="net.ontopia.topicmaps.query.*" />
@@ -1524,9 +1522,6 @@
       <param name="file" value="${doc.path}/rdf2tm/spec.xml" />
     </antcall>
     <copy file="${doc.path}/rdf2tm/spec.xml.html" tofile="${collect.path}/doc/misc/rdf2tm.html" />
-
-    <!-- Include LTM emacs mode -->
-    <!--copy file="${java.path}/elisp/ltm-mode.el" todir="${collect.path}/utils" /-->
 
     <!-- Copy stylesheets -->
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${collect.path}/doc" />
