@@ -179,9 +179,8 @@ is intended as a teaching aid and debugger for people like yourself who
 want to know what is going on under the covers.</p>
 
 <p><b>Technology</b><br/>
-The Omnigator is an application of the
-<a href="http://www.ontopia.net/solutions/products.html">Ontopia
-Knowledge Suite</a>, Ontopia's Java toolkit for Topic Maps application
+The Omnigator is built using the tools in the
+<a href="http://www.ontopia.net/">Ontopia</a> Java toolkit for Topic Maps application
 development. It is built on top of the <a
 href="http://www.ontopia.net/solutions/engine.html">Ontopia Topic Maps
 Engine</a> using the <a
