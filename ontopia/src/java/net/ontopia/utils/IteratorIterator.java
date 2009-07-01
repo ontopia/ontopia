@@ -16,7 +16,7 @@ public class IteratorIterator implements Iterator {
   protected Iterator iter;
 
   /**
-   * @params colls_or_iters a collection of collections or iterators.
+   * @param colls_or_iters a collection of collections or iterators.
    */
   public IteratorIterator(Collection colls_or_iters) {
     colls_iter = colls_or_iters.iterator();

@@ -10,7 +10,7 @@ import net.ontopia.topicmaps.core.*;
  * INTERNAL: Topic map reader that reads topic maps from the RDBMS
  * backend connector.
  *
- * @since: 1.2.5
+ * @since 1.2.5
  */
 
 public class RDBMSTopicMapReader implements TopicMapReaderIF {

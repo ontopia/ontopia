@@ -33,7 +33,7 @@ public class CharacteristicUtils {
   /**
    * INTERNAL: Gets the basenames of the given collection of topics.
    *
-   * @param A scope; a collection of TopicIF objects.
+   * @param topics A scope; a collection of TopicIF objects.
    * @return An ArrayList of TopicNameIF objects; the base names of 
    *             all the topics in the given collection.
    */

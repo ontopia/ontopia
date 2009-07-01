@@ -17,7 +17,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
  * INTERNAL: An internal utility class that generates statistics based on 
  * the data that exists in the topic map.
  *
- * @since: 2.2.3
+ * @since 2.2.3
  */
 
 public class Stats {

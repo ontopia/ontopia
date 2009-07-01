@@ -88,7 +88,7 @@ public class DynamicTreeWidget {
    * PUBLIC: Sets up the widget ready for use.
    * 
    * @param topicmap The topic map being displayed.
-   * @param topquery A tolog query that generates the entire tree. The
+   * @param tablequery A tolog query that generates the entire tree. The
    * query must have at least two columns, where the first column
    * contains all the parent nodes and the second column contains the
    * children of those parents. Any further columns will be used to

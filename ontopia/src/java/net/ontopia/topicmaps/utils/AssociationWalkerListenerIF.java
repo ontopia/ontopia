@@ -17,7 +17,7 @@ public interface AssociationWalkerListenerIF
      * PUBLIC: The function invoked by the AssociationWalker.
      *
      * @param leftRolePlayer The first topic in the triple; an object implementing TopicIF.
-     * @param assoc           The association in the triple; an object implementing AssociationIF.
+     * @param association The association in the triple; an object implementing AssociationIF.
      * @param rightRolePlayer The second topic in the triple; an object implementing TopicIF.
      */
     public void  walkAssociation(TopicIF leftRolePlayer, AssociationIF association, TopicIF rightRolePlayer);

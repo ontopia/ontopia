@@ -101,7 +101,7 @@ public class TopicClass extends TopicConstraintCollection
 
   /**
    * INTERNAL: Sets the superclass of this class.
-   * @param TopicClass The superclass of this class. May be null.
+   * @param superclass The superclass of this class. May be null.
    */
   public void setSuperclass(TopicClass superclass) {
     if (this.superclass == superclass)

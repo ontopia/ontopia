@@ -213,7 +213,7 @@ public class TypeHierarchyUtils {
    * INTERNAL: Returns the topics which types of the object
    * <code>typed</code> and all their supertypes.
    *
-   * @param a topic
+   * @param typed a topic
    * @return a collection of topicIF objects; the type and all supertypes
    *         of the given object
    */
@@ -226,7 +226,7 @@ public class TypeHierarchyUtils {
    * <code>typed</code> (if not <code>excludeTypes</code> is set to
    * true) and all their supertypes.
    *
-   * @param a topic
+   * @param typed a topic
    * @param excludeTypes types of specified topic are not in returned
    * collection
    * @return a collection of topicIF objects; the type and all

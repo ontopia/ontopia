@@ -79,8 +79,6 @@ public class TreeWidget {
   /**
    * PUBLIC: Sets up the widget ready for use. The default constructor
    * must be accompanied by the appropriate setter methods.
-   * 
-   * @param topicmap The topic map being displayed.
    */
   public TreeWidget() {
   }

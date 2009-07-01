@@ -41,9 +41,9 @@ public class ActionRuntimeException extends OntopiaRuntimeException {
    * @param isCritical Flag indicating whether this is a critical error.
    * @since 3.0
    */
-  public ActionRuntimeException(Throwable e, boolean isCritial) {
+  public ActionRuntimeException(Throwable e, boolean isCritical) {
     super(e);
-    this.isCritical = isCritial;
+    this.isCritical = isCritical;
   }
 
   /**
@@ -51,9 +51,9 @@ public class ActionRuntimeException extends OntopiaRuntimeException {
    * @param isCritical Flag indicating whether this is a critical error.
    * @since 3.0
    */
-  public ActionRuntimeException(String message, boolean isCritial) {
+  public ActionRuntimeException(String message, boolean isCritical) {
     super(message);
-    this.isCritical = isCritial;
+    this.isCritical = isCritical;
   }
 
   /**
@@ -64,9 +64,9 @@ public class ActionRuntimeException extends OntopiaRuntimeException {
    * @since 3.0
    */
   public ActionRuntimeException(String message, Throwable cause,
-                                boolean isCritial) {
+                                boolean isCritical) {
     super(message, cause);
-    this.isCritical = isCritial;
+    this.isCritical = isCritical;
   }
 
   /**

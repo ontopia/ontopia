@@ -12,7 +12,7 @@ import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
  * INTERNAL: An internal utility class that contains various utility
  * operations on the topic map implementation from this package.
  *
- * @since: 2.0
+ * @since 2.0
  */
 
 public class Utils {
@@ -22,7 +22,7 @@ public class Utils {
    * map physically from the database. This method will delete a topic
    * map conforming to the database schema in OKS 1.x and 2.x.
    *
-   * @since: 2.1.1
+   * @since 2.1.1
    */
   static void clearTopicMap(TopicMapIF topicmap) throws SQLException {
     truncateTopicMap(topicmap, true);    
@@ -33,7 +33,7 @@ public class Utils {
    * map physically from the database. This method will delete a topic
    * map conforming to the database schema in OKS 1.x and 2.x.
    *
-   * @since: 2.0
+   * @since 2.0
    */
   static void deleteTopicMap(TopicMapIF topicmap) throws SQLException {
     truncateTopicMap(topicmap, false);

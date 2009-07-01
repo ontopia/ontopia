@@ -176,9 +176,8 @@ public interface TopicIF extends TMObjectIF {
    * are suppressed. The topics must be in the same topic map, and the
    * source topic is removed from the topic map.
    *
-   * @param source topicIF; the source topic. This is empty after the
+   * @param topic topicIF; the source topic. This is empty after the
    *            operation and is removed from the topic map.
-   * @param target topicIF; the target topic. This gets new characteristics.
    * @exception throws ConstraintViolationException if the two topics
    * have different values for the 'subject' property, since if they
    * do they cannot represent the same subject. If this exception is

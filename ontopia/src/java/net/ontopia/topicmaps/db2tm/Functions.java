@@ -134,7 +134,7 @@ public class Functions {
 
   /**
    * INTERNAL: Conversion between two date formats.
-   * @see http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
+   * @see <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</html>
    */
   public static String convertDate(String date,
                                    String informat,

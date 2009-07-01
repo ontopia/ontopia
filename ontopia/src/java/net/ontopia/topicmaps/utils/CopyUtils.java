@@ -31,8 +31,6 @@ public class CopyUtils {
   /**
    * INTERNAL: Copies all the characteristics from the source topic to
    * the target topic.
-   *
-   * @return the new topic with a copy of all the characteristics.
    */
   public static void copyCharacteristics(TopicIF target, TopicIF source) {
     copyTypes(target, source);

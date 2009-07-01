@@ -67,7 +67,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    * If there is no object with that object id in this topic map,
    * then null is returned.
    *
-   * @param object-id A string; the object id of the object to get.
+   * @param object_id A string; the object id of the object to get.
    *
    * @return A topic map object; an object implementing TMObjectIF.
    */

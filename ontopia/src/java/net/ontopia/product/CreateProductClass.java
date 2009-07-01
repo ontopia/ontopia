@@ -16,9 +16,16 @@ public class CreateProductClass {
     String major_version = args[2];
     String minor_version = args[3];
     String micro_version = args[4];
-    String beta_version = args[5];
-    String build_user = args[6];
+    String build_user = args[5];
 
+    String beta_version;
+    if (args.length < 7 || args[6].equals("")) {
+      beta_version = "0";
+    } else {
+      if (args[6].charAt(0) != 'b')
+        throw new RuntimeException("dist.version.beta does not start with the letter 'b'");
+      beta_version = args[6].substring(1);
+    } 
     Calendar cal = Calendar.getInstance();
     String build_date = cal.get(Calendar.YEAR) + ", " + cal.get(Calendar.MONTH) + 
       ", " + cal.get(Calendar.DAY_OF_MONTH) + ", " + cal.get(Calendar.HOUR_OF_DAY) + 

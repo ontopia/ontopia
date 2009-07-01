@@ -11,7 +11,7 @@ import net.ontopia.infoset.core.LocatorIF;
  * prevents the traversal of external references by returning null
  * from all methods.<p>
  *
- * @since: 1.3.4
+ * @since 1.3.4
  */
 
 public class NullResolvingExternalReferenceHandler
