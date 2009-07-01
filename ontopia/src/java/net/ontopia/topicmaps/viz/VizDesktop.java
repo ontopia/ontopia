@@ -463,7 +463,7 @@ public class VizDesktop {
       // HACK - I don't like the following code
       String base = System.getProperty("user.dir");
       base = base.substring(0, Math.max(0, base.length() - 4));
-      File preset = new File(base + "\\jakarta-tomcat\\webapps\\omnigator\\" +
+      File preset = new File(base + "\\apache-tomcat\\webapps\\omnigator\\" +
           "WEB-INF\\topicmaps\\mapping.rdff");
       if (preset.exists()) {
         defaultFile = preset;

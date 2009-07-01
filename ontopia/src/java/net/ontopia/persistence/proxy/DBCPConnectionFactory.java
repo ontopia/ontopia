@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
 /** 
- * INTERNAL: Jakarta DBCP connection factory implementation.
+ * INTERNAL: Apache Commons DBCP connection factory implementation.
  */
 
 public class DBCPConnectionFactory extends AbstractConnectionFactory {

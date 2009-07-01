@@ -1,5 +1,5 @@
-Ontopia uses Apache Tomcat @VERSION@ (see http://tomcat.apache.org/
-for more information) as its default web container.
+Ontopia uses Apache Tomcat as its default web container. See
+http://tomcat.apache.org/ for more information.
 
 In order to minimize the download size of our software we have decided
 to remove the original (demo) web applications which comes with the

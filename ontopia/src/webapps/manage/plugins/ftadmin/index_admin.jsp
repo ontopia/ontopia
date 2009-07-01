@@ -60,7 +60,7 @@
   
       // === create new index
       if (action.equals("create index") || action.equals("reindex")) {
-        // some installers don't create the jakarta-tomcat/temp directory,
+        // some installers don't create the apache-tomcat/temp directory,
         // so we have a go at it ourselves, if it isn't there.
         String tmpdir = System.getProperty("java.io.tmpdir");
         File tmpf = new File(tmpdir);

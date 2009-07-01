@@ -30,7 +30,7 @@ release.
 <title>Requirements</title>
 
 <para>The most important requirement is that you must have the Java 2
-Software Development Kit (SDK) version 1.4 or newer. There should be
+Software Development Kit (SDK) version 1.5 or newer. There should be
 no platform dependencies in the code, so the software should run on
 all operating systems for which there is a supported JDK available.</para>
 
@@ -682,13 +682,11 @@ which comes with Ontopia, follow these steps:</para>
 
 <orderedlist>
 <listitem>
-<para>Copy the following .jar files from
-<filename>${basedir}/apache-tomcat/common/lib</filename> to the other
-Tomcat installation: oks-*.jar, jaxp.jar, crimson.jar, getopt.jar,
-commons-logging.jar, log4j.jar, antlr.jar, commons-collections.jar,
-jakarta-oro.jar, jing.jar, xerces.jar, jena.jar, icu4j.jar,
-concurrent.jar, trove.jar, backport-util-concurrent.jar, tmapi.jar,
-GraphLayout.jar, lucene.jar
+<para>Copy all the .jar files, except
+<filename>ontopia-tests.jar</filename> and
+<filename>junit.jar</filename>, from
+<filename>${basedir}/lib</filename> to
+<filename>${tomcat.home}/common/lib</filename>.
 </para> 
 </listitem> 
 <listitem> 
@@ -715,18 +713,17 @@ be found in the <filename>${basedir}/lib</filename> directory.</para>
 <itemizedlist>
   <listitem><para>Topic Map Engine:</para>
     <orderedlist>
-      <listitem><para><filename>jaxp.jar</filename>, version 1.1, (<ulink url="http://java.sun.com/xml/">Java API for XML Processing</ulink>)</para></listitem>
       <listitem><para><filename>crimson.jar</filename>, version 1.1.3, (<ulink url="http://xml.apache.org/crimson/">Apache XML - Crimson</ulink>)</para></listitem>
-      <listitem><para><filename>getopt.jar</filename>, version 1.0.8, (<ulink url="http://www.urbanophile.com/arenn/hacking/download.html">GNU Java getopt</ulink>)</para></listitem>
+      <listitem><para><filename>getopt.jar</filename>, version 1.0.9, (<ulink url="http://www.urbanophile.com/arenn/hacking/download.html">GNU Java getopt</ulink>)</para></listitem>
       <listitem><para><filename>slf4j-api.jar</filename>, <filename>slf4j-log4j12.jar</filename>, <filename>jcl-over-slf4j.jar</filename> version 1.5.8, (<ulink url="http://www.slf4j.org/">Simple Logging Facade for Java (SLF4J)</ulink>)</para></listitem>
-      <listitem><para><filename>log4j.jar</filename>, version 1.2.15, (<ulink url="http://jakarta.apache.org/log4j/">Jakarta - Log4J</ulink>)</para></listitem>
+      <listitem><para><filename>log4j.jar</filename>, version 1.2.14, (<ulink url="http://logging.apache.org/log4j/1.2/index.html">Apache log4J</ulink>)</para></listitem>
       <listitem><para><filename>antlr.jar</filename>, version 2.7.7, (<ulink url="http://www.antlr.org">ANTLR parser generator</ulink>)</para></listitem>
-      <listitem><para><filename>commons-collections.jar</filename>, version 3.2.1, (<ulink url="http://jakarta.apache.org/commons/collections/">Jakarta Commons - Collections</ulink>)</para></listitem>
-      <listitem><para><filename>jakarta-oro.jar</filename>, version 2.0.8, (<ulink url="http://jakarta.apache.org/oro/">Jakarta - ORO</ulink>)</para></listitem>
+      <listitem><para><filename>commons-collections.jar</filename>, version 3.2.1, (<ulink url="http://commons.apache.org/collections/">Apache Commons Collections</ulink>)</para></listitem>
+      <listitem><para><filename>oro.jar</filename>, version 2.0.8, (<ulink url="http://jakarta.apache.org/oro/">Apache Jakarta ORO</ulink>)</para></listitem>
       <listitem><para><filename>jing.jar</filename>, version 2003-01-31, (<ulink url="http://www.thaiopensource.com/relaxng/jing.html">Jing - A RELAX NG validator in Java</ulink>)</para></listitem>
-      <listitem><para><filename>xerces.jar</filename>, dependent on jing.jar, (<ulink url="http://xml.apache.org/xerces2-j/index.html">Apache Xerces2 Java Parser</ulink>)</para></listitem>
-      <listitem><para><filename>jena.jar</filename>, version 2.1, (<ulink url="http://jena.sourceforge.net/">Jena - A Semantic Web Framework for Java</ulink>)</para></listitem>
-      <listitem><para><filename>icu4j.jar</filename>, dependent on jena.jar, (<ulink url="http://www.ibm.com/developerworks/oss/icu4j/">International Components for Unicode for Java</ulink>)</para></listitem>
+      <listitem><para><filename>xerces.jar</filename>, version 2.7.1, (<ulink url="http://xml.apache.org/xerces2-j/index.html">Apache Xerces2 Java Parser</ulink>)</para></listitem>
+      <listitem><para><filename>jena.jar</filename>, version 2.3, (<ulink url="http://jena.sourceforge.net/">Jena - A Semantic Web Framework for Java</ulink>)</para></listitem>
+      <listitem><para><filename>icu4j.jar</filename>, version 3.4.4, (<ulink url="http://www.ibm.com/developerworks/oss/icu4j/">International Components for Unicode for Java</ulink>)</para></listitem>
       <listitem><para><filename>concurrent.jar</filename>, version 1.3.4, (<ulink url="http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html">util.concurrent</ulink>)</para></listitem>
       <listitem><para><filename>trove.jar</filename>, version 2.0.4, (<ulink url="http://trove4j.sourceforge.net/">GNU Trove</ulink>)</para></listitem>
       <listitem><para><filename>backport-util-concurrent.jar</filename>, version 3.1, (<ulink url="http://backport-jsr166.sourceforge.net/">backport-util-concurrent, a backport of JSR 166</ulink>)</para></listitem>
@@ -737,29 +734,29 @@ be found in the <filename>${basedir}/lib</filename> directory.</para>
 <itemizedlist>
   <listitem><para>Vizigator:</para>
     <orderedlist>
-      <listitem><para><filename>GraphLayout.jar</filename>, built from source with patches, (<ulink url="http://touchgraph.sourceforge.net/">TouchGraph</ulink>)</para></listitem>
+      <listitem><para><filename>touchgraph.jar</filename>, built from source with patches, (<ulink url="http://touchgraph.sourceforge.net/">TouchGraph</ulink>)</para></listitem>
     </orderedlist>
   </listitem>        
 </itemizedlist>
 <itemizedlist>
   <listitem><para>Web Editor Framework:</para>
     <orderedlist>
-      <listitem><para><filename>velocity.jar</filename>, version 1.3, (<ulink url="http://jakarta.apache.org/velocity/">Jakarta - Velocity</ulink>)</para></listitem>
-      <listitem><para><filename>commons-fileupload.jar</filename>, version 1.0, (<ulink url="http://jakarta.apache.org/commons/fileupload/">Jakarta - FileUpload</ulink>)</para></listitem>
+      <listitem><para><filename>velocity.jar</filename>, version 1.3, (<ulink url="http://velocity.apache.org/">Apache Velocity</ulink>)</para></listitem>
+      <listitem><para><filename>commons-fileupload.jar</filename>, version 1.1, (<ulink url="http://commons.apache.org/fileupload/">Apache Commons FileUpload</ulink>)</para></listitem>
     </orderedlist>
   </listitem>        
 </itemizedlist>
 <itemizedlist>
   <listitem><para>Full-text Integration:</para>
     <orderedlist>
-      <listitem><para><filename>lucene.jar</filename>, version 1.4.3, (<ulink url="http://jakarta.apache.org/lucene/">Jakarta - Lucene</ulink>)</para></listitem>
+      <listitem><para><filename>lucene.jar</filename>, version 1.4.3, (<ulink url="http://lucene.apache.org/java/docs/">Apache Lucene</ulink>)</para></listitem>
     </orderedlist>
   </listitem>        
 </itemizedlist>
 <itemizedlist>
   <listitem><para>DB2TM:</para>
     <orderedlist>
-      <listitem><para><filename>opencsv.jar</filename>, version 1.3, (<ulink url="http://opencsv.sourceforge.net/">opencsv</ulink>)</para></listitem>
+      <listitem><para><filename>opencsv.jar</filename>, version 1.8, (<ulink url="http://opencsv.sourceforge.net/">opencsv</ulink>)</para></listitem>
     </orderedlist>
   </listitem>        
 </itemizedlist>
@@ -777,9 +774,9 @@ be found in the <filename>${basedir}/lib</filename> directory.</para>
 <itemizedlist>
   <listitem><para>RDBMS Backend Connector:</para>
     <orderedlist>
-      <listitem><para><filename>commons-pool.jar</filename>, version 1.4, (<ulink url="http://jakarta.apache.org/commons/pool/">Jakarta - Commons Pool</ulink>)</para></listitem>
-      <listitem><para><filename>commons-dbcp.jar</filename>, version 1.2.2, (<ulink url="http://jakarta.apache.org/commons/dbcp/">Jakarta - Commons DBCP</ulink>)</para></listitem>
-      <listitem><para><filename>jgroups-all.jar</filename>, version 2.6.3 GA, (<ulink url="http://www.jgroups.org/">JGroups - A Toolkit for Reliable Multicast Communication</ulink>)</para></listitem>
+      <listitem><para><filename>commons-pool.jar</filename>, version 1.3, (<ulink url="http://commons.apache.org/pool/">Apache Commons Pool</ulink>)</para></listitem>
+      <listitem><para><filename>commons-dbcp.jar</filename>, version 1.2.2, (<ulink url="http://commons.apache.org/dbcp/">Apache Commons DBCP</ulink>)</para></listitem>
+      <listitem><para><filename>jgroups-all.jar</filename>, version 2.6.10 GA, (<ulink url="http://www.jgroups.org/">JGroups - A Toolkit for Reliable Multicast Communication</ulink>)</para></listitem>
     </orderedlist>
   </listitem>        
 </itemizedlist>
