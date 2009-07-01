@@ -149,7 +149,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
    * PUBLIC: Tells the reader whether or not to perform duplicate
    * suppression at the end of the import. The default is to not do
    * it.
-   * @param 2.0.3
+   * @since 2.0.3
    */
   public void setDuplicateSuppression(boolean duplicate_suppression) {
     this.duplicate_suppression = duplicate_suppression;
@@ -158,7 +158,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
   /**
    * PUBLIC: Tells the reader whether or not to stop when errors are
    * found in the mapping. The default is to stop.
-   * @param 2.1
+   * @since 2.1
    */
   public void setLenient(boolean lenient) {
     this.lenient = lenient;
