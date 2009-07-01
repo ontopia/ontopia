@@ -701,26 +701,6 @@
        net.ontopia.topicmaps.classify" />
 
   <!-- ======================================================================
-        TMRAP
-       ====================================================================== -->
-
-  <patternset id="sources.tmrap">
-    <include name="net/ontopia/topicmaps/utils/tmrap/*.java"/>
-  </patternset>
-
-  <patternset id="classes.tmrap">
-    <include name="net/ontopia/topicmaps/utils/tmrap/*.class"/>
-  </patternset>
-
-  <patternset id="sources.test.tmrap">
-    <include name="net/ontopia/topicmaps/utils/tmrap/test/**/*.java"/>
-  </patternset>
-
-  <patternset id="classes.test.tmrap">
-    <include name="net/ontopia/topicmaps/utils/tmrap/test/**/*.class"/>
-  </patternset>
-
-  <!-- ======================================================================
         Unit tests
        ====================================================================== -->
 
