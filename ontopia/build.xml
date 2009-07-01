@@ -13,13 +13,17 @@
 
   If you'd like to do the compile targets manually execute them in this order:
 
-    ant init ivy.resolve clean.classes compile.ontopia jar.ontopia compile.ontopia.test jar.ontopia.test
+    ant init clean.classes compile.ontopia jar.ontopia compile.ontopia.test jar.ontopia.test
 
 -->
 
 <project name="ontopia" default="bootstrap" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-  <target name="init">
+  <target name="init" depends="init.init" unless="init.done">
+
+  </target>
+
+  <target name="init.init">
     <!-- Create time stamp -->
     <tstamp>
       <format property="build.date" pattern="yyyy-MM-dd 'at' HH:mm:ss z" />
@@ -77,51 +81,46 @@
 
     <property name="dist.path" value="${build.root}/dists/${dist.dir}" />
 
-  </target>
-
-  <!-- ======================================================================
-         CLASSPATH
-        ====================================================================== -->
-
-  <target name="ivy.resolve">
+    <ivy:settings id="ivy.instance" file="${basedir}/ivysettings.xml" />
     <ivy:resolve />
-    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" sync="true" />
+    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" />
+
+    <ivy:cachepath pathid="project.classpath.ivy" organisation="net.ontopia" module="ontopia" conf="build"/>
+
+    <path id="project.classpath.nolog4j">
+      <pathelement location="${basedir}/3rdparty/ontoboot.jar" />
+      <pathelement location="${basedir}/3rdparty/jing.jar" />
+      <pathelement location="${basedir}/3rdparty/tmapi-2.0a2.jar" />
+      <pathelement location="${basedir}/3rdparty/touchgraph.jar" />
+      <pathelement location="${basedir}/3rdparty/trove.jar" />
+      <path refid="project.classpath.ivy"/>
+    </path>
+  
+    <path id="project.classpath"> 
+      <path refid="project.classpath.nolog4j"/>
+      <!--pathelement location="${3rdparty.path}/log4j.jar" /-->
+      <pathelement location="${basedir}/build/classes" />
+    </path>
+ 
+    <taskdef classname="JFlex.anttask.JFlexTask" name="jflex">
+      <classpath refid="project.classpath"/>
+    </taskdef>
+  
+    <taskdef name="texen" classname="net.ontopia.ant.TemplateTexenTask">
+      <!-- WARNING: velocity will define its template directory just
+      once, so when calling the texen task multiple times only the first
+      template directory is used. for that reason we're using build.tmp
+      as the template directory. --> 
+      <classpath refid="project.classpath"/>
+    </taskdef>
+  
+    <property name="init.done" value="true" />
+
   </target>
-
-  <ivy:settings id="ivy.instance" file="${basedir}/ivysettings.xml" />
-
-  <ivy:cachepath pathid="project.classpath.ivy" organisation="net.ontopia" module="ontopia" conf="build"/>
-
-  <path id="project.classpath.nolog4j">
-    <pathelement location="${basedir}/3rdparty/ontoboot.jar" />
-    <pathelement location="${basedir}/3rdparty/jing.jar" />
-    <pathelement location="${basedir}/3rdparty/tmapi-2.0a2.jar" />
-    <pathelement location="${basedir}/3rdparty/touchgraph.jar" />
-    <pathelement location="${basedir}/3rdparty/trove.jar" />
-    <path refid="project.classpath.ivy"/>
-  </path>
-
-  <path id="project.classpath"> 
-    <path refid="project.classpath.nolog4j"/>
-    <!--pathelement location="${3rdparty.path}/log4j.jar" /-->
-    <pathelement location="${basedir}/build/classes" />
-  </path>
 
   <!-- ======================================================================
         Bootstrap
        ====================================================================== -->
- 
-  <taskdef classname="JFlex.anttask.JFlexTask" name="jflex">
-    <classpath refid="project.classpath"/>
-  </taskdef>
-
-  <taskdef name="texen" classname="net.ontopia.ant.TemplateTexenTask">
-    <!-- WARNING: velocity will define its template directory just
-    once, so when calling the texen task multiple times only the first
-    template directory is used. for that reason we're using build.tmp
-    as the template directory. --> 
-    <classpath refid="project.classpath"/>
-  </taskdef>
 
   <target name="jar.ontoboot" depends="init">
     <echo>Creating engine runtime jar file...</echo>
@@ -164,7 +163,7 @@
     <mkdir dir="${build.tmp}" />
 
     <!-- Prepare product classes -->
-    <antcall target="prepare.product.class"/>
+    <antcall inheritRefs="true" target="prepare.product.class"/>
   </target>
 
   <target name="clean.classes">
@@ -575,7 +574,7 @@
     <include name="net/ontopia/topicmaps/viz/messages_*.properties" />
   </patternset>
 
-  <target name="jar.vizlet" depends="init,compile.dummyLoggers">
+  <target name="jar.vizlet" depends="compile.dummyLoggers">
     <echo>Creating vizlet jar file...</echo>
 
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j" source="1.5">
@@ -714,16 +713,7 @@
         API documentation (docbook)
        ====================================================================== -->
 
-  <target name="makehtml.uptodatetest" depends="init">
-    <echo>Checking if ${file}.html is up-to-date (newer than ${file}).</echo>
-    <uptodate property="htmlUpToDate" srcfile="${file}"
-        targetfile="${file}.html"/>
-  </target>
-  
-  <!-- NOTE: removed unless="htmlUpToDate" depends="makehtml.uptodatetest" 
-             because the document may contain conditions -->
-
-  <target name="makehtml" depends="init">
+  <target name="makehtml">
     <echo>Generating ${file}.html</echo>
     <property name="stylesheet.dir" value="${doc.path}/stylesheets/" />
     <property name="number-sects" value="true" />
@@ -1015,10 +1005,10 @@
   <target name="dist.ontopia" depends="init,check-jvm"
           description="builds the full ontopia distribution">
 
-    <antcall target="dist.ontopia.echo"/>
+    <antcall inheritRefs="true" target="dist.ontopia.echo"/>
 
     <!-- compile and build jar files -->
-    <antcall target="dist.jar.ontopia"/>
+    <antcall inheritRefs="true" target="dist.jar.ontopia.body"/>
 
     <!-- Clean distribution directory -->
     <delete dir="${build.tmp}" />
@@ -1026,30 +1016,30 @@
     <mkdir dir="${dist.path}" />
 
     <!-- Collect product structures -->
-    <antcall target="dist.product.collect" />
-    <antcall target="dist.engine.collect" />
-    <antcall target="dist.query.collect" />
-    <antcall target="dist.fulltext.collect" />
-    <antcall target="dist.schema.collect" />
-    <antcall target="dist.webed.collect" />
-    <antcall target="dist.navigator.collect" /> <!-- viz and tmrap must be placed after this task -->
-    <antcall target="dist.db2tm.collect" />
-    <antcall target="dist.rdbms.collect" />
-    <antcall target="dist.classify.collect" />
-    <antcall target="dist.viz.collect" />
-    <antcall target="dist.tmrap.collect" />
+    <antcall inheritRefs="true" target="dist.product.collect" />
+    <antcall inheritRefs="true" target="dist.engine.collect" />
+    <antcall inheritRefs="true" target="dist.query.collect" />
+    <antcall inheritRefs="true" target="dist.fulltext.collect" />
+    <antcall inheritRefs="true" target="dist.schema.collect" />
+    <antcall inheritRefs="true" target="dist.webed.collect" />
+    <antcall inheritRefs="true" target="dist.navigator.collect" /> <!-- viz and tmrap must be placed after this task -->
+    <antcall inheritRefs="true" target="dist.db2tm.collect" />
+    <antcall inheritRefs="true" target="dist.rdbms.collect" />
+    <antcall inheritRefs="true" target="dist.classify.collect" />
+    <antcall inheritRefs="true" target="dist.viz.collect" />
+    <antcall inheritRefs="true" target="dist.tmrap.collect" />
 
     <!-- Collect product tests -->
-    <antcall target="dist.engine.test.collect" />
-    <antcall target="dist.navigator.test.collect" />
-    <antcall target="dist.fulltext.test.collect" />
-    <antcall target="dist.query.test.collect" />
-    <antcall target="dist.schema.test.collect" />
-    <antcall target="dist.webed.test.collect" />
-    <antcall target="dist.viz.test.collect" />
-    <antcall target="dist.db2tm.test.collect" />
-    <antcall target="dist.tmrap.test.collect" />
-    <antcall target="dist.rdbms.test.collect" />
+    <antcall inheritRefs="true" target="dist.engine.test.collect" />
+    <antcall inheritRefs="true" target="dist.navigator.test.collect" />
+    <antcall inheritRefs="true" target="dist.fulltext.test.collect" />
+    <antcall inheritRefs="true" target="dist.query.test.collect" />
+    <antcall inheritRefs="true" target="dist.schema.test.collect" />
+    <antcall inheritRefs="true" target="dist.webed.test.collect" />
+    <antcall inheritRefs="true" target="dist.viz.test.collect" />
+    <antcall inheritRefs="true" target="dist.db2tm.test.collect" />
+    <antcall inheritRefs="true" target="dist.tmrap.test.collect" />
+    <antcall inheritRefs="true" target="dist.rdbms.test.collect" />
 
     <!-- Test configuration -->
     <copy file="${test.path}/config/tests.xml" todir="${dist.path}/tests/test-data" />
@@ -1081,13 +1071,13 @@
     <chmod dir="${dist.path}/bin" perm="a+rx" includes="*.sh" />
 
     <!-- Add accessctl web application -->
-    <antcall target="dist.ontopia.webapp.accessctl" />
+    <antcall inheritRefs="true" target="dist.ontopia.webapp.accessctl" />
 
     <!-- Replace ROOT web application -->
-    <antcall target="dist.ontopia.webapp.toplevel" />
+    <antcall inheritRefs="true" target="dist.ontopia.webapp.toplevel" />
 
     <!-- Generate javadoc -->
-    <antcall target="javadoc.ontopia" />
+    <antcall inheritRefs="true" target="javadoc.ontopia" />
     <copy todir="${dist.path}/doc/api">
       <fileset dir="${build.javadoc}/ontopia" />
     </copy>
@@ -1110,7 +1100,7 @@
     </zip>
   </target>
 
-  <target name="javadoc.ontopia" depends="init">
+  <target name="javadoc.ontopia">
     <delete dir="${build.javadoc}/ontopia" />
     <mkdir dir="${build.javadoc}/ontopia" />
     <javadoc packagenames="
@@ -1160,16 +1150,12 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${build.javadoc}/ontopia-dev" />
   </target>
 
-  <target name="dist.jar.ontopia" depends="init" 
+  <target name="dist.jar.ontopia.body" depends="check-jvm,prepare.product.class,clean.classes,compile.ontopia,compile.ontopia.test,jar.ontopia.test,jar.ontopia" 
           description="builds the ontopia.jar file">
-    <antcall target="ivy.resolve"/>
-    <antcall target="check-jvm"/>
-    <antcall target="prepare.product.class"/>
-    <antcall target="clean.classes"/>
-    <antcall target="compile.ontopia"/>
-    <antcall target="compile.ontopia.test"/>
-    <antcall target="jar.ontopia.test"/>
-    <antcall target="jar.ontopia"/>
+  </target>
+
+  <target name="dist.jar.ontopia" depends="init,dist.jar.ontopia.body" 
+          description="builds the ontopia.jar file">
   </target>
 
   <target name="jar.ontopia">
@@ -1257,7 +1243,9 @@
 
     <echo>Copying webed resources...</echo>
     <copy todir="${build.classes}/" overwrite="yes">
-      <fileset refid="ontopia.vms" />
+      <fileset dir="${basedir}/src/webapps/webedtest/WEB-INF/templates/">
+        <include name="*.vm" />
+      </fileset>
     </copy>
 
     <echo>Copying rdbms resources...</echo>
@@ -1318,7 +1306,7 @@
      </copy>
   </target>
 
-  <target name="jar.ontopia.test" depends="init">
+  <target name="jar.ontopia.test">
     <property name="dist.name" value="ontopia" />
     <delete file="${build.jars}/${dist.name}-tests.jar" />
     <jar basedir="${build.classes}" jarfile="${build.jars}/${dist.name}-tests.jar" manifest="${src.path}/dist/manifests/manifest-ontopia-tests.mf">
@@ -1373,38 +1361,6 @@
     <copy file="${src.path}/webapps/accessctl/WEB-INF/topicmaps/userman.ltm"
         tofile="${dist.path}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps/userman.ltm" overwrite="yes"/>
   </target>
-
-  <!-- - - - Update taglib descriptors  - - - - - - - - - - - - - - - - - - -->
-
-  <target name="jar.ontopia.resources" depends="init">
-    <echo>Copying TLDs to META-INF...</echo>
-    <copy todir="${build.classes}/META-INF/" overwrite="yes">
-      <fileset dir="${src.path}/webapps/webedtest/WEB-INF/jsp/">
-         <include name="*.tld" />
-      </fileset>
-    </copy>
-    <echo>Copying VMs to build.classes...</echo>
-    <copy todir="${build.classes}/" overwrite="yes">
-      <fileset refid="ontopia.vms" />
-    </copy>
-    <echo>Building jar-file...</echo>
-    <jar basedir="${build.classes}" jarfile="${build.jars}/ontopia-resources.jar">
-      <patternset>
-        <include name="*.vm" />
-        <include name="META-INF/*.tld" />
-      </patternset>
-    </jar>
-  </target>
-
-  <fileset id="ontopia.tlds" dir="${src.path}/webapps/webedtest/WEB-INF/jsp/">
-    <include name="*.tld" />
-  </fileset>
-
-  <!-- - - - Update velocity macros - - - - - - - - - - - - - - - - - - - - -->
-
-  <fileset id="ontopia.vms" dir="${basedir}/src/webapps/webedtest/WEB-INF/templates/">
-    <include name="*.vm" />
-  </fileset>
 
   <!-- - - - Collect common product structure - - - - - - - - - - - - - - - -->
 
@@ -1462,18 +1418,18 @@
     <mkdir dir="${dist.path}/doc" />
 
     <!-- Generate documentation -->
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/ontopia/whatsnew.xml" />
     </antcall>
     <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${dist.path}/doc/whatsnew.html" />
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/ontopia/startup.xml" />
     </antcall>
     <copy file="${doc.path}/ontopia/startup.xml.html" tofile="${dist.path}/doc/install.html" />
 
     <copy file="${doc.path}/ontopia/copyrights.txt" todir="${dist.path}/doc" />
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/ontopia/overview.xml" />
     </antcall>
     <copy file="${doc.path}/ontopia/overview.xml.html" tofile="${dist.path}/doc/misc/overview.html" />
@@ -1489,12 +1445,12 @@
     </copy>
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/misc" />
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/ltm/tutorial.xml" />
     </antcall>
     <copy file="${doc.path}/ltm/tutorial.xml.html" tofile="${dist.path}/doc/misc/ltm.html" />
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/rdf2tm/spec.xml" />
     </antcall>
     <copy file="${doc.path}/rdf2tm/spec.xml.html" tofile="${dist.path}/doc/misc/rdf2tm.html" />
@@ -1522,7 +1478,7 @@
   <target name="dist.engine.collect">
     <echo>Collecting engine components...</echo>
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/engine/devguide.xml" />
     </antcall>
 
@@ -1650,19 +1606,19 @@
   <target name="dist.navigator.collect" depends="download-apache-tomcat">
     <echo>Collecting navigator runtime components...</echo>
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/omnigator/user-guide.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/navigator/config.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/navigator/devguide.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/navigator/taglib-reference.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/navigator/userman.xml" />
     </antcall>
 
@@ -1705,7 +1661,7 @@
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/webdav" />
 
     <!-- Build Ontopia realm -->
-    <antcall target="jar.topicmaprealm"/>
+    <antcall inheritRefs="true" target="jar.topicmaprealm"/>
     <copy file="${build.jars}/ontopia-realm.jar" 
         tofile="${dist.path}/apache-tomcat/server/lib/ontopia-realm.jar" overwrite="yes" />
 
@@ -1856,16 +1812,16 @@
     <replace file="${dist.path}/apache-tomcat/webapps/omnigator/fragments/tagline-header.jsp" token="@DATE@" value="${build.date}" />
 
     <!-- Add i18n web application -->
-    <antcall target="dist.ontopia.webapp.i18n" />
+    <antcall inheritRefs="true" target="dist.ontopia.webapp.i18n" />
 
     <!-- Add xmltools web application -->
-    <antcall target="dist.ontopia.webapp.xmltools" />
+    <antcall inheritRefs="true" target="dist.ontopia.webapp.xmltools" />
 
     <!-- Add manage web application -->
-    <antcall target="dist.ontopia.webapp.manage" />
+    <antcall inheritRefs="true" target="dist.ontopia.webapp.manage" />
 
     <!-- Add ontopoly web application -->
-    <antcall target="dist.ontopia.webapp.ontopoly" />
+    <antcall inheritRefs="true" target="dist.ontopia.webapp.ontopoly" />
 
   </target>
 
@@ -1895,7 +1851,7 @@
   <target name="dist.db2tm.collect">
 
     <!-- build and copy documentation -->
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/db2tm/devguide.xml" />
     </antcall>
     <copy file="${doc.path}/db2tm/devguide.xml.html" 
@@ -1922,7 +1878,7 @@
   <!-- - - - Collect tmrap components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.tmrap.collect">
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/tmrap/devguide.xml" />
     </antcall>
     <copy file="${doc.path}/tmrap/devguide.xml.html" tofile="${dist.path}/doc/tmrap/dev-guide.html" />
@@ -1948,10 +1904,10 @@
   <!-- - - - Collect rdbms components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.rdbms.collect">
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/rdbms/install.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/rdbms/devguide.xml" />
     </antcall>
     <javac srcdir="${doc.path}/rdbms" 
@@ -1965,42 +1921,42 @@
 
     <echo>Generating database schemas...</echo>
     <mkdir dir="${dist.path}/rdbms/setup" />
-    <antcall target="generate-rdbms-schema">
+    <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="generic" />
       <param name="database" value="generic" />
       <param name="platforms" value="generic" />
     </antcall>
-    <antcall target="generate-rdbms-schema">
+    <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="oracle8" />
       <param name="database" value="oracle" />
       <param name="platforms" value="oracle8,oracle,generic" />
     </antcall>
-    <antcall target="generate-rdbms-schema">
+    <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="oracle9i" />
       <param name="database" value="oracle" />
       <param name="platforms" value="oracle9i,oracle,generic" />
     </antcall>
-    <antcall target="generate-rdbms-schema">
+    <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="oracle10g" />
       <param name="database" value="oracle" />
       <param name="platforms" value="oracle10g,oracle,generic" />
     </antcall>
-    <antcall target="generate-rdbms-schema">
+    <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="postgresql" />
       <param name="database" value="postgresql" />
       <param name="platforms" value="postgresql,generic" />
     </antcall>
-    <antcall target="generate-rdbms-schema">
+    <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="sqlserver" />
       <param name="database" value="sqlserver" />
       <param name="platforms" value="sqlserver,generic" />
     </antcall>
-    <antcall target="generate-rdbms-schema">
+    <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="mysql" />
       <param name="database" value="mysql" />
       <param name="platforms" value="mysql,generic" />
     </antcall>
-    <antcall target="generate-rdbms-schema">
+    <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="h2" />
       <param name="database" value="generic" />
       <param name="platforms" value="generic" />
@@ -2073,10 +2029,10 @@
   <!-- - - - Collect schema components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.schema.collect">
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/osl/schemaspec.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/osl/tutorial.xml" />
     </antcall>
 
@@ -2104,10 +2060,10 @@
   <!-- - - - Collect query components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.query.collect">
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/tolog/tutorial.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/tolog/predicate-ref.xml" />
     </antcall>
 
@@ -2135,16 +2091,16 @@
   <!-- - - - Collect webed components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.webed.collect">
 
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/webed/action-ref.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/webed/devguide.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/webed/taglib-ref.xml" />
     </antcall>
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/webed/config.xml" />
     </antcall>
 
@@ -2186,8 +2142,8 @@
   <!-- - - - Collect viz components  - - - - - - - - - - - - - - - - - - - -->
   <target name="dist.viz.collect">
 
-    <antcall target="jar.vizlet" />
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="jar.vizlet" />
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/vizigator/user-guide.xml" />
     </antcall>
     <exec dir="${java.path}" executable="python">
@@ -2241,14 +2197,14 @@
   </target>
 
   <!-- - - - Ontopoly web application  - - - - - - - - - - - - - - - - - - -->
-  <target name="dist.ontopia.webapp.ontopoly" depends="init">
+  <target name="dist.ontopia.webapp.ontopoly">
 
     <property name="build.ontopoly" value="${dist.path}/apache-tomcat/webapps/ontopoly" />
     <delete dir="${build.ontopoly}" />
     <mkdir dir="${build.ontopoly}/doc" />
 
     <!-- documentation -->
-    <antcall target="makehtml">
+    <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
     </antcall>
     <copy file="${doc.path}/ontopoly/user-guide.xml.html" 
@@ -2287,7 +2243,7 @@
 
   </target>
 
-  <target name="dist.ontopia.webapp.toplevel" depends="init">
+  <target name="dist.ontopia.webapp.toplevel">
 
     <echo>Replacing ROOT web application...</echo>
     <delete dir="${dist.path}/apache-tomcat/webapps/ROOT" />
@@ -2312,20 +2268,11 @@
     <include name="org/slf4j/*.class" />
   </patternset>
 
-  <target name="compile.dummyLoggers" depends="init">
+  <target name="compile.dummyLoggers">
     <echo>Compiling dummy logger classes...</echo>
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" source="1.5">
       <patternset refid="sources.dummyLoggers" />
     </javac>
-  </target>
-
-  <target name="clean.dummyLoggers" depends="init">
-    <echo>Cleaning up dummy logger classes...</echo>
-    <delete>
-      <fileset dir="${build.classes}">
-        <patternset refid="classes.dummyLoggers" />
-      </fileset>
-    </delete>
   </target>
 
   <!-- ======================================================================
