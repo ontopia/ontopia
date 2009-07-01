@@ -85,7 +85,7 @@
 
   <target name="ivy.resolve">
     <ivy:resolve />
-    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" />
+    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" sync="true" />
   </target>
 
   <ivy:settings id="ivy.instance" file="${basedir}/ivysettings.xml" />
