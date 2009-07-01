@@ -1374,6 +1374,9 @@
     <!-- Create lib directory -->
     <mkdir dir="${dist.path}/lib" />
 
+    <!-- Make sure we have Apache Tomcat -->
+    <antcall inheritRefs="true" target="download-apache-tomcat" />
+
     <!-- Collect 3rdparty jar files -->
     <copy file="${3rdparty.path}/jing.jar" tofile="${dist.path}/lib/jing.jar" />
     <copy file="${3rdparty.path}/tmapi-2.0a2.jar" tofile="${dist.path}/lib/tmapi.jar" />
@@ -1603,7 +1606,7 @@
          dest="${lib.path}/apache-tomcat-5.5.27.zip" usetimestamp="true" />
   </target>
 
-  <target name="dist.navigator.collect" depends="download-apache-tomcat">
+  <target name="dist.navigator.collect">
     <echo>Collecting navigator runtime components...</echo>
 
     <antcall inheritRefs="true" target="makehtml">
