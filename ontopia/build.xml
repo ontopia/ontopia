@@ -58,7 +58,6 @@
     <property name="build.classes" value="${build.root}/classes" />
     <property name="build.jars" value="${build.root}/jars" />
     <property name="build.javadoc" value="${build.root}/javadoc" />
-    <property name="build.doc" value="${build.root}/doc" />
     <property name="build.tmp" value="${build.root}/tmp" />
 
     <!-- Distribution properties -->
@@ -71,7 +70,7 @@
     <property name="dist.version.major" value="5"/>
     <property name="dist.version.minor" value="0"/>
     <property name="dist.version.micro" value="0"/>
-    <property name="dist.is.beta"       value="2"/> <!-- beta if greater than zero -->
+    <property name="dist.version.beta"       value="2"/> <!-- beta if greater than zero -->
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}"/>
     <property name="dist.full.version" value="${dist.version}-${dist.date}"/>
 
@@ -154,7 +153,6 @@
     <mkdir dir="${build.dists}" />
     <mkdir dir="${build.classes}" />
     <mkdir dir="${build.jars}" />
-    <mkdir dir="${build.doc}" />
   </target>
 
   <target name="bootstrap" depends="init">
@@ -166,7 +164,6 @@
     <mkdir dir="${build.dists}" />
     <mkdir dir="${build.classes}" />
     <mkdir dir="${build.jars}" />
-    <mkdir dir="${build.doc}" />
     <mkdir dir="${build.tmp}" />
 
     <!-- Prepare product classes -->
@@ -1441,15 +1438,12 @@
   <target name="dist.product.collect">
     <echo>Building and collecting common product components...</echo>
 
-    <!-- Build properties -->
-    <property name="collect.path" value="${build.root}/dists/product-common" />
-
-    <!-- Initialize the product directory -->
-    <delete dir="${collect.path}" />
-    <mkdir dir="${collect.path}" />
+    <!-- Create product directory -->
+    <delete dir="${dist.path}" />
+    <mkdir dir="${dist.path}" />
 
     <!-- Create lib directory -->
-    <mkdir dir="${collect.path}/lib" />
+    <mkdir dir="${dist.path}/lib" />
 
     <!-- Collect 3rdparty jar files -->
     <copy file="${3rdparty.path}/jing.jar" tofile="${dist.path}/lib/jing.jar" />
@@ -1492,25 +1486,25 @@
     <copy file="${lib.path}/standard-1.1.2.jar" tofile="${dist.path}/apache-tomcat/common/lib/standard.jar" />
 
     <!-- Create doc directory -->
-    <mkdir dir="${collect.path}/doc" />
+    <mkdir dir="${dist.path}/doc" />
 
     <!-- Generate documentation -->
     <antcall target="makehtml">
       <param name="file" value="${doc.path}/ontopia/whatsnew.xml" />
     </antcall>
-    <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${collect.path}/doc/whatsnew.html" />
+    <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${dist.path}/doc/whatsnew.html" />
     <antcall target="makehtml">
       <param name="file" value="${doc.path}/ontopia/startup.xml" />
     </antcall>
-    <copy file="${doc.path}/ontopia/startup.xml.html" tofile="${collect.path}/doc/install.html" />
+    <copy file="${doc.path}/ontopia/startup.xml.html" tofile="${dist.path}/doc/install.html" />
 
-    <copy file="${doc.path}/ontopia/copyrights.txt" todir="${collect.path}/doc" />
+    <copy file="${doc.path}/ontopia/copyrights.txt" todir="${dist.path}/doc" />
 
     <antcall target="makehtml">
       <param name="file" value="${doc.path}/ontopia/overview.xml" />
     </antcall>
-    <copy file="${doc.path}/ontopia/overview.xml.html" tofile="${collect.path}/doc/misc/overview.html" />
-    <copy todir="${collect.path}/doc/misc">
+    <copy file="${doc.path}/ontopia/overview.xml.html" tofile="${dist.path}/doc/misc/overview.html" />
+    <copy todir="${dist.path}/doc/misc">
       <fileset dir="${doc.path}/ontopia">
         <patternset>
           <include name="*.gif" />
@@ -1520,24 +1514,24 @@
         </patternset>
       </fileset>
     </copy>
-    <copy file="${doc.path}/ontopia/logo.gif" todir="${collect.path}/doc/misc" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/misc" />
 
     <antcall target="makehtml">
       <param name="file" value="${doc.path}/ltm/tutorial.xml" />
     </antcall>
-    <copy file="${doc.path}/ltm/tutorial.xml.html" tofile="${collect.path}/doc/misc/ltm.html" />
+    <copy file="${doc.path}/ltm/tutorial.xml.html" tofile="${dist.path}/doc/misc/ltm.html" />
 
     <antcall target="makehtml">
       <param name="file" value="${doc.path}/rdf2tm/spec.xml" />
     </antcall>
-    <copy file="${doc.path}/rdf2tm/spec.xml.html" tofile="${collect.path}/doc/misc/rdf2tm.html" />
+    <copy file="${doc.path}/rdf2tm/spec.xml.html" tofile="${dist.path}/doc/misc/rdf2tm.html" />
 
     <!-- Copy stylesheets -->
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${collect.path}/doc" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${collect.path}/doc/misc" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/misc" />
 
     <!-- Collect documentation -->
-    <copy file="${doc.path}/ontopia/logo.gif" todir="${collect.path}/doc" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc" />
 
     <!-- Generate index pages -->
     <echo message="Generating HTML index pages..." />
@@ -1549,10 +1543,6 @@
     <!-- Copy license -->
     <copy file="${doc.path}/ontopia/license.txt" tofile="${dist.path}/doc/license.txt" overwrite="yes" />
 
-    <echo>Collecting product components...</echo>
-    <copy todir="${dist.path}">
-      <fileset dir="${build.dists}/product-common" />
-    </copy>
   </target>
 
   <!-- - - - Collect engine components - - - - - - - - - - - - - - - - - - - -->
@@ -2102,7 +2092,7 @@
       <arg value="${dist.version.major}" />
       <arg value="${dist.version.minor}" />
       <arg value="${dist.version.micro}" />
-      <arg value="${dist.is.beta}" />
+      <arg value="${dist.version.beta}" />
       <arg value="${build.user}" />
     </java>
   </target>
