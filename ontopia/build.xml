@@ -71,7 +71,7 @@
     <property name="dist.version.major" value="5"/>
     <property name="dist.version.minor" value="0"/>
     <property name="dist.version.micro" value="0"/>
-    <property name="dist.is.beta"       value="1"/> <!-- beta if greater than zero -->
+    <property name="dist.is.beta"       value="2"/> <!-- beta if greater than zero -->
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}"/>
     <property name="dist.full.version" value="${dist.version}-${dist.date}"/>
 
@@ -1130,13 +1130,14 @@
       <arg value="${dist.path}/lib/digests.txt" />
     </java>
 
-    <echo>Packaging distribution: ${dist.name}-${dist.full.version}.zip</echo>
-    <exec dir="${build.dists}" executable="zip">
-      <arg value="-r" />
-      <arg value="${dist.name}-${dist.full.version}.zip" />
-      <arg value="${dist.name}-${dist.version}" />
-    </exec>
-
+    <!-- Package the distribution -->
+    <zip destFile="${build.dists}/${dist.name}-${dist.full.version}.zip" duplicate="preserve"> 
+      <zipfileset dir="${build.dists}" filemode="755" 
+        includes="${dist.name}-${dist.version}/apache-tomcat/bin/*.sh" /> 
+      <zipfileset dir="${build.dists}" 
+        includes="${dist.name}-${dist.version}/**/*"
+        excludes="${dist.name}-${dist.version}/apache-tomcat/bin/*.sh" />
+    </zip>
   </target>
 
   <target name="javadoc.ontopia" depends="init">
