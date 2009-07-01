@@ -22,8 +22,6 @@ import net.ontopia.utils.StringUtils;
  *
  * <p>Example usage within the link tag:
  * <pre>template="/models/topic_%model%.jsp?tm=%topicmap%&id=%id%"</pre>
- *
- * @see net.ontopia.topicmaps.nav2.taglibs.output.LinkTag
  */
 public class ModelLinkGeneratorWithObjID implements LinkGeneratorIF {
 
