@@ -1,4 +1,4 @@
-// $ANTLR 2.7.5 (20050128): "tolog.g" -> "RealTologParser.java"$
+// $ANTLR 2.7.7 (20060906): "tolog.g" -> "RealTologParser.java"$
  package net.ontopia.topicmaps.query.parser; 
 import antlr.TokenBuffer;
 import antlr.TokenStreamException;
@@ -267,7 +267,7 @@ public RealTologParser(ParserSharedInputState state) {
 					synPredMatched8 = false;
 				}
 				rewind(_m8);
-				inputState.guessing--;
+inputState.guessing--;
 			}
 			if ( synPredMatched8 ) {
 				rule();

@@ -1,4 +1,4 @@
-// $ANTLR 2.7.5 (20050128): tolog.g -> RealTologParserTokenTypes.txt$
+// $ANTLR 2.7.7 (20060906): tolog.g -> RealTologParserTokenTypes.txt$
 RealTologParser    // output token vocab name
 IDENT=4
 LPAREN("(")=5

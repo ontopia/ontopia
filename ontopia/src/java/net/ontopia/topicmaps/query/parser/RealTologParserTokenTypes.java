@@ -1,4 +1,4 @@
-// $ANTLR 2.7.5 (20050128): "tolog.g" -> "TologLexer.java"$
+// $ANTLR 2.7.7 (20060906): "tolog.g" -> "TologLexer.java"$
  package net.ontopia.topicmaps.query.parser; 
 public interface RealTologParserTokenTypes {
 	int EOF = 1;

@@ -53,6 +53,8 @@ public class PSI {
   public static final LocatorIF ON_DATATYPE_HTML = PSI.ON.resolveAbsolute("datatype-html");
   public static final LocatorIF ON_DATATYPE_IMAGE = PSI.ON.resolveAbsolute("datatype-image");
 
+  public static final LocatorIF ON_FIELD_VALUE_ORDER = PSI.ON.resolveAbsolute("field-value-order");
+
   public static final LocatorIF ON_DEFAULT_FIELDS_VIEW = PSI.ON.resolveAbsolute("default-fields-view");
 
   public static final LocatorIF ON_EDIT_MODE_EXISTING_VALUES_ONLY = PSI.ON.resolveAbsolute("edit-mode-existing-values-only");

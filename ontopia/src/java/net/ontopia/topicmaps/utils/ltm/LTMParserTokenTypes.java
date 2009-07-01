@@ -1,4 +1,4 @@
-// $ANTLR 2.7.7 (2006-11-01): "ltm.g" -> "LTMLexer.java"$
+// $ANTLR 2.7.7 (20060906): "ltm.g" -> "LTMLexer.java"$
  package net.ontopia.topicmaps.utils.ltm; 
 public interface LTMParserTokenTypes {
 	int EOF = 1;

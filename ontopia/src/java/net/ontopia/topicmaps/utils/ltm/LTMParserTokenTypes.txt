@@ -1,4 +1,4 @@
-// $ANTLR 2.7.7 (2006-11-01): ltm.g -> LTMParserTokenTypes.txt$
+// $ANTLR 2.7.7 (20060906): ltm.g -> LTMParserTokenTypes.txt$
 LTMParser    // output token vocab name
 PREFIX("prefix directive")=4
 NAME=5

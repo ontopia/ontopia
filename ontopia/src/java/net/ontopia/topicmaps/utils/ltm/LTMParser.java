@@ -1,4 +1,4 @@
-// $ANTLR 2.7.7 (2006-11-01): "ltm.g" -> "LTMParser.java"$
+// $ANTLR 2.7.7 (20060906): "ltm.g" -> "LTMParser.java"$
  package net.ontopia.topicmaps.utils.ltm; 
 import antlr.TokenBuffer;
 import antlr.TokenStreamException;

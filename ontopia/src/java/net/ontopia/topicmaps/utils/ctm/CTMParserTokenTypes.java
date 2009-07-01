@@ -1,4 +1,4 @@
-// $ANTLR 2.7.5 (20050128): "ctm.g" -> "CTMParser.java"$
+// $ANTLR 2.7.7 (20060906): "ctm.g" -> "CTMParser.java"$
  package net.ontopia.topicmaps.utils.ctm; 
 public interface CTMParserTokenTypes {
 	int EOF = 1;

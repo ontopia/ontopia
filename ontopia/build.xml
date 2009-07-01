@@ -1225,15 +1225,23 @@
   <!-- Makes sure that all neccessary classes are compiled before packaging ontopia.jar -->
   <target name="compile.ontopia">
     <echo>Compiling LTM grammar...</echo>
-    <antlr target="${java.path}/net/ontopia/topicmaps/utils/ltm/ltm.g" />
+    <java classname="antlr.Tool" dir="${java.path}/net/ontopia/topicmaps/utils/ltm" 
+          classpathref="project.classpath" fork="true" output="${build.root}/antlr.ltm.log">
+       <arg line="ltm.g" />
+    </java>
 
     <echo>Compiling CTM grammar...</echo>
-    <jflex file="${java.path}/net/ontopia/topicmaps/utils/ctm/ctm.flex"
-           destdir="${java.path}"/>
-    <antlr target="${java.path}/net/ontopia/topicmaps/utils/ctm/ctm.g" />
+    <jflex file="${java.path}/net/ontopia/topicmaps/utils/ctm/ctm.flex" destdir="${java.path}"/>
+    <java classname="antlr.Tool" dir="${java.path}/net/ontopia/topicmaps/utils/ctm" 
+          classpathref="project.classpath" fork="true" output="${build.root}/antlr.ctm.log">
+       <arg line="ctm.g" />
+    </java>
 
     <echo>Compiling tolog grammar...</echo>
-    <antlr target="${java.path}/net/ontopia/topicmaps/query/parser/tolog.g" />
+    <java classname="antlr.Tool" dir="${java.path}/net/ontopia/topicmaps/query/parser" 
+          classpathref="project.classpath" fork="true" output="${build.root}/antlr.tolog.log">
+       <arg line="tolog.g" />
+    </java>
 
     <echo>Compiling TMAPI code...</echo>
     <mkdir dir="${build.classes}/META-INF/services"/>
