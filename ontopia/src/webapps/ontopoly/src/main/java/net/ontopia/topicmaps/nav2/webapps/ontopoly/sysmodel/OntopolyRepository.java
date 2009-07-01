@@ -172,6 +172,11 @@ public class OntopolyRepository {
       if (ref.getId().equals(id))
         return ref;
     }
+    
+    TopicMapReferenceIF ref = repository.getReferenceByKey(id);
+    if (ref != null)
+      return new TopicMapReference(ref, this);
+    
     return null;
   }
   
