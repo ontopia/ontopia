@@ -1,5 +1,9 @@
+
+// $Id$
+
 package net.ontopia.topicmaps.viz;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -7,10 +11,10 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public class UndoManager {
 
-  private ArrayList undoStack;
-  private ArrayList operationStack;
-  private ArrayList redoStack;
-  private ArrayList currentUndo;
+  private List undoStack;
+  private List operationStack;
+  private List redoStack;
+  private List currentUndo;
   private boolean operationInProgress;
   private boolean redoInProgress;
   private VizController controller;
@@ -44,7 +48,7 @@ public class UndoManager {
       throw new OntopiaRuntimeException("Cannot start undoable operation. " +
           "Undoable operation already in progress.");
     
-    // Whenever the user performes an operation other than the redo operation,
+    // Whenever the user performs an operation other than the redo operation,
     // the stack of redoable operations is emptied, since all such operations
     // start a new branch of operations, leaving other branches inaccessible.
     if (!redoInProgress)
@@ -77,7 +81,7 @@ public class UndoManager {
       currentUndo.add(recovery);
     else
       VizDebugUtils.debug("No undoable operation in progress. Ignored: " +
-          recovery);
+                          recovery);
   }
   
   public void undo() {
