@@ -25,7 +25,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   static final long serialVersionUID = -7350019735868904034L;
 
-	protected TopicIF reifier;
+  protected TopicIF reifier;
   protected String value;
   protected TopicIF type;
   protected UniqueSet scope;
@@ -69,7 +69,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   }
   
   public void setValue(String value) {
-		if (value == null) throw new NullPointerException("Topic name value must not be null.");
+    if (value == null) throw new NullPointerException("Topic name value must not be null.");
     // Notify listeners
     fireEvent("TopicNameIF.setValue", value, getValue());
     this.value = value;
@@ -136,9 +136,9 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   public void remove() {
     if (parent != null) {
-			DeletionUtils.removeDependencies(this);
+      DeletionUtils.removeDependencies(this);
       ((Topic)parent).removeTopicName(this);
-		}
+    }
   }
 
   // -----------------------------------------------------------------------------
@@ -149,10 +149,11 @@ public class TopicName extends TMObject implements TopicNameIF {
     // Return scope defined on this object
     return (scope == null ? Collections.EMPTY_SET : scope);
   }
+  
   public void addTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("TopicNameIF.addTheme", theme, null);
     // Add theme to scope
@@ -169,10 +170,11 @@ public class TopicName extends TMObject implements TopicNameIF {
       }
     }      
   }
+  
   public void removeTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("TopicNameIF.removeTheme", null, theme);
 
@@ -198,9 +200,10 @@ public class TopicName extends TMObject implements TopicNameIF {
   public TopicIF getType() {
     return type;
   }
+  
   public void setType(TopicIF type) {
-		if (type != null)
-			CrossTopicMapException.check(type, this);
+    if (type != null)
+      CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("TopicNameIF.setType", type, getType());
     this.type = type;
@@ -211,19 +214,19 @@ public class TopicName extends TMObject implements TopicNameIF {
   // -----------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return reifier;
-	}
+    return reifier;
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     this.reifier = reifier;
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null) oldReifier.setReified(null);
+    if (reifier != null) reifier.setReified(this);
+  }
 
   // -----------------------------------------------------------------------------
   // Misc. methods
