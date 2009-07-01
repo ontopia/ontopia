@@ -1469,7 +1469,7 @@
     <echo message="Generating HTML index pages..." />
     <texen controlTemplate="docindex-control.vm" templatePath="${src.path}/dist/doc/"
            outputFile="docindex.report" outputDirectory="${build.tmp}"
-           productVersion="Version ${dist.version} builddate ${dist.date.full}" />
+           productVersion="Version ${dist.version}, builddate ${dist.date.full}" />
     <copy file="${build.tmp}/docindex.html" overwrite="yes" tofile="${dist.path}/index.html" />
 
     <!-- Copy license -->
