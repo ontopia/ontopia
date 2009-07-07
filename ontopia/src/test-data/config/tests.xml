@@ -92,6 +92,7 @@
     <group-ref>net.ontopia.topicmaps.impl.rdbms</group-ref>
     <test>net.ontopia.topicmaps.impl.rdbms.test.CanonicalXTMimportIntoTests</test>
     <test>net.ontopia.topicmaps.impl.rdbms.test.CanonicalExporterXTMTests</test>
+    <test>net.ontopia.topicmaps.impl.rdbms.test.CanonicalExporterXTMTestsRO</test>
     <test>net.ontopia.topicmaps.impl.rdbms.test.MergeTMTestGenerator</test>
     <test>net.ontopia.topicmaps.impl.rdbms.test.ObjectLookupTests</test>
     <test>net.ontopia.persistence.proxy.test.TrackableSetTest</test>

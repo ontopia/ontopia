@@ -19,7 +19,7 @@
 <ivy-module version="2.0">
   <info organisation="net.ontopia" module="ontopia"/>
   <configurations>
-        <conf name="build"  description="build dependancies" />
+    <conf name="build"  description="build dependencies" />
   </configurations>
   <dependencies defaultconfmapping="*->default">
     <dependency org="commons-dbcp" name="commons-dbcp" rev="1.2.2" conf="build" />
@@ -77,7 +77,6 @@
     <!--dependency org="gnu.trove" name="trove4j" rev="2.0.4" conf="build" /-->
     <!--dependency org="thaiopensource" name="jing" rev="20030619" conf="build"/-->
     <!--dependency org="org.tmapi" name="tmapi" rev="1.0" conf="build"/-->
-    <!--dependency org="org.python" name="jython" rev="2.2.1" conf="build" /-->
   
   </dependencies>
 </ivy-module>

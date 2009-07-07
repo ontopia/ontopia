@@ -586,8 +586,7 @@
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j">
       <patternset refid="sources.viz" />
     </javac>
-    <echo>Copying Vizigator Resources ... </echo>
-    <!-- "About" image file -->
+    <echo>Copying vizigator resources ... </echo>
     <copy file="${java.path}/net/ontopia/topicmaps/viz/logo.gif" tofile="${build.classes}/net/ontopia/topicmaps/viz/logo.gif" />
     <!-- base nls support for Vizigator -->
     <copy todir="${build.classes}/net/ontopia/topicmaps/viz/" overwrite="yes">
@@ -1230,7 +1229,7 @@
     <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
       <patternset refid="sources.ontopia.aux" />
     </javac>
-    <echo>Copy RelaxNG schemas</echo>
+    <echo>Copying RelaxNG schemas</echo>
     <copy file="${java.path}/net/ontopia/topicmaps/xml/tmxml.rnc" 
         tofile="${build.classes}/net/ontopia/topicmaps/xml/tmxml.rnc" overwrite="yes" />
     <copy file="${java.path}/net/ontopia/topicmaps/db2tm/db2tm.rnc" 
@@ -1256,7 +1255,7 @@
     <copy file="${java.path}/net/ontopia/topicmaps/impl/rdbms/config/queries.xml" 
         tofile="${build.classes}/net/ontopia/topicmaps/impl/rdbms/config/queries.xml" overwrite="yes" />
 
-    <echo>Copying Vizigator resources ... </echo>
+    <echo>Copying vizigator resources ... </echo>
     <copy file="${java.path}/net/ontopia/topicmaps/viz/logo.gif" tofile="${build.classes}/net/ontopia/topicmaps/viz/logo.gif" />
     <copy todir="${build.classes}/net/ontopia/topicmaps/viz/" overwrite="yes">
       <fileset dir="${java.path}/net/ontopia/topicmaps/viz/">

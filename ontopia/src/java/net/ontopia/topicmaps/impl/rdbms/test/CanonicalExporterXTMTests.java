@@ -13,7 +13,11 @@ import net.ontopia.infoset.impl.basic.URILocator;
 
 public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.test.CanonicalExporterXTMTests {
 
-  protected void canonicalize(String infile, String tmpfile, String outfile) throws IOException {
+  protected boolean getExportReadOnly() {
+    return false;
+  }
+
+  protected void canonicalize(String infile, String tmpfile, String outfile) throws IOException {    
     // Import document
     TopicMapStoreIF store1 = new RDBMSTopicMapStore();
     TopicMapIF source1 = store1.getTopicMap();
@@ -29,15 +33,16 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.test.Ca
 
     // Export document
     TopicMapStoreIF store2 = new RDBMSTopicMapStore(topicmap_id1);
-    ((AbstractTopicMapStore)store2).setBaseAddress(new URILocator(new File(infile).toURL()));
+    ((AbstractTopicMapStore)store2).setReadOnly(getExportReadOnly());
     TopicMapIF source2 = store2.getTopicMap();
     new XTMTopicMapWriter(new File(tmpfile)).write(source2);
-    store2.delete(true);
+    store2.close();    
+    TopicMapStoreIF store2_ = new RDBMSTopicMapStore(topicmap_id1);
+    store2_.delete(true);
 
     // Read exported document
     TopicMapStoreIF store3 = new RDBMSTopicMapStore();
-    TopicMapIF source3 = store3.getTopicMap();
-    
+    TopicMapIF source3 = store3.getTopicMap();    
     reader = new XTMTopicMapReader(new File(tmpfile));
     reader.setValidation(false);
     reader.importInto(source3);
@@ -49,6 +54,7 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.test.Ca
 
     // Canonicalize document
     TopicMapStoreIF store4 = new RDBMSTopicMapStore(topicmap_id3);
+    ((AbstractTopicMapStore)store4).setReadOnly(getExportReadOnly());
     TopicMapIF source4 = store4.getTopicMap();
 
     CanonicalTopicMapWriter cwriter = new CanonicalTopicMapWriter(outfile);
@@ -56,8 +62,9 @@ public class CanonicalExporterXTMTests extends net.ontopia.topicmaps.xml.test.Ca
     cwriter.write(source4);
 
     // Make sure topic map goes away
-    store4.delete(true);
-    //! store4.close();
+    store4.close();    
+    TopicMapStoreIF store4_ = new RDBMSTopicMapStore(topicmap_id3);
+    store4_.delete(true);
   }
   
 }

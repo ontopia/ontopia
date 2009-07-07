@@ -156,7 +156,9 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
 
 	public ReifiableIF getReified() {
-    return (ReifiableIF)loadField(Topic.LF_reified);
+		String reifiedId = (String)loadField(Topic.LF_reified);
+		if (reifiedId == null) return null;
+		return (ReifiableIF)getTopicMap().getObjectById(reifiedId);
 	}
   
   // -----------------------------------------------------------------------------

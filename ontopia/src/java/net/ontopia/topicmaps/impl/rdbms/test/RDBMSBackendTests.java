@@ -6,6 +6,7 @@ package net.ontopia.topicmaps.impl.rdbms.test;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import net.ontopia.utils.ObjectUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
@@ -596,6 +597,58 @@ public class RDBMSBackendTests extends AbstractTopicMapTestCase {
     }
   }
   
+  public void testIssue61() throws Exception {
+    // initialize storage
+    RDBMSTopicMapStore store1 = null;
+    long tmid;
+    String occid;
+    String reifierid;
+    try {
+      // create topic map with one topic and one occurrence
+      store1 = new RDBMSTopicMapStore();
+      TopicMapIF tm1 = store1.getTopicMap();
+      TopicIF topic = tm1.getBuilder().makeTopic();
+      TopicIF otype = tm1.getBuilder().makeTopic();
+      OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, "SomeValue");
+      occid = occurrence.getObjectId();
+      TopicIF oreifier = tm1.getBuilder().makeTopic();
+      reifierid = oreifier.getObjectId();
+      occurrence.setReifier(oreifier);
+
+      assertTrue("Wrong reifier (rw)", ObjectUtils.equals(occurrence.getReifier(), oreifier));
+      assertTrue("Wrong reified (rw)", ObjectUtils.equals(occurrence, oreifier.getReified()));
+
+      tmid = store1.getLongId();
+      store1.commit();
+    } finally {
+      if (store1 != null) store1.close();
+    }
+
+    RDBMSTopicMapStore store2 = null;
+    try {
+      // create a second topic map with one topic
+      store2 = new RDBMSTopicMapStore(tmid);
+      store2.setReadOnly(true);
+      TopicMapIF tm2 = store2.getTopicMap();
+      OccurrenceIF occurrence = (OccurrenceIF)tm2.getObjectById(occid);
+      TopicIF oreifier = (TopicIF)tm2.getObjectById(reifierid);
+
+      assertTrue("Wrong reifier (ro)", ObjectUtils.equals(occurrence.getReifier(), oreifier));
+      assertTrue("Wrong reified (ro)", ObjectUtils.equals(occurrence, oreifier.getReified()));
+
+    } finally {
+      if (store2 != null) store2.close();
+    }
+
+    RDBMSTopicMapStore store3 = null;
+    try {
+      store3 = new RDBMSTopicMapStore(tmid);
+    } finally {
+      if (store3 != null) store3.delete(true);
+    }
+
+  }
+
 }
 
 
