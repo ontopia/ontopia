@@ -374,7 +374,7 @@ public class TopicMapSynchronizer {
     
     TopicIF found = null;
     
-		Iterator it = find.getSubjectLocators().iterator();
+    Iterator it = find.getSubjectLocators().iterator();
     while (it.hasNext() && found == null) {
       LocatorIF psi = (LocatorIF) it.next();
       found = tm.getTopicBySubjectLocator(psi);
