@@ -156,6 +156,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
 
   public void addType(Topic type) {
     Check.typeNotNull(this, type);
+    Check.typeInTopicMap(getTopicMap(), type);
     wrapped.addType(topicMap.unwrapTopic(type));
   }
 
@@ -204,6 +205,8 @@ public class TopicImpl extends ConstructImpl implements Topic {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
+    Check.scopeInTopicMap(getTopicMap(), scope);
+    Check.typeInTopicMap(getTopicMap(), type);
     TopicNameIF name = topicMap.getWrapped().getBuilder().makeTopicName(
         wrapped, topicMap.unwrapTopic(type), value);
     applyScope(name, scope);
@@ -233,6 +236,8 @@ public class TopicImpl extends ConstructImpl implements Topic {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
+    Check.scopeInTopicMap(getTopicMap(), scope);
+    Check.typeInTopicMap(getTopicMap(), type);
     OccurrenceIF occ = topicMap.getWrapped().getBuilder().makeOccurrence(
         wrapped, topicMap.unwrapTopic(type), value);
     applyScope(occ, scope);
@@ -263,6 +268,8 @@ public class TopicImpl extends ConstructImpl implements Topic {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
+    Check.scopeInTopicMap(getTopicMap(), scope);
+    Check.typeInTopicMap(getTopicMap(), type);
     OccurrenceIF occ = topicMap.getWrapped().getBuilder().makeOccurrence(
         wrapped, topicMap.unwrapTopic(type), topicMap.unwrapLocator(value));
     applyScope(occ, scope);
@@ -294,6 +301,7 @@ public class TopicImpl extends ConstructImpl implements Topic {
     Check.typeNotNull(this, type);
     Check.valueNotNull(this, value, datatype);
     Check.scopeNotNull(this, scope);
+    Check.typeInTopicMap(getTopicMap(), type);
     OccurrenceIF occ = topicMap.getWrapped().getBuilder().makeOccurrence(
         wrapped, topicMap.unwrapTopic(type), value,
         topicMap.unwrapLocator(datatype));

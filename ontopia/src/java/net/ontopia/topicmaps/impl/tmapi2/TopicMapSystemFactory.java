@@ -100,7 +100,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
 
   @Override
   public void setProperty(String key, Object val) {
-    setProperty(key, val);
+    this.setProperty(key, (String)val);
   }
 
 }

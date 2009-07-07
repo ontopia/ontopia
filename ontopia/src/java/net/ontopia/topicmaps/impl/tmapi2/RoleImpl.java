@@ -51,6 +51,7 @@ public class RoleImpl extends ReifiableImpl implements Role {
   
   public void setPlayer(Topic player) {
     Check.playerNotNull(this, player);
+    Check.playerInTopicMap(getTopicMap(), player);
     wrapped.setPlayer(topicMap.unwrapTopic(player));
   }
 
@@ -68,6 +69,7 @@ public class RoleImpl extends ReifiableImpl implements Role {
   
   public void setType(Topic type) {
     Check.typeNotNull(this, type);
+    Check.typeInTopicMap(getTopicMap(), type);
     wrapped.setType(topicMap.unwrapTopic(type));
   }
 

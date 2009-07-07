@@ -37,6 +37,7 @@ public abstract class ScopedImpl extends ReifiableImpl implements Scoped {
   
   public void addTheme(Topic theme) {
     Check.themeNotNull(this, theme);
+    Check.scopeInTopicMap(getTopicMap(), theme);
     ((ScopedIF) getWrapped()).addTheme(topicMap.unwrapTopic(theme));
   }
 

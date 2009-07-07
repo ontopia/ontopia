@@ -27,7 +27,8 @@ public class NameImpl extends ScopedImpl implements Name {
 
   private TopicNameIF wrapped;
 
-  // The scope of variants is handled different in TMAPI2. Therefore the wrappers of
+  // The scope of variants is handled different in TMAPI2. Therefore the
+  // wrappers of
   // variants have a state, containing explicitly set themes from the name.
   // These wrappers need to be stored in the name wrapper.
   private Set<Variant> wrappedVariants = Collections.emptySet();
@@ -66,8 +67,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * java.util.Collection)
    */
 
-  public Variant createVariant(String value,
-      Collection<Topic> scope) {
+  public Variant createVariant(String value, Collection<Topic> scope) {
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
 
@@ -99,8 +99,6 @@ public class NameImpl extends ScopedImpl implements Name {
     }
     wrappedVariants.add(variant);
   }
-  
- 
 
   /*
    * (non-Javadoc)
@@ -109,8 +107,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * org.tmapi.core.Topic[])
    */
 
-  public Variant createVariant(Locator value,
-      Topic... scope) {
+  public Variant createVariant(Locator value, Topic... scope) {
     Check.scopeNotNull(this, scope);
     return createVariant(value, Arrays.asList(scope));
   }
@@ -122,8 +119,7 @@ public class NameImpl extends ScopedImpl implements Name {
    * java.util.Collection)
    */
 
-  public Variant createVariant(Locator value,
-      Collection<Topic> scope) {
+  public Variant createVariant(Locator value, Collection<Topic> scope) {
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
 
@@ -141,12 +137,11 @@ public class NameImpl extends ScopedImpl implements Name {
   /*
    * (non-Javadoc)
    * 
-   * @see Name#createVariant(java.lang.String,
-   * org.tmapi.core.Locator, org.tmapi.core.Topic[])
+   * @see Name#createVariant(java.lang.String, org.tmapi.core.Locator,
+   * org.tmapi.core.Topic[])
    */
 
-  public Variant createVariant(String value, Locator datatype,
-      Topic... scope) {
+  public Variant createVariant(String value, Locator datatype, Topic... scope) {
     Check.scopeNotNull(this, scope);
     return createVariant(value, datatype, Arrays.asList(scope));
   }
@@ -162,6 +157,7 @@ public class NameImpl extends ScopedImpl implements Name {
       Collection<Topic> scope) {
     Check.valueNotNull(this, value, datatype);
     Check.scopeNotNull(this, scope);
+    Check.scopeInTopicMap(getTopicMap(), scope.toArray(new Topic[scope.size()]));
     VariantNameIF variant = topicMap.getWrapped().getBuilder().makeVariantName(
         wrapped, value, topicMap.unwrapLocator(datatype), unwrapScope(scope));
     return topicMap.wrapVariant(variant);
@@ -234,6 +230,7 @@ public class NameImpl extends ScopedImpl implements Name {
 
   public void setType(Topic type) {
     Check.typeNotNull(this, type);
+    Check.typeInTopicMap(getTopicMap(), type);
     wrapped.setType(topicMap.unwrapTopic(type));
   }
 

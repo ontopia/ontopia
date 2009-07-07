@@ -116,6 +116,8 @@ public class TopicMapImpl extends ReifiableImpl implements
   public Association createAssociation(Topic type, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.scopeNotNull(this, scope);
+    Check.scopeInTopicMap(this, scope);
+    Check.typeInTopicMap(this, type);
     AssociationIF assoc = wrapped.getBuilder().makeAssociation(
         unwrapTopic(type));
     for (Topic theme : scope) {

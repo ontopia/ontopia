@@ -8,6 +8,7 @@ import org.tmapi.core.Construct;
 import org.tmapi.core.Locator;
 import org.tmapi.core.ModelConstraintException;
 import org.tmapi.core.Topic;
+import org.tmapi.core.TopicMap;
 
 /**
  * INTERNAL: Provides various argument constraint checks.
@@ -125,8 +126,6 @@ public final class Check {
     }
   }
 
-  
-  
   /**
    * Throws a {@link ModelConstraintException} iff the <tt>player</tt> is
    * <tt>null</tt>.
@@ -161,55 +160,67 @@ public final class Check {
   }
 
   /**
-   * Throws a IllegalArgumentException if the subject locator is <code>null</code>
-   * @param loc the locator to check
+   * Throws a IllegalArgumentException if the subject locator is
+   * <code>null</code>
+   * 
+   * @param loc
+   *          the locator to check
    */
   public static void subjectLocatorNotNull(Locator loc) {
     if (loc == null) {
       throw new IllegalArgumentException("The subject locator must not be null");
     }
   }
-  
+
   /**
-   * Throws a IllegalArgumentException if the subject identifier is <code>null</code>
-   * @param sid the identifier to check
+   * Throws a IllegalArgumentException if the subject identifier is
+   * <code>null</code>
+   * 
+   * @param sid
+   *          the identifier to check
    */
   public static void subjectIdentifierNotNull(Locator sid) {
     if (sid == null) {
       throw new IllegalArgumentException("The subject locator must not be null");
     }
   }
-  
+
   /**
    * Throws a IllegalArgumentException if the value is <code>null</code>
-   * @param value the value to check
+   * 
+   * @param value
+   *          the value to check
    */
   public static void valueNotNull(Object value) {
     if (value == null) {
       throw new IllegalArgumentException("value is null");
     }
   }
-  
+
   /**
-   * Throws a IllegalArgumentException if the  locator is <code>null</code>
-   * @param loc the locator to check
+   * Throws a IllegalArgumentException if the locator is <code>null</code>
+   * 
+   * @param loc
+   *          the locator to check
    */
   public static void locatorNotNull(Locator loc) {
     if (loc == null) {
       throw new IllegalArgumentException("The locator must not be null");
     }
   }
-  
+
   /**
-   * Throws a IllegalArgumentException if the  datatype is <code>null</code>
-   * @param datatype the locator to check
+   * Throws a IllegalArgumentException if the datatype is <code>null</code>
+   * 
+   * @param datatype
+   *          the locator to check
    */
   public static void datatypeNotNull(Locator loc) {
     if (loc == null) {
       throw new IllegalArgumentException("The datatype must not be null");
     }
   }
-  
+
   /**
    * Throws a {@link IllegalArgumentException} iff the <tt>theme</tt> is
    * <tt>null</tt>.
@@ -222,7 +233,7 @@ public final class Check {
       throw new IllegalArgumentException("The theme must not be null");
     }
   }
-  
+
   /**
    * Throws a {@link IllegalArgumentException} iff the <tt>theme</tt> is
    * <tt>null</tt>.
@@ -235,7 +246,7 @@ public final class Check {
       throw new IllegalArgumentException("The theme must not be null");
     }
   }
-  
+
   /**
    * Throws a {@link IllegalArgumentException} iff the <tt>type</tt> is
    * <tt>null</tt>.
@@ -249,4 +260,76 @@ public final class Check {
     }
   }
 
+  /**
+   * Checks if the scope is in the topic map
+   * 
+   * 
+   * @param topicMap
+   *          the topicMap creating a scoped statement
+   * @param scope
+   *          an array of themes (scope types)
+   * @throws ModelConstraintException
+   *           if a theme is not part of the topic map
+   */
+  public static void scopeInTopicMap(TopicMap topicMap, Topic... scope) {
+    for (Topic theme : scope) {
+      if (theme.getTopicMap() != topicMap)
+        reportError(topicMap, "Theme " + theme.getId()
+            + " is not part of Topic Map");
+    }
+  }
+
+  /**
+   * Checks if the type is in the topic map
+   * 
+   * 
+   * @param topicMap
+   *          the topicMap creating a typed construct
+   * @param type
+   *          type to check
+   * @throws ModelConstraintException
+   *           if the type is not part of the topic map
+   */
+  public static void typeInTopicMap(TopicMap topicMap, Topic type) {
+    if (type.getTopicMap() != topicMap)
+      reportError(topicMap, "Type " + type.getId()
+          + " is not part of Topic Map");
+
+  }
+
+  /**
+   * Checks if the reifier is in the topic map
+   * 
+   * 
+   * @param topicMap
+   *          the topicMap creating a typed construct
+   * @param reifier
+   *          reifier to check
+   * @throws ModelConstraintException
+   *           if the reifier is not part of the topic map
+   */
+  public static void reifierInTopicMap(TopicMap topicMap, Topic reifier) {
+    if (reifier.getTopicMap() != topicMap)
+      reportError(topicMap, "Reifier " + reifier.getId()
+          + " is not part of Topic Map");
+
+  }
+
+  /**
+   * Checks if the player is in the topic map
+   * 
+   * 
+   * @param topicMap
+   *          the topicMap creating a typed construct
+   * @param player
+   *          player to check
+   * @throws ModelConstraintException
+   *           if the player is not part of the topic map
+   */
+  public static void playerInTopicMap(TopicMap topicMap, Topic player) {
+    if (player.getTopicMap() != topicMap)
+      reportError(topicMap, "Player " + player.getId()
+          + " is not part of Topic Map");
+
+  }
 }

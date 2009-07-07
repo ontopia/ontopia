@@ -61,6 +61,7 @@ public class OccurrenceImpl extends DatatypeAwareImpl implements Occurrence {
   
   public void setType(Topic type) {
     Check.typeNotNull(this, type);
+    Check.typeInTopicMap(getTopicMap(), type);
     wrapped.setType(topicMap.unwrapTopic(type));
   }
 

@@ -39,6 +39,8 @@ public class AssociationImpl extends ScopedImpl implements Association {
   public RoleImpl createRole(Topic type, Topic player) {
     Check.typeNotNull(this, type);
     Check.playerNotNull(this, player);
+    Check.typeInTopicMap(getTopicMap(), type);
+    Check.playerInTopicMap(getTopicMap(), player);
     AssociationRoleIF role = topicMap.getWrapped().getBuilder().makeAssociationRole(wrapped, topicMap.unwrapTopic(type), topicMap.unwrapTopic(player));
     return topicMap.wrapRole(role);
   }
@@ -87,9 +89,9 @@ public class AssociationImpl extends ScopedImpl implements Association {
   /* (non-Javadoc)
    * @see org.tmapi.core.Typed#setType(org.tmapi.core.Topic)
    */
-  
   public void setType(Topic type) {
     Check.typeNotNull(this, type);
+    Check.typeInTopicMap(getTopicMap(), type);
     wrapped.setType(topicMap.unwrapTopic(type));
   }
 

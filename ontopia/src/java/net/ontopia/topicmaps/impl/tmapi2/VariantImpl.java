@@ -18,8 +18,7 @@ import org.tmapi.core.Variant;
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-public class VariantImpl extends DatatypeAwareImpl implements
-    Variant {
+public class VariantImpl extends DatatypeAwareImpl implements Variant {
 
   private VariantNameIF wrapped;
 
