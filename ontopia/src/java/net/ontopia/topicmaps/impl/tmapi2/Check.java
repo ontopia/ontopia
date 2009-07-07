@@ -273,7 +273,7 @@ public final class Check {
    */
   public static void scopeInTopicMap(TopicMap topicMap, Topic... scope) {
     for (Topic theme : scope) {
-      if (theme.getTopicMap() != topicMap)
+      if (theme.getTopicMap().equals(topicMap ))
         reportError(topicMap, "Theme " + theme.getId()
             + " is not part of Topic Map");
     }
@@ -291,7 +291,7 @@ public final class Check {
    *           if the type is not part of the topic map
    */
   public static void typeInTopicMap(TopicMap topicMap, Topic type) {
-    if (type.getTopicMap() != topicMap)
+    if (type.getTopicMap().equals(topicMap ))
       reportError(topicMap, "Type " + type.getId()
           + " is not part of Topic Map");
 
@@ -309,7 +309,7 @@ public final class Check {
    *           if the reifier is not part of the topic map
    */
   public static void reifierInTopicMap(TopicMap topicMap, Topic reifier) {
-    if (reifier.getTopicMap() != topicMap)
+    if (reifier.getTopicMap().equals(topicMap ))
       reportError(topicMap, "Reifier " + reifier.getId()
           + " is not part of Topic Map");
 
@@ -327,7 +327,7 @@ public final class Check {
    *           if the player is not part of the topic map
    */
   public static void playerInTopicMap(TopicMap topicMap, Topic player) {
-    if (player.getTopicMap() != topicMap)
+    if (player.getTopicMap().equals(topicMap ))
       reportError(topicMap, "Player " + player.getId()
           + " is not part of Topic Map");
 
