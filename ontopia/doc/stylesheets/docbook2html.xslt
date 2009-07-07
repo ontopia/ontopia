@@ -631,7 +631,7 @@
     <i><xsl:apply-templates/></i>
   </xsl:template>
 
-  <xsl:template match="editor | orgname | releaseinfo | city | country |
+  <xsl:template match="editor | orgname | city | country |
                        conftitle | confdates | pubdate | publishername |
                        isbn"
                 mode="bib">
