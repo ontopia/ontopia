@@ -552,9 +552,11 @@
   </patternset>
 
   <patternset id="sources.test.viz">
+    <include name="net/ontopia/topicmaps/viz/test/*.java" />
   </patternset>
     
   <patternset id="classes.test.viz">
+    <include name="net/ontopia/topicmaps/viz/test/*.class" />
   </patternset>
 
   <patternset id="classes.vizlet">
@@ -2149,10 +2151,6 @@
     <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/vizigator/user-guide.xml" />
     </antcall>
-    <exec dir="${java.path}" executable="python">
-      <arg value="${src.path}/scripts/check-properties.py" />
-      <arg value="${java.path}/net/ontopia/topicmaps/viz" />
-    </exec>
 
     <!-- Collect documentation -->
     <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />

@@ -51,6 +51,7 @@
     <group-ref>schema</group-ref>
     <group-ref>db2tm</group-ref>
     <!--group-ref>classify</group-ref-->
+    <group-ref>viz</group-ref>
   </group>
   
   <group>
@@ -123,6 +124,11 @@
     <!--group-ref>net.ontopia.topicmaps.nav2.realm</group-ref--> 
     <group-ref>TMRAP</group-ref>
     <group-ref>ontopoly</group-ref>
+  </group>
+
+  <group>
+    <name>viz</name>
+    <test>net.ontopia.topicmaps.viz.test.ResourceBundlesTest</test>
   </group>
 
   <group>
