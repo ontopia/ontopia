@@ -139,13 +139,13 @@ public class QueryWrapper {
   public Map queryForMap(String query, Map params) {
     MapMapper mapper = new MapMapper();
     List list = queryForList(query, mapper, params);
-		int size = list.size();
+    int size = list.size();
     if (size == 0)
       return null;
-		else if (size == 1)
+    else if (size == 1)
       return (Map) list.get(0);
     else
-			throw new OntopiaRuntimeException("Query produced more than one row");
+      throw new OntopiaRuntimeException("Query produced more than one row");
   }
  
   /**
