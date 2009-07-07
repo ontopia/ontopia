@@ -48,7 +48,8 @@ public class SchemaFilter implements DeciderIF {
       LocatorIF psi = (LocatorIF) it.next();
 
       // There are some exceptions
-      if (PSI.ON_DESCRIPTION.equals(psi) ||
+      if (PSI.ON_UNTYPED_NAME.equals(psi) ||
+          PSI.ON_DESCRIPTION.equals(psi) ||
           PSI.ON_CREATOR.equals(psi) ||
           PSI.ON_VERSION.equals(psi) ||
           PSI.ON_SUPERCLASS_SUBCLASS.equals(psi) ||

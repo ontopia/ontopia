@@ -21,6 +21,8 @@ public class Upgrade_2_0 extends UpgradeBase {
     sb.append("on:has-field(on:identity-field : on:field-owner, on:width : on:field-definition)\n");
     sb.append("on:field-in-view(on:identity-field-embedded-view : on:fields-view, on:width : on:field-definition)\n");
 
+    // see issue 3
+    sb.append("[on:untyped-name @\"http://psi.topicmaps.org/iso13250/model/topic-name\"]\n");
   }
   
   @Override

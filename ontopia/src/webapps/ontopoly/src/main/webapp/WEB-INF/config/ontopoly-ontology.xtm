@@ -363,6 +363,7 @@
     </instanceOf>
     <subjectIdentity>
       <subjectIndicatorRef xlink:href="http://psi.ontopia.net/ontology/untyped-name"></subjectIndicatorRef>
+      <subjectIndicatorRef xlink:href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
     </subjectIdentity>
     <baseName>
       <baseNameString>Name</baseNameString>
