@@ -82,7 +82,7 @@ public class VizDesktop {
     Messages.setLanguage(ohandler.lang);
 
     // Get command line arguments
-    String[] args = options.getArguments();    
+    final String[] args = options.getArguments();    
     if (args.length > 1) {
       System.err.println(Messages.getString("Viz.InvalidParamNum"));
       usage();
@@ -90,7 +90,11 @@ public class VizDesktop {
     }
 
     // open main window
-    new VizDesktop(args);
+    SwingUtilities.invokeLater(new Runnable() {
+      public void run() {
+        new VizDesktop(args);
+      }
+    });
   }
 
   protected static void usage() {
@@ -195,6 +199,7 @@ public class VizDesktop {
     frame.setJMenuBar(getMenuBar());
     frame.getContentPane().add("Center", vPanel);
 
+    frame.pack();
     frame.setSize(800, 800);
     frame.setVisible(true);
     this.disableMenuItems();
