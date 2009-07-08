@@ -1321,6 +1321,7 @@
       <patternset refid="classes.test.db2tm" />
       <patternset refid="classes.test.rdbms" />
       <patternset refid="classes.test.classify" />
+      <patternset refid="classes.test.viz" />
     </jar>
   </target>
 
