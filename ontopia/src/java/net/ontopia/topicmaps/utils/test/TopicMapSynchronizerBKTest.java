@@ -157,7 +157,25 @@ public class TopicMapSynchronizerBKTest extends AbstractTopicMapTestCase {
 
     canonicalize("single-topic-two.filter.cxtm", target);
     compare("single-topic-two.filter.cxtm");
-  }  
+  }
+
+  public void testReifiedAssociation() throws IOException, InvalidQueryException {
+    // Set up deciders
+    tchard = DeciderUtils.getTrueDecider();
+    schard = tchard;
+
+    // Load topic maps
+    TopicMapIF target = load("target-reify-assoc.ltm");
+    TopicMapIF source = load("source-reify-assoc.ltm");
+
+    // Sync
+    TopicMapSynchronizer.update(target, "topic($T)?", tchard,
+                                source, "topic($T)?", schard);
+
+    // Test
+    canonicalize("reify-assoc.cxtm", target);
+    compare("reify-assoc.cxtm");
+  }
   
   // ===== INTERNAL
 
