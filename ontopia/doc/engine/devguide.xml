@@ -1311,13 +1311,17 @@ Kaithi
 <section>
 <title>Logging</title>
 
-<para> The logging support in the engine is based on <ulink
+<para> The logging support in the engine is based on the
+<ulink url="http://www.slf4j.org/">Simple Logging Facade for Java
+(SLF4J)</ulink>, which makes it possible to use any logging tool
+supported by SLF4J for the actual logging. By default, Ontopia
+uses <ulink
 url="http://jakarta.apache.org/log4j/docs/index.html">log4j</ulink>,
 an open source logging package developed as part of the Jakarta Apache
-project.  For the engine to properly log its runtime messages log4j
+project. For the engine to properly log its runtime messages log4j
 needs to be configured. If it is not properly configured the first log
 statement will output an error message like the following to the
-console.  </para>
+console.</para>
 
 <screen>
 log4j:ERROR No appenders could be found for category (net.ontopia.topicmaps.xml.AbstractTopicMapContentHandler).
@@ -1343,7 +1347,11 @@ PropertyConfigurator.configure("log4j.properties");
 <para>
 To learn how log4j works and other mechanisms for configuring logging
 see <ulink url="http://jakarta.apache.org/log4j/docs/manual.html">the
-log4j manual</ulink>.
+log4j manual</ulink>. In order to switch to a different logging engine
+than log4j, all that's necessary is to replace the jar file that binds
+SLF4J to log4j with one that binds to another logging engine.
+See <ulink url="http://www.slf4j.org/manual.html">the SLF4J manual</ulink>
+for further details.
 </para>
 
 <para>

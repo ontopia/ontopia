@@ -58,6 +58,12 @@ You no longer need a valid license key to run Ontopia.</para>
     convenient lookup of topics using qnames.</para>
   </listitem>  
   <listitem>
+    <para>Ontopia now uses the <ulink
+    url="http://www.slf4j.org/">Simple Logging Facade for Java
+    (SLF4J)</ulink>, which makes it easy to switch logging tools, if
+    desired.</para>
+  </listitem>
+  <listitem>
     <para>The old net.ontopia.product classes have been removed, in
     favour of a single new class named
     <classname>net.ontopia.Ontopia</classname>.</para>
