@@ -89,10 +89,21 @@ You no longer need a valid license key to run Ontopia.</para>
      >Issue 2:</ulink> template definitions crash CTM parser</para>
   </listitem>
   <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=3"
+     >Issue 3:</ulink> Name typing breaks on import into Ontopoly</para>
+  </listitem>
+  <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=9"
      >Issue 9:</ulink> Nontopoly model in Omnigator broken
     </para>
   </listitem>
+  <listitem>
+    <para><ulink
+    url="http://code.google.com/p/ontopia/issues/detail?id=17" >Issue
+    17:</ulink> Exception thrown in Ontopoly when clicking Add on "Add
+    or remove topic type" when no topic type selected
+    </para>
+  </listitem>  
   <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=20"
      >Issue 20:</ulink> Exporting topic maps without schema broken in Ontopoly
@@ -104,6 +115,25 @@ You no longer need a valid license key to run Ontopia.</para>
     same as some subject identifier    
     </para>
   </listitem>
+  <listitem>
+    <para><ulink
+    url="http://code.google.com/p/ontopia/issues/detail?id=36" >Issue
+    36:</ulink> Ontopoly export without schema loses description
+    occurrence
+    </para>
+  </listitem>
+  <listitem>
+    <para><ulink
+    url="http://code.google.com/p/ontopia/issues/detail?id=37" >Issue
+    37:</ulink> TMSync does not synchronize reification
+    </para>
+  </listitem>
+  <listitem>
+    <para><ulink
+    url="http://code.google.com/p/ontopia/issues/detail?id=37" >Issue
+    58:</ulink> VizDesktop doesn't work with Sun 1.5 JRE under Gnome
+    </para>
+  </listitem>  
 </itemizedlist>
 </section>
 
