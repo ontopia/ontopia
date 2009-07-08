@@ -1178,10 +1178,10 @@ When the Navigator Framework is used together with other tag
 libraries, especially the JSTL tag libraries, there is very often a
 need to access Ontopia variables from the other tag libraries. To support
 this, the <symbol>tolog:context</symbol> tag registers a Map attribute
-named "oks" in the request scope. This Map can be used to access all
+named "ontopia" in the request scope. This Map can be used to access all
 Ontopia variables in effect at the time of access. This means that using
 the JSP Expression Language you can access Ontopia variables using an
-expression like <symbol>${oks.foo}</symbol>.
+expression like <symbol>${ontopia.foo}</symbol>.
 </para>
 
 <para>
@@ -1190,13 +1190,13 @@ One example of this might be the following:
 
 <literallayout><![CDATA[
   <tolog:foreach query="cms:is-about(%article.topic% : cms:work, $SUBJ : cms:subject)?">
-    <li><a href="topic.jsp?id=<c:out value="${oks.SUBJ.objectId}"/>"
+    <li><a href="topic.jsp?id=<c:out value="${ontopia.SUBJ.objectId}"/>"
           ><tolog:out var="SUBJ"/></a>
   </tolog:foreach>
 ]]></literallayout>
 
 <para>
-Here the <symbol>oks</symbol> refers to the variable map,
+Here the <symbol>ontopia</symbol> refers to the variable map,
 <symbol>SUBJ</symbol> to the variable inside it containing a topic,
 and <symbol>objectId</symbol> to the <methodname>getObjectId</methodname>
 method on the topic in the variable.
