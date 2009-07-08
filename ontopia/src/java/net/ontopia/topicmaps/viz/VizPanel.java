@@ -120,7 +120,6 @@ public class VizPanel extends JPanel {
       tgPanel = new ExtendedTGPanel(wallpapSrc);
     }
     
-    
     init();
     controller = new VizController(this, vizlet, tgPanel);
     enabledItemIds = controller.getEnabledItemIds();
