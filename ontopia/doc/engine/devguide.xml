@@ -284,8 +284,8 @@ follow later.
 <title>Support for TMAPI</title>
 
 <para>
-Ontopia now supports <ulink url="http://www.tmapi.org">TMAPI
-1.0</ulink>, which is a de-facto standard Java API for Topic Maps
+Ontopia now supports <ulink url="http://www.tmapi.org/2.0/">TMAPI
+2.0</ulink>, which is a de-facto standard Java API for Topic Maps
 engines. The API is supported by wrapping the Ontopia core interfaces
 in TMAPI interface implementations.
 </para>
@@ -300,14 +300,14 @@ detect Ontopia and start using it.
 <para>
 If you need direct access to it, the Ontopia implementation of the
 <classname>TopicMapSystemFactory</classname> is called
-<classname>net.ontopia.topicmaps.impl.oks2tmapi.TopicMapSystemFactory</classname>.
+<classname>net.ontopia.topicmaps.impl.tmapi2.TopicMapSystemFactory</classname>.
 </para>
 
 <para>
 The rest of this document will describe the Ontopia native interfaces.
 If you would like to use the TMAPI interfaces instead, please see the 
-<ulink url="http://www.tmapi.org">TMAPI</ulink> web site for
-documentation of TMAPI.
+<ulink url="http://www.tmapi.org/2.0/">TMAPI 2.0</ulink> web site for
+documentation of TMAPI 2.0.
 </para>
 </section>
 </section>
