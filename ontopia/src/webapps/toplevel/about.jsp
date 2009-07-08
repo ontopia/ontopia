@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>About the OKS</title>
+<title>About Ontopia</title>
 <link rel="stylesheet" type="text/css" href="frontpage.css">
 
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
@@ -29,20 +29,18 @@
   <div id="contentarea">
     <div id="inner-contentarea">
       <div id="sub-header">
-        <h1>About the OKS</h1>
+        <h1>About Ontopia</h1>
       </div>
 
-<h4><a href="ontopia-factsheet-3.0.pdf">View Factsheet</a></h4>
+<p>In this web interace you can access Ontopoly and the Omnigator,
+which are end-user tools built using Ontopia.</p>
 
-<p>Ontopoly and the Omnigator are free tools built using the the Ontopia
-Knowledge Suite (OKS).</p>
-
-<p>The OKS is an application development platform for Topic Maps. It is
-the most comprehensive suite of Topic Maps tools available, and consists
-of a number of interrelated products that address every aspect of the
-topic map project life cycle, including topic map creation (both
-automated and manual), validation, maintenance, storage, querying and
-end-user delivery.</p>
+<p>Ontopia is an open source application development platform for
+Topic Maps. It is the most comprehensive suite of Topic Maps tools
+available, and consists of a number of interrelated products that
+address every aspect of the Topic Maps project life cycle, including
+topic map creation (both automated and manual), validation,
+maintenance, storage, querying and end-user delivery.</p>
 
 <p>The core component is the Engine, an easy-to-use SDK for Java
 developers.</p>
@@ -56,28 +54,23 @@ systems.</p>
 
 <p align="center"><img src="ontopia-diagram.png"/></p>
 
-<h4>Ideal for integrators and OEMs.</h4>
+<h4>Ideal for integrators and OEMs</h4>
 
-<p>The OKS is the tool of choice for systems integrators. Its flexible
+<p>Ontopia is the tool of choice for systems integrators. Its flexible
 and powerful Topic Maps model enables the rapid development of complex
-systems. Using the OKS, integrators can create representations of
+systems. Using Ontopia, integrators can create representations of
 diverse information and knowledge models and then access and manipulate
 them with a common tool set and query language.</p>
 
-<p>The Topic Maps paradigm supported by the OKS enables connections to
+<p>The Topic Maps paradigm supported by Ontopia enables connections to
 be made to and from a variety of data sources. Its extensible nature
 means that new data sources can easily be integrated without a need to
 change the delivery or processing application.</p>
 
-<p>The OKS also implements the concept of semantic identity that is the
+<p>Ontopia also implements the concept of semantic identity that is the
 single most unique feature of the Topic Maps model. This powerful
 concept enables integrators to easily integrate and unify information
 around a central set of core subjects.</p>
-
-<h4>A robust development environment for information connectivity.</h4>
-
-<p>The OKS is a complete and generic implementation of the Topic Maps
-standards XTM 1.0 and ISO 13250.</p>
 
 <h4>Key features:</h4>
 
@@ -99,12 +92,10 @@ databases, including Oracle™ and PostgreSQL.</li>
 <li>Automated test suite for quick and easy testing of the engine in new
 environments.</li>
 <li>Platform: Written in pure Java; runs on any platform that has JDK
-1.3 (or higher) environment.</li>
+1.5 (or higher) environment.</li>
 <li>Operating Systems: Windows (98, 2000 and XP), Linux (RedHat, SuSE
 and Debian) and SunSolaris.</li>
 </ul>
-
-<h4><a href="ontopia-factsheet-3.0.pdf">View Factsheet</a></h4>
 
     </div>
   </div>
@@ -115,9 +106,8 @@ and Debian) and SunSolaris.</li>
       <tr>
         <td>Copyright &copy; 2001-2009 <a href="http://www.ontopia.net/">Ontopia
         AS</a>.</td>
-        <td align="right"><b>*</b> built using the <a
-          href="http://www.ontopia.net/solutions/products.html">Ontopia
-        Knowledge Suite</a>.</td>
+        <td align="right"><b>*</b> built using <a
+          href="http://www.ontopia.net/">Ontopia</a>.</td>
       </tr>
     </table>
   </div>
