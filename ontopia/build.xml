@@ -2214,8 +2214,8 @@
          todir="${build.ontopoly}/doc" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" 
          todir="${build.ontopoly}/doc" />
-    <copy todir="${build.ontopoly}/doc/pages/">
-      <fileset dir="${doc.path}/ontopoly/pages" />
+    <copy todir="${build.ontopoly}/doc/images/">
+      <fileset dir="${doc.path}/ontopoly/images" />
     </copy>
 
     <copy todir="${build.ontopoly}" overwrite="yes">
