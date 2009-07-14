@@ -39,7 +39,7 @@ public class ActionConfigContentHandlerTest extends AbstractOntopiaTestCase {
       String baseDir = getTestDirectory() + File.separator + "webed";
       String configFile = baseDir + File.separator + "actionConfig.xml";
       ActionConfigurator ac = new ActionConfigurator("/omnieditor", "/", configFile);
-      ac.readAndWatchRegistry();
+      ac.readRegistryConfiguration();
       registry = ac.getRegistry();
     }
   }

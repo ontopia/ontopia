@@ -79,8 +79,7 @@ public abstract class FileWatchdog extends Thread {
     try {
       fileExists = file.exists();
     } catch (SecurityException e) {
-      log.warn("Was not allowed to check file existance of: "+
-               filename+".");
+      log.warn("Was not allowed to check existence of file: "+ filename);
       // there is no point in continuing
       interrupted = true;
       return;

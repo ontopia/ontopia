@@ -66,7 +66,8 @@ public class ActionConfigurator implements ConfigurationObservableIF {
    */
   public ActionConfigurator(String contextPath, String realPath, String fileName,
                             long delay) {
-    log.debug("ActionConfigurator initialised for '{}' delay: '{}' ms.", fileName, delay);
+    log.debug("ActionConfigurator initialised for '{}' delay: '{}' ms.",
+              fileName, delay);
     this.contextPath = contextPath;
     this.realPath = realPath;
     this.fileName = fileName;
