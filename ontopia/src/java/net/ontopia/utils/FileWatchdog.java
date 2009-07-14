@@ -79,23 +79,23 @@ public abstract class FileWatchdog extends Thread {
     try {
       fileExists = file.exists();
     } catch (SecurityException e) {
-      log.warn("Was not allowed to check existence of file: "+ filename);
+      log.warn("Was not allowed to check existence of file: {}", filename);
       // there is no point in continuing
       interrupted = true;
       return;
     }
     if (fileExists) {
       long l = file.lastModified();
-      log.debug(filename + " last modified " + l + "; previously " + lastModified);
+      log.debug("{} last modified: {}; previously: {}", filename, l, lastModified);
       if (l > lastModified) {
-        log.debug("loading file " + filename);
+        log.debug("loading file {}", filename);
         lastModified = l;
         doOnChange();
         warnedAlready = false;
       }
     } else {
       if (!warnedAlready) {
-        log.debug("["+filename+"] does not exist.");
+        log.debug("[{}] does not exist.", filename);
         warnedAlready = true;
       }
     }
