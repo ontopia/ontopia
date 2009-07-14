@@ -86,7 +86,7 @@ public abstract class FileWatchdog extends Thread {
     }
     if (fileExists) {
       long l = file.lastModified();
-      log.debug("{} last modified: {}; previously: {}", filename, Long.toString(l), Long.toString(lastModified));
+      log.debug("{} last modified: {}; previously: {}", new Object[] {filename, Long.toString(l), Long.toString(lastModified)} );
       if (l > lastModified) {
         log.debug("loading file {}", filename);
         lastModified = l;
