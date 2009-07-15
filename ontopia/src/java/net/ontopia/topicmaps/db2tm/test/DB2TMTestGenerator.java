@@ -110,7 +110,9 @@ public class DB2TMTestGenerator implements TestCaseGeneratorIF {
       }
       
       // Export the result topic map to cxtm
-      (new CanonicalXTMWriter(new FileOutputStream(cxtm))).write(topicmap);
+      FileOutputStream out = new FileOutputStream(cxtm);
+      (new CanonicalXTMWriter(out)).write(topicmap);
+      out.close();
       
       // Check that the cxtm output matches the baseline.
       assertTrue("The canonicalized conversion from " + filename
@@ -221,7 +223,9 @@ public class DB2TMTestGenerator implements TestCaseGeneratorIF {
       }
       
       // Export the result topic map to cxtm
-      (new CanonicalXTMWriter(new FileOutputStream(cxtm))).write(topicmap);
+      FileOutputStream out = new FileOutputStream(cxtm);
+      (new CanonicalXTMWriter(out)).write(topicmap);
+      out.close();
       
       // Check that the cxtm output matches the baseline.
       assertTrue("The canonicalized conversion from " + filename

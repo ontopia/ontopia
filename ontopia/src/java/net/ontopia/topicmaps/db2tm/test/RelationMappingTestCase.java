@@ -2,7 +2,6 @@
 package net.ontopia.topicmaps.db2tm.test;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;

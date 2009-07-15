@@ -296,7 +296,9 @@ public class SyncTest extends AbstractOntopiaTestCase {
     String baseline = base + "baseline" + File.separator + name + ".cxtm";
     
     // Export the result topic map to cxtm
-    (new CanonicalXTMWriter(new FileOutputStream(cxtm))).write(topicmap);
+    FileOutputStream out = new FileOutputStream(cxtm);
+    (new CanonicalXTMWriter(out)).write(topicmap);
+    out.close();
       
       // Check that the cxtm output matches the baseline.
     assertTrue("The canonicalized conversion from " + name
