@@ -238,6 +238,7 @@ public class TestTMRAPOperation extends AbstractOntopiaTestCase {
     xtmReader.setExternalReferenceHandler(
         new NullResolvingExternalReferenceHandler());
     TopicMapIF importedTM = xtmReader.read();
+    reader.close();
     TMRAPTestGenerator.filterUnifyingTopics(importedTM);
 
     // Canonicalize the reimported TM

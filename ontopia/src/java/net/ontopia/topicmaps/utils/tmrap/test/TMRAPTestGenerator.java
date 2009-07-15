@@ -133,8 +133,10 @@ public class TMRAPTestGenerator implements TestCaseGeneratorIF {
       String baseline = base + "baseline" + File.separator
           + id + ".cxtm";
 
-      runRapServlet(base, new PrintWriter(new FileWriter(out)), 
+      PrintWriter pw = new PrintWriter(new FileWriter(out));
+      runRapServlet(base, pw, 
           descriptor.getUri(), descriptor.getEdit(), descriptor.getView());
+      pw.close();
             
       // FIXME: When other syntaxes are supported, the Reader must take the
       // chosen syntax into account.
@@ -148,8 +150,9 @@ public class TMRAPTestGenerator implements TestCaseGeneratorIF {
       filterUnifyingTopics(importedTM);
 
       // Canonicalize the reimported tm.
-      (new CanonicalXTMWriter(new FileOutputStream(cxtm)))
-          .write(importedTM);
+      FileOutputStream fos = new FileOutputStream(cxtm);
+      (new CanonicalXTMWriter(fos)).write(importedTM);
+      fos.close();
       
       // NOTE: Only for observational purposes when making tests.
       // (new LTMTopicMapWriter(new FileOutputStream(base + "ltm" + File.separator

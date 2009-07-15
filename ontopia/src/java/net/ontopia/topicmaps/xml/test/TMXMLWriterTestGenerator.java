@@ -106,10 +106,12 @@ public class TMXMLWriterTestGenerator implements TestCaseGeneratorIF {
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
-      if (recanonicalizeSource)
+      if (recanonicalizeSource) {
         // Canonicalize the source topic map.
-        (new CanonicalXTMWriter(new FileOutputStream(baseline)))
-            .write(sourceMap);
+        FileOutputStream fos = new FileOutputStream(baseline);
+        (new CanonicalXTMWriter(fos)).write(sourceMap);
+        fos.close();
+      }
 
       // Export the topic map to tmxml.
       TopicMapWriterIF writer = new TMXMLWriter(tmxml);
@@ -119,7 +121,9 @@ public class TMXMLWriterTestGenerator implements TestCaseGeneratorIF {
       TopicMapIF tmxmlMap = ImportExportUtils.getReader(tmxml).read();
 
       // Canonicalize the reimported tmxml.
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(tmxmlMap);
+      FileOutputStream fos = new FileOutputStream(out);
+      (new CanonicalXTMWriter(fos)).write(tmxmlMap);
+      fos.close();
 
       // compare results
       assertTrue("canonicalizing the test file " + filename
