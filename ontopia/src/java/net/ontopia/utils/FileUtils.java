@@ -127,13 +127,11 @@ public class FileUtils {
       InputStream s2 = new BufferedInputStream(new FileInputStream(file2));
       try  {
         return StreamUtils.compare(s1, s2);
-      } catch (Exception e) {
+      } finally {
         s2.close();
-        throw new RuntimeException(e);
       }
-    } catch (Exception e) {
+    } finally {
       s1.close();
-      throw new RuntimeException(e);
     }
   }
 
