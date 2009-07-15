@@ -91,7 +91,6 @@ public class Processor {
         
         // loop over tuples        
         TupleReaderIF reader = datasource.getReader(relation.getName());
-
         String [] tuple = null;
         while ((tuple = reader.readNext()) != null) {
           if (tuple == null) break;
@@ -105,6 +104,7 @@ public class Processor {
         log.debug("    " + rtuples + " tuples, " + 
                   (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
         ttuples += rtuples;
+        reader.close();
       }
     }
     log.debug("done: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms");

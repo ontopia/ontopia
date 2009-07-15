@@ -116,16 +116,16 @@ public class CSVDataSource implements DataSourceIF {
   }
 
   private class TupleReader implements TupleReaderIF {
-
     private CSVReader reader;
+    private Reader in;
+    
     private TupleReader(File csvfile) {
       try {
-        Reader r;
         if (encoding == null)
-          r = new InputStreamReader(new FileInputStream(csvfile));
+          in = new InputStreamReader(new FileInputStream(csvfile));
         else
-          r = new InputStreamReader(new FileInputStream(csvfile), encoding);
-        this.reader = new CSVReader(r, separator, quoteCharacter);
+          in = new InputStreamReader(new FileInputStream(csvfile), encoding);
+        this.reader = new CSVReader(in, separator, quoteCharacter);
         // ignore first N lines
         for (int i=0; i < ignoreFirstLines; i++) {
           java.util.Arrays.asList(readNext());
@@ -144,8 +144,12 @@ public class CSVDataSource implements DataSourceIF {
     }
 
     public void close() {
+      try {
+        if (in != null)
+          in.close();
+      } catch (IOException e) {
+        throw new OntopiaRuntimeException(e);
+      }
     }
-
   }
-
 }
