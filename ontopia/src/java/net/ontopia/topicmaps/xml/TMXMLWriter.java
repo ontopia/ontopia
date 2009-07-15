@@ -1,9 +1,6 @@
 
 // $Id: TMXMLWriter.java,v 1.29 2008/12/04 11:32:20 lars.garshol Exp $
 
-// FIXME:
-//  - the 'close' attribute is not used
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
@@ -142,14 +139,15 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   }
   
   /**
-   * INTERNAL: Closes the Writer created for internal use.
+   * PUBLIC: Closes the Writer created for internal use.
    *
    * Call this method when you have finished using the fragment
    * exporter interface on the topic map writer. Don't call this
    * method if using the TopicMapWriterIF interface.
    */
   public void close() throws IOException {
-    if (writer != null) writer.close();
+    if (writer != null)
+      writer.close();
   }
   
   // --- Accessors
