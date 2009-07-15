@@ -195,9 +195,9 @@ public class ImportExportUtils {
     if (tmfile.endsWith(".tmx"))
       return new TMXMLWriter (tmfile, encoding);
     else if (tmfile.endsWith(".xtm1"))
-			return new XTMTopicMapWriter (new File (tmfile), encoding);
-		else
-			return new XTM2TopicMapWriter (new File (tmfile), encoding);
+      return new XTMTopicMapWriter(new File(tmfile), encoding);
+    else
+      return new XTM2TopicMapWriter(new File(tmfile), encoding);
   }
 
   /**
