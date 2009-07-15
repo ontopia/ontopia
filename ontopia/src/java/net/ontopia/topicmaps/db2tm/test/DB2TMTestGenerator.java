@@ -116,7 +116,8 @@ public class DB2TMTestGenerator implements TestCaseGeneratorIF {
       
       // Check that the cxtm output matches the baseline.
       assertTrue("The canonicalized conversion from " + filename
-          + " does not match the baseline: " + cxtm + " " + baseline, FileUtils.compare(cxtm, baseline));
+          + " does not match the baseline: " + cxtm + " " + baseline,
+                 FileUtils.compare(cxtm, baseline));
     }
   }
 
