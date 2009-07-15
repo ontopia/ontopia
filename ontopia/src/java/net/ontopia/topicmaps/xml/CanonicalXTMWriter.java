@@ -726,7 +726,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
                                   t2.getSubjectIdentifiers());
       if (cmp == 0)
         cmp = compareLocatorSet(t1.getSubjectLocators(), 
-																t2.getSubjectLocators());
+                                t2.getSubjectLocators());
       if (cmp == 0)
         cmp = compareLocatorSet(t1.getItemIdentifiers(),
                                 t2.getItemIdentifiers());
@@ -1010,9 +1010,9 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return indicator;
     }
 
-		public Collection getSubjectLocators() {
-			return Collections.EMPTY_SET;
-		}
+    public Collection getSubjectLocators() {
+      return Collections.EMPTY_SET;
+    }
 
     public Collection getTopicNames() {
       return Collections.EMPTY_SET;
