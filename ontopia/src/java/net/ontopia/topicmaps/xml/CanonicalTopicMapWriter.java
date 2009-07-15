@@ -14,7 +14,7 @@ import net.ontopia.utils.*;
 import net.ontopia.xml.*;
 
 /**
- * PUBLIC: A topic map writer that writes topic maps out to the
+ * PUBLIC: A topic map writer that writes topic maps out to Ontopia's
  * Canonical XTM topic map format. This format is generally used for
  * testing and not for other purposes.
  *
@@ -83,20 +83,6 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       throw new IOException("XML writing problem: " + e.toString());
     }
   }
-
-  //! /**
-  //!  * PUBLIC: Gets the output stream used by the writer.
-  //!  */  
-  //! public OutputStream getOutputStream() {
-  //!   return stream;
-  //! }
-  //! 
-  //! /**
-  //!  * PUBLIC: Sets the output stream used by the writer.
-  //!  */  
-  //! public void setOutputStream(OutputStream stream) {
-  //!   this.output = stream;
-  //! }
 
   /**
    * INTERNAL: Gets the base locator used to resolve relative locators.
@@ -179,9 +165,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
       it = orderedIterator(topic.getSubjectLocators(),
                            new StringifierComparator(new LocatorStringifier()));
-			if (it.hasNext()) // NOTE: exporting only one
+      if (it.hasNext()) // NOTE: exporting only one
         writeResourceRef((LocatorIF)it.next(), dh);
-			
+
       it = orderedIterator(topic.getSubjectIdentifiers(),
                            new StringifierComparator(new LocatorStringifier()));
       while (it.hasNext()) {
