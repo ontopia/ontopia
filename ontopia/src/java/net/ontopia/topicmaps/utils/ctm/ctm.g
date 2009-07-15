@@ -164,9 +164,9 @@ include :
     LocatorIF docuri = literal.getLocator();
     InputSource source = new InputSource(docuri.getExternalForm());
     ParseContextIF othercontext;
+    Reader reader = null;
     try {
-      Reader reader = 
-        CTMTopicMapReader.makeReader(source, new CTMEncodingSniffer());
+       reader = CTMTopicMapReader.makeReader(source, new CTMEncodingSniffer());
       CTMLexer lexer = new CTMLexer(reader);
       lexer.setDocuri(docuri.getExternalForm());
       CTMParser parser = new CTMParser(lexer);
@@ -182,6 +182,13 @@ include :
       reader.close();
     } catch (IOException e) {
       throw new AntlrWrapException(e);
+    } finally {
+      try {
+        if (reader != null)
+          reader.close();
+      } catch (IOException e) {
+        throw new AntlrWrapException(e);
+      }
     }
 
     // pull over template definitions

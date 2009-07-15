@@ -128,8 +128,9 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
           .setBaseAddress(getBaseAddress());
 
     // Parse!
+    Reader reader = null;
     try {
-      Reader reader = makeReader(source, new CTMEncodingSniffer());
+      reader = makeReader(source, new CTMEncodingSniffer());
       CTMLexer lexer = new CTMLexer(reader);
       lexer.setDocuri(getBaseAddress().getAddress());
       CTMParser parser = new CTMParser(lexer);
@@ -154,6 +155,9 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
     } catch (java.io.CharConversionException e) {
       throw new IOException("Problem decoding character encoding."
                             + "Did you declare the right encoding?");
+    } finally {
+      if (reader != null)
+        reader.close();
     }
 
     ClassInstanceUtils.resolveAssociations2(topicmap);

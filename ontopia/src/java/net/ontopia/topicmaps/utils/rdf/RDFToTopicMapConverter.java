@@ -4,6 +4,7 @@
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.HashMap;
@@ -203,13 +204,19 @@ public class RDFToTopicMapConverter {
 
       URLConnection conn = new URL(url).openConnection();
       String encoding = conn.getContentEncoding();
+      InputStream in = null;
       try {
+        in = conn.getInputStream();
         if (encoding == null)
-          parser.load(conn.getInputStream(), url);
+          parser.load(in, url);
         else
-          parser.load(new InputStreamReader(conn.getInputStream(), encoding), url);
+          parser.load(new InputStreamReader(in, encoding), url);
+        in.close();
       } catch (org.xml.sax.SAXException e) {
         throw new OntopiaRuntimeException(e);
+      } finally {
+        if (in != null)
+          in.close();
       }
 
     } else {

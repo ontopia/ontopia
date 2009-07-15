@@ -127,8 +127,9 @@ public class LTMTopicMapReader extends AbstractTopicMapReader {
           .setBaseAddress(getBaseAddress());
 
     // Parse!
+    Reader reader = null;
     try {
-      Reader reader = makeReader(source, new LTMEncodingSniffer());
+      reader = makeReader(source, new LTMEncodingSniffer());
       LTMLexer lexer = new LTMLexer(reader);
       LTMParser parser = new LTMParser(lexer);
       parser.setBase(getBaseAddress());
@@ -152,6 +153,9 @@ public class LTMTopicMapReader extends AbstractTopicMapReader {
     } catch (java.io.CharConversionException e) {
       throw new IOException("Problem decoding character encoding."
           + "Did you declare the right encoding?");
+    } finally {
+      if (reader != null)
+        reader.close();
     }
 
     // Process class-instance associations

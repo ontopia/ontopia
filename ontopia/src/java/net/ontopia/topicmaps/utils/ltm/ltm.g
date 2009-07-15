@@ -358,8 +358,9 @@ options {
   private void mergeInLTM(LocatorIF extloc, List includedFrom)
     throws RecognitionException, TokenStreamException {
 
+    Reader reader = null;
     try {
-      Reader reader = AbstractTopicMapReader.makeReader(
+      reader = AbstractTopicMapReader.makeReader(
         new InputSource(extloc.getExternalForm()),
         new LTMEncodingSniffer());
       LTMParser parser = new LTMParser(new LTMLexer(reader));
@@ -373,6 +374,13 @@ options {
       createdRoles.addAll(parser.getCreatedRoles());
     } catch (IOException e) {
       throw new AntlrWrapException(e);
+    } finally {
+      try {
+        if (reader != null)
+          reader.close();
+      } catch (IOException e) {
+        throw new AntlrWrapException(e);
+      }
     }
   }
 
