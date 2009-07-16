@@ -91,6 +91,7 @@
       <pathelement location="${basedir}/3rdparty/ontoboot.jar" />
       <pathelement location="${basedir}/3rdparty/jing.jar" />
       <pathelement location="${basedir}/3rdparty/tmapi-2.0a2.jar" />
+      <pathelement location="${basedir}/3rdparty/tmapi-2.0a2-tests.jar" />
       <pathelement location="${basedir}/3rdparty/touchgraph.jar" />
       <pathelement location="${basedir}/3rdparty/trove.jar" />
       <path refid="project.classpath.ivy"/>
