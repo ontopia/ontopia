@@ -377,7 +377,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
           throw new InvalidTopicMapException("Association outside topic map. Did you forget or misspell the 'topicMap' element?");
         
         // Create association
-				TopicIF atype = getNullTopic(builder.getTopicMap());
+        TopicIF atype = getNullTopic(builder.getTopicMap());
         AssociationIF assoc = builder.makeAssociation(atype);
         
         // Add propagated themes
@@ -466,7 +466,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       else if (qName == EL_OCCURRENCE) {
         // Create occurrence
         TopicIF topic = getParentTopic();
-				TopicIF otype = getNullTopic(builder.getTopicMap());
+        TopicIF otype = getNullTopic(builder.getTopicMap());
         OccurrenceIF occurs = builder.makeOccurrence(topic, otype, "");
         // FIXME: register with parent topic, but this might be
         // troublesome since topics can be merged.
@@ -806,10 +806,10 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
           // Add association role to association
           AssociationIF assoc = (AssociationIF)info.get(EL_ASSOCIATION);
           // Set role type if it was specified
-					TopicIF nullTopic = getNullTopic(builder.getTopicMap());
+          TopicIF nullTopic = getNullTopic(builder.getTopicMap());
           TopicIF roletype = (TopicIF)info.get(EL_ROLESPEC);
-					if (roletype == null) roletype = nullTopic;
-					TopicIF player = nullTopic;
+          if (roletype == null) roletype = nullTopic;
+          TopicIF player = nullTopic;
           AssociationRoleIF role = builder.makeAssociationRole(assoc, roletype, player);
         }
         
@@ -981,7 +981,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         // Add processed documents to accumulated list.
         processed_documents_accumulated.addAll(processed_documents_current);
 
-				// Remove null-topic if not used
+        // Remove null-topic if not used
         removeNullTopic(topicmap);
 
         // Clear topic map related info
@@ -1016,9 +1016,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // Misc. methods
   // ---------------------------------------------------------------------------
 
-	private void reify(ReifiableIF reifiable, TopicIF reifier) {
-		ReificationUtils.reify(reifiable, reifier);
-	}
+  private void reify(ReifiableIF reifiable, TopicIF reifier) {
+    ReificationUtils.reify(reifiable, reifier);
+  }
 
   private boolean logError() {
     try {
@@ -1077,16 +1077,16 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   }
 
   protected TopicIF registerSubjectLocator(TopicIF topic, LocatorIF locator) {
-		// merge with existing, if any
-		TopicIF existing = topicmap.getTopicBySubjectLocator(locator);
-		if (existing != null && ObjectUtils.different(existing, topic)) {
-			existing.merge(topic);
-			topic = existing;
-		}
-		// add subject locator
-		topic.addSubjectLocator(locator);
-		return topic;
-	}
+    // merge with existing, if any
+    TopicIF existing = topicmap.getTopicBySubjectLocator(locator);
+    if (existing != null && ObjectUtils.different(existing, topic)) {
+      existing.merge(topic);
+      topic = existing;
+    }
+    // add subject locator
+    topic.addSubjectLocator(locator);
+    return topic;
+  }
   
   protected void registerSourceLocator(TMObjectIF tmobject, String id) {
     // No need to register source locator if id is null
@@ -1312,10 +1312,10 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     // Add association role to association
     AssociationIF assoc = (AssociationIF)info.get(EL_ASSOCIATION);
     TopicIF roletype = (TopicIF)info.get(EL_ROLESPEC);
-		if (roletype == null)
-			roletype = getNullTopic(builder.getTopicMap());
-		if (player == null)
-			player = getNullTopic(builder.getTopicMap());
+    if (roletype == null)
+      roletype = getNullTopic(builder.getTopicMap());
+    if (player == null)
+      player = getNullTopic(builder.getTopicMap());
     AssociationRoleIF role = builder.makeAssociationRole(assoc, roletype, player);
     
     // Put previous role onto info map, so that it is possible to
@@ -1323,27 +1323,27 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     info.put(EL_MEMBER, role);      
   }
 
-	protected void addItemIdentifier(TMObjectIF tmobject, LocatorIF sourceLocator) {
-		tmobject.addItemIdentifier(sourceLocator);
-
-		// handle implicit reification
-		if (tmobject instanceof ReifiableIF) {
-			TopicIF reifier = topicmap.getTopicBySubjectIdentifier(sourceLocator);
-			if (reifier != null)
-				reify((ReifiableIF)tmobject, reifier);
-		}
-	}
-
-	protected void addSubjectIdentifier(TopicIF topic, LocatorIF subjectIndicator) {
-		topic.addSubjectIdentifier(subjectIndicator);
-
-		// handle implicit reification
-		if (!(topic instanceof LazyTopic)) {
-			TMObjectIF reified = topicmap.getObjectByItemIdentifier(subjectIndicator);
-			if (reified != null && reified instanceof ReifiableIF)
-				reify((ReifiableIF)reified, topic);
-		}
-	}
+  protected void addItemIdentifier(TMObjectIF tmobject, LocatorIF sourceLocator) {
+    tmobject.addItemIdentifier(sourceLocator);
+    
+    // handle implicit reification
+    if (tmobject instanceof ReifiableIF) {
+      TopicIF reifier = topicmap.getTopicBySubjectIdentifier(sourceLocator);
+      if (reifier != null)
+        reify((ReifiableIF)tmobject, reifier);
+    }
+  }
+  
+  protected void addSubjectIdentifier(TopicIF topic, LocatorIF subjectIndicator) {
+    topic.addSubjectIdentifier(subjectIndicator);
+    
+    // handle implicit reification
+    if (!(topic instanceof LazyTopic)) {
+      TMObjectIF reified = topicmap.getObjectByItemIdentifier(subjectIndicator);
+      if (reified != null && reified instanceof ReifiableIF)
+        reify((ReifiableIF)reified, topic);
+    }
+  }
 
   // --------------------------------------------------------------------------
   // Lazy initialization of topics
@@ -1434,9 +1434,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     public void remove() {
       throw new UnsupportedOperationException();
     }
-		public ReifiableIF getReified() {
+    public ReifiableIF getReified() {
       throw new UnsupportedOperationException();
-		}
+    }
   }
   
   protected LazyTopic lazyTopic;
@@ -1458,10 +1458,10 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     // loop over identities until first existing topic is found
     
     TopicIF topic = null;
-		for (int i=0; i < lazyTopic.subjectLocators.size(); i++) {
-			topic = topicmap.getTopicBySubjectLocator((LocatorIF)lazyTopic.subjectLocators.get(i));
-			if (topic != null) break;
-		}            
+    for (int i=0; i < lazyTopic.subjectLocators.size(); i++) {
+      topic = topicmap.getTopicBySubjectLocator((LocatorIF)lazyTopic.subjectLocators.get(i));
+      if (topic != null) break;
+    }            
     
     if (topic == null) {
       for (int i=0; i < lazyTopic.subjectIndicators.size(); i++) {
@@ -1650,27 +1650,26 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // Null topic
   // --------------------------------------------------------------------------
 
-	public static LocatorIF nullPSI = URILocator.create("http://psi.ontopia.net/xtm/1.0/null-topic");
+  public static LocatorIF nullPSI = URILocator.create("http://psi.ontopia.net/xtm/1.0/null-topic");
 
-	public static TopicIF getNullTopic(TopicMapIF topicmap) {
-		TopicIF topic = topicmap.getTopicBySubjectIdentifier(nullPSI);
-		if (topic == null) {
-			topic = topicmap.getBuilder().makeTopic();
-			topic.addSubjectIdentifier(nullPSI);
-		}
-		return topic;
-	}
+  public static TopicIF getNullTopic(TopicMapIF topicmap) {
+    TopicIF topic = topicmap.getTopicBySubjectIdentifier(nullPSI);
+    if (topic == null) {
+      topic = topicmap.getBuilder().makeTopic();
+      topic.addSubjectIdentifier(nullPSI);
+    }
+    return topic;
+  }
 
-	public static void removeNullTopic(TopicMapIF topicmap) {
-		TopicIF topic = topicmap.getTopicBySubjectIdentifier(nullPSI);
-		if (topic != null) {
-			if (topic.getReified() != null) return;
-			ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)topicmap.getIndex(ClassInstanceIndexIF.class.getName());
-			if (cindex.usedAsType(topic)) return;
-			ScopeIndexIF sindex = (ScopeIndexIF)topicmap.getIndex(ScopeIndexIF.class.getName());
-			if (sindex.usedAsTheme(topic)) return;
-			topic.remove();
-		}
-	}
-
+  public static void removeNullTopic(TopicMapIF topicmap) {
+    TopicIF topic = topicmap.getTopicBySubjectIdentifier(nullPSI);
+    if (topic != null) {
+      if (topic.getReified() != null) return;
+      ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)topicmap.getIndex(ClassInstanceIndexIF.class.getName());
+      if (cindex.usedAsType(topic)) return;
+      ScopeIndexIF sindex = (ScopeIndexIF)topicmap.getIndex(ScopeIndexIF.class.getName());
+      if (sindex.usedAsTheme(topic)) return;
+      topic.remove();
+    }
+  }  
 }
