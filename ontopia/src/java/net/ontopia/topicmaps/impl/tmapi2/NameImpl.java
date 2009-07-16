@@ -79,7 +79,7 @@ public class NameImpl extends ScopedImpl implements Name {
 
     VariantImpl v = topicMap.wrapVariant(variant);
     v.setExplicitScope(explScope);
-    addVariant(v);
+
     return v;
   }
 
@@ -93,11 +93,18 @@ public class NameImpl extends ScopedImpl implements Name {
 
   }
 
-  private void addVariant(Variant variant) {
+  void addVariant(Variant variant) {
     if (wrappedVariants == Collections.EMPTY_SET) {
       wrappedVariants = new HashSet<Variant>();
     }
     wrappedVariants.add(variant);
+  }
+  
+  void clearVariants() {
+    if (wrappedVariants == Collections.EMPTY_SET) {
+      wrappedVariants = new HashSet<Variant>();
+    }
+    wrappedVariants.clear();
   }
 
   /*
@@ -130,7 +137,6 @@ public class NameImpl extends ScopedImpl implements Name {
     VariantImpl v = topicMap.wrapVariant(variant);
     v.setExplicitScope(explicitScope);
 
-    addVariant(v);
     return v;
   }
 

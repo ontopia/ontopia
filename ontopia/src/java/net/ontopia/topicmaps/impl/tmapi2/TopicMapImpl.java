@@ -3,6 +3,7 @@
 package net.ontopia.topicmaps.impl.tmapi2;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -436,6 +437,17 @@ public class TopicMapImpl extends ReifiableImpl implements
       wrapper = new NameImpl(this, name);
       nameIndex.addName((NameImpl) wrapper);
     }
+    
+    // need to update variant cache of wrapper
+    if (wrapper.getVariants().size()!=name.getVariants().size()) {
+      wrapper.clearVariants();
+      Iterator it = name.getVariants().iterator();
+      while (it.hasNext()) {
+        VariantNameIF v = (VariantNameIF) it.next();
+        wrapVariant(v);
+      }
+    }
+    
     return wrapper;
   }
 
@@ -454,8 +466,10 @@ public class TopicMapImpl extends ReifiableImpl implements
       if (((VariantImpl) tmp).getWrapped() == variant)
         return (VariantImpl) tmp;
     }
-    if (v == null)
+    if (v == null) {
       v = new VariantImpl(this, name, variant);
+      name.addVariant(v); 
+    }
 
     return v;
   }
