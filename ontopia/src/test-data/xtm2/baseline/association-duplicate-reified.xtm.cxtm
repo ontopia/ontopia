@@ -1,0 +1,67 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#assoctype</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#player1</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#player2</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#roletype1</locator>
+</itemIdentifiers>
+</topic>
+<topic number="5">
+<itemIdentifiers>
+<locator>#roletype2</locator>
+</itemIdentifiers>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="7">
+<subjectIdentifiers>
+<locator>#assoc1</locator>
+<locator>#assoc2</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#reifier1</locator>
+<locator>#reifier2</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Reifier1</value>
+<type topicref="6"></type>
+</name>
+<name number="2">
+<value>Reifier2</value>
+<type topicref="6"></type>
+</name>
+</topic>
+<association number="1" reifier="7">
+<type topicref="1"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="4"></type>
+</role>
+<role number="2">
+<player topicref="3"></player>
+<type topicref="5"></type>
+</role>
+<itemIdentifiers>
+<locator>#assoc1</locator>
+<locator>#assoc2</locator>
+</itemIdentifiers>
+</association>
+</topicMap>

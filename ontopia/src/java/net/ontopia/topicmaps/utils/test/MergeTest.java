@@ -321,11 +321,11 @@ public class MergeTest extends AbstractTopicMapTestCase {
     try {
       TopicIF t1 = builder1.makeTopic();
       URILocator loc1 = makeLocator("http://www.ontopia.net");
-			TopicIF ot1 = builder1.makeTopic();
+      TopicIF ot1 = builder1.makeTopic();
       OccurrenceIF oc1 = builder1.makeOccurrence(t1, ot1, loc1);
       TopicIF t2 = builder1.makeTopic();
       URILocator loc2 = makeLocator("ftp://www.ontopia.net");
-			TopicIF ot2 = builder1.makeTopic();
+      TopicIF ot2 = builder1.makeTopic();
       OccurrenceIF oc2 = builder1.makeOccurrence(t2, ot2, loc2);
 
       MergeUtils.mergeInto(t1, t2);
@@ -752,7 +752,7 @@ public class MergeTest extends AbstractTopicMapTestCase {
     // its reifier
 
     // check
-		TopicNameIF newbn = (TopicNameIF)t1.getTopicNames().iterator().next();
+    TopicNameIF newbn = (TopicNameIF)t1.getTopicNames().iterator().next();
     assertTrue("Basename lost reifier on merge",
                newbn.getReifier() == t2);
     assertTrue("Topic lost reified on merge",
@@ -772,7 +772,7 @@ public class MergeTest extends AbstractTopicMapTestCase {
     // its reifier
 
     // check
-		OccurrenceIF newocc = (OccurrenceIF)t1.getOccurrences().iterator().next();
+    OccurrenceIF newocc = (OccurrenceIF)t1.getOccurrences().iterator().next();
     assertTrue("Occurrence lost reifier on merge",
                newocc.getReifier() == t2);
     assertTrue("Topic lost reified on merge",
@@ -789,18 +789,18 @@ public class MergeTest extends AbstractTopicMapTestCase {
     TopicIF drp = builder1.makeTopic();
     TopicIF target = builder1.makeTopic();
 
-		AssociationIF assoc = builder1.makeAssociation(at);
+    AssociationIF assoc = builder1.makeAssociation(at);
     AssociationRoleIF nrole = builder1.makeAssociationRole(assoc, nrt, nrp);
     AssociationRoleIF drole = builder1.makeAssociationRole(assoc, drt, drp);
-		assoc.setReifier(reifier);
+    assoc.setReifier(reifier);
     // merge
     MergeUtils.mergeInto(target, nrp);
     // previous line checks if moving association from nrp to target causes it to lose
     // its reifier
 
     // check
-		AssociationRoleIF newrole = (AssociationRoleIF)target.getRoles().iterator().next();
-		AssociationIF newassoc = newrole.getAssociation();
+    AssociationRoleIF newrole = (AssociationRoleIF)target.getRoles().iterator().next();
+    AssociationIF newassoc = newrole.getAssociation();
     assertTrue("Association lost reifier on merge",
                newassoc.getReifier() == reifier);
     assertTrue("Topic lost reified on merge",
@@ -817,17 +817,17 @@ public class MergeTest extends AbstractTopicMapTestCase {
     TopicIF drp = builder1.makeTopic();
     TopicIF target = builder1.makeTopic();
 
-		AssociationIF assoc = builder1.makeAssociation(at);
+    AssociationIF assoc = builder1.makeAssociation(at);
     AssociationRoleIF nrole = builder1.makeAssociationRole(assoc, nrt, nrp);
     AssociationRoleIF drole = builder1.makeAssociationRole(assoc, drt, drp);
-		nrole.setReifier(reifier);
+    nrole.setReifier(reifier);
     // merge
     MergeUtils.mergeInto(target, nrp);
     // previous line checks if moving association from nrp to target causes it to lose
     // its reifier
 
     // check
-		AssociationRoleIF newnrole = (AssociationRoleIF)target.getRoles().iterator().next();
+    AssociationRoleIF newnrole = (AssociationRoleIF)target.getRoles().iterator().next();
     assertTrue("Near role lost reifier on merge",
                newnrole.getReifier() == reifier);
     assertTrue("Topic lost reified on merge",
@@ -844,10 +844,10 @@ public class MergeTest extends AbstractTopicMapTestCase {
     TopicIF drp = builder1.makeTopic();
     TopicIF target = builder1.makeTopic();
 
-		AssociationIF assoc = builder1.makeAssociation(at);
+    AssociationIF assoc = builder1.makeAssociation(at);
     AssociationRoleIF nrole = builder1.makeAssociationRole(assoc, nrt, nrp);
     AssociationRoleIF drole = builder1.makeAssociationRole(assoc, drt, drp);
-		drole.setReifier(reifier);
+    drole.setReifier(reifier);
     // merge
     MergeUtils.mergeInto(target, nrp);
     // previous line checks if moving association from nrp to target causes it to lose
@@ -929,7 +929,7 @@ public class MergeTest extends AbstractTopicMapTestCase {
       TopicIF t2 = builder2.makeTopic();
       TopicNameIF bn2 = builder2.makeTopicName(t2, "boodoo");
       bn2.addItemIdentifier(new URILocator("http://www.example.com/#1"));
-			bn2.setReifier(t1);
+      bn2.setReifier(t1);
       MergeUtils.mergeInto(topicmap1, t2);
 
       assertTrue("reifying topic was not included",
@@ -978,5 +978,92 @@ public class MergeTest extends AbstractTopicMapTestCase {
     new CanonicalTopicMapWriter(outfile).write(newtm);
     assertTrue("Topic map created by merging over topics not equal to original",
                FileUtils.compare(new File(outfile), new File(baseline)));
+  }
+
+  public void testMergeReifiedNames() {
+    TopicIF t1 = builder1.makeTopic();
+    TopicNameIF bn1 = builder1.makeTopicName(t1, "bn1");
+    TopicIF r1 = builder1.makeTopic();
+    bn1.setReifier(r1);
+    builder1.makeTopicName(r1, "reifier1");
+
+    TopicIF t2 = builder1.makeTopic();
+    TopicNameIF bn2 = builder1.makeTopicName(t2, "bn1");
+    TopicIF r2 = builder1.makeTopic();
+    bn2.setReifier(r2);
+    builder1.makeTopicName(r2, "reifier2");
+
+    MergeUtils.mergeInto(t1, t2);
+    
+    assertTrue("wrong number of base names after merge",
+               t1.getTopicNames().size() == 1);
+            
+    assertTrue("original base name lost",
+               t1.getTopicNames().contains(bn1));
+
+    bn1 = (TopicNameIF) t1.getTopicNames().iterator().next();
+    r1 = bn1.getReifier();
+
+    assertTrue("reifier lost", r1 != null);
+
+    assertTrue("wrong number of names on reifier: " + r1.getTopicNames().size(),
+               r1.getTopicNames().size() == 2);
+  }
+
+  public void testMergeReifiedOccurrences() {
+    TopicIF occtype = builder1.makeTopic();
+    
+    TopicIF t1 = builder1.makeTopic();
+    OccurrenceIF occ1 = builder1.makeOccurrence(t1, occtype, "occ1");
+    TopicIF r1 = builder1.makeTopic();
+    occ1.setReifier(r1);
+    builder1.makeTopicName(r1, "reifier1");
+
+    TopicIF t2 = builder1.makeTopic();
+    OccurrenceIF occ2 = builder1.makeOccurrence(t2, occtype, "occ1");
+    TopicIF r2 = builder1.makeTopic();
+    occ2.setReifier(r2);
+    builder1.makeTopicName(r2, "reifier2");
+
+    MergeUtils.mergeInto(t1, t2);
+    
+    assertTrue("wrong number of occurrences after merge",
+               t1.getOccurrences().size() == 1);
+            
+    assertTrue("original occurrence lost",
+               t1.getOccurrences().contains(occ1));
+
+    occ1 = (OccurrenceIF) t1.getOccurrences().iterator().next();
+    r1 = occ1.getReifier();
+
+    assertTrue("reifier lost", r1 != null);
+
+    assertTrue("wrong number of names on reifier: " + r1.getTopicNames().size(),
+               r1.getTopicNames().size() == 2);
+  }
+
+  public void testMergeAssociationReifiers() {
+    // the idea here is: what happens if you attempt to merge two topics
+    // which reify duplicate associations?
+    
+    TopicIF atype = builder1.makeTopic();
+    AssociationIF assoc1 = builder1.makeAssociation(atype);
+    AssociationIF assoc2 = builder1.makeAssociation(atype);
+    TopicIF player = builder1.makeTopic();
+    TopicIF type = builder1.makeTopic();
+    AssociationRoleIF ar1 = builder1.makeAssociationRole(assoc1, type, player);
+    AssociationRoleIF ar2 = builder1.makeAssociationRole(assoc2, type, player);
+
+    // the two associations should be equal
+
+    TopicIF r1 = builder1.makeTopic();
+    assoc1.setReifier(r1);
+    TopicIF r2 = builder1.makeTopic();
+    assoc2.setReifier(r2);
+    
+    MergeUtils.mergeInto(r1, r2);
+    
+    assertTrue("wrong number of roles after merge",
+               player.getRoles().size() == 1);
   }
 }

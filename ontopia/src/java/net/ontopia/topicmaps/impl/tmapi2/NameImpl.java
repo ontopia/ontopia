@@ -27,10 +27,10 @@ public class NameImpl extends ScopedImpl implements Name {
 
   private TopicNameIF wrapped;
 
-  // The scope of variants is handled different in TMAPI2. Therefore the
-  // wrappers of
-  // variants have a state, containing explicitly set themes from the name.
-  // These wrappers need to be stored in the name wrapper.
+  // The scope of variants is handled different in TMAPI2. Therefore
+  // the wrappers of variants have a state, containing explicitly set
+  // themes from the name.  These wrappers need to be stored in the
+  // name wrapper.
   private Set<Variant> wrappedVariants = Collections.emptySet();
 
   public NameImpl(TopicMapImpl topicMap, TopicNameIF name) {

@@ -112,8 +112,8 @@ public class MergeUtils {
     }
 
     // remove item identifiers from source
-    List srclocs = new ArrayList(source.getItemIdentifiers());
-    it = srclocs.iterator();
+    List itemids = new ArrayList(source.getItemIdentifiers());
+    it = itemids.iterator();
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
       source.removeItemIdentifier(loc);
@@ -133,8 +133,8 @@ public class MergeUtils {
       target.addSubjectIdentifier(loc);
     }
 
-    // add source locators to target
-    it = srclocs.iterator();
+    // add item identifiers to target
+    it = itemids.iterator();
     while (it.hasNext()) {    
       LocatorIF loc = (LocatorIF) it.next();
       target.addItemIdentifier(loc);
@@ -146,13 +146,7 @@ public class MergeUtils {
       target.addType((TopicIF) it.next());
         
     // copying base names
-    Map map = new HashMap();
-    it = target.getTopicNames().iterator();
-    while (it.hasNext()) {
-      TopicNameIF bn = (TopicNameIF) it.next();
-      String key = KeyGenerator.makeTopicNameKey(bn);
-      map.put(key, bn);
-    }
+    Map map = buildKeyMap(target.getTopicNames());
 
     List sbns = new ArrayList(source.getTopicNames());
     it = sbns.iterator();
@@ -165,35 +159,26 @@ public class MergeUtils {
         targetbn = CopyUtils.copyTopicName(target, sourcebn);
         moveReifier(targetbn, sourcebn);
         sourcebn.remove();
-      } else {
-        Iterator it2 = new ArrayList(sourcebn.getVariants()).iterator();
-        while (it2.hasNext()) {
-          VariantNameIF sourcevn = (VariantNameIF) it2.next();
-          VariantNameIF targetvn = CopyUtils.copyVariant(targetbn, sourcevn);
-          moveReifier(targetvn, sourcevn);
-          sourcevn.remove();
-        }
-      }
+      } else
+        mergeInto(targetbn, sourcebn);
     }
-                
+
     // copying occurrences
-    HashSet keys = new HashSet();
-    it = target.getOccurrences().iterator();
-    while (it.hasNext())
-      keys.add(KeyGenerator.makeOccurrenceKey((OccurrenceIF) it.next()));
-        
+    map = buildKeyMap(target.getOccurrences());
     it = new ArrayList(source.getOccurrences()).iterator();
     while (it.hasNext()) {
       OccurrenceIF sourceoc = (OccurrenceIF) it.next();
-      if (!keys.contains(KeyGenerator.makeOccurrenceKey(sourceoc))) {
-        OccurrenceIF targetoc = CopyUtils.copyOccurrence(target, sourceoc);
+      OccurrenceIF targetoc = (OccurrenceIF) map.get(KeyGenerator.makeOccurrenceKey(sourceoc));
+      if (targetoc == null) {
+        targetoc = CopyUtils.copyOccurrence(target, sourceoc);
         moveReifier(targetoc, sourceoc);
         sourceoc.remove();
-      }
+      } else
+        mergeInto(targetoc, sourceoc);
     }
-        
+
     // copying roles
-    keys.clear();
+    Set keys = new HashSet();
     it = target.getRoles().iterator();
     while (it.hasNext())
       keys.add(KeyGenerator.makeAssociationKey(
@@ -213,6 +198,17 @@ public class MergeUtils {
 
     // removing source
     source.remove();
+  }
+
+  private static Map buildKeyMap(Collection objects) {
+    Map map = new HashMap();
+    Iterator it = objects.iterator();
+    while (it.hasNext()) {
+      ReifiableIF object = (ReifiableIF) it.next();
+      String key = KeyGenerator.makeKey(object);
+      map.put(key, object);
+    }
+    return map;
   }
 
   /**
@@ -274,6 +270,110 @@ public class MergeUtils {
     }
   }
 
+  /**
+   * PUBLIC: Merges the source name into the target name. The two
+   * names must be in the same topic map, but need not have the same
+   * parent topic. It is assumed (but not verified) that the two
+   * names are actually equal.
+   * @since %NEXT%
+   */
+  public static void mergeInto(TopicNameIF target, TopicNameIF source) {
+    Iterator it = new ArrayList(source.getVariants()).iterator();
+    while (it.hasNext()) {
+      VariantNameIF sourcevn = (VariantNameIF) it.next();
+      VariantNameIF targetvn = CopyUtils.copyVariant(target, sourcevn);
+      moveReifier(targetvn, sourcevn);
+      sourcevn.remove();
+    }
+    moveReifier(target, source);
+    moveItemIdentifiers(target, source);
+    source.remove();
+  }
+
+  private static void moveItemIdentifiers(TMObjectIF target, TMObjectIF source) {
+    Iterator it = new ArrayList(source.getItemIdentifiers()).iterator();
+    while (it.hasNext()) {
+      LocatorIF itemid = (LocatorIF) it.next();
+      source.removeItemIdentifier(itemid);
+      target.addItemIdentifier(itemid);
+    }
+  }
+
+  /**
+   * PUBLIC: Merges the source occurrence into the target
+   * occurrence. The two occurrences must be in the same topic map, but
+   * need not have the same parent topic. It is assumed (but not
+   * verified) that the two occurrences are actually equal.
+   * @since %NEXT%
+   */
+  public static void mergeInto(OccurrenceIF target, OccurrenceIF source) {
+    moveReifier(target, source);
+    moveItemIdentifiers(target, source);
+    source.remove();
+  }
+
+  /**
+   * PUBLIC: Merges the source association into the target
+   * association. The two associations must be in the same topic
+   * map. It is assumed (but not verified) that the two associations
+   * are actually equal.
+   * @since %NEXT%
+   */
+  public static void mergeInto(AssociationIF target, AssociationIF source) {
+    moveReifier(target, source);
+    moveItemIdentifiers(target, source);
+    source.remove();
+  }
+
+  /**
+   * PUBLIC: Merges the source role into the target role.  The two
+   * roles must be in the same topic map, but need not have the same
+   * parent association. It is assumed (but not verified) that the two
+   * roles are actually equal.
+   * @since %NEXT%
+   */
+  public static void mergeInto(AssociationRoleIF target, AssociationRoleIF source) {
+    moveReifier(target, source);
+    moveItemIdentifiers(target, source);
+    source.remove();
+  }
+
+  /**
+   * PUBLIC: Merges the source variant into the target variant.  The
+   * two variants must be in the same topic map, but need not have the
+   * same parent name. It is assumed (but not verified) that the two
+   * variants are actually equal.
+   * @since %NEXT%
+   */
+  public static void mergeInto(VariantNameIF target, VariantNameIF source) {
+    moveReifier(target, source);
+    moveItemIdentifiers(target, source);
+    source.remove();
+  }
+  
+  /**
+   * PUBLIC: Merges the source object into the target object.  The two
+   * objects must be in the same topic map, but need not have the same
+   * parent. It is assumed (but not verified) that the two objects are
+   * actually equal.
+   * @since %NEXT%
+   */
+  public static void mergeInto(ReifiableIF target, ReifiableIF source) {
+    if (target instanceof TopicNameIF)
+      mergeInto((TopicNameIF) target, (TopicNameIF) source);
+    else if (target instanceof OccurrenceIF)
+      mergeInto((OccurrenceIF) target, (OccurrenceIF) source);
+    else if (target instanceof AssociationIF)
+      mergeInto((AssociationIF) target, (AssociationIF) source);
+    else if (target instanceof AssociationRoleIF)
+      mergeInto((AssociationRoleIF) target, (AssociationRoleIF) source);
+    else if (target instanceof VariantNameIF)
+      mergeInto((VariantNameIF) target, (VariantNameIF) source);
+    else
+      throw new UnsupportedOperationException("Cannot merge objects of this type: "
+                                              + target);
+  }
+  
   /**
    * PUBLIC: Merges the source topic from into the target topic map,
    * when the source topic is not already in the target topic map.
@@ -978,18 +1078,36 @@ public class MergeUtils {
   }
 
   private static void moveReified(TopicIF target, TopicIF source) {
-    ReifiableIF reified = source.getReified();
-    if (reified != null) {
-      reified.setReifier(null);
-      ReificationUtils.reify(reified, target);
+    ReifiableIF sreified = source.getReified();
+    if (sreified != null) {
+      ReifiableIF treified = target.getReified();
+      if (treified != null) {
+        if (!KeyGenerator.makeKey(sreified).equals(KeyGenerator.makeKey(treified)))
+          throw new ConstraintViolationException("Cannot merge topics which " +
+                                                 "reify different objects");
+
+        // FIXME: must verify that parents are equal
+        
+        mergeInto(treified, sreified);
+        
+      } else {
+        sreified.setReifier(null);
+        ReificationUtils.reify(sreified, target);
+      }
     }
   }
 
   private static void moveReifier(ReifiableIF target, ReifiableIF source) {
-    TopicIF reifier = source.getReifier();
-    if (reifier != null) {
-      source.setReifier(null);
-      ReificationUtils.reify(target, reifier);		
+    TopicIF sreifier = source.getReifier();
+    if (sreifier != null) {
+      TopicIF treifier = target.getReifier();
+      if (treifier != null) {
+        source.setReifier(null);
+        mergeInto(treifier, sreifier);
+      } else {
+        source.setReifier(null);
+        ReificationUtils.reify(target, sreifier);
+      }
     }
   }
 }

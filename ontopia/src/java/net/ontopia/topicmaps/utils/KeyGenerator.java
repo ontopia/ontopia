@@ -5,6 +5,7 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.*;
 import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.*;
 
@@ -12,7 +13,7 @@ import net.ontopia.topicmaps.core.*;
  * PUBLIC: Utilities for generating keys from complex topic map
  * objects. The keys from two different objects in the same topic map
  * will be equal if the two objects are equal according to the
- * equality principles of ISO 13250 Annex F.
+ * equality rules of the TMDM.
  */
 public class KeyGenerator {
 
@@ -120,7 +121,25 @@ public class KeyGenerator {
     return makeTypedKey(role) + ":" +
       (role.getPlayer() != null ? role.getPlayer().getObjectId() : "");
   }
-  
+
+  /**
+   * PUBLIC: Makes a key for any reifiable object, using the other
+   * methods in this class.
+   * @since %NEXT%
+   */
+  public static String makeKey(ReifiableIF object) {
+    if (object instanceof TopicNameIF)
+      return makeTopicNameKey((TopicNameIF) object);
+    else if (object instanceof OccurrenceIF)
+      return makeOccurrenceKey((OccurrenceIF) object);
+    else if (object instanceof AssociationIF)
+      return makeAssociationKey((AssociationIF) object);
+    else if (object instanceof AssociationRoleIF)
+      return makeAssociationRoleKey((AssociationRoleIF) object);
+    else
+      throw new OntopiaRuntimeException("Cannot make key for: " + object);
+  }
+
   // --- Helper methods
 
   protected static String makeTypedKey(TypedIF typed) {

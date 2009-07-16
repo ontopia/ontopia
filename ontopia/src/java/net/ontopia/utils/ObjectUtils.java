@@ -186,7 +186,8 @@ public class ObjectUtils {
   }
 
   /**
-   * INTERNAL: Extract real exception from wrapper exception and rethrow as a RuntimeException.
+   * INTERNAL: Extract real exception from wrapper exception and
+   * rethrow as a RuntimeException.
    */
   public static void throwRuntimeException(Throwable t) {
     Throwable x = getRealCause(t);

@@ -147,23 +147,12 @@ public class DuplicateSuppressionUtils {
       TopicNameIF duplicate = (TopicNameIF) map.get(key);
       if (duplicate != null) {
         if (duplicate != basename) {
-          copySourceLocators(duplicate, basename);
-          TopicMapBuilderIF builder = duplicate.getTopicMap().getBuilder();
-          
-          Iterator it2 = new ArrayList(basename.getVariants()).iterator();
-          while (it2.hasNext()) {
-            VariantNameIF vns = (VariantNameIF) it2.next();
-            VariantNameIF vnt = builder.makeVariantName(duplicate, vns.getValue(), vns.getDataType());
-            copyScope(vnt, vns);
-            copySourceLocators(vnt, vns);
-          }
-          if (basename.getTopic() != null)
-            basename.remove();
+          MergeUtils.mergeInto(duplicate, basename);
           basename = duplicate; // do this so that we can remove duplicate variants later
         }
-      } else {
+      } else
         map.put(key, basename);
-      }
+
       removeDuplicates(basename);
     }
   }
@@ -180,14 +169,10 @@ public class DuplicateSuppressionUtils {
 
       OccurrenceIF duplicate = (OccurrenceIF) map.get(key);
       if (duplicate != null) {
-        if (duplicate != occ) {
-          copySourceLocators(duplicate, occ);
-          if (occ.getTopic() != null)
-            occ.remove();
-        }
-      } else {
+        if (duplicate != occ)
+          MergeUtils.mergeInto(duplicate, occ);
+      } else
         map.put(key, occ);
-      }
     }
   }
 
@@ -221,13 +206,10 @@ public class DuplicateSuppressionUtils {
         
         AssociationIF duplicate = (AssociationIF) map.get(key);
         if (duplicate != null) {
-          if (duplicate != assoc) {
-            copySourceLocators(duplicate, assoc);
-            assoc.remove();
-          }
-        } else {
+          if (duplicate != assoc)
+            MergeUtils.mergeInto(duplicate, assoc);
+        } else
           map.put(key, assoc);
-        }
       }
     }
   }
@@ -236,7 +218,6 @@ public class DuplicateSuppressionUtils {
    * PUBLIC: Remove all duplicate variant names of the given topic name.
    */
   public static void removeDuplicates(TopicNameIF basename) {
-
     HashMap map = new HashMap();
     Iterator it = new ArrayList(basename.getVariants()).iterator();
     while (it.hasNext()) {
@@ -244,12 +225,10 @@ public class DuplicateSuppressionUtils {
       String key = KeyGenerator.makeVariantKey(variant);
 
       VariantNameIF duplicate = (VariantNameIF) map.get(key);
-      if (duplicate != null) {
-        copySourceLocators(duplicate, variant);
-        variant.remove();
-      } else {
+      if (duplicate != null)
+        MergeUtils.mergeInto(duplicate, variant);
+      else
         map.put(key, variant);
-      }
     }
   }
 
@@ -257,19 +236,16 @@ public class DuplicateSuppressionUtils {
    * PUBLIC: Remove all duplicate association roles of the association.
    */
   public static void removeDuplicates(AssociationIF assoc) {
-
     HashMap map = new HashMap();
     Iterator it = new ArrayList(assoc.getRoles()).iterator();
     while (it.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) it.next();
       String key = KeyGenerator.makeAssociationRoleKey(role);
 
-      if (map.get(key) != null) {
-        copySourceLocators((AssociationRoleIF) map.get(key), role);
-        role.remove();
-      } else {
+      if (map.get(key) != null)
+        MergeUtils.mergeInto((AssociationRoleIF) map.get(key), role);
+      else
         map.put(key, role);
-      }
     }
   }
 
@@ -279,7 +255,6 @@ public class DuplicateSuppressionUtils {
    * @since 2.1
    */
   public static Map removeDuplicateAssociations(TopicIF topic) {
-
     Map map = new HashMap();
     Map resultMap = new HashMap();
     TopicMapIF topicmap = topic.getTopicMap();
