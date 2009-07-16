@@ -456,6 +456,8 @@ public class TopicImpl extends ConstructImpl implements Topic {
       // getWrapped().merge(topicMap.unwrapTopic(topic));
     } catch (InvalidTopicMapException e) {
       throw new ModelConstraintException(this, e.getMessage());
+    } catch (ConstraintViolationException e) {
+      throw new ModelConstraintException(this, e.getMessage());
     }
 
   }
