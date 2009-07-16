@@ -268,6 +268,18 @@ public class TopicMapSynchronizer {
     DuplicateSuppressionUtils.removeDuplicateAssociations(targett);
   }
 
+  /**
+   * PUBLIC: Updates the target topic map from the source topic map,
+   * synchronizing the selected topics in the target (ttopicq) with
+   * the selected topics in the source (stopicq) using the deciders to
+   * filter topic characteristics to synchronize.
+   * @param target the topic map to update
+   * @param ttopicq tolog query selecting the target topics to update
+   * @param tchard filter for the target characteristics to update
+   * @param source the source topic map
+   * @param stopicq tolog query selecting the source topics to use
+   * @param schard filter for the source characteristics to update
+   */
   public static void update(TopicMapIF target, String ttopicq, DeciderIF tchard,
                             TopicMapIF source, String stopicq, DeciderIF schard)
     throws InvalidQueryException {   
