@@ -39,14 +39,6 @@ public class DuplicateSuppressionUtils {
    */
   public static void removeDuplicates(TopicMapIF topicmap) {
 
-    //! if ("net.ontopia.topicmaps.impl.rdbms.TopicMap".equals(topicmap.getClass().getName())) {
-    //!   try {
-    //!     net.ontopia.topicmaps.impl.rdbms.Utils.removeDuplicates(topicmap);
-    //!   } catch (Exception e) {
-    //!     throw new OntopiaRuntimeException(e);
-    //!   }
-    //! } else {
-
     // remove duplicate topic characteristics
     int batchSize = 50;
     Iterator it = topicmap.getTopics().iterator();
@@ -73,9 +65,6 @@ public class DuplicateSuppressionUtils {
     assocs = cindex.getAssociations(null);
     if (!assocs.isEmpty())
       removeDuplicateAssociations(assocs);
-
-    //! // remove duplicate associations
-    //! removeDuplicateAssociations(topicmap.getAssociations());    
   }
 
   private static void prefetchTopics(TopicMapIF topicmap, Collection batch) {
@@ -131,7 +120,8 @@ public class DuplicateSuppressionUtils {
   }
   
   /**
-   * PUBLIC: Remove all duplicated characteristics of the given topic, except for duplicate associations the topic may participate in.
+   * PUBLIC: Remove all duplicated characteristics of the given topic,
+   * except for duplicate associations the topic may participate in.
    */
   public static void removeDuplicates(TopicIF topic) {
 
