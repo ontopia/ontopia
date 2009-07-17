@@ -33,7 +33,7 @@ public class Topic extends TMObject implements TopicIF {
 
   protected Set subjects;
   protected Set indicators;
-	protected ReifiableIF reified;
+  protected ReifiableIF reified;
 
   protected UniqueSet scope;
   protected UniqueSet types;
@@ -93,9 +93,9 @@ public class Topic extends TMObject implements TopicIF {
     fireEvent("TopicIF.addSubjectLocator", subject_locator, null);    
     // Modify property
     subjects.add(subject_locator);
-	}
+  }
 
-	public void removeSubjectLocator(LocatorIF subject_locator) {
+  public void removeSubjectLocator(LocatorIF subject_locator) {
     if (subject_locator == null)
       throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
@@ -243,25 +243,25 @@ public class Topic extends TMObject implements TopicIF {
   }
 
   public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type) {
-		if (roletype == null) throw new NullPointerException("Role type cannot be null.");
-		if (assoc_type == null) throw new NullPointerException("Association type cannot be null.");
+    if (roletype == null) throw new NullPointerException("Role type cannot be null.");
+    if (assoc_type == null) throw new NullPointerException("Association type cannot be null.");
     Collection result = new HashSet();
     synchronized (roles) {    
       Iterator iter = roles.iterator();
       while (iter.hasNext()) {
         AssociationRoleIF role = (AssociationRoleIF)iter.next();
         if (role.getType() == roletype) {
-	  AssociationIF assoc = role.getAssociation();
-	  if (assoc != null && assoc.getType() == assoc_type)
-	    result.add(role);
-	}
+          AssociationIF assoc = role.getAssociation();
+          if (assoc != null && assoc.getType() == assoc_type)
+            result.add(role);
+        }
       }
     }
     return result;
   }
 
   public void merge(TopicIF topic) {
-		CrossTopicMapException.check(topic, this);
+    CrossTopicMapException.check(topic, this);
     net.ontopia.topicmaps.utils.MergeUtils.mergeInto(this, topic);
   }
   
@@ -295,7 +295,7 @@ public class Topic extends TMObject implements TopicIF {
   public void addType(TopicIF type) {
     if (type == null)
       throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(type, this);
+    CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("TopicIF.addType", type, null);
     // Add type to list of types
@@ -305,24 +305,24 @@ public class Topic extends TMObject implements TopicIF {
   public void removeType(TopicIF type) {
     if (type == null)
       throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(type, this);
+    CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("TopicIF.removeType", null, type);
     // Remove type from list of types
     types = topicmap.setpool.remove(types, type, true);
   }
 
-	public ReifiableIF getReified() {
-		return reified;
-	}
+  public ReifiableIF getReified() {
+    return reified;
+  }
 
-	void setReified(ReifiableIF reified) {
-		ReifiableIF oldReified = getReified();
-		if (ObjectUtils.different(oldReified, reified)) {
-			// remove reifier from old reifiable
-			this.reified = reified;
-		}
-	}
+  void setReified(ReifiableIF reified) {
+    ReifiableIF oldReified = getReified();
+    if (ObjectUtils.different(oldReified, reified)) {
+      // remove reifier from old reifiable
+      this.reified = reified;
+    }
+  }
 
   // -----------------------------------------------------------------------------
   // Misc. methods

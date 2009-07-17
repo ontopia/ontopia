@@ -33,7 +33,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
 
   static final long serialVersionUID = -7364980697913079915L;
 
-	protected TopicIF reifier;
+  protected TopicIF reifier;
   protected TopicIF type;
   protected UniqueSet scope;
   protected String value;
@@ -49,9 +49,9 @@ public class Occurrence extends TMObject implements OccurrenceIF {
 
   public void remove() {
     if (parent != null) {
-			DeletionUtils.removeDependencies(this);
+      DeletionUtils.removeDependencies(this);
       ((Topic)parent).removeOccurrence(this);
-		}
+    }
   }
 
   public TopicIF getTopic() {
@@ -97,10 +97,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public void setValue(String value, LocatorIF datatype) {
-		if (value == null) throw new NullPointerException("Occurrence value must not be null.");
-		if (datatype == null) throw new NullPointerException("Occurrence value datatype must not be null.");
-		if (!"URI".equals(datatype.getNotation()))
-			throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    if (value == null) 
+      throw new NullPointerException("Occurrence value must not be null.");
+    if (datatype == null) 
+      throw new NullPointerException("Occurrence value datatype must not be null.");
+    if (!"URI".equals(datatype.getNotation()))
+      throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setDataType(datatype);
     // Notify listeners
     fireEvent("OccurrenceIF.setValue", value, getValue());
@@ -120,10 +122,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   //! }
 
   public void setReader(Reader value, long length, LocatorIF datatype) {
-		if (value == null) throw new NullPointerException("Occurrence value must not be null.");
-		if (datatype == null) throw new NullPointerException("Occurrence value datatype must not be null.");
-		if (!"URI".equals(datatype.getNotation()))
-			throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    if (value == null) 
+      throw new NullPointerException("Occurrence value must not be null.");
+    if (datatype == null) 
+      throw new NullPointerException("Occurrence value datatype must not be null.");
+    if (!"URI".equals(datatype.getNotation()))
+      throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     try {
       setValue(StreamUtils.readString(value, length), datatype);
     } catch (IOException e) {
@@ -146,9 +150,10 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
   
   public void setLocator(LocatorIF locator) {
-		if (locator == null) throw new NullPointerException("Occurrence locator must not be null.");
-		if (!"URI".equals(locator.getNotation()))
-			throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
+    if (locator == null) 
+      throw new NullPointerException("Occurrence locator must not be null.");
+    if (!"URI".equals(locator.getNotation()))
+      throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
@@ -165,8 +170,9 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     return (scope == null ? Collections.EMPTY_SET : scope);
   }
   public void addTheme(TopicIF theme) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    if (theme == null) 
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("OccurrenceIF.addTheme", theme, null);
     // Add theme to scope
@@ -175,8 +181,9 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     scope = topicmap.setpool.add(scope, theme, true);
   }
   public void removeTheme(TopicIF theme) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    if (theme == null) 
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("OccurrenceIF.removeTheme", null, theme);
     // Remove theme from scope
@@ -194,8 +201,9 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public void setType(TopicIF type) {
-		if (type == null) throw new NullPointerException("Occurrence type must not be null.");
-		CrossTopicMapException.check(type, this);
+    if (type == null) 
+      throw new NullPointerException("Occurrence type must not be null.");
+    CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("OccurrenceIF.setType", type, getType());
     this.type = type;
@@ -206,19 +214,20 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // -----------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return reifier;
-	}
+    return reifier;
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) 
+      CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     this.reifier = reifier;
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null) oldReifier.setReified(null);
+    if (reifier != null) reifier.setReified(this);
+  }
 
   // -----------------------------------------------------------------------------
   // Misc. methods
@@ -241,8 +250,4 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
   
 }
-
-
-
-
 

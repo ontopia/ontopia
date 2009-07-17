@@ -19,7 +19,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   static final long serialVersionUID = 8387889553134058046L;
 
-	protected TopicIF reifier;
+  protected TopicIF reifier;
   protected TopicIF type;
   protected TopicIF player;
 
@@ -53,8 +53,8 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   }
 
   public void setPlayer(TopicIF player) {
-		if (player == null) throw new NullPointerException("Association role player must not be null.");
-		CrossTopicMapException.check(player, this);
+    if (player == null) throw new NullPointerException("Association role player must not be null.");
+    CrossTopicMapException.check(player, this);
     // Notify listeners
     fireEvent("AssociationRoleIF.setPlayer", player, this.player);
     // Unregister association role with topic
@@ -69,9 +69,9 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
 
   public void remove() {
     if (parent != null) {
-			DeletionUtils.removeDependencies(this);
+      DeletionUtils.removeDependencies(this);
       ((Association)parent).removeRole(this);
-		}
+    }
   }
 
   // -----------------------------------------------------------------------------
@@ -83,8 +83,8 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   }
 
   public void setType(TopicIF type) {
-		if (type == null) throw new NullPointerException("Association role type must not be null.");
-		CrossTopicMapException.check(type, this);
+    if (type == null) throw new NullPointerException("Association role type must not be null.");
+    CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("AssociationRoleIF.setType", type, getType());
     this.type = type;
@@ -95,19 +95,19 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   // -----------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return reifier;
-	}
+    return reifier;
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     this.reifier = reifier;
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null) oldReifier.setReified(null);
+    if (reifier != null) reifier.setReified(this);
+  }
 
   // -----------------------------------------------------------------------------
   // Misc. methods

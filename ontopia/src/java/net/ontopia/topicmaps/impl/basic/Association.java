@@ -26,7 +26,7 @@ public class Association extends TMObject implements AssociationIF {
 
   static final long serialVersionUID = -8986947932370957132L;
   
-	protected TopicIF reifier;
+  protected TopicIF reifier;
   protected TopicIF type;
   protected UniqueSet scope;
   protected Set roles;
@@ -71,8 +71,8 @@ public class Association extends TMObject implements AssociationIF {
   }
   
   public Collection getRolesByType(TopicIF roletype) {
-		if (roletype == null) throw new NullPointerException("Role type must not be null.");
-		CrossTopicMapException.check(roletype, this);
+    if (roletype == null) throw new NullPointerException("Role type must not be null.");
+    CrossTopicMapException.check(roletype, this);
     Collection result = new HashSet();
     synchronized (roles) {    
       Iterator iter = roles.iterator();
@@ -132,9 +132,9 @@ public class Association extends TMObject implements AssociationIF {
 
   public void remove() {
     if (topicmap != null) {
-			DeletionUtils.removeDependencies(this);
+      DeletionUtils.removeDependencies(this);
       topicmap.removeAssociation(this);
-		}
+    }
   }
 
   // -----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ public class Association extends TMObject implements AssociationIF {
   public void addTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
-		CrossTopicMapException.check(theme, this);
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("AssociationIF.addTheme", theme, null);
     // Add theme to scope
@@ -161,7 +161,7 @@ public class Association extends TMObject implements AssociationIF {
   public void removeTheme(TopicIF theme) {
     if (theme == null)
       throw new NullPointerException(MSG_NULL_ARGUMENT);
-		CrossTopicMapException.check(theme, this);
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("AssociationIF.removeTheme", null, theme);
     // Remove theme from scope
@@ -179,8 +179,8 @@ public class Association extends TMObject implements AssociationIF {
   }
 
   public void setType(TopicIF type) {
-		if (type == null) throw new NullPointerException("Association type must not be null.");
-		CrossTopicMapException.check(type, this);
+    if (type == null) throw new NullPointerException("Association type must not be null.");
+    CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("AssociationIF.setType", type, getType());
     this.type = type;
@@ -191,19 +191,19 @@ public class Association extends TMObject implements AssociationIF {
   // -----------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return reifier;
-	}
+    return reifier;
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     this.reifier = reifier;
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null) oldReifier.setReified(null);
+    if (reifier != null) reifier.setReified(this);
+  }
 
   // -----------------------------------------------------------------------------
   // Misc. methods
