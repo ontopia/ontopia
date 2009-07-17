@@ -31,7 +31,7 @@ public class NameImpl extends ScopedImpl implements Name {
   // the wrappers of variants have a state, containing explicitly set
   // themes from the name.  These wrappers need to be stored in the
   // name wrapper.
-  private Set<Variant> wrappedVariants = Collections.emptySet();
+  private Set<Variant> wrappedVariants = null;
 
   public NameImpl(TopicMapImpl topicMap, TopicNameIF name) {
     super(topicMap);
@@ -94,14 +94,14 @@ public class NameImpl extends ScopedImpl implements Name {
   }
 
   void addVariant(Variant variant) {
-    if (wrappedVariants == Collections.EMPTY_SET) {
+    if (wrappedVariants == null) {
       wrappedVariants = new HashSet<Variant>();
     }
     wrappedVariants.add(variant);
   }
   
   void clearVariants() {
-    if (wrappedVariants == Collections.EMPTY_SET) {
+    if (wrappedVariants == null) {
       wrappedVariants = new HashSet<Variant>();
     }
     wrappedVariants.clear();
@@ -204,7 +204,7 @@ public class NameImpl extends ScopedImpl implements Name {
    */
 
   public Set<Variant> getVariants() {
-    return wrappedVariants;
+    return wrappedVariants != null ? wrappedVariants : Collections.<Variant>emptySet();
   }
 
   /*
