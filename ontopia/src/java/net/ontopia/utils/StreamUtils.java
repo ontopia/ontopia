@@ -77,7 +77,8 @@ public class StreamUtils {
   }
 
   /**
-   * INTERNAL: Returns the first given number of bytes of a stream into a byte array.   
+   * INTERNAL: Returns the first given number of bytes of a stream
+   * into a byte array.
    * @since 2.0
    */
   public static byte[] read(InputStream in, int length) throws IOException {
