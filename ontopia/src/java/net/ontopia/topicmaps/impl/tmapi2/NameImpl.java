@@ -102,7 +102,7 @@ public class NameImpl extends ScopedImpl implements Name {
   
   void clearVariants() {
     if (wrappedVariants == null) {
-      wrappedVariants = new HashSet<Variant>();
+      return;
     }
     wrappedVariants.clear();
   }

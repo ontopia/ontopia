@@ -439,7 +439,7 @@ public class TopicMapImpl extends ReifiableImpl implements
     }
     
     // need to update variant cache of wrapper
-    if (wrapper.getVariants().size()!=name.getVariants().size()) {
+    if (wrapper.getVariants().size() != name.getVariants().size()) {
       wrapper.clearVariants();
       Iterator it = name.getVariants().iterator();
       while (it.hasNext()) {
@@ -463,8 +463,10 @@ public class TopicMapImpl extends ReifiableImpl implements
     VariantImpl v = null;
 
     for (Variant tmp : name.getVariants()) {
-      if (((VariantImpl) tmp).getWrapped() == variant)
-        return (VariantImpl) tmp;
+      if (((VariantImpl)tmp).getWrapped().equals(variant)) {
+        v = (VariantImpl) tmp;
+        break;
+      }
     }
     if (v == null) {
       v = new VariantImpl(this, name, variant);
