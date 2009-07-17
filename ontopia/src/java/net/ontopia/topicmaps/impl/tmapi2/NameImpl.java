@@ -101,10 +101,9 @@ public class NameImpl extends ScopedImpl implements Name {
   }
   
   void clearVariants() {
-    if (wrappedVariants == null) {
-      return;
+    if (wrappedVariants != null) {
+        wrappedVariants.clear();
     }
-    wrappedVariants.clear();
   }
 
   /*
