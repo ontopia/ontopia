@@ -9,7 +9,6 @@ import java.lang.reflect.*;
 /**
  * INTERNAL: Class that contains useful methods.
  */
-
 public class ObjectUtils {
 
   private ObjectUtils() {
@@ -206,7 +205,7 @@ public class ObjectUtils {
   
   private static void sortParallel(Object[] x, int xoff, int xlen, Object[] y, int yoff, Comparator c) {
     // Insertion sort; fast when arrays are small.
-		int yrel = xoff-yoff;
+    int yrel = xoff-yoff;
     for (int i=xoff; i < xlen+xoff; i++) {
       for (int j=i; j > xoff && c.compare(x[j-1], x[j]) > 0; j--) {
         swapParallel(x, y, j, j-1, yrel);
@@ -223,20 +222,20 @@ public class ObjectUtils {
 
 
   /**
-	 * INTERNAL: Compare array size, then each element in sequence using a comparator.
-	 */
+   * INTERNAL: Compare array size, then each element in sequence using
+   * a comparator.
+   */
   public static int compareArrays(Object[] a1, Object[] a2, Comparator c) {
-		int r = compare(a1.length, a2.length);
-		if (r != 0) return r;
-		for (int i=0; i < a1.length; i++) {
-			r = c.compare(a1[i], a2[i]);
-			if (r != 0) return r;
-		}
-		return 0;
-	}
+    int r = compare(a1.length, a2.length);
+    if (r != 0) return r;
+    for (int i=0; i < a1.length; i++) {
+      r = c.compare(a1[i], a2[i]);
+      if (r != 0) return r;
+    }
+    return 0;
+  }
 
-	public static String toString(Object o) {
-		return (o == null ? "null" : o.toString());
-	}
-
+  public static String toString(Object o) {
+    return (o == null ? "null" : o.toString());
+  }
 }
