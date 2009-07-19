@@ -21,6 +21,7 @@ public class TreeTag extends TagSupport {
   private String query;
   private String ownpage;
   private String nodepage;
+  private String imageurl;
 
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
@@ -28,6 +29,7 @@ public class TreeTag extends TagSupport {
 
     TreeWidget widget = new TreeWidget(tm, query, topquery,
                                        ownpage, nodepage);
+    widget.setImageUrl(imageurl);
     try {
       widget.run(pageContext, pageContext.getOut());
     } catch (IOException e) {
@@ -58,5 +60,9 @@ public class TreeTag extends TagSupport {
   
   public void setNodepage(String nodepage) {
     this.nodepage = nodepage;
+  }
+
+  public void setImageUrl(String imageurl) {
+    this.imageurl = imageurl;
   }
 }
