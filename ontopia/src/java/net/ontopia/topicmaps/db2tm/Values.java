@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.lang.reflect.*;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
@@ -90,7 +89,7 @@ public final class Values {
   // -----------------------------------------------------------------------------
   
   private static class TupleValue implements ValueIF {
-    private int ix;
+    private final int ix;
     private TupleValue(int ix) {
       this.ix = ix;
     }
@@ -103,19 +102,19 @@ public final class Values {
   }
   
   private static class StaticValue implements ValueIF {
-    private String value;
+    private final String value;
     private StaticValue(String value) {
       this.value = value;
     }
     public String getValue(String[] tuple) {
       return value;
-    }    
+    }
   }
   
   private static class PatternValue implements ValueIF {
   
-    private Object[] list;
-    private int colvals;
+    private final Object[] list;
+    private final int colvals;
     
     private PatternValue(Object[] list, int colvals) {
       this.list = list;
@@ -124,7 +123,7 @@ public final class Values {
     
     public String getValue(String[] tuple) {
       int empties = 0;
-      StringBuffer sb = new StringBuffer();
+      StringBuilder sb = new StringBuilder();
       for (int i=0; i < list.length; i++) {
         Object o = list[i];
         if (o instanceof String)
@@ -136,8 +135,6 @@ public final class Values {
             empties++;
             if (empties == colvals)
               return null;
-            //! else
-            //!   sb.append("");
           } else
             sb.append(value);
         }
