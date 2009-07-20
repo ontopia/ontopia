@@ -3,11 +3,12 @@
 
 package net.ontopia.topicmaps.webed.webapps.omnieditor;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.webed.impl.basic.ParamRuleIF;
 import net.ontopia.topicmaps.webed.impl.basic.ActionContextIF;
-
-import org.apache.oro.text.perl.Perl5Util;
 
 /**
  * INTERNAL: Implementation of ParamRuleIF to substitute the show
@@ -19,20 +20,23 @@ import org.apache.oro.text.perl.Perl5Util;
  */
 public class ShowActionGroupParamRule implements ParamRuleIF {
 
-  // share this instance with all objects
-  static Perl5Util putil = new Perl5Util();
+  private static final Pattern PATTERN_AG = Pattern.compile("(\\?|&)(" + Constants.RP_ACTIONGROUP + "=.*?(&|$))");
+  private static final Pattern PATTERN_SHOW = Pattern.compile("(\\?|&)" + Constants.RP_SHOW_AG + "=(.*?)(&|$)");
   
   public String generate(ActionContextIF context,
                          String actionName, String nextActionTemplate,
                          String urlWithParams) {
     String url = urlWithParams;
     // ag=bar -> REMOVE
-    url = putil.substitute("s/(\\?|&)" + Constants.RP_ACTIONGROUP +
-                           "=.*?(&|$)/$1/", url);
+    Matcher m = PATTERN_AG.matcher(url);
+    if (m != null) {
+      url = m.replaceAll("$1");
+    }
     // show_ag=foo -> ag=foo
-    url = putil.substitute("s/(\\?|&)" + Constants.RP_SHOW_AG +
-                           "=(.*?)(&|$)/$1" + Constants.RP_ACTIONGROUP +
-                           "=$2$3/", url);
+    m = PATTERN_SHOW.matcher(url);
+    if (m != null) {
+      url = m.replaceAll("$1" + Constants.RP_ACTIONGROUP + "=$2$3");
+    }
     return url;
   }
   
