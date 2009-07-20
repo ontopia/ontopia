@@ -59,10 +59,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.Perl5Matcher;
 
 /**
  * INTERNAL: Central entry point to the web application for processing a HTTP
