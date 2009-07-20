@@ -5,12 +5,12 @@ package net.ontopia.topicmaps.db2tm;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.lang.reflect.*;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-
-import org.apache.oro.text.regex.*;
 
 /**
  * INTERNAL: Virtual column that used a hash table to map from old
@@ -20,15 +20,7 @@ import org.apache.oro.text.regex.*;
 
 public final class Values {
     
-  private static Pattern pat;
-  static {
-    try {
-      Perl5Compiler compiler = new Perl5Compiler();
-      pat = compiler.compile("\\$((\\d+)|\\{(\\w+)\\})");
-    } catch (MalformedPatternException e) {
-      throw new OntopiaRuntimeException(e);
-    }
-  }
+  private static final Pattern PATTERN = Pattern.compile("\\$((\\d+)|\\{(\\w+)\\})");
 
   // -----------------------------------------------------------------------------
   // Utility methods
@@ -53,46 +45,38 @@ public final class Values {
     return new TupleValue(cix);
   }
   
+  
   static ValueIF getPatternValue(Relation relation, String value) {
     // use pattern value
     List list = new ArrayList();
-    StringBuffer sb = new StringBuffer(value.length()+20);
-    Perl5Matcher matcher = new Perl5Matcher();
-    PatternMatcherInput input = new PatternMatcherInput(value);
+    Matcher matcher = PATTERN.matcher(value);
     int colvals = 0;
     int ix = 0;
-    while (matcher.contains(input, pat)) {
-      MatchResult r = matcher.getMatch();
-      //! System.out.println("##-- groups " + r.groups() +
-      //!                     " a:" + r.group(1) + " b:" + r.group(2) + " c:" + r.group(3) + " d:" + r.group(4));
-      
+    while (matcher != null && matcher.find()) {
       ValueIF colval = null;
-      String name = r.group(1);
+      // First try: Found number?
+      String name = matcher.group(2);
       if (name != null) {
-        try {
-          int cix = Integer.parseInt(name)-1;
-          colval = getColumnValue(relation, cix);
-        } catch (NumberFormatException e) {
-          name = null;
-        }
+        int cix = Integer.parseInt(name)-1;
+        colval = getColumnValue(relation, cix);
       }
-      if (name == null) {
-        name = r.group(3);
+      else {
+        // Must have been matched $\w
+        name = matcher.group(3);
         colval = getColumnValue(relation, name);
       }
       if (name != null) {
-        int beginOffset = input.getMatchBeginOffset();
+        int beginOffset = matcher.start();
         if (beginOffset > ix)
           list.add(value.substring(ix, beginOffset));
         list.add(colval);
         colvals++;
       } else {
-        int endOffset = input.getMatchEndOffset();
+        int endOffset = matcher.end();
         if (endOffset > ix)
           list.add(value.substring(ix, endOffset));
       }
-      ix = input.getMatchEndOffset();
-      input.setCurrentOffset(input.getMatchEndOffset());
+      ix = matcher.end();
     }
     if (ix > 0 && value.length() > ix)
       list.add(value.substring(ix));
