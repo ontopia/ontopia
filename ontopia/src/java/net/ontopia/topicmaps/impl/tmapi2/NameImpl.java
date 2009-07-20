@@ -243,8 +243,13 @@ public class NameImpl extends ScopedImpl implements Name {
   public void removeTheme(Topic theme) {
     super.removeTheme(theme);
 
-    for (Variant v : wrappedVariants) {
-
+    // when a theme is removed from a name it also is removed from
+    // all variants. However TMAPI defines, if a scope of a name is explicitly
+    // added to the variant, it may not be removed when the theme is removed 
+    // from the name. So the following line will add the theme to
+    // the variant again.
+    
+    for (Variant v : getVariants()) {
       if (((VariantImpl) v).getExplicitScope().contains(theme))
         v.addTheme(theme);
     }
