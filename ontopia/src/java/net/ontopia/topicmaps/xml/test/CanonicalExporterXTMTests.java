@@ -15,8 +15,10 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
 
   protected boolean filter(String filename) {
     // Ignore importInto-specific file.
-    if (filename.equals("multiple-tms-read.xtm")) return false;
-    if (filename.equals("bug750.xtm")) return false;
+    if (filename.equals("multiple-tms-read.xtm") ||
+        filename.equals("bug750.xtm") ||
+        filename.equals("association-duplicate-reified2.xtm"))
+      return false;
     
     return filename.endsWith(".xtm");
   }

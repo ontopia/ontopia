@@ -1,0 +1,53 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <association id="assoc1">
+    <instanceOf>
+      <topicRef xlink:href="#assoctype"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#roletype1"/>
+      </roleSpec>
+      <topicRef xlink:href="#player1"/>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#roletype2"/>
+      </roleSpec>
+      <topicRef xlink:href="#player2"/>
+    </member>
+  </association>
+
+  <topic id="reifier1">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="#assoc1"/>
+    </subjectIdentity>
+  </topic>
+
+  <association id="assoc2">
+    <instanceOf>
+      <topicRef xlink:href="#assoctype"/>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#roletype1"/>
+      </roleSpec>
+      <topicRef xlink:href="#player1"/>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#roletype2"/>
+      </roleSpec>
+      <topicRef xlink:href="#player2"/>
+    </member>
+  </association>
+
+  <topic id="reifier2">
+    <subjectIdentity>
+      <topicRef xlink:href="#reifier1"/> <!-- reifier1 & 2 now same topic -->
+      <subjectIndicatorRef xlink:href="#assoc2"/> <!-- now reifying two assocs -->
+    </subjectIdentity>
+  </topic>
+  
+</topicMap>
