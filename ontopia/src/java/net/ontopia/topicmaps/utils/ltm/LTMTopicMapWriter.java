@@ -47,12 +47,6 @@ import net.ontopia.utils.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// FIXME: we should lose this dependency. 
-import org.apache.oro.text.regex.MalformedPatternException;
-import org.apache.oro.text.regex.Pattern;
-import org.apache.oro.text.regex.Perl5Compiler;
-import org.apache.oro.text.regex.Perl5Matcher;
-
 /**
  * PUBLIC: Exports topic maps to the LTM 1.3 interchange format.
  * @since 2.2
@@ -61,10 +55,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   static Logger log = LoggerFactory.getLogger(LTMTopicMapWriter.class.getName());
 
   protected String encoding; // the encoding reported on the first line
-  
-  // Syntax definition of LTM NAME.
-  protected static final String NAME_EXPRESSION = "[A-Za-z_][-A-Za-z_0-9.]*";
-  
+    
   protected boolean preserveIds;
 
   protected Map roleCounter;
@@ -105,11 +96,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
   protected String groupString1;
 
-  // These are only used in one method validate(String), but are created
-  // globally so they don't have to be created once for every validation.
-  Pattern pattern;
-  Perl5Matcher matcher;
-
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given
    * OutputStream in UTF-8. <b>Warning:</b> Use of this method is
@@ -149,7 +135,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    *   reported, because there is no way for the LTMTopicMapWriter to know
    *   what encoding the writer uses.
    * @since 4.0
-   */ // FIXME: SHOULD WE KILL THE OTHER METHOD?
+   */
   public LTMTopicMapWriter(Writer out, String encoding) {
     this.encoding = encoding;
     this.out = out;
@@ -168,20 +154,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     variantComparator = new VariantComparator();
     this.preserveIds = true;
     this.filter = null;
-    
-    try {
-      Perl5Compiler compiler = new Perl5Compiler();
-
-      // Compile the regular expression to a pattern.
-      pattern = compiler.compile(NAME_EXPRESSION);
-    } catch (MalformedPatternException e) {
-      throw new ActionValidationException("Internal error: " +
-            "The regular expression: " + NAME_EXPRESSION + 
-            " could not be compiled. Please check that it" + 
-            " is a valid regular expression.", true);
-    }
-
-    matcher = new Perl5Matcher();
   }
 
   /**
@@ -1093,7 +1065,6 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private String preserveId(TopicIF topic) {
     Iterator sourceLocators = topic.getItemIdentifiers().iterator();
-
     while (sourceLocators.hasNext()) {
       LocatorIF sourceLocator = (LocatorIF)sourceLocators.next();
       String fragmentId = getFragment(sourceLocator);
@@ -1104,9 +1075,10 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         if (lastPos > 0 && remaining.length() > 0 && allDigits(remaining))
           return idManager.makeId(topic, fragmentId.substring(0, lastPos + 1),
               true);
-        if (fragmentId.length() > 0
-            && !(fragmentId.startsWith("id") && fragmentId.length() > 2 && allDigits(fragmentId
-                .substring(2))))
+        if (fragmentId.length() > 0 &&
+            !(fragmentId.startsWith("id") &&
+              fragmentId.length() > 2 &&
+              allDigits(fragmentId.substring(2))))
           return idManager.makeId(topic, fragmentId, false);
       }
     } // Found no appropriate source locator.
@@ -1206,13 +1178,28 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
   }
   
   /** 
-   * Returns true iff fieldValue matches the regular expression NAME_EXPRESSION.
-   * @param id string to match.
-   * @return true iff fieldValue matches matchExpression.
+   * Checks whether the given id is a valid LTM ID, matching
+   * [A-Za-z_][-A-Za-z_0-9.]*
    */
   private boolean validate(String id) {
-    // Check if fieldValue matches the regular expression in pattern.
-    return matcher.matches(id, pattern);
+    if (id.length() == 0)
+      return false;
+    
+    char ch = id.charAt(0);
+    if (!((ch >= 'A' && ch <= 'Z') ||
+          (ch >= 'a' && ch <= 'z') ||
+          ch == '_'))
+      return false;
+    
+    for (int ix = 1; ix < id.length(); ix++) {
+      ch = id.charAt(ix);
+      if (!((ch >= 'A' && ch <= 'Z') ||
+            (ch >= 'a' && ch <= 'z') ||
+            (ch >= '0' && ch <= '9') ||
+            ch == '_' || ch == '-' || ch == '.'))
+        return false;
+    }
+    return true;
   }
   
   /**

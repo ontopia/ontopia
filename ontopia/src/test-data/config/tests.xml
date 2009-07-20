@@ -401,6 +401,7 @@
     <test>net.ontopia.topicmaps.utils.ltm.test.LTMTestGenerator</test>
     <test>net.ontopia.topicmaps.utils.ltm.test.LTMErrorTestGenerator</test>
     <test>net.ontopia.topicmaps.utils.ltm.test.LTMTopicMapReaderTest</test>
+    <test>net.ontopia.topicmaps.utils.ltm.test.LTMTopicMapWriterTest</test>
     <test>net.ontopia.topicmaps.utils.ltm.test.LTMTopicMapWriterTestGenerator</test>
   </group>
 
