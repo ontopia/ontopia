@@ -106,19 +106,26 @@ public class LTMTopicMapWriterTestGenerator implements TestCaseGeneratorIF {
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
-      if (recanonicalizeSource)
+      if (recanonicalizeSource) {
         // Canonicalize the source topic map.
-        (new CanonicalXTMWriter(new FileOutputStream(baseline)))
+        FileOutputStream fos = new FileOutputStream(baseline);
+        (new CanonicalXTMWriter(fos))
             .write(sourceMap);
+        fos.close();
+      }
 
       // Export the topic map to ltm.
-      (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(sourceMap);
+      FileOutputStream fos = new FileOutputStream(ltm);
+      (new LTMTopicMapWriter(fos)).write(sourceMap);
+      fos.close();
 
       // Reimport the exported ltm.
       TopicMapIF ltmMap = ImportExportUtils.getReader(ltm).read();
 
       // Canonicalize the reimported ltm.
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(ltmMap);
+      fos = new FileOutputStream(out);
+      (new CanonicalXTMWriter(fos)).write(ltmMap);
+      fos.close();
 
       // compare results
       assertTrue("canonicalizing the test file " + filename
@@ -173,7 +180,9 @@ public class LTMTopicMapWriterTestGenerator implements TestCaseGeneratorIF {
       TopicMapIF ltmMap = ImportExportUtils.getReader(ltm).read();
 
       // Canonicalize the reimported ltm.
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(ltmMap);
+      FileOutputStream fos = new FileOutputStream(out);
+      (new CanonicalXTMWriter(fos)).write(ltmMap);
+      fos.close();
 
       // compare results
       assertTrue("canonicalizing the test file " + filename
@@ -220,8 +229,8 @@ public class LTMTopicMapWriterTestGenerator implements TestCaseGeneratorIF {
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
-      LTMTopicMapWriter ltmWriter = new LTMTopicMapWriter(new FileOutputStream(
-          ltm));
+      FileOutputStream fos = new FileOutputStream(ltm)
+      LTMTopicMapWriter ltmWriter = new LTMTopicMapWriter(fos);
 
       // Set this writer to filter out the following topics.
       TMDecider tmFilter = new TMDecider();
@@ -231,12 +240,15 @@ public class LTMTopicMapWriterTestGenerator implements TestCaseGeneratorIF {
 
       // Export the topic map to ltm.
       ltmWriter.write(sourceMap);
+      fos.close();
 
       // Reimport the exported ltm.
       TopicMapIF ltmMap = ImportExportUtils.getReader(ltm).read();
 
       // Canonicalize the reimported ltm.
-      (new CanonicalXTMWriter(new FileOutputStream(out))).write(ltmMap);
+      fos = new FileOutputStream(out);
+      (new CanonicalXTMWriter(fos)).write(ltmMap);
+      fos.close();
 
       // compare results
       assertTrue("canonicalizing the test file " + filename
