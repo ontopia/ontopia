@@ -61,7 +61,8 @@ public class XTM2ContentHandler extends DefaultHandler {
   private TopicIF player;
   private List itemids;
   private TopicNameIF basename; // used as parent for variants
-  private TopicIF reifier;
+  private TopicIF reifier;         // stores reifier until end tag
+  private TopicIF stacked_reifier; // used for associations (roles can be reified)
 
   private static final int CONTEXT_TYPE        = 1;
   private static final int CONTEXT_SCOPE       = 2;
@@ -237,28 +238,31 @@ public class XTM2ContentHandler extends DefaultHandler {
       context = CONTEXT_ROLE;
       reifier = getReifier(atts);
 
-      // MERGEMAP
+      // <MERGEMAP
     } else if (name == "mergeMap")
       loadMap(makeLocator(atts.getValue("", "href")));
 
-      // VARIANT
+      // <VARIANT
     else if (name == "variant") {
       context = CONTEXT_VARIANT;
       if (basename == null)
         makeTopicName(); // can't store properties across the variants
       reifier = getReifier(atts);
 
+      // <NAME
     } else if (name == "name") {
       context = CONTEXT_TOPIC_NAME;
       reifier = getReifier(atts);
       
+      // <OCCURRENCE
     } else if (name == "occurrence") {
       context = CONTEXT_OCCURRENCE;
       reifier = getReifier(atts);
-      
+
+      // <ASSOCIATION
     } else if (name == "association") {
       context = CONTEXT_ASSOCIATION;
-      reifier = getReifier(atts);
+      stacked_reifier = getReifier(atts);
     }
   }
 
@@ -314,6 +318,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       // </ASSOCIATION
     } else if (name == "association") {
       addItemIdentifiers(association);
+      reify(association, stacked_reifier);
       association = null;
 
       // </VARIANT>

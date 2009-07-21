@@ -1,0 +1,48 @@
+<topicMap
+    xmlns="http://www.topicmaps.org/xtm/"
+    version="2.0">
+
+  <association reifier="#reifier1">
+    <type>
+      <topicRef href="#assoctype"/>
+    </type>
+    <role>
+      <type>
+        <topicRef href="#roletype1"/>
+      </type>
+      <topicRef href="#player1"/>
+    </role>
+    <role>
+      <type>
+        <topicRef href="#roletype2"/>
+      </type>
+      <topicRef href="#player2"/>
+    </role>
+  </association>
+
+  <association reifier="#reifier1">
+    <type>
+      <topicRef href="#assoctype"/>
+    </type>
+    <role>
+      <type>
+        <topicRef href="#roletype1"/>
+      </type>
+      <topicRef href="#player1"/>
+    </role>
+    <role>
+      <type>
+        <topicRef href="#roletype2"/>
+      </type>
+      <topicRef href="#player2"/>
+    </role>
+  </association>
+
+  <topic id="reifier1">
+    <subjectIdentifier href="http://psi.example.org"/>
+    <name>
+      <value>Reifier1</value>
+    </name>
+  </topic>
+  
+</topicMap>
