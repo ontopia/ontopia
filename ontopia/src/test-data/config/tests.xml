@@ -84,27 +84,27 @@
 -->
   <group>
     <name>tmapi</name>
- <!--    <test>net.ontopia.topicmaps.impl.tmapi2.test.TopicMapSystemFactoryTest</test>-->
-	<test>org.tmapi.core.TestScoped</test>
-	<test>org.tmapi.core.TestTopicMergeDetectionAutomergeDisabled</test>
-	<test>org.tmapi.core.TestTopicRemovableConstraint</test>
-	<test>org.tmapi.core.TestAssociation</test>
-	<test>org.tmapi.core.TestTopicMapSystem</test>
-	<test>org.tmapi.core.TestTopicMergeDetectionAutomergeEnabled</test>
-	<test>org.tmapi.core.TestTopicMap</test>
-	<test>org.tmapi.core.TestItemIdentifierConstraint</test>
-	<test>org.tmapi.core.TestTopicMerge</test>
-	<test>org.tmapi.core.TestTopic</test>
-	<test>org.tmapi.core.TestConstruct</test>
-	<test>org.tmapi.core.TestVariant</test>
-	<test>org.tmapi.core.TestName</test>
-	<test>org.tmapi.core.TestOccurrence</test>
-	<test>org.tmapi.core.TestSameTopicMap</test>
-	<test>org.tmapi.core.TestReifiable</test>
-	<test>org.tmapi.core.TestTyped</test>
-	<test>org.tmapi.core.TestRFC3986</test>
-	<test>org.tmapi.core.TestTopicMapMerge</test>
-	<test>org.tmapi.core.TestLocator</test>
+    <test>net.ontopia.topicmaps.impl.tmapi2.test.TopicMapSystemFactoryTest</test>
+    <test>org.tmapi.core.TestReifiable</test>
+    <test>org.tmapi.core.TestScoped</test>
+    <test>org.tmapi.core.TestTyped</test>
+    <test>org.tmapi.core.TestLocator</test>
+    <test>org.tmapi.core.TestTopicMerge</test>
+    <test>org.tmapi.core.TestTopicMapMerge</test>
+    <test>org.tmapi.core.TestTopicMergeDetectionAutomergeEnabled</test>
+    <test>org.tmapi.core.TestTopicMergeDetectionAutomergeDisabled</test>
+    <test>org.tmapi.core.TestTopicRemovableConstraint</test>
+    <test>org.tmapi.core.TestItemIdentifierConstraint</test>
+    <test>org.tmapi.core.TestTopicMapSystem</test>
+    <test>org.tmapi.core.TestConstruct</test>
+    <test>org.tmapi.core.TestTopicMap</test>
+    <test>org.tmapi.core.TestTopic</test>
+    <test>org.tmapi.core.TestAssociation</test>
+    <test>org.tmapi.core.TestSameTopicMap</test>
+    <test>org.tmapi.core.TestRole</test>
+    <test>org.tmapi.core.TestOccurrence</test>
+    <test>org.tmapi.core.TestName</test>
+    <test>org.tmapi.core.TestVariant</test>
 	<test>org.tmapi.index.TestScopedIndex</test>
 	<test>org.tmapi.index.TestTypeInstanceIndex</test>
 	<test>org.tmapi.index.TestLiteralIndex</test>
