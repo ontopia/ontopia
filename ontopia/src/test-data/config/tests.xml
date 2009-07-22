@@ -81,7 +81,7 @@
     <group-ref>net.ontopia.topicmaps.utils.rdf</group-ref>
     <group-ref>tmxml</group-ref>
   </group>
--->
+
   <group>
     <name>tmapi</name>
     <test>net.ontopia.topicmaps.impl.tmapi2.test.TopicMapSystemFactoryTest</test>
@@ -105,9 +105,9 @@
     <test>org.tmapi.core.TestOccurrence</test>
     <test>org.tmapi.core.TestName</test>
     <test>org.tmapi.core.TestVariant</test>
-	<test>org.tmapi.index.TestScopedIndex</test>
-	<test>org.tmapi.index.TestTypeInstanceIndex</test>
-	<test>org.tmapi.index.TestLiteralIndex</test>
+    <test>org.tmapi.index.TestScopedIndex</test>
+    <test>org.tmapi.index.TestTypeInstanceIndex</test>
+    <test>org.tmapi.index.TestLiteralIndex</test>
   </group>
 
   <group>
