@@ -79,7 +79,8 @@ public class DeletionUtils {
       // Remove instances of the topic
       objects = cindex.getTopics(topic).toArray();
       for (int i=0; i < objects.length; i++) {
-        ((TopicIF)objects[i]).remove();
+        if (objects[i] != topic) // avoids infinite recursion if instance of self
+          ((TopicIF)objects[i]).remove();
       }
       
       // Remove associations
@@ -89,156 +90,18 @@ public class DeletionUtils {
         role.getAssociation().remove();
       }
 
-			// Unregister as reifier
-			ReifiableIF reified = topic.getReified();
-			if (reified != null) reified.setReifier(null);
+      // Unregister as reifier
+      ReifiableIF reified = topic.getReified();
+      if (reified != null) reified.setReifier(null);
     }
   }
 
   public static void removeDependencies(ReifiableIF object) {
     synchronized (object) {
-			TopicIF reifier = object.getReifier();
-			if (reifier != null) object.setReifier(null);
-		}
-	}
-
-  //! /**
-  //!  * INTERNAL: Deletes all the given topics from the topic map. This
-  //!  * method is more efficent than deleting topics individually.
-  //!  *
-  //!  * @since 3.2
-  //!  */  
-  //! public static boolean removeTopics(TopicMapIF tm,
-  //!                                    Collection topics) {
-  //! 
-  //!   // Get topic map to which topic belongs
-  //!   if (tm == null) return false;
-  //!     
-  //!   // Get class instance index; to be used when removing where topic is used as type
-  //!   ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
-  //!   
-  //!   Object[] objects;    
-  //!   // remove where used as association role type
-  //!   objects = cindex.getAssociationRoleTypes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF type = (TopicIF)objects[o];
-  //!     if (topics.contains(type)) {
-  //!       Object[] deps = cindex.getAssociationRoles(type).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((TypedIF)deps[d]).setType(null);
-  //!       }        
-  //!     }
-  //!   }
-  //!   // remove where used as association type
-  //!   objects = cindex.getAssociationTypes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF type = (TopicIF)objects[o];
-  //!     if (topics.contains(type)) {
-  //!       Object[] deps = cindex.getAssociations(type).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((TypedIF)deps[d]).setType(null);
-  //!       }        
-  //!     }
-  //!   }
-  //!   // remove where used as basename type
-  //!   objects = cindex.getTopicNameTypes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF type = (TopicIF)objects[o];
-  //!     if (topics.contains(type)) {
-  //!       Object[] deps = cindex.getTopicNames(type).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((TypedIF)deps[d]).setType(null);
-  //!       }        
-  //!     }
-  //!   }
-  //!   // remove where used as occurrence type
-  //!   objects = cindex.getOccurrenceTypes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF type = (TopicIF)objects[o];
-  //!     if (topics.contains(type)) {
-  //!       Object[] deps = cindex.getOccurrences(type).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((TypedIF)deps[d]).setType(null);
-  //!       }        
-  //!     }
-  //!   }
-  //!   // remove where used as topic type
-  //!   objects = cindex.getTopicTypes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF type = (TopicIF)objects[o];
-  //!     if (topics.contains(type)) {
-  //!       Object[] deps = cindex.getTopics(type).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((TopicIF)deps[d]).removeType(type);
-  //!       }        
-  //!     }
-  //!   }
-  //!   
-  //!   // Get scope index; to be used when removing where topic is used as theme
-  //!   ScopeIndexIF sindex = (ScopeIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
-  //! 
-  //!   // remove where used as association theme
-  //!   objects = sindex.getAssociationThemes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF theme = (TopicIF)objects[o];
-  //!     if (topics.contains(theme)) {
-  //!       Object[] deps = sindex.getAssociations(theme).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((ScopedIF)deps[d]).removeTheme(theme);
-  //!       }        
-  //!     }
-  //!   }
-  //!   // remove where used as basename theme
-  //!   objects = sindex.getTopicNameThemes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF theme = (TopicIF)objects[o];
-  //!     if (topics.contains(theme)) {
-  //!       Object[] deps = sindex.getTopicNames(theme).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((ScopedIF)deps[d]).removeTheme(theme);
-  //!       }        
-  //!     }
-  //!   }
-  //!   // remove where used as occurrence theme
-  //!   objects = sindex.getOccurrenceThemes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF theme = (TopicIF)objects[o];
-  //!     if (topics.contains(theme)) {
-  //!       Object[] deps = sindex.getOccurrences(theme).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((ScopedIF)deps[d]).removeTheme(theme);
-  //!       }        
-  //!     }
-  //!   }
-  //!   // remove where used as variant theme
-  //!   objects = sindex.getVariantThemes().toArray();
-  //!   for (int o=0; o < objects.length; o++) {
-  //!     TopicIF theme = (TopicIF)objects[o];
-  //!     if (topics.contains(theme)) {
-  //!       Object[] deps = sindex.getVariants(theme).toArray();
-  //!       for (int d=0; d < deps.length; d++) {
-  //!         ((ScopedIF)deps[d]).removeTheme(theme);
-  //!       }        
-  //!     }
-  //!   }
-  //! 
-  //!   // now delete the topics
-  //!   Iterator iter = topics.iterator();
-  //!   while (iter.hasNext()) {
-  //!     TopicIF topic = (TopicIF)iter.next();
-  //!     
-  //!     // Remove associations
-  //!     Object[] roles = topic.getRoles().toArray();
-  //!     for (int i=0; i < roles.length; i++) {
-  //!       AssociationRoleIF role = (AssociationRoleIF)roles[i];        
-  //!       role.getAssociation().remove();
-  //!     }
-  //!     
-  //!     // Remove topic from topic map
-  //!     topic.remove();
-  //!   }
-  //!   return true;      
-  //! }
+      TopicIF reifier = object.getReifier();
+      if (reifier != null) object.setReifier(null);
+    }
+  }
   
   /**
    * INTERNAL: Deletes all the topics and associations from the topic
