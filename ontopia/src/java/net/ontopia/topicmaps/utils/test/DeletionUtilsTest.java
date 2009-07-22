@@ -5,12 +5,14 @@ package net.ontopia.topicmaps.utils.test;
 
 import java.io.*;
 import java.util.*;
+
+import net.ontopia.test.*;
+import net.ontopia.utils.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.test.*;
 import net.ontopia.topicmaps.utils.*;
-import net.ontopia.utils.*;
-import net.ontopia.test.*;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 
 public class DeletionUtilsTest extends AbstractTopicMapTestCase {
 
@@ -61,7 +63,7 @@ public class DeletionUtilsTest extends AbstractTopicMapTestCase {
         TopicMapIF tm = makeTopicMap();
         TopicMapImporterIF importer = ImportExportUtils.getImporter(name);
         if (name.endsWith(".xtm"))
-          ((net.ontopia.topicmaps.xml.XTMTopicMapReader)importer).setValidation(false);
+          ((XTMTopicMapReader) importer).setValidation(false);
         importer.importInto(tm);
         clearTopicMap(tm);
         tm.getStore().close();
@@ -76,7 +78,8 @@ public class DeletionUtilsTest extends AbstractTopicMapTestCase {
     TopicIF morituri = builder.makeTopic();
     morituri.remove();
 
-    assertTrue("Topic still connected to topic map", morituri.getTopicMap() == null);
+    assertTrue("Topic still connected to topic map",
+               morituri.getTopicMap() == null);
     assertTrue("Topic map not empty", topicmap.getTopics().isEmpty());
   }
 
