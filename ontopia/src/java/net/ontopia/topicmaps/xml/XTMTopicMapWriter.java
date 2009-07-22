@@ -153,6 +153,7 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
         XTM2TopicMapExporter exporter = new XTM2TopicMapExporter();
         if (filter != null)
           exporter.setFilter(filter);
+        exporter.setExportItemIdentifiers(getExportSourceLocators());
         exporter.export(topicmap, out);
       } else
         throw new OntopiaRuntimeException("Unknown XTM version: " + xtm_version);

@@ -37,6 +37,7 @@ import org.xml.sax.helpers.AttributeListImpl;
  * INTERNAL: Exports topic maps to the XTM 2.0 interchange format.
  */
 public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
+  protected boolean export_itemids = false;
   protected AttributeListImpl atts;
   protected static final AttributeListImpl EMPTY_ATTR_LIST =
     new AttributeListImpl();
@@ -54,6 +55,10 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
 
   public XTM2TopicMapExporter() {
     this.atts = new AttributeListImpl();
+  }
+
+  public void setExportItemIdentifiers(boolean export_itemids) {
+    this.export_itemids = export_itemids;
   }
   
   /**
@@ -277,7 +282,8 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
 
   private void writeItemIdentities(TMObjectIF obj, DocumentHandler dh)
     throws SAXException {
-    write(obj.getItemIdentifiers(), "itemIdentity", dh);
+    if (export_itemids)
+      write(obj.getItemIdentifiers(), "itemIdentity", dh);
   }
 
   private boolean isDefaultNameType(TopicIF type) {
