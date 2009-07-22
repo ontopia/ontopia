@@ -1,0 +1,39 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>reified-association-source.ltm#assoctype</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>reified-association-source.ltm#reifier</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Reifier</value>
+<type topicref="5"></type>
+</name>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>reified-association-source.ltm#roletype</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>reified-association-source.ltm#source</locator>
+</itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<association number="1" reifier="2">
+<type topicref="1"></type>
+<role number="1">
+<player topicref="4"></player>
+<type topicref="3"></type>
+</role>
+</association>
+</topicMap>

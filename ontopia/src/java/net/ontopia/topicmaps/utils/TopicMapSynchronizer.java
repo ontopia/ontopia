@@ -164,7 +164,7 @@ public class TopicMapSynchronizer {
       } else {
         TopicNameIF tbn = builder.makeTopicName(targett, ttype, sbn.getValue());
         addScope(tbn, tscope);
-        addReifier(tbn, sbn.getReifier(), tracker);
+        addReifier(tbn, sbn.getReifier(), tfilter, sfilter, tracker);
         update(tbn, sbn, tfilter);
         if (debug) log.debug("  target name added " + tbn); 
       }
@@ -207,7 +207,7 @@ public class TopicMapSynchronizer {
         OccurrenceIF tocc = builder.makeOccurrence(targett, ttype, "");
         CopyUtils.copyOccurrenceData(tocc, socc);
         addScope(tocc, tscope);
-        addReifier(tocc, socc.getReifier(), tracker);
+        addReifier(tocc, socc.getReifier(), tfilter, sfilter, tracker);
         if (debug) log.debug("  target occurrence added " + tocc); 
       }
     }
@@ -251,7 +251,7 @@ public class TopicMapSynchronizer {
         // exist in the target, and so we must create it
         AssociationIF tassoc = builder.makeAssociation(ttype);
         addScope(tassoc, tscope);
-        addReifier(tassoc, sassoc.getReifier(), tracker);
+        addReifier(tassoc, sassoc.getReifier(), tfilter, sfilter, tracker);
         Iterator it2 = sassoc.getRoles().iterator();
         while (it2.hasNext()) {
           role = (AssociationRoleIF) it2.next();
@@ -445,10 +445,29 @@ public class TopicMapSynchronizer {
 
   // reifiers is topic in source, not target!
   private static void addReifier(ReifiableIF reified, TopicIF reifiers,
+                                 DeciderIF tfilter, DeciderIF sfilter,
                                  AssociationTracker tracker) {
-    if (!tracker.inSourceTopics(reifiers))
+    if (reifiers == null)
+      return;
+    
+    if (!tracker.isSourceTopicsSet()) {
+      // this means we're synchronizing a single topic. different mode
+      // of operation
+      if (!sfilter.ok(reifiers))
+        return; // client doesn't want the reifier, so we skip it
+
+      // FIXME: if there is cycle of reification here we could fall into
+      //        a recursion well
+
+      // sync the reifier across
+      update(reified.getTopicMap(), reifiers, tfilter, sfilter, tracker);
+    } else if (!tracker.inSourceTopics(reifiers))
+      // this means we're synchronizing a set of topics, but the reifier
+      // is not one of them, so we skip it
       return;
 
+    // just set the reifier. statements about the reifier will either be
+    // synchronized by the main code, or have been synchronized above.
     TopicIF reifiert = getOrCreate(reified.getTopicMap(), reifiers);
     reified.setReifier(reifiert);
   }
@@ -517,6 +536,10 @@ public class TopicMapSynchronizer {
 
     public Collection getUnsupported() {
       return unwanted.values();
+    }
+
+    public boolean isSourceTopicsSet() {
+      return (sourcetopics != null);
     }
 
     public boolean inSourceTopics(TopicIF topic) {

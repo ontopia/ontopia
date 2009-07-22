@@ -1,0 +1,4 @@
+
+assoctype(source : roletype) ~ reifier
+
+[reifier = "Reifier"]
