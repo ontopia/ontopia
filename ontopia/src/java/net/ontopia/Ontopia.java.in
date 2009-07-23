@@ -170,7 +170,6 @@ public final class Ontopia {
     checkClass("com.hp.hpl.jena.graph.Node",                   "jena.jar");
     checkClass("com.ibm.icu.util.Calendar",                    "icu4j.jar");
     checkClass("com.thaiopensource.relaxng.Schema",            "jing.jar");
-    checkClass("org.apache.oro.text.regex.MalformedPatternException", "oro.jar");
   }
 
   /**
