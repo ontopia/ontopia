@@ -37,19 +37,19 @@ public class ParsedQuery implements ParsedQueryIF {
   
   /// ParsedQueryIF implementation [the class does not implement the interface]
   
-  public List getSelectedVariables() {
+  public List<String> getSelectedVariables() {
     return getVariables(query.getSelectedVariables());
   }
 
-  public Collection getAllVariables() {
+  public Collection<String> getAllVariables() {
     return getVariables(query.getAllVariables());
   }
   
-  public Collection getCountedVariables() {
+  public Collection<String> getCountedVariables() {
     return getVariables(query.getCountedVariables());
   }
 
-  public List getOrderBy() {
+  public List<String> getOrderBy() {
     return getVariables(query.getOrderBy());
   }
 
@@ -61,7 +61,7 @@ public class ParsedQuery implements ParsedQueryIF {
     return processor.execute(query);
   }
 
-  public QueryResultIF execute(Map arguments) throws InvalidQueryException {
+  public QueryResultIF execute(Map<String, ?> arguments) throws InvalidQueryException {
     return processor.execute(query, arguments);
   }
   
@@ -71,11 +71,11 @@ public class ParsedQuery implements ParsedQueryIF {
     return query.toString();
   }
 
-  protected List getVariables(Collection varnames) {
-    List results = new ArrayList(varnames.size());
-    Iterator iter = varnames.iterator();
+  protected List<String> getVariables(Collection<Variable> varnames) {
+    List<String> results = new ArrayList<String>(varnames.size());
+    Iterator<Variable> iter = varnames.iterator();
     while (iter.hasNext()) {
-      results.add(((Variable)iter.next()).getName());
+      results.add(iter.next().getName());
     }
     return results;
   }

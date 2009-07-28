@@ -36,7 +36,7 @@ public interface QueryProcessorIF {
    *
    * @since 2.0
    */
-  public QueryResultIF execute(String query, Map arguments)
+  public QueryResultIF execute(String query, Map<String, ?> arguments)
     throws InvalidQueryException;
 
   /**
@@ -46,7 +46,7 @@ public interface QueryProcessorIF {
    *
    * @since 2.1
    */
-  public QueryResultIF execute(String query, Map arguments,
+  public QueryResultIF execute(String query, Map<String, ?> arguments,
                                DeclarationContextIF context)
     throws InvalidQueryException;
   

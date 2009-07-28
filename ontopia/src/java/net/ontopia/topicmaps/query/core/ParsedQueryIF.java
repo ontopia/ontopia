@@ -19,7 +19,7 @@ public interface ParsedQueryIF {
    * returned, in no particular order.
    * @return An immutable List of String objects.
    */
-  public List getSelectedVariables();
+  public List<String> getSelectedVariables();
 
   /**
    * PUBLIC: Returns the variables that are counted in the
@@ -28,14 +28,14 @@ public interface ParsedQueryIF {
    * is no <tt>select</tt> clause an empty collection is returned.
    * @return An immutable Collection of String objects.
    */
-  public Collection getCountedVariables();
+  public Collection<String> getCountedVariables();
 
   /**
    * PUBLIC: Returns all the variables used in the query, in no
    * particular order.
    * @return An immutable Collection of String objects.
    */
-  public Collection getAllVariables();
+  public Collection<String> getAllVariables();
 
   /**
    * PUBLIC: Returns the variables listed in the <tt>order by</tt>
@@ -44,7 +44,7 @@ public interface ParsedQueryIF {
    * <tt>isOrderedAscending</tt> method.
    * @return An immutable List of String objects.
    */
-  public List getOrderBy();
+  public List<String> getOrderBy();
 
   /**
    * PUBLIC: Returns true if the named variable is to be sorted in
@@ -65,6 +65,6 @@ public interface ParsedQueryIF {
    * to date.
    * @since 2.0
    */
-  public QueryResultIF execute(Map arguments) throws InvalidQueryException;
+  public QueryResultIF execute(Map<String, ?> arguments) throws InvalidQueryException;
   
 }

@@ -7,7 +7,10 @@ package net.ontopia.topicmaps.query.core;
  * PUBLIC: This exception is used to indicate that there is something
  * wrong with the query, whether syntactically or semantically.
  */
-public class InvalidQueryException extends QueryException {
+public class InvalidQueryException extends QueryException 
+{
+  private static final long serialVersionUID = 2502041495982776532L;
+  
   public InvalidQueryException(String msg) {
     super(msg);
   }
