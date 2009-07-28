@@ -117,6 +117,8 @@
   
     <property name="init.done" value="true" />
 
+    <!-- svn-revision to the external xtm2 test suite -->
+    <property name="xtm2.revision" value="10" />
   </target>
 
   <!-- ======================================================================
@@ -698,7 +700,7 @@
         Unit tests
        ====================================================================== -->
 
-  <target name="test" depends="init">
+  <target name="test" depends="init, download-xtm2">
     <property name="test.config" value="${test.path}/config/tests.xml" />
     <property name="test.name" value="complete-non-rdbms" />
     <echo>Using configuration file ${test.config}</echo>
@@ -1516,7 +1518,7 @@
 
   </target>
 
-  <target name="dist.engine.test.collect">
+  <target name="dist.engine.test.collect" depends="download-xtm2">
 
     <!-- Test data -->
     <copy todir="${dist.path}/tests/test-data/canonical/baseline">
@@ -1592,6 +1594,27 @@
       <fileset dir="${test.path}/cxtm" />
     </copy>
 
+  </target>
+
+  <target name="checkfiles-xtm2" depends="init">
+    <property name="xtm2.basename" value="${test.path}/xtm2-r${xtm2.revision}"/>
+    <!-- checks if file has already been downloaded -->
+    <available file="${xtm2.basename}.tar.gz" property="xtm2.exists" />
+  </target>
+
+  <target name="download-xtm2"
+          depends="checkfiles-xtm2" unless="xtm2.exists">
+    <!-- TODO download to ${build.root}, so 'ant clean.build' would clean up instead -->
+    <delete dir="${test.path}/xtm2" />
+    <!-- download and extract xtm2 -->
+    <get src="http://cxtm-tests.svn.sourceforge.net/viewvc/cxtm-tests/trunk/xtm2.tar.gz?view=tar&amp;pathrev=${xtm2.revision}" 
+         dest="${xtm2.basename}.tar.gz" />
+    <gunzip src="${xtm2.basename}.tar.gz"/>
+    <untar src="${xtm2.basename}.tar" dest="${test.path}/">
+      <patternset>
+        <include name="xtm2/**"/>
+      </patternset>
+    </untar>
   </target>
 
   <!-- - - - Collect navigator runtime components  - - - - - - - - - - - - - -->
