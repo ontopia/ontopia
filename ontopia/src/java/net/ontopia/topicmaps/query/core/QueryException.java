@@ -9,10 +9,7 @@ import net.ontopia.utils.OntopiaException;
  * PUBLIC: Common super-exception for all exceptions thrown by the
  * query engine.
  */
-public class QueryException extends OntopiaException 
-{
-  private static final long serialVersionUID = 681171293109058887L;
-  
+public class QueryException extends OntopiaException {
   public QueryException(String msg) {
     super(msg);
   }
