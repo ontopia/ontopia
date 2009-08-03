@@ -1410,6 +1410,7 @@
     <copy file="${lib.path}/opencsv-1.8.jar" tofile="${dist.path}/lib/opencsv.jar" />
     <copy file="${lib.path}/velocity-1.3.jar" tofile="${dist.path}/lib/velocity.jar" />
     <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
+    <copy file="${lib.path}/lucene-snowball-2.0.0.jar" tofile="${dist.path}/lib/lucene-snowball.jar" />
 
     <copy todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes">
       <fileset dir="${dist.path}/lib">
