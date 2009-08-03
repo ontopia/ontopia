@@ -20,12 +20,12 @@ import org.tmapi.core.TopicMapSystem;
 /**
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
-public class TopicMapSystemImpl implements TopicMapSystem {
+public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
 
   private TopicMapSystemFactory sf;
   private Map<Locator, TopicMapImpl> loc2tm = new HashMap<Locator, TopicMapImpl>();
 
-  public TopicMapSystemImpl(TopicMapSystemFactory topicMapSystemFactory) {
+  public MemoryTopicMapSystemImpl(TopicMapSystemFactory topicMapSystemFactory) {
     sf = topicMapSystemFactory;
   }
 
@@ -58,7 +58,7 @@ public class TopicMapSystemImpl implements TopicMapSystem {
     return wrapLocator(createLocatorIF(reference));
   }
 
-  Locator wrapLocator(LocatorIF loc) {
+  public Locator wrapLocator(LocatorIF loc) {
     return new LocatorImpl(loc);
   }
 
@@ -145,12 +145,8 @@ public class TopicMapSystemImpl implements TopicMapSystem {
 
   /* --- callbacks */
 
-  void close(TopicMapImpl topicmap) {
-    // Something to do here?
-  }
-
-  void remove(TopicMapImpl topicmap) {
-    loc2tm.remove(wrapLocator(topicmap.getWrapped().getStore().getBaseAddress()));
+  public void remove(LocatorIF loc) {
+    loc2tm.remove(wrapLocator(loc));
   }
 
 }

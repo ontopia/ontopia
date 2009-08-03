@@ -18,12 +18,12 @@ public class TopicMapSystemFactoryTest
 
   public void testFactory() throws org.tmapi.core.TMAPIException {
     TopicMapSystemFactory tmsf = TopicMapSystemFactory.newInstance();
-    assertTrue("TopicMapSystemFactory is not net.ontopia.topicmaps.impl.oks2tmapi.TopicMapSystemFactory", 
+    assertTrue("TopicMapSystemFactory is not net.ontopia.topicmaps.impl.tmapi2.TopicMapSystemFactory", 
 	       tmsf instanceof net.ontopia.topicmaps.impl.tmapi2.TopicMapSystemFactory);
 
     TopicMapSystem ts = tmsf.newTopicMapSystem();
-    assertTrue("TopicMapSystem is not net.ontopia.topicmaps.impl.oks2tmapi.TopicMapSystem", 
-	       ts instanceof net.ontopia.topicmaps.impl.tmapi2.TopicMapSystemImpl);
+    assertTrue("TopicMapSystem is not net.ontopia.topicmaps.impl.tmapi2.TopicMapSystem", 
+	       ts instanceof net.ontopia.topicmaps.impl.tmapi2.MemoryTopicMapSystemImpl);
 
     ts.close();
   }

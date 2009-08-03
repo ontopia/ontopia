@@ -27,12 +27,35 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
       new Feature("http://tmapi.org/features/merge/byTopicName", true, false),
       new Feature("http://tmapi.org/features/readOnly", true, false) };
 
+  public final String STORE_PROPERTY = "net.ontopia.topicmaps.store"; 
+  
   public TopicMapSystemFactory() {
   }
 
+  /**
+   * <p>
+   * Create a new TopicMapSystem instance based on the properties set so far.
+   * <br>Supported TopicMapSystems:
+   * <ul>
+   * <li>{@link MemoryTopicMapSystemImpl}
+   * <li>{@link RDBMSTopicMapSystemImpl}
+   * </ul>
+   * </p>
+   * <p>In order to configure the TopicMapStore, you need to set the property
+   * "net.ontopia.topicmaps.store" to one of the following values:
+   * <ul>
+   * <li>memory (default)
+   * <li>rdbms
+   * </ul>
+   * </p>
+   */
   public TopicMapSystem newTopicMapSystem()
       throws TMAPIException {
-    return new TopicMapSystemImpl(this);
+    String store = properties.getProperty(STORE_PROPERTY);
+    if (store != null && store.equalsIgnoreCase("rdbms") )
+      return new RDBMSTopicMapSystemImpl(this);
+    else 
+      return new MemoryTopicMapSystemImpl(this);
   }
 
   public boolean hasFeature(String feature) {

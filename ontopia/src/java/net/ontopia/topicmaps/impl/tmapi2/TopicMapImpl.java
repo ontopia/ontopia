@@ -43,7 +43,7 @@ import org.tmapi.index.TypeInstanceIndex;
 public class TopicMapImpl extends ReifiableImpl implements
     TopicMap {
 
-  private TopicMapSystemImpl tmsystem;
+  private TopicMapSystemIF tmsystem;
   private TopicMapIF wrapped;
   private TopicImpl defaultNameType = null;
 
@@ -59,7 +59,7 @@ public class TopicMapImpl extends ReifiableImpl implements
   // this is used for the automatic item identifier creation in createTopic()
   private static AtomicLong lastId = new AtomicLong(0);
 
-  public TopicMapImpl(TopicMapSystemImpl tmsystem, TopicMapStoreIF store) {
+  public TopicMapImpl(TopicMapSystemIF tmsystem, TopicMapStoreIF store) {
     super(null);
     this.tmsystem = tmsystem;
     wrapped = store.getTopicMap();
@@ -103,7 +103,6 @@ public class TopicMapImpl extends ReifiableImpl implements
    */
 
   public void close() {
-    tmsystem.close(this);
     wrapped.getStore().close();
   }
 
@@ -367,8 +366,8 @@ public class TopicMapImpl extends ReifiableImpl implements
    */
 
   public void remove() {
-    tmsystem.remove(this);
     wrapped.getStore().delete(true);
+    tmsystem.remove(wrapped.getStore().getBaseAddress());
   }
 
   /* ---- wrappers: topic */
