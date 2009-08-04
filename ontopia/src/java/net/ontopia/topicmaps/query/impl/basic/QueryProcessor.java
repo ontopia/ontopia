@@ -255,6 +255,17 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     for (Iterator it = countVars.iterator(); it.hasNext();)
       countcols[ix++] = matches.getIndex(it.next());
 
+    // fixes issue 80: return 0 if the query did not match anything, and
+    //                 the select clauses contain only counted variables
+    if (countVars.size() == matches.colcount && 
+        matches.last == -1 && matches.size == 1) {
+      Object[] row = matches.data[matches.size - 1];
+      for (int i = 0; i < matches.colcount; i++)
+        row[i] = new Integer(0);
+      matches.last = 0;
+      return matches;
+    }
+      
     ArrayWrapper wrapper = new ArrayWrapper(); // for instance reuse...
     Map counters = new HashMap();
 
@@ -284,6 +295,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
 
       matches.data[next++] = row; // no need to expand...
     }
+    
     matches.last = next - 1;
     return matches;
   }
