@@ -183,7 +183,9 @@ easier to read.</p>
 <tr><td>
     <input type=submit value="Search" tabindex="3">
     <input type=reset  value="Reset">
-    <input type=checkbox name="trace"> Show trace
+    <input type=radio name="executeQuery" value="normal" checked="checked"> Run query
+    <input type=radio name="executeQuery" value="trace"> Show trace
+    <input type=radio name="executeQuery" value="analyze"> Analyze query
 
 </table>
 <input type=hidden value="<%= tmid %>" name=tm>

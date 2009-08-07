@@ -47,9 +47,16 @@ if (charenc != null)
 
 StringWriter trace = null;
 SimpleQueryTracer tracer = null;
-if (request.getParameter("trace") != null) {
-  trace = new StringWriter();
-  tracer = new SimpleQueryTracer(trace);
+String executeQuery = request.getParameter("executeQuery");
+boolean analyzeQuery = false;
+
+if (executeQuery != null) {
+  if (executeQuery.equals("trace")) {
+    trace = new StringWriter();
+    tracer = new SimpleQueryTracer(trace);
+  } else if (executeQuery.equals("analyze")) {
+    analyzeQuery = true;
+  } 
 }
 
 String tmid = request.getParameter("tm");
@@ -83,7 +90,7 @@ try {
   
   QueryResultIF result = null;
   
-  if (pquery != null) {
+  if (!analyzeQuery && pquery != null) {
     StringifierIF str = TopicStringifiers.getDefaultStringifier();
   
     if (tracer != null)
@@ -145,10 +152,10 @@ try {
 <tr><th align=left>Result rows</th>    <td><%= rows %></td></tr>
 </table>
 
-<% if (pquery != null && pquery == null) { %>
+<% if (analyzeQuery) { %>
   <p><b>Parsed query:</b></p>
 
-  <p><%= pquery %></p>
+  <pre><%= pquery %></pre>
 <% } %>
 
 </template:put>
