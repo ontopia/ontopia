@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+  <storage id="default">
+    <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+      <!-- <param name="path" value="${CWD}/WEB-INF/classes/topicmaps"/> -->
+      <param name="path" value="/Volumes/McFeasty/Users/Stig/jobb/utvikling/opensource/ontopia/trunk/sandbox/ontopia-stormberg-demowebapp/src/main/resources/topicmaps"/>
+      <param name="suffix" value=".xtm"/>
+      <param name="duplicateSuppression" value="false"/>
+      <param name="validation" value="true"/>
+    </source>
+  </storage>
+<!-- ${CWD} -->
+</config>

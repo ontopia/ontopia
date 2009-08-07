@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:tolog="http://psi.ontopia.net/jsp/taglib/tolog">
+<jsp:directive.page pageEncoding="utf-8" contentType="text/html;charset=utf-8"/>
+
+<tolog:context topicmap="stormberg.xtm">
+
+    <tolog:query name="TOPICLIST">
+        using stormberg for i"http://lau.no/stormberg/"
+        stormberg:passer-til($A:stormberg:kategori, $B:stormberg:kategori)?
+    </tolog:query>
+
+
+    <tolog:foreach query="TOPICLIST">
+        <div>
+            <tolog:out var="A"/> <tolog:id var="B"/>
+        </div>
+    </tolog:foreach>
+
+</tolog:context>
+</html>
