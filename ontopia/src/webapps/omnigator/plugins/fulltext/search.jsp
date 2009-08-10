@@ -59,9 +59,7 @@
 
 <p>This plug-in allows you to search your topic map using the full-text
 search engine Lucene. Indexing is performed on names, the contents of
-internal occurrences, and the locators of external occurrences. (The
-full OKS also allows indexing of the contents of external
-occurrences.)</p>
+internal occurrences, and the locators of external occurrences.</p>
 
 <p>By default, searching is perfomed on names and the contents of
 internal occurrences, but this can be restricted to the one or the
