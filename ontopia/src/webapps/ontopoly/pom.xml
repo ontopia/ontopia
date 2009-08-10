@@ -42,6 +42,16 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.js</include>
+                    <include>**/*.html</include>
+                    <include>**/*.gif</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -53,10 +63,8 @@
             </plugin>
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
+                <!-- Should use jetty-maven-plugin -->
                 <artifactId>maven-jetty-plugin</artifactId>
-                <configuration>
-                    <contextPath>/</contextPath>
-                </configuration>
             </plugin>
         </plugins>
     </build>
