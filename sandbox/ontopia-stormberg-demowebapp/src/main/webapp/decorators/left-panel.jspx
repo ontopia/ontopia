@@ -4,11 +4,7 @@
       xmlns:tolog="http://psi.ontopia.net/jsp/taglib/tolog">
 <jsp:directive.page pageEncoding="utf-8" contentType="text/html;charset=utf-8"/>
 
-<head>
-    <title>Stormberg product catalog ripoff</title>
-</head>
 <body>
-<h1>Webapp demo</h1>
 <tolog:context topicmap="stormberg.xtm">
 
     <tolog:query name="TOPICLIST">
@@ -16,13 +12,11 @@
         stormberg:passer-til($A:stormberg:kategori, $B:stormberg:kategori)?
     </tolog:query>
 
-
     <tolog:foreach query="TOPICLIST">
         <div>
-            <tolog:out var="A"/> <tolog:id var="B"/>
+            <tolog:out var="A"/> -- <tolog:out var="B"/>
         </div>
     </tolog:foreach>
-
 </tolog:context>
 </body>
 </html>
