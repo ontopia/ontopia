@@ -4,13 +4,13 @@
           xmlns:tolog="http://psi.ontopia.net/jsp/taglib/tolog"
           xmlns:c="http://java.sun.com/jsp/jstl/core">
     <jsp:directive.page pageEncoding="utf-8" contentType="text/html;charset=utf-8"/>
-    <h1>Andre aktuelle produkter</h1>
-
     <tolog:context topicmap="stormberg.xtm">
         <tolog:declare>using stormberg for i"http://psi.stormberg.no/"</tolog:declare>
 
         <tolog:set var="TOPIC" reqparam="topic"/>
         <tolog:if var="TOPIC">
+            <h1>Andre aktuelle produkter</h1>
+            
             <tolog:foreach
                     query="stormberg:aktuelle-produkter(%TOPIC% : stormberg:klesplagg, $OTHER: stormberg:klesplagg)?">
                 <c:set var="otherProductName"><tolog:out var='OTHER'/></c:set>
