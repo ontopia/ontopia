@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:tolog="http://psi.ontopia.net/jsp/taglib/tolog"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <jsp:directive.page pageEncoding="utf-8" contentType="text/html;charset=utf-8"/>
+    <h1>Andre aktuelle produkter</h1>
+
+    <tolog:context topicmap="stormberg.xtm">
+        <tolog:declare>using stormberg for i"http://psi.stormberg.no/"</tolog:declare>
+
+        <tolog:set var="TOPIC" reqparam="topic"/>
+        <tolog:if var="TOPIC">
+            <tolog:foreach
+                    query="stormberg:aktuelle-produkter(%TOPIC% : stormberg:klesplagg, $OTHER: stormberg:klesplagg)?">
+                <c:set var="otherProductName"><tolog:out var='OTHER'/></c:set>
+                <c:set var="otherProductID"><tolog:id var='OTHER'/></c:set>
+
+                <div>
+                    <a href="${pageContext.request.contextPath}/product/klesplagg.jspx?topic=${otherProductID}">${otherProductName}</a>
+                </div>
+            </tolog:foreach>
+        </tolog:if>
+    </tolog:context>
+</jsp:root>

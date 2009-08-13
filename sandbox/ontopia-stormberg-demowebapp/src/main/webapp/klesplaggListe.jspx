@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:tolog="http://psi.ontopia.net/jsp/taglib/tolog"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <jsp:directive.page pageEncoding="utf-8" contentType="text/html;charset=utf-8"/>
+    <h1>Klesplaggliste</h1>
+    <tolog:context topicmap="stormberg.xtm">
+        <tolog:declare>using stormberg for i"http://psi.stormberg.no/"</tolog:declare>
+        <tolog:query name="TOPICLIST">
+            instance-of($KLESPLAGG, stormberg:klesplagg)?
+        </tolog:query>
+        <tolog:foreach query="TOPICLIST">
+            <div>
+                <c:set var="topicName"><tolog:out var="KLESPLAGG"/></c:set>
+                <c:set var="topicId"><tolog:oid var='KLESPLAGG'/></c:set>
+
+                <a href="${pageContext.request.contextPath}/product/klesplagg.jspx?topic=${topicId}">${topicName}</a>
+            </div>
+        </tolog:foreach>
+    </tolog:context>
+</jsp:root>
+
+
+
+
+
+        

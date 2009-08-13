@@ -1,5 +1,5 @@
-<decorators defaultdir="/decorators">
-    <decorator name="main" page="main.jsp">
-          <pattern>/*</pattern>
+<decorators>
+    <decorator name="product" page="/product/product-decorator.jspx">
+          <pattern>/product/*</pattern>
     </decorator>
 </decorators>
