@@ -136,6 +136,8 @@ public class KeyGenerator {
       return makeAssociationKey((AssociationIF) object);
     else if (object instanceof AssociationRoleIF)
       return makeAssociationRoleKey((AssociationRoleIF) object);
+    else if (object instanceof VariantNameIF)
+      return makeVariantKey((VariantNameIF) object);
     else
       throw new OntopiaRuntimeException("Cannot make key for: " + object);
   }
