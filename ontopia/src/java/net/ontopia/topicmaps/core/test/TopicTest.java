@@ -392,6 +392,13 @@ public class TopicTest extends AbstractTMObjectTest {
       // this is the expected outcome
     }
   }
+
+  public void testDeleteInstanceOfSelf() {
+    TopicIF topic = builder.makeTopic();
+    topic.addType(topic);
+    topic.remove();
+    assertTrue("topic was not deleted", topic.getTopicMap() == null);
+  }
   
   // --- Internal methods
 
