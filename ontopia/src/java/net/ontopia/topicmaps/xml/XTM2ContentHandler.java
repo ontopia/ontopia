@@ -63,6 +63,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   private TopicNameIF basename; // used as parent for variants
   private TopicIF reifier;         // stores reifier until end tag
   private TopicIF stacked_reifier; // used for associations (roles can be reified)
+  private List<RoleReification> delayedRoleReification; // see issue 116 below
 
   private static final int CONTEXT_TYPE        = 1;
   private static final int CONTEXT_SCOPE       = 2;
@@ -94,6 +95,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     this.content = new StringBuffer();
     this.scope = new ArrayList();
     this.itemids = new ArrayList();
+    this.delayedRoleReification = new ArrayList<RoleReification>();
 
     read_documents.add(doc_address);
   }
@@ -231,7 +233,7 @@ public class XTM2ContentHandler extends DefaultHandler {
       if (association == null) {
         association = builder.makeAssociation(type);
         addScope(association);
-        reify(association, reifier);
+        //reify(association, reifier);
         addItemIdentifiers(association);
         clear();
       }
@@ -311,7 +313,14 @@ public class XTM2ContentHandler extends DefaultHandler {
     } else if (name == "role") {
       AssociationRoleIF role =
         builder.makeAssociationRole(association, type, player);
-      reify(role, reifier);
+      if (reifier != null && reifier.getReified() != null) 
+        // this is essentially issue 116: the role is reified by a topic that
+        // already has a reifier. we can't merge the roles, because we haven't
+        // seen the whole association yet. so we have to delay the reification
+        // until after the association is done.
+        delayedRoleReification.add(new RoleReification(role, reifier));
+      else
+        reify(role, reifier);
       addItemIdentifiers(role);
       clear();
 
@@ -320,6 +329,11 @@ public class XTM2ContentHandler extends DefaultHandler {
       addItemIdentifiers(association);
       reify(association, stacked_reifier);
       association = null;
+      if (!delayedRoleReification.isEmpty()) {
+        for (RoleReification rr : delayedRoleReification)
+          reify(rr.role, rr.reifier);
+        delayedRoleReification.clear();
+      }
 
       // </VARIANT>
     } else if (name == "variant") {
@@ -495,5 +509,17 @@ public class XTM2ContentHandler extends DefaultHandler {
       return Collections.EMPTY_SET;
     else
       return Collections.singleton(topicmap);
+  }
+
+  // --- Helper class
+
+  class RoleReification {
+    private AssociationRoleIF role;
+    private TopicIF reifier;
+
+    public RoleReification(AssociationRoleIF role, TopicIF reifier) {
+      this.role = role;
+      this.reifier = reifier;
+    }
   }
 }

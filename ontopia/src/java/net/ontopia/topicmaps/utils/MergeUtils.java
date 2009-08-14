@@ -328,14 +328,25 @@ public class MergeUtils {
   /**
    * PUBLIC: Merges the source role into the target role.  The two
    * roles must be in the same topic map, but need not have the same
-   * parent association. It is assumed (but not verified) that the two
-   * roles are actually equal.
+   * parent association. If the associations are not the same, they
+   * are merged, provided that they are equal; if they are not equal,
+   * a ConstraintViolationException is thrown. It is assumed (but not
+   * verified) that the two roles are actually equal.
    * @since %NEXT%
    */
   public static void mergeInto(AssociationRoleIF target, AssociationRoleIF source) {
-    moveReifier(target, source);
-    moveItemIdentifiers(target, source);
-    source.remove();
+    if (target.getAssociation() != source.getAssociation()) {
+      String key1 = KeyGenerator.makeAssociationKey(target.getAssociation());
+      String key2 = KeyGenerator.makeAssociationKey(source.getAssociation());
+      if (!key1.equals(key2))
+        throw new ConstraintViolationException("Cannot merge roles in different "
+                                               + " associations");
+      mergeInto(target.getAssociation(), source.getAssociation());
+    } else {
+      moveReifier(target, source);
+      moveItemIdentifiers(target, source);
+      source.remove();
+    }
   }
 
   /**
