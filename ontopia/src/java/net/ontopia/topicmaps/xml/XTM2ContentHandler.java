@@ -23,6 +23,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.topicmaps.impl.utils.ReificationUtils;
 import org.slf4j.Logger;
@@ -59,10 +60,11 @@ public class XTM2ContentHandler extends DefaultHandler {
   private LocatorIF locator;
   private AssociationIF association; // created when we hit the first role
   private TopicIF player;
-  private List itemids;
+  private List<LocatorIF> itemids;
   private TopicNameIF basename; // used as parent for variants
   private TopicIF reifier;         // stores reifier until end tag
   private TopicIF stacked_reifier; // used for associations (roles can be reified)
+  private List<LocatorIF> stacked_itemids; // used for associations
   private List<RoleReification> delayedRoleReification; // see issue 116 below
 
   private static final int CONTEXT_TYPE        = 1;
@@ -94,7 +96,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     this.read_documents = read_documents;
     this.content = new StringBuffer();
     this.scope = new ArrayList();
-    this.itemids = new ArrayList();
+    this.itemids = new ArrayList<LocatorIF>();
     this.delayedRoleReification = new ArrayList<RoleReification>();
 
     read_documents.add(doc_address);
@@ -240,8 +242,8 @@ public class XTM2ContentHandler extends DefaultHandler {
       if (association == null) {
         association = builder.makeAssociation(type);
         addScope(association);
-        //reify(association, reifier);
-        addItemIdentifiers(association);
+        if (!itemids.isEmpty())
+          stacked_itemids = new ArrayList<LocatorIF>(itemids);
         clear();
       }
       context = CONTEXT_ROLE;
@@ -333,6 +335,10 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // </ASSOCIATION
     } else if (name == "association") {
+      if (stacked_itemids != null) {
+        itemids = stacked_itemids;
+        stacked_itemids = null;
+      }
       addItemIdentifiers(association);
       reify(association, stacked_reifier);
       association = null;
@@ -446,13 +452,28 @@ public class XTM2ContentHandler extends DefaultHandler {
       merge(topic, (TopicIF) obj);
     else // itemid collision
       throw new InvalidTopicMapException("Another object " + obj + " already " +
-                                         "has source locator " + ii);
+                                         "has item identifier " + ii);
   }
 
-  private void addItemIdentifiers(TMObjectIF object) {
-    for (int ix = 0; ix < itemids.size(); ix++)
-      object.addItemIdentifier((LocatorIF) itemids.get(ix));
+  private void addItemIdentifiers(ReifiableIF object) {
+    for (int ix = 0; ix < itemids.size(); ix++) {
+      LocatorIF itemid = itemids.get(ix);
+      try {
+        object.addItemIdentifier(itemid);
+      } catch (UniquenessViolationException e) {
+        TMObjectIF other = topicmap.getObjectByItemIdentifier(itemid);
+        if (other != null && canBeMerged(object, other))
+          MergeUtils.mergeInto(object, (ReifiableIF) other);
+        else
+          throw e;
+      }
+    }
     itemids.clear();
+  }
+
+  private boolean canBeMerged(ReifiableIF object, TMObjectIF other) {
+    return object.getClass().equals(other.getClass()) &&
+      KeyGenerator.makeKey(object).equals(KeyGenerator.makeKey((ReifiableIF) other));
   }
   
   private void merge(TopicIF target, TopicIF source) {

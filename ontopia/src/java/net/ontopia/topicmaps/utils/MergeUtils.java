@@ -315,13 +315,31 @@ public class MergeUtils {
   /**
    * PUBLIC: Merges the source association into the target
    * association. The two associations must be in the same topic
-   * map. It is assumed (but not verified) that the two associations
-   * are actually equal.
+   * map. If the two associations are not actually equal a
+   * ConstraintViolationException is thrown.
    * @since %NEXT%
    */
   public static void mergeInto(AssociationIF target, AssociationIF source) {
     moveReifier(target, source);
     moveItemIdentifiers(target, source);
+
+    // set up key map
+    Map<String, AssociationRoleIF> keys = new HashMap<String, AssociationRoleIF>();
+    Iterator it = target.getRoles().iterator();
+    while (it.hasNext()) {
+      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      keys.put(KeyGenerator.makeAssociationRoleKey(role), role);
+    }
+
+    // merge the roles
+    it = source.getRoles().iterator();
+    while (it.hasNext()) {
+      AssociationRoleIF srole = (AssociationRoleIF) it.next();
+      AssociationRoleIF trole = keys.get(KeyGenerator.makeAssociationRoleKey(srole));
+      if (trole == null)
+        throw new ConstraintViolationException("Cannot merge unequal associations");
+      mergeIntoChecked(trole, srole);
+    }    
     source.remove();
   }
 
@@ -343,10 +361,15 @@ public class MergeUtils {
                                                + " associations");
       mergeInto(target.getAssociation(), source.getAssociation());
     } else {
-      moveReifier(target, source);
-      moveItemIdentifiers(target, source);
+      mergeIntoChecked(target, source);
       source.remove();
     }
+  }
+
+  private static void mergeIntoChecked(AssociationRoleIF target,
+                                       AssociationRoleIF source) {
+    moveReifier(target, source);
+    moveItemIdentifiers(target, source);
   }
 
   /**
