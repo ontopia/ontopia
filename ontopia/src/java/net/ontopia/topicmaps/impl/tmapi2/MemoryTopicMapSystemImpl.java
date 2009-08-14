@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 import org.tmapi.core.FeatureNotRecognizedException;
@@ -21,20 +22,19 @@ import org.tmapi.core.TopicMapSystem;
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
-
   private TopicMapSystemFactory sf;
-  private Map<Locator, TopicMapImpl> loc2tm = new HashMap<Locator, TopicMapImpl>();
+  private Map<Locator, TopicMapImpl> loc2tm =
+    new HashMap<Locator, TopicMapImpl>();
 
   public MemoryTopicMapSystemImpl(TopicMapSystemFactory topicMapSystemFactory) {
     sf = topicMapSystemFactory;
   }
-
+  
   /*
    * (non-Javadoc)
    * 
    * @see org.tmapi.core.TopicMapSystem#close()
-   */
-  
+   */  
   public void close() {
     loc2tm.clear();
     loc2tm = null;
@@ -70,9 +70,9 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
   
   public TopicMapImpl createTopicMap(Locator loc) throws TopicMapExistsException {
     if (loc2tm.containsKey(loc)) {
-      throw new TopicMapExistsException("Topic map with base locator " + loc + " already exists.");
-    }
-    else {
+      throw new TopicMapExistsException("Topic map with base locator " + loc +
+                                        " already exists");
+    } else {
       // create new topic map
       InMemoryTopicMapStore store = new InMemoryTopicMapStore();
       store.setBaseAddress(((LocatorImpl) loc).getWrapped());
@@ -81,6 +81,19 @@ public class MemoryTopicMapSystemImpl implements TopicMapSystemIF {
       loc2tm.put(loc, tm);
       return tm;
     }
+  }
+
+  public TopicMapImpl createTopicMap(TopicMapIF topicmap)
+    throws TopicMapExistsException {
+    Locator loc = wrapLocator(topicmap.getStore().getBaseAddress());
+    if (loc2tm.containsKey(loc))
+      throw new TopicMapExistsException("Topic map with base locator " + loc +
+                                        " already exists");
+    // wrap the topic map
+    TopicMapImpl tm = new TopicMapImpl(this, topicmap.getStore());
+    // register base locator
+    loc2tm.put(loc, tm);
+    return tm;
   }
 
   /*
