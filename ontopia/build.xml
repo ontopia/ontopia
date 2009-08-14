@@ -118,7 +118,7 @@
     <property name="init.done" value="true" />
 
     <!-- svn-revision to the external xtm2 test suite -->
-    <property name="xtm2.revision" value="10" />
+    <property name="xtm2.revision" value="18" />
   </target>
 
   <!-- ======================================================================
@@ -2326,4 +2326,206 @@
     </jar>
   </target>
 
+  <!-- ======================================================================
+        Posting online docs
+       ======================================================================
+
+  This target is used to produce a documentation bundle which can be uploaded
+  to ontopia.net so that we have all the product documentation available
+  online.
+
+  The target will produce build/ontopia-docs.zip 
+  
+  -->
+
+  <target name="doc.ontopia" depends="init">
+    <echo>Generating docs in ${dist.path}/doc...</echo>
+    
+    <!-- Create doc directory -->
+    <delete dir="${dist.path}/doc" />
+    <mkdir dir="${dist.path}/doc" />
+
+    <!-- Get javadoc -->
+    <antcall inheritRefs="true" target="javadoc.ontopia" />
+    <copy todir="${dist.path}/doc/api">
+      <fileset dir="${build.javadoc}/ontopia" />
+    </copy>
+
+    <!-- (from dist.product.collect) -->
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/ontopia/whatsnew.xml" />
+    </antcall>
+    <copy file="${doc.path}/ontopia/whatsnew.xml.html" tofile="${dist.path}/doc/whatsnew.html" />
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/ontopia/startup.xml" />
+    </antcall>
+    <copy file="${doc.path}/ontopia/startup.xml.html" tofile="${dist.path}/doc/install.html" />
+
+    <copy file="${doc.path}/ontopia/copyrights.txt" todir="${dist.path}/doc" />
+
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/ontopia/overview.xml" />
+    </antcall>
+    <copy file="${doc.path}/ontopia/overview.xml.html" tofile="${dist.path}/doc/misc/overview.html" />
+    <copy todir="${dist.path}/doc/misc">
+      <fileset dir="${doc.path}/ontopia">
+        <patternset>
+          <include name="*.gif" />
+        </patternset>
+        <patternset>
+          <include name="*.png" />
+        </patternset>
+      </fileset>
+    </copy>
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/misc" />
+
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/ltm/tutorial.xml" />
+    </antcall>
+    <copy file="${doc.path}/ltm/tutorial.xml.html" tofile="${dist.path}/doc/misc/ltm.html" />
+
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/rdf2tm/spec.xml" />
+    </antcall>
+    <copy file="${doc.path}/rdf2tm/spec.xml.html" tofile="${dist.path}/doc/misc/rdf2tm.html" />
+
+    <!-- Copy stylesheets -->
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/misc" />
+
+    <!-- Collect documentation -->
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc" />
+
+    <!-- Generate index pages -->
+    <echo message="Generating HTML index pages..." />
+    <texen controlTemplate="docindex-control.vm"
+           templatePath="${src.path}/dist/doc/"
+           outputFile="docindex.report"
+           outputDirectory="${build.tmp}"
+           productVersion="Version ${dist.version}, builddate ${dist.date.full}"
+           />
+    <copy file="${build.tmp}/docindex.html" overwrite="yes" tofile="${dist.path}/index.html" />
+
+    <!-- Copy license -->
+    <copy file="${doc.path}/ontopia/license.txt" tofile="${dist.path}/doc/license.txt" overwrite="yes" />
+    
+    <!-- Get more component docs -->
+    <antcall inheritRefs="true" target="dist.engine.collect" />
+    <antcall inheritRefs="true" target="dist.query.collect" />
+    <antcall inheritRefs="true" target="dist.fulltext.collect" /> <!-- noop -->
+    <antcall inheritRefs="true" target="dist.schema.collect" />
+    <antcall inheritRefs="true" target="dist.webed.collect" />
+    <antcall inheritRefs="true" target="dist.db2tm.collect" />
+
+    <!-- (from dist.navigator.collect) -->
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/omnigator/user-guide.xml" />
+    </antcall>
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/navigator/config.xml" />
+    </antcall>
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/navigator/devguide.xml" />
+    </antcall>
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/navigator/taglib-reference.xml" />
+    </antcall>
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/navigator/userman.xml" />
+    </antcall>
+
+    <!-- Collect omnigator documentation -->
+    <copy file="${doc.path}/navigator/config.xml.html" tofile="${dist.path}/doc/navigator/config.html" />
+    <copy file="${doc.path}/navigator/devguide.xml.html" tofile="${dist.path}/doc/navigator/navguide.html" />
+    <copy file="${doc.path}/navigator/taglib-reference.xml.html" tofile="${dist.path}/doc/navigator/tolog-taglib.html" />
+    <copy file="${doc.path}/navigator/userman.xml.html" tofile="${dist.path}/doc/navigator/userman.html" />
+    <copy todir="${dist.path}/doc/navigator">
+      <fileset dir="${doc.path}/navigator">
+        <patternset>
+          <include name="*.png" />
+        </patternset>
+        <patternset>
+          <include name="*.gif" />
+        </patternset>
+      </fileset>
+    </copy>
+
+    <!-- Copy logo and stylesheet -->
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/navigator" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/navigator" />
+
+    <!-- Copy the user guide to the web application -->
+    <mkdir dir="${dist.path}/doc/omnigator/" />
+    <copy file="${doc.path}/omnigator/user-guide.xml.html" 
+        tofile="${dist.path}/doc/omnigator/userguide.html" />
+    <copy todir="${dist.path}/doc/omnigator/graphics">
+      <fileset dir="${doc.path}/omnigator/graphics" />
+    </copy>
+    <copy todir="${dist.path}/doc/omnigator">
+      <fileset dir="${doc.path}/navigator">
+        <patternset>
+          <include name="*.png" />
+        </patternset>
+        <patternset>
+          <include name="*.gif" />
+        </patternset>
+      </fileset>
+    </copy>
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/omnigator" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/omnigator" />
+
+    <!-- (from dist.rdbms.collect) -->
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/rdbms/install.xml" />
+    </antcall>
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/rdbms/devguide.xml" />
+    </antcall>
+    <mkdir dir="${dist.path}/doc/rdbms" />
+    <copy file="${doc.path}/rdbms/install.xml.html" tofile="${dist.path}/doc/rdbms/install.html" />
+    <copy file="${doc.path}/rdbms/devguide.xml.html" tofile="${dist.path}/doc/rdbms/devguide.html" />
+
+    <copy file="${doc.path}/rdbms/RdbmsImport.java" todir="${dist.path}/doc/rdbms" />
+    <copy file="${doc.path}/rdbms/RdbmsExport.java" todir="${dist.path}/doc/rdbms" />
+    <copy file="${doc.path}/rdbms/RdbmsList.java" todir="${dist.path}/doc/rdbms" />
+
+    <!-- Copy logo and stylesheet -->
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/rdbms" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/rdbms" />
+
+    <!-- (from dist.viz.collect) -->
+    <antcall inheritRefs="true" target="jar.vizlet" />
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/vizigator/user-guide.xml" />
+    </antcall>
+
+    <!-- Collect documentation -->
+    <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
+    <copy file="${doc.path}/vizigator/user-guide.xml.html" 
+      tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator/userguide.html" />
+
+    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator">
+      <fileset dir="${doc.path}/vizigator">
+        <patternset>
+          <include name="*.gif" />
+        </patternset>
+        <patternset>
+          <include name="*.png" />
+        </patternset>
+      </fileset>
+    </copy>
+
+    <!-- Copy logo and stylesheet -->
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
+    
+    <!-- (from dist.viz.collect) -->
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/tmrap/devguide.xml" />
+    </antcall>
+    <copy file="${doc.path}/tmrap/devguide.xml.html" tofile="${dist.path}/doc/tmrap/dev-guide.html" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/tmrap" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/tmrap" />
+  </target>
+  
 </project>
