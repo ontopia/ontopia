@@ -6,15 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.tmapi.core.FeatureNotRecognizedException;
-import org.tmapi.core.FeatureNotSupportedException;
 import org.tmapi.core.TMAPIException;
 import org.tmapi.core.TopicMapSystem;
+import org.tmapi.core.FeatureNotRecognizedException;
+import org.tmapi.core.FeatureNotSupportedException;
 
 /**
  * INTERNAL: OKS->TMAPI object wrapper.
  */
-
 public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory {
 
   Properties properties = new Properties();
@@ -49,8 +48,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
    * </ul>
    * </p>
    */
-  public TopicMapSystem newTopicMapSystem()
-      throws TMAPIException {
+  public TopicMapSystem newTopicMapSystem() throws TMAPIException {
     String store = properties.getProperty(STORE_PROPERTY);
     if (store != null && store.equalsIgnoreCase("rdbms") )
       return new RDBMSTopicMapSystemImpl(this);
