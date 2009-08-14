@@ -40,8 +40,7 @@ import org.tmapi.index.TypeInstanceIndex;
  * INTERNAL: OKS->TMAPI 2 object wrapper.
  */
 
-public class TopicMapImpl extends ReifiableImpl implements
-    TopicMap {
+public class TopicMapImpl extends ReifiableImpl implements TopicMap {
 
   private TopicMapSystemIF tmsystem;
   private TopicMapIF wrapped;
