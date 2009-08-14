@@ -140,7 +140,14 @@ public class XTM2ContentHandler extends DefaultHandler {
         ((net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore)store).setBaseAddress(doc_address);
 
       reifier = getReifier(atts);
-      reify(topicmap, reifier);
+      if (read_documents.size() == 1) {
+        // this means we are reading the master XTM file, and thus can accept
+        // reifiers. had we been reading a sub-file there would be more
+        // read_documents, and then we couldn't actually set the reifier, as
+        // sub-topicmaps are considered different topic maps from the master,
+        // and their reifiers are consequently to be discarded.
+        reify(topicmap, reifier);
+      }
 
       // <TOPIC
     } else if (name == "topic") {

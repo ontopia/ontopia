@@ -17,8 +17,7 @@ public class CanonicalXTM2ReaderTestGenerator extends AbstractCanonicalTests {
   protected boolean filter(String filename) {
     return filename.endsWith(".xtm") &&
           !(filename.endsWith("-duplicate-iid.xtm") ||      // FIXME: issue 91
-            filename.endsWith("-duplicate-iid2.xtm")) &&    // FIXME: issue 91
-          !filename.equals("mergemap-tm-reifier.xtm")       // FIXME: issue 117
+            filename.endsWith("-duplicate-iid2.xtm"))       // FIXME: issue 91
       ;   
   }
 

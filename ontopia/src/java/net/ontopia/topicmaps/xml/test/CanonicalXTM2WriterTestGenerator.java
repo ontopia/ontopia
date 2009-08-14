@@ -35,8 +35,7 @@ public class CanonicalXTM2WriterTestGenerator implements TestCaseGeneratorIF {
       String name = infiles[i].getName();
       if (name.endsWith(".xtm") &&
           !(name.endsWith("-duplicate-iid.xtm") ||      // FIXME: issue 91
-            name.endsWith("-duplicate-iid2.xtm")) &&    // FIXME: issue 91
-          !name.equals("mergemap-tm-reifier.xtm"))      // FIXME: issue 117
+            name.endsWith("-duplicate-iid2.xtm")))      // FIXME: issue 91
         tests.add(makeTestCase(name, base));
     }
 
