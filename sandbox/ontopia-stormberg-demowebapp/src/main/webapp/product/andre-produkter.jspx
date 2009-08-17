@@ -6,9 +6,9 @@
     <jsp:directive.page pageEncoding="utf-8" contentType="text/html;charset=utf-8"/>
     <tolog:context topicmap="stormberg.xtm">
         <tolog:declare>using stormberg for i"http://psi.stormberg.no/"</tolog:declare>
-
         <tolog:set var="TOPIC" reqparam="topic"/>
         <tolog:if var="TOPIC">
+
             <h1>Andre aktuelle produkter</h1>
             
             <tolog:foreach
