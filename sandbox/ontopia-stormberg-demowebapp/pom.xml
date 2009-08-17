@@ -12,6 +12,12 @@
             <groupId>net.ontopia</groupId>
             <artifactId>ontopia-engine</artifactId>
             <version>5.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>saxon</groupId>
+                    <artifactId>saxon</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
