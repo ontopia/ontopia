@@ -672,14 +672,12 @@ public class Processor {
   }
 
   protected static void updateTypes(TopicIF topic, String[] types, Entity entity, String[] tuple, Context ctx) {
-    if (entity.isPrimary()) {
-      // clear existing topic types
-      Collection _types = topic.getTypes();
-      if (!_types.isEmpty()) {
-        Object[] typea = _types.toArray();
-        for (int i=0; i < typea.length; i++) {
-          topic.removeType((TopicIF)typea[i]);
-        }
+    // clear existing topic types
+    Collection _types = topic.getTypes();
+    if (!_types.isEmpty()) {
+      Object[] typea = _types.toArray();
+      for (int i=0; i < typea.length; i++) {
+        topic.removeType((TopicIF)typea[i]);
       }
     }
     // add new topic type(s)
