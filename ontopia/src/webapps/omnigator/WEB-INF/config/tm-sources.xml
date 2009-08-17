@@ -73,7 +73,7 @@
     <param name="maintainFulltextIndexes" value="true"/>
     <param name="indexDirectory" value="${CWD}/../../webapps/omnigator/WEB-INF/indexes"/>
   </source>    
-  <source class="net.ontopia.topicmaps.utils.CTMPathTopicMapSource">
+  <source class="net.ontopia.topicmaps.utils.ctm.CTMPathTopicMapSource">
     <param name="path" value="${CWD}/../../webapps/omnigator/WEB-INF/topicmaps"/>
     <param name="suffix" value=".ctm"/>
     <param name="duplicateSuppression" value="true"/>
