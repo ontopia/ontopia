@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
 
 import net.ontopia.topicmaps.nav.context.UserFilterContextStore;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: implementation of UserIF for holding data relevant to one
  * user session.
  */
-public class User implements UserIF {
+public class User implements UserIF, Serializable {
   private static Logger logger = LoggerFactory.getLogger(User.class.getName());
   private static final int DEFAULT_MAX_BUNDLES   = 5; // max working bundles per user
   private static final int DEFAULT_BUNDLE_EXPIRY = 1800; // user bundle expiry time
