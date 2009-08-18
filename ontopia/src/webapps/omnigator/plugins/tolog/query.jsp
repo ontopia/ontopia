@@ -147,10 +147,12 @@ try {
 <p><b>Query:</b><br>
 <pre><%= query %></pre></p>
 
+<% if (!analyzeQuery) { %>
 <table>
 <tr><th align=left>Execution time</th> <td><%= millis %> millisecs</td></tr>
 <tr><th align=left>Result rows</th>    <td><%= rows %></td></tr>
 </table>
+<% } %>
 
 <% if (analyzeQuery) { %>
   <p><b>Parsed query:</b></p>
