@@ -28,7 +28,11 @@ public class URILocator extends AbstractLocator implements Externalizable {
       net.ontopia.net.data.Handler.install();
     } catch (SecurityException e) {
       // Fail silently if there are security issues.
-    }      
+    } catch (NoClassDefFoundError e) {
+      // This happens on Google AppEngine, but is not really a problem
+      // since the data-URL handler is rarely used. See
+      // http://code.google.com/p/ontopia/issues/detail?id=118
+    }
   }
 
   /**
