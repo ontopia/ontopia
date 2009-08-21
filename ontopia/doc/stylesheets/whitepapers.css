@@ -1,7 +1,7 @@
 
 /*
    Default stylesheet for Ontopia whitepapers, articles and documentation.
-   $Id: whitepapers.css,v 1.9 2007/04/30 09:21:52 larsga Exp $
+   $Id: whitepapers.css,v 1.3 2002/11/24 15:45:08 larsga Exp $
  */
 
 body {
@@ -125,3 +125,31 @@ td {
 .dbTableEntry {
 }
 
+/* added to make xmlspec documents work */
+div.issue, div.note, div.notice {
+  margin-left: 2em;
+}
+
+table.scrap, table.scrap code {
+  background-color: #8F8;
+}
+
+table.scrap, table.eg { 
+  border: solid thin #800;
+}
+
+/* make it look nicer when printed */
+@media print {
+  h1 {
+    background-color: white;
+    color: black;
+  }
+
+  h2.subtitle {
+    color: black;
+  }
+   
+  a {
+    text-decoration: none;
+  }
+}
