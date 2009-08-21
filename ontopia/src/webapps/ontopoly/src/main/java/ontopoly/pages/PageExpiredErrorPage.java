@@ -2,6 +2,7 @@ package ontopoly.pages;
 
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.models.HelpLinkResourceModel;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -44,7 +45,7 @@ public class PageExpiredErrorPage extends AbstractOntopolyErrorPage {
   
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel", 
-          new ResourceModel("page.expired.title"), new ResourceModel("help.link.startpage")));
+          new ResourceModel("page.expired.title"), new HelpLinkResourceModel("help.link.startpage")));
   }
   
 }

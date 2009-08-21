@@ -2,6 +2,7 @@ package ontopoly.pages;
 
 import net.ontopia.Ontopia;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.models.HelpLinkResourceModel;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
@@ -92,7 +93,7 @@ public class InternalErrorPage extends AbstractOntopolyErrorPage {
   
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel",
-          new ResourceModel("internal.error"), new ResourceModel("help.link.startpage")));
+          new ResourceModel("internal.error"), new HelpLinkResourceModel("help.link.startpage")));
   }
 
 }

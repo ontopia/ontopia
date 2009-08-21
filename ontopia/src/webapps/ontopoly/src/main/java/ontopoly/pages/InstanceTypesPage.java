@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import ontopoly.components.LinkPanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.components.TreePanel;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.pojos.TopicNode;
 import ontopoly.utils.TreeModels;
 
@@ -80,6 +81,6 @@ public class InstanceTypesPage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     add(new TitleHelpPanel("titlePartPanel", 
-        new ResourceModel("instancetypes"), new ResourceModel("help.link.instancetypespage")));
+        new ResourceModel("instancetypes"), new HelpLinkResourceModel("help.link.instancetypespage")));
   }
 }

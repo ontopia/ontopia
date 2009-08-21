@@ -31,6 +31,7 @@ import ontopoly.components.ViewsFunctionBoxPanel;
 import ontopoly.components.VizigatorLinkFunctionBoxPanel;
 import ontopoly.models.AvailableTopicTypesModel;
 import ontopoly.models.FieldsViewModel;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.utils.OntopolyUtils;
@@ -173,7 +174,7 @@ public class InstancePage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     this.titlePartPanel = new TitleHelpPanel("titlePartPanel", 
-        new PropertyModel(topicModel, "name"), new ResourceModel("help.link.instancepage"));
+        new PropertyModel(topicModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
     titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);    
   }

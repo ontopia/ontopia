@@ -14,6 +14,7 @@ import ontopoly.components.FunctionBoxesPanel;
 import ontopoly.components.InstancePanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.models.FieldsViewModel;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
@@ -93,7 +94,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
     // Adding part containing title and help link
     this.titlePartPanel = new TitleHelpPanel("titlePartPanel",
         new PropertyModel(getTopicMapModel(), "name"),
-        new ResourceModel("help.link.descriptionpage"));
+        new HelpLinkResourceModel("help.link.descriptionpage"));
     this.titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);
   }

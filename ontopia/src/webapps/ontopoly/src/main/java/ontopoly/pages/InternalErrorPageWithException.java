@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.ontopia.Ontopia;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.models.HelpLinkResourceModel;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.ComponentTag;
@@ -134,7 +135,7 @@ public class InternalErrorPageWithException extends AbstractOntopolyErrorPage {
   
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel",
-          new ResourceModel("an.error.occurred"), new ResourceModel("help.link.startpage")));
+          new ResourceModel("an.error.occurred"), new HelpLinkResourceModel("help.link.startpage")));
   }
 
 }

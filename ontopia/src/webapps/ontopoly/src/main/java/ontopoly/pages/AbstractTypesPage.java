@@ -12,6 +12,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import ontopoly.components.LinkPanel;
 import ontopoly.components.MenuHelpPanel;
 import ontopoly.components.TreePanel;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.pojos.MenuItem;
 import ontopoly.pojos.TopicNode;
 
@@ -98,15 +99,15 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
 
   private static IModel getNameModelForHelpLinkAddress(int type) {
     if (type == TOPIC_TYPES_INDEX_IN_SUBMENU) {
-      return new ResourceModel("help.link.topictypespage");
+      return new HelpLinkResourceModel("help.link.topictypespage");
     } else if (type == OCCURRENCE_TYPES_INDEX_IN_SUBMENU) {
-      return new ResourceModel("help.link.occurrencetypespage");
+      return new HelpLinkResourceModel("help.link.occurrencetypespage");
     } else if (type == ASSOCIATION_TYPES_INDEX_IN_SUBMENU) {
-      return new ResourceModel("help.link.associationtypespage");
+      return new HelpLinkResourceModel("help.link.associationtypespage");
     } else if (type == ROLE_TYPES_INDEX_IN_SUBMENU) {
-      return new ResourceModel("help.link.roletypespage");
+      return new HelpLinkResourceModel("help.link.roletypespage");
     } else if (type == NAME_TYPES_INDEX_IN_SUBMENU) {
-      return new ResourceModel("help.link.nametypespage");
+      return new HelpLinkResourceModel("help.link.nametypespage");
     } else {
       return null;
     }

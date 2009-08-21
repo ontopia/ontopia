@@ -11,13 +11,13 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.xml.XTMFragmentExporter;
 import ontopoly.components.FunctionBoxesPanel;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicModel;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.ResourceModel;
 
 public class VizigatorPage extends OntopolyAbstractPage {
 
@@ -123,7 +123,7 @@ public class VizigatorPage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     TitleHelpPanel titlePartPanel = new TitleHelpPanel("titlePartPanel",
-        new PropertyModel(topicModel, "name"), new ResourceModel("help.link.instancepage"));
+        new PropertyModel(topicModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
     titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);    
   }

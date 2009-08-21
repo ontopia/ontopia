@@ -4,13 +4,13 @@
 	<groupId>net.ontopia.ontopoly</groupId>
 	<artifactId>ontopoly_ear</artifactId>
 	<packaging>ear</packaging>
-	<version>4.1-SNAPSHORT</version>
+	<version>5.0.0</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.ontopia.ontopoly</groupId>
 			<artifactId>ontopoly_war</artifactId>
-			<version>4.1-SNAPSHOT</version>
+			<version>5.0.0</version>
 			<type>war</type>
 			<scope>compile</scope> 
 		</dependency>

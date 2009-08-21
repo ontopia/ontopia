@@ -5,6 +5,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.conversion.ConversionUtils;
+import ontopoly.models.HelpLinkResourceModel;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
@@ -72,7 +73,7 @@ public class UpgradePage extends NonOntopolyAbstractPage {
 
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel",
-          new PropertyModel(getTopicMapModel(), "name"), new ResourceModel("help.link.upgradepage")));
+          new PropertyModel(getTopicMapModel(), "name"), new HelpLinkResourceModel("help.link.upgradepage")));
   }
   
 }

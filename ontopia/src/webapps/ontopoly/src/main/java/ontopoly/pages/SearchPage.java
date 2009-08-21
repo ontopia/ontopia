@@ -11,6 +11,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.models.HelpLinkResourceModel;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -135,7 +136,7 @@ public class SearchPage extends OntopolyAbstractPage {
   
   private void createTitle() {
     TitleHelpPanel titlePartPanel = new TitleHelpPanel("titlePartPanel",
-        new ResourceModel("search.results"), new ResourceModel("help.link.namefieldconfigpage"));
+        new ResourceModel("search.results"), new HelpLinkResourceModel("help.link.namefieldconfigpage"));
     titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);
   }

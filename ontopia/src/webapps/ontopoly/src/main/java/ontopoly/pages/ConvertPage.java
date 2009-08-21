@@ -16,6 +16,7 @@ import ontopoly.components.AjaxOntopolyTextField;
 import ontopoly.components.AjaxRadioGroupPanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.conversion.ConversionUtils;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapModel;
 import ontopoly.models.TopicMapSourceModel;
 import ontopoly.utils.OntopolyContext;
@@ -172,7 +173,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
 
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel", 
-          new PropertyModel(topicMapModel, "id"), new ResourceModel("help.link.convertpage")));
+          new PropertyModel(topicMapModel, "id"), new HelpLinkResourceModel("help.link.convertpage")));
   }
   
 }

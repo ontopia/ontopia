@@ -18,6 +18,7 @@ import ontopoly.components.LinkPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.components.TreePanel;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pojos.TopicNode;
 import ontopoly.utils.TreeModels;
@@ -107,7 +108,7 @@ public class InstancesPage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     add(new TitleHelpPanel("titlePartPanel", 
-        new PropertyModel(topicTypeModel, "name"), new ResourceModel("help.link.instancespage")));
+        new PropertyModel(topicTypeModel, "name"), new HelpLinkResourceModel("help.link.instancespage")));
   }
 
   private void createFunctionBoxes() {

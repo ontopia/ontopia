@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.components.AjaxOntopolyTextField;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.utils.ExportUtils;
 
 import org.apache.wicket.PageParameters;
@@ -168,7 +169,7 @@ public class AdminPage extends OntopolyAbstractPage {
   
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel", 
-        new ResourceModel("AdminPage.export.title"), new ResourceModel("help.link.exportpage")));
+        new ResourceModel("AdminPage.export.title"), new HelpLinkResourceModel("help.link.exportpage")));
   }
   
 }

@@ -14,6 +14,7 @@ import ontopoly.components.FooterPanel;
 import ontopoly.components.HeaderPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapReferenceModel;
 import ontopoly.utils.OntopolyContext;
 
@@ -165,7 +166,7 @@ public class StartPage extends AbstractProtectedOntopolyPage {
 
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel",
-          new ResourceModel("ontopias.topic.map.editor"), new ResourceModel("help.link.startpage")));
+          new ResourceModel("ontopias.topic.map.editor"), new HelpLinkResourceModel("help.link.startpage")));
   }
   
 }

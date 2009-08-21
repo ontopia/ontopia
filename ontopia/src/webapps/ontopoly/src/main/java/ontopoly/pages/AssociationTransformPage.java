@@ -20,6 +20,7 @@ import ontopoly.components.LockPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.models.AssociationTypeModel;
+import ontopoly.models.HelpLinkResourceModel;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.PageParameters;
@@ -81,7 +82,7 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     this.titlePartPanel = new TitleHelpPanel("titlePartPanel", 
-        new PropertyModel(associationTypeModel, "name"), new ResourceModel("help.link.instancepage"));
+        new PropertyModel(associationTypeModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
     titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);    
   }
