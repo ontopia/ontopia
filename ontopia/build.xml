@@ -2252,6 +2252,12 @@
         </patternset>
       </fileset>
     </copy>
+    <javac srcdir="${webapps.path}/ontopoly/src/main/java" destdir="${build.ontopoly}/WEB-INF/classes" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
+      <include name="**/*.java"/>
+    </javac>
+    <jar basedir="${build.ontopoly}/WEB-INF/classes" jarfile="${build.ontopoly}/WEB-INF/lib/ontopoly.jar"/>
+    <delete dir="${build.ontopoly}/WEB-INF/classes" />
+
     <copy todir="${build.ontopoly}/WEB-INF/lib" overwrite="yes">
       <fileset dir="${lib.path}">
         <patternset>
@@ -2262,9 +2268,6 @@
       </fileset>
     </copy>
 
-    <javac srcdir="${webapps.path}/ontopoly/src/main/java" destdir="${build.ontopoly}/WEB-INF/classes" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
-      <include name="**/*.java"/>
-    </javac>
 
   </target>
 
