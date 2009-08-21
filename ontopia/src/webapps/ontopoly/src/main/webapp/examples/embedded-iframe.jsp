@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <html>
 <head>
@@ -18,7 +18,7 @@ function calcHeight() {
   var odoc = document.getElementById('the_iframe').contentWindow.document;
   var the_height = odoc.body.scrollHeight;
   //change the height of the iframe 
-  document.getElementById('the_iframe').height = the_height;
+  document.getElementById('the_iframe').height = the_height+50;
 }
 </script>
 
