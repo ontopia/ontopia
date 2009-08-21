@@ -71,18 +71,19 @@ public abstract class VizConfigurationManager {
    * URL given in the parameter.
    */
   public VizConfigurationManager(String tmurl) throws IOException {
-		if (tmurl != null) {
-			XTMTopicMapReader reader = new XTMTopicMapReader(tmurl);
-			reader.setExternalReferenceHandler(new NullResolvingExternalReferenceHandler());
-			reader.setValidation(false); // means we don't need Jing
-			try {
-				topicmap = reader.read();
-			} catch (OntopiaRuntimeException e) {
-				// if we can't read the configuration, carry on anyway
-				// init() will make a blank TM for us
-			}
-		}
-    if (topicmap == null) topicmap = new InMemoryTopicMapStore().getTopicMap();
+    if (tmurl != null) {
+      XTMTopicMapReader reader = new XTMTopicMapReader(tmurl);
+      reader.setExternalReferenceHandler(new NullResolvingExternalReferenceHandler());
+      reader.setValidation(false); // means we don't need Jing
+      try {
+        topicmap = reader.read();
+      } catch (OntopiaRuntimeException e) {
+        // if we can't read the configuration, carry on anyway
+        // init() will make a blank TM for us
+      }
+    }
+    if (topicmap == null)
+      topicmap = new InMemoryTopicMapStore().getTopicMap();
     init();
   }
   

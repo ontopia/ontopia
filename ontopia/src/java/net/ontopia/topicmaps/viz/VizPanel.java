@@ -102,45 +102,30 @@ public class VizPanel extends JPanel {
   private TypesConfigFrame topicFrame;
   private TypesConfigFrame assocFrame;
   
-  private VizDesktop vizDesktop;
+  private VizFrontEndIF vizFrontEnd;
 
-  public VizPanel(Vizlet vizlet) throws IOException {
-    this.controlsVisible = vizlet.getDefaultControlsVisible();
-
-    String wallpaperUnresolvedSrc = vizlet.getParameter("wallpaper_image");
-    if (wallpaperUnresolvedSrc == null)
-      tgPanel = new TGPanel();
-    else {
-      String wallpapSrc = vizlet.resolve(vizlet
-          .getParameter("wallpaper_image"));
-      if (wallpapSrc == null)
-        throw new OntopiaRuntimeException("Invalid image path: " + 
-            wallpaperUnresolvedSrc);
-
+  public VizPanel(VizFrontEndIF vizFrontEnd) throws IOException  {
+    this.vizFrontEnd = vizFrontEnd;
+    this.controlsVisible = vizFrontEnd.getDefaultControlsVisible();
+    String wallpapSrc = vizFrontEnd.getWallpaper();
+    if(wallpapSrc != null) {
       tgPanel = new ExtendedTGPanel(wallpapSrc);
+    } else {
+      tgPanel = new TGPanel();
     }
-    
     init();
-    controller = new VizController(this, vizlet, tgPanel);
+    controller = new VizController(this, this.vizFrontEnd, tgPanel);
     enabledItemIds = controller.getEnabledItemIds();
     buildPanel();
-    VizDebugUtils.debug("VizPanel - setting locality: " + 
-        controller.getDefaultLocality());
-    setLocality(controller.getDefaultLocality());
-    locSpinner.setMax(controller.getMaxLocality());
+    if (vizFrontEnd.mapPreLoaded()) {
+      setLocality(controller.getDefaultLocality());
+      locSpinner.setMax(controller.getMaxLocality());
+    }
     addUIs();
-    controller.initializeMotionKillerEnabled();
-    controller.undoManager.reset();
-  }
-
-  public VizPanel(VizDesktop desktop) {
-    this.vizDesktop = desktop;
-    tgPanel = new TGPanel();
-    init();
-    controller = new VizController(this, desktop, tgPanel);
-    enabledItemIds = controller.getEnabledItemIds();
-    buildPanel();
-    addUIs();
+    if (vizFrontEnd.mapPreLoaded()) {
+      controller.initializeMotionKillerEnabled();
+      controller.undoManager.reset();
+    }
   }
 
   public void init() {
@@ -754,17 +739,11 @@ public class VizPanel extends JPanel {
   }
 
   private void menuOpenAssociationConfig() {
-    if (vizDesktop != null) {
-      vizDesktop.menuOpenAssociationConfig();
-      return;
-    }
-
     if (!controller.hasTopicMap())
       return;
 
     if (assocFrame == null) {
-      assocFrame = TypesConfigFrame.createAssociationTypeConfigFrame(
-          controller, null);
+      assocFrame = vizFrontEnd.getTypesConfigFrame(controller, false);
       assocFrame.show();
     } else {
       assocFrame.setVisible(true);
@@ -773,16 +752,11 @@ public class VizPanel extends JPanel {
   }
 
   private void menuOpenTopicConfig() {
-    if (vizDesktop != null) {
-      vizDesktop.menuOpenTopicConfig();
-      return;
-    }
-
     if (!controller.hasTopicMap())
       return;
 
     if (topicFrame == null) {
-      topicFrame = TypesConfigFrame.createTopicTypeConfigFrame(controller, null);
+      topicFrame = vizFrontEnd.getTypesConfigFrame(controller, true);
       topicFrame.show();
     } else {
       topicFrame.setVisible(true);

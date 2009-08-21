@@ -992,6 +992,21 @@ public class TopicMapView {
     return node;
   }
 
+  /**
+   *  EXPERIMENTAL: method to redraw the map, without starting a new
+   *  thread or displaying the progress bar
+   */
+  public void buildAllSilent() {
+    final Collection topics = getTopicMap().getTopics();
+    Iterator it = topics.iterator();
+    while (it.hasNext()) {
+      TopicIF topic = (TopicIF) it.next();
+      TMTopicNode node = assertNode(topic, true);
+      if (node != null)
+        createAssociations(node);
+    }
+  }
+  
   protected void buildAll() {
     final Collection topics = topicmap.getTopics();
     final boolean[] running = new boolean[] { true };

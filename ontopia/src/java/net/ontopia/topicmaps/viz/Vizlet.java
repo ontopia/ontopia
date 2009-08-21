@@ -3,6 +3,7 @@
 
 package net.ontopia.topicmaps.viz;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -14,6 +15,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.swing.JApplet;
 import net.ontopia.Ontopia;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.impl.remote.RemoteTopicMapStore;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
@@ -23,15 +27,17 @@ import net.ontopia.utils.StreamUtils;
  * PUBLIC: Visualization applet. To learn how to use this applet, consult the
  * The Vizigator User's Guide.
  */
-public class Vizlet extends JApplet {
+public class Vizlet extends JApplet implements VizFrontEndIF {
   private ParsedMenuFile enabledMenuItems;
   private boolean parsedMenuItems;
+  private AppletContext appletContext = null;
 
   public String getAppletInfo() {
     return "Ontopia Vizlet";
   }
 
   public void init() {
+    appletContext = new AppletContext(this);
     // FIXME: This logging should only go into the instrumented version of
     // Vizlet to find out what slows it down.
     VizDebugUtils.resetTimer();
@@ -102,7 +108,7 @@ public class Vizlet extends JApplet {
   /**
    * INTERNAL: Resolves the URI relative to the applet's codebase URI.
    */
-  protected String resolve(String base) throws MalformedURLException {
+  public String resolve(String base) throws MalformedURLException {
     return new URL(getCodeBase(), base).toExternalForm();
   }
 
@@ -142,5 +148,63 @@ public class Vizlet extends JApplet {
     enabledMenuItems = menuFileParser.parse();
     parsedMenuItems = true;
     return enabledMenuItems;
+  }
+  
+  public TopicMapIF getTopicMap() {
+    String tmrap = getResolvedParameter("tmrap");
+    String tmid = getParameter("tmid");
+    if (tmid == null) {
+      throw new VizigatorReportException("The required \"tmid\" parameter " +
+          "has not been set.");
+    }
+    RemoteTopicMapStore store = new RemoteTopicMapStore(tmrap, tmid);
+    return store.getTopicMap();
+  }
+
+  // --- VizFrontEndIF implementation
+  
+  public boolean mapPreLoaded() {
+    return true;
+  }
+
+  public void setNewTypeColor(TopicIF type, Color c) {
+    throw new UnsupportedOperationException("Cannot change colours in Vizlet");
+  }
+
+  public void configureFilterMenus() {
+    throw new UnsupportedOperationException("No filter menus in Vizlet");
+  }
+
+  public boolean useGeneralConfig() {
+    return false;
+  }
+  
+  public String getWallpaper() {
+    String wallpaperSrc = null;
+    String wallpaperUnresolvedSrc = getParameter("wallpaper_image");
+    try {
+      if(wallpaperUnresolvedSrc != null) {
+        wallpaperSrc = resolve(wallpaperUnresolvedSrc);
+      }
+    } catch (MalformedURLException mue) {
+      throw new OntopiaRuntimeException("Invalid image path: " + wallpaperUnresolvedSrc);
+    }
+    return wallpaperSrc;
+  }
+  
+  public String getConfigURL() {
+    return getResolvedParameter("config");
+  }
+
+  public TypesConfigFrame getTypesConfigFrame(VizController controller, boolean isTopicConfig) {
+    if(isTopicConfig) {
+      return TypesConfigFrame.createTopicTypeConfigFrame(controller, null);
+    } else {
+      return TypesConfigFrame.createAssociationTypeConfigFrame(controller, null);
+    }
+  }
+
+  public ApplicationContextIF getContext() {
+    return appletContext;
   }
 }

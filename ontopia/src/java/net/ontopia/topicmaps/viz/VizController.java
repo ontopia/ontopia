@@ -82,53 +82,56 @@ public class VizController {
   
   protected boolean showNeighbouringCircle = false;
   protected boolean showNeighboursOnMouseover = false;
-  
-  public VizController(VizPanel vpanel, VizDesktop vdesktop, TGPanel aTgPanel) {
+
+  public VizController(VizPanel vpanel, VizFrontEndIF vizFrontEnd, TGPanel aTgPanel) {
     undoManager = new UndoManager(this);
     this.vpanel = vpanel;
     hoverHelpManager = new VizHoverHelpManager(aTgPanel);
-    appContext = new DesktopContext(vdesktop);
-    File configFile = getGeneralConfigurationFile();
-    if (!configFile.exists()) {
-      generalConfig = new VizGeneralConfigurationManager();
-    } else {
-      try {
-        generalConfig = new VizGeneralConfigurationManager(configFile);
-      } catch (IOException e) {
-        ErrorDialog.showError(vpanel, Messages
-            .getString("Viz.ErrorLoadingConfig"),
-            e);
+    appContext = vizFrontEnd.getContext();
+    appContext.setVizPanel(vpanel);
+
+    if (vizFrontEnd.useGeneralConfig()) {
+      File configFile = getGeneralConfigurationFile();
+      if (!configFile.exists()) {
         generalConfig = new VizGeneralConfigurationManager();
+      } else {
+        try {
+          generalConfig = new VizGeneralConfigurationManager(configFile);
+        } catch (IOException e) {
+          ErrorDialog.showError(vpanel, Messages.getString("Viz.ErrorLoadingConfig"), e);
+          generalConfig = new VizGeneralConfigurationManager();
+        }
       }
+    }
+
+    String configurl = null;
+    try {
+      configurl = vizFrontEnd.getConfigURL();
+      if (configurl != null) {
+        tmConfig = new VizTopicMapConfigurationManager(configurl);
+      }
+    } catch (MalformedURLException mue) {
+      ErrorDialog.showError(vpanel, Messages.getString("Viz.ErrorLoadingConfig"), mue);
+    } catch (IOException ioe) {
+      ErrorDialog.showError(vpanel, Messages.getString("Viz.ErrorLoadingConfig"), ioe);
+    } finally {
+      // if an error occurred, or there is no config parameter, then create a default one
+      if(tmConfig == null) {
+        tmConfig = new VizTopicMapConfigurationManager();
+      }
+    }
+
+    appContext.setTmConfig(tmConfig);
+    if (vizFrontEnd.mapPreLoaded()) {
+      view = new TopicMapView(this, vizFrontEnd.getTopicMap(), aTgPanel, tmConfig);
+      appContext.setView(view);
     }
     highlightNode = new HighlightNode(this);
     keyMan = new KeyInputManager(this);
+    if (vizFrontEnd.mapPreLoaded())
+      focusStartTopicInternal();
   }
 
-  public VizController(VizPanel panel, Vizlet vizlet, TGPanel tgpanel)
-      throws IOException {
-    // Currently the Vizlet does not need access to the information stored
-    // within the general configuration file. If at some time in the future this
-    // situation changes, then we should load it here.
-
-    undoManager = new UndoManager(this);
-    AppletContext appletContext = new AppletContext(vizlet);
-    appContext = appletContext;
-
-    String configurl = appletContext.getConfigurl();
-    tmConfig = new VizTopicMapConfigurationManager(configurl);
-    vpanel = panel;
-    hoverHelpManager = new VizHoverHelpManager(tgpanel);
-
-    RemoteTopicMapStore store = new RemoteTopicMapStore(appletContext
-        .getTmrap(), appletContext.getTmid());
-    view = new TopicMapView(this, store.getTopicMap(), tgpanel, tmConfig);
-
-    highlightNode = new HighlightNode(this);
-    keyMan = new KeyInputManager(this);
-
-    focusStartTopicInternal();
-  }
   
   public VizPanel getVizPanel() {
     return vpanel;
@@ -270,7 +273,6 @@ public class VizController {
     }
   }
 
-
   /**
    * Set the given node to be the focus node. This method should only be called
    * from the user interface, and should not be used to implement other
@@ -358,10 +360,8 @@ public class VizController {
    * Opens the supplied url string in a browser window. Which window is used is
    * defined by the 'propTarget' applet parameter
    * 
-   * @param url
-   *               String representing the target url
+   * @param url String representing the target url
    */
-
   public void openPropertiesURL(String url) {
     appContext.openPropertiesURL(url);
   }
@@ -379,7 +379,6 @@ public class VizController {
   public void loadConfig(File f) throws IOException {
     try {
       vpanel.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-
       tmConfig = new VizTopicMapConfigurationManager(f);
       view.setConfigManager(tmConfig);
     } finally {
@@ -419,6 +418,7 @@ public class VizController {
         // Remove all paintListeners
         hoverHelpManager.resetPainters();
         view = new TopicMapView(this, topicmap, vpanel.getTGPanel(), tmConfig);
+        appContext.setView(view);
         setScopingTopic(getDefaultScopingTopic(topicmap));
         int locality = getDefaultLocality();
         VizDebugUtils.debug("loadTopicMap(tmfile, cfgfile) - " +
@@ -459,6 +459,7 @@ public class VizController {
         // Remove all paintListeners
         hoverHelpManager.resetPainters();
         view = new TopicMapView(this, topicmap, vpanel.getTGPanel(), tmConfig);
+        appContext.setView(view);
         setScopingTopic(getDefaultScopingTopic(topicmap));
         int locality = getDefaultLocality();
         VizDebugUtils.debug("loadTopicMap(tm, cfgfile) - setting  locality: " +
@@ -1175,354 +1176,6 @@ public class VizController {
   }
 
   // ----------- Nested classes and interfaces -------------
-
-  /**
-   * INTERNAL: This interface represents the application context
-   */
-  private interface ApplicationContextIF {
-    int getMaxLocality();
-
-    TypesConfigFrame getAssocFrame();
-
-    TypesConfigFrame getTopicFrame();
-
-    int getDefaultLocality();
-
-    boolean isApplet();
-
-    void goToTopic(TopicIF aTopic);
-
-    void openPropertiesURL(String aUrl);
-
-    void setStartTopic(TopicIF aTopic);
-
-    TopicIF getTopicForLocator(LocatorIF locator, TopicMapIF aTopicmap);
-
-    void loadTopic(TopicIF aTopic);
-
-    void focusNode(TMAbstractNode aNode);
-
-    void setScopingTopic(TopicIF aScope);
-
-    TopicIF getDefaultScopingTopic(TopicMapIF aTopicmap);
-
-    TopicIF getStartTopic(TopicMapIF aTopicmap);
-
-    ParsedMenuFile getEnabledItemIds();
-  }
-  
-  /**
-   * INTERNAL: Application Context for the VizDesktop
-   */
-  private class DesktopContext implements ApplicationContextIF {
-    private VizDesktop desktop;
-
-    public DesktopContext(VizDesktop aDesktop) {
-      super();
-      desktop = aDesktop;
-    }
-
-    public void goToTopic(TopicIF topic) {
-      ErrorDialog.showError(vpanel, Messages
-          .getString("Viz.GotoTopicNotAvailable"));
-    }
-
-    public boolean isApplet() {
-      return false;
-    }
-
-    public void openPropertiesURL(String aUrl) {
-      // Not supported on Desktop mode.
-    }
-
-    public void setStartTopic(TopicIF aTopic) {
-      tmConfig.setStartTopic(aTopic);
-      desktop.resetStartTopicMenu();
-      desktop.resetClearStartMenu();
-    }
-
-    public TopicIF getTopicForLocator(LocatorIF aLocator, TopicMapIF topicmap) {
-      return topicmap.getTopicBySubjectIdentifier(aLocator);
-    }
-
-    public void loadTopic(TopicIF aTopic) {
-      // In the desktop, all information is loaded up front.
-      // No real need to do anything here.
-    }
-
-    public void focusNode(TMAbstractNode aNode) {
-      if (aNode != null)
-        view.focusNode(aNode);
-
-      desktop.resetMapViewMenu();
-      desktop.resetClearStartMenu();
-      desktop.resetStartTopicMenu();
-    }
-
-    public void setScopingTopic(TopicIF aScope) {
-      desktop.setScopingTopic(aScope);
-    }
-
-    public TopicIF getDefaultScopingTopic(TopicMapIF aTopicmap) {
-      return tmConfig.getScopingTopic(aTopicmap);
-    }
-
-    public TopicIF getStartTopic(TopicMapIF aTopicmap) {
-      return tmConfig.getStartTopic(aTopicmap);
-    }
-
-    public int getDefaultLocality() {
-      int locality = 1;
-      VizDebugUtils.debug("DesktopContext.getDefaultLocality - locality:" + 
-          locality);
-      return locality;
-    }
-
-    public int getMaxLocality() {
-      int maxLocality = 5;
-      VizDebugUtils.debug("DesktopContext.getMaxLocality - maxLocality:" +
-          maxLocality);
-      return maxLocality;
-    }
-
-    public ParsedMenuFile getEnabledItemIds() {
-      VizDebugUtils.debug("VizController$ApplicationContext.getEnabledItemIds" +
-          "() - null: " + null);
-      return new ParsedMenuFile(null);
-    }
-
-    public TypesConfigFrame getAssocFrame() {
-      return desktop.getAssocFrame();
-    }
-
-    public TypesConfigFrame getTopicFrame() {
-      return desktop.getTopicFrame();
-    }
-  }
-
-  /**
-   * INTERNAL: Application Context for the Vizlet
-   */
-  private class AppletContext implements ApplicationContextIF {
-
-    private Vizlet vizlet;
-
-    public AppletContext(Vizlet aVizlet) {
-      super();
-      vizlet = aVizlet;
-    }
-
-    // --- environment actions -----------------------------------------------
-
-    /**
-     * Opens the supplied url string. The window used to display the url is
-     * defined by the applet parameter 'gotoTarget'
-     */
-    public void goToTopicURL(String url) {
-      try {
-        URL absurl = new URL(vizlet.getCodeBase(), url);
-
-        String target = vizlet.getParameter("gototarget");
-        if (target == null || target.length() == 0)
-          vizlet.getAppletContext().showDocument(absurl);
-        else
-          vizlet.getAppletContext().showDocument(absurl, target);
-
-      } catch (MalformedURLException e) {
-        ErrorDialog.showError(vizlet, Messages.getString("Viz.BadUrl") + url);
-      }
-    }
-
-    public void goToTopic(TopicIF topic) {
-      Collection pages = view.getPagesFor(topic);
-      if (!pages.isEmpty()) {
-        TopicPage page = (TopicPage) pages.iterator().next();
-        goToTopicURL(page.getURL());
-      }
-    }
-
-    /**
-     * Opens the supplied url string in a browser window. Which window is used
-     * is defined by the 'propTarget' applet parameter
-     * 
-     * @param url String representing the target url
-     */
-    public void openPropertiesURL(String url) {
-      try {
-        String target = vizlet.getParameter("proptarget");
-        if (target == null || target.length() == 0)
-          target = "_blank";
-        vizlet.getAppletContext().showDocument(new URL(url), target);
-      } catch (MalformedURLException e) {
-        ErrorDialog.showError(vizlet, Messages.getString("Viz.BadUrl") + url);
-      }
-    }
-
-    public boolean isApplet() {
-      return true;
-    }
-
-    public void setStartTopic(TopicIF aTopic) {
-      // For the applet, this is not necessary. We really should not make this
-      // option available.
-    }
-
-    public TopicIF getTopicForLocator(LocatorIF aLocator, TopicMapIF topicmap) {
-      return getTopicFor(topicmap, Collections.singletonList(aLocator),
-          Collections.EMPTY_LIST, null);
-    }
-
-    public void loadTopic(TopicIF aTopic) {
-      ((RemoteTopic) aTopic).checkLoad();
-    }
-
-    public void focusNode(TMAbstractNode aNode) {
-      view.focusNode(aNode);
-    }
-
-    public void setScopingTopic(TopicIF aScope) {
-      // Currently the applet does not use the configured scope
-    }
-
-    public TopicIF getDefaultScopingTopic(TopicMapIF aTopicmap) {
-      String scopeType = vizlet.getParameter("scopetype");
-      String scopeValue = vizlet.getParameter("scopevalue");
-
-      if (scopeType == null || scopeValue == null || scopeType.length() == 0
-          || scopeValue.length() == 0)
-        // Get the scope topic from the config topicmap
-        return getConfiguredScopingTopic(aTopicmap);
-
-      // Otherwise, resolve the scoping topic from the applet parameters
-      return getTopicFrom(aTopicmap, scopeType, scopeValue);
-    }
-
-    private TopicIF getTopicFrom(TopicMapIF aTopicmap, String type, 
-                                 String value) {
-      LocatorIF locator = URIUtils.getURILocator(value);
-      Set srclocs = Collections.EMPTY_SET;
-      Set subjids = Collections.EMPTY_SET;
-      Set sublocs = Collections.EMPTY_SET;
-      if (type.equals("source"))
-        srclocs = Collections.singleton(locator);
-      else if (type.equals("indicator"))
-        subjids = Collections.singleton(locator);
-      else
-        sublocs = Collections.singleton(locator);
-      return getTopicFor(aTopicmap, subjids, srclocs, sublocs);
-    }
-
-    private TopicIF getConfiguredScopingTopic(TopicMapIF aTopicmap) {
-      TopicIF scopingTopicHolder = tmConfig.getScopingTopicHolder();
-      Collection indicators = getCollectionFor(getLocatorFrom(tmConfig
-          .getOccurrence(scopingTopicHolder, tmConfig.getSubjectIndicator())));
-      Collection locators = getCollectionFor(getLocatorFrom(tmConfig
-          .getOccurrence(scopingTopicHolder, tmConfig.getSourceLocator())));
-      Collection subjects = getCollectionFor(getLocatorFrom(tmConfig
-          .getOccurrence(scopingTopicHolder, tmConfig.getSubject())));
-      return getTopicFor(aTopicmap, indicators, locators, subjects);
-    }
-
-    private TopicIF getTopicFor(TopicMapIF aTopicmap,
-                                Collection indicators,
-                                Collection locators,
-                                Collection subjects) {
-      RemoteTopicMapStore store = (RemoteTopicMapStore)
-        aTopicmap.getStore();
-      RemoteTopicIndex tindex = store.getTopicIndex();
-      Collection topics;
-      if (!indicators.isEmpty() ||
-          !locators.isEmpty() ||
-          !subjects.isEmpty())
-        topics = tindex.getTopics(indicators, locators, subjects);
-      else
-        return null;
-      if (topics == null || topics.isEmpty())
-        return null;
-      return (TopicIF) CollectionUtils.getFirst(topics);
-    }
-
-    private Collection getCollectionFor(LocatorIF aLocator) {
-      if (aLocator == null)
-        return Collections.EMPTY_LIST;
-      return Collections.singletonList(aLocator);
-    }
-
-    private LocatorIF getLocatorFrom(OccurrenceIF anOccurrence) {
-      if (anOccurrence == null)
-        return null;
-      return anOccurrence.getLocator();
-    }
-
-    public TopicIF getStartTopic(TopicMapIF aTopicmap) {
-      System.out.println("Loading start topic...");
-      
-      String idValue = vizlet.getParameter("idvalue");
-      if (idValue == null)
-        throw new VizigatorReportException("The required \"idvalue\" parameter" +
-            " has not been set.");
-      LocatorIF locator = URIUtils.getURILocator(idValue);
-      
-      String idtype = vizlet.getParameter("idtype");
-      if (idtype == null)
-        throw new VizigatorReportException("The required \"idtype\" parameter" +
-            " has not been set. It should be set to \"indicator\", \"source\" " +
-            "or \"subject\".");
-      Collection indicators = (idtype.equals("indicator") ? Collections.singleton(locator) : Collections.EMPTY_SET);
-      Collection sources = (idtype.equals("source") ? Collections.singleton(locator) : Collections.EMPTY_SET);
-      Collection subject = (idtype.equals("subject") ? Collections.singleton(locator) : Collections.EMPTY_SET);
-      RemoteTopicMapStore store = (RemoteTopicMapStore)aTopicmap.getStore();
-      RemoteTopicIndex tindex = store.getTopicIndex();
-
-      Collection topics = tindex.loadRelatedTopics(indicators, sources, subject,
-                                                   true); // go 2 steps out
-      return (TopicIF)CollectionUtils.getFirst(topics);
-    }
-
-    public String getConfigurl() {
-      return vizlet.getResolvedParameter("config");
-    }
-
-    public String getTmrap() {
-      return vizlet.getResolvedParameter("tmrap");
-    }
-
-    public String getTmid() {
-      String retVal = vizlet.getParameter("tmid");
-      if (retVal == null)
-        throw new VizigatorReportException("The required \"tmid\" parameter " +
-            "has not been set.");
-      return retVal;
-    }
-
-    public int getDefaultLocality() {
-      int locality = vizlet.getDefaultLocality();
-      VizDebugUtils.debug("DesktopContext.getDefaultLocality - locality:" +
-          locality);
-      return locality;
-    }
-
-    public int getMaxLocality() {
-      int maxLocality = vizlet.getMaxLocality();
-      VizDebugUtils.debug("DesktopContext.getMaxLocality - maxLocality:" +
-          maxLocality);
-      return maxLocality;
-    }
-
-    public ParsedMenuFile getEnabledItemIds() {
-      return vizlet.getEnabledItemIds();
-    }
-
-    public TypesConfigFrame getAssocFrame() {
-      VizPanel vPanel = getVizPanel();
-      return vPanel.getAssocFrame();
-    }
-
-    public TypesConfigFrame getTopicFrame() {
-      VizPanel vPanel = getVizPanel();
-      return vPanel.getTopicFrame();
-    }
-  }
 
   /**
    * INTERNAL: Hover Help Manager

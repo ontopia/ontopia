@@ -50,7 +50,7 @@ import com.touchgraph.graphlayout.Node;
  * INTERNAL: The top-level class for the VizDesktop. Can be run from the
  * command-line to produce the desktop UI.
  */
-public class VizDesktop {
+public class VizDesktop implements VizFrontEndIF {
   private static final String ONTOPIA_VIZDESKTOP_TITLE = "Ontopia VizDesktop";
 
   /**
@@ -189,6 +189,7 @@ public class VizDesktop {
     });
 
     try {
+      getContext();
       vPanel = new VizPanel(this);
       controller = vPanel.getController();
     } catch (Exception e) {
@@ -601,7 +602,7 @@ public class VizDesktop {
     stringifier = VizUtils.stringifierFor(topic);
   }
 
-  protected void configureFilterMenus() {
+  public void configureFilterMenus() {
     // clear any existing menu items
     visibleTopicTypesMenu.removeAll();
     visibleAssocTypesMenu.removeAll();
@@ -1186,5 +1187,43 @@ public class VizDesktop {
     public void actionPerformed(ActionEvent aE) {
       configureDynamicMenus();
     }
+  }
+
+  // --- VizFrontEndIF implementation
+  
+  public ApplicationContextIF getContext() {
+    return new DesktopContext(this);
+  }
+
+  public boolean getDefaultControlsVisible() {
+    return true;
+  }
+
+  public TypesConfigFrame getTypesConfigFrame(VizController controller, boolean isTopicConfig) {
+    if(isTopicConfig) {
+      return TypesConfigFrame.createTopicTypeConfigFrame(controller, this);
+    } else {
+      return TypesConfigFrame.createAssociationTypeConfigFrame(controller, this);
+    }
+  }
+  
+  public boolean mapPreLoaded() {
+    return false;
+  }
+
+  public TopicMapIF getTopicMap() {
+    return currentTopicMap;
+  }
+
+  public String getWallpaper() {
+    return null;
+  }
+  
+  public String getConfigURL() {
+    return null;
+  }
+  
+  public boolean useGeneralConfig() {
+    return true;
   }
 }
