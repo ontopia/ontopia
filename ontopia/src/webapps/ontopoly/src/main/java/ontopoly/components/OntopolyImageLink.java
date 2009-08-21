@@ -59,10 +59,5 @@ public abstract class OntopolyImageLink extends Panel {
   public IModel getTitleModel() {
     return titleModel;    
   }
-  
-//  @Override
-//  public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
-//    replaceComponentTagBody(markupStream, openTag, "<img src='images/" + getImage() + "' />");
-//  }
 
 }

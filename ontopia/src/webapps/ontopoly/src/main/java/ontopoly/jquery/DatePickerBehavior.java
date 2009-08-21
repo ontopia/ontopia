@@ -1,8 +1,13 @@
 package ontopoly.jquery;
 
+import ontopoly.images.ImageResource;
+
 import org.apache.wicket.Component;
+import org.apache.wicket.RequestCycle;
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.util.value.ValueMap;
 
 public class DatePickerBehavior extends JQueryBehavior {
   
@@ -17,9 +22,6 @@ public class DatePickerBehavior extends JQueryBehavior {
     super.onBind();
     Component c = getComponent();
     c.setOutputMarkupId(true);
-//    c.add(new AttributeAppender("onfocus", new Model("$(this).datepicker('enable')"), ";"));    
-//    c.add(new AttributeAppender("onblur", new Model("$(this).datepicker('disable')"), ";"));    
-//    c.add(new AttributeAppender("class", new Model("datePicker"), " "));    
   }
   
   public void renderHead(IHeaderResponse response) {
@@ -44,10 +46,8 @@ public class DatePickerBehavior extends JQueryBehavior {
     response.renderOnLoadJavascript("Wicket.Ajax.registerPostCallHandler(function(){ " + functionId + "(); });");
   }
 
-  protected String getDateIconURL() {
-    return "/ontopoly/images/datepicker.gif";
-//    PackageResource icon = PackageResource.get(ImageResource.class, "datepicker.gif");
-//    return "/" + icon.getAbsolutePath();
+  protected CharSequence getDateIconURL() {
+    return RequestCycle.get().urlFor(new ResourceReference(ImageResource.class, "datepicker.gif"), ValueMap.EMPTY_MAP);
   }
 
   @Override

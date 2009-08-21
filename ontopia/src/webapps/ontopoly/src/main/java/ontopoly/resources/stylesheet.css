@@ -1,5 +1,5 @@
 
-@import url("jquery-ui-themeroller/jquery-ui-themeroller.css");
+@import url("jquery-ui-theme/theme.css"); /* default theme is 'smoothness'. see http://jqueryui.com/themeroller */
 
 body { font-family: Verdana, Geneva, Arial, sans-serif; font-size: small; margin: 0; padding: 0; }
 
@@ -25,27 +25,27 @@ select, input, textarea { font-size: 90%; font-family: Verdana, GeneVa,Arial, sa
 select, option { max-width: 500px; }
 
 /* Header */
-#header { background-image: url('../images/headerbg.gif'); background-repeat: no-repeat; height: 110px; }
+#header { background-image: url('../../resources/ontopoly.images.ImageResource/headerbg.gif'); background-repeat: no-repeat; height: 110px; }
 
 #header a:link { color: white; margin: 0px; padding: 0px; }
 #header a:visited { color: white; margin: 0px; padding: 0px; }
 #header a:hover { color: white; text-decoration: underline; margin: 0px; padding: 0px; }
 
 #header #topRightMenuContainer { padding: 16px 0 0 16px; text-align: right;	}
-#header #topRightMenu { background-image: url('../images/topmenubg.gif'); color: white; float: right; height: 25px; margin: 0; text-align: right; white-space: nowrap; }
+#header #topRightMenu { background-image: url('../../resources/ontopoly.images.ImageResource/topmenubg.gif'); color: white; float: right; height: 25px; margin: 0; text-align: right; white-space: nowrap; }
 
 #header #tabMenuContainer { float: left; height: 66px; }
 #header #outer-outer-tabMenu { padding-top: 32px; }
 #header #outer-tabMenu { height: 34px; }
 #header #tabMenu { float: left; font-size: 93%; line-height: normal; }
 #header #tabMenu ul { list-style: none; margin: 0; padding: 10px 10px 0; }
-#header #tabMenu li { background: url("../images/tab_first_inactive_left.gif") no-repeat left top; float: left; margin: 0; padding: 0 0 0 14px; }
-#header #tabMenu a { background: url("../images/tab_last_inactive_right.gif") no-repeat right top; display: block; float: left; padding: 5px 15px 5px 1px; }
+#header #tabMenu li { background: url("../../resources/ontopoly.images.ImageResource/tab_first_inactive_left.gif") no-repeat left top; float: left; margin: 0; padding: 0 0 0 14px; }
+#header #tabMenu a { background: url("../../resources/ontopoly.images.ImageResource/tab_last_inactive_right.gif") no-repeat right top; display: block; float: left; padding: 5px 15px 5px 1px; }
   
 /* Popups */
-.popupHeader { background-image: url('../images/topmenubg.gif'); }
+.popupHeader { background-image: url('../../resources/ontopoly.images.ImageResource/topmenubg.gif'); }
 .popupTitle { padding: 15px 0; border-bottom: dashed 1px #ccc; }
-.popupBorder  { background-image: url('../images/contentbg.gif'); }
+.popupBorder  { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); }
 .popupContent  { margin-left: 8px; }
 
 /* Feedback/error messages */
@@ -58,15 +58,15 @@ li .feedbackPanelERROR { color: red; font-weight: bold; }
 
 #header #tabMenu a:link, #tabMenu a:visited, #tabMenu a:hover, #tabMenu a:active {color: black; text-decoration: none;}
 #header #tabMenu a:hover {text-decoration: underline;}
-#header #tabMenu .selected { background-image: url("../images/tab_first_active_left.gif"); padding: 0 0 0 14px; }
-#header #tabMenu .selected a { background-image: url("../images/tab_mid_active_right.gif"); padding-left: 1px; }
+#header #tabMenu .selected { background-image: url("../../resources/ontopoly.images.ImageResource/tab_first_active_left.gif"); padding: 0 0 0 14px; }
+#header #tabMenu .selected a { background-image: url("../../resources/ontopoly.images.ImageResource/tab_mid_active_right.gif"); padding-left: 1px; }
     
 #header #editingPanelContainer { float: right; text-align: right; vertical-align: top; white-space: nowrap; }
 #header #editingPanel{ border: solid 1px black; margin: 15px 15px 0 0; text-align: left; width: 280px; }
-#header #editingPanel p { background-image: url('../images/contentbg.gif'); border-bottom: solid 1px black; margin: 0; padding: 0; }
+#header #editingPanel p { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); border-bottom: solid 1px black; margin: 0; padding: 0; }
 #header #editingPanel form { margin: 0; }
-#header #editingPanel #tmfuncopen { background: url('../images/tmopen.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
-#header #editingPanel #tmfuncsave { background: url('../images/tmsave.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
+#header #editingPanel #tmfuncopen { background: url('../../resources/ontopoly.images.ImageResource/tmopen.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
+#header #editingPanel #tmfuncsave { background: url('../../resources/ontopoly.images.ImageResource/tmsave.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
 
 
 /* TODO check if some of the rules for the footer is unnecessary*/ 
@@ -85,8 +85,8 @@ li .feedbackPanelERROR { color: red; font-weight: bold; }
 #footerTable a { color: white; font-weight: bold; }
 
 /* Content */
-#content { background-image: url('../images/contentbg.gif'); }
-#inner-content { background: url('../images/contentbgtop.gif') repeat-x left top; padding: 0px 10px;}
+#content { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); }
+#inner-content { background: url('../../resources/ontopoly.images.ImageResource/contentbgtop.gif') repeat-x left top; padding: 0px 10px;}
 
 .clear { clear: both; }
 span.comment { color: #999; }
@@ -109,7 +109,7 @@ span.italic { font-style: italic;}
 .submenu a:link, .submenu a:visited { text-decoration: none; }
 .submenu a:hover .submenu a:active { text-decoration: underline; }
 .submenu .selected a { color: black; }
-.submenu .delimiter { background: url('../images/delimiter.gif') no-repeat left center; padding: 0 0 0 6px; }
+.submenu .delimiter { background: url('../../resources/ontopoly.images.ImageResource/delimiter.gif') no-repeat left center; padding: 0 0 0 6px; }
 
 /* Menu on top of the footer */
 #lowMenuContainer { background-color: white; border-top: solid 1px #CCC; margin-top: 12px; padding: 5px 10px; }
@@ -121,7 +121,7 @@ span.italic { font-style: italic;}
 #lowmenu a:link, #lowmenu a:visited { text-decoration: none; }
 #lowmenu a:hover #lowmenu a:active { text-decoration: underline; }
 #lowmenu a:active { color: black; }
-#lowmenu .delimiter { background: url('../images/delimiter.gif') no-repeat left center; padding: 0 0 0 6px; }
+#lowmenu .delimiter { background: url('../../resources/ontopoly.images.ImageResource/delimiter.gif') no-repeat left center; padding: 0 0 0 6px; }
 
 #functionBoxes { float: right; width: 250px; }
 #functionBoxes #functionBoxesList { width: 100%; margin: 0; padding:  5px 0;}
@@ -142,10 +142,10 @@ table#exportFormTable td { vertical-align: top; }
 .helptip {font-size: 80%; color: #BBB;}
 
 div.ontopoly-tree div.wicket-tree { border: none; overflow: auto;  width: auto; white-space: normal; margin: 2px; }
-div.ontopoly-tree div.wicket-tree span.junction { background-image: url("../images/boxed.gif"); background-position: 0px center; background-repeat: no-repeat; }
-div.ontopoly-tree div.wicket-tree span.junction-last { background-image: url("../images/boxed.gif"); background-position: 0px center; }
-div.ontopoly-tree div.wicket-tree span.minus { background-image: url("../images/collapse.gif"); background-position: 0px center; }
-div.ontopoly-tree div.wicket-tree span.plus { background-image: url("../images/expand.gif"); }
+div.ontopoly-tree div.wicket-tree span.junction { background-image: url("../../resources/ontopoly.images.ImageResource/boxed.gif"); background-position: 0px center; background-repeat: no-repeat; }
+div.ontopoly-tree div.wicket-tree span.junction-last { background-image: url("../../resources/ontopoly.images.ImageResource/boxed.gif"); background-position: 0px center; }
+div.ontopoly-tree div.wicket-tree span.minus { background-image: url("../../resources/ontopoly.images.ImageResource/collapse.gif"); background-position: 0px center; }
+div.ontopoly-tree div.wicket-tree span.plus { background-image: url("../../resources/ontopoly.images.ImageResource/expand.gif"); }
 div.ontopoly-tree div.wicket-tree span.corner { background-image: none; background-position: 0px center; }
 div.ontopoly-tree div.wicket-tree span.indent-line { background-image: none; width: 14px; }
 div.ontopoly-tree div.wicket-tree div.a_ { width: auto; }

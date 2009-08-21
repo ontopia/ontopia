@@ -33,7 +33,7 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
   }
 
   protected String getStylesheet() {
-    return "styles/stylesheet.css";
+    return "resources/ontopoly.resources.Resources/stylesheet.css";
   }
   
   public OntopolySession getOntopolySession() { 
