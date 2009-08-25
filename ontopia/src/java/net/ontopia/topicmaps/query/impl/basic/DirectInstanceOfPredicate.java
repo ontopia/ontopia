@@ -4,6 +4,7 @@
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -39,9 +40,6 @@ public class DirectInstanceOfPredicate extends AbstractInstanceOfPredicate {
   }
 
   protected Collection getSupertypes(TopicIF type) {
-    Collection supers = new java.util.ArrayList(1);
-    supers.add(type);
-    return supers;
-  }
-  
+    return Collections.singleton(type);
+  }  
 }
