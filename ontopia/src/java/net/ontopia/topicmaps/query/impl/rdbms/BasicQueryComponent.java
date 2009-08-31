@@ -34,7 +34,7 @@ public class BasicQueryComponent implements QueryComponentIF {
     this.qproc = qproc;
 
     // optimize clauses    
-    this.clauses = QueryOptimizer.getOptimizer(query, TopicMapStoreIF.RDBMS_IMPLEMENTATION).optimize(clauses, new QueryContext(query));
+    this.clauses = QueryOptimizer.getOptimizer(query).optimize(clauses, new QueryContext(query));
   }
   
   public QueryMatches satisfy(QueryMatches matches, Map arguments)

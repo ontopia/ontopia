@@ -57,7 +57,7 @@ public class RulePredicate extends AbstractQueryProcessor
     
     // do type analysis on rule
     boolean strict = rule.getQuery()
-                       .getOptions().getBooleanValue("compiler.typecheck", true);
+                       .getOptions().getBooleanValue("compiler.typecheck");
     Map vartypes = QueryAnalyzer.analyzeTypes(rule.getClauses(), strict)
                      .getVariableTypes();
     
@@ -124,9 +124,9 @@ public class RulePredicate extends AbstractQueryProcessor
     Set bound = getBoundVariables(params, extarguments, extmatches);
     Set litvars = getLiteralVariables(params, extarguments);
     List theclauses = rule.getClauses();
-    if (extcontext.getTologOptions().getBooleanValue("optimizer.reorder", true)) {
+    if (extcontext.getTologOptions().getBooleanValue("optimizer.reorder")) {
       CostEstimator estimator;
-      if (extcontext.getTologOptions().getBooleanValue("optimizer.reorder.predicate-based", true))
+      if (extcontext.getTologOptions().getBooleanValue("optimizer.reorder.predicate-based"))
         estimator = new PredicateDrivenCostEstimator();
       else
         estimator = new SimpleCostEstimator();

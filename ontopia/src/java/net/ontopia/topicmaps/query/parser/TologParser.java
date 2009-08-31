@@ -22,9 +22,11 @@ import antlr.TokenStreamRecognitionException;
  */
 public class TologParser {
   protected ParseContextIF context;
+  protected TologOptions options;
 
-  public TologParser(ParseContextIF context) {
+  public TologParser(ParseContextIF context, TologOptions options) {
     this.context = context;
+    this.options = options;
   }
 
   public TologQuery parse(String query) throws InvalidQueryException {
@@ -129,7 +131,7 @@ public class TologParser {
   // --- Internal methods
 
   private RealTologParser makeParser(Reader reader) throws InvalidQueryException {
-    TologLexer lexer = new TologLexer(reader);
+    TologLexer lexer = new TologLexer(reader, options);
     RealTologParser parser = new RealTologParser(lexer);
     parser.init(lexer);
     return parser;

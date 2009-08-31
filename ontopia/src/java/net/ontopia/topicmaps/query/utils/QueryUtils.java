@@ -17,6 +17,7 @@ import net.ontopia.topicmaps.query.parser.GlobalParseContext;
 import net.ontopia.topicmaps.query.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.parser.ParseContextIF;
 import net.ontopia.topicmaps.query.parser.TologParser;
+import net.ontopia.topicmaps.query.parser.TologOptions;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 import org.apache.commons.collections.ReferenceMap;
@@ -198,7 +199,7 @@ public class QueryUtils {
     pctxt = new LocalParseContext(pctxt);
 
     // parse the declarations into this
-    TologParser parser = new TologParser(pctxt);
+    TologParser parser = new TologParser(pctxt, TologOptions.defaults);
     return (DeclarationContextIF) parser.parseDeclarations(declarations);
   }
 }

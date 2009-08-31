@@ -107,25 +107,21 @@ options {
     TologOptions options = query.getOptions();
     optimizer = new QueryOptimizer();
 
-    if (options.getBooleanValue("optimizer.inliner", true))
+    if (options.getBooleanValue("optimizer.inliner"))
       optimizer.addOptimizer(new QueryOptimizer.RuleInliner());    
-    if (options.getBooleanValue("optimizer.typeconflict", true))
+    if (options.getBooleanValue("optimizer.typeconflict"))
       optimizer.addOptimizer(new QueryOptimizer.TypeConflictResolver());
-    if (options.getBooleanValue("optimizer.hierarchy-walker", false))
+    if (options.getBooleanValue("optimizer.hierarchy-walker"))
       optimizer.addOptimizer(new QueryOptimizer.HierarchyWalker());      
-    if (options.getBooleanValue("optimizer.recursive-pruner", true))
+    if (options.getBooleanValue("optimizer.recursive-pruner"))
       optimizer.addOptimizer(new QueryOptimizer.RecursivePruner());
 
-    // disabling this optimizer in rules because the effect is that before
-    // we have the rule parameter bindings it just messes up the predicate
-    // order. the reorderer running at run-time will then start from the
-    // wrong order and make a real mess of things. better to leave the order
-    // untouched so that the run-time optimizer produces better results.
-    if (options.getBooleanValue("optimizer.reorder", false)) {
-      boolean newapproach =
-        options.getBooleanValue("optimizer.reorder.predicate-based", true);
-      optimizer.addOptimizer(new QueryOptimizer.Reorderer(newapproach)); 
-    }   
+    // the reordering optimizer is disabled in rules because the
+    // effect is that before we have the rule parameter bindings it
+    // just messes up the predicate order. the reorderer running at
+    // run-time will then start from the wrong order and make a real
+    // mess of things. better to leave the order untouched so that the
+    // run-time optimizer produces better results.
   }
 
   // see comments below
@@ -425,10 +421,95 @@ tokens {
 }
 
 {
-  private TologOptions options = new TologOptions();
+  private TologOptions options;
+
+  public TologLexer(Reader reader, TologOptions options) {
+    this(reader);
+    this.options = new TologOptions(options);
+  }
 
   public TologOptions getOptions() {
     return options;
+  }
+
+  // --- Option parsing
+  
+  // "#OPTION: name.of.option: value"
+  private void parse(String comment) {
+    int pos = ignoreWS(comment, 0);
+    pos = check(comment, pos, "#OPTION:");
+    if (pos == -1)
+      return; // syntax error -> no options here
+
+    pos = ignoreWS(comment, pos);
+    if (pos == -1)
+      return; // syntax error -> no options here
+
+    String name = getName(comment, pos);
+    if (name == null)
+      return; // syntax error -> no options here
+    pos += name.length();
+
+    pos = ignoreWS(comment, pos);
+    if (pos == -1)
+      return; // syntax error -> no options here
+
+    pos = check(comment, pos, "=");
+    if (pos == -1)
+      return; // syntax error -> no options here
+
+    pos = ignoreWS(comment, pos);
+    if (pos == -1)
+      return; // syntax error -> no options here
+
+    String value = getValue(comment, pos);
+    if (value == null)
+      return; // syntax error -> no options here
+
+    options.setOption(name, value); // there was a value
+  }
+
+  private int ignoreWS(String data, int pos) {
+    if (pos == data.length())
+      return -1;
+    
+    char ch = ' ';
+    while (pos < data.length() &&
+           (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r'))
+      ch = data.charAt(pos++);
+    return pos - 1;
+  }
+
+  private int check(String data, int pos, String expected) {
+    int start = pos;
+    while (pos < data.length() &&
+           pos - start < expected.length() &&
+           data.charAt(pos) == expected.charAt(pos - start))
+      pos++;
+    if (pos == start)
+      return -1;
+    else
+      return pos;
+  }
+
+  private String getName(String data, int pos) {
+    int start = pos;
+    char ch = 'a';
+    while (pos < data.length() &&
+           ((ch >= 'a' && ch <= 'z') ||
+            (ch >= 'A' && ch <= 'Z') ||
+            (ch >= '0' && ch <= '9') ||
+            ch == '.' || ch == '-'))
+      ch = data.charAt(pos++);
+
+    if (pos == start)
+      return null;
+    
+    return data.substring(start, pos - 1);
+  }
+  
+  private String getValue(String data, int pos) {
+    return getName(data, pos); // FIXME: too primitive, obviously
   }
 }
 
@@ -463,7 +544,7 @@ STRING:
 COMMENT : 
  "/*" INCOMMENT "*/" 
  { $setType(Token.SKIP);
-   options.parse(new String(text.getBuffer(), _begin+2, (text.length()-_begin)-3)); }
+   parse(new String(text.getBuffer(), _begin+2, (text.length()-_begin)-3)); }
  ;
 
 INCOMMENT:

@@ -15,6 +15,11 @@ import java.util.Map;
 import java.util.Set;
 import java.text.Collator;
 
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringifierIF;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.ObjectUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -37,15 +42,11 @@ import net.ontopia.topicmaps.query.parser.GlobalParseContext;
 import net.ontopia.topicmaps.query.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.parser.ParseContextIF;
 import net.ontopia.topicmaps.query.parser.TologParser;
+import net.ontopia.topicmaps.query.parser.TologOptions;
 import net.ontopia.topicmaps.query.parser.TologQuery;
 import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.utils.CompactHashSet;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.StringUtils;
-import net.ontopia.utils.ObjectUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     QueryProcessorIF, IndexIF {
   protected TopicMapIF topicmap; // the topic map to query
   protected Collator collator;
-  
+  protected TologOptions options;
   protected TologParser parser; // the default parser (may have state)
 
   // --- initialize logging facility.
@@ -73,10 +74,21 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     this.topicmap = topicmap;
     this.collator = getCollator(topicmap);
 
+    this.options = new TologOptions(TologOptions.defaults);
+    options.setOption("optimizer.role-player-type",
+                      "" + !(topicmap instanceof RDBMSTopicMapStore));
+    options.setOption("optimizer.next-previous",
+                      "" + !(topicmap instanceof RDBMSTopicMapStore));
+    options.loadProperties(); // loads tolog.properties from classpath
+    
     ParseContextIF context = new GlobalParseContext(new PredicateFactory(
         topicmap, base), topicmap, base);
     context = new LocalParseContext(context);
-    parser = new TologParser(context);
+    parser = new TologParser(context, options);
+  }
+
+  public TologOptions getOptions() {
+    return options;
   }
   
   // / query processor implementation
@@ -117,7 +129,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       return optimize(parser.parse(query));
 
     // there is a context, so we have to use a new parser for this
-    TologParser localparser = new TologParser((ParseContextIF) context);
+    TologParser localparser = new TologParser((ParseContextIF) context, options);
     return optimize(localparser.parse(query));
   }
 
@@ -323,7 +335,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
    * Optimizes the query before executing it.
    */
   private TologQuery optimize(TologQuery query) throws InvalidQueryException {
-    return QueryOptimizer.getOptimizer(query, topicmap.getStore().getImplementation()).optimize(query);
+    return QueryOptimizer.getOptimizer(query).optimize(query);
   }
 
   // --- Internal classes

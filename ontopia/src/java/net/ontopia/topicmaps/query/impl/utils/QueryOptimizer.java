@@ -76,31 +76,29 @@ public class QueryOptimizer {
    * INTERNAL: Get hold of an query optimizer instance.
    * @param query The parsed query.
    */
-  public static QueryOptimizer getOptimizer(TologQuery query, int storeImplementation) {
+  public static QueryOptimizer getOptimizer(TologQuery query) {
     // WARNING: method used by basic+rdbms tolog
     TologOptions options = query.getOptions();
     QueryOptimizer optimizer = new QueryOptimizer();
 
     if (options != null) {
-      if (options.getBooleanValue("optimizer.inliner", true))
+      if (options.getBooleanValue("optimizer.inliner"))
         optimizer.addOptimizer(new QueryOptimizer.RuleInliner());
-      if (options.getBooleanValue("optimizer.reorder", true)) {
+      if (options.getBooleanValue("optimizer.reorder")) {
         // NOTE: new optimizer is now on by default
         boolean newapproach =
-          options.getBooleanValue("optimizer.reorder.predicate-based", true);
+          options.getBooleanValue("optimizer.reorder.predicate-based");
         optimizer.addOptimizer(new QueryOptimizer.Reorderer(newapproach));
       }
-      if (options.getBooleanValue("optimizer.typeconflict", true))
+      if (options.getBooleanValue("optimizer.typeconflict"))
         optimizer.addOptimizer(new QueryOptimizer.TypeConflictResolver());
-      if (options.getBooleanValue("optimizer.hierarchy-walker", true))
+      if (options.getBooleanValue("optimizer.hierarchy-walker"))
         optimizer.addOptimizer(new QueryOptimizer.HierarchyWalker());
-      if (options.getBooleanValue("optimizer.prefix-search", true))
+      if (options.getBooleanValue("optimizer.prefix-search"))
         optimizer.addOptimizer(new QueryOptimizer.StringPrefixOptimizer());
-      if (options.getBooleanValue("optimizer.role-player-type", 
-                 storeImplementation == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION))
+      if (options.getBooleanValue("optimizer.role-player-type"))
         optimizer.addOptimizer(new QueryOptimizer.AddTypeToRolePlayer());
-      if (options.getBooleanValue("optimizer.next-previous", 
-                 storeImplementation == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION))
+      if (options.getBooleanValue("optimizer.next-previous"))
         optimizer.addOptimizer(new QueryOptimizer.NextPreviousOptimizer());
     }
     return optimizer;
@@ -463,7 +461,7 @@ public class QueryOptimizer {
               types2[i].equals(Object.class))
             empty = false;
 
-      if (empty && context.getBooleanOption("compiler.typecheck", true))
+      if (empty && context.getBooleanOption("compiler.typecheck"))
         throw new InvalidQueryException(
           "Type conflict on " + arg + ": cannot be both " +
           PredicateSignature.getClassList(types1) + " and, as required by " +

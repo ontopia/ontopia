@@ -29,8 +29,8 @@ public class QueryContext {
   /**
    * Returns value of boolean option.
    */
-  public boolean getBooleanOption(String name, boolean defvalue) {
-    return query.getOptions().getBooleanValue(name, defvalue);
+  public boolean getBooleanOption(String name) {
+    return query.getOptions().getBooleanValue(name);
   }
 
   /**

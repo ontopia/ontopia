@@ -53,18 +53,18 @@ public class QueryProcessor implements QueryProcessorIF {
     this.topicmap = topicmap;
     this.base = base;
 
+    this.bprocessor = new net.ontopia.topicmaps.query.impl.basic.QueryProcessor(topicmap);
+    
     ParseContextIF context = new GlobalParseContext(
-	    new PredicateFactory(topicmap, base),
-            topicmap, base);
+      new PredicateFactory(topicmap, base),
+      topicmap, base);
     context = new LocalParseContext(context);
-    parser = new TologParser(context);
+    parser = new TologParser(context, bprocessor.getOptions());
 
-		RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
+    RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
     this.txn = store.getTransactionIF();
     this.access = (RDBMSAccess) txn.getStorageAccess();
     this.mapping = access.getStorage().getMapping();
-    
-    this.bprocessor = new net.ontopia.topicmaps.query.impl.basic.QueryProcessor(topicmap);
   }
 
   public String getProperty(String name) {
@@ -110,11 +110,13 @@ public class QueryProcessor implements QueryProcessorIF {
       tquery = parser.parse(query);
     else {
       // there is a context, so we have to use a new parser for this
-      TologParser localparser = new TologParser((ParseContextIF) context);
+      TologParser localparser = new TologParser((ParseContextIF) context,
+                                                bprocessor.getOptions());
       tquery = localparser.parse(query);
     }
 
-    return new ParsedQuery(this, bprocessor, QueryOptimizer.getOptimizer(tquery, topicmap.getStore().getImplementation()).optimize(tquery));
+    return new ParsedQuery(this, bprocessor,
+                           QueryOptimizer.getOptimizer(tquery).optimize(tquery));
   }
   
   public void load(String ruleset) throws InvalidQueryException {
@@ -126,7 +128,8 @@ public class QueryProcessor implements QueryProcessorIF {
   }
 
   public void setContext(DeclarationContextIF context) {
-    parser = new TologParser((LocalParseContext) context);
+    parser = new TologParser((LocalParseContext) context,
+                             bprocessor.getOptions());
   }
 
   /// query builder code

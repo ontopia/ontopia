@@ -24,7 +24,7 @@ public class QueryAnalyzer {
 
   public static BindingContext analyzeTypes(TologQuery query) 
     throws InvalidQueryException {
-    boolean strict = query.getOptions().getBooleanValue("compiler.typecheck", true);
+    boolean strict = query.getOptions().getBooleanValue("compiler.typecheck");
     BindingContext bc = new BindingContext(strict);
     analyzeTypes(query.getClauses(), bc);
     return bc;
@@ -135,7 +135,7 @@ public class QueryAnalyzer {
     throws InvalidQueryException {
 
     boolean typecheck =
-      query.getOptions().getBooleanValue("compiler.typecheck", true);
+      query.getOptions().getBooleanValue("compiler.typecheck");
     Map ptypes = query.getParameterTypes();
     Iterator it = ptypes.keySet().iterator();
     while (it.hasNext()) {

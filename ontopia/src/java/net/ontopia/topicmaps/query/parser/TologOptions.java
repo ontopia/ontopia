@@ -3,105 +3,89 @@
 
 package net.ontopia.topicmaps.query.parser;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Properties;
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.ontopia.utils.PropertyUtils;
 
 /**
- * INTERNAL: Used to parse and represent the options passed to various
- * queries.
+ * INTERNAL: Represents the properties set in a given tolog processing
+ * context. There are three kinds of contexts: in a given query, for a
+ * given query, and global defaults. This is represented as three
+ * nested TologOptions objects.
  */
 public class TologOptions {
-  private Map options;
+  public static TologOptions defaults;
+  private static Properties properties; // tolog.properties, if loaded
+  static Logger log = LoggerFactory.getLogger(TologOptions.class.getName());
+
+  private TologOptions parent;
+  private Map<String, String> options;
   
   public TologOptions() {
-    options = new HashMap();
+    options = new HashMap<String, String>();
   }
 
-  public boolean getBooleanValue(String name, boolean defvalue) {
-    String value = (String) options.get(name);
-    if (value == null)
-      return defvalue;
-    else
+  public TologOptions(TologOptions parent) {
+    this.parent = parent;
+    this.options = new HashMap<String, String>();
+  }
+  
+  public boolean getBooleanValue(String name) {
+    String value = options.get(name);
+    if (value == null) {
+      if (parent == null)
+        return false; // FIXME: throw exception?
+      return parent.getBooleanValue(name);
+    } else
       return value.equalsIgnoreCase("true");
   }
 
-  // --- Option parsing
-  
-  // "#OPTION: name.of.option: value"
-  public void parse(String comment) {
-    int pos = ignoreWS(comment, 0);
-    pos = check(comment, pos, "#OPTION:");
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    pos = ignoreWS(comment, pos);
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    String name = getName(comment, pos);
-    if (name == null)
-      return; // syntax error -> no options here
-    pos += name.length();
-
-    pos = ignoreWS(comment, pos);
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    pos = check(comment, pos, "=");
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    pos = ignoreWS(comment, pos);
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    String value = getValue(comment, pos);
-    if (value == null)
-      return; // syntax error -> no options here
-
-    options.put(name, value); // there was a value
+  public void setOption(String name, String value) {
+    options.put(name, value);
   }
 
-  private int ignoreWS(String data, int pos) {
-    if (pos == data.length())
-      return -1;
+  // --- LOADING tolog.properties
+
+  public void loadProperties() {
+    if (properties == null) {
+      try {
+        properties = PropertyUtils.loadPropertiesFromClassPath("tolog.properties");
+      } catch (IOException e) {
+        log.warn("Couldn't load tolog.properties", e);
+      }
+
+      if (properties == null) // avoid a reload
+        properties = new Properties(); 
+    }
+
+    // copy across properties
+    for (Object k : properties.keySet()) {
+      String key = (String) k;
+      String value = (String) properties.get(key);
+      options.put(key, value);
+    }
+  }
+
+  // --- DEFAULT OPTIONS
     
-    char ch = ' ';
-    while (pos < data.length() &&
-           (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r'))
-      ch = data.charAt(pos++);
-    return pos - 1;
-  }
-
-  private int check(String data, int pos, String expected) {
-    int start = pos;
-    while (pos < data.length() &&
-           pos - start < expected.length() &&
-           data.charAt(pos) == expected.charAt(pos - start))
-      pos++;
-    if (pos == start)
-      return -1;
-    else
-      return pos;
-  }
-
-  private String getName(String data, int pos) {
-    int start = pos;
-    char ch = 'a';
-    while (pos < data.length() &&
-           ((ch >= 'a' && ch <= 'z') ||
-            (ch >= 'A' && ch <= 'Z') ||
-            (ch >= '0' && ch <= '9') ||
-            ch == '.' || ch == '-'))
-      ch = data.charAt(pos++);
-
-    if (pos == start)
-      return null;
-    
-    return data.substring(start, pos - 1);
-  }
-  
-  private String getValue(String data, int pos) {
-    return getName(data, pos); // FIXME: too primitive, obviously
+  static {
+    defaults = new TologOptions();
+    defaults.setOption("optimizer.inliner", "true");
+    defaults.setOption("optimizer.reorder", "true");
+    defaults.setOption("optimizer.reorder.predicate-based", "true");
+    defaults.setOption("optimizer.typeconflict", "true");
+    defaults.setOption("optimizer.hierarchy-walker", "true");             
+    defaults.setOption("optimizer.prefix-search", "true");
+    defaults.setOption("optimizer.recursive-pruner", "true"); // rules only
+    defaults.setOption("compiler.typecheck", "true"); // queryanalyzer
+    // optimizer.role-player-type: default depends on implementation
+    // optimizer.next-previous: ditto.
+    // both set in QueryProcessor constructor
   }
 }

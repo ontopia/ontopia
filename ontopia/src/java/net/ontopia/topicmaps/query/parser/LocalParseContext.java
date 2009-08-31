@@ -18,6 +18,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.BadObjectReferenceException;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.parser.TologOptions;
 
 /**
  * INTERNAL: Represents the local context in which a tolog query or
@@ -48,7 +49,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
       ModuleIF module = getModule(uri);
       if (module == null) {
         LocalParseContext modulectx = new LocalParseContext(subcontext);
-        TologParser parser = new TologParser(modulectx);
+        TologParser parser = new TologParser(modulectx, TologOptions.defaults);
         try {
           if (isLoading(uri))
             throw new InvalidQueryException("Importing an already imported module is not allowed: '" + uri + "'");

@@ -85,7 +85,7 @@ public class ParsedRule {
     }
 
     // run type analysis
-    boolean strict = query.getOptions().getBooleanValue("compiler.typecheck", true);
+    boolean strict = query.getOptions().getBooleanValue("compiler.typecheck");
     typemap = QueryAnalyzer.analyzeTypes(clauses, strict).getVariableTypes();
   }
 
