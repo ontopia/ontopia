@@ -22,6 +22,101 @@ both at a higher level, and in more detail.
 </abstract>
 
 <!-- ======================================================================
+     5.0.1                                                              -->
+<section>
+<title>Ontopia 5.0.1 release notes</title>
+
+<para>This is a micro release, containing bug fixes and minor
+improvements throughout the product. Please consult the lists below to
+see the actual changes.</para>
+
+<para>
+The following changes have been made:  
+</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=13"
+                >Support for tolog.properties added</ulink>
+    (<ulink url="http://ontopia.wordpress.com/2009/08/31/tolog-properties/"
+    >blog post</ulink>)
+    </para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=72"
+                >Refactored Vizigator to simplify embedding</ulink>
+    </para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=81"
+                >Dependency on Apache ORO removed</ulink>
+    </para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=114"
+                >Ontopoly can now be built as a .jar file</ulink>
+    </para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://ontopia.wordpress.com/2009/08/21/ontopia-on-google-appengine/">Ontopia now runs on Google AppEngine</ulink>, thanks to two small fixes
+    (<ulink url="http://code.google.com/p/ontopia/issues/detail?id=118"
+           >118</ulink>,
+     <ulink url="http://code.google.com/p/ontopia/issues/detail?id=114"
+           >114</ulink>)
+    </para>
+  </listitem>
+  <listitem>
+    <para>Minor improvements in
+    <ulink url="http://code.google.com/p/ontopia/wiki/TologTips">TologSpy</ulink>
+    to make reports more readable</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=80"
+                >tolog can now count to zero</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=104"
+                >tolog plug-in in Omnigator can show query plan without
+    running query</ulink></para>
+  </listitem>
+  <listitem>
+    <para>New version of Italian Opera topic map.</para>
+  </listitem>
+</itemizedlist>
+
+<para>
+The following bugs have been fixed:
+</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=30"
+                 >Synchronization problem in DB2TM fixed</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=77"
+                 >XTM 1.0 crash on duplicate non-topic objects</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=91"
+                 >XTM 2.0 crash on duplicate non-topic objects</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=85"
+                 >NullPointerException on names in TMAPI 2.0</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=88"
+                 >TMSync doesn't synchronize reifying topics</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=117"
+                 >Reification of sub-topic maps carred into main TM in XTM 2.0</ulink></para>
+  </listitem>
+</itemizedlist>
+</section>
+
+<!-- ======================================================================
      5.0.0                                                              -->
 <section>
 <title>Ontopia 5.0.0 release notes</title>
