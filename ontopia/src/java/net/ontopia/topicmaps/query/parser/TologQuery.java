@@ -12,13 +12,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.xml.AbstractTopicMapExporter;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.utils.BindingContext;
 import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Used to represent parsed queries.
@@ -229,13 +230,20 @@ public class TologQuery {
   }
 
   private static String topicToString(TopicIF topic) {
+    String fallbackid = null; // bad IDs, only used in worst case
+    
     Iterator it = topic.getItemIdentifiers().iterator();
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
       String addr = loc.getAddress();
       int pos = addr.lastIndexOf('#');
-      if (pos != -1)
-        return addr.substring(pos + 1);
+      if (pos != -1) {
+        String id = addr.substring(pos + 1);
+        if (AbstractTopicMapExporter.mayCollide(id))
+          fallbackid = id;
+        else
+          return id;
+      }
     }
 
     it = topic.getSubjectIdentifiers().iterator();
@@ -246,6 +254,8 @@ public class TologQuery {
     if (it.hasNext())
       return "a\"" + ((LocatorIF) it.next()).getAddress() + "\"";
 
+    if (fallbackid != null)
+      return fallbackid;
     return "@" + topic.getObjectId();
   }
     
