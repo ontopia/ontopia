@@ -19,7 +19,18 @@ import net.ontopia.utils.StringUtils;
  */
 public class QueryProfiler {
   static DecimalFormat df = new DecimalFormat("0.#");
-  Map eStats = new HashMap();
+  Map<String, Event> eStats;
+  /**
+   * Tracks whether traversal events have been seen. The tolog profiler does
+   * not provide these, and tracking this lets us leave out two unnecessary
+   * columns in the report.
+   */
+  boolean traverse;
+
+  public QueryProfiler() {
+    eStats = new HashMap<String, Event>();
+    traverse = false;
+  }
 
   public synchronized void clear() {
     eStats.clear();
@@ -41,12 +52,13 @@ public class QueryProfiler {
                                           long start, long end) {
     Event event = getEvent(ename);
     event.addTraverse(hasNext, start, end);
+    traverse = true;
   }
 
   // -- Utilities
 
   private Event getEvent(String ename) {
-    Event event = (Event) eStats.get(ename);
+    Event event = eStats.get(ename);
     if (event == null) {
       event = new Event(ename);
       eStats.put(ename, event);
@@ -61,9 +73,10 @@ public class QueryProfiler {
     out.write("<h1>" + title + "</h1>\n");
 
     out.write("<table>\n");
-    out.write("<tr><th> <th>Query <th colspan=\"2\">Total time <th>Avg <th>Min <th>Max <th>Traverse time");
-    out.write("<th>Times run");
-    out.write("<th>Rows\n");
+    out.write("<tr><th> <th>Query <th colspan=\"2\">Total time <th>Avg <th>Min <th>Max");
+    out.write("<th>Times run\n");
+    if (traverse)
+      out.write("<th>Traverse time <th>Rows\n");
 
     Object[] events = eStats.values().toArray();
     Arrays.sort(events, new EventComparator());
@@ -100,11 +113,13 @@ public class QueryProfiler {
       out.write("<td>");
       out.write(df.format(event.executeTimeMax));
       out.write("<td>");
-      out.write(Long.toString(event.traverseTime));
-      out.write("<td>");
       out.write(Long.toString(event.executeNum));
-      out.write("<td>");
-      out.write(Long.toString(event.traverseNum));
+      if (traverse) {
+        out.write("<td>");
+        out.write(Long.toString(event.traverseTime));
+        out.write("<td>");
+        out.write(Long.toString(event.traverseNum));
+      }
       out.write("</tr>\n");
     }
     out.write("</table>\n");
