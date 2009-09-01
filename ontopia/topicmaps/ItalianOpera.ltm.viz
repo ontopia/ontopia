@@ -1,0 +1,2219 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <topic id="triptych">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Triptych"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>17 235 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id344">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/default-precedence-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id15">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-line-weight"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id129">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Librettist"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 204 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id181">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject-indicator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id170">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/double-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id201">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id157">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Artform"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id196">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="libretto-by">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/libretto_by"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id335"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id274">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Domain"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>250 248 96</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id9">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Play"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 102</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id340">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/motion-killer-delay"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id282">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/composed_by"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>51 51 255</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id345">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/rank-association"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id174">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="file:/L:/omnigator/WEB-INF/topicmaps/opera.hytm#domain"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id34">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/subject"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id318">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/has_voice"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 153 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id334">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/override-random-colors"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id278">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id225">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-excluded"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id280">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="file:/L:/omnigator/WEB-INF/topicmaps/opera.hytm#nameform"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id78">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Voice_type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>92 114 250</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id263">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Work"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 102</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id82">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/part_of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id1">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Event"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id333">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/scoping-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="conservatory">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Conservatory"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id342">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/enable-motion-killer"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id335">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/association-type-color-autogenerated"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id123">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Aria"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id88"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 255 204</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id116">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/written_by"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 204 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id95">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Region"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id27">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/single-mouse-click"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id153">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Place"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id88"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="dictionary">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Dictionary"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id88">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-shape-padding"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id145">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/source-locator"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id182">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/creator"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id140">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Country"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id88"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id21">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/format"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id120">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Style"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>246 164 142</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id277">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-icon-filename"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id210">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/takes_place_in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 153 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id267">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#superordinate-role-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id331">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/default-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Dialog-0-12</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id338">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/filter-strictness"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="fairy-tale">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Fairy_tale"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>247 21 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id236">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id215">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Composer"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>0 0 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id88"></topicRef>
+      </instanceOf>
+      <resourceData>3</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-1-12</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id8">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-color"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id337">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/scope-filter"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="literary-work">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Literary_work"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>245 179 241</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id28">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Novella"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 102</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id252">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="file:/L:/omnigator/WEB-INF/topicmaps/opera.hytm#codetype"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id137">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/subordinate-role-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id107">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Producer"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id330">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/untyped"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 245 242</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id103">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Name_form"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>11 22 89</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id13">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/exponent_of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>11 85 14</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id336">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-type-color-autogenerated"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id207">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/null"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id6">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/topic-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id244">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/died_in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>3</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>0 0 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id195">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/subject"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id248">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Theatre"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 204 204</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id86">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Language"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id88"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id186">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/sung_by"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id165"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>255 153 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 255 204</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="completed-by">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/completed_by"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id335"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id314">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/born_in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>0 255 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id191">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#hierarchical-relation-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id99">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Writer"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>245 157 205</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="la-boheme2">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/La_Boheme_(Leoncavallo)"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id91">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Publisher"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 255 102</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id238">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Character"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>255 204 204</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id88"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id232">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id341">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/max-topic-name-length"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id254">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/published_by"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>134 55 8</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id168">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/vizigator-general"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id38"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id170"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id106"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id342"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>240 240 240</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id324">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Opera"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>255 0 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-0-12</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id88"></topicRef>
+      </instanceOf>
+      <resourceData>7</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id304">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/premiere"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>3</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 153 153</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="publication">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Publication"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>1 34 233</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id179">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/start-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id181"></topicRef>
+      </instanceOf>
+      <resourceRef xlink:href="http://psi.ontopedia.net/Arrigo_Boito"></resourceRef>
+    </occurrence>
+  </topic>
+  <topic id="id165">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/assoc-type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id290">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/publisher"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="takes-place-during">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/takes_place_during"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>121 9 125</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id335"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id146">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/unfinished"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>255 71 21</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="musician">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Musician"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>9 20 121</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id339">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/locality-algorithm"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="chorus">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Chorus"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="status">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Status"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>92 114 250</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id18">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-visible"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id310">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/based_on"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 0 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id38">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/show-role-hover-help"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id161">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/appears_in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id165"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>255 204 204</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id106">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/display-scoped-assoc-names"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id32">
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id347">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/rank-below-role"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id286">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/killed_by"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>255 0 0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>4</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id39">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-instance"></subjectIndicatorRef>
+    </subjectIdentity>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <baseName>
+      <baseNameString>Instance of</baseNameString>
+    </baseName>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 204 204</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id332">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/default-association-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id335"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>116 10 57</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="subordinate-role-type">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://www.techquila.com/psi/hierarchy/#subordinate-role-type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>9 125 129</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id336"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id197">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Ballet"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id111">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/City"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id88"></topicRef>
+      </instanceOf>
+      <resourceData>0</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 153 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id133">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Cause_of_death"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>10 106 66</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id220">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/pupil_of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>3</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>0 51 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>false</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id60">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://purl.org/dc/elements/1.1/language"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>204 102 0</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id226">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Novel"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 102</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id64">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/located_in"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id18"></topicRef>
+      </instanceOf>
+      <resourceData>true</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>1</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 153 153</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id20">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-font"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id230">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Name_type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>219 1 99</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id176">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Metadata"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>0 238 22</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id300">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Poem"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>102 102 102</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id4">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/type-shape"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="la-boheme">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/La_Boheme"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id150">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Network_location"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id259">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Code_type"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id70">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/revision_of"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id15"></topicRef>
+      </instanceOf>
+      <resourceData>6</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id20"></topicRef>
+      </instanceOf>
+      <resourceData>Arial-2-10</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id346">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/rank-above-role"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id343">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/viz/rank-topic"></subjectIndicatorRef>
+    </subjectIdentity>
+  </topic>
+  <topic id="id74">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Playwright"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>153 204 255</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <topic id="id293">
+    <subjectIdentity>
+      <subjectIndicatorRef xlink:href="http://psi.ontopedia.net/Broadcasting_company"></subjectIndicatorRef>
+    </subjectIdentity>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id6"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id8"></topicRef>
+      </instanceOf>
+      <resourceData>64 64 64</resourceData>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <topicRef xlink:href="#id4"></topicRef>
+      </instanceOf>
+      <resourceData>2</resourceData>
+    </occurrence>
+  </topic>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#id345"></topicRef>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#id347"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#id343"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#id346"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#id344"></topicRef>
+    </member>
+  </association>
+  <association>
+    <instanceOf>
+      <topicRef xlink:href="#id345"></topicRef>
+    </instanceOf>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#id346"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#id343"></topicRef>
+    </member>
+    <member>
+      <roleSpec>
+        <topicRef xlink:href="#id347"></topicRef>
+      </roleSpec>
+      <topicRef xlink:href="#id344"></topicRef>
+    </member>
+  </association>
+</topicMap>

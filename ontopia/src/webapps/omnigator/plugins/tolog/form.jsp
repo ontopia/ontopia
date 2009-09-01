@@ -46,7 +46,7 @@ queries:</p>
  onChange='javascript:insertExample(this.options[this.selectedIndex].value)'
  tabindex='1'>
 <%
-  if (tmid.equals("opera.hytm")) {
+  if (tmid.equals("ItalianOpera.ltm")) {
 %>
     <option value="">Example queries:</option>
     <option value="exPuccini">Puccini's operas</option>
@@ -54,55 +54,18 @@ queries:</p>
     <option value="exShakespeare">Composers inspired by Shakespeare</option>
     <option value="exBornDied">Born and died in the same place</option>
     <option value="exComposers">Most prolific composers</option>
-    <option value="exMecca">Cities with the most opera premieres</option>
+    <option value="exMecca">Cities with the most premieres</option>
+    <option value="exTheatresByPremiere">Theatres with the most premieres</option>
     <option value="exOperasByPremiereDate">Operas by premiere date (paged)</option>
     <option value="exEnglishTitles">Operas that have English titles</option>
     <option value="exSuicides">Suicides (incomplete data)</option>
-    <option value="exNoDramatisPersonae">Operas with no dramatis personae</option>
     <option value="exSettingsByCountry">Settings of operas by country</option>
     <option value="exNaryArias">Arias sung by more than one person</option>
     <option value="exInspiredBy">"Inspired by" as inference rule</option>
     <option value="exBibliography">Subtle bibliography query</option>
     <option value="exRecordings">Audio recordings</option>
-<%
-  } else if (tmid.equals("opera.xtm")) {
-%>
-    <option value="">Example queries:</option>
-    <option value="exPuccini2">Puccini's operas</option>
-    <option value="exPucciniSorted2">Puccini's operas (sorted)</option>
-    <option value="exShakespeare2">Composers inspired by Shakespeare</option>
-    <option value="exBornDied2">Born and died in the same place</option>
-    <option value="exComposers2">Most prolific composers</option>
-    <option value="exMecca2">Cities with the most opera premieres</option>
-    <option value="exOperasByPremiereDate2">Operas by premiere date (paged)</option>
-    <option value="exEnglishTitles2">Operas that have English titles</option>
-    <option value="exSuicides2">Suicides (incomplete data)</option>
-    <option value="exNoDramatisPersonae2">Operas with no dramatis personae</option>
-    <option value="exSettingsByCountry2">Settings of operas by country</option>
-    <option value="exNaryArias2">Arias sung by more than one person</option>
-    <option value="exInspiredBy2">"Inspired by" as inference rule</option>
-    <option value="exBibliography2">Subtle bibliography query</option>
-    <option value="exRecordings2">Audio recordings</option>
-<%
-  } else if (tmid.equals("opera.ltm")) {
-%>
-    <option value="">Example queries:</option>
-    <option value="exPuccini3">Puccini's operas</option>
-    <option value="exPucciniSorted3">Puccini's operas (sorted)</option>
-    <option value="exShakespeare3">Composers inspired by Shakespeare</option>
-    <option value="exBornDied3">Born and died in the same place</option>
-    <option value="exComposers3">Most prolific composers</option>
-    <option value="exMecca3">Cities with the most opera premieres</option>
-    <option value="exOperasByPremiereDate3">Operas by premiere date (paged)</option>
-    <option value="exEnglishTitles3">Operas that have English titles</option>
-    <option value="exSuicides3">Suicides (incomplete data)</option>
-    <option value="exSettingsByCountry3">Settings of operas by country</option>
-    <option value="exNaryArias3">Arias sung by more than one person</option>
-    <option value="exInspiredBy3">"Inspired by" as inference rule</option>
-    <option value="exBibliography3">Subtle bibliography query</option>
-    <option value="exRecordings3">Audio recordings</option>
-    <option value="exNoDramatisPersonae3">Operas with no dramatis personae</option>
-    <option value="exNoVoiceType3">Operas with missing voice types</option>
+    <option value="exNoDramatisPersonae">Operas with no dramatis personae</option>
+    <option value="exNoVoiceType">Operas with missing voice types</option>
 <%
   } else if (tmid.equals("i18n.ltm")) {
 %>
@@ -124,7 +87,6 @@ queries:</p>
     <option value="">Example queries:</option>
     <option value="exBComposers">"B" composers and their works </option>
     <option value="exConcertsByDate">Concerts by date </option>
-    <option value="exNoSortName">Missing sort names </option>
 <%
   } else {
 %>
@@ -135,36 +97,30 @@ queries:</p>
 %>
 </select>
 </p>
-<p><b>tolog</b> is a topic map query language developed by Ontopia (and
-also supported by the Open Source topic map engine <a
-href="http://www.tm4j.org/">TM4J</a>). It is inspired by
-Datalog and based around the concept of predicates (which map to
-associations, occurrences and other constructs in topic maps). Topics
-can be referenced in numerous ways, including by XML ID and by subject
-identifier.* The language also supports inferencing through the use of
-inference rules. For a full description, see <a
+<p><b>tolog</b> is a language for querying topic maps that is supported by Ontopia,
+<a href="http://www.tm4j.org/">TM4J</a> and other Topic Maps engines. It
+is inspired by Datalog and based around the concept of predicates (which
+map to associations, occurrences and other constructs in topic maps).
+Topics can be referenced in numerous ways, including by local ID and by
+subject identifier.* The language also supports inferencing through the
+use of inference rules, which may be defined separately or embedded in
+the query itself. For a full description of the language, see <a
 href="../../docs/query/tutorial.html">The <b>tolog</b> Query Language
 Tutorial</a>.</p>
 
-<p>As of version 2.0 of the Ontopia Knowledge Suite (and version 007 of
-the Omnigator) tolog supports the complete 
+<p><b>tolog</b> supports the complete
 <a href="http://www.isotopicmaps.org/sam/">Topic Maps Data Model (TMDM)</a>
-ISO standard and is now an extremely powerful tool
-for querying every aspect of a topic map. Some of the new example
+ISO standard and is an extremely powerful tool
+for querying every aspect of a topic map. Some of the example
 queries supplied with the Omnigator demonstrate this very clearly. (Try
 for example the "English titles" query in <b><a
-href="../../models/topicmap_complete.jsp?tm=opera.ltm">opera.ltm</a></b>,
+href="../../models/topicmap_complete.jsp?tm=ItalianOpera.ltm">ItalianOpera.ltm</a></b>,
 which finds operas that have base names in the scope "English".)</p>
 
-<p><b>tolog</b> also supports inference rules, which may be defined
-separately or embedded in the query itself. Refer to <a
-href="../../docs/query/tutorial.html">The <b>tolog</b> Query Language
-Tutorial</a> for more details.</p>
-
-<p>Ontopia is participating actively in the development of a standard
-<a href="http://isotopicmaps.org/tmql/">Topic Maps Query Language
-(TMQL)</a>, which incorporates some features from tolog. Users of
-Ontopia's products will be provided with a migration path from
+<p>Ontopia supporters are participating actively in the development of a
+standard <a href="http://isotopicmaps.org/tmql/">Topic Maps Query Language
+(TMQL)</a>, which incorporates many features from tolog. Users of
+Ontopia will be provided with a migration path from
 <b>tolog</b> once TMQL has been defined and implemented.</p>
 
 <p>* Note that, although subject identifiers are generally more robust

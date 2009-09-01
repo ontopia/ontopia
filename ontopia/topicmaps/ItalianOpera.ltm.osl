@@ -1,0 +1,1720 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<tm-schema match="loose">
+
+  <!-- OSL schema for the Italian Opera topic map
+
+    Author: Steve Pepper, <pepper.steve@gmail.com>
+
+    (c) 2001-2009 Steve Pepper
+
+    Not to be used for commercial purposes (including demonstrations of
+    commercial software) without written permission from the author.
+
+    $Id: opera.ltm.osl,v 1.6 2006/10/14 20:55:11 pepper Exp $
+
+    Documentation for the Ontopia Schema Language (OSL) may be found at
+
+    Specification: http://www.ontopia.net/omnigator/docs/schema/spec.html
+    Tutorial:      http://www.ontopia.net/omnigator/docs/schema/tutorial.html
+
+  -->
+
+  <!-- *************************** TT: COMPOSER *************************** -->
+
+  <topic id="composer" match="strict">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+    </instanceOf>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Librettist"/>
+    </otherClass>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope; well, two are OK if one is the fullname -->
+    <baseName min="1" max="2">
+      <scope></scope>
+    </baseName>
+    <!-- exactly one name of the type "normal" (typed names not supported by OSL) -->
+<!--
+    <baseName min="1" max="1">
+    <instanceOf><subjectIndicatorRef href="http://psi.ontopedia.net/normal"/></instanceOf>
+    </baseName>
+-->
+    <!-- exactly one name of in the scope "normal" -->
+    <baseName min="1" max="1">
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/normal"/></scope>
+    </baseName>
+    <!-- exactly one name in the scope "shortname" -->
+    <baseName min="1" max="1">
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/></scope>
+    </baseName>
+    <!-- allow nom-de-plumes -->
+    <baseName>
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/nom_de_plume"/></scope>
+    </baseName>
+    <baseName>
+      <scope>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/nom_de_plume"/>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/normal"/>
+      </scope>
+    </baseName>
+    <baseName>
+      <scope>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/nom_de_plume"/>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+        </instanceOf>
+      </scope>
+    </baseName>
+
+    <!-- OCCURRENCES -->
+    <!-- must have internal "born" occurrence -->
+    <occurrence external="no" min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/date_of_birth"/>
+      </instanceOf>
+    </occurrence>
+    <!-- must have internal "died" occurrence -->
+    <occurrence external="no" min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/date_of_death"/>
+      </instanceOf>
+    </occurrence>
+    <!-- must have external "illustration" occurrence -->
+    <occurrence external="yes" min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/illustration"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "article" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/article"/>
+      </instanceOf>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Network_location"/>
+        </instanceOf>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Publication"/>
+        </instanceOf>
+      </scope>
+    </occurrence>
+    <!-- can have "bio" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/biographical_article"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "bibref" occurrences -->
+    <occurrence external="no">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/bibref"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "description" occurrences -->
+    <occurrence internal="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://purl.org/dc/elements/1.1/description"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "website" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/website"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "webpage" occurrences -->
+    <occurrence external="yes" min="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/webpage"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "gallery" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/gallery"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "sound-clip" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/sound_clip"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "note" occurrences -->
+    <occurrence external="no">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/note"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- ROLES -->
+    <!-- must play role of "person" in "born-in" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/born_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- must play role of "person" in "died-in" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/died_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- must play role of "composer" in "composed-by" association -->
+    <playing min="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/composed_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "composer" in "completed-by" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/completed_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "librettist" in "libretto-by" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Librettist"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/libretto_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "teacher" in "pupil-of" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Teacher"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/pupil_of"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "pupil" in "pupil-of" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Pupil"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/pupil_of"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "person" in "exponent-of" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/exponent_of"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+  </topic>
+
+  <!-- *************************** TT: LIBRETTIST *************************** -->
+
+  <topic id="librettist" match="loose">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Librettist"/>
+    </instanceOf>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+    </otherClass>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Producer"/>
+    </otherClass>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Writer"/>
+    </otherClass>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Playwright"/>
+    </otherClass>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope; well, two are OK if one is the fullname -->
+    <baseName min="1" max="2">
+      <scope></scope>
+    </baseName>
+    <!-- exactly one name of in the scope "normal" -->
+    <baseName min="1" max="1">
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/normal"/></scope>
+    </baseName>
+    <!-- exactly one name in the scope "shortname" -->
+    <baseName min="1" max="1">
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/></scope>
+    </baseName>
+
+    <!-- OCCURRENCES -->
+    <!-- must have internal "born" occurrence -->
+    <!-- FIXME: Bug #557 Check if this bug is fixed. Following rule no longer commented out. -->
+    <occurrence external="no" min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/date_of_birth"/>
+      </instanceOf>
+    </occurrence>
+    <!-- must have internal "died" occurrence -->
+    <occurrence external="no" min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/date_of_death"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- ROLES -->
+    <!-- must play role of "librettist" in "libretto-by" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Librettist"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/libretto_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- must play role of "person" in "born-in" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/born_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- must play role of "person" in "died-in" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/died_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+  </topic>
+
+  <!-- *************************** TT: WRITER ******************************* -->
+
+  <topic id="writer" match="loose">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Writer"/>
+    </instanceOf>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+    </otherClass>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Producer"/>
+    </otherClass>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Writer"/>
+    </otherClass>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Playwright"/>
+    </otherClass>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope; well, two are OK if one is the fullname -->
+    <baseName min="1" max="2">
+      <scope></scope>
+    </baseName>
+    <!-- exactly one name of in the scope "normal" -->
+    <baseName min="1" max="1">
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/normal"/></scope>
+    </baseName>
+    <!-- exactly one name in the scope "shortname" -->
+    <baseName min="1" max="1">
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/></scope>
+    </baseName>
+
+    <!-- OCCURRENCES -->
+    <!-- must have internal "born" occurrence -->
+    <occurrence external="no" min="0" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/date_of_birth"/>
+      </instanceOf>
+    </occurrence>
+    <!-- must have internal "died" occurrence -->
+    <occurrence external="no" min="0" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/date_of_death"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- ROLES -->
+    <!-- must play role of "person" in "born-in" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/born_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- must play role of "person" in "died-in" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/died_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+  </topic>
+
+  <!-- **************************** TT: OPERA **************************** -->
+  <topic id="opera" match="strict">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+    </instanceOf>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope -->
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+    <!-- may have one name in the scope "shortname" -->
+    <baseName>
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/></scope>
+    </baseName>
+    <!-- may have names in the scope of a topic of type "language" -->
+    <baseName>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Language"/>
+        </instanceOf>
+      </scope>
+    </baseName>
+    <!-- may have names in the scope "original-name" -->
+    <baseName>
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/original_name"/></scope>
+    </baseName>
+    <!-- may have one name in the scope of a topic of type "composer" -->
+    <baseName max="1">
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+        </instanceOf>
+      </scope>
+    </baseName>
+    <!-- may have one short name in the scope of a topic of type "composer" -->
+    <baseName max="1">
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+        </instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/>
+      </scope>
+    </baseName>
+    <!-- may have names in the scope "altname" -->
+    <baseName>
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/alternative_name"/></scope>
+    </baseName>
+
+    <!-- OCCURRENCES -->
+    <!-- must have internal "premiere-date" occurrence -->
+    <occurrence external="no" min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/premiere_date"/>
+      </instanceOf>
+    </occurrence>
+    <!-- may have external "libretto" occurrence -->
+    <occurrence external="yes" max="2">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/libretto"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "webpage" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/webpage"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "bibref" occurrences -->
+    <occurrence external="no">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/bibref"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "note" occurrences -->
+    <occurrence external="no">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/note"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "description" occurrences -->
+    <occurrence internal="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://purl.org/dc/elements/1.1/description"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "synopsis" occurrences -->
+    <occurrence external="yes">
+      <instanceOf subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/synopsis"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "illustration" occurrences -->
+    <occurrence external="yes">
+      <instanceOf subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/illustration"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "audio recording" occurrences -->
+    <occurrence internal="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/audio_recording"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "video recording" occurrences -->
+    <occurrence internal="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/video_recording"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "poster" occurrences -->
+    <occurrence external="yes">
+      <instanceOf subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/poster"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "gallery" occurrences -->
+    <occurrence external="yes">
+      <instanceOf subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/gallery"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "article" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/article"/>
+      </instanceOf>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Network_location"/>
+        </instanceOf>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Publication"/>
+        </instanceOf>
+      </scope>
+    </occurrence>
+    <!-- can have "sound-clip" occurrences -->
+    <occurrence external="yes">
+      <instanceOf subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/sound_clip"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- ROLES -->
+    <!-- MUST play role of "opera" in "composed-by" association -->
+    <playing min="1" max="2">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/composed_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "opera" in "completed-by" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/completed_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- MAY play role of "opera" in "libretto-by" association -->
+<!-- FIXME: librettist unknown for following 23 operas:
+select $COMPOSER, $OPERA from
+composed-by( $OPERA : work, $COMPOSER : composer),
+not(libretto-by( $OPERA : opera, $LIBRETTIST : librettist))
+order by $COMPOSER?
+-->
+    <playing min="0">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/libretto_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "result" in "based-on" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Result"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/based_on"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "result" in "revision-of" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Result"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/revision_of"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "source" in "revision-of" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Source"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/revision_of"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "work" in "premiere" association -->
+    <playing min="0" max="10">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/premiere"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "opera" in up to five "takes-place-in" associations -->
+    <playing max="5">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/takes_place_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "opera" in "takes-place-during" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/takes_place_during"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+<!-- FIXME: character list not captured for following operas:
+select $COMPOSER, $OPERA from
+composed-by( $OPERA : opera, $COMPOSER : composer),
+not(appears-in($OPERA : work, $B : character))
+order by $COMPOSER, $OPERA?
+-->
+    <!-- may play role of "work" in "appears-in" association -->
+    <playing><!-- min="1"-->
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/appears_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "opera" in "character-dies" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/killed_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "work" in "published-by" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/published_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "part" in "part-of" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Part"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/part_of"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "whole" in "part-of" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Whole"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/part_of"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "opera" in "unfinished" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/unfinished"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+  </topic>
+
+  <!-- **************************** TT: ARIA ***************************** -->
+  <topic id="aria" match="strict">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Aria"/>
+    </instanceOf>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope -->
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+    <!-- may have names in the scope "altname" -->
+    <baseName>
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/alternative_name"/></scope>
+    </baseName>
+    <!-- may have names in the scope of a topic of type "language" -->
+    <baseName>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Language"/>
+        </instanceOf>
+      </scope>
+    </baseName>
+
+    <!-- OCCURRENCES -->
+    <!-- may have "audio-recording" occurrence(s) -->
+    <occurrence external="no">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/audio_recording"/>
+      </instanceOf>
+    </occurrence>
+    <occurrence>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/sound_clip"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- ROLES -->
+    <!-- must play role of "aria" in "sung-by" association -->
+    <playing min="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Aria"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/sung_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- must play role of "part" in "part-of" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Part"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/part_of"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+  </topic>
+
+  <!-- *************************** TT: CHARACTER ************************** -->
+
+  <topic id="character" match="strict">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+    </instanceOf>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope -->
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+    <!-- may have one name in the scope "character" -->
+    <baseName max="1">
+      <scope>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </scope>
+    </baseName>
+    <!-- may have one name in the scope "character" and a topic of type "opera" -->
+    <baseName max="1">
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+        </instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </scope>
+    </baseName>
+    <!-- may have one short name in the scope "character" -->
+    <baseName max="1">
+      <scope>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/>
+      </scope>
+    </baseName>
+    <!-- may have one short name in the scope of a topic of type "opera" -->
+    <baseName max="1">
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+        </instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/>
+      </scope>
+    </baseName>
+    <!-- may have one short name in the scope "character" and a topic of type "opera" -->
+    <baseName max="1">
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+        </instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/>
+      </scope>
+    </baseName>
+    <!-- may have names in the scope "english", "italian" or "french" -->
+    <baseName>
+      <scope match="superset">
+         <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"/>
+         <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/language.xtm#fr"/>
+         <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/language.xtm#it"/>
+      </scope>
+    </baseName>
+    <!-- may have names in the scope of topics of type "language" and "opera" -->
+    <baseName>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Language"/>
+        </instanceOf>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+        </instanceOf>
+      </scope>
+    </baseName>
+    <!-- may have a name in the scope of a topic of type "name-type" -->
+    <baseName>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Name_type"/>
+        </instanceOf>
+      </scope>
+    </baseName>
+    <!-- may have "description" occurrence -->
+    <occurrence external="no" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://purl.org/dc/elements/1.1/description"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "note" occurrences -->
+    <occurrence external="no">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/note"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have "bibref" occurrences -->
+    <occurrence external="no">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/bibref"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- ROLES -->
+    <!-- must play role of "character" in "appears-in" association -->
+    <playing min="1" max="2">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/appears_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "character" in "has-voice" association -->
+    <playing min="0" max="2">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/has_voice"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "victim" in "killed-by" association -->
+    <playing max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Victim"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/killed_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "perpetrator" in "killed-by" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Perpetrator"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/killed_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "character" in "sung-by" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/sung_by"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- ***************************** TT: CITY ***************************** -->
+
+  <topic id="city" match="strict">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/City"/>
+    </instanceOf>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope -->
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+    <!-- may have names in the scope of a topic of type "language" -->
+    <baseName>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Language"/>
+        </instanceOf>
+      </scope>
+    </baseName>
+    <!-- may have a name in the scope "former name" -->
+    <baseName>
+      <scope>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/former_name"/>
+      </scope>
+    </baseName>
+
+    <!-- OCCURRENCES -->
+    <!-- can have "article" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/article"/>
+      </instanceOf>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Network_location"/>
+        </instanceOf>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Publication"/>
+        </instanceOf>
+      </scope>
+    </occurrence>
+
+    <!-- ROLES -->
+    <!-- must play role of "containee" in "located-in" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Containee"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/located_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "container" in "located-in" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Container"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/located_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "place" in "born-in" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/born_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "place" in "died-in" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/died_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "place" in "takes-place-in" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/takes_place_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "place" in "first-performed-at" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/premiere"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- ***************************** TT: COUNTRY ************************** -->
+
+  <topic id="country" match="strict">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Country"/>
+    </instanceOf>
+    <otherClass>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Region"/>
+    </otherClass>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope -->
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+    <!-- may have names in the scope of a topic of type "language" -->
+    <baseName>
+      <scope>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/Language"/>
+        </instanceOf>
+      </scope>
+    </baseName>
+
+    <!-- OCCURRENCES -->
+
+    <!-- ROLES -->
+    <!-- may play role of "containee" in "located-in" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Containee"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/located_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "container" in "located-in" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Container"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/located_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "place" in "takes-place-in" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/takes_place_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- may play role of "value" in "dc:subject" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.topicmaps.org/iso29111/value"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://purl.org/dc/elements/1.1/subject"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- **************************** TT: THEATRE **************************** -->
+
+  <topic id="theatre" match="strict">
+
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/Theatre"/>
+    </instanceOf>
+
+    <!-- BASE NAMES -->
+    <!-- exactly one name in the unconstrained scope -->
+    <baseName min="1" max="1">
+      <scope></scope>
+    </baseName>
+    <!-- may have a name in the scope "shortname" -->
+    <baseName max="1">
+      <scope><subjectIndicatorRef href="http://psi.ontopedia.net/short_name"/></scope>
+    </baseName>
+
+    <!-- OCCURRENCES -->
+    <!-- can have "webpage" occurrences -->
+    <occurrence external="yes">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/webpage"/>
+      </instanceOf>
+    </occurrence>
+    <!-- can have external "illustration" occurrence -->
+    <occurrence external="yes" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/illustration"/>
+      </instanceOf>
+    </occurrence>
+
+    <!-- ROLES -->
+    <!-- must play role of "containee" in "located-in" association -->
+    <playing min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Containee"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/located_in"/>
+        </instanceOf>
+      </in>
+    </playing>
+
+    <!-- may play role of "theatre" in "premiere" association -->
+    <playing>
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Theatre"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/premiere"/>
+        </instanceOf>
+      </in>
+    </playing>
+    <!-- must play role of "place" in at least one "first-performed-at" association -->
+    <playing min="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <in>
+        <instanceOf>
+          <subjectIndicatorRef href="http://psi.ontopedia.net/premiere"/>
+        </instanceOf>
+      </in>
+    </playing>
+  </topic>
+
+  <!-- ************************* AT: ARIA-IN-OPERA ************************ -->
+<!--
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/part_of"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Part"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Part"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Whole"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Whole"/>
+      </player>
+    </role>
+  </association>
+-->
+  <!-- *************************** AT: BASED-ON *************************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/based_on"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Result"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <!-- NB When an opera is based on more than one work, multiple binary
+      associations must be used (max="1")-->
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Source"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ********************** AT: BORN-IN AND DIED-IN ********************* -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/born_in"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+<!--FIXME: Terrible error reporting if we replace "geography" with "opera" in following -->
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <player subclasses="yes">
+<!--FIXME: Inadequate error reporting if we replace "geography" with "opera" in following -->
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </player>
+    </role>
+  </association>
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/died_in"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ************************ AT: CHARACTER-DIES ************************ -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/killed_by"/>
+    </instanceOf>
+    <role max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Cause_of_death"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Cause_of_death"/>
+      </player>
+    </role>
+    <role><!-- BUG: bad error reporting when min="1" max="1" -->
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Perpetrator"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Victim"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ********************** AT: APPEARS-IN ****************************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/appears_in"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ************************** AT: COMPOSED-BY ************************* -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/composed_by"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ************************** AT: PART-OF ***************************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/part_of"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Whole"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Triptych"/>
+      </player>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Part"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </player>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Aria"/>
+      </player>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Chorus"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ************************** AT: EXPONENT-OF ************************* -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/exponent_of"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Style"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Style"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- *************************** AT: HAS-VOICE ************************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/has_voice"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Character"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Voice_type"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Voice_type"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ************************** AT: LOCATED-IN ************************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/located_in"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Container"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Containee"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- *************************** AT: PREMIERE *************************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/premiere"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Triptych"/>
+      </player>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </player>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Broadcasting_company"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ************************* AT: PUBLISHED-BY ************************* -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/published_by"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Triptych"/>
+      </player>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Publisher"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Publisher"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- **************************** AT: PUPIL-OF ************************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/pupil_of"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Teacher"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Musician"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Pupil"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Composer"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ************************** AT: REVISION-OF ************************* -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/revision_of"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Result"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <!-- NB When an opera is based on more than one work, multiple binary
+      associations must be used (max="1")-->
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Source"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ************************* AT: TAKES-PLACE-IN *********************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/takes_place_in"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Opera"/>
+      </player>
+    </role>
+    <role max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Place"/>
+      </player>
+    </role>
+    <role max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Event"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Event"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- *************************** AT: SUNG-BY **************************** -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/sung_by"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Aria"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Aria"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <player>
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </player>
+    </role>
+  </association>
+
+  <!-- ********************** AT: SUPERCLASS-SUBCLASS ********************* -->
+
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"/>
+      </instanceOf>
+    </role>
+    <role min="1" max="1">
+      <instanceOf>
+        <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"/>
+      </instanceOf>
+    </role>
+  </association>
+
+  <!-- ************************** AT: WRITTEN-BY ************************** -->
+
+  <!-- FIXME: Make written-by constraints tighter... -->
+  <association>
+    <instanceOf>
+      <subjectIndicatorRef href="http://psi.ontopedia.net/written_by"/>
+    </instanceOf>
+    <role min="1" max="1">
+      <instanceOf subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Work"/>
+      </player>
+    </role>
+    <role min="1" max="1">
+      <instanceOf subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </instanceOf>
+      <player subclasses="yes">
+        <subjectIndicatorRef href="http://psi.ontopedia.net/Person"/>
+      </player>
+    </role>
+  </association>
+
+</tm-schema>
