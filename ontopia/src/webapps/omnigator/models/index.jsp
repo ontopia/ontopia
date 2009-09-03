@@ -90,7 +90,7 @@
         </li>
         <li><b>Examples</b>
             <ul>
-              <li><a href="../docs/navigator/opera.ltm" title="The world's most famous topic map, in LTM format">Italian Opera (LTM syntax)</a></li>
+              <li><a href="../docs/navigator/ItalianOpera.ltm" title="The world's most famous topic map, in LTM format">Italian Opera (LTM syntax)</a></li>
               <li><a href="../docs/i18n.ltm" title="An LTM topic map about the world's scripts and languages">Scripts and languages (LTM syntax)</a></li>
               <li><a href="../docs/jill.xtm" title="A simple topic map based on the tutorial in the Omnigator User Guide">Jill's First Topic Map (XTM syntax)</a></li>
             </ul>
@@ -133,24 +133,24 @@ href="../docs/navigator/userguide.html">far more</a></u> than simply
 browse your topic maps. It supports all aspects of the Topic Maps
 standard and has a host of powerful features, such as the ability to
 
-<u><a href="/omnigator/plugins/merge/select.jsp?tm=opera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3Dopera.ltm">merge</a></u> topic maps on the fly;
-<u><a href="/omnigator/plugins/tolog/form.jsp?tm=opera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3Dopera.ltm">search</a></u> in ways that make Google boggle;
-<u><a href="/omnigator/plugins/export/config.jsp?tm=opera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3Dopera.ltm">export</a></u> to a range of syntaxes;
+<u><a href="/omnigator/plugins/merge/select.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">merge</a></u> topic maps on the fly;
+<u><a href="/omnigator/plugins/tolog/form.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">search</a></u> in ways that make Google boggle;
+<u><a href="/omnigator/plugins/export/config.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">export</a></u> to a range of syntaxes;
 <!--generate reports of the topic map's "vital statistics";-->
-<u><a href="/omnigator/plugins/customise/user.jsp?tm=opera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3Dopera.ltm">customize</a></u> different views;
-produce <u><a href="/omnigator/plugins/filter/userContextFilter.jsp?tm=opera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3Dopera.ltm">filtered subsets</a></u> based on scope;
-perform semantic <u><a href="/omnigator/plugins/validator/validate.jsp?tm=opera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3Dopera.ltm"/>validation</a></u>;
+<u><a href="/omnigator/plugins/customise/user.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">customize</a></u> different views;
+produce <u><a href="/omnigator/plugins/filter/userContextFilter.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">filtered subsets</a></u> based on scope;
+perform semantic <u><a href="/omnigator/plugins/validator/validate.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm"/>validation</a></u>;
 and much more besides.</p>
 
 <p align="center"><a
-href="/omnigator/plugins/viz/viz.jsp?tm=opera.ltm&id=puccini&redirect=%2Fomnigator%2Fmodels%2Ftopic_complete.jsp%3Ftm%3Dopera.ltm%26id%3Dpuccini"><img
+href="/omnigator/plugins/viz/viz.jsp?tm=ItalianOpera.ltm&id=puccini&redirect=%2Fomnigator%2Fmodels%2Ftopic_complete.jsp%3Ftm%3DItalianOpera.ltm%26id%3Dpuccini"><img
 border="0" src="../images/tosca-2.png" title="Vizigator screenshot
 showing a portion of the Italian Opera Topic Map"/></a></p>
 
 <p>The most eye-catching new Omnigator feature is the Vizigator, which
 produces a graphic visualization of your topic map. The Vizigator is
 accessed via the <u><a
-href="/omnigator/plugins/viz/viz.jsp?tm=opera.ltm&id=puccini&redirect=%2Fomnigator%2Fmodels%2Ftopic_complete.jsp%3Ftm%3Dopera.ltm%26id%3Dpuccini">Vizigate</a></u>
+href="/omnigator/plugins/viz/viz.jsp?tm=ItalianOpera.ltm&id=puccini&redirect=%2Fomnigator%2Fmodels%2Ftopic_complete.jsp%3Ftm%3DItalianOpera.ltm%26id%3Dpuccini">Vizigate</a></u>
 plug-in on any Topic Page. In addition, support for RDF has been
 improved through the addition of the <u><a href="http://localhost:8080/omnigator/plugins/rdf2tm/configure.jsp?tm=KanzakisConcerts.rdf">RDF2TM</a></u> plug-in
 which allows you to configure your mappings.</p>
