@@ -1,1 +1,1 @@
-Class-Path: junit.jar
+Class-Path: junit.jar tmapi-tests.jar
