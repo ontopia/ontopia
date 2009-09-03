@@ -113,6 +113,10 @@ The following bugs have been fixed:
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=117"
                  >Reification of sub-topic maps carred into main TM in XTM 2.0</ulink></para>
   </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=15"
+                 >Cannot log in to new installation</ulink></para>
+  </listitem>
 </itemizedlist>
 </section>
 
