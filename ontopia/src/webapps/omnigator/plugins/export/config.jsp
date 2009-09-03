@@ -60,7 +60,6 @@
         <!-- Export functionality -->
         <form action="export.jsp" method="get" name="export">
         <input type="hidden" name="tm" value="<%= request.getParameter("tm") %>">
-        <input type="hidden" name="filename" value="<%= request.getParameter("tm") %>">
         <tr valign="top">
             <td><input type='radio' name='format' value='xtm1' checked='checked'
                  onClick="setFilename('export', 'filename', '<%= request.getParameter("tm") %>', '.xtm')">
@@ -73,8 +72,8 @@
                  onClick="setFilename('export', 'filename', '<%= request.getParameter("tm") %>', '.xtm')">
             <td>XTM 2.0 syntax
             <td>&nbsp; &nbsp;
-            <td><input type='radio' name='type' value='octet' checked='checked'>
-            <td>Download
+            <td>
+            <td>Save as: <input type='text' name='filename' value='<%= request.getParameter("tm") %>.xtm'>
         <tr><td><input type='radio' name='format' value='rdf'
                  onClick="setFilename('export', 'filename', '<%= request.getParameter("tm") %>', '.rdf')">
             <td>RDF/XML syntax
