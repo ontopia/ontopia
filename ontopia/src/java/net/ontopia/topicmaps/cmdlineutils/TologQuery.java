@@ -29,6 +29,7 @@ public class TologQuery {
     // Register local options
     options.addLong(ohandler, "trace", 't');
     options.addLong(ohandler, "debug", 'd');
+    options.addLong(ohandler, "timeit", 'i');
     
     // Register logging options
     CmdlineUtils.registerLoggingOptions(options);
@@ -133,16 +134,33 @@ public class TologQuery {
     }
 
     System.out.println("Rows: " + rows);
+
+    if (ohandler.timeit) {
+      // runs the query 10 more times, to produce an average time
+      System.out.println("\nDoing timing...");
+
+      int times = 10;
+      long total = 0;
+      for (int ix = 0; ix < times; ix++) {
+        time = System.currentTimeMillis();
+        pquery.execute();
+        total += (System.currentTimeMillis() - time);
+      }
+
+      System.out.println("Average: " + (total / times));
+    }
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
     boolean trace;
     boolean debug;
+    boolean timeit;
     
     public void processOption(char option, String value)
       throws CmdlineOptions.OptionsException {
       if (option == 't') trace = true;
       if (option == 'd') debug = true;
+      if (option == 'i') timeit = true;
     }
   }
 
