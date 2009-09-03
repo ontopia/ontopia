@@ -26,9 +26,11 @@ public class LTMTopicMapWriterTest extends AbstractCanonicalTestCase {
     TopicMapBuilderIF builder = tm.getBuilder();
     TopicIF topic = builder.makeTopic();
     topic.addItemIdentifier(base.resolveAbsolute("#22"));
-
+    
     String root = getTestDirectory();
+    verifyDirectory(root, "ltmWriter");
     String thebase = root + File.separator + "ltmWriter" + File.separator;
+    verifyDirectory(thebase, "out");
     String filename = thebase + File.separator + "out" + File.separator +
       "testBadId.ltm";
     
