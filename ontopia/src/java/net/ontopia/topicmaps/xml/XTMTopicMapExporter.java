@@ -122,6 +122,10 @@ public class XTMTopicMapExporter extends AbstractTopicMapExporter {
     while (iter.hasNext())
       writeTopic((TopicIF) iter.next(), dh);
 
+    // Finished with the topics, so allow them to be GC-ed
+    topics = null;
+    iter = null;
+
     // Do all the associations
     Collection associations = filterCollection(tm.getAssociations());
     iter = associations.iterator();
