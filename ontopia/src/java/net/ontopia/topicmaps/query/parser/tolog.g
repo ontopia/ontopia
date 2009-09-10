@@ -177,19 +177,16 @@ options {
     }
     return deferredRule;
   }
-}
 
-// the grammar
-
-query:  
-  (prefixdecl | importdecl)*
-  (// we solve #1143 by using what antlr calls a "syntactic
-   // predicate" to verify that this really is a rule
-   (IDENT LPAREN VARIABLE (COMMA VARIABLE)* RPAREN CONNECT) => 
-   rule)* 
-  { 
+  /**
+   * Processing of rules once they are all parsed. Verifies that all
+   * rules we have seen references to are actually defined, passes the
+   * close() event to rules, and then optimizes them.
+   */
+  private void optimizeRules() throws AntlrWrapException {
     if (optimizer == null)
       configureOptimizer();
+
     // validate rules
     Iterator riter = rules.values().iterator();
     while (riter.hasNext()) {
@@ -199,6 +196,7 @@ query:
                 new InvalidQueryException("Unknown predicate: " + prule.getName()));
       }
     }
+
     // close and optimize rules
     riter = rules.values().iterator();
     while (riter.hasNext()) {
@@ -211,6 +209,19 @@ query:
       }
     }
     rules.clear();
+  }
+}
+
+// the grammar
+
+query:  
+  (prefixdecl | importdecl)*
+  (// we solve #1143 by using what antlr calls a "syntactic
+   // predicate" to verify that this really is a rule
+   (IDENT LPAREN VARIABLE (COMMA VARIABLE)* RPAREN CONNECT) => 
+   rule)* 
+  { 
+    optimizeRules();
   }
   
   (SELECT selectlist FROM )?
@@ -231,7 +242,11 @@ query:
 // order to be able to use a syntactic predicate
 declarations:
   (prefixdecl | importdecl)*
-  (rule)*;
+  (rule)* 
+  {
+    optimizeRules();
+  }
+  ;
 
 prefixdecl:
   USING IDENT { notQNameHere(); prevIdent = LT(0).getText(); }

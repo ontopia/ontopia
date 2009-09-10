@@ -69,9 +69,16 @@ public class ParsedRule {
     // will only work after close() has been called
     return query;
   }
-  
+
+  /**
+   * Some checks can only be performed when we know that we have
+   * parsed the entire rule. Therefore close() is called once parsing
+   * of the rule has ended. It verifies that all parameters to the
+   * rule are actually used in the rule (no free variables), and runs
+   * type inferencing on the rule.
+   */
   public void close(TologQuery query) throws InvalidQueryException {
-    // verify that all parameters to rule are actually bound by it
+    // verify that all parameters are used
     Set allVariables = new HashSet();
     for (int ix = 0; ix < clauses.size(); ix++) {
       AbstractClause clause = (AbstractClause) clauses.get(ix);
@@ -84,7 +91,7 @@ public class ParsedRule {
                                         " is not bound by the rule.");
     }
 
-    // run type analysis
+    // run type inferencing
     boolean strict = query.getOptions().getBooleanValue("compiler.typecheck");
     typemap = QueryAnalyzer.analyzeTypes(clauses, strict).getVariableTypes();
   }
