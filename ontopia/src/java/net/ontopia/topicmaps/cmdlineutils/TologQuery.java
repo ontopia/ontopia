@@ -82,6 +82,7 @@ public class TologQuery {
     System.out.println("  Options:");
     CmdlineUtils.printLoggingOptionsUsage(System.out);
     System.out.println("    --trace: turn on query tracing");
+    System.out.println("    --timeit: run query 10 times to check performance");
     System.out.println("");
     System.out.println("    <tm>:  url or file name of topic map to be queried");
     System.out.println("    <query>: query string or file containing query");
