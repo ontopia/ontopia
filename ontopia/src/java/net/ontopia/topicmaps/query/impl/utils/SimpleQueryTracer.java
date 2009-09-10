@@ -28,6 +28,7 @@ public class SimpleQueryTracer extends QueryTracer.TracePrinter {
   public void output(String message) {
     try {
       out.write(message + "\n");
+      out.flush();
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }
