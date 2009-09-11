@@ -264,7 +264,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     if (encoding != null)
       out.write("@\"" + encoding + "\"\n");
     out.write("#VERSION \"1.3\"\n");
-    out.write("/*\n   Generator: Ontopia Knowledge Suite (OKS)");
+    out.write("/*\n   Generator: Ontopia");
     out.write("\n   Date:      ");
     out.write(minLengthString(calendar.get(Calendar.YEAR), 4));
     out.write('-');
@@ -576,7 +576,7 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
         out.write("%\"");
         out.write(escapeString(externalForm));
         out.write('"');
-			}
+      }
 
       // Write subject indicators, one per line.
       Collection subjectIndicators = topic.getSubjectIdentifiers();
@@ -829,26 +829,26 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
    */
   private void writeVariant(VariantNameIF variant, Writer out)
       throws IOException {
-		if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING)) {
-			String value = variant.getValue();
-			if (value != null) {
-				out.write("(\"");
-				out.write(escapeString(value));
-				out.write('"');
+    if (ObjectUtils.equals(variant.getDataType(), DataTypes.TYPE_STRING)) {
+      String value = variant.getValue();
+      if (value != null) {
+        out.write("(\"");
+        out.write(escapeString(value));
+        out.write('"');
 
-				// Write the names of the scoping topics of this variant.
-				writeScope(variant, out);
+        // Write the names of the scoping topics of this variant.
+        writeScope(variant, out);
 
-				out.write(')');
-			}
-		} else {
+        out.write(')');
+      }
+    } else {
       out.write("/* WARNING: LTM 1.3 cannot represent variant names that");
       out.write(" are not of xsd:string type, hence cannot represent object [");
       out.write(variant.getObjectId());
       out.write("] */");
     }
-	}
-		
+  }
+    
 
   /**
    * Write one given occurrence to 'out'.
@@ -860,32 +860,32 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     if (filterOk(occurrence)) {
       String value = occurrence.getValue();
 
-			if (occurrence.getDataType().equals(DataTypes.TYPE_URI)) {
-				out.write("   {");
-				out.write(getElementId(occurrence.getTopic()));
-				out.write(", ");
-				out.write(lazyTypeElementId(occurrence));
-				out.write(", ");
-				out.write("\"");
-				out.write(occurrence.getLocator().getExternalForm());
-				out.write("\"");
-				out.write('}');
-			} else if (occurrence.getDataType().equals(DataTypes.TYPE_STRING)) {
-				out.write("   {");
-				out.write(getElementId(occurrence.getTopic()));
-				out.write(", ");
-				out.write(lazyTypeElementId(occurrence));
-				out.write(", ");
-				out.write("[[");
-				out.write(escapeInternalOccurrence(value));
-				out.write("]]");
-				out.write('}');
-			} else {
-				out.write("/* WARNING: LTM 1.3 cannot represent occurrences that");
-				out.write(" are not of xsd:string or xsd:anyURI type, hence cannot represent object [");
-				out.write(occurrence.getObjectId());
-				out.write("] */");
-			}
+      if (occurrence.getDataType().equals(DataTypes.TYPE_URI)) {
+        out.write("   {");
+        out.write(getElementId(occurrence.getTopic()));
+        out.write(", ");
+        out.write(lazyTypeElementId(occurrence));
+        out.write(", ");
+        out.write("\"");
+        out.write(occurrence.getLocator().getExternalForm());
+        out.write("\"");
+        out.write('}');
+      } else if (occurrence.getDataType().equals(DataTypes.TYPE_STRING)) {
+        out.write("   {");
+        out.write(getElementId(occurrence.getTopic()));
+        out.write(", ");
+        out.write(lazyTypeElementId(occurrence));
+        out.write(", ");
+        out.write("[[");
+        out.write(escapeInternalOccurrence(value));
+        out.write("]]");
+        out.write('}');
+      } else {
+        out.write("/* WARNING: LTM 1.3 cannot represent occurrences that");
+        out.write(" are not of xsd:string or xsd:anyURI type, hence cannot represent object [");
+        out.write(occurrence.getObjectId());
+        out.write("] */");
+      }
 
       // Write the names of the scoping topics of this occurrence.
       writeScope(occurrence, out);
@@ -900,9 +900,9 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       throws IOException
   {
     // Write the reifier.
-		TopicIF reifier = reifiable.getReifier();
+    TopicIF reifier = reifiable.getReifier();
     if (reifier != null)
-			out.write("~ " + getElementId(reifier));
+      out.write("~ " + getElementId(reifier));
   }
 
   /**
@@ -1419,10 +1419,10 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
       // Compare the reifier(if there is one) of the association.
       if (retVal == 0) {
-				TopicIF reifier1 = assoc1.getReifier();
-				Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
-				TopicIF reifier2 = assoc2.getReifier();
-				Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
+        TopicIF reifier1 = assoc1.getReifier();
+        Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
+        TopicIF reifier2 = assoc2.getReifier();
+        Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
         reifiers1 = filterCollection(reifiers1);
         reifiers2 = filterCollection(reifiers2);
         retVal = reifierComparator.compare(reifiers1, reifiers2);
@@ -1532,14 +1532,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
       // Compare the reifier(if any) of the association roles.
       if (retVal == 0) {
-				TopicIF reifier1 = ar1.getReifier();
-				Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
-				TopicIF reifier2 = ar2.getReifier();
-				Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
+        TopicIF reifier1 = ar1.getReifier();
+        Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
+        TopicIF reifier2 = ar2.getReifier();
+        Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
         reifiers1 = filterCollection(reifiers1);
         reifiers2 = filterCollection(reifiers2);
         retVal = reifierComparator.compare(reifiers1, reifiers2);
-			}
+      }
 
       return retVal;
     }
@@ -1595,14 +1595,14 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
       // Compare the reifier(if there is one) of the occurrences.
       if (retVal == 0) {
-				TopicIF reifier1 = occ1.getReifier();
-				Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
-				TopicIF reifier2 = occ2.getReifier();
-				Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
+        TopicIF reifier1 = occ1.getReifier();
+        Collection reifiers1 = (reifier1 == null ? Collections.EMPTY_SET : Collections.singleton(reifier1));
+        TopicIF reifier2 = occ2.getReifier();
+        Collection reifiers2 = (reifier2 == null ? Collections.EMPTY_SET : Collections.singleton(reifier2));
         reifiers1 = filterCollection(reifiers1);
         reifiers2 = filterCollection(reifiers2);
         retVal = reifierComparator.compare(reifiers1, reifiers2);
-			}
+      }
 
       if (retVal == 0)
         retVal = -1;
