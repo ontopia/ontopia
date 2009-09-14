@@ -70,7 +70,7 @@
 
     <property name="dist.version.major" value="5"/>
     <property name="dist.version.minor" value="0"/>
-    <property name="dist.version.micro" value="1"/>
+    <property name="dist.version.micro" value="2"/>
 
     <property name="dist.version.beta"   value=""/> <!-- "b1" if beta 1, empty if not beta -->
 
