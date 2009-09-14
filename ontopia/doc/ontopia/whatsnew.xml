@@ -22,6 +22,22 @@ both at a higher level, and in more detail.
 </abstract>
 
 <!-- ======================================================================
+     5.0.2                                                              -->
+<section>
+<title>Ontopia 5.0.2 release notes</title>
+
+<para>This is a bug fix release, specifically released in order to
+make the fix in <ulink
+url="http://code.google.com/p/ontopia/source/detail?r=486">revision
+486</ulink> available to a customer who needed this fix. The fix
+solves performance problems with tolog inference rules parsed into
+<interfacename>DeclarationContextIF</interfacename> objects.</para>
+
+<para>A few other very minor fixes are also included in this version,
+which is otherwise very similar to 5.0.1.</para>
+</section>
+
+<!-- ======================================================================
      5.0.1                                                              -->
 <section>
 <title>Ontopia 5.0.1 release notes</title>
