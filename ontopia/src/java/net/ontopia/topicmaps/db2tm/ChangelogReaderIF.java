@@ -6,7 +6,10 @@ package net.ontopia.topicmaps.db2tm;
 import net.ontopia.utils.*;
 
 /**
- * INTERNAL: A tuple reader is 
+ * INTERNAL: A change log reader is a tuple reader that is used to
+ * read a change log relation. For each tuple read it also returns the
+ * type of change and an order value that says something about the
+ * order in which the change occurred.
  */
 public interface ChangelogReaderIF extends TupleReaderIF {
 
