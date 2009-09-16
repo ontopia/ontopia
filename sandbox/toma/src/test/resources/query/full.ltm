@@ -1,0 +1,46 @@
+/* topic types */
+
+[format       = "Format"]
+[standard     = "Standard"]
+[project      = "Project"]
+[organization = "Organization"]
+
+/* association types */
+
+[format-for = "Format for"]
+[defined-by = "Defined by"]
+[version = "Version"]
+[english = "English language"]
+[german  = "German language"]
+
+/* occurrence types */
+
+[specification = "Specification"]
+[homepage      = "Home page"]
+
+/* topics, associations and occurrences */
+
+[topic-maps : standard  = "Topic maps"
+                        = "ISO/IEC 13250 Topic Maps" / fullname]
+{topic-maps, specification,
+   "http://www.y12.doe.gov/sgml/sc34/document/0129.pdf"} / english
+
+[xtm : format = "XTM Syntax"]
+
+[ltm : format = "The linear topic map notation";
+                "linear topic map notation, the"
+     @"http://www.ontopia.net/topicmaps/ltm-tech-report.html"]
+{ltm, specification, "http://www.ontopia.net/topicmaps/ltm-tech-report.html"} / german
+
+format-for(ltm, topic-maps)
+format-for(xtm, topic-maps) ~ xtm-standard
+{xtm-standard, version, [[2.0]]}
+
+defined-by(ltm, ontopia)
+defined-by(xtm, topicmaps.org)
+
+[ontopia : project = "Ontopia Project"]
+{ontopia, homepage, "http://code.google.com/p/ontopia/"}
+
+[topicmaps.org  : organization = "TopicMaps.Org"]
+{topicmaps.org, homepage, "http://www.topicmaps.org"}
