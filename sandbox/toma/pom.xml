@@ -1,48 +1,69 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>net.ontopia</groupId>
-    <artifactId>toma</artifactId>
-    <version>0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <name>Ontopia TOMA query language implementation</name>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.ontopia</groupId>
+	<artifactId>toma</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>Ontopia TOMA query language implementation</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>net.ontopia</groupId>
-            <artifactId>ontopia-engine</artifactId>
-            <version>5.0.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>saxon</groupId>
-                    <artifactId>saxon</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-	    <dependency>
-        	<groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>3.8.2</version>
-                <scope>test</scope>
-            </dependency>
-    </dependencies>
-    
-    <build>
-	<plugins>  
-	    <plugin>
-		<artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-		    <source>1.5</source>
-		    <target>1.5</target>
-		</configuration>
-	    </plugin>
-	</plugins>
-    </build>
+	<dependencies>
+		<dependency>
+			<groupId>net.ontopia</groupId>
+			<artifactId>ontopia-engine</artifactId>
+			<version>5.0.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>saxon</groupId>
+					<artifactId>saxon</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-    <repositories>
-        <repository>
-            <id>Ontopia</id>
-            <url>http://ontopia.googlecode.com/svn/maven-repository</url>
-        </repository>
-    </repositories>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>antlr-maven-plugin</artifactId>
+				<configuration>
+					<sourceDirectory>${basedir}/src/main/java/net/ontopia/topicmaps/query/toma/parser</sourceDirectory>
+					<outputDirectory>${basedir}/src/main/java/net/ontopia/topicmaps/query/toma/parser</outputDirectory>
+					<!--
+						Comma separated list of grammar files or pattern grammar files By
+						default, grammar file(s) is in ${basedir}/src/main/antlr
+					-->
+					<grammars>toma.g</grammars>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>Ontopia</id>
+			<url>http://ontopia.googlecode.com/svn/maven-repository</url>
+		</repository>
+	</repositories>
 </project>

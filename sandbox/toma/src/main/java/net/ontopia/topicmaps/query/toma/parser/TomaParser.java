@@ -12,15 +12,20 @@ import antlr.TokenStreamRecognitionException;
 
 /**
  * INTERNAL: The TOMA query language parser.
+ * This is a convenient class and acts as a wrapper to the auto-generated
+ * parser and lexer classes from the antlr grammar.
  */
 public class TomaParser 
 {
   /**
+   * INTERNAL: Parses a TOMA query.
+   * Depending on the parse context, a different AST will be created.
    * 
-   * @param query
-   * @param context
-   * @return
-   * @throws InvalidQueryException
+   *  
+   * @param query the TOMA query to be parsed.
+   * @param context the parse context to be used.
+   * @return the parsed query.
+   * @throws InvalidQueryException if the query is syntactically wrong.
    */
   public static TomaQuery parse(String query, 
       LocalParseContext context) throws InvalidQueryException 
@@ -29,6 +34,7 @@ public class TomaParser
   }
 
   /**
+   * INTERNAL:
    * 
    * @param queryReader
    * @param context
@@ -71,7 +77,7 @@ public class TomaParser
   // --- Internal methods
 
   /**
-   * INTERNAL: create a new TOMA parser that contains internally the generated
+   * INTERNAL: create a new TOMA parser that internally contains the auto-generated
    * lexer and parser from the antlr grammar.
    */
   private static RealTomaParser makeParser(Reader reader, 

@@ -12,14 +12,13 @@ class RealTomaParser extends Parser;
 
 options {
   defaultErrorHandler = false;
-  k = 4;
+  k = 2;
 }
 
 {
   private LocalParseContext context;
 
-  public void init(LocalParseContext c)
-  {
+  public void init(LocalParseContext c) {
   	this.context = c;
   }
    
@@ -27,18 +26,26 @@ options {
    * Tries to convert a string into an integer and throws an AntlrWrapException
    * if it does not work.
    */ 
-  protected int getInt(String s) throws AntlrWrapException
-  {
-  	try
-  	{
+  protected int getInt(String s) throws AntlrWrapException {
+  	try {
 	  return Integer.parseInt(s);
   	} catch (NumberFormatException e) {
   	  throw new AntlrWrapException(e);
   	}
-  }  
+  }
+  
+  /**
+   * Create a path expression that is started by a variable
+   */
+  protected PathExpressionIF createVariable(String varName) throws AntlrWrapException {
+  	PathRootIF root = context.createVariable(varName);
+  	PathExpressionIF pe = context.createPathExpression();
+  	pe.setRoot(root);
+  	return pe;
+  }
 }
 
-// the grammar
+// the TOMA grammar
 
 query returns [TomaQuery q]:
   q=statement
@@ -47,8 +54,7 @@ query returns [TomaQuery q]:
 statement returns [TomaQuery q]:
                 { q = new TomaQuery(); SelectStatement stmt;     }
   stmt=select   { q.addStatement(stmt);                          }
-  (
-                { SelectStatement.UNION_TYPE type;               }
+  (             { SelectStatement.UNION_TYPE type;               }
     ( UNION     { type = SelectStatement.UNION_TYPE.UNION;       } 
     | INTERSECT { type = SelectStatement.UNION_TYPE.INTERSECT;   }
     | EXCEPT    { type = SelectStatement.UNION_TYPE.EXCEPT;      }
@@ -61,46 +67,48 @@ statement returns [TomaQuery q]:
   (offset[q])?;
 
 select returns [SelectStatement stmt]:
-                      { stmt = new SelectStatement(); }
+                     { stmt = new SelectStatement(); }
   SELECT 
-  ( ALL               { stmt.setDistinct(false);      } 
-  | DISTINCT          { stmt.setDistinct(true);       }
+  ( ALL              { stmt.setDistinct(false);      } 
+  | DISTINCT         { stmt.setDistinct(true);       }
   )?
   selectlist[stmt]
-  (                   { ExpressionIF e;               } 
-   WHERE e=orclause   { stmt.setClause(e);            }
+  (                  { ExpressionIF e;               } 
+    WHERE e=orclause { stmt.setClause(e);            }
   )?;
 
 selectlist [SelectStatement stmt]:
-                { ExpressionIF e;    }
-  e=expr        { stmt.addSelect(e); }
+                 { ExpressionIF e;    }
+  e=expr         { stmt.addSelect(e); }
   (
-   COMMA e=expr { stmt.addSelect(e); }
+    COMMA e=expr { stmt.addSelect(e); }
   )*;
   
 orclause returns [ExpressionIF e]:
-                      { ExpressionIF left, right;                                }
+                       { ExpressionIF left, right;                                }
   e=andclause 
   (
-   OR right=andclause { left=e; e = context.createExpression("OR", left, right); }
+    OR right=andclause { left=e; e = context.createExpression("OR", left, right); }
   )*;
 
 andclause returns [ExpressionIF e]:
-                               { ExpressionIF left, right; }
+                      { ExpressionIF left, right;                                 }
   e=clause 
   (
-   AND right=clause { left=e; e = context.createExpression("AND", left, right); }
+    AND right=clause  { left=e; e = context.createExpression("AND", left, right); }
   )*;
   
 clause returns [ExpressionIF e]:
-                               { ExpressionIF left, right;                        }
+                               { ExpressionIF left, right; String exprID;         }
   ( 
     left=expr e=comparator right=expr 
                                { e.addChild(left); e.addChild(right);             }
-  | NOT EXISTS left=expr       { e = context.createExpression("NOTEXISTS", left); }
-  | left=expr IS NULL          { e = context.createExpression("NOTEXISTS", left); }
-  | EXISTS left=expr           { e = context.createExpression("EXISTS", left);    }
-  | left=expr IS NOT NULL      { e = context.createExpression("EXISTS", left);    }
+  |                            { exprID = "EXISTS";                               } 
+    (NOT { exprID = "NOTEXISTS";})? EXISTS left=expr           
+                               { e = context.createExpression(exprID, left);      }
+  |                            { exprID = "NOTEXISTS";                            } 
+    left=expr IS (NOT { exprID = "EXISTS";})? NULL    
+                               { e = context.createExpression(exprID, left);      }
   | left=expr IN LPAREN        { e = context.createExpression("IN");              }
     ( left=statement           { e.addChild(left);                                }
     | left=expr                { e.addChild(left);                                } 
@@ -113,10 +121,8 @@ clause returns [ExpressionIF e]:
 expr returns [ExpressionIF p]:
                { ExpressionIF left, right;                                  }
   p=atomexpr
-  ( 
-   DOUBLEPIPE right=atomexpr 
-               { left = p; p = context.createExpression("||", left, right); }   
-  )*; 
+  (DOUBLEPIPE right=atomexpr 
+               { left = p; p = context.createExpression("||", left, right); })*;   
   
 atomexpr returns [ExpressionIF p]:
   ( p=topicpathexpr
@@ -142,30 +148,22 @@ topicpathexpr returns [PathExpressionIF p]:
   
 assocpathexpr [PathExpressionIF p, PathExpressionIF left]:
                                { PathElementIF pe = context.createElement("ASSOC");
-                               	 if (left != null) {
-                               	 	pe.addChild(left);
-                               	 }
-                               	 PathExpressionIF type, scope, right; 
-                               	 p.addPath(pe);                                     }
-  (
-    assocVar:VARIABLE          { pe.bindVariable(
-    	                           context.createVariable(assocVar.getText()));     }
-  )?
+                               	 if (left != null) pe.addChild(left);
+                               	 p.addPath(pe);
+                               	 PathExpressionIF type, scope, right;               } 
+  (assocVar:VARIABLE           { pe.bindVariable(
+    	                           context.createVariable(assocVar.getText()));     })?
   LPAREN type=pathexpr RPAREN  { pe.setType(type);                                  }                                     
-  (
-    ATSCOPE
-    scope=pathexpr             { pe.setScope(scope);                                }
-  )?
+  (ATSCOPE scope=pathexpr      { pe.setScope(scope);                                })?
   RARROW 
   LPAREN right=roleexpr RPAREN { pe.addChild(right);                                }
-  (
-    LSQUARE
-    VARIABLE
-    RSQUARE
+  // TODO: add support for variable binding in association roles
+  (LSQUARE
+   roleVar:VARIABLE
+   RSQUARE
   )?
-                               { PathElementIF part;                                }
-  (
-   DOT part=pathpart           { p.addPath(part);                                   }
+  (                            { PathElementIF part;                                }
+    DOT part=pathpart          { p.addPath(part);                                   }
   )*
   (DOT assocleftside[p])?;
 
@@ -187,8 +185,7 @@ pathexpr returns [PathExpressionIF path]:
     topic=topicliteral  { path.setRoot(topic);                                 } 
   | var:VARIABLE        { path.setRoot(context.createVariable(var.getText())); }
   )
-                        { PathElementIF pe;                                    }
-  (
+  (                     { PathElementIF pe;                                    }
    DOT pe=pathpart      { path.addPath(pe);                                    }
   )*;
   
@@ -197,8 +194,8 @@ pathpart returns [PathElementIF p]:
     ROLE | REIFIER | TYPE | INSTANCE | SUB | SUPER )
   { p = context.createElement(LT(0).getText()); }
   ( LPAREN
-    (                { PathExpressionIF path; } 
-      path=pathexpr  { p.setType(path);       }
+    (                { PathExpressionIF type; } 
+      type=pathexpr  { p.setType(type);       }
     |                { Level l;               }           
       l=level        { p.setLevel(l);         }
     )
@@ -206,17 +203,15 @@ pathpart returns [PathElementIF p]:
   )?
   ( ATSCOPE 
                                 { PathExpressionIF pe; PathRootIF r;         }
-    ( var:VARIABLE              { r = context.createVariable(var.getText());
-    	                          pe = context.createPathExpression();
-    	                          pe.setRoot(r);                             }
-    | r=topicliteral            { pe = context.createPathExpression(); 
-    	                          pe.setRoot(r);                             }
+    ( var:VARIABLE              { pe = createVariable(var.getText());        }
+    | r=topicliteral            { pe = context.createPathExpression();       } 
+    	                        { pe.setRoot(r);                             }
     | LPAREN pe=pathexpr RPAREN 
     )                           { p.setScope(pe);                            }
   )?
   ( LSQUARE
-    bound:VARIABLE              { p.bindVariable(
-    	                           context.createVariable(bound.getText())); }
+    bound:VARIABLE              { p.bindVariable(                            }
+    	                        {  context.createVariable(bound.getText())); }
     RSQUARE
   )?; 
  
@@ -232,10 +227,10 @@ orderpart [TomaQuery q]:
           { q.addOrderBy(getInt(col.getText()), order);              };
 
 limit [TomaQuery q]: 
-  LIMIT i:INT { q.setLimit(getInt(i.getText())); };
+  LIMIT i:INT   { q.setLimit(getInt(i.getText()));  };
   
 offset [TomaQuery q]: 
-  OFFSET o:INT { q.setOffset(getInt(o.getText())); };
+  OFFSET o:INT  { q.setOffset(getInt(o.getText())); };
 
 level returns [Level l]:
   ( i:INT       { l = new Level(getInt(i.getText()));      }
@@ -254,9 +249,8 @@ topicliteral returns [PathRootIF root]:
   | VARLITERAL  { type = "VAR";                                      }
   | SUBJID      { type = "SUBJID";                                   }
   | SUBJLOC     { type = "SUBJLOC";                                  }
-  | IDENT       { type = "IID";                                      }
-  )
-                { root = context.createTopic(type, LT(0).getText()); };
+  | IDENTIFIER  { type = "IID";                                      }
+  )             { root = context.createTopic(type, LT(0).getText()); };
   
 comparator returns [ExpressionIF e]:
   ( NOTEQUALS | EQUALS | LESSTHAN | GREATERTHAN | LESSTHANEQ     
@@ -273,14 +267,13 @@ function returns [FunctionIF f]:
 
 functionparam:
   ( INT
-  | IDENT
+  | IDENTIFIER
   | STRING
   ); 
   
 /**
  * INTERNAL: Lexer for TOMA query language.
  */
-
 class TomaLexer extends Lexer;
 
 options { 
@@ -352,17 +345,17 @@ tokens {
   TO_UNIT   = "to_unit";
 }
 
-IDENT options { testLiterals = true; }:
- ('A'..'Z' | 'a'..'z') 
- ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')*
- (
-   { !(LA(2) == ' ' || LA(2) == '\t' || LA(2) == '\n' || LA(2) == '\r') }?
-   (':' ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')+)?
- )?;
+IDENTIFIER options { testLiterals = true; }:
+  ('A'..'Z' | 'a'..'z') 
+  ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')*
+  (
+    { !(LA(2) == ' ' || LA(2) == '\t' || LA(2) == '\n' || LA(2) == '\r') }?
+    (':' ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')+)?
+  )?;
 
 WS:
- (' ' |	'\t' | '\n'  { newline(); } | '\r')
- { $setType(Token.SKIP); };
+  (' ' |	'\t' | '\n'  { newline(); } | '\r')
+  { $setType(Token.SKIP); };
 
 ITEMID: 'i' STRING;
 NAMELITERAL: 'n' STRING;
@@ -382,21 +375,18 @@ STRING:
   { setText(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-2)); };
 
 COMMENT:
- "#" (~'\n')* '\n'
- { $setType(Token.SKIP); newline(); };
+  "#" (~'\n')* '\n'
+  { $setType(Token.SKIP); newline(); };
 
 VARIABLE:
- '$'
- ('A'..'Z' | 'a'..'z' | '_') 
- ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' )*
- { setText(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-1)); };
+  '$'
+  ('A'..'Z' | 'a'..'z' | '_') 
+  ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' )*
+  { setText(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-1)); };
 
 INT: ('0'..'9')+;
  
-NUMBER:
- ('0'..'9')+
- ( '.' 
-   ('0'..'9')+ )?;
+NUMBER: ('0'..'9')+ ( '.' ('0'..'9')+ )?;
 
 ASTERISK   options { paraphrase = "*";  } : '*'  ;
 COLON      options { paraphrase = ":";  } : ':'  ;
@@ -429,5 +419,3 @@ REGEXPCS      options { paraphrase = "~"; }  : '~' ;
 REGEXPCI      options { paraphrase = "~*"; } : "~*" ;
 REGEXPNCS     options { paraphrase = "!~"; } : "!~" ;
 REGEXPNCI     options { paraphrase = "!~*"; }: "!~*" ;
-
-
