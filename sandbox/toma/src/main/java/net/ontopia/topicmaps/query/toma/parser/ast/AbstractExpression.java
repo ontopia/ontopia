@@ -7,72 +7,95 @@ import java.util.List;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
-public abstract class AbstractExpression implements ExpressionIF 
-{
+/**
+ * INTERNAL: Abstract base class for all expressions in the TOMA AST.
+ */
+public abstract class AbstractExpression implements ExpressionIF {
   protected String name;
   protected ArrayList<ExpressionIF> childs;
 
-  protected AbstractExpression(String name)
-  {
+  /**
+   * Create a new expression with the given name.
+   * @param name the name of the expression
+   */
+  protected AbstractExpression(String name) {
     this.name = name;
     childs = new ArrayList<ExpressionIF>();
   }
-  
-  public String getName() 
-  {
+
+  /**
+   * Get the name of the expression.
+   * @return the name.
+   */
+  public String getName() {
     return name;
   }
 
-  public void addChild(ExpressionIF child) throws AntlrWrapException 
-  {
-    childs.add(child);
+  /**
+   * Add an expression as a child to this expression.
+   * @param expr the expression to be added as a child.
+   * @throws AntlrWrapException if this operation is not allowed. 
+   */
+  public void addChild(ExpressionIF expr) throws AntlrWrapException {
+    childs.add(expr);
   }
-  
-  public int getChildCount()
-  {
+
+  /**
+   * Get the number of children.
+   * @return the number of children.  
+   */
+  public int getChildCount() {
     return childs.size();
   }
-  
+
+  /**
+   * Get the child expression at the given index.
+   * @param idx the given index.
+   * @return the nth child expression or null if outside the range.
+   */
   public ExpressionIF getChild(int idx) {
-    return childs.get(idx);
+    try {
+      return childs.get(idx);
+    } catch (IndexOutOfBoundsException e) {
+      return null;
+    }
   }
-  
-  public List<ExpressionIF> getChilds()
-  {
+
+  /**
+   * Get a list containing all children.
+   * @return a list with all children.
+   */
+  public List<ExpressionIF> getChilds() {
     return Collections.unmodifiableList(childs);
   }
-  
-  public void fillParseTree(IndentedStringBuilder buf, int level) 
-  {
-    switch (childs.size())
-    {
+
+  public void fillParseTree(IndentedStringBuilder buf, int level) {
+    switch (childs.size()) {
     case 0:
       buf.append(String.format("(%1$10s)", getName()), level);
       break;
-      
+
     case 1:
       buf.append(String.format("(%1$10s)", getName()), level);
-      childs.get(0).fillParseTree(buf, level+1);
+      childs.get(0).fillParseTree(buf, level + 1);
       break;
-      
+
     case 2:
-      childs.get(0).fillParseTree(buf, level+1);
+      childs.get(0).fillParseTree(buf, level + 1);
       buf.append(String.format("(%1$10s)", getName()), level);
-      childs.get(1).fillParseTree(buf, level+1);
+      childs.get(1).fillParseTree(buf, level + 1);
       break;
-      
+
     default:
       buf.append(String.format("(%1$10s)", getName()), level);
-      for (ExpressionIF child : childs)
-      {
-        child.fillParseTree(buf, level+1);
+      for (ExpressionIF child : childs) {
+        child.fillParseTree(buf, level + 1);
       }
-      break;  
+      break;
     }
   }
-  
-  public String toString()
-  {
+
+  public String toString() {
     return getName();
   }
 }

@@ -16,6 +16,10 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 
+/**
+ * PUBLIC: A simple command-line tool to run TOMA queries against a
+ * given topic map.
+ */
 public class QueryTool {
 
   public static void main(String [] argv) {

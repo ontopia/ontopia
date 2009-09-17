@@ -43,6 +43,16 @@ options {
   	pe.setRoot(root);
   	return pe;
   }
+  
+  /**
+   * Create an association path expression (i.e. without left side input)
+   */
+  protected PathExpressionIF createAssociationExpression() throws AntlrWrapException {
+    PathExpressionIF path = context.createPathExpression();
+  	path.setRoot(context.createEmptyRoot());
+  	return path;
+  }
+
 }
 
 // the TOMA grammar
@@ -126,18 +136,15 @@ expr returns [ExpressionIF p]:
   
 atomexpr returns [ExpressionIF p]:
   ( p=topicpathexpr
-  |                          { PathExpressionIF path = 
-  	                             context.createPathExpression();
-  	                           path.setRoot(context.createEmptyRoot());
-                               p = path;                               } 
-    assocpathexpr[path, null]
-  | s:STRING                 { p = context.createLiteral(s.getText()); }
-  |                          { FunctionIF f; ExpressionIF left;        } 
-    f=function               { p = f;                                  } 
+  |                         { p = createAssociationExpression();       }
+    assocpathexpr[(PathExpressionIF) p, null]
+  | s:STRING                { p = context.createLiteral(s.getText());  }
+  |                         { FunctionIF f; ExpressionIF left;         } 
+    f=function              { p = f;                                   }
       LPAREN
-      left=atomexpr          { p.addChild(left);                       }
+      left=atomexpr         { p.addChild(left);                        }
       (
-       COMMA functionparam   { f.addParam(LT(0).getText());            }
+       COMMA functionparam  { f.addParam(LT(0).getText());             }
       )* 
       RPAREN
   );
@@ -233,14 +240,14 @@ offset [TomaQuery q]:
   OFFSET o:INT  { q.setOffset(getInt(o.getText())); };
 
 level returns [Level l]:
-  ( i:INT       { l = new Level(getInt(i.getText()));      }
-  | ASTERISK    { l = new Level(0, Integer.MAX_VALUE);     }
-  | s:INT RANGE { int start = 0; int end = 0;              }
-    ( e:INT     { end = getInt(e.getText());               } 
-    | ASTERISK  { end = Integer.MAX_VALUE;                 }
+                { int start = 0; int end = 0;          }
+  ( i:INT       { start = end = getInt(i.getText());   }
+  | ASTERISK    { start = 0; end = Integer.MAX_VALUE;  }
+  | s:INT RANGE { start = getInt(s.getText());         }
+    ( e:INT     { end = getInt(e.getText());           } 
+    | ASTERISK  { end = Integer.MAX_VALUE;             }
     )
-                { l = new Level(getInt(s.getText()), end); }
-  );
+  )             { l = new Level(start, end);           };
   
 topicliteral returns [PathRootIF root]:
                 { String type;                                       }
