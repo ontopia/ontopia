@@ -41,19 +41,7 @@ public abstract class AbstractPathExpression extends AbstractExpression
   }
 
   public void addPath(PathElementIF next) throws AntlrWrapException {
-    if (!path.isEmpty()) {
-      PathElementIF last = path.get(path.size() - 1);
-      Set<PathElementIF.TYPE> validInput = next.validInput();
-      if (validInput != null && validInput.contains(last.output())) {
-        path.add(next);
-      } else {
-        throw new AntlrWrapException(
-            new InvalidQueryException("path element '" + next.toString()
-                + "' not allowed after '" + last.toString() + "'"));
-      }
-    } else {
-      path.add(next);
-    }
+    path.add(next);
   }
 
   public int getPathLength() {
@@ -68,6 +56,28 @@ public abstract class AbstractPathExpression extends AbstractExpression
   public void addChild(ExpressionIF child) throws AntlrWrapException {
     throw new AntlrWrapException(new InvalidQueryException(
         "PathExpressions can not have children"));
+  }
+
+  public boolean validate() throws AntlrWrapException {
+    root.validate();
+
+    // TODO: check input from root
+    PathElementIF.TYPE output = PathElementIF.TYPE.TOPIC;
+    PathElementIF last = null;
+    for (PathElementIF element : path) {
+      Set<PathElementIF.TYPE> validInput = element.validInput();
+      
+      if (validInput != null && !validInput.contains(output)) {
+        throw new AntlrWrapException(
+            new InvalidQueryException("path element '" + element.toString()
+                + "' not allowed after '" + last.toString() + "'"));
+      }
+      
+      output = element.output();
+      last = element;
+    }
+ 
+    return true;
   }
 
   @Override

@@ -58,7 +58,7 @@ options {
 // the TOMA grammar
 
 query returns [TomaQuery q]:
-  q=statement
+  q=statement   { q.validate(); }
   SEMICOLON;
 
 statement returns [TomaQuery q]:

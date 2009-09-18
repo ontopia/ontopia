@@ -27,8 +27,8 @@ public class TomaQueryTest
       DuplicateSuppressionUtils.removeDuplicates(tm);
 
       //String query = "select $t where $t.($$)<-$a(pupil-of)->(pupil).(person)<-$b(born-in)->(place) = i'milano';";
-      //String query = "select $a.role where $a(pupil-of)->(pupil) = i'leoni';";
-      String query = "select $t.oc(specification)@english where exists $t.oc@english;";
+      //String query = "select $a.role where $a(defined-by)->($$) = i'ontopia';";
+      String query = "select distinct substr($t.oc(specification)@english, 5, 1) where exists $t.oc@english;";
 
       QueryProcessorIF processor = new BasicQueryProcessor(tm);
       ParsedQueryIF pquery = processor.parse(query);

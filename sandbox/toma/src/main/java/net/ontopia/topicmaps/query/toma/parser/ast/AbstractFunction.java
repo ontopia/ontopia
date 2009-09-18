@@ -9,7 +9,7 @@ import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 /**
  * INTERNAL: Abstract base class for functions in the TOMA AST.
  */
-public class AbstractFunction extends AbstractExpression implements FunctionIF {
+public abstract class AbstractFunction extends AbstractExpression implements FunctionIF {
 
   protected ArrayList<String> parameters;
   private int maxParameters;

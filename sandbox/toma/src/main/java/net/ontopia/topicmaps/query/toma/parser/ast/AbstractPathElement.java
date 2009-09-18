@@ -141,6 +141,12 @@ public abstract class AbstractPathElement implements PathElementIF {
    */
   protected abstract boolean isChildAllowed();
 
+  public boolean validate() throws AntlrWrapException {
+    // TODO: no specific validation for path elements is being done by now.
+    //       probably this is not needed anyways
+    return true;
+  }
+
   public void fillParseTree(IndentedStringBuilder buf, int level) {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("(%1$10s)", getName()));

@@ -4,6 +4,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractExpression;
 
 public class AndExpression extends AbstractExpression implements BasicExpressionIF
@@ -24,5 +25,14 @@ public class AndExpression extends AbstractExpression implements BasicExpression
     ResultSet rs2 = right.evaluate(context);
 
     return rs2;
+  }
+  
+  public boolean validate() throws AntlrWrapException {
+    if (getChildCount() != 2) {
+      throw new AntlrWrapException(
+          new InvalidQueryException("expression '" + getName()
+              + "' needs to have two children."));
+    }
+    return true;
   }
 }

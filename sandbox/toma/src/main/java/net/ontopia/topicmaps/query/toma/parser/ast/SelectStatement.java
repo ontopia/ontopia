@@ -2,6 +2,7 @@ package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import java.util.ArrayList;
 
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -117,6 +118,19 @@ public class SelectStatement implements ASTElementIF {
    */
   public ExpressionIF getClause() {
     return this.clause;
+  }
+
+  public boolean validate() throws AntlrWrapException {
+
+    // validate all select projections
+    for (ExpressionIF expr : selects) {
+      expr.validate();
+    }
+
+    // validate the where clauses
+    clause.validate();
+    
+    return true;
   }
 
   public void fillParseTree(IndentedStringBuilder buf, int level) {

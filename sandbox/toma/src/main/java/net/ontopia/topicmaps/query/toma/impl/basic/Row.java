@@ -35,6 +35,10 @@ public class Row implements Cloneable {
   public void setValue(int column, Object val) {
     row.set(column, val);
   }
+  
+  public void setLastValue(Object val) {
+    row.set(row.size() - 1, val);
+  }
 
   public Object[] getValues() {
     return row.toArray();

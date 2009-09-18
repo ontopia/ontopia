@@ -1,5 +1,6 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -7,7 +8,14 @@ import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
  * just a common method for printing the AST on screen.  
  */
 public interface ASTElementIF {
-  
+
+  /**
+   * Validates if this element is syntactically correct.
+   * @return true if validation was successful.
+   * @throws AntlrWrapException if an syntax error was found.
+   */
+  public boolean validate() throws AntlrWrapException;
+
   /**
    * Fills the parse tree with a string representation of this AST element.
    * 

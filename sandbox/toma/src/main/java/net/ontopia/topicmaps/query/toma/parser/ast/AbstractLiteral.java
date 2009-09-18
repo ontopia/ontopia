@@ -30,6 +30,10 @@ public abstract class AbstractLiteral extends AbstractExpression implements
         "Literals can not have children"));
   }
 
+  public boolean validate() throws AntlrWrapException {
+    return true;
+  }
+
   @Override
   public void fillParseTree(IndentedStringBuilder buf, int level) {
     buf.append("(   LITERAL) [" + getValue() + "]", level);

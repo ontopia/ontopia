@@ -1,7 +1,12 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.function;
 
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
+/**
+ * INTERNAL: Transforms an input string into lowercase letters.
+ */
 public class LowerCaseFunction extends AbstractSimpleFunction {
   
   public LowerCaseFunction() {
@@ -15,5 +20,9 @@ public class LowerCaseFunction extends AbstractSimpleFunction {
     } else {
       return str;
     }
+  }
+  
+  public boolean validate() throws AntlrWrapException {
+    return true;
   }
 }

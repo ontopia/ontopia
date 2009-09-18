@@ -1,6 +1,8 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.function;
 
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
 public class TitleCaseFunction extends AbstractSimpleFunction {
   
@@ -38,5 +40,9 @@ public class TitleCaseFunction extends AbstractSimpleFunction {
         }
     }
     return buffer.toString();
+  }
+  
+  public boolean validate() throws AntlrWrapException {
+    return true;
   }
 }

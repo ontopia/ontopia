@@ -3,6 +3,8 @@ package net.ontopia.topicmaps.query.toma.parser.ast;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -110,8 +112,13 @@ public class TomaQuery extends AbstractExpression implements ExpressionIF {
    * Set the offset value for this query.
    * 
    * @param offset the offset value to be set.
+   * @throws AntlrWrapException if a negative offset is given.
    */
-  public void setOffset(int offset) {
+  public void setOffset(int offset) throws AntlrWrapException {
+    if (offset < 0) {
+      throw new AntlrWrapException(new InvalidQueryException(
+          "Negative offset not valid."));
+    }
     this.offset = offset;
   }
 
@@ -119,8 +126,13 @@ public class TomaQuery extends AbstractExpression implements ExpressionIF {
    * Set the limit value for this query.
    * 
    * @param limit the limit value to be set.
+   * @throws AntlrWrapException if a negative limit is given.
    */
-  public void setLimit(int limit) {
+  public void setLimit(int limit) throws AntlrWrapException {
+    if (limit < 0) {
+      throw new AntlrWrapException(new InvalidQueryException(
+      "Negative limit not valid."));
+    }
     this.limit = limit;
   }
 
@@ -142,6 +154,14 @@ public class TomaQuery extends AbstractExpression implements ExpressionIF {
     IndentedStringBuilder buf = new IndentedStringBuilder(2);
     fillParseTree(buf, 0);
     return buf.toString();
+  }
+
+  public boolean validate() throws AntlrWrapException {
+    for (SelectStatement stmt : statements) {
+      stmt.validate();
+    }
+
+    return true;
   }
 
   public void fillParseTree(IndentedStringBuilder buf, int level) {

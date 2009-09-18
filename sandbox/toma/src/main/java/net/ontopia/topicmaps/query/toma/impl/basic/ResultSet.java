@@ -68,6 +68,14 @@ public class ResultSet implements Iterable<Row> {
   public int getColumnCount() {
     return columns.size();
   }
+  
+  /**
+   * Convenience method the 
+   * @return
+   */
+  public int getLastIndex() {
+    return columns.size() - 1;
+  }
 
   public void addColumn(String name) {
     columns.add(name);

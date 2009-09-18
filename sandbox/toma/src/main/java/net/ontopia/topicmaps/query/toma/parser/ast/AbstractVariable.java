@@ -1,5 +1,6 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -33,6 +34,10 @@ public abstract class AbstractVariable implements PathRootIF {
    */
   public void setName(String name) {
     this.name = name;
+  }
+
+  public boolean validate() throws AntlrWrapException {
+    return true;
   }
 
   public void fillParseTree(IndentedStringBuilder buf, int level) {

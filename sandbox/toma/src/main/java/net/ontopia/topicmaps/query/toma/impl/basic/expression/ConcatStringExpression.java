@@ -8,6 +8,7 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractExpression;
 
 public class ConcatStringExpression extends AbstractExpression 
@@ -55,5 +56,14 @@ public class ConcatStringExpression extends AbstractExpression
     }
     
     return rs;
+  }
+  
+  public boolean validate() throws AntlrWrapException {
+    if (getChildCount() != 2) {
+      throw new AntlrWrapException(
+          new InvalidQueryException("expression '" + getName()
+              + "' needs to have two children."));
+    }
+    return true;
   }
 }
