@@ -8,13 +8,21 @@ import java.util.Set;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class PlayerPath extends AbstractPathElement implements BasicPathElementIF {
-  
+/**
+ * INTERNAL: Player path element in an path expression. Returns all players
+ * of a given input association.
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>ASSOCIATION
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: TOPIC
+ * </p>
+ */
+public class PlayerPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
@@ -26,22 +34,18 @@ public class PlayerPath extends AbstractPathElement implements BasicPathElementI
     super("PLAYER");
   }
 
-  @Override
   protected boolean isLevelAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return false;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return false;
   }
@@ -54,6 +58,7 @@ public class PlayerPath extends AbstractPathElement implements BasicPathElementI
     return TYPE.TOPIC;
   }
   
+  @SuppressWarnings("unchecked")
   public Collection<TopicIF> evaluate(LocalContext context, Object input) {
     AssociationIF assoc = (AssociationIF) input;
     Collection<AssociationRoleIF> roles = assoc.getRoles();
@@ -62,21 +67,5 @@ public class PlayerPath extends AbstractPathElement implements BasicPathElementI
       result.add(role.getPlayer());
     }
     return result;
-  }
-  
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
+  }  
 }

@@ -6,11 +6,25 @@ import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class ItemIDPath extends AbstractPathElement implements BasicPathElementIF {
+/**
+ * INTERNAL: ID path element in an path expression. Returns the item identifiers
+ * of a given topic map construct as a locator.
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>TOPIC
+ * <li>NAME
+ * <li>VARIANT
+ * <li>OCCURRENCE
+ * <li>ASSOCIATION
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: LOCATOR
+ * </p>
+ */
+public class ItemIDPath extends AbstractBasicPathElement {
   
   static final Set<TYPE> inputSet;
   
@@ -27,22 +41,18 @@ public class ItemIDPath extends AbstractPathElement implements BasicPathElementI
     super("ID");
   }
   
-  @Override
   protected boolean isLevelAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return false;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return false;
   }
@@ -55,24 +65,9 @@ public class ItemIDPath extends AbstractPathElement implements BasicPathElementI
     return TYPE.LOCATOR;
   }
 
-  public Collection<?> evaluate(LocalContext context, Object input) {
+  @SuppressWarnings("unchecked")
+  public Collection<LocatorIF> evaluate(LocalContext context, Object input) {
     TMObjectIF tm = (TMObjectIF) input;
     return tm.getItemIdentifiers();
-  }
-  
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 }

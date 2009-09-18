@@ -6,12 +6,21 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class NamePath extends AbstractPathElement implements BasicPathElementIF {
-  
+/**
+ * INTERNAL: Name path element in an path expression. Returns all names
+ * of a given input topic.
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>TOPIC
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: NAME
+ * </p>
+ */
+public class NamePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
@@ -23,22 +32,18 @@ public class NamePath extends AbstractPathElement implements BasicPathElementIF 
     super("NAME");
   }
 
-  @Override
   protected boolean isLevelAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return true;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return true;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return false;
   }
@@ -51,24 +56,9 @@ public class NamePath extends AbstractPathElement implements BasicPathElementIF 
     return TYPE.NAME;
   }
 
+  @SuppressWarnings("unchecked")
   public Collection<TopicNameIF> evaluate(LocalContext context, Object input) {
     TopicIF topic = (TopicIF) input;
     return topic.getTopicNames();
-  }
-
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 }

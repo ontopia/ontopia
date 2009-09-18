@@ -5,6 +5,7 @@ package net.ontopia.topicmaps.query.toma;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -50,6 +51,32 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
     addMatch(matches, "$T.NAME", getTopicById("ontopia").getTopicNames().iterator().next());
     
     verifyQuery(matches, "select $t.name where $t = i'ontopia';");
+  }
+
+  /// variant path expressions
+  
+  public void testVariant() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List<TopicNameIF> matches = new ArrayList<TopicNameIF>();
+    Collection topicNames = getTopicById("ltm").getTopicNames();
+    for (Object o : topicNames) {
+      TopicNameIF name = (TopicNameIF) o;
+      for (Object var : name.getVariants()) {
+        addMatch(matches, "$T.NAME.VAR", var);
+      }
+    }
+    
+    verifyQuery(matches, "select $t.name.var where $t.name = 'The linear topic map notation';");
+  }
+
+  public void testVariantWithScope() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List<TopicNameIF> matches = new ArrayList<TopicNameIF>();
+    addMatch(matches, "$T", getTopicById("ltm"));
+    
+    verifyQuery(matches, "select $t where exists $t.name.var@german;");
   }
   
   /// occurrence path expressions

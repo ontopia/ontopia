@@ -7,12 +7,22 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class DataPath extends AbstractPathElement implements BasicPathElementIF {
-  
+/**
+ * INTERNAL: Data path element in an path expression. Returns the value of 
+ * variants/occurrences as string.
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>OCCURRENCE
+ * <li>VARIANT
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: STRING
+ * </p>
+ */
+public class DataPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
@@ -25,22 +35,18 @@ public class DataPath extends AbstractPathElement implements BasicPathElementIF 
     super("DATA");
   }
 
-  @Override
   protected boolean isLevelAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return false;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return false;
   }
@@ -65,21 +71,5 @@ public class DataPath extends AbstractPathElement implements BasicPathElementIF 
     }
     
     return coll;
-  }
-  
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
+  }  
 }

@@ -13,7 +13,7 @@ public interface PathElementIF extends ASTElementIF {
    * evaluated {@link PathElementIF}.
    */
   public enum TYPE {
-    TOPIC, ASSOCIATION, NAME, VARIANT, OCCURRENCE, LOCATOR, STRING
+    TOPIC, ASSOCIATION, NAME, VARIANT, OCCURRENCE, LOCATOR, STRING, UNKNOWN
   };
 
   /**

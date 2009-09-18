@@ -1,6 +1,7 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF.TYPE;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -15,6 +16,10 @@ public abstract class AbstractEmptyRoot implements PathRootIF {
 
   public boolean validate() throws AntlrWrapException {
     return true;
+  }
+
+  public TYPE output() {
+    return TYPE.TOPIC;
   }
 
   public void fillParseTree(IndentedStringBuilder buf, int level) {

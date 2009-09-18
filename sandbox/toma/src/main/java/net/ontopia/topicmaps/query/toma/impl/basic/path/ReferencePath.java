@@ -6,17 +6,24 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.AssociationIF;
-import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class ReferencePath extends AbstractPathElement implements BasicPathElementIF {
-  
+/**
+ * INTERNAL: Reference path element in an path expression. Returns the locator for
+ * an variant or occurrence element.
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>VARIANT
+ * <li>OCCURRENCE
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: LOCATOR
+ * </p>
+ */
+public class ReferencePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
@@ -29,22 +36,18 @@ public class ReferencePath extends AbstractPathElement implements BasicPathEleme
     super("REF");
   }
 
-  @Override
   protected boolean isLevelAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return false;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return false;
   }
@@ -69,21 +72,5 @@ public class ReferencePath extends AbstractPathElement implements BasicPathEleme
     }
     
     return coll;
-  }
-  
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 }

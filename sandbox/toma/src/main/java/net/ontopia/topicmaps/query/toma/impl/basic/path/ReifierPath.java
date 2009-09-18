@@ -5,16 +5,26 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class ReifierPath extends AbstractPathElement 
-  implements BasicPathElementIF {
-  
+/**
+ * INTERNAL: Reifier path element in an path expression. Returns the reifier for
+ * an topic map construct.
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>NAME
+ * <li>ASSOCIATION
+ * <li>VARIANT
+ * <li>OCCURRENCE
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: TOPIC
+ * </p>
+ */
+public class ReifierPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
@@ -29,22 +39,18 @@ public class ReifierPath extends AbstractPathElement
     super("REIFIER");
   }
 
-  @Override
   protected boolean isLevelAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return false;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return false;
   }
@@ -62,21 +68,5 @@ public class ReifierPath extends AbstractPathElement
     Collection<TopicIF> coll = new LinkedList<TopicIF>();
     coll.add(construct.getReifier());
     return coll;
-  }
-  
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 }

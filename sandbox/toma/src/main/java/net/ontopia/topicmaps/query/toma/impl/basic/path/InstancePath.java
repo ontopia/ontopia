@@ -6,12 +6,21 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class InstancePath extends AbstractPathElement implements BasicPathElementIF {
-  
+/**
+ * INTERNAL: Instance path element in an path expression. Returns all topics
+ * that are an instance of a given type.
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>TOPIC
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: TOPIC
+ * </p>
+ */
+public class InstancePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
@@ -23,22 +32,18 @@ public class InstancePath extends AbstractPathElement implements BasicPathElemen
     super("INSTANCE");
   }
 
-  @Override
   protected boolean isLevelAllowed() {
     return true;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return false;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return false;
   }
@@ -48,30 +53,15 @@ public class InstancePath extends AbstractPathElement implements BasicPathElemen
   }
   
   public TYPE output() {
-    return TYPE.STRING;
+    return TYPE.TOPIC;
   }
 
+  @SuppressWarnings("unchecked")
   public Collection<?> evaluate(LocalContext context, Object input) {
-    ClassInstanceIndexIF index = 
-      (ClassInstanceIndexIF) context.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
+    ClassInstanceIndexIF index = (ClassInstanceIndexIF) context.getTopicMap()
+        .getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
 
     Collection<TopicIF> instances = index.getTopics((TopicIF) input);
     return instances;
-  }
-  
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
+  }  
 }

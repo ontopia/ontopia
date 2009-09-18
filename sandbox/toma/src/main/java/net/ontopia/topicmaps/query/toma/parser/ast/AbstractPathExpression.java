@@ -1,6 +1,7 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -62,15 +63,19 @@ public abstract class AbstractPathExpression extends AbstractExpression
     root.validate();
 
     // TODO: check input from root
-    PathElementIF.TYPE output = PathElementIF.TYPE.TOPIC;
+    PathElementIF.TYPE output = root.output();
     PathElementIF last = null;
     for (PathElementIF element : path) {
       Set<PathElementIF.TYPE> validInput = element.validInput();
       
-      if (validInput != null && !validInput.contains(output)) {
-        throw new AntlrWrapException(
-            new InvalidQueryException("path element '" + element.toString()
-                + "' not allowed after '" + last.toString() + "'"));
+      // TODO: variable have an UNKNOWN type by now, we need to a semantic
+      // check of the variable in order to verify that they are used correctly. 
+      if (output != PathElementIF.TYPE.UNKNOWN) {
+        if (validInput != null && !validInput.contains(output)) {
+          throw new AntlrWrapException(new InvalidQueryException(
+              "path element '" + element.toString() + "' not allowed after '"
+                  + last.toString() + "'"));
+        }
       }
       
       output = element.output();

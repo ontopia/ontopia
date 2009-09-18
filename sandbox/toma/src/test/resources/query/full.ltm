@@ -25,10 +25,12 @@
 {topic-maps, specification,
    "http://www.y12.doe.gov/sgml/sc34/document/0129.pdf"} / english
 
-[xtm : format = "XTM Syntax"]
+[xtm : format = "XTM Syntax"
+                ("XML Topic Map Syntax" / english)]
 
 [ltm : format = "The linear topic map notation";
                 "linear topic map notation, the"
+                ("Die lineare Topic Map Notation" / german)
      @"http://www.ontopia.net/topicmaps/ltm-tech-report.html"]
 {ltm, specification, "http://www.ontopia.net/topicmaps/ltm-tech-report.html"} / german
 

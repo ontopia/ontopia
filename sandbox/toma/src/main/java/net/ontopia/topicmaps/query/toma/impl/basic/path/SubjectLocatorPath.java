@@ -6,13 +6,21 @@ import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class SubjectLocatorPath extends AbstractPathElement 
-  implements BasicPathElementIF {
-  
+/**
+ * INTERNAL: Subject Locator path element in an path expression. Returns all 
+ * subject locators for a given input topic. 
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>TOPIC
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: LOCATOR
+ * </p>
+ */
+public class SubjectLocatorPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
@@ -24,22 +32,18 @@ public class SubjectLocatorPath extends AbstractPathElement
     super("SL");
   }
 
-  @Override
   protected boolean isLevelAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return false;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return false;
   }
@@ -52,24 +56,9 @@ public class SubjectLocatorPath extends AbstractPathElement
     return TYPE.LOCATOR;
   }
   
+  @SuppressWarnings("unchecked")
   public Collection<LocatorIF> evaluate(LocalContext context, Object input) {
     TopicIF topic = (TopicIF) input;
     return topic.getSubjectLocators();
-  }
-  
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
+  }  
 }

@@ -1,6 +1,7 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF.TYPE;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -8,6 +9,7 @@ import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
  */
 public abstract class AbstractVariable implements PathRootIF {
   private String name;
+  private TYPE type;
 
   /**
    * Create a new variable with the given name.
@@ -16,6 +18,7 @@ public abstract class AbstractVariable implements PathRootIF {
    */
   public AbstractVariable(String name) {
     this.name = name;
+    this.type = TYPE.UNKNOWN;
   }
 
   /**
@@ -36,10 +39,22 @@ public abstract class AbstractVariable implements PathRootIF {
     this.name = name;
   }
 
+  public void setType(TYPE type) {
+    this.type = type;
+  }
+  
+  public TYPE getType() {
+    return type;
+  }
+  
   public boolean validate() throws AntlrWrapException {
     return true;
   }
 
+  public TYPE output() {
+    return type;
+  }
+  
   public void fillParseTree(IndentedStringBuilder buf, int level) {
     buf.append("(  VARIABLE) [" + getName() + "]", level);
   }

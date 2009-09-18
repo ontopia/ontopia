@@ -7,21 +7,26 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
-import net.ontopia.topicmaps.core.index.NameIndexIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.PathExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.WildcardRoot;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
-public class AssocPath extends AbstractPathElement 
-  implements BasicPathElementIF {
-  
+/**
+ * INTERNAL: Association path element in an path expression. Returns all
+ * topics that take part in the specified association.
+ * <p>
+ * <b>Allowed Input</b>:
+ * <ul>
+ * <li>TOPIC
+ * </ul>
+ * </p><p>
+ * <b>Output</b>: TOPIC
+ * </p>
+ */
+public class AssocPath extends AbstractBasicPathElement { 
   static final Set<TYPE> inputSet;
   
   static {
@@ -33,22 +38,18 @@ public class AssocPath extends AbstractPathElement
     super("ASSOC");
   }
 
-  @Override
   protected boolean isLevelAllowed() {
     return false;
   }
 
-  @Override
   protected boolean isScopeAllowed() {
     return true;
   }
   
-  @Override
   protected boolean isTypeAllowed() {
     return true;
   }
 
-  @Override
   protected boolean isChildAllowed() {
     return true;
   }
@@ -61,11 +62,12 @@ public class AssocPath extends AbstractPathElement
     return TYPE.TOPIC;
   }
   
+  @SuppressWarnings("unchecked")
   public Collection<?> evaluate(LocalContext context, Object input) 
   {
     PathExpression type = (PathExpression) getType();
     ResultSet types = type.evaluate(context);
-    Collection<?> validTypes = types.getValues(types.getColumnCount() - 1);
+    Collection<?> validTypes = types.getValues(types.getLastIndex());
     
     ClassInstanceIndexIF index = 
       (ClassInstanceIndexIF) context.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
@@ -76,12 +78,13 @@ public class AssocPath extends AbstractPathElement
       assocs.addAll(a);
     }
     
-    Collection<?> validScopes = null;
-    if (getScope() != null) {
-      PathExpression scope = (PathExpression) getScope();
-      ResultSet scopes = scope.evaluate(context);
-      validScopes = scopes.getValues(scopes.getColumnCount() - 1);
-    }
+    // TODO: implement scoped associations
+//    Collection<?> validScopes = null;
+//    if (getScope() != null) {
+//      PathExpression scope = (PathExpression) getScope();
+//      ResultSet scopes = scope.evaluate(context);
+//      validScopes = scopes.getValues(scopes.getLastIndex());
+//    }
 
     TopicIF topic = null;
     if (input instanceof TopicIF) {
@@ -128,7 +131,7 @@ public class AssocPath extends AbstractPathElement
       return result;
     } else {
       ResultSet roles = rightRole.evaluate(context);
-      Collection<?> validRoles = roles.getValues(roles.getColumnCount() - 1);
+      Collection<?> validRoles = roles.getValues(roles.getLastIndex());
       
       LinkedList<LinkedList> result = new LinkedList<LinkedList>();
       
@@ -151,6 +154,7 @@ public class AssocPath extends AbstractPathElement
     }
   }
   
+  @SuppressWarnings("unchecked")
   private LinkedList<AssociationIF> getValidAssociations(LocalContext context, LinkedList<AssociationIF> assocs, PathExpression roleType, TopicIF input) 
   {
     if (roleType.getRoot() instanceof WildcardRoot) 
@@ -191,31 +195,6 @@ public class AssocPath extends AbstractPathElement
       }
       
       return validAssocs;
-    }
-  }
-  
-  private boolean containsScope(Collection scopes, Collection valid) {
-    for (Object scope : valid) {
-      if (scopes.contains(scope)) {
-        return true;
-      }
-    }
-    return false;
-  }
-  
-  public String[] getColumnNames() {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
-    }
-  }
-
-  public int getResultSize() {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
     }
   }
 }

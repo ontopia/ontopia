@@ -1,6 +1,7 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;

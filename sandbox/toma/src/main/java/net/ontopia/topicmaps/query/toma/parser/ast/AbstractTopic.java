@@ -43,6 +43,10 @@ public abstract class AbstractTopic implements PathRootIF {
     return true;
   }
 
+  public PathElementIF.TYPE output() {
+    return PathElementIF.TYPE.TOPIC;
+  }
+  
   public void fillParseTree(IndentedStringBuilder buf, int level) {
     buf.append("(     TOPIC) [" + getIdentifier() + "]", level);
   }
