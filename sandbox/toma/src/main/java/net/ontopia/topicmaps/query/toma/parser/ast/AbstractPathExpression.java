@@ -23,7 +23,7 @@ public abstract class AbstractPathExpression extends AbstractExpression
   }
 
   public AbstractPathExpression(PathRootIF root) {
-    super("PATHEXPR");
+    super("PATHEXPR", 0);
     this.root = root;
     this.path = new ArrayList<PathElementIF>();
   }
@@ -59,13 +59,18 @@ public abstract class AbstractPathExpression extends AbstractExpression
         "PathExpressions can not have children"));
   }
 
+  @Override
   public boolean validate() throws AntlrWrapException {
+    super.validate();
     root.validate();
 
     // TODO: check input from root
     PathElementIF.TYPE output = root.output();
     PathElementIF last = null;
     for (PathElementIF element : path) {
+      // validate the element itself
+      element.validate();
+      // get the valid input for this element
       Set<PathElementIF.TYPE> validInput = element.validInput();
       
       // TODO: variable have an UNKNOWN type by now, we need to a semantic

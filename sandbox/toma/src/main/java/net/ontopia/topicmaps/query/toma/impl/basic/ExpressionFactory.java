@@ -60,7 +60,7 @@ public class ExpressionFactory implements ExpressionFactoryIF {
   }
 
   public ExpressionIF createLiteral(String value) {
-    return new Literal(value);
+    return new LiteralExpression(value);
   }
 
   public FunctionIF createFunction(String name) {

@@ -23,7 +23,7 @@ public class TomaQuery extends AbstractExpression implements ExpressionIF {
    * Create a new TOMA query.
    */
   public TomaQuery() {
-    super("TOMA");
+    super("TOMA", 0);
     statements = new ArrayList<SelectStatement>();
     orderBy = new ArrayList<QueryOrder>();
     limit = -1;
@@ -156,11 +156,14 @@ public class TomaQuery extends AbstractExpression implements ExpressionIF {
     return buf.toString();
   }
 
+  @Override
   public boolean validate() throws AntlrWrapException {
+    super.validate();
+    // validate select statements
     for (SelectStatement stmt : statements) {
       stmt.validate();
     }
-
+      
     return true;
   }
 

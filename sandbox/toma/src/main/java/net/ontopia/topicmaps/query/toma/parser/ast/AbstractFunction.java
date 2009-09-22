@@ -22,7 +22,7 @@ public abstract class AbstractFunction extends AbstractExpression implements Fun
    * @param maxParameters the maximum allowed number of parameters.
    */
   public AbstractFunction(String name, int maxParameters) {
-    super(name);
+    super(name, 1);
 
     parameters = new ArrayList<String>();
     this.maxParameters = maxParameters;

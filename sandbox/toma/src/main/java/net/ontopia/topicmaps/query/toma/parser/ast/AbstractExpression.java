@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
@@ -13,14 +14,17 @@ import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 public abstract class AbstractExpression implements ExpressionIF {
   protected String name;
   protected ArrayList<ExpressionIF> childs;
+  protected int requiredChilds;
 
   /**
    * Create a new expression with the given name.
    * @param name the name of the expression
+   * @param reqChilds the number of required child expressions
    */
-  protected AbstractExpression(String name) {
+  protected AbstractExpression(String name, int reqChilds) {
     this.name = name;
     childs = new ArrayList<ExpressionIF>();
+    this.requiredChilds = reqChilds;
   }
 
   /**
@@ -67,6 +71,21 @@ public abstract class AbstractExpression implements ExpressionIF {
    */
   public List<ExpressionIF> getChilds() {
     return Collections.unmodifiableList(childs);
+  }
+
+  public boolean validate() throws AntlrWrapException {
+    if (getChildCount() != requiredChilds) {
+      throw new AntlrWrapException(new InvalidQueryException("expression '"
+          + getName() + "' has " + getChildCount() + " instead of "
+          + requiredChilds + " child(s)."));
+    }
+    
+    // validate all children
+    for (ExpressionIF child : childs) {
+      child.validate();
+    }
+    
+    return true;
   }
 
   public void fillParseTree(IndentedStringBuilder buf, int level) {

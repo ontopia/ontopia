@@ -12,7 +12,7 @@ public abstract class AbstractLiteral extends AbstractExpression implements
   private String value;
 
   public AbstractLiteral(String value) {
-    super("LITERAL");
+    super("LITERAL", 0);
     this.value = value;
   }
 
@@ -28,10 +28,6 @@ public abstract class AbstractLiteral extends AbstractExpression implements
   public void addChild(ExpressionIF child) throws AntlrWrapException {
     throw new AntlrWrapException(new InvalidQueryException(
         "Literals can not have children"));
-  }
-
-  public boolean validate() throws AntlrWrapException {
-    return true;
   }
 
   @Override

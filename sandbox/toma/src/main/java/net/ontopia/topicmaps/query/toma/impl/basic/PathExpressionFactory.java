@@ -3,7 +3,12 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.*;
+import net.ontopia.topicmaps.query.toma.impl.basic.root.EmptyRoot;
+import net.ontopia.topicmaps.query.toma.impl.basic.root.Topic;
+import net.ontopia.topicmaps.query.toma.impl.basic.root.Variable;
+import net.ontopia.topicmaps.query.toma.impl.basic.root.WildcardRoot;
 import net.ontopia.topicmaps.query.toma.parser.PathExpressionFactoryIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;

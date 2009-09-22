@@ -51,6 +51,19 @@ public class ResultSet implements Iterable<Row> {
     rows = new HashBag();
   }
 
+  public List<String> getSharedColumns(ResultSet rs) {
+    List<String> sharedCols = new ArrayList<String>();
+    
+    List<String> vars = getBoundVariables();
+    for (String var : vars) {
+      if (rs.containsColumn(var)) {
+        sharedCols.add(var);
+      }
+    }
+    
+    return sharedCols;
+  }
+  
   public List<String> getBoundVariables() {
     List<String> variables = new ArrayList<String>();
     for (String col : columns) {
@@ -159,5 +172,29 @@ public class ResultSet implements Iterable<Row> {
   public Collection<?> getValues(String column) {
     int idx = getColumnIndex(column);
     return getValues(idx);
+  }
+  
+  @SuppressWarnings("unchecked")
+  public ResultSet merge(ResultSet rs) {
+    List<String> sharedCols = getSharedColumns(rs);
+    if (sharedCols.isEmpty()) {
+      return null;
+    } else {
+      String col = sharedCols.get(0);
+      Collection vals1 = getValues(col);
+      Collection vals2 = rs.getValues(col);
+      
+      vals1.addAll(vals2);
+      ResultSet result = new ResultSet(1, true);
+      result.setColumnName(0, col);
+      
+      for (Object o : vals1) {
+        Row r = result.createRow();
+        r.setLastValue(o);
+        result.addRow(r);
+      }
+      
+      return result;
+    }
   }
 }

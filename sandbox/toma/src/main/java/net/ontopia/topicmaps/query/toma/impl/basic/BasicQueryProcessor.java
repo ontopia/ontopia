@@ -11,6 +11,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 import net.ontopia.topicmaps.query.toma.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.toma.parser.TomaParser;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
