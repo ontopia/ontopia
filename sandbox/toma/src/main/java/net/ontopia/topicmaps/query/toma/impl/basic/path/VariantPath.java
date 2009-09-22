@@ -8,8 +8,8 @@ import java.util.Set;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.impl.basic.PathExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
+import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 
 /**
  * INTERNAL: Variant path element in an path expression. Returns all variants

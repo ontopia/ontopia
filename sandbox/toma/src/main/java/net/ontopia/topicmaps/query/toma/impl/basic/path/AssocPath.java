@@ -10,9 +10,9 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.impl.basic.PathExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
-import net.ontopia.topicmaps.query.toma.impl.basic.WildcardRoot;
+import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
+import net.ontopia.topicmaps.query.toma.impl.basic.root.WildcardRoot;
 
 /**
  * INTERNAL: Association path element in an path expression. Returns all
