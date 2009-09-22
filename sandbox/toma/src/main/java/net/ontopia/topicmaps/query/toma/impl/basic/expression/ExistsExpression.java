@@ -5,43 +5,35 @@ import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
-import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
-import net.ontopia.topicmaps.query.toma.parser.ast.AbstractExpression;
 
-public class ExistsExpression extends AbstractExpression implements BasicExpressionIF
-{
-  public ExistsExpression()
-  {
+/**
+ * INTERNAL: Exists expression, returns all valid (not-null) results of
+ * a specified child expression.  
+ */
+public class ExistsExpression extends AbstractUnaryExpression {
+  
+  public ExistsExpression() {
     super("EXISTS");
   }
 
   public ResultSet evaluate(LocalContext context) throws InvalidQueryException {
-    if (getChildCount() != 1) 
+    if (getChildCount() != 1)
       return null;
-    
+
     BasicExpressionIF child = (BasicExpressionIF) getChild(0);
     ResultSet rs = child.evaluate(context);
-    
+
     ResultSet result = new ResultSet(rs);
-    
+
     for (Object r : rs) {
       Row row = (Row) r;
-      Object val = row.getValue(row.getColumnCount() - 1);
+      Object val = row.getLastValue();
       if (val != null) {
         result.addRow(row);
       }
     }
-    
+
     context.addResultSet(result);
     return result;
-  }
-  
-  public boolean validate() throws AntlrWrapException {
-    if (getChildCount() != 1) {
-      throw new AntlrWrapException(
-          new InvalidQueryException("expression '" + getName()
-              + "' needs to have exactly one child."));
-    }
-    return true;
   }
 }
