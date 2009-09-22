@@ -1,6 +1,5 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.function;
 
-import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
