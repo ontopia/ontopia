@@ -3,18 +3,15 @@ package net.ontopia.topicmaps.query.toma.impl.basic.path;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.parser.ast.Level;
 import net.ontopia.topicmaps.utils.AssociationWalker;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SubjectIdentityDecider;
-import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 import net.ontopia.utils.DeciderIF;
 
 /**
