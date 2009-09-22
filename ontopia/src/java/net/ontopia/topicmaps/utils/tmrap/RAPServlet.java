@@ -98,12 +98,14 @@ public class RAPServlet extends HttpServlet {
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response,
       String URLString) throws IOException, ServletException {
-    if (URLString.endsWith("get-tolog"))//
+    if (URLString.endsWith("get-tolog"))
       getTolog(request, response);
-    else if (URLString.endsWith("get-topic"))//
+    else if (URLString.endsWith("get-topic"))
       getTopic(request, response); 
-    else if (URLString.endsWith("get-topic-page"))//
+    else if (URLString.endsWith("get-topic-page"))
       getTopicPage(request, response);
+    else
+      reportError(response, "No such GET request: " + URLString);
   }
   
   public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -113,16 +115,18 @@ public class RAPServlet extends HttpServlet {
   
   public void doPost(HttpServletRequest request, HttpServletResponse response,
       String URLString) throws IOException {
-    if (URLString.endsWith("add-fragment"))//
+    if (URLString.endsWith("add-fragment"))
       addFragment(request, response);
-    else if (URLString.endsWith("update-topic"))//
+    else if (URLString.endsWith("update-topic"))
       updateTopic(request, response);
-    else if (URLString.endsWith("delete-topic"))//
+    else if (URLString.endsWith("delete-topic"))
       deleteTopic(request, response);
-    else if (URLString.endsWith("add-type-listener"))//
+    else if (URLString.endsWith("add-type-listener"))
       addTypeListener(request, response);
-    else if (URLString.endsWith("remove-type-listener"))//
+    else if (URLString.endsWith("remove-type-listener"))
       removeTypeListener(request, response);
+    else
+      reportError(response, "No such POST request" + URLString);
   }
 
   // --- TMRAP request implementations
