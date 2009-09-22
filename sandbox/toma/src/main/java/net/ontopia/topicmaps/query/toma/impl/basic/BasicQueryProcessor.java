@@ -117,6 +117,9 @@ public class BasicQueryProcessor implements QueryProcessorIF {
       }
       Collection<?> values = pathExpr.evaluate(context, input);
       for (Object v : values) {
+        // ignore null values in the first select clause
+        if (v == null && index == 0) continue;
+        
         try {
           Row newRow = (Row) row.clone();
 

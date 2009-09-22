@@ -156,5 +156,28 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
     addMatch(matches, "$A.REIFIER", getTopicById("xtm-standard"));
     
     verifyQuery(matches, "select $a.reifier where $a(format-for)->(format) = i'xtm';");
+  }
+  
+  /// type path expressions
+  
+  public void testType() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List<TopicIF> matches = new ArrayList<TopicIF>();
+    addMatch(matches, "$T.TYPE", getTopicById("format"));
+    
+    verifyQuery(matches, "select $t.type(1) where $t = i'xtm';");
+  }
+  
+  /// instance path expressions
+  
+  public void testInstance() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List<TopicIF> matches = new ArrayList<TopicIF>();
+    addMatch(matches, "$T.INSTANCE", getTopicById("xtm"));
+    addMatch(matches, "$T.INSTANCE", getTopicById("ltm"));
+    
+    verifyQuery(matches, "select $t.instance(1) where $t = i'format';");
   }  
 }

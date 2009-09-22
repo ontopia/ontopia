@@ -1,0 +1,27 @@
+
+/*
+  Topic map with instance-of relationships _and_ subclasses used by
+  the query engine test cases.
+*/
+
+[subclass-of = "Subclass of"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+[superclass = "Superclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"]
+[subclass = "Subclass"
+ @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+
+[typeA = "Type A"]
+[typeB = "Type B"]
+[typeC = "Type C"]
+[typeD = "Type D"]
+subclass-of([typeA] : superclass, [typeB] : subclass)
+subclass-of([typeB] : superclass, [typeC] : subclass)
+subclass-of([typeA] : superclass, [typeC] : subclass)
+subclass-of([typeC] : superclass, [typeD] : subclass)
+
+/* type-instance examples */
+[topicA = "Topic A"]
+[topicB : topicA = "Topic B"]
+[topicC : topicA topicB = "Topic C"]
+[topicD : topicC = "Topic D"]
