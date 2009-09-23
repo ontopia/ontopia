@@ -40,6 +40,14 @@ public class ExpressionFactory implements ExpressionFactoryIF {
     functions.put("SUBSTR", SubstrFunction.class);
     functions.put("TRIM", TrimFunction.class);
     functions.put("TITLECASE", TitleCaseFunction.class);
+    functions.put("TO_NUM", ToNumFunction.class);
+    
+    functions.put("COUNT", CountFunction.class);
+    functions.put("SUM", SumFunction.class);
+    functions.put("MIN", MinFunction.class);
+    functions.put("MAX", MaxFunction.class);
+    functions.put("AVG", AvgFunction.class);
+    functions.put("CONCAT", ConcatFunction.class);
   }
 
   public ExpressionIF createExpression(String name, ExpressionIF... childs) {
