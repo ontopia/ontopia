@@ -110,22 +110,28 @@ andclause returns [ExpressionIF e]:
   
 clause returns [ExpressionIF e]:
                                { ExpressionIF left, right; String exprID;         }
-  ( 
-    left=expr e=comparator right=expr 
+  (
+                               { exprID = "EXISTS";                               } 
+    (NOT                       { exprID = "NOTEXISTS";                            })? 
+     EXISTS left=expr           
+                               { e = context.createExpression(exprID, left);      }
+  |                            
+    left=expr                               
+    ( 
+      e=comparator right=expr 
                                { e.addChild(left); e.addChild(right);             }
-  |                            { exprID = "EXISTS";                               } 
-    (NOT { exprID = "NOTEXISTS";})? EXISTS left=expr           
-                               { e = context.createExpression(exprID, left);      }
-  |                            { exprID = "NOTEXISTS";                            } 
-    left=expr IS (NOT { exprID = "EXISTS";})? NULL    
-                               { e = context.createExpression(exprID, left);      }
-  | left=expr IN LPAREN        { e = context.createExpression("IN");              }
-    ( left=statement           { e.addChild(left);                                }
-    | left=expr                { e.addChild(left);                                } 
-      (
-       COMMA right=expr        { e.addChild(right);                               }
-      )*
-    ) RPAREN
+    |                          { exprID = "NOTEXISTS";                            } 
+      IS (NOT                  { exprID = "EXISTS";                               })? 
+      NULL                     { e = context.createExpression(exprID, left);      }
+    | IN LPAREN                { e = context.createExpression("IN");
+    	                         e.addChild(left);                                }
+      ( right=statement        { e.addChild(right);                               }
+      | right=expr             { e.addChild(right);                               } 
+        (
+         COMMA right=expr      { e.addChild(right);                               }
+        )*
+      ) RPAREN
+    )
   );
   
 expr returns [ExpressionIF p]:
@@ -264,11 +270,16 @@ comparator returns [ExpressionIF e]:
   | GREATERTHANEQ | REGEXPCS | REGEXPCI | REGEXPNCS | REGEXPNCI)
   { e = context.createExpression(LT(0).getText()); };
       
+function returns [FunctionIF f]:
+  ( f=aggregate_function 
+  | f=simple_function
+  );
+  
 aggregate_function returns [FunctionIF f]:
   ( COUNT | SUM | MAX | MIN | AVG | CONCAT)
   { f = context.createFunction(LT(0).getText()); };
   
-function returns [FunctionIF f]:
+simple_function returns [FunctionIF f]:
   ( LOWERCASE | UPPERCASE | TITLECASE | LENGTH | SUBSTR | TRIM | TO_NUM | TO_UNIT)
   { f = context.createFunction(LT(0).getText()); };
 
