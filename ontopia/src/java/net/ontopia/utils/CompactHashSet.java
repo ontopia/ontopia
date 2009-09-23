@@ -20,7 +20,17 @@ public class CompactHashSet extends java.util.AbstractSet {
   
   protected final static int INITIAL_SIZE = 3;
   protected final static double LOAD_FACTOR = 0.75;
+
+  /**
+   * This object is used to represent null, should clients add that to the set.
+   */
   protected final static Object nullObject = new Object();
+  /**
+   * When an object is deleted this object is put into the hashtable
+   * in its place, so that other objects with the same key
+   * (collisions) further down the hashtable are not lost after we
+   * delete an object in the collision chain.
+   */
   protected final static Object deletedObject = new Object();
   protected int elements;
   protected int freecells;
