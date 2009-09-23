@@ -143,14 +143,13 @@ public abstract class AbstractPathElement implements PathElementIF {
   protected abstract boolean isChildAllowed();
 
   public boolean validate() throws AntlrWrapException {
-    // TODO: currently only missing level parameters for type/instance/sub/super
-    //       elements are validated.
+    // Check if no level has been set for type/instance/sub/super
+    // elements. If this is the case, set it to the default: Level(1, 1)
     if (isLevelAllowed() && getLevel() == null) {
-      throw new AntlrWrapException(new InvalidQueryException(
-          "missing level parameter for path expression '" + getName() + "'"));
-    } else {
-      return true;
+      setLevel(new Level(1));
     }
+    
+    return true;
   }
 
   public void fillParseTree(IndentedStringBuilder buf, int level) {
