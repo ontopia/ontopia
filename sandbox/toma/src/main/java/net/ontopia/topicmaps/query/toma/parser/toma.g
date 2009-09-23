@@ -85,7 +85,7 @@ select returns [SelectStatement stmt]:
   selectlist[stmt]
   (                  { ExpressionIF e;               } 
     WHERE e=orclause { stmt.setClause(e);            }
-  )?;
+  );
 
 selectlist [SelectStatement stmt]:
                  { ExpressionIF e;    }
@@ -130,7 +130,7 @@ clause returns [ExpressionIF e]:
         (
          COMMA right=expr      { e.addChild(right);                               }
         )*
-      ) RPAREN
+      )? RPAREN
     )
   );
   
@@ -271,16 +271,16 @@ comparator returns [ExpressionIF e]:
   { e = context.createExpression(LT(0).getText()); };
       
 function returns [FunctionIF f]:
-  ( f=aggregate_function 
+  ( f=aggregate_function
   | f=simple_function
-  );
+  );      
   
 aggregate_function returns [FunctionIF f]:
   ( COUNT | SUM | MAX | MIN | AVG | CONCAT)
   { f = context.createFunction(LT(0).getText()); };
   
 simple_function returns [FunctionIF f]:
-  ( LOWERCASE | UPPERCASE | TITLECASE | LENGTH | SUBSTR | TRIM | TO_NUM | TO_UNIT)
+  ( LOWERCASE | UPPERCASE | TITLECASE | LENGTH | SUBSTR | TRIM | TO_NUM)
   { f = context.createFunction(LT(0).getText()); };
 
 functionparam:
@@ -360,7 +360,6 @@ tokens {
   
   // CONVERSION FUNCTIONS
   TO_NUM    = "to_num";
-  TO_UNIT   = "to_unit";
 }
 
 IDENTIFIER options { testLiterals = true; }:
