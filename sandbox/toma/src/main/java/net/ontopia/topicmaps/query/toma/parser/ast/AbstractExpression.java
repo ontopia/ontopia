@@ -74,7 +74,7 @@ public abstract class AbstractExpression implements ExpressionIF {
   }
 
   public boolean validate() throws AntlrWrapException {
-    if (getChildCount() != requiredChilds) {
+    if (requiredChilds > 0 && getChildCount() != requiredChilds) {
       throw new AntlrWrapException(new InvalidQueryException("expression '"
           + getName() + "' has " + getChildCount() + " instead of "
           + requiredChilds + " child(s)."));
