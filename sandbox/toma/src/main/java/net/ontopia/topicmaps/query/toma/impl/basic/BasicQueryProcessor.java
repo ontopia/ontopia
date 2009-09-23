@@ -12,9 +12,9 @@ import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
+import net.ontopia.topicmaps.query.toma.impl.basic.function.AbstractAggregateFunction;
 import net.ontopia.topicmaps.query.toma.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.toma.parser.TomaParser;
-import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.SelectStatement;
 import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
 
@@ -115,23 +115,37 @@ public class BasicQueryProcessor implements QueryProcessorIF {
       } else {
         pathExpr = (PathExpression) selectExpr.getChild(0);
       }
+
       Collection<?> values = pathExpr.evaluate(context, input);
-      for (Object v : values) {
-        // ignore null values in the first select clause
-        if (v == null && index == 0) continue;
-        
+      
+      if (selectExpr instanceof AbstractAggregateFunction) {
         try {
-          Row newRow = (Row) row.clone();
-
-          if (selectExpr instanceof BasicFunctionIF) {
-            v = ((BasicFunctionIF) selectExpr).evaluate(v);
-          }
-
-          newRow.setValue(index, v);
-          fillFinalResultSet(context, index + 1, input, newRow, rs, stmt);
-        } catch (Exception e) {
+          String r = ((BasicFunctionIF) selectExpr).evaluate(values);
+          row.setValue(index, r);
+          fillFinalResultSet(context, index + 1, input, row, rs, stmt);
+        } catch(InvalidQueryException e) {
           // TODO: better error handling
           e.printStackTrace();
+        }
+      } else {
+        
+        for (Object v : values) {
+          // ignore null values in the first select clause
+          if (v == null && index == 0) continue;
+
+          try {
+            Row newRow = (Row) row.clone();
+
+            if (selectExpr instanceof BasicFunctionIF) {
+              v = ((BasicFunctionIF) selectExpr).evaluate(v);
+            }
+
+            newRow.setValue(index, v);
+            fillFinalResultSet(context, index + 1, input, newRow, rs, stmt);
+          } catch (Exception e) {
+            // TODO: better error handling
+            e.printStackTrace();
+          }
         }
       }
     } else {

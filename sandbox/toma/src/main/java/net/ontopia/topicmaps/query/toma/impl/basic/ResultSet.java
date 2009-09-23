@@ -97,6 +97,7 @@ public class ResultSet implements Iterable<Row> {
     }
   }
 
+  @SuppressWarnings("unchecked")
   public Iterator<Row> iterator() {
     if (unique) {
       return rows.uniqueSet().iterator();
@@ -130,7 +131,7 @@ public class ResultSet implements Iterable<Row> {
   public void removeRow(Row row) {
     rows.remove(row);
   }
-
+  
   public String getColumnName(int index) {
     return columns.get(index);
   }

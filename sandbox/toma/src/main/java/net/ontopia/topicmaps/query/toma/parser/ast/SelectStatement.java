@@ -122,11 +122,16 @@ public class SelectStatement implements ASTElementIF {
 
   public boolean validate() throws AntlrWrapException {
 
+    // TODO: check that all select clauses use an aggregate function
+    // if at least one contains such a function.
+    
     // validate all select projections
     for (ExpressionIF expr : selects) {
       expr.validate();
     }
 
+    // TODO: check that no aggregate functions are used in the where clause.
+    
     // validate the where clauses
     clause.validate();
     

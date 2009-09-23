@@ -24,7 +24,7 @@ public class Topic extends AbstractTopic implements BasicRootIF {
     super(type, id);
   }
 
-  public Collection<?> evaluate(LocalContext context) {
+  public Collection<TopicIF> evaluate(LocalContext context) {
     TopicMapIF topicmap = context.getTopicMap();
 
     switch (getIDType()) {
@@ -45,10 +45,11 @@ public class Topic extends AbstractTopic implements BasicRootIF {
       return getTopicsByVar(topicmap);
     }
 
-    return new LinkedList();
+    // should not be reached anyways
+    return new LinkedList<TopicIF>();
   }
 
-  private Collection<?> getTopicsByIID(TopicMapIF topicmap) {
+  private Collection<TopicIF> getTopicsByIID(TopicMapIF topicmap) {
     LocatorIF locator = topicmap.getStore().getBaseAddress().resolveAbsolute(
         "#" + getIdentifier());
     TMObjectIF obj = topicmap.getObjectByItemIdentifier(locator);
@@ -59,7 +60,7 @@ public class Topic extends AbstractTopic implements BasicRootIF {
     return coll;
   }
 
-  private Collection<?> getTopicsBySI(TopicMapIF topicmap) {
+  private Collection<TopicIF> getTopicsBySI(TopicMapIF topicmap) {
     LocatorIF locator = URILocator.create(getIdentifier());
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator);
     Collection<TopicIF> coll = new LinkedList<TopicIF>();
@@ -67,7 +68,7 @@ public class Topic extends AbstractTopic implements BasicRootIF {
     return coll;
   }
 
-  private Collection<?> getTopicsBySL(TopicMapIF topicmap) {
+  private Collection<TopicIF> getTopicsBySL(TopicMapIF topicmap) {
     LocatorIF locator = URILocator.create(getIdentifier());
     TopicIF topic = topicmap.getTopicBySubjectLocator(locator);
     Collection<TopicIF> coll = new LinkedList<TopicIF>();
@@ -75,7 +76,8 @@ public class Topic extends AbstractTopic implements BasicRootIF {
     return coll;
   }
 
-  private Collection<?> getTopicsByName(TopicMapIF topicmap) {
+  @SuppressWarnings("unchecked")
+  private Collection<TopicIF> getTopicsByName(TopicMapIF topicmap) {
     NameIndexIF index = (NameIndexIF) topicmap
         .getIndex("net.ontopia.topicmaps.core.index.NameIndexIF");
 
@@ -87,7 +89,8 @@ public class Topic extends AbstractTopic implements BasicRootIF {
     return topics;
   }
 
-  private Collection<?> getTopicsByVar(TopicMapIF topicmap) {
+  @SuppressWarnings("unchecked")
+  private Collection<TopicIF> getTopicsByVar(TopicMapIF topicmap) {
     NameIndexIF index = (NameIndexIF) topicmap
         .getIndex("net.ontopia.topicmaps.core.index.NameIndexIF");
 
