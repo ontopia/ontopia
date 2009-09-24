@@ -18,76 +18,9 @@ import java.util.NoSuchElementException;
  * INTERNAL: This class is a specialization of the CompactHashSet
  * class, and uses the == operator to compare objects.
  */
-public class CompactIdentityHashSet extends java.util.AbstractSet {
-  
-  protected final static int INITIAL_SIZE = 3;
-  protected final static double LOAD_FACTOR = 0.75;
-  protected final static Object nullObject = new Object();
-  protected final static Object deletedObject = new Object();
-  protected int elements;
-  protected int freecells;
-  protected Object[] objects;
-  protected int modCount;
-  
-  /**
-   * Constructs a new, empty set.
-   */
-  public CompactIdentityHashSet() {
-    objects = new Object[INITIAL_SIZE];
-    elements = 0;
-    freecells = objects.length;
-    modCount = 0;
-  }
-
-  /**
-   * Constructs a new, empty set.
-   */
-  public CompactIdentityHashSet(int size) {
-    // NOTE: If array size is 0, we get a
-    // "java.lang.ArithmeticException: / by zero" in add(Object).
-    objects = new Object[(size==0 ? 1 : size)]; 
-    elements = 0;
-    freecells = objects.length;
-    modCount = 0;
-  }
-
-  /**
-   * Constructs a new set containing the elements in the specified
-   * collection.
-   *
-   * @param c the collection whose elements are to be placed into this set.
-   */
-  public CompactIdentityHashSet(Collection c) {
-    this(c.size());
-    addAll(c);
-  }
+public class CompactIdentityHashSet extends CompactHashSet {
 
   // ===== SET IMPLEMENTATION ================================================
-  
-  /**
-   * Returns an iterator over the elements in this set.  The elements
-   * are returned in no particular order.
-   *
-   * @return an Iterator over the elements in this set.
-   * @see ConcurrentModificationException
-   */
-  public Iterator iterator() {
-    return new CompactHashIterator();
-  }
-
-  /**
-   * Returns the number of elements in this set (its cardinality).
-   */
-  public int size() {
-    return elements;
-  }
-
-  /**
-   * Returns <tt>true</tt> if this set contains no elements.
-   */
-  public boolean isEmpty() {
-    return elements == 0;
-  }
 
   /**
    * Returns <tt>true</tt> if this set contains the specified element.
@@ -196,60 +129,7 @@ public class CompactIdentityHashSet extends java.util.AbstractSet {
       return false;
   }
   
-  /**
-   * Removes all of the elements from this set.
-   */
-  public void clear() {
-    elements = 0;
-    for (int ix = 0; ix < objects.length; ix++)
-      objects[ix] = null;
-    freecells = objects.length;
-    modCount++;
-  }
-
-  public Object[] toArray() {
-    Object[] result = new Object[elements];
-    Object[] objects = this.objects;
-    int pos = 0;
-    for (int i = 0; i < objects.length; i++)
-      if (objects[i] != null && objects[i] != deletedObject) {
-        if (objects[i] == nullObject)
-          result[pos++] = null;
-        else
-          result[pos++] = objects[i];
-      }
-    return result;
-  }
-
-  public Object[] toArray(Object a[]) {
-    int size = elements;
-    if (a.length < size)
-      a = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
-    Object[] objects = this.objects;
-    int pos = 0;
-    for (int i = 0; i < objects.length; i++)
-      if (objects[i] != null && objects[i] != deletedObject) {
-        if (objects[i] == nullObject)
-          a[pos++] = null;
-        else
-          a[pos++] = objects[i];
-      }
-    return a;
-  }  
-  
   // ===== INTERNAL METHODS ==================================================
-
-  /**
-   * INTERNAL: Used for debugging only.
-   */
-  public void dump() {
-    System.out.println("Size: " + objects.length);
-    System.out.println("Elements: " + elements);
-    System.out.println("Free cells: " + freecells);
-    System.out.println();
-    for (int ix = 0; ix < objects.length; ix++) 
-      System.out.println("[" + ix + "]: " + objects[ix]);
-  }
   
   /**
    * INTERNAL: Rehashes the hashset to a bigger size.
@@ -281,62 +161,4 @@ public class CompactIdentityHashSet extends java.util.AbstractSet {
     objects = newObjects;
     freecells = objects.length - elements;
   }
-  
-  // ===== ITERATOR IMPLEMENTATON ============================================
-  
-  private class CompactHashIterator implements Iterator {
-    private int index;
-    private int lastReturned = -1;
-    
-    /**
-     * The modCount value that the iterator believes that the backing
-     * CompactIdentityHashSet should have.  If this expectation is violated,
-     * the iterator has detected concurrent modification.
-     */
-    private int expectedModCount;
-
-    public CompactHashIterator() {
-      for (index = 0; index < objects.length &&
-             (objects[index] == null ||
-              objects[index] == deletedObject); index++)
-        ;
-      expectedModCount = modCount;
-    }
-
-    public boolean hasNext() {
-      return index < objects.length;
-    }
-
-    public Object next() {
-      if (modCount != expectedModCount)
-        throw new ConcurrentModificationException();
-      if (index >= objects.length) {
-        lastReturned = -2;
-        throw new NoSuchElementException();
-      }
-
-      lastReturned = index;
-      for (index += 1; index < objects.length &&
-             (objects[index] == null ||
-              objects[index] == deletedObject); index++)
-        ;
-      if (objects[lastReturned] == nullObject)
-        return null;
-      else
-        return objects[lastReturned];
-    }
-
-    public void remove() {
-      if (modCount != expectedModCount)
-        throw new ConcurrentModificationException();
-      if (lastReturned == -1 || lastReturned == -2)
-        throw new IllegalStateException();
-      // delete object
-      if (objects[lastReturned] != null && objects[lastReturned] != deletedObject) {
-        objects[lastReturned] = deletedObject;
-        elements--;
-      }
-    }
-  }
-  
 }
