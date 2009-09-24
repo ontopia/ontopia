@@ -212,21 +212,28 @@ public class CompactIdentityHashSet extends java.util.AbstractSet {
     Object[] objects = this.objects;
     int pos = 0;
     for (int i = 0; i < objects.length; i++)
-      if (objects[i] != null && objects[i] != deletedObject)
-        result[pos++] = objects[i];
+      if (objects[i] != null && objects[i] != deletedObject) {
+        if (objects[i] == nullObject)
+          result[pos++] = null;
+        else
+          result[pos++] = objects[i];
+      }
     return result;
   }
 
   public Object[] toArray(Object a[]) {
     int size = elements;
     if (a.length < size)
-      a = (Object[])java.lang.reflect.Array.newInstance(
-                                                        a.getClass().getComponentType(), size);
+      a = (Object[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
     Object[] objects = this.objects;
     int pos = 0;
     for (int i = 0; i < objects.length; i++)
-      if (objects[i] != null && objects[i] != deletedObject)
-        a[pos++] = objects[i];
+      if (objects[i] != null && objects[i] != deletedObject) {
+        if (objects[i] == nullObject)
+          a[pos++] = null;
+        else
+          a[pos++] = objects[i];
+      }
     return a;
   }  
   

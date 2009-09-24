@@ -291,6 +291,26 @@ public class CompactHashSetTest extends AbstractOntopiaTestCase {
     assertTrue("null was not found with iterator", set.iterator().next() == null);
   }
 
+  public void testNull2() {
+    assertTrue("null was found", !set.contains(null));
+  }
+
+  public void testNull3() {
+    set.add(null);
+    Object[] array = set.toArray();
+    assertTrue("wrong size of array", array.length == 1);
+    assertTrue("array doesn't contain null: " + array[0],
+               array[0] == null);
+  }
+
+  public void testNull4() {
+    set.add(null);
+    Object[] array = set.toArray(new Object[1]);
+    assertTrue("wrong size of array", array.length == 1);
+    assertTrue("array doesn't contain null: " + array[0],
+               array[0] == null);
+  }
+  
   public void testRemove() {
     set.add("hei");
     assertTrue("remove didn't know element was in set",

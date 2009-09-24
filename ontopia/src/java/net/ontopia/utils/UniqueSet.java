@@ -14,7 +14,6 @@ import java.util.Set;
 /**
  * INTERNAL: 
  */
-
 public class UniqueSet extends CompactHashSet {
   
   public UniqueSet() {
