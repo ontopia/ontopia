@@ -244,6 +244,7 @@
     <test>net.ontopia.topicmaps.xml.test.CanonicalXTMWriterTest</test>
     <test>net.ontopia.topicmaps.xml.test.XTM2WriterFilterTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.XTMWriterFilterTestGenerator</test>
+    <test>net.ontopia.topicmaps.xml.test.XTM2ExporterTest</test>
   </group>
 
   <group>
@@ -472,6 +473,11 @@
   <group>
     <name>query.dev</name>
     <test>net.ontopia.topicmaps.query.core.test.QueryWrapperTest</test>
+  </group>
+
+  <group>
+    <name>query-updates</name>
+    <test>net.ontopia.topicmaps.query.core.test.DeleteTest</test>
   </group>
 
   <group>

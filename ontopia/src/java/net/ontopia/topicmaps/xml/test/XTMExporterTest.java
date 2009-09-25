@@ -14,19 +14,10 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.*;
 
 public class XTMExporterTest extends AbstractXMLTestCase {
-  private TopicMapBuilderIF builder;
-  private TopicMapIF topicmap;
-  private LocatorIF sourceLoc;
-  private LocatorIF tmbase;
-  private File tmfile;
   
   public XTMExporterTest(String name) {
     super(name);
-  }
-    
-  public void setUp() {
-    String root = getTestDirectory();
-    verifyDirectory(root, "canonical", "out");
+    version = 1; // ensure export() uses XTM 1.0
   }
 
   // --- Test cases
@@ -337,26 +328,12 @@ public class XTMExporterTest extends AbstractXMLTestCase {
   
   // --- Internal helper methods
 
-  private void prepareTopicMap() throws IOException {
-    tmfile = new File(resolveFileName("canonical" + File.separator + "out", "tmid.xtm"));
-    tmbase = new URILocator(tmfile.toURL());
-    sourceLoc = tmbase.resolveAbsolute("#id");
-    
-    InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-    store.setBaseAddress(tmbase);
-    topicmap = store.getTopicMap();
-    builder = topicmap.getBuilder();
-  }
-
   private void reload() throws IOException {
     reload(false);
   }
-  
-  private void reload(boolean validate) throws IOException { 
-    XTMTopicMapWriter writer = new XTMTopicMapWriter(tmfile);
-    writer.setVersion(1);
-    writer.setAddIds(true);
-    writer.write(topicmap);
+
+  private void reload(boolean validate) throws IOException {
+    export();
     XTMTopicMapReader reader = new XTMTopicMapReader(tmfile);
     reader.setValidation(validate);
     topicmap = reader.read();

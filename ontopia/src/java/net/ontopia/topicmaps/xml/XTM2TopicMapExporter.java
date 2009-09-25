@@ -16,6 +16,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -156,7 +157,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     writeScope(vn, dh);
 
     atts.clear();
-    if (vn.getDataType().equals(XTM2ContentHandler.XTM_URITYPE)) {
+    if (vn.getDataType().equals(DataTypes.TYPE_URI)) {
       atts.addAttribute("href", "CDATA", vn.getLocator().getExternalForm());
       dh.startElement("resourceRef", atts);
       dh.endElement("resourceRef");
@@ -179,7 +180,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     writeScope(occ, dh);
 
     atts.clear();
-    if (occ.getDataType().equals(XTM2ContentHandler.XTM_URITYPE)) {
+    if (occ.getDataType().equals(DataTypes.TYPE_URI)) {
       atts.addAttribute("href", "CDATA", occ.getLocator().getExternalForm());
       dh.startElement("resourceRef", atts);
       dh.endElement("resourceRef");
@@ -297,8 +298,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   }
 
   private void addDatatype(AttributeListImpl atts, LocatorIF datatype) {
-    if (!datatype.equals(XTM2ContentHandler.XTM_URITYPE) &&
-        !datatype.equals(XTM2ContentHandler.XTM_STRINGTYPE)) 
+    if (!datatype.equals(DataTypes.TYPE_STRING)) 
       atts.addAttribute("datatype", "CDATA", datatype.getExternalForm());
   }
 }
