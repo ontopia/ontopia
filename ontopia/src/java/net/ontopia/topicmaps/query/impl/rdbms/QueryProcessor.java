@@ -89,7 +89,11 @@ public class QueryProcessor implements QueryProcessorIF {
                                DeclarationContextIF context)
     throws InvalidQueryException {
     return parseQuery(query, context).execute(arguments);
-  }  
+  }
+
+  public int update(String query) {
+    throw new UnsupportedOperationException();
+  }
   
   public ParsedQueryIF parse(String query) throws InvalidQueryException {
     return parseQuery(query, null);
@@ -107,12 +111,12 @@ public class QueryProcessor implements QueryProcessorIF {
     TologQuery tquery;
     if (context == null)
       // there is no context, so we just use the default parser
-      tquery = parser.parse(query);
+      tquery = parser.parseQuery(query);
     else {
       // there is a context, so we have to use a new parser for this
       TologParser localparser = new TologParser((ParseContextIF) context,
                                                 bprocessor.getOptions());
-      tquery = localparser.parse(query);
+      tquery = localparser.parseQuery(query);
     }
 
     return new ParsedQuery(this, bprocessor,
