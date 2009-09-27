@@ -34,7 +34,7 @@ options {
 
 {
   /// references
-  private TologQuery query;
+  private TologStatement statement;
   private QueryOptimizer optimizer;
   private ParseContextIF context;
   private TologLexer lexer;
@@ -61,21 +61,17 @@ options {
   
   public void init(TologLexer lexer) {
     this.lexer = lexer;
-    query = new TologQuery();
     openLists = new Stack();
     orClauses = new Stack();
     notClauses = new Stack();
-    
-    // setting it now so we have the options when we parse rules
-    query.setOptions(lexer.getOptions());
   }
 
   public void setContext(ParseContextIF context) {
     this.context = context;
   }
   
-  public TologQuery getQuery() {
-    return query;
+  public TologStatement getStatement() {
+    return statement;
   }
 
   /// lookup methods
@@ -104,7 +100,7 @@ options {
   }
 
   private void configureOptimizer() {
-    TologOptions options = query.getOptions();
+    TologOptions options = lexer.getOptions();
     optimizer = new QueryOptimizer();
 
     if (options.getBooleanValue("optimizer.inliner"))
@@ -200,9 +196,9 @@ options {
     // close and optimize rules
     riter = rules.values().iterator();
     while (riter.hasNext()) {
-      ParsedRule prule = (ParsedRule)riter.next();
+      ParsedRule prule = (ParsedRule) riter.next();
       try {
-        prule.close(query);
+        prule.close();
         prule = optimizer.optimize(prule);
       } catch (InvalidQueryException e) {
         throw new AntlrWrapException(e);
@@ -214,7 +210,11 @@ options {
 
 // the grammar
 
-query:  
+query: // entry point for SELECT queries
+  {
+    statement = new TologQuery();
+    ((TologQuery) statement).setOptions(lexer.getOptions());
+  }
   (prefixdecl | importdecl)*
   (// we solve #1143 by using what antlr calls a "syntactic
    // predicate" to verify that this really is a rule
@@ -225,13 +225,13 @@ query:
   }
   
   (SELECT selectlist FROM )?
-    clauselist { query.setClauseList(prevClauseList); }
+    clauselist { ((TologQuery) statement).setClauseList(prevClauseList); }
   (order)?
   (limit)?
   (offset)?
   QUESTIONM { 
     try {
-      query.close();
+      statement.close();
     }
     catch (InvalidQueryException e) {
       throw new AntlrWrapException(e);
@@ -271,7 +271,11 @@ clauselist:
   { prevClauseList = clauselist;
     clauselist = (List) openLists.pop(); };
 
+// invoked from outside when loading rule declarations and modules. never
+// called when parsing a query.
 ruleset:
+  { // we need a query object. this is probably not the best way, though.
+    statement = new TologQuery(); }
   (prefixdecl | importdecl)*
   (rule)*;
 
@@ -279,7 +283,7 @@ rule:
   IDENT
     { notQNameHere();     
       rule = getRule(LT(0).getText());
-      rule.init(query);
+      rule.init(lexer.getOptions());
       context.addPredicate(context.getPredicate(rule)); }
   LPAREN paramlist RPAREN 
   CONNECT 
@@ -297,14 +301,14 @@ paramlist:
   )*;
 
 selectlist:
-  (VARIABLE { query.addVariable(new Variable(LT(0).getText())); } |
+  (VARIABLE { ((TologQuery) statement).addVariable(new Variable(LT(0).getText())); } |
    (COUNT LPAREN VARIABLE   
-    { query.addCountVariable(new Variable(LT(0).getText())); }
+    { ((TologQuery) statement).addCountVariable(new Variable(LT(0).getText())); }
     RPAREN))
   (COMMA 
-   (VARIABLE { query.addVariable(new Variable(LT(0).getText())); } |
+   (VARIABLE { ((TologQuery) statement).addVariable(new Variable(LT(0).getText())); } |
    (COUNT LPAREN VARIABLE   
-    { query.addCountVariable(new Variable(LT(0).getText())); }
+    { ((TologQuery) statement).addCountVariable(new Variable(LT(0).getText())); }
     RPAREN)))*
   ;
 
@@ -316,18 +320,18 @@ order:
 orderpart:
   VARIABLE { var = new Variable(LT(0).getText()); }
   (ASC | DESC)?
-  { query.addOrderBy(var, !LT(0).getText().equalsIgnoreCase("DESC")); }
+  { ((TologQuery) statement).addOrderBy(var, !LT(0).getText().equalsIgnoreCase("DESC")); }
   ;
 
 limit:
   LIMIT NUMBER { isIntegerHere(); }
-  { query.setLimit(Integer.parseInt(LT(0).getText())); }
+  { ((TologQuery) statement).setLimit(Integer.parseInt(LT(0).getText())); }
   ;
 
 offset:
   OFFSET NUMBER { isIntegerHere(); }
   { try {
-      query.setOffset(Integer.parseInt(LT(0).getText()));
+      ((TologQuery) statement).setOffset(Integer.parseInt(LT(0).getText()));
     } catch (InvalidQueryException e) {
       throw new AntlrWrapException(e);
     }
@@ -402,6 +406,43 @@ predicateref:
     SOURCELOC { prevValue = context.getObjectByItemId(LT(0).getText());        }|
     OBJID     { prevValue = context.getObjectByObjectId(LT(0).getText());     }));
 
+/// THE UPDATE LANGUAGE
+
+updatestatement: delete; // only one supported at the moment
+
+delete:
+  DELETE 
+    { statement = new DeleteStatement();
+      statement.setOptions(lexer.getOptions()); }
+  (litlist | funccall)
+  (FROM clauselist 
+    { ((DeleteStatement) statement)
+       .setClauseList(prevClauseList, lexer.getOptions()); } 
+  )? EXCLAMATIONM { 
+    try {
+      statement.close();
+    }
+    catch (InvalidQueryException e) {
+      throw new AntlrWrapException(e);
+    }
+  };
+
+litlist:
+  lit (COMMA lit)*;
+
+lit:
+  (VARIABLE  { ((DeleteStatement) statement).addLit(new Variable(LT(0).getText())); }
+  | PARAMETER { ((DeleteStatement) statement).addLit(new Parameter(LT(0).getText())); }
+  | topicref { ((DeleteStatement) statement).addLit(prevValue); }
+  );
+
+funccall:
+  IDENT 
+  { ((DeleteStatement) statement).setFunction((String) prevValue); }
+  LPAREN param COMMA param RPAREN;
+
+param: lit;
+
 /**
  * INTERNAL: Lexer for LTM syntax.
  */
@@ -433,6 +474,8 @@ tokens {
   FOR    = "for";
   AS     = "as";
   IMPORT = "import";
+
+  DELETE = "delete";
 }
 
 {
@@ -609,6 +652,7 @@ NUMBER:
 
 COLON     options { paraphrase = ":";  } : ':'  ;
 QUESTIONM options { paraphrase = "?";  } : '?'  ;
+EXCLAMATIONM options { paraphrase = "!";  } : '!';
 COMMA  	  options { paraphrase = ",";  } : ','  ;
 LPAREN 	  options { paraphrase = "(";  } : '('  ;
 RPAREN 	  options { paraphrase = ")";  } : ')'  ;

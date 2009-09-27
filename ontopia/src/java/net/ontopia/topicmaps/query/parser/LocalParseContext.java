@@ -197,7 +197,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   public TMObjectIF getObjectByItemId(String uri) throws AntlrWrapException {
     return checkReference(subcontext.getObjectByItemId(uri), uri);
   }
-
+  
   // --- Methods specific to LocalParseContext
 
   /**

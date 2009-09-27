@@ -44,6 +44,7 @@ import net.ontopia.topicmaps.query.parser.ParseContextIF;
 import net.ontopia.topicmaps.query.parser.TologParser;
 import net.ontopia.topicmaps.query.parser.TologOptions;
 import net.ontopia.topicmaps.query.parser.TologQuery;
+import net.ontopia.topicmaps.query.parser.DeleteStatement;
 import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
@@ -126,11 +127,11 @@ public class QueryProcessor extends AbstractQueryProcessor implements
 
     if (context == null)
       // there is no context, so we just use the default parser
-      return optimize(parser.parse(query));
+      return optimize(parser.parseQuery(query));
 
     // there is a context, so we have to use a new parser for this
     TologParser localparser = new TologParser((ParseContextIF) context, options);
-    return optimize(localparser.parse(query));
+    return optimize(localparser.parseQuery(query));
   }
 
   public void load(String ruleset) throws InvalidQueryException {
@@ -159,7 +160,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     QueryMatches matches;
 
     QueryTracer.startQuery();
-    try {      
+    try {
       matches = createInitialMatches(query, arguments);
       List clauses = query.getClauses();
       
@@ -176,6 +177,18 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     TologSpy.recordExecute(query, start, System.currentTimeMillis());
     
     return new QueryResult(matches, query.getLimit(), query.getOffset());
+  }
+
+  public int update(String query) throws InvalidQueryException {
+    DeleteStatement statement = (DeleteStatement) parser.parseStatement(query);
+    if (statement.getEmbeddedQuery() != null) {
+      TologQuery subquery = optimize(statement.getEmbeddedQuery());
+      QueryMatches matches = createInitialMatches(subquery, null);
+      matches = satisfy(subquery.getClauses(), matches);
+      matches = reduce(subquery, matches);
+      return statement.doDeletes(matches);
+    } else
+      return statement.doStaticDeletes();
   }
 
   // / actual query processor implementation

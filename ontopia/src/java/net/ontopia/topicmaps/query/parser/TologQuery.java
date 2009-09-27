@@ -22,23 +22,23 @@ import net.ontopia.topicmaps.query.impl.utils.BindingContext;
 import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
 
 /**
- * INTERNAL: Used to represent parsed queries.
+ * INTERNAL: Used to represent parsed SELECT queries.
  */
-public class TologQuery {
+public class TologQuery extends TologStatement {
+  protected List clauses;   // the actual predicates of the query part, if any
+  protected Map arguments;  // external args used to resolve param refs
+  protected Map vartypemap; // variable -> Object[] containing possible types
+  protected Map ptypemap;   // parameter -> Object[] containing possible types
+
   protected List variables; // select * from variables
   protected Set countVariables;
   protected Set allVariables;
-  protected List clauses;
   protected List orderBy;
   protected Set orderDescending;
-  protected Map arguments; // external args used to resolve param refs
   protected int limit;
   protected int offset;
-  protected Map vartypemap;   // maps variable to Object[] containing possible types
-  protected Map ptypemap;     // maps parameter to Object[] containing possible types
 
-  protected List selected_variables;
-  protected TologOptions options;
+  protected List selected_variables; // cached unmodifiable collection
   
   public TologQuery() {
     clauses = new ArrayList();
@@ -50,12 +50,53 @@ public class TologQuery {
     offset = -1;
   }
 
+  public List getClauses() {
+    return clauses;
+  }
+
+  public void setClauseList(List clauses) {
+    this.clauses = clauses;
+  }
+
+  public Map getArguments() {
+    // NOTE: needed by the RDBMS implementation.
+    return arguments;
+  }
+  
+  public void setArguments(Map arguments) {
+    this.arguments = arguments;
+  }
+
+  public Object getArgument(String name) throws InvalidQueryException {
+    if (arguments == null)
+      throw new InvalidQueryException("Tried to get value for query parameter '" +
+                                      name + "', but no arguments provided");
+
+    Object value = arguments.get(name);
+    
+    if (value == null)
+      throw new InvalidQueryException("No value supplied for query parameter '" +
+                                      name + "'");
+
+    return value;
+  }
+
+  /// query introspection
+
+  public Map getVariableTypes() {
+    return vartypemap;
+  }
+
+  public Map getParameterTypes() {
+    return ptypemap;
+  }
+  
   /// ParsedQueryIF implementation [the class does not implement the interface]
   
   public List getSelectedVariables() {
     if (selected_variables == null) {
       // Need to resolve the list of selected variables once, because
-      // of the fact that allVariables is unordered.
+      // allVariables is unordered.
       if (variables.size() > 0)
         selected_variables = Collections.unmodifiableList(variables);
       else
@@ -92,14 +133,6 @@ public class TologQuery {
 
   public boolean isOrderedAscending(String name) {
     return !orderDescending.contains(name);
-  }
-
-  public TologOptions getOptions() {
-    return options;
-  }
-  
-  public void setOptions(TologOptions options) {
-    this.options = options;
   }
 
   /// Object implementation
@@ -261,14 +294,6 @@ public class TologQuery {
     
   /// Modifiers
 
-  public List getClauses() {
-    return clauses;
-  }
-
-  public void setClauseList(List clauses) {
-    this.clauses = clauses;
-  }
-
   public void addVariable(Variable variable) throws AntlrWrapException {
     if (variables.contains(variable))
       throw new AntlrWrapException(
@@ -293,7 +318,6 @@ public class TologQuery {
   }
   
   public void close() throws InvalidQueryException {
-   
     // compute the variables we calculate
     allVariables = new HashSet();
     for (int ix = 0; ix < clauses.size(); ix++) {
@@ -376,29 +400,6 @@ public class TologQuery {
     return false;
   }
 
-  public Map getArguments() {
-    // NOTE: needed by the RDBMS implementation.
-    return arguments;
-  }
-  
-  public void setArguments(Map arguments) {
-    this.arguments = arguments;
-  }
-
-  public Object getArgument(String name) throws InvalidQueryException {
-    if (arguments == null)
-      throw new InvalidQueryException("Tried to get value for query parameter '" +
-                                      name + "', but no arguments provided");
-
-    Object value = arguments.get(name);
-    
-    if (value == null)
-      throw new InvalidQueryException("No value supplied for query parameter '" +
-                                      name + "'");
-
-    return value;
-  }
-
   public void setLimit(int limit) {
     this.limit = limit;
   }
@@ -413,15 +414,5 @@ public class TologQuery {
 
   public int getOffset() {
     return offset;
-  }
-
-  /// query introspection
-
-  public Map getVariableTypes() {
-    return vartypemap;
-  }
-
-  public Map getParameterTypes() {
-    return ptypemap;
   }
 }

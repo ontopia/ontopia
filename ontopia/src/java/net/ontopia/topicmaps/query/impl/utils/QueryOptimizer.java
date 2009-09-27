@@ -130,7 +130,7 @@ public class QueryOptimizer {
   public ParsedRule optimize(ParsedRule rule)
     throws InvalidQueryException {
 
-    QueryContext context = new QueryContext(rule);
+    QueryContext context = new QueryContext(null, rule);
     rule.setClauseList(optimize(rule.getClauses(), context));
     return rule;
   }

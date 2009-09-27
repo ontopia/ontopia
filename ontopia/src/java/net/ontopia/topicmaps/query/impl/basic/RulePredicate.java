@@ -56,8 +56,7 @@ public class RulePredicate extends AbstractQueryProcessor
     // we do not return here, but try to produce a stricter value
     
     // do type analysis on rule
-    boolean strict = rule.getQuery()
-                       .getOptions().getBooleanValue("compiler.typecheck");
+    boolean strict = rule.getOptions().getBooleanValue("compiler.typecheck");
     Map vartypes = QueryAnalyzer.analyzeTypes(rule.getClauses(), strict)
                      .getVariableTypes();
     

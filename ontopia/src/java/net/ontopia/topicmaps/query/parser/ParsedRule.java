@@ -21,20 +21,20 @@ public class ParsedRule {
   private List parameters;
   private List clauses;
   private Map typemap;
-  private TologQuery query;
+  private TologOptions options;
   
   public ParsedRule(String name) {
     this.name = name;
   }
 
-  public void init(TologQuery query) {
-    this.query = query;
+  public void init(TologOptions options) {
+    this.options = options;
     this.parameters = new ArrayList();
     this.clauses = new ArrayList();
   }
 
   public boolean initialized() {
-    return query != null;
+    return options != null;
   }
 
   public String getName() {
@@ -65,9 +65,9 @@ public class ParsedRule {
     return Collections.EMPTY_MAP;
   }
 
-  public TologQuery getQuery() {
+  public TologOptions getOptions() {
     // will only work after close() has been called
-    return query;
+    return options;
   }
 
   /**
@@ -77,7 +77,7 @@ public class ParsedRule {
    * rule are actually used in the rule (no free variables), and runs
    * type inferencing on the rule.
    */
-  public void close(TologQuery query) throws InvalidQueryException {
+  public void close() throws InvalidQueryException {
     // verify that all parameters are used
     Set allVariables = new HashSet();
     for (int ix = 0; ix < clauses.size(); ix++) {
@@ -92,7 +92,7 @@ public class ParsedRule {
     }
 
     // run type inferencing
-    boolean strict = query.getOptions().getBooleanValue("compiler.typecheck");
+    boolean strict = options.getBooleanValue("compiler.typecheck");
     typemap = QueryAnalyzer.analyzeTypes(clauses, strict).getVariableTypes();
   }
 
@@ -105,6 +105,5 @@ public class ParsedRule {
               clauses.equals(other.clauses));
     }
     return false;
-  }
-  
+  }  
 }

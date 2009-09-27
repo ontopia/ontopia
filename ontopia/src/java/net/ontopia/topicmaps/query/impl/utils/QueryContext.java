@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.ontopia.topicmaps.query.parser.ParsedRule;
 import net.ontopia.topicmaps.query.parser.TologQuery;
+import net.ontopia.topicmaps.query.parser.TologOptions;
 
 /**
  * INTERNAL: Used during traversal of queries to represent the context
@@ -16,9 +17,10 @@ public class QueryContext {
   private int nesting_level;
   private ParsedRule rule;  // not set outside rules
   private TologQuery query;
-  
-  public QueryContext(ParsedRule rule) {
-    this.query = rule.getQuery();
+
+  // note that query may be null (in DeclContext, for example)
+  public QueryContext(TologQuery query, ParsedRule rule) {
+    this.query = query;
     this.rule = rule;
   }
   
@@ -30,7 +32,13 @@ public class QueryContext {
    * Returns value of boolean option.
    */
   public boolean getBooleanOption(String name) {
-    return query.getOptions().getBooleanValue(name);
+    TologOptions options;
+    if (query != null)
+      options = query.getOptions();
+    else
+      options = rule.getOptions();
+
+    return options.getBooleanValue(name);
   }
 
   /**

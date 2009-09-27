@@ -329,7 +329,20 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
     } finally {
       result.close();
     }
-}
+  }
+
+  public int update(String query) throws InvalidQueryException {
+    return processor.update(query);
+  }
+
+  public void updateError(String query) throws InvalidQueryException {
+    try {
+      update(query);
+      fail("No error from query");
+    } catch (InvalidQueryException e) {
+      // as expected
+    }
+  }
   
   protected void getParseError(String query) {
     getParseError(query, Collections.EMPTY_MAP);

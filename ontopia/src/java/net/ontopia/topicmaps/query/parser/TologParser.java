@@ -29,16 +29,22 @@ public class TologParser {
     this.options = options;
   }
 
-  public TologQuery parse(String query) throws InvalidQueryException {
-    return parse(new StringReader(query));
+  /**
+   * Returns a parsed SELECT statement.
+   */
+  public TologQuery parseQuery(String query) throws InvalidQueryException {
+    return parseQuery(new StringReader(query));
   }
   
-  public TologQuery parse(Reader queryReader) throws InvalidQueryException {
+  /**
+   * Returns a parsed SELECT statement.
+   */
+  public TologQuery parseQuery(Reader queryReader) throws InvalidQueryException {
     try {
       RealTologParser parser = makeParser(queryReader);
       parser.setContext(new LocalParseContext(context));
       parser.query();
-      return parser.getQuery();
+      return (TologQuery) parser.getStatement();
     }
     catch (AntlrWrapException ex) {
       Exception e = ex.getException();
@@ -62,6 +68,45 @@ public class TologParser {
     }
   }
 
+  /**
+   * Returns a parsed INSERT/UPDATE/MERGE/DELETE statement.
+   */
+  public TologStatement parseStatement(String query) throws InvalidQueryException {
+    return parseStatement(new StringReader(query));
+  }
+  
+  /**
+   * Returns a parsed INSERT/UPDATE/MERGE/DELETE statement.
+   */
+  public TologStatement parseStatement(Reader queryReader) throws InvalidQueryException {
+    try {
+      RealTologParser parser = makeParser(queryReader);
+      parser.setContext(new LocalParseContext(context));
+      parser.updatestatement();
+      return parser.getStatement();
+    }
+    catch (AntlrWrapException ex) {
+      Exception e = ex.getException();
+      if (e instanceof InvalidQueryException)
+        throw (InvalidQueryException)e;
+      else 
+        throw new InvalidQueryException(e);
+    }
+    catch (RecognitionException ex) {
+      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+    }
+    catch (TokenStreamRecognitionException e) {
+      RecognitionException ex = e.recog;
+      throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
+    }
+    catch (TokenStreamIOException ex) {
+      throw new InvalidQueryException(ex.io.toString());
+    }
+    catch (TokenStreamException ex) {
+      throw new InvalidQueryException("Lexical error: " + ex.getMessage());
+    }
+  }
+  
   public ParseContextIF parseDeclarations(String decls) throws InvalidQueryException {
     try {
       ParseContextIF ctxt = new LocalParseContext(context);

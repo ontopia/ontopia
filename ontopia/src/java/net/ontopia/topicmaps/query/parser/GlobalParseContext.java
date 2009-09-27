@@ -22,6 +22,7 @@ public class GlobalParseContext implements ParseContextIF {
   private PredicateFactoryIF factory;
   private TopicMapIF topicmap;
   private LocatorIF base;
+  private TologStatement statement;
 
   public GlobalParseContext(PredicateFactoryIF factory, TopicMapIF topicmap) {
     this(factory, topicmap, topicmap.getStore().getBaseAddress());
