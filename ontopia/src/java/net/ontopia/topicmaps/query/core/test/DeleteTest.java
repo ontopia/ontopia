@@ -204,4 +204,14 @@ public class DeleteTest extends AbstractQueryTest {
     load("instance-of.ltm");
     updateError("delete item-identifier(topic4, \"foo:bar\", topic3)!");
   }
+  
+  public void testFunctionVariableButNoFrom() throws InvalidQueryException {
+    makeEmpty();
+    updateError("delete item-identifier($A, $B)!");
+  }
+  
+  public void testNoSuchFunction() throws InvalidQueryException {
+    makeEmpty();
+    updateError("delete gurble(topic4, \"http://example.org\")!");
+  }
 }

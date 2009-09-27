@@ -3,9 +3,10 @@
 
 package net.ontopia.topicmaps.query.parser;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.net.MalformedURLException;
 
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -65,10 +66,28 @@ public class DeleteStatement extends TologStatement {
   public void close() throws InvalidQueryException {
     if (query != null)
       query.close();
+
+    // verify that if we have variables in the litlist we also have a FROM
+    // part
+    if (query == null)
+      for (int ix = 0; ix < litlist.size(); ix++)
+        if (litlist.get(ix) instanceof Variable)
+          throw new InvalidQueryException("Cannot have variables in select " +
+                                          "part if no from part");
+
   }
 
   public int doStaticDeletes() throws InvalidQueryException {
-    return doLitListDeletes(true);
+    if (funcname == null)
+      return doLitListDeletes(true);
+    else {
+      // in order to avoid duplicating code we produce a "fake" matches
+      // object here, so that in effect we're simulating a one-row zero-column
+      // result set
+      QueryMatches matches = new QueryMatches(Collections.EMPTY_SET, null);
+      matches.last++; // make an empty row
+      return doFunctionDeletes(matches);
+    }
   }
 
   public int doDeletes(QueryMatches matches) throws InvalidQueryException {

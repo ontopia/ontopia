@@ -438,10 +438,14 @@ lit:
 
 funccall:
   IDENT 
-  { ((DeleteStatement) statement).setFunction((String) prevValue); }
-  LPAREN param COMMA param RPAREN;
+  { ((DeleteStatement) statement).setFunction(LT(0).getText()); }
+  LPAREN param
+  COMMA param  
+  RPAREN;
 
-param: lit;
+param: 
+  lit |
+  STRING { ((DeleteStatement) statement).addLit(LT(0).getText()); } ;
 
 /**
  * INTERNAL: Lexer for LTM syntax.
