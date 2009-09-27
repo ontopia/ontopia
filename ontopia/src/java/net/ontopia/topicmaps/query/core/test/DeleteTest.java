@@ -177,6 +177,52 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("topic retains item identifier after delete",
                topic4.getItemIdentifiers().isEmpty());
   }
+
+  public void testSIStatic() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    TopicIF topic = getTopicById("type1");
+    LocatorIF si = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
+    
+    update("delete subject-identifier(type1, \"" + si.getAddress() + "\")!");
+
+    assertTrue("topic retains subject identifier after delete",
+               topic.getSubjectIdentifiers().isEmpty());
+  }
+
+  public void testSIDynamic() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    TopicIF topic = getTopicById("type1");
+    
+    update("delete subject-identifier(type1, $SI) from subject-identifier(type1, $SI)!");
+
+    assertTrue("topic retains subject identifier after delete",
+               topic.getSubjectIdentifiers().isEmpty());
+  }
+
+  public void testSLStatic() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    TopicIF topic = getTopicById("type2");
+    LocatorIF sl = (LocatorIF) topic.getSubjectLocators().iterator().next();
+    
+    update("delete subject-locator(type2, \"" + sl.getAddress() + "\")!");
+
+    assertTrue("topic retains subject locator after delete",
+               topic.getSubjectLocators().isEmpty());
+  }
+
+  public void testSLDynamic() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    TopicIF topic = getTopicById("type2");
+    
+    update("delete subject-locator(type2, $SL) from subject-locator(type2, $SL)!");
+
+    assertTrue("topic retains subject locator after delete",
+               topic.getSubjectLocators().isEmpty());
+  }
   
   /// error tests
     

@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
@@ -74,7 +75,6 @@ public class DeleteStatement extends TologStatement {
         if (litlist.get(ix) instanceof Variable)
           throw new InvalidQueryException("Cannot have variables in select " +
                                           "part if no from part");
-
   }
 
   public int doStaticDeletes() throws InvalidQueryException {
@@ -176,6 +176,10 @@ public class DeleteStatement extends TologStatement {
     throws InvalidQueryException {
     if (name.equals("item-identifier"))
       return new ItemIdentifierFunction();
+    else if (name.equals("subject-identifier"))
+      return new SubjectIdentifierFunction();
+    else if (name.equals("subject-locator"))
+      return new SubjectLocatorFunction();
     else
       throw new InvalidQueryException("No such delete function: '" + name + "'");
   }
@@ -188,6 +192,34 @@ public class DeleteStatement extends TologStatement {
     public void delete(TMObjectIF object, String value) {
       try {
         object.removeItemIdentifier(new URILocator(value));
+      } catch (MalformedURLException e) {
+        throw new OntopiaRuntimeException("Invalid URI: " + value);
+      }
+    }
+  }
+
+  class SubjectIdentifierFunction implements DeleteFunctionIF {
+    public void delete(TMObjectIF object, String value) {
+      if (!(object instanceof TopicIF))
+        return;
+
+      TopicIF topic = (TopicIF) object;
+      try {
+        topic.removeSubjectIdentifier(new URILocator(value));
+      } catch (MalformedURLException e) {
+        throw new OntopiaRuntimeException("Invalid URI: " + value);
+      }
+    }
+  }
+
+  class SubjectLocatorFunction implements DeleteFunctionIF {
+    public void delete(TMObjectIF object, String value) {
+      if (!(object instanceof TopicIF))
+        return;
+
+      TopicIF topic = (TopicIF) object;
+      try {
+        topic.removeSubjectLocator(new URILocator(value));
       } catch (MalformedURLException e) {
         throw new OntopiaRuntimeException("Invalid URI: " + value);
       }
