@@ -20,6 +20,17 @@ import java.util.NoSuchElementException;
  */
 public class CompactIdentityHashSet extends CompactHashSet {
 
+  public CompactIdentityHashSet() {
+  }
+
+  public CompactIdentityHashSet(int size) {
+    super(size);
+  }
+
+  public CompactIdentityHashSet(Collection coll) {
+    super(coll);
+  }
+
   // ===== SET IMPLEMENTATION ================================================
 
   /**
