@@ -21,7 +21,7 @@ public class CanonicalXTMWriterTest extends AbstractXMLTestCase {
     super(name);
   }
   
-  public void setUp() throws IOException {
+  protected void setUp() throws IOException {
     topicmap = makeEmptyTopicMap();
     String root = getTestDirectory();
     verifyDirectory(root, "cxtm", "out");

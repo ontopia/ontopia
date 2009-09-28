@@ -24,7 +24,7 @@ public abstract class AbstractXMLTestCase extends AbstractTopicMapTestCase {
     super(name);
   }
     
-  public void setUp() {
+  protected void setUp() throws Exception {
     String root = getTestDirectory();
     verifyDirectory(root, "canonical", "out");
   }
