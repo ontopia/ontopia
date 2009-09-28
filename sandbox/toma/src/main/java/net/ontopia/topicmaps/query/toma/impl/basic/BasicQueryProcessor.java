@@ -26,6 +26,10 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     this.topicmap = topicmap;
   }
 
+  public int update(String query) throws InvalidQueryException {
+    throw new InvalidQueryException("Not implemented yet.");
+  }
+
   public QueryResultIF execute(String query, Map<String, ?> arguments,
       DeclarationContextIF context) throws InvalidQueryException {
     ParsedQueryIF pq = parse(query, context);
