@@ -21,6 +21,7 @@ public class PSI {
   public static final String XTM_CLASS_INSTANCE = XTM_BASE + "class-instance";
   public static final String XTM_CLASS = XTM_BASE + "class";
   public static final String XTM_INSTANCE = XTM_BASE + "instance";
+  public static final String XTM_OCCURRENCE = XTM_BASE + "occurrence";
 
   public static final String XTM_SUPERCLASS_SUBCLASS =
     XTM_BASE + "superclass-subclass";
@@ -83,6 +84,11 @@ public class PSI {
     return xtmInstance;
   }
 
+  public static URILocator getXTMOccurrence() {
+    if (xtmOccurrence == null)
+      xtmOccurrence = makeLocator(XTM_OCCURRENCE);
+    return xtmOccurrence;
+  }
 
   public static URILocator getXTMSuperclassSubclass() {
     if (xtmSuperclassSubclass == null)
@@ -190,6 +196,7 @@ public class PSI {
   private static URILocator xtmClassInstance;
   private static URILocator xtmClass;
   private static URILocator xtmInstance;
+  private static URILocator xtmOccurrence;
 
   private static URILocator xtmSuperclassSubclass;
   private static URILocator xtmSuperclass;

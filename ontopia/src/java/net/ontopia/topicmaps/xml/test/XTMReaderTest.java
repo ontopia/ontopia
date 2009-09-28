@@ -13,6 +13,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.xml.*;
 
 public class XTMReaderTest extends AbstractXMLTestCase {
@@ -199,7 +200,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
         assertTrue("occurrence " + occ + " has spurious themes",
                occ.getScope().size() == 0);
         assertTrue("occurrence " + occ + " has spurious type",
-               occ.getType().getSubjectIdentifiers().contains(XTMContentHandler.nullPSI));
+               occ.getType().getSubjectIdentifiers().contains(PSI.getXTMOccurrence()));
 
       } else if (occ.getLocator().equals(visit)) {
         assertTrue("occurrence " + occ + " has wrong number of themes",
@@ -207,7 +208,7 @@ public class XTMReaderTest extends AbstractXMLTestCase {
         assertTrue("occurrence " + occ + " has wrong theme",
                occ.getScope().iterator().next().equals(tourism));
         assertTrue("occurrence " + occ + " has spurious type",
-									 occ.getType().getSubjectIdentifiers().contains(XTMContentHandler.nullPSI));
+									 occ.getType().getSubjectIdentifiers().contains(PSI.getXTMOccurrence()));
                 
       } else
         fail("spurious occurrence: " + occ);

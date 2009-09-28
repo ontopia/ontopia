@@ -11,10 +11,10 @@
 </topic>
 <topic number="2">
 <subjectIdentifiers>
-<locator>http://psi.ontopia.net/xtm/1.0/null-topic</locator>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#occurrence</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
-<locator>#null-topic</locator>
+<locator>#occurrence</locator>
 </itemIdentifiers>
 </topic>
 </topicMap>

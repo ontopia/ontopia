@@ -34,6 +34,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -466,7 +467,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       else if (qName == EL_OCCURRENCE) {
         // Create occurrence
         TopicIF topic = getParentTopic();
-        TopicIF otype = getNullTopic(builder.getTopicMap());
+        TopicIF otype = getDefaultOccurrenceTopic(builder.getTopicMap());
         OccurrenceIF occurs = builder.makeOccurrence(topic, otype, "");
         // FIXME: register with parent topic, but this might be
         // troublesome since topics can be merged.
@@ -983,6 +984,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
 
         // Remove null-topic if not used
         removeNullTopic(topicmap);
+        
+        // Remove occurrence default topic if not used
+        removeDefaultOccurrenceTopic(topicmap);
 
         // Clear topic map related info
         this.topicmap = null;
@@ -1661,8 +1665,31 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     return topic;
   }
 
+  public static TopicIF getDefaultOccurrenceTopic(TopicMapIF topicmap) {
+    TopicIF topic = topicmap
+        .getTopicBySubjectIdentifier(PSI.getXTMOccurrence());
+    if (topic == null) {
+      topic = topicmap.getBuilder().makeTopic();
+      topic.addSubjectIdentifier(PSI.getXTMOccurrence());
+    }
+    return topic;
+  }
+  
   public static void removeNullTopic(TopicMapIF topicmap) {
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(nullPSI);
+    if (topic != null) {
+      if (topic.getReified() != null) return;
+      ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)topicmap.getIndex(ClassInstanceIndexIF.class.getName());
+      if (cindex.usedAsType(topic)) return;
+      ScopeIndexIF sindex = (ScopeIndexIF)topicmap.getIndex(ScopeIndexIF.class.getName());
+      if (sindex.usedAsTheme(topic)) return;
+      topic.remove();
+    }
+  }
+  
+  public static void removeDefaultOccurrenceTopic(TopicMapIF topicmap) {
+    TopicIF topic = topicmap
+        .getTopicBySubjectIdentifier(PSI.getXTMOccurrence());
     if (topic != null) {
       if (topic.getReified() != null) return;
       ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)topicmap.getIndex(ClassInstanceIndexIF.class.getName());

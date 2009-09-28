@@ -8,10 +8,10 @@
     </occurrence>
   </topic>
   
-  <!-- added explicit reference to null-topic because otherwise we get a mismatch on the item identifier -->
-  <topic id="null-topic">
+  <!-- added explicit reference to occurrence-topic because otherwise we get a mismatch on the item identifier -->
+  <topic id="occurrence">
     <subjectIdentity>
-      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/xtm/1.0/null-topic"></subjectIndicatorRef>
+      <subjectIndicatorRef xlink:href="http://www.topicmaps.org/xtm/1.0/core.xtm#occurrence"></subjectIndicatorRef>
     </subjectIdentity>
   </topic>
 
