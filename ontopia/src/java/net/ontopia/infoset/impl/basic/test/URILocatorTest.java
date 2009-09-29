@@ -4,7 +4,6 @@
 package net.ontopia.infoset.impl.basic.test;
 
 import java.io.File;
-import net.ontopia.test.*;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -132,8 +131,49 @@ public class URILocatorTest extends AbstractLocatorTest {
                      "http://en.wikipedia.org/wiki/Anton%C3%ADn_Dvo%C5%99%C3%A1k");
   }
   
+  public void testReferenceResolutionRFC3986() {
+    String base = "http://a/b/c/d;p?q";
+    
+    testAbsoluteResolution(base, "g:h", "g:h");
+    testAbsoluteResolution(base, "g", "http://a/b/c/g");
+    testAbsoluteResolution(base, "./g", "http://a/b/c/g");
+    testAbsoluteResolution(base, "g/", "http://a/b/c/g/");
+    testAbsoluteResolution(base, "/g", "http://a/g");
+    testAbsoluteResolution(base, "//g", "http://g");
+    //testAbsoluteResolution(base, "?y", "http://a/b/c/d;p?y");
+    testAbsoluteResolution(base, "g?y", "http://a/b/c/g?y");
+    testAbsoluteResolution(base, "#s", "http://a/b/c/d;p?q#s");
+    testAbsoluteResolution(base, "g#s", "http://a/b/c/g#s");
+    testAbsoluteResolution(base, "g?y#s", "http://a/b/c/g?y#s");
+    testAbsoluteResolution(base, ";x", "http://a/b/c/;x");
+    testAbsoluteResolution(base, "g;x", "http://a/b/c/g;x");
+    testAbsoluteResolution(base, "g;x?y#s", "http://a/b/c/g;x?y#s");
+    testAbsoluteResolution(base, "", "http://a/b/c/d;p?q");
+    testAbsoluteResolution(base, ".", "http://a/b/c/");
+    testAbsoluteResolution(base, "./", "http://a/b/c/");
+    testAbsoluteResolution(base, "..", "http://a/b/");
+    testAbsoluteResolution(base, "../", "http://a/b/");
+    testAbsoluteResolution(base, "../g", "http://a/b/g");
+    testAbsoluteResolution(base, "../..", "http://a/");
+    testAbsoluteResolution(base, "../../", "http://a/");
+    testAbsoluteResolution(base, "../../g", "http://a/g");
+  }
+
   // --- Internal
 
+  private void testAbsoluteResolution(String base, String uri, String external) {
+    try {
+      // tests based on http://tools.ietf.org/html/rfc3986#section-5.4.1
+      LocatorIF baseURI = new URILocator(base);
+      LocatorIF locator = baseURI.resolveAbsolute(uri);
+      assertTrue("incorrect external form for URI '" + uri + "': '" +
+          locator.getExternalForm() + "', correct '" + external + "'",
+          locator.getExternalForm().equals(external));
+    } catch (java.net.MalformedURLException e) {
+      fail("INTERNAL ERROR: " + e);
+    }
+  }
+  
   private void testExternalForm(String uri, String external) {
     try {
       LocatorIF locator = new URILocator(uri);
@@ -160,5 +200,4 @@ public class URILocatorTest extends AbstractLocatorTest {
       throw new OntopiaRuntimeException(e);
     }
   }
-  
 }

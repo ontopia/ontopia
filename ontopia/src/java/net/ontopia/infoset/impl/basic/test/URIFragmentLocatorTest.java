@@ -6,7 +6,6 @@ package net.ontopia.infoset.impl.basic.test;
 import net.ontopia.test.AbstractOntopiaTestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 public class URIFragmentLocatorTest extends AbstractOntopiaTestCase {
   

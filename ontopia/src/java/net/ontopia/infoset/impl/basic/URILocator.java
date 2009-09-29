@@ -382,7 +382,6 @@ public class URILocator extends AbstractLocator implements Externalizable {
     //   after each ':' keep track of where it was and whether it was
     //   followed by non-digits
     int ix = schemeEnd + 3; // skip over the '//'
-    int start = ix;
     int portStart = -1;
     int hostStart = ix;
     String port = null;
@@ -717,6 +716,7 @@ public class URILocator extends AbstractLocator implements Externalizable {
   
   // --- Debugging methods
 
+  @SuppressWarnings("unused")
   private void debugPrint(char[] uri, int length, int[] indexes, int count) {
     System.out.println("\n" + new String(uri, 0, length));
     int next = 0;

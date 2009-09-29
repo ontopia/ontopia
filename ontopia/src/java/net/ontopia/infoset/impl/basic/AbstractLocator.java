@@ -9,6 +9,7 @@ import net.ontopia.infoset.core.LocatorIF;
  * INTERNAL: The abstract locator class. All locator implementations should
  * extend this class.
  */
+@SuppressWarnings("serial")
 public abstract class AbstractLocator implements LocatorIF, Serializable  {
 
   // -------------------------------------------------------------------------

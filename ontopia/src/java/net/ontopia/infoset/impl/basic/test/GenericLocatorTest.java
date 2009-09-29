@@ -2,10 +2,8 @@
 
 package net.ontopia.infoset.impl.basic.test;
 
-import net.ontopia.test.*;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 public class GenericLocatorTest extends AbstractLocatorTest {
 
