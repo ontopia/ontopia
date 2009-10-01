@@ -132,7 +132,17 @@ public class ResultSet implements Iterable<Row> {
     rows.remove(row);
   }
   
-  public String getColumnName(int index) {
+  /**
+   * 
+   * @param index
+   * @return
+   * @throws IndexOutOfBoundsException
+   */
+  public String getColumnName(int index) throws IndexOutOfBoundsException {
+    if (index < 0 || index >= columns.size()) {
+      throw new IndexOutOfBoundsException("No column available for index '"
+          + index + "'");
+    }
     return columns.get(index);
   }
 

@@ -92,7 +92,7 @@ public class TomaQuery extends AbstractExpression implements ExpressionIF {
     if (statements.size() > 0) {
       SelectStatement stmt = statements.get(0);
       for (int idx = 0; idx < stmt.getSelectCount(); idx++) {
-        ExpressionIF expr = stmt.getSelect(idx);
+        //ExpressionIF expr = stmt.getSelect(idx);
         // result.add(expr.getRoot().toString());
       }
     }

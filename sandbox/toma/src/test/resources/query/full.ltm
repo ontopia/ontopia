@@ -10,6 +10,7 @@
 [format-for = "Format for"]
 [defined-by = "Defined by"]
 [version = "Version"]
+[mass = "Mass"]
 [english = "English language"]
 [german  = "German language"]
 
@@ -37,6 +38,7 @@
 format-for(ltm, topic-maps)
 format-for(xtm, topic-maps) ~ xtm-standard
 {xtm-standard, version, [[2.0]]}
+{xtm-standard, mass, [[2.0 kg]]}
 
 defined-by(ltm, ontopia)
 defined-by(xtm, topicmaps.org)

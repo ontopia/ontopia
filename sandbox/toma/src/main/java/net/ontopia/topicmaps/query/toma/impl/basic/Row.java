@@ -20,7 +20,16 @@ public class Row implements Cloneable {
     return row.size();
   }
 
-  public Object getValue(int column) {
+  /**
+   * 
+   * @param column
+   * @return
+   * @throws IndexOutOfBoundsException
+   */
+  public Object getValue(int column) throws IndexOutOfBoundsException {
+    if (column < 0 || column >= row.size()) {
+      throw new IndexOutOfBoundsException("No column at index '" + column + "'");
+    }
     return row.get(column);
   }
 
