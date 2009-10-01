@@ -11,9 +11,10 @@ import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
  * INTERNAL: Converts a string into a number.
  */
 public class ToNumFunction extends AbstractSimpleFunction {
-  
-  private static Pattern pattern = Pattern.compile("^\\s*([+\\-]?[0-9]+[\\.]?[0-9]*(?:[eE][+\\-]?[0-9]+)?).*");
-  
+
+  private static Pattern pattern = Pattern
+      .compile("^\\s*([+\\-]?[0-9]+[\\.]?[0-9]*(?:[eE][+\\-]?[0-9]+)?).*");
+
   public ToNumFunction() {
     super("TO_NUM", 0);
   }
