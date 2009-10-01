@@ -16,7 +16,7 @@ public abstract class AbstractSimpleFunction extends AbstractFunction implements
     BasicFunctionIF {
 
   public AbstractSimpleFunction(String name, int maxParameters) {
-    super(name, maxParameters);
+    super(name, maxParameters, false);
   }
 
   public ResultSet evaluate(LocalContext context) throws InvalidQueryException {

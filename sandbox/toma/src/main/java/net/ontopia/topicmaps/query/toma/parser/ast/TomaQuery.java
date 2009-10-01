@@ -73,27 +73,27 @@ public class TomaQuery extends AbstractExpression implements ExpressionIF {
     orderBy.add(new QueryOrder(column, sorting));
   }
 
-  public List<String> getOrderByVariables() {
-    List<String> result = new ArrayList<String>();
-    if (statements.size() > 0) {
-      SelectStatement stmt = statements.get(0);
-
-      for (QueryOrder order : orderBy) {
-        int column = order.getColumn();
-        ExpressionIF expr = stmt.getSelect(column);
-        result.add(expr.toString());
-      }
-    }
-    return result;
+  /**
+   * Get the defined orderings for this query.
+   * 
+   * @return a list of all query orderings.
+   */
+  public List<QueryOrder> getOrderBy() {
+    return orderBy;
   }
 
-  public List<String> getSelectedVariables() {
-    List<String> result = new ArrayList<String>();
+  /**
+   * Get a list of all select clauses of the first select expression
+   * in a TOMA query.
+   * 
+   * @return a list of all select clauses.
+   */
+  public ArrayList<ExpressionIF> getSelectExpressions() {
+    ArrayList<ExpressionIF> result = new ArrayList<ExpressionIF>();
     if (statements.size() > 0) {
       SelectStatement stmt = statements.get(0);
       for (int idx = 0; idx < stmt.getSelectCount(); idx++) {
-        //ExpressionIF expr = stmt.getSelect(idx);
-        // result.add(expr.getRoot().toString());
+        result.add(stmt.getSelect(idx));
       }
     }
     return result;
@@ -159,9 +159,20 @@ public class TomaQuery extends AbstractExpression implements ExpressionIF {
   @Override
   public boolean validate() throws AntlrWrapException {
     super.validate();
+    
     // validate select statements
     for (SelectStatement stmt : statements) {
       stmt.validate();
+    }
+    
+    // check if orderBy columns are valid
+    SelectStatement stmt = statements.get(0);
+    int sc = stmt.getSelectCount();
+    for (QueryOrder order : orderBy) {
+      if (order.getColumn() < 1 || order.getColumn() > sc) {
+        throw new AntlrWrapException(new InvalidQueryException(
+            "order by references an invalid column"));
+      }
     }
       
     return true;

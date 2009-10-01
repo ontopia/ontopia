@@ -26,7 +26,7 @@ public abstract class AbstractAggregateFunction extends AbstractFunction impleme
     BasicFunctionIF {
 
   public AbstractAggregateFunction(String name, int maxParameters) {
-    super(name, maxParameters);
+    super(name, maxParameters, true);
   }
   
   /**

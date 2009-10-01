@@ -13,6 +13,7 @@ public abstract class AbstractFunction extends AbstractExpression implements Fun
 
   protected ArrayList<String> parameters;
   private int maxParameters;
+  private boolean isAggregate;
 
   /**
    * Create a new function with the given name and a maximum number of 
@@ -20,12 +21,14 @@ public abstract class AbstractFunction extends AbstractExpression implements Fun
    * 
    * @param name the name of the function.
    * @param maxParameters the maximum allowed number of parameters.
+   * @param aggregate if the function is an aggregate function or not.
    */
-  public AbstractFunction(String name, int maxParameters) {
+  public AbstractFunction(String name, int maxParameters, boolean aggregate) {
     super(name, 1);
 
     parameters = new ArrayList<String>();
     this.maxParameters = maxParameters;
+    this.isAggregate = aggregate;
   }
 
   /**
@@ -39,6 +42,10 @@ public abstract class AbstractFunction extends AbstractExpression implements Fun
     } else {
       parameters.add(param);
     }
+  }
+
+  public boolean isAggregateFunction() {
+    return isAggregate;
   }
 
   @Override

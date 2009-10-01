@@ -17,4 +17,11 @@ public interface FunctionIF extends ExpressionIF {
    * for this function.
    */
   public void addParam(String param) throws AntlrWrapException;
+  
+  /**
+   * Returns whether this is an aggregate function or not.
+   * 
+   * @return true if this is an aggregate function, false otherwise.
+   */
+  public boolean isAggregateFunction();
 }
