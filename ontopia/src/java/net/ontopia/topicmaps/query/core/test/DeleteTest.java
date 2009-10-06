@@ -8,6 +8,8 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
 // FIXME: test with parameters
+// FIXME: test with bad URLs in delete functions
+// FIXME: test with topic which has MANY identifiers
 
 public class DeleteTest extends AbstractQueryTest {
   
@@ -223,6 +225,29 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("topic retains subject locator after delete",
                topic.getSubjectLocators().isEmpty());
   }
+
+  public void testDIOStatic() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    TopicIF topic = getTopicById("topic1");
+    
+    update("delete direct-instance-of(topic1, type1)!");
+
+    assertTrue("topic retains type after delete",
+               topic.getTypes().isEmpty());
+  }
+
+  public void testDIODynamic() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    TopicIF topic = getTopicById("topic1");
+    
+    update("delete direct-instance-of($I, $T) from $I = topic1, $T = type1!");
+
+    assertTrue("topic retains type after delete",
+               topic.getTypes().isEmpty());
+  }
+  
   
   /// error tests
     
@@ -249,6 +274,16 @@ public class DeleteTest extends AbstractQueryTest {
   public void testWrongArgNo2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
     updateError("delete item-identifier(topic4, \"foo:bar\", topic3)!");
+  }
+
+  public void testWrongArgType1() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+    updateError("delete item-identifier(\"foo:bar\", \"foo:bar\")!");
+  }
+
+  public void testWrongArgType2() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+    updateError("delete item-identifier(topic1, topic2)!");
   }
   
   public void testFunctionVariableButNoFrom() throws InvalidQueryException {

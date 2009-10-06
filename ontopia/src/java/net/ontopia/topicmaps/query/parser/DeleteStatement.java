@@ -5,6 +5,7 @@ package net.ontopia.topicmaps.query.parser;
 
 import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.net.MalformedURLException;
@@ -15,6 +16,8 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
+import net.ontopia.topicmaps.impl.utils.Argument;
+import net.ontopia.topicmaps.impl.utils.ArgumentValidator;
 
 /**
  * INTERNAL: Represents a parsed DELETE statement.
@@ -139,25 +142,21 @@ public class DeleteStatement extends TologStatement {
     int deletes = 0;
 
     DeleteFunctionIF function = makeFunction(funcname);
+    FunctionSignature signature = FunctionSignature.getSignature(function);
     Object arg1 = litlist.get(0);
     int varix1 = getIndex(arg1, matches);
     Object arg2 = litlist.get(1);
     int varix2 = getIndex(arg2, matches);
     
     for (int row = 0; row <= matches.last; row++) {
-      TMObjectIF obj;
-      if (varix1 == -1)
-        obj = (TMObjectIF) arg1;
-      else
-        obj = (TMObjectIF) matches.data[row][varix1];
+      if (varix1 != -1)
+        arg1 = matches.data[row][varix1];
 
-      String str;
-      if (varix2 == -1)
-        str = (String) arg2;
-      else
-        str = (String) matches.data[row][varix2];
+      if (varix2 != -1)
+        arg2 = matches.data[row][varix2];
 
-      function.delete(obj, str);
+      signature.validateArguments(arg1, arg2, funcname);
+      function.delete((TMObjectIF) arg1, arg2);
     }
 
     return deletes;
@@ -180,16 +179,23 @@ public class DeleteStatement extends TologStatement {
       return new SubjectIdentifierFunction();
     else if (name.equals("subject-locator"))
       return new SubjectLocatorFunction();
+    else if (name.equals("direct-instance-of"))
+      return new DirectInstanceOfFunction();
     else
       throw new InvalidQueryException("No such delete function: '" + name + "'");
   }
 
   interface DeleteFunctionIF {
-    public void delete(TMObjectIF object, String value);
+    public void delete(TMObjectIF object, Object value);
+    public String getSignature();
   }
 
   class ItemIdentifierFunction implements DeleteFunctionIF {
-    public void delete(TMObjectIF object, String value) {
+    public String getSignature() {
+      return "x s";
+    }
+    public void delete(TMObjectIF object, Object v) {
+      String value = (String) v;
       try {
         object.removeItemIdentifier(new URILocator(value));
       } catch (MalformedURLException e) {
@@ -199,11 +205,15 @@ public class DeleteStatement extends TologStatement {
   }
 
   class SubjectIdentifierFunction implements DeleteFunctionIF {
-    public void delete(TMObjectIF object, String value) {
+    public String getSignature() {
+      return "t s";
+    }
+    public void delete(TMObjectIF object, Object v) {
       if (!(object instanceof TopicIF))
         return;
 
       TopicIF topic = (TopicIF) object;
+      String value = (String) v;
       try {
         topic.removeSubjectIdentifier(new URILocator(value));
       } catch (MalformedURLException e) {
@@ -213,16 +223,73 @@ public class DeleteStatement extends TologStatement {
   }
 
   class SubjectLocatorFunction implements DeleteFunctionIF {
-    public void delete(TMObjectIF object, String value) {
+    public String getSignature() {
+      return "t s";
+    }
+    public void delete(TMObjectIF object, Object v) {
       if (!(object instanceof TopicIF))
         return;
 
       TopicIF topic = (TopicIF) object;
+      String value = (String) v;
       try {
         topic.removeSubjectLocator(new URILocator(value));
       } catch (MalformedURLException e) {
         throw new OntopiaRuntimeException("Invalid URI: " + value);
       }
+    }
+  }
+
+  class DirectInstanceOfFunction implements DeleteFunctionIF {
+    public String getSignature() {
+      return "t t";
+    }
+    public void delete(TMObjectIF object, Object v) {
+      if (!(object instanceof TopicIF))
+        return;
+
+      TopicIF topic = (TopicIF) object;
+      TopicIF type = (TopicIF) v;
+      topic.removeType(type);
+    }
+  }
+
+  static class FunctionSignature extends ArgumentValidator {
+    private static Map cache = new HashMap(); // used to avoid having to reparse
+
+    public static FunctionSignature getSignature(DeleteFunctionIF function)
+    throws InvalidQueryException {
+
+      String sign = function.getSignature();
+      FunctionSignature signature = (FunctionSignature) cache.get(sign);
+
+      if (signature == null) {
+        signature = new FunctionSignature(sign);
+        cache.put(sign, signature);
+      }
+    
+      return signature;
+    }
+  
+    private FunctionSignature(String signature) {
+      super(signature);
+    }
+
+    public void validateArguments(Object arg1, Object arg2, String function)
+      throws InvalidQueryException {
+      check(arg1, getArgument(0), function, 1);
+      check(arg2, getArgument(1), function, 2);
+    }
+
+    public void check(Object arg, Argument reqarg, String function, int no)
+      throws InvalidQueryException {
+      if (!reqarg.allows(arg.getClass()))
+        throw new InvalidQueryException("Delete function " + function +
+                                        " does not accept " +
+                                        arg +
+                                        "as parameter no " + no +
+                                        ", but requires a " +
+                                        getClassList(reqarg.getTypes()));
     }
   }
 }
