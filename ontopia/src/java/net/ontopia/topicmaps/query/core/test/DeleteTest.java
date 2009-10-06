@@ -1,10 +1,13 @@
 
 package net.ontopia.topicmaps.query.core.test;
 
+import java.util.Iterator;
 import java.io.IOException;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
 // FIXME: test with parameters
@@ -248,6 +251,50 @@ public class DeleteTest extends AbstractQueryTest {
                topic.getTypes().isEmpty());
   }
   
+  public void testScopeDynamic() throws InvalidQueryException, IOException {
+    load("bb-ontologi.ltm");
+
+    TopicIF topic = getTopicById("bbtype");
+    Iterator it = topic.getTopicNames().iterator();
+    TopicNameIF name = (TopicNameIF) it.next();
+    if (name.getScope().isEmpty()) // need the one with scope
+      name = (TopicNameIF) it.next();
+    
+    update("delete scope($N, english) from topic-name(bbtype, $N), scope($N, english)!");
+
+    assertTrue("name retains scope after delete",
+               name.getScope().isEmpty());
+  }
+
+  public void testReifiesDynamic() throws InvalidQueryException, IOException {
+    load("jill.xtm");
+
+    TopicIF topic = getTopicById("jill-ontopia-topic");
+    AssociationIF reified = (AssociationIF) topic.getReified();
+    
+    update("delete reifies($T, $A) from instance-of($T, employment), reifies($T, $A)!");
+
+    assertTrue("topic retains reified after delete",
+               topic.getReified() == null);
+    assertTrue("reified retains reifier after delete",
+               reified.getReifier() == null);
+  }
+
+  public void testReifiesDynamic2() throws InvalidQueryException, IOException {
+    load("jill.xtm");
+
+    TopicIF contract = getTopicById("jills-contract-topic");
+    TopicIF employment = getTopicById("jill-ontopia-topic");
+
+    // this test tries to delete an association that is *not* reified
+    // by jills-contract-topic, and so it shouldn't do anything
+    update("delete reifies(jills-contract-topic, $A) from instance-of($T, employment), reifies($T, $A)!");
+
+    assertTrue("topic lost reified after delete",
+               contract.getReified() != null);
+    assertTrue("topic lost reified after delete",
+               employment.getReified() != null);
+  }
   
   /// error tests
     

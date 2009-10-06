@@ -13,7 +13,9 @@ import java.net.MalformedURLException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 import net.ontopia.topicmaps.impl.utils.Argument;
@@ -22,22 +24,11 @@ import net.ontopia.topicmaps.impl.utils.ArgumentValidator;
 /**
  * INTERNAL: Represents a parsed DELETE statement.
  */
-public class DeleteStatement extends TologStatement {
+public class DeleteStatement extends UpdateStatement {
   private String funcname; // name of delete function to be called, if any
-  private List litlist;    // doubles as param list to function, when there is one
-  private TologQuery query; // the FROM ... part, if any
 
   public DeleteStatement() {
     super();
-    litlist = new ArrayList();
-  }
-
-  public void addLit(Object lit) {
-    litlist.add(lit);
-  }
-
-  public List getLitList() {
-    return litlist;
   }
 
   public void setFunction(String name) {
@@ -48,39 +39,7 @@ public class DeleteStatement extends TologStatement {
     return funcname;
   }
 
-  public void setClauseList(List clauses, TologOptions options)
-    throws AntlrWrapException {
-    // this is only called if there was a FROM clause, so we create a subquery
-    query = new TologQuery();
-    query.setClauseList(clauses);
-    query.setOptions(options);
-
-    // add vars in litlist to select list of subquery so that we get projection
-    for (int ix = 0; ix < litlist.size(); ix++) {
-      Object lit = litlist.get(ix);
-      if (lit instanceof Variable)
-        query.addVariable((Variable) lit);
-    }
-  }
-
-  public TologQuery getEmbeddedQuery() {
-    return query;
-  }
-
-  public void close() throws InvalidQueryException {
-    if (query != null)
-      query.close();
-
-    // verify that if we have variables in the litlist we also have a FROM
-    // part
-    if (query == null)
-      for (int ix = 0; ix < litlist.size(); ix++)
-        if (litlist.get(ix) instanceof Variable)
-          throw new InvalidQueryException("Cannot have variables in select " +
-                                          "part if no from part");
-  }
-
-  public int doStaticDeletes() throws InvalidQueryException {
+  public int doStaticUpdates() throws InvalidQueryException {
     if (funcname == null)
       return doLitListDeletes(true);
     else {
@@ -93,7 +52,7 @@ public class DeleteStatement extends TologStatement {
     }
   }
 
-  public int doDeletes(QueryMatches matches) throws InvalidQueryException {
+  public int doUpdates(QueryMatches matches) throws InvalidQueryException {
     if (funcname == null)
       return doNormalDeletes(matches);
     else
@@ -181,6 +140,10 @@ public class DeleteStatement extends TologStatement {
       return new SubjectLocatorFunction();
     else if (name.equals("direct-instance-of"))
       return new DirectInstanceOfFunction();
+    else if (name.equals("scope"))
+      return new ScopeFunction();
+    else if (name.equals("reifies"))
+      return new ReifiesFunction();
     else
       throw new InvalidQueryException("No such delete function: '" + name + "'");
   }
@@ -254,6 +217,31 @@ public class DeleteStatement extends TologStatement {
     }
   }
 
+  class ScopeFunction implements DeleteFunctionIF {
+    public String getSignature() {
+      return "bvoa t";
+    }
+    public void delete(TMObjectIF object, Object v) {
+      ScopedIF scoped = (ScopedIF) object;
+      TopicIF theme = (TopicIF) v;
+      scoped.removeTheme(theme);
+    }
+  }
+
+  class ReifiesFunction implements DeleteFunctionIF {
+    public String getSignature() {
+      return "t bvoar";
+    }
+    public void delete(TMObjectIF object, Object v) {
+      TopicIF reifier = (TopicIF) object;
+      ReifiableIF reified = (ReifiableIF) v;
+
+      TopicIF realreifier = reified.getReifier();
+      if (realreifier != null && reifier.equals(realreifier))
+        reified.setReifier(null);
+    }
+  }
+  
   static class FunctionSignature extends ArgumentValidator {
     private static Map cache = new HashMap(); // used to avoid having to reparse
 

@@ -44,7 +44,7 @@ import net.ontopia.topicmaps.query.parser.ParseContextIF;
 import net.ontopia.topicmaps.query.parser.TologParser;
 import net.ontopia.topicmaps.query.parser.TologOptions;
 import net.ontopia.topicmaps.query.parser.TologQuery;
-import net.ontopia.topicmaps.query.parser.DeleteStatement;
+import net.ontopia.topicmaps.query.parser.UpdateStatement;
 import net.ontopia.topicmaps.query.parser.Variable;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
@@ -180,15 +180,15 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   }
 
   public int update(String query) throws InvalidQueryException {
-    DeleteStatement statement = (DeleteStatement) parser.parseStatement(query);
+    UpdateStatement statement = (UpdateStatement) parser.parseStatement(query);
     if (statement.getEmbeddedQuery() != null) {
       TologQuery subquery = optimize(statement.getEmbeddedQuery());
       QueryMatches matches = createInitialMatches(subquery, null);
       matches = satisfy(subquery.getClauses(), matches);
       matches = reduce(subquery, matches);
-      return statement.doDeletes(matches);
+      return statement.doUpdates(matches);
     } else
-      return statement.doStaticDeletes();
+      return statement.doStaticUpdates();
   }
 
   // / actual query processor implementation

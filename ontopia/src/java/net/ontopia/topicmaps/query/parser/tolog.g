@@ -408,7 +408,7 @@ predicateref:
 
 /// THE UPDATE LANGUAGE
 
-updatestatement: delete; // only one supported at the moment
+updatestatement: delete | merge; // only ones supported at the moment
 
 delete:
   DELETE 
@@ -431,9 +431,9 @@ litlist:
   lit (COMMA lit)*;
 
 lit:
-  (VARIABLE  { ((DeleteStatement) statement).addLit(new Variable(LT(0).getText())); }
-  | PARAMETER { ((DeleteStatement) statement).addLit(new Parameter(LT(0).getText())); }
-  | topicref { ((DeleteStatement) statement).addLit(prevValue); }
+  (VARIABLE  { ((UpdateStatement) statement).addLit(new Variable(LT(0).getText())); }
+  | PARAMETER { ((UpdateStatement) statement).addLit(new Parameter(LT(0).getText())); }
+  | topicref { ((UpdateStatement) statement).addLit(prevValue); }
   );
 
 funccall:
@@ -446,6 +446,23 @@ funccall:
 param: 
   lit |
   STRING { ((DeleteStatement) statement).addLit(LT(0).getText()); } ;
+
+merge:
+  MERGE
+    { statement = new MergeStatement();
+      statement.setOptions(lexer.getOptions()); }
+  lit COMMA lit
+  (FROM clauselist 
+    { ((UpdateStatement) statement)
+       .setClauseList(prevClauseList, lexer.getOptions()); } 
+  )? EXCLAMATIONM { 
+    try {
+      statement.close();
+    }
+    catch (InvalidQueryException e) {
+      throw new AntlrWrapException(e);
+    }
+  };
 
 /**
  * INTERNAL: Lexer for LTM syntax.
@@ -480,6 +497,7 @@ tokens {
   IMPORT = "import";
 
   DELETE = "delete";
+  MERGE  = "merge";
 }
 
 {
