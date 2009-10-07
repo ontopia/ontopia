@@ -65,4 +65,13 @@ public abstract class UpdateStatement extends TologStatement {
 
   public abstract int doUpdates(QueryMatches matches)
     throws InvalidQueryException;
+
+  // --- Internal utilities
+
+  protected static int getIndex(Object arg, QueryMatches matches) {
+    if (arg instanceof Variable)
+      return matches.getIndex((Variable) arg);
+    else
+      return -1;
+  }  
 }

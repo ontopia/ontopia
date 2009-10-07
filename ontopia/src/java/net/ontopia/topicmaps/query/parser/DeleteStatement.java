@@ -116,16 +116,10 @@ public class DeleteStatement extends UpdateStatement {
 
       signature.validateArguments(arg1, arg2, funcname);
       function.delete((TMObjectIF) arg1, arg2);
+      deletes++;
     }
 
     return deletes;
-  }
-
-  private int getIndex(Object arg, QueryMatches matches) {
-    if (arg instanceof Variable)
-      return matches.getIndex((Variable) arg);
-    else
-      return -1;
   }
     
   // ----- DELETE FUNCTIONS

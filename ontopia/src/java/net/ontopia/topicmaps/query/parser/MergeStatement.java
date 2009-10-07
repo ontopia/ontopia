@@ -32,6 +32,30 @@ public class MergeStatement extends UpdateStatement {
 
   public int doUpdates(QueryMatches matches)
     throws InvalidQueryException {
-    return 0;
+    int merges = 0;
+
+    Object arg1 = litlist.get(0);
+    int varix1 = getIndex(arg1, matches);
+    Object arg2 = litlist.get(1);
+    int varix2 = getIndex(arg2, matches);
+    
+    for (int row = 0; row <= matches.last; row++) {
+      if (varix1 != -1)
+        arg1 = matches.data[row][varix1];
+
+      if (varix2 != -1)
+        arg2 = matches.data[row][varix2];
+
+      TopicIF topic1 = (TopicIF) arg1;
+      TopicIF topic2 = (TopicIF) arg2;
+      if (topic1 != topic2 &&
+          topic1.getTopicMap() != null &&
+          topic2.getTopicMap() != null) {
+        topic1.merge(topic2);
+        merges++;
+      }
+    }
+
+    return merges;
   }
 }
