@@ -18,25 +18,23 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
-import net.ontopia.topicmaps.impl.utils.Argument;
-import net.ontopia.topicmaps.impl.utils.ArgumentValidator;
 
 /**
  * INTERNAL: Represents a parsed DELETE statement.
  */
-public class DeleteStatement extends UpdateStatement {
-  private String funcname; // name of delete function to be called, if any
+public class DeleteStatement extends ModificationFunctionStatement {
 
+  static {
+    functions.put("item-identifier", new ItemIdentifierFunction());
+    functions.put("subject-identifier", new SubjectIdentifierFunction());
+    functions.put("subject-locator", new SubjectLocatorFunction());
+    functions.put("direct-instance-of", new DirectInstanceOfFunction());
+    functions.put("scope", new ScopeFunction());
+    functions.put("reifies", new ReifiesFunction());
+  }
+  
   public DeleteStatement() {
     super();
-  }
-
-  public void setFunction(String name) {
-    this.funcname = name;
-  }
-
-  public String getFunction() {
-    return funcname;
   }
 
   public int doStaticUpdates() throws InvalidQueryException {
@@ -100,7 +98,7 @@ public class DeleteStatement extends UpdateStatement {
     throws InvalidQueryException {
     int deletes = 0;
 
-    DeleteFunctionIF function = makeFunction(funcname);
+    ModificationFunctionIF function = makeFunction(funcname);
     FunctionSignature signature = FunctionSignature.getSignature(function);
     Object arg1 = litlist.get(0);
     int varix1 = getIndex(arg1, matches);
@@ -115,7 +113,7 @@ public class DeleteStatement extends UpdateStatement {
         arg2 = matches.data[row][varix2];
 
       signature.validateArguments(arg1, arg2, funcname);
-      function.delete((TMObjectIF) arg1, arg2);
+      function.modify((TMObjectIF) arg1, arg2);
       deletes++;
     }
 
@@ -124,34 +122,11 @@ public class DeleteStatement extends UpdateStatement {
     
   // ----- DELETE FUNCTIONS
 
-  private DeleteFunctionIF makeFunction(String name)
-    throws InvalidQueryException {
-    if (name.equals("item-identifier"))
-      return new ItemIdentifierFunction();
-    else if (name.equals("subject-identifier"))
-      return new SubjectIdentifierFunction();
-    else if (name.equals("subject-locator"))
-      return new SubjectLocatorFunction();
-    else if (name.equals("direct-instance-of"))
-      return new DirectInstanceOfFunction();
-    else if (name.equals("scope"))
-      return new ScopeFunction();
-    else if (name.equals("reifies"))
-      return new ReifiesFunction();
-    else
-      throw new InvalidQueryException("No such delete function: '" + name + "'");
-  }
-
-  interface DeleteFunctionIF {
-    public void delete(TMObjectIF object, Object value);
-    public String getSignature();
-  }
-
-  class ItemIdentifierFunction implements DeleteFunctionIF {
+  static class ItemIdentifierFunction implements ModificationFunctionIF {
     public String getSignature() {
       return "x s";
     }
-    public void delete(TMObjectIF object, Object v) {
+    public void modify(TMObjectIF object, Object v) {
       String value = (String) v;
       try {
         object.removeItemIdentifier(new URILocator(value));
@@ -161,11 +136,11 @@ public class DeleteStatement extends UpdateStatement {
     }
   }
 
-  class SubjectIdentifierFunction implements DeleteFunctionIF {
+  static class SubjectIdentifierFunction implements ModificationFunctionIF {
     public String getSignature() {
       return "t s";
     }
-    public void delete(TMObjectIF object, Object v) {
+    public void modify(TMObjectIF object, Object v) {
       if (!(object instanceof TopicIF))
         return;
 
@@ -179,11 +154,11 @@ public class DeleteStatement extends UpdateStatement {
     }
   }
 
-  class SubjectLocatorFunction implements DeleteFunctionIF {
+  static class SubjectLocatorFunction implements ModificationFunctionIF {
     public String getSignature() {
       return "t s";
     }
-    public void delete(TMObjectIF object, Object v) {
+    public void modify(TMObjectIF object, Object v) {
       if (!(object instanceof TopicIF))
         return;
 
@@ -197,11 +172,11 @@ public class DeleteStatement extends UpdateStatement {
     }
   }
 
-  class DirectInstanceOfFunction implements DeleteFunctionIF {
+  static class DirectInstanceOfFunction implements ModificationFunctionIF {
     public String getSignature() {
       return "t t";
     }
-    public void delete(TMObjectIF object, Object v) {
+    public void modify(TMObjectIF object, Object v) {
       if (!(object instanceof TopicIF))
         return;
 
@@ -211,67 +186,28 @@ public class DeleteStatement extends UpdateStatement {
     }
   }
 
-  class ScopeFunction implements DeleteFunctionIF {
+  static class ScopeFunction implements ModificationFunctionIF {
     public String getSignature() {
       return "bvoa t";
     }
-    public void delete(TMObjectIF object, Object v) {
+    public void modify(TMObjectIF object, Object v) {
       ScopedIF scoped = (ScopedIF) object;
       TopicIF theme = (TopicIF) v;
       scoped.removeTheme(theme);
     }
   }
 
-  class ReifiesFunction implements DeleteFunctionIF {
+  static class ReifiesFunction implements ModificationFunctionIF {
     public String getSignature() {
       return "t bvoar";
     }
-    public void delete(TMObjectIF object, Object v) {
+    public void modify(TMObjectIF object, Object v) {
       TopicIF reifier = (TopicIF) object;
       ReifiableIF reified = (ReifiableIF) v;
 
       TopicIF realreifier = reified.getReifier();
       if (realreifier != null && reifier.equals(realreifier))
         reified.setReifier(null);
-    }
-  }
-  
-  static class FunctionSignature extends ArgumentValidator {
-    private static Map cache = new HashMap(); // used to avoid having to reparse
-
-    public static FunctionSignature getSignature(DeleteFunctionIF function)
-    throws InvalidQueryException {
-
-      String sign = function.getSignature();
-      FunctionSignature signature = (FunctionSignature) cache.get(sign);
-
-      if (signature == null) {
-        signature = new FunctionSignature(sign);
-        cache.put(sign, signature);
-      }
-    
-      return signature;
-    }
-  
-    private FunctionSignature(String signature) {
-      super(signature);
-    }
-
-    public void validateArguments(Object arg1, Object arg2, String function)
-      throws InvalidQueryException {
-      check(arg1, getArgument(0), function, 1);
-      check(arg2, getArgument(1), function, 2);
-    }
-
-    public void check(Object arg, Argument reqarg, String function, int no)
-      throws InvalidQueryException {
-      if (!reqarg.allows(arg.getClass()))
-        throw new InvalidQueryException("Delete function " + function +
-                                        " does not accept " +
-                                        arg +
-                                        "as parameter no " + no +
-                                        ", but requires a " +
-                                        getClassList(reqarg.getTypes()));
     }
   }
 }

@@ -3,75 +3,105 @@
 
 package net.ontopia.topicmaps.query.parser;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.net.MalformedURLException;
 
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 
 /**
- * INTERNAL: Common abstract superclass for all update statements.
+ * INTERNAL: Represents an UPDATE statement.
  */
-public abstract class UpdateStatement extends TologStatement {
-  protected List litlist;     // always exactly two
-  protected TologQuery query; // the FROM ... part, if any
+public class UpdateStatement extends ModificationFunctionStatement {
+
+  static {
+    functions.put("value", new ValueFunction());
+    functions.put("resource", new ResourceFunction());
+  }
 
   public UpdateStatement() {
     super();
-    litlist = new ArrayList();
   }
 
-  public void addLit(Object lit) {
-    litlist.add(lit);
+  public int doStaticUpdates() throws InvalidQueryException {
+    // in order to avoid duplicating code we produce a "fake" matches
+    // object here, so that in effect we're simulating a one-row zero-column
+    // result set
+    QueryMatches matches = new QueryMatches(Collections.EMPTY_SET, null);
+    matches.last++; // make an empty row
+    return doUpdates(matches);
   }
 
-  public List getLitList() {
-    return litlist;
+  public int doUpdates(QueryMatches matches)
+    throws InvalidQueryException {
+    int updates = 0;
+
+    ModificationFunctionIF function = makeFunction(funcname);
+    FunctionSignature signature = FunctionSignature.getSignature(function);
+    Object arg1 = litlist.get(0);
+    int varix1 = getIndex(arg1, matches);
+    Object arg2 = litlist.get(1);
+    int varix2 = getIndex(arg2, matches);
+    
+    for (int row = 0; row <= matches.last; row++) {
+      if (varix1 != -1)
+        arg1 = matches.data[row][varix1];
+
+      if (varix2 != -1)
+        arg2 = matches.data[row][varix2];
+
+      signature.validateArguments(arg1, arg2, funcname);
+      function.modify((TMObjectIF) arg1, arg2);
+      updates++;
+    }
+
+    return updates;
   }
 
-  public void setClauseList(List clauses, TologOptions options)
-    throws AntlrWrapException {
-    // this is only called if there was a FROM clause, so we create a subquery
-    query = new TologQuery();
-    query.setClauseList(clauses);
-    query.setOptions(options);
+  // ----- UPDATE FUNCTIONS
 
-    // add vars in litlist to select list of subquery so that we get projection
-    for (int ix = 0; ix < litlist.size(); ix++) {
-      Object lit = litlist.get(ix);
-      if (lit instanceof Variable)
-        query.addVariable((Variable) lit);
+  static class ValueFunction implements ModificationFunctionIF {
+    public String getSignature() {
+      return "vbo s";
+    }
+    public void modify(TMObjectIF object, Object v) {
+      String value = (String) v;
+
+      if (object instanceof OccurrenceIF)
+        ((OccurrenceIF) object).setValue(value);
+      else if (object instanceof TopicNameIF)
+        ((TopicNameIF) object).setValue(value);
+      else if (object instanceof VariantNameIF)
+        ((VariantNameIF) object).setValue(value);
+      else
+        throw new OntopiaRuntimeException("OUCH!");
     }
   }
 
-  public TologQuery getEmbeddedQuery() {
-    return query;
+  static class ResourceFunction implements ModificationFunctionIF {
+    public String getSignature() {
+      return "vo s";
+    }
+    public void modify(TMObjectIF object, Object v) {
+      try {
+        LocatorIF loc = new URILocator((String) v);
+
+        if (object instanceof OccurrenceIF)
+          ((OccurrenceIF) object).setLocator(loc);
+        else if (object instanceof VariantNameIF)
+          ((VariantNameIF) object).setLocator(loc);
+        else
+          throw new OntopiaRuntimeException("OUCH!");
+      } catch (MalformedURLException e) {
+        throw new OntopiaRuntimeException(e);
+      }
+    }
   }
-
-  public void close() throws InvalidQueryException {
-    if (query != null)
-      query.close();
-
-    // verify that if we have variables in the litlist we also have a FROM
-    // part
-    if (query == null)
-      for (int ix = 0; ix < litlist.size(); ix++)
-        if (litlist.get(ix) instanceof Variable)
-          throw new InvalidQueryException("Cannot have variables in select " +
-                                          "part if no from part");
-  }
-
-  public abstract int doStaticUpdates() throws InvalidQueryException;
-
-  public abstract int doUpdates(QueryMatches matches)
-    throws InvalidQueryException;
-
-  // --- Internal utilities
-
-  protected static int getIndex(Object arg, QueryMatches matches) {
-    if (arg instanceof Variable)
-      return matches.getIndex((Variable) arg);
-    else
-      return -1;
-  }  
 }

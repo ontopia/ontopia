@@ -408,7 +408,7 @@ predicateref:
 
 /// THE UPDATE LANGUAGE
 
-updatestatement: delete | merge; // only ones supported at the moment
+updatestatement: delete | merge | update; // only ones supported at the moment
 
 delete:
   DELETE 
@@ -431,27 +431,44 @@ litlist:
   lit (COMMA lit)*;
 
 lit:
-  (VARIABLE  { ((UpdateStatement) statement).addLit(new Variable(LT(0).getText())); }
-  | PARAMETER { ((UpdateStatement) statement).addLit(new Parameter(LT(0).getText())); }
-  | topicref { ((UpdateStatement) statement).addLit(prevValue); }
+  (VARIABLE  { ((ModificationStatement) statement).addLit(new Variable(LT(0).getText())); }
+  | PARAMETER { ((ModificationStatement) statement).addLit(new Parameter(LT(0).getText())); }
+  | topicref { ((ModificationStatement) statement).addLit(prevValue); }
   );
 
 funccall:
   IDENT 
-  { ((DeleteStatement) statement).setFunction(LT(0).getText()); }
+  { ((ModificationFunctionStatement) statement).setFunction(LT(0).getText()); }
   LPAREN param
   COMMA param  
   RPAREN;
 
 param: 
   lit |
-  STRING { ((DeleteStatement) statement).addLit(LT(0).getText()); } ;
+  STRING { ((ModificationStatement) statement).addLit(LT(0).getText()); } ;
 
 merge:
   MERGE
     { statement = new MergeStatement();
       statement.setOptions(lexer.getOptions()); }
   lit COMMA lit
+  (FROM clauselist 
+    { ((ModificationStatement) statement)
+       .setClauseList(prevClauseList, lexer.getOptions()); } 
+  )? EXCLAMATIONM { 
+    try {
+      statement.close();
+    }
+    catch (InvalidQueryException e) {
+      throw new AntlrWrapException(e);
+    }
+  };
+
+update:
+  UPDATE 
+    { statement = new UpdateStatement();
+      statement.setOptions(lexer.getOptions()); }
+  funccall
   (FROM clauselist 
     { ((UpdateStatement) statement)
        .setClauseList(prevClauseList, lexer.getOptions()); } 
@@ -498,6 +515,7 @@ tokens {
 
   DELETE = "delete";
   MERGE  = "merge";
+  UPDATE = "update";
 }
 
 {

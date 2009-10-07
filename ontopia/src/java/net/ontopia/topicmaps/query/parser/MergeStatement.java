@@ -16,7 +16,7 @@ import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 /**
  * INTERNAL: Represents a parsed MERGE statement.
  */
-public class MergeStatement extends UpdateStatement {
+public class MergeStatement extends ModificationStatement {
 
   public MergeStatement() {
     super();
