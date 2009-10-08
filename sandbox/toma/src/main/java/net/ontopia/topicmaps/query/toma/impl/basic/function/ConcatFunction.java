@@ -20,6 +20,7 @@ public class ConcatFunction extends AbstractAggregateFunction {
     return "";
   }
 
+  @Override
   public boolean validate() throws AntlrWrapException {
     return true;
   }

@@ -55,11 +55,12 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
 
   /// variant path expressions
   
+  @SuppressWarnings("unchecked")
   public void testVariant() throws InvalidQueryException, IOException {
     load("full.ltm");
 
     List<TopicNameIF> matches = new ArrayList<TopicNameIF>();
-    Collection topicNames = getTopicById("ltm").getTopicNames();
+    Collection<TopicNameIF> topicNames = getTopicById("ltm").getTopicNames();
     for (Object o : topicNames) {
       TopicNameIF name = (TopicNameIF) o;
       for (Object var : name.getVariants()) {

@@ -4,11 +4,9 @@
 package net.ontopia.topicmaps.query.toma;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;

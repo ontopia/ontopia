@@ -6,11 +6,11 @@ import java.util.LinkedList;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicRootIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathExpression;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 
 /**
  * INTERNAL:
@@ -19,9 +19,9 @@ import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathExpression;
 public class PathExpression extends AbstractPathExpression implements
     BasicExpressionIF {
 
-  private ResultSet createNewResultSet(String rootName)
+  private ResultSet createNewResultSet()
   {
-    int size = 1;
+    int size = 0;
     for (int idx = 0; idx < getPathLength(); idx++) {
       BasicPathElementIF element = (BasicPathElementIF) getPathElement(idx);
       size += element.getResultSize();
@@ -32,9 +32,7 @@ public class PathExpression extends AbstractPathExpression implements
     }
     
     ResultSet rs = new ResultSet(size, false);
-    rs.setColumnName(0, rootName);
-    
-    for (int colIdx = 1, idx = 0; idx < getPathLength(); idx++) {
+    for (int colIdx = 0, idx = 0; idx < getPathLength(); idx++) {
       BasicPathElementIF element = (BasicPathElementIF) getPathElement(idx);
       String[] columns = element.getColumnNames();
       for (String col : columns) {
@@ -50,16 +48,9 @@ public class PathExpression extends AbstractPathExpression implements
   }
   
   public ResultSet evaluate(LocalContext context) {
-    BasicRootIF root = (BasicRootIF) getRoot();
-    Collection<?> roots = root.evaluate(context);
-
-    ResultSet rs = createNewResultSet(root.toString());
-    for (Object o : roots) {
-      Row r = rs.createRow();
-      r.setValue(0, o);
-      evaluateElement(context, rs, r, 0, 1, o);
-    }
-
+    ResultSet rs = createNewResultSet();
+    Row r = rs.createRow();
+    evaluateElement(context, rs, r, 0, 0, PathElementIF.TYPE.NONE);
     return rs;
   }
 
@@ -101,10 +92,11 @@ public class PathExpression extends AbstractPathExpression implements
               }
               evaluateElement(context, rs, newRow, pathDepth + 1, rowIndex + idx, last);
             } else {
+              int newIndex = rowIndex;
               if (element.getResultSize() > 0) {
-                newRow.setValue(rowIndex++, o);
+                newRow.setValue(newIndex++, o);
               }
-              evaluateElement(context, rs, newRow, pathDepth + 1, rowIndex, o);
+              evaluateElement(context, rs, newRow, pathDepth + 1, newIndex, o);
             }
           } catch (Exception e) {
             // TODO: better error handling

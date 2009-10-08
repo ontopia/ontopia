@@ -1,7 +1,9 @@
-package net.ontopia.topicmaps.query.toma.impl.basic.root;
+package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -11,20 +13,74 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.BasicRootIF;
+import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
+import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic;
+import net.ontopia.topicmaps.query.toma.parser.ast.Level;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF.TYPE;
 
 /**
- * INTERNAL:
+ * INTERNAL: Represents a topic literal.
  */
-public class Topic extends AbstractTopic implements BasicRootIF {
-
-  public Topic(AbstractTopic.TYPE type, String id) {
-    super(type, id);
+public class TopicPath extends AbstractTopic implements BasicPathElementIF {
+  static final Set<TYPE> inputSet;
+  
+  static {
+    inputSet = new HashSet<TYPE>();
+    inputSet.add(TYPE.NONE);
   }
 
-  public Collection<TopicIF> evaluate(LocalContext context) {
+  public TopicPath(AbstractTopic.IDTYPE type, String id) {
+    super(type, id);
+  }
+  
+  public String[] getColumnNames() {
+    return new String[] { "TOPIC" };
+  }
+
+  public int getResultSize() {
+    return 1;
+  }
+
+  @Override
+  protected boolean isChildAllowed() {
+    return false;
+  }
+
+  @Override
+  protected boolean isLevelAllowed() {
+    return false;
+  }
+
+  @Override
+  protected boolean isScopeAllowed() {
+    return false;
+  }
+
+  @Override
+  protected boolean isTypeAllowed() {
+    return false;
+  }
+
+  public TYPE output() {
+    return PathElementIF.TYPE.TOPIC;
+  }
+
+  public Set<TYPE> validInput() {
+    return inputSet;
+  }
+
+  /**
+   * Evaluate a topic literal and return the real topics that are identified by
+   * the literal.
+   * 
+   * @return a Collection of {@link TopicIF} objects.
+   */
+  public Collection<TopicIF> evaluate(LocalContext context, Object input) {
     TopicMapIF topicmap = context.getTopicMap();
 
     switch (getIDType()) {
@@ -54,7 +110,7 @@ public class Topic extends AbstractTopic implements BasicRootIF {
         "#" + getIdentifier());
     TMObjectIF obj = topicmap.getObjectByItemIdentifier(locator);
     Collection<TopicIF> coll = new LinkedList<TopicIF>();
-    if (obj instanceof TopicIF) {
+    if (obj != null && obj instanceof TopicIF) {
       coll.add((TopicIF) obj);
     }
     return coll;
@@ -64,7 +120,9 @@ public class Topic extends AbstractTopic implements BasicRootIF {
     LocatorIF locator = URILocator.create(getIdentifier());
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator);
     Collection<TopicIF> coll = new LinkedList<TopicIF>();
-    coll.add(topic);
+    if (topic != null) {
+      coll.add(topic);
+    }
     return coll;
   }
 
@@ -72,7 +130,9 @@ public class Topic extends AbstractTopic implements BasicRootIF {
     LocatorIF locator = URILocator.create(getIdentifier());
     TopicIF topic = topicmap.getTopicBySubjectLocator(locator);
     Collection<TopicIF> coll = new LinkedList<TopicIF>();
-    coll.add(topic);
+    if (topic != null) {
+      coll.add(topic);
+    }
     return coll;
   }
 

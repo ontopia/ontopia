@@ -11,13 +11,16 @@ import java.util.Set;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
+import net.ontopia.topicmaps.query.toma.impl.basic.path.VariablePath;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractVariable;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.FunctionIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
-import net.ontopia.topicmaps.query.toma.parser.ast.PathRootIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder;
 import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
+import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder.SORT_ORDER;
 
 /**
@@ -78,12 +81,16 @@ public class ParsedQuery implements ParsedQueryIF {
    * @return the name of the first variable, or null if there is no variable.
    */
   private String getVariableName(ExpressionIF expr) {
-    if (expr instanceof PathExpressionIF) {
-      PathRootIF root = ((PathExpressionIF) expr).getRoot();
-      if (root instanceof AbstractVariable) {
-        return ((AbstractVariable) root).getName();
-      } else {
+    if (expr instanceof PathExpression) {
+      if (((PathExpression) expr).isEmpty()) {
         return null;
+      } else {
+        PathElementIF start = ((PathExpression) expr).getPathElement(0);
+        if (start instanceof VariablePath) {
+          return ((AbstractVariable) start).getVarName();
+        } else {
+          return null;
+        }
       }
     } else {
       if (expr.getChildCount() > 0) {

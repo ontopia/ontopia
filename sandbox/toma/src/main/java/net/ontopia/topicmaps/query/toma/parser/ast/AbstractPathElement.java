@@ -14,7 +14,7 @@ public abstract class AbstractPathElement implements PathElementIF {
   private PathExpressionIF scope;
   private PathExpressionIF type;
   private Level level;
-  private PathRootIF boundVariable;
+  private VariableIF boundVariable;
   private ArrayList<PathExpressionIF> childs;
 
   /**
@@ -29,6 +29,11 @@ public abstract class AbstractPathElement implements PathElementIF {
     this.childs = null;
   }
 
+  /**
+   * Get the name of this path element.
+   * 
+   * @return the name of the path element
+   */
   public String getName() {
     return this.name;
   }
@@ -72,11 +77,11 @@ public abstract class AbstractPathElement implements PathElementIF {
     return scope;
   }
 
-  public void bindVariable(PathRootIF var) throws AntlrWrapException {
+  public void bindVariable(VariableIF var) throws AntlrWrapException {
     this.boundVariable = var;
   }
 
-  public PathRootIF getBoundVariable() {
+  public VariableIF getBoundVariable() {
     return boundVariable;
   }
 
@@ -171,6 +176,7 @@ public abstract class AbstractPathElement implements PathElementIF {
     }
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(getName());

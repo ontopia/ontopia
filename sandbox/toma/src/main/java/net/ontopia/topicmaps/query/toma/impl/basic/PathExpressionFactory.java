@@ -5,15 +5,11 @@ import java.util.Map;
 
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.*;
-import net.ontopia.topicmaps.query.toma.impl.basic.root.EmptyRoot;
-import net.ontopia.topicmaps.query.toma.impl.basic.root.Topic;
-import net.ontopia.topicmaps.query.toma.impl.basic.root.Variable;
-import net.ontopia.topicmaps.query.toma.impl.basic.root.WildcardRoot;
 import net.ontopia.topicmaps.query.toma.parser.PathExpressionFactoryIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
-import net.ontopia.topicmaps.query.toma.parser.ast.PathRootIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
 
 public class PathExpressionFactory implements PathExpressionFactoryIF {
 
@@ -57,31 +53,23 @@ public class PathExpressionFactory implements PathExpressionFactoryIF {
     return new PathExpression();
   }
 
-  public PathRootIF createTopic(String type, String id) {
+  public PathElementIF createTopic(String type, String id) {
     if (type.equals("IID")) {
-      return new Topic(AbstractTopic.TYPE.IID, id);
+      return new TopicPath(AbstractTopic.IDTYPE.IID, id);
     } else if (type.equals("NAME")) {
-      return new Topic(AbstractTopic.TYPE.NAME, id);
+      return new TopicPath(AbstractTopic.IDTYPE.NAME, id);
     } else if (type.equals("VAR")) {
-      return new Topic(AbstractTopic.TYPE.VAR, id);
+      return new TopicPath(AbstractTopic.IDTYPE.VAR, id);
     } else if (type.equals("SUBJID")) {
-      return new Topic(AbstractTopic.TYPE.SI, id);
+      return new TopicPath(AbstractTopic.IDTYPE.SI, id);
     } else if (type.equals("SUBJLOC")) {
-      return new Topic(AbstractTopic.TYPE.SL, id);
+      return new TopicPath(AbstractTopic.IDTYPE.SL, id);
     } else {
-      return new Topic(AbstractTopic.TYPE.IID, id);
+      return new TopicPath(AbstractTopic.IDTYPE.IID, id);
     }
   }
 
-  public PathRootIF createVariable(String name) {
-    return new Variable(name);
-  }
-
-  public PathRootIF createEmptyRoot() {
-    return new EmptyRoot();
-  }
-
-  public PathRootIF createAnyRoot() {
-    return new WildcardRoot();
+  public VariableIF createVariable(String name) {
+    return new VariablePath(name);
   }
 }

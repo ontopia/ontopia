@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.AbstractTopicMapTestCase;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 
+@SuppressWarnings("unchecked")
 public abstract class AbstractTomaQueryTestCase extends AbstractTopicMapTestCase {
 
   public LocatorIF        base;
@@ -163,6 +164,7 @@ public abstract class AbstractTomaQueryTestCase extends AbstractTopicMapTestCase
     verifyQuery(matches, query, ruleset, null);
   }
   
+  @SuppressWarnings("deprecation")
   protected void verifyQuery(List matches, String query, String ruleset, Map args)
     throws InvalidQueryException {
 
@@ -212,6 +214,7 @@ public abstract class AbstractTomaQueryTestCase extends AbstractTopicMapTestCase
     verifyQuerySubset(matches, query, ruleset, null);
   }
   
+  @SuppressWarnings("deprecation")
   protected void verifyQuerySubset(List matches, String query, String ruleset, Map args)
     throws InvalidQueryException {
 

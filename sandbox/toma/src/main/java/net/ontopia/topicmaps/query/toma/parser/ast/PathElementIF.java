@@ -13,7 +13,7 @@ public interface PathElementIF extends ASTElementIF {
    * evaluated {@link PathElementIF}.
    */
   public enum TYPE {
-    TOPIC, ASSOCIATION, NAME, VARIANT, OCCURRENCE, LOCATOR, STRING, UNKNOWN
+    TOPIC, ASSOCIATION, NAME, VARIANT, OCCURRENCE, LOCATOR, STRING, UNKNOWN, NONE
   };
 
   /**
@@ -25,6 +25,13 @@ public interface PathElementIF extends ASTElementIF {
   public void setLevel(Level l) throws AntlrWrapException;
 
   /**
+   * Get the specified level for this element.
+   * 
+   * @return the level if specified, null otherwise.
+   */
+  public Level getLevel();
+  
+  /**
    * Use the given expression as a type for this element.
    * 
    * @param expr the expression to be used as a type.
@@ -32,6 +39,13 @@ public interface PathElementIF extends ASTElementIF {
    */
   public void setType(PathExpressionIF expr) throws AntlrWrapException;
 
+  /**
+   * Get the type of this path element.
+   * 
+   * @return the specified type, null otherwise.
+   */
+  public PathExpressionIF getType();
+  
   /**
    * Use the given expression as a scope for this element.
    * 
@@ -41,12 +55,19 @@ public interface PathElementIF extends ASTElementIF {
   public void setScope(PathExpressionIF expr) throws AntlrWrapException;
 
   /**
+   * Get the scope for this path element.
+   * 
+   * @return the specified scope, null otherwise.
+   */
+  public PathExpressionIF getScope();
+  
+  /**
    * Bind a variable to this path element.
    * 
    * @param var the variable to use for binding.
    * @throws AntlrWrapException
    */
-  public void bindVariable(PathRootIF var) throws AntlrWrapException;
+  public void bindVariable(VariableIF var) throws AntlrWrapException;
 
   /**
    * Add a {@link PathExpressionIF} as a child to this path element.

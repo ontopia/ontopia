@@ -1,29 +1,29 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
-import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
  * INTERNAL: Abstract base class for Topic Literals in the AST.
  */
-public abstract class AbstractTopic implements PathRootIF {
-  public enum TYPE {
+public abstract class AbstractTopic extends AbstractPathElement {
+  public enum IDTYPE {
     IID, SI, SL, NAME, VAR
   };
 
-  private TYPE idType;
+  private IDTYPE idType;
   private String identifier;
 
-  public AbstractTopic(TYPE type, String id) {
+  public AbstractTopic(IDTYPE type, String id) {
+    super("TOPIC");
     this.idType = type;
     this.identifier = id;
   }
 
-  public TYPE getIDType() {
+  public IDTYPE getIDType() {
     return idType;
   }
 
-  public void setIDType(TYPE type) {
+  public void setIDType(IDTYPE type) {
     this.idType = type;
   }
 
@@ -35,22 +35,12 @@ public abstract class AbstractTopic implements PathRootIF {
     this.identifier = identifier;
   }
 
-  public AbstractPathElement.TYPE getType() {
-    return AbstractPathElement.TYPE.TOPIC;
-  }
-
-  public boolean validate() throws AntlrWrapException {
-    return true;
-  }
-
-  public PathElementIF.TYPE output() {
-    return PathElementIF.TYPE.TOPIC;
-  }
-  
+  @Override
   public void fillParseTree(IndentedStringBuilder buf, int level) {
     buf.append("(     TOPIC) [" + getIdentifier() + "]", level);
   }
 
+  @Override
   public String toString() {
     StringBuffer sb = new StringBuffer();
 

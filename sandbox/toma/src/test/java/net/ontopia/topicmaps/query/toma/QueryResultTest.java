@@ -4,8 +4,6 @@
 package net.ontopia.topicmaps.query.toma;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -121,7 +119,7 @@ public class QueryResultTest extends AbstractTomaQueryTestCase {
     assertTrue("result had wrong width", result.getWidth() == 1);
     
     try {
-      Object[] values = result.getValues();
+      result.getValues();
       fail("accepted getValues before calling next");
     } catch (IllegalStateException e) {
     }
@@ -143,7 +141,7 @@ public class QueryResultTest extends AbstractTomaQueryTestCase {
     result.close();
     
     try {
-      int width = result.getWidth();
+      result.getWidth();
       fail("accepted getWidth after close");
     } catch (IllegalStateException e) {
     }

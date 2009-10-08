@@ -1,7 +1,5 @@
 package net.ontopia.topicmaps.query.toma;
 
-import java.io.IOException;
-
 import net.ontopia.topicmaps.query.toma.parser.TomaParser;
 
 import org.apache.xerces.parsers.SAXParser;

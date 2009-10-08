@@ -17,9 +17,11 @@ options {
 
 {
   private LocalParseContext context;
+  private SelectStatement seStmt;     // the current select statement
 
   public void init(LocalParseContext c) {
   	this.context = c;
+  	this.seStmt = null;
   }
    
   /**
@@ -38,21 +40,11 @@ options {
    * Create a path expression that is started by a variable
    */
   protected PathExpressionIF createVariable(String varName) throws AntlrWrapException {
-  	PathRootIF root = context.createVariable(varName);
+  	VariableIF var = context.createVariable(varName);
   	PathExpressionIF pe = context.createPathExpression();
-  	pe.setRoot(root);
+  	pe.addPath(var);
   	return pe;
-  }
-  
-  /**
-   * Create an association path expression (i.e. without left side input)
-   */
-  protected PathExpressionIF createAssociationExpression() throws AntlrWrapException {
-    PathExpressionIF path = context.createPathExpression();
-  	path.setRoot(context.createEmptyRoot());
-  	return path;
-  }
-
+  }  
 }
 
 // the TOMA grammar
@@ -60,17 +52,17 @@ options {
 query returns [TomaQuery q]:
   q=statement   { q.validate(); }
   SEMICOLON;
-
+  
 statement returns [TomaQuery q]:
-                { q = new TomaQuery(); SelectStatement stmt;     }
-  stmt=select   { q.addStatement(stmt);                          }
-  (             { SelectStatement.UNION_TYPE type;               }
-    ( UNION     { type = SelectStatement.UNION_TYPE.UNION;       } 
-    | INTERSECT { type = SelectStatement.UNION_TYPE.INTERSECT;   }
-    | EXCEPT    { type = SelectStatement.UNION_TYPE.EXCEPT;      }
+                  { q = new TomaQuery();                               }
+  seStmt=select   { q.addStatement(seStmt);                            }
+  (               { SelectStatement.UNION_TYPE type;                   }
+    ( UNION       { type = SelectStatement.UNION_TYPE.UNION;           } 
+    | INTERSECT   { type = SelectStatement.UNION_TYPE.INTERSECT;       }
+    | EXCEPT      { type = SelectStatement.UNION_TYPE.EXCEPT;          }
     )
-    (ALL        { type = SelectStatement.UNION_TYPE.UNIONALL;    })? 
-    stmt=select { stmt.setUnionType(type); q.addStatement(stmt); }
+    (ALL          { type = SelectStatement.UNION_TYPE.UNIONALL;        })? 
+    seStmt=select { seStmt.setUnionType(type); q.addStatement(seStmt); }
   )*
   (order[q])?
   (limit[q])?
@@ -142,7 +134,7 @@ expr returns [ExpressionIF p]:
   
 atomexpr returns [ExpressionIF p]:
   ( p=topicpathexpr
-  |                         { p = createAssociationExpression();       }
+  |                         { p = context.createPathExpression();      }
     assocpathexpr[(PathExpressionIF) p, null]
   | s:STRING                { p = context.createLiteral(s.getText());  }
   |                         { FunctionIF f; ExpressionIF left;         } 
@@ -185,18 +177,17 @@ assocleftside [PathExpressionIF p]:
   LPAREN left=roleexpr RPAREN LARROW assocpathexpr[p, left];
 
 roleexpr returns [PathExpressionIF p]:
-  (
-    ANONYM              { p = context.createPathExpression();
-    	                  p.setRoot(context.createAnyRoot());                  }
+  (                     // create an empty PathExpression in the case of an $$
+    ANONYM              { p = context.createPathExpression(); } 
   | p=pathexpr
   );
   
 pathexpr returns [PathExpressionIF path]:
                         { path = context.createPathExpression();               }
   ( 
-                        { PathRootIF topic;                                    } 
-    topic=topicliteral  { path.setRoot(topic);                                 } 
-  | var:VARIABLE        { path.setRoot(context.createVariable(var.getText())); }
+                        { PathElementIF topic;                                 } 
+    topic=topicliteral  { path.addPath(topic);                                 } 
+  | var:VARIABLE        { path.addPath(context.createVariable(var.getText())); }
   )
   (                     { PathElementIF pe;                                    }
    DOT pe=pathpart      { path.addPath(pe);                                    }
@@ -215,10 +206,10 @@ pathpart returns [PathElementIF p]:
     RPAREN
   )?
   ( ATSCOPE 
-                                { PathExpressionIF pe; PathRootIF r;         }
+                                { PathExpressionIF pe; PathElementIF e;      }
     ( var:VARIABLE              { pe = createVariable(var.getText());        }
-    | r=topicliteral            { pe = context.createPathExpression();       } 
-    	                        { pe.setRoot(r);                             }
+    | e=topicliteral            { pe = context.createPathExpression();       } 
+    	                        { pe.addPath(e);                             }
     | LPAREN pe=pathexpr RPAREN 
     )                           { p.setScope(pe);                            }
   )?
@@ -255,7 +246,7 @@ level returns [Level l]:
     )
   )             { l = new Level(start, end);           };
   
-topicliteral returns [PathRootIF root]:
+topicliteral returns [PathElementIF root]:
                 { String type;                                       }
   ( ITEMID      { type = "IID";                                      }
   | NAMELITERAL { type = "NAME";                                     }

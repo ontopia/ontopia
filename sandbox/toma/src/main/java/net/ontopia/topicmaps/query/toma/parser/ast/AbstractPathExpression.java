@@ -14,25 +14,11 @@ import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 public abstract class AbstractPathExpression extends AbstractExpression
     implements PathExpressionIF {
 
-  private PathRootIF root;
   private ArrayList<PathElementIF> path;
 
   public AbstractPathExpression() {
-    this(null);
-  }
-
-  public AbstractPathExpression(PathRootIF root) {
     super("PATHEXPR", 0);
-    this.root = root;
     this.path = new ArrayList<PathElementIF>();
-  }
-
-  public void setRoot(PathRootIF root) {
-    this.root = root;
-  }
-
-  public PathRootIF getRoot() {
-    return root;
   }
 
   public List<AbstractVariable> getBoundVariables() {
@@ -44,6 +30,10 @@ public abstract class AbstractPathExpression extends AbstractExpression
     path.add(next);
   }
 
+  public boolean isEmpty() {
+    return path.isEmpty();
+  }
+  
   public int getPathLength() {
     return path.size();
   }
@@ -61,10 +51,8 @@ public abstract class AbstractPathExpression extends AbstractExpression
   @Override
   public boolean validate() throws AntlrWrapException {
     super.validate();
-    root.validate();
 
-    // TODO: check input from root
-    PathElementIF.TYPE output = root.output();
+    PathElementIF.TYPE output = PathElementIF.TYPE.NONE;
     PathElementIF last = null;
     for (PathElementIF element : path) {
       // validate the element itself
@@ -72,7 +60,7 @@ public abstract class AbstractPathExpression extends AbstractExpression
       // get the valid input for this element
       Set<PathElementIF.TYPE> validInput = element.validInput();
       
-      // TODO: variable have an UNKNOWN type by now, we need to a semantic
+      // TODO: variables have an UNKNOWN type by now, we need to do a semantic
       // check of the variable in order to verify that they are used correctly. 
       if (output != PathElementIF.TYPE.UNKNOWN) {
         if (validInput != null && !validInput.contains(output)) {
@@ -91,22 +79,19 @@ public abstract class AbstractPathExpression extends AbstractExpression
 
   @Override
   public void fillParseTree(IndentedStringBuilder buf, int level) {
-    if (root != null)
-      root.fillParseTree(buf, level);
     for (PathElementIF pe : path) {
-      pe.fillParseTree(buf, ++level);
+      pe.fillParseTree(buf, level++);
     }
   }
 
   public String toString() {
     StringBuffer sb = new StringBuffer();
 
-    if (root != null) {
-      sb.append(root.toString());
-      if (path != null) {
-        for (PathElementIF p : path) {
+    if (path != null) {
+      for (int i=0; i<path.size(); i++) {
+        sb.append(path.get(i).toString());
+        if (i < (path.size() - 1)) {
           sb.append(".");
-          sb.append(p.toString());
         }
       }
     }

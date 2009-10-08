@@ -1,6 +1,7 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;

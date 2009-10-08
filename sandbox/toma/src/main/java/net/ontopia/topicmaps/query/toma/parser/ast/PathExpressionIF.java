@@ -8,20 +8,6 @@ import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
  */
 public interface PathExpressionIF extends ExpressionIF {
   /**
-   * Set the root node for this path expression.
-   * 
-   * @param root the root node to be set.
-   */
-  public void setRoot(PathRootIF root);
-
-  /**
-   * Get the root node of this path expression.
-   * 
-   * @return the root node of the path.
-   */
-  public PathRootIF getRoot();
-
-  /**
    * Append a path element {@link PathElementIF} to the end of the path
    * expression.
    * 

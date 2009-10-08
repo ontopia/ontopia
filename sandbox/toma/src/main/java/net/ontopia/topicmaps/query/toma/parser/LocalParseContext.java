@@ -5,7 +5,7 @@ import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.FunctionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
-import net.ontopia.topicmaps.query.toma.parser.ast.PathRootIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
 
 /**
  * INTERNAL: This class is a convenience wrapper to access
@@ -41,37 +41,21 @@ public class LocalParseContext {
     return element;
   }
 
-  public PathRootIF createTopic(String type, String id)
+  public PathElementIF createTopic(String type, String id)
       throws AntlrWrapException {
-    PathRootIF root = pathExpressionFactory.createTopic(type, id);
-    if (root == null)
+    PathElementIF topic = pathExpressionFactory.createTopic(type, id);
+    if (topic == null)
       throw new AntlrWrapException(new InvalidQueryException(
           "unable to create topic literal with id '" + id + "'"));
-    return root;
+    return topic;
   }
 
-  public PathRootIF createVariable(String name) throws AntlrWrapException {
-    PathRootIF root = pathExpressionFactory.createVariable(name);
-    if (root == null)
+  public VariableIF createVariable(String name) throws AntlrWrapException {
+    VariableIF var = pathExpressionFactory.createVariable(name);
+    if (var == null)
       throw new AntlrWrapException(new InvalidQueryException(
           "unable to create variable '" + name + "'"));
-    return root;
-  }
-
-  public PathRootIF createEmptyRoot() throws AntlrWrapException {
-    PathRootIF root = pathExpressionFactory.createEmptyRoot();
-    if (root == null)
-      throw new AntlrWrapException(new InvalidQueryException(
-          "unable to create empty root"));
-    return root;
-  }
-
-  public PathRootIF createAnyRoot() throws AntlrWrapException {
-    PathRootIF root = pathExpressionFactory.createAnyRoot();
-    if (root == null)
-      throw new AntlrWrapException(new InvalidQueryException(
-          "unable to create wildcard root"));
-    return root;
+    return var;
   }
 
   public ExpressionIF createExpression(String type, ExpressionIF... childs)

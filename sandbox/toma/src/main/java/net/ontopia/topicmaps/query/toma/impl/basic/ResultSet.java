@@ -2,13 +2,17 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder;
+
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
+import org.apache.commons.collections.bag.TreeBag;
 
 public class ResultSet implements Iterable<Row> {
 
@@ -51,6 +55,15 @@ public class ResultSet implements Iterable<Row> {
     rows = new HashBag();
   }
 
+  /**
+   * Get an unmodifiable list of the columns for this ResultSet.
+   *  
+   * @return
+   */
+  public List<String> getColumnDefinitions() {
+    return Collections.unmodifiableList(columns);
+  }
+  
   public List<String> getSharedColumns(ResultSet rs) {
     List<String> sharedCols = new ArrayList<String>();
     

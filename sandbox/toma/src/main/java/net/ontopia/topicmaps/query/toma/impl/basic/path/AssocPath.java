@@ -9,10 +9,10 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
-import net.ontopia.topicmaps.query.toma.impl.basic.root.WildcardRoot;
 
 /**
  * INTERNAL: Association path element in an path expression. Returns all
@@ -32,6 +32,7 @@ public class AssocPath extends AbstractBasicPathElement {
   static {
     inputSet = new HashSet<TYPE>();
     inputSet.add(TYPE.TOPIC);
+    inputSet.add(TYPE.NONE);
   }
 
   public AssocPath() {
@@ -63,8 +64,8 @@ public class AssocPath extends AbstractBasicPathElement {
   }
   
   @SuppressWarnings("unchecked")
-  public Collection<?> evaluate(LocalContext context, Object input) 
-  {
+  public Collection<?> evaluate(LocalContext context, Object input)
+      throws InvalidQueryException  {
     PathExpression type = (PathExpression) getType();
     ResultSet types = type.evaluate(context);
     Collection<?> validTypes = types.getValues(types.getLastIndex());
@@ -102,9 +103,8 @@ public class AssocPath extends AbstractBasicPathElement {
       rightRole = (PathExpression) getChild(1);
       break;
     default:
-      // TODO: improve error handling
-      System.err.println("invalid query, missing roles");
-      break;
+      throw new InvalidQueryException(
+          "missing roles in association path element");
     }
     
     LinkedList<AssociationIF> finalAssocs;
@@ -114,7 +114,7 @@ public class AssocPath extends AbstractBasicPathElement {
       finalAssocs = assocs;
     }    
     
-    if (rightRole.getRoot() instanceof WildcardRoot) 
+    if (rightRole.isEmpty()) 
     {
       LinkedList<LinkedList> result = new LinkedList<LinkedList>();
       for (AssociationIF assoc : finalAssocs) 
@@ -157,7 +157,7 @@ public class AssocPath extends AbstractBasicPathElement {
   @SuppressWarnings("unchecked")
   private LinkedList<AssociationIF> getValidAssociations(LocalContext context, LinkedList<AssociationIF> assocs, PathExpression roleType, TopicIF input) 
   {
-    if (roleType.getRoot() instanceof WildcardRoot) 
+    if (roleType.isEmpty()) 
     {
       if (input == null) return assocs;
       LinkedList<AssociationIF> validAssocs = new LinkedList<AssociationIF>();

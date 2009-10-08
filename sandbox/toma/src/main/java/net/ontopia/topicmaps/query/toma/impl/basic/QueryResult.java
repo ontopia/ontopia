@@ -1,6 +1,7 @@
 package net.ontopia.topicmaps.query.toma.impl.basic;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 
@@ -10,9 +11,11 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
  */
 public class QueryResult implements QueryResultIF {
 
-  private ResultSet result;
-  private Iterator<Row> rowIterator;
-  private Row currentRow;
+  private List<String> columns;
+  private ArrayList<Row> rows;
+  private int currentRow;
+  private int from;
+  private int to;
   private boolean isClosed;
 
   /**
@@ -21,21 +24,28 @@ public class QueryResult implements QueryResultIF {
    * @param result the ResultSet to be used.
    * @throws IllegalArgumentException if the given ResultSet is null.
    */
-  public QueryResult(ResultSet result) throws IllegalArgumentException {
-    if (result == null) {
-      throw new IllegalArgumentException("ResultSet must be non-null.");
+  public QueryResult(List<String> columns, ArrayList<Row> rows, int limit, int offset)
+      throws IllegalArgumentException {
+    if (columns == null) {
+      throw new IllegalArgumentException("Parameter columns for QueryResult may not be null.");
     }
-    
-    this.result = result;
-    this.rowIterator = result.iterator();
-    this.currentRow = null;
+
+    if (rows == null) {
+      throw new IllegalArgumentException("Parameter rows for QueryResult may not be null.");
+    }
+
+    this.columns = columns;
+    this.rows = rows;
+    this.from = (offset == -1) ? 0 : offset;
+    this.to = Math.min(rows.size() - 1, from + (limit == -1 ? Integer.MAX_VALUE : limit));
+    this.currentRow = -1;
     this.isClosed = false;
   }
 
   public void close() {
-    currentRow = null;
-    rowIterator = null;
-    result = null;
+    rows.clear();
+    rows = null;
+    columns = null;
     isClosed = true;
   }
 
@@ -49,7 +59,7 @@ public class QueryResult implements QueryResultIF {
           "Can't do getColumnName() after QueryResult has been closed.");
     }
     
-    return result.getColumnName(ix);
+    return columns.get(ix);
   }
 
   /**
@@ -61,9 +71,9 @@ public class QueryResult implements QueryResultIF {
           "Can't do getColumnNames() after QueryResult has been closed.");
     }
 
-    String[] names = new String[result.getColumnCount()];
-    for (int i = 0; i < result.getColumnCount(); i++) {
-      names[i] = result.getColumnName(i);
+    String[] names = new String[columns.size()];
+    for (int i = 0; i < columns.size(); i++) {
+      names[i] = columns.get(i);
     }
     return names;
   }
@@ -77,7 +87,14 @@ public class QueryResult implements QueryResultIF {
           "Can't do getIndex() after QueryResult has been closed.");
     }
     
-    return result.getColumnIndex(colname);
+    int idx = 0;
+    for (String column : columns) {
+      if (column.equals(colname)) {
+        return idx;
+      }
+      idx++;
+    }
+    return -1;
   }
 
   /**
@@ -90,12 +107,12 @@ public class QueryResult implements QueryResultIF {
           "Can't do getValue() after QueryResult has been closed.");
     }
 
-    if (currentRow == null) {
+    if (currentRow == -1) {
       throw new IllegalStateException(
           "QueryResult is not pointed at a row anymore, call next() before using this method.");
     }
 
-    return currentRow.getValue(ix);
+    return rows.get(currentRow).getValue(ix);
   }
 
   /**
@@ -107,17 +124,17 @@ public class QueryResult implements QueryResultIF {
           "Can't do getValue() after QueryResult has been closed.");
     }
 
-    if (currentRow == null) {
+    if (currentRow == -1) {
       throw new IllegalStateException(
           "QueryResult is not pointed at a row anymore, call next() before using this method.");
     }
     
-    int idx = result.getColumnIndex(colname);
+    int idx = getIndex(colname);
     if (idx == -1) {
       throw new IllegalArgumentException("Column '" + colname
           + "' not existant in QueryResult.");
     } else {
-      return currentRow.getValue(idx);
+      return rows.get(currentRow).getValue(idx);
     }
   }
 
@@ -130,12 +147,12 @@ public class QueryResult implements QueryResultIF {
           "Can't do getValues() after QueryResult has been closed.");
     }
 
-    if (currentRow == null) {
+    if (currentRow == -1) {
       throw new IllegalStateException(
           "QueryResult is not pointed at a row anymore, call next() before using this method.");
     }
     
-    return currentRow.getValues();
+    return rows.get(currentRow).getValues();
   }
 
   /**
@@ -147,12 +164,12 @@ public class QueryResult implements QueryResultIF {
           "Can't do getValues() after QueryResult has been closed.");
     }
 
-    if (currentRow == null) {
+    if (currentRow == -1) {
       throw new IllegalStateException(
           "QueryResult is not pointed at a row anymore, call next() before using this method.");
     }
 
-    return currentRow.getValues(values);
+    return rows.get(currentRow).getValues(values);
   }
 
   /**
@@ -164,7 +181,7 @@ public class QueryResult implements QueryResultIF {
           "Can't do getWidth() after QueryResult has been closed.");
     }
     
-    return result.getColumnCount();
+    return columns.size();
   }
 
   /**
@@ -176,11 +193,19 @@ public class QueryResult implements QueryResultIF {
           "Can't do next() after QueryResult has been closed.");
     }
     
-    if (rowIterator.hasNext()) {
-      currentRow = rowIterator.next();
-      return true;
+    if (currentRow == -1) {
+      currentRow = from;
+      if (currentRow <= to) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      if (++currentRow <= to) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }

@@ -2,8 +2,12 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
@@ -15,6 +19,8 @@ import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.function.AbstractAggregateFunction;
 import net.ontopia.topicmaps.query.toma.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.toma.parser.TomaParser;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder;
 import net.ontopia.topicmaps.query.toma.parser.ast.SelectStatement;
 import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
 
@@ -49,11 +55,25 @@ public class BasicQueryProcessor implements QueryProcessorIF {
   public QueryResultIF execute(TomaQuery query) throws InvalidQueryException {
     for (int i = 0; i < query.getStatementCount(); i++) {
       SelectStatement stmt = query.getStatement(i);
-      return new QueryResult(evaluateSelect(stmt));
+      ResultSet rs = evaluateSelect(stmt);
+      
+      ArrayList<Row> rows = new ArrayList<Row>(rs.getRowCount());
+      for (Row r : rs) {
+        rows.add(r);
+      }
+      
+      sort(rows, query.getOrderBy());
+      
+      return new QueryResult(rs.getColumnDefinitions(), rows, query.getLimit(), query.getOffset()); 
     }
     return null;
   }
 
+  private void sort(ArrayList<Row> matches, List<QueryOrder> orderings) {
+    if (!orderings.isEmpty())
+      Collections.sort(matches, new RowComparator(orderings));
+  }
+  
   private ResultSet evaluateSelect(SelectStatement stmt) {
     BasicExpressionIF expr = (BasicExpressionIF) stmt.getClause();
     LocalContext context = new LocalContext(topicmap);
@@ -88,12 +108,12 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     Collection<?> boundVariable = null;
     String boundName;
     if (selectExpr instanceof PathExpression) {
-      boundName = ((PathExpression) selectExpr).getRoot().toString();
+      boundName = ((PathExpression) selectExpr).getPathElement(0).toString();
     } else {
       while (!(selectExpr instanceof PathExpression)) {
         selectExpr = (BasicExpressionIF) selectExpr.getChild(0);
       }
-      boundName = ((PathExpression) selectExpr).getRoot().toString();
+      boundName = ((PathExpression) selectExpr).getPathElement(0).toString();
     }
 
     if (bound.containsColumn(boundName)) {
@@ -101,10 +121,10 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     } else {
     }
 
-    for (Object obj : boundVariable) {
+    //for (Object obj : boundVariable) {
       Row r = rs.createRow();
-      fillFinalResultSet(context, 0, obj, r, rs, stmt);
-    }
+      fillFinalResultSet(context, 0, PathElementIF.TYPE.NONE, r, rs, stmt);
+    //}
 
     return rs;
   }
