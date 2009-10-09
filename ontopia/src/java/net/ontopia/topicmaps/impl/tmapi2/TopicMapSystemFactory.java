@@ -24,6 +24,7 @@ public class TopicMapSystemFactory extends org.tmapi.core.TopicMapSystemFactory 
       new Feature("http://tmapi.org/features/model/xtm1.1", true, false),
       new Feature("http://tmapi.org/features/automerge", true, false),
       new Feature("http://tmapi.org/features/merge/byTopicName", true, false),
+      new Feature("http://tmapi.org/features/type-instance-associations", true, false),
       new Feature("http://tmapi.org/features/readOnly", true, false) };
 
   public final String STORE_PROPERTY = "net.ontopia.topicmaps.store"; 
