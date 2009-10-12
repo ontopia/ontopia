@@ -266,14 +266,14 @@ public class QueryOptimizer {
       int lowest = Integer.MAX_VALUE;
       int best = 0;
 
-      System.out.println("--------------------------------------------------");
+      //System.out.println("--------------------------------------------------");
       
       // find current best clause
       for (int ix = 0; ix < clauses.size(); ix++) {
         int cost = estimator.computeCost(context,
                                          (AbstractClause) clauses.get(ix),
                                          literalvars, rulename);
-        System.out.println("cost (" + cost + "): " + clauses.get(ix));
+        //System.out.println("cost (" + cost + "): " + clauses.get(ix));
         
         if (cost < lowest) {
           lowest = cost;
@@ -281,7 +281,7 @@ public class QueryOptimizer {
         }
       }
 
-      System.out.println("best (" + lowest +"): " + clauses.get(best));
+      //System.out.println("best (" + lowest +"): " + clauses.get(best));
       
       // update based on choice
       AbstractClause clause = (AbstractClause) clauses.get(best);
