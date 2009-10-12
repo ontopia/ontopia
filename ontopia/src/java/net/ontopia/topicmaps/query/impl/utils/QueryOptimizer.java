@@ -215,10 +215,8 @@ public class QueryOptimizer {
   //     3. add variables bound by this clause to context
   //     4. if more clauses goto 2
   //   
-  //   To compute cost within context:
-  //   
-  //     cost is 10 for every unbound variable
-  //     additional cost of 1 for every literal (going from bound vars is better)
+  //   To compute cost within context: use an estimator. There are
+  //   two, which can be swapped, and more can be added.
 
   /**
    * INTERNAL: Optimizes the query by reordering the clauses into the
@@ -268,16 +266,22 @@ public class QueryOptimizer {
       int lowest = Integer.MAX_VALUE;
       int best = 0;
 
+      System.out.println("--------------------------------------------------");
+      
       // find current best clause
       for (int ix = 0; ix < clauses.size(); ix++) {
         int cost = estimator.computeCost(context,
                                          (AbstractClause) clauses.get(ix),
                                          literalvars, rulename);
+        System.out.println("cost (" + cost + "): " + clauses.get(ix));
+        
         if (cost < lowest) {
           lowest = cost;
           best = ix;
         }
       }
+
+      System.out.println("best (" + lowest +"): " + clauses.get(best));
       
       // update based on choice
       AbstractClause clause = (AbstractClause) clauses.get(best);

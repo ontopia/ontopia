@@ -5,6 +5,7 @@ package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.Set;
 import java.util.List;
+import java.util.Iterator;
 import net.ontopia.topicmaps.query.parser.Pair;
 import net.ontopia.topicmaps.query.parser.OrClause;
 import net.ontopia.topicmaps.query.parser.Variable;
@@ -51,8 +52,7 @@ public class PredicateDrivenCostEstimator extends CostEstimator {
         cost += BIG_RESULT;
       
     } else if (clause instanceof NotClause)
-      // set the cost to something bigger than the others
-      cost = INFINITE_RESULT + 2;
+      cost = computeCost((NotClause) clause, context, literalvars);
     else if (clause instanceof OrClause &&
              ((OrClause) clause).getAlternatives().size() == 1)
       // set the cost to something big
@@ -63,6 +63,18 @@ public class PredicateDrivenCostEstimator extends CostEstimator {
     return cost;
   }
 
+  // a very conservative estimator: if all variables in the not() clause
+  // are bound, we filter, otherwise delay execution of the not()
+  private int computeCost(NotClause not, Set context, Set literalvars) {
+    Iterator it = not.getAllVariables().iterator();
+    while (it.hasNext()) {
+      Variable var = (Variable) it.next();
+      if (!context.contains(var) && !literalvars.contains(var))
+        return INFINITE_RESULT + 2; // might not be safe to run just yet
+    }
+    return FILTER_RESULT; // all variables are bound, so this not() will filter
+  }
+  
   private int computeCost(OrClause or, Set context, Set literalvars,
                           String rulename) {
     int worstcost = -1;
