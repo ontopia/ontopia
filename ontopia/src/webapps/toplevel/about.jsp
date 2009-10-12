@@ -32,7 +32,7 @@
         <h1>About Ontopia</h1>
       </div>
 
-<p>In this web interace you can access Ontopoly and the Omnigator,
+<p>In this web interface you can access Ontopoly and the Omnigator,
 which are end-user tools built using Ontopia.</p>
 
 <p>Ontopia is an open source application development platform for
