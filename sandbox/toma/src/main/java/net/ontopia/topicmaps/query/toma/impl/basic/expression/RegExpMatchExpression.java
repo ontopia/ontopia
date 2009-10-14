@@ -16,7 +16,6 @@ public class RegExpMatchExpression extends AbstractComparisonExpression {
     super("~");
   }
 
-  @Override
   protected boolean satisfiesExpression(String s1, String s2) {
     if (s1 != null && s2 != null) {
       Pattern p = Pattern.compile(s2 + ".*");

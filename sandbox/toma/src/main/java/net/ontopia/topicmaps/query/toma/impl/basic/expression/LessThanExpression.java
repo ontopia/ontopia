@@ -14,7 +14,6 @@ public class LessThanExpression extends AbstractComparisonExpression {
     super("LESS");
   }
 
-  @Override
   protected boolean satisfiesExpression(String s1, String s2) {
     if (s1 == null || s2 == null)
       return false;

@@ -8,7 +8,6 @@ public class EqualsExpression extends AbstractComparisonExpression {
     super("EQUALS");
   }
 
-  @Override
   protected boolean satisfiesExpression(String s1, String s2) {
     if (s1 != null && s2 != null && s1.equals(s2))
       return true;
