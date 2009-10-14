@@ -12,11 +12,12 @@ import net.ontopia.topicmaps.query.toma.parser.ast.AbstractVariable;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 
 /**
- * INTERNAL: Represents a variable within a TOMA query. 
+ * INTERNAL: Represents a variable within a TOMA query.
  */
-public class VariablePath extends AbstractVariable implements BasicPathElementIF {
+public class VariablePath extends AbstractVariable implements
+    BasicPathElementIF {
   static final Set<TYPE> inputSet;
-  
+
   static {
     inputSet = new HashSet<TYPE>();
     inputSet.add(TYPE.NONE);
@@ -25,7 +26,7 @@ public class VariablePath extends AbstractVariable implements BasicPathElementIF
   public VariablePath(String name) {
     super(name.toUpperCase());
   }
-  
+
   public String[] getColumnNames() {
     return new String[] { toString() };
   }

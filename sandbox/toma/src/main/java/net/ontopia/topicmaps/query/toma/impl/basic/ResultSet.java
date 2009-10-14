@@ -5,12 +5,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
 
+/**
+ * INTERNAL: This is a simple implementation of a table.
+ */
 public class ResultSet implements Iterable<Row> {
 
   private Vector<String> columns;
@@ -141,6 +145,10 @@ public class ResultSet implements Iterable<Row> {
   public void removeRow(Row row) {
     rows.remove(row);
   }
+
+  public boolean containsRow(Row row) {
+    return rows.contains(row);
+  }
   
   /**
    * 
@@ -216,6 +224,31 @@ public class ResultSet implements Iterable<Row> {
       }
       
       return result;
+    }
+  }
+  
+  public void union(ResultSet rs, boolean distinct) {
+    for (Row r : rs) {
+      if (!distinct || !containsRow(r)) {
+        addRow(r);
+      }
+    }
+  }
+  
+  public void intersect(ResultSet rs) {
+    List<Row> toDelete = new LinkedList<Row>();
+    for (Row r : this) {
+      if (!rs.containsRow(r)) {
+        toDelete.add(r);
+      }
+    }
+    
+    rows.removeAll(toDelete);
+  }
+  
+  public void except(ResultSet rs) {
+    for (Row r : rs) {
+      removeRow(r);
     }
   }
 }

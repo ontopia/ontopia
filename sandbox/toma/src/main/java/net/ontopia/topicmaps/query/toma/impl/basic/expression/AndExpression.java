@@ -6,7 +6,7 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 
 /**
- * INTERNAL: AND expression, returns the intersection of the resultsets 
+ * INTERNAL: AND expression, returns the intersection of the ResultSets 
  * of its child expressions. 
  */
 public class AndExpression extends AbstractBinaryExpression {

@@ -1,7 +1,5 @@
 package net.ontopia.topicmaps.query.toma.impl.basic;
 
-import java.util.Collection;
-
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 
@@ -17,15 +15,4 @@ public interface BasicExpressionIF extends ExpressionIF {
    * @return the result of the evaluation as a {@link ResultSet}.
    */
   public ResultSet evaluate(LocalContext context) throws InvalidQueryException;
-
-  /**
-   * Evaluate the expression given a certain input.
-   * 
-   * @param context
-   * @param input
-   * @return
-   * @throws InvalidQueryException
-   */
-  public Collection<?> evaluate(LocalContext context, Object input)
-      throws InvalidQueryException;
 }

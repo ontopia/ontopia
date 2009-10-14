@@ -1,10 +1,6 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.expression;
 
-import java.util.Collection;
-
-import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
-import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractExpression;
 
 /**
@@ -16,11 +12,4 @@ public abstract class AbstractUnaryExpression extends AbstractExpression
   protected AbstractUnaryExpression(String name) {
     super(name, 1);
   }  
-  
-  public Collection<?> evaluate(LocalContext context, Object input)
-      throws InvalidQueryException {
-    throw new InvalidQueryException(
-        "Internal error, tried to evaluate the expression '" + getName()
-            + "' with a given input.");
-  }
 }

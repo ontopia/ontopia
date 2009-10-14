@@ -9,6 +9,10 @@ import net.ontopia.topicmaps.query.toma.parser.ExpressionFactoryIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.FunctionIF;
 
+/**
+ * INTERNAL: Implementation of {@link ExpressionFactoryIF} to create appropriate
+ * AST elements for the {@link BasicQueryProcessor}.
+ */
 public class ExpressionFactory implements ExpressionFactoryIF {
 
   private Map<String, Class<? extends ExpressionIF>> expressions;

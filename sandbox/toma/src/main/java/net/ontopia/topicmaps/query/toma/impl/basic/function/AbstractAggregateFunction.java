@@ -1,7 +1,5 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.function;
 
-import java.util.Collection;
-
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicFunctionIF;
@@ -30,19 +28,6 @@ public abstract class AbstractAggregateFunction extends AbstractFunction
     // get the child and evaluate it
     BasicExpressionIF child = (BasicExpressionIF) getChild(0);
     return child.evaluate(context);
-  }
-
-  public Collection<?> evaluate(LocalContext context, Object input)
-      throws InvalidQueryException {
-    // all functions need to have exactly one child
-    if (getChildCount() != 1) {
-      throw new InvalidQueryException("Function '" + getName()
-          + "' does not have a child.");
-    }
-
-    // get the child and evaluate it
-    BasicExpressionIF child = (BasicExpressionIF) getChild(0);
-    return child.evaluate(context, input);
   }
 
   public String evaluate(Object obj) throws InvalidQueryException {

@@ -22,7 +22,7 @@ import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder.SORT_ORDER;
 
 /**
- * INTERNAL: implementation of the {@link ParsedQueryIF} interface for TOMA.
+ * PUBLIC: implementation of the {@link ParsedQueryIF} interface for TOMA.
  */
 public class ParsedQuery implements ParsedQueryIF {
 
@@ -35,7 +35,7 @@ public class ParsedQuery implements ParsedQueryIF {
    * @param processor the query processor to use.
    * @param query the TOMA query itself.
    */
-  public ParsedQuery(BasicQueryProcessor processor, TomaQuery query) {
+  protected ParsedQuery(BasicQueryProcessor processor, TomaQuery query) {
     this.processor = processor;
     this.query = query;
   }

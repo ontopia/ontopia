@@ -11,6 +11,10 @@ import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
 
+/**
+ * INTERNAL: Implementation of {@link PathExpressionFactoryIF} to create
+ * appropriate AST path expression elements for the {@link BasicQueryProcessor}.
+ */
 public class PathExpressionFactory implements PathExpressionFactoryIF {
 
   Map<String, Class<? extends PathElementIF>> elements;

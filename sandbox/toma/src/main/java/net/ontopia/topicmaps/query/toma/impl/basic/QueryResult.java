@@ -1,18 +1,17 @@
 package net.ontopia.topicmaps.query.toma.impl.basic;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 
 /**
- * INTERNAL: implementation of the {@link QueryResultIF} interface for the TOMA
+ * PUBLIC: implementation of the {@link QueryResultIF} interface for the TOMA
  * QueryProcessor.
  */
 public class QueryResult implements QueryResultIF {
 
   private List<String> columns;
-  private ArrayList<Row> rows;
+  private List<Row> rows;
   private int currentRow;
   private int from;
   private int to;
@@ -24,7 +23,7 @@ public class QueryResult implements QueryResultIF {
    * @param result the ResultSet to be used.
    * @throws IllegalArgumentException if the given ResultSet is null.
    */
-  public QueryResult(List<String> columns, ArrayList<Row> rows, int limit, int offset)
+  protected QueryResult(List<String> columns, List<Row> rows, int limit, int offset)
       throws IllegalArgumentException {
     if (columns == null) {
       throw new IllegalArgumentException("Parameter columns for QueryResult may not be null.");

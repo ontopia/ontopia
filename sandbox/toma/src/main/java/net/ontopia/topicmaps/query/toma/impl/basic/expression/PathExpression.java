@@ -1,7 +1,6 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.expression;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
@@ -95,43 +94,6 @@ public class PathExpression extends AbstractPathExpression implements
         rs.addRow(curRow);
       } else {
         evaluateElement(context, last, rs, curRow, pathDepth + 1, newCol);
-      }
-    }
-  }
-
-  public Collection<?> evaluate(LocalContext context, Object input)
-      throws InvalidQueryException {
-    Collection<Object> coll = new LinkedList<Object>();
-    if (!isEmpty()) {
-      evaluateElement(context, 0, input, coll);
-    }
-    return coll;
-  }
-
-  /**
-   * Evaluate the PathExpression in a recursive manner, i.e. iterate over the
-   * PathElement(s) and at the last element, store the results in a collection.
-   * 
-   * @param context the evaluation context.
-   * @param index the current PathElement index.
-   * @param input the input for this stage of the PathExpression.
-   * @param coll the collection to store the results.
-   * @throws InvalidQueryException if a PathElement could not be evaluated.
-   */
-  private void evaluateElement(LocalContext context, int index, Object input,
-      Collection<Object> coll) throws InvalidQueryException {
-    BasicPathElementIF element = (BasicPathElementIF) getPathElement(index);
-    Collection<?> result = element.evaluate(context, input);
-    if (result == null || result.size() == 0) {
-      coll.add(null);
-    } else {
-      // if we are at the last element -> break condition
-      if (index == (getPathLength() - 1)) {
-        coll.addAll(result);
-      } else {
-        for (Object obj : result) {
-          evaluateElement(context, index + 1, obj, coll);
-        }
       }
     }
   }
