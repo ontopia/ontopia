@@ -159,7 +159,8 @@ assocpathexpr [PathExpressionIF p, PathExpressionIF left]:
   (assocVar:VARIABLE           { pe.bindVariable(
     	                           context.createVariable(assocVar.getText()));     })?
   LPAREN type=pathexpr RPAREN  { pe.setType(type);                                  }                                     
-  (ATSCOPE scope=pathexpr      { pe.setScope(scope);                                })?
+  (ATSCOPE 
+   LPAREN scope=pathexpr RPAREN{ pe.setScope(scope);                                })?
   RARROW 
   LPAREN right=roleexpr RPAREN { pe.addChild(right);                                }
   // TODO: add support for variable binding in association roles

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
@@ -60,22 +61,24 @@ public class OccurrencePath extends AbstractBasicPathElement {
   }
   
   @SuppressWarnings("unchecked")
-  public Collection<OccurrenceIF> evaluate(LocalContext context, Object input) {
+  public Collection<OccurrenceIF> evaluate(LocalContext context, Object input)
+      throws InvalidQueryException {
     TopicIF topic = (TopicIF) input;
     
-    Collection<?> validScopes = null;
-    Collection<?> validTypes = null;
+    Collection<TopicIF> validScopes = null;
+    Collection<TopicIF> validTypes = null;
     
     if (getScope() != null) {
       PathExpression scope = (PathExpression) getScope();
       ResultSet scopes = scope.evaluate(context);
-      validScopes = scopes.getValues(scopes.getColumnCount() - 1);
+      validScopes = (Collection<TopicIF>) scopes.getValues(scopes
+          .getLastIndex());
     }
-    
+
     if (getType() != null) {
       PathExpression type = (PathExpression) getType();
       ResultSet types = type.evaluate(context);
-      validTypes = types.getValues(types.getColumnCount() - 1);
+      validTypes = (Collection<TopicIF>) types.getValues(types.getLastIndex());
     }
     
     Collection<OccurrenceIF> ocs = topic.getOccurrences();

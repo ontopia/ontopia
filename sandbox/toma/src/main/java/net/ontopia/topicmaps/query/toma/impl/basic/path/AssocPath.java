@@ -15,20 +15,21 @@ import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 
 /**
- * INTERNAL: Association path element in an path expression. Returns all
- * topics that take part in the specified association.
+ * INTERNAL: Association path element in an path expression. Returns all topics
+ * that take part in the specified association.
  * <p>
  * <b>Allowed Input</b>:
  * <ul>
  * <li>TOPIC
  * </ul>
- * </p><p>
+ * </p>
+ * <p>
  * <b>Output</b>: TOPIC
  * </p>
  */
-public class AssocPath extends AbstractBasicPathElement { 
+public class AssocPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
-  
+
   static {
     inputSet = new HashSet<TYPE>();
     inputSet.add(TYPE.TOPIC);
@@ -46,7 +47,7 @@ public class AssocPath extends AbstractBasicPathElement {
   protected boolean isScopeAllowed() {
     return true;
   }
-  
+
   protected boolean isTypeAllowed() {
     return true;
   }
@@ -54,38 +55,48 @@ public class AssocPath extends AbstractBasicPathElement {
   protected boolean isChildAllowed() {
     return true;
   }
-  
+
   public Set<TYPE> validInput() {
     return inputSet;
   }
-  
+
   public TYPE output() {
     return TYPE.TOPIC;
   }
-  
+
   @SuppressWarnings("unchecked")
   public Collection<?> evaluate(LocalContext context, Object input)
-      throws InvalidQueryException  {
+      throws InvalidQueryException {
+
+    ClassInstanceIndexIF index = (ClassInstanceIndexIF) context.getTopicMap()
+        .getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
+
+    Collection<TopicIF> validScopes = null;
+    if (getScope() != null) {
+      PathExpression scope = (PathExpression) getScope();
+      ResultSet scopes = scope.evaluate(context);
+      validScopes = (Collection<TopicIF>) scopes.getValues(scopes
+          .getLastIndex());
+    }
+
     PathExpression type = (PathExpression) getType();
     ResultSet types = type.evaluate(context);
-    Collection<?> validTypes = types.getValues(types.getLastIndex());
-    
-    ClassInstanceIndexIF index = 
-      (ClassInstanceIndexIF) context.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
+    Collection<TopicIF> validTypes = (Collection<TopicIF>) types
+        .getValues(types.getLastIndex());
 
     LinkedList<AssociationIF> assocs = new LinkedList<AssociationIF>();
     for (Object t : validTypes) {
-      Collection<AssociationIF> a = index.getAssociations((TopicIF) t);
-      assocs.addAll(a);
+      Collection<AssociationIF> as = index.getAssociations((TopicIF) t);
+      if (validScopes == null) {
+        assocs.addAll(as);
+      } else {
+        for (AssociationIF assoc : as) {
+          if (containsAny(assoc.getScope(), validScopes)) {
+            assocs.add(assoc);
+          }
+        }
+      }
     }
-    
-    // TODO: implement scoped associations
-//    Collection<?> validScopes = null;
-//    if (getScope() != null) {
-//      PathExpression scope = (PathExpression) getScope();
-//      ResultSet scopes = scope.evaluate(context);
-//      validScopes = scopes.getValues(scopes.getLastIndex());
-//    }
 
     TopicIF topic = null;
     if (input instanceof TopicIF) {
@@ -93,7 +104,6 @@ public class AssocPath extends AbstractBasicPathElement {
     }
 
     PathExpression leftRole = null, rightRole = null;
-    
     switch (getChildCount()) {
     case 1:
       rightRole = (PathExpression) getChild(0);
@@ -104,97 +114,64 @@ public class AssocPath extends AbstractBasicPathElement {
       break;
     default:
       throw new InvalidQueryException(
-          "missing roles in association path element");
+          "Missing roles in association path element.");
     }
-    
-    LinkedList<AssociationIF> finalAssocs;
+
+    LinkedList<AssociationRoleIF> finalRoles;
     if (leftRole != null) {
-      finalAssocs = getValidAssociations(context, assocs, leftRole, topic);
+      finalRoles = getValidAssociationRoles(context, assocs, leftRole, topic);
     } else {
-      finalAssocs = assocs;
-    }    
-    
-    if (rightRole.isEmpty()) 
-    {
-      LinkedList<LinkedList> result = new LinkedList<LinkedList>();
-      for (AssociationIF assoc : finalAssocs) 
-      {
-        Collection<AssociationRoleIF> assocRoles = assoc.getRoles();
-        for (AssociationRoleIF role : assocRoles) 
-        {
-          LinkedList row = new LinkedList();
-          row.add(assoc);
-          row.add(role.getPlayer());
-          result.add(row);
-        }
+      finalRoles = new LinkedList<AssociationRoleIF>();
+      for (AssociationIF assoc : assocs) {
+        finalRoles.addAll(assoc.getRoles());
       }
-      return result;
-    } else {
+    }
+
+    Collection<TopicIF> validRoles = null;
+    if (!rightRole.isEmpty()) {
       ResultSet roles = rightRole.evaluate(context);
-      Collection<?> validRoles = roles.getValues(roles.getLastIndex());
-      
-      LinkedList<LinkedList> result = new LinkedList<LinkedList>();
-      
-      for (AssociationIF assoc : finalAssocs) 
-      {
-        for (Object o : validRoles) 
-        {
-          Collection<AssociationRoleIF> assocRoles = assoc.getRolesByType((TopicIF) o);
-          for (AssociationRoleIF role : assocRoles) 
-          {
-            LinkedList row = new LinkedList();
-            row.add(assoc);
-            row.add(role.getPlayer());
-            result.add(row);
-          }
-        }
-      }
-      
-      return result;
+      validRoles = (Collection<TopicIF>) roles.getValues(roles.getLastIndex());
     }
+    
+    LinkedList<Object[]> result = new LinkedList<Object[]>();
+    for (AssociationRoleIF role : finalRoles) {
+      if (validRoles == null || validRoles.contains(role.getType())) {
+        result.add(new Object[] { role.getAssociation(), role.getPlayer() });
+      }
+    }
+    return result;
   }
-  
+
   @SuppressWarnings("unchecked")
-  private LinkedList<AssociationIF> getValidAssociations(LocalContext context, LinkedList<AssociationIF> assocs, PathExpression roleType, TopicIF input) 
-  {
-    if (roleType.isEmpty()) 
-    {
-      if (input == null) return assocs;
-      LinkedList<AssociationIF> validAssocs = new LinkedList<AssociationIF>();
-      for (AssociationIF assoc : assocs) 
-      {
-        Collection<AssociationRoleIF> assocRoles = assoc.getRoles();
-        for (AssociationRoleIF role : assocRoles) 
-        {
-          if (role.getPlayer().getObjectId().equals(input.getObjectId())) {
-            validAssocs.add(assoc);
-            break;
-          }
-        }
-      }
-      return validAssocs;
-    } else {
-      ResultSet roles = roleType.evaluate(context);
-      Collection<?> validRoles = roles.getValues(roles.getColumnCount() - 1);
-      
-      LinkedList<AssociationIF> validAssocs = new LinkedList<AssociationIF>();
-      
-      for (AssociationIF assoc : assocs) 
-      {
-        for (Object o : validRoles) 
-        {
-          Collection<AssociationRoleIF> assocRoles = assoc.getRolesByType((TopicIF) o);
-          for (AssociationRoleIF role : assocRoles) 
-          {
-            if (input == null || role.getPlayer().getObjectId().equals(input.getObjectId())) {
-              validAssocs.add(assoc);
-              break;
-            }
-          }
-        }
-      }
-      
-      return validAssocs;
+  private LinkedList<AssociationRoleIF> getValidAssociationRoles(
+      LocalContext context, LinkedList<AssociationIF> assocs,
+      PathExpression roleType, TopicIF input) throws InvalidQueryException {
+
+    LinkedList<AssociationRoleIF> validRoles = new LinkedList<AssociationRoleIF>();
+    if (input == null) {
+      return validRoles;
     }
+    
+    Collection<TopicIF> validRoleTypes = null;
+    if (!roleType.isEmpty()) {
+      ResultSet roles = roleType.evaluate(context);
+      validRoleTypes = (Collection<TopicIF>) roles.getValues(roles.getLastIndex());
+    }
+    
+    for (AssociationIF assoc : assocs) {
+      Collection<AssociationRoleIF> roles = assoc.getRoles();
+      for (AssociationRoleIF role : roles) {
+        if (validRoleTypes == null || validRoleTypes.contains(role.getType())) {
+          if (role.getPlayer().getObjectId().equals(input.getObjectId())) {
+            // add all the other roles of this assoc
+            Collection<AssociationRoleIF> tmp = new HashSet<AssociationRoleIF>(roles);
+            tmp.remove(role);
+            validRoles.addAll(tmp);
+          }
+        }
+      }
+    }
+    
+    return validRoles;
   }
 }

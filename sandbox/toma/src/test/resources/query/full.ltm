@@ -4,11 +4,14 @@
 [standard     = "Standard"]
 [project      = "Project"]
 [organization = "Organization"]
+[person       = "Person"]
 
 /* association types */
 
-[format-for = "Format for"]
-[defined-by = "Defined by"]
+[format-for     = "Format for"]
+[defined-by     = "Defined by"]
+[contributes-to = "Contributes to"]
+[implements     = "Implements"]
 
 /* occurrence types */
 
@@ -20,8 +23,9 @@
 
 /* scope types */
 
-[english = "English language"]
-[german  = "German language"]
+[english  = "English language"]
+[german   = "German language"]
+[year2009 = "Year 2009"]
 
 /* topics, associations and occurrences */
 
@@ -51,11 +55,20 @@ format-for(xtm, topic-maps) ~ xtm-standard
 {xtm-standard, mass, [[2.0 kg]]}
 {xtm-standard, pages, [[120]]}
 
-defined-by(ltm, ontopia)
-defined-by(xtm, topicmaps.org)
-
 [ontopia : project = "Ontopia Project"]
 {ontopia, homepage, "http://code.google.com/p/ontopia/"}
 
 [topicmaps.org  : organization = "TopicMaps.Org"]
 {topicmaps.org, homepage, "http://www.topicmaps.org"}
+
+defined-by(ltm, ontopia)
+defined-by(xtm, topicmaps.org)
+
+[tn : person = "Thomas Neidhart"]
+[lmg : person = "Lars Marius Garshol"]
+
+contributes-to(tn, ontopia) / year2009
+contributes-to(lmg, ontopia)
+
+implements(ontopia, xtm-standard)
+implements(ontopia, ltm-standard)

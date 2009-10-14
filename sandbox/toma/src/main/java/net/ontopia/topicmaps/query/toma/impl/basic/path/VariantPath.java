@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
@@ -60,7 +61,8 @@ public class VariantPath extends AbstractBasicPathElement {
   }
   
   @SuppressWarnings("unchecked")
-  public Collection<VariantNameIF> evaluate(LocalContext context, Object input) {
+  public Collection<VariantNameIF> evaluate(LocalContext context, Object input)
+      throws InvalidQueryException {
     TopicNameIF name = (TopicNameIF) input;
     
     Collection<?> validScopes = null;
