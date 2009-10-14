@@ -1,8 +1,10 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.function;
 
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
-import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
+/**
+ * INTERNAL: Transforms a string into uppercase.
+ */
 public class UpperCaseFunction extends AbstractSimpleFunction {
   
   public UpperCaseFunction() {
@@ -16,9 +18,5 @@ public class UpperCaseFunction extends AbstractSimpleFunction {
     } else {
       return str;
     }
-  }
-  
-  public boolean validate() throws AntlrWrapException {
-    return true;
   }
 }

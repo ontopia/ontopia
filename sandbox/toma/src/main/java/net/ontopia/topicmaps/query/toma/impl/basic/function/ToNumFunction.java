@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
-import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
 /**
  * INTERNAL: Converts a string into a number.
@@ -35,9 +34,5 @@ public class ToNumFunction extends AbstractSimpleFunction {
   
   public String evaluate(Object obj) throws InvalidQueryException {
     return convertToNumber(obj);
-  }
-
-  public boolean validate() throws AntlrWrapException {
-    return true;
   }
 }

@@ -32,6 +32,8 @@ public class ConcatFunction extends AbstractAggregateFunction {
 
   @Override
   public boolean validate() throws AntlrWrapException {
+    super.validate();
+    
     if (parameters.size() != 1) {
       throw new AntlrWrapException(new InvalidQueryException(
           "The 'concat' function needs to have 1 parameter."));

@@ -1,8 +1,10 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.function;
 
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
-import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
+/**
+ * INTERNAL: Transforms a string into titlecase style. 
+ */
 public class TitleCaseFunction extends AbstractSimpleFunction {
   
   public TitleCaseFunction() {
@@ -39,9 +41,5 @@ public class TitleCaseFunction extends AbstractSimpleFunction {
         }
     }
     return buffer.toString();
-  }
-  
-  public boolean validate() throws AntlrWrapException {
-    return true;
   }
 }

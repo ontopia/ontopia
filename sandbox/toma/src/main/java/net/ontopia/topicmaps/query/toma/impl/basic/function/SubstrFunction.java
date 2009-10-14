@@ -27,7 +27,10 @@ public class SubstrFunction extends AbstractSimpleFunction {
     }
   }
 
+  @Override
   public boolean validate() throws AntlrWrapException {
+    super.validate();
+    
     if (parameters.size() < 1 || parameters.size() > 2) {
       throw new AntlrWrapException(new InvalidQueryException(
           "Only 1 or 2 parameters are allowed for 'substr' function."));
@@ -36,7 +39,7 @@ public class SubstrFunction extends AbstractSimpleFunction {
     String param1 = parameters.get(0);
     
     try {
-      from = Integer.valueOf(param1);
+      from = Integer.valueOf(param1) - 1;
       if (from < 0) {
         throw new AntlrWrapException(new InvalidQueryException(
             "negative values are not allowed as parameter for function 'substr': "

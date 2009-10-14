@@ -3,10 +3,13 @@ package net.ontopia.topicmaps.query.toma.impl.basic.function;
 import java.util.Collection;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
 /**
- * INTERNAL: Identifies the minimum value in a collection. Only works for numbers.
+ * INTERNAL: Identifies the minimum value in a collection.
+ * <p>
+ * <b>Note</b>: This function is only defined for numbers. In case the 
+ * encapsulated expression returns something else, the result will be 0.  
+ * </p>
  */
 public class MinFunction extends AbstractAggregateFunction {
   
@@ -34,9 +37,5 @@ public class MinFunction extends AbstractAggregateFunction {
     }
     
     return new Double(min);
-  }
-
-  public boolean validate() throws AntlrWrapException {
-    return true;
   }
 }

@@ -3,10 +3,13 @@ package net.ontopia.topicmaps.query.toma.impl.basic.function;
 import java.util.Collection;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
 /**
- * INTERNAL: Calculates the sum of a collection. Only works for numbers.
+ * INTERNAL: Calculates the sum of a collection.
+ * <p>
+ * <b>Note</b>: This function is only defined for numbers. In case the 
+ * encapsulated expression returns something else, the result will be 0.  
+ * </p>
  */
 public class SumFunction extends AbstractAggregateFunction {
   
@@ -28,9 +31,5 @@ public class SumFunction extends AbstractAggregateFunction {
     }
    
     return new Double(sum);
-  }
-
-  public boolean validate() throws AntlrWrapException {
-    return true;
   }
 }

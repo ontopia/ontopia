@@ -4,6 +4,9 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
+/**
+ * INTERNAL: trims characters from a string.
+ */
 public class TrimFunction extends AbstractSimpleFunction {
   
   private enum TRIM_TYPE {
@@ -27,7 +30,10 @@ public class TrimFunction extends AbstractSimpleFunction {
     }
   }
   
+  @Override
   public boolean validate() throws AntlrWrapException {
+    super.validate();
+    
     if (parameters.size() > 2) {
       throw new AntlrWrapException(new InvalidQueryException(
           "Only up to 2 parameters are allowed for the 'trim' function."));

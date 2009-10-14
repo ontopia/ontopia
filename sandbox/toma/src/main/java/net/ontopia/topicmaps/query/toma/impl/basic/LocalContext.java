@@ -6,7 +6,10 @@ import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 
-public class LocalContext implements Cloneable {
+/**
+ * INTERNAL: The current context when evaluating a query.
+ */
+public class LocalContext {
 
   private TopicMapIF topicmap;
   private Map<String, ResultSet> resultsets;
