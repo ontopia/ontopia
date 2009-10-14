@@ -1,6 +1,3 @@
-
-// $Id: QueryProcessorTest.java,v 1.75 2009/04/27 11:00:50 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.toma;
 
 import java.io.IOException;
@@ -54,7 +51,7 @@ public class ParsedQueryTest extends AbstractTomaQueryTestCase {
   
   public void testSimpleCount() throws InvalidQueryException {
     makeEmpty();
-    ParsedQueryIF query = parse("select $A, count($B) where $A.instance(1) = $B;");
+    ParsedQueryIF query = parse("select count($B) where $A.instance(1) = $B;");
     Collection<String> vars = query.getCountedVariables();
     assertTrue("bad number of variables in counted variables", vars.size() == 1);
     assertTrue("selected variables does not contain B", vars.contains("B"));

@@ -1,8 +1,8 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import java.util.ArrayList;
-import java.util.Map;
 
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
@@ -121,16 +121,41 @@ public class SelectStatement implements ASTElementIF {
     return this.clause;
   }
 
+  public boolean isAggregated() {
+    // validate all select projections
+    int numAggregate = 0;
+    for (ExpressionIF expr : selects) {
+      if (expr instanceof FunctionIF) {
+        if (((FunctionIF) expr).isAggregateFunction()) {
+          numAggregate++;
+        }
+      }
+    }
+
+    return (numAggregate > 0);
+  }
+  
   public boolean validate() throws AntlrWrapException {
 
     // TODO: check that all select clauses use an aggregate function
     // if at least one contains such a function.
     
     // validate all select projections
+    int numAggregate = 0;
     for (ExpressionIF expr : selects) {
+      if (expr instanceof FunctionIF) {
+        if (((FunctionIF) expr).isAggregateFunction()) {
+          numAggregate++;
+        }
+      }
       expr.validate();
     }
 
+    if (numAggregate > 0 && numAggregate != selects.size()) {
+      throw new AntlrWrapException(new InvalidQueryException(
+          "All select-clauses must contain a aggregate function."));
+    }
+    
     // TODO: check that no aggregate functions are used in the where clause.
     
     // validate the where clauses

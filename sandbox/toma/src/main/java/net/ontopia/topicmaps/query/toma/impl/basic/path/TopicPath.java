@@ -15,13 +15,8 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
-import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic;
-import net.ontopia.topicmaps.query.toma.parser.ast.Level;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
-import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
-import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
-import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF.TYPE;
 
 /**
  * INTERNAL: Represents a topic literal.

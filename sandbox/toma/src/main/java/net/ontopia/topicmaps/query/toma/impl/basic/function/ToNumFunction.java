@@ -19,7 +19,7 @@ public class ToNumFunction extends AbstractSimpleFunction {
     super("TO_NUM", 0);
   }
 
-  public String evaluate(Object obj) throws InvalidQueryException {
+  public static String convertToNumber(Object obj) throws InvalidQueryException {
     String str = Stringifier.toString(obj);
     if (str != null) {
       Matcher m = pattern.matcher(str);
@@ -31,6 +31,10 @@ public class ToNumFunction extends AbstractSimpleFunction {
     } else {
       return "0";
     }
+  }
+  
+  public String evaluate(Object obj) throws InvalidQueryException {
+    return convertToNumber(obj);
   }
 
   public boolean validate() throws AntlrWrapException {

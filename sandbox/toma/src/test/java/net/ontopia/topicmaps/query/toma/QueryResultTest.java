@@ -1,6 +1,3 @@
-
-// $Id: QueryProcessorTest.java,v 1.75 2009/04/27 11:00:50 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.toma;
 
 import java.io.IOException;

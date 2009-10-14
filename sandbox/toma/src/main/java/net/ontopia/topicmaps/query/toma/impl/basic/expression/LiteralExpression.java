@@ -1,5 +1,8 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.expression;
 
+import java.util.Collection;
+
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
@@ -24,5 +27,11 @@ public class LiteralExpression extends AbstractLiteral implements
     row.setValue(0, getValue());
     rs.addRow(row);
     return rs;
+  }
+  
+  public Collection<?> evaluate(LocalContext context, Object input)
+      throws InvalidQueryException {
+    throw new InvalidQueryException(
+        "Internal error, tried to evaluate a literal expression with a given input.");
   }
 }

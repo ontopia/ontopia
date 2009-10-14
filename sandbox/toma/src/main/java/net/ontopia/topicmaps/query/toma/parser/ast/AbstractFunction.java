@@ -83,7 +83,9 @@ public abstract class AbstractFunction extends AbstractExpression implements Fun
 
     for (String param : parameters) {
       sb.append(",");
+      sb.append("'");
       sb.append(param);
+      sb.append("'");
     }
 
     sb.append(")");

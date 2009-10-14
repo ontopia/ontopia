@@ -16,7 +16,7 @@ import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
-import net.ontopia.topicmaps.query.toma.impl.basic.function.AbstractAggregateFunction;
+import net.ontopia.topicmaps.query.toma.impl.basic.function.AbstractSimpleFunction;
 import net.ontopia.topicmaps.query.toma.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.toma.parser.TomaParser;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
@@ -53,15 +53,12 @@ public class BasicQueryProcessor implements QueryProcessorIF {
   }
 
   public QueryResultIF execute(TomaQuery query) throws InvalidQueryException {
+    // TODO: implement UNION styles
     for (int i = 0; i < query.getStatementCount(); i++) {
       SelectStatement stmt = query.getStatement(i);
-      ResultSet rs = evaluateSelect(stmt);
       
-      ArrayList<Row> rows = new ArrayList<Row>(rs.getRowCount());
-      for (Row r : rs) {
-        rows.add(r);
-      }
-      
+      ResultSet rs = satisfy(stmt);
+      ArrayList<Row> rows = aggregate(stmt, rs);
       sort(rows, query.getOrderBy());
       
       return new QueryResult(rs.getColumnDefinitions(), rows, query.getLimit(), query.getOffset()); 
@@ -69,12 +66,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     return null;
   }
 
-  private void sort(ArrayList<Row> matches, List<QueryOrder> orderings) {
-    if (!orderings.isEmpty())
-      Collections.sort(matches, new RowComparator(orderings));
-  }
-  
-  private ResultSet evaluateSelect(SelectStatement stmt) {
+  private ResultSet satisfy(SelectStatement stmt) throws InvalidQueryException {
     BasicExpressionIF expr = (BasicExpressionIF) stmt.getClause();
     LocalContext context = new LocalContext(topicmap);
 
@@ -130,46 +122,23 @@ public class BasicQueryProcessor implements QueryProcessorIF {
   }
 
   private void fillFinalResultSet(LocalContext context, int index,
-      Object input, Row row, ResultSet rs, SelectStatement stmt) {
+      Object input, Row row, ResultSet rs, SelectStatement stmt)
+      throws InvalidQueryException {
     if (index < stmt.getSelectCount()) {
-      BasicExpressionIF selectExpr = (BasicExpressionIF) stmt.getSelect(index);
-      PathExpression pathExpr;
-      if (selectExpr instanceof PathExpression) {
-        pathExpr = (PathExpression) selectExpr;
-      } else {
-        pathExpr = (PathExpression) selectExpr.getChild(0);
-      }
+      BasicExpressionIF expr = (BasicExpressionIF) stmt.getSelect(index);
+      Collection<?> values = expr.evaluate(context, input);
+      for (Object v : values) {
+        // ignore null values in the first select clause
+        if (v == null && index == 0)
+          continue;
 
-      Collection<?> values = pathExpr.evaluate(context, input);
-      
-      if (selectExpr instanceof AbstractAggregateFunction) {
         try {
-          String r = ((BasicFunctionIF) selectExpr).evaluate(values);
-          row.setValue(index, r);
-          fillFinalResultSet(context, index + 1, input, row, rs, stmt);
-        } catch(InvalidQueryException e) {
+          Row newRow = (Row) row.clone();
+          newRow.setValue(index, v);
+          fillFinalResultSet(context, index + 1, input, newRow, rs, stmt);
+        } catch (Exception e) {
           // TODO: better error handling
           e.printStackTrace();
-        }
-      } else {
-        
-        for (Object v : values) {
-          // ignore null values in the first select clause
-          if (v == null && index == 0) continue;
-
-          try {
-            Row newRow = (Row) row.clone();
-
-            if (selectExpr instanceof BasicFunctionIF) {
-              v = ((BasicFunctionIF) selectExpr).evaluate(v);
-            }
-
-            newRow.setValue(index, v);
-            fillFinalResultSet(context, index + 1, input, newRow, rs, stmt);
-          } catch (Exception e) {
-            // TODO: better error handling
-            e.printStackTrace();
-          }
         }
       }
     } else {
@@ -177,6 +146,36 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     }
   }
 
+  private ArrayList<Row> aggregate(SelectStatement stmt, ResultSet rs)
+      throws InvalidQueryException {
+    ArrayList<Row> rows;
+    
+    // if the select is aggregated, evaluate the aggregate functions now;
+    // otherwise just return the ResultSet.
+    if (stmt.isAggregated()) {
+      rows = new ArrayList<Row>(1);
+      Row aggregatedRow = rs.createRow();
+      for (int i=0; i<stmt.getSelectCount(); i++) {
+        // we know, that it has to be a function
+        BasicFunctionIF expr = (BasicFunctionIF) stmt.getSelect(i);
+        aggregatedRow.setValue(i, expr.aggregate(rs.getValues(i)));
+      }
+      rows.add(aggregatedRow);
+    } else {
+      rows = new ArrayList<Row>(rs.getRowCount());
+      for (Row r : rs) {
+        rows.add(r);
+      }
+    }
+    
+    return rows;
+  }
+  
+  private void sort(ArrayList<Row> matches, List<QueryOrder> orderings) {
+    if (!orderings.isEmpty())
+      Collections.sort(matches, new RowComparator(orderings));
+  }
+  
   public QueryResultIF execute(String query) throws InvalidQueryException {
     return execute(query, null, null);
   }

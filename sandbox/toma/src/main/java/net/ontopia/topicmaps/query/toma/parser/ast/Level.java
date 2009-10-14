@@ -64,4 +64,24 @@ public class Level {
   public void setEnd(int end) {
     this.end = end;
   }
+  
+  public String toString() {
+    StringBuffer sb = new StringBuffer();
+    if (start == end) {
+      sb.append(convertLevelToString(start));
+    } else {
+      sb.append(convertLevelToString(start));
+      sb.append("..");
+      sb.append(convertLevelToString(end));
+    }
+    return sb.toString();
+  }
+  
+  private String convertLevelToString(int lvl) {
+    if (lvl == Integer.MAX_VALUE) {
+      return "*";
+    } else {
+      return String.valueOf(lvl);
+    }
+  }
 }

@@ -14,10 +14,8 @@ public class CountFunction extends AbstractAggregateFunction {
     super("COUNT", 0);
   }
 
-  public String evaluate(Object obj) throws InvalidQueryException {
-    Collection col = (Collection) obj;
-    int size = col.size();
-    return String.valueOf(size);
+  public Object aggregate(Collection<?> values) throws InvalidQueryException {
+    return new Integer(values.size());
   }
 
   public boolean validate() throws AntlrWrapException {

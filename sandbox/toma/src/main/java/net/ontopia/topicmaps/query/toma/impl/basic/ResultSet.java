@@ -8,11 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder;
-
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
-import org.apache.commons.collections.bag.TreeBag;
 
 public class ResultSet implements Iterable<Row> {
 

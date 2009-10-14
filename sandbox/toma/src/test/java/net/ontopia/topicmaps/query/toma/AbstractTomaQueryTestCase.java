@@ -198,6 +198,33 @@ public abstract class AbstractTomaQueryTestCase extends AbstractTopicMapTestCase
     assertTrue("expected matches not found: " + matches,
                matches.isEmpty());
   }
+
+  @SuppressWarnings("deprecation")
+  protected void verifyQueryExists(List matches, String query)
+    throws InvalidQueryException {
+
+    matches = new ArrayList(matches); // avoid modifying caller's list
+    
+    QueryResultIF result = null;
+    result = processor.execute(query);
+
+    //! System.out.println("____QUERY: " + query);
+    //! System.out.println("    MATCHES: " + matches);
+    //! int i=0;
+    try {
+      while (result.next()) {
+        //! i++;
+        //! System.out.println("    ROW " + i + ": " + Arrays.asList(result.getValues()));
+        Map match = getMatch(result);
+        assertTrue("match not found in expected results: " + match + " => " + matches,
+            matches.contains(match));
+        matches.remove(match);
+        //! System.out.println("____removing: " + match);
+      }
+    } finally {
+      result.close();
+    }
+  }
   
   protected void verifyQuerySubset(List matches, String query)
     throws InvalidQueryException {

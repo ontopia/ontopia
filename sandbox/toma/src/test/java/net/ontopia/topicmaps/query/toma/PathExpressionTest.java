@@ -1,6 +1,3 @@
-
-// $Id: QueryProcessorTest.java,v 1.75 2009/04/27 11:00:50 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.toma;
 
 import java.io.IOException;
@@ -8,13 +5,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 
+@SuppressWarnings("unchecked")
 public class PathExpressionTest extends AbstractTomaQueryTestCase {
   
   public PathExpressionTest(String name) {
@@ -36,7 +31,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testID() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<LocatorIF> matches = new ArrayList<LocatorIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.ID", getTopicById("ontopia").getItemIdentifiers().iterator().next());
     
     verifyQuery(matches, "select $t.id where $t = i'ontopia';");
@@ -47,7 +42,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testName() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicNameIF> matches = new ArrayList<TopicNameIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.NAME", getTopicById("ontopia").getTopicNames().iterator().next());
     
     verifyQuery(matches, "select $t.name where $t = i'ontopia';");
@@ -55,11 +50,10 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
 
   /// variant path expressions
   
-  @SuppressWarnings("unchecked")
   public void testVariant() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicNameIF> matches = new ArrayList<TopicNameIF>();
+    List matches = new ArrayList();
     Collection<TopicNameIF> topicNames = getTopicById("ltm").getTopicNames();
     for (Object o : topicNames) {
       TopicNameIF name = (TopicNameIF) o;
@@ -74,7 +68,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testVariantWithScope() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicNameIF> matches = new ArrayList<TopicNameIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T", getTopicById("ltm"));
     
     verifyQuery(matches, "select $t where exists $t.name.var@german;");
@@ -85,7 +79,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testOccurrence() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<OccurrenceIF> matches = new ArrayList<OccurrenceIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.OC", getTopicById("ontopia").getOccurrences().iterator().next());
     
     verifyQuery(matches, "select $t.oc where $t = i'ontopia';");
@@ -94,7 +88,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testTypedOccurrence() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T", getTopicById("ltm"));
     addMatch(matches, "$T", getTopicById("topic-maps"));
     
@@ -106,7 +100,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testSubjectIndicator() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<LocatorIF> matches = new ArrayList<LocatorIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SI", getTopicById("ltm").getSubjectIdentifiers().iterator().next());
     
     verifyQuery(matches, "select $t.si where $t = i'ltm';");
@@ -117,7 +111,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testScope() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T", getTopicById("topic-maps"));
     
     verifyQuery(matches, "select $t where exists $t.name.sc;");
@@ -128,7 +122,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testPlayer() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$A.PLAYER", getTopicById("topic-maps"));
     addMatch(matches, "$A.PLAYER", getTopicById("ltm"));
     addMatch(matches, "$A.PLAYER", getTopicById("xtm"));
@@ -141,7 +135,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testRole() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$A.ROLE", getTopicById("format"));
     addMatch(matches, "$A.ROLE", getTopicById("standard"));
     
@@ -153,7 +147,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testReifier() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$A.REIFIER", getTopicById("xtm-standard"));
     
     verifyQuery(matches, "select $a.reifier where $a(format-for)->(format) = i'xtm';");
@@ -164,7 +158,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testType() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.TYPE", getTopicById("format"));
     
     verifyQuery(matches, "select $t.type(1) where $t = i'xtm';");
@@ -175,7 +169,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
   public void testInstance() throws InvalidQueryException, IOException {
     load("full.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.INSTANCE", getTopicById("xtm"));
     addMatch(matches, "$T.INSTANCE", getTopicById("ltm"));
     

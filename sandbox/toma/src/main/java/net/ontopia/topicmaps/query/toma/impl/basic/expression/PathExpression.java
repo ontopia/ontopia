@@ -54,6 +54,7 @@ public class PathExpression extends AbstractPathExpression implements
     return rs;
   }
 
+  @SuppressWarnings("unchecked")
   private void evaluateElement(LocalContext context, ResultSet rs, Row row,
       int pathDepth, int rowIndex, Object input) 
   {
@@ -116,7 +117,7 @@ public class PathExpression extends AbstractPathExpression implements
     return evaluate(context, 0, input);
   }
 
-  public Collection<?> evaluate(LocalContext context, int pathStart,
+  private Collection<?> evaluate(LocalContext context, int pathStart,
       Object input) {
     Collection<Object> coll = new LinkedList<Object>();
     if (pathStart >= getPathLength()) {

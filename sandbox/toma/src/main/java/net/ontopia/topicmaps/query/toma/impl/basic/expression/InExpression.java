@@ -1,5 +1,6 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.expression;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,5 +63,11 @@ public class InExpression extends AbstractExpression implements BasicExpressionI
     }
     
     return rs;
+  }
+  
+  public Collection<?> evaluate(LocalContext context, Object input)
+      throws InvalidQueryException {
+    throw new InvalidQueryException(
+        "Internal error, tried to evaluate an 'IN' expression with a given input.");
   }
 }

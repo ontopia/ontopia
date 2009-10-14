@@ -156,7 +156,7 @@ public abstract class AbstractPathElement implements PathElementIF {
     return true;
   }
 
-  public void fillParseTree(IndentedStringBuilder buf, int level) {
+  public void fillParseTree(IndentedStringBuilder buf, int depth) {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("(%1$10s)", getName()));
 
@@ -168,11 +168,15 @@ public abstract class AbstractPathElement implements PathElementIF {
       sb.append(String.format(" @%1$s", scope.toString()));
     }
 
-    buf.append(sb.toString(), level);
+    if (this.level != null) {
+      sb.append(String.format(" (%1$s)", level.toString()));
+    }
+    
+    buf.append(sb.toString(), depth);
     
     for (int i=0; i<getChildCount(); i++) {
       PathExpressionIF child = getChild(i);
-      child.fillParseTree(buf, level+1);
+      child.fillParseTree(buf, depth+1);
     }
   }
 

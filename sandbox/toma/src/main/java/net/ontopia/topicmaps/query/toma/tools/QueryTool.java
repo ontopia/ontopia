@@ -17,37 +17,37 @@ import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 
 /**
- * PUBLIC: A simple command-line tool to run TOMA queries against a
- * given topic map.
+ * PUBLIC: A simple command-line tool to run TOMA queries against a given topic
+ * map.
  */
 public class QueryTool {
 
-  public static void main(String [] argv) {
+  public static void main(String[] argv) {
 
     // Initialize logging
     CmdlineUtils.initializeLogging();
-      
+
     // Initialize command line option parser and listeners
     CmdlineOptions options = new CmdlineOptions("QueryTool", argv);
     OptionsListener ohandler = new OptionsListener();
-      
+
     // Register local options
     options.addLong(ohandler, "debug", 'd');
-    
+
     // Register logging options
     CmdlineUtils.registerLoggingOptions(options);
-      
+
     // Parse command line options
     try {
       options.parse();
     } catch (CmdlineOptions.OptionsException e) {
       System.err.println("Error: " + e.getMessage());
       usage();
-      System.exit(1);      
+      System.exit(1);
     }
 
     // Get command line arguments
-    String[] args = options.getArguments();    
+    String[] args = options.getArguments();
 
     if (args.length != 2) {
       System.err.println("Error: Must have exactly two arguments!");
@@ -58,22 +58,19 @@ public class QueryTool {
     try {
       // Run the query
       runquery(args[0], args[1], ohandler);
-    }
-    catch (java.net.MalformedURLException e) {
+    } catch (java.net.MalformedURLException e) {
+      System.err.println(e);
+      System.exit(2);
+    } catch (java.io.IOException e) {
+      System.err.println(e);
+      System.exit(2);
+    } catch (InvalidQueryException e) {
       System.err.println(e);
       System.exit(2);
     }
-    catch (java.io.IOException e) {
-      System.err.println(e);
-      System.exit(2);
-    }
-    catch (InvalidQueryException e) {
-      System.err.println(e);
-      System.exit(2);
-    }
-   }
+  }
 
-   private static void usage() {
+  private static void usage() {
     System.out.println("QueryTool [options] <tm> <query>");
     System.out.println("");
     System.out.println("  Runs a toma query against a topic map.");
@@ -81,14 +78,15 @@ public class QueryTool {
     CmdlineUtils.printLoggingOptionsUsage(System.out);
     System.out.println("    --debug: turn on debugging output");
     System.out.println("");
-    System.out.println("    <tm>:  url or file name of topic map to be queried");
+    System.out
+        .println("    <tm>:  url or file name of topic map to be queried");
     System.out.println("    <query>: query string or file containing query");
     System.out.println("");
-   }
+  }
 
-   private static void runquery(String tmfile, String query,
-                               OptionsListener ohandler)
-    throws IOException, MalformedURLException, InvalidQueryException {
+  private static void runquery(String tmfile, String query,
+      OptionsListener ohandler) throws IOException, MalformedURLException,
+      InvalidQueryException {
 
     TopicMapIF tm = ImportExportUtils.getReader(tmfile).read();
     // run duplicate suppression only on in-memory topic maps. too expensive on
@@ -99,7 +97,7 @@ public class QueryTool {
     if (ohandler.debug) {
       System.out.println("Query: " + query + "\n");
     }
-    
+
     QueryProcessorIF processor = new BasicQueryProcessor(tm);
     ParsedQueryIF pquery = processor.parse(query);
 
@@ -109,42 +107,46 @@ public class QueryTool {
 
     long time = System.currentTimeMillis();
     QueryResultIF result = pquery.execute();
-    System.out.println("Query time: " + (System.currentTimeMillis() - time) + "ms\n");
+    System.out.println("Query time: " + (System.currentTimeMillis() - time)
+        + "ms\n");
 
     int rows = 0;
 
     for (int ix = 0; ix < result.getWidth(); ix++)
       System.out.print(String.format("%1$30s |", result.getColumnName(ix)));
     System.out.println();
-    for (int ix = 0; ix < result.getWidth(); ix++) 
+    for (int ix = 0; ix < result.getWidth(); ix++)
       System.out.print("-------------------------------|");
     System.out.println();
-    
+
     while (result.next()) {
       for (int ix = 0; ix < result.getWidth(); ix++)
-        System.out.print(String.format("%1$30s |", getString(Stringifier.toString(result.getValue(ix)), 30)));
+        System.out.print(String.format("%1$30s |", getString(Stringifier
+            .toString(result.getValue(ix)), 30)));
       System.out.println("");
       rows++;
     }
-    
-    System.out.println("\nRows: " + rows);
-   }
 
-   private static String getString(String str, int maxLength) {
-     if (str == null) return null;
-     if (str.length() > maxLength) {
-       return "..." + str.substring(str.length() - maxLength + 4, str.length());
-     } else {
-       return str;
-     }
-   }
-   
-   private static class OptionsListener implements CmdlineOptions.ListenerIF {
-    boolean debug;
-    
-    public void processOption(char option, String value)
-      throws CmdlineOptions.OptionsException {
-      if (option == 'd') debug = true;
+    System.out.println("\nRows: " + rows);
+  }
+
+  private static String getString(String str, int maxLength) {
+    if (str == null)
+      return null;
+    if (str.length() > maxLength) {
+      return "..." + str.substring(str.length() - maxLength + 4, str.length());
+    } else {
+      return str;
     }
-   }
+  }
+
+  private static class OptionsListener implements CmdlineOptions.ListenerIF {
+    boolean debug;
+
+    public void processOption(char option, String value)
+        throws CmdlineOptions.OptionsException {
+      if (option == 'd')
+        debug = true;
+    }
+  }
 }

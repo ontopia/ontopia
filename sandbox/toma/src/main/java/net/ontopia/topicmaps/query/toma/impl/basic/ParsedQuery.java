@@ -17,10 +17,8 @@ import net.ontopia.topicmaps.query.toma.parser.ast.AbstractVariable;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.FunctionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
-import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder;
 import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
-import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder.SORT_ORDER;
 
 /**
@@ -178,6 +176,7 @@ public class ParsedQuery implements ParsedQueryIF {
     return false;
   }
 
+  @Override
   public String toString() {
     return query.getParseTree();
   }

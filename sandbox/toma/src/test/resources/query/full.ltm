@@ -9,15 +9,19 @@
 
 [format-for = "Format for"]
 [defined-by = "Defined by"]
-[version = "Version"]
-[mass = "Mass"]
-[english = "English language"]
-[german  = "German language"]
 
 /* occurrence types */
 
 [specification = "Specification"]
 [homepage      = "Home page"]
+[version       = "Version"]
+[pages         = "Number of pages"]
+[mass          = "Mass"]
+
+/* scope types */
+
+[english = "English language"]
+[german  = "German language"]
 
 /* topics, associations and occurrences */
 
@@ -35,10 +39,17 @@
      @"http://www.ontopia.net/topicmaps/ltm-tech-report.html"]
 {ltm, specification, "http://www.ontopia.net/topicmaps/ltm-tech-report.html"} / german
 
-format-for(ltm, topic-maps)
+[ltm-standard : standard = "LTM standard"]
+format-for(ltm, topic-maps) ~ ltm-standard
+{ltm-standard, version, [[1.2]]}
+{ltm-standard, mass, [[3.0 kg]]}
+{ltm-standard, pages, [[80]]}
+
+[xtm-standard : standard = "XTM standard"]
 format-for(xtm, topic-maps) ~ xtm-standard
 {xtm-standard, version, [[2.0]]}
 {xtm-standard, mass, [[2.0 kg]]}
+{xtm-standard, pages, [[120]]}
 
 defined-by(ltm, ontopia)
 defined-by(xtm, topicmaps.org)

@@ -30,7 +30,7 @@ public class TrimFunction extends AbstractSimpleFunction {
   public boolean validate() throws AntlrWrapException {
     if (parameters.size() > 2) {
       throw new AntlrWrapException(new InvalidQueryException(
-          "Only up to 2 parameters are allowed for 'trim' function."));
+          "Only up to 2 parameters are allowed for the 'trim' function."));
     }
 
     TRIM_TYPE trimming = TRIM_TYPE.BOTH;

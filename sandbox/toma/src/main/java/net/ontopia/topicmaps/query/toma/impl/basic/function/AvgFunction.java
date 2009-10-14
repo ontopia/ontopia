@@ -3,7 +3,6 @@ package net.ontopia.topicmaps.query.toma.impl.basic.function;
 import java.util.Collection;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
-import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
 /**
@@ -19,22 +18,19 @@ public class AvgFunction extends AbstractAggregateFunction {
     super("AVG", 0);
   }
 
-  public String evaluate(Object obj) throws InvalidQueryException {
-    Collection col = (Collection) obj;
-    
+  public Object aggregate(Collection<?> values) throws InvalidQueryException {
     double sum = 0.0;
-    for (Object val : col) {
+    for (Object val : values) {
       try {
-        if (val != null) {
-          sum += Double.parseDouble(Stringifier.toString(val));
-        }
+        sum += Double.parseDouble(ToNumFunction.convertToNumber(val));
       } catch (NumberFormatException e) {
-        //e.printStackTrace()
+        // TODO: check design decision
+        // If the conversion fails, ignore it 
       }
     }
     
-    double avg = sum / Math.max(col.size(), 1);
-    return String.valueOf(avg);
+    double avg = sum / Math.max(values.size(), 1);
+    return new Double(avg);
   }
 
   public boolean validate() throws AntlrWrapException {

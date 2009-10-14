@@ -1,16 +1,13 @@
-
-// $Id: QueryProcessorTest.java,v 1.75 2009/04/27 11:00:50 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.toma;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 
+@SuppressWarnings("unchecked")
 public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
   
   public TypeHierarchyTest(String name) {
@@ -33,7 +30,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // type(0) gets the topic itself
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.TYPE", getTopicById("topicA"));
     
     verifyQuery(matches, "select $t.type(0) where $t = i'topicA';");
@@ -50,7 +47,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // topicC has topicB, which has topicA as type
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.TYPE", getTopicById("topicA"));
     addMatch(matches, "$T.TYPE", getTopicById("topicB"));
     
@@ -61,7 +58,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // topicC has topicB, which has topicA as type
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.TYPE", getTopicById("topicA"));
     addMatch(matches, "$T.TYPE", getTopicById("topicB"));
     addMatch(matches, "$T.TYPE", getTopicById("topicC"));
@@ -73,7 +70,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // topicC has topicB, which has topicA as type
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.TYPE", getTopicById("topicA"));
     addMatch(matches, "$T.TYPE", getTopicById("topicB"));
     
@@ -86,7 +83,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // instance(0) gets the topic itself
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.INSTANCE", getTopicById("topicA"));
     
     verifyQuery(matches, "select $t.instance(0) where $t = i'topicA';");
@@ -102,7 +99,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
   public void testInstanceWithRange() throws InvalidQueryException, IOException {
     load("hierarchies.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.INSTANCE", getTopicById("topicC"));
     addMatch(matches, "$T.INSTANCE", getTopicById("topicD"));
     
@@ -113,7 +110,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // topicC has topicB, which has topicA as type
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.INSTANCE", getTopicById("topicB"));
     addMatch(matches, "$T.INSTANCE", getTopicById("topicC"));
     addMatch(matches, "$T.INSTANCE", getTopicById("topicD"));
@@ -125,7 +122,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // topicC has topicB, which has topicA as type
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.INSTANCE", getTopicById("topicC"));
     addMatch(matches, "$T.INSTANCE", getTopicById("topicD"));
     
@@ -138,7 +135,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // sub(0) gets the type itself
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SUB", getTopicById("typeA"));
     
     verifyQuery(matches, "select $t.sub(0) where $t = i'typeA';");
@@ -154,7 +151,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
   public void testSubTypeWithRange() throws InvalidQueryException, IOException {
     load("hierarchies.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SUB", getTopicById("typeC"));
     addMatch(matches, "$T.SUB", getTopicById("typeD"));
     
@@ -164,7 +161,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
   public void testSubTypeWithRange2() throws InvalidQueryException, IOException {
     load("hierarchies.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SUB", getTopicById("typeB"));
     addMatch(matches, "$T.SUB", getTopicById("typeC"));
     addMatch(matches, "$T.SUB", getTopicById("typeD"));
@@ -175,7 +172,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
   public void testSubTypeWithStar() throws InvalidQueryException, IOException {
     load("hierarchies.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SUB", getTopicById("typeC"));
     addMatch(matches, "$T.SUB", getTopicById("typeD"));
     
@@ -188,7 +185,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
     load("hierarchies.ltm");
 
     // super(0) gets the type itself
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SUPER", getTopicById("typeD"));
     
     verifyQuery(matches, "select $t.super(0) where $t = i'typeD';");
@@ -204,7 +201,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
   public void testSuperTypeWithRange() throws InvalidQueryException, IOException {
     load("hierarchies.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SUPER", getTopicById("typeA"));
     addMatch(matches, "$T.SUPER", getTopicById("typeB"));
     
@@ -214,7 +211,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
   public void testSuperTypeWithRange2() throws InvalidQueryException, IOException {
     load("hierarchies.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SUPER", getTopicById("typeA"));
     addMatch(matches, "$T.SUPER", getTopicById("typeB"));
     addMatch(matches, "$T.SUPER", getTopicById("typeC"));
@@ -225,7 +222,7 @@ public class TypeHierarchyTest extends AbstractTomaQueryTestCase {
   public void testSuperTypeWithStar() throws InvalidQueryException, IOException {
     load("hierarchies.ltm");
 
-    List<TopicIF> matches = new ArrayList<TopicIF>();
+    List matches = new ArrayList();
     addMatch(matches, "$T.SUPER", getTopicById("typeA"));
     addMatch(matches, "$T.SUPER", getTopicById("typeB"));
     
