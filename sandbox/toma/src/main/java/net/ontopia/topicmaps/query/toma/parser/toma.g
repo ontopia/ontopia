@@ -395,7 +395,6 @@ VARIABLE:
   { setText(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-1)); };
 
 INT: ('0'..'9')+;
-NUMBER: ('0'..'9')+ ( '.' ('0'..'9')+ )?;
 
 ASTERISK   options { paraphrase = "*";  } : '*'  ;
 COLON      options { paraphrase = ":";  } : ':'  ;
