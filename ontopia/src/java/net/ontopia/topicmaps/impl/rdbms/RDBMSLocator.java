@@ -46,10 +46,10 @@ public class RDBMSLocator extends AbstractLocator implements Externalizable {
   
   public LocatorIF resolveAbsolute(String address) {
     // FIXME: should use static method instead of creating URILocator instance
-		try {
-			return new URILocator(this.address).resolveAbsolute(address);
-		} catch (java.net.MalformedURLException e) {
-			// use RDBMS locator
+    try {
+      return new URILocator(this.address).resolveAbsolute(address);
+    } catch (java.net.MalformedURLException e) {
+      // use RDBMS locator
     }
     // Since this locator is general we cannot make the address
     // absolute, so we'll just return a new locator with the same
@@ -59,11 +59,11 @@ public class RDBMSLocator extends AbstractLocator implements Externalizable {
 
   public String getExternalForm() {
     // FIXME: should use static method instead of creating URILocator instance
-		try {
-			return new URILocator(this.address).getExternalForm();
-		} catch (java.net.MalformedURLException e) {
-			// use existing address
-		}
+    try {
+      return new URILocator(this.address).getExternalForm();
+    } catch (java.net.MalformedURLException e) {
+      // use existing address
+    }
     // this locator is general so we don't know how to do this
     return address;
   }
