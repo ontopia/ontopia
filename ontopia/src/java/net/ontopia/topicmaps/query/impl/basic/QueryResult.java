@@ -90,7 +90,6 @@ public class QueryResult implements QueryResultIF {
   }
 
   public void close() {
-    // Nothing needs to be released.
+    matches = null; // lets the (potentially big) QueryMatches object be GC-ed
   }
-  
 }
