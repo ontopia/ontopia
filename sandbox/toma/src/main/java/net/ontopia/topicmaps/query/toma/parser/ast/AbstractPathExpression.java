@@ -6,6 +6,7 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF.TYPE;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -66,6 +67,15 @@ public abstract class AbstractPathExpression extends AbstractExpression
   public void addChild(ExpressionIF child) throws AntlrWrapException {
     throw new AntlrWrapException(new InvalidQueryException(
         "PathExpressions can not have children"));
+  }
+
+  public TYPE output() {
+    if (!isEmpty()) {
+      PathElementIF lastElement = path.get(path.size() - 1);
+      return lastElement.output();
+    } else {
+      return PathElementIF.TYPE.NONE;
+    }
   }
 
   @Override

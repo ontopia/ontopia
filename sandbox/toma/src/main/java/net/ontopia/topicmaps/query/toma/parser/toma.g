@@ -120,7 +120,7 @@ clause returns [ExpressionIF e]:
       ( right=statement        { e.addChild(right);                               }
       | right=expr             { e.addChild(right);                               } 
         (
-         COMMA right=expr      { e.addChild(right);                               }
+         COMMA right=atomexpr  { e.addChild(right);                               }
         )*
       )? RPAREN
     )

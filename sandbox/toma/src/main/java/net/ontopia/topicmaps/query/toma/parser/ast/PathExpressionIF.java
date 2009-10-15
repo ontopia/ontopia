@@ -1,6 +1,7 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF.TYPE;
 
 /**
  * INTERNAL: Represents a TOMA path expression in the AST. A path expression
@@ -16,4 +17,11 @@ public interface PathExpressionIF extends ExpressionIF {
    *           an invalid path expression.
    */
   public void addPath(PathElementIF element) throws AntlrWrapException;
+  
+  /**
+   * Specifies the output type for this {@link PathExpressionIF}.
+   * 
+   * @return the {@link TYPE} that is the output of this element.
+   */
+  public TYPE output();
 }

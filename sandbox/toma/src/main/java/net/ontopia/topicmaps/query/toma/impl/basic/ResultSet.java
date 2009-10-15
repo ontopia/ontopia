@@ -142,6 +142,17 @@ public class ResultSet implements Iterable<Row> {
     rows.add(row);
   }
 
+  /**
+   * Adds all rows from the other ResultSet to this one. Note: the layout of the
+   * two ResultSets has to be the same, otherwise this operation will fail.
+   * 
+   * @param other the ResultSet to be added. 
+   */
+  @SuppressWarnings("unchecked")
+  public void addAll(ResultSet other) {
+    rows.addAll(other.rows);
+  }
+
   public void removeRow(Row row) {
     rows.remove(row);
   }
