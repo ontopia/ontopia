@@ -158,9 +158,14 @@ assocpathexpr [PathExpressionIF p, PathExpressionIF left]:
                                	 PathExpressionIF type, scope, right;               } 
   (assocVar:VARIABLE           { pe.bindVariable(
     	                           context.createVariable(assocVar.getText()));     })?
-  LPAREN type=pathexpr RPAREN  { pe.setType(type);                                  }                                     
-  (ATSCOPE 
-   LPAREN scope=pathexpr RPAREN{ pe.setScope(scope);                                })?
+  LPAREN type=pathexpr RPAREN  { pe.setType(type);                                  }
+  ( ATSCOPE 
+                               { PathElementIF tl;                                  }
+    ( var:VARIABLE             { scope = createVariable(var.getText());             }
+    | tl=topicliteral          { scope = context.createPathExpression();            } 
+    	                       { scope.addPath(tl);                                 }
+    | LPAREN scope=pathexpr RPAREN 
+    )                          { pe.setScope(scope);                                })?
   RARROW 
   LPAREN right=roleexpr RPAREN { pe.addChild(right);                                }
   // TODO: add support for variable binding in association roles
@@ -355,12 +360,8 @@ tokens {
 }
 
 IDENTIFIER options { testLiterals = true; }:
-  ('A'..'Z' | 'a'..'z') 
-  ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')*
-  (
-    { !(LA(2) == ' ' || LA(2) == '\t' || LA(2) == '\n' || LA(2) == '\r') }?
-    (':' ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')+)?
-  )?;
+  ('A'..'Z' | 'a'..'z')
+  ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | { LA(2)!='>' }? '-')*;
 
 WS:
   (' ' |	'\t' | '\n'  { newline(); } | '\r')
@@ -394,7 +395,6 @@ VARIABLE:
   { setText(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-1)); };
 
 INT: ('0'..'9')+;
- 
 NUMBER: ('0'..'9')+ ( '.' ('0'..'9')+ )?;
 
 ASTERISK   options { paraphrase = "*";  } : '*'  ;
