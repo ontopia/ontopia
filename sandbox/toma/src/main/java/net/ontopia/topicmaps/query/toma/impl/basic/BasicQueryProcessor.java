@@ -16,6 +16,7 @@ import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.toma.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.toma.parser.TomaParser;
+import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder;
 import net.ontopia.topicmaps.query.toma.parser.ast.SelectStatement;
 import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
@@ -211,7 +212,18 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     ExpressionFactory ef = new ExpressionFactory();
     PathExpressionFactory pef = new PathExpressionFactory();
     LocalParseContext lc = new LocalParseContext(pef, ef);
-    return new ParsedQuery(this, TomaParser.parse(query, lc));
+    
+    TomaQuery toma = TomaParser.parse(query, lc);
+    
+    // optimize query
+    QueryOptimizer optimizer = new QueryOptimizer();
+    for (int i = 0; i < toma.getStatementCount(); i++) {
+      SelectStatement stmt = toma.getStatement(i);
+      ExpressionIF whereClause = stmt.getClause();
+      stmt.setClause(whereClause.optimize(optimizer));
+    }
+
+    return new ParsedQuery(this, toma);
   }
 
   public ParsedQueryIF parse(String query) throws InvalidQueryException {

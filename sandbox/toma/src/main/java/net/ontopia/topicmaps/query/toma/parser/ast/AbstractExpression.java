@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.toma.impl.utils.QueryOptimizerIF;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
@@ -35,6 +36,16 @@ public abstract class AbstractExpression implements ExpressionIF {
     return name;
   }
 
+  /**
+   * Replace the child at index.
+   * 
+   * @param index the index of the child to be replaced.
+   * @param expr the expression to be used.
+   */
+  public void setChild(int index, ExpressionIF expr) {
+    childs.set(index, expr);
+  }
+  
   /**
    * Add an expression as a child to this expression.
    * @param expr the expression to be added as a child.
@@ -86,6 +97,15 @@ public abstract class AbstractExpression implements ExpressionIF {
     }
     
     return true;
+  }
+
+  public ExpressionIF optimize(QueryOptimizerIF optimizer) {
+    for (int i=0; i<getChildCount(); i++) {
+      ExpressionIF child = getChild(i);
+      setChild(i, optimizer.optimize(child));
+    }
+    
+    return optimizer.optimize(this);
   }
 
   public void fillParseTree(IndentedStringBuilder buf, int level) {

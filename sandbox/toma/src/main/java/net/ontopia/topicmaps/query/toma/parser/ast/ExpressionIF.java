@@ -2,6 +2,7 @@ package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import java.util.List;
 
+import net.ontopia.topicmaps.query.toma.impl.utils.QueryOptimizerIF;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
 /**
@@ -38,4 +39,12 @@ public interface ExpressionIF extends ASTElementIF {
    * @return the list of children.
    */
   public List<ExpressionIF> getChilds();
+  
+  /**
+   * Optimize this expression with the given optimizer.
+   * 
+   * @param optimizer the optimizer to be used.
+   * @return the optimized expression to be used afterwards.
+   */
+  public ExpressionIF optimize(QueryOptimizerIF optimizer);
 }

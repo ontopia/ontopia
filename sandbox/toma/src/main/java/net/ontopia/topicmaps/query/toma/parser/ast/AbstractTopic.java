@@ -37,35 +37,34 @@ public abstract class AbstractTopic extends AbstractPathElement {
 
   @Override
   public void fillParseTree(IndentedStringBuilder buf, int level) {
-    buf.append("(     TOPIC) [" + getIdentifier() + "]", level);
+    buf.append("(     TOPIC) [" + getTypeString() + "] [" + getIdentifier() + "]", level);
   }
 
+  private String getTypeString() {
+    switch (idType) {
+    case IID:
+      return "i";
+
+    case SI:
+      return "si";
+
+    case SL:
+      return "sl";
+
+    case NAME:
+      return "n";
+
+    case VAR:
+      return "v";
+    }
+    
+    return "unknown";
+  }
+  
   @Override
   public String toString() {
     StringBuffer sb = new StringBuffer();
-
-    switch (idType) {
-    case IID:
-      sb.append("i");
-      break;
-
-    case SI:
-      sb.append("si");
-      break;
-
-    case SL:
-      sb.append("sl");
-      break;
-
-    case NAME:
-      sb.append("n");
-      break;
-
-    case VAR:
-      sb.append("v");
-      break;
-    }
-
+    sb.append(getTypeString());
     sb.append("'");
     sb.append(identifier);
     sb.append("'");
