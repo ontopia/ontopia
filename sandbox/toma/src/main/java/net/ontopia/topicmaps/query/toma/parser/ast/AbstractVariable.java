@@ -19,20 +19,10 @@ public abstract class AbstractVariable extends AbstractPathElement implements
     this.varName = name;
   }
 
-  /**
-   * Get the name of the variable.
-   * 
-   * @return the name.
-   */
   public String getVarName() {
     return varName;
   }
 
-  /**
-   * Set the name of the variable.
-   * 
-   * @param name the name to be set.
-   */
   public void setVarName(String name) {
     this.varName = name;
   }

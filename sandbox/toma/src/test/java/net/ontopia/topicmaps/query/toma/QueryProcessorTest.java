@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 
@@ -54,6 +53,27 @@ public class QueryProcessorTest extends AbstractTomaQueryTestCase {
     addMatch(matches, "$T", xtm, "$P.NAME", tn);
     addMatch(matches, "$T", xtm, "$P.NAME", lmg);
     
-    verifyQuery(matches, "select $t, $p.name where $t.type = format and $p.type = person;");
+    verifyQuery(matches,
+        "select $t, $p.name where $t.type = format and $p.type = person;");
+  }
+  
+  public void testThreeColumnsMixed() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List matches = new ArrayList();
+    TopicIF ltm = getTopicById("ltm");
+    Object ltmName = ltm.getTopicNames().iterator().next();
+    TopicIF xtm = getTopicById("xtm");
+    Object xtmName = xtm.getTopicNames().iterator().next();
+    Object tn = getTopicById("tn").getTopicNames().iterator().next();
+    Object lmg = getTopicById("lmg").getTopicNames().iterator().next();
+    
+    addMatch(matches, "$T", ltm, "$T.NAME", ltmName, "$P.NAME", tn);
+    addMatch(matches, "$T", ltm, "$T.NAME", ltmName, "$P.NAME", lmg);
+    addMatch(matches, "$T", xtm, "$T.NAME", xtmName, "$P.NAME", tn);
+    addMatch(matches, "$T", xtm, "$T.NAME", xtmName, "$P.NAME", lmg);
+    
+    verifyQuery(matches,
+        "select $t, $t.name, $p.name where $t.type = format and $p.type = person;");
   }
 }

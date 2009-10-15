@@ -150,6 +150,10 @@ public class ResultSet implements Iterable<Row> {
     return rows.contains(row);
   }
   
+  public void clear() {
+    rows.clear();
+  }
+  
   /**
    * 
    * @param index

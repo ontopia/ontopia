@@ -121,6 +121,9 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     ResultSet values = expr.evaluate(context);
     try {
       LocalContext newContext = (LocalContext) context.clone();
+      ResultSet localResult = new ResultSet(1, false);
+      localResult.setColumnName(0, values.getColumnName(0));
+      newContext.addResultSet(localResult);
       
       for (Row r : values) {
         Object val = r.getLastValue();
@@ -129,17 +132,17 @@ public class BasicQueryProcessor implements QueryProcessorIF {
           continue;
         }
 
+        // for each value, a new row in the ResultSet will be created
         Row newRow = (Row) row.clone();
         newRow.setValue(index, val);
 
-        // TODO: make code cleaner
-        ResultSet newRS = new ResultSet(1, false);
-        newRS.setColumnName(0, values.getColumnName(0));
-        Row myRow = newRS.createRow();
-        myRow.setValue(0, r.getFirstValue());
-        newRS.addRow(myRow);
-        newContext.addResultSet(newRS);
+        // update the context with the current variable binding
+        localResult.clear();
+        Row currBinding = localResult.createRow();
+        currBinding.setValue(0, r.getFirstValue());
+        localResult.addRow(currBinding);
 
+        // if we are not at the end -> recursion
         if (index < (stmt.getSelectCount() - 1)) {
           calculateMatches(newContext, index + 1, newRow, rs, stmt);
         } else {

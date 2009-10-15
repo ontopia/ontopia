@@ -34,6 +34,26 @@ public abstract class AbstractPathExpression extends AbstractExpression
     return path.isEmpty();
   }
   
+  public boolean isVariable() {
+    if (getPathLength() == 1) {
+      PathElementIF element = path.get(0);
+      if (element instanceof VariableIF) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public String getVariableName() {
+    if (getPathLength() > 0) {
+      PathElementIF element = path.get(0);
+      if (element instanceof VariableIF) {
+        return ((VariableIF) element).toString();
+      }
+    }
+    return null;
+  }
+  
   public int getPathLength() {
     return path.size();
   }
