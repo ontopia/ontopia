@@ -36,7 +36,7 @@ public class QueryResult implements QueryResultIF {
     this.columns = columns;
     this.rows = rows;
     this.from = (offset == -1) ? 0 : offset;
-    this.to = Math.min(rows.size() - 1, from + (limit == -1 ? Integer.MAX_VALUE : limit));
+    this.to = Math.min(rows.size() - 1, from + (limit == -1 ? Integer.MAX_VALUE : limit-1));
     this.currentRow = -1;
     this.isClosed = false;
   }

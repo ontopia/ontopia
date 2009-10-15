@@ -25,7 +25,7 @@ public class QueryProcessorTest extends AbstractTomaQueryTestCase {
     closeStore();
   }
 
-  /// generic tests
+  /// column bound tests
   
   public void testTwoColumnsBound() throws InvalidQueryException, IOException {
     load("full.ltm");
@@ -75,5 +75,28 @@ public class QueryProcessorTest extends AbstractTomaQueryTestCase {
     
     verifyQuery(matches,
         "select $t, $t.name, $p.name where $t.type = format and $p.type = person;");
+  }
+  
+  /// limit and offset tests
+  
+  public void testLimit() throws InvalidQueryException, IOException {
+    load("family.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "$T", getTopicById("asle"));
+    addMatch(matches, "$T", getTopicById("edvin"));
+    addMatch(matches, "$T", getTopicById("kfg"));
+    
+    verifyQueryOrder(matches, "select $t where $t.type = father order by 1 limit 3;");
+  }
+  
+  public void testOffset() throws InvalidQueryException, IOException {
+    load("family.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "$T", getTopicById("edvin"));
+    addMatch(matches, "$T", getTopicById("kfg"));
+    
+    verifyQueryOrder(matches, "select $t where $t.type = father order by 1 limit 2 offset 1;");
   }
 }
