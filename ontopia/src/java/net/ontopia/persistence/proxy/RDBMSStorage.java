@@ -35,7 +35,6 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import net.ontopia.utils.LookupIndexIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
-import net.ontopia.utils.SoftHashMapIndex;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.SynchronizedLookupIndex;
