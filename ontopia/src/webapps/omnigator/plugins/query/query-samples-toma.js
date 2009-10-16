@@ -27,9 +27,9 @@ function insertExample(exName) {
   } else if (exName == "exBornDied") { // -----------------------------------
     document.queryform.query.value =
       'select $PLACE, $PERSON where \n' +
-      '  $T.(person)<-(born-in)->(place) = $PLACE and \n' +
-      '  $PLACE.(place)<-(died-in)->(person) = $PERSON and \n' +
-      '  $T = $PERSON \n' + 
+      '  $PERSON.(person)<-(born-in)->(place) = $PLACE and \n' +
+      '  $PERSON.(person)<-(died-in)->(place) = $DIED and \n' +
+      '  $PLACE = $DIED \n' + 
       '  order by 1, 2;';
 
   } else if (exName == "exComposers") { // ----------------------------------
@@ -76,9 +76,9 @@ function insertExample(exName) {
 
   } else if (exName == "exSuicides") { // -----------------------------------
     document.queryform.query.value =
-      'select distinct $WORK, $SUICIDE where \n' +
-      '  $SUICIDE = (killed-by)->(victim) and \n' +
-      '  $SUICIDE = (killed-by)->(perpetrator) and \n' +
+      'select $WORK, $SUICIDE where \n' +
+      '  $SUICIDE.(perpetrator)<-(killed-by)->(victim) = $VICTIM and \n' +
+      '  $VICTIM = $SUICIDE and \n' +
       '  $SUICIDE.(character)<-(appears-in)->(work) = $WORK \n' +
       'order by 1;';
     
