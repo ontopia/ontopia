@@ -63,6 +63,8 @@ public class AssociationTest extends AbstractTomaQueryTestCase {
     addMatch(matches, "$A.PLAYER", getTopicById("lmg"));
     addMatch(matches, "$A.PLAYER", getTopicById("ontopia"));
     addMatch(matches, "$A.PLAYER", getTopicById("ontopia"));
+    addMatch(matches, "$A.PLAYER", getTopicById("lh"));
+    addMatch(matches, "$A.PLAYER", getTopicById("tinytim"));
     
     verifyQuery(matches, "select $a.player where exists $a(contributes-to)->($$);");
   }
@@ -73,6 +75,8 @@ public class AssociationTest extends AbstractTomaQueryTestCase {
     List matches = new ArrayList();
     addMatch(matches, "$A.PLAYER", getTopicById("tn"));
     addMatch(matches, "$A.PLAYER", getTopicById("lmg"));
+    addMatch(matches, "$A.PLAYER", getTopicById("lh"));
+    addMatch(matches, "$A.PLAYER", getTopicById("tinytim"));
     addMatch(matches, "$A.PLAYER", getTopicById("ontopia"));
     
     verifyQuery(matches, "select distinct $a.player where exists $a(contributes-to)->($$);");

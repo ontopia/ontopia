@@ -35,6 +35,8 @@ public class QueryProcessorTest extends AbstractTomaQueryTestCase {
     addMatch(matches, "$T", t, "$T.NAME", t.getTopicNames().iterator().next());
     t = getTopicById("lmg");
     addMatch(matches, "$T", t, "$T.NAME", t.getTopicNames().iterator().next());
+    t = getTopicById("lh");
+    addMatch(matches, "$T", t, "$T.NAME", t.getTopicNames().iterator().next());
     
     verifyQuery(matches, "select $t, $t.name where $t.type = person;");
   }
@@ -47,11 +49,14 @@ public class QueryProcessorTest extends AbstractTomaQueryTestCase {
     TopicIF xtm = getTopicById("xtm");
     Object tn = getTopicById("tn").getTopicNames().iterator().next();
     Object lmg = getTopicById("lmg").getTopicNames().iterator().next();
+    Object lh = getTopicById("lh").getTopicNames().iterator().next();
     
     addMatch(matches, "$T", ltm, "$P.NAME", tn);
     addMatch(matches, "$T", ltm, "$P.NAME", lmg);
+    addMatch(matches, "$T", ltm, "$P.NAME", lh);
     addMatch(matches, "$T", xtm, "$P.NAME", tn);
     addMatch(matches, "$T", xtm, "$P.NAME", lmg);
+    addMatch(matches, "$T", xtm, "$P.NAME", lh);
     
     verifyQuery(matches,
         "select $t, $p.name where $t.type = format and $p.type = person;");
@@ -67,16 +72,19 @@ public class QueryProcessorTest extends AbstractTomaQueryTestCase {
     Object xtmName = xtm.getTopicNames().iterator().next();
     Object tn = getTopicById("tn").getTopicNames().iterator().next();
     Object lmg = getTopicById("lmg").getTopicNames().iterator().next();
+    Object lh = getTopicById("lh").getTopicNames().iterator().next();
     
     addMatch(matches, "$T", ltm, "$T.NAME", ltmName, "$P.NAME", tn);
     addMatch(matches, "$T", ltm, "$T.NAME", ltmName, "$P.NAME", lmg);
+    addMatch(matches, "$T", ltm, "$T.NAME", ltmName, "$P.NAME", lh);
     addMatch(matches, "$T", xtm, "$T.NAME", xtmName, "$P.NAME", tn);
     addMatch(matches, "$T", xtm, "$T.NAME", xtmName, "$P.NAME", lmg);
+    addMatch(matches, "$T", xtm, "$T.NAME", xtmName, "$P.NAME", lh);
     
     verifyQuery(matches,
         "select $t, $t.name, $p.name where $t.type = format and $p.type = person;");
   }
-  
+
   /// limit and offset tests
   
   public void testLimit() throws InvalidQueryException, IOException {

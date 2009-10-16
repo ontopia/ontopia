@@ -9,6 +9,7 @@ import net.ontopia.topicmaps.query.toma.impl.basic.BasicQueryProcessor;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
+import net.ontopia.topicmaps.query.toma.impl.basic.path.AssocPath;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathExpression;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 
@@ -19,7 +20,7 @@ public class PathExpression extends AbstractPathExpression implements
     BasicExpressionIF {
 
   public ResultSet evaluate(LocalContext context) throws InvalidQueryException {
-    ResultSet rs = createNewResultSet();
+    ResultSet rs = createNewResultSet(context);
     if (!isEmpty()) {
       Row row = rs.createRow();
       evaluateElement(context, PathElementIF.TYPE.NONE, rs, row, 0, 0);
@@ -52,6 +53,11 @@ public class PathExpression extends AbstractPathExpression implements
     // if the current PathElement returned nothing, we can fill the rest of
     // the row with null's.
     if (result == null || result.isEmpty()) {
+      // This is necessary, because association paths are always implicitly EXISTS
+      if (element instanceof AssocPath) {
+        return;
+      }
+      
       for (int idx = colIndex; idx < row.getColumnCount(); idx++) {
         row.setValue(idx, null);
       }
@@ -77,14 +83,14 @@ public class PathExpression extends AbstractPathExpression implements
         Object[] coll = (Object[]) val;
         int idx = 0;
         for (Object obj : coll) {
-          if (idx < element.getResultSize()) {
+          if (idx < element.getResultSize(context)) {
             curRow.setValue(colIndex + idx++, obj);
           }
           last = obj;
         }
         newCol = colIndex + idx;
       } else {
-        if (element.getResultSize() > 0) {
+        if (element.getResultSize(context) > 0) {
           curRow.setValue(newCol++, val);
         }
       }
@@ -103,12 +109,12 @@ public class PathExpression extends AbstractPathExpression implements
    * 
    * @return an empty ResultSet
    */
-  private ResultSet createNewResultSet() {
+  private ResultSet createNewResultSet(LocalContext context) {
     int size = 0;
     // first, check the correct width for this PathExpression.
     for (int idx = 0; idx < getPathLength(); idx++) {
       BasicPathElementIF element = (BasicPathElementIF) getPathElement(idx);
-      size += element.getResultSize();
+      size += element.getResultSize(context);
     }
 
     // if we have a non-empty PathExpression, add a column to store the result.
@@ -120,7 +126,7 @@ public class PathExpression extends AbstractPathExpression implements
     // set the column names according to the definition of the PathExpression.
     for (int colIdx = 0, idx = 0; idx < getPathLength(); idx++) {
       BasicPathElementIF element = (BasicPathElementIF) getPathElement(idx);
-      String[] columns = element.getColumnNames();
+      String[] columns = element.getColumnNames(context);
       for (String col : columns) {
         rs.setColumnName(colIdx++, col);
       }

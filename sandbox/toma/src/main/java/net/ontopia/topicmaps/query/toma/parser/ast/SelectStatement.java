@@ -136,10 +136,6 @@ public class SelectStatement implements ASTElementIF {
   }
   
   public boolean validate() throws AntlrWrapException {
-
-    // TODO: check that all select clauses use an aggregate function
-    // if at least one contains such a function.
-    
     // validate all select projections
     int numAggregate = 0;
     for (ExpressionIF expr : selects) {

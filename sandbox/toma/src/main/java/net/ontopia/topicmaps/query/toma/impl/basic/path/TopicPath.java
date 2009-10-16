@@ -33,11 +33,11 @@ public class TopicPath extends AbstractTopic implements BasicPathElementIF {
     super(type, id);
   }
   
-  public String[] getColumnNames() {
+  public String[] getColumnNames(LocalContext context) {
     return new String[] { "TOPIC" };
   }
 
-  public int getResultSize() {
+  public int getResultSize(LocalContext context) {
     return 1;
   }
 

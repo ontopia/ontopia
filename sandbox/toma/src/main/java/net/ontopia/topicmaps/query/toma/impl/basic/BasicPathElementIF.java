@@ -28,14 +28,16 @@ public interface BasicPathElementIF {
    * Get the number of columns this path element will generate in the
    * evaluation.
    * 
+   * @param context the current context.
    * @return the number of result columns.
    */
-  public int getResultSize();
+  public int getResultSize(LocalContext context);
   
   /**
    * Get the names of the result columns this path element will generate.
-   *  
+   *
+   * @param context the current context.
    * @return an array containing the names of the result columns.
    */
-  public String[] getColumnNames();
+  public String[] getColumnNames(LocalContext context);
 }

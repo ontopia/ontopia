@@ -3,6 +3,7 @@ package net.ontopia.topicmaps.query.toma.impl.basic.path;
 import java.util.Collection;
 
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
+import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 
 public abstract class AbstractBasicPathElement extends AbstractPathElement
@@ -11,7 +12,7 @@ public abstract class AbstractBasicPathElement extends AbstractPathElement
     super(name);
   }
 
-  public String[] getColumnNames() {
+  public String[] getColumnNames(LocalContext context) {
     if (getBoundVariable() != null) {
       return new String[] { getBoundVariable().toString() };
     } else {
@@ -19,7 +20,7 @@ public abstract class AbstractBasicPathElement extends AbstractPathElement
     }
   }
 
-  public int getResultSize() {
+  public int getResultSize(LocalContext context) {
     if (getBoundVariable() != null) {
       return 1;
     } else {

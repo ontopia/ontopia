@@ -77,6 +77,7 @@ public class FunctionTest extends AbstractTomaQueryTestCase {
 
     List matches = new ArrayList();
     addMatch(matches, "TRIM($T.NAME,'BOTH',' Project')", "Ontopia");
+    addMatch(matches, "TRIM($T.NAME,'BOTH',' Project')", "TinyTIM");
     
     verifyQuery(matches, "select trim($t.name, BOTH, ' Project') where $t.type = project;");
   } 
@@ -85,6 +86,7 @@ public class FunctionTest extends AbstractTomaQueryTestCase {
     load("full.ltm");
 
     List matches = new ArrayList();
+    addMatch(matches, "LENGTH(TRIM($T.NAME,'BOTH',' Project'))", "7");
     addMatch(matches, "LENGTH(TRIM($T.NAME,'BOTH',' Project'))", "7");
     
     verifyQuery(matches, "select length(trim($t.name, BOTH, ' Project')) where $t.type = project;");

@@ -122,8 +122,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     ResultSet values = expr.evaluate(context);
     try {
       LocalContext newContext = (LocalContext) context.clone();
-      ResultSet localResult = new ResultSet(1, false);
-      localResult.setColumnName(0, values.getColumnName(0));
+      ResultSet localResult = new ResultSet(values);
       newContext.addResultSet(localResult);
       
       for (Row r : values) {
@@ -139,9 +138,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
 
         // update the context with the current variable binding
         localResult.clear();
-        Row currBinding = localResult.createRow();
-        currBinding.setValue(0, r.getFirstValue());
-        localResult.addRow(currBinding);
+        localResult.addRow(r);
 
         // if we are not at the end -> recursion
         if (index < (stmt.getSelectCount() - 1)) {
