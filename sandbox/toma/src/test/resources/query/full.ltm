@@ -58,6 +58,9 @@ format-for(xtm, topic-maps) ~ xtm-standard
 [ontopia : project = "Ontopia Project"]
 {ontopia, homepage, "http://code.google.com/p/ontopia/"}
 
+[tinytim : project = "TinyTIM Project"]
+{tinytim, homepage, "http://tinytim.sourceforge.net/"}
+
 [topicmaps.org  : organization = "TopicMaps.Org"]
 {topicmaps.org, homepage, "http://www.topicmaps.org"}
 
@@ -66,9 +69,12 @@ defined-by(xtm, topicmaps.org)
 
 [tn : person = "Thomas Neidhart"]
 [lmg : person = "Lars Marius Garshol"]
+[lh : person = "Lars Heuer"]
 
 contributes-to(tn, ontopia) / year2009
 contributes-to(lmg, ontopia)
+contributes-to(lh, tinytim)
 
 implements(ontopia, xtm-standard)
 implements(ontopia, ltm-standard)
+implements(tinytim, xtm-standard)
