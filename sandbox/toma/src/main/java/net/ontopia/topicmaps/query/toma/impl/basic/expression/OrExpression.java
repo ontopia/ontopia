@@ -35,6 +35,8 @@ public class OrExpression extends AbstractBinaryExpression {
     LocalContext ctx2 = new LocalContext(context.getTopicMap());
     ResultSet rs2 = right.evaluate(ctx2);
 
+    // TODO: check if this works for all situations with multiple shared columns
+    //       add complex unit tests
     List<String> sharedCols = rs1.getSharedColumns(rs2);
     if (sharedCols.isEmpty()) {
       context.addResultSet(rs1);

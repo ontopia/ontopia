@@ -59,7 +59,7 @@ public class FunctionTest extends AbstractTomaQueryTestCase {
     List matches = new ArrayList();
     addMatch(matches, "TO_NUM($T.OC(i'mass'))", "2.0");
     
-    verifyQuery(matches, "select to_num($t.oc(mass)) where $t.id = xtm-standard;");
+    verifyQuery(matches, "select to_num($t.oc(mass)) where $t = xtm-standard;");
   }
   
   public void testSubstr() throws InvalidQueryException, IOException {

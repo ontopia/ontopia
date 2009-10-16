@@ -53,4 +53,23 @@ public class Stringifier {
       return o.toString();
     }
   }
+  
+  public static String toCompare(Object o) {
+    if (o == null)
+      return null;
+
+    if (o instanceof TopicIF) {
+      return ((TopicIF) o).getObjectId();
+    } else if (o instanceof TopicNameIF) {
+      return ((TopicNameIF) o).getValue();
+    } else if (o instanceof VariantNameIF) {
+      return ((VariantNameIF) o).getValue();
+    } else if (o instanceof LocatorIF) {
+      return ((LocatorIF) o).getAddress();
+    } else if (o instanceof OccurrenceIF) {
+      return ((OccurrenceIF) o).getValue();
+    } else {
+      return o.toString();
+    }
+  }
 }

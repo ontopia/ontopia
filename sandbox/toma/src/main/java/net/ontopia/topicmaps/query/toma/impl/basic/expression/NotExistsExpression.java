@@ -25,14 +25,14 @@ public class NotExistsExpression extends AbstractUnaryExpression {
 
     ResultSet result = new ResultSet(rs);
 
-    for (Object r : rs) {
-      Row row = (Row) r;
+    for (Row row : rs) {
       Object val = row.getValue(rs.getLastIndex());
       if (val == null) {
         result.addRow(row);
       }
     }
 
+    context.addResultSet(result);
     return result;
   }
 }

@@ -32,7 +32,7 @@ public class ComparisonTest extends AbstractTomaQueryTestCase {
     List matches = new ArrayList();
     addMatch(matches, "$T", getTopicById("xtm"));
     
-    verifyQuery(matches, "select $t where $t.id = i'xtm';");
+    verifyQuery(matches, "select $t where $t = i'xtm';");
   }
   
   public void testNotEquals() throws InvalidQueryException, IOException {
