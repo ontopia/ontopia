@@ -27,7 +27,7 @@ public class NotExistsExpression extends AbstractUnaryExpression {
 
     for (Object r : rs) {
       Row row = (Row) r;
-      Object val = row.getValue(row.getColumnCount() - 1);
+      Object val = row.getValue(rs.getLastIndex());
       if (val == null) {
         result.addRow(row);
       }

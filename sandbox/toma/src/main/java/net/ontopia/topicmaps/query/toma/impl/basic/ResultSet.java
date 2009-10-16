@@ -204,7 +204,7 @@ public class ResultSet implements Iterable<Row> {
     if (idx == -1)
       return col;
 
-    for (Object r : rows) {
+    for (Object r : rows.uniqueSet()) {
       Row row = (Row) r;
       Object val = row.getValue(idx);
       col.add(val);

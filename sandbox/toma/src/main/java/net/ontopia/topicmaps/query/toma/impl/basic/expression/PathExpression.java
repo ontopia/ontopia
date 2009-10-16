@@ -54,6 +54,7 @@ public class PathExpression extends AbstractPathExpression implements
     // the row with null's.
     if (result == null || result.isEmpty()) {
       // This is necessary, because association paths are always implicitly EXISTS
+      // FIXME: this is a hack, as it breaks NOT EXISTS and EXISTS queries, fix
       if (element instanceof AssocPath) {
         return;
       }

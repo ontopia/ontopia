@@ -27,8 +27,9 @@ public abstract class AbstractComparisonExpression extends
     ResultSet rs1 = left.evaluate(context);
     ResultSet rs2 = right.evaluate(context);
 
+    // FIXME: take care if the two resultsets share a column
     ResultSet rs = new ResultSet(rs1, rs2);
-    
+
     for (Object row1 : rs1) {
       Object o1 = ((Row) row1).getLastValue();
       String str1 = Stringifier.toString(o1);
@@ -41,7 +42,7 @@ public abstract class AbstractComparisonExpression extends
         }
       }
     }
-      
+
     context.addResultSet(rs);
     return rs;
   }
