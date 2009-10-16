@@ -364,10 +364,6 @@ public class RDBMSStorage implements StorageIF {
   public StorageCacheIF getStorageCache() {
     return scache;
   }
-
-  public CachesIF getCaches() {
-    return caches;
-  }
   
   /**
    * INTERNAL: Returns the database type.
