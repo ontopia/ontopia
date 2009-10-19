@@ -13,13 +13,14 @@
   net.ontopia.topicmaps.query.impl.basic.QueryTracer,
   net.ontopia.topicmaps.query.impl.utils.SimpleQueryTracer,
   net.ontopia.topicmaps.query.parser.*,
-  net.ontopia.topicmaps.utils.TopicStringifiers"
+  net.ontopia.topicmaps.utils.TopicStringifiers,
+  java.lang.reflect.Constructor"
 %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
 
-<%@page import="java.lang.reflect.Constructor"%><framework:response/>
+<framework:response/>
 
 <logic:context tmparam="tm" settm="topicmap">
   <template:insert template='/views/template_%view%.jsp'>
@@ -179,6 +180,13 @@ try {
   <p><b>Parsed query:</b></p>
 
   <pre><%= pquery %></pre>
+<% } else { %>
+  <p>
+  <form method=get action="csv.jsp">
+    <input type=submit value="Export to CSV">
+    <input type=hidden name=tm value="<%= tmid %>">
+    <input type=hidden name=query value="<%= query.replace("\"", "&#34;") %>">
+  </form>
 <% } %>
 
 </template:put>
