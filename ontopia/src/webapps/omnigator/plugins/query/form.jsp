@@ -65,6 +65,7 @@ String skin = user.getSkin();
 <template:put name="navigation" body="true">
 <form action="query.jsp" method="get" name="queryform">
 
+<p><b>Query language:</b>
 <select name="processor"
  onChange='javascript:changeDescription(this.options[this.selectedIndex].value)'
  tabindex='1'>
