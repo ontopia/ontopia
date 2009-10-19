@@ -1739,6 +1739,7 @@
         <include name="tolog/*/**" />
         <include name="validator/*/**" />
         <include name="viz/*/**" />
+        <include name="query/*/**" />
       </fileset>
     </copy>
 
