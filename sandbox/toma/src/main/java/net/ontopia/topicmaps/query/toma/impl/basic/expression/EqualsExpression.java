@@ -4,6 +4,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
+import net.ontopia.topicmaps.query.toma.impl.utils.QueryTracer;
 
 /**
  * INTERNAL: Equality operator, checks whether two objects are equal.
@@ -48,9 +49,13 @@ public class EqualsExpression extends AbstractComparisonExpression {
   private ResultSet bindVariableToExpression(String name,
       BasicExpressionIF expr, LocalContext context)
       throws InvalidQueryException {
+    QueryTracer.enter(this);
+    
     ResultSet rs = expr.evaluate(context);
     rs.setColumnName(rs.getLastIndex(), name);
     context.addResultSet(rs);
+    
+    QueryTracer.leave(rs);
     return rs;
   }
 

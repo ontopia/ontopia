@@ -14,6 +14,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.toma.impl.utils.QueryTracer;
 import net.ontopia.topicmaps.query.toma.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.toma.parser.TomaParser;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
@@ -64,6 +65,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
    */
   public QueryResultIF execute(TomaQuery query) throws InvalidQueryException {
     ResultSet rs = null;
+    QueryTracer.startQuery();
     for (int i = 0; i < query.getStatementCount(); i++) {
       SelectStatement stmt = query.getStatement(i);
 
@@ -92,6 +94,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
 
     List<Row> rows = convertToList(rs);
     sort(rows, query.getOrderBy());
+    QueryTracer.endQuery();
     return new QueryResult(rs.getColumnDefinitions(), rows, query.getLimit(),
         query.getOffset());
   }
@@ -111,7 +114,10 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     expr.evaluate(context);
 
     Row r = rs.createRow();
+    
+    QueryTracer.enterSelect(null);
     calculateMatches(context, 0, r, rs, stmt);
+    QueryTracer.leaveSelect(null);
 
     return rs;
   }
@@ -182,8 +188,10 @@ public class BasicQueryProcessor implements QueryProcessorIF {
   }
 
   private void sort(List<Row> matches, List<QueryOrder> orderings) {
+    QueryTracer.enterOrderBy();
     if (!orderings.isEmpty())
       Collections.sort(matches, new RowComparator(orderings));
+    QueryTracer.leaveOrderBy();
   }
 
   public QueryResultIF execute(String query) throws InvalidQueryException {

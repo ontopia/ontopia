@@ -8,6 +8,7 @@ import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
+import net.ontopia.topicmaps.query.toma.impl.utils.QueryTracer;
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
 
 /**
@@ -24,6 +25,8 @@ public abstract class AbstractComparisonExpression extends
     if (getChildCount() != 2)
       return null;
 
+    QueryTracer.enter(this);
+    
     BasicExpressionIF left = (BasicExpressionIF) getChild(0);
     BasicExpressionIF right = (BasicExpressionIF) getChild(1);
 
@@ -56,6 +59,7 @@ public abstract class AbstractComparisonExpression extends
     }
 
     context.addResultSet(rs);
+    QueryTracer.leave(rs);
     return rs;
   }
 

@@ -213,6 +213,30 @@ public class ResultSet implements Iterable<Row> {
     return col;
   }
 
+  /**
+   * Get all valid values from a specified column of the ResultSet.
+   * A valid value is a non-null value.
+   * 
+   * @param idx the column of the ResultSet.
+   * @return a Collection containing all valid values.
+   */
+  public Collection<?> getValidValues(int idx) {
+    Collection<Object> col = new HashSet<Object>(rows.size());
+
+    if (idx == -1)
+      return col;
+
+    for (Object r : rows.uniqueSet()) {
+      Row row = (Row) r;
+      Object val = row.getValue(idx);
+      if (val != null) {
+        col.add(val);
+      }
+    }
+
+    return col;
+  }
+  
   public Collection<?> getValues(String column) {
     int idx = getColumnIndex(column);
     return getValues(idx);

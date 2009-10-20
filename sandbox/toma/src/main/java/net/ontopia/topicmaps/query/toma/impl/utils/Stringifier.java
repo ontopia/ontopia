@@ -53,7 +53,23 @@ public class Stringifier {
       return o.toString();
     }
   }
-  
+
+  /**
+   * Returns a string representation of the given object to be used for
+   * comparison.
+   * 
+   * <ul>
+   * <li>Topic: the object id
+   * <li>TopicName: the value of the topic name
+   * <li>VariantName: the value of the variant name
+   * <li>Locator: the address of the locator
+   * <li>Occurrence: the value of the occurrence
+   * <li>any other object: the result of toString()
+   * </ul>
+   * 
+   * @param o the object to be converted.
+   * @return a string representation of the object
+   */
   public static String toCompare(Object o) {
     if (o == null)
       return null;
