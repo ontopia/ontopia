@@ -43,7 +43,12 @@ public class QueryOptimizer implements QueryOptimizerIF {
 
   // TODO: other ideas for query optimization
 
-  // reordering of expressions which are coupled together by an 'and'
+  // - reordering of expressions which are coupled together by an 'and'
+  // - structure of association path expression should be reordered if the
+  //   start of the path is a variable. Transform: 
+  //     $t.(r1)<-$a()->(r2) => $a()-> $t(r1)
+  //                                     (r2)
+  //   this should improve association path expressions significantly
 
   @SuppressWarnings("unchecked")
   public static class ReplaceExpressions implements QueryOptimizerIF {
