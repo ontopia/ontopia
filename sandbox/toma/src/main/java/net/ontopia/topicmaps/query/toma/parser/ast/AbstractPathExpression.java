@@ -98,6 +98,13 @@ public abstract class AbstractPathExpression extends AbstractExpression
               "path element '" + element.toString() + "' not allowed after '"
                   + last.toString() + "'"));
         }
+      } else if (last instanceof AbstractVariable) {
+        // first very simple analysis: if the input of the next path element is
+        // well known, set the variable to this type.
+        if (validInput != null && validInput.size() == 1) {
+          AbstractVariable var = (AbstractVariable) last;
+          var.setVarType(validInput.iterator().next());
+        }
       }
       
       output = element.output();

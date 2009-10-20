@@ -72,8 +72,7 @@ public class VariablePath extends AbstractVariable implements
   }
 
   public TYPE output() {
-    // TODO: return the correct output type after semantic analysis.
-    return PathElementIF.TYPE.UNKNOWN;
+    return getVarType();
   }
 
   public Set<TYPE> validInput() {
@@ -114,7 +113,16 @@ public class VariablePath extends AbstractVariable implements
       }
     } else {
       TopicMapIF topicmap = context.getTopicMap();
-      return topicmap.getTopics();
+      
+      switch (getVarType()) {
+      case ASSOCIATION:
+        return topicmap.getAssociations();
+        
+      default:
+        // TODO: fix for other types
+        return topicmap.getTopics();
+          
+      }
     }
   }
 }
