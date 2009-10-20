@@ -33,6 +33,13 @@ public class User implements UserIF, Serializable {
   protected String model;
   protected String view;
   protected String skin;
+
+  // these are marked as transient, which means that when the User
+  // object has been stored in the server's persistent session store
+  // and resurrected from there, they will all be null. the rest of
+  // the class is coded to handle the case where these are initialized
+  // as null. (the loss of the actual data is no problem.) see issue 135
+  // http://code.google.com/p/ontopia/issues/detail?id=135
   protected transient UserFilterContextStore filterContext;
   protected transient HistoryMap history;
   protected transient RingBuffer log;
@@ -44,6 +51,8 @@ public class User implements UserIF, Serializable {
   protected long bundleExpiryAge;
   // Initial number of seconds before bundles are expired.
   protected final long initialBundleExpiryAge;
+  // How many working bundles is the max, according to config?
+  protected final int max_bundles;
   
   /**
    * default constructor using a common user id.
@@ -62,16 +71,11 @@ public class User implements UserIF, Serializable {
     this.id = userId;
 
     // how many bundles?
-    int max_bundles = navConf.getProperty("maxUserBundles", DEFAULT_MAX_BUNDLES);
+    max_bundles = navConf.getProperty("maxUserBundles", DEFAULT_MAX_BUNDLES);
     logger.debug("max_bundles: " + max_bundles);
     
     // set default values
     setMVS(DEFAULT_MODEL, DEFAULT_VIEW, DEFAULT_SKIN);
-    filterContext = new UserFilterContextStore();
-    history = new HistoryMap();
-    workingBundles = new LRUMap(max_bundles);
-    timeStamps = new LRUMap(max_bundles);
-    log = new RingBuffer();
 
     // bundle expiry time?
     bundleExpiryAge = navConf.getProperty("userBundleExpiryTime",
@@ -86,22 +90,22 @@ public class User implements UserIF, Serializable {
   
   // --- filterContext accessor methods
    
-  public void setFilterContext(UserFilterContextStore filterContext) {
-    this.filterContext = filterContext;
-  }
-
   public UserFilterContextStore getFilterContext() {
+    if (filterContext == null)
+      filterContext = new UserFilterContextStore();
     return filterContext;
   }
 
   // -- history
   
   public HistoryMap getHistory() {
+    if (history == null)
+      history = new HistoryMap();
     return history;
   }
-  
-  public void setHistory(HistoryMap hm) {
-    this.history = hm;
+
+  public void setHistory(HistoryMap history) {
+    this.history = history;
   }
 
   // -- logs
@@ -111,19 +115,25 @@ public class User implements UserIF, Serializable {
   }
   
   public List getLogMessages() {
-    synchronized (log) {
+    synchronized (this) {
+      if (log == null)
+        log = new RingBuffer();
       return log.getElements();
     }
   }
 
   public void addLogMessage(String message) {
-    synchronized (log) {
+    synchronized (this) {
+      if (log == null)
+        log = new RingBuffer();
       log.addElement(message);
     }
   }
 
   public void clearLog() {
-    synchronized (log) {
+    synchronized (this) {
+      if (log == null)
+        log = new RingBuffer();
       log.clear();
     }
   }
@@ -132,7 +142,11 @@ public class User implements UserIF, Serializable {
   
   public synchronized void addWorkingBundle(String bundle_id, Object object) {
     removeOldWorkingBundles(bundle_id);
+    if (timeStamps == null)
+      timeStamps = new LRUMap(max_bundles);
     timeStamps.put(object, new Date());
+    if (workingBundles == null)
+      workingBundles = new LRUMap(max_bundles);
     workingBundles.put(bundle_id, object);
   }
   
@@ -140,11 +154,15 @@ public class User implements UserIF, Serializable {
     removeOldWorkingBundles(bundle_id);
     if (bundle_id == null) 
       return null;
+    if (workingBundles == null)
+      workingBundles = new LRUMap(max_bundles);
     return workingBundles.get(bundle_id);
   }
 
   public synchronized void removeWorkingBundle(String bundle_id) {
     removeOldWorkingBundles(bundle_id);
+    if (workingBundles == null)
+      workingBundles = new LRUMap(max_bundles);
     workingBundles.remove(bundle_id);
   }
   
@@ -154,6 +172,9 @@ public class User implements UserIF, Serializable {
    * @param keepBundle Doesn't remove the bundle with this ID.
    */
   private void removeOldWorkingBundles(String keepBundle) {
+    if (workingBundles == null)
+      return; // nothing to remove
+    
     logger.debug("Removing working bundles older than " + bundleExpiryAge
         + " seconds; now at " + workingBundles.size() + " bundles");
     long expiryTime = new Date().getTime() - (bundleExpiryAge * 1000);
