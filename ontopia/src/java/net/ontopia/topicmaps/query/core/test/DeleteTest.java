@@ -295,6 +295,36 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("topic lost reified after delete",
                employment.getReified() != null);
   }
+
+  public void testQName() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+
+    update("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" " +
+           "delete xtm:subclass!");
+
+    assertTrue("topic still attached to TM after delete",
+               subclass.getTopicMap() == null);
+    assertTrue("wrong number of topics after delete",
+               topicmap.getTopics().size() == (topics - 1));
+  }  
+
+  public void testQName2() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+
+    update("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" " +
+           "delete $A from $A = xtm:subclass!");
+
+    assertTrue("topic still attached to TM after delete",
+               subclass.getTopicMap() == null);
+    assertTrue("wrong number of topics after delete",
+               topicmap.getTopics().size() == (topics - 1));
+  }  
   
   /// error tests
     

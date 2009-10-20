@@ -408,7 +408,9 @@ predicateref:
 
 /// THE UPDATE LANGUAGE
 
-updatestatement: delete | merge | update; // only ones supported at the moment
+updatestatement: 
+  (prefixdecl | importdecl)*
+  delete | merge | update; // only ones supported at the moment
 
 delete:
   DELETE 
