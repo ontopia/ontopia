@@ -9,8 +9,6 @@ import java.util.Collections;
 
 import net.ontopia.utils.StringUtils;
 
-import org.apache.commons.collections.map.AbstractMapDecorator;
-
 /**
  * INTERNAL: CacheIF implementation that wraps a Map. All access is
  * synchronized.
