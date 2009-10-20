@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 
@@ -121,5 +122,27 @@ public class QueryProcessorTest extends AbstractTomaQueryTestCase {
     addMatch(matches, "$T", getTopicById("kfg"));
     
     verifyQueryOrder(matches, "select $t where $t.type = father order by 1 limit 2 offset 1;");
+  }
+  
+  /// concat string tests
+  
+  public void testConcatInWhere() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "$T", getTopicById("ltm-standard"));
+    
+    verifyQueryOrder(matches, "select $t where $t.oc(mass) = '3.0' || ' kg';");
+  }
+
+  public void testConcatInSelect() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List matches = new ArrayList();
+    TopicNameIF tn = (TopicNameIF) getTopicById("tn").getTopicNames()
+        .iterator().next();
+    addMatch(matches, "||", tn.getValue() + " - Superman");
+    
+    verifyQueryOrder(matches, "select $t.name || ' - Superman' where $t = tn;");
   }
 }

@@ -48,6 +48,13 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
     verifyQuery(matches, "select $t.name where $t.name = 'Ontopia Project';");
   }
 
+  public void testNonExistantName() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    findNothing("select $t.name where $t.name@blabla = 'Ontopia Project';");
+    findNothing("select $t.name where $t.name(myname) = 'Ontopia Project';");
+  }
+  
   /// variant path expressions
   
   public void testVariant() throws InvalidQueryException, IOException {
