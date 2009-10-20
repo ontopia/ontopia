@@ -32,7 +32,7 @@ public class InstancePath extends AbstractBasicPathElement {
   public InstancePath() {
     super("INSTANCE");
   }
-
+  
   protected boolean isLevelAllowed() {
     return true;
   }

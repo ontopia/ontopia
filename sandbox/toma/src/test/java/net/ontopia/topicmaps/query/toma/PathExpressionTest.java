@@ -34,7 +34,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
     List matches = new ArrayList();
     addMatch(matches, "$T.ID", getTopicById("ontopia").getItemIdentifiers().iterator().next());
     
-    verifyQuery(matches, "select $t.id where $t = i'ontopia';");
+    verifyQuery(matches, "select $t.id where $t.id = 'ontopia';");
   }  
   
   /// name path expressions
@@ -45,7 +45,7 @@ public class PathExpressionTest extends AbstractTomaQueryTestCase {
     List matches = new ArrayList();
     addMatch(matches, "$T.NAME", getTopicById("ontopia").getTopicNames().iterator().next());
     
-    verifyQuery(matches, "select $t.name where $t = i'ontopia';");
+    verifyQuery(matches, "select $t.name where $t.name = 'Ontopia Project';");
   }
 
   /// variant path expressions

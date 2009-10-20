@@ -7,13 +7,21 @@ import net.ontopia.topicmaps.query.toma.impl.basic.expression.EqualsExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.LiteralExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.InstancePath;
+import net.ontopia.topicmaps.query.toma.impl.basic.path.ItemIDPath;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.NamePath;
+import net.ontopia.topicmaps.query.toma.impl.basic.path.SubTypePath;
+import net.ontopia.topicmaps.query.toma.impl.basic.path.SubjectIDPath;
+import net.ontopia.topicmaps.query.toma.impl.basic.path.SubjectLocatorPath;
+import net.ontopia.topicmaps.query.toma.impl.basic.path.SuperTypePath;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.TopicPath;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.TypePath;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.VariablePath;
+import net.ontopia.topicmaps.query.toma.impl.basic.path.VariantPath;
 import net.ontopia.topicmaps.query.toma.impl.utils.QueryOptimizerIF;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.Level;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic.IDTYPE;
 
 public class QueryOptimizer implements QueryOptimizerIF {
@@ -33,76 +41,199 @@ public class QueryOptimizer implements QueryOptimizerIF {
     return e;
   }
 
-  // TODO: this is just an example for a good optimization
-  // need to improve the way optimizations (in this case replacements) are coded
+  // TODO: other ideas for query optimization
 
-  // useful replacements:
-  // $t.name = 'something' -> $t = n'something'
-  // $t.name.var = 'something' -> $t = v'something'
-  // $t.sl = 'something' -> $t = sl'something'
-  // $t.si = 'something' -> $t = si'something'
-  // $t.type = topicExpr -> $t = topicExpr.instance
-  // $t.instance = topicExpr -> $t = topicExpr.type
-  // $t.super = topicExpr -> $t = topicExpr.sub
-  // $t.sub = topicExpr -> $t = topicExpr.super
-
-  // other ideas for query optimization
   // reordering of expressions which are coupled together by an 'and'
 
+  @SuppressWarnings("unchecked")
   public static class ReplaceExpressions implements QueryOptimizerIF {
+
+    private enum STATUS {
+      FOUND, MIRROR, NOTFOUND
+    };
+
+    private static Class[] IDPATH = { VariablePath.class, ItemIDPath.class };
+    private static Class[] NAMEPATH = { VariablePath.class, NamePath.class };
+    private static Class[] VARIANTPATH = { VariablePath.class, NamePath.class,
+        VariantPath.class };
+    private static Class[] SLPATH = { VariablePath.class,
+        SubjectLocatorPath.class };
+    private static Class[] SIPATH = { VariablePath.class, SubjectIDPath.class };
+
+    private static Class[] TYPEPATH = { VariablePath.class, TypePath.class };
+    private static Class[] INSTANCEPATH = { VariablePath.class,
+        InstancePath.class };
+    private static Class[] SUBPATH = { VariablePath.class, SubTypePath.class };
+    private static Class[] SUPERPATH = { VariablePath.class,
+        SuperTypePath.class };
+    private static Class[] TOPICPATH = { TopicPath.class };
+
     public ExpressionIF optimize(ExpressionIF expr) {
       if (expr instanceof EqualsExpression) {
-        BasicExpressionIF left = (BasicExpressionIF) expr.getChild(0);
-        BasicExpressionIF right = (BasicExpressionIF) expr.getChild(1);
+        ExpressionIF left = expr.getChild(0);
+        ExpressionIF right = expr.getChild(1);
 
-        if (left instanceof PathExpression
-            && right instanceof LiteralExpression) {
-          PathExpression path = (PathExpression) left;
-          if (path.getPathLength() == 2
-              && path.getPathElement(0) instanceof VariablePath
-              && path.getPathElement(1) instanceof NamePath) {
-            try {
-              ExpressionIF result = new EqualsExpression();
-              PathExpression l = new PathExpression();
-              l.addPath(new VariablePath(path.getVariableName().substring(1)));
-              result.addChild(l);
-              PathExpression r = new PathExpression();
-              r.addPath(new TopicPath(IDTYPE.NAME, ((LiteralExpression) right)
-                  .getValue()));
-              result.addChild(r);
-              return result;
-            } catch (AntlrWrapException e) {
-            }
-          }
-        } else if (left instanceof PathExpression
-            && right instanceof PathExpression) {
-          PathExpression leftPath = (PathExpression) left;
-          PathExpression rightPath = (PathExpression) right;
+        STATUS status;
+        status = checkExpression(left, right, PathExpression.class,
+            LiteralExpression.class);
+        if (status != STATUS.NOTFOUND) {
+          PathExpression path = (PathExpression) (status == STATUS.FOUND ? left
+              : right);
+          LiteralExpression literal = (LiteralExpression) (status == STATUS.FOUND ? right
+              : left);
+          String varName = path.getVariableName().substring(1);
 
-          if (leftPath.getPathLength() == 2
-              && leftPath.getPathElement(0) instanceof VariablePath
-              && leftPath.getPathElement(1) instanceof TypePath &&
-              rightPath.getPathLength() == 1 
-              && rightPath.getPathElement(0) instanceof TopicPath) {
-            try {
-              ExpressionIF result = new EqualsExpression();
-              PathExpression l = rightPath;
-              InstancePath i = new InstancePath();
-              i.setLevel(leftPath.getPathElement(1).getLevel());
-              l.addPath(i);
-              result.addChild(l);
-              PathExpression r = new PathExpression();
-              r.addPath(new VariablePath(leftPath.getVariableName().substring(1)));
-              result.addChild(r);
-              return result;
-            } catch (AntlrWrapException e) {
-            }
+          ExpressionIF result = null;
+          if (checkSimplePathExpression(path, IDPATH)) {
+            // $t.id = 'abc' -> $t = i'abc'
+            result = getTopicEqualsIDExpression(varName, IDTYPE.IID, literal
+                .getValue());
+          } else if (checkSimplePathExpression(path, NAMEPATH)) {
+            // $t.name = 'abc' -> $t = n'abc'
+            result = getTopicEqualsIDExpression(varName, IDTYPE.NAME, literal
+                .getValue());
+          } else if (checkSimplePathExpression(path, VARIANTPATH)) {
+            // $t.name.var = 'abc' -> $t = v'abc'
+            result = getTopicEqualsIDExpression(varName, IDTYPE.VAR, literal
+                .getValue());
+          } else if (checkSimplePathExpression(path, SLPATH)) {
+            // $t.sl = 'abc' -> $t = sl'abc'
+            result = getTopicEqualsIDExpression(varName, IDTYPE.SL, literal
+                .getValue());
+          } else if (checkSimplePathExpression(path, SIPATH)) {
+            // $t.si = 'abc' -> $t = si'abc'
+            result = getTopicEqualsIDExpression(varName, IDTYPE.SI, literal
+                .getValue());
           }
+
+          // if something went wrong in the optimization process, return the
+          // unchanged expression.
+          return (result == null) ? expr : result;
         }
 
+        status = checkExpression(left, right, PathExpression.class,
+            PathExpression.class);
+        if (status != STATUS.NOTFOUND) {
+          PathExpression leftPath = (PathExpression) left;
+          PathExpression rightPath = (PathExpression) right;
+          PathExpression path = null, topic = null;
+
+          // check if the TopicPath Expression is on the right or left side of
+          // the equals expression.
+          if (checkSimplePathExpression(rightPath, TOPICPATH)) {
+            path = leftPath;
+            topic = rightPath;
+          } else if (checkSimplePathExpression(leftPath, TOPICPATH)) {
+            path = rightPath;
+            topic = leftPath;
+          }
+
+          if (path != null) {
+            // get the level of the last path element
+            Level level = path.isEmpty() ? null : path.getPathElement(
+                path.getPathLength() - 1).getLevel();
+            String varName = path.getVariableName();
+            if (varName != null) {
+              // TODO: This has to be done, because path.getVariableName()
+              // returns '$' + varName, so we need to remove the '$'.
+              varName = varName.substring(1);
+            }
+            ExpressionIF result = null;
+
+            if (checkSimplePathExpression(path, TYPEPATH)) {
+              // $t.type = i'topic' -> $t = i'topic'.instance
+              result = getReversalTopicExpression(varName, topic,
+                  new InstancePath(), level);
+            } else if (checkSimplePathExpression(path, INSTANCEPATH)) {
+              // $t.instance = i'topic' -> $t = i'topic'.type
+              result = getReversalTopicExpression(varName, topic,
+                  new TypePath(), level);
+            } else if (checkSimplePathExpression(path, SUBPATH)) {
+              // $t.sub = i'topic' -> $t = i'topic'.super
+              result = getReversalTopicExpression(varName, topic,
+                  new SuperTypePath(), level);
+            } else if (checkSimplePathExpression(path, SUPERPATH)) {
+              // $t.super = i'topic' -> $t = i'topic'.sub
+              result = getReversalTopicExpression(varName, topic,
+                  new SubTypePath(), level);
+            }
+
+            // if something went wrong in the optimization process, return the
+            // unchanged expression.
+            return (result == null) ? expr : result;
+          }
+        }
       }
 
       return expr;
+    }
+
+    private ExpressionIF getTopicEqualsIDExpression(String varName,
+        IDTYPE type, String val) {
+      try {
+        ExpressionIF expr = new EqualsExpression();
+        PathExpression l = new PathExpression();
+        l.addPath(new VariablePath(varName));
+        expr.addChild(l);
+        PathExpression r = new PathExpression();
+        r.addPath(new TopicPath(type, val));
+        expr.addChild(r);
+        return expr;
+      } catch (AntlrWrapException e) {
+        return null;
+      }
+    }
+
+    private ExpressionIF getReversalTopicExpression(String varName,
+        PathExpression topicExpr, PathElementIF reverseElement, Level level) {
+      try {
+        ExpressionIF expr = new EqualsExpression();
+        PathExpression l = new PathExpression();
+        l.addPath(new VariablePath(varName));
+        expr.addChild(l);
+        PathExpression r = topicExpr;
+        reverseElement.setLevel(level);
+        r.addPath(reverseElement);
+        expr.addChild(r);
+        return expr;
+      } catch (AntlrWrapException e) {
+        return null;
+      }
+    }
+
+    private STATUS checkExpression(ExpressionIF left, ExpressionIF right,
+        Class expectedLeft, Class expectedRight) {
+      if (expectedLeft.isInstance(left) && expectedRight.isInstance(right)) {
+        return STATUS.FOUND;
+      } else if (expectedLeft.isInstance(right)
+          && expectedRight.isInstance(left)) {
+        return STATUS.MIRROR;
+      } else {
+        return STATUS.NOTFOUND;
+      }
+    }
+
+    private boolean checkSimplePathExpression(PathExpression path,
+        Class<? extends PathElementIF>... elements) {
+      // check if the length of the same for both paths
+      if (path.getPathLength() != elements.length) {
+        return false;
+      }
+
+      // now check all elements for equality
+      for (int idx = 0; idx < path.getPathLength(); idx++) {
+        PathElementIF pe = path.getPathElement(idx);
+
+        // if they are not of the same class -> false
+        if (!elements[idx].isInstance(pe)) {
+          return false;
+        }
+
+        if (pe.getScope() != null || pe.getType() != null) {
+          return false;
+        }
+      }
+      return true;
     }
   }
 }
