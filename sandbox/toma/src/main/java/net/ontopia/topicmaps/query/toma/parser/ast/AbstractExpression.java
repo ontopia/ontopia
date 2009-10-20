@@ -102,7 +102,7 @@ public abstract class AbstractExpression implements ExpressionIF {
   public ExpressionIF optimize(QueryOptimizerIF optimizer) {
     for (int i=0; i<getChildCount(); i++) {
       ExpressionIF child = getChild(i);
-      setChild(i, optimizer.optimize(child));
+      setChild(i, child.optimize(optimizer));
     }
     
     return optimizer.optimize(this);
