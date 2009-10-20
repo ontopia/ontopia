@@ -28,8 +28,7 @@ function insertExample(exName) {
     document.queryform.query.value =
       'select $PLACE, $PERSON where \n' +
       '  $PERSON.(person)<-(born-in)->(place) = $PLACE and \n' +
-      '  $PERSON.(person)<-(died-in)->(place) = $DIED and \n' +
-      '  $PLACE = $DIED \n' + 
+      '  $PERSON.(person)<-(died-in)->(place) = $PLACE \n' +
       '  order by 1, 2;';
 
   } else if (exName == "exComposers") { // ----------------------------------
@@ -69,6 +68,7 @@ function insertExample(exName) {
 
   } else if (exName == "exEnglishTitles") { // ------------------------------
     document.queryform.query.value =
+      '# can be further improved with square brackets \n' + 
       'select $OPERA, $OPERA.name@english where \n' +
       '  $OPERA.type = opera and \n' +
       '  exists $OPERA.name@english \n' + 
@@ -84,20 +84,21 @@ function insertExample(exName) {
     
   } else if (exName == "exSettingsByCountry") { // --------------------------
     document.queryform.query.value =
-      "/* Define inference rule to capture nested located-in associations: */\n" +
-      'using o for i"http://psi.ontopedia.net/"\n' +
-      "ext-located-in($CONTAINEE, $CONTAINER) :-\n" +
-      "{\n" +
-      " o:located_in($CONTAINEE : o:Containee, $CONTAINER : o:Container) |\n" +
-      " o:located_in($CONTAINEE : o:Containee, $MID : o:Container),\n" +
-      " ext-located-in($MID, $CONTAINER)\n" +
-      "}.\n\n" +
-      "select $COUNTRY, count($OPERA) from\n" +
-      " instance-of($COUNTRY, o:Country),\n" +
-      " { o:takes_place_in($OPERA : o:Opera, $COUNTRY : o:Place) |\n" +
-      "   o:takes_place_in($OPERA : o:Opera, $PLACE : o:Place),\n" +
-      "   ext-located-in($PLACE, $COUNTRY) }\n" +
-      "order by $OPERA desc?\n" ;
+      '# not possible currently due to missing grouping in toma.';
+      //"/* Define inference rule to capture nested located-in associations: */\n" +
+      //'using o for i"http://psi.ontopedia.net/"\n' +
+      //"ext-located-in($CONTAINEE, $CONTAINER) :-\n" +
+      //"{\n" +
+      //" o:located_in($CONTAINEE : o:Containee, $CONTAINER : o:Container) |\n" +
+      //" o:located_in($CONTAINEE : o:Containee, $MID : o:Container),\n" +
+      //" ext-located-in($MID, $CONTAINER)\n" +
+      //"}.\n\n" +
+      //"select $COUNTRY, count($OPERA) from\n" +
+      //" instance-of($COUNTRY, o:Country),\n" +
+      //" { o:takes_place_in($OPERA : o:Opera, $COUNTRY : o:Place) |\n" +
+      //"   o:takes_place_in($OPERA : o:Opera, $PLACE : o:Place),\n" +
+      //"   ext-located-in($PLACE, $COUNTRY) }\n" +
+      //"order by $OPERA desc?\n" ;
 
   } else if (exName == "exNaryArias") { // ----------------------------------
     document.queryform.query.value =
@@ -112,44 +113,23 @@ function insertExample(exName) {
 
   } else if (exName == "exInspiredBy") { // ---------------------------------
     document.queryform.query.value =
-      "/* First define inference rule and then use it in query:*/\n\n" +
-      'using o for i"http://psi.ontopedia.net/"\n' +
-      "inspired-by($COMPOSER, $WRITER) :-\n" +
-      ' o:composed_by($OPERA : o:Work, $COMPOSER : o:Composer),\n' +
-      ' o:based_on($OPERA : o:Result, $WORK : o:Source),\n' +
-      ' o:written_by($WORK : o:Work, $WRITER : o:Writer).\n\n' +
-      "inspired-by(o:Giuseppe_Verdi, $WHO)\n" +
-      "order by $WHO?\n\n" +
-      "------------------------------------------------------------\n\n" +
-      "Anything after ? is ignored by the query processor, so it's\n" +
-      "safe to write stuff here... Try the following query and\n" +
-      "compare it with the query 'Composers inspired by Shakespeare'.\n" +
-      "(You'll have to copy the next two lines and use them to\n" +
-      "replace the two line query above.)\n\n" +
-      "inspired-by($WHO, o:Shakespeare)\n" +
-      "order by $WHO?\n";
+      'select distinct $COMPOSER, $WRITER where \n' +
+      '  $COMPOSER = verdi and \n' +
+      '  $COMPOSER.(composer)<-(composed-by)->(work) = $OPERA and \n' +
+      '  $OPERA.(result)<-(based-on)->(source) = $WORK and \n' +
+      '  $WORK.(work)<-(written-by)->(writer) = $WRITER \n' +
+      'order by 2;';
 
   } else if (exName == "exBibliography") { // -------------------------------
     document.queryform.query.value =
-      'using o for i"http://psi.ontopedia.net/"\n' +
-      "select $TOPIC, $BIBREF from\n" +
-      "{\n" +
-      "  o:bibref($TOPIC, $BIBREF)\n" +
-      "|\n" +
-      "  role-player($ROLE, $TOPIC),\n" +
-      "  association-role($ASSOC, $ROLE),\n" +
-      "  reifies($REIFIER, $ASSOC),\n" +
-      "  o:bibref($REIFIER, $BIBREF)\n" +
-      "}\n" +
-      "order by $TOPIC desc, $BIBREF?\n\n" +
-      "--------------------------------------------------------------\n\n" +
-      "This query caters both for bibliographic references that are\n" +
-      "attached directly to the topic and for those that are attached\n" +
-      "to (reified) associations in which the topic plays a role.\n\n" +
-      'For example, a book on the relationship between Tosca and Rome\n' +
-      'will also be found under "Tosca", even though it is not an\n' +
-      'occurrence of the topic "Tosca". (It is actually an occurrence\n' +
-      'of the association between "Tosca" and "Rome".)\n';
+      'select $TOPIC, $TOPIC.oc(bibref).data where \n' +
+      '  exists $TOPIC.oc(bibref) \n' + 
+      'union \n' +
+      'select $TOPIC, $REIFIER.oc(bibref) where \n' + 
+      '  $a.player = $TOPIC and \n' +
+      '  $reifier = $a.reifier and \n' +
+      '  exists $reifier.oc(bibref) \n' + 
+      'order by 1 desc, 2;';    	
 
   } else if (exName == "exRecordings") { // ---------------------------------
     document.queryform.query.value =
