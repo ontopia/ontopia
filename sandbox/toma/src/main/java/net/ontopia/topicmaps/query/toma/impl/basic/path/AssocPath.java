@@ -36,6 +36,11 @@ public class AssocPath extends AbstractBasicPathElement {
     inputSet.add(TYPE.NONE);
   }
 
+  private Collection<TopicIF> validScopes = null;
+  private Collection<TopicIF> validTypes = null;
+  private Collection<TopicIF> validLeftRoles = null;
+  private Collection<TopicIF> validRightRoles = null;
+  
   public AssocPath() {
     super("ASSOC");
   }
@@ -87,18 +92,24 @@ public class AssocPath extends AbstractBasicPathElement {
       topic = (TopicIF) input;
     }
 
-    Collection<TopicIF> validScopes = null;
     if (getScope() != null) {
       PathExpression scope = (PathExpression) getScope();
-      ResultSet scopes = scope.evaluate(context);
-      validScopes = (Collection<TopicIF>) scopes.getValues(scopes
-          .getLastIndex());
+      // Optimization: if the scope expression does not contain a variable, we
+      // can cache it.
+      if (scope.getVariableName() != null || validScopes == null) {
+        ResultSet scopes = scope.evaluate(context);
+        validScopes = (Collection<TopicIF>) scopes.getValidValues(scopes
+            .getLastIndex());
+      }
     }
 
     PathExpression type = (PathExpression) getType();
-    ResultSet types = type.evaluate(context);
-    Collection<TopicIF> validTypes = (Collection<TopicIF>) types
-        .getValues(types.getLastIndex());
+    // Optimization: if the type expression does not contain a variable, we
+    // can cache it.
+    if (type.getVariableName() != null || validTypes == null) {
+      ResultSet types = type.evaluate(context);
+      validTypes = (Collection<TopicIF>) types.getValidValues(types.getLastIndex());
+    }
 
     if (leftRole != null) {
       return evaluateLeft(context, topic, leftRole, rightRole, validTypes,
@@ -130,15 +141,17 @@ public class AssocPath extends AbstractBasicPathElement {
     Collection<AssociationRoleIF> inputRoles = input.getRoles();
     Collection<AssociationRoleIF> result = new LinkedList<AssociationRoleIF>();
 
-    Collection<TopicIF> validRoleTypes = null;
-    if (!left.isEmpty()) {
+    // Optimization: if the type expression does not contain a variable, we
+    // can cache it.
+    if (!left.isEmpty()
+        && (left.getVariableName() != null || validRightRoles == null)) {
       ResultSet roles = left.evaluate(context);
-      validRoleTypes = (Collection<TopicIF>) roles.getValues(roles
+      validLeftRoles = (Collection<TopicIF>) roles.getValidValues(roles
           .getLastIndex());
     }
 
     for (AssociationRoleIF role : inputRoles) {
-      if (validRoleTypes == null || validRoleTypes.contains(role.getType())) {
+      if (validLeftRoles == null || validLeftRoles.contains(role.getType())) {
         AssociationIF a = role.getAssociation();
         if (validTypes == null || validTypes.contains(a.getType())) {
           if (validScopes == null || containsAny(a.getScope(), validScopes)) {
@@ -160,15 +173,17 @@ public class AssocPath extends AbstractBasicPathElement {
       PathExpression right, Collection<AssociationRoleIF> roles)
       throws InvalidQueryException {
 
-    Collection<TopicIF> validRoles = null;
-    if (!right.isEmpty()) {
+    // Optimization: if the type expression does not contain a variable, we
+    // can cache it.
+    if (!right.isEmpty()
+        && (right.getVariableName() != null || validRightRoles == null)) {
       ResultSet rs = right.evaluate(context);
-      validRoles = (Collection<TopicIF>) rs.getValues(rs.getLastIndex());
+      validRightRoles = (Collection<TopicIF>) rs.getValidValues(rs.getLastIndex());
     }
 
     Collection<Object[]> result = new LinkedList<Object[]>();
     for (AssociationRoleIF role : roles) {
-      if (validRoles == null || validRoles.contains(role.getType())) {
+      if (validRightRoles == null || validRightRoles.contains(role.getType())) {
         result.add(new Object[] { role.getAssociation(), role.getPlayer() });
       }
     }

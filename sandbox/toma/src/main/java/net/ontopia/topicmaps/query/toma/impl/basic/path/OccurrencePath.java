@@ -13,24 +13,28 @@ import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 
 /**
- * INTERNAL: Occurrence path element in an path expression. Returns all occurrences
- * of a given input topic.
+ * INTERNAL: Occurrence path element in an path expression. Returns all
+ * occurrences of a given input topic.
  * <p>
  * <b>Allowed Input</b>:
  * <ul>
  * <li>TOPIC
  * </ul>
- * </p><p>
+ * </p>
+ * <p>
  * <b>Output</b>: OCCURRENCE
  * </p>
  */
-public class OccurrencePath extends AbstractBasicPathElement { 
+public class OccurrencePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
-  
+
   static {
     inputSet = new HashSet<TYPE>();
     inputSet.add(TYPE.TOPIC);
   }
+
+  private Collection<TopicIF> validScopes = null;
+  private Collection<TopicIF> validTypes = null;
 
   public OccurrencePath() {
     super("OC");
@@ -43,7 +47,7 @@ public class OccurrencePath extends AbstractBasicPathElement {
   protected boolean isScopeAllowed() {
     return true;
   }
-  
+
   protected boolean isTypeAllowed() {
     return true;
   }
@@ -51,36 +55,42 @@ public class OccurrencePath extends AbstractBasicPathElement {
   protected boolean isChildAllowed() {
     return false;
   }
-  
+
   public Set<TYPE> validInput() {
     return inputSet;
   }
-  
+
   public TYPE output() {
     return TYPE.OCCURRENCE;
   }
-  
+
   @SuppressWarnings("unchecked")
   public Collection<OccurrenceIF> evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
     TopicIF topic = (TopicIF) input;
-    
-    Collection<TopicIF> validScopes = null;
-    Collection<TopicIF> validTypes = null;
-    
+
     if (getScope() != null) {
       PathExpression scope = (PathExpression) getScope();
-      ResultSet scopes = scope.evaluate(context);
-      validScopes = (Collection<TopicIF>) scopes.getValues(scopes
-          .getLastIndex());
+      // Optimization: if the scope expression does not contain a variable, we
+      // can cache it.
+      if (scope.getVariableName() != null || validScopes == null) {
+        ResultSet scopes = scope.evaluate(context);
+        validScopes = (Collection<TopicIF>) scopes.getValidValues(scopes
+            .getLastIndex());
+      }
     }
 
     if (getType() != null) {
       PathExpression type = (PathExpression) getType();
-      ResultSet types = type.evaluate(context);
-      validTypes = (Collection<TopicIF>) types.getValues(types.getLastIndex());
+      // Optimization: if the type expression does not contain a variable, we
+      // can cache it.
+      if (type.getVariableName() != null || validTypes == null) {
+        ResultSet types = type.evaluate(context);
+        validTypes = (Collection<TopicIF>) types.getValidValues(types
+            .getLastIndex());
+      }
     }
-    
+
     Collection<OccurrenceIF> ocs = topic.getOccurrences();
     if (validTypes == null && validScopes == null) {
       return ocs;
@@ -89,13 +99,12 @@ public class OccurrencePath extends AbstractBasicPathElement {
       for (OccurrenceIF oc : ocs) {
         TopicIF ocType = oc.getType();
         if (validTypes == null || validTypes.contains(ocType)) {
-          if (validScopes == null || 
-              containsAny(oc.getScope(), validScopes)) {
+          if (validScopes == null || containsAny(oc.getScope(), validScopes)) {
             result.add(oc);
           }
         }
       }
       return result;
     }
-  }  
+  }
 }

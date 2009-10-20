@@ -89,6 +89,8 @@ public class VariablePath extends AbstractVariable implements
     if (rs != null) {
       if (getResultSize(context) > 1) {
         List<String> vars = rs.getBoundVariables();
+        // FIXME: this is a hack to move the current bound variable to the end
+        // of the list.
         vars.remove(toString());
         vars.add(toString());
         int[] indices = new int[vars.size()];

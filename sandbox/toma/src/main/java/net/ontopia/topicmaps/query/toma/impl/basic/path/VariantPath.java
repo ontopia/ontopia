@@ -32,6 +32,8 @@ public class VariantPath extends AbstractBasicPathElement {
     inputSet.add(TYPE.NAME);
   }
   
+  private Collection<?> validScopes = null;
+
   public VariantPath() {
     super("VAR");
   }
@@ -65,12 +67,14 @@ public class VariantPath extends AbstractBasicPathElement {
       throws InvalidQueryException {
     TopicNameIF name = (TopicNameIF) input;
     
-    Collection<?> validScopes = null;
-    
     if (getScope() != null) {
       PathExpression scope = (PathExpression) getScope();
-      ResultSet scopes = scope.evaluate(context);
-      validScopes = scopes.getValues(scopes.getLastIndex());
+      // Optimization: if the scope expression does not contain a variable, we
+      // can cache it.
+      if (scope.getVariableName() != null || validScopes == null) {
+        ResultSet scopes = scope.evaluate(context);
+        validScopes = scopes.getValidValues(scopes.getLastIndex());
+      }
     }
 
     Collection<VariantNameIF> variants = name.getVariants();
