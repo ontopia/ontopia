@@ -335,6 +335,15 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
     return processor.update(query);
   }
 
+  public int update(String query, Map params) throws InvalidQueryException {
+    return processor.update(query, params);
+  }
+
+  public int update(String query, Map params, DeclarationContextIF context)
+    throws InvalidQueryException {
+    return processor.update(query, params, context);
+  }
+  
   public void updateError(String query) throws InvalidQueryException {
     try {
       update(query);

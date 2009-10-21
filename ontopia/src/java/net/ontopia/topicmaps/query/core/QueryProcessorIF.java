@@ -53,8 +53,27 @@ public interface QueryProcessorIF {
   /**
    * PUBLIC: Runs the update statement, returning the number of
    * modified objects.
+   * @since %NEXT%
    */
   public int update(String query) throws InvalidQueryException;
+
+  /**
+   * PUBLIC: Runs the update statement with the given parameters,
+   * returning the number of modified objects.
+   * @since %NEXT%
+   */
+  public int update(String query, Map<String, ?> arguments)
+    throws InvalidQueryException;
+
+  /**
+   * PUBLIC: Runs the update statement in the given declaration
+   * context with the given parameters, returning the number of
+   * modified objects.
+   * @since %NEXT%
+   */
+  public int update(String query, Map<String, ?> arguments,
+                    DeclarationContextIF context)
+    throws InvalidQueryException;
   
   /**     
    * PUBLIC: Parses the query, returning an object representing the

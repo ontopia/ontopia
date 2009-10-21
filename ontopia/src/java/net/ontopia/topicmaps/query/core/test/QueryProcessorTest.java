@@ -937,6 +937,20 @@ public class QueryProcessorTest extends AbstractQueryTest {
   }
   
   /// other tests
+
+  public void testParamIsWrongType()
+    throws InvalidQueryException, IOException {
+    makeEmpty();
+
+    try {
+      Map params = new HashMap();
+      params.put("str", new Integer(5));
+      processor.execute("resource($R, %str%)?", params);      
+      fail("Successfully passed integer parameter to predicate requiring string");
+    } catch (InvalidQueryException e) {
+      // this is what we were testing for
+    }
+  }
   
   public void testRuleWithWrongNumberOfArgs()
     throws InvalidQueryException, IOException {

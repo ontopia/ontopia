@@ -94,6 +94,17 @@ public class QueryProcessor implements QueryProcessorIF {
   public int update(String query) {
     throw new UnsupportedOperationException();
   }
+
+  public int update(String query, Map<String, ?> arguments)
+    throws InvalidQueryException {
+    throw new UnsupportedOperationException();
+  }
+
+  public int update(String query, Map<String, ?> arguments,
+                    DeclarationContextIF context)
+    throws InvalidQueryException {
+    throw new UnsupportedOperationException();
+  }
   
   public ParsedQueryIF parse(String query) throws InvalidQueryException {
     return parseQuery(query, null);

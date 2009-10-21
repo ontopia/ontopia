@@ -3,6 +3,7 @@
 
 package net.ontopia.topicmaps.query.parser;
 
+import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -62,7 +63,8 @@ public abstract class ModificationStatement extends TologStatement {
                                           "part if no from part");
   }
 
-  public abstract int doStaticUpdates() throws InvalidQueryException;
+  public abstract int doStaticUpdates(Map arguments)
+    throws InvalidQueryException;
 
   public abstract int doUpdates(QueryMatches matches)
     throws InvalidQueryException;
@@ -74,5 +76,18 @@ public abstract class ModificationStatement extends TologStatement {
       return matches.getIndex((Variable) arg);
     else
       return -1;
+  }
+
+  // translates parameters to their values (and leaves values alone)
+  protected static Object getValue(Object obj, Map arguments)
+    throws InvalidQueryException {
+    Object value;
+    if (obj instanceof Parameter) {
+      value = arguments.get(((Parameter) obj).getName());
+      if (value == null)
+        throw new InvalidQueryException("Parameter not specified: " + obj);
+    } else
+      value = obj;
+    return value;
   }  
 }

@@ -3,6 +3,7 @@ package net.ontopia.topicmaps.query.core.test;
 
 import java.io.IOException;
 
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -151,6 +152,60 @@ public class MergeTest extends AbstractQueryTest {
                getTopicById("topic3") == getTopicById("topic4"));
   }
   
+  public void testParam() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+    TopicIF superclass = getTopicById("superclass");
+    Map params = makeArguments("topic", subclass);
+
+    update("merge superclass, %topic%!", params);
+
+    assertTrue("topic still attached to TM after merge",
+               subclass.getTopicMap() == null);
+    assertTrue("name lost after merge: " + superclass.getTopicNames().size(),
+               superclass.getTopicNames().size() == 2);
+    assertTrue("wrong number of topics after merge",
+               topicmap.getTopics().size() == (topics - 1));
+  }  
+
+  public void testParam2() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+    TopicIF superclass = getTopicById("superclass");
+    Map params = makeArguments("topic", subclass);
+
+    update("merge superclass, $A from $A = %topic%!", params);
+
+    assertTrue("topic still attached to TM after merge",
+               subclass.getTopicMap() == null);
+    assertTrue("name lost after merge: " + superclass.getTopicNames().size(),
+               superclass.getTopicNames().size() == 2);
+    assertTrue("wrong number of topics after merge",
+               topicmap.getTopics().size() == (topics - 1));
+  }
+
+  public void testParam3() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+    TopicIF superclass = getTopicById("superclass");
+    Map params = makeArguments("topic", subclass);
+
+    update("merge $A, %topic% from $A = superclass!", params);
+
+    assertTrue("topic still attached to TM after merge",
+               subclass.getTopicMap() == null);
+    assertTrue("name lost after merge: " + superclass.getTopicNames().size(),
+               superclass.getTopicNames().size() == 2);
+    assertTrue("wrong number of topics after merge",
+               topicmap.getTopics().size() == (topics - 1));
+  }
+
   /// error tests
     
   public void testVariableButNoFrom() throws InvalidQueryException {

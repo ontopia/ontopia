@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.net.MalformedURLException;
 
@@ -18,7 +19,8 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
-
+import net.ontopia.topicmaps.query.impl.basic.QueryContext;
+import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
 /**
  * INTERNAL: Represents a parsed DELETE statement.
  */
@@ -37,32 +39,26 @@ public class DeleteStatement extends ModificationFunctionStatement {
     super();
   }
 
-  public int doStaticUpdates() throws InvalidQueryException {
-    if (funcname == null)
-      return doLitListDeletes(true);
-    else {
-      // in order to avoid duplicating code we produce a "fake" matches
-      // object here, so that in effect we're simulating a one-row zero-column
-      // result set
-      QueryMatches matches = new QueryMatches(Collections.EMPTY_SET, null);
-      matches.last++; // make an empty row
-      return doFunctionDeletes(matches);
-    }
-  }
+  // doStaticUpdates is inherited from ModificationFunctionStatement
 
   public int doUpdates(QueryMatches matches) throws InvalidQueryException {
     if (funcname == null)
       return doNormalDeletes(matches);
     else
-      return doFunctionDeletes(matches);
+      return doFunctionUpdates(matches);
   }
 
   // --- Internal methods
 
-  private int doLitListDeletes(boolean strict) throws InvalidQueryException {
+  protected int doLitListDeletes(boolean strict, Map arguments)
+    throws InvalidQueryException {
     int deletes = 0;
     for (int ix = 0; ix < litlist.size(); ix++) {
       Object lit = litlist.get(ix);
+
+      if (lit instanceof Parameter)
+        lit = arguments.get(((Parameter) lit).getName());
+      
       if (lit instanceof TMObjectIF) {
         ((TMObjectIF) lit).remove();
         deletes++;
@@ -74,7 +70,8 @@ public class DeleteStatement extends ModificationFunctionStatement {
   }
 
   private int doNormalDeletes(QueryMatches matches) throws InvalidQueryException{
-    int deletes = doLitListDeletes(false);
+    int deletes = doLitListDeletes(false,
+                                   matches.getQueryContext().getParameters());
 
     // INV: the final QueryMatches object contains only variables actually
     // used in the litlist, so we can go through and just delete everything
@@ -91,32 +88,6 @@ public class DeleteStatement extends ModificationFunctionStatement {
       }
     }
     
-    return deletes;
-  }
-
-  private int doFunctionDeletes(QueryMatches matches)
-    throws InvalidQueryException {
-    int deletes = 0;
-
-    ModificationFunctionIF function = makeFunction(funcname);
-    FunctionSignature signature = FunctionSignature.getSignature(function);
-    Object arg1 = litlist.get(0);
-    int varix1 = getIndex(arg1, matches);
-    Object arg2 = litlist.get(1);
-    int varix2 = getIndex(arg2, matches);
-    
-    for (int row = 0; row <= matches.last; row++) {
-      if (varix1 != -1)
-        arg1 = matches.data[row][varix1];
-
-      if (varix2 != -1)
-        arg2 = matches.data[row][varix2];
-
-      signature.validateArguments(arg1, arg2, funcname);
-      function.modify((TMObjectIF) arg1, arg2);
-      deletes++;
-    }
-
     return deletes;
   }
     

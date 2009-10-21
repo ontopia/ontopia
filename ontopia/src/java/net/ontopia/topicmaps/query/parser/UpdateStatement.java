@@ -3,6 +3,7 @@
 
 package net.ontopia.topicmaps.query.parser;
 
+import java.util.Map;
 import java.util.Collections;
 import java.net.MalformedURLException;
 
@@ -15,6 +16,8 @@ import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
+import net.ontopia.topicmaps.query.impl.basic.QueryContext;
+import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
 
 /**
  * INTERNAL: Represents an UPDATE statement.
@@ -30,39 +33,15 @@ public class UpdateStatement extends ModificationFunctionStatement {
     super();
   }
 
-  public int doStaticUpdates() throws InvalidQueryException {
-    // in order to avoid duplicating code we produce a "fake" matches
-    // object here, so that in effect we're simulating a one-row zero-column
-    // result set
-    QueryMatches matches = new QueryMatches(Collections.EMPTY_SET, null);
-    matches.last++; // make an empty row
-    return doUpdates(matches);
+  // doStaticUpdates is inherited from ModificationFunctionStatement
+
+  public int doUpdates(QueryMatches matches) throws InvalidQueryException {
+    return doFunctionUpdates(matches);
   }
 
-  public int doUpdates(QueryMatches matches)
+  protected int doLitListDeletes(boolean strict, Map arguments)
     throws InvalidQueryException {
-    int updates = 0;
-
-    ModificationFunctionIF function = makeFunction(funcname);
-    FunctionSignature signature = FunctionSignature.getSignature(function);
-    Object arg1 = litlist.get(0);
-    int varix1 = getIndex(arg1, matches);
-    Object arg2 = litlist.get(1);
-    int varix2 = getIndex(arg2, matches);
-    
-    for (int row = 0; row <= matches.last; row++) {
-      if (varix1 != -1)
-        arg1 = matches.data[row][varix1];
-
-      if (varix2 != -1)
-        arg2 = matches.data[row][varix2];
-
-      signature.validateArguments(arg1, arg2, funcname);
-      function.modify((TMObjectIF) arg1, arg2);
-      updates++;
-    }
-
-    return updates;
+    throw new UnsupportedOperationException(); // updates always have a function
   }
 
   // ----- UPDATE FUNCTIONS

@@ -37,6 +37,7 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
 import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
+import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
 import net.ontopia.topicmaps.query.utils.TologSpy;
 import net.ontopia.topicmaps.query.parser.GlobalParseContext;
 import net.ontopia.topicmaps.query.parser.LocalParseContext;
@@ -180,18 +181,29 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   }
 
   public int update(String query) throws InvalidQueryException {
+    return update(query, null);
+  }
+
+  public int update(String query, Map<String, ?> params)
+    throws InvalidQueryException {
     ModificationStatement statement = (ModificationStatement)
       parser.parseStatement(query);
     if (statement.getEmbeddedQuery() != null) {
       TologQuery subquery = optimize(statement.getEmbeddedQuery());
-      QueryMatches matches = createInitialMatches(subquery, null);
+      QueryMatches matches = createInitialMatches(subquery, params);
       matches = satisfy(subquery.getClauses(), matches);
       matches = reduce(subquery, matches);
       return statement.doUpdates(matches);
     } else
-      return statement.doStaticUpdates();
+      return statement.doStaticUpdates(params);
   }
 
+  public int update(String query, Map<String, ?> arguments,
+                    DeclarationContextIF context)
+    throws InvalidQueryException {
+    return 0;
+  }
+  
   // / actual query processor implementation
 
   // satisfy lives in AbstractQueryProcessor
@@ -204,12 +216,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   }
 
   public QueryMatches createInitialMatches(TologQuery query, Collection items,
-      Map arguments) {
+                                           Map arguments) {
     QueryContext context = new QueryContext(topicmap, query, arguments, query.getOptions());
-    QueryMatches matches = new QueryMatches(items, context);
-    matches.last++; // enter a single empty match to seed the process
-    matches.insertConstants();
-    return matches;
+    return QueryMatchesUtils.createInitialMatches(context, items);
   }
 
   /**

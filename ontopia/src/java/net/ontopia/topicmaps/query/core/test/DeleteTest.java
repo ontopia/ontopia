@@ -1,6 +1,7 @@
 
 package net.ontopia.topicmaps.query.core.test;
 
+import java.util.Map;
 import java.util.Iterator;
 import java.io.IOException;
 
@@ -325,6 +326,67 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == (topics - 1));
   }  
+
+  public void testParam() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+    Map params = makeArguments("topic", subclass);
+
+    update("delete %topic%!", params);
+
+    assertTrue("topic still attached to TM after delete",
+               subclass.getTopicMap() == null);
+    assertTrue("wrong number of topics after delete",
+               topicmap.getTopics().size() == (topics - 1));
+  }  
+
+  public void testParam2() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+    Map params = makeArguments("topic", subclass);
+
+    update("delete $A from $A = %topic%!", params);
+
+    assertTrue("topic still attached to TM after delete",
+               subclass.getTopicMap() == null);
+    assertTrue("wrong number of topics after delete",
+               topicmap.getTopics().size() == (topics - 1));
+  }
+
+  public void testParam3() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+    TopicIF superclass = getTopicById("superclass");
+    Map params = makeArguments("topic", subclass);
+
+    update("delete $A, %topic% from $A = superclass!", params);
+
+    assertTrue("topic still attached to TM after delete",
+               subclass.getTopicMap() == null);
+    assertTrue("topic still attached to TM after delete",
+               superclass.getTopicMap() == null);
+    assertTrue("wrong number of topics after delete",
+               topicmap.getTopics().size() == (topics - 2));
+  }
+  
+  public void testFunctionWithParam() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    TopicIF topic = getTopicById("topic1");
+    TopicIF type = getTopicById("type1");
+    
+    update("delete direct-instance-of(topic1, %type%)!",
+           makeArguments("type", type));
+
+    assertTrue("topic retains type after delete",
+               topic.getTypes().isEmpty());
+  }
   
   /// error tests
     

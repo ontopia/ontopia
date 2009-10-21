@@ -1,6 +1,8 @@
 
 package net.ontopia.topicmaps.query.core.test;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.io.IOException;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -113,6 +115,46 @@ public class UpdateTest extends AbstractQueryTest {
                occ.getDataType().equals(DataTypes.TYPE_URI));
   }
 
+  public void testParam() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    TopicIF subclass = getTopicById("subclass");
+    TopicNameIF name = (TopicNameIF) subclass.getTopicNames().iterator().next();
+    Map params = makeArguments("name", name);
+
+    update("update value(%name%, \"SUBCLASS\")!", params);
+
+    assertTrue("name value not changed",
+               name.getValue().equals("SUBCLASS"));
+  }  
+
+  public void testParam2() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    TopicIF subclass = getTopicById("subclass");
+    TopicNameIF name = (TopicNameIF) subclass.getTopicNames().iterator().next();
+    Map params = new HashMap();
+    params.put("v", "SUBCLASS");
+
+    update("update value(@" + name.getObjectId() + ", %v%)!", params);
+
+    assertTrue("name value not changed",
+               name.getValue().equals("SUBCLASS"));
+  }
+
+  public void testParam3() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    TopicIF subclass = getTopicById("subclass");
+    TopicNameIF name = (TopicNameIF) subclass.getTopicNames().iterator().next();
+    Map params = makeArguments("name", name);
+
+    update("update value($N, \"SUBCLASS\") from $N = %name%!", params);
+
+    assertTrue("name value not changed",
+               name.getValue().equals("SUBCLASS"));
+  }
+  
   /// error tests
 
   public void testNotAString() throws InvalidQueryException, IOException {

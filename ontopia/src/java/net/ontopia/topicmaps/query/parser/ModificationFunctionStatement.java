@@ -5,11 +5,16 @@ package net.ontopia.topicmaps.query.parser;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.Collections;
 
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.impl.utils.Argument;
 import net.ontopia.topicmaps.impl.utils.ArgumentValidator;
+import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
+import net.ontopia.topicmaps.query.impl.basic.QueryContext;
+import net.ontopia.topicmaps.query.impl.utils.QueryMatchesUtils;
 
 /**
  * INTERNAL: Represents an UPDATE or DELETE statement, since these are
@@ -39,6 +44,58 @@ public abstract class ModificationFunctionStatement
 
   // --- Internal helpers
 
+  public int doStaticUpdates(Map arguments) throws InvalidQueryException {
+    if (funcname == null)
+      return doLitListDeletes(true, arguments);
+    else {
+      // in order to avoid duplicating code we produce a "fake" matches
+      // object here, so that in effect we're simulating a one-row zero-column
+      // result set
+      QueryContext context = new QueryContext(null, null, arguments, null);
+      Collection columns = arguments == null ? Collections.EMPTY_SET :
+                                               arguments.values();
+      QueryMatches matches =
+        QueryMatchesUtils.createInitialMatches(context, columns);
+      return doFunctionUpdates(matches);
+    }
+  }
+
+  protected abstract int doLitListDeletes(boolean strict, Map arguments)
+    throws InvalidQueryException;
+  
+  // generic method for traversing result set and calling functions
+  protected int doFunctionUpdates(QueryMatches matches) 
+    throws InvalidQueryException {
+    int rows = 0;
+
+    ModificationFunctionIF function = makeFunction(funcname);
+    FunctionSignature signature = FunctionSignature.getSignature(function);
+    QueryContext context = matches.getQueryContext();
+    Map parameters = Collections.EMPTY_MAP;
+    if (context != null)
+      parameters = context.getParameters();
+    Object arg1 = getValue(litlist.get(0), parameters);
+    int varix1 = getIndex(arg1, matches);
+    Object arg2 = getValue(litlist.get(1), parameters);
+    int varix2 = getIndex(arg2, matches);
+    
+    for (int row = 0; row <= matches.last; row++) {
+      if (varix1 != -1)
+        arg1 = matches.data[row][varix1];
+
+      if (varix2 != -1)
+        arg2 = matches.data[row][varix2];
+
+      signature.validateArguments(arg1, arg2, funcname);
+      function.modify((TMObjectIF) arg1, arg2);
+      rows++;
+    }
+
+    return rows;
+  }
+
+  // --- Functions and signatures
+  
   protected static ModificationFunctionIF makeFunction(String name)
     throws InvalidQueryException {
     ModificationFunctionIF function = functions.get(name);
@@ -85,7 +142,7 @@ public abstract class ModificationFunctionStatement
         throw new InvalidQueryException("Function " + function +
                                         " does not accept " +
                                         arg +
-                                        "as parameter no " + no +
+                                        " as parameter no " + no +
                                         ", but requires " +
                                         getClassList(reqarg.getTypes()));
     }
