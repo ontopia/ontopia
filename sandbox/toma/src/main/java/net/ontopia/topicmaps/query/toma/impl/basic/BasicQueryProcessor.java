@@ -40,6 +40,17 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     throw new InvalidQueryException("Not implemented yet.");
   }
 
+  
+  public int update(String query, Map<String, ?> arguments,
+      DeclarationContextIF context) throws InvalidQueryException {
+    throw new InvalidQueryException("Not implemented yet.");
+  }
+
+  public int update(String query, Map<String, ?> arguments)
+      throws InvalidQueryException {
+    throw new InvalidQueryException("Not implemented yet.");
+  }
+
   public QueryResultIF execute(String query, Map<String, ?> arguments,
       DeclarationContextIF context) throws InvalidQueryException {
     ParsedQueryIF pq = parse(query, context);
