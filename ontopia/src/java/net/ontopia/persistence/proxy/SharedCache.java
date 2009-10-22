@@ -252,7 +252,7 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
       //! System.out.println("+I  " + identity);      
       
       // register with cache
-      datacache.put(identity, new CacheEntry(identity, getFieldsCount(identity.getType())));
+      datacache.put(WrappedIdentity.wrap(identity), new CacheEntry(identity, getFieldsCount(identity.getType())));
     }
   }
   
@@ -265,11 +265,12 @@ public class SharedCache implements StorageCacheIF, AccessRegistrarIF {
       log.debug("Registering " + identity + " field " + field + "=" + value);
     CacheEntry fields = (CacheEntry)datacache.get(identity);
     if (fields == null) {
+      IdentityIF wrappedIdentity = WrappedIdentity.wrap(identity);
       // create new cache entry
-      fields = new CacheEntry(identity, getFieldsCount(identity.getType()));
+      fields = new CacheEntry(wrappedIdentity, getFieldsCount(wrappedIdentity.getType()));
       fields.setValue(field, value);
       // register with cache
-      datacache.put(identity, fields);
+      datacache.put(wrappedIdentity, fields);
     } else {
       fields.setValue(field, value);
     }

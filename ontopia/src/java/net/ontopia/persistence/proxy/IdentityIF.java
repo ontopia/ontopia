@@ -40,5 +40,7 @@ public interface IdentityIF extends Cloneable {
    */
   public Object createInstance() throws Exception;
   // FIXME: Consider moving this method elsewhere.
-  
+
+  public Object clone();
+
 }
