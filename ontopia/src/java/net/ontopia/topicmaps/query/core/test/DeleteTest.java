@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 
 // FIXME: test with parameters
 // FIXME: test with bad URLs in delete functions
@@ -327,6 +328,23 @@ public class DeleteTest extends AbstractQueryTest {
                topicmap.getTopics().size() == (topics - 1));
   }  
 
+  public void testDeclarationContext()
+    throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+    TopicIF subclass = getTopicById("subclass");
+
+    DeclarationContextIF context = parseContext("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\"");
+    
+    update("delete xtm:subclass!", context);
+
+    assertTrue("topic still attached to TM after delete",
+               subclass.getTopicMap() == null);
+    assertTrue("wrong number of topics after delete",
+               topicmap.getTopics().size() == (topics - 1));
+  }
+  
   public void testParam() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
 

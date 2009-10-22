@@ -331,10 +331,20 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
     }
   }
 
+  public DeclarationContextIF parseContext(String decls)
+    throws InvalidQueryException {
+    return QueryUtils.parseDeclarations(topicmap, decls);
+  }
+
   public int update(String query) throws InvalidQueryException {
     return processor.update(query);
   }
 
+  public int update(String query, DeclarationContextIF context)
+    throws InvalidQueryException {
+    return processor.update(query, null, context);
+  }
+  
   public int update(String query, Map params) throws InvalidQueryException {
     return processor.update(query, params);
   }

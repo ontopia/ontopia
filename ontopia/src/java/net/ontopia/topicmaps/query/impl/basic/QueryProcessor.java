@@ -181,13 +181,28 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   }
 
   public int update(String query) throws InvalidQueryException {
-    return update(query, null);
+    return update(query, null, null);
   }
 
   public int update(String query, Map<String, ?> params)
     throws InvalidQueryException {
-    ModificationStatement statement = (ModificationStatement)
-      parser.parseStatement(query);
+    return update(query, params, null);
+  }
+
+  public int update(String query, Map<String, ?> params,
+                    DeclarationContextIF context)
+    throws InvalidQueryException {
+
+    ModificationStatement statement;    
+    if (context == null)
+      statement = (ModificationStatement) parser.parseStatement(query);
+    else {
+      // there is a context, so we have to use a new parser for this
+      TologParser localparser = new TologParser((ParseContextIF) context,
+                                                options);
+      statement = (ModificationStatement) localparser.parseStatement(query);
+    }
+    
     if (statement.getEmbeddedQuery() != null) {
       TologQuery subquery = optimize(statement.getEmbeddedQuery());
       QueryMatches matches = createInitialMatches(subquery, params);
@@ -196,12 +211,6 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       return statement.doUpdates(matches);
     } else
       return statement.doStaticUpdates(params);
-  }
-
-  public int update(String query, Map<String, ?> arguments,
-                    DeclarationContextIF context)
-    throws InvalidQueryException {
-    return 0;
   }
   
   // / actual query processor implementation
