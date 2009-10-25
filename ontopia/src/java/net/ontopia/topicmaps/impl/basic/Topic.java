@@ -3,13 +3,14 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.Iterator;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
+import net.ontopia.utils.UniqueSet;
+import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -20,8 +21,6 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
-import net.ontopia.utils.UniqueSet;
-import net.ontopia.utils.ObjectUtils;
   
 /**
  * INTERNAL: The basic topic implementation.
@@ -229,8 +228,9 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   public Collection getRolesByType(TopicIF roletype) {
-		if (roletype == null) throw new NullPointerException("Role type cannot be null.");
-    Collection result = new ArrayList(roles.size());
+    if (roletype == null) throw new NullPointerException("Role type cannot be null.");
+    // see below for rationale for next line
+    Collection result = new CompactHashSet();
     synchronized (roles) {    
       Iterator iter = roles.iterator();
       while (iter.hasNext()) {
@@ -245,7 +245,18 @@ public class Topic extends TMObject implements TopicIF {
   public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type) {
     if (roletype == null) throw new NullPointerException("Role type cannot be null.");
     if (assoc_type == null) throw new NullPointerException("Association type cannot be null.");
-    Collection result = new HashSet();
+
+    // below are timing results from running a big query with different
+    // data structures for the result collection. used TologQuery --timeit
+    // and results indicate that uninitialized CompactHashSet is the fastest.
+    
+    // ArrayList(size)      816 804 804     -> 808
+    // HashSet()            732 764 763  
+    // ArrayList()          756 739 712 745 -> 738.0
+    // CompactHashSet()     733 712 726 730 -> 725.25
+    // CompactHashSet(size) 838 856 842     -> 845.33
+
+    Collection result = new CompactHashSet();
     synchronized (roles) {    
       Iterator iter = roles.iterator();
       while (iter.hasNext()) {
