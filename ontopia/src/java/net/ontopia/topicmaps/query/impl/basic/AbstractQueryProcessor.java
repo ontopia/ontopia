@@ -119,20 +119,20 @@ public abstract class AbstractQueryProcessor {
         QueryMatches matches = new QueryMatches(result);
         QueryTracer.enter(clause, result);
 
-				if (clause.getShortCircuit()) {
-					// shortcircuting OR
-					Iterator it = clause.getAlternatives().iterator();
-					while (it.hasNext()) {
-						List branch = (List) it.next();
-						QueryTracer.enter(branch);
-						QueryMatches _matches = satisfy(branch, result);
-						if (!_matches.isEmpty()) {
-							matches.add(_matches);
-							break;
-						}
-						QueryTracer.leave(branch);
-					}
-				} else {
+        if (clause.getShortCircuit()) {
+          // shortcircuting OR
+          Iterator it = clause.getAlternatives().iterator();
+          while (it.hasNext()) {
+            List branch = (List) it.next();
+            QueryTracer.enter(branch);
+            QueryMatches _matches = satisfy(branch, result);
+            if (!_matches.isEmpty()) {
+              matches.add(_matches);
+              break;
+            }
+            QueryTracer.leave(branch);
+          }
+        } else {
           if (clause.getAlternatives().size() == 1) {
             // optional clause
             List branch = (List) clause.getAlternatives().get(0);
@@ -152,7 +152,7 @@ public abstract class AbstractQueryProcessor {
               QueryTracer.leave(branch);
             }
           }
-				}
+        }
 
         result = matches;
         QueryTracer.leave(result);
