@@ -24,11 +24,10 @@ public class SynchronizedCollectionFactory implements CollectionFactoryIF, java.
 
   public Set makeSmallSet() {
     return new SynchronizedCompactHashSet();
-    //return Collections.synchronizedSet(new HashSet(initsize));
   }
 
   public Set makeLargeSet() {
-    return Collections.synchronizedSet(new HashSet());
+    return new SynchronizedCompactHashSet();
   }
 
   public Map makeSmallMap() {
