@@ -22,7 +22,7 @@ import java.lang.ref.ReferenceQueue;
 public class SoftHashMap extends AbstractMap {
 
   static private class SoftKey extends SoftReference {
-    private int hc;
+    private int hc; // hash code of key object
 
     private SoftKey(Object k) {
       super(k);
