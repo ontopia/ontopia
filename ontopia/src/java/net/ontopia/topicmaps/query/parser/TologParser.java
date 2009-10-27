@@ -10,8 +10,12 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.URL;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
+import net.ontopia.topicmaps.utils.ctm.Template;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import antlr.TokenStreamIOException;
@@ -22,7 +26,12 @@ import antlr.TokenStreamRecognitionException;
  */
 public class TologParser {
   protected ParseContextIF context;
+  protected ParseContextIF localcontext; // needed for CTM part of INSERT
   protected TologOptions options;
+  private static final Pattern insertP =
+    Pattern.compile("(^|\\s+)insert\\s+", Pattern.CASE_INSENSITIVE);
+  private static final Pattern fromP =
+    Pattern.compile("\\s+from\\s+", Pattern.CASE_INSENSITIVE);
 
   public TologParser(ParseContextIF context, TologOptions options) {
     this.context = context;
@@ -72,16 +81,25 @@ public class TologParser {
    * Returns a parsed INSERT/UPDATE/MERGE/DELETE statement.
    */
   public TologStatement parseStatement(String query) throws InvalidQueryException {
-    return parseStatement(new StringReader(query));
+    if (isInsertStatement(query)) {
+      String ctm = getCTMPart(query);
+      query = getTologPart(query);
+      InsertStatement stmt = (InsertStatement) parseStatement(new StringReader(query));
+      stmt.setCTMPart(ctm, localcontext);
+      return stmt;
+    } else
+      return parseStatement(new StringReader(query));
   }
   
   /**
    * Returns a parsed INSERT/UPDATE/MERGE/DELETE statement.
    */
-  public TologStatement parseStatement(Reader queryReader) throws InvalidQueryException {
+  private TologStatement parseStatement(Reader queryReader)
+    throws InvalidQueryException {
     try {
       RealTologParser parser = makeParser(queryReader);
-      parser.setContext(new LocalParseContext(context));
+      localcontext = new LocalParseContext(context);
+      parser.setContext(localcontext);
       parser.updatestatement();
       return parser.getStatement();
     }
@@ -180,5 +198,43 @@ public class TologParser {
     RealTologParser parser = new RealTologParser(lexer);
     parser.init(lexer);
     return parser;
+  }
+
+  // --- Extra code to deal with INSERT statements
+
+  private boolean isInsertStatement(String query) {
+    Matcher matcher = insertP.matcher(query);
+    return matcher.find();
+  }
+
+  private String getCTMPart(String query) {
+    Matcher insertM = insertP.matcher(query);
+    insertM.find();
+    Matcher fromM = fromP.matcher(query);
+    boolean hasFrom = fromM.find(insertM.end());
+
+    if (hasFrom)
+      return query.substring(insertM.end(), fromM.start());
+    else {
+      // need to find the ! and leave that out
+      int ix = query.lastIndexOf('!');
+      return query.substring(insertM.end(), ix);
+    }
+  }
+
+  private String getTologPart(String query) {
+    Matcher insertM = insertP.matcher(query);
+    insertM.find();
+    Matcher fromM = fromP.matcher(query);
+    boolean hasFrom = fromM.find(insertM.end());
+
+    if (hasFrom)
+      return query.substring(0, insertM.end()) +
+             query.substring(fromM.start());
+    else {
+      // need to find the ! and keep that
+      int ix = query.lastIndexOf('!');
+      return query.substring(0, insertM.end()) + query.substring(ix);
+    }
   }
 }

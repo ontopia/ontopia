@@ -478,6 +478,9 @@
   <group>
     <name>query-updates</name>
     <test>net.ontopia.topicmaps.query.core.test.DeleteTest</test>
+    <test>net.ontopia.topicmaps.query.core.test.MergeTest</test>
+    <test>net.ontopia.topicmaps.query.core.test.UpdateTest</test>
+    <test>net.ontopia.topicmaps.query.core.test.InsertTest</test>
   </group>
 
   <group>

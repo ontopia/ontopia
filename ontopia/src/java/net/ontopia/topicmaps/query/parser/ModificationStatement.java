@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 
@@ -63,7 +64,7 @@ public abstract class ModificationStatement extends TologStatement {
                                           "part if no from part");
   }
 
-  public abstract int doStaticUpdates(Map arguments)
+  public abstract int doStaticUpdates(TopicMapIF topicmap, Map arguments)
     throws InvalidQueryException;
 
   public abstract int doUpdates(QueryMatches matches)

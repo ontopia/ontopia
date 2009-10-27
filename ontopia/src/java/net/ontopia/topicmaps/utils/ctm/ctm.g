@@ -87,6 +87,13 @@ options {
     this.template_wildcards = new HashMap();
   }
 
+  // only used for tolog INSERT
+  public void setHandler(ParseEventHandlerIF handler,
+                         ParseContextIF context) {
+    this.handler = handler;
+    this.context = context;
+  }
+
   public ParseContextIF getContext() {
     return context;
   }
@@ -221,7 +228,7 @@ topic_identity :
    } |
    VARIABLE           
      { if (current_template == null)
-         throw new InvalidTopicMapException("Variable $" + LT(0).getText() + 
+         throw new InvalidTopicMapException("Variable " + LT(0).getText() + 
                                             " referenced outside template");
        topic_ref = current_template.getTopicIdentityVariable(LT(0).getText(), 
                                                              topicmap);
@@ -377,7 +384,7 @@ literal :
              basic_literal.setDatatype(PSI.getXSDDatetime());} |
   VARIABLE { 
     if (current_template == null)
-      throw new InvalidTopicMapException("Variable $" + LT(0).getText() +
+      throw new InvalidTopicMapException("Variable " + LT(0).getText() +
                                          " referenced outside template");
     literal = current_template.getLiteralVariable(LT(0).getText()); 
   });
@@ -408,14 +415,27 @@ template_def :
     { handler = new TemplateEventHandler(template_name, parameters, real_handler);
       current_template = ((TemplateEventHandler) handler).getTemplate(); }
 
-  (topic | 
-   ((topic_ref LEFTPAREN topic_ref COLON) => association |
-    template_invocation))*
+  template_body
 
     { context.registerTemplate(template_name, current_template);
       handler = real_handler;
       current_template = null; }
   END ;
+
+// this is separated out so we can share it between template_def and tolog_insert
+template_body:
+  (topic | 
+   ((topic_ref LEFTPAREN topic_ref COLON) => association |
+    template_invocation))*;
+
+tolog_insert:
+  // the END is there only to force antlr to actually parse the
+  // contents of the template_body. without it, antlr is just as happy
+  // to simply say "I didn't find anything" and go home, since
+  // template_body is not required to match anything. we insert a fake
+  // "END" at the end of the CTM part to make this work.
+  { current_template = ((TemplateEventHandler) handler).getTemplate(); }
+  template_body END; 
 
 template_invocation :
   IDENTIFIER 

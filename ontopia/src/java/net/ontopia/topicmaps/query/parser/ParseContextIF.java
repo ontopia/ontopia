@@ -6,6 +6,7 @@ package net.ontopia.topicmaps.query.parser;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * INTERNAL: Represents an interpretation context for tolog queries.
@@ -19,6 +20,20 @@ public interface ParseContextIF {
   static final int ITEM_IDENTIFIER    = 3;
   static final int MODULE             = 4;
 
+  /**
+   * INTERNAL: Returns the topic map being parsed against.
+   */
+  public TopicMapIF getTopicMap();
+
+  /**
+   * INTERNAL: Returns the full locator for the given QName, or
+   * reports an error if the prefix is unbound, or if the prefix is
+   * bound to something other than a subject identifier namespace
+   * (since this is used for the CTM part of tolog INSERT only).
+   * FIXME: what exception to throw?
+   */
+  public LocatorIF resolveQName(QName qname);
+  
   /**
    * INTERNAL: Adds a prefix binding to the context.
    * @param prefix The prefix whose binding is being defined.

@@ -7,14 +7,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.BadObjectReferenceException;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -28,14 +32,32 @@ import net.ontopia.topicmaps.query.parser.TologOptions;
  */
 public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   private ParseContextIF subcontext;
-  private Map bindings;
+  private Map<String, PrefixBinding> bindings;
   private Map predicates;
   Set loading_modules = new HashSet();
 
   public LocalParseContext(ParseContextIF subcontext) {
     this.subcontext = subcontext;
-    this.bindings = new HashMap();
+    this.bindings = new HashMap<String, PrefixBinding>();
     this.predicates = new HashMap();
+  }
+
+  public TopicMapIF getTopicMap() {
+    return subcontext.getTopicMap();
+  }
+
+  public LocatorIF resolveQName(QName qname) {
+    PrefixBinding binding = bindings.get(qname.getPrefix());
+    if (binding == null)
+      throw new OntopiaRuntimeException("No such prefix " + qname.getPrefix());
+    if (binding.getQualification() != SUBJECT_IDENTIFIER)
+      throw new OntopiaRuntimeException("Prefix " + qname.getPrefix() +
+                                        " is not a subject identifier prefix");
+    try {
+      return new URILocator(binding.getUri(qname.getLocalName()));
+    } catch (MalformedURLException e) {
+      throw new OntopiaRuntimeException(e);
+    }
   }
   
   public void addPrefixBinding(String prefix, String uri, int qualification)
@@ -130,7 +152,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
     if (prefix == null)
       return subcontext.getObject(qname);
 
-    PrefixBinding binding = (PrefixBinding) bindings.get(prefix);
+    PrefixBinding binding = bindings.get(prefix);
     if (binding == null)
       return subcontext.getObject(qname);
 
@@ -143,7 +165,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
       return getObjectByItemId(binding.getUri(localname));
     default:
       throw new AntlrWrapException(
-              new InvalidQueryException("Prefix " + prefix + " bound to a module"));
+           new InvalidQueryException("Prefix " + prefix + " bound to a module"));
     }    
   }
 
@@ -156,7 +178,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
       return predicate;
     }
 
-    PrefixBinding binding = (PrefixBinding) bindings.get(qname.getPrefix());
+    PrefixBinding binding = bindings.get(qname.getPrefix());
     if (binding == null)
       return subcontext.getPredicate(qname, assoc);
 

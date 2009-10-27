@@ -210,7 +210,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       matches = reduce(subquery, matches);
       return statement.doUpdates(matches);
     } else
-      return statement.doStaticUpdates(params);
+      return statement.doStaticUpdates(topicmap, params);
   }
   
   // / actual query processor implementation

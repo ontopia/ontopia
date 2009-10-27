@@ -410,7 +410,7 @@ predicateref:
 
 updatestatement: 
   (prefixdecl | importdecl)*
-  delete | merge | update; // only ones supported at the moment
+  (delete | merge | update | insert);
 
 delete:
   DELETE 
@@ -483,6 +483,22 @@ update:
     }
   };
 
+insert:
+  INSERT
+    { statement = new InsertStatement();
+      statement.setOptions(lexer.getOptions()); }
+  (FROM clauselist
+    { ((ModificationStatement) statement)
+       .setClauseList(prevClauseList, lexer.getOptions()); } 
+  )? EXCLAMATIONM { 
+    try {
+      statement.close();
+    }
+    catch (InvalidQueryException e) {
+      throw new AntlrWrapException(e);
+    }
+  };
+
 /**
  * INTERNAL: Lexer for LTM syntax.
  */
@@ -518,6 +534,7 @@ tokens {
   DELETE = "delete";
   MERGE  = "merge";
   UPDATE = "update";
+  INSERT = "insert";
 }
 
 {

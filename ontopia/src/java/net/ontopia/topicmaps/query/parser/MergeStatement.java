@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 import net.ontopia.topicmaps.query.parser.Parameter;
@@ -23,7 +24,8 @@ public class MergeStatement extends ModificationStatement {
     super();
   }
 
-  public int doStaticUpdates(Map arguments) throws InvalidQueryException {
+  public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
+    throws InvalidQueryException {
     TopicIF topic1 = (TopicIF) getValue(litlist.get(0), arguments);
     TopicIF topic2 = (TopicIF) getValue(litlist.get(1), arguments);
     if (topic1 != topic2)

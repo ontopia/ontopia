@@ -20,7 +20,7 @@ import net.ontopia.topicmaps.core.*;
 public class TemplateEventHandler implements ParseEventHandlerIF {
   private Template template;
   
-  public TemplateEventHandler(String name, List parameters,
+  public TemplateEventHandler(String name, List<String> parameters,
                               ParseEventHandlerIF real_handler) {
     this.template = new Template(name, parameters);
   }

@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
+
 import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
@@ -20,17 +22,17 @@ import net.ontopia.topicmaps.xml.InvalidTopicMapException;
  */
 public class Template {
   private String name;
-  private List parameters; // list of parameter names as strings
+  private List<String> parameters; // just the names, in declared order
   private List events;
   private Set named_wilcards;
   /**
    * Each variable used in the template has a corresponding generator
    * stored here. On invocation, the invoke() method sets the passed
-   * arguments in the generators.
+   * arguments in the generators stored here.
    */
   private Map generators;  
   
-  public Template(String name, List parameters) {
+  public Template(String name, List<String> parameters) {
     this.name = name;
     this.parameters = parameters;
     this.events = new ArrayList();
@@ -99,6 +101,12 @@ public class Template {
     return gen;
   }
 
+  /**
+   * Invokes the template.
+   * @param arguments a list of generator objects producing the values
+   *                  for the arguments, in the same order as the
+   *                  parameters list
+   */
   public void invoke(List arguments, ParseEventHandlerIF handler) {    
     if (parameters.size() != arguments.size())
       throw new InvalidTopicMapException("Incorrect number of arguments to " +
@@ -108,7 +116,7 @@ public class Template {
 
     for (int ix = 0; ix < parameters.size(); ix++) {
       // name of parameter
-      String name = (String) parameters.get(ix);
+      String name = parameters.get(ix);
       // generator producing passed argument value
       Object value = arguments.get(ix);
       // generator producing variable value inside invoked template
@@ -121,8 +129,12 @@ public class Template {
         ((VariableLiteralGenerator) generator).setValue(value);
       else if (generator instanceof TopicIdentityVariableGenerator)
         ((TopicIdentityVariableGenerator) generator).setValue(value);
+      else
+        throw new OntopiaRuntimeException("No generator for parameter " + name +
+                                          " to template " + this.name + ": " +
+                                          generator);
     }
-    
+
     for (int ix = 0; ix < events.size(); ix++) {
       ParseEventIF event = (ParseEventIF) events.get(ix);
       event.replay(handler);

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Collection;
 import java.util.Collections;
 
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.impl.utils.Argument;
@@ -44,7 +45,8 @@ public abstract class ModificationFunctionStatement
 
   // --- Internal helpers
 
-  public int doStaticUpdates(Map arguments) throws InvalidQueryException {
+  public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
+    throws InvalidQueryException {
     if (funcname == null)
       return doLitListDeletes(true, arguments);
     else {

@@ -59,8 +59,6 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
     throws InvalidQueryException {
     
-    QueryTracer.trace("satisfy " + getName(), arguments); 
-    
     // check whether to use a faster implementation
     int argix = -1;
     for (int i = 0; i < arguments.length; i++) {
@@ -202,7 +200,6 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     // symmetrical values
     mirrorIfSymmetrical(result, arguments);
 
-    QueryTracer.trace("  results: " + result.last);
     return result;
   }
 
@@ -246,6 +243,13 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     Prefetcher.prefetchRolesByType(topicmap, matches, boundcol, rtype, type,
                                    Prefetcher_RBT_fields,
                                    Prefetcher_RBT_traverse);
+
+//     // in the in-memory implementation the getRolesByType() call often consumes
+//     // much of the time needed to run a query. we solve this by implementing a
+//     // simple role cache. using an LRUMap to avoid making a cache that grows
+//     // beyond all reasonable bounds.
+//     java.util.Map rolecache =
+//       new org.apache.commons.collections.map.LRUMap(100);
     
     // loop over existing matches
     for (int row = 0; row <= matches.last; row++) {
@@ -257,7 +261,14 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
       // now, test if this row is really valid
       TopicIF topic = (TopicIF) data[row][boundcol];
 
-      Iterator riter = topic.getRolesByType(rtype, type).iterator(); 
+      Collection theroles = //(Collection) rolecache.get(topic);
+//       if (theroles == null) {
+//        theroles =
+        topic.getRolesByType(rtype, type);
+//         rolecache.put(topic, theroles);
+//       }
+      
+      Iterator riter = theroles.iterator(); 
 
       // first, look for roles in assocs of the type we're supposed to have
       // (role type already ensured)

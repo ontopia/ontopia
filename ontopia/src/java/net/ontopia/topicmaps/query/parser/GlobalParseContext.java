@@ -33,6 +33,15 @@ public class GlobalParseContext implements ParseContextIF {
     this.topicmap = topicmap;
     this.base = base;
   }
+
+  public TopicMapIF getTopicMap() {
+    return topicmap;
+  }
+
+  public LocatorIF resolveQName(QName qname) {
+    // FIXME: right exception?
+    throw new OntopiaRuntimeException("No such prefix " + qname.getPrefix());
+  }
   
   public void addPrefixBinding(String prefix, String uri, int qualification) {
     throw new OntopiaRuntimeException("Can't add bindings to global context");

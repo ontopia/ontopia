@@ -12,7 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.net.MalformedURLException;
 
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -87,7 +89,13 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
     // IMPORTANT: This method is being overloaded by the RDBMS
     // implementation to provide the right object implementations.
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-    topicmap = store.getTopicMap();
+    try {
+      base = new URILocator("http://example.com");
+      store.setBaseAddress(base);
+    } catch (MalformedURLException e) {
+      throw new OntopiaRuntimeException(e);
+    }
+    topicmap = store.getTopicMap();    
       
     builder = store.getTopicMap().getBuilder();
     processor = new QueryProcessor(topicmap);
