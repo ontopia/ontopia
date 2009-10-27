@@ -119,6 +119,8 @@
 
     <!-- svn-revision to the external xtm2 test suite -->
     <property name="xtm2.revision" value="18" />
+    <!-- svn-revision to the external tm/xml test suite -->
+    <property name="tmxml.revision" value="27" />
   </target>
 
   <!-- ======================================================================
@@ -700,7 +702,7 @@
         Unit tests
        ====================================================================== -->
 
-  <target name="test" depends="init, download-xtm2">
+  <target name="test" depends="init, download-xtm2, download-tmxml">
     <property name="test.config" value="${test.path}/config/tests.xml" />
     <property name="test.name" value="complete-non-rdbms" />
     <echo>Using configuration file ${test.config}</echo>
@@ -1525,7 +1527,7 @@
 
   </target>
 
-  <target name="dist.engine.test.collect" depends="download-xtm2">
+  <target name="dist.engine.test.collect" depends="download-xtm2, download-tmxml">
 
     <!-- Test data -->
     <copy todir="${dist.path}/tests/test-data/canonical/baseline">
@@ -1624,6 +1626,27 @@
     </untar>
   </target>
 
+  <target name="checkfiles-tmxml" depends="init">
+    <property name="tmxml.basename" value="${test.path}/tmxml-r${tmxml.revision}"/>
+    <!-- checks if file has already been downloaded -->
+    <available file="${tmxml.basename}.tar.gz" property="tmxml.exists" />
+  </target>
+
+  <target name="download-tmxml"
+          depends="checkfiles-tmxml" unless="tmxml.exists">
+    <!-- TODO download to ${build.root}, so 'ant clean.build' would clean up instead -->
+    <delete dir="${test.path}/tmxml" />
+    <!-- download and extract tmxml -->
+    <get src="http://cxtm-tests.svn.sourceforge.net/viewvc/cxtm-tests/trunk/tmxml.tar.gz?view=tar&amp;pathrev=${tmxml.revision}"
+         dest="${tmxml.basename}.tar.gz" />
+    <gunzip src="${tmxml.basename}.tar.gz"/>
+    <untar src="${tmxml.basename}.tar" dest="${test.path}/">
+      <patternset>
+        <include name="tmxml/**"/>
+      </patternset>
+    </untar>
+  </target>
+  
   <!-- - - - Collect navigator runtime components  - - - - - - - - - - - - - -->
 
   <target name="checkfiles-apache-tomcat">

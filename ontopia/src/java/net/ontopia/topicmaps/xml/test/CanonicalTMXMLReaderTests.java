@@ -4,30 +4,45 @@
 package net.ontopia.topicmaps.xml.test;
 
 import java.io.*;
+import net.ontopia.test.AbstractOntopiaTestCase;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.xml.*;
 import net.ontopia.infoset.impl.basic.URILocator;
 
+/**
+ * INTERNAL: Test case generator based on the cxtm-tests external test
+ * suite, thus relying on the download-tmxml ant build target.
+ */
 public class CanonicalTMXMLReaderTests extends AbstractCanonicalTests {
   
   // --- Canonicalization type methods
+
+  protected String getBaseDirectory() {
+    String root = AbstractOntopiaTestCase.getTestDirectory();
+    return root + File.separator + "tmxml" + File.separator;
+  }
+
+  // this is actually the file name of the baseline file
+  protected String getOutFilename(String infile) {
+    return infile + ".cxtm";
+  }
   
   protected boolean filter(String filename) {
-    return filename.endsWith(".xml") &&
-           !filename.equals("xmltools-tm.xml");
+    return filename.endsWith(".xml");
   }
 
   protected void canonicalize(String infile, String outfile)
     throws IOException {
     TMXMLReader reader = new TMXMLReader(infile);
-    reader.setValidate(false);
+    reader.setValidate(true); // we do want to validate
     TopicMapIF source = reader.read();
 
-    CanonicalTopicMapWriter cwriter = new CanonicalTopicMapWriter(outfile);
-    cwriter.setBaseLocator(new URILocator(file2URL(infile)));      
+    FileOutputStream fos = new FileOutputStream(outfile);
+    CanonicalXTMWriter cwriter = new CanonicalXTMWriter(fos);
     cwriter.write(source);
 
+    fos.close();
     source.getStore().close();
   }  
 }

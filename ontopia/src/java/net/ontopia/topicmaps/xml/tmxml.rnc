@@ -2,7 +2,8 @@
 #
 # TM/XML
 #
-# A RELAX-NG schema for TM/XML.
+# A RELAX-NG schema for TM/XML. This is for TM/XML 1.1, changed
+# as proposed in http://code.google.com/p/ontopia/issues/detail?id=138
 #
 # ============================================================
 
@@ -14,10 +15,9 @@ start = topicmap
 topicmap = element * { reifier?, topic* }
   reifier = attribute reifier { text }
 
-topic = element * { ((id, identifier*, locator*) |
-                     (id?, ((identifier+, locator*) |
-                            (identifier*, locator+)))),
-                    topicname*, occurrence*, association* }
+topic = element * { ((id, (identifier | locator)*) |
+                     (id?, (identifier | locator)+)),
+                    (topicname | occurrence | association)* }
   id = attribute id { xsd:ID }
 identifier = element identifier { xsd:anyURI }
 locator = element locator { xsd:anyURI }

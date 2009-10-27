@@ -69,6 +69,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
   public static final String NS_XTM = "http://www.topicmaps.org/xtm/1.0/core.xtm#";
   public static final String NS_TM = "http://psi.ontopia.net/xml/tm-xml/";
   public static final String XSD_ANYURI = "http://www.w3.org/2001/XMLSchema#anyURI";
+  public static final String XSD_STRING = "http://www.w3.org/2001/XMLSchema#string";
 
   // --- Constructors
 

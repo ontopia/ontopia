@@ -181,7 +181,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
 
     // carryovers from start tag to object creation
     private Collection scope;
-    private boolean external;
+    private String datatype;
     
     public TMXMLContentHandler(TopicMapIF topicmap, LocatorIF base) {
       super(base);
@@ -259,7 +259,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
           state = VARIANT;
           scope = getScope(atts);
           reifier = atts.getValue("", "reifier");
-          String datatype = atts.getValue("", "datatype");
+          datatype = atts.getValue("", "datatype");
           isuri = datatype != null && datatype.equals(TMXMLWriter.XSD_ANYURI);
         }
         break;
@@ -339,15 +339,12 @@ public class TMXMLReader extends AbstractXMLFormatReader
       case MAYBETOPICNAME:
         // it turned out to be an occurrence
         state = TOPIC;
-        OccurrenceIF occ;
-        if (external)
-          occ = builder.makeOccurrence(topic, 
-                                       getType(uri, name),
-                                       createLocator(buffer.toString()));
-        else 
-          occ = builder.makeOccurrence(topic, 
-                                       getType(uri, name),
-                                       buffer.toString());
+        if (datatype == null)
+          datatype = TMXMLWriter.XSD_STRING;
+        OccurrenceIF occ = builder.makeOccurrence(topic, 
+                                                  getType(uri, name),
+                                                  buffer.toString(),
+                                                  createLocator(datatype));
         buffer.setLength(0);
         addScope(occ);
         handleReifier(occ, reifier);
@@ -406,11 +403,7 @@ public class TMXMLReader extends AbstractXMLFormatReader
     }
 
     private void checkDatatype(Attributes atts) {
-      String value = atts.getValue("", "datatype");
-      if (value == null)
-        external = false;
-      else
-        external = value.equals(TMXMLWriter.XSD_ANYURI);
+      datatype = atts.getValue("", "datatype");
     }
 
     private TopicIF getTopicByAttRef(String attref) {

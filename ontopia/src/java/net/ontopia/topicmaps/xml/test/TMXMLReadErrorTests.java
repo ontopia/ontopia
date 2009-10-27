@@ -13,6 +13,11 @@ import net.ontopia.topicmaps.xml.*;
 
 public class TMXMLReadErrorTests extends AbstractCanonicalTests {
 
+  protected String getBaseDirectory() {
+    String root = AbstractOntopiaTestCase.getTestDirectory();
+    return root + File.separator + "tmxml" + File.separator;
+  }
+
   protected String getFileDirectory() {
     return "errors";
   }
