@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF.TYPE;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -177,11 +178,27 @@ public class SelectStatement implements ASTElementIF {
       throw new AntlrWrapException(new InvalidQueryException(
           "All select-clauses must contain a aggregate function."));
     }
-    
+
     // TODO: check that no aggregate functions are used in the where clause.
     
     // validate the where clauses
     clause.validate();
+    
+    // validate that all variables are known
+    for (VariableDecl var : variables.values()) {
+      if (var.getValidTypes().size() != 1) {
+        // if a variable has no qualified type up to now, 
+        // we assume it's of type topic.
+        try {
+          var.constrainTypes(TYPE.TOPIC);
+        } catch (InvalidQueryException e) {
+          // if this fails -> throw error that variable could not 
+          // be qualified to a type.
+          throw new AntlrWrapException(new InvalidQueryException("Variable '"
+            + var.getVariableName() + "' could not be qualified to a type."));
+        }
+      }
+    }
     
     return true;
   }

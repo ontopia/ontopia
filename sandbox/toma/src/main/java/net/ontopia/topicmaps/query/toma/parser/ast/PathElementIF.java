@@ -13,7 +13,15 @@ public interface PathElementIF extends ASTElementIF {
    * evaluated {@link PathElementIF}.
    */
   public enum TYPE {
-    TOPIC, ASSOCIATION, NAME, VARIANT, OCCURRENCE, LOCATOR, STRING, UNKNOWN, NONE
+    TOPIC, 
+    ASSOCIATION, 
+    NAME, 
+    VARIANT, 
+    OCCURRENCE, 
+    LOCATOR, 
+    STRING,
+    NONE,
+    UNKNOWN
   };
 
   /**
@@ -69,6 +77,14 @@ public interface PathElementIF extends ASTElementIF {
    */
   public void bindVariable(VariableIF var) throws AntlrWrapException;
 
+  /**
+   * Bind an input variable to this path element.
+   * 
+   * @param var the variable to use for binding.
+   * @throws AntlrWrapException
+   */
+  public void bindInputVariable(VariableIF var) throws AntlrWrapException;
+  
   /**
    * Add a {@link PathExpressionIF} as a child to this path element.
    * 

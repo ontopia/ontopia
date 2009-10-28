@@ -1,5 +1,9 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
+import java.util.Collection;
+import java.util.Set;
+
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 
 /**
@@ -8,7 +12,6 @@ import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
 public abstract class AbstractVariable extends AbstractPathElement implements
     VariableIF {
   private VariableDecl decl;
-  private PathElementIF.TYPE varType; 
 
   /**
    * Create a new variable with the given name.
@@ -18,7 +21,6 @@ public abstract class AbstractVariable extends AbstractPathElement implements
   public AbstractVariable(VariableDecl decl) {
     super("VARIABLE");
     this.decl = decl;
-    this.varType = TYPE.UNKNOWN;
   }
 
   public String getVarName() {
@@ -29,17 +31,38 @@ public abstract class AbstractVariable extends AbstractPathElement implements
     return decl;
   }
   
-  public TYPE getVarType() {
-    return varType;
+  public Set<TYPE> getValidTypes() {
+    return decl.getValidTypes();
   }
-  
-  public void setVarType(TYPE type) {
-    varType = type;
+
+  /**
+   * Constrain the types for this variable.
+   * @see VariableDecl
+   */
+  public void constrainTypes(TYPE... types) throws InvalidQueryException {
+    decl.constrainTypes(types);
+  }
+
+  /**
+   * Constrain the types for this variable.
+   * @see VariableDecl
+   */
+  public void constrainTypes(Collection<TYPE> types) throws InvalidQueryException {
+    decl.constrainTypes(types);
   }
   
   @Override
   public void fillParseTree(IndentedStringBuilder buf, int level) {
-    buf.append("(  VARIABLE) [" + getVarName() + "]", level);
+    Set<TYPE> validTypes = getValidTypes();
+    String type;
+
+    if (validTypes.size() > 1) {
+      type = "UNKNOWN";
+    } else {
+      type = validTypes.iterator().next().toString();
+    }
+    
+    buf.append("(  VARIABLE) [" + getVarName() + "] [" + type + "]", level);
   }
 
   @Override

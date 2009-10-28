@@ -186,7 +186,8 @@ assocpathexpr [PathExpressionIF p, PathExpressionIF left]:
                                	 if (left != null) pe.addChild(left);
                                	 p.addPath(pe);
                                	 PathExpressionIF type, scope, right;                } 
-  (assocVar:VARIABLE           { pe.bindVariable(createVariable(assocVar.getText()));})?
+  (assocVar:VARIABLE           { pe.bindInputVariable(
+  	                                  createVariable(assocVar.getText()));           })?
   LPAREN type=pathexpr RPAREN  { pe.setType(type);                                   }
   ( ATSCOPE 
                                { PathElementIF tl;                                   }
@@ -197,9 +198,8 @@ assocpathexpr [PathExpressionIF p, PathExpressionIF left]:
     )                          { pe.setScope(scope);                                 })?
   RARROW 
   LPAREN right=roleexpr RPAREN { pe.addChild(right);                                 }
-  // TODO: add support for variable binding in association roles
   (LSQUARE
-   roleVar:VARIABLE
+   bindVar:VARIABLE            { pe.bindVariable(createVariable(bindVar.getText())); }
    RSQUARE
   )?
   (                            { PathElementIF part;                                 }

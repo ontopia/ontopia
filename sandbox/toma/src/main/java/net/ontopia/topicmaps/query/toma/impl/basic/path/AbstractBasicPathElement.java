@@ -13,19 +13,23 @@ public abstract class AbstractBasicPathElement extends AbstractPathElement
   }
 
   public String[] getColumnNames(LocalContext context) {
-    if (getBoundVariable() != null) {
-      return new String[] { getBoundVariable().toString() };
-    } else {
-      return new String[0];
+    String[] names = new String[getResultSize(context)];
+
+    int idx = 0;
+    if (getBoundInputVariable() != null) {
+      names[idx++] = getBoundInputVariable().toString();
     }
+    if (getBoundVariable() != null) {
+      names[idx++] = getBoundVariable().toString();
+    }
+    return names;
   }
 
   public int getResultSize(LocalContext context) {
-    if (getBoundVariable() != null) {
-      return 1;
-    } else {
-      return 0;
-    }
+    int cnt = 0;
+    if (getBoundInputVariable() != null) cnt++;
+    if (getBoundVariable() != null) cnt++;
+    return cnt;
   }
   
   /**

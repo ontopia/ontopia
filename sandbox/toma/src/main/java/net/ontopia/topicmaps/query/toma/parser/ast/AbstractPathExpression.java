@@ -99,21 +99,21 @@ public abstract class AbstractPathExpression extends AbstractExpression
       element.validate();
       // get the valid input for this element
       Set<PathElementIF.TYPE> validInput = element.validInput();
-      
-      // TODO: variables have an UNKNOWN type by now, we need to do a semantic
-      // check of the variable in order to verify that they are used correctly. 
-      if (output != PathElementIF.TYPE.UNKNOWN) {
+
+      // if the first element was a VariablePath, constrain the types
+      if (last instanceof AbstractVariable) {
+        AbstractVariable var = (AbstractVariable) last;
+        try {
+          var.constrainTypes(validInput);
+        } catch (InvalidQueryException e) {
+          throw new AntlrWrapException(e);
+        }
+      } else {
+        // check if the types match
         if (validInput != null && !validInput.contains(output)) {
           throw new AntlrWrapException(new InvalidQueryException(
               "path element '" + element.toString() + "' not allowed after '"
-                  + last.toString() + "'"));
-        }
-      } else if (last instanceof AbstractVariable) {
-        // first very simple analysis: if the input of the next path element is
-        // well known, set the variable to this type.
-        if (validInput != null && validInput.size() == 1) {
-          AbstractVariable var = (AbstractVariable) last;
-          var.setVarType(validInput.iterator().next());
+              + last.toString() + "'"));
         }
       }
       

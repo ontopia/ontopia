@@ -12,7 +12,6 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractVariable;
-import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.VariableDecl;
 
 /**
@@ -73,7 +72,12 @@ public class VariablePath extends AbstractVariable implements
   }
 
   public TYPE output() {
-    return getVarType();
+    Set<TYPE> types = getValidTypes();
+    if (types.size() != 1) {
+      return TYPE.UNKNOWN;
+    } else {
+      return types.iterator().next();
+    }
   }
 
   public Set<TYPE> validInput() {
@@ -115,7 +119,7 @@ public class VariablePath extends AbstractVariable implements
     } else {
       TopicMapIF topicmap = context.getTopicMap();
       
-      switch (getVarType()) {
+      switch (output()) {
       case ASSOCIATION:
         return topicmap.getAssociations();
         

@@ -14,6 +14,7 @@ public abstract class AbstractPathElement implements PathElementIF {
   private PathExpressionIF scope;
   private PathExpressionIF type;
   private Level level;
+  private VariableIF boundInputVariable;
   private VariableIF boundVariable;
   private ArrayList<PathExpressionIF> childs;
 
@@ -25,6 +26,7 @@ public abstract class AbstractPathElement implements PathElementIF {
     this.name = name;
     this.scope = null;
     this.level = null;
+    this.boundInputVariable = null;
     this.boundVariable = null;
     this.childs = null;
   }
@@ -77,6 +79,14 @@ public abstract class AbstractPathElement implements PathElementIF {
     return scope;
   }
 
+  public void bindInputVariable(VariableIF var) throws AntlrWrapException {
+    this.boundInputVariable = var;
+  }
+
+  public VariableIF getBoundInputVariable() {
+    return boundInputVariable;
+  }
+  
   public void bindVariable(VariableIF var) throws AntlrWrapException {
     this.boundVariable = var;
   }
@@ -151,6 +161,25 @@ public abstract class AbstractPathElement implements PathElementIF {
     // elements. If this is the case, set it to the default: Level(1, 1)
     if (isLevelAllowed() && getLevel() == null) {
       setLevel(new Level(1));
+    }
+    
+    VariableIF var = getBoundVariable();
+    if (var != null) {
+      try {
+        ((AbstractVariable) var).constrainTypes(output());
+      } catch (InvalidQueryException e) {
+        throw new AntlrWrapException(e);
+      }
+    }
+
+    // special case for Association Paths
+    var = getBoundInputVariable();
+    if (var != null) {
+      try {
+        ((AbstractVariable) var).constrainTypes(TYPE.ASSOCIATION);
+      } catch (InvalidQueryException e) {
+        throw new AntlrWrapException(e);
+      }
     }
     
     return true;
