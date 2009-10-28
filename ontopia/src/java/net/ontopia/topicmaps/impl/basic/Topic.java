@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.Iterator;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.ArrayList;
 
 import net.ontopia.utils.UniqueSet;
 import net.ontopia.utils.ObjectUtils;
