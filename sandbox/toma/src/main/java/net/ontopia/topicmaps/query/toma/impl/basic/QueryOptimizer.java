@@ -86,6 +86,8 @@ public class QueryOptimizer implements QueryOptimizerIF {
               : right);
           LiteralExpression literal = (LiteralExpression) (status == STATUS.FOUND ? right
               : left);
+          // TODO: This has to be done, because path.getVariableName()
+          // returns '$' + varName, so we need to remove the '$'.
           String varName = path.getVariableName().substring(1);
 
           ExpressionIF result = null;
