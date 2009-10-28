@@ -182,9 +182,14 @@ public class AssocPath extends AbstractBasicPathElement {
     }
 
     Collection<Object[]> result = new LinkedList<Object[]>();
+    boolean includeAssoc = getBoundInputVariable() != null;
     for (AssociationRoleIF role : roles) {
       if (validRightRoles == null || validRightRoles.contains(role.getType())) {
-        result.add(new Object[] { role.getAssociation(), role.getPlayer() });
+        if (includeAssoc) {
+          result.add(new Object[] { role.getAssociation(), role.getPlayer() });
+        } else {
+          result.add(new Object[] { role.getPlayer() });
+        }
       }
     }
     return result;
