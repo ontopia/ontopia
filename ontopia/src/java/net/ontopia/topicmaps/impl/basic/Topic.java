@@ -230,7 +230,7 @@ public class Topic extends TMObject implements TopicIF {
   public Collection getRolesByType(TopicIF roletype) {
     if (roletype == null) throw new NullPointerException("Role type cannot be null.");
     // see below for rationale for next line
-    Collection result = new CompactHashSet();
+    Collection result = new ArrayList();
     synchronized (roles) {    
       Iterator iter = roles.iterator();
       while (iter.hasNext()) {
@@ -249,6 +249,7 @@ public class Topic extends TMObject implements TopicIF {
     // below are timing results from running a big query with different
     // data structures for the result collection. used TologQuery --timeit
     // and results indicate that uninitialized CompactHashSet is the fastest.
+    // however, this is likely a special case, so using uninitialized ArrayList.
     
     // ArrayList(size)      816 804 804     -> 808
     // HashSet()            732 764 763  
@@ -256,7 +257,7 @@ public class Topic extends TMObject implements TopicIF {
     // CompactHashSet()     733 712 726 730 -> 725.25
     // CompactHashSet(size) 838 856 842     -> 845.33
 
-    Collection result = new CompactHashSet();
+    Collection result = new ArrayList();
     synchronized (roles) {    
       Iterator iter = roles.iterator();
       while (iter.hasNext()) {
