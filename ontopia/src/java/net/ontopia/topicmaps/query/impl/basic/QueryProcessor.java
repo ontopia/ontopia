@@ -34,6 +34,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.core.ParsedModificationStatementIF;
 import net.ontopia.topicmaps.query.impl.utils.Prefetcher;
 import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
 import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
@@ -184,6 +185,11 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     return update(query, null, null);
   }
 
+  public int update(String query, DeclarationContextIF context)
+    throws InvalidQueryException {
+    return update(query, null, context);
+  }
+  
   public int update(String query, Map<String, ?> params)
     throws InvalidQueryException {
     return update(query, params, null);
@@ -192,17 +198,35 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   public int update(String query, Map<String, ?> params,
                     DeclarationContextIF context)
     throws InvalidQueryException {
+    return runUpdate(parseUpdateStatement(query, context), params);
+  }
 
-    ModificationStatement statement;    
-    if (context == null)
-      statement = (ModificationStatement) parser.parseStatement(query);
+  public ParsedModificationStatementIF parseUpdate(String statement)
+    throws InvalidQueryException {
+    return parseUpdate(statement, null);
+  }
+
+  public ParsedModificationStatementIF parseUpdate(String statement,
+                                                   DeclarationContextIF context)
+    throws InvalidQueryException {
+    return new ParsedModificationStatement(parseUpdateStatement(statement,
+                                                                context));
+  }
+
+  protected ModificationStatement parseUpdateStatement(String statement,
+                                                       DeclarationContextIF ctx)
+    throws InvalidQueryException {
+    if (ctx == null)
+      return (ModificationStatement) parser.parseStatement(statement);
     else {
       // there is a context, so we have to use a new parser for this
-      TologParser localparser = new TologParser((ParseContextIF) context,
-                                                options);
-      statement = (ModificationStatement) localparser.parseStatement(query);
+      TologParser localparser = new TologParser((ParseContextIF) ctx, options);
+      return (ModificationStatement) localparser.parseStatement(statement);
     }
-    
+  }
+
+  protected int runUpdate(ModificationStatement statement, Map<String, ?> params)
+    throws InvalidQueryException {
     if (statement.getEmbeddedQuery() != null) {
       TologQuery subquery = optimize(statement.getEmbeddedQuery());
       QueryMatches matches = createInitialMatches(subquery, params);
@@ -679,5 +703,23 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     Locale locale = getLocale(_locale);
     if (locale == null) return null;
     return Collator.getInstance(locale);
-  }  
+  }
+
+  // -- ParsedModificationStatement
+
+  class ParsedModificationStatement implements ParsedModificationStatementIF {
+    private ModificationStatement stmt;
+
+    private ParsedModificationStatement(ModificationStatement stmt) {
+      this.stmt = stmt;
+    }
+
+    public int update() throws InvalidQueryException {
+      return runUpdate(stmt, null);
+    }
+
+    public int update(Map<String, ?> params) throws InvalidQueryException {
+      return runUpdate(stmt, params);
+    }
+  }
 }

@@ -3,14 +3,14 @@
 
 package net.ontopia.topicmaps.query.core;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
+import java.util.Collection;
 
 /**
  * PUBLIC: Used to represent parsed queries.
  */
-public interface ParsedQueryIF {
+public interface ParsedQueryIF extends ParsedStatementIF {
 
   /**
    * PUBLIC: Returns the variables in the <tt>select</tt> clause of

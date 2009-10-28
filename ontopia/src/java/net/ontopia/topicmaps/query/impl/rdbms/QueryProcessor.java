@@ -20,6 +20,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.core.ParsedModificationStatementIF;
 import net.ontopia.topicmaps.query.impl.utils.QueryOptimizer;
 import net.ontopia.topicmaps.query.parser.GlobalParseContext;
 import net.ontopia.topicmaps.query.parser.LocalParseContext;
@@ -95,6 +96,11 @@ public class QueryProcessor implements QueryProcessorIF {
     throw new UnsupportedOperationException();
   }
 
+  public int update(String query, DeclarationContextIF context)
+    throws InvalidQueryException {
+    throw new UnsupportedOperationException();
+  }
+  
   public int update(String query, Map<String, ?> arguments)
     throws InvalidQueryException {
     throw new UnsupportedOperationException();
@@ -132,6 +138,17 @@ public class QueryProcessor implements QueryProcessorIF {
 
     return new ParsedQuery(this, bprocessor,
                            QueryOptimizer.getOptimizer(tquery).optimize(tquery));
+  }
+
+  public ParsedModificationStatementIF parseUpdate(String statement)
+    throws InvalidQueryException {
+    throw new UnsupportedOperationException();
+  }
+
+  public ParsedModificationStatementIF parseUpdate(String statement,
+                                                   DeclarationContextIF context)
+    throws InvalidQueryException {
+    throw new UnsupportedOperationException();
   }
   
   public void load(String ruleset) throws InvalidQueryException {

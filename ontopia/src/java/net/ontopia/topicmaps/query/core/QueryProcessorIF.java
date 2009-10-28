@@ -58,6 +58,14 @@ public interface QueryProcessorIF {
   public int update(String query) throws InvalidQueryException;
 
   /**
+   * PUBLIC: Runs the update statement in the given declaration
+   * context, returning the number of modified objects.
+   * @since %NEXT%
+   */
+  public int update(String query, DeclarationContextIF context)
+    throws InvalidQueryException;
+  
+  /**
    * PUBLIC: Runs the update statement with the given parameters,
    * returning the number of modified objects.
    * @since %NEXT%
@@ -90,7 +98,24 @@ public interface QueryProcessorIF {
    */
   public ParsedQueryIF parse(String query, DeclarationContextIF context)
     throws InvalidQueryException;
-  
+
+  /**     
+   * PUBLIC: Parses the update statement, returning an object
+   * representing the result.
+   * @since %NEXT%
+   */
+  public ParsedModificationStatementIF parseUpdate(String statement)
+    throws InvalidQueryException;
+
+  /**     
+   * PUBLIC: Parses the update statement in the given context,
+   * returning an object representing the result.
+   * @since %NEXT%
+   */
+  public ParsedModificationStatementIF parseUpdate(String statement,
+                                                   DeclarationContextIF context)
+    throws InvalidQueryException;
+ 
   /**
    * DEPRECATED: Loads a set of rules into the query processor from a
    * string. The rules will then be available for use in queries
