@@ -99,7 +99,20 @@ public class QueryProcessorTest extends AbstractTomaQueryTestCase {
         matches,
         "select $PERSON, $PLACE where $PERSON.(person)<-(born-in)->($$) = $PLACE and $PERSON.(person)<-(died-in)->($$) = $DIED and $PLACE = $DIED order by 1;");
   }
-  
+
+  public void testThreeColumnsBoundWithSquareBracket() throws InvalidQueryException, IOException {
+    load("complex.ltm");
+
+    List matches = new ArrayList();
+    
+    addMatch(matches, "$PERSON", getTopicById("bohr"), "$PLACE", getTopicById("copenhagen"));
+    addMatch(matches, "$PERSON", getTopicById("humboldt"), "$PLACE", getTopicById("berlin"));
+    addMatch(matches, "$PERSON", getTopicById("schroedinger"), "$PLACE", getTopicById("wien"));
+    
+    verifyQueryOrder(
+        matches,
+        "select $PERSON, $PLACE where exists $PERSON.(person)<-(born-in)->($$)[$PLACE] and exists $PERSON.(person)<-(died-in)->($$)[$DIED] and $PLACE = $DIED order by 1;");
+  }
   
   /// limit and offset tests
   
