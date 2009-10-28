@@ -219,11 +219,11 @@ public interface TopicMapBuilderIF {
    * @param occurs_type The type of the created occurrence; 
    *                    an object implementing TopicIF.
    * @param value The value of the occurrence;
-	 * @param datatype The datatype of the value.
+   * @param datatype The datatype of the value.
    *
    * @return An object implementing OccurrenceIF, having the given
    *         type and value, and belonging to the given topic.
-	 * @since 4.0
+   * @since 4.0
    */
   public OccurrenceIF makeOccurrence(TopicIF topic, TopicIF occurs_type, String value, LocatorIF datatype); // NEW
   
