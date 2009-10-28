@@ -11,6 +11,7 @@ import edu.emory.mathcs.backport.java.util.Collections;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.ParsedModificationStatementIF;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
@@ -244,5 +245,20 @@ public class BasicQueryProcessor implements QueryProcessorIF {
 
   public ParsedQueryIF parse(String query) throws InvalidQueryException {
     return parse(query, null);
+  }
+  
+  public ParsedModificationStatementIF parseUpdate(String statement,
+      DeclarationContextIF context) throws InvalidQueryException {
+    throw new InvalidQueryException("Not supported by this QueryProcessor");
+  }
+
+  public ParsedModificationStatementIF parseUpdate(String statement)
+      throws InvalidQueryException {
+    throw new InvalidQueryException("Not supported by this QueryProcessor");
+  }
+
+  public int update(String query, DeclarationContextIF context)
+      throws InvalidQueryException {
+    throw new InvalidQueryException("Not supported by this QueryProcessor");
   }
 }
