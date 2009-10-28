@@ -2,6 +2,7 @@ package net.ontopia.topicmaps.query.toma.parser;
 
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.VariableDecl;
 import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
 
 /**
@@ -19,10 +20,10 @@ public interface PathExpressionFactoryIF {
   /**
    * INTERNAL: Create a new Variable.
    * 
-   * @param name the name of the variable.
+   * @param decl the declaration for the variable.
    * @return a new variable.
    */
-  public VariableIF createVariable(String name);
+  public VariableIF createVariable(VariableDecl decl);
 
   /**
    * INTERNAL: Create a new Topic literal.

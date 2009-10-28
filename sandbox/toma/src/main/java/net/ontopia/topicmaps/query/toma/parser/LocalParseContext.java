@@ -5,6 +5,7 @@ import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.FunctionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.VariableDecl;
 import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
 
 /**
@@ -50,11 +51,11 @@ public class LocalParseContext {
     return topic;
   }
 
-  public VariableIF createVariable(String name) throws AntlrWrapException {
-    VariableIF var = pathExpressionFactory.createVariable(name);
+  public VariableIF createVariable(VariableDecl decl) throws AntlrWrapException {
+    VariableIF var = pathExpressionFactory.createVariable(decl);
     if (var == null)
       throw new AntlrWrapException(new InvalidQueryException(
-          "unable to create variable '" + name + "'"));
+          "unable to create variable '" + decl.getVariableName() + "'"));
     return var;
   }
 

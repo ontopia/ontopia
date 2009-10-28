@@ -1,6 +1,9 @@
 package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
@@ -17,9 +20,10 @@ public class SelectStatement implements ASTElementIF {
   };
 
   private boolean distinct;
-  private ArrayList<ExpressionIF> selects;
+  private List<ExpressionIF> selects;
   private ExpressionIF clause;
   private UNION_TYPE unionType;
+  private Map<String, VariableDecl> variables;
 
   /**
    * Create a new empty Select Statement.
@@ -29,6 +33,7 @@ public class SelectStatement implements ASTElementIF {
     selects = new ArrayList<ExpressionIF>();
     clause = null;
     unionType = UNION_TYPE.NOUNION;
+    variables = new HashMap<String, VariableDecl>();
   }
 
   /**
@@ -121,6 +126,27 @@ public class SelectStatement implements ASTElementIF {
     return this.clause;
   }
 
+  /**
+   * Gets a variable declaration for the given variable name. If there is no
+   * variable declaration available yet, a new one will be created.
+   * 
+   * @param varName the name of the variable.
+   * @return the variable declaration for this variable.
+   */
+  public VariableDecl getVariableDeclaration(String varName) {
+    String name = varName.toUpperCase();
+    VariableDecl vDecl = variables.get(name);
+    if (vDecl == null) {
+      vDecl = new VariableDecl(name);
+      variables.put(name, vDecl);
+    }
+    return vDecl;
+  }
+
+  public void addDeclarations(Map<String, VariableDecl> declarations) {
+    variables.putAll(declarations);
+  }
+  
   public boolean isAggregated() {
     // validate all select projections
     int numAggregate = 0;

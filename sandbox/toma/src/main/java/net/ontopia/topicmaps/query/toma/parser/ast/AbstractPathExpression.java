@@ -55,6 +55,16 @@ public abstract class AbstractPathExpression extends AbstractExpression
     return null;
   }
   
+  public VariableDecl getVariableDeclaration() {
+    if (getPathLength() > 0) {
+      PathElementIF element = path.get(0);
+      if (element instanceof VariableIF) {
+        return ((VariableIF) element).getDeclaration();
+      }
+    }
+    return null;
+  }
+  
   public int getPathLength() {
     return path.size();
   }

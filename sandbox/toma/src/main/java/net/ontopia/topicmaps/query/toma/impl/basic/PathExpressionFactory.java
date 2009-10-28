@@ -9,6 +9,7 @@ import net.ontopia.topicmaps.query.toma.parser.PathExpressionFactoryIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.VariableDecl;
 import net.ontopia.topicmaps.query.toma.parser.ast.VariableIF;
 
 /**
@@ -73,7 +74,7 @@ public class PathExpressionFactory implements PathExpressionFactoryIF {
     }
   }
 
-  public VariableIF createVariable(String name) {
-    return new VariablePath(name);
+  public VariableIF createVariable(VariableDecl decl) {
+    return new VariablePath(decl);
   }
 }

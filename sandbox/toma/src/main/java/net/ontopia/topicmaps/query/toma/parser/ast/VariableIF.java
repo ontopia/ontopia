@@ -11,11 +11,11 @@ public interface VariableIF extends PathElementIF {
    * @return the name.
    */
   public String getVarName();
-
+  
   /**
-   * Set the name of the variable.
+   * Get the declaration for this variable path element.
    * 
-   * @param name the name to be set.
+   * @return the variable declaration.
    */
-  public void setVarName(String name);
+  public VariableDecl getDeclaration();
 }

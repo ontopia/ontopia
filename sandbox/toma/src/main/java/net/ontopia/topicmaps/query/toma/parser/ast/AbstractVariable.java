@@ -7,7 +7,7 @@ import net.ontopia.topicmaps.query.toma.util.IndentedStringBuilder;
  */
 public abstract class AbstractVariable extends AbstractPathElement implements
     VariableIF {
-  private String varName;
+  private VariableDecl decl;
   private PathElementIF.TYPE varType; 
 
   /**
@@ -15,20 +15,20 @@ public abstract class AbstractVariable extends AbstractPathElement implements
    * 
    * @param name the name of the variable.
    */
-  public AbstractVariable(String name) {
+  public AbstractVariable(VariableDecl decl) {
     super("VARIABLE");
-    this.varName = name;
+    this.decl = decl;
     this.varType = TYPE.UNKNOWN;
   }
 
   public String getVarName() {
-    return varName;
+    return decl.getVariableName();
   }
 
-  public void setVarName(String name) {
-    this.varName = name;
+  public VariableDecl getDeclaration() {
+    return decl;
   }
-
+  
   public TYPE getVarType() {
     return varType;
   }
@@ -44,6 +44,6 @@ public abstract class AbstractVariable extends AbstractPathElement implements
 
   @Override
   public String toString() {
-    return "$" + varName;
+    return "$" + decl.getVariableName();
   }
 }

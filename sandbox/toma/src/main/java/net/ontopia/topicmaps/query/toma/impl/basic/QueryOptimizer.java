@@ -22,6 +22,7 @@ import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.Level;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.VariableDecl;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic.IDTYPE;
 
 public class QueryOptimizer implements QueryOptimizerIF {
@@ -86,30 +87,29 @@ public class QueryOptimizer implements QueryOptimizerIF {
               : right);
           LiteralExpression literal = (LiteralExpression) (status == STATUS.FOUND ? right
               : left);
-          // TODO: This has to be done, because path.getVariableName()
-          // returns '$' + varName, so we need to remove the '$'.
-          String varName = path.getVariableName().substring(1);
+          
+          VariableDecl varDecl = path.getVariableDeclaration();
 
           ExpressionIF result = null;
           if (checkSimplePathExpression(path, IDPATH)) {
             // $t.id = 'abc' -> $t = i'abc'
-            result = getTopicEqualsIDExpression(varName, IDTYPE.IID, literal
+            result = getTopicEqualsIDExpression(varDecl, IDTYPE.IID, literal
                 .getValue());
           } else if (checkSimplePathExpression(path, NAMEPATH)) {
             // $t.name = 'abc' -> $t = n'abc'
-            result = getTopicEqualsIDExpression(varName, IDTYPE.NAME, literal
+            result = getTopicEqualsIDExpression(varDecl, IDTYPE.NAME, literal
                 .getValue());
           } else if (checkSimplePathExpression(path, VARIANTPATH)) {
             // $t.name.var = 'abc' -> $t = v'abc'
-            result = getTopicEqualsIDExpression(varName, IDTYPE.VAR, literal
+            result = getTopicEqualsIDExpression(varDecl, IDTYPE.VAR, literal
                 .getValue());
           } else if (checkSimplePathExpression(path, SLPATH)) {
             // $t.sl = 'abc' -> $t = sl'abc'
-            result = getTopicEqualsIDExpression(varName, IDTYPE.SL, literal
+            result = getTopicEqualsIDExpression(varDecl, IDTYPE.SL, literal
                 .getValue());
           } else if (checkSimplePathExpression(path, SIPATH)) {
             // $t.si = 'abc' -> $t = si'abc'
-            result = getTopicEqualsIDExpression(varName, IDTYPE.SI, literal
+            result = getTopicEqualsIDExpression(varDecl, IDTYPE.SI, literal
                 .getValue());
           }
 
@@ -139,29 +139,25 @@ public class QueryOptimizer implements QueryOptimizerIF {
             // get the level of the last path element
             Level level = path.isEmpty() ? null : path.getPathElement(
                 path.getPathLength() - 1).getLevel();
-            String varName = path.getVariableName();
-            if (varName != null) {
-              // TODO: This has to be done, because path.getVariableName()
-              // returns '$' + varName, so we need to remove the '$'.
-              varName = varName.substring(1);
-            }
+            
+            VariableDecl varDecl = path.getVariableDeclaration();
             ExpressionIF result = null;
 
             if (checkSimplePathExpression(path, TYPEPATH)) {
               // $t.type = i'topic' -> $t = i'topic'.instance
-              result = getReversalTopicExpression(varName, topic,
+              result = getReversalTopicExpression(varDecl, topic,
                   new InstancePath(), level);
             } else if (checkSimplePathExpression(path, INSTANCEPATH)) {
               // $t.instance = i'topic' -> $t = i'topic'.type
-              result = getReversalTopicExpression(varName, topic,
+              result = getReversalTopicExpression(varDecl, topic,
                   new TypePath(), level);
             } else if (checkSimplePathExpression(path, SUBPATH)) {
               // $t.sub = i'topic' -> $t = i'topic'.super
-              result = getReversalTopicExpression(varName, topic,
+              result = getReversalTopicExpression(varDecl, topic,
                   new SuperTypePath(), level);
             } else if (checkSimplePathExpression(path, SUPERPATH)) {
               // $t.super = i'topic' -> $t = i'topic'.sub
-              result = getReversalTopicExpression(varName, topic,
+              result = getReversalTopicExpression(varDecl, topic,
                   new SubTypePath(), level);
             }
 
@@ -175,12 +171,12 @@ public class QueryOptimizer implements QueryOptimizerIF {
       return expr;
     }
 
-    private ExpressionIF getTopicEqualsIDExpression(String varName,
+    private ExpressionIF getTopicEqualsIDExpression(VariableDecl decl,
         IDTYPE type, String val) {
       try {
         ExpressionIF expr = new EqualsExpression();
         PathExpression l = new PathExpression();
-        l.addPath(new VariablePath(varName));
+        l.addPath(new VariablePath(decl));
         expr.addChild(l);
         PathExpression r = new PathExpression();
         r.addPath(new TopicPath(type, val));
@@ -191,12 +187,12 @@ public class QueryOptimizer implements QueryOptimizerIF {
       }
     }
 
-    private ExpressionIF getReversalTopicExpression(String varName,
+    private ExpressionIF getReversalTopicExpression(VariableDecl decl,
         PathExpression topicExpr, PathElementIF reverseElement, Level level) {
       try {
         ExpressionIF expr = new EqualsExpression();
         PathExpression l = new PathExpression();
-        l.addPath(new VariablePath(varName));
+        l.addPath(new VariablePath(decl));
         expr.addChild(l);
         PathExpression r = topicExpr;
         reverseElement.setLevel(level);

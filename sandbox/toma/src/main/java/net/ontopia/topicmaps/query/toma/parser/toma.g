@@ -3,6 +3,8 @@ header { package net.ontopia.topicmaps.query.toma.parser; }
 
 {
   import net.ontopia.topicmaps.query.toma.parser.ast.*;
+  import java.util.Map;
+  import java.util.HashMap;
 }
 
 /**
@@ -17,11 +19,11 @@ options {
 
 {
   private LocalParseContext context;
-  private SelectStatement seStmt;     // the current select statement
+  private Map<String, VariableDecl> variables;
 
   public void init(LocalParseContext c) {
   	this.context = c;
-  	this.seStmt = null;
+  	this.variables = new HashMap<String, VariableDecl>();
   }
    
   /**
@@ -36,14 +38,40 @@ options {
   	}
   }
   
+  protected VariableDecl getVariableDeclaration(String varName) {
+  	String name = varName.toUpperCase();
+  	VariableDecl decl = variables.get(name);
+  	if (decl == null) {
+  		decl = new VariableDecl(name);
+  		variables.put(name, decl);
+  	}
+  	return decl;
+  }
+  
+  /**
+   * Add all current variable declarations to the given SelectStatement, 
+   * and empties the variable map afterwards.
+   */
+  protected void addDeclarations(SelectStatement stmt) {
+  	stmt.addDeclarations(variables);
+  	variables.clear();
+  }
+  
   /**
    * Create a path expression that is started by a variable
    */
-  protected PathExpressionIF createVariable(String varName) throws AntlrWrapException {
-  	VariableIF var = context.createVariable(varName);
+  protected PathExpressionIF createVariablePath(String varName) throws AntlrWrapException {
+  	VariableDecl vDecl = getVariableDeclaration(varName);
+  	VariableIF var = context.createVariable(vDecl);
   	PathExpressionIF pe = context.createPathExpression();
   	pe.addPath(var);
   	return pe;
+  }
+  
+  protected VariableIF createVariable(String varName) throws AntlrWrapException {
+  	VariableDecl vDecl = getVariableDeclaration(varName);
+  	VariableIF var = context.createVariable(vDecl);
+  	return var;
   }  
 }
 
@@ -54,15 +82,17 @@ query returns [TomaQuery q]:
   SEMICOLON;
   
 statement returns [TomaQuery q]:
-                  { q = new TomaQuery();                               }
-  seStmt=select   { q.addStatement(seStmt);                            }
+                  { q = new TomaQuery(); SelectStatement stmt;         }
+  stmt=select     { q.addStatement(stmt); addDeclarations(stmt);       }
   (               { SelectStatement.UNION_TYPE type;                   }
     ( UNION       { type = SelectStatement.UNION_TYPE.UNION;           } 
     | INTERSECT   { type = SelectStatement.UNION_TYPE.INTERSECT;       }
     | EXCEPT      { type = SelectStatement.UNION_TYPE.EXCEPT;          }
     )
     (ALL          { type = SelectStatement.UNION_TYPE.UNIONALL;        })? 
-    seStmt=select { seStmt.setUnionType(type); q.addStatement(seStmt); }
+    stmt=select   { stmt.setUnionType(type); 
+    	            q.addStatement(stmt);   
+    	            addDeclarations(stmt);                             }
   )*
   (order[q])?
   (limit[q])?
@@ -155,26 +185,25 @@ assocpathexpr [PathExpressionIF p, PathExpressionIF left]:
                                { PathElementIF pe = context.createElement("ASSOC");
                                	 if (left != null) pe.addChild(left);
                                	 p.addPath(pe);
-                               	 PathExpressionIF type, scope, right;               } 
-  (assocVar:VARIABLE           { pe.bindVariable(
-    	                           context.createVariable(assocVar.getText()));     })?
-  LPAREN type=pathexpr RPAREN  { pe.setType(type);                                  }
+                               	 PathExpressionIF type, scope, right;                } 
+  (assocVar:VARIABLE           { pe.bindVariable(createVariable(assocVar.getText()));})?
+  LPAREN type=pathexpr RPAREN  { pe.setType(type);                                   }
   ( ATSCOPE 
-                               { PathElementIF tl;                                  }
-    ( var:VARIABLE             { scope = createVariable(var.getText());             }
-    | tl=topicliteral          { scope = context.createPathExpression();            } 
-    	                       { scope.addPath(tl);                                 }
+                               { PathElementIF tl;                                   }
+    ( var:VARIABLE             { scope = createVariablePath(var.getText());          }
+    | tl=topicliteral          { scope = context.createPathExpression();             } 
+    	                       { scope.addPath(tl);                                  }
     | LPAREN scope=pathexpr RPAREN 
-    )                          { pe.setScope(scope);                                })?
+    )                          { pe.setScope(scope);                                 })?
   RARROW 
-  LPAREN right=roleexpr RPAREN { pe.addChild(right);                                }
+  LPAREN right=roleexpr RPAREN { pe.addChild(right);                                 }
   // TODO: add support for variable binding in association roles
   (LSQUARE
    roleVar:VARIABLE
    RSQUARE
   )?
-  (                            { PathElementIF part;                                }
-    DOT part=pathpart          { p.addPath(part);                                   }
+  (                            { PathElementIF part;                                 }
+    DOT part=pathpart          { p.addPath(part);                                    }
   )*
   (DOT assocleftside[p])?;
 
@@ -189,14 +218,14 @@ roleexpr returns [PathExpressionIF p]:
   );
   
 pathexpr returns [PathExpressionIF path]:
-                        { path = context.createPathExpression();               }
+                        { path = context.createPathExpression();        }
   ( 
-                        { PathElementIF topic;                                 } 
-    topic=topicliteral  { path.addPath(topic);                                 } 
-  | var:VARIABLE        { path.addPath(context.createVariable(var.getText())); }
+                        { PathElementIF topic;                          } 
+    topic=topicliteral  { path.addPath(topic);                          } 
+  | var:VARIABLE        { path.addPath(createVariable(var.getText()));  }
   )
-  (                     { PathElementIF pe;                                    }
-   DOT pe=pathpart      { path.addPath(pe);                                    }
+  (                     { PathElementIF pe;                             }
+   DOT pe=pathpart      { path.addPath(pe);                             }
   )*;
   
 pathpart returns [PathElementIF p]:
@@ -213,15 +242,14 @@ pathpart returns [PathElementIF p]:
   )?
   ( ATSCOPE 
                                 { PathExpressionIF pe; PathElementIF e;      }
-    ( var:VARIABLE              { pe = createVariable(var.getText());        }
+    ( var:VARIABLE              { pe = createVariablePath(var.getText());    }
     | e=topicliteral            { pe = context.createPathExpression();       } 
     	                        { pe.addPath(e);                             }
     | LPAREN pe=pathexpr RPAREN 
     )                           { p.setScope(pe);                            }
   )?
   ( LSQUARE
-    bound:VARIABLE              { p.bindVariable(                            }
-    	                        {  context.createVariable(bound.getText())); }
+    bound:VARIABLE              { p.bindVariable(createVariable(bound.getText())); }
     RSQUARE
   )?; 
  
