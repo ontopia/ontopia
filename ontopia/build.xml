@@ -120,7 +120,7 @@
     <!-- svn-revision to the external xtm2 test suite -->
     <property name="xtm2.revision" value="18" />
     <!-- svn-revision to the external tm/xml test suite -->
-    <property name="tmxml.revision" value="27" />
+    <property name="tmxml.revision" value="28" />
   </target>
 
   <!-- ======================================================================
