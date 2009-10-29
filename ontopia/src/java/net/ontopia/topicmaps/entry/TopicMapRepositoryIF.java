@@ -19,6 +19,8 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
  * reference's id. See the implementations for more information on
  * their key generation policies.<p>
  *
+ * The default implementation of TopicMapRepositoryIF is thread-safe.<p>
+ *
  * @since 1.3.2
  */
 public interface TopicMapRepositoryIF {

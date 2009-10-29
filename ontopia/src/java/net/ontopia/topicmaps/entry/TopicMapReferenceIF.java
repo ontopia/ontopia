@@ -13,8 +13,10 @@ import net.ontopia.topicmaps.core.*;
  * A reference is always considered to be open once it has been
  * constructed. It can also be reopened if it has been closed, but not
  * if it has been deleted.<p>
+ *
+ * The most common TopicMapReferenceIF implementations (such as the
+ * one for RDBMS topic maps) are thread-safe.<p>
  */
-
 public interface TopicMapReferenceIF {
 
   /**
