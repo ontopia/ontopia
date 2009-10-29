@@ -6,14 +6,14 @@ package net.ontopia.topicmaps.entry;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.utils.CachedIF;
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(TopicMapSourceManager.class.getName());
 
-  protected Set sources = new HashSet();
+  protected Set sources = new CompactHashSet();
 
   protected Map smap = new HashMap();
 
