@@ -90,8 +90,8 @@
     <path id="project.classpath.nolog4j">
       <pathelement location="${basedir}/3rdparty/ontoboot.jar" />
       <pathelement location="${basedir}/3rdparty/jing.jar" />
-      <pathelement location="${basedir}/3rdparty/tmapi-2.0a2.jar" />
-      <pathelement location="${basedir}/3rdparty/tmapi-2.0a2-tests.jar" />
+      <pathelement location="${basedir}/3rdparty/tmapi-2.0RC1.jar" />
+      <pathelement location="${basedir}/3rdparty/tmapi-2.0RC1-tests.jar" />
       <pathelement location="${basedir}/3rdparty/touchgraph.jar" />
       <pathelement location="${basedir}/3rdparty/trove.jar" />
       <path refid="project.classpath.ivy"/>
@@ -1390,8 +1390,8 @@
 
     <!-- Collect 3rdparty jar files -->
     <copy file="${3rdparty.path}/jing.jar" tofile="${dist.path}/lib/jing.jar" />
-    <copy file="${3rdparty.path}/tmapi-2.0a2.jar" tofile="${dist.path}/lib/tmapi.jar" />
-    <copy file="${3rdparty.path}/tmapi-2.0a2-tests.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
+    <copy file="${3rdparty.path}/tmapi-2.0RC1.jar" tofile="${dist.path}/lib/tmapi.jar" />
+    <copy file="${3rdparty.path}/tmapi-2.0RC1-tests.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
 <copy file="${3rdparty.path}/touchgraph.jar" tofile="${dist.path}/lib/touchgraph.jar" />
     <copy file="${3rdparty.path}/trove.jar" tofile="${dist.path}/lib/trove.jar" />
 
