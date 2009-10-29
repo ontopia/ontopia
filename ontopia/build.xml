@@ -69,10 +69,10 @@
     <tstamp><format property="dist.date.full" pattern="yyyy-MM-dd" /></tstamp>
 
     <property name="dist.version.major" value="5"/>
-    <property name="dist.version.minor" value="0"/>
-    <property name="dist.version.micro" value="2"/>
+    <property name="dist.version.minor" value="1"/>
+    <property name="dist.version.micro" value="0"/>
 
-    <property name="dist.version.beta"   value=""/> <!-- "b1" if beta 1, empty if not beta -->
+    <property name="dist.version.beta"   value="b1"/> <!-- "b1" if beta 1, empty if not beta -->
 
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}${dist.version.beta}"/>
 
@@ -1598,6 +1598,9 @@
 
     <copy todir="${dist.path}/tests/test-data/xtm2">
       <fileset dir="${test.path}/xtm2" />
+    </copy>
+    <copy todir="${dist.path}/tests/test-data/tmxml">
+      <fileset dir="${test.path}/tmxml" />
     </copy>
     <copy todir="${dist.path}/tests/test-data/cxtm">
       <fileset dir="${test.path}/cxtm" />
