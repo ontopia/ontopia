@@ -119,9 +119,9 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
 
   public void testRolePlayerPredicate3() throws InvalidQueryException, IOException {
     makeEmpty();
-		TopicIF atype = builder.makeTopic();
-		TopicIF rtype1 = builder.makeTopic();
-		TopicIF rtype2 = builder.makeTopic();
+    TopicIF atype = builder.makeTopic();
+    TopicIF rtype1 = builder.makeTopic();
+    TopicIF rtype2 = builder.makeTopic();
     TopicIF player = builder.makeTopic();
     TopicIF other = builder.makeTopic();
     AssociationIF assoc = builder.makeAssociation(atype);
@@ -129,8 +129,8 @@ public class RolePlayerPredicateTest extends AbstractPredicateTest {
     AssociationRoleIF role2 = builder.makeAssociationRole(assoc, rtype2, other);
 
     AssociationIF assoc2 = builder.makeAssociation(atype);
-    AssociationRoleIF role3 = builder.makeAssociationRole(assoc, rtype1, player);
-    AssociationRoleIF role4 = builder.makeAssociationRole(assoc, rtype2, other);
+    AssociationRoleIF role3 = builder.makeAssociationRole(assoc2, rtype1, player);
+    AssociationRoleIF role4 = builder.makeAssociationRole(assoc2, rtype2, other);
     
     List matches = new ArrayList();
     addMatch(matches, "ROLE", role);
