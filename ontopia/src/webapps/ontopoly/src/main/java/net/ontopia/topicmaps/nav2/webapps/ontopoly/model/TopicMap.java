@@ -47,12 +47,12 @@ public class TopicMap {
   static final String XSD = "http://www.w3.org/2001/XMLSchema#";
 
   private static final String declarations = 
-		  "using xtm for i\"" + XTM + "\" "
-		+ "using on for i\"" + ON + "\" " 
-		+ "using test for i\"" + TEST + "\" "
-		+ "using tech for i\"" + TECH + "\" " 
-		+ "using dc for i\"" + DC + "\" ";
-
+    "using xtm for i\"" + XTM + "\" "
+    + "using on for i\"" + ON + "\" " 
+    + "using test for i\"" + TEST + "\" "
+    + "using tech for i\"" + TECH + "\" " 
+    + "using dc for i\"" + DC + "\" ";
+  
   private OntopolyRepository repository;
 
   private TopicMapIF topicMapIF;
@@ -185,26 +185,26 @@ public class TopicMap {
    * topic map.
    */
   public void setName(String _value) {
-		String value = (_value == null ? "" : _value);
-		TopicIF topic = makeReifier();
-		// update existing new name or create a new one
-		Collection names = OntopolyModelUtils.findTopicNames(null, topic, value,
-																												 Collections.EMPTY_SET);
-		Iterator iter = names.iterator();
-		if (iter.hasNext()) {
-			TopicNameIF bn = (TopicNameIF) iter.next();
-			bn.setValue(value);
-		} else {
-			getTopicMapIF().getBuilder().makeTopicName(topic, value);
-		}
-		// remove superflous names
-		while (iter.hasNext())
-			((TopicNameIF) iter.next()).remove();
-		// update ontopoly repository if there is one
-		if (repository != null) {
-			TopicMapReference ref = repository.getReference(topicMapId);
-			ref.setName(value);
-		}
+    String value = (_value == null ? "" : _value);
+    TopicIF topic = makeReifier();
+    // update existing new name or create a new one
+    Collection names = OntopolyModelUtils.findTopicNames(null, topic, value,
+                                                         Collections.EMPTY_SET);
+    Iterator iter = names.iterator();
+    if (iter.hasNext()) {
+      TopicNameIF bn = (TopicNameIF) iter.next();
+      bn.setValue(value);
+    } else
+      getTopicMapIF().getBuilder().makeTopicName(topic, value);
+
+    // remove superflous names
+    while (iter.hasNext())
+      ((TopicNameIF) iter.next()).remove();
+    // update ontopoly repository if there is one
+    if (repository != null) {
+      TopicMapReference ref = repository.getReference(topicMapId);
+      ref.setName(value);
+    }
   }
 
   /**
@@ -272,9 +272,9 @@ public class TopicMap {
    */
   public List getTopicTypes() {
     String query = "select $type from "
-			+ "instance-of($type, on:topic-type)"
-			//! + ", not (instance-of($type, on:ontology-type)), $type /= on:ontology-type"
-			+ " order by $type?";
+      + "instance-of($type, on:topic-type)"
+      //! + ", not (instance-of($type, on:ontology-type)), $type /= on:ontology-type"
+      + " order by $type?";
 
     List result = getQueryWrapper().queryForList(query,
         OntopolyModelUtils.getRowMapperOneColumn());
@@ -296,9 +296,9 @@ public class TopicMap {
 
   public List getOccurrenceTypes() {
     String query = "select $type from "
-			+ "instance-of($type, on:occurrence-type)"
-			//! + ", not (instance-of($type, on:system-topic))"
-			+ " order by $type?";
+      + "instance-of($type, on:occurrence-type)"
+      //! + ", not (instance-of($type, on:system-topic))"
+      + " order by $type?";
 
     List result = getQueryWrapper().queryForList(query,
         OntopolyModelUtils.getRowMapperOneColumn());
@@ -325,9 +325,9 @@ public class TopicMap {
 
   public List getAssociationTypes() {
     String query = "select $type from "
-			+ "instance-of($type, on:association-type)"
-			//! + ", not(instance-of($type, on:system-topic))" 
-			+ " order by $type?";
+      + "instance-of($type, on:association-type)"
+      //! + ", not(instance-of($type, on:system-topic))" 
+      + " order by $type?";
 
     List result = getQueryWrapper().queryForList(query,
         OntopolyModelUtils.getRowMapperOneColumn());
@@ -345,9 +345,9 @@ public class TopicMap {
       query = "select $type from direct-instance-of($type, on:role-type) order by $type?";
     else
       query = "select $type from "
-				+ "direct-instance-of($type, on:role-type)"
-				+ ", not(instance-of($type, on:system-topic))"
-				+ " order by $type?";
+        + "direct-instance-of($type, on:role-type)"
+        + ", not(instance-of($type, on:system-topic))"
+        + " order by $type?";
 
     List result = getQueryWrapper().queryForList(query,
         OntopolyModelUtils.getRowMapperOneColumn());
@@ -451,34 +451,8 @@ public class TopicMap {
   }
 
   public TopicType createTopicType(String name) {
-
     TopicIF topicTypeIf= OntopolyModelUtils.getTopicIF(this, PSI.ON, "topic-type");
     TopicIF topicIf = createNamedTopic(name, topicTypeIf);
-
-    //! // make has_field association
-    //! TopicIF aType = OntopolyModelUtils.getTopicIF(this, PSI.ON, "has-field");
-    //! TopicIF type1 = OntopolyModelUtils.getTopicIF(this, PSI.ON, "field-owner");
-    //! TopicIF type2 = OntopolyModelUtils.getTopicIF(this, PSI.ON, "field-definition");
-    //! TopicIF untypedName = OntopolyModelUtils.getTopicIF(this, PSI.ON, "untyped-name");
-    //! OntopolyModelUtils.makeBinaryAssociation(aType, topic, type1, untypedName,
-    //!     type2);
-		//! 
-    //! // add field-order occurrence with theme (scope)
-    //! TopicMapBuilderIF builder = getTopicMapIF().getBuilder();
-    //! OccurrenceIF occurrenceIf = builder.makeOccurrence(topic,
-    //!     OntopolyModelUtils.getTopicIF(this, PSI.ON, "field-order"), "000000001");
-    //! occurrenceIf.addTheme(untypedName);
-
-    //! // make has-cardinality association
-    //! TopicIF hasCardinality = OntopolyModelUtils.getTopicIF(this, PSI.ON, "has-cardinality");
-    //! TopicIF fieldOwner = OntopolyModelUtils.getTopicIF(this, PSI.ON, "field-owner");
-    //! TopicIF fieldDefinition = OntopolyModelUtils.getTopicIF(this, PSI.ON, "field-definition");
-    //! TopicIF cardinality = OntopolyModelUtils.getTopicIF(this, PSI.ON, "cardinality");
-    //! TopicIF cardinality11 = OntopolyModelUtils.getTopicIF(this, PSI.ON, "cardinality-1-1");
-    //! OntopolyModelUtils.makeTernaryAssociation(hasCardinality, 
-		//! 																					topic, fieldOwner, 
-		//! 																					untypedName, fieldDefinition, 
-		//! 																					cardinality11, cardinality);
 
     TopicType topicType = new TopicType(topicIf, this);
     topicType.addField(getDefaultNameField());
@@ -492,16 +466,16 @@ public class TopicMap {
     return (NameField)CollectionUtils.getFirstElement(nameFields);
   }
   
-	public IdentityField getIdentityField(IdentityType identityType) {
-		String query = "select $FD from on:has-identity-type(%type% : on:identity-type, $FD : on:identity-field) limit 1?";
-		Map params = Collections.singletonMap("type", identityType.getTopicIF());
-
-		TopicIF fieldTopic = (TopicIF)getQueryWrapper().queryForObject(query, params);
-		if (fieldTopic == null) 
-			throw new OntopolyModelRuntimeException("Could not find identity field for " + identityType);
+  public IdentityField getIdentityField(IdentityType identityType) {
+    String query = "select $FD from on:has-identity-type(%type% : on:identity-type, $FD : on:identity-field) limit 1?";
+    Map params = Collections.singletonMap("type", identityType.getTopicIF());
+    
+    TopicIF fieldTopic = (TopicIF)getQueryWrapper().queryForObject(query, params);
+    if (fieldTopic == null) 
+      throw new OntopolyModelRuntimeException("Could not find identity field for " + identityType);
 
     return new IdentityField(fieldTopic, this, identityType);
-	}
+  }
 
   public NameType createNameType(String name) {
     TopicMap tm = this;
@@ -528,16 +502,16 @@ public class TopicMap {
     return nameType;
   }
 
-	public NameField getNameField(NameType nameType) {
-		String query = "select $FD from on:has-name-type(%type% : on:name-type, $FD : on:name-field) limit 1?";
-		Map params = Collections.singletonMap("type", nameType.getTopicIF());
-
-		TopicIF fieldTopic = (TopicIF)getQueryWrapper().queryForObject(query, params);
-		if (fieldTopic == null) 
-			throw new OntopolyModelRuntimeException("Could not find name field for " + nameType);
-
+  public NameField getNameField(NameType nameType) {
+    String query = "select $FD from on:has-name-type(%type% : on:name-type, $FD : on:name-field) limit 1?";
+    Map params = Collections.singletonMap("type", nameType.getTopicIF());
+    
+    TopicIF fieldTopic = (TopicIF)getQueryWrapper().queryForObject(query, params);
+    if (fieldTopic == null) 
+      throw new OntopolyModelRuntimeException("Could not find name field for " + nameType);
+    
     return new NameField(fieldTopic, this, nameType);
-	}
+  }
 
   public OccurrenceType createOccurrenceType(String name) {
     TopicMap tm = this;
@@ -559,31 +533,22 @@ public class TopicMap {
         occurrenceTypeTopic, OCCURRENCE_TYPE,
         occurrenceFieldTopic, OCCURRENCE_FIELD);
 
-    // TODO: add default datatype and cardinality
-
-    //! TopicIF aType = OntopolyModelUtils.getTopicIF(this, PSI.ON, "has-datatype");
-    //! TopicIF type1 = OntopolyModelUtils.getTopicIF(this, PSI.ON, "datatype");
-    //! TopicIF type2 = OntopolyModelUtils.getTopicIF(this, PSI.ON, "field-definition");
-		//! 
-    //! OntopolyModelUtils.makeBinaryAssociation(aType, ((DataType) DataType
-    //!     .getDefaultDataType(this)).getTopicIF(), type1, topicIF, type2);
-
     return occurrenceType;
   }
 
-	public OccurrenceField getOccurrenceField(OccurrenceType occurrenceType) {
-		String query = "select $FD from on:has-occurrence-type(%type% : on:occurrence-type, $FD : on:occurrence-field) limit 1?";
-		Map params = Collections.singletonMap("type", occurrenceType.getTopicIF());
+  public OccurrenceField getOccurrenceField(OccurrenceType occurrenceType) {
+    String query = "select $FD from on:has-occurrence-type(%type% : on:occurrence-type, $FD : on:occurrence-field) limit 1?";
+    Map params = Collections.singletonMap("type", occurrenceType.getTopicIF());
 
-		TopicIF fieldTopic = (TopicIF)getQueryWrapper().queryForObject(query, params);
-		if (fieldTopic == null) 
-			throw new OntopolyModelRuntimeException("Could not find occurrence field for " + occurrenceType);
-
+    TopicIF fieldTopic = (TopicIF)getQueryWrapper().queryForObject(query, params);
+    if (fieldTopic == null) 
+      throw new OntopolyModelRuntimeException("Could not find occurrence field for " + occurrenceType);
+    
     return new OccurrenceField(fieldTopic, this, occurrenceType);
-	}
+  }
 
   public AssociationType createAssociationType(String name) {
-		TopicMap tm = this;
+    TopicMap tm = this;
     TopicMapBuilderIF builder = tm.getTopicMapIF().getBuilder();
 
     // create association type
@@ -611,16 +576,16 @@ public class TopicMap {
     
     // on:has-association-field($AF : on:association-field, $FD : on:role-field)
     OntopolyModelUtils.makeBinaryAssociation(HAS_ASSOCIATION_FIELD, 
-				roleFieldTopic1, ROLE_FIELD,
-        associationFieldTopic, ASSOCIATION_FIELD);
+                                             roleFieldTopic1, ROLE_FIELD,
+                                             associationFieldTopic, ASSOCIATION_FIELD);
 
     // create second role field
     TopicIF roleFieldTopic2 = builder.makeTopic(roleFieldType);
     
     // on:has-association-field($AF : on:association-field, $FD : on:role-field)
     OntopolyModelUtils.makeBinaryAssociation(HAS_ASSOCIATION_FIELD, 
-				roleFieldTopic2, ROLE_FIELD,
-        associationFieldTopic, ASSOCIATION_FIELD);
+                                             roleFieldTopic2, ROLE_FIELD,
+                                             associationFieldTopic, ASSOCIATION_FIELD);
 
     // TODO: add default cardinality
 
@@ -629,12 +594,12 @@ public class TopicMap {
 
   public AssociationField getAssociationField(AssociationType atype) {
 
-		String query = "select $AF from "
-			+ "on:has-association-type(%atype% : on:association-type, $AF : on:association-field) limit 1?";
-		Map params = Collections.singletonMap("atype", atype.getTopicIF());
-		TopicIF fieldTopic = (TopicIF)getQueryWrapper().queryForObject(query, params);
-		if (fieldTopic == null) 
-			throw new OntopolyModelRuntimeException("Could not find association field for " + atype);
+    String query = "select $AF from "
+      + "on:has-association-type(%atype% : on:association-type, $AF : on:association-field) limit 1?";
+    Map params = Collections.singletonMap("atype", atype.getTopicIF());
+    TopicIF fieldTopic = (TopicIF)getQueryWrapper().queryForObject(query, params);
+    if (fieldTopic == null) 
+      throw new OntopolyModelRuntimeException("Could not find association field for " + atype);
 
     return new AssociationField(fieldTopic, this, atype);
   }
@@ -646,25 +611,25 @@ public class TopicMap {
 
   public RoleField getRoleField(final AssociationType atype, final RoleType rtype) {
 
-		String query = "select $AF, $RF from "
-			+ "on:has-association-type(%atype% : on:association-type, $AF : on:association-field), " 
-			+ "on:has-association-field($AF : on:association-field, $RF : on:role-field), " 
-			+ "on:has-role-type($RF : on:role-field, %rtype% : on:role-type) limit 1?";
-		Map params = new HashMap(2);
-		params.put("atype", atype.getTopicIF());
-		params.put("rtype", rtype.getTopicIF());
+    String query = "select $AF, $RF from "
+      + "on:has-association-type(%atype% : on:association-type, $AF : on:association-field), " 
+      + "on:has-association-field($AF : on:association-field, $RF : on:role-field), " 
+      + "on:has-role-type($RF : on:role-field, %rtype% : on:role-type) limit 1?";
+    Map params = new HashMap(2);
+    params.put("atype", atype.getTopicIF());
+    params.put("rtype", rtype.getTopicIF());
 
     RoleField roleField = (RoleField) getQueryWrapper().queryForObject(query,
         new RowMapperIF() {
           public Object mapRow(QueryResultIF result, int rowno) {
-						TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
-						TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
-						return new RoleField(roleFieldTopic, TopicMap.this, rtype, new AssociationField(associationFieldTopic, TopicMap.this, atype));
-					}
-				}, params);
+            TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
+            TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
+            return new RoleField(roleFieldTopic, TopicMap.this, rtype, new AssociationField(associationFieldTopic, TopicMap.this, atype));
+          }
+        }, params);
 
-		if (roleField == null) 
-			throw new OntopolyModelRuntimeException("Could not find field for " + atype + " and " + rtype);
+    if (roleField == null) 
+      throw new OntopolyModelRuntimeException("Could not find field for " + atype + " and " + rtype);
 
     return roleField;
   }
