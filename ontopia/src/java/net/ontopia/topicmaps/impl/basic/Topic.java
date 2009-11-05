@@ -5,6 +5,7 @@ package net.ontopia.topicmaps.impl.basic;
 
 import java.util.Set;
 import java.util.Iterator;
+import java.util.Comparator;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.ArrayList;
@@ -13,9 +14,11 @@ import net.ontopia.utils.UniqueSet;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -40,6 +43,8 @@ public class Topic extends TMObject implements TopicIF {
   protected Set names;
   protected Set occurs;
   protected Set roles;
+
+  private static final Comparator rolecomp = new RoleComparator();
 
   protected Topic(TopicMap tm) {
     super(tm);
@@ -70,9 +75,9 @@ public class Topic extends TMObject implements TopicIF {
     // Set parent
     this.parent = parent;
   }
-	
+
   public Collection getSubjectLocators() {
-		if (subjects == null)
+    if (subjects == null)
       return Collections.EMPTY_SET;
     else
       return Collections.unmodifiableSet(subjects);
@@ -108,7 +113,7 @@ public class Topic extends TMObject implements TopicIF {
     fireEvent("TopicIF.removeSubjectLocator", null, subject_locator);    
     // Modify property
     subjects.remove(subject_locator);
-	}
+  }
 
   public Collection getSubjectIdentifiers() {
     if (indicators == null)
@@ -247,30 +252,40 @@ public class Topic extends TMObject implements TopicIF {
     if (roletype == null) throw new NullPointerException("Role type cannot be null.");
     if (assoc_type == null) throw new NullPointerException("Association type cannot be null.");
 
-    // below are timing results from running a big query with different
-    // data structures for the result collection. used TologQuery --timeit
-    // and results indicate that uninitialized CompactHashSet is the fastest.
-    // however, this is likely a special case, so using uninitialized ArrayList.
+    synchronized (roles) {
+      if (roles instanceof edu.emory.mathcs.backport.java.util.TreeSet) {
+        AssociationRoleIF lowrole = new FakeRole(roletype, assoc_type,
+                                                 Integer.MIN_VALUE);
+        AssociationRoleIF highrole = new FakeRole(roletype, assoc_type,
+                                                  Integer.MAX_VALUE);        
+        return ((edu.emory.mathcs.backport.java.util.TreeSet)
+                roles).subSet(lowrole, true, highrole, true);
+      } else {
+        // below are timing results from running a big query with
+        // different data structures for the result collection. used
+        // TologQuery --timeit and results indicate that uninitialized
+        // CompactHashSet is the fastest.  however, this is likely a
+        // special case, so using uninitialized ArrayList.
     
-    // ArrayList(size)      816 804 804     -> 808
-    // HashSet()            732 764 763  
-    // ArrayList()          756 739 712 745 -> 738.0
-    // CompactHashSet()     733 712 726 730 -> 725.25
-    // CompactHashSet(size) 838 856 842     -> 845.33
+        // ArrayList(size)      816 804 804     -> 808
+        // HashSet()            732 764 763  
+        // ArrayList()          756 739 712 745 -> 738.0
+        // CompactHashSet()     733 712 726 730 -> 725.25
+        // CompactHashSet(size) 838 856 842     -> 845.33
 
-    Collection result = new ArrayList();
-    synchronized (roles) {    
-      Iterator iter = roles.iterator();
-      while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
-        if (role.getType() == roletype) {
-          AssociationIF assoc = role.getAssociation();
-          if (assoc != null && assoc.getType() == assoc_type)
-            result.add(role);
+        Collection result = new ArrayList();
+        Iterator iter = roles.iterator();
+        while (iter.hasNext()) {
+          AssociationRoleIF role = (AssociationRoleIF)iter.next();
+          if (role.getType() == roletype) {
+            AssociationIF assoc = role.getAssociation();
+            if (assoc != null && assoc.getType() == assoc_type)
+              result.add(role);
+          }
         }
+        return result;
       }
-    }
-    return result;
+    }    
   }
 
   public void merge(TopicIF topic) {
@@ -284,6 +299,11 @@ public class Topic extends TMObject implements TopicIF {
    */
   protected void addRole(AssociationRoleIF assoc_role) {
     // Add association role to list of association roles
+    if (roles.size() > 100 && roles instanceof CompactHashSet) {
+      Set new_roles = new edu.emory.mathcs.backport.java.util.TreeSet(rolecomp);
+      new_roles.addAll(roles);
+      roles = new_roles;
+    }
     roles.add(assoc_role);
   }
 
@@ -344,5 +364,91 @@ public class Topic extends TMObject implements TopicIF {
   public String toString() {
     return ObjectStrings.toString("basic.Topic", (TopicIF)this);
   }
+
+  static class RoleComparator implements Comparator {
+    public int compare(Object o1, Object o2) {
+      AssociationRoleIF role1 = (AssociationRoleIF) o1;
+      AssociationRoleIF role2 = (AssociationRoleIF) o2;
+
+      int c = role1.getType().hashCode() - role2.getType().hashCode();
+      if (c == 0)
+        c = role1.getAssociation().getType().hashCode() -
+            role2.getAssociation().getType().hashCode();
+      if (c == 0) {
+        // have to do this the long-winded way, because of overflow issues
+        int hc1 = role1.getAssociation().hashCode();
+        int hc2 = role2.getAssociation().hashCode();
+        if (hc1 < hc2)
+          c = -1;
+        else if (hc1 > hc2)
+          c = 1;
+        else
+          c = 0;
+      }
+      return c;
+    }
+  }
+
+  static abstract class AbstractFake implements TMObjectIF {
+    public String getObjectId() { return null; }
+    public boolean isReadOnly() { return true; }
+    public TopicMapIF getTopicMap() { return null; }
+    public Collection getItemIdentifiers() { return null; }
+    public void addItemIdentifier(LocatorIF item_identifier) { }
+    public void removeItemIdentifier(LocatorIF item_identifier) { }
+    public void remove() { }
+  }
   
+  static class FakeRole extends AbstractFake implements AssociationRoleIF {
+    private AssociationIF assoc;
+    private TopicIF assoctype;
+    private TopicIF roletype;
+    private int assochc;
+
+    public FakeRole(TopicIF roletype, TopicIF assoctype, int assochc) {
+      this.roletype = roletype;
+      this.assoctype = assoctype;
+      this.assochc = assochc;
+    }
+    
+    public AssociationIF getAssociation() {
+      if (assoc == null)
+        assoc = new FakeAssociation(assoctype, assochc);
+      return assoc;
+    }
+    public TopicIF getType() {
+      return roletype;
+    }
+    public TopicIF getPlayer() { return null; }
+    public void setPlayer(TopicIF player) {}
+    public TopicIF getReifier() { return null; }
+    public void setReifier(TopicIF reifier) { }
+    public void setType(TopicIF type) { }
+  }
+
+  static class FakeAssociation extends AbstractFake implements AssociationIF {
+    private TopicIF type;
+    private int hashcode;
+
+    public FakeAssociation(TopicIF type, int hashcode) {
+      this.type = type;
+      this.hashcode = hashcode;
+    }
+    
+    public TopicIF getType() {
+      return type;
+    }
+    public int hashCode() {
+      return hashcode;
+    }
+    public TopicIF getReifier() { return null; }
+    public void setReifier(TopicIF reifier) { }
+    public void setType(TopicIF type) { }
+    public Collection getRoleTypes() { return null; }
+    public Collection getRolesByType(TopicIF roletype) { return null; }
+    public Collection getRoles() { return null; }
+    public Collection getScope() { return null; }
+    public void addTheme(TopicIF theme) { }
+    public void removeTheme(TopicIF theme) { }
+  }
 }
