@@ -68,9 +68,9 @@
     <dependency org="pdfbox" name="pdfbox" rev="0.7.3" conf="build" />
     <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2" conf="build" />
 
-    <dependency org="org.apache.wicket" name="wicket" rev="1.3.6" conf="build" />
-    <dependency org="org.apache.wicket" name="wicket-datetime" rev="1.3.6" conf="build" />
-    <dependency org="org.apache.wicket" name="wicket-extensions" rev="1.3.6" conf="build" />
+    <dependency org="org.apache.wicket" name="wicket" rev="1.4.3" conf="build" />
+    <dependency org="org.apache.wicket" name="wicket-datetime" rev="1.4.3" conf="build" />
+    <dependency org="org.apache.wicket" name="wicket-extensions" rev="1.4.3" conf="build" />
 
     <!-- dependencies that do not exist in maven repositories -->
     <!--dependency org="gnu.trove" name="trove4j" rev="2.0.4" conf="build" /-->

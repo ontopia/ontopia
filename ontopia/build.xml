@@ -2294,9 +2294,10 @@
     <copy todir="${build.ontopoly}/WEB-INF/lib" overwrite="yes">
       <fileset dir="${lib.path}">
         <patternset>
-          <include name="wicket-1.3.6.jar"/>
-          <include name="wicket-datetime-1.3.6.jar"/>
-          <include name="wicket-extensions-1.3.6.jar"/>
+          <include name="wicket-1.4.3.jar"/>
+          <include name="wicket-datetime-1.4.3.jar"/>
+          <include name="wicket-extensions-1.4.3.jar"/>
+          <include name="joda-time-1.6.jar"/>
         </patternset>
       </fileset>
     </copy>
