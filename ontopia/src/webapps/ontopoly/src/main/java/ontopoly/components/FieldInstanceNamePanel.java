@@ -48,7 +48,7 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
     // add field values component(s)
     this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel, NameComparator.INSTANCE);
     
-		this.listView = new ListView("fieldValues", fieldValuesModel) {
+		this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
 		  @Override
 		  protected void onBeforeRender() {
 		    validateCardinality();		    

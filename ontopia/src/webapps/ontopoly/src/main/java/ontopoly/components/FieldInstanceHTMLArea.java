@@ -35,9 +35,9 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
     
     OccurrenceIF occ = (OccurrenceIF)fieldValueModel.getObject();
     this.oldValue = (occ == null ? null : occ.getValue());
-    setModel(new Model(oldValue));
+    setDefaultModel(new Model<String>(oldValue));
     
-    this.textArea = new TextArea("field", new Model(oldValue)) {      
+    this.textArea = new TextArea<String>("field", new Model<String>(oldValue)) {      
       @Override
       protected void onComponentTag(ComponentTag tag) {
         tag.setName("textarea");

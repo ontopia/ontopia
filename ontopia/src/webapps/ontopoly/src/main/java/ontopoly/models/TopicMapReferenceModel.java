@@ -5,7 +5,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class TopicMapReferenceModel extends LoadableDetachableModel {
+public class TopicMapReferenceModel extends LoadableDetachableModel<TopicMapReference> {
 
   private String topicMapReferenceId;
 
@@ -28,7 +28,7 @@ public class TopicMapReferenceModel extends LoadableDetachableModel {
   }
 
   @Override
-  protected Object load() {
+  protected TopicMapReference load() {
  // retrieve topicMapReference from ontopoly repository
     return OntopolyContext.getOntopolyRepository().getReference(topicMapReferenceId);
   }

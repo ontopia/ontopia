@@ -18,7 +18,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldAssignmentModel extends LoadableDetachableModel {
+public class FieldAssignmentModel extends LoadableDetachableModel<FieldAssignment> {
 
   private String topicMapId;
   
@@ -53,7 +53,7 @@ public class FieldAssignmentModel extends LoadableDetachableModel {
   }
 
   @Override
-  protected Object load() {
+  protected FieldAssignment load() {
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
 
     TopicIF topicTypeIf = tm.getTopicIFById(topicTypeId);
@@ -84,11 +84,11 @@ public class FieldAssignmentModel extends LoadableDetachableModel {
     return new FieldAssignment(topicType, declaredTopicType, fieldDefinition);
   }
 
-  public static List wrapInFieldAssignmentModels(List fieldAssignments) {
-    List result = new ArrayList(fieldAssignments.size());
-    Iterator iter = fieldAssignments.iterator();
+  public static List<FieldAssignmentModel> wrapInFieldAssignmentModels(List<FieldAssignment> fieldAssignments) {
+    List<FieldAssignmentModel> result = new ArrayList<FieldAssignmentModel>(fieldAssignments.size());
+    Iterator<FieldAssignment> iter = fieldAssignments.iterator();
     while (iter.hasNext()) {
-      FieldAssignment fieldAssignment = (FieldAssignment)iter.next();
+      FieldAssignment fieldAssignment = iter.next();
       result.add(new FieldAssignmentModel(fieldAssignment));
     }
     return result;

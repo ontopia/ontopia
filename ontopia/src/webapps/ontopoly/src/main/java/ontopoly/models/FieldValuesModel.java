@@ -12,24 +12,20 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldValuesModel extends LoadableDetachableModel implements Comparator {
+public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueModel>> implements Comparator<FieldValueModel> {
 
   private FieldInstanceModel fieldInstanceModel;
-  private Comparator comparator;
+  private Comparator<Object> comparator;
   private boolean showExtraField;
   
   public FieldValuesModel(FieldInstanceModel fieldInstanceModel) {
     this(fieldInstanceModel, null);
   }
   
-  public FieldValuesModel(FieldInstanceModel fieldInstanceModel, Comparator comparator) {
+  public FieldValuesModel(FieldInstanceModel fieldInstanceModel, Comparator<Object> comparator) {
     if (fieldInstanceModel == null)
       throw new NullPointerException("fieldInstanceModel parameter cannot be null.");
     this.fieldInstanceModel = fieldInstanceModel;
-    this.comparator = comparator;
-  }
-  
-  public void setComparator(Comparator comparator) {
     this.comparator = comparator;
   }
   
@@ -72,18 +68,18 @@ public class FieldValuesModel extends LoadableDetachableModel implements Compara
     Collection values = (Collection)super.getObject();
     return !values.isEmpty();
   }
-
+  
   protected Collection getValues(FieldInstance fieldInstance) {
     return fieldInstance.getValues();
   }
   
   @Override
-  public Object getObject() {
-    Collection values = (Collection)super.getObject();
+  public List<FieldValueModel> getObject() {
+    List<FieldValueModel> values = super.getObject();
     if (values.isEmpty())
       setShowExtraField(true);
     if (getShowExtraField()) {
-      List result = new ArrayList(values);
+      List<FieldValueModel> result = new ArrayList<FieldValueModel>(values);
       FieldValueModel fieldValueModel = FieldValueModel.createModel(fieldInstanceModel, null, false); 
       result.add(0, fieldValueModel);
       return result;
@@ -93,13 +89,13 @@ public class FieldValuesModel extends LoadableDetachableModel implements Compara
   }
   
   @Override
-  protected Object load() {
+  protected List<FieldValueModel> load() {
     FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
-    Collection values = getValues(fieldInstance);
+    Collection values = fieldInstance.getValues();
     if (values.isEmpty()) {
-      return values;
+      return Collections.emptyList();
     } else {
-      List result = new ArrayList(values.size());
+      List<FieldValueModel> result = new ArrayList<FieldValueModel>(values.size());
       Iterator iter = values.iterator();
       while (iter.hasNext()) {
         Object value = iter.next();
@@ -112,8 +108,8 @@ public class FieldValuesModel extends LoadableDetachableModel implements Compara
     }
   }
 
-  public int compare(Object o1, Object o2) {
-    return comparator.compare(((FieldValueModel)o1).getFieldValue(), ((FieldValueModel)o2).getFieldValue());
+  public int compare(FieldValueModel fvm1, FieldValueModel fvm2) {
+    return comparator.compare(fvm1.getFieldValue(), fvm2.getFieldValue());
   }
  
 }

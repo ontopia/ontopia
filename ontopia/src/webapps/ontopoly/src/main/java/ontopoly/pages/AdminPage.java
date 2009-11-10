@@ -49,11 +49,11 @@ public class AdminPage extends OntopolyAbstractPage {
     add(form);
 
     // First column of radio buttons
-    final List contentCategories = Arrays.asList(
+    final List<String> contentCategories = Arrays.asList(
         new ResourceModel("AdminPage.export.entire.topic.map").getObject().toString(), 
         new ResourceModel("AdminPage.export.topic.map.without.schema").getObject().toString());
     content = (String)contentCategories.get(0);
-    RadioChoice contentRadioChoice = new RadioChoice("content", new PropertyModel(this, "content"), contentCategories);
+    RadioChoice contentRadioChoice = new RadioChoice<String>("content", new PropertyModel<String>(this, "content"), contentCategories);
     contentRadioChoice.add(new AjaxFormChoiceComponentUpdatingBehavior() {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
@@ -71,15 +71,15 @@ public class AdminPage extends OntopolyAbstractPage {
     syntax = syntaxCategories.get(1);
     filename = topicMap.getId();
     
-    final AjaxOntopolyTextField fileNameTextField = new AjaxOntopolyTextField("fileNameTextField", new PropertyModel(this, "filename"));
+    final AjaxOntopolyTextField fileNameTextField = new AjaxOntopolyTextField("fileNameTextField", new PropertyModel<String>(this, "filename"));
       
-    RadioChoice syntaxRadioChoice = new RadioChoice("syntax", new PropertyModel(this, "syntax"), syntaxCategories, 
-      new IChoiceRenderer() {
-        public Object getDisplayValue(Object object) {
+    RadioChoice syntaxRadioChoice = new RadioChoice<String>("syntax", new PropertyModel<String>(this, "syntax"), syntaxCategories, 
+      new IChoiceRenderer<String>() {
+        public Object getDisplayValue(String object) {
           return new ResourceModel("AdminPage.export.syntax." + object).getObject(); // "export.syntax.ltm", "export.syntax.xtm1", "export.syntax.xtm2", "export.syntax.rdf"
         }
-        public String getIdValue(Object object, int index) {
-          return (String)object;
+        public String getIdValue(String object, int index) {
+          return object;
         }
       });  
     syntaxRadioChoice.add(new AjaxFormChoiceComponentUpdatingBehavior() {
@@ -92,11 +92,11 @@ public class AdminPage extends OntopolyAbstractPage {
     form.add(syntaxRadioChoice);
 
     // Third column of radio buttons
-    List actionCategories = Arrays.asList(
+    List<String> actionCategories = Arrays.asList(
         new ResourceModel("AdminPage.export.download").getObject().toString(), 
         new ResourceModel("AdminPage.export.view").getObject().toString());
     action = actionCategories.get(0).toString();
-    RadioChoice actionRadioChoice = new RadioChoice("action", new PropertyModel(this, "action"), actionCategories);
+    RadioChoice actionRadioChoice = new RadioChoice<String>("action", new PropertyModel<String>(this, "action"), actionCategories);
     form.add(actionRadioChoice);
     actionRadioChoice.add(new AjaxFormChoiceComponentUpdatingBehavior() {
       @Override
@@ -138,7 +138,7 @@ public class AdminPage extends OntopolyAbstractPage {
       protected void setHeaders(WebResponse response) {
         super.setHeaders(response);
         if(action.equals(new ResourceModel("AdminPage.export.download").getObject().toString())) {
-          response.setAttachmentHeader(fileNameTextField.getModelObjectAsString());
+          response.setAttachmentHeader(fileNameTextField.getDefaultModelObjectAsString());
         }
       }
     };

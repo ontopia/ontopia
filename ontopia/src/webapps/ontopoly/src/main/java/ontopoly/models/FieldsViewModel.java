@@ -8,7 +8,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldsViewModel extends LoadableDetachableModel {
+public class FieldsViewModel extends LoadableDetachableModel<FieldsView> {
 
   private String topicMapId;
 
@@ -38,7 +38,7 @@ public class FieldsViewModel extends LoadableDetachableModel {
   }
   
   @Override
-  protected Object load() {
+  protected FieldsView load() {
     if (topicMapId == null) return null;
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);

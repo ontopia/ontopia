@@ -21,7 +21,7 @@ public class InternalErrorPage extends AbstractOntopolyErrorPage {
     
     createTitle();
     
-    add(new BookmarkablePageLink("link", StartPage.class));
+    add(new BookmarkablePageLink<Object>("link", StartPage.class));
     
     add(new Label("java_version") {
       @Override

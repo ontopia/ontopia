@@ -22,8 +22,9 @@ import org.apache.wicket.version.undo.Change;
 public class AjaxRadioGroupPanel extends Panel {
 
   private String suffix = "<br/>\n"; 
-  private List ajaxTargets = new ArrayList();
+  private List<Component> ajaxTargets = new ArrayList<Component>();
   
+  @SuppressWarnings("unchecked")
   public AjaxRadioGroupPanel(String id, final Form form, List choices, IModel model) {
     super(id);
     final RadioGroup rg = new RadioGroup("radiochoicegroup", model);  
@@ -39,15 +40,12 @@ public class AjaxRadioGroupPanel extends Panel {
             if(target != null) {
               int size = ajaxTargets.size();
               for (int i = 0; i < size; i++) {       
-                target.addComponent((Component)ajaxTargets.get(i));      
+                target.addComponent(ajaxTargets.get(i));      
               }   
             }
           }
-
           @Override
           protected void onError(AjaxRequestTarget target) {
-            // TODO Auto-generated method stub
-            
           }    
         });    
         // Add label for radio button    

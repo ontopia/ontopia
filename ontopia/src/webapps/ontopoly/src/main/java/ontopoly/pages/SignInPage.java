@@ -25,7 +25,7 @@ public class SignInPage extends WebPage {
     
     public SignInForm(String id) { 
       super(id); 
-      setModel(new CompoundPropertyModel(this)); 
+      setDefaultModel(new CompoundPropertyModel<SignInForm>(this)); 
       add(new TextField("username")); 
       add(new PasswordTextField("password"));   
     } 

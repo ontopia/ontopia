@@ -49,14 +49,14 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
     // add field values component(s)
     this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel, IdentityComparator.INSTANCE);
     
-		this.listView = new ListView("fieldValues", fieldValuesModel) {
+		this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
       @Override
       protected void onBeforeRender() {
         validateCardinality();        
         super.onBeforeRender();
       }
-		  public void populateItem(final ListItem item) {
-		    final FieldValueModel fieldValueModel = (FieldValueModel)item.getModelObject();
+		  public void populateItem(final ListItem<FieldValueModel> item) {
+		    final FieldValueModel fieldValueModel = item.getModelObject();
 
         // TODO: make sure non-existing value field gets focus if last edit happened there
 

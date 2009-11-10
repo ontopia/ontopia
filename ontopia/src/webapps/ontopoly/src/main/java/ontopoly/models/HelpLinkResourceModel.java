@@ -4,9 +4,8 @@ import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.IModel;
 
-public class HelpLinkResourceModel extends AbstractReadOnlyModel implements IModel {
+public class HelpLinkResourceModel extends AbstractReadOnlyModel<String> {
 
   private String resourceKey;
   

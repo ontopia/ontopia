@@ -8,8 +8,6 @@ import java.util.Map;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.utils.RowMapperIF;
 
 /**
  * Represents a role type.
@@ -66,18 +64,14 @@ public class RoleType extends AbstractTypingTopic {
 //    }
 //  }
 
-	public Collection getDeclaredByFields() {
+  @Override
+	public Collection<RoleField> getDeclaredByFields() {
     String query = "select $RF from "
 			+ "on:has-role-type(%RT% : on:role-type, $RF : on:role-field)?";
-    Map params = Collections.singletonMap("RT", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("RT", getTopicIF());
 
-    return getTopicMap().getQueryWrapper().queryForList(query,
-        new RowMapperIF() {
-          public Object mapRow(QueryResultIF result, int rowno) {
-						TopicIF roleFieldTopic = (TopicIF)result.getValue(0);
-						return new RoleField(roleFieldTopic, getTopicMap());
-					}
-				}, params);
+    QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
 	}
 
 //	public Collection getUsedBy() {

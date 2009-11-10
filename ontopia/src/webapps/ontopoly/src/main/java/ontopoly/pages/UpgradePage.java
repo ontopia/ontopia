@@ -13,7 +13,6 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 
 public class UpgradePage extends NonOntopolyAbstractPage {
@@ -40,8 +39,8 @@ public class UpgradePage extends NonOntopolyAbstractPage {
     
     // version numbers
     add(new Label("message", new StringResourceModel("UpgradePage.message", this, null,
-            new Object[] { new Model(Float.toString(ontologyVersion)), 
-                           new Model(Float.toString(OntopolyRepository.CURRENT_VERSION_NUMBER))  })));
+            new Object[] { new Model<String>(Float.toString(ontologyVersion)), 
+                           new Model<String>(Float.toString(OntopolyRepository.CURRENT_VERSION_NUMBER))  })));
     
     // Adding part containing title and help link
     createTitle();
@@ -73,7 +72,7 @@ public class UpgradePage extends NonOntopolyAbstractPage {
 
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel",
-          new PropertyModel(getTopicMapModel(), "name"), new HelpLinkResourceModel("help.link.upgradepage")));
+          new PropertyModel<String>(getTopicMapModel(), "name"), new HelpLinkResourceModel("help.link.upgradepage")));
   }
   
 }

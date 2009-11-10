@@ -111,16 +111,18 @@ public class AssociationType extends AbstractTypingTopic {
 //      getTopicIF().removeType(hierarchicalRelationType);
 //  }
 
-	public Collection getDeclaredByFields() {
+  @Override
+	public Collection<RoleField> getDeclaredByFields() {
     String query = "select $AF, $RF, $RT from "
 			+ "on:has-association-type(%AT% : on:association-type, $AF : on:association-field), "
 			+ "on:has-association-field($AF : on:association-field, $RF : on:role-field), "
 			+ "on:has-role-type($RF : on:role-field, $RT : on:role-type)?";
-    Map params = Collections.singletonMap("AT", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("AT", getTopicIF());
 
-    return getTopicMap().getQueryWrapper().queryForList(query,
-        new RowMapperIF() {
-          public Object mapRow(QueryResultIF result, int rowno) {
+    QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
+    return qm.queryForList(query,
+        new RowMapperIF<RoleField>() {
+          public RoleField mapRow(QueryResultIF result, int rowno) {
 						TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
 						TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
 						TopicIF roleType = (TopicIF)result.getValue(2);
@@ -148,8 +150,8 @@ public class AssociationType extends AbstractTypingTopic {
 	 * Returns all role types that have been declared for this association type.
 	 * @return list of role types
 	 */
-  public List getDeclaredRoleTypes() {
-    List result = new ArrayList();
+  public List<RoleType> getDeclaredRoleTypes() {
+    List<RoleType> result = new ArrayList<RoleType>();
     AssociationField associationField = null;
     Collection roleFields = this.getDeclaredByFields();
     Iterator iter = roleFields.iterator();
@@ -172,39 +174,33 @@ public class AssociationType extends AbstractTypingTopic {
 	 * 
 	 * @return Collection<List<RoleType>>
 	 */
-	public Collection getUsedRoleTypeCombinations() {
-	  Collection result = new HashSet();
+	public Collection<List<RoleType>> getUsedRoleTypeCombinations() {
+	  Collection<List<RoleType>> result = new HashSet<List<RoleType>>();
 	  
 	  TopicIF associationType = getTopicIF();
 	  ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)associationType.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
 	  Iterator iter = cindex.getAssociations(associationType).iterator();
 
-	  List tuple = new ArrayList();
+	  List<RoleType> tuple = new ArrayList<RoleType>();
 	  while (iter.hasNext()) {
 	    AssociationIF assoc = (AssociationIF)iter.next();
 	    Iterator riter = assoc.getRoles().iterator();
 	    while (riter.hasNext()) {
 	      AssociationRoleIF role = (AssociationRoleIF)riter.next();
-	      tuple.add(role.getType());
+	      tuple.add(new RoleType(role.getType(), getTopicMap()));
 	    }
-	    Collections.sort(tuple, ObjectIdComparator.INSTANCE);
+	    Collections.sort(tuple, new Comparator<RoleType>() {
+        public int compare(RoleType o1, RoleType o2) {
+          return ObjectIdComparator.INSTANCE.compare(o1.getTopicIF(), o2.getTopicIF());
+        }
+	      
+	    });
 	    if (result.contains(tuple)) {
 	      tuple.clear();
 	    } else {
 	      result.add(tuple);
-	      tuple = new ArrayList();
+	      tuple = new ArrayList<RoleType>();
 	    }	     
-	  }
-	  
-	  // replace TopicIFs with RoleTypes
-	  iter = result.iterator();
-	  while (iter.hasNext()) {
-	    List combo = (List)iter.next();
-	    int size = combo.size();
-	    for (int i=0; i < size; i++) {
-	      TopicIF rtype = (TopicIF)combo.get(i);
-	      combo.set(i, new RoleType(rtype, getTopicMap()));
-	    }
 	  }
 	  return result;
 	}

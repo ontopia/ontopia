@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -20,7 +21,6 @@ import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.models.TopicMapModel;
@@ -51,7 +51,8 @@ public class TreeModels {
     sb.append(" order by $P, $C?");
     
     final String topicMapId = tm.getId();
-    return new QueryTreeModel(tm, sb.toString(), Collections.EMPTY_MAP) {
+    Map<String,?> params = Collections.emptyMap();
+    return new QueryTreeModel(tm, sb.toString(), params) {
       @Override
       protected DefaultMutableTreeNode createTreeNode(Object o) {
         return new DefaultMutableTreeNode(new TopicNode(topicMapId, ((TopicIF)o).getObjectId()));
@@ -90,7 +91,8 @@ public class TreeModels {
     sb.append(" order by $P, $C?");
     
     final String topicMapId = tm.getId();
-    return new QueryTreeModel(tm, sb.toString(), Collections.EMPTY_MAP) {
+    Map<String,?> params = Collections.emptyMap();
+    return new QueryTreeModel(tm, sb.toString(), params) {
       @Override
       protected DefaultMutableTreeNode createTreeNode(Object o) {
         return new DefaultMutableTreeNode(new TopicNode(topicMapId, ((TopicIF)o).getObjectId()));
@@ -103,8 +105,8 @@ public class TreeModels {
     TopicIF atype;
     TopicIF prtype;
     TopicIF crtype;
-    Collection ptypes = new HashSet();
-    Collection ctypes = new HashSet();
+    Collection<TopicIF> ptypes = new HashSet<TopicIF>();
+    Collection<TopicIF> ctypes = new HashSet<TopicIF>();
     
     HierarchyDefinition(TopicIF atype, TopicIF prtype, TopicIF crtype) {
       this.atype = atype;
@@ -123,12 +125,12 @@ public class TreeModels {
     
   }
   
-  public static TreeModel createInstancesTreeModel(TopicType topicType, final boolean isAdminEnabled) {    
+  public static TreeModel createInstancesTreeModel(TopicType topicType, final boolean isAdminEnabled) {
     DefaultMutableTreeNode root = new DefaultMutableTreeNode("<root>");    
     if (topicType != null) {
-      QueryWrapper qw = topicType.getTopicMap().getQueryWrapper();
-      QueryProcessorIF qp = qw.getQueryProcessor();
-      DeclarationContextIF dc = qw.getDeclarationContext();
+      TopicMap topicMap = topicType.getTopicMap();
+      QueryProcessorIF qp = topicMap.getQueryProcessor();
+      DeclarationContextIF dc = topicMap.getDeclarationContext();
     
       String query = "using on for i\"http://psi.ontopia.net/ontology/\" " 
         + "using hierarchy for i\"http://www.techquila.com/psi/hierarchy/#\" " 
@@ -148,11 +150,12 @@ public class TreeModels {
         + "?";
       
       // retrieve hierarchical definitions
-      Map hds = new HashMap();
-      Map hd_ctypes = new HashMap();
+      Map<HierarchyDefinition,HierarchyDefinition> hds = new HashMap<HierarchyDefinition,HierarchyDefinition>();
+      Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes = new HashMap<TopicIF,Set<HierarchyDefinition>>();
       
       try {
-        QueryResultIF qr = qp.execute(query, Collections.EMPTY_MAP, dc);
+        Map<String,?> params = Collections.emptyMap();
+        QueryResultIF qr = qp.execute(query, params, dc);
         try {
           while (qr.next()) {
             TopicIF atype = (TopicIF)qr.getValue(0);
@@ -160,7 +163,7 @@ public class TreeModels {
             TopicIF prtype = (TopicIF)qr.getValue(3);
             HierarchyDefinition hd = new HierarchyDefinition(atype, prtype, crtype);
             if (hds.containsKey(hd))
-              hd = (HierarchyDefinition)hds.get(hd);
+              hd = hds.get(hd);
             else
               hds.put(hd, hd);
             TopicIF crpt = (TopicIF)qr.getValue(2);
@@ -168,15 +171,15 @@ public class TreeModels {
             hd.ctypes.add(crpt);
             hd.ptypes.add(prpt);
             if (!hd_ctypes.containsKey(crpt))
-              hd_ctypes.put(crpt, new HashSet());
-            ((Collection)hd_ctypes.get(crpt)).add(hd);
+              hd_ctypes.put(crpt, new HashSet<HierarchyDefinition>());
+            hd_ctypes.get(crpt).add(hd);
           }        
         } finally {
           qr.close();
         }
            
         // generate hierarchical query
-        Map existingRules = new LinkedHashMap();
+        Map<TopicIF,StringBuffer> existingRules = new LinkedHashMap<TopicIF,StringBuffer>();
         TopicIF topicTypeIf = topicType.getTopicIF();
         
         StringBuffer sb = new StringBuffer();      
@@ -192,14 +195,12 @@ public class TreeModels {
         }
         
         String hquery = sb.toString();
-//        System.out.println("QQ: " + hquery);
 
-        TopicMap topicMap = topicType.getTopicMap();
         final String topicMapId = topicMap.getId();
         final TopicMapModel topicMapModel = new TopicMapModel(topicMap);
-        Map params = Collections.singletonMap("topicType", topicTypeIf);
+        Map<String,TopicIF> hqparams = Collections.singletonMap("topicType", topicTypeIf);
         
-        return new QueryTreeModel(topicType.getTopicMap(), hquery, params) {
+        return new QueryTreeModel(topicType.getTopicMap(), hquery, hqparams) {
           @Override
           protected boolean filter(Object p, Object c) {
             if (isAdminEnabled) return true;
@@ -227,7 +228,7 @@ public class TreeModels {
     return new DefaultTreeModel(root);
   }
 
-  private static StringBuffer createHierarchyRuleFor(TopicIF topicType, String pVar, String cVar, String bVar, Map existingRules, Map hd_ctypes) {
+  private static StringBuffer createHierarchyRuleFor(TopicIF topicType, String pVar, String cVar, String bVar, Map<TopicIF,StringBuffer> existingRules, Map hd_ctypes) {
     if (!existingRules.containsKey(topicType)) {
       StringBuffer sb = new StringBuffer();
       existingRules.put(topicType, sb);
@@ -248,7 +249,7 @@ public class TreeModels {
     .append("($").append(pVar).append(", $").append(cVar).append(", $").append(bVar).append(")");
   }
 
-  private static StringBuffer createStepPredicates(Collection hds, Map existingRules, Map hd_ctypes) {
+  private static StringBuffer createStepPredicates(Collection hds, Map<TopicIF,StringBuffer> existingRules, Map hd_ctypes) {
     StringBuffer sb = new StringBuffer();
     // call parent rules
     sb.append("{ ");
@@ -269,7 +270,7 @@ public class TreeModels {
     return sb;
   }
   
-  private static StringBuffer createStepPredicates(HierarchyDefinition hd, String pVar, String cVar, String bVar, Map existingRules, Map hd_ctypes) {
+  private static StringBuffer createStepPredicates(HierarchyDefinition hd, String pVar, String cVar, String bVar, Map<TopicIF,StringBuffer> existingRules, Map hd_ctypes) {
     StringBuffer sb = new StringBuffer();
     
     if (hd.ptypes.size() > 1) sb.append("{");
@@ -314,7 +315,7 @@ public class TreeModels {
       (!isAdminEnabled ? ", not(direct-instance-of($P, on:system-topic))" : "" ) +
       "} " +
       "order by $P, $C?";
-    Map params = Collections.singletonMap("topicType", tt);
+    Map<String,TopicIF> params = Collections.singletonMap("topicType", tt);
     
 //    System.out.println("TT: " + tt);
 //    System.out.println("HQ: " + query);
@@ -328,7 +329,7 @@ public class TreeModels {
     };
   }
   
-  public static TreeModel createQueryTreeModel(TopicMap topicMap, String query, Map params) {
+  public static TreeModel createQueryTreeModel(TopicMap topicMap, String query, Map<String,?> params) {
 
     final String topicMapId = topicMap.getId();
     

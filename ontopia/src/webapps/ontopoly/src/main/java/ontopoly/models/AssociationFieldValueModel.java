@@ -9,7 +9,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class AssociationFieldValueModel extends LoadableDetachableModel {
+public class AssociationFieldValueModel extends LoadableDetachableModel<RoleField.ValueIF> {
 
   private String[][] afvinfo; // [topicMapId, associationTypeId, roleTypeId,
                               // playerId]
@@ -36,7 +36,7 @@ public class AssociationFieldValueModel extends LoadableDetachableModel {
   }
 
   @Override
-  protected Object load() {
+  protected RoleField.ValueIF load() {
     RoleField.ValueIF value = RoleField.createValue(afvinfo.length);
     for (int i = 0; i < afvinfo.length; i++) {
       // create field

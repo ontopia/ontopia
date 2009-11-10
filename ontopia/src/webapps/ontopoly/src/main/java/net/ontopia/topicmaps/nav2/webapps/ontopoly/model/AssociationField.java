@@ -22,7 +22,7 @@ import net.ontopia.utils.ObjectUtils;
 public class AssociationField extends Topic {
 
 	private AssociationType cachedAssociationType;
-	private List cachedFieldsForRoles;
+	private List<RoleField> cachedFieldsForRoles;
 
   public AssociationField(TopicIF topic, TopicMap tm) {
 		super(topic, tm);
@@ -175,16 +175,18 @@ public class AssociationField extends Topic {
    * 
    * @return List of RoleField objects
    */
-  public List getFieldsForRoles() {
+  public List<RoleField> getFieldsForRoles() {
 		if (cachedFieldsForRoles != null) return cachedFieldsForRoles;
 
     String query = "select $RF from "
 			+ "on:has-association-field(%AF% : on:association-field, $RF : on:role-field)?";
-    Map params = Collections.singletonMap("AF", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("AF", getTopicIF());
 
-    List roleFields = getTopicMap().getQueryWrapper().queryForList(query,
-        new RowMapperIF() {
-          public Object mapRow(QueryResultIF result, int rowno) {
+    QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
+    
+    List<RoleField> roleFields = qm.queryForList(query,
+        new RowMapperIF<RoleField>() {
+          public RoleField mapRow(QueryResultIF result, int rowno) {
 						TopicIF roleFieldTopic = (TopicIF)result.getValue(0);
 						return new RoleField(roleFieldTopic, getTopicMap());
 					}
@@ -218,7 +220,7 @@ public class AssociationField extends Topic {
 	 * Gets the role fields that are assigned to this association field.
 	 * @return Collection of RoleField
 	 */
-	public Collection getDeclaredByFields() {
+  public Collection<RoleField> getDeclaredByFields() {
 		return getFieldsForRoles();
 	}
 
@@ -237,7 +239,7 @@ public class AssociationField extends Topic {
 //				}, params);
 //	}
 
-  static class RoleFieldComparator implements Comparator {
+  static class RoleFieldComparator implements Comparator<RoleField> {
     private static final RoleFieldComparator INSTANCE = new RoleFieldComparator();
 
     private RoleFieldComparator() {
@@ -248,10 +250,7 @@ public class AssociationField extends Topic {
       return INSTANCE;
     }
 
-    public int compare(Object o1, Object o2) {
-      RoleField rf1 = (RoleField) o1;
-      RoleField rf2 = (RoleField) o2;
-
+    public int compare(RoleField rf1, RoleField rf2) {
       return ObjectUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }
   }

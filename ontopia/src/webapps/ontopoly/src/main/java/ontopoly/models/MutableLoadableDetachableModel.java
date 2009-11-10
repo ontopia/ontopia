@@ -2,18 +2,18 @@ package ontopoly.models;
 
 import org.apache.wicket.model.IModel;
 
-public abstract class MutableLoadableDetachableModel implements IModel {
+public abstract class MutableLoadableDetachableModel<T> implements IModel<T> {
 
   /** keeps track of whether this model is attached or detached */
   private transient boolean attached = false;
 
   /** temporary, transient object. */
-  private transient Object transientModelObject;
+  private transient T transientModelObject;
 
   public MutableLoadableDetachableModel() {
   }
 
-  public MutableLoadableDetachableModel(Object object) {
+  public MutableLoadableDetachableModel(T object) {
     this.transientModelObject = object;
     attached = true;
   }
@@ -26,7 +26,7 @@ public abstract class MutableLoadableDetachableModel implements IModel {
     }
   }
   
-  public Object getObject() {
+  public T getObject() {
     if (!attached) {
       attached = true;
       transientModelObject = load();
@@ -35,7 +35,7 @@ public abstract class MutableLoadableDetachableModel implements IModel {
     return transientModelObject;
   }
 
-  public void setObject(Object object) {
+  public void setObject(T object) {
     this.transientModelObject = object;
     attached = true;
   }
@@ -52,7 +52,7 @@ public abstract class MutableLoadableDetachableModel implements IModel {
     return sb.toString();
   }
 
-  protected abstract Object load();
+  protected abstract T load();
 
   protected void onAttach() {
   }

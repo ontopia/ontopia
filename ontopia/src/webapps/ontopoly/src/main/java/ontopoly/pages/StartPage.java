@@ -27,7 +27,7 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.ResourceModel;
 
 public class StartPage extends AbstractProtectedOntopolyPage {
@@ -52,9 +52,10 @@ public class StartPage extends AbstractProtectedOntopolyPage {
   }
 
   private void addOntopolyTopicMapsSection() {
-    IModel eachTopicMapModel = new Model() {
-      public Object getObject() {
-        List existingOntopolyTopicMaps = new ArrayList();
+    IModel<List<TopicMapReference>> eachTopicMapModel = new LoadableDetachableModel<List<TopicMapReference>>() {
+      @Override
+      protected List<TopicMapReference> load() {
+        List<TopicMapReference> existingOntopolyTopicMaps = new ArrayList<TopicMapReference>();
         
         OntopolyRepository repository = OntopolyContext.getOntopolyRepository();
         List ontTopicMaps = repository.getOntopolyTopicMaps();
@@ -66,15 +67,13 @@ public class StartPage extends AbstractProtectedOntopolyPage {
           }
         }
         return existingOntopolyTopicMaps; 
-      }
+      }      
     };
 
-    ListView eachTopicMap = new ListView("eachOntopolyTopicMap",
-        eachTopicMapModel) {
-      protected void populateItem(ListItem item) {
-        final TopicMapReference ref = (TopicMapReference) item.getModelObject();
-        PageParameters pageParameters = new PageParameters("topicMapId="
-            + ref.getId());
+    ListView eachTopicMap = new ListView<TopicMapReference>("eachOntopolyTopicMap", eachTopicMapModel) {
+      protected void populateItem(ListItem<TopicMapReference> item) {
+        final TopicMapReference ref = item.getModelObject();
+        PageParameters pageParameters = new PageParameters("topicMapId=" + ref.getId());
         BookmarkablePageLink link = new OntopolyBookmarkablePageLink(
             "ontTMLink", InstanceTypesPage.class, pageParameters, ref.getName());
         item.add(link);
@@ -82,9 +81,10 @@ public class StartPage extends AbstractProtectedOntopolyPage {
     };
     add(eachTopicMap);
 
-    final IModel eachMissingTopicMapModel = new Model() {
-      public Object getObject() {
-        List missingOntopolyTopicMaps = new ArrayList();
+    final IModel<List<TopicMapReference>> eachMissingTopicMapModel = new LoadableDetachableModel<List<TopicMapReference>>() {
+      @Override
+      protected List<TopicMapReference> load() {
+        List<TopicMapReference> missingOntopolyTopicMaps = new ArrayList<TopicMapReference>();
         
         OntopolyRepository repository = OntopolyContext.getOntopolyRepository();
         List ontTopicMaps = repository.getOntopolyTopicMaps();      
@@ -111,10 +111,9 @@ public class StartPage extends AbstractProtectedOntopolyPage {
     missingTopicMapContainer.setOutputMarkupPlaceholderTag(true);
     add(missingTopicMapContainer);
 
-    eachTopicMap = new ListView("eachMissingOntopolyTopicMap",
-        eachMissingTopicMapModel) {
-      protected void populateItem(ListItem item) {
-        TopicMapReference ref = (TopicMapReference) item.getModelObject();
+    eachTopicMap = new ListView<TopicMapReference>("eachMissingOntopolyTopicMap", eachMissingTopicMapModel) {
+      protected void populateItem(ListItem<TopicMapReference> item) {
+        TopicMapReference ref = item.getModelObject();
         final TopicMapReferenceModel topicMapReferenceModel = new TopicMapReferenceModel(ref);
         item.add(new Label("missingOntTMTitle", ref.getName()));
         item.add(new Label("missingOntTMFilename", ref.getId()));
@@ -138,17 +137,18 @@ public class StartPage extends AbstractProtectedOntopolyPage {
   
   private void addOtherTopicMapsSection() {
     // Alt. 2 Make a loadabledetachableModel for repository
-    IModel eachNonOntopolyTopicMapModel = new Model() {
-      public Object getObject() {
+    IModel<List<TopicMapReference>> eachNonOntopolyTopicMapModel = new LoadableDetachableModel<List<TopicMapReference>>() {
+      @Override
+      protected List<TopicMapReference> load() {
         OntopolyRepository repository = OntopolyContext.getOntopolyRepository();
         return repository.getNonOntopolyTopicMaps();
       }
     }; 
 
-    ListView eachTopicMap = new ListView("eachNonOntopolyTopicMap", eachNonOntopolyTopicMapModel) {
-      protected void populateItem(ListItem item) {
-        final TopicMapReference ref = (TopicMapReference) item.getModelObject();
-        Map pageParameterMap = new HashMap();
+    ListView eachTopicMap = new ListView<TopicMapReference>("eachNonOntopolyTopicMap", eachNonOntopolyTopicMapModel) {
+      protected void populateItem(ListItem<TopicMapReference> item) {
+        final TopicMapReference ref = item.getModelObject();
+        Map<String,String> pageParameterMap = new HashMap<String,String>();
         pageParameterMap.put("topicMapId",ref.getId());
         
         BookmarkablePageLink link = new OntopolyBookmarkablePageLink(

@@ -2,27 +2,27 @@ package ontopoly.models;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public abstract class CollectionModel extends LoadableDetachableModel {
+public abstract class ListModel<T,V> extends LoadableDetachableModel<List<T>> {
 
-  private Collection values;
+  private List<V> values;
 
-  public CollectionModel(Collection values) {
+  public ListModel(List<V> values) {
     if (values == null)
       throw new NullPointerException("values parameter cannot be null.");
     this.values = values;
   }
   
   @Override
-  protected Object load() {
-    Collection result = makeCollection(values.size());
-    Iterator iter = values.iterator();
+  protected List<T> load() {
+    List<T> result = makeCollection(values.size());
+    Iterator<V> iter = values.iterator();
     while (iter.hasNext()) {
-      Object value = iter.next();
+      V value = iter.next();
       result.add(getObjectFor(value));
     }
     return result;
@@ -33,8 +33,8 @@ public abstract class CollectionModel extends LoadableDetachableModel {
    * @param size the size of the collection to create.
    * @return return new collection
    */
-  protected Collection makeCollection(int size) {
-    return new ArrayList(size);
+  protected List<T> makeCollection(int size) {
+    return new ArrayList<T>(size);
   }
   
   /**
@@ -42,6 +42,6 @@ public abstract class CollectionModel extends LoadableDetachableModel {
    * @param object the object to wrap
    * @return the wrapper object
    */
-  protected abstract Object getObjectFor(Object object);
+  protected abstract T getObjectFor(V object);
   
 }

@@ -21,14 +21,14 @@ public class FieldInstancesPanel extends Panel {
   protected boolean readonly;
   
   public FieldInstancesPanel(String id, 
-      List fieldInstanceModels, final FieldsViewModel fieldsViewModel,
+      List<FieldInstanceModel> fieldInstanceModels, final FieldsViewModel fieldsViewModel,
       final boolean readonly, final boolean traversable) {
     super(id);
     this.readonly = readonly;
     
-    ListView listView = new ListView("fields", fieldInstanceModels) {
-      public void populateItem(final ListItem item) {
-        FieldInstanceModel fieldInstanceModel = (FieldInstanceModel)item.getModelObject();
+    ListView listView = new ListView<FieldInstanceModel>("fields", fieldInstanceModels) {
+      public void populateItem(final ListItem<FieldInstanceModel> item) {
+        FieldInstanceModel fieldInstanceModel = item.getModelObject();
         item.setRenderBodyOnly(true);
         Component component = createFieldInstanceComponent(fieldInstanceModel, fieldsViewModel, traversable);
         component.setRenderBodyOnly(true);

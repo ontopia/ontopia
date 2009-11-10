@@ -19,7 +19,7 @@ public class DraggableBehavior extends JQueryBehavior {
     super.onBind();
     Component c = getComponent();
     c.setOutputMarkupId(true);
-    c.add(new AttributeAppender("class", new Model("dg_" + id), " "));    
+    c.add(new AttributeAppender("class", new Model<String>("dg_" + id), " "));    
   }
   
   public void renderHead(IHeaderResponse response) {

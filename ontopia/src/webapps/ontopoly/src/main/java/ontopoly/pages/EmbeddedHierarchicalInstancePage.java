@@ -23,18 +23,21 @@ import ontopoly.pojos.TopicNode;
 import ontopoly.utils.OntopolyUtils;
 import ontopoly.utils.TreeModels;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.tree.AbstractTree;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
   
-  private TopicModel hierarchyModel;
+  private TopicModel<Topic> hierarchyModel;
   
   public EmbeddedHierarchicalInstancePage(PageParameters parameters) {
     // expect there to be a topicId parameter
@@ -43,12 +46,12 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
     // find hierarchy topic
     String hierarchyId = parameters.getString("hierarchyId");
     if (hierarchyId == null)
-      this.hierarchyModel = new TopicModel(getHierarchyTopic(getTopic()));      
+      this.hierarchyModel = new TopicModel<Topic>(getHierarchyTopic(getTopic()));      
     else
-      this.hierarchyModel = new TopicModel(parameters.getString("topicMapId"), hierarchyId);
+      this.hierarchyModel = new TopicModel<Topic>(parameters.getString("topicMapId"), hierarchyId);
     
     // create a tree
-    TreePanel treePanel = createTreePanel("treePanel", createTreeModel(getHierarchyTopic(), getTopic()));
+    TreePanel treePanel = createTreePanel("treePanel", createTreeModel(new TopicModel<Topic>(getHierarchyTopic()), new TopicModel<Topic>(getTopic())));
     treePanel.setOutputMarkupId(true);
     add(treePanel); 
   }
@@ -84,26 +87,35 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
     return (occ == null ? null : occ.getValue());    
   }
   
-  protected TreeModel createTreeModel(Topic hierarchyTopic, Topic currentNode) {
-
+  protected IModel<TreeModel> createTreeModel(final TopicModel<Topic> hierarchyTopicModel, final TopicModel<Topic> currentNodeModel) {
+    final TreeModel treeModel;
+    Topic hierarchyTopic = hierarchyTopicModel.getTopic();
+    Topic currentNode = currentNodeModel.getTopic();
+    
     // find hierarchy definition query for topic
     String query = (hierarchyTopic == null ? null : getDefinitionQuery(hierarchyTopic));
 
     if (query != null) {
-      Map params = new HashMap(2);
+      Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
       params.put("hierarchyTopic", hierarchyTopic.getTopicIF());
       params.put("currentNode", currentNode.getTopicIF());
-      return TreeModels.createQueryTreeModel(currentNode.getTopicMap(), query, params);
+      treeModel = TreeModels.createQueryTreeModel(currentNode.getTopicMap(), query, params);
     } else if (currentNode.isTopicType()) {
       // if no definition query found, then show topic in instance hierarchy
-      return TreeModels.createTopicTypesTreeModel(currentNode.getTopicMap(), isAnnotationEnabled(), isAdministrationEnabled());
+      treeModel = TreeModels.createTopicTypesTreeModel(currentNode.getTopicMap(), isAnnotationEnabled(), isAdministrationEnabled());
     } else {
-      return TreeModels.createInstancesTreeModel(OntopolyUtils.getDefaultTopicType(currentNode), isAdministrationEnabled());
-      // return new DefaultTreeModel(new DefaultMutableTreeNode("<root>"));      
-    }    
+      treeModel = TreeModels.createInstancesTreeModel(OntopolyUtils.getDefaultTopicType(currentNode), isAdministrationEnabled());
+    }
+    
+    return new AbstractReadOnlyModel<TreeModel>() {
+      @Override
+      public TreeModel getObject() {
+        return treeModel;
+      }
+    };
   }
   
-  protected TreePanel createTreePanel(final String id, TreeModel treeModel) {
+  protected TreePanel createTreePanel(final String id, IModel<TreeModel> treeModel) {
     return new TreePanel(id, treeModel) {
       @Override
       protected boolean isMenuEnabled() {
@@ -134,16 +146,16 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
       }
       
       @Override
-      protected void populateNode(WebMarkupContainer container, String id, TreeNode treeNode, int level) {
+      protected Component populateNode(String id, TreeNode treeNode) {
         DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
         final TopicNode node = (TopicNode)mTreeNode.getUserObject();
         Topic topic = node.getTopic();
         final boolean isCurrentTopic = ObjectUtils.equals(topic, getTopic());
         // create link with label
-        container.add(new LinkPanel(id) {
+        return new LinkPanel(id) {
           @Override
           protected Label newLabel(String id) {
-            return new Label(id, new Model(node.getTopic().getName())) {
+            return new Label(id, new Model<String>(node.getTopic().getName())) {
               @Override
               protected void onComponentTag(final ComponentTag tag) {
                 if (isCurrentTopic)
@@ -155,9 +167,9 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
           @Override
           protected Link newLink(String id) {
             Topic topic = node.getTopic();
-            return new BookmarkablePageLink(id, getPageClass(topic), getPageParameters(topic));
+            return new BookmarkablePageLink<Page>(id, getPageClass(topic), getPageParameters(topic));
           }
-        });
+        };
       }
     };
   }

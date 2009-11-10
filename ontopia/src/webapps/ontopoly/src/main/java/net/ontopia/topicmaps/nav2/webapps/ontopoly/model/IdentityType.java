@@ -37,32 +37,19 @@ public class IdentityType extends AbstractTypingTopic {
     return (getTopicIF().equals(other.getTopicIF()));
   }
 
-	public Collection getDeclaredByFields() {
+  @Override
+	public Collection<IdentityField> getDeclaredByFields() {
     String query = "select $FD from on:has-identity-type(%TYPE% : on:identity-type, $FD : on:identity-field)?";
-    Map params = Collections.singletonMap("TYPE", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("TYPE", getTopicIF());
 
-    return getTopicMap().getQueryWrapper().queryForList(query,
-        new RowMapperIF() {
-          public Object mapRow(QueryResultIF result, int rowno) {
+    QueryMapper<IdentityField> qm = getTopicMap().newQueryMapper(IdentityField.class);    
+    return qm.queryForList(query,
+        new RowMapperIF<IdentityField>() {
+          public IdentityField mapRow(QueryResultIF result, int rowno) {
 						TopicIF fieldTopic = (TopicIF)result.getValue(0);
 						return new IdentityField(fieldTopic, getTopicMap(), new IdentityType(getTopicIF(), getTopicMap()));
 					}
 				}, params);
 	}
-
-//	public Collection getUsedBy() {
-//    String query = "select $TT from "
-//			+ "on:has-identity-type(%IT% : on:identity-type, $FD : on:identity-field), "
-//			+ "on:has-field($FD : on:field-definition, $TT : on:field-owner)?";
-//    Map params = Collections.singletonMap("IT", getTopicIF());
-//
-//    return getTopicMap().getQueryWrapper().queryForList(query,
-//        new RowMapperIF() {
-//          public Object mapRow(QueryResultIF result, int rowno) {
-//						TopicIF topicType = (TopicIF)result.getValue(0);
-//						return new TopicType(topicType, getTopicMap());
-//					}
-//				}, params);
-//	}
 
 }

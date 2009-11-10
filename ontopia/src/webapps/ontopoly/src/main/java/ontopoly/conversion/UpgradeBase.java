@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Map;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -18,6 +19,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
+import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.QueryMapper;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -429,7 +431,10 @@ public abstract class UpgradeBase {
 
     // find existing field definition
     String query = "on:has-occurrence-type(%OT% : on:occurrence-type, $OF : on:occurrence-field)?";
-    TopicIF oField = topicMap.getQueryWrapper().queryForTopic(query, Collections.singletonMap("OT", otype));
+    Map<String,TopicIF> params = Collections.singletonMap("OT", otype);
+    
+    QueryMapper<TopicIF> qm = topicMap.newQueryMapperNoWrap();
+    TopicIF oField = qm.queryForObject(query, params);
 
     if (oField == null) {
       oField = builder.makeTopic(getTopic(topicmap, base_on, "occurrence-field"));
@@ -439,14 +444,14 @@ public abstract class UpgradeBase {
     }
     
    query = "on:has-datatype(%OF% : on:field-definition, $DT : on:datatype)?";
-   if (!topicMap.getQueryWrapper().isTrue(query, Collections.singletonMap("OF", oField))) { 
+   if (!qm.isTrue(query, Collections.singletonMap("OF", oField))) { 
      AssociationIF hasField = builder.makeAssociation(getTopic(topicmap, base_on, "has-datatype"));
      builder.makeAssociationRole(hasField, getTopic(topicmap, base_on, "field-definition"), oField);
      builder.makeAssociationRole(hasField, getTopic(topicmap, base_on, "datatype"), datatype);
    }
     
    query = "on:has-cardinality(%OF% : on:field-definition, $CD : on:cardinality)?";
-   if (!topicMap.getQueryWrapper().isTrue(query, Collections.singletonMap("OF", oField))) { 
+   if (!qm.isTrue(query, Collections.singletonMap("OF", oField))) { 
      AssociationIF hasCardinality = builder.makeAssociation(getTopic(topicmap, base_on, "has-cardinality"));
      builder.makeAssociationRole(hasCardinality, getTopic(topicmap, base_on, "field-definition"), oField);
      builder.makeAssociationRole(hasCardinality, getTopic(topicmap, base_on, "cardinality"), cardinality);

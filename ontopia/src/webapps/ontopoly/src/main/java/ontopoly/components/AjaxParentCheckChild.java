@@ -12,11 +12,11 @@ import org.apache.wicket.model.IModel;
  * @author grove
  * @see AjaxParentFormChoiceComponentUpdatingBehavior
  */
-public class AjaxParentCheckChild extends Check implements IHeaderContributor {
+public class AjaxParentCheckChild extends Check<String> implements IHeaderContributor {
 
   private AjaxParentFormChoiceComponentUpdatingBehavior apfc;
   
-  public AjaxParentCheckChild(String id, IModel model, AjaxParentFormChoiceComponentUpdatingBehavior apfc) {
+  public AjaxParentCheckChild(String id, IModel<String> model, AjaxParentFormChoiceComponentUpdatingBehavior apfc) {
     super(id, model);
     setOutputMarkupId(true);
     this.apfc = apfc;

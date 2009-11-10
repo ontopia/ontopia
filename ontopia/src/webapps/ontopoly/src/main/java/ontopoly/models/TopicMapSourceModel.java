@@ -3,7 +3,7 @@ package ontopoly.models;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapSource;
 import ontopoly.utils.OntopolyContext;
 
-public class TopicMapSourceModel extends MutableLoadableDetachableModel {
+public class TopicMapSourceModel extends MutableLoadableDetachableModel<TopicMapSource> {
 
   private String topicMapSourceId;
 
@@ -26,13 +26,13 @@ public class TopicMapSourceModel extends MutableLoadableDetachableModel {
   }
 
   @Override
-  public void setObject(Object object) {
-    super.setObject(object);
-    this.topicMapSourceId = ((TopicMapSource)object).getId(); 
+  public void setObject(TopicMapSource source) {
+    super.setObject(source);
+    this.topicMapSourceId = source.getId(); 
   }
 
   @Override
-  protected Object load() {
+  protected TopicMapSource load() {
     // retrieve topicMapSource from ontopoly repository
     return OntopolyContext.getOntopolyRepository().getSource(topicMapSourceId);
   }

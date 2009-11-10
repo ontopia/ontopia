@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -41,13 +42,13 @@ public class SearchPage extends OntopolyAbstractPage {
     // Adding part containing title and help link
     createTitle();
 
-    final TextField searchField = new TextField("searchField", new Model(searchText));
+    final TextField searchField = new TextField<String>("searchField", new Model<String>(searchText));
     Form form = new Form("searchForm") {
       @Override
       protected void onSubmit() {
-          Map pageParametersMap = new HashMap();
+          Map<String,String> pageParametersMap = new HashMap<String,String>();
           pageParametersMap.put("topicMapId", getTopicMap().getId());
-          pageParametersMap.put("searchTerm", searchField.getModelObjectAsString());
+          pageParametersMap.put("searchTerm", searchField.getDefaultModelObjectAsString());
           setResponsePage(SearchPage.class, new PageParameters(pageParametersMap));
           setRedirect(false);
       }
@@ -55,19 +56,19 @@ public class SearchPage extends OntopolyAbstractPage {
     add(form);
     form.add(searchField);
         
-    final IModel searchResultModel = new LoadableDetachableModel() {
+    final IModel<List<Topic>> searchResultModel = new LoadableDetachableModel<List<Topic>>() {
       @Override
-      protected Object load() {
+      protected List<Topic> load() {
         try {
           errorInSearch = false;
-          Collection result = getTopicMap().searchAll(searchField.getModelObjectAsString());
+          List<Topic> result = getTopicMap().searchAll(searchField.getDefaultModelObjectAsString());
           AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
           page.filterTopics(result);
           return result;
         }
         catch(Exception e) {
           errorInSearch = true;
-          return Collections.EMPTY_SET;
+          return Collections.emptyList();
         }
       }     
     };
@@ -82,7 +83,7 @@ public class SearchPage extends OntopolyAbstractPage {
     
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
       public boolean isVisible() {
-        return !searchField.getModelObjectAsString().equals("") && ((Collection)searchResultModel.getObject()).isEmpty() ? true : false;      
+        return !searchField.getDefaultModelObjectAsString().equals("") && ((Collection)searchResultModel.getObject()).isEmpty() ? true : false;      
       }
     };
     unsuccessfulSearchContainer.setOutputMarkupPlaceholderTag(true);
@@ -93,14 +94,14 @@ public class SearchPage extends OntopolyAbstractPage {
     Label message = new Label("message", new ResourceModel(errorInSearch ? "search.error" : "search.empty"));
     unsuccessfulSearchContainer.add(message);
   
-    ListView searchResult = new ListView("searchResult", searchResultModel) {
+    ListView searchResult = new ListView<Topic>("searchResult", searchResultModel) {
 
       @Override
       protected void populateItem(ListItem item) {
         Topic topic = (Topic)item.getModelObject();
         TopicMap topicMap = topic.getTopicMap();
                 
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", topic.getId());
    

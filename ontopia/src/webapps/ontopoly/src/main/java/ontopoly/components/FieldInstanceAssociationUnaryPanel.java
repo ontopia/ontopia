@@ -38,15 +38,15 @@ public class FieldInstanceAssociationUnaryPanel extends AbstractFieldInstancePan
     
     // add field values component(s)
     this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel); // NOTE: no need to do any sorting here
-    this.listView = new ListView("fieldValues", fieldValuesModel) {
+    this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
       // NOTE: no need to validate cardinality here
 //      @Override
 //      protected void onBeforeRender() {
 //        validateCardinality(FieldInstanceAssociationUnaryPanel.this);        
 //        super.onBeforeRender();
 //      }
-		  public void populateItem(final ListItem item) {
-		    FieldValueModel fieldValueModel = (FieldValueModel)item.getModelObject();
+		  public void populateItem(final ListItem<FieldValueModel> item) {
+		    FieldValueModel fieldValueModel = item.getModelObject();
 
         // TODO: make sure non-existing value field gets focus if last edit happened there
           

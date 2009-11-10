@@ -1,5 +1,6 @@
 package ontopoly.components;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,11 +15,15 @@ public abstract class LinkFunctionBoxPanel extends FunctionBoxPanel {
   }
 
   @Override
-  protected List getFunctionBoxComponentList(String id) {
-    return Arrays.asList(new List[] {
-        Arrays.asList(new Component[] { getLabel(id) }),
-        Arrays.asList(new Component[] {
-            new Label(id, new ResourceModel("arrow.right")), getLink(id) }) });
+  protected List<List<Component>> getFunctionBoxComponentList(String id) {
+    List<Component> heading = Arrays.asList(new Component[] { getLabel(id) }); 
+    List<Component> box = Arrays.asList(new Component[] {
+        new Label(id, new ResourceModel("arrow.right")), getLink(id) });
+    
+    List<List<Component>> result = new ArrayList<List<Component>>(2);
+    result.add(heading);
+    result.add(box);
+    return result;
   }
 
   protected abstract Component getLabel(String id);

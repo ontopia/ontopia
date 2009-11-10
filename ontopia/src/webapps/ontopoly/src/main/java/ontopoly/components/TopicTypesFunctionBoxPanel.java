@@ -49,7 +49,7 @@ public class TopicTypesFunctionBoxPanel extends Panel {
       Topic topic = topicModel.getTopic();
       TopicMap tm = topic.getTopicMap();
       
-      Map pageParametersMap = new HashMap();
+      Map<String,String> pageParametersMap = new HashMap<String,String>();
       pageParametersMap.put("topicMapId", tm.getId());
       pageParametersMap.put("topicId", topic.getId());
       pageParametersMap.put("topicTypeId", topicType.getId());

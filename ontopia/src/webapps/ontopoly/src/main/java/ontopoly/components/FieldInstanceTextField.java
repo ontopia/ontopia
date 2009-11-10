@@ -11,7 +11,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 
-public class FieldInstanceTextField extends TextField {
+public class FieldInstanceTextField extends TextField<String> {
 
   private FieldValueModel fieldValueModel;
   private String oldValue;
@@ -35,7 +35,7 @@ public class FieldInstanceTextField extends TextField {
         throw new RuntimeException("Unsupported field value: " + value);
       }
     }
-    setModel(new Model(oldValue));
+    setModel(new Model<String>(oldValue));
   }
 
   public void setCols(int cols) {

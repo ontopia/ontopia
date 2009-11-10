@@ -12,20 +12,18 @@ import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 public abstract class QueryTreeModel extends DefaultTreeModel {
   
-  public QueryTreeModel(TopicMap topicmap, String query, Map params) {
+  public QueryTreeModel(TopicMap topicMap, String query, Map<String, ?> params) {
     super(new DefaultMutableTreeNode("<root>"));    
     
-    QueryWrapper qw = topicmap.getQueryWrapper();
-    QueryProcessorIF qp = qw.getQueryProcessor();
-    DeclarationContextIF dc = qw.getDeclarationContext();
+    QueryProcessorIF qp = topicMap.getQueryProcessor();
+    DeclarationContextIF dc = topicMap.getDeclarationContext();
 
     DefaultMutableTreeNode root = (DefaultMutableTreeNode)getRoot();
-    Map nodes = new HashMap();
+    Map<Object,DefaultMutableTreeNode> nodes = new HashMap<Object,DefaultMutableTreeNode>();
     
     try {
       QueryResultIF qr = qp.execute(query, params, dc);

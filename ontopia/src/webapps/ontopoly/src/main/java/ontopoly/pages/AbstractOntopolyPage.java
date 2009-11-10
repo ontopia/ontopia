@@ -10,8 +10,9 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import ontopoly.OntopolySession;
 import ontopoly.utils.OntopolyUtils;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
-import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.WebPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
     super(params);
     
     // add header contributor for stylesheet
-    add(HeaderContributor.forCss(getStylesheet()));
+    add(CSSPackageResource.getHeaderContribution(getStylesheet()));
   }
 
   protected String getStylesheet() {
@@ -130,7 +131,7 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
    * not have access to will be removed from the collection.
    * @param topics the topics to check rights for
    */
-  public void filterTopics(Collection topics) {
+  public void filterTopics(Collection<? extends Topic> topics) {
     if (isAdministrationEnabled())
       OntopolyUtils.filterTopicsByAdministratorRole(topics);
     else if (isAnnotationEnabled())
@@ -159,7 +160,7 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
    * @param topic
    * @return
    */
-  public Class getPageClass(Topic topic) {
+  public Class<? extends Page> getPageClass(Topic topic) {
     return getClass();
   }
   

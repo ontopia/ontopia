@@ -36,12 +36,12 @@ public class FieldInstanceAssociationNaryField extends Panel {
 
   protected final FieldValueModel fieldValueModel;
   protected int arity;
-  protected final Map selectedPlayers = new HashMap();
+  protected final Map<RoleFieldModel,TopicModel> selectedPlayers = new HashMap<RoleFieldModel,TopicModel>();
   protected final FieldInstanceAssociationNaryPanel parentPanel;
   protected boolean needsUpdate;
   
   protected RoleFieldModel currentFieldModel;
-  protected TopicModel currentTopicModel;
+  protected TopicModel<Topic> currentTopicModel;
   
   public FieldInstanceAssociationNaryField(String id, 
       FieldInstanceAssociationNaryPanel _parentPanel,
@@ -57,7 +57,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
     
     // register current player
     this.currentFieldModel = roleFieldModel;
-    this.currentTopicModel = new TopicModel(fieldInstanceModel.getFieldInstance().getInstance());
+    this.currentTopicModel = new TopicModel<Topic>(fieldInstanceModel.getFieldInstance().getInstance());
     selectedPlayers.put(roleFieldModel, currentTopicModel);
 
     RoleField.ValueIF fieldValue = (RoleField.ValueIF)fieldValueModel.getFieldValue();
@@ -83,14 +83,14 @@ public class FieldInstanceAssociationNaryField extends Panel {
       };
       parent.setOutputMarkupId(true);
       rv.add(parent);
-      parent.add(new Label("label", new Model(ofield.getRoleType().getName())));
+      parent.add(new Label("label", new Model<String>(ofield.getRoleType().getName())));
       //! parent.add(new Label("label", new Model(ofield.getFieldName())));
       
       // register other player
       Topic topic = (fieldValue == null ? null : fieldValue.getPlayer(ofield, fieldInstanceModel.getFieldInstance().getInstance()));
-      final TopicModel topicModel = new TopicModel(topic);
+      final TopicModel<Topic> topicModel = new TopicModel<Topic>(topic);
       // NOTE: should not use same model as selected model as the model would then be updated immediately
-      selectedPlayers.put(ofieldModel, new TopicModel(topic));
+      selectedPlayers.put(ofieldModel, new TopicModel<Topic>(topic));
 
       TopicLink playerLink = new TopicLink("player", topicModel);
       playerLink.setEnabled(traversable);
@@ -112,9 +112,9 @@ public class FieldInstanceAssociationNaryField extends Panel {
         InterfaceControl interfaceControl = ofield.getInterfaceControl();
         if (interfaceControl.isAutoComplete()) {
           final AssociationFieldAutoCompleteTextField autoCompleteField 
-            = new AssociationFieldAutoCompleteTextField("select", new Model(null), ofieldModel) {
+            = new AssociationFieldAutoCompleteTextField("select", new Model<String>(null), ofieldModel) {
             @Override
-            protected void filterPlayers(List players) {
+            protected void filterPlayers(List<Topic> players) {
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
               page.filterTopics(players);
             }            
@@ -124,7 +124,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
               boolean changesMade = onNewSelection(ofieldModel, topic);
               // replace ourselves with a topic link
               if (changesMade)
-                parent.replace(new TopicLink("select", new TopicModel(topic)));
+                parent.replace(new TopicLink("select", new TopicModel<Topic>(topic)));
             }                
           };
           autoCompleteField.getTextField().add(new AjaxFormComponentUpdatingBehavior("onchange") {
@@ -147,13 +147,13 @@ public class FieldInstanceAssociationNaryField extends Panel {
         } else if (interfaceControl.isDropDownList()) {
           final PossiblePlayersModel choicesModel = new PossiblePlayersModel(fieldInstanceModel, ofieldModel) {
             @Override
-            protected void filterPlayers(List players) {
+            protected void filterPlayers(Collection<Topic> players) {
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
               page.filterTopics(players);
             }            
           };
           
-          TopicDropDownChoice choice = new TopicDropDownChoice("select", topicModel, choicesModel) {        
+          TopicDropDownChoice<Topic> choice = new TopicDropDownChoice<Topic>("select", topicModel, choicesModel) {        
             @Override
             protected void onModelChanged() {
               super.onModelChanged();            
@@ -307,7 +307,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
         }
       }    
       // add new selection
-      selectedPlayers.put(ofieldModel, new TopicModel(selectedTopic));
+      selectedPlayers.put(ofieldModel, new TopicModel<Topic>(selectedTopic));
       // check to see if new state was complete
       if (selectedPlayers.size() == arity) {
         // add new association as state is now complete

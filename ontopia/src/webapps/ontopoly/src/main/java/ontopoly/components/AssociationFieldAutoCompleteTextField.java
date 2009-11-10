@@ -23,6 +23,7 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
   
   protected AutoCompleteTextField textField;
   
+  @SuppressWarnings("unchecked")
   public AssociationFieldAutoCompleteTextField(String id, IModel model, final RoleFieldModel valueFieldModel) {
     super(id);
         
@@ -42,7 +43,7 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
 
       @Override
       protected Iterator getChoices(String input) {
-        List result = new ArrayList(valueFieldModel.getRoleField().searchAllowedPlayers(input));
+        List<Topic> result = new ArrayList<Topic>(valueFieldModel.getRoleField().searchAllowedPlayers(input));
         filterPlayers(result);
         Collections.sort(result, TopicComparator.INSTANCE);
         return result.iterator();
@@ -62,7 +63,7 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
     add(textField);
   }
 
-  protected abstract void filterPlayers(List players);
+  protected abstract void filterPlayers(List<Topic> players);
   
   protected AutoCompleteTextField getTextField() {
     return textField;

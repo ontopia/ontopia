@@ -259,24 +259,24 @@ public class ConversionUtils {
         "   descendant-of($MID, $DES) }.");
     
     // load superclass-subclass hierarchy
-    Map subsup = new HashMap();
-    Map supsub = new HashMap();
+    Map<TopicIF,Collection<TopicIF>> subsup = new HashMap<TopicIF,Collection<TopicIF>>();
+    Map<TopicIF,Collection<TopicIF>> supsub = new HashMap<TopicIF,Collection<TopicIF>>();
     result = queryProcessor.execute("select $SUP, $SUB from xtm:superclass-subclass($SUB : xtm:subclass, $SUP : xtm:superclass)?", dc);
     try {
       while (result.next()) {
         TopicIF sup = (TopicIF)result.getValue(0);
         TopicIF sub = (TopicIF)result.getValue(1);
         // subtype to supertype mapping
-        Collection x = (Collection)subsup.get(sub);
+        Collection<TopicIF> x = subsup.get(sub);
         if (x == null) {
-          x = new HashSet();
+          x = new HashSet<TopicIF>();
           subsup.put(sub, x);
         }
         x.add(sup);
         // supertype to subtype mapping
-        Collection y = (Collection)supsub.get(sup);
+        Collection<TopicIF> y = supsub.get(sup);
         if (y == null) {
-          y = new HashSet();
+          y = new HashSet<TopicIF>();
           supsub.put(sup, y);
         }
         y.add(sub);
@@ -290,7 +290,7 @@ public class ConversionUtils {
   
     // translate name scopes into name types
     ScopeIndexIF sindex = (ScopeIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
-    Collection nstypes = new HashSet();
+    Collection<TopicIF> nstypes = new HashSet<TopicIF>();
     Iterator nsiter = tracker.getSuspectNameScopes().iterator();
     while (nsiter.hasNext()) {
       TopicIF ntheme = (TopicIF)nsiter.next();
@@ -332,7 +332,7 @@ public class ConversionUtils {
     }
   
     // add super types to list of topic types
-    Collection all_topic_types = new HashSet(tracker.getTopicTypes());
+    Collection<TopicIF> all_topic_types = new HashSet<TopicIF>(tracker.getTopicTypes());
     all_topic_types.addAll(supsub.keySet());
   
     // get topmost super types
@@ -411,7 +411,7 @@ public class ConversionUtils {
     }    
   
     // association types
-    Collection excluded_atypes = new HashSet();
+    Collection<TopicIF> excluded_atypes = new HashSet<TopicIF>();
     excluded_atypes.add(topicByPSI(xtmbase.resolveAbsolute("#superclass-subclass"), tm));
     excluded_atypes.add(topicByPSI(teqbase.resolveAbsolute("#hierarchical-relation-type"), tm));
     
@@ -496,7 +496,7 @@ public class ConversionUtils {
     // generate field order
     TopicIF ted_field_order = topicByPSI(psibase.resolveAbsolute("field-order"), tm);
     
-    List fields = new ArrayList();
+    List<Object[]> fields = new ArrayList<Object[]>();
     result = queryProcessor.execute("/* #OPTION: optimizer.reorder=false */ " +
         "select $topic, $owner, $field from " +
         "direct-instance-of($topic, on:topic-type), { descendant-of($owner, $topic) | $owner = $topic }, " +
@@ -535,7 +535,7 @@ public class ConversionUtils {
     }
   }
 
-  private static class FieldsComparator implements Comparator {
+  private static class FieldsComparator implements Comparator<Object> {
     TopicIF ted_nt;
     TopicIF ted_si;
     TopicIF ted_sl;
@@ -692,7 +692,7 @@ public class ConversionUtils {
     QueryResultIF qr = null;
     TopicIF ifield = null;
     try {
-      Map params = Collections.singletonMap("itype", itype);
+      Map<String,TopicIF> params = Collections.singletonMap("itype", itype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $ifield from on:has-identity-type(%itype% : on:identity-type, $ofield : on:identity-field)?", params);
       if (qr.next())
@@ -727,7 +727,7 @@ public class ConversionUtils {
     QueryResultIF qr = null;
     TopicIF nfield = null;
     try {
-      Map params = Collections.singletonMap("ntype", ntype);
+      Map<String,TopicIF> params = Collections.singletonMap("ntype", ntype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $nfield from on:has-name-type(%ntype% : on:name-type, $nfield : on:name-field)?", params);
       if (qr.next())
@@ -768,7 +768,7 @@ public class ConversionUtils {
     QueryResultIF qr = null;
     TopicIF ofield = null;
     try {
-      Map params = Collections.singletonMap("otype", otype);
+      Map<String,TopicIF> params = Collections.singletonMap("otype", otype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $ofield from on:has-occurrence-type(%otype% : on:occurrence-type, $ofield : on:occurrence-field)?", params);
       if (qr.next())
@@ -800,7 +800,7 @@ public class ConversionUtils {
     QueryResultIF qr = null;
     TopicIF afield = null;
     try {
-      Map params = Collections.singletonMap("atype", atype);
+      Map<String,TopicIF> params = Collections.singletonMap("atype", atype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
           "select $afield from on:has-association-type(%atype% : on:association-type, $afield : on:association-field)?", params);
       if (qr.next())
@@ -823,7 +823,7 @@ public class ConversionUtils {
     QueryResultIF qr = null;
     TopicIF rfield = null;
     try {
-      Map params = new HashMap();
+      Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
       params.put("afield", afield);
       params.put("rtype", rtype);
       qr = qp.execute("using on for i\"http://psi.ontopia.net/ontology/\"\n" +
@@ -950,8 +950,8 @@ public class ConversionUtils {
       return topicByPSI(psibase.resolveAbsolute("cardinality-0-M"), tm);
   }
 
-  protected static boolean isSubjectLocatorDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map subsup) {
-    Collection supertypes = (Collection)subsup.get(ttype);
+  protected static boolean isSubjectLocatorDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
+    Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return false;
     Iterator iter = supertypes.iterator();
     while (iter.hasNext()) {
@@ -965,8 +965,8 @@ public class ConversionUtils {
     return false;
   }
 
-  protected static boolean isSubjectIndicatorDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map subsup) {
-    Collection supertypes = (Collection)subsup.get(ttype);
+  protected static boolean isSubjectIndicatorDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
+    Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return false;
     Iterator iter = supertypes.iterator();
     while (iter.hasNext()) {
@@ -980,10 +980,10 @@ public class ConversionUtils {
     return false;
   }
 
-  protected static Collection getNamesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map subsup) {
-    Collection supertypes = (Collection)subsup.get(ttype);
-    if (supertypes == null) return Collections.EMPTY_SET;
-    Collection result = new HashSet();
+  protected static Collection<TopicIF> getNamesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
+    Collection<TopicIF> supertypes = subsup.get(ttype);
+    if (supertypes == null) return Collections.emptySet();
+    Collection<TopicIF> result = new HashSet<TopicIF>();
     Iterator iter = supertypes.iterator();
     while (iter.hasNext()) {
       TopicIF supertype = (TopicIF)iter.next();
@@ -993,10 +993,10 @@ public class ConversionUtils {
     return result;
   }
 
-  protected static Collection getInternalOccurrencesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map subsup) {
-    Collection supertypes = (Collection)subsup.get(ttype);
-    if (supertypes == null) return Collections.EMPTY_SET;
-    Collection result = new HashSet();
+  protected static Collection<TopicIF> getInternalOccurrencesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
+    Collection<TopicIF> supertypes = subsup.get(ttype);
+    if (supertypes == null) return Collections.emptySet();
+    Collection<TopicIF> result = new HashSet<TopicIF>();
     Iterator iter = supertypes.iterator();
     while (iter.hasNext()) {
       TopicIF supertype = (TopicIF)iter.next();
@@ -1006,10 +1006,10 @@ public class ConversionUtils {
     return result;
   }
 
-  protected static Collection getExternalOccurrencesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map subsup) {
-    Collection supertypes = (Collection)subsup.get(ttype);
-    if (supertypes == null) return Collections.EMPTY_SET;
-    Collection result = new HashSet();
+  protected static Collection<TopicIF> getExternalOccurrencesDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
+    Collection<TopicIF> supertypes = subsup.get(ttype);
+    if (supertypes == null) return Collections.emptySet();
+    Collection<TopicIF> result = new HashSet<TopicIF>();
     Iterator iter = supertypes.iterator();
     while (iter.hasNext()) {
       TopicIF supertype = (TopicIF)iter.next();
@@ -1019,8 +1019,8 @@ public class ConversionUtils {
     return result;
   }
 
-  protected static boolean isRoleDeclaredOnSuperType(TopicIF ttype, Collection ptypes, Map subsup) {
-    Collection supertypes = (Collection)subsup.get(ttype);
+  protected static boolean isRoleDeclaredOnSuperType(TopicIF ttype, Collection ptypes, Map<TopicIF,Collection<TopicIF>> subsup) {
+    Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return false;
     Iterator iter = supertypes.iterator();
     while (iter.hasNext()) {
@@ -1201,11 +1201,11 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static Collection getTopMostTypes(Collection ttypes, Map subsup) {
-    Collection result = new HashSet();
-    Iterator iter = ttypes.iterator();
+  protected static Collection<TopicIF> getTopMostTypes(Collection<TopicIF> ttypes, Map<TopicIF,Collection<TopicIF>> subsup) {
+    Collection<TopicIF> result = new HashSet<TopicIF>();
+    Iterator<TopicIF> iter = ttypes.iterator();
     while (iter.hasNext()) {
-      TopicIF ttype = (TopicIF)iter.next();
+      TopicIF ttype = iter.next();
       if (!subsup.containsKey(ttype))
         result.add(ttype);
     }
@@ -1246,9 +1246,9 @@ public class ConversionUtils {
     return (OccurrenceIF) result.iterator().next();
   }
 
-  public static Collection getOccurrencesOfType(TopicIF topic,
+  public static Collection<OccurrenceIF> getOccurrencesOfType(TopicIF topic,
       TopicIF occType) {
-    List result = new ArrayList();
+    List<OccurrenceIF> result = new ArrayList<OccurrenceIF>();
     for (Iterator iter = topic.getOccurrences().iterator(); iter.hasNext();) {
       OccurrenceIF occurrence = (OccurrenceIF) iter.next();
       TopicIF otype = occurrence.getType();

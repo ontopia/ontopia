@@ -1,6 +1,5 @@
 package ontopoly.pages;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldAssignment;
@@ -17,11 +17,10 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
-import net.ontopia.utils.CollectionUtils;
-import ontopoly.components.AjaxParentFormChoiceComponentUpdatingBehavior;
 import ontopoly.components.AjaxParentCheckChild;
-import ontopoly.components.CheckLabelPanel;
+import ontopoly.components.AjaxParentFormChoiceComponentUpdatingBehavior;
 import ontopoly.components.AjaxParentRadioChild;
+import ontopoly.components.CheckLabelPanel;
 import ontopoly.components.TopicDropDownChoice;
 import ontopoly.components.TreePanel;
 import ontopoly.models.FieldInstanceModel;
@@ -47,6 +46,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
@@ -67,7 +67,12 @@ public abstract class ModalFindPage extends Panel {
   
   private boolean errorInSearch = false;
 
-  protected IModel treeModelModel = new Model((Serializable)TreeModels.createEmptyTreeModel());
+  protected final IModel<TreeModel> emptyTreeModelModel = new LoadableDetachableModel<TreeModel>() {
+    @Override
+    protected TreeModel load() {
+      return TreeModels.createEmptyTreeModel();
+    }
+  };
 
   public ModalFindPage(String id, FieldInstanceModel fieldInstanceModel, int activeTab) {
     super(id);
@@ -80,7 +85,7 @@ public abstract class ModalFindPage extends Panel {
     FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
     FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
     RoleField roleField = (RoleField)fieldAssignment.getFieldDefinition();        
-    popupContent.add(new Label("title", new Model(roleField.getFieldName())));
+    popupContent.add(new Label("title", new Model<String>(roleField.getFieldName())));
   
     final WebMarkupContainer searchTab = createSearchTab();
     popupContent.add(searchTab);
@@ -135,7 +140,7 @@ public abstract class ModalFindPage extends Panel {
     WebMarkupContainer searchTab = new WebMarkupContainer("searchTab");
     searchTab.setOutputMarkupId(true);
     
-    final TextField searchTermField = new TextField("searchTerm", new Model(null));
+    final TextField searchTermField = new TextField<String>("searchTerm", new Model<String>(null));
     searchTermField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
@@ -148,22 +153,21 @@ public abstract class ModalFindPage extends Panel {
     resultsContainer.setOutputMarkupId(true);
     searchTab.add(resultsContainer);
     
-    final IModel results = new LoadableDetachableModel() {
+    final IModel<List<Topic>> results = new LoadableDetachableModel<List<Topic>>() {
       @Override
-      protected Object load() {
+      protected List<Topic> load() {
         String searchTerm = (String)searchTermField.getModelObject();
         if (searchTerm == null) {
-          return Collections.EMPTY_LIST;
+          return Collections.emptyList();
         } else {
           try {
             FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
             RoleField associationField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
             RoleField otherField = (RoleField)associationField.getFieldsForOtherRoles().iterator().next();
-            List results = CollectionUtils.castList(otherField.searchAllowedPlayers(searchTerm));
-            return results;
+            return otherField.searchAllowedPlayers(searchTerm);
           } catch(Exception e) {
             errorInSearch = true;
-            return Collections.EMPTY_SET;
+            return Collections.emptyList();
           }
         }
       }      
@@ -182,9 +186,9 @@ public abstract class ModalFindPage extends Panel {
     final FormComponent checkGroup;
     final boolean maxOneCardinality = isMaxOneCardinality();
     if (maxOneCardinality) {
-      checkGroup = new RadioGroup("checkGroup", new Model());      
+      checkGroup = new RadioGroup<String>("checkGroup", new Model<String>());      
     } else {
-      checkGroup = new CheckGroup("checkGroup", new HashSet());
+      checkGroup = new CheckGroup<String>("checkGroup", new HashSet<String>());
     }
     checkGroup.add(new AjaxFormChoiceComponentUpdatingBehavior() {
       @Override
@@ -196,7 +200,7 @@ public abstract class ModalFindPage extends Panel {
 
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
       public boolean isVisible() {
-        return !searchTermField.getModelObjectAsString().equals("") && ((Collection)results.getObject()).isEmpty() ? true : false;      
+        return !searchTermField.getDefaultModelObjectAsString().equals("") && ((Collection)results.getObject()).isEmpty() ? true : false;      
       }
     };
     unsuccessfulSearchContainer.setOutputMarkupPlaceholderTag(true);
@@ -205,11 +209,11 @@ public abstract class ModalFindPage extends Panel {
     Label message = new Label("message", new ResourceModel(errorInSearch ? "search.error" : "search.empty"));
     unsuccessfulSearchContainer.add(message);
     
-    final ListView listView = new ListView("results", results) {
-      public void populateItem(final ListItem item) {
-        Topic hit = (Topic)item.getModelObject();
+    final ListView listView = new ListView<Topic>("results", results) {
+      public void populateItem(final ListItem<Topic> item) {
+        Topic hit = item.getModelObject();
         if (maxOneCardinality) {
-          Radio check = new Radio("check", new Model(hit.getId())) {
+          Radio check = new Radio<String>("check", new Model<String>(hit.getId())) {
             @Override
             protected void onComponentTag(final ComponentTag tag) {
               tag.put("type", "radio");
@@ -218,7 +222,7 @@ public abstract class ModalFindPage extends Panel {
           };
           item.add(check);
         } else {
-          Check check = new Check("check", new Model(hit.getId())) {
+          Check<String> check = new Check<String>("check", new Model<String>(hit.getId())) {
             @Override
             protected void onComponentTag(final ComponentTag tag) {
               tag.put("type", "checkbox");
@@ -227,8 +231,8 @@ public abstract class ModalFindPage extends Panel {
           }; 
           item.add(check);
         }
-        item.add(new Label("topic", new Model(hit.getName())));
-        item.add(new Label("type", new Model(((TopicType)hit.getTopicTypes().iterator().next()).getName())));
+        item.add(new Label("topic", new Model<String>(hit.getName())));
+        item.add(new Label("type", new Model<String>(((TopicType)hit.getTopicTypes().iterator().next()).getName())));
       }
     };
     checkGroup.add(listView);
@@ -251,7 +255,7 @@ public abstract class ModalFindPage extends Panel {
         onCloseOk(target);
         
         // reset search term field
-        searchTermField.getModel().setObject(null);
+        searchTermField.getDefaultModel().setObject(null);
       }
     });
     searchTab.add(closeOkButton);
@@ -262,7 +266,7 @@ public abstract class ModalFindPage extends Panel {
       protected void onUpdate(AjaxRequestTarget target) {
         onCloseCancel(target);
         // reset search term field
-        searchTermField.getModel().setObject(null);
+        searchTermField.getDefaultModel().setObject(null);
       }
     });
     searchTab.add(closeCancelButton);
@@ -276,9 +280,9 @@ public abstract class ModalFindPage extends Panel {
     browseTab.setOutputMarkupId(true);
 
     // types select
-    IModel playerTypesChoicesModel = new LoadableDetachableModel() {
+    IModel<List<TopicType>> playerTypesChoicesModel = new LoadableDetachableModel<List<TopicType>>() {
       @Override
-      protected Object load() {
+      protected List<TopicType> load() {
         // TODO: should merge with PlayerTypesModel.java (extend to filter my large instance types)
         FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
         RoleField associationField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
@@ -286,10 +290,9 @@ public abstract class ModalFindPage extends Panel {
         RoleField otherField = (RoleField)associationField.getFieldsForOtherRoles().iterator().next();
         TopicMap tm = associationField.getTopicMap();
         // include all topic types except those with large instance sets
-//        Collection allowedValueTypes = otherField.getAllowedPlayerTypes(fieldInstance.getInstance());
         Collection allowedValueTypes = otherField.getDeclaredPlayerTypes();
         Collection largeInstanceSets = tm.getTopicTypesWithLargeInstanceSets(); 
-        List topicTypes = new ArrayList(allowedValueTypes.size());
+        List<TopicType> topicTypes = new ArrayList<TopicType>(allowedValueTypes.size());
         Iterator iter = allowedValueTypes.iterator();
         while (iter.hasNext()) {
           TopicType topicType = (TopicType)iter.next();
@@ -299,21 +302,21 @@ public abstract class ModalFindPage extends Panel {
         return topicTypes; 
       }
     };
-    final TopicModel selectedTypeModel = new TopicModel(null, TopicModel.TYPE_TOPIC_TYPE);
+    final TopicModel<TopicType> selectedTypeModel = new TopicModel<TopicType>(null, TopicModel.TYPE_TOPIC_TYPE);
     
     final WebMarkupContainer resultsContainer = new WebMarkupContainer("resultsContainer");
     resultsContainer.setOutputMarkupId(true);
     browseTab.add(resultsContainer);
     
     final FormComponent checkGroup;
-    final Model radioGroupModel = new Model();
-    final Collection checkGroupModel = new HashSet();
+    final Model<String> radioGroupModel = new Model<String>();
+    final Collection<String> checkGroupModel = new HashSet<String>();
     
     final boolean maxOneCardinality = isMaxOneCardinality();
     if (maxOneCardinality) {
-      checkGroup = new RadioGroup("checkGroup", radioGroupModel);      
+      checkGroup = new RadioGroup<String>("checkGroup", radioGroupModel);      
     } else {
-      checkGroup = new CheckGroup("checkGroup", checkGroupModel);
+      checkGroup = new CheckGroup<String>("checkGroup", checkGroupModel);
     }
     final AjaxParentFormChoiceComponentUpdatingBehavior apfc = new AjaxParentFormChoiceComponentUpdatingBehavior() {
       @Override
@@ -325,20 +328,20 @@ public abstract class ModalFindPage extends Panel {
     resultsContainer.add(checkGroup);
         
     // create a tree
-    final Panel treePanel = new TreePanel("results", treeModelModel) {
+    final TreePanel treePanel = new TreePanel("results", emptyTreeModelModel) {
       @Override
-      protected void populateNode(WebMarkupContainer container, String id, TreeNode treeNode, int level) {
+      protected Component populateNode(String id, TreeNode treeNode) {
         DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
         final TopicNode node = (TopicNode)mTreeNode.getUserObject();
         Topic selectedType = selectedTypeModel.getTopic();        
         final boolean selectable = node.getTopic().isInstanceOf(selectedType);
         
         // create link with label        
-        container.add(new CheckLabelPanel(id) {
+        return new CheckLabelPanel(id) {
           @Override
           protected Component newCheck(String id) {            
             if (maxOneCardinality) {
-              return new AjaxParentRadioChild(id, new Model(node.getTopicId()), apfc) {
+              return new AjaxParentRadioChild<String>(id, new Model<String>(node.getTopicId()), apfc) {
                 @Override
                 public boolean isVisible() {
                   return selectable;
@@ -350,7 +353,7 @@ public abstract class ModalFindPage extends Panel {
                 }                            
               };              
             } else {
-              return new AjaxParentCheckChild(id, new Model(node.getTopicId()), apfc) {
+              return new AjaxParentCheckChild(id, new Model<String>(node.getTopicId()), apfc) {
                 @Override
                 public boolean isVisible() {
                   return selectable;
@@ -365,32 +368,37 @@ public abstract class ModalFindPage extends Panel {
           }
           @Override
           protected Label newLabel(String id) {
-            Label label = new Label(id, new Model(node.getName()));
+            Label label = new Label(id, new Model<String>(node.getName()));
             label.setRenderBodyOnly(false);
             return label;
           }
-        });
+        };
       }
     };    
     treePanel.setOutputMarkupId(true);
     checkGroup.add(treePanel);
     
-    TopicDropDownChoice playerTypesDropDown = new TopicDropDownChoice("playerTypes", selectedTypeModel, playerTypesChoicesModel) {
-      @Override
-      protected void onModelChanged() {
-        super.onModelChanged();
-        // replace tree model
-        TopicType topicType = (TopicType)getModelObject();
-        if (topicType == null) {
-          treeModelModel.setObject(TreeModels.createEmptyTreeModel());
-        } else {
-          AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();        
-          treeModelModel.setObject(TreeModels.createInstancesTreeModel(topicType, page.isAdministrationEnabled()));
-        }
-      }
-    };
+    final TopicDropDownChoice<TopicType> playerTypesDropDown = new TopicDropDownChoice<TopicType>("playerTypes", selectedTypeModel, playerTypesChoicesModel);
+    
     playerTypesDropDown.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       protected void onUpdate(AjaxRequestTarget target) {
+        // replace tree model
+        TopicType topicType = (TopicType)playerTypesDropDown.getDefaultModelObject();
+        System.out.println("UUU" + topicType);
+        if (topicType == null) {
+          treePanel.setDefaultModel(emptyTreeModelModel);
+        } else {
+          AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
+          final TreeModel treeModel = TreeModels.createInstancesTreeModel(topicType, page.isAdministrationEnabled());
+          treePanel.setDefaultModel(new AbstractReadOnlyModel<TreeModel>() {
+            @Override
+            public TreeModel getObject() {
+              System.out.println("XXX: " + ((TreeNode)treeModel.getRoot()).getChildCount());
+              new RuntimeException().printStackTrace();
+              return treeModel;
+            }
+          });
+        }
         target.addComponent(resultsContainer);
       }
     });
@@ -415,7 +423,7 @@ public abstract class ModalFindPage extends Panel {
 
         // reset selected topic type, choice group and tree model
         selectedTypeModel.setObject(null);
-        treeModelModel.setObject((Serializable)TreeModels.createEmptyTreeModel());
+        treePanel.setDefaultModel(emptyTreeModelModel);
         radioGroupModel.setObject(null);
         checkGroupModel.clear();
       }
@@ -430,7 +438,7 @@ public abstract class ModalFindPage extends Panel {
 
         // reset selected topic type, choice group and tree model
         selectedTypeModel.setObject(null);
-        treeModelModel.setObject((Serializable)TreeModels.createEmptyTreeModel());
+        treePanel.setDefaultModel(emptyTreeModelModel);
         radioGroupModel.setObject(null);
         checkGroupModel.clear();
       }

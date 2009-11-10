@@ -18,9 +18,9 @@ import ontopoly.pojos.TopicNode;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -97,7 +97,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     }
   }
 
-  private static IModel getNameModelForHelpLinkAddress(int type) {
+  private static IModel<String> getNameModelForHelpLinkAddress(int type) {
     if (type == TOPIC_TYPES_INDEX_IN_SUBMENU) {
       return new HelpLinkResourceModel("help.link.topictypespage");
     } else if (type == OCCURRENCE_TYPES_INDEX_IN_SUBMENU) {
@@ -113,11 +113,11 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     }
   }
 
-  private static List getSubMenuItem(IModel model) {
+  private static List<MenuItem> getSubMenuItem(IModel model) {
     PageParameters parameters = new PageParameters();
     parameters.add("topicMapId", ((TopicMap) model.getObject()).getId());
 
-    List subMenuItems = Arrays.asList(new MenuItem[] {
+    List<MenuItem> subMenuItems = Arrays.asList(new MenuItem[] {
         new MenuItem(new Label("caption", new ResourceModel("topic.types")), TopicTypesPage.class, parameters),
         new MenuItem(new Label("caption",new ResourceModel("occurrence.types")), OccurrenceTypesPage.class, parameters),
         new MenuItem(new Label("caption",new ResourceModel("association.types")), AssociationTypesPage.class, parameters),
@@ -128,19 +128,19 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
 
   protected abstract Component createTreePanel(String id);
   
-  protected TreePanel createTreePanel(String id, TreeModel treeModel) {
-    TreePanel treePanel = new TreePanel(id, treeModel) {
+  protected TreePanel createTreePanel(String id, IModel<TreeModel> treeModelModel) {
+    TreePanel treePanel = new TreePanel(id, treeModelModel) {
       @Override
-      protected void populateNode(WebMarkupContainer container, String id, TreeNode treeNode, int level) {
+      protected Component populateNode(String id, TreeNode treeNode) {
         DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
         final TopicNode node = (TopicNode)mTreeNode.getUserObject();
         // create link with label
-        container.add(new LinkPanel(id) {
+        return new LinkPanel(id) {
           @Override
           protected Label newLabel(String id) {
             Topic topic = node.getTopic();
             final boolean isSystemTopic = topic.isSystemTopic();
-            return new Label(id, new Model(topic.getName())) {
+            return new Label(id, new Model<String>(topic.getName())) {
               @Override
               protected void onComponentTag(final ComponentTag tag) {
                 if (isSystemTopic)
@@ -152,9 +152,9 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
           @Override
           protected Link newLink(String id) {
             Topic topic = node.getTopic();
-            return new BookmarkablePageLink(id, getPageClass(topic), getPageParameters(topic));
+            return new BookmarkablePageLink<Page>(id, getPageClass(topic), getPageParameters(topic));
           }
-        });
+        };
       }
     };
     treePanel.setOutputMarkupId(true);
@@ -162,7 +162,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
   }
 
   @Override
-  public Class getPageClass(Topic topic) {
+  public Class<? extends Page> getPageClass(Topic topic) {
     return InstancePage.class;
   }
   

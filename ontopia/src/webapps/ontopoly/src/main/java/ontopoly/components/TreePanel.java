@@ -1,36 +1,34 @@
 package ontopoly.components;
 
-import java.io.Serializable;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.behavior.SimpleAttributeModifier;
-import org.apache.wicket.extensions.markup.html.tree.DefaultAbstractTree;
-import org.apache.wicket.extensions.markup.html.tree.DefaultAbstractTree.LinkType;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.html.tree.AbstractTree;
+import org.apache.wicket.markup.html.tree.BaseTree;
+import org.apache.wicket.markup.html.tree.BaseTree.LinkType;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 public abstract class TreePanel extends Panel {
 
-  public TreePanel(String id, final TreeModel treeModel) {
-    this(id, new Model((Serializable)treeModel));
-  }
+  protected final Tree tree;
   
-  public TreePanel(String id, IModel treeModelModel) {
+  public TreePanel(String id, IModel<TreeModel> treeModelModel) {
     super(id, treeModelModel);
     
     final WebMarkupContainer treeContainer = new WebMarkupContainer("treeContainer") {
       protected void onComponentTag(ComponentTag tag) {
-        TreeModel treeModel = (TreeModel)TreePanel.this.getModelObject();
+        TreeModel treeModel = (TreeModel)TreePanel.this.getDefaultModelObject();
         if (treeModel.getChildCount(treeModel.getRoot()) == 0) {
           tag.put("class", "hide");
         }
@@ -39,9 +37,9 @@ public abstract class TreePanel extends Panel {
     treeContainer.setOutputMarkupId(true);
     add(treeContainer);
 
-    final Tree tree = new Tree("tree", treeModelModel);
-
-    tree.setLinkType(LinkType.AJAX_FALLBACK);
+    tree = new Tree("tree", treeModelModel);
+    
+    tree.setLinkType(LinkType.AJAX);
 
     tree.setRootLess(true);
     initializeTree(tree);
@@ -88,8 +86,8 @@ public abstract class TreePanel extends Panel {
         tree.getTreeState().expandAll();
         expandTop.add(new SimpleAttributeModifier("class", "hide"));
         expandBottom.add(new SimpleAttributeModifier("class", "hide"));
-        collapseTop.add(new AttributeModifier("class", false, new Model("")));
-        collapseBottom.add(new AttributeModifier("class", false, new Model("")));
+        collapseTop.add(new AttributeModifier("class", false, new Model<String>("")));
+        collapseBottom.add(new AttributeModifier("class", false, new Model<String>("")));
         if (target != null) {
           target.addComponent(tree);
           target.addComponent(expandTop);
@@ -106,8 +104,8 @@ public abstract class TreePanel extends Panel {
         tree.getTreeState().collapseAll();
         collapseTop.add(new SimpleAttributeModifier("class", "hide"));
         collapseBottom.add(new SimpleAttributeModifier("class", "hide"));
-        expandTop.add(new AttributeModifier("class", false, new Model("")));
-        expandBottom.add(new AttributeModifier("class", false, new Model("")));
+        expandTop.add(new AttributeModifier("class", false, new Model<String>("")));
+        expandBottom.add(new AttributeModifier("class", false, new Model<String>("")));
         if (target != null) {
           target.addComponent(tree);
           target.addComponent(expandTop);
@@ -124,9 +122,9 @@ public abstract class TreePanel extends Panel {
         tree.getTreeState().expandAll();
         expandTop.add(new SimpleAttributeModifier("class", "hide"));
         expandBottom.add(new SimpleAttributeModifier("class", "hide"));
-        collapseTop.add(new AttributeModifier("class", false, new Model("")));
+        collapseTop.add(new AttributeModifier("class", false, new Model<String>("")));
         collapseBottom
-            .add(new AttributeModifier("class", false, new Model("")));
+            .add(new AttributeModifier("class", false, new Model<String>("")));
         if (target != null) {
           target.addComponent(tree);
           target.addComponent(expandTop);
@@ -143,8 +141,8 @@ public abstract class TreePanel extends Panel {
         tree.getTreeState().collapseAll();
         collapseTop.add(new SimpleAttributeModifier("class", "hide"));
         collapseBottom.add(new SimpleAttributeModifier("class", "hide"));
-        expandTop.add(new AttributeModifier("class", false, new Model("")));
-        expandBottom.add(new AttributeModifier("class", false, new Model("")));
+        expandTop.add(new AttributeModifier("class", false, new Model<String>("")));
+        expandBottom.add(new AttributeModifier("class", false, new Model<String>("")));
         if (target != null) {
           target.addComponent(tree);
           target.addComponent(expandTop);
@@ -177,22 +175,23 @@ public abstract class TreePanel extends Panel {
    * @param treeNode The tree node that should be rendered.
    * @param level The level in the tree that the tree node is placed.
    */
-  protected abstract void populateNode(WebMarkupContainer container, String id, TreeNode treeNode, int level);
+  protected abstract Component populateNode(String id, TreeNode treeNode);
 
-  private class Tree extends DefaultAbstractTree {
-    public Tree(String id, IModel treeModelModel) {
+  @Override
+  public MarkupContainer setDefaultModel(IModel<?> model) {
+    // notify nested tree about new tree model
+    tree.setDefaultModel(model);
+    return super.setDefaultModel(model);
+  }
+  
+  private class Tree extends BaseTree {
+    public Tree(String id, IModel<TreeModel> treeModelModel) {
       super(id, treeModelModel);
     }
     @Override
-    protected void populateTreeItem(WebMarkupContainer item, int level) {
-      final TreeNode node = (TreeNode) item.getModelObject();
-
-      item.add(newIndentation(item, "indent", (TreeNode) item.getModelObject(), level));
-
-      item.add(newJunctionLink(item, "link", "image", node));
-
-      // let subclass populate node container
-      TreePanel.this.populateNode(item, "node", node, level);
+    protected Component newNodeComponent(String id, IModel<java.lang.Object> model) {
+      TreeNode treeNode = (TreeNode) model.getObject();
+      return populateNode(id, treeNode);
     }
   };
 }

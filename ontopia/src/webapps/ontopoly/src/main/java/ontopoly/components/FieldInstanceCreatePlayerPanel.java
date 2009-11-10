@@ -84,17 +84,16 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
       add(new ContextMenuPanel("createMenu", menuId) {
         @Override
         protected ListView createListView(final String menuId, final String menuItemId) {
-          return new ListView(menuId, new PlayerTypesModel(fieldInstanceModel, roleFieldModel)) {
+          return new ListView<TopicType>(menuId, new PlayerTypesModel(fieldInstanceModel, roleFieldModel)) {
             @Override
-            public void populateItem(final ListItem item) {
-              final TopicTypeModel topicTypeModel = (TopicTypeModel)item.getModelObject();;
+            public void populateItem(final ListItem<TopicType> item) {
               AjaxLink createLink = new AjaxLink(menuItemId) {
                 @Override
                 public void onClick(AjaxRequestTarget target) {
-                  FieldInstanceCreatePlayerPanel.this.onClick(target, topicTypeModel.getTopicType());
+                  FieldInstanceCreatePlayerPanel.this.onClick(target, item.getModelObject());
                 }
               };
-              createLink.add(new Label("label", topicTypeModel.getTopicType().getName()));
+              createLink.add(new Label("label", item.getModelObject().getName()));
               item.add(createLink);
             }
           };
@@ -156,7 +155,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
   protected void showInstancePage(AjaxRequestTarget target, Topic topic, TopicType topicType, Component c) {
     // open modal window
     final ModalWindow createModal = new ModalWindow("createModal");
-    TopicModel topicModel = new TopicModel(topic);
+    TopicModel<Topic> topicModel = new TopicModel<Topic>(topic);
     TopicTypeModel topicTypeModel = new TopicTypeModel(topicType);
     createModal.setContent(new ModalInstancePage(createModal.getContentId(), topicModel, topicTypeModel, fieldsViewModel) {
       @Override

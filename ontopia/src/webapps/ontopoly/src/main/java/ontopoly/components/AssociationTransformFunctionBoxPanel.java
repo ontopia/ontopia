@@ -26,7 +26,7 @@ public class AssociationTransformFunctionBoxPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         Topic instance = topicModel.getTopic();
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", instance.getTopicMap().getId());
         pageParametersMap.put("topicId", instance.getId());
         setResponsePage(AssociationTransformPage.class, new PageParameters(pageParametersMap));

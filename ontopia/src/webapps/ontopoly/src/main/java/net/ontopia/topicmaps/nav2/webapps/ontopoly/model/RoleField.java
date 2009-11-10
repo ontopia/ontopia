@@ -82,20 +82,20 @@ public class RoleField extends FieldDefinition {
 
   public EditMode getEditMode() {
     String query = "on:use-edit-mode(%FD% : on:field-definition, $EM : on:edit-mode)?";
-    Map params = Collections.singletonMap("FD", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    TopicIF editMode = (TopicIF)tm.getQueryWrapper().queryForObject(query, params);
-    return (editMode == null ? EditMode.getDefaultEditMode(tm) : new EditMode(editMode, tm));
+    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();
+    TopicIF editMode = qm.queryForObject(query, params);
+    return (editMode == null ? EditMode.getDefaultEditMode(getTopicMap()) : new EditMode(editMode, getTopicMap()));
   }
 
   public CreateAction getCreateAction() {
     String query = "on:use-create-action(%FD% : on:field-definition, $CA : on:create-action)?";
-    Map params = Collections.singletonMap("FD", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    TopicIF createAction = (TopicIF)tm.getQueryWrapper().queryForObject(query, params);
-    return (createAction == null ? CreateAction.getDefaultCreateAction(tm) : new CreateAction(createAction, tm));
+    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();
+    TopicIF createAction = qm.queryForObject(query, params);
+    return (createAction == null ? CreateAction.getDefaultCreateAction(getTopicMap()) : new CreateAction(createAction, getTopicMap()));
   }
 
   /**
@@ -162,8 +162,11 @@ public class RoleField extends FieldDefinition {
   public AssociationField getAssociationField() {
     if (associationField == null) {
 			String query = "select $AF from on:has-association-field(%RF% : on:role-field, $AF : on:association-field)?";
-			Map params = Collections.singletonMap("RF", getTopicIF());
-			TopicIF afield = (TopicIF)getTopicMap().getQueryWrapper().queryForObject(query, params);
+			Map<String,TopicIF> params = Collections.singletonMap("RF", getTopicIF());
+			
+			QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();	    
+			TopicIF afield = qm.queryForObject(query, params);
+			
 			this.associationField = new AssociationField(afield, getTopicMap());
 		}
     return associationField;
@@ -174,10 +177,10 @@ public class RoleField extends FieldDefinition {
    * 
    * @returns the other RoleField objects this object's association type topic takes part in.
    */
-  public Collection getFieldsForOtherRoles() {
+  public Collection<RoleField> getFieldsForOtherRoles() {
     AssociationField afield = getAssociationField();
-    Collection fields = afield.getFieldsForRoles();
-		List ofields = new ArrayList(fields);
+    Collection<RoleField> fields = afield.getFieldsForRoles();
+		List<RoleField> ofields = new ArrayList<RoleField>(fields);
 		ofields.remove(this);
     return ofields;
   }
@@ -215,14 +218,12 @@ public class RoleField extends FieldDefinition {
   public InterfaceControl getInterfaceControl() {
     String query = "on:use-interface-control(%FD% : on:field-definition, $IC : on:interface-control)?";
 
-		TopicMap tm = getTopicMap();
-    List result = tm.getQueryWrapper().queryForList(query,
-			OntopolyModelUtils.getRowMapperOneColumn(), Collections.singletonMap("FD", getTopicIF()));
-
-    if (result.isEmpty())
-      return InterfaceControl.getDefaultInterfaceControl(tm);
-    else
-      return new InterfaceControl((TopicIF) result.get(0), tm);
+    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
+    
+    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();         
+		TopicIF interfaceControl = qm.queryForObject(query, qm.newRowMapperOneColumn(), params);
+		
+		return interfaceControl == null ? InterfaceControl.getDefaultInterfaceControl(getTopicMap()) : new InterfaceControl(interfaceControl, getTopicMap());
   }
 
 //  /**
@@ -252,22 +253,16 @@ public class RoleField extends FieldDefinition {
    * 
    * @return the topic types which may play the other roles in this association type.
    */
-  public Collection getDeclaredPlayerTypes() {
+  public Collection<TopicType> getDeclaredPlayerTypes() {
     String query = "select $ttype from on:has-field(%FD% : on:field-definition, $ttype : on:field-owner)?";
 
-    Collection rows = getTopicMap().getQueryWrapper().queryForList(query,
-			OntopolyModelUtils.getRowMapperOneColumn(), Collections.singletonMap("FD", getTopicIF()));
-
-    Iterator it = rows.iterator();
-    Collection results = new ArrayList(rows.size());
-    while (it.hasNext()) {
-      TopicIF topic = (TopicIF) it.next();
-      results.add(new TopicType(topic, getTopicMap()));
-    }
-    return results;
+    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
+    
+    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
   }
 
-  public Collection getAllowedPlayerTypes(Topic currentTopic) {
+  public Collection<TopicType> getAllowedPlayerTypes(Topic currentTopic) {
     String query = getAllowedPlayersTypesQuery();
     if (query == null) {
       query = "subclasses-of($SUP, $SUB) :- { "
@@ -280,20 +275,13 @@ public class RoleField extends FieldDefinition {
         + "not(on:is-abstract($avtype : on:topic-type))?";
     }
 
-    Map params = new HashMap(2);
+    Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
     params.put("field", getTopicIF());
     if (currentTopic != null)
       params.put("topic", currentTopic.getTopicIF());
-    Collection rows = getTopicMap().getQueryWrapper().queryForList(query,
-			OntopolyModelUtils.getRowMapperOneColumn(), params);
-
-    Iterator it = rows.iterator();
-    Collection results = new ArrayList(rows.size());
-    while (it.hasNext()) {
-      TopicIF topic = (TopicIF) it.next();
-      results.add(new TopicType(topic, getTopicMap()));
-    }
-    return results;
+    
+    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
   }
 
   private String getAllowedPlayersQuery() {
@@ -317,21 +305,18 @@ public class RoleField extends FieldDefinition {
     return (occ == null ? null : occ.getValue());
   }
 
-  public Collection getAllowedPlayers(Topic currentTopic) {
+  public Collection<Topic> getAllowedPlayers(Topic currentTopic) {
 
-    TopicMap tm = getTopicMap();
-
-    Collection result = new HashSet();
+    Collection<Topic> result = new HashSet<Topic>();
     String query = getAllowedPlayersQuery();
     if (query != null) {
-      Map params = new HashMap();
+      Map<String,TopicIF> params = new HashMap<String,TopicIF>();
       params.put("field", getTopicIF());
       params.put("topic", currentTopic.getTopicIF());
-      Collection topics = tm.getQueryWrapper().queryForList(query, params);
-      Iterator iter = topics.iterator();
-      while (iter.hasNext()) {
-        result.add(new Topic((TopicIF)iter.next(), tm));
-      }
+      
+      QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
+      return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    
     } else {
       Collection topicTypes = getAllowedPlayerTypes(currentTopic);
       Iterator iter = topicTypes.iterator();
@@ -350,7 +335,7 @@ public class RoleField extends FieldDefinition {
    * @param searchTerm the search term used to search for topics.
    * @return a collection of Topic objects
    */
-  public Collection searchAllowedPlayers(String searchTerm) {
+  public List<Topic> searchAllowedPlayers(String searchTerm) {
     try {
       String query = getAllowedPlayersSearchQuery();
       if (query == null)
@@ -360,16 +345,16 @@ public class RoleField extends FieldDefinition {
           + "topic-name($player, $tn), value-like($tn, %search%, $score) "
           + "order by $score desc, $player?";
   
-      Map params = new HashMap(2);
+      Map<String,Object> params = new HashMap<String,Object>(2);
       params.put("field", getTopicIF());
       params.put("search", searchTerm);
   
-      Collection rows = getTopicMap().getQueryWrapper().queryForList(query,
-          OntopolyModelUtils.getRowMapperOneColumn(), params);
+      QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();         
+      Collection<TopicIF> rows = qm.queryForList(query, qm.newRowMapperOneColumn(), params);
   
       Iterator it = rows.iterator();
-      Collection results = new ArrayList(rows.size());
-      Collection duplicateChecks = new HashSet(rows.size());
+      List<Topic> results = new ArrayList<Topic>(rows.size());
+      Collection<TopicIF> duplicateChecks = new HashSet<TopicIF>(rows.size());
   
       while (it.hasNext()) {
         TopicIF topic = (TopicIF) it.next();
@@ -380,7 +365,7 @@ public class RoleField extends FieldDefinition {
       } 
       return results;
     } catch (Exception e) {
-      return Collections.EMPTY_LIST;
+      return Collections.emptyList();
     }
   }
 
@@ -467,10 +452,10 @@ public class RoleField extends FieldDefinition {
    * @param topic the instance topic that takes part in the association.
    * @return the instance topics on the other side of an association an instance topic takes part in.
    */  
-  public Collection getValues(Topic topic) { 
+  public List<ValueIF> getValues(Topic topic) { 
     Collection roles = getRoles(topic);
     
-    List result = new ArrayList(roles.size());
+    List<ValueIF> result = new ArrayList<ValueIF>(roles.size());
     Iterator iter = roles.iterator();
     while (iter.hasNext()) {
       AssociationRoleIF role = (AssociationRoleIF) iter.next();
@@ -495,16 +480,16 @@ public class RoleField extends FieldDefinition {
     return OntopolyModelUtils.findRoles(associationTypeIf, roleTypeIf, playerIf);    
   }
   
-  public Collection getOrderedValues(Topic topic, RoleField ofield) { 
-    List values = (List)getValues(topic);
+  public List getOrderedValues(Topic topic, RoleField ofield) { 
+    List<ValueIF> values = getValues(topic);
     if (values.size() > 1) {
-      Map topics_occs = getValuesWithOrdering(topic);
+      Map<Topic,OccurrenceIF> topics_occs = getValuesWithOrdering(topic);
       Collections.sort(values, new MapValueComparator(topics_occs, ofield, topic));
     }
     return values;
   }
 
-  private static class MapValueComparator implements Comparator {
+  private static class MapValueComparator implements Comparator<ValueIF> {
     //! private static final String DEFAULT_ORDER_VALUE = "999999999";    
     private static final String DEFAULT_ORDER_VALUE = null; // sorts before "000000000"    
     private Map entries;
@@ -515,10 +500,8 @@ public class RoleField extends FieldDefinition {
       this.ofield = ofield;
       this.oplayer = oplayer;
     }
-    public int compare(Object o1, Object o2) {
+    public int compare(ValueIF v1, ValueIF v2) {
       try {
-        ValueIF v1 = (ValueIF)o1;
-        ValueIF v2 = (ValueIF)o2;
         Topic p1 = v1.getPlayer(ofield, oplayer);
         Topic p2 = v2.getPlayer(ofield, oplayer);
         OccurrenceIF oc1 = (OccurrenceIF)entries.get(p1);
@@ -534,7 +517,7 @@ public class RoleField extends FieldDefinition {
     }
   }
 
-  private Map getValuesWithOrdering(Topic topic) {
+  private Map<Topic,OccurrenceIF> getValuesWithOrdering(Topic topic) {
 
     TopicIF topicIf = topic.getTopicIF();   
     TopicIF typeIf = OntopolyModelUtils.getTopicIF(topic.getTopicMap(), PSI.ON, "field-value-order");
@@ -542,7 +525,7 @@ public class RoleField extends FieldDefinition {
 
     TopicIF fieldDefinitionIf = getTopicIF();
 
-    Map topics_occs = new HashMap();
+    Map<Topic,OccurrenceIF> topics_occs = new HashMap<Topic,OccurrenceIF>();
     Iterator iter = OntopolyModelUtils.findOccurrences(typeIf, topicIf, datatype).iterator();
     while (iter.hasNext()) {
       OccurrenceIF occ = (OccurrenceIF)iter.next();
@@ -690,7 +673,7 @@ public class RoleField extends FieldDefinition {
     value.addPlayer(roleField, new Topic(role.getPlayer(), roleField.getTopicMap()));
 
     Object[] roles = aroles.toArray();
-    Collection matched = new HashSet(roles.length);
+    Collection<AssociationRoleIF> matched = new HashSet<AssociationRoleIF>(roles.length);
     matched.add(role);
 
 		int selfMatch = 0;
@@ -845,12 +828,12 @@ public class RoleField extends FieldDefinition {
 		return topics;
 	}
 
-  private Collection getValues(Topic instance, RoleField ofield) {
-    Collection values = getValues(instance);
-    Collection result = new HashSet(values.size());
-    Iterator iter = values.iterator();
+  private Collection<Topic> getValues(Topic instance, RoleField ofield) {
+    Collection<ValueIF> values = getValues(instance);
+    Collection<Topic> result = new HashSet<Topic>(values.size());
+    Iterator<ValueIF> iter = values.iterator();
     while (iter.hasNext()) {
-      RoleField.ValueIF rfv = (RoleField.ValueIF)iter.next();
+      ValueIF rfv = iter.next();
       Topic player = rfv.getPlayer(ofield, instance);
       result.add(player);
     }
@@ -876,14 +859,12 @@ public class RoleField extends FieldDefinition {
     Collection alltopics = getValues(instance, ofield);
 //    System.out.println("ALL: " + alltopics);
 
-    Map topics_occs = getValuesWithOrdering(instance);
+    Map<Topic,OccurrenceIF> topics_occs = getValuesWithOrdering(instance);
 //    System.out.println("TO: " + topics_occs);
 
-    List occs = new ArrayList(topics_occs.values());
-    Collections.sort(occs, new Comparator() {
-        public int compare(Object o1, Object o2) {
-          OccurrenceIF occ1 = (OccurrenceIF)o1;
-          OccurrenceIF occ2 = (OccurrenceIF)o2;
+    List<OccurrenceIF> occs = new ArrayList<OccurrenceIF>(topics_occs.values());
+    Collections.sort(occs, new Comparator<OccurrenceIF>() {
+        public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
           return ObjectUtils.compare(occ1.getValue(), occ2.getValue());
         }
       });

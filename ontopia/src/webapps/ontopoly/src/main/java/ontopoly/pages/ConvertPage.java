@@ -39,7 +39,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
   
   private int NUMBER_OF_SOURCES;
   
-  private Map properties;
+  private Map<String,String> properties;
   
   public ConvertPage() {
   }
@@ -70,7 +70,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
       }
     }
     
-    properties = new HashMap();
+    properties = new HashMap<String,String>();
     
     // Adding part containing title and help link
     createTitle();
@@ -81,7 +81,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     
     final WebMarkupContainer sourcesDropDownContainer = new WebMarkupContainer("sourcesDropDownContainer") {
       public boolean isVisible() {
-        return (NUMBER_OF_SOURCES > 1 && getProperties().get("choice")
+        return (NUMBER_OF_SOURCES > 1 && properties.get("choice")
             .equals(new ResourceModel("ConvertPage.create.copy").getObject())) ? true : false;
       }
     };
@@ -91,10 +91,10 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     List sources = topicMap.getOntopolyRepository().getSources();  
     NUMBER_OF_SOURCES = sources.size();
     
-    final List contentCategories = Arrays.asList(
+    final List<String> contentCategories = Arrays.asList(
         new ResourceModel("ConvertPage.update.existing").getObject(), 
         new ResourceModel("ConvertPage.create.copy").getObject());
-    getProperties().put("choice", contentCategories.get(1));
+    properties.put("choice", contentCategories.get(1));
     
     String topicMapId = topicMap.getId();
     if(NUMBER_OF_SOURCES > 0 && 
@@ -112,9 +112,9 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     }
        
     // sources dropdown   
-    IModel sourcesChoicesModel = new LoadableDetachableModel() {
+    IModel<List<TopicMapSource>> sourcesChoicesModel = new LoadableDetachableModel<List<TopicMapSource>>() {
       @Override
-      protected Object load() {
+      protected List<TopicMapSource> load() {
         return OntopolyContext.getOntopolyRepository().getSources(); 
       }
     };
@@ -124,22 +124,23 @@ public class ConvertPage extends NonOntopolyAbstractPage {
       topicMapSourceModel = new TopicMapSourceModel((TopicMapSource)sources.get(0));
     }
       
-    final AjaxOntopolyDropDownChoice sourcesDropDown = new AjaxOntopolyDropDownChoice("sourcesDropDown", 
-        topicMapSourceModel, sourcesChoicesModel, new ChoiceRenderer("title", "id"));
+    final AjaxOntopolyDropDownChoice sourcesDropDown = 
+      new AjaxOntopolyDropDownChoice<TopicMapSource>("sourcesDropDown", 
+        topicMapSourceModel, sourcesChoicesModel, new ChoiceRenderer<TopicMapSource>("title", "id"));
          
     sourcesDropDownContainer.add(sourcesDropDown);
     
     
-    final AjaxOntopolyTextField textField = new AjaxOntopolyTextField("filename", new Model(""));
+    final AjaxOntopolyTextField textField = new AjaxOntopolyTextField("filename", new Model<String>(""));
     form.add(textField);
     
     Button okButton = new Button("ok", new ResourceModel("button.ok")) {
       @Override
       public void onSubmit() {
         TopicMap topicMap = getTopicMapModel().getTopicMap();
-        String name = textField.getModelObjectAsString();
+        String name = textField.getDefaultModelObjectAsString();
         
-        if(getProperties().get("choice").equals(new ResourceModel("ConvertPage.create.copy").getObject())) {
+        if(properties.get("choice").equals(new ResourceModel("ConvertPage.create.copy").getObject())) {
           
             TopicMapSource topicMapSource = (TopicMapSource) sourcesDropDown.getModelObject();
             String newTopicMapId = ConversionUtils.convertNew(topicMap, name, topicMapSource);
@@ -167,13 +168,13 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     form.add(cancelButton);   
   }
   
-  public Map getProperties() {
+  public Map<String,String> getProperties() {
     return properties;
   }
 
   private void createTitle() {
     add(new TitleHelpPanel("titlePartPanel", 
-          new PropertyModel(topicMapModel, "id"), new HelpLinkResourceModel("help.link.convertpage")));
+          new PropertyModel<String>(topicMapModel, "id"), new HelpLinkResourceModel("help.link.convertpage")));
   }
   
 }

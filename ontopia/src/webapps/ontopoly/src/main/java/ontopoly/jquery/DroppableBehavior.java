@@ -21,7 +21,7 @@ public abstract class DroppableBehavior extends JQueryBehavior {
     super.onBind();
     Component c = getComponent();
     c.setOutputMarkupId(true);
-    c.add(new AttributeAppender("class", new Model("do_" + id), " "));    
+    c.add(new AttributeAppender("class", new Model<String>("do_" + id), " "));    
   }
   
   public void renderHead(IHeaderResponse response) {
@@ -68,7 +68,7 @@ public abstract class DroppableBehavior extends JQueryBehavior {
    */
   protected abstract MarkupContainer getDropContainer();
   
-  private static class MarkupIdVisitor implements IVisitor {
+  private static class MarkupIdVisitor implements IVisitor<Component> {
     private final String id;
     private Component found;
 

@@ -7,7 +7,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldValueModel extends LoadableDetachableModel {
+public class FieldValueModel extends LoadableDetachableModel<Object> {
 
   private FieldInstanceModel fieldInstanceModel;
   private Object value;

@@ -119,7 +119,7 @@ public abstract class AbstractTypingTopic extends Topic {
    * 
    * @return a list of FieldDefinitions.
    */
-  public abstract Collection getDeclaredByFields();
+  public abstract Collection<? extends FieldDefinition> getDeclaredByFields();
 
 //  public abstract Collection getUsedBy();
 

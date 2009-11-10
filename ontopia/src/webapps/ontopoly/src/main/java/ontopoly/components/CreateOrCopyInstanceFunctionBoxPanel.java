@@ -38,7 +38,7 @@ public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
         TopicMap topicMap = instance.getTopicMap();
         TopicType topicType = topicTypeModel.getTopicType();
         Topic newInstance = topicType.createInstance(null);
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", newInstance.getId());
         if (newInstance.isOntologyTopic())
@@ -56,7 +56,7 @@ public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
         Topic instance = topicModel.getTopic();
         TopicMap topicMap = instance.getTopicMap();
         Topic newInstance = instance.copyCharacteristics();
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", newInstance.getId());
         if (newInstance.isOntologyTopic())

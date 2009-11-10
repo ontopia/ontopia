@@ -20,6 +20,8 @@ import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.utils.OntopolyUtils;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -29,7 +31,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 public class DescriptionPage extends OntopolyAbstractPage {
-  private TopicModel topicModel;
+  private TopicModel<Topic> topicModel;
   private TopicTypeModel topicTypeModel;
   private FieldsViewModel fieldsViewModel;
 
@@ -48,7 +50,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
     TopicMap topicMap = getTopicMap();
     Topic reifier = topicMap.getReifier();
 
-    this.topicModel = new TopicModel(reifier);
+    this.topicModel = new TopicModel<Topic>(reifier);
     Topic topic = topicModel.getTopic();
     
     // if "topicType" parameter is specified, pull out most specific direct type    
@@ -93,7 +95,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
 
     // Adding part containing title and help link
     this.titlePartPanel = new TitleHelpPanel("titlePartPanel",
-        new PropertyModel(getTopicMapModel(), "name"),
+        new PropertyModel<String>(getTopicMapModel(), "name"),
         new HelpLinkResourceModel("help.link.descriptionpage"));
     this.titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);
@@ -133,7 +135,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
     
     FunctionBoxesPanel functionBoxesPanel = new FunctionBoxesPanel("functionBoxes") {
       @Override
-      protected List getFunctionBoxesList(String id) {
+      protected List<Component> getFunctionBoxesList(String id) {
         // TODO Auto-generated method stub
         return createFunctionBoxesList(id);
       }      
@@ -141,8 +143,8 @@ public class DescriptionPage extends OntopolyAbstractPage {
     functionBoxesContainer.add(functionBoxesPanel);
   }
 
-  private List createFunctionBoxesList(String id) {
-    List list = new ArrayList();
+  private List<Component> createFunctionBoxesList(String id) {
+    List<Component> list = new ArrayList<Component>();
     
     TopicMap topicMap = getTopicMap();
     if (topicMap.isDeleteable()) {
@@ -228,7 +230,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
   }
 
   @Override
-  public Class getPageClass(Topic topic) {
+  public Class<? extends Page> getPageClass(Topic topic) {
     return InstancePage.class;
   }
   

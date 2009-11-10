@@ -17,7 +17,7 @@ import org.apache.wicket.markup.html.form.Form;
 
 public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
   
-  protected TopicModel topicModel;
+  protected TopicModel<Topic> topicModel;
   protected TopicTypeModel topicTypeModel;
   protected FieldsViewModel fieldsViewModel;
 
@@ -30,7 +30,7 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
     super(parameters);
 	  
     String topicMapId = parameters.getString("topicMapId");
-    this.topicModel = new TopicModel(topicMapId, parameters.getString("topicId"));
+    this.topicModel = new TopicModel<Topic>(topicMapId, parameters.getString("topicId"));
     Topic topic = topicModel.getTopic();
     
     // if "topicType" parameter is specified, pull out most specific direct type    

@@ -8,7 +8,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class TopicTypeModel extends LoadableDetachableModel {
+public class TopicTypeModel extends LoadableDetachableModel<TopicType> {
 
   private static final long serialVersionUID = -8374148020034895666L;
 
@@ -38,7 +38,7 @@ public class TopicTypeModel extends LoadableDetachableModel {
   }
 
   @Override
-  protected Object load() {
+  protected TopicType load() {
     if (topicMapId == null) return null;
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);

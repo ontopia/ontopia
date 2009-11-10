@@ -7,6 +7,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -25,7 +26,7 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
     
     add(new Label("title", getTitleModel()));
     
-    final TextField nameField = new TextField("content", new Model(""));
+    final TextField<String> nameField = new TextField<String>("content", new Model<String>(""));
     nameField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
@@ -38,8 +39,8 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         TopicMap topicMap = topicMapModel.getTopicMap();
-        Topic instance = createInstance(topicMap, nameField.getModelObjectAsString());
-        Map pageParametersMap = new HashMap();
+        Topic instance = createInstance(topicMap, nameField.getDefaultModelObjectAsString());
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", instance.getId());
         if (instance.isOntologyTopic())
@@ -50,13 +51,13 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
     add(button);
   }
 
-  protected abstract IModel getTitleModel();
+  protected abstract IModel<String> getTitleModel();
 
-  protected IModel getButtonModel() {
+  protected IModel<String> getButtonModel() {
     return new ResourceModel("create");
   }
     
-  protected abstract Class getInstancePageClass();
+  protected abstract Class<? extends Page> getInstancePageClass();
   
   protected abstract Topic createInstance(TopicMap topicMap, String name);
   

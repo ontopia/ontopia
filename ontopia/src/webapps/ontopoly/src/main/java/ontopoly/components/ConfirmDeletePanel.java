@@ -19,21 +19,21 @@ import org.apache.wicket.model.ResourceModel;
 
 public class ConfirmDeletePanel extends Panel {
   
-  private TopicModel topicModel = new TopicModel(null);
+  private TopicModel<Topic> topicModel = new TopicModel<Topic>(null);
   
   public ConfirmDeletePanel(String id, final Component refreshComponent) {
     super(id);
     
-    add(new Label("topic", new AbstractReadOnlyModel() {
+    add(new Label("topic", new AbstractReadOnlyModel<String>() {
       @Override
       public String getObject() {
         Topic topic = topicModel.getTopic();
         return topic == null ? null : topic.getName();
       }
     }));
-    add(new Label("dependent", new AbstractReadOnlyModel() {
+    add(new Label("dependent", new AbstractReadOnlyModel<Integer>() {
       @Override
-      public Object getObject() {
+      public Integer getObject() {
         Topic topic = topicModel.getTopic();
         int size = topic == null ? 0 : topic.getDependentObjects().size();
         return new Integer(size);

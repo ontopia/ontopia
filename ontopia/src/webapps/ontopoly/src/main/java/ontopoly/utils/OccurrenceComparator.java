@@ -6,7 +6,7 @@ import java.util.Comparator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.utils.StringUtils;
 
-public class OccurrenceComparator implements Comparator, Serializable {
+public class OccurrenceComparator implements Comparator<Object>, Serializable {
 
   public static final OccurrenceComparator INSTANCE = new OccurrenceComparator();
   

@@ -7,16 +7,16 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.validator.AbstractValidator;
 
-public class URIValidator extends AbstractValidator {
+public class URIValidator extends AbstractValidator<String> {
 
   @Override
-  protected void onValidate(IValidatable validatable) {
-    String value = (String)validatable.getValue();
+  protected void onValidate(IValidatable<String> validatable) {
+    String value = validatable.getValue();
     if (value == null) return;
     try {
       new URILocator(value);
     } catch (Exception e) {
-      error(validatable, Collections.singletonMap("value", value));
+      error(validatable, Collections.singletonMap("value", (Object)value));
     }
   }
 

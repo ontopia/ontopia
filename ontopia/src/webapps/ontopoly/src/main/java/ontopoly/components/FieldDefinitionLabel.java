@@ -23,7 +23,7 @@ public class FieldDefinitionLabel extends Panel {
 
     Topic ontologyType = getPrimaryOntologyType(fieldDefinitionModel.getFieldDefinition());    
     
-    add(new TopicLink("ontologyType", new TopicModel(ontologyType)) {
+    add(new TopicLink("ontologyType", new TopicModel<Topic>(ontologyType)) {
       @Override
       public String getLabel() {
         return fieldDefinitionModel.getFieldDefinition().getFieldName();

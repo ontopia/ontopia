@@ -27,26 +27,25 @@ public class SchemaTracker {
 
   protected static final Collection NULL_COLLECTION = Collections.singleton(null);
   
-  protected Map ttypes = new HashMap(); // ttype : { TopicType }
-  protected Map atypes = new HashMap(); // atypes : { rtypes : { ptypes : PlayerType } }
+  protected Map<TopicIF,TopicType> ttypes = new HashMap<TopicIF,TopicType>(); // ttype : { TopicType }
+  protected Map<TopicIF,Map<TopicIF,Map<TopicIF,PlayerType>>> atypes = new HashMap<TopicIF,Map<TopicIF,Map<TopicIF,PlayerType>>>(); // atypes : { rtypes : { ptypes : PlayerType } }
   
-  protected Collection non_symmetric_atypes = new HashSet();
+  protected Collection<TopicIF> non_symmetric_atypes = new HashSet<TopicIF>();
   
-  protected Collection utypedp = new HashSet(); // untyped players
-  protected Collection utypedt = new HashSet(); // untyped topics
+  protected Collection<TopicIF> utypedp = new HashSet<TopicIF>(); // untyped players
+  protected Collection<TopicIF> utypedt = new HashSet<TopicIF>(); // untyped topics
   
-  protected Map nscopes = new HashMap(); // nscope : [ ttypes ]
+  protected Map<TopicIF,Collection<TopicIF>> nscopes = new HashMap<TopicIF,Collection<TopicIF>>(); // nscope : [ ttypes ]
   
   private class TopicType {
-//   protected TopicIF type;
-   protected int count;
+    protected int count;
   
-   protected IdentityType subloc = new IdentityType();
-   protected IdentityType subind = new IdentityType();
+    protected IdentityType subloc = new IdentityType();
+    protected IdentityType subind = new IdentityType();
   
-   protected Map ntypes = new HashMap(); // ntype : CharType
-   protected Map oitypes = new HashMap(); // otype : CharType
-   protected Map oetypes = new HashMap(); // otype : CharType    
+    protected Map<TopicIF,CharType> ntypes = new HashMap<TopicIF,CharType>(); // ntype : CharType
+    protected Map<TopicIF,CharType> oitypes = new HashMap<TopicIF,CharType>(); // otype : CharType
+    protected Map<TopicIF,CharType> oetypes = new HashMap<TopicIF,CharType>(); // otype : CharType    
   }
   
   private abstract class AbstractProperty {
@@ -104,7 +103,7 @@ public class SchemaTracker {
      ttinfo.subind.registerCardinality(subinds.size());
      
      // names
-     TObjectIntHashMap ncards = new TObjectIntHashMap();      
+     TObjectIntHashMap<TopicIF> ncards = new TObjectIntHashMap<TopicIF>();      
      Iterator niter = topic.getTopicNames().iterator();
      while (niter.hasNext()) {
        TopicNameIF tn = (TopicNameIF)niter.next();
@@ -115,9 +114,9 @@ public class SchemaTracker {
            Iterator siter = scope.iterator();
            while (siter.hasNext()) {
              TopicIF theme = (TopicIF)siter.next();
-             Collection nstypes = (Collection)nscopes.get(theme);
+             Collection<TopicIF> nstypes = nscopes.get(theme);
              if (nstypes == null) {
-               nstypes = new HashSet();
+               nstypes = new HashSet<TopicIF>();
                nscopes.put(theme, nstypes);
              }
              nstypes.add(ttype);
@@ -141,8 +140,8 @@ public class SchemaTracker {
      }      
      
      // occurrences
-     TObjectIntHashMap oicards = new TObjectIntHashMap();      
-     TObjectIntHashMap oecards = new TObjectIntHashMap();      
+     TObjectIntHashMap<TopicIF> oicards = new TObjectIntHashMap<TopicIF>();      
+     TObjectIntHashMap<TopicIF> oecards = new TObjectIntHashMap<TopicIF>();      
      Iterator oiter = topic.getOccurrences().iterator();
      while (oiter.hasNext()) {
        OccurrenceIF oc = (OccurrenceIF)oiter.next();
@@ -250,7 +249,7 @@ public class SchemaTracker {
   
   // --- getters
   
-  public Collection getTopicTypes() {
+  public Collection<TopicIF> getTopicTypes() {
    return ttypes.keySet();
   }
   
@@ -294,9 +293,9 @@ public class SchemaTracker {
    return utypedp;
   }
   
-  public Collection getNameTypes(TopicIF ttype) {
+  public Collection<TopicIF> getNameTypes(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return Collections.EMPTY_SET;
+   if (tt == null) return Collections.emptySet();
    return tt.ntypes.keySet();
   }
   
@@ -316,9 +315,9 @@ public class SchemaTracker {
    return ct.maxcard;
   }
   
-  public Collection getExternalOccurrenceTypes(TopicIF ttype) {
+  public Collection<TopicIF> getExternalOccurrenceTypes(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return Collections.EMPTY_SET;
+   if (tt == null) return Collections.emptySet();
    return tt.oetypes.keySet();
   }
   
@@ -338,9 +337,9 @@ public class SchemaTracker {
    return ct.maxcard;
   }
   
-  public Collection getInternalOccurrenceTypes(TopicIF ttype) {
+  public Collection<TopicIF> getInternalOccurrenceTypes(TopicIF ttype) {
    TopicType tt = getTopicType(ttype);
-   if (tt == null) return Collections.EMPTY_SET;
+   if (tt == null) return Collections.emptySet();
    return tt.oitypes.keySet();
   }
   
@@ -407,12 +406,12 @@ public class SchemaTracker {
   }
   
   public Collection getOntologyTypes() {
-   Collection onto_types = new HashSet();
+   Collection<TopicIF> onto_types = new HashSet<TopicIF>();
   
    // topic types
-   Iterator ttypes = getTopicTypes().iterator();
+   Iterator<TopicIF> ttypes = getTopicTypes().iterator();
    while (ttypes.hasNext()) {
-     TopicIF ttype = (TopicIF)ttypes.next();
+     TopicIF ttype = ttypes.next();
      onto_types.add(ttype);
      // name types
      Iterator ntypes = getNameTypes(ttype).iterator();
@@ -477,12 +476,12 @@ public class SchemaTracker {
    return t;
   }
   
-  protected CharType getCharType(Map cmap, TopicIF ctype) {
-   return (CharType)cmap.get(ctype);
+  protected CharType getCharType(Map<TopicIF,CharType> cmap, TopicIF ctype) {
+   return cmap.get(ctype);
   }
   
-  protected CharType createCharType(Map cmap, TopicIF ctype) {
-   CharType t = (CharType)cmap.get(ctype);
+  protected CharType createCharType(Map<TopicIF,CharType> cmap, TopicIF ctype) {
+   CharType t = cmap.get(ctype);
    if (t == null) {
      t = new CharType();
      t.type = ctype;
@@ -491,26 +490,26 @@ public class SchemaTracker {
    return t;
   }
   
-  protected PlayerType getPlayerType(Map amap, TopicIF atype, TopicIF rtype, TopicIF ptype) {
-   Map rmap = (Map)amap.get(atype);
+  protected PlayerType getPlayerType(Map<TopicIF,Map<TopicIF,Map<TopicIF,PlayerType>>> amap, TopicIF atype, TopicIF rtype, TopicIF ptype) {
+   Map<TopicIF,Map<TopicIF,PlayerType>> rmap = amap.get(atype);
    if (rmap == null) return null;
-   Map pmap = (Map)rmap.get(rtype);
+   Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
    if (pmap == null) return null;
-   return (PlayerType)pmap.get(ptype);
+   return pmap.get(ptype);
   }
   
-  protected PlayerType createPlayerType(Map amap, TopicIF atype, TopicIF rtype, TopicIF ptype) {
-   Map rmap = (Map)amap.get(atype);
+  protected PlayerType createPlayerType(Map<TopicIF,Map<TopicIF,Map<TopicIF,PlayerType>>> amap, TopicIF atype, TopicIF rtype, TopicIF ptype) {
+   Map<TopicIF,Map<TopicIF,PlayerType>> rmap = amap.get(atype);
    if (rmap == null) {
-     rmap = new HashMap();
+     rmap = new HashMap<TopicIF,Map<TopicIF,PlayerType>>();
      amap.put(atype, rmap);
    }
-   Map pmap = (Map)rmap.get(rtype);
+   Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
    if (pmap == null) {
-     pmap = new HashMap();
+     pmap = new HashMap<TopicIF,PlayerType>();
      rmap.put(rtype, pmap);
    }
-   PlayerType t = (PlayerType)pmap.get(ptype);
+   PlayerType t = pmap.get(ptype);
    if (t == null) {
      t = new PlayerType();
 //     t.atype = atype;

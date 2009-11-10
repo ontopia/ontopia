@@ -3,6 +3,7 @@ package ontopoly.components;
 import ontopoly.pages.VizigatorPage;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -32,7 +33,7 @@ public abstract class VizigatorLinkFunctionBoxPanel extends CustomLinkFunctionBo
     pageParameters.put("topicMapId", getTopicMapId());
     pageParameters.put("topicId", getTopicId());
     
-    return new BookmarkablePageLink(id, VizigatorPage.class, pageParameters) {
+    return new BookmarkablePageLink<Page>(id, VizigatorPage.class, pageParameters) {
       @Override
       protected void onComponentTag(ComponentTag tag) {
         tag.setName("a");

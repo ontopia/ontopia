@@ -41,23 +41,23 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
 
       if (embedded) {
         TopicType defaultTopicType = OntopolyUtils.getDefaultTopicType(oPlayer);
-        List fieldInstances = oPlayer.getFieldInstances(defaultTopicType, fieldsViewModel.getFieldsView());
+        List<FieldInstance> fieldInstances = oPlayer.getFieldInstances(defaultTopicType, fieldsViewModel.getFieldsView());
         // if no matching fields show link to topic instead
         if (fieldInstances.isEmpty()) {
           // player link
-          TopicLink playerLink = new TopicLink("player", new TopicModel(oPlayer), fieldsViewModel);
+          TopicLink playerLink = new TopicLink("player", new TopicModel<Topic>(oPlayer), fieldsViewModel);
           playerLink.setEnabled(traversable);
           add(playerLink);          
         } else {
           // embedded topic
-          List fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(fieldInstances);
+          List<FieldInstanceModel> fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(fieldInstances);
           FieldInstancesPanel fip = new FieldInstancesPanel("player", fieldInstanceModels, fieldsViewModel, readonly, traversable);
           fip.setRenderBodyOnly(true);
           add(fip);
         }
       } else {
         // player link
-        TopicLink playerLink = new TopicLink("player", new TopicModel(oPlayer), fieldsViewModel);
+        TopicLink playerLink = new TopicLink("player", new TopicModel<Topic>(oPlayer), fieldsViewModel);
         playerLink.setEnabled(traversable);
         add(playerLink);
       }
@@ -71,16 +71,16 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
       
       } else if (interfaceControl.isDropDownList()) {
         // default is drop-down list
-        IModel selectedModel = new TopicModel(null);
-        IModel choicesModel = new PossiblePlayersModel(fieldInstanceModel, valueFieldModel) {
+        TopicModel<Topic> selectedModel = new TopicModel<Topic>(null);
+        IModel<List<Topic>> choicesModel = new PossiblePlayersModel(fieldInstanceModel, valueFieldModel) {
           @Override
-          protected void filterPlayers(List players) {
+          protected void filterPlayers(Collection<Topic> players) {
             AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
             page.filterTopics(players);
           }            
         };
         
-        TopicDropDownChoice choice = new TopicDropDownChoice("player", selectedModel, choicesModel) {        
+        TopicDropDownChoice<Topic> choice = new TopicDropDownChoice<Topic>("player", selectedModel, choicesModel) {        
           @Override
           protected void onModelChanged() {
             super.onModelChanged();
@@ -92,9 +92,9 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
 
       } else if (interfaceControl.isAutoComplete()) {
         AssociationFieldAutoCompleteTextField autoCompleteField 
-          = new AssociationFieldAutoCompleteTextField("player", new Model(null), valueFieldModel) {
+          = new AssociationFieldAutoCompleteTextField("player", new Model<String>(null), valueFieldModel) {
           @Override
-          protected void filterPlayers(List players) {
+          protected void filterPlayers(List<Topic> players) {
             AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
             page.filterTopics(players);
           }            

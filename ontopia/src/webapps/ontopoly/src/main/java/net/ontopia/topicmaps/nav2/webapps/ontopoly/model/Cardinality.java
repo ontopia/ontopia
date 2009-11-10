@@ -2,14 +2,9 @@
 
 package net.ontopia.topicmaps.nav2.webapps.ontopoly.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.utils.OntopolyModelUtils;
 
 /**
  * Represents a cardinality that can be assigned to a field.
@@ -76,21 +71,11 @@ public class Cardinality extends Topic {
    * @return A list containing Cardinality objects of all available
    *         cardinalities.
    */
-  public static List getCardinalityTypes(TopicMap tm) {
+  public static List<Cardinality> getCardinalityTypes(TopicMap tm) {
     String query = "instance-of($d, on:cardinality)?";
 
-    Collection result = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn());
-
-    if (result.isEmpty())
-      return Collections.EMPTY_LIST;
-
-    List cardinalityTypes = new ArrayList();
-    Iterator it = result.iterator();
-    while (it.hasNext()) {
-      cardinalityTypes.add(new Cardinality((TopicIF) it.next(), tm));
-    }
-    return cardinalityTypes;
+    QueryMapper<Cardinality> qm = tm.newQueryMapper(Cardinality.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn());
   }
 
 }

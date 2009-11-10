@@ -44,13 +44,15 @@ public class NameType extends AbstractTypingTopic {
     return getTopicIF().getSubjectIdentifiers().contains(PSI.ON_UNTYPED_NAME);
 	}
 
-	public Collection getDeclaredByFields() {
+	@Override
+	public Collection<NameField> getDeclaredByFields() {
     String query = "select $FD from on:has-name-type(%TYPE% : on:name-type, $FD : on:name-field)?";
-    Map params = Collections.singletonMap("TYPE", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("TYPE", getTopicIF());
 
-    return getTopicMap().getQueryWrapper().queryForList(query,
-        new RowMapperIF() {
-          public Object mapRow(QueryResultIF result, int rowno) {
+    QueryMapper<NameField> qm = getTopicMap().newQueryMapper(NameField.class);    
+    return qm.queryForList(query,
+        new RowMapperIF<NameField>() {
+          public NameField mapRow(QueryResultIF result, int rowno) {
 						TopicIF fieldTopic = (TopicIF)result.getValue(0);
 						return new NameField(fieldTopic, getTopicMap(), new NameType(getTopicIF(), getTopicMap()));
 					}

@@ -2,7 +2,6 @@
 
 package net.ontopia.topicmaps.nav2.webapps.ontopoly.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -143,11 +142,12 @@ public abstract class FieldDefinition extends Topic {
     String query = 
 			"select $C from on:has-cardinality(%FD% : on:field-definition, $C : on:cardinality) limit 1?";
 
-    Map params = Collections.singletonMap("FD", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    TopicIF card = (TopicIF)tm.getQueryWrapper().queryForObject(query, params);
-		Cardinality cardinality = (card == null ? Cardinality.getDefaultCardinality(tm) : new Cardinality(card, tm));
+    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();    
+    
+    TopicIF card = qm.queryForObject(query, params);
+		Cardinality cardinality = (card == null ? Cardinality.getDefaultCardinality(getTopicMap()) : new Cardinality(card, getTopicMap()));
 		cachedCardinality = cardinality;
 		return cardinality;
   }
@@ -182,23 +182,12 @@ public abstract class FieldDefinition extends Topic {
    * 
    * @return a list of TopicType objects
    */
-  public List getUsedBy() {
+  public List<TopicType> getUsedBy() {
     String query = "select $type from on:has-field($type : on:field-owner, %FD% : on:field-definition)?";
-    Map params = Collections.singletonMap("FD", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    Collection queryCollection = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn(), params);
-
-    Iterator it = queryCollection.iterator();
-    List topicTypes = new ArrayList();
-    TopicIF currTopicIF;
-    while (it.hasNext()) {
-      currTopicIF = (TopicIF) it.next();
-      topicTypes.add(new TopicType(currTopicIF, tm));
-    }
-
-    return topicTypes;
+    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
   }
 
   public abstract Collection getValues(Topic topic);

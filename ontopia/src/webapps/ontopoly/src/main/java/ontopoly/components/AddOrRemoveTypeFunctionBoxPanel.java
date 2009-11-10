@@ -17,7 +17,6 @@ import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
 public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
@@ -26,8 +25,8 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
     super(id);
     add(new Label("title", new ResourceModel("add.remove.type.instance")));   
 
-    final IModel selectedModel = new TopicModel(null, TopicModel.TYPE_TOPIC_TYPE);
-    IModel choicesModel = new AvailableTopicTypesModel(topicModel) {
+    final TopicModel<TopicType> selectedModel = new TopicModel<TopicType>(null, TopicModel.TYPE_TOPIC_TYPE);
+    AvailableTopicTypesModel choicesModel = new AvailableTopicTypesModel(topicModel) {
       @Override
       protected boolean getShouldIncludeExistingTypes() {
         return true;
@@ -38,7 +37,7 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
         return page.filterTopic(o);
       }                              
     };
-    TopicDropDownChoice choice = new TopicDropDownChoice("typesList", selectedModel, choicesModel);
+    TopicDropDownChoice<TopicType> choice = new TopicDropDownChoice<TopicType>("typesList", selectedModel, choicesModel);
     choice.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
@@ -54,7 +53,7 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
         if (topicType == null) return;
         Topic instance = topicModel.getTopic();
         instance.addTopicType(topicType);
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", instance.getTopicMap().getId());
         pageParametersMap.put("topicId", instance.getId());
         setResponsePage(InstancePage.class, new PageParameters(pageParametersMap));
@@ -73,7 +72,7 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
         if (!(topicTypes.size() == 1 && topicTypes.contains(topicType)))
           // only remove topic type if it won't end up without a type at all
           instance.removeTopicType(topicType);
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", instance.getTopicMap().getId());
         pageParametersMap.put("topicId", instance.getId());
         setResponsePage(InstancePage.class, new PageParameters(pageParametersMap));

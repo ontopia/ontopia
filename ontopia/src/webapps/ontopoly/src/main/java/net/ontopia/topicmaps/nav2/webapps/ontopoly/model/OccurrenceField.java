@@ -6,7 +6,6 @@ package net.ontopia.topicmaps.nav2.webapps.ontopoly.model;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -80,16 +79,12 @@ public class OccurrenceField extends FieldDefinition {
    */
   public DataType getDataType() {
     String query = "select $datatype from on:has-datatype(%FD% : on:field-definition, $datatype : on:datatype)?";
-    Map params = Collections.singletonMap("FD", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    List queryResult = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn(), params);
-
-    if (queryResult.isEmpty())
-      return DataType.getDefaultDataType(tm);
-    else
-      return new DataType((TopicIF) queryResult.get(0), tm);
+    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();
+    
+    TopicIF dataType = qm.queryForObject(query, params);
+    return dataType == null ? DataType.getDefaultDataType(getTopicMap()) : new DataType(dataType, getTopicMap());
   }
 
 //  /**

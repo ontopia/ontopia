@@ -23,8 +23,12 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMapSourceIF;
+import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.QueryMapper;
+import net.ontopia.topicmaps.query.core.DeclarationContextIF;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.utils.QueryWrapper;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.utils.ObjectUtils;
@@ -41,8 +45,8 @@ public class OntopolyRepository {
 
   private TopicMapIF systemtm;
   private TopicMapRepositoryIF repository;
-  private List tms;
-  private List sources;
+  private List<TopicMapReference> tms;
+  private List<TopicMapSource> sources;
 
   public OntopolyRepository(TopicMapRepositoryIF repository) {
     this.repository = repository;
@@ -67,7 +71,7 @@ public class OntopolyRepository {
   
   private void build() {
     // get all TMs in repository first
-    final Map byid = new HashMap(); // so we can reference from rowmapper
+    final Map<String,TopicMapReferenceIF> byid = new HashMap<String,TopicMapReferenceIF>(); // so we can reference from rowmapper
     Iterator it = repository.getReferences().iterator();
     while (it.hasNext()) {
       TopicMapReferenceIF ref = (TopicMapReferenceIF) it.next();
@@ -81,15 +85,21 @@ public class OntopolyRepository {
     }
 
     // now query to find Ontopoly TMs
-    QueryWrapper qw = new QueryWrapper(systemtm);
-    tms = qw.queryForList(
-      "using ont for i\"http://psi.ontopia.net/ontology/\" " +
+    String declarations = "using ont for i\"http://psi.ontopia.net/ontology/\"";
+    QueryProcessorIF processor = QueryUtils.getQueryProcessor(systemtm);
+    DeclarationContextIF context;
+    try {
+      context = QueryUtils.parseDeclarations(systemtm, declarations);
+    } catch (InvalidQueryException e) {
+      throw new OntopiaRuntimeException(e);
+    }
+    
+    QueryMapper<TopicMapReference> qm = new QueryMapper<TopicMapReference>(null, processor, context, TopicMapReference.class); 
+    tms = qm.queryForList(
       "instance-of($T, ont:ted-topic-map), " +
       "ont:topic-map-id($T, $ID)?",
-      new RowMapperIF() {
-        // Java anonymous classes stink
-          
-        public Object mapRow(QueryResultIF result, int ix) {
+      new RowMapperIF<TopicMapReference>() {
+        public TopicMapReference mapRow(QueryResultIF result, int ix) {
           TopicIF topic = (TopicIF) result.getValue("T");
           String id = (String) result.getValue("ID");
           TopicMapReferenceIF ref = repository.getReferenceByKey(id);
@@ -109,7 +119,7 @@ public class OntopolyRepository {
     sortTopicMaps();
 
     // get the sources as well
-    sources = new ArrayList();
+    sources = new ArrayList<TopicMapSource>();
     it = repository.getSources().iterator();
     while (it.hasNext()) {
       TopicMapSourceIF src = (TopicMapSourceIF) it.next();
@@ -137,8 +147,8 @@ public class OntopolyRepository {
    * Ontopoly topic maps.
    * @return a List of TopicMapReference objects
    */
-  public List getOntopolyTopicMaps() {
-    List tmp = new ArrayList(tms.size());
+  public List<TopicMapReference> getOntopolyTopicMaps() {
+    List<TopicMapReference> tmp = new ArrayList<TopicMapReference>(tms.size());
     for (int ix = 0; ix < tms.size(); ix++) {
       TopicMapReference ref = (TopicMapReference) tms.get(ix);
       if (ref.isOntopolyTopicMap())
@@ -152,8 +162,8 @@ public class OntopolyRepository {
    * non-Ontopoly topic maps.
    * @return a List of TopicMapReference objects
    */
-  public List getNonOntopolyTopicMaps() {
-    List tmp = new ArrayList(tms.size());
+  public List<TopicMapReference> getNonOntopolyTopicMaps() {
+    List<TopicMapReference> tmp = new ArrayList<TopicMapReference>(tms.size());
     for (int ix = 0; ix < tms.size(); ix++) {
       TopicMapReference ref = (TopicMapReference) tms.get(ix);
       if (!ref.isOntopolyTopicMap())
@@ -186,16 +196,16 @@ public class OntopolyRepository {
    * support creation are not included.   
    * @return a List of TopicMapSource objects
    */
-  public List getSources() {
+  public List<TopicMapSource> getSources() {
     return sources;
   }
   
   public TopicMapSource getSource(String topicMapSourceId) {
     TopicMapSource source = null;
     
-    Iterator it = getSources().iterator();
+    Iterator<TopicMapSource> it = getSources().iterator();
     while(it.hasNext()) {
-      TopicMapSource s = (TopicMapSource) it.next();
+      TopicMapSource s = it.next();
       if(s.getId().equals(topicMapSourceId)) {
         source = s;
         break;
@@ -232,7 +242,7 @@ public class OntopolyRepository {
    * INTERNAL: Sort the list of topic maps in place.
    */
   private void sortTopicMaps() {
-    Collections.sort(tms, new Comparator() {
+    Collections.sort(tms, new Comparator<Object>() {
         public int compare(Object o1, Object o2) {
           TopicMapReference ref1 = (TopicMapReference) o1;
           TopicMapReference ref2 = (TopicMapReference) o2;

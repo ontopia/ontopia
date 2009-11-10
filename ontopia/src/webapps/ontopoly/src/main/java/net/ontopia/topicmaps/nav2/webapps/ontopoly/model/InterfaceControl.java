@@ -2,10 +2,6 @@
 
 package net.ontopia.topicmaps.nav2.webapps.ontopoly.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -75,21 +71,11 @@ public class InterfaceControl extends Topic {
     return new InterfaceControl(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "drop-down-list"), tm);
   }
 
-  public static List getInterfaceControlTypes(TopicMap tm) {
+  public static List<InterfaceControl> getInterfaceControlTypes(TopicMap tm) {
     String query = "instance-of($d, on:interface-control)?";
 
-    Collection result = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn());
-
-    if (result.isEmpty())
-      return Collections.EMPTY_LIST;
-
-    List interfaceControlTypes = new ArrayList();
-    Iterator it = result.iterator();
-    while (it.hasNext()) {
-      interfaceControlTypes.add(new InterfaceControl((TopicIF) it.next(), tm));
-    }
-    return interfaceControlTypes;
+    QueryMapper<InterfaceControl> qm = tm.newQueryMapper(InterfaceControl.class);    
+    return qm.queryForList(query, qm.newRowMapperOneColumn());
   }
 
 }

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.utils.OntopolyModelUtils;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.utils.TopicComparator;
 import net.ontopia.topicmaps.utils.CopyUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
@@ -220,30 +219,24 @@ public class Topic {
 			+ "direct-instance-of($TOPIC, $DTYPE), "
 			+ "{ $XTYPE = $DTYPE | supertype-of($DTYPE, $XTYPE) } ?";
 
-    Map params = new HashMap(2);
+    Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
     params.put("topic", getTopicIF());
     params.put("topicType", topicType.getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    List result = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn(), params);
-
-    if (result.isEmpty())
-      return null;
-    else
-      return new TopicType(((TopicIF) result.get(0)), tm);
+    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
+    return qm.queryForObject(query, qm.newRowMapperOneColumn(), params);    
   }
 
   /**
    * Returns the topic types of which this topic is a direct instance.
    */
-  public List getTopicTypes() {
+  public List<TopicType> getTopicTypes() {
     TopicIF topicIF = getTopicIF();
     Collection topicTypes = topicIF.getTypes();
 		int size = topicTypes.size();
 		if (size == 0)
-		  return Collections.EMPTY_LIST;
-		List result = new ArrayList(size);
+		  return Collections.emptyList();
+		List<TopicType> result = new ArrayList<TopicType>(size);
 		TopicIF topicTypeTopic = topicIF.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_TOPIC_TYPE);
 		Iterator iter = topicTypes.iterator();
 		while (iter.hasNext()) {
@@ -323,13 +316,13 @@ public class Topic {
   //!   return fieldInstances;
   //! }
 
-  public List getFieldInstances(TopicType topicType) {
+  public List<FieldInstance> getFieldInstances(TopicType topicType) {
 		return getFieldInstances(topicType, null);
 	}
 
-  public List getFieldInstances(TopicType topicType, FieldsView fieldsView) {
+  public List<FieldInstance> getFieldInstances(TopicType topicType, FieldsView fieldsView) {
     List fieldAssignments = topicType.getFieldAssignments(fieldsView);
-    List fieldInstances = new ArrayList(fieldAssignments.size());
+    List<FieldInstance> fieldInstances = new ArrayList<FieldInstance>(fieldAssignments.size());
 
     Iterator it = fieldAssignments.iterator();
 
@@ -350,8 +343,8 @@ public class Topic {
 		topicIF.remove();
 	}
 
-  public Collection getDependentObjects() {
-    Collection result = new HashSet();
+  public Collection<Topic> getDependentObjects() {
+    Collection<Topic> result = new HashSet<Topic>();
     findDependentObjects(result);
     return result;
   }
@@ -363,8 +356,8 @@ public class Topic {
    * role field that has on:create-only-mode enabled. The dependencies
    * are transitive.
    */
-  protected void findDependentObjects(Collection alreadyKnownDependentObjects) {
-    Collection newPlayers = new HashSet();
+  protected void findDependentObjects(Collection<Topic> alreadyKnownDependentObjects) {
+    Collection<Topic> newPlayers = new HashSet<Topic>();
     Iterator titer = getTopicTypes().iterator();
     while (titer.hasNext()) {
       TopicType topicType = (TopicType)titer.next();

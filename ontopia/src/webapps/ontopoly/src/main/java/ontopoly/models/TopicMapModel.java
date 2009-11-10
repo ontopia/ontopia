@@ -6,7 +6,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class TopicMapModel extends LoadableDetachableModel {
+public class TopicMapModel extends LoadableDetachableModel<TopicMap> {
 
   private static final long serialVersionUID = -6589204980069242599L;
 
@@ -30,7 +30,7 @@ public class TopicMapModel extends LoadableDetachableModel {
   }
 
   @Override
-  protected Object load() {
+  protected TopicMap load() {
     // retrive topicMap from ontopoly model
     return OntopolyContext.getTopicMap(topicMapId);
   }

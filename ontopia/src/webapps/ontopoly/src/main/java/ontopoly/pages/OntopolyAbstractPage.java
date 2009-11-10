@@ -66,11 +66,11 @@ public abstract class OntopolyAbstractPage extends AbstractProtectedOntopolyPage
     super.onDetach();
   }
   
-  private static List getMainMenuItem(TopicMapModel topicMapModel) {
+  private static List<MenuItem> getMainMenuItem(TopicMapModel topicMapModel) {
     PageParameters parameters = new PageParameters();
     parameters.add("topicMapId", topicMapModel.getTopicMap().getId());
 
-    List mainMenuItems = Arrays.asList(new MenuItem[] {
+    List<MenuItem> mainMenuItems = Arrays.asList(new MenuItem[] {
         new MenuItem(new Label("caption", new ResourceModel("description")),
             DescriptionPage.class, parameters),
         new MenuItem(new Label("caption", new ResourceModel("administration")),

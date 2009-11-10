@@ -14,7 +14,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class RoleFieldModel extends LoadableDetachableModel {
+public class RoleFieldModel extends LoadableDetachableModel<RoleField> {
   
   private String topicMapId;
   private String fieldId;
@@ -41,14 +41,14 @@ public class RoleFieldModel extends LoadableDetachableModel {
   }
   
   @Override
-  protected Object load() {
+  protected RoleField load() {
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF fieldTopic = tm.getTopicIFById(fieldId);
     return new RoleField(fieldTopic, tm);    
   }
 
-  public static List wrapInRoleFieldModels(Collection roleFields) {
-    List result = new ArrayList(roleFields.size());
+  public static List<RoleFieldModel> wrapInRoleFieldModels(Collection<RoleField> roleFields) {
+    List<RoleFieldModel> result = new ArrayList<RoleFieldModel>(roleFields.size());
     Iterator iter = roleFields.iterator();
     while (iter.hasNext()) {
       RoleField roleField = (RoleField)iter.next();

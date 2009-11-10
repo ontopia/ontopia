@@ -16,14 +16,14 @@ public abstract class FunctionBoxPanel extends Panel {
   
   public FunctionBoxPanel(String id, IModel model) {
     super(id, model);
-    ListView nestedComponentList = new ListView("outerList",
+    ListView nestedComponentList = new ListView<List<Component>>("outerList",
         getFunctionBoxComponentList("content")) {
-      protected void populateItem(ListItem item) {
-        List componentGroups = (List) item.getModelObject();
+      protected void populateItem(ListItem<List<Component>> item) {
+        List<Component> componentGroups = item.getModelObject();
 
-        item.add(new ListView("innerList", componentGroups) {
-          protected void populateItem(ListItem item) {
-            item.add((Component) item.getModelObject());
+        item.add(new ListView<Component>("innerList", componentGroups) {
+          protected void populateItem(ListItem<Component> item) {
+            item.add(item.getModelObject());
           }
         });
       }
@@ -31,5 +31,5 @@ public abstract class FunctionBoxPanel extends Panel {
     add(nestedComponentList);
   }
 
-  protected abstract List getFunctionBoxComponentList(String id);
+  protected abstract List<List<Component>> getFunctionBoxComponentList(String id);
 }

@@ -15,7 +15,7 @@ import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvi
 import org.apache.wicket.model.Model;
 
 
-public class FieldInstanceDateTimeField extends TextField implements ITextFormatProvider {
+public class FieldInstanceDateTimeField extends TextField<String> implements ITextFormatProvider {
 
   private FieldValueModel fieldValueModel;
   private String oldValue;
@@ -27,7 +27,7 @@ public class FieldInstanceDateTimeField extends TextField implements ITextFormat
     
     OccurrenceIF occ = (OccurrenceIF)fieldValueModel.getObject();
     this.oldValue = (occ == null ? null : occ.getValue());
-    setModel(new Model(oldValue));
+    setDefaultModel(new Model<String>(oldValue));
 
     add(new DatePickerBehavior("yy-mm-dd 12:00:00"));
     //! add(new DatePicker("yy-mm-dd 12:00:00"));

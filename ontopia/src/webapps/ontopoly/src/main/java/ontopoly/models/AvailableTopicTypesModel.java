@@ -9,11 +9,12 @@ import java.util.List;
 
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
+import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import ontopoly.utils.TopicComparator;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public abstract class AvailableTopicTypesModel extends LoadableDetachableModel {
+public abstract class AvailableTopicTypesModel extends LoadableDetachableModel<List<TopicType>> {
 
   private TopicModel topicModel;  
   
@@ -30,8 +31,9 @@ public abstract class AvailableTopicTypesModel extends LoadableDetachableModel {
   }
   
   @Override
-  protected Object load() {
-    Collection types = new HashSet();
+  protected List<TopicType> load() {
+    // FIXME: use sorted set instead?
+    Collection<TopicType> types = new HashSet<TopicType>();
     Topic topic = topicModel.getTopic();
     TopicMap topicMap = topic.getTopicMap();
     types.addAll(topicMap.getTopicTypes());
@@ -39,10 +41,10 @@ public abstract class AvailableTopicTypesModel extends LoadableDetachableModel {
       types.remove(topic); // remove topic itself as it cannot be an instance of itself
     if (!getShouldIncludeExistingTypes())
       types.removeAll(topic.getTopicTypes());
-    List result = new ArrayList(types.size()); 
+    List<TopicType> result = new ArrayList<TopicType>(types.size()); 
     Iterator iter = types.iterator();
     while (iter.hasNext()) {
-      Topic o = (Topic)iter.next();
+      TopicType o = (TopicType)iter.next();
       if (filter(o))
         result.add(o);
     }

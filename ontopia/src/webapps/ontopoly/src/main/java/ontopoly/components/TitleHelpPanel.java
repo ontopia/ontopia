@@ -6,7 +6,7 @@ import org.apache.wicket.model.IModel;
 
 public class TitleHelpPanel extends Panel {
 
-  public TitleHelpPanel(String id, IModel titleModel, IModel helpLinkModel) {
+  public TitleHelpPanel(String id, IModel<String> titleModel, IModel<String> helpLinkModel) {
     super(id);
     add(new Label("title", titleModel));
     add(new HelpPanel("help", helpLinkModel));

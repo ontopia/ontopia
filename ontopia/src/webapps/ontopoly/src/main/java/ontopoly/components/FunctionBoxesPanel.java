@@ -11,15 +11,15 @@ public abstract class FunctionBoxesPanel extends Panel {
 
   public FunctionBoxesPanel(String id) {
     super(id);
-    List list = getFunctionBoxesList("functionBox"); 
-    ListView functionBoxes = new ListView("functionBoxesList", list) {
+    List<Component> list = getFunctionBoxesList("functionBox"); 
+    ListView<Component> functionBoxes = new ListView<Component>("functionBoxesList", list) {
       protected void populateItem(ListItem item) {
-        item.add((Component) item.getModelObject());
+        item.add((Component)item.getDefaultModelObject());
       }
     };
     functionBoxes.setVisible(!list.isEmpty());
     add(functionBoxes);
   }
 
-  protected abstract List getFunctionBoxesList(String id);
+  protected abstract List<Component> getFunctionBoxesList(String id);
 }

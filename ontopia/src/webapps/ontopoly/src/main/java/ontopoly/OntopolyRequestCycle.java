@@ -36,7 +36,7 @@ public class OntopolyRequestCycle extends WebRequestCycle {
 
   //! private static final Logger log = LoggerFactory.getLogger(OntopolyRequestCycle.class);
   
-  private static ThreadLocal topicmaps = new ThreadLocal();
+  private static ThreadLocal<Map<String,TopicMap>> topicmaps = new ThreadLocal<Map<String,TopicMap>>();
 
   private OntopolyRepository repository;
   
@@ -55,7 +55,7 @@ public class OntopolyRequestCycle extends WebRequestCycle {
   protected void onEndRequest() {
     //! log.info("OKS: onEndRequest: " + this);
     super.onEndRequest();
-    Map tms = (Map)topicmaps.get();
+    Map<String,TopicMap> tms = topicmaps.get();
     if (tms != null && !tms.isEmpty()) {
       Iterator iter = tms.values().iterator();
       while (iter.hasNext()) {
@@ -85,11 +85,12 @@ public class OntopolyRequestCycle extends WebRequestCycle {
       super.logRuntimeException(e);
   }
   
+  @SuppressWarnings("unchecked")
   @Override
   public Page onRuntimeException(Page page, RuntimeException e) {
     
     //! log.info("OKS: onRuntimeException: " + this);
-    Map tms = (Map)topicmaps.get();
+    Map<String,TopicMap> tms = topicmaps.get();
     if (tms != null && !tms.isEmpty()) {
       Iterator iter = tms.values().iterator();
       while (iter.hasNext()) {
@@ -128,13 +129,13 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         pattern = Pattern.compile("&([^&]*)=([^&]*)");
         matcher = pattern.matcher(referer);
         
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         while (matcher.find())
           pageParametersMap.put(matcher.group(1), matcher.group(2));
         
-        Class classObjectForPage = null;
+        Class<? extends Page> classObjectForPage = null;
         try {
-          classObjectForPage = Class.forName(pageName);
+          classObjectForPage = (Class<? extends Page>)Class.forName(pageName);
         }
         catch(ClassNotFoundException cnfe) {
           //! System.out.println("Couldn't find a class with the name: "+pageName);
@@ -152,11 +153,11 @@ public class OntopolyRequestCycle extends WebRequestCycle {
 
   public TopicMap getTopicMap(String topicMapId) {    
     // go ahead and hand out topic map
-    Map tms = (Map)topicmaps.get();
+    Map<String,TopicMap> tms = topicmaps.get();
     TopicMap tm = (tms == null ? null : (TopicMap)tms.get(topicMapId));
     if (tm == null) {
       if (tms == null) {
-        tms = new HashMap();
+        tms = new HashMap<String,TopicMap>();
         topicmaps.set(tms);
       }
       
@@ -214,6 +215,7 @@ public class OntopolyRequestCycle extends WebRequestCycle {
       throw new OntopiaRuntimeException(e);
     }    
   }
+  
 
 }
 

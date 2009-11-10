@@ -7,11 +7,11 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
-public class AjaxOntopolyTextField extends TextField {
+public class AjaxOntopolyTextField extends TextField<String> {
 
   private String cols;
 
-  public AjaxOntopolyTextField(String id, IModel model) {
+  public AjaxOntopolyTextField(String id, IModel<String> model) {
     super(id, model);
     
     setOutputMarkupId(true);

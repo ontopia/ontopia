@@ -87,7 +87,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
     
     RoleField ofield = (RoleField)roleField.getFieldsForOtherRoles().iterator().next();
     final RoleFieldModel ofieldModel = new RoleFieldModel(ofield);
-    final TopicModel topicModel = new TopicModel(fieldInstance.getInstance());
+    final TopicModel<Topic> topicModel = new TopicModel<Topic>(fieldInstance.getInstance());
     
     InterfaceControl interfaceControl = ofield.getInterfaceControl();
 
@@ -117,18 +117,18 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         }
       };
     } else {
-      Comparator comparator = new RoleFieldValueComparator(topicModel, ofieldModel);
+      Comparator<Object> comparator = new RoleFieldValueComparator(topicModel, ofieldModel);
       this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel, comparator);
     }
     
-    this.listView = new ListView("fieldValues", fieldValuesModel) {
+    this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
       @Override
       protected void onBeforeRender() {
         validateCardinality();        
         super.onBeforeRender();
       }
-		  public void populateItem(final ListItem item) {        
-		    final FieldValueModel fieldValueModel = (FieldValueModel)item.getModelObject();
+		  public void populateItem(final ListItem<FieldValueModel> item) {        
+		    final FieldValueModel fieldValueModel = item.getModelObject();
 
 		    // get topic
 		    Topic oplayer = null;
@@ -137,7 +137,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
 		      RoleField ofield = ofieldModel.getRoleField();
 		      oplayer = valueIf.getPlayer(ofield, fieldInstanceModel.getFieldInstance().getInstance());
 		    }
-        final TopicModel oplayerModel = new TopicModel(oplayer);
+        final TopicModel<Topic> oplayerModel = new TopicModel<Topic>(oplayer);
 
         // acquire lock for embedded topic
         final boolean isLockedByOther;
@@ -160,8 +160,8 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
 		        }
 		        @Override
 		        protected void onDrop(Component component, AjaxRequestTarget target) {
-              FieldValueModel fvm_dg = (FieldValueModel)component.getModelObject();
-              FieldValueModel fvm_do = (FieldValueModel)getComponent().getModelObject();
+              FieldValueModel fvm_dg = (FieldValueModel)component.getDefaultModelObject();
+              FieldValueModel fvm_do = (FieldValueModel)getComponent().getDefaultModelObject();
               RoleField.ValueIF rfv_dg = (RoleField.ValueIF)fvm_dg.getFieldValue();
               RoleField.ValueIF rfv_do = (RoleField.ValueIF)fvm_do.getFieldValue();
 		          
@@ -316,9 +316,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
     
     if (readonlyField || !allowAdd) {
       // unused components
-      fieldInstanceButtons.add(new Label("add", new Model("unused")).setVisible(false));
-      fieldInstanceButtons.add(new Label("find", new Model("unused")).setVisible(false));
-      fieldInstanceButtons.add(new Label("findModal", new Model("unused")).setVisible(false));
+      fieldInstanceButtons.add(new Label("add", new Model<String>("unused")).setVisible(false));
+      fieldInstanceButtons.add(new Label("find", new Model<String>("unused")).setVisible(false));
+      fieldInstanceButtons.add(new Label("findModal", new Model<String>("unused")).setVisible(false));
     
     // add/find button
     } else if (interfaceControl.isDropDownList() || interfaceControl.isAutoComplete()) {
@@ -350,8 +350,8 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       fieldInstanceButtons.add(addButton);
       
       // unused components
-      fieldInstanceButtons.add(new Label("find", new Model("unused")).setVisible(false));
-      fieldInstanceButtons.add(new Label("findModal", new Model("unused")).setVisible(false));
+      fieldInstanceButtons.add(new Label("find", new Model<String>("unused")).setVisible(false));
+      fieldInstanceButtons.add(new Label("findModal", new Model<String>("unused")).setVisible(false));
       
     } else if (interfaceControl.isSearchDialog() || interfaceControl.isBrowseDialog()) {
       
@@ -414,7 +414,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       };  
       fieldInstanceButtons.add(findButton);
       // unused components
-      fieldInstanceButtons.add(new Label("add", new Model("unused")).setVisible(false));
+      fieldInstanceButtons.add(new Label("add", new Model<String>("unused")).setVisible(false));
     } else {
       throw new RuntimeException("Unsupported interface control: " + interfaceControl);
     }

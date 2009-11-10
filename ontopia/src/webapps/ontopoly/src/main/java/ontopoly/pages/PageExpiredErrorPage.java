@@ -4,6 +4,7 @@ import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.models.HelpLinkResourceModel;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.ResourceModel;
@@ -17,7 +18,7 @@ public class PageExpiredErrorPage extends AbstractOntopolyErrorPage {
     this(null, parameters);
   }
   
-  public PageExpiredErrorPage(final Class previousPage, PageParameters parameters) {	
+  public PageExpiredErrorPage(final Class<? extends Page> previousPage, PageParameters parameters) {	
     super(parameters);
     
     createTitle();
@@ -26,7 +27,7 @@ public class PageExpiredErrorPage extends AbstractOntopolyErrorPage {
     
     // The bookmarkablePageLink class demands that the page argument is not equal to null, so
     // it has to be set to a concrete page if previousPage is null.
-    Class page = StartPage.class;
+    Class<? extends Page> page = StartPage.class;
     if(previousPage != null) {
       page = previousPage;
     }

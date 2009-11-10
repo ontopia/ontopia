@@ -56,7 +56,7 @@ public class UploadPanel extends Panel {
                 }
               };
             }
-            public Class getPageIdentity() {
+            public Class<? extends Page> getPageIdentity() {
               return UploadIFrame.class;
             }            
         };

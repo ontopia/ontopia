@@ -37,6 +37,7 @@ import ontopoly.models.TopicTypeModel;
 import ontopoly.utils.OntopolyUtils;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -50,7 +51,7 @@ import org.apache.wicket.model.ResourceModel;
 
 public class InstancePage extends OntopolyAbstractPage {
 
-  private TopicModel topicModel;
+  private TopicModel<Topic> topicModel;
   private TopicTypeModel topicTypeModel;
   private FieldsViewModel fieldsViewModel;
 
@@ -66,7 +67,7 @@ public class InstancePage extends OntopolyAbstractPage {
     super(parameters);
     
     String topicMapId = parameters.getString("topicMapId");
-    this.topicModel = new TopicModel(topicMapId, parameters.getString("topicId"));
+    this.topicModel = new TopicModel<Topic>(topicMapId, parameters.getString("topicId"));
     Topic topic = topicModel.getTopic();
     
     // if "topicType" parameter is specified, pull out most specific direct type    
@@ -174,7 +175,7 @@ public class InstancePage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     this.titlePartPanel = new TitleHelpPanel("titlePartPanel", 
-        new PropertyModel(topicModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
+        new PropertyModel<String>(topicModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
     titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);    
   }
@@ -184,8 +185,8 @@ public class InstancePage extends OntopolyAbstractPage {
     add(new FunctionBoxesPanel("functionBoxes") {
 
       @Override
-      protected List getFunctionBoxesList(String id) {
-        List list = new ArrayList();
+      protected List<Component> getFunctionBoxesList(String id) {
+        List<Component> list = new ArrayList<Component>();
 
         if (getTopicTypeModel().getTopicType() != null) {
           list.add(new TopicTypesFunctionBoxPanel(id, getTopicModel(), getTopicTypeModel(), getFieldsViewModel()));
@@ -202,7 +203,7 @@ public class InstancePage extends OntopolyAbstractPage {
               protected Component getLink(String id) {
                 TopicMap tm = getTopicMapModel().getTopicMap();
                 Topic tt = getTopicModel().getTopic();
-                Map pageParametersMap = new HashMap();
+                Map<String,String> pageParametersMap = new HashMap<String,String>();
                 pageParametersMap.put("topicMapId", tm.getId());
                 pageParametersMap.put("topicId", tt.getId());
                 return new OntopolyBookmarkablePageLink(id, InstancesPage.class, new PageParameters(pageParametersMap), tt.getName());
@@ -218,7 +219,7 @@ public class InstancePage extends OntopolyAbstractPage {
             protected Component getLink(String id) {
               TopicMap tm = getTopicMapModel().getTopicMap();
               TopicType tt = getTopicTypeModel().getTopicType();
-              Map pageParametersMap = new HashMap();
+              Map<String,String> pageParametersMap = new HashMap<String,String>();
               pageParametersMap.put("topicMapId", tm.getId());
               pageParametersMap.put("topicId", tt.getId());
               return new OntopolyBookmarkablePageLink(id, InstancesPage.class, new PageParameters(pageParametersMap), tt.getName());
@@ -238,7 +239,7 @@ public class InstancePage extends OntopolyAbstractPage {
             protected Component getLink(String id) {
               TopicMap tm = getTopicMapModel().getTopicMap();
               TopicType tt = getTopicTypeModel().getTopicType();
-              Map pageParametersMap = new HashMap();
+              Map<String,String> pageParametersMap = new HashMap<String,String>();
               pageParametersMap.put("topicMapId", tm.getId());
               pageParametersMap.put("topicId", tt.getId());
               pageParametersMap.put("ontology", "true");
@@ -260,11 +261,11 @@ public class InstancePage extends OntopolyAbstractPage {
               if (!topicType.isAbstract() && !topicType.isReadOnly()) {
                 list.add(new CreateInstanceFunctionBoxPanel(id, getTopicMapModel()) {
                   @Override
-                  protected Class getInstancePageClass() {
+                  protected Class<? extends Page> getInstancePageClass() {
                     return InstancePage.class;
                   }
                   @Override
-                  protected IModel getTitleModel() {
+                  protected IModel<String> getTitleModel() {
                     return new ResourceModel("instances.create.text");
                   }
                   @Override
@@ -294,11 +295,11 @@ public class InstancePage extends OntopolyAbstractPage {
                 return !isReadOnlyPage();
               }          
               @Override
-              protected List getFunctionBoxComponentList(String id) {
+              protected List<List<Component>> getFunctionBoxComponentList(String id) {
                 Label label = new Label(id, new ResourceModel("change.type.instance"));
-                IModel selectedModel = new TopicModel(null, TopicModel.TYPE_TOPIC_TYPE);
+                TopicModel<TopicType> selectedModel = new TopicModel<TopicType>(null, TopicModel.TYPE_TOPIC_TYPE);
                 final boolean isOntologyType = topicModel.getTopic().isOntologyTopic();
-                IModel choicesModel = new AvailableTopicTypesModel(topicModel) {
+                AvailableTopicTypesModel choicesModel = new AvailableTopicTypesModel(topicModel) {
                   @Override
                   protected boolean filter(Topic o) {
                     // if current topic is an ontology topic then include ontology types
@@ -307,7 +308,7 @@ public class InstancePage extends OntopolyAbstractPage {
                     return page.filterTopic(o);
                   }                              
                 };
-                TopicDropDownChoice choice = new TopicDropDownChoice(id, selectedModel, choicesModel) {        
+                TopicDropDownChoice<TopicType> choice = new TopicDropDownChoice<TopicType>(id, selectedModel, choicesModel) {        
                   @Override
                   protected void onModelChanged() {
                     super.onModelChanged();
@@ -315,7 +316,7 @@ public class InstancePage extends OntopolyAbstractPage {
                     Topic topic = topicModel.getTopic();                 
                     topic.addTopicType(selectedTopicType);
                     topic.removeTopicType(getTopicTypeModel().getTopicType());
-                    Map pageParametersMap = new HashMap();
+                    Map<String,String> pageParametersMap = new HashMap<String,String>();
                     pageParametersMap.put("topicMapId", topic.getTopicMap().getId());
                     pageParametersMap.put("topicId", topic.getId());
                     pageParametersMap.put("topicTypeId", selectedTopicType.getId());
@@ -327,10 +328,14 @@ public class InstancePage extends OntopolyAbstractPage {
                   protected void onUpdate(AjaxRequestTarget target) {
                   }
                 });
-                  
-                return Arrays.asList(new List[] {
-                    Arrays.asList(new Component[] { label }),
-                    Arrays.asList(new Component[] { choice }) });
+                
+                List<Component> heading = Arrays.asList(new Component[] { label });
+                List<Component> box = Arrays.asList(new Component[] { choice });
+            
+                List<List<Component>> result = new ArrayList<List<Component>>(2);
+                result.add(heading);
+                result.add(box);
+                return result;
               }
             });
             
@@ -367,7 +372,7 @@ public class InstancePage extends OntopolyAbstractPage {
                   Topic topic = (Topic)_topic;
                   TopicMap topicMap = topic.getTopicMap();
                   TopicType topicType = getTopicTypeModel().getTopicType();
-                  Map pageParametersMap = new HashMap();
+                  Map<String,String> pageParametersMap = new HashMap<String,String>();
                   pageParametersMap.put("topicMapId", topicMap.getId());
                   pageParametersMap.put("topicId", topicType.getId());            
                   setResponsePage(InstancesPage.class, new PageParameters(pageParametersMap));                      

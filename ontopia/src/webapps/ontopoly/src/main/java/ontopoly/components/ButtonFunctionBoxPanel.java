@@ -1,5 +1,6 @@
 package ontopoly.components;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -23,10 +24,13 @@ public abstract class ButtonFunctionBoxPanel extends FunctionBoxPanel {
   }
 
   @Override
-  protected List getFunctionBoxComponentList(String id) {
-    return Arrays.asList(new List[] {
-        Arrays.asList(new Component[] { new Label(id, getText()) }),
-        Arrays.asList(new Component[] { getButton(id) }) });
+  protected List<List<Component>> getFunctionBoxComponentList(String id) {
+    List<Component> heading = Arrays.asList(new Component[] { new Label(id, getText()) });
+    List<Component> box = Arrays.asList(new Component[] { getButton(id) });
+    List<List<Component>> result = new ArrayList<List<Component>>();
+    result.add(heading);
+    result.add(box);
+    return result;    
   }
 
   protected Component getButton(String id) {

@@ -34,9 +34,9 @@ public class CreateNewTopicMapPanel extends Panel {
     NUMBER_OF_SOURCES = sources.size();
     
  // sources dropdown   
-    IModel sourcesChoicesModel = new LoadableDetachableModel() {
+    IModel<List<TopicMapSource>> sourcesChoicesModel = new LoadableDetachableModel<List<TopicMapSource>>() {
       @Override
-      protected Object load() {
+      protected List<TopicMapSource> load() {
         return OntopolyContext.getOntopolyRepository().getSources(); 
       }
     };
@@ -54,13 +54,13 @@ public class CreateNewTopicMapPanel extends Panel {
     sourcesDropDownContainer.setOutputMarkupPlaceholderTag(true);
     add(sourcesDropDownContainer);
     
-    final AjaxOntopolyDropDownChoice sourcesDropDown = new AjaxOntopolyDropDownChoice("sourcesDropDown", 
-        topicMapSourceModel, sourcesChoicesModel, new ChoiceRenderer("title", "id"));
+    final AjaxOntopolyDropDownChoice sourcesDropDown = new AjaxOntopolyDropDownChoice<TopicMapSource>("sourcesDropDown", 
+        topicMapSourceModel, sourcesChoicesModel, new ChoiceRenderer<TopicMapSource>("title", "id"));
          
     sourcesDropDownContainer.add(sourcesDropDown);
     
     
-    final AjaxOntopolyTextField nameField = new AjaxOntopolyTextField("content", new Model(""));
+    final AjaxOntopolyTextField nameField = new AjaxOntopolyTextField("content", new Model<String>(""));
     add(nameField);
 
     final Button button = new Button("button", new ResourceModel("create"));
@@ -68,12 +68,12 @@ public class CreateNewTopicMapPanel extends Panel {
     button.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        String name = nameField.getModelObjectAsString();
+        String name = nameField.getDefaultModelObjectAsString();
         if(!name.equals("")) {
           TopicMapSource topicMapSource = (TopicMapSource) sourcesDropDown.getModelObject();
-          TopicMapReference topicMapReference = topicMapSource.createTopicMap((nameField.getModelObjectAsString()));       
+          TopicMapReference topicMapReference = topicMapSource.createTopicMap((nameField.getDefaultModelObjectAsString()));       
           
-          Map pageParametersMap = new HashMap();
+          Map<String,String> pageParametersMap = new HashMap<String,String>();
           pageParametersMap.put("topicMapId", topicMapReference.getId());
           setResponsePage(TopicTypesPage.class, new PageParameters(pageParametersMap));
         }

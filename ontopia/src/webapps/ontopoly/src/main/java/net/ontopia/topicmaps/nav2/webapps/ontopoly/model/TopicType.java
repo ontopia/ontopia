@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -22,7 +23,6 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.utils.FieldAssignmentComparat
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.utils.OntopolyModelUtils;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.StringUtils;
 
 /**
@@ -131,24 +131,13 @@ public class TopicType extends AbstractTypingTopic {
    * 
    * @return A Collection of TopicType objects.
    */
-  public Collection getDirectSubTypes() {
+  public Collection<TopicType> getDirectSubTypes() {
     String query = "xtm:superclass-subclass($SUB : xtm:subclass, %topic% : xtm:superclass)?";
 
-    Map params = Collections.singletonMap("topic", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    Collection result = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn(), params);
-
-    if (result.isEmpty())
-      return Collections.EMPTY_SET;
-
-    Collection subTypes = new ArrayList();
-    Iterator it = result.iterator();
-    while (it.hasNext()) {
-      subTypes.add(new TopicType((TopicIF) it.next(), tm));
-    }
-    return subTypes;
+    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
   }
 
   /**
@@ -156,27 +145,16 @@ public class TopicType extends AbstractTypingTopic {
    * 
    * @return A Collection of TopicType objects.
    */
-  public Collection getAllSubTypes() {
+  public Collection<TopicType> getAllSubTypes() {
     String query = "subclasses-of($SUP, $SUB) :- { "
         + "xtm:superclass-subclass($SUP : xtm:superclass, $SUB : xtm:subclass) | "
         + "xtm:superclass-subclass($SUP : xtm:superclass, $MID : xtm:subclass), "
         + "subclasses-of($MID, $SUB) }. " + "subclasses-of(%topic%, $SUB)?";
 
-    Map params = Collections.singletonMap("topic", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    Collection result = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn(), params);
-
-    if (result.isEmpty())
-      return Collections.EMPTY_SET;
-
-    Collection subTypes = new ArrayList();
-    Iterator it = result.iterator();
-    while (it.hasNext()) {
-      subTypes.add(new TopicType((TopicIF) it.next(), tm));
-    }
-    return subTypes;
+    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
   }
 
   /**
@@ -185,16 +163,10 @@ public class TopicType extends AbstractTypingTopic {
   public TopicType getSuperType() {
     String query = "xtm:superclass-subclass(%topic% : xtm:subclass, $SUP : xtm:superclass)?";
 
-    Map params = Collections.singletonMap("topic", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    List result = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn(), params);
-
-    if (result.isEmpty())
-      return null;
-    else
-      return new TopicType(((TopicIF) result.get(0)), tm);
+    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
+    return qm.queryForObject(query, params);
   }
 
 //  /**
@@ -532,7 +504,7 @@ public class TopicType extends AbstractTypingTopic {
     }
   }
 
-  public List getFieldViews(boolean includeHiddenViews, boolean includeEmbeddedViews) {
+  public List<FieldsView> getFieldViews(boolean includeHiddenViews, boolean includeEmbeddedViews) {
     String query = 
       "subclasses-of($SUP, $SUB) :- { " +
       "  xtm:superclass-subclass($SUP : xtm:superclass, $SUB : xtm:subclass) | " +
@@ -546,10 +518,12 @@ public class TopicType extends AbstractTypingTopic {
       (includeEmbeddedViews ? "" : ", not(on:is-embedded-view($FV : on:fields-view))") +
       " } order by $FV?";
                                                         
-    Map params = Collections.singletonMap("tt", getTopicIF());
-    List list = getTopicMap().getQueryWrapper().queryForList(query,
-        new RowMapperIF() {
-          public Object mapRow(QueryResultIF result, int rowno) {
+    Map<String,TopicIF> params = Collections.singletonMap("tt", getTopicIF());
+    
+    QueryMapper<FieldsView> qm = getTopicMap().newQueryMapperNoWrap();
+    return qm.queryForList(query,
+        new RowMapperIF<FieldsView>() {
+          public FieldsView mapRow(QueryResultIF result, int rowno) {
             TopicIF viewTopic = (TopicIF)result.getValue(0);
             if (viewTopic == null)
               return FieldsView.getDefaultFieldsView(getTopicMap());
@@ -557,7 +531,6 @@ public class TopicType extends AbstractTypingTopic {
               return new FieldsView(viewTopic, getTopicMap());
           }
         }, params);
-    return CollectionUtils.removeDuplicates(list);
   }
 
   /**
@@ -569,11 +542,11 @@ public class TopicType extends AbstractTypingTopic {
    * Note that if isSystemTopic(), the list of fields will always contain the
    * default name type with the "exactly one" cardinality at the very top
    */
-  public List getFieldAssignments() {
+  public List<FieldAssignment> getFieldAssignments() {
     return getFieldAssignments(null);
   }
 
-  public List getFieldAssignments(FieldsView view) {
+  public List<FieldAssignment> getFieldAssignments(FieldsView view) {
     String viewClause = "";
     if (view != null) {
       if (view.isDefaultView())
@@ -598,17 +571,19 @@ public class TopicType extends AbstractTypingTopic {
       viewClause +
       "direct-instance-of($FD, $FT), xtm:superclass-subclass($FT : xtm:subclass, on:field-definition : xtm:superclass), " +
       "{ field-order(%tt%, $FD, $FO) }?";
-    Map params;
+    Map<String,TopicIF> params;
     if (view == null)
       params = Collections.singletonMap("tt", getTopicIF());
     else {
-      params = new HashMap(2);
+      params = new HashMap<String,TopicIF>(2);
       params.put("tt", getTopicIF());
       params.put("view", view.getTopicIF());
     }
-    List fieldAssignments = getTopicMap().getQueryWrapper().queryForList(query,
-        new RowMapperIF() {
-          public Object mapRow(QueryResultIF result, int rowno) {
+    QueryMapper<FieldAssignment> qm = getTopicMap().newQueryMapperNoWrap();
+    
+    List<FieldAssignment> fieldAssignments = qm.queryForList(query,
+        new RowMapperIF<FieldAssignment>() {
+          public FieldAssignment mapRow(QueryResultIF result, int rowno) {
             TopicIF topicType = (TopicIF)result.getValue(0);
             TopicIF fieldDefinitionTopic = (TopicIF)result.getValue(1);
             TopicIF fieldDefinitionType = (TopicIF)result.getValue(2);
@@ -725,24 +700,13 @@ public class TopicType extends AbstractTypingTopic {
    * 
    * @return A collection of Topic objects.
    */
-  public Collection getInstances() {
+  public Collection<Topic> getInstances() {
     String query = "instance-of($instance, %topic%)?";
 
-    Map params = Collections.singletonMap("topic", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    Collection result = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn(), params);
-
-    if (result.isEmpty())
-      return Collections.EMPTY_SET;
-
-    Collection instances = new ArrayList();
-    Iterator it = result.iterator();
-    while (it.hasNext()) {
-      instances.add(new Topic((TopicIF) it.next(), tm));
-    }
-    return instances;
+    QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
   }
 
 //!   public void moveUpInFieldOrder(FieldAssignment fa) {
@@ -901,22 +865,21 @@ public class TopicType extends AbstractTypingTopic {
    * 
    * @return a collection of Topic objects
    */
-  public Collection searchAll(String searchTerm) {
+  public List<Topic> searchAll(String searchTerm) {
     String query = "select $topic, $score from "
         + "value-like($tn, %searchTerm%, $score), topic-name($topic, $tn), instance-of($topic, %topicType%) "
         + "order by $score desc, $topic?";
 
-    Map params = new HashMap();
+    Map<String,Object> params = new HashMap<String,Object>();
     params.put("searchTerm", searchTerm);
     params.put("topicType", getTopicIF());
 
-    TopicMap tm = getTopicMap();
-    Collection rows = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn(), params);
+    QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
+    Collection<Topic> rows = qm.queryForList(query, qm.newRowMapperOneColumn(), params);
 
     Iterator it = rows.iterator();
-    Collection results = new ArrayList(rows.size());
-    Collection duplicateChecks = new HashSet(rows.size());
+    List<Topic> results = new ArrayList<Topic>(rows.size());
+    Set<TopicIF> duplicateChecks = new HashSet<TopicIF>(rows.size());
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
       if (duplicateChecks.contains(topic))
@@ -928,8 +891,8 @@ public class TopicType extends AbstractTypingTopic {
     return results;
   }
 
-  public Collection getDeclaredByFields() {
-    return Collections.EMPTY_LIST;
+  public Collection<? extends FieldDefinition> getDeclaredByFields() {
+    return Collections.emptyList();
   }
 
 //  public Collection getUsedBy() {

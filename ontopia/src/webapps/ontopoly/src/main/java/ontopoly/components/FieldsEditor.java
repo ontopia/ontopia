@@ -11,8 +11,11 @@ import java.util.Set;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.AssociationType;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldAssignment;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldDefinition;
+import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.NameField;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.NameType;
+import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.OccurrenceField;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.OccurrenceType;
+import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import net.ontopia.utils.ObjectUtils;
@@ -37,7 +40,7 @@ public class FieldsEditor extends Panel {
   boolean readonly;
   
   ListView listView;
-  List fieldAssignmentModels;
+  List<FieldAssignmentModel> fieldAssignmentModels;
   WebMarkupContainer addFieldsContainer;
   
   public FieldsEditor(String id, final TopicTypeModel topicTypeModel, final boolean readonly) {
@@ -47,13 +50,13 @@ public class FieldsEditor extends Panel {
     setOutputMarkupId(true);
 
     // existing fields
-    List fieldAssignments = topicTypeModel.getTopicType().getFieldAssignments();
+    List<FieldAssignment> fieldAssignments = topicTypeModel.getTopicType().getFieldAssignments();
     this.fieldAssignmentModels = FieldAssignmentModel.wrapInFieldAssignmentModels(fieldAssignments);
     
-    this.listView = new ListView("existingFields", fieldAssignmentModels) {
-      public void populateItem(final ListItem item) {
+    this.listView = new ListView<FieldAssignmentModel>("existingFields", fieldAssignmentModels) {
+      public void populateItem(final ListItem<FieldAssignmentModel> item) {
         
-        FieldAssignmentModel fieldAssignmentModel = (FieldAssignmentModel)item.getModelObject();
+        FieldAssignmentModel fieldAssignmentModel = item.getModelObject();
         item.setRenderBodyOnly(true);
         
         Component component = new FieldsEditorExistingPanel("field", topicTypeModel, fieldAssignmentModel, readonly) {
@@ -96,8 +99,10 @@ public class FieldsEditor extends Panel {
     add(actionsContainer);
     actionsContainer.add(new FieldDefinitionTypeLink("names") {
       @Override
-      protected List getFieldDefinitions() {
-        return filterFieldDefinitions(topicTypeModel.getTopicType().getTopicMap().getNameFields());               
+      protected List<NameField> getFieldDefinitions() {
+        List<NameField> fields = topicTypeModel.getTopicType().getTopicMap().getNameFields();
+        filterFieldDefinitions(fields);               
+        return fields;
       }      
     });
     actionsContainer.add(new OntopolyImageLink("create-name-field", "create.gif", new ResourceModel("create.new.name.type")) {
@@ -110,8 +115,10 @@ public class FieldsEditor extends Panel {
     });
     actionsContainer.add(new FieldDefinitionTypeLink("occurrences") {
       @Override
-      protected List getFieldDefinitions() {
-        return filterFieldDefinitions(topicTypeModel.getTopicType().getTopicMap().getOccurrenceFields());               
+      protected List<OccurrenceField> getFieldDefinitions() {
+        List<OccurrenceField> fields = topicTypeModel.getTopicType().getTopicMap().getOccurrenceFields();
+        filterFieldDefinitions(fields);
+        return fields;
       }      
     });
     actionsContainer.add(new OntopolyImageLink("create-occurrence-field", "create.gif", new ResourceModel("create.new.occurrence.type")) {
@@ -124,8 +131,10 @@ public class FieldsEditor extends Panel {
     });
     actionsContainer.add(new FieldDefinitionTypeLink("associations") {
       @Override
-      protected List getFieldDefinitions() {
-        return filterFieldDefinitions(topicTypeModel.getTopicType().getTopicMap().getRoleFields());               
+      protected List<? extends FieldDefinition> getFieldDefinitions() {
+        List<RoleField> fields = topicTypeModel.getTopicType().getTopicMap().getRoleFields();
+        filterFieldDefinitions(fields);
+        return fields;
       }      
     });
     actionsContainer.add(new OntopolyImageLink("create-role-field", "create.gif", new ResourceModel("create.new.association.type")) {
@@ -138,7 +147,8 @@ public class FieldsEditor extends Panel {
     });
     actionsContainer.add(new FieldDefinitionTypeLink("identities") {
       @Override
-      protected List getFieldDefinitions() {
+      protected List<? extends FieldDefinition> getFieldDefinitions() {
+        // FIXME: shouldn't these be filtered also?
         return topicTypeModel.getTopicType().getTopicMap().getIdentityFields();               
       }      
     });
@@ -148,14 +158,14 @@ public class FieldsEditor extends Panel {
     add(this.addFieldsContainer);        
 
     // add empty listview
-    ListView afListView = createListView(Collections.EMPTY_LIST);
+    List<FieldDefinitionModel> fields = Collections.emptyList();
+    ListView afListView = createListView(fields);
     addFieldsContainer.add(afListView);
   }
 
-  private List filterFieldDefinitions(List result) {
+  private void filterFieldDefinitions(List<? extends FieldDefinition> result) {
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     page.filterTopics(result);
-    return result;
   }
   
   private void redirectToTopic(Topic topic) {
@@ -164,11 +174,11 @@ public class FieldsEditor extends Panel {
     setRedirect(true);
   }
 
-  private ListView createListView(final List fieldDefinitionModels) {
-    ListView listView = new ListView("addFields", fieldDefinitionModels) {
-      public void populateItem(final ListItem item) {
+  private ListView createListView(final List<FieldDefinitionModel> fieldDefinitionModels) {
+    ListView listView = new ListView<FieldDefinitionModel>("addFields", fieldDefinitionModels) {
+      public void populateItem(final ListItem<FieldDefinitionModel> item) {
         
-        FieldDefinitionModel fieldDefinitionModel = (FieldDefinitionModel)item.getModelObject();
+        FieldDefinitionModel fieldDefinitionModel = item.getModelObject();
         item.setRenderBodyOnly(true);
 
         Component component = new FieldsEditorAddPanel("field", topicTypeModel, fieldDefinitionModel) {
@@ -204,29 +214,30 @@ public class FieldsEditor extends Panel {
       selectedTypeLinkId = typeLinkId;
       afListView = createListView(filterAndWrapInFieldDefinitions(typeLink.getFieldDefinitions()));
     } else {
-      afListView = createListView(Collections.EMPTY_LIST);
+      List<FieldDefinitionModel> fields = Collections.emptyList();      
+      afListView = createListView(fields);
       selectedTypeLinkId = null;
     }
     addFieldsContainer.replace(afListView);    
   }
   
-  private List filterAndWrapInFieldDefinitions(List fieldDefinitions) {
+  private List<FieldDefinitionModel> filterAndWrapInFieldDefinitions(List fieldDefinitions) {
     // resolve existing field definitions
-    Set existingFieldDefinitions = new HashSet(fieldAssignmentModels.size());
+    Set<FieldDefinition> existingFieldDefinitions = new HashSet<FieldDefinition>(fieldAssignmentModels.size());
     Iterator iter = fieldAssignmentModels.iterator();
     while (iter.hasNext()) {
       FieldAssignmentModel fieldAssignmentModel = (FieldAssignmentModel)iter.next();
       existingFieldDefinitions.add(fieldAssignmentModel.getFieldAssignment().getFieldDefinition());
     }
     // filter and sort field definitions
-    List result = new ArrayList(fieldDefinitions.size());
+    List<FieldDefinitionModel> result = new ArrayList<FieldDefinitionModel>(fieldDefinitions.size());
     iter = fieldDefinitions.iterator();
     while (iter.hasNext()) {
       FieldDefinition fieldDefinition = (FieldDefinition)iter.next();
       if (!existingFieldDefinitions.contains(fieldDefinition))
         result.add(new FieldDefinitionModel(fieldDefinition));
     }
-    Collections.sort(result, new Comparator() {
+    Collections.sort(result, new Comparator<Object>() {
       public int compare(Object o1, Object o2) {
         FieldDefinition fd1 = ((FieldDefinitionModel)o1).getFieldDefinition();
         FieldDefinition fd2 = ((FieldDefinitionModel)o2).getFieldDefinition();
@@ -240,7 +251,7 @@ public class FieldsEditor extends Panel {
     FieldDefinitionTypeLink(String id) {
       super(id);
     }
-    protected abstract List getFieldDefinitions();
+    protected abstract List<? extends FieldDefinition> getFieldDefinitions();
     
     @Override
     public void onClick(AjaxRequestTarget target) {

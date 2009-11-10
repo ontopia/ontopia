@@ -23,7 +23,7 @@ public class FieldInstanceURIField extends Panel {
 
   protected FieldValueModel fieldValueModel;
   protected String oldValue;
-  protected TextField textField;
+  protected TextField<String> textField;
   protected String cols = "60";
   protected ExternalLink button;
   
@@ -46,7 +46,7 @@ public class FieldInstanceURIField extends Panel {
       }
     }
 
-    this.textField = new TextField("input", new Model(oldValue)) {      
+    this.textField = new TextField<String>("input", new Model<String>(oldValue)) {      
       @Override
       public boolean isEnabled() {
         return FieldInstanceURIField.this.isEnabled();
@@ -80,9 +80,9 @@ public class FieldInstanceURIField extends Panel {
     textField.add(new IdentityValidator(fieldValueModel.getFieldInstanceModel()));
     add(textField);
     
-    this.button = new ExternalLink("button", new AbstractReadOnlyModel() {
+    this.button = new ExternalLink("button", new AbstractReadOnlyModel<String>() {
           @Override
-          public Object getObject() {
+          public String getObject() {
             return textField.getModelObject();
           }      
         }) {

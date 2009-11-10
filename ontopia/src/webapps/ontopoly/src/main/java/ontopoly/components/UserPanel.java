@@ -20,7 +20,7 @@ public class UserPanel extends Panel {
     add(new Label("fullname", new PropertyModel(this, "session.user.fullname"))); 
     PageParameters parameters = new PageParameters(); 
     parameters.add(SignOutPage.REDIRECTPAGE_PARAM, logoutPageClass.getName()); 
-    add(new BookmarkablePageLink("signout", SignOutPage.class, parameters) { 
+    add(new BookmarkablePageLink<Page>("signout", SignOutPage.class, parameters) { 
       @Override 
       public boolean isVisible() { 
         OntopolySession session = (OntopolySession)Session.get();

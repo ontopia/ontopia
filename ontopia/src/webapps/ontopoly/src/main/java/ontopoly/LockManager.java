@@ -11,7 +11,7 @@ public class LockManager {
   public static final long DEFAULT_LOCK_TIMESPAN_MINUTES = 5; // 5 minutes 
   public static final long DEFAULT_LOCK_REACQUIRE_TIMESPAN_MINUTES = DEFAULT_LOCK_TIMESPAN_MINUTES - 1; // 4 minutes 
   
-  private final Map locks = new HashMap();
+  private final Map<String,Lock> locks = new HashMap<String,Lock>();
   
   private long lockTimespan; 
   private int accessCount;

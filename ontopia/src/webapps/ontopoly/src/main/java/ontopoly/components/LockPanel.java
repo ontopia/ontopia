@@ -26,9 +26,8 @@ public abstract class LockPanel extends Panel {
   protected String lockedAt;
   protected String lockKey;
   
-  public LockPanel(String id, IModel topicModel, boolean shouldAcquireLock) {
-    super(id);
-    setModel(topicModel);
+  public LockPanel(String id, IModel<? extends Topic> topicModel, boolean shouldAcquireLock) {
+    super(id, topicModel);
     
     // acquire lock unless read-only page
     if (!shouldAcquireLock)
@@ -59,9 +58,9 @@ public abstract class LockPanel extends Panel {
         //! System.out.println("Got lock: " + hadlock + " " + gotlock);
         if ((hadlock && !gotlock)) {
           stop();
-          onLockLost(target, (Topic)getModelObject());
+          onLockLost(target, (Topic)getDefaultModelObject());
         } else if (!hadlock && gotlock) {
-          onLockWon(target, (Topic)getModelObject());
+          onLockWon(target, (Topic)getDefaultModelObject());
         }
       }
     };
@@ -70,7 +69,7 @@ public abstract class LockPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         LockManager lockManager = OntopolyContext.getLockManager();
-        Topic topic = (Topic)getModelObject();
+        Topic topic = (Topic)getDefaultModelObject();
         lockManager.forcedUnlock(lockKey);
         timerBehavior.stop();
         onLockWon(target, topic);
@@ -95,7 +94,7 @@ public abstract class LockPanel extends Panel {
     // create lock id and lock key
     OntopolySession session = (OntopolySession)Session.get();
     String lockerId = session.getLockerId(getRequest());
-    LockManager.Lock lock = session.lock((Topic)getModelObject(), lockerId);
+    LockManager.Lock lock = session.lock((Topic)getDefaultModelObject(), lockerId);
     this.lockedBy = lock.getLockedBy();
     this.lockedAt = new Date(lock.getLockTime()).toString();
     this.lockKey = lock.getLockKey();

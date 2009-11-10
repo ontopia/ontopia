@@ -309,10 +309,10 @@ public class Upgrade_1_9 extends UpgradeBase {
     TopicIF tt_role_field = getTopic(topicmap, base_on, "role-field");
     
     // track field definitions with cardinalities
-    Set assignedCardinality = new HashSet();
+    Set<TopicIF> assignedCardinality = new HashSet<TopicIF>();
     
     // retrieve all association fields
-    List afields = new ArrayList();
+    List<TopicIF[]> afields = new ArrayList<TopicIF[]>();
     QueryResultIF qr = null;
     try {
       qr =  qp.execute("select $TT, $AT, $RT from on:has-field($TT : on:topic-type, $AT : on:field, $RT : on:role-type)?", dc);
@@ -338,7 +338,7 @@ public class Upgrade_1_9 extends UpgradeBase {
       TopicIF associationField = null;
       boolean existingAField = false;
       try {
-        Map params = Collections.singletonMap("AT", at);
+        Map<String,TopicIF> params = Collections.singletonMap("AT", at);
         qr =  qp.execute("select $AF from " 
             + "on:has-association-type(%AT% : on:association-type, $AF : on:association-field)?",
             params, dc);
@@ -362,7 +362,7 @@ public class Upgrade_1_9 extends UpgradeBase {
       TopicIF roleField = null;
       boolean existingRField = false;
       try {
-        Map params = new HashMap(2);
+        Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
         params.put("AT", at);
         params.put("RT", rt);
         qr =  qp.execute("select $RF from " 
@@ -393,7 +393,7 @@ public class Upgrade_1_9 extends UpgradeBase {
     
         // move role labels from association type to role field
         try {
-          Map params = new HashMap();
+          Map<String,TopicIF> params = new HashMap<String,TopicIF>();
           params.put("AT", at);
           params.put("RT", rt);
           qr =  qp.execute("select $TN from topic-name(%AT%, $TN), scope($TN, %RT%), not(type($TN, $NT)), not(scope($TN, $SC), $SC /= %RT%)?", params, dc);
@@ -410,7 +410,7 @@ public class Upgrade_1_9 extends UpgradeBase {
         
         // on:use-control($AT : on:association-type, $RT : on:role-type, $IC : on:interface-control)
         try {
-          Map params = new HashMap();
+          Map<String,TopicIF> params = new HashMap<String,TopicIF>();
           params.put("AT", at);
           params.put("RT", rt);
           qr =  qp.execute("select $IC from on:use-control(%AT% : on:association-type, %RT% : on:role-type, $IC : on:interface-control)?", params, dc);
@@ -433,7 +433,7 @@ public class Upgrade_1_9 extends UpgradeBase {
       // on:has-cardinality($TT : on:topic-type, $AT : on:field, $RT : on:role-type, $C : on:cardinality)
       if (!assignedCardinality.contains(roleField)) {
         try {
-          Map params = new HashMap();
+          Map<String,TopicIF> params = new HashMap<String,TopicIF>();
           params.put("TT", tt);
           params.put("AT", at);
           params.put("RT", rt);
@@ -453,7 +453,7 @@ public class Upgrade_1_9 extends UpgradeBase {
       
       // update field order scope
       try {
-        Map params = new HashMap();
+        Map<String,TopicIF> params = new HashMap<String,TopicIF>();
         params.put("TT", tt);
         params.put("AT", at);
         params.put("RT", rt);
@@ -476,7 +476,7 @@ public class Upgrade_1_9 extends UpgradeBase {
     }
       
     // retrieve all non-association fields
-    List ofields = new ArrayList();
+    List<TopicIF[]> ofields = new ArrayList<TopicIF[]>();
     try {
       qr =  qp.execute("select $TT, $XT from on:has-field($TT : on:topic-type, $XT : on:field), not(direct-instance-of($XT, on:association-type)), not(direct-instance-of($XT, on:role-type))?", dc);
       while (qr.next()) {
@@ -489,7 +489,7 @@ public class Upgrade_1_9 extends UpgradeBase {
 
     // create default fields for identity types, name types and occurrence types
     TopicMapBuilderIF builder = topicmap.getBuilder();
-    Map xtfields = new HashMap();
+    Map<TopicIF,TopicIF> xtfields = new HashMap<TopicIF,TopicIF>();
     
     // identity types: subject identifier
     TopicIF subjectIdentifier = getTopic(topicmap, base_on, "subject-identifier");
@@ -531,7 +531,7 @@ public class Upgrade_1_9 extends UpgradeBase {
     assignField(topicmap, base_on, subjectIdentifierField, "fields-view");          
       
     // occurrence types
-    Collection nonFieldOccurrenceTypes = new HashSet();
+    Collection<TopicIF> nonFieldOccurrenceTypes = new HashSet<TopicIF>();
     nonFieldOccurrenceTypes.add(getTopic(topicmap, base_on, "field-order"));
     nonFieldOccurrenceTypes.add(getTopic(topicmap, base_on, "field-value-order"));
     nonFieldOccurrenceTypes.add(getTopic(topicmap, base_on, "ted-ontology-version"));
@@ -596,7 +596,7 @@ public class Upgrade_1_9 extends UpgradeBase {
       
       // update field order scope
       try {
-        Map params = new HashMap();
+        Map<String,TopicIF> params = new HashMap<String,TopicIF>();
         params.put("TT", tt);
         params.put("XT", xt);
         String query = 
@@ -618,7 +618,7 @@ public class Upgrade_1_9 extends UpgradeBase {
       // on:has-cardinality($XT : on:field-definition,  $C : on:cardinality)
       if (!assignedCardinality.contains(xtField)) {
         try {
-          Map params = new HashMap();
+          Map<String,TopicIF> params = new HashMap<String,TopicIF>();
           params.put("TT", tt);
           params.put("XT", xt);
           qr =  qp.execute("select $C from on:has-cardinality(%TT% : on:topic-type, %XT% : on:field, $C : on:cardinality)?", params, dc);
@@ -1429,7 +1429,7 @@ public class Upgrade_1_9 extends UpgradeBase {
     }
     
     // order fields
-    List fdo = new ArrayList();
+    List<String> fdo = new ArrayList<String>();
     fdo.add("null|http://psi.ontopia.net/ontology/untyped-name");
     fdo.add("null|http://psi.ontopia.net/ontology/subject-identifier");
     fdo.add("null|http://psi.ontopia.net/ontology/description");
@@ -1562,7 +1562,7 @@ public class Upgrade_1_9 extends UpgradeBase {
         "occurrence($TT, $FO2), type($FO2, on:field-order), scope($FO2, $FD), " +
         "$FO1 /= $FO2, value($FO1, $FOV) " + 
         "order by $TT, $FD, $FOV?", dc);
-    Map fieldOrders = new HashMap();
+    Map<String,OccurrenceIF> fieldOrders = new HashMap<String,OccurrenceIF>();
     while (qr.next()) {
       TopicIF tt = (TopicIF)qr.getValue(0);
       TopicIF fd = (TopicIF)qr.getValue(1);

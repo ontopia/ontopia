@@ -12,13 +12,13 @@ import org.apache.wicket.validation.IValidator;
 
 public class ExternalValidation {
   
-  public static void validate(final FormComponent component, final String value) {
-    List validators = component.getValidators();
-    final IValidatable validatable = new IValidatable() {
+  public static void validate(final FormComponent<String> component, final String value) {
+    List<IValidator<String>> validators = component.getValidators();
+    final IValidatable<String> validatable = new IValidatable<String>() {
       public void error(IValidationError error) {
         component.error(error);
       }
-      public Object getValue() {
+      public String getValue() {
         return value;
       }
       public boolean isValid() {
@@ -26,13 +26,13 @@ public class ExternalValidation {
       }
     };
     
-    IValidator validator = null;
+    IValidator<String> validator = null;
     boolean isNull = value == null;
 
     try {
-      Iterator iter = validators.iterator();
+      Iterator<IValidator<String>> iter = validators.iterator();
       while (iter.hasNext()) {
-        validator = (IValidator)iter.next();
+        validator = iter.next();
         if (isNull == false || validator instanceof INullAcceptingValidator)
           validator.validate(validatable);
         if (!component.isValid())

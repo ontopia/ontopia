@@ -14,6 +14,7 @@ import ontopoly.components.TitleHelpPanel;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicModel;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
@@ -123,7 +124,7 @@ public class VizigatorPage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     TitleHelpPanel titlePartPanel = new TitleHelpPanel("titlePartPanel",
-        new PropertyModel(topicModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
+        new PropertyModel<String>(topicModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
     titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);    
   }
@@ -133,8 +134,8 @@ public class VizigatorPage extends OntopolyAbstractPage {
     add(new FunctionBoxesPanel("functionBoxes") {
 
       @Override
-      protected List getFunctionBoxesList(String id) {
-        return Collections.EMPTY_LIST;
+      protected List<Component> getFunctionBoxesList(String id) {
+        return Collections.emptyList();
       }
 
     });

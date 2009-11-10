@@ -15,7 +15,7 @@ import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvi
 import org.apache.wicket.model.Model;
 import org.apache.wicket.validation.IValidatable;
 
-public class FieldInstanceDateField extends TextField implements ITextFormatProvider, IValidatable {
+public class FieldInstanceDateField extends TextField<String> implements ITextFormatProvider, IValidatable {
 
   private FieldValueModel fieldValueModel;
   private String oldValue;
@@ -27,7 +27,7 @@ public class FieldInstanceDateField extends TextField implements ITextFormatProv
     
     OccurrenceIF occ = (OccurrenceIF)fieldValueModel.getObject();
     this.oldValue = (occ == null ? null : occ.getValue());
-    setModel(new Model(oldValue));
+    setModel(new Model<String>(oldValue));
     
     add(new DatePickerBehavior("yy-mm-dd"));
     add(new DateValidator());

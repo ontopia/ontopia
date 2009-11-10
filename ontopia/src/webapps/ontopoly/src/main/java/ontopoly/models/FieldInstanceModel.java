@@ -20,7 +20,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldInstanceModel extends LoadableDetachableModel {
+public class FieldInstanceModel extends LoadableDetachableModel<FieldInstance> {
 
   private String topicMapId;
   private String topicId;
@@ -60,7 +60,7 @@ public class FieldInstanceModel extends LoadableDetachableModel {
   }
   
   @Override
-  protected Object load() {
+  protected FieldInstance load() {
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
     Topic topic = new Topic(topicIf, tm);
@@ -98,9 +98,9 @@ public class FieldInstanceModel extends LoadableDetachableModel {
     return new FieldInstance(topic, fieldAssignment);    
   }
 
-  public static List wrapInFieldInstanceModels(List fieldInstances) {
-    List result = new ArrayList(fieldInstances.size());
-    Iterator iter = fieldInstances.iterator();
+  public static List<FieldInstanceModel> wrapInFieldInstanceModels(List<FieldInstance> fieldInstances) {
+    List<FieldInstanceModel> result = new ArrayList<FieldInstanceModel>(fieldInstances.size());
+    Iterator<FieldInstance> iter = fieldInstances.iterator();
     while (iter.hasNext()) {
       FieldInstance fieldInstance = (FieldInstance)iter.next();
       result.add(new FieldInstanceModel(fieldInstance));

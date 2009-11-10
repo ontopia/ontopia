@@ -6,7 +6,7 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 
-public class TopicChoiceRenderer implements IChoiceRenderer {
+public class TopicChoiceRenderer<T extends Topic> implements IChoiceRenderer<T> {
 
   public static final TopicChoiceRenderer INSTANCE = new TopicChoiceRenderer();
   
@@ -15,7 +15,7 @@ public class TopicChoiceRenderer implements IChoiceRenderer {
     return (Topic)(object instanceof IModel ? ((IModel)object).getObject() : object);    
   }
   
-  public Object getDisplayValue(Object object) {
+  public Object getDisplayValue(Topic object) {
     Topic topic = getTopic(object);
     if (topic == null)
       return "[No name]";
@@ -23,7 +23,7 @@ public class TopicChoiceRenderer implements IChoiceRenderer {
     return TopicStringifiers.toString(topic.getTopicIF());    
   }
 
-  public String getIdValue(Object object, int index) {
+  public String getIdValue(Topic object, int index) {
     Topic topic = getTopic(object);
     return topic.getId();
   }

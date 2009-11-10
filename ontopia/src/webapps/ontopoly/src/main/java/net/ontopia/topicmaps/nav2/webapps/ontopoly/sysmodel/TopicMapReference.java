@@ -3,6 +3,8 @@
 
 package net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel;
 
+import java.io.Serializable;
+
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -13,7 +15,7 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
  * INTERNAL: Represents a topic map in the Ontopoly topic map
  * repository.
  */
-public class TopicMapReference {
+public class TopicMapReference implements Serializable {
   private TopicMapReferenceIF reference;
   private TopicIF topic; // in system topic map
   private String id;

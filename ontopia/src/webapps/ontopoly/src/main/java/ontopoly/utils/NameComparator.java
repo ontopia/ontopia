@@ -6,7 +6,7 @@ import java.util.Comparator;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.utils.StringUtils;
 
-public class NameComparator implements Comparator, Serializable {
+public class NameComparator implements Comparator<Object>, Serializable {
 
   public static final NameComparator INSTANCE = new NameComparator();
   

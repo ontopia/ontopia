@@ -12,7 +12,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.utils.OntopolyContext;
 
-public class TopicModel extends MutableLoadableDetachableModel {
+public class TopicModel<T extends Topic> extends MutableLoadableDetachableModel<T> {
 
   private static final long serialVersionUID = -8374148020034895666L;
 
@@ -28,7 +28,7 @@ public class TopicModel extends MutableLoadableDetachableModel {
   private String topicMapId;
   private String topicId;
   
-  public TopicModel(Topic topic) {
+  public TopicModel(T topic) {
     super(topic);
     if (topic != null) {
       this.topicMapId = topic.getTopicMap().getId();
@@ -36,7 +36,7 @@ public class TopicModel extends MutableLoadableDetachableModel {
     }
   }
 
-  public TopicModel(Topic topic, int returnType) {
+  public TopicModel(T topic, int returnType) {
     this(topic);
     this.returnType = returnType;
   }
@@ -49,34 +49,35 @@ public class TopicModel extends MutableLoadableDetachableModel {
     this.topicMapId = topicMapId;
     this.topicId = topicId;
   }
-  
+ 
   public Topic getTopic() {    
-    return (Topic)getObject();
+    return getObject();
   }
   
+  @SuppressWarnings("unchecked")
   @Override
-  protected Object load() {
+  protected T load() {
     if (topicMapId == null) return null;
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
     switch (returnType) {
       case TYPE_ASSOCIATION_TYPE:
-        return new AssociationType(topicIf, tm);
+        return (T)new AssociationType(topicIf, tm);
       case TYPE_ROLE_TYPE:
-        return new RoleType(topicIf, tm);
+        return (T)new RoleType(topicIf, tm);
       case TYPE_OCCURRENCE_TYPE:
-        return new OccurrenceType(topicIf, tm);
+        return (T)new OccurrenceType(topicIf, tm);
       case TYPE_NAME_TYPE:
-        return new NameType(topicIf, tm);
+        return (T)new NameType(topicIf, tm);
       case TYPE_TOPIC_TYPE:
-        return new TopicType(topicIf, tm);
+        return (T)new TopicType(topicIf, tm);
       default:
-        return new Topic(topicIf, tm);
+        return (T)new Topic(topicIf, tm);
     }
   }
 
   @Override
-  public void setObject(Object object) {
+  public void setObject(T object) {
     super.setObject(object);
     if (object == null) {
       this.topicMapId = null;

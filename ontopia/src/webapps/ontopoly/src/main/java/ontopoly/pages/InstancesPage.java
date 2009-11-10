@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
@@ -24,13 +25,14 @@ import ontopoly.pojos.TopicNode;
 import ontopoly.utils.TreeModels;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -58,18 +60,25 @@ public class InstancesPage extends OntopolyAbstractPage {
       add(new InstanceSearchPanel("contentPanel", topicTypeModel));
     } else {
       // create a tree
-      Panel treePanel = new TreePanel("contentPanel", TreeModels.createInstancesTreeModel(topicTypeModel.getTopicType(), isAdministrationEnabled())) {
+      final TreeModel treeModel = TreeModels.createInstancesTreeModel(topicTypeModel.getTopicType(), isAdministrationEnabled());
+      IModel<TreeModel> treeModelModel = new AbstractReadOnlyModel<TreeModel>() {
         @Override
-        protected void populateNode(WebMarkupContainer container, String id, TreeNode treeNode, int level) {
+        public TreeModel getObject() {
+          return treeModel;
+        }        
+      };
+      Panel treePanel = new TreePanel("contentPanel", treeModelModel) {
+        @Override
+        protected Component populateNode(String id, TreeNode treeNode) {
           DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
           final TopicNode node = (TopicNode)mTreeNode.getUserObject();
           // create link with label
-          container.add(new LinkPanel(id) {
+          return new LinkPanel(id) {
             @Override
             protected Label newLabel(String id) {
               Topic topic = node.getTopic();
               final boolean isSystemTopic = topic.isSystemTopic();
-              return new Label(id, new Model(topic.getName())) {
+              return new Label(id, new Model<String>(topic.getName())) {
                 @Override
                 protected void onComponentTag(final ComponentTag tag) {
                   if (isSystemTopic)
@@ -84,9 +93,9 @@ public class InstancesPage extends OntopolyAbstractPage {
               params.put("topicMapId", node.getTopicMapId());
               params.put("topicId", node.getTopicId());            
               params.put("topicTypeId", topicTypeModel.getTopicType().getId());
-              return new BookmarkablePageLink(id, InstancePage.class, params);
+              return new BookmarkablePageLink<Page>(id, InstancePage.class, params);
             }
-          });
+          };
         }
       };
       treePanel.setOutputMarkupId(true);
@@ -108,24 +117,24 @@ public class InstancesPage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     add(new TitleHelpPanel("titlePartPanel", 
-        new PropertyModel(topicTypeModel, "name"), new HelpLinkResourceModel("help.link.instancespage")));
+        new PropertyModel<String>(topicTypeModel, "name"), new HelpLinkResourceModel("help.link.instancespage")));
   }
 
   private void createFunctionBoxes() {
 
     add(new FunctionBoxesPanel("functionBoxes") {
       @Override
-      protected List getFunctionBoxesList(String id) {
-        List list = new ArrayList();
+      protected List<Component> getFunctionBoxesList(String id) {
+        List<Component> list = new ArrayList<Component>();
         TopicType topicType = topicTypeModel.getTopicType();
         if (!topicType.isAbstract() && !topicType.isReadOnly()) {
           list.add(new CreateInstanceFunctionBoxPanel(id, getTopicMapModel()) {
             @Override
-            protected Class getInstancePageClass() {
+            protected Class<? extends Page> getInstancePageClass() {
               return InstancePage.class;
             }
             @Override
-            protected IModel getTitleModel() {
+            protected IModel<String> getTitleModel() {
               return new ResourceModel("instances.create.text");
             }
             @Override

@@ -22,6 +22,7 @@ import ontopoly.jquery.DraggableBehavior;
 import ontopoly.jquery.DroppableBehavior;
 import ontopoly.models.FieldAssignmentModel;
 import ontopoly.models.FieldDefinitionModel;
+import ontopoly.models.MutableLoadableDetachableModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
 import ontopoly.utils.TopicChoiceRenderer;
@@ -34,8 +35,8 @@ import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 public abstract class FieldsEditorExistingPanel extends Panel {
@@ -48,8 +49,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
     
     FieldAssignment fieldAssignment = fieldAssignmentModel.getFieldAssignment(); 
 
-    WebMarkupContainer container = new WebMarkupContainer("field");
-    container.setModel(fieldAssignmentModel);
+    WebMarkupContainer container = new WebMarkupContainer("field", fieldAssignmentModel);
     add(container);
     
     OntopolyImage icon = new OntopolyImage("icon", "dnd.gif", new ResourceModel("icon.dnd.reorder"));
@@ -87,12 +87,12 @@ public abstract class FieldsEditorExistingPanel extends Panel {
         }
         @Override
         protected void onDrop(Component component, AjaxRequestTarget target) {
-          FieldAssignmentModel fam_dg = (FieldAssignmentModel)component.getModel();
-          FieldAssignmentModel fam_do = (FieldAssignmentModel)getComponent().getModel();
+          FieldAssignmentModel fam_dg = (FieldAssignmentModel)component.getDefaultModel();
+          FieldAssignmentModel fam_do = (FieldAssignmentModel)getComponent().getDefaultModel();
           FieldAssignment fa_dg = fam_dg.getFieldAssignment();
           FieldAssignment fa_do = fam_do.getFieldAssignment();
           fa_do.moveAfter(fa_dg);
-          onMoveAfter(fam_dg, fam_do, target);
+          FieldsEditorExistingPanel.this.onMoveAfter(fam_dg, fam_do, target);
         }      
       });
     }
@@ -104,7 +104,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       OntopolyImageLink button = new OntopolyImageLink("button", "remove-value.gif", new ResourceModel("icon.remove.field")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
-          onRemove(fieldAssignmentModel, target);
+          FieldsEditorExistingPanel.this.onRemove(fieldAssignmentModel, target);
         }
         @Override
         public boolean isVisible() {
@@ -117,8 +117,8 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       OntopolyImageLink button = new OntopolyImageLink("button", "goto.gif", new ResourceModel("icon.goto.assigning-type")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
-          Map pageParametersMap = new HashMap(2);
           TopicType declaredTopicType = fieldAssignmentModel.getFieldAssignment().getDeclaredTopicType();          
+          Map<String,String> pageParametersMap = new HashMap<String,String>(3);
           pageParametersMap.put("topicMapId", declaredTopicType.getTopicMap().getId());
           pageParametersMap.put("topicId", declaredTopicType.getId());
           pageParametersMap.put("ontology", "true");
@@ -208,7 +208,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
   }
   
   private static String getAllowedPlayerNames(RoleField af) {
-    Set topicTypeNames = new TreeSet();
+    Set<String> topicTypeNames = new TreeSet<String>();
     
     AssociationType at = af.getAssociationType();
     AssociationField afield = at.getTopicMap().getAssociationField(at);
@@ -226,20 +226,25 @@ public abstract class FieldsEditorExistingPanel extends Panel {
   }
   
   private static Component getCardinality(String id, final FieldAssignmentModel fam) {    
-//    Component cardinality = null;
-//    if (isReadOnlyPage()) {
-//      cardinality = new Label("cardinality", new PropertyModel(new FieldAssignmentModel(fa), "cardinality.name"));
-//    } else {
-      LoadableDetachableModel cardinalityChoicesModel = new LoadableDetachableModel() {
-        @Override
-        protected Object load() {
-          return Cardinality.getCardinalityTypes(fam.getFieldAssignment().getFieldDefinition().getTopicMap());
-        }   
-      };
-      
-      AjaxOntopolyDropDownChoice choice = new AjaxOntopolyDropDownChoice("cardinality", new PropertyModel(fam, "fieldDefinition.cardinality"),
-          cardinalityChoicesModel, TopicChoiceRenderer.INSTANCE);
-      return choice;
-//    }
+    LoadableDetachableModel<List<Cardinality>> cardinalityChoicesModel = new LoadableDetachableModel<List<Cardinality>>() {
+      @Override
+      protected List<Cardinality> load() {
+        return Cardinality.getCardinalityTypes(fam.getFieldAssignment().getFieldDefinition().getTopicMap());
+      }   
+    };
+    final IModel<Cardinality> cardModel = new MutableLoadableDetachableModel<Cardinality>() {
+      @Override
+      protected Cardinality load() {
+        return fam.getFieldAssignment().getCardinality();
+      }
+      @Override
+      public void setObject(Cardinality card) {
+        fam.getFieldAssignment().getFieldDefinition().setCardinality(card);
+        super.setObject(card);
+      }
+    };
+    AjaxOntopolyDropDownChoice<Cardinality> choice = new AjaxOntopolyDropDownChoice<Cardinality>("cardinality", cardModel,
+        cardinalityChoicesModel, new TopicChoiceRenderer<Cardinality>());
+    return choice;
   }
 }

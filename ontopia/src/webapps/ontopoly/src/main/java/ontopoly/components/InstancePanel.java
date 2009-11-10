@@ -24,7 +24,7 @@ public abstract class InstancePanel extends Panel {
   
   private boolean isReadOnly;
   
-  public InstancePanel(String id, TopicModel topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel, boolean _isReadOnly, boolean traversable) {
+  public InstancePanel(String id, TopicModel<Topic> topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel, boolean _isReadOnly, boolean traversable) {
     super(id);
     this.topicModel = topicModel;
     this.topicTypeModel = topicTypeModel;
@@ -82,7 +82,7 @@ public abstract class InstancePanel extends Panel {
       specificType = type;
     FieldsView fieldsView = fieldsViewModel.getFieldsView();
     
-    List fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(topic.getFieldInstances(specificType, fieldsView));
+    List<FieldInstanceModel> fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(topic.getFieldInstances(specificType, fieldsView));
     add(new FieldInstancesPanel("fieldsPanel", fieldInstanceModels, fieldsViewModel, isReadOnly, traversable));    
   }
 

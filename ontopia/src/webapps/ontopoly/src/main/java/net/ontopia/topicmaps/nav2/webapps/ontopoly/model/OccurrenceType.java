@@ -37,13 +37,15 @@ public class OccurrenceType extends AbstractTypingTopic {
     return (getTopicIF().equals(other.getTopicIF()));
   }
 
-  public Collection getDeclaredByFields() {
+  @Override
+  public Collection<OccurrenceField> getDeclaredByFields() {
     String query = "select $FD from on:has-occurrence-type(%OT% : on:occurrence-type, $FD : on:occurrence-field)?";
-    Map params = Collections.singletonMap("OT", getTopicIF());
+    Map<String,TopicIF> params = Collections.singletonMap("OT", getTopicIF());
 
-    return getTopicMap().getQueryWrapper().queryForList(query,
-        new RowMapperIF() {
-          public Object mapRow(QueryResultIF result, int rowno) {
+    QueryMapper<OccurrenceField> qm = getTopicMap().newQueryMapper(OccurrenceField.class);
+    return qm.queryForList(query,
+        new RowMapperIF<OccurrenceField>() {
+          public OccurrenceField mapRow(QueryResultIF result, int rowno) {
               TopicIF fieldTopic = (TopicIF)result.getValue(0);
               return new OccurrenceField(fieldTopic, getTopicMap(), new OccurrenceType(getTopicIF(), getTopicMap()));
           }

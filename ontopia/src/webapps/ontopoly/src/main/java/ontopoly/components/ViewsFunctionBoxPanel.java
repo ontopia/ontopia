@@ -52,7 +52,7 @@ public class ViewsFunctionBoxPanel extends Panel {
       TopicMap tm = topic.getTopicMap();
       TopicType tt = topicTypeModel.getTopicType();
       
-      Map pageParametersMap = new HashMap();
+      Map<String,String> pageParametersMap = new HashMap<String,String>();
       pageParametersMap.put("topicMapId", tm.getId());
       pageParametersMap.put("topicId", topic.getId());
       pageParametersMap.put("topicTypeId", tt.getId());

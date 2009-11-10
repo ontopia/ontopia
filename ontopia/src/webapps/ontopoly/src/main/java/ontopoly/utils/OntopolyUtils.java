@@ -105,21 +105,20 @@ public class OntopolyUtils {
     return !topic.isPrivateSystemTopic();
   }
   
-  public static void filterTopicsByAdministratorRole(Collection topics) {
+  public static void filterTopicsByAdministratorRole(Collection<? extends Topic> topics) {
     // none should be excluded
   }
      
-  public static void filterTopicsByAnnotationRole(Collection topics) {
+  public static void filterTopicsByAnnotationRole(Collection<? extends Topic> topics) {
     // WARNING: collection must be mutable and iterator support .remove()
-    Iterator iter = topics.iterator();
+    Iterator<? extends Topic> iter = topics.iterator();
     while (iter.hasNext()) {
-      Topic topic = (Topic)iter.next();
-      if (!filterTopicByAnnotationRole(topic))
+      if (!filterTopicByAnnotationRole(iter.next()))
         iter.remove();
     }
   }
   
-  public static void filterTopicsByDefaultRole(Collection topics) {
+  public static void filterTopicsByDefaultRole(Collection<? extends Topic> topics) {
     // WARNING: collection must be mutable and iterator support .remove()
     Iterator iter = topics.iterator();
     while (iter.hasNext()) {

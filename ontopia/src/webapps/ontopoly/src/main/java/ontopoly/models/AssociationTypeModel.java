@@ -8,7 +8,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class AssociationTypeModel extends LoadableDetachableModel {
+public class AssociationTypeModel extends LoadableDetachableModel<AssociationType> {
 
   private String topicMapId;
 
@@ -38,7 +38,7 @@ public class AssociationTypeModel extends LoadableDetachableModel {
   }
   
   @Override
-  protected Object load() {
+  protected AssociationType load() {
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
     return new AssociationType(topicIf, tm);

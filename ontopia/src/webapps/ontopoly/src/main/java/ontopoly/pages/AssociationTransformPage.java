@@ -82,7 +82,7 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
   private void createTitle() {
     // Adding part containing title and help link
     this.titlePartPanel = new TitleHelpPanel("titlePartPanel", 
-        new PropertyModel(associationTypeModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
+        new PropertyModel<String>(associationTypeModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
     titlePartPanel.setOutputMarkupId(true);
     add(titlePartPanel);    
   }
@@ -96,10 +96,10 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
     Collection roleCombos = associationType.getUsedRoleTypeCombinations();
 
     // then remove the combination that is valid according to declaration
-    List declaredRoleTypes = associationType.getDeclaredRoleTypes();
-    Collections.sort(declaredRoleTypes, new Comparator() {
-      public int compare(Object o1, Object o2) {
-        return ObjectIdComparator.INSTANCE.compare(((RoleType)o1).getTopicIF(), ((RoleType)o2).getTopicIF());
+    List<RoleType> declaredRoleTypes = associationType.getDeclaredRoleTypes();
+    Collections.sort(declaredRoleTypes, new Comparator<RoleType>() {
+      public int compare(RoleType rt1, RoleType rt2) {
+        return ObjectIdComparator.INSTANCE.compare(rt1.getTopicIF(), rt2.getTopicIF());
       }      
     });
     roleCombos.remove(declaredRoleTypes);
@@ -126,7 +126,7 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         Topic t = getAssociationType();
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", t.getTopicMap().getId());
         pageParametersMap.put("topicId", t.getId());
         pageParametersMap.put("ontology", "true");
@@ -141,8 +141,8 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
     add(new FunctionBoxesPanel("functionBoxes") {
 
       @Override
-      protected List getFunctionBoxesList(String id) {
-        List list = new ArrayList();
+      protected List<Component> getFunctionBoxesList(String id) {
+        List<Component> list = new ArrayList<Component>();
 
         list.add(new LinkFunctionBoxPanel(id) {
           @Override
@@ -152,7 +152,7 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
           @Override
           protected Component getLink(String id) {
             Topic t = getAssociationType();
-            Map pageParametersMap = new HashMap();
+            Map<String,String> pageParametersMap = new HashMap<String,String>();
             pageParametersMap.put("topicMapId", getTopicMap().getId());
             pageParametersMap.put("topicId", t.getId());
             pageParametersMap.put("ontology", "true");

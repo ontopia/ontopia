@@ -13,7 +13,9 @@ import ontopoly.utils.TreeModels;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
@@ -34,23 +36,29 @@ public class RoleTypesPage extends AbstractTypesPage {
   @Override
   protected Component createTreePanel(String id) {
     // create a tree
-    TreeModel treeModel = TreeModels.createRoleTypesTreeModel(getTopicMapModel().getTopicMap(), isAdministrationEnabled());
-    return createTreePanel("tree", treeModel);
+    final TreeModel treeModel = TreeModels.createRoleTypesTreeModel(getTopicMapModel().getTopicMap(), isAdministrationEnabled()); 
+    IModel<TreeModel> treeModelModel = new AbstractReadOnlyModel<TreeModel>() {
+      @Override
+      public TreeModel getObject() {
+        return treeModel;
+      }
+    };
+    return createTreePanel("tree", treeModelModel);    
   }
 
   @Override
   protected void createFunctionBoxes(MarkupContainer parent, String id) {
     parent.add(new FunctionBoxesPanel(id) {
       @Override
-      protected List getFunctionBoxesList(String id) {
-        List list = new ArrayList();
+      protected List<Component> getFunctionBoxesList(String id) {
+        List<Component> list = new ArrayList<Component>();
         list.add(new CreateInstanceFunctionBoxPanel(id, getTopicMapModel()) {
           @Override
-          protected Class getInstancePageClass() {
+          protected Class<? extends Page> getInstancePageClass() {
             return InstancePage.class;
           }
           @Override
-          protected IModel getTitleModel() {
+          protected IModel<String> getTitleModel() {
             return new ResourceModel("role.types.create.text");
           }
           @Override

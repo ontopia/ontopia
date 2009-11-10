@@ -3,6 +3,7 @@ package ontopoly.pages;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import ontopoly.models.TopicModel;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 
 public class EnterTopicPage extends AbstractProtectedOntopolyPage {
@@ -15,7 +16,7 @@ public class EnterTopicPage extends AbstractProtectedOntopolyPage {
 	
     Topic topic = new TopicModel(parameters.getString("topicMapId"), parameters.getString("topicId")).getTopic();
     
-    Class pageClass;
+    Class<? extends Page> pageClass;
     if (topic.isTopicType())
       pageClass = InstancesPage.class;
 //    else if (topic.isAssociationType())

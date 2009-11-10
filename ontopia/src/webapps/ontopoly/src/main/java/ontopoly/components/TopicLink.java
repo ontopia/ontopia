@@ -5,6 +5,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.pages.AbstractOntopolyPage;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
@@ -15,14 +16,14 @@ public class TopicLink extends AbstractBookmarkablePageLink {
 
   protected FieldsViewModel fieldsViewModel;
   
-  public TopicLink(String id, IModel topicModel) {
+  public TopicLink(String id, IModel<? extends Topic> topicModel) {
     super(id);
-    setModel(topicModel); 
+    setDefaultModel(topicModel); 
   }
   
-  public TopicLink(String id, IModel topicModel, FieldsViewModel fieldsViewModel) {
+  public TopicLink(String id, IModel<? extends Topic> topicModel, FieldsViewModel fieldsViewModel) {
     super(id);
-    setModel(topicModel);
+    setDefaultModel(topicModel);
     this.fieldsViewModel = fieldsViewModel;
   }
 
@@ -35,16 +36,16 @@ public class TopicLink extends AbstractBookmarkablePageLink {
   }
   
   @Override
-  public Class getPageClass() {
-    if (pageClassName != null)
-      return super.getPageClass();
+  public Class<? extends Page> getPageClass() {
+//    if (pageClassName != null)
+//      return super.getPageClass();
     
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     return page.getPageClass(getTopic());
   }
   
   public Topic getTopic() {
-    return (Topic)getModelObject();    
+    return (Topic)getDefaultModelObject();    
   }
   
   @Override

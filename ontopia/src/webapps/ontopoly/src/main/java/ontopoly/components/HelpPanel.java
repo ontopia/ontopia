@@ -6,7 +6,7 @@ import org.apache.wicket.model.IModel;
 
 public class HelpPanel extends Panel {
 
-  public HelpPanel(String id, IModel helpLinkModel) {
+  public HelpPanel(String id, IModel<String> helpLinkModel) {
     super(id);
     add(new ExternalLink("helpLink", helpLinkModel));
   }

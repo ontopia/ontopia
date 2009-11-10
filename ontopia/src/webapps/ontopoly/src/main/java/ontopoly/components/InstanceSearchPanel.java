@@ -1,9 +1,10 @@
 package ontopoly.components;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -37,19 +38,19 @@ public class InstanceSearchPanel extends Panel {
     final TopicTypeModel topicTypeModel = (TopicTypeModel) model; 
     
     
-    final AjaxOntopolyTextField searchField = new AjaxOntopolyTextField("searchField", new Model("")); 
+    final AjaxOntopolyTextField searchField = new AjaxOntopolyTextField("searchField", new Model<String>("")); 
     add(searchField);
     
-    final IModel searchResultModel = new LoadableDetachableModel() {
+    final IModel<List<Topic>> searchResultModel = new LoadableDetachableModel<List<Topic>>() {
       @Override
-      protected Object load() {
+      protected List<Topic> load() {
         try {
           errorInSearch = false;
-          return topicTypeModel.getTopicType().searchAll(searchField.getModelObjectAsString());
+          return topicTypeModel.getTopicType().searchAll(searchField.getDefaultModelObjectAsString());
         }
         catch(Exception e) {
           errorInSearch = true;
-          return new HashSet();
+          return Collections.emptyList();
         }
       }     
     };
@@ -64,7 +65,7 @@ public class InstanceSearchPanel extends Panel {
     
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
       public boolean isVisible() {
-        return !searchField.getModelObjectAsString().equals("") && ((Collection)searchResultModel.getObject()).isEmpty() ? true : false;      
+        return !searchField.getDefaultModelObjectAsString().equals("") && ((Collection)searchResultModel.getObject()).isEmpty() ? true : false;      
       }
     };
     unsuccessfulSearchContainer.setOutputMarkupPlaceholderTag(true);
@@ -85,13 +86,13 @@ public class InstanceSearchPanel extends Panel {
     Label message = new Label("message", new ResourceModel(errorInSearch ? "search.error" : "search.empty"));
     unsuccessfulSearchContainer.add(message);
     
-    ListView searchResult = new ListView("searchResult", searchResultModel) {
+    ListView searchResult = new ListView<Topic>("searchResult", searchResultModel) {
       @Override
-      protected void populateItem(ListItem item) {
-        Topic topic = (Topic)item.getModelObject();
+      protected void populateItem(ListItem<Topic> item) {
+        Topic topic = item.getModelObject();
         TopicMap topicMap = topic.getTopicMap();
         
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", topic.getId());
         pageParametersMap.put("topicTypeId", topicTypeModel.getTopicType().getId());

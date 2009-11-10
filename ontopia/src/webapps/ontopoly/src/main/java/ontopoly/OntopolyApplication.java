@@ -26,11 +26,13 @@ import ontopoly.pages.TopicTypesPage;
 import ontopoly.pages.UpgradePage;
 import ontopoly.utils.OccurrenceImageRequestTargetUrlCodingStrategy;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.Request;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.target.coding.MixedParamUrlCodingStrategy;
 import org.apache.wicket.settings.IApplicationSettings;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.slf4j.Logger;
@@ -53,7 +55,8 @@ public class OntopolyApplication extends WebApplication {
   public OntopolyApplication() {
   }
   
-  public Class getHomePage() {
+  @Override
+  public Class<? extends Page> getHomePage() {
     return StartPage.class;
     //return SignInPage.class;
   }
@@ -86,29 +89,29 @@ public class OntopolyApplication extends WebApplication {
   
   @Override 
   protected void init() {
-    mount(new OntopolyUrlCodingStrategy("signin", SignInPage.class, new String[] {}));
-    mount(new OntopolyUrlCodingStrategy("signout", SignOutPage.class, new String[] {}));
+    mount(new MixedParamUrlCodingStrategy("signin", SignInPage.class, new String[] {}));
+    mount(new MixedParamUrlCodingStrategy("signout", SignOutPage.class, new String[] {}));
 
-    mount(new OntopolyUrlCodingStrategy("convert-topicmap", ConvertPage.class, new String[] {"topicMapId"}));
-    mount(new OntopolyUrlCodingStrategy("upgrade-topicmap", UpgradePage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("convert-topicmap", ConvertPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("upgrade-topicmap", UpgradePage.class, new String[] {"topicMapId"}));
     
-    mount(new OntopolyUrlCodingStrategy("admin", AdminPage.class, new String[] {"topicMapId"}));
-    mount(new OntopolyUrlCodingStrategy("description", DescriptionPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("admin", AdminPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("description", DescriptionPage.class, new String[] {"topicMapId"}));
 
-    mount(new OntopolyUrlCodingStrategy("instance", InstancePage.class, new String[] {"topicMapId", "topicId"}));
-    mount(new OntopolyUrlCodingStrategy("instance-embedded", EmbeddedInstancePage.class, new String[] {"topicMapId", "topicId"}));
-    mount(new OntopolyUrlCodingStrategy("instance-embedded-hierarchical", EmbeddedHierarchicalInstancePage.class, new String[] {"topicMapId", "topicId"}));
+    mount(new MixedParamUrlCodingStrategy("instance", InstancePage.class, new String[] {"topicMapId", "topicId"}));
+    mount(new MixedParamUrlCodingStrategy("instance-embedded", EmbeddedInstancePage.class, new String[] {"topicMapId", "topicId"}));
+    mount(new MixedParamUrlCodingStrategy("instance-embedded-hierarchical", EmbeddedHierarchicalInstancePage.class, new String[] {"topicMapId", "topicId"}));
     
-    mount(new OntopolyUrlCodingStrategy("instances", InstancesPage.class, new String[] {"topicMapId", "topicId"}));
-    mount(new OntopolyUrlCodingStrategy("instance-types", InstanceTypesPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("instances", InstancesPage.class, new String[] {"topicMapId", "topicId"}));
+    mount(new MixedParamUrlCodingStrategy("instance-types", InstanceTypesPage.class, new String[] {"topicMapId"}));
     
-    mount(new OntopolyUrlCodingStrategy("topic-types", TopicTypesPage.class, new String[] {"topicMapId"}));
-    mount(new OntopolyUrlCodingStrategy("occurrence-types", OccurrenceTypesPage.class, new String[] {"topicMapId"}));
-    mount(new OntopolyUrlCodingStrategy("association-types", AssociationTypesPage.class, new String[] {"topicMapId"}));
-    mount(new OntopolyUrlCodingStrategy("role-types", RoleTypesPage.class, new String[] {"topicMapId"}));
-    mount(new OntopolyUrlCodingStrategy("name-types", NameTypesPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("topic-types", TopicTypesPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("occurrence-types", OccurrenceTypesPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("association-types", AssociationTypesPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("role-types", RoleTypesPage.class, new String[] {"topicMapId"}));
+    mount(new MixedParamUrlCodingStrategy("name-types", NameTypesPage.class, new String[] {"topicMapId"}));
 
-    mount(new OntopolyUrlCodingStrategy("association-transform", AssociationTransformPage.class, new String[] {"topicMapId", "topicId"}));
+    mount(new MixedParamUrlCodingStrategy("association-transform", AssociationTransformPage.class, new String[] {"topicMapId", "topicId"}));
 
     mount(new OccurrenceImageRequestTargetUrlCodingStrategy("occurrenceImages"));
     

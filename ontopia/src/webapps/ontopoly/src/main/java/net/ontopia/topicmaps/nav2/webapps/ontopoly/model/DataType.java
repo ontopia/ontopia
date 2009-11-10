@@ -3,10 +3,7 @@
 
 package net.ontopia.topicmaps.nav2.webapps.ontopoly.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -140,20 +137,10 @@ public class DataType extends Topic {
     return new DataType(tm.getTopicMapIF().getTopicBySubjectIdentifier(DataTypes.TYPE_STRING), tm);
   }
 
-  public static List getDataTypes(TopicMap tm) {
+  public static List<DataType> getDataTypes(TopicMap tm) {
     String query = "instance-of($d, on:datatype)?";
-
-    Collection result = tm.getQueryWrapper().queryForList(query,
-        OntopolyModelUtils.getRowMapperOneColumn());
-
-    if (result.isEmpty())
-      return Collections.EMPTY_LIST;
-
-    List dataTypes = new ArrayList();
-    Iterator it = result.iterator();
-    while (it.hasNext()) {
-      dataTypes.add(new DataType((TopicIF) it.next(), tm));
-    }
-    return dataTypes;
+    QueryMapper<DataType> qm = tm.newQueryMapper(DataType.class);
+    return qm.queryForList(query, qm.newRowMapperOneColumn());
   }
+  
 }

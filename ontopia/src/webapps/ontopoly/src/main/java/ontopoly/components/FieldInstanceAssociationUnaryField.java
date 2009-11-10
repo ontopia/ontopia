@@ -19,7 +19,7 @@ public class FieldInstanceAssociationUnaryField extends Panel {
   public FieldInstanceAssociationUnaryField(String id, final FieldValueModel fieldValueModel, final boolean readonly) {
     super(id);
 
-    IModel selectedModel = new Model(Boolean.valueOf(fieldValueModel.isExistingValue()));
+    IModel<Boolean> selectedModel = new Model<Boolean>(Boolean.valueOf(fieldValueModel.isExistingValue()));
       
     this.checkbox = new CheckBox("player", selectedModel) {        
       @Override

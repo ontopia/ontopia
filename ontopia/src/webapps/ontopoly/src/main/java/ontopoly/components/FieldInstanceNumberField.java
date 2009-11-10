@@ -13,7 +13,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.validation.validator.PatternValidator;
 
 
-public class FieldInstanceNumberField extends TextField {
+public class FieldInstanceNumberField extends TextField<String> {
 
   private FieldValueModel fieldValueModel;
   private String oldValue;
@@ -25,7 +25,7 @@ public class FieldInstanceNumberField extends TextField {
     
     OccurrenceIF occ = (OccurrenceIF)fieldValueModel.getObject();
     this.oldValue = (occ == null ? null : occ.getValue());
-    setModel(new Model(oldValue));
+    setModel(new Model<String>(oldValue));
     
         
     //add(new PatternValidator("-?\\d+\\.?\\d*"));

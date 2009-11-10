@@ -12,11 +12,11 @@ import org.apache.wicket.model.IModel;
  * @author grove
  * @see AjaxParentFormChoiceComponentUpdatingBehavior
  */
-public class AjaxParentRadioChild extends Radio implements IHeaderContributor {
+public class AjaxParentRadioChild<T> extends Radio<T> implements IHeaderContributor {
 
   private AjaxParentFormChoiceComponentUpdatingBehavior apfc;
   
-  public AjaxParentRadioChild(String id, IModel model, AjaxParentFormChoiceComponentUpdatingBehavior apfc) {
+  public AjaxParentRadioChild(String id, IModel<T> model, AjaxParentFormChoiceComponentUpdatingBehavior apfc) {
     super(id, model);
     setOutputMarkupId(true);
     this.apfc = apfc;

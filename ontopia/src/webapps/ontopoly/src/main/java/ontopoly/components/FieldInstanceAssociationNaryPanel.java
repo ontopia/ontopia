@@ -68,17 +68,17 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
     fieldValuesContainer.add(feedbackPanel);
 
     // add field values component(s)
-    Comparator comparator = new RoleFieldsValueComparator(new TopicModel(fieldInstance.getInstance()), otherRoleFieldModels);
+    Comparator<Object> comparator = new RoleFieldsValueComparator(new TopicModel<Topic>(fieldInstance.getInstance()), otherRoleFieldModels);
     this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel, comparator);
     
-    this.listView = new ListView("fieldValues", fieldValuesModel) {
+    this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
       @Override
       protected void onBeforeRender() {
         validateCardinality();        
         super.onBeforeRender();
       }
-		  public void populateItem(final ListItem item) {
-		    FieldValueModel fieldValueModel = (FieldValueModel)item.getModelObject();
+		  public void populateItem(final ListItem<FieldValueModel> item) {
+		    FieldValueModel fieldValueModel = item.getModelObject();
 
         // TODO: make sure non-existing value field gets focus if last edit happened there
         

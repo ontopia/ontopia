@@ -12,9 +12,9 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.LifeCycleListener;
 import net.ontopia.utils.StreamUtils;
 import ontopoly.models.FieldValueModel;
 
-import org.apache.wicket.behavior.HeaderContributor;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
@@ -32,7 +32,7 @@ public abstract class UploadIFrame extends WebPage {
     this.fieldValueModel = fieldValueModel;
 
     // add header contributor for stylesheet
-    add(HeaderContributor.forCss(getStylesheet()));
+    add(CSSPackageResource.getHeaderContribution(getStylesheet()));
     
     WebMarkupContainer container = new WebMarkupContainer("container");
     container.setOutputMarkupId(true);

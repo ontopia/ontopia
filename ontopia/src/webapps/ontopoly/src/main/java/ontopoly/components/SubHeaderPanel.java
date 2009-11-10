@@ -28,14 +28,14 @@ public class SubHeaderPanel extends HeaderPanel {
     
     add(new Label("topicMap", new PropertyModel(topicMapModel, "name")));
 
-    final TextField searchField = new TextField("searchField", new Model(""));
+    final TextField searchField = new TextField<String>("searchField", new Model<String>(""));
     
     Form form = new Form("searchForm") {
       @Override
       protected void onSubmit() {
-        Map pageParametersMap = new HashMap();
+        Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMapModel.getTopicMap().getId());
-        pageParametersMap.put("searchTerm", searchField.getModelObjectAsString());
+        pageParametersMap.put("searchTerm", searchField.getDefaultModelObjectAsString());
         setResponsePage(SearchPage.class, new PageParameters(pageParametersMap));
         setRedirect(false);
       }

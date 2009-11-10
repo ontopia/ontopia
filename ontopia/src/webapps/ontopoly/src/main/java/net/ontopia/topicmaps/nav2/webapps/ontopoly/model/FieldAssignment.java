@@ -104,12 +104,14 @@ public class FieldAssignment {
         + "{field-order-value($tt, $f, $value)}, "
         + "{xtm:superclass-subclass($super : xtm:superclass , $tt : xtm:subclass) } limit 1? ";
 
-    Map params = new HashMap();
+    Map<String,TopicIF> params = new HashMap<String,TopicIF>();
     params.put("tt", tt);
     params.put("f", fieldDefinition.getTopicIF());
 
+    QueryMapper<TopicIF> qm = tm.newQueryMapperNoWrap();
+    
     while (true) {
-      queryResult = tm.getQueryWrapper().queryForMap(query, params);
+      queryResult = qm.queryForMap(query, params);
       value = (String) queryResult.get("value");
       tt = (TopicIF) queryResult.get("super");
       params.put("tt", tt);

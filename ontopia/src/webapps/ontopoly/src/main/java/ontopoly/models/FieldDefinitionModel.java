@@ -16,7 +16,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldDefinitionModel extends LoadableDetachableModel {
+public class FieldDefinitionModel extends LoadableDetachableModel<FieldDefinition> {
 
   private String topicMapId;
   
@@ -35,11 +35,11 @@ public class FieldDefinitionModel extends LoadableDetachableModel {
   }
   
   public FieldDefinition getFieldDefinition() {
-    return (FieldDefinition)getObject();
+    return getObject();
   }
 
   @Override
-  protected Object load() {
+  protected FieldDefinition load() {
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
  
     TopicIF fieldTopic = tm.getTopicIFById(fieldId);
@@ -64,11 +64,11 @@ public class FieldDefinitionModel extends LoadableDetachableModel {
     return fieldDefinition;
   }
 
-  public static List wrapInFieldDefinitionModels(List fieldDefinitions) {
-    List result = new ArrayList(fieldDefinitions.size());
-    Iterator iter = fieldDefinitions.iterator();
+  public static List<FieldDefinitionModel> wrapInFieldDefinitionModels(List<FieldDefinition> fieldDefinitions) {
+    List<FieldDefinitionModel> result = new ArrayList<FieldDefinitionModel>(fieldDefinitions.size());
+    Iterator<FieldDefinition> iter = fieldDefinitions.iterator();
     while (iter.hasNext()) {
-      FieldDefinition fieldDefinition = (FieldDefinition)iter.next();
+      FieldDefinition fieldDefinition = iter.next();
       result.add(new FieldDefinitionModel(fieldDefinition));
     }
     return result;

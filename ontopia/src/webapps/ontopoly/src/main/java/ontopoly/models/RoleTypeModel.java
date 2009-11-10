@@ -8,7 +8,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class RoleTypeModel extends LoadableDetachableModel {
+public class RoleTypeModel extends LoadableDetachableModel<RoleType> {
 
   private static final long serialVersionUID = -4066710557389722040L;
 
@@ -40,9 +40,10 @@ public class RoleTypeModel extends LoadableDetachableModel {
   }
   
   @Override
-  protected Object load() {
+  protected RoleType load() {
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
     return new RoleType(topicIf, tm);
   }
+  
 }

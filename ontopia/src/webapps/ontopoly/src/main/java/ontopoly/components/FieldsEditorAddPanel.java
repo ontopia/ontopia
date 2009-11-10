@@ -17,8 +17,7 @@ public abstract class FieldsEditorAddPanel extends Panel {
     
     FieldDefinition fieldDefinition = fieldDefinitionModel.getFieldDefinition(); 
 
-    WebMarkupContainer container = new WebMarkupContainer("field");
-    container.setModel(fieldDefinitionModel);
+    WebMarkupContainer container = new WebMarkupContainer("field", fieldDefinitionModel);
     add(container);
 
     container.add(new FieldDefinitionLabel("fieldLabel", fieldDefinitionModel) {

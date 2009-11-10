@@ -14,7 +14,7 @@ import ontopoly.models.FieldInstanceModel;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.validator.AbstractValidator;
 
-public class IdentityValidator extends AbstractValidator {
+public class IdentityValidator extends AbstractValidator<String> {
 
   protected FieldInstanceModel fieldInstanceModel;
   
@@ -23,8 +23,8 @@ public class IdentityValidator extends AbstractValidator {
   }
   
   @Override
-  protected void onValidate(IValidatable validatable) {
-    String value = (String)validatable.getValue();
+  protected void onValidate(IValidatable<String> validatable) {
+    String value = validatable.getValue();
     if (value == null) return;
     LocatorIF locator;
     try {
@@ -40,11 +40,11 @@ public class IdentityValidator extends AbstractValidator {
     
     TopicIF otopic = topicMapIf.getTopicBySubjectIdentifier(locator);
     if (otopic != null && ObjectUtils.different(topicIf, otopic))
-      error(validatable, "validators.IdentityValidator.subjectIdentifierClash", Collections.singletonMap("identity", value));
+      error(validatable, "validators.IdentityValidator.subjectIdentifierClash", Collections.singletonMap("identity", (Object)value));
 
     otopic = topicMapIf.getTopicBySubjectLocator(locator);
     if (otopic != null && ObjectUtils.different(topicIf, otopic))
-      error(validatable, "validators.IdentityValidator.subjectLocatorClash", Collections.singletonMap("identity", value));
+      error(validatable, "validators.IdentityValidator.subjectLocatorClash", Collections.singletonMap("identity", (Object)value));
   }
 
 }

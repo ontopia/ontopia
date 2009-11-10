@@ -8,7 +8,7 @@ import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class TMObjectModel extends LoadableDetachableModel {
+public class TMObjectModel extends LoadableDetachableModel<TMObjectIF> {
 
   private static final long serialVersionUID = -8374148020034895666L;
 
@@ -38,7 +38,7 @@ public class TMObjectModel extends LoadableDetachableModel {
   }
   
   @Override
-  protected Object load() {
+  protected TMObjectIF load() {
     if (topicMapId == null) return null;
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     // FIXME: should probably complain if object not found
