@@ -1661,19 +1661,6 @@ provide a more convenient interface. Using this, you can add as many
 sources as you want, to be managed by the repository. You can look the
 references up by reference key, refresh all your sources at the same
 time, and so on.  </para>
-
-<para>
-For the cases where you are working with a group of transactional
-users there is the <classname>StoreRegistry</classname> class, which
-can keep track of topic maps on behalf of any number of transactional
-users. Every method on this class takes a parameter <symbol>Object
-txnuser</symbol>, which represents the transaction user. The
-<classname>StoreRegistry</classname> internally maintains a map from
-<symbol>txnuser</symbol> objects to open topic map transactions, and
-uses this to manage the accesses. The
-<classname>StoreRegistry</classname> wraps a
-<interfacename>TopicMapRepositoryIF</interfacename>.
-</para>
 </section>
 
 <section>
