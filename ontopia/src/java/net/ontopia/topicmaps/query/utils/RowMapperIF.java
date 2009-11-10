@@ -10,7 +10,7 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
  * the queryForList method on QueryWrapper. 
  * @since 3.4.4
  */
-public interface RowMapperIF {
+public interface RowMapperIF<T> {
 
   /**
    * EXPERIMENTAL: This method is called once for each row in query
@@ -21,6 +21,6 @@ public interface RowMapperIF {
    * (in zero-based counting)
    * @return an object to put into the query result list
    */
-  public Object mapRow(QueryResultIF result, int rowno);
+  public T mapRow(QueryResultIF result, int rowno);
   
 }
