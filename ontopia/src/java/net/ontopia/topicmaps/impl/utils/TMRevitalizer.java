@@ -10,7 +10,6 @@ import java.io.ObjectInput;
 
 import java.util.*;
 import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.CompactIdentityHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 
