@@ -6,11 +6,13 @@ import java.util.Map;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
+import ontopoly.OntopolySession;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
 
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.basic.Label;
@@ -48,7 +50,14 @@ public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
     });
     add(createButton);
 
-    Button copyButton = new Button("copyButton", new ResourceModel("copy"));
+    Button copyButton = new Button("copyButton", new ResourceModel("copy")) {
+      @Override
+      public boolean isEnabled() {
+        // only display copy button for non-ontology topics
+        return !topicModel.getTopic().isOntologyTopic() || ((OntopolySession)Session.get()).isAdministrationEnabled();
+        
+      }
+    };
     copyButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
