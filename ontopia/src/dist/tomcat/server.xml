@@ -74,7 +74,7 @@
     -->
 
     <!-- Define a non-SSL HTTP/1.1 Connector on port 8080 -->
-    <Connector port="8080" maxHttpHeaderSize="8192"
+    <Connector port="8080" maxHttpHeaderSize="8192" URIEncoding="UTF-8"
                maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
                enableLookups="false" redirectPort="8443" acceptCount="100"
                connectionTimeout="20000" disableUploadTimeout="true" />
