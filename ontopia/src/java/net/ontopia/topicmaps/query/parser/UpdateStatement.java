@@ -44,6 +44,13 @@ public class UpdateStatement extends ModificationFunctionStatement {
     throw new UnsupportedOperationException(); // updates always have a function
   }
 
+  public String toString() {
+    String str = "update " + toStringFunction();
+    if (query != null)
+      str += "\nfrom " + query.toStringFromPart();
+    return str;
+  }
+
   // ----- UPDATE FUNCTIONS
 
   static class ValueFunction implements ModificationFunctionIF {

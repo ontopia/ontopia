@@ -62,4 +62,11 @@ public class MergeStatement extends ModificationStatement {
 
     return merges;
   }
+
+  public String toString() {
+    String str = "merge " + toStringLitlist();
+    if (query != null)
+      str += "\nfrom" + query.toStringFromPart();
+    return str;
+  }
 }

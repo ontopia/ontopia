@@ -69,8 +69,18 @@ public abstract class ModificationStatement extends TologStatement {
 
   public abstract int doUpdates(QueryMatches matches)
     throws InvalidQueryException;
-
+  
   // --- Internal utilities
+
+  protected String toStringLitlist() {
+    StringBuffer buf = new StringBuffer();
+    for (int ix = 0; ix < litlist.size(); ix++) {
+      buf.append(litlist.get(ix));
+      if (ix + 1 < litlist.size())
+        buf.append(", ");
+    }
+    return buf.toString();
+  }
 
   protected static int getIndex(Object arg, QueryMatches matches) {
     if (arg instanceof Variable)

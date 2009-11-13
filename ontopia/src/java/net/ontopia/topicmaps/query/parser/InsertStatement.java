@@ -81,6 +81,13 @@ public class InsertStatement extends ModificationStatement {
     return matches.last + 1;
   }
 
+  public String toString() {
+    String str = "insert ..."; // FIXME: stringfy CTM part
+    if (query != null)
+      str += "\nfrom" + query.toStringFromPart();
+    return str;
+  }
+  
   public void setCTMPart(String ctm, ParseContextIF context)
     throws InvalidQueryException {
 

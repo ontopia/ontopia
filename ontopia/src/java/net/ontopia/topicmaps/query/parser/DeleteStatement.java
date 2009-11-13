@@ -49,6 +49,17 @@ public class DeleteStatement extends ModificationFunctionStatement {
   }
 
   // --- Internal methods
+  
+  public String toString() {
+    String str = "delete ";
+    if (funcname != null)
+      str += toStringFunction();
+    else
+      str += toStringLitlist();
+    if (query != null)
+      str += "\nfrom " + query.toStringFromPart();
+    return str;
+  }
 
   protected int doLitListDeletes(boolean strict, Map arguments)
     throws InvalidQueryException {

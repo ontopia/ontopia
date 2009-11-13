@@ -45,6 +45,10 @@ public abstract class ModificationFunctionStatement
 
   // --- Internal helpers
 
+  protected String toStringFunction() {
+    return funcname + "(" + toStringLitlist() + ")";
+  }
+
   public int doStaticUpdates(TopicMapIF topicmap, Map arguments)
     throws InvalidQueryException {
     if (funcname == null)

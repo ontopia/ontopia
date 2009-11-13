@@ -721,5 +721,9 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     public int update(Map<String, ?> params) throws InvalidQueryException {
       return runUpdate(stmt, params);
     }
+
+    public String toString() {
+      return stmt.toString();
+    }
   }
 }

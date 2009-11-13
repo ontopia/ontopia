@@ -158,7 +158,7 @@ public class TologQuery extends TologStatement {
     }
 
     // predicates
-    buf.append(toString(clauses));
+    buf.append(toStringFromPart());
 
     // order by
     if (!orderBy.isEmpty()) {
@@ -237,6 +237,10 @@ public class TologQuery extends TologStatement {
     return buf.toString();
   }
 
+  protected String toStringFromPart() {
+    return toString(clauses);
+  }
+  
   private static String argumentsToString(List arguments) {
     StringBuffer buf = new StringBuffer();
 
