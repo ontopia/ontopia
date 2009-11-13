@@ -193,8 +193,9 @@ method are shown in the table below.
   <entry>syntax</entry> <entry>no</entry> <entry>no</entry> 
   <entry>string</entry>
   <entry>The syntax in which to return the topc map fragment. The
-  default is XTM, but TM/XML is also supported. Note that the values
-  supplied must be the syntax identifiers defined above.</entry>
+  default is XTM, but TM/XML is also supported (and LTM is not). Note
+  that the values supplied must be the syntax identifiers defined
+  above.</entry>
 </row>
 <row>
   <entry>view</entry> <entry>no</entry> <entry>no</entry> 
