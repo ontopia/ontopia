@@ -5,10 +5,7 @@
   net.ontopia.topicmaps.nav2.core.*,
   net.ontopia.topicmaps.nav2.utils.NavigatorUtils,
   net.ontopia.topicmaps.nav2.utils.FrameworkUtils,
-  net.ontopia.topicmaps.query.core.QueryProcessorIF,
-  net.ontopia.topicmaps.query.core.ParsedQueryIF,
-  net.ontopia.topicmaps.query.core.QueryResultIF,
-  net.ontopia.topicmaps.query.core.InvalidQueryException,
+  net.ontopia.topicmaps.query.core.*,
   net.ontopia.topicmaps.query.utils.QueryUtils,
   net.ontopia.topicmaps.query.impl.basic.QueryTracer,
   net.ontopia.topicmaps.query.impl.utils.SimpleQueryTracer,
@@ -47,11 +44,14 @@ if (charenc != null && charenc.trim().equals(""))
 if (charenc != null)
   request.setCharacterEncoding(charenc); // weird that we need to do this
 
-StringWriter trace = null;
-SimpleQueryTracer tracer = null;
 String executeQuery = request.getParameter("executeQuery");
 String processor = request.getParameter("processor");
+boolean search = request.getParameter("search") != null;
+
+StringWriter trace = null;
+SimpleQueryTracer tracer = null;
 boolean analyzeQuery = false;
+boolean update = request.getParameter("update") != null;
 
 if (executeQuery != null) {
   if (executeQuery.equals("trace")) {
@@ -68,7 +68,7 @@ String query = request.getParameter("query");
 String[] variables = null;
 long millis = 0;
 int rows = 0;
-ParsedQueryIF pquery = null;
+ParsedStatementIF stmt = null;
 String error = null;
 StringWriter tmp = new StringWriter();
 
@@ -76,7 +76,6 @@ StringWriter tmp = new StringWriter();
 TopicMapIF topicmap = navApp.getTopicMapById(tmid);
 
 try {
-
   UserIF user = FrameworkUtils.getUser(pageContext);
   String model = "complete";
   if (user != null)
@@ -99,66 +98,88 @@ try {
     // use tolog if we could not find an engine yet
     proc = QueryUtils.getQueryProcessor(topicmap);
   }
-  
-  try {
-    pquery = proc.parse(query);
-  }
-  catch (InvalidQueryException e) {
-    error = "<p>Error: " + e.getMessage() + "</p>";
-  }
-  
-  QueryResultIF result = null;
-  
-  if (!analyzeQuery && pquery != null) {
-    StringifierIF str = TopicStringifiers.getDefaultStringifier();
-  
-    if (tracer != null)
-      QueryTracer.addListener(tracer);
-    try {
-      millis = System.currentTimeMillis();
-      result = pquery.execute();
-      millis = System.currentTimeMillis() - millis;
-    } finally {
-      if (tracer != null)
-        QueryTracer.removeListener(tracer);
-    }
-    variables = result.getColumnNames();
-    
-    if (variables.length == 0) {
-      tmp.write("<tr valign='top'>");
-      if (result.next()) {
-        // result: true
-        rows++;
-        tmp.write("<td><i>TRUE</i></td>");
-      } else {
-        // result: false
-        tmp.write("<td><i>FALSE</i></td>");
+
+  if (update) {
+    stmt = proc.parseUpdate(query);
+    // FIXME: tracing is commented out for the moment because it crashes
+    // with a message I don't understand.
+    // if (tracer != null)
+    //   QueryTracer.addListener(tracer);
+    if (!analyzeQuery) {
+      try {
+        millis = System.currentTimeMillis();
+        rows = ((ParsedModificationStatementIF) stmt).update();
+        millis = System.currentTimeMillis() - millis;
+      } finally {
+      //  if (tracer != null)
+      //    QueryTracer.removeListener(tracer);
       }
-      tmp.write("</tr>");
-    } else {
-      while (result.next()) {
+      tmp.write("<p>Rows updated: " + rows + "</p>");
+    }
+  } else {  
+    stmt = proc.parse(query);
+    QueryResultIF result = null;
+  
+    if (!analyzeQuery && stmt != null) {
+      StringifierIF str = TopicStringifiers.getDefaultStringifier();
+    
+      if (tracer != null)
+        QueryTracer.addListener(tracer);
+      try {
+        millis = System.currentTimeMillis();
+        result = ((ParsedQueryIF) stmt).execute();
+        millis = System.currentTimeMillis() - millis;
+      } finally {
+        if (tracer != null)
+          QueryTracer.removeListener(tracer);
+      }
+      variables = result.getColumnNames();
+      
+      if (variables.length == 0) {
         tmp.write("<tr valign='top'>");
-        rows++;
-        Object[] row = result.getValues();
-        for (int ix = 0; ix < variables.length; ix++) {
-          if (row[ix] == null)
-            tmp.write("<td><i>null</i></td>");
-          else if (row[ix] instanceof TopicIF)
-            tmp.write("<td><a href=\"../../models/topic_" + model + ".jsp?tm=" + tmid  + "&id=" + ((TopicIF) row[ix]).getObjectId() + "\">" + str.toString(row[ix]) + "</a></td>");
-          else if (row[ix] instanceof AssociationIF) {
-            String objid = ((AssociationIF) row[ix]).getObjectId();
-            tmp.write("<td><a href=\"../../models/association_" + model + ".jsp?tm=" + tmid  + "&id=" + objid + "\">Association " + objid + "</a></td>");
-          } else if (row[ix] instanceof TopicNameIF) {
-            String name = ((TopicNameIF) row[ix]).getValue();
-            tmp.write("<td>" + name + "</td>");
-          } else
-            tmp.write("<td>" + row[ix] + "</td>");
+        if (result.next()) {
+          // result: true
+          rows++;
+          tmp.write("<td><i>TRUE</i></td>");
+        } else {
+          // result: false
+          tmp.write("<td><i>FALSE</i></td>");
         }
         tmp.write("</tr>");
+      } else {
+        tmp.write("<table class='text' border='1' cellpadding='2'>\n");
+        tmp.write("<tr>");
+	for (int ix = 0; ix < variables.length; ix++)
+	  tmp.write("<th>" + variables[ix] + "</th>");
+        tmp.write("</tr>");
+
+        while (result.next()) {
+          tmp.write("<tr valign='top'>");
+          rows++;
+          Object[] row = result.getValues();
+          for (int ix = 0; ix < variables.length; ix++) {
+            if (row[ix] == null)
+              tmp.write("<td><i>null</i></td>");
+            else if (row[ix] instanceof TopicIF)
+              tmp.write("<td><a href=\"../../models/topic_" + model + ".jsp?tm=" + tmid  + "&id=" + ((TopicIF) row[ix]).getObjectId() + "\">" + str.toString(row[ix]) + "</a></td>");
+            else if (row[ix] instanceof AssociationIF) {
+              String objid = ((AssociationIF) row[ix]).getObjectId();
+              tmp.write("<td><a href=\"../../models/association_" + model + ".jsp?tm=" + tmid  + "&id=" + objid + "\">Association " + objid + "</a></td>");
+            } else if (row[ix] instanceof TopicNameIF) {
+              String name = ((TopicNameIF) row[ix]).getValue();
+              tmp.write("<td>" + name + "</td>");
+            } else
+              tmp.write("<td>" + row[ix] + "</td>");
+          }
+          tmp.write("</tr>");
+        }
+	tmp.write("</table>");
       }
     }
   }
 
+} catch (InvalidQueryException e) {
+  error = "<p>Error: " + e.getMessage() + "</p>";
 } finally {
   navApp.returnTopicMap(topicmap);
 }
@@ -179,8 +200,8 @@ try {
 <% if (analyzeQuery) { %>
   <p><b>Parsed query:</b></p>
 
-  <pre><%= pquery %></pre>
-<% } else { %>
+  <pre><%= stmt %></pre>
+<% } else if (!update) { %>
   <p>
   <form method=get action="csv.jsp">
     <input type=submit value="Export to CSV">
@@ -194,18 +215,9 @@ try {
 
 <template:put name="content" body="true">
 
-<% if (pquery != null) { %>
+<% if (stmt != null) { %>
 
-<table class="text" border="1" cellpadding="2">
-<tr><%
-  if (variables != null) {
-    for (int ix = 0; ix < variables.length; ix++)
-      out.write("<th>" + variables[ix] + "</th>");
-  }
-%></tr>
-
-<%= tmp %>
-</table>
+  <%= tmp %>
 
 <%
   } else if (error != null) {

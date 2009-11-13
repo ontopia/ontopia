@@ -93,8 +93,8 @@ try {
 <font size="+1"><textarea name="query" rows="15" cols="62" tabindex="2"><%= (request.getParameter("query") == null ? "" : request.getParameter("query")) %></textarea></font>
 
 <tr><td>
-    <input type=submit value="Search" tabindex="3">
-    <input type=reset  value="Reset">
+    <input type=submit name=search value="Search" tabindex="3">
+    <input type=submit name=update value="Update" tabindex="4">
     <input type=radio name="executeQuery" value="normal" checked="checked"> Run query
     <input type=radio name="executeQuery" value="trace"> Show trace
     <input type=radio name="executeQuery" value="analyze"> Analyze query
