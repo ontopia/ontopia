@@ -215,11 +215,8 @@ public class TologParser {
 
     if (hasFrom)
       return query.substring(insertM.end(), fromM.start());
-    else {
-      // need to find the ! and leave that out
-      int ix = query.lastIndexOf('!');
-      return query.substring(insertM.end(), ix);
-    }
+    else
+      return query.substring(insertM.end());
   }
 
   private String getTologPart(String query) {
@@ -231,10 +228,7 @@ public class TologParser {
     if (hasFrom)
       return query.substring(0, insertM.end()) +
              query.substring(fromM.start());
-    else {
-      // need to find the ! and keep that
-      int ix = query.lastIndexOf('!');
-      return query.substring(0, insertM.end()) + query.substring(ix);
-    }
+    else
+      return query.substring(0, insertM.end());
   }
 }
