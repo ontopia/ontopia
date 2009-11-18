@@ -420,7 +420,7 @@ delete:
   (FROM clauselist 
     { ((DeleteStatement) statement)
        .setClauseList(prevClauseList, lexer.getOptions()); } 
-  )? EXCLAMATIONM { 
+  )? EOF! { 
     try {
       statement.close();
     }
@@ -457,7 +457,7 @@ merge:
   (FROM clauselist 
     { ((ModificationStatement) statement)
        .setClauseList(prevClauseList, lexer.getOptions()); } 
-  )? EXCLAMATIONM { 
+  )? EOF! { 
     try {
       statement.close();
     }
@@ -474,7 +474,7 @@ update:
   (FROM clauselist 
     { ((UpdateStatement) statement)
        .setClauseList(prevClauseList, lexer.getOptions()); } 
-  )? EXCLAMATIONM { 
+  )? EOF! { 
     try {
       statement.close();
     }
@@ -490,7 +490,7 @@ insert:
   (FROM clauselist
     { ((ModificationStatement) statement)
        .setClauseList(prevClauseList, lexer.getOptions()); } 
-  )? EXCLAMATIONM { 
+  )? EOF! { 
     try {
       statement.close();
     }
@@ -498,234 +498,3 @@ insert:
       throw new AntlrWrapException(e);
     }
   };
-
-/**
- * INTERNAL: Lexer for LTM syntax.
- */
-
-class TologLexer extends Lexer;
-
-options { 
-  // can't include U+FFFF in the vocabulary, because antlr 2.7.1 uses it
-  // to represent EOF...
-  charVocabulary = '\1'..'\uFFFE'; 
-  caseSensitive = false;
-  caseSensitiveLiterals = false;
-  testLiterals = false;
-  k = 4;
-}
-
-tokens {
-  COUNT  = "count";
-  ORDER  = "order";
-  BY     = "by";
-  SELECT = "select";
-  FROM   = "from";
-  NOT    = "not";
-  DESC   = "desc";
-  ASC    = "asc";
-  LIMIT  = "limit";
-  OFFSET = "offset";
-  USING  = "using";
-  FOR    = "for";
-  AS     = "as";
-  IMPORT = "import";
-
-  DELETE = "delete";
-  MERGE  = "merge";
-  UPDATE = "update";
-  INSERT = "insert";
-}
-
-{
-  private TologOptions options;
-
-  public TologLexer(Reader reader, TologOptions options) {
-    this(reader);
-    this.options = new TologOptions(options);
-  }
-
-  public TologOptions getOptions() {
-    return options;
-  }
-
-  // --- Option parsing
-  
-  // "#OPTION: name.of.option: value"
-  private void parse(String comment) {
-    int pos = ignoreWS(comment, 0);
-    pos = check(comment, pos, "#OPTION:");
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    pos = ignoreWS(comment, pos);
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    String name = getName(comment, pos);
-    if (name == null)
-      return; // syntax error -> no options here
-    pos += name.length();
-
-    pos = ignoreWS(comment, pos);
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    pos = check(comment, pos, "=");
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    pos = ignoreWS(comment, pos);
-    if (pos == -1)
-      return; // syntax error -> no options here
-
-    String value = getValue(comment, pos);
-    if (value == null)
-      return; // syntax error -> no options here
-
-    options.setOption(name, value); // there was a value
-  }
-
-  private int ignoreWS(String data, int pos) {
-    if (pos == data.length())
-      return -1;
-    
-    char ch = ' ';
-    while (pos < data.length() &&
-           (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r'))
-      ch = data.charAt(pos++);
-    return pos - 1;
-  }
-
-  private int check(String data, int pos, String expected) {
-    int start = pos;
-    while (pos < data.length() &&
-           pos - start < expected.length() &&
-           data.charAt(pos) == expected.charAt(pos - start))
-      pos++;
-    if (pos == start)
-      return -1;
-    else
-      return pos;
-  }
-
-  private String getName(String data, int pos) {
-    int start = pos;
-    char ch = 'a';
-    while (pos < data.length() &&
-           ((ch >= 'a' && ch <= 'z') ||
-            (ch >= 'A' && ch <= 'Z') ||
-            (ch >= '0' && ch <= '9') ||
-            ch == '.' || ch == '-'))
-      ch = data.charAt(pos++);
-
-    if (pos == start)
-      return null;
-    
-    return data.substring(start, pos - 1);
-  }
-  
-  private String getValue(String data, int pos) {
-    return getName(data, pos); // FIXME: too primitive, obviously
-  }
-}
-
-OBJID:
- '@'
- ('A'..'Z' | 'a'..'z' | '0' .. '9')*
- { setText(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-1)); }
- ;
-
-IDENT options { testLiterals = true; }: 
- ('A'..'Z' | 'a'..'z' | '_') 
- ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')*
- ({ !(LA(2) == ' ' || LA(2) == '\t' || LA(2) == '\n' || LA(2) == '\r') }?
-  (':'
-   ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')+)?)?;
-
-WS :
- (' ' |	'\t' | '\n'  { newline(); } | '\r')
- { $setType(Token.SKIP); }
- ;
-
-STRING:
- { boolean quoted = false; }
- '"' (~('"' | '\n') | '\n' { newline(); } | '"' '"' { quoted = true; } )* '"'
- {
-   if (quoted)
-     setText(net.ontopia.utils.StringUtils.replace(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-2), "\"\"", "\""));
-   else
-     setText(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-2)); }
- ;
-
-COMMENT : 
- "/*" INCOMMENT "*/" 
- { $setType(Token.SKIP);
-   parse(new String(text.getBuffer(), _begin+2, (text.length()-_begin)-3)); }
- ;
-
-INCOMMENT:
- (~('*' | '\n')           |
-    { LA(2)!='/' }? '*'   |
-      '\n' { newline(); } |
-    COMMENT )*;
-
-VARIABLE:
- '$'
- ('A'..'Z' | 'a'..'z' | '_') 
- ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')*
- ;
-
-PARAMETER :
- '%'
- ('A'..'Z' | 'a'..'z' | '_') 
- ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | '-')*
- '%'
- { setText(new String(text.getBuffer(), _begin+1, (text.length()-_begin)-2)); }
- ;
-
-INDICATOR :
- 'i'
- '"' (~('"' | '\n') | '\n' { newline(); } )* '"'
- { setText(new String(text.getBuffer(), _begin+2, (text.length()-_begin)-3)); }
- ;
-
-ADDRESS :
- 'a'
- '"' (~('"' | '\n') | '\n' { newline(); } )* '"'
- { setText(new String(text.getBuffer(), _begin+2, (text.length()-_begin)-3)); }
- ;
-
-SOURCELOC :
- 's'
- '"' (~('"' | '\n') | '\n' { newline(); } )* '"'
- { setText(new String(text.getBuffer(), _begin+2, (text.length()-_begin)-3)); }
- ;
-  
-NUMBER:
- ('0'..'9')+
- ( '.' 
-   ('0'..'9')+ )?
- ;
-
-
-COLON     options { paraphrase = ":";  } : ':'  ;
-QUESTIONM options { paraphrase = "?";  } : '?'  ;
-EXCLAMATIONM options { paraphrase = "!";  } : '!';
-COMMA  	  options { paraphrase = ",";  } : ','  ;
-LPAREN 	  options { paraphrase = "(";  } : '('  ;
-RPAREN 	  options { paraphrase = ")";  } : ')'  ;
-PERIOD    options { paraphrase = ")";  } : '.'  ;
-CONNECT   options { paraphrase = ":-"; } : ":-" ;
-LCURLY    options { paraphrase = "{";  } : '{'  ;
-RCURLY    options { paraphrase = "}";  } : '}'  ;
-PIPE      options { paraphrase = "|";  } : '|'  ;
-DOUBLEPIPE      options { paraphrase = "||";  } : "||"  ;
-
-NOTEQUALS     options { paraphrase = "/="; } : "/=" ;
-EQUALS        options { paraphrase = "="; }  : "="  ;
-LESSTHAN      options { paraphrase = "<"; }  : "<"  ;
-GREATERTHAN   options { paraphrase = ">"; }  : ">"  ;
-LESSTHANEQ    options { paraphrase = "<="; } : "<=" ;
-GREATERTHANEQ options { paraphrase = ">="; } : ">=" ;
-

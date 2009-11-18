@@ -62,6 +62,13 @@ public class TologParser {
       else 
         throw new InvalidQueryException(e);
     }
+    catch (JFlexWrapException ex) {
+      Exception e = ex.getException();
+      if (e instanceof InvalidQueryException)
+        throw (InvalidQueryException)e;
+      else 
+        throw new InvalidQueryException(e);
+    }
     catch (RecognitionException ex) {
       throw new InvalidQueryException("Lexical error at " /*+ getBaseAddress().getAddress() + ":"*/ + ex.line + ":" + ex.column + ": "+ ex.getMessage());
     }

@@ -35,7 +35,7 @@ public class DeleteTest extends AbstractQueryTest {
   
   public void testEmptyDelete() throws InvalidQueryException {
     makeEmpty();
-    update("delete $A, $B from direct-instance-of($A, $B)!");
+    update("delete $A, $B from direct-instance-of($A, $B)");
   }
 
   /// instance-of topic map
@@ -46,7 +46,7 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("delete topic4!");
+    update("delete topic4");
 
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == 5);
@@ -60,7 +60,7 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("delete $A from $A = topic4!");
+    update("delete $A from $A = topic4");
 
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == 5);
@@ -74,7 +74,7 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("delete $A from $A = topic4, $B = topic3!");
+    update("delete $A from $A = topic4, $B = topic3");
 
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == 5);
@@ -90,7 +90,7 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("delete $A, topic3 from $A = topic4!");
+    update("delete $A, topic3 from $A = topic4");
 
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == 4);
@@ -106,7 +106,7 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("delete type2!");
+    update("delete type2");
 
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == 3);
@@ -124,7 +124,7 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("delete $A, topic4 from $A = topic4!");
+    update("delete $A, topic4 from $A = topic4");
 
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == 5);
@@ -138,7 +138,7 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("delete $A from instance-of($A, type2)!");
+    update("delete $A from instance-of($A, type2)");
 
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == 4);
@@ -154,7 +154,7 @@ public class DeleteTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("delete $A, $B from instance-of($A, $B)!");
+    update("delete $A, $B from instance-of($A, $B)");
 
     assertTrue("wrong number of topics after delete",
                topicmap.getTopics().size() == 0);
@@ -168,7 +168,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF topic4 = getTopicById("topic4");
     LocatorIF ii = (LocatorIF) topic4.getItemIdentifiers().iterator().next();
     
-    update("delete item-identifier(topic4, \"" + ii.getAddress() + "\")!");
+    update("delete item-identifier(topic4, \"" + ii.getAddress() + "\")");
 
     assertTrue("topic retains item identifier after delete",
                topic4.getItemIdentifiers().isEmpty());
@@ -179,7 +179,7 @@ public class DeleteTest extends AbstractQueryTest {
 
     TopicIF topic4 = getTopicById("topic4");
     
-    update("delete item-identifier(topic4, $II) from item-identifier(topic4, $II)!");
+    update("delete item-identifier(topic4, $II) from item-identifier(topic4, $II)");
 
     assertTrue("topic retains item identifier after delete",
                topic4.getItemIdentifiers().isEmpty());
@@ -191,7 +191,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF topic = getTopicById("type1");
     LocatorIF si = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
     
-    update("delete subject-identifier(type1, \"" + si.getAddress() + "\")!");
+    update("delete subject-identifier(type1, \"" + si.getAddress() + "\")");
 
     assertTrue("topic retains subject identifier after delete",
                topic.getSubjectIdentifiers().isEmpty());
@@ -202,7 +202,7 @@ public class DeleteTest extends AbstractQueryTest {
 
     TopicIF topic = getTopicById("type1");
     
-    update("delete subject-identifier(type1, $SI) from subject-identifier(type1, $SI)!");
+    update("delete subject-identifier(type1, $SI) from subject-identifier(type1, $SI)");
 
     assertTrue("topic retains subject identifier after delete",
                topic.getSubjectIdentifiers().isEmpty());
@@ -214,7 +214,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF topic = getTopicById("type2");
     LocatorIF sl = (LocatorIF) topic.getSubjectLocators().iterator().next();
     
-    update("delete subject-locator(type2, \"" + sl.getAddress() + "\")!");
+    update("delete subject-locator(type2, \"" + sl.getAddress() + "\")");
 
     assertTrue("topic retains subject locator after delete",
                topic.getSubjectLocators().isEmpty());
@@ -225,7 +225,7 @@ public class DeleteTest extends AbstractQueryTest {
 
     TopicIF topic = getTopicById("type2");
     
-    update("delete subject-locator(type2, $SL) from subject-locator(type2, $SL)!");
+    update("delete subject-locator(type2, $SL) from subject-locator(type2, $SL)");
 
     assertTrue("topic retains subject locator after delete",
                topic.getSubjectLocators().isEmpty());
@@ -236,7 +236,7 @@ public class DeleteTest extends AbstractQueryTest {
 
     TopicIF topic = getTopicById("topic1");
     
-    update("delete direct-instance-of(topic1, type1)!");
+    update("delete direct-instance-of(topic1, type1)");
 
     assertTrue("topic retains type after delete",
                topic.getTypes().isEmpty());
@@ -247,7 +247,7 @@ public class DeleteTest extends AbstractQueryTest {
 
     TopicIF topic = getTopicById("topic1");
     
-    update("delete direct-instance-of($I, $T) from $I = topic1, $T = type1!");
+    update("delete direct-instance-of($I, $T) from $I = topic1, $T = type1");
 
     assertTrue("topic retains type after delete",
                topic.getTypes().isEmpty());
@@ -262,7 +262,7 @@ public class DeleteTest extends AbstractQueryTest {
     if (name.getScope().isEmpty()) // need the one with scope
       name = (TopicNameIF) it.next();
     
-    update("delete scope($N, english) from topic-name(bbtype, $N), scope($N, english)!");
+    update("delete scope($N, english) from topic-name(bbtype, $N), scope($N, english)");
 
     assertTrue("name retains scope after delete",
                name.getScope().isEmpty());
@@ -274,7 +274,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF topic = getTopicById("jill-ontopia-topic");
     AssociationIF reified = (AssociationIF) topic.getReified();
     
-    update("delete reifies($T, $A) from instance-of($T, employment), reifies($T, $A)!");
+    update("delete reifies($T, $A) from instance-of($T, employment), reifies($T, $A)");
 
     assertTrue("topic retains reified after delete",
                topic.getReified() == null);
@@ -290,7 +290,7 @@ public class DeleteTest extends AbstractQueryTest {
 
     // this test tries to delete an association that is *not* reified
     // by jills-contract-topic, and so it shouldn't do anything
-    update("delete reifies(jills-contract-topic, $A) from instance-of($T, employment), reifies($T, $A)!");
+    update("delete reifies(jills-contract-topic, $A) from instance-of($T, employment), reifies($T, $A)");
 
     assertTrue("topic lost reified after delete",
                contract.getReified() != null);
@@ -305,7 +305,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF subclass = getTopicById("subclass");
 
     update("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" " +
-           "delete xtm:subclass!");
+           "delete xtm:subclass");
 
     assertTrue("topic still attached to TM after delete",
                subclass.getTopicMap() == null);
@@ -320,7 +320,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF subclass = getTopicById("subclass");
 
     update("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" " +
-           "delete $A from $A = xtm:subclass!");
+           "delete $A from $A = xtm:subclass");
 
     assertTrue("topic still attached to TM after delete",
                subclass.getTopicMap() == null);
@@ -337,7 +337,7 @@ public class DeleteTest extends AbstractQueryTest {
 
     DeclarationContextIF context = parseContext("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\"");
     
-    update("delete xtm:subclass!", context);
+    update("delete xtm:subclass", context);
 
     assertTrue("topic still attached to TM after delete",
                subclass.getTopicMap() == null);
@@ -352,7 +352,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF subclass = getTopicById("subclass");
     Map params = makeArguments("topic", subclass);
 
-    update("delete %topic%!", params);
+    update("delete %topic%", params);
 
     assertTrue("topic still attached to TM after delete",
                subclass.getTopicMap() == null);
@@ -367,7 +367,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF subclass = getTopicById("subclass");
     Map params = makeArguments("topic", subclass);
 
-    update("delete $A from $A = %topic%!", params);
+    update("delete $A from $A = %topic%", params);
 
     assertTrue("topic still attached to TM after delete",
                subclass.getTopicMap() == null);
@@ -383,7 +383,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF superclass = getTopicById("superclass");
     Map params = makeArguments("topic", subclass);
 
-    update("delete $A, %topic% from $A = superclass!", params);
+    update("delete $A, %topic% from $A = superclass", params);
 
     assertTrue("topic still attached to TM after delete",
                subclass.getTopicMap() == null);
@@ -399,7 +399,7 @@ public class DeleteTest extends AbstractQueryTest {
     TopicIF topic = getTopicById("topic1");
     TopicIF type = getTopicById("type1");
     
-    update("delete direct-instance-of(topic1, %type%)!",
+    update("delete direct-instance-of(topic1, %type%)",
            makeArguments("type", type));
 
     assertTrue("topic retains type after delete",
@@ -410,46 +410,46 @@ public class DeleteTest extends AbstractQueryTest {
     
   public void testVariableButNoFrom() throws InvalidQueryException {
     makeEmpty();
-    updateError("delete $A!");
+    updateError("delete $A");
   }
 
   public void testNoSuchVariable() throws InvalidQueryException {
     makeEmpty();
-    updateError("delete $A from $B = 1!");
+    updateError("delete $A from $B = 1");
   }
 
   public void testBadType() throws InvalidQueryException {
     makeEmpty();
-    updateError("delete $A from $A = 1!");
+    updateError("delete $A from $A = 1");
   }
 
   public void testWrongArgNo() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    updateError("delete item-identifier(topic4)!");
+    updateError("delete item-identifier(topic4)");
   }
 
   public void testWrongArgNo2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    updateError("delete item-identifier(topic4, \"foo:bar\", topic3)!");
+    updateError("delete item-identifier(topic4, \"foo:bar\", topic3)");
   }
 
   public void testWrongArgType1() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    updateError("delete item-identifier(\"foo:bar\", \"foo:bar\")!");
+    updateError("delete item-identifier(\"foo:bar\", \"foo:bar\")");
   }
 
   public void testWrongArgType2() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-    updateError("delete item-identifier(topic1, topic2)!");
+    updateError("delete item-identifier(topic1, topic2)");
   }
   
   public void testFunctionVariableButNoFrom() throws InvalidQueryException {
     makeEmpty();
-    updateError("delete item-identifier($A, $B)!");
+    updateError("delete item-identifier($A, $B)");
   }
   
   public void testNoSuchFunction() throws InvalidQueryException {
     makeEmpty();
-    updateError("delete gurble(topic4, \"http://example.org\")!");
+    updateError("delete gurble(topic4, \"http://example.org\")");
   }
 }

@@ -29,7 +29,7 @@ public class MergeTest extends AbstractQueryTest {
   
   public void testEmptyMerge() throws InvalidQueryException {
     makeEmpty();
-    update("merge $A, $B from direct-instance-of($A, $B)!");
+    update("merge $A, $B from direct-instance-of($A, $B)");
   }
 
   /// instance-of topic map
@@ -41,7 +41,7 @@ public class MergeTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("merge topic1, topic1!");
+    update("merge topic1, topic1");
 
     assertTrue("wrong number of topics after merge",
                topicmap.getTopics().size() == 6);
@@ -55,7 +55,7 @@ public class MergeTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("merge topic1, topic2!");
+    update("merge topic1, topic2");
 
     assertTrue("wrong number of topics after merge",
                topicmap.getTopics().size() == 5);
@@ -78,7 +78,7 @@ public class MergeTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("merge $A, $B from $A = topic1, $B = topic2!");
+    update("merge $A, $B from $A = topic1, $B = topic2");
 
     assertTrue("wrong number of topics after merge: " + topicmap.getTopics().size(),
                topicmap.getTopics().size() == 5);
@@ -101,7 +101,7 @@ public class MergeTest extends AbstractQueryTest {
     assertTrue("wrong number of topics to start with",
                topicmap.getTopics().size() == 6);
     
-    update("merge $A, topic2 from $A = topic1!");
+    update("merge $A, topic2 from $A = topic1");
 
     assertTrue("wrong number of topics after merge: " + topicmap.getTopics().size(),
                topicmap.getTopics().size() == 5);
@@ -125,7 +125,7 @@ public class MergeTest extends AbstractQueryTest {
                topicmap.getTopics().size() == 6);
 
     // merges topic1, topic2, topic3, and topic4 into a single topic
-    update("merge $A, $B from instance-of($A, $C), instance-of($B, $D)!");
+    update("merge $A, $B from instance-of($A, $C), instance-of($B, $D)");
 
     assertTrue("wrong number of topics after merge: " + topicmap.getTopics().size(),
                topicmap.getTopics().size() == 3);
@@ -160,7 +160,7 @@ public class MergeTest extends AbstractQueryTest {
     TopicIF superclass = getTopicById("superclass");
     Map params = makeArguments("topic", subclass);
 
-    update("merge superclass, %topic%!", params);
+    update("merge superclass, %topic%", params);
 
     assertTrue("topic still attached to TM after merge",
                subclass.getTopicMap() == null);
@@ -178,7 +178,7 @@ public class MergeTest extends AbstractQueryTest {
     TopicIF superclass = getTopicById("superclass");
     Map params = makeArguments("topic", subclass);
 
-    update("merge superclass, $A from $A = %topic%!", params);
+    update("merge superclass, $A from $A = %topic%", params);
 
     assertTrue("topic still attached to TM after merge",
                subclass.getTopicMap() == null);
@@ -196,7 +196,7 @@ public class MergeTest extends AbstractQueryTest {
     TopicIF superclass = getTopicById("superclass");
     Map params = makeArguments("topic", subclass);
 
-    update("merge $A, %topic% from $A = superclass!", params);
+    update("merge $A, %topic% from $A = superclass", params);
 
     assertTrue("topic still attached to TM after merge",
                subclass.getTopicMap() == null);
@@ -210,16 +210,16 @@ public class MergeTest extends AbstractQueryTest {
     
   public void testVariableButNoFrom() throws InvalidQueryException {
     makeEmpty();
-    updateError("merge $A, topic1!");
+    updateError("merge $A, topic1");
   }
 
   public void testNoSuchParam() throws InvalidQueryException {
     makeEmpty();
-    updateError("merge %A%, topic1!");
+    updateError("merge %A%, topic1");
   }
 
   public void testTopicAndTopicMap() throws InvalidQueryException {
     makeEmpty();
-    updateError("merge topic1, $TM from topicmap($TM)!");
+    updateError("merge topic1, $TM from topicmap($TM)");
   }
 }
