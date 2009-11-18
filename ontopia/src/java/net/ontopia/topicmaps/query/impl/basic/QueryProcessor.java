@@ -229,10 +229,15 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     throws InvalidQueryException {
     if (statement.getEmbeddedQuery() != null) {
       TologQuery subquery = optimize(statement.getEmbeddedQuery());
-      QueryMatches matches = createInitialMatches(subquery, params);
-      matches = satisfy(subquery.getClauses(), matches);
-      matches = reduce(subquery, matches);
-      return statement.doUpdates(matches);
+      QueryTracer.startQuery();
+      try {
+        QueryMatches matches = createInitialMatches(subquery, params);
+        matches = satisfy(subquery.getClauses(), matches);
+        matches = reduce(subquery, matches);
+        return statement.doUpdates(matches);
+      } finally {
+        QueryTracer.endQuery();
+      }
     } else
       return statement.doStaticUpdates(topicmap, params);
   }
