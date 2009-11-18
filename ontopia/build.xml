@@ -1204,6 +1204,7 @@
     </java>
 
     <echo>Compiling tolog grammar...</echo>
+    <jflex file="${java.path}/net/ontopia/topicmaps/query/parser/tolog.flex" destdir="${java.path}"/>
     <java classname="antlr.Tool" dir="${java.path}/net/ontopia/topicmaps/query/parser"
           classpathref="project.classpath" fork="true" output="${build.root}/antlr.tolog.log">
        <arg line="tolog.g" />
