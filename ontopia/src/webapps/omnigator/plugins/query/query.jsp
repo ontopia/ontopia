@@ -101,18 +101,16 @@ try {
 
   if (update) {
     stmt = proc.parseUpdate(query);
-    // FIXME: tracing is commented out for the moment because it crashes
-    // with a message I don't understand.
-    // if (tracer != null)
-    //   QueryTracer.addListener(tracer);
+    if (tracer != null)
+      QueryTracer.addListener(tracer);
     if (!analyzeQuery) {
       try {
         millis = System.currentTimeMillis();
         rows = ((ParsedModificationStatementIF) stmt).update();
         millis = System.currentTimeMillis() - millis;
       } finally {
-      //  if (tracer != null)
-      //    QueryTracer.removeListener(tracer);
+      if (tracer != null)
+        QueryTracer.removeListener(tracer);
       }
       tmp.write("<p>Rows updated: " + rows + "</p>");
     }
