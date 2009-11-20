@@ -222,13 +222,14 @@ public class BasicQueryProcessor implements QueryProcessorIF {
         
         ResultSet result = new ResultSet(rs);
         for (ResultSet tmpRS : groupingMap.values()) {
+          Row tmpRow = tmpRS.iterator().next();
           Row aggregatedRow = result.createRow();
           for (int i = 0; i < stmt.getSelectCount(); i++) {
             if (stmt.getSelect(i) instanceof BasicFunctionIF) {
               BasicFunctionIF expr = (BasicFunctionIF) stmt.getSelect(i);
               aggregatedRow.setValue(i, expr.aggregate(tmpRS.getValues(i)));
             } else {
-              aggregatedRow.setValue(i, tmpRS.getValues(i));
+              aggregatedRow.setValue(i, tmpRow.getValue(i));
             }
           }
           result.addRow(aggregatedRow);
