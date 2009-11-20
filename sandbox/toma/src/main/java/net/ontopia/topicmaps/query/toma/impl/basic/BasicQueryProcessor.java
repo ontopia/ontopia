@@ -3,6 +3,7 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -176,16 +177,64 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     // if the select is aggregated, evaluate the aggregate functions now;
     // otherwise just return the ResultSet.
     if (stmt.isAggregated()) {
-      ResultSet result = new ResultSet(rs);
-
-      Row aggregatedRow = result.createRow();
-      for (int i = 0; i < stmt.getSelectCount(); i++) {
-        // we know, that it has to be a FunctionIF
-        BasicFunctionIF expr = (BasicFunctionIF) stmt.getSelect(i);
-        aggregatedRow.setValue(i, expr.aggregate(rs.getValues(i)));
+      // in case all select expressions are aggregated we can simply
+      // evaluate the columns separately
+      if (stmt.getSelectCount() == stmt.getAggregatedSelectCount()) {
+        ResultSet result = new ResultSet(rs);
+        Row aggregatedRow = result.createRow();
+        for (int i = 0; i < stmt.getSelectCount(); i++) {
+          // we know, that it has to be a FunctionIF
+          BasicFunctionIF expr = (BasicFunctionIF) stmt.getSelect(i);
+          aggregatedRow.setValue(i, expr.aggregate(rs.getValues(i)));
+        }
+        result.addRow(aggregatedRow);
+        return result;
+      } else {
+        int selectCount = stmt.getSelectCount();
+        int aggregateCount = stmt.getAggregatedSelectCount();
+        int groupIdx[] = new int[selectCount - aggregateCount];
+        
+        for (int i = 0, j = 0; i < stmt.getSelectCount(); i++) {
+          if (!(stmt.getSelect(i) instanceof BasicFunctionIF)) {
+            groupIdx[j++] = i;
+          }
+        }
+        
+        ResultSet groupingRS = new ResultSet(selectCount - aggregateCount, false);
+        HashMap<Row, ResultSet> groupingMap = new HashMap<Row, ResultSet>(); 
+        
+        // group together all rows based on non-aggregated columns
+        for (Row r : rs) {
+          Row gRow = groupingRS.createRow();
+          int j = 0;
+          for (int idx : groupIdx) {
+            gRow.setValue(j++, r.getValue(idx));
+          }
+          
+          ResultSet tmpRS = groupingMap.get(gRow);
+          if (tmpRS == null) {
+            tmpRS = new ResultSet(rs);
+            groupingMap.put(gRow, tmpRS);
+          }
+          
+          tmpRS.addRow(r);
+        }
+        
+        ResultSet result = new ResultSet(rs);
+        for (ResultSet tmpRS : groupingMap.values()) {
+          Row aggregatedRow = result.createRow();
+          for (int i = 0; i < stmt.getSelectCount(); i++) {
+            if (stmt.getSelect(i) instanceof BasicFunctionIF) {
+              BasicFunctionIF expr = (BasicFunctionIF) stmt.getSelect(i);
+              aggregatedRow.setValue(i, expr.aggregate(tmpRS.getValues(i)));
+            } else {
+              aggregatedRow.setValue(i, tmpRS.getValues(i));
+            }
+          }
+          result.addRow(aggregatedRow);
+        }
+        return result;
       }
-      result.addRow(aggregatedRow);
-      return result;
     } else {
       return rs;
     }

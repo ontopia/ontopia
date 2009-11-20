@@ -26,15 +26,15 @@ public class AggregateFunctionTest extends AbstractTomaQueryTestCase {
 
   /// checking query structure
 
-  public void testInvalidAggregateQuery() throws InvalidQueryException,
-      IOException {
-    load("full.ltm");
-
-    try {
-      parse("select $T, count($T) where exists $T;");
-      fail("accepted invalid query");
-    } catch (InvalidQueryException e) {}
-  }
+//  public void testInvalidAggregateQuery() throws InvalidQueryException,
+//      IOException {
+//    load("full.ltm");
+//
+//    try {
+//      parse("select $T, count($T) where exists $T;");
+//      fail("accepted invalid query");
+//    } catch (InvalidQueryException e) {}
+//  }
   
   public void testCount() throws InvalidQueryException, IOException {
     load("full.ltm");

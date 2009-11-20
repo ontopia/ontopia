@@ -92,6 +92,19 @@ public class SelectStatement implements ASTElementIF {
     return selects.size();
   }
 
+  public int getAggregatedSelectCount() {
+    int numAggregate = 0;
+    for (ExpressionIF expr : selects) {
+      if (expr instanceof FunctionIF) {
+        if (((FunctionIF) expr).isAggregateFunction()) {
+          numAggregate++;
+        }
+      }
+    }
+
+    return numAggregate;
+  }
+  
   /**
    * Get the select clause at the given index.
    * 
@@ -174,10 +187,10 @@ public class SelectStatement implements ASTElementIF {
       expr.validate();
     }
 
-    if (numAggregate > 0 && numAggregate != selects.size()) {
-      throw new AntlrWrapException(new InvalidQueryException(
-          "All select-clauses must contain a aggregate function."));
-    }
+//    if (numAggregate > 0 && numAggregate != selects.size()) {
+//      throw new AntlrWrapException(new InvalidQueryException(
+//          "All select-clauses must contain a aggregate function."));
+//    }
 
     // TODO: check that no aggregate functions are used in the where clause.
     

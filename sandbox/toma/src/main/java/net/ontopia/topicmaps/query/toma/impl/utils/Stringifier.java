@@ -88,4 +88,46 @@ public class Stringifier {
       return o.toString();
     }
   }
+  
+  /**
+   * Returns a string representation of the given object to be used for
+   * comparison.
+   * 
+   * <ul>
+   * <li>Topic: the object id
+   * <li>TopicName: the value of the topic name
+   * <li>VariantName: the value of the variant name
+   * <li>Locator: the address of the locator
+   * <li>Occurrence: the value of the occurrence
+   * <li>any other object: the result of toString()
+   * </ul>
+   * 
+   * @param o the object to be converted.
+   * @return a string representation of the object
+   */
+  public static Comparable toSort(Object o) {
+    if (o == null)
+      return null;
+
+    if (o instanceof TopicIF) {
+      Collection<LocatorIF> iids = ((TopicIF) o).getItemIdentifiers();
+      if (iids.isEmpty()) {
+        return ((TopicIF) o).getObjectId();
+      } else {
+        return iids.iterator().next().getAddress();        
+      }
+    } else if (o instanceof TopicNameIF) {
+      return ((TopicNameIF) o).getValue();
+    } else if (o instanceof VariantNameIF) {
+      return ((VariantNameIF) o).getValue();
+    } else if (o instanceof LocatorIF) {
+      return ((LocatorIF) o).getAddress();
+    } else if (o instanceof OccurrenceIF) {
+      return ((OccurrenceIF) o).getValue();
+    } else if (o instanceof Integer || o instanceof Double){
+      return (Comparable) o;
+    } else {
+      return o.toString();
+    }
+  }
 }

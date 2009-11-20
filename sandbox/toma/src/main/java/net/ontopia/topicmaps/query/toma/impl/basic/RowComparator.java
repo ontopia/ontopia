@@ -28,8 +28,8 @@ public class RowComparator implements Comparator<Row> {
     } else {
       for (QueryOrder order : ordering) {
         int col = order.getColumn() - 1;
-        String s1 = Stringifier.toString(row1.getValue(col));
-        String s2 = Stringifier.toString(row2.getValue(col));
+        Comparable s1 = Stringifier.toSort(row1.getValue(col));
+        Comparable s2 = Stringifier.toSort(row2.getValue(col));
         
         int cmp = 0;
         if (order.getOrder() == SORT_ORDER.ASC) {
