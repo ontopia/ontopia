@@ -33,32 +33,24 @@ function insertExample(exName) {
 
   } else if (exName == "exComposers") { // ----------------------------------
     document.queryform.query.value = 
-      '# not possible currently due to missing grouping in toma.';
-      //'using o for i"http://psi.ontopedia.net/"\n' +
-      //'select $COMPOSER, count($OPERA) from\n' +
-      //' o:composed_by($OPERA : o:Work, $COMPOSER : o:Composer)\n' +
-      //'order by $OPERA desc?';
+      'select $COMPOSER, count($OPERA) where \n' +
+      '  exists $COMPOSER.(composer)<-(composed-by)->(work)[$OPERA] \n' +
+      '  order by 2 desc;';
 
   } else if (exName == "exMecca") { // --------------------------------------
     document.queryform.query.value = 
-      '# not possible currently due to missing grouping in toma.';
-      //'using o for i"http://psi.ontopedia.net/"\n' +
-      //'select $CITY, count($OPERA) from\n' +
-      //' instance-of($CITY, o:City),\n' +
-      //' { o:premiere($OPERA : o:Work, $CITY : o:Place)\n' +
-      //' |\n' +
-      //'   o:premiere($OPERA : o:Work, $THEATRE : o:Place),\n' +
-      //'   o:located_in($THEATRE : o:Containee, $CITY : o:Container)\n' +
-      //' } order by $OPERA desc?';
+      '# incomplete query\n' +
+      'select $CITY, count($OPERA) where $CITY.type = city and \n' +
+      '  exists $OPERA.(work)<-(premiere)->(place).\n' +
+      '                (containee)<-(located-in)->(container)[$CITY] \n' + 
+      'order by 2 desc;';
 
   } else if (exName == "exTheatresByPremiere") { // -------------------------
     document.queryform.query.value =
-      '# not possible currently due to missing grouping in toma.';
-      //'using o for i"http://psi.ontopedia.net/"\n' +
-      //'select $THEATRE, count($OPERA) from\n' +
-      //' instance-of($THEATRE, o:Theatre),\n' +
-      //' o:premiere($OPERA : o:Work, $THEATRE : o:Place)\n' +
-      //'order by $OPERA desc?';
+      'select $THEATRE, count($OPERA) where \n' +
+      '  $THEATRE.type = theatre and \n' +
+      '  exists $THEATRE.(place)<-(premiere)->(work)[$OPERA] \n' + 
+      'order by 2 desc;';
 
   } else if (exName == "exOperasByPremiereDate") { // -----------------------
     document.queryform.query.value =
@@ -84,7 +76,7 @@ function insertExample(exName) {
     
   } else if (exName == "exSettingsByCountry") { // --------------------------
     document.queryform.query.value =
-      '# not possible currently due to missing grouping in toma.';
+      '# not translated to toma yet.';
       //"/* Define inference rule to capture nested located-in associations: */\n" +
       //'using o for i"http://psi.ontopedia.net/"\n' +
       //"ext-located-in($CONTAINEE, $CONTAINER) :-\n" +
@@ -102,14 +94,12 @@ function insertExample(exName) {
 
   } else if (exName == "exNaryArias") { // ----------------------------------
     document.queryform.query.value =
-      '# not possible currently due to missing grouping in toma.';
-      //'using o for i"http://psi.ontopedia.net/"\n' +
-      //"select $OPERA, $ARIA, count($CHARACTERS) from\n" +
-      //" o:part_of($ARIA : o:Part, $OPERA : o:Whole),\n" +
-      //" o:sung_by($CHARACTERS : o:Person, $ARIA : o:Aria),\n" +
-      //" o:sung_by($CHARACTER2 : o:Person, $ARIA : o:Aria),\n" +
-      //" $CHARACTERS /= $CHARACTER2\n" +
-      //"order by $CHARACTERS desc, $OPERA?";
+      'select $OPERA, $ARIA, count($CHARACTERS) where \n' +
+      '  exists $OPERA.(whole)<-(part-of)->(part)[$ARIA] and \n' +
+      '  exists $ARIA.(aria)<-(sung-by)->(person)[$CHARACTERS] and \n' +
+      '  exists $ARIA.(aria)<-(sung-by)->(person)[$CHARACTER2] and \n' +
+      '  $CHARACTERS != $CHARACTER2 \n' +
+      'order by 3 desc, 1;';
 
   } else if (exName == "exInspiredBy") { // ---------------------------------
     document.queryform.query.value =
