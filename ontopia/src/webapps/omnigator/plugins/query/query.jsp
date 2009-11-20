@@ -204,6 +204,7 @@ try {
   <form method=get action="csv.jsp">
     <input type=submit value="Export to CSV">
     <input type=hidden name=tm value="<%= tmid %>">
+    <input type=hidden name=processor value="<%= processor %>">
     <input type=hidden name=query value="<%= query.replace("\"", "&#34;") %>">
   </form>
 <% } %>

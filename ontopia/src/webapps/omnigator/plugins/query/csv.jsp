@@ -30,7 +30,7 @@ response.setContentType("text/plain");
 
 String query = request.getParameter("query");
 String tmid = request.getParameter("tm");
-String processor = "tolog";
+String processor = request.getParameter("processor");
 
 // get the topic map
 TopicMapIF topicmap = navApp.getTopicMapById(tmid);
