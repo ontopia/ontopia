@@ -11,7 +11,7 @@
 		<dependency>
 			<groupId>net.ontopia</groupId>
 			<artifactId>ontopia-engine</artifactId>
-			<version>5.0.2</version>
+			<version>5.1.0-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>saxon</groupId>
@@ -85,6 +85,10 @@
 		<repository>
 			<id>Ontopia</id>
 			<url>http://ontopia.googlecode.com/svn/maven-repository</url>
+		</repository>
+		<repository>
+			<id>Ontopia-Snapshot</id>
+			<url>http://ontopia.googlecode.com/svn/maven-snapshot-repository</url>
 		</repository>
 	</repositories>
 </project>
