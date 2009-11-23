@@ -97,7 +97,7 @@ if (ServletFileUpload.isMultipartContent(request)) {
       else
         fileName = optionalFileName;
 
-      String dirName = "../webapps/omnigator/WEB-INF/topicmaps/";
+      String dirName = getServletContext().getRealPath("/") + "../omnigator/WEB-INF/topicmaps/";
 
       File saveTo = new File(dirName + fileName);
       try {
