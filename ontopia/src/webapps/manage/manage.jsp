@@ -16,6 +16,10 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic'     %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
+
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.FileItem"%>
 <framework:response/>
 
 <script type="text/javascript">
@@ -62,6 +66,52 @@ String id = (String) request.getParameter("id");
 boolean update = false;
 
 boolean readonly = true;
+
+// IMPORT TOPICMAP
+if (ServletFileUpload.isMultipartContent(request)) {
+  ServletFileUpload servletFileUpload = 
+    new ServletFileUpload(new DiskFileItemFactory());
+  List fileItemsList = servletFileUpload.parseRequest(request);
+
+  String optionalFileName = "";
+  FileItem fileItem = null;
+
+  Iterator it = fileItemsList.iterator();
+  while (it.hasNext()){
+    FileItem fileItemTemp = (FileItem)it.next();
+    if (fileItemTemp.isFormField()){
+      if (fileItemTemp.getFieldName().equals("tmfilename"))
+        optionalFileName = fileItemTemp.getString();
+    }
+    else
+      fileItem = fileItemTemp;
+  }
+
+  if (fileItem != null){
+    String fileName = fileItem.getName();
+
+    /* Save the uploaded file if its size is greater than 0. */
+    if (fileItem.getSize() > 0){
+      if (optionalFileName.trim().equals(""))
+        fileName = new File(fileName).getName();
+      else
+        fileName = optionalFileName;
+
+      String dirName = "../webapps/omnigator/WEB-INF/topicmaps/";
+
+      File saveTo = new File(dirName + fileName);
+      try {
+        fileItem.write(saveTo);
+        report = "Successfully uploaded topic map: <br/>" +
+        	"File name: " + fileName + "<br/>" + 
+        	"File size: " + fileItem.getSize();
+        repository.refresh();
+      } catch (Exception e) {
+        report = "Could not upload topic map: <br/>" + e.toString();
+      }
+    }
+  }
+}
 
 // check action
 if (action != null) {
@@ -216,12 +266,34 @@ if (action != null) {
       <tr>
         <td colspan="3"><h3>Registry Items</h3></td>
         <td colspan="2" align="center" valign="middle">
-        <form method="post" action="manage.jsp">
-          <input type="submit" value=" Refresh Sources ">
-          <input type="hidden" name="action" value="refresh_sources">
-        </form></h3>
+          <form method="post" action="manage.jsp">
+            <input type="submit" value=" Refresh Sources ">
+            <input type="hidden" name="action" value="refresh_sources">
+          </form>
+        </td>
+        <td id="showRowImport">
+          <form method="post" action="manage.jsp">
+            <input type="button" value=">>" onClick="show('Import')">
+          </form>
+        </td>
+        <td id="hideRowImport">
+          <form method="post" action="manage.jsp">
+            <input type="button" value="<<" onClick="hide('Import')">
+          </form>
         </td>
       </tr>
+	  <tr id="rowImport">
+        <td colspan="7">
+          <form method="post" action="manage.jsp" enctype="multipart/form-data">
+			<input type="file" name="tmfilename" size="25" accept="text/*">
+            <input type="submit" value=" Import ">
+            <input type="hidden" name="action" value="import_topicmap">
+		  </form>
+        </td>
+	  </tr>      
+      <script type="text/javascript">
+        hide('Import');
+      </script>
     
       <%
       Iterator iter = sortedRefs.iterator();

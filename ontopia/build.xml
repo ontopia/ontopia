@@ -1401,7 +1401,8 @@
     <copy file="${lib.path}/commons-collections-3.2.1.jar" tofile="${dist.path}/lib/commons-collections.jar" />
     <copy file="${lib.path}/backport-util-concurrent-3.1.jar" tofile="${dist.path}/lib/backport-util-concurrent.jar" />
     <copy file="${lib.path}/commons-dbcp-1.2.2.jar" tofile="${dist.path}/lib/commons-dbcp.jar" />
-    <copy file="${lib.path}/commons-fileupload-1.1.jar" tofile="${dist.path}/lib/commons-fileupload.jar" />
+    <copy file="${lib.path}/commons-io-1.1.jar" tofile="${dist.path}/lib/commons-io.jar" />
+  	<copy file="${lib.path}/commons-fileupload-1.1.jar" tofile="${dist.path}/lib/commons-fileupload.jar" />
     <copy file="${lib.path}/commons-pool-1.3.jar" tofile="${dist.path}/lib/commons-pool.jar" />
     <copy file="${lib.path}/concurrent-1.3.4.jar" tofile="${dist.path}/lib/concurrent.jar" />
     <copy file="${lib.path}/crimson-1.1.3.jar" tofile="${dist.path}/lib/crimson.jar" />
