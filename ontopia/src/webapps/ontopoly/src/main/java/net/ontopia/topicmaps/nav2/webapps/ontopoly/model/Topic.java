@@ -224,7 +224,7 @@ public class Topic {
     params.put("topicType", topicType.getTopicIF());
 
     QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
-    return qm.queryForObject(query, qm.newRowMapperOneColumn(), params);    
+    return qm.queryForObject(query, params);    
   }
 
   /**

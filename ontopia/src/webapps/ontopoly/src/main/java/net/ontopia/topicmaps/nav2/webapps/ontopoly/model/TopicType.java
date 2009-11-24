@@ -137,7 +137,7 @@ public class TopicType extends AbstractTypingTopic {
     Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 
     QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    return qm.queryForList(query, params);
   }
 
   /**
@@ -154,7 +154,7 @@ public class TopicType extends AbstractTypingTopic {
     Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 
     QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    return qm.queryForList(query, params);
   }
 
   /**
@@ -706,7 +706,7 @@ public class TopicType extends AbstractTypingTopic {
     Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 
     QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    return qm.queryForList(query, params);
   }
 
 //!   public void moveUpInFieldOrder(FieldAssignment fa) {
@@ -875,7 +875,7 @@ public class TopicType extends AbstractTypingTopic {
     params.put("topicType", getTopicIF());
 
     QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
-    Collection<Topic> rows = qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    Collection<Topic> rows = qm.queryForList(query, params);
 
     Iterator it = rows.iterator();
     List<Topic> results = new ArrayList<Topic>(rows.size());

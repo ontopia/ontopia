@@ -71,7 +71,7 @@ public class RoleType extends AbstractTypingTopic {
     Map<String,TopicIF> params = Collections.singletonMap("RT", getTopicIF());
 
     QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    return qm.queryForList(query, params);
 	}
 
 //	public Collection getUsedBy() {

@@ -187,7 +187,7 @@ public abstract class FieldDefinition extends Topic {
     Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
 
     QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    return qm.queryForList(query, params);
   }
 
   public abstract Collection getValues(Topic topic);

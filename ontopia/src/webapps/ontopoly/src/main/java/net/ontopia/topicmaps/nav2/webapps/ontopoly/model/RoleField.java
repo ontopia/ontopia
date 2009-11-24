@@ -221,7 +221,7 @@ public class RoleField extends FieldDefinition {
     Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
     
     QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();         
-		TopicIF interfaceControl = qm.queryForObject(query, qm.newRowMapperOneColumn(), params);
+		TopicIF interfaceControl = qm.queryForObject(query, params);
 		
 		return interfaceControl == null ? InterfaceControl.getDefaultInterfaceControl(getTopicMap()) : new InterfaceControl(interfaceControl, getTopicMap());
   }
@@ -259,7 +259,7 @@ public class RoleField extends FieldDefinition {
     Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
     
     QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    return qm.queryForList(query, params);
   }
 
   public Collection<TopicType> getAllowedPlayerTypes(Topic currentTopic) {
@@ -281,7 +281,7 @@ public class RoleField extends FieldDefinition {
       params.put("topic", currentTopic.getTopicIF());
     
     QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    return qm.queryForList(query, params);
   }
 
   private String getAllowedPlayersQuery() {
@@ -315,7 +315,7 @@ public class RoleField extends FieldDefinition {
       params.put("topic", currentTopic.getTopicIF());
       
       QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
-      return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+      return qm.queryForList(query, params);
     
     } else {
       Collection topicTypes = getAllowedPlayerTypes(currentTopic);
@@ -350,7 +350,7 @@ public class RoleField extends FieldDefinition {
       params.put("search", searchTerm);
   
       QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();         
-      Collection<TopicIF> rows = qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+      Collection<TopicIF> rows = qm.queryForList(query, params);
   
       Iterator it = rows.iterator();
       List<Topic> results = new ArrayList<Topic>(rows.size());

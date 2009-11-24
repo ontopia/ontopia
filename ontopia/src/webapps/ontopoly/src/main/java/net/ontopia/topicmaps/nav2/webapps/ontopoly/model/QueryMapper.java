@@ -1,12 +1,10 @@
 package net.ontopia.topicmaps.nav2.webapps.ontopoly.model;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
@@ -17,18 +15,16 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public class QueryMapper<T> {
   
-  private Class<T> type;
   private DeclarationContextIF context;
   private QueryProcessorIF processor;
-  private TopicMap topicMap;
   
-  public QueryMapper(TopicMap topicMap, QueryProcessorIF processor, DeclarationContextIF context) {
-    this(topicMap, processor, context, null);   
-  }
+  private final RowMapperIF<T> FIRST_COLUMN_MAPPER = new RowMapperIF<T>() {
+    public T mapRow(QueryResultIF queryResult, int rowno) {
+      return wrapValue(queryResult.getValue(0));
+    }
+  };
   
-  public QueryMapper(TopicMap topicMap, QueryProcessorIF processor, DeclarationContextIF context, Class<T> type) {
-    this.topicMap = topicMap;
-    this.type = type;
+  public QueryMapper(QueryProcessorIF processor, DeclarationContextIF context) {
     this.processor = processor;
     this.context = context;
   } 
@@ -49,36 +45,38 @@ public class QueryMapper<T> {
        result.close();
    }
 }
+ 
+ /**
+  * EXPERIMENTAL: Returns the value in the first column in the first
+  * row of the query result. If the query produces no results null is
+  * returned.
+  */
+ public T queryForObject(String query) {
+   return queryForObject(query, FIRST_COLUMN_MAPPER, null);
+ }
   
   /**
    * EXPERIMENTAL: Returns the value in the first column in the first
    * row of the query result. If the query produces no results null is
-   * returned. If the query produces more than one row or more than
-   * one column, an exception is thrown.
+   * returned.
    */
-  @SuppressWarnings("unchecked")
   public T queryForObject(String query, Map<String,?> params) {
-    QueryResultIF result = null;
-    try {
-      result = processor.execute(query, params, context);
-      if (result.next())
-        return (T)result.getValue(0);
-      else
-        return null;
-      // if (result.next()) throw new OntopolyModelRuntimeException("Got more than one result row.");
-    } catch (InvalidQueryException e) {
-      throw new OntopiaRuntimeException(e);
-    } finally {
-      if (result != null)
-        result.close();
-    }
+    return queryForObject(query, FIRST_COLUMN_MAPPER, params);
+  }
+  
+  /**
+   * EXPERIMENTAL: Returns the value in the first column in the first
+   * row of the query result. If the query produces no results null is
+   * returned.
+   */
+  public T queryForObject(String query, RowMapperIF<T> mapper) {
+    return queryForObject(query, mapper, null);
   }
   
   /**
    * EXPERIMENTAL: Returns the mapping of the value in the first
    * column in the first row of the query result. If the query
-   * produces no results null is returned. If the query produces more
-   * than one row or more than one column, an exception is thrown.
+   * produces no results null is returned.
    */
   public T queryForObject(String query, RowMapperIF<T> mapper, Map<String,?> params) {
     QueryResultIF result = null;
@@ -89,13 +87,20 @@ public class QueryMapper<T> {
         return mapper.mapRow(result, ix++);
       else
         return null;
-      // if (result.next()) throw new OntopolyModelRuntimeException("Got more than one result row.");
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
       if (result != null)
         result.close();
     }
+  }
+
+  /**
+   * EXPERIMENTAL: Runs the query, and returns a the single value in
+   * each row.
+   */
+  public List<T> queryForList(String query) {
+    return queryForList(query, FIRST_COLUMN_MAPPER, null);
   }
   
   /**
@@ -105,6 +110,14 @@ public class QueryMapper<T> {
    */
   public List<T> queryForList(String query, RowMapperIF<T> mapper) {
     return queryForList(query, mapper, null);
+  }
+
+  /**
+   * EXPERIMENTAL: Runs the query, and returns a the single value in
+   * each row.
+   */
+  public List<T> queryForList(String query, Map<String,?> params) {
+    return queryForList(query, FIRST_COLUMN_MAPPER, params);
   }
  
   /**
@@ -133,8 +146,7 @@ public class QueryMapper<T> {
    * EXPERIMENTAL: Returns a map of the first row of the query
    * results, with each variable name (without $) as a key and each
    * variable value as the value of the key. If the query produces no
-   * rows the method returns null; if it produces more than one an
-   * exception is thrown.
+   * rows the method returns null.
    */
   public Map queryForMap(String query, Map<String,?> params) {
     QueryResultIF result = null;
@@ -143,13 +155,12 @@ public class QueryMapper<T> {
       if (result.next()) {
         Map<String,Object> row = new HashMap<String,Object>(result.getWidth());
         for (int ix = 0; ix < result.getWidth(); ix++)
-          row.put(result.getColumnName(ix), result.getValue(ix));
+          row.put(result.getColumnName(ix), wrapValue(result.getValue(ix)));
         return row;
 
       } else {
         return null;
       }
-      // if (result.next()) throw new OntopolyModelRuntimeException("Got more than one result row.");
     } catch (InvalidQueryException e) {
       throw new OntopiaRuntimeException(e);
     } finally {
@@ -158,35 +169,10 @@ public class QueryMapper<T> {
     }
 
   }
-  
-  public RowMapperIF<T> newRowMapperOneColumn() {
-    // hardcoded to return the value in the first column
-    return new RowMapperIF<T>() {
-      public T mapRow(QueryResultIF queryResult, int rowno) {
-        return wrapValue(queryResult.getValue(0));
-      }
-    };
-  }
 
   @SuppressWarnings("unchecked")
-  private T wrapValue(Object value) {
-    // don't wrap if type is null
-    if (type == null) return (T)value;
-    
-    // if (value == null) return null;
-    try {      
-      Constructor<T> constructor = getConstructor();
-      if (constructor == null) {
-        throw new OntopolyModelRuntimeException("Couldn't find constructor for the class: " + type);
-      }
-      return constructor.newInstance(new Object[] { value, topicMap });
-    } catch (Exception e) {
-      throw new OntopolyModelRuntimeException(e);
-    }
-  }
-  
-  private Constructor<T> getConstructor() throws SecurityException, NoSuchMethodException {
-    return type.getConstructor(TopicIF.class, TopicMap.class); 
+  protected T wrapValue(Object value) {
+    return (T)value;
   }
   
 }

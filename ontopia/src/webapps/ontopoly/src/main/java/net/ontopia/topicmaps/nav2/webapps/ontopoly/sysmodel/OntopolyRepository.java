@@ -94,7 +94,7 @@ public class OntopolyRepository {
       throw new OntopiaRuntimeException(e);
     }
     
-    QueryMapper<TopicMapReference> qm = new QueryMapper<TopicMapReference>(null, processor, context, TopicMapReference.class); 
+    QueryMapper<TopicMapReference> qm = new QueryMapper<TopicMapReference>(processor, context); 
     tms = qm.queryForList(
       "instance-of($T, ont:ted-topic-map), " +
       "ont:topic-map-id($T, $ID)?",

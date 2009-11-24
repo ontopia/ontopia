@@ -75,7 +75,7 @@ public class InterfaceControl extends Topic {
     String query = "instance-of($d, on:interface-control)?";
 
     QueryMapper<InterfaceControl> qm = tm.newQueryMapper(InterfaceControl.class);    
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
 }

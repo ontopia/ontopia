@@ -182,7 +182,7 @@ public class OntopolyModelUtils {
     params.put("rType2", rType2);
 
     QueryMapper<AssociationIF> qm = tm.newQueryMapperNoWrap();    
-    return removeDuplicateAssociations(qm.queryForList(query, qm.newRowMapperOneColumn(), params));
+    return removeDuplicateAssociations(qm.queryForList(query, params));
   }
 
   public static Collection<AssociationIF> findBinaryAssociations(
@@ -200,7 +200,7 @@ public class OntopolyModelUtils {
     params.put("rType2", rType2);
 
     QueryMapper<AssociationIF> qm = tm.newQueryMapperNoWrap();    
-    return qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    return qm.queryForList(query, params);
   }
   
   public static Collection<TopicIF> findTernaryPlayers(
@@ -257,7 +257,7 @@ public class OntopolyModelUtils {
 
     QueryMapper<AssociationIF> qm = tm.newQueryMapperNoWrap();
     
-    return removeDuplicateAssociations(qm.queryForList(query, qm.newRowMapperOneColumn(), params));
+    return removeDuplicateAssociations(qm.queryForList(query, params));
   }
 
 //  public static Collection findTernaryAssociations(

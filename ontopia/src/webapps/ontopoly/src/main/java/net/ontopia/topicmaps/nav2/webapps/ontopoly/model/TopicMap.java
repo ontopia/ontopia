@@ -4,6 +4,7 @@
 package net.ontopia.topicmaps.nav2.webapps.ontopoly.model;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -130,11 +131,33 @@ public class TopicMap {
   }
 
   public <T> QueryMapper<T> newQueryMapperNoWrap() {
-    return new QueryMapper<T>(this, getQueryProcessor(), getDeclarationContext());
+    return new QueryMapper<T>(getQueryProcessor(), getDeclarationContext());
   }
 
-  public <T> QueryMapper<T> newQueryMapper(Class<T> type) {
-    return new QueryMapper<T>(this, getQueryProcessor(), getDeclarationContext(), type);
+  public <T> QueryMapper<T> newQueryMapper(final Class<T> type) {
+    return new QueryMapper<T>(getQueryProcessor(), getDeclarationContext()) {
+      @SuppressWarnings("unchecked")
+      @Override
+      protected T wrapValue(Object value) {
+        // don't wrap if type is null
+        if (type == null) return (T)value;
+        
+        // if (value == null) return null;
+        try {      
+          Constructor<T> constructor = getConstructor();
+          if (constructor == null) {
+            throw new OntopolyModelRuntimeException("Couldn't find constructor for the class: " + type);
+          }
+          return constructor.newInstance(new Object[] { value, TopicMap.this });
+        } catch (Exception e) {
+          throw new OntopolyModelRuntimeException(e);
+        }
+      }
+      
+      private Constructor<T> getConstructor() throws SecurityException, NoSuchMethodException {
+        return type.getConstructor(TopicIF.class, TopicMap.class); 
+      }
+    };
   }
 
   public OntopolyRepository getOntopolyRepository() {
@@ -293,7 +316,7 @@ public class TopicMap {
       + " order by $type?";
 
     QueryMapper<TopicType> qm = newQueryMapper(TopicType.class);    
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   /**
@@ -303,7 +326,7 @@ public class TopicMap {
     String query = "select $type from on:has-large-instance-set($type : on:topic-type)?";
 
     QueryMapper<TopicType> qm = newQueryMapper(TopicType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<OccurrenceType> getOccurrenceTypes() {
@@ -313,14 +336,14 @@ public class TopicMap {
       + " order by $type?";
 
     QueryMapper<OccurrenceType> qm = newQueryMapper(OccurrenceType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<OccurrenceField> getOccurrenceFields() {
     String query = "select $field from direct-instance-of($field, on:occurrence-field) order by $field?";
 
     QueryMapper<OccurrenceField> qm = newQueryMapper(OccurrenceField.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<AssociationType> getAssociationTypes() {
@@ -330,7 +353,7 @@ public class TopicMap {
       + " order by $type?";
 
     QueryMapper<AssociationType> qm = newQueryMapper(AssociationType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<RoleType> getRoleTypes(boolean includeSystemTopics) {
@@ -344,42 +367,42 @@ public class TopicMap {
         + " order by $type?";
 
     QueryMapper<RoleType> qm = newQueryMapper(RoleType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<RoleField> getRoleFields() {
     String query = "select $field from direct-instance-of($field, on:role-field) order by $field?";
 
     QueryMapper<RoleField> qm = newQueryMapper(RoleField.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<NameType> getNameTypes() {
     String query = "select $type from direct-instance-of($type, on:name-type) order by $type?";
 
     QueryMapper<NameType> qm = newQueryMapper(NameType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<NameField> getNameFields() {
     String query = "select $field from direct-instance-of($field, on:name-field) order by $field?";
 
     QueryMapper<NameField> qm = newQueryMapper(NameField.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<IdentityType> getIdentityTypes() {
     String query = "select $type from instance-of($type, on:identity-type) order by $type?";
 
     QueryMapper<IdentityType> qm = newQueryMapper(IdentityType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public List<IdentityField> getIdentityFields() {
     String query = "select $field from instance-of($field, on:identity-field) order by $field?";
 
     QueryMapper<IdentityField> qm = newQueryMapper(IdentityField.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
   public boolean isSaveable() {
@@ -613,7 +636,7 @@ public class TopicMap {
     params.put("searchTerm", searchTerm);
 
     QueryMapper<Topic> qm = newQueryMapperNoWrap();
-    List rows = qm.queryForList(query, qm.newRowMapperOneColumn(), params);
+    List rows = qm.queryForList(query, params);
 
     Iterator it = rows.iterator();
     List<Topic> results = new ArrayList<Topic>(rows.size());

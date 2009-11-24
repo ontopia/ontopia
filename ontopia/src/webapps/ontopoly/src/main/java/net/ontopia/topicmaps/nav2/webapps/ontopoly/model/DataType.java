@@ -140,7 +140,7 @@ public class DataType extends Topic {
   public static List<DataType> getDataTypes(TopicMap tm) {
     String query = "instance-of($d, on:datatype)?";
     QueryMapper<DataType> qm = tm.newQueryMapper(DataType.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
   
 }

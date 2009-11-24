@@ -75,7 +75,7 @@ public class Cardinality extends Topic {
     String query = "instance-of($d, on:cardinality)?";
 
     QueryMapper<Cardinality> qm = tm.newQueryMapper(Cardinality.class);
-    return qm.queryForList(query, qm.newRowMapperOneColumn());
+    return qm.queryForList(query);
   }
 
 }
