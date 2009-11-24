@@ -9,6 +9,7 @@ import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -22,7 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PUBLIC: Exports topic maps to the JTM 1.0 interchange format.
+ * PUBLIC: Exports topic maps to the JTM 1.0 interchange format. See the <a
+ * href="http://www.cerny-online.com/jtm/1.0/">JTM homepage</a> for a
+ * specification of the JTM 1.0 exchange format for topic map fragments.
  * 
  * @since 5.1
  */
@@ -31,12 +34,8 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       .getLogger(JTMTopicMapWriter.class.getName());
 
   private final static String VERSION = "1.0";
-  private final static int INDENT = 3;
   
-  protected String encoding; // the encoding reported on the first line
-
-  protected Writer out;
-  protected String base;
+  private JSONWriter writer;
 
   /**
    * PUBLIC: Create an JTMTopicMapWriter that writes to a given OutputStream in
@@ -58,267 +57,180 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    */
   public JTMTopicMapWriter(OutputStream stream, String encoding)
       throws IOException {
-    this(new OutputStreamWriter(stream, encoding), encoding);
+    this(new OutputStreamWriter(stream, encoding));
   }
 
   /**
-   * PUBLIC: Create an LTMTopicMapWriter that writes to a given Writer.
+   * PUBLIC: Create an JTMTopicMapWriter that writes to a given Writer.
    * 
    * @param out Where the output should be written.
-   * @param encoding The encoding used by the writer. This is the encoding that
-   *          will be declared on the first line of the LTM file. It must be
-   *          reported, because there is no way for the LTMTopicMapWriter to
-   *          know what encoding the writer uses.
-   * @since 4.0
+   * @param encoding The encoding used by the writer. 
    */
-  public JTMTopicMapWriter(Writer out, String encoding) {
-    this.encoding = encoding;
-    this.out = out;
+  public JTMTopicMapWriter(Writer out) {
+    writer = new JSONWriter(out);
   }
 
   /**
    * PUBLIC: Writes out the given topic map.
+   * 
+   * @param tm The topic map to be serialized as JTM.
    */
   public void write(TopicMapIF tm) throws IOException {
-    writeTopicMap(tm, true);
-    out.flush();
+    writer.object().pair("version", VERSION).pair("item_type", "topicmap");
+    writeTopicMap(tm);
+    writer.finish();
   }
 
   /**
-   * PUBLIC: Writes out the given topic map object.
+   * PUBLIC: Write the given topic map construct as a JTM fragment.
+   * 
+   * @param object The topic map construct to be serialized as JTM fragment.
    */
   public void write(TMObjectIF object) throws IOException {
+    writer.object().pair("version", VERSION);
+    
+    String key = "item_type";
     if (object instanceof TopicMapIF) {
-      writeTopicMap((TopicMapIF) object, true);
+      writer.pair(key, "topicmap");
+      writeTopicMap((TopicMapIF) object);
     } else if (object instanceof TopicIF) {
-      writeTopic((TopicIF) object, true, 0);
+      writer.pair(key, "topic");
+      writeTopic((TopicIF) object);
     } else if (object instanceof TopicNameIF) {
-      writeName((TopicNameIF) object, true, 0);
+      writer.pair(key, "name");
+      writeName((TopicNameIF) object);
     } else if (object instanceof VariantNameIF) {
-      writeVariant((VariantNameIF) object, true, 0);
+      writer.pair(key, "variant");
+      writeVariant((VariantNameIF) object);
     } else if (object instanceof OccurrenceIF) {
-      writeOccurrence((OccurrenceIF) object, true, 0);
+      writer.pair(key, "occurrence");
+      writeOccurrence((OccurrenceIF) object);
     } else if (object instanceof AssociationIF) {
-      writeAssociation((AssociationIF) object, true, 0);
+      writer.pair(key, "association");
+      writeAssociation((AssociationIF) object);
     } else if (object instanceof AssociationRoleIF) {
-      writeRole((AssociationRoleIF) object, true, 0);
+      writer.pair(key, "role");
+      writeRole((AssociationRoleIF) object);
     }
     
-    out.flush();
+    writer.finish();
   }
 
   @SuppressWarnings("unchecked")
-  private void writeTopicMap(TopicMapIF tm, boolean isStartElement)
-      throws IOException {
-    LocatorIF baseLocator = tm.getStore().getBaseAddress();
-    base = (baseLocator == null) ? null : baseLocator.getExternalForm();
-
-    writeHeader("topicmap", isStartElement, 0);
-    
+  private void writeTopicMap(TopicMapIF tm) throws IOException {
     // ----------------- Topics --------------------
     Collection<TopicIF> topics = tm.getTopics();
     if (!topics.isEmpty()) {
-      out.write("\"topics\":[\n");
-      int cnt = 0;
+      writer.key("topics").array();
       for (TopicIF topic : topics) {
-        writeTopic(topic, false, 1);
-        if (++cnt < topics.size()) {
-          out.write(",\n");
-        }
+        writeTopic(topic);
       }
-      out.write("]");
+      writer.endArray();
     }
 
     // ----------------- Associations --------------
     Collection<AssociationIF> assocs = tm.getAssociations();
     if (!assocs.isEmpty()) {
-      writeLF(0);
-      out.write("\"associations\":[\n");
-      int cnt = 0;
+      writer.key("associations").array();
       for (AssociationIF assoc : assocs) {
-        writeAssociation(assoc, false, 1);
-        if (++cnt < assocs.size()) {
-          out.write(",\n");
-        }
+        writeAssociation(assoc);
       }
-      out.write("]");
+      writer.endArray();
     }
-    
-    out.write("}");
+
+    writer.endObject();
   }
   
   // --------------------------------------------------------------------
   // Methods used on Topics
   // --------------------------------------------------------------------
 
-  /**
-   * Write the given topic. 
-   */
   @SuppressWarnings("unchecked")
-  private void writeTopic(TopicIF topic, boolean isStartElement, int level)
-      throws IOException {
-    
-    writeHeader("topic", isStartElement, level);
+  private void writeTopic(TopicIF topic) throws IOException {
+    writer.object();
 
-    boolean added = false;
-    added = writeIdentifiers("item_identifiers", topic.getItemIdentifiers());
-    if (added && !topic.getSubjectIdentifiers().isEmpty()) {
-      writeLF(level);
-    }
-    added = writeIdentifiers("subject_identifiers", topic.getSubjectIdentifiers());
-    if (added && !topic.getSubjectLocators().isEmpty()) {
-      writeLF(level);
-    }
+    writeIdentifiers("item_identifiers", topic.getItemIdentifiers());
+    writeIdentifiers("subject_identifiers", topic.getSubjectIdentifiers());
     writeIdentifiers("subject_locators", topic.getSubjectLocators());
 
     Collection<TopicNameIF> names = topic.getTopicNames();
     if (!names.isEmpty()) {
-      writeLF(level);
-      out.write("\"names\":[\n");
-      int cnt = 0;
+      writer.key("names").array();
       for (TopicNameIF name : names) {
-        writeName(name, false, level+1);
-        if (++cnt < names.size()) {
-          out.write(",\n");
-        }
+        writeName(name);
       }
-      out.write("]");
+      writer.endArray();
     }
 
     Collection<OccurrenceIF> occurrences = topic.getOccurrences();
     if (!occurrences.isEmpty()) {
-      if (added) {
-        writeLF(level);
-      }
-      out.write("\"occurrences\":[\n");
-      int cnt = 0;
+      writer.key("occurrences").array();
       for (OccurrenceIF oc : occurrences) {
-        writeOccurrence(oc, false, level+1);
-        if (++cnt < occurrences.size()) {
-          out.write(",\n");
-        }
+        writeOccurrence(oc);
       }
-      out.write("]");
+      writer.endArray();
     }
-    
-    writeFooter();
+
+    writer.endObject();
   }
 
   /**
    * Write the given association.
    */
   @SuppressWarnings("unchecked")
-  private void writeAssociation(AssociationIF association,
-      boolean isStartElement, int level) throws IOException {
-
-    writeHeader("association", isStartElement, level);
-    
-    writePair("type", association.getType());
+  private void writeAssociation(AssociationIF association) throws IOException {
+    writer.object().pair("type", getTopicRef(association.getType()));
     
     Collection<AssociationRoleIF> roles = association.getRoles();
     if (!roles.isEmpty()) {
-      writeLF(level);
-      out.write("\"roles\":[\n");
-      int cnt = 0;
+      writer.key("roles").array();
       for (AssociationRoleIF role : roles) {
-        writeRole(role, false, level+1);
-        if (++cnt < roles.size()) {
-          out.write(",\n");
-        }
+        writeRole(role);
       }
-      out.write("]");
+      writer.endArray();
     }
     
-    if (!association.getScope().isEmpty()) {
-      Collection<TopicIF> scopes = association.getScope();
-      writeLF(level);
-      writeRefArray("scope", scopes);
-    }
+    writeRefArray("scope", association.getScope());
+    writeReifier(association);
+    writeIdentifiers("item_identifiers", association.getItemIdentifiers());
     
-    if (association.getReifier() != null) {
-      writeLF(level);
-      writePair("reifier", association.getReifier());
-    }
-
-    if (!association.getItemIdentifiers().isEmpty()) {
-      writeLF(level);
-      writeIdentifiers("item_identifiers", association.getItemIdentifiers());
-    }
-    
-    writeFooter();
+    writer.endObject();
   }
 
   @SuppressWarnings("unchecked")
-  private void writeRole(AssociationRoleIF role, boolean isStartElement,
-      int level) throws IOException {
+  private void writeRole(AssociationRoleIF role) throws IOException {
+    writer.object().
+      pair("player", getTopicRef(role.getPlayer())).
+      pair("type", getTopicRef(role.getType()));
+    
+    writeReifier(role);
+    writeIdentifiers("item_identifiers", role.getItemIdentifiers());
 
-    writeHeader("role", isStartElement, level);
-    
-    writePair("player", role.getPlayer());
-    writeLF(level);
-    writePair("type", role.getType());
-    
-    if (role.getReifier() != null) {
-      writeLF(level);
-      writePair("reifier", role.getReifier());
-    }
-
-    if (!role.getItemIdentifiers().isEmpty()) {
-      writeLF(level);
-      writeIdentifiers("item_identifiers", role.getItemIdentifiers());
-    }
-    
-    writeFooter();
+    writer.endObject();
   }
   
-  /**
-   * Write the given TopicNameIF to the given Writer, after line breaks with the
-   * given indentString.
-   */
   @SuppressWarnings("unchecked")
-  private void writeName(TopicNameIF name, boolean isStartElement, int level)
-      throws IOException {
-    
-    writeHeader("name", isStartElement, level);
-    
-    writePair("value", name.getValue());
+  private void writeName(TopicNameIF name) throws IOException {
+    writer.object().pair("value", name.getValue());
     
     if (name.getType() != null) {
-      writeLF(level);
-      writePair("type", name.getType());
+      writer.pair("type", getTopicRef(name.getType()));
     }
     
     Collection<VariantNameIF> variants = name.getVariants();
     if (!variants.isEmpty()) {
-      writeLF(level);
-      out.write("\"variants\":[\n");
-      int cnt = 0;
+      writer.key("variants").array();
       for (VariantNameIF var : variants) {
-        writeVariant(var, false, level+1);
-        if (++cnt < variants.size()) {
-          out.write(",\n");
-        }
+        writeVariant(var);
       }
-      out.write("]");
+      writer.endArray();
     }
     
-    if (!name.getScope().isEmpty()) {
-      Collection<TopicIF> scopes = name.getScope();
-      writeLF(level);
-      writeRefArray("scope", scopes);
-    }
-    
-    if (name.getReifier() != null) {
-      writeLF(level);
-      writePair("reifier", name.getReifier());
-    }
+    writeRefArray("scope", name.getScope());
+    writeReifier(name);
+    writeIdentifiers("item_identifiers", name.getItemIdentifiers());
 
-    if (!name.getItemIdentifiers().isEmpty()) {
-      writeLF(level);
-      writeIdentifiers("item_identifiers", name.getItemIdentifiers());
-    }
-
-    writeFooter();
+    writer.endObject();
   }
 
   /**
@@ -326,181 +238,95 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * given indentString.
    */
   @SuppressWarnings("unchecked")
-  private void writeVariant(VariantNameIF variant, boolean isStartElement,
-      int level) throws IOException {
+  private void writeVariant(VariantNameIF variant) throws IOException {
+    writer.object().pair("value", variant.getValue());
+    writeDataType(variant.getDataType());
     
-    writeHeader("variant", isStartElement, level);
-   
-    writePair("value", variant.getValue());
-
-    writeDataType(variant.getDataType(), level);
+    writeRefArray("scope", variant.getScope());
+    writeReifier(variant);
+    writeIdentifiers("item_identifiers", variant.getItemIdentifiers());
     
-    if (!variant.getScope().isEmpty()) {
-      Collection<TopicIF> scopes = variant.getScope();
-      writeLF(level);
-      writeRefArray("scope", scopes);
-    }
-    
-    if (variant.getReifier() != null) {
-      writeLF(level);
-      writePair("reifier", variant.getReifier());
-    }
-
-    if (!variant.getItemIdentifiers().isEmpty()) {
-      writeLF(level);
-      writeIdentifiers("item_identifiers", variant.getItemIdentifiers());
-    }
-    
-    writeFooter();
+    writer.endObject();
   }
 
-  /**
-   * Write one given occurrence.
-   */
   @SuppressWarnings("unchecked")
-  private void writeOccurrence(OccurrenceIF occurrence, boolean isStartElement,
-      int level) throws IOException {
+  private void writeOccurrence(OccurrenceIF occurrence) throws IOException {
+    writer.object().
+      pair("value", occurrence.getValue()).
+      pair("type", getTopicRef(occurrence.getType()));
     
-    writeHeader("occurrence", isStartElement, level);
+    writeDataType(occurrence.getDataType());
+    writeRefArray("scope", occurrence.getScope());
+    writeReifier(occurrence);
+    writeIdentifiers("item_identifiers", occurrence.getItemIdentifiers());
     
-    writePair("value", occurrence.getValue());
-    
-    writeLF(level);
-    writePair("type", occurrence.getType());
-    
-    writeDataType(occurrence.getDataType(), level);
-    
-    if (!occurrence.getScope().isEmpty()) {
-      Collection<TopicIF> scopes = occurrence.getScope();
-      writeLF(level);
-      writeRefArray("scope", scopes);
-    }
-    if (occurrence.getReifier() != null) {
-      writeLF(level);
-      writePair("reifier", occurrence.getReifier());
-    }
-
-    if (!occurrence.getItemIdentifiers().isEmpty()) {
-      writeLF(level);
-      writeIdentifiers("item_identifiers", occurrence.getItemIdentifiers());
-    }
-    
-    writeFooter();
+    writer.endObject();
   }
 
-  private boolean writeIdentifiers(String key, Collection<LocatorIF> ids)
+  private void writeIdentifiers(String key, Collection<LocatorIF> ids)
       throws IOException {
     if (!ids.isEmpty()) {
-      out.write("\"" + key + "\":[");
-      int cnt = 0;
+      writer.key(key).array();
       for (LocatorIF id : ids) {
-        writeLocator(id);
-        if (++cnt < ids.size()) {
-          out.write(",");
-        }
+        writer.value(id.getExternalForm());
       }
-      out.write("]");
-      return true;
-    } else {
-      return false;
+      writer.endArray();
     }
   }
   
-  private void writeLocator(LocatorIF locator) throws IOException {
-    out.write("\"");
-    out.write(locator.getExternalForm());
-    out.write("\"");
+  private void writeRefArray(String key, Collection<TopicIF> coll)
+      throws IOException {
+    if (!coll.isEmpty()) {
+      writer.key(key).array();
+      for (TopicIF ref : coll) {
+        writer.value(getTopicRef(ref));
+      }
+      writer.endArray();
+    }
   }
   
-  private void writeDataType(LocatorIF type, int level) throws IOException {
+  private void writeDataType(LocatorIF type) throws IOException {
     if (type != null && !PSI.getXSDString().equals(type)) {
-      writeLF(level);
-      writePair("datatype", type.getExternalForm());
+      writer.pair("datatype", type.getExternalForm());
     }
   }
   
+  private void writeReifier(ReifiableIF obj) throws IOException {
+    if (obj.getReifier() != null) {
+      writer.pair("reifier", getTopicRef(obj.getReifier()));
+    }
+  }
+
   /**
-   * Writes a simple json key-value pair to the output stream.
+   * Get the reference to a topic in JTM notation. When a topic is referred to
+   * by means of a locator L, the string is to be constructed as follows: 
+   * 
+   * <ul>
+   *   <li>L is a subject identifier: si:L
+   *   <li>L is a subject locator: sl:L
+   *   <li>L is an item identifier: ii:L
+   * </ul>
+   * 
+   * @param ref The topic to be referenced.
+   * @return A reference to this topic in JTM notation.
    */
-  private void writePair(String key, String value) throws IOException {
-    out.write("\"");
-    out.write(key);
-    out.write("\":\"");
-    out.write(value);
-    out.write("\"");
-  }
-
-  private void writePair(String key, TopicIF ref) throws IOException {
-    out.write("\"");
-    out.write(key);
-    out.write("\":");
-    writeTopicRef(ref);
-  }
-
-  private void writeTopicRef(TopicIF ref) throws IOException {
-    out.write("\"");
+  private String getTopicRef(TopicIF ref) {
+    StringBuilder sb = new StringBuilder();
     if (!ref.getItemIdentifiers().isEmpty()) {
-      out.write("ii:");
+      sb.append("ii:");
       LocatorIF loc = (LocatorIF) ref.getItemIdentifiers().iterator().next();
-      out.write(loc.getExternalForm());
+      sb.append(loc.getExternalForm());
     } else if (!ref.getSubjectIdentifiers().isEmpty()) {
-      out.write("si:");
+      sb.append("si:");
       LocatorIF loc = (LocatorIF) ref.getSubjectIdentifiers().iterator().next();
-      out.write(loc.getExternalForm());
+      sb.append(loc.getExternalForm());
     } else if (!ref.getSubjectLocators().isEmpty()) {
-      out.write("sl:");
+      sb.append("sl:");
       LocatorIF loc = (LocatorIF) ref.getSubjectLocators().iterator().next();
-      out.write(loc.getExternalForm());
+      sb.append(loc.getExternalForm());
     } else {
       // TODO: throw an error
     }
-    out.write("\"");
-  }
-  
-  private void writeRefArray(String key, Collection<TopicIF> coll) throws IOException {
-    out.write("\"");
-    out.write(key);
-    out.write("\":[");
-    int cnt = 0;
-    for (TopicIF ref : coll) {
-      writeTopicRef(ref);
-      if (++cnt < coll.size()) {
-        out.write(",");
-      }
-    }
-    out.write("]");
-  }
-  
-  private void writeHeader(String type, boolean isStartElement, int level)
-      throws IOException {
-    addIndentation(level);
-    out.write("{");
-    if (isStartElement) {
-      writePair("version", VERSION);
-      out.write(",\n");
-      addIndentation(level);
-      out.write(" ");
-      writePair("item_type", type);
-      out.write(",\n");
-      addIndentation(level);
-      out.write(" ");
-    }
-  }
-  
-  private void writeFooter() throws IOException {
-    out.write("}");
-  }
-
-  private void writeLF(int level) throws IOException {
-    out.write(",\n");
-    addIndentation(level);
-    out.write(" ");
-  }
-  
-  private void addIndentation(int level) throws IOException {
-    if (level > 0) {
-      int indentation = level * INDENT + level;
-      out.write(String.format("%1$" + indentation + "s", ' '));
-    }
+    return sb.toString();
   }
 }
