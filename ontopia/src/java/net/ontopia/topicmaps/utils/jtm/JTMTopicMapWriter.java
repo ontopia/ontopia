@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -17,6 +18,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
 
 import org.slf4j.Logger;
@@ -129,14 +131,27 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     }
 
     // ----------------- Associations --------------
+    ClassInstanceIndexIF classIndex = (ClassInstanceIndexIF) tm
+      .getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
+    
+    Collection<TopicIF> topicTypes = classIndex.getTopicTypes();
     Collection<AssociationIF> assocs = tm.getAssociations();
-    if (!assocs.isEmpty()) {
+    
+    if (!assocs.isEmpty() || !topicTypes.isEmpty()) {
       writer.key("associations").array();
+      
+      for (TopicIF type : topicTypes) {
+        Collection<TopicIF> instances = classIndex.getTopics(type);
+        for (TopicIF instance : instances) {
+          writeTypeInstanceAssociation(type, instance);
+        }
+      }
       for (AssociationIF assoc : assocs) {
         writeAssociation(assoc);
       }
       writer.endArray();
     }
+
 
     writer.endObject();
   }
@@ -206,6 +221,27 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     writeReifier(role);
     writeIdentifiers("item_identifiers", role.getItemIdentifiers());
 
+    writer.endObject();
+  }
+  
+  private void writeTypeInstanceAssociation(TopicIF type, TopicIF instance)
+      throws IOException {
+    writer.object().pair("type", "si:" + PSI.getSAMTypeInstance().getExternalForm());
+    writer.key("roles").array();
+    
+    // Type Role
+    writer.object();
+    writer.pair("player", getTopicRef(type));
+    writer.pair("type", "si:" + PSI.getSAMType().getExternalForm());
+    writer.endObject();
+
+    // Instance Role
+    writer.object();
+    writer.pair("player", getTopicRef(instance));
+    writer.pair("type", "si:" + PSI.getSAMInstance().getExternalForm());
+    writer.endObject();
+    
+    writer.endArray();
     writer.endObject();
   }
   
