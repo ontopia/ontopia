@@ -135,8 +135,9 @@ public abstract class AbstractCanonicalExporterTests implements TestCaseGenerato
       // compare results
       String baseline = base + File.separator + "baseline" + File.separator +
                         filename;
-      assertTrue("test file " + filename + " canonicalized wrongly",
-             FileUtils.compare(out, baseline));
+      assertTrue("test file " + filename + " canonicalized wrongly (" + baseline
+                 + " != " + out + "), tmp=" + tmp,
+                 FileUtils.compare(out, baseline));
       // NOTE: we compare out/exp-* and baseline/*
     }
   }
