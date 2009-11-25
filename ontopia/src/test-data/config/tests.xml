@@ -468,11 +468,8 @@
     <test>net.ontopia.topicmaps.query.core.test.QueryWrapperTest</test>
     <test>net.ontopia.topicmaps.query.core.test.DatatypePredicateTest</test>
     <test>net.ontopia.topicmaps.query.core.test.NextPreviousOptimizerTest</test>
-  </group>
-
-  <group>
-    <name>query.dev</name>
     <test>net.ontopia.topicmaps.query.core.test.QueryWrapperTest</test>
+    <group-ref>query-updates</group-ref>        
   </group>
 
   <group>
@@ -583,10 +580,16 @@
     <name>tmxml</name>
     <test>net.ontopia.topicmaps.xml.test.TMXMLReadErrorTests</test>
     <test>net.ontopia.topicmaps.xml.test.CanonicalTMXMLReaderTests</test>
-    <test>net.ontopia.topicmaps.xml.test.CanonicalExporterTMXMLTests</test>
     <test>net.ontopia.topicmaps.xml.test.TMXMLReaderTest</test>
     <test>net.ontopia.topicmaps.xml.test.TMXMLWriterTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.TMXMLWriterTest</test>
+    <!--
+    disabled because these tests don't work with the old CXTM format. the
+    reason being that it doesn't handle the new default topic name type.
+    the whole set needs to be ported to ISO CXTM, after which we can enable
+    this again.
+    <test>net.ontopia.topicmaps.xml.test.CanonicalExporterTMXMLTests</test>
+    -->
   </group>
 
   <group>

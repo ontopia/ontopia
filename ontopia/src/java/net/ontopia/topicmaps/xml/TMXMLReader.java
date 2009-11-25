@@ -291,6 +291,8 @@ public class TMXMLReader extends AbstractXMLFormatReader
       throws SAXException {
       //System.out.println("</" + name + ": " + state);
 
+      try {
+        
       switch(state) {
       case TOP:
         state = START;
@@ -337,7 +339,8 @@ public class TMXMLReader extends AbstractXMLFormatReader
         state = TOPIC;
         break;
       case MAYBETOPICNAME:
-        // it turned out to be an occurrence
+        // it turned out to be an occurrence (because we're seeing the end of
+        // the element and haven't seen <value>)
         state = TOPIC;
         if (datatype == null)
           datatype = TMXMLWriter.XSD_STRING;
@@ -357,6 +360,11 @@ public class TMXMLReader extends AbstractXMLFormatReader
         state = ASSOCIATION;
         break;
       }
+
+      } catch (Exception e) {
+        System.out.println("" + base + ": " + e);
+        throw new OntopiaRuntimeException(e);
+      }
     }
 
     public void startPrefixMapping(String prefix, String uri) {
@@ -370,11 +378,8 @@ public class TMXMLReader extends AbstractXMLFormatReader
     private TopicIF getType(String uri, String name) throws SAXException {
       if (uri == null || uri == "")
         return getTopicById(name);
-      if (uri == TMXMLWriter.NS_TM &&
-          (name == "topic" || name == "occurrence" || name == "association"))
+      if (uri == TMXMLWriter.NS_TM && name == "topic")
         return null; // element for typeless construct
-      if (uri == TMXMLWriter.NS_ISO && name == "topic-name")
-        return null; // this is the element for 'topic name with no type'
       
       try {
         return getTopicBySubjectIdentifier(new URILocator(uri + name));
