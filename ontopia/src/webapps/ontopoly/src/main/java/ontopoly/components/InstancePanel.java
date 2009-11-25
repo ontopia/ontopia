@@ -53,7 +53,7 @@ public abstract class InstancePanel extends Panel {
     createFields(isReadOnly, traversable);
     
     // optional close button
-    Button button = new Button("button", new ResourceModel("button.ok")) {
+    Button button = new Button("okButton", new ResourceModel("button.ok")) {
       @Override
       public boolean isVisible() {
         return isButtonsVisible();
