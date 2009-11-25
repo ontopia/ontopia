@@ -22,6 +22,7 @@ public class PathExpression extends AbstractPathExpression implements
 
   public ResultSet evaluate(LocalContext context) throws InvalidQueryException {
     QueryTracer.enter(this);
+    initResultSets(context);
     ResultSet rs = createNewResultSet(context);
     if (!isEmpty()) {
       Row row = rs.createRow();
@@ -29,6 +30,13 @@ public class PathExpression extends AbstractPathExpression implements
     }
     QueryTracer.leave(rs);
     return rs;
+  }
+  
+  private void initResultSets(LocalContext context) {
+    for (int i=0; i<getPathLength(); i++) {
+      BasicPathElementIF element = (BasicPathElementIF) getPathElement(i);
+      element.initResultSet(context);
+    }
   }
 
   /**
@@ -87,14 +95,14 @@ public class PathExpression extends AbstractPathExpression implements
         Object[] coll = (Object[]) val;
         int idx = 0;
         for (Object obj : coll) {
-          if (idx < element.getResultSize(context)) {
+          if (idx < element.getResultSize()) {
             curRow.setValue(colIndex + idx++, obj);
           }
           last = obj;
         }
         newCol = colIndex + idx;
       } else {
-        if (element.getResultSize(context) > 0) {
+        if (element.getResultSize() > 0) {
           curRow.setValue(newCol++, val);
         }
       }
@@ -118,7 +126,7 @@ public class PathExpression extends AbstractPathExpression implements
     // first, check the correct width for this PathExpression.
     for (int idx = 0; idx < getPathLength(); idx++) {
       BasicPathElementIF element = (BasicPathElementIF) getPathElement(idx);
-      size += element.getResultSize(context);
+      size += element.getResultSize();
     }
 
     // if we have a non-empty PathExpression, add a column to store the result.
@@ -130,7 +138,7 @@ public class PathExpression extends AbstractPathExpression implements
     // set the column names according to the definition of the PathExpression.
     for (int colIdx = 0, idx = 0; idx < getPathLength(); idx++) {
       BasicPathElementIF element = (BasicPathElementIF) getPathElement(idx);
-      String[] columns = element.getColumnNames(context);
+      String[] columns = element.getColumnNames();
       for (String col : columns) {
         rs.setColumnName(colIdx++, col);
       }

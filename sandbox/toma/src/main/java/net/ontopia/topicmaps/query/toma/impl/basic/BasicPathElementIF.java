@@ -25,19 +25,24 @@ public interface BasicPathElementIF {
       throws InvalidQueryException;
 
   /**
+   * Initialize the resultset layout for the current context.
+   * 
+   * @param context the current context.
+   */
+  public void initResultSet(LocalContext context);
+  
+  /**
    * Get the number of columns this path element will generate in the
    * evaluation.
    * 
-   * @param context the current context.
    * @return the number of result columns.
    */
-  public int getResultSize(LocalContext context);
+  public int getResultSize();
   
   /**
    * Get the names of the result columns this path element will generate.
    *
-   * @param context the current context.
    * @return an array containing the names of the result columns.
    */
-  public String[] getColumnNames(LocalContext context);
+  public String[] getColumnNames();
 }

@@ -2,34 +2,111 @@ package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
 import java.util.Collection;
 
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
+import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
+import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
 
 public abstract class AbstractBasicPathElement extends AbstractPathElement
     implements BasicPathElementIF {
+  
+  protected String[] columns;
+  protected int resultSize;
+  
+  protected boolean assignScope;
+  protected boolean assignType;
+  
   protected AbstractBasicPathElement(String name) {
     super(name);
   }
 
-  public String[] getColumnNames(LocalContext context) {
-    String[] names = new String[getResultSize(context)];
+  public void initResultSet(LocalContext context) {
+    resultSize = 0;
+    if (getBoundInputVariable() != null) {
+      resultSize++;
+    }
+    if (containsSoleUnboundVariable(getScope(), context)) {
+      assignScope = true;
+      resultSize++;
+    }
+    if (containsSoleUnboundVariable(getType(), context)) {
+      assignType = true;
+      resultSize++;
+    }
+    if (getBoundVariable() != null) {
+      resultSize++;
+    }
+    
+    columns = new String[resultSize];
 
     int idx = 0;
     if (getBoundInputVariable() != null) {
-      names[idx++] = getBoundInputVariable().toString();
+      columns[idx++] = getBoundInputVariable().toString();
+    }
+    if (containsSoleUnboundVariable(getScope(), context)) {
+      columns[idx++] = getVariableName(getScope());
+    }
+    if (containsSoleUnboundVariable(getType(), context)) {
+      columns[idx++] = getVariableName(getType());
     }
     if (getBoundVariable() != null) {
-      names[idx++] = getBoundVariable().toString();
+      columns[idx++] = getBoundVariable().toString();
     }
-    return names;
+  }
+  
+  public final String[] getColumnNames() {
+    return columns;
   }
 
-  public int getResultSize(LocalContext context) {
-    int cnt = 0;
-    if (getBoundInputVariable() != null) cnt++;
-    if (getBoundVariable() != null) cnt++;
-    return cnt;
+  public final int getResultSize() {
+    return resultSize;
+  }
+  
+  protected boolean isAssignScope() {
+    return assignScope;
+  }
+  
+  protected boolean isAssignType() {
+    return assignType;
+  }
+  
+  protected int getResultArraySize() {
+    int size = 1;
+    if (getBoundInputVariable() != null) {
+      size++;
+    }
+    if (isAssignScope()) {
+      size++;
+    }
+    if (isAssignType()) {
+      size++;
+    }
+    return size;
+  }
+  
+  protected boolean containsSoleUnboundVariable(PathExpressionIF expr,
+      LocalContext context) {
+    if (expr != null) {
+      PathExpression e = (PathExpression) expr;
+      String varName = e.getVariableName();
+      if (varName != null && e.getPathLength() == 1) {
+        if (context.getResultSet(varName) == null) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  protected String getVariableName(PathExpressionIF expr) {
+    if (expr != null) {
+      PathExpression e = (PathExpression) expr;
+      return e.getVariableName();
+    }
+    return null;
   }
   
   /**

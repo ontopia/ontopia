@@ -64,11 +64,11 @@ public class NamePath extends AbstractBasicPathElement {
   }
 
   @SuppressWarnings("unchecked")
-  public Collection<TopicNameIF> evaluate(LocalContext context, Object input)
+  public Collection evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
     TopicIF topic = (TopicIF) input;
     
-    if (getScope() != null) {
+    if (getScope() != null && !isAssignScope()) {
       PathExpression scope = (PathExpression) getScope();
       // Optimization: if the scope expression does not contain a variable, we
       // can cache it.
@@ -78,7 +78,7 @@ public class NamePath extends AbstractBasicPathElement {
       }
     }
     
-    if (getType() != null) {
+    if (getType() != null && !isAssignType()) {
       PathExpression type = (PathExpression) getType();
       // Optimization: if the type expression does not contain a variable, we
       // can cache it.
@@ -87,22 +87,46 @@ public class NamePath extends AbstractBasicPathElement {
         validTypes = types.getValidValues(types.getLastIndex());
       }
     }
-    
+
     Collection<TopicNameIF> names = topic.getTopicNames();
-    if (validTypes == null && validScopes == null) {
+    if (validTypes == null && validScopes == null && !isAssignScope()
+        && !isAssignType()) {
       return names;
     } else {
-      Collection<TopicNameIF> result = new LinkedList<TopicNameIF>();
+      Collection<Object[]> result = new LinkedList<Object[]>();
       for (TopicNameIF name : names) {
         TopicIF nameType = name.getType();
         if (validTypes == null || validTypes.contains(nameType)) {
           if (validScopes == null || 
               containsAny(name.getScope(), validScopes)) {
-            result.add(name);
+            fillResultCollection(result, name);
           }
         }
       }
       return result;
+    }
+  }
+  
+  @SuppressWarnings("unchecked")
+  private void fillResultCollection(Collection<Object[]> result,
+      TopicNameIF name) {
+    if (isAssignScope()) {
+      Collection<TopicIF> scopes = name.getScope();
+      if (scopes.isEmpty()) {
+        if (isAssignType()) {
+          result.add(new Object[] { null, name.getType(), name });
+        } else {
+          result.add(new Object[] { null, name });
+        }
+      } else {
+        for (TopicIF scope : scopes) {
+          result.add(new Object[] { scope, name.getType(), name });
+        }
+      }
+    } else if (isAssignType()) {
+      result.add(new Object[] { name.getType(), name });
+    } else {
+      result.add(new Object[] { name });
     }
   }
 }

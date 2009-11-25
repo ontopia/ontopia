@@ -26,29 +26,33 @@ public class VariablePath extends AbstractVariable implements
     inputSet.add(TYPE.NONE);
   }
 
+  private String[] columns;
+  private int resultSize;
+  
   public VariablePath(VariableDecl decl) {
     super(decl);
   }
 
-  public String[] getColumnNames(LocalContext context) {
+  public void initResultSet(LocalContext context) {
     ResultSet rs = context.getResultSet(toString());
     if (rs == null) {
-      return new String[] { toString() };
+      resultSize = 1;
+      columns = new String[] { toString() };      
     } else {
+      resultSize = rs.getBoundVariables().size();
       List<String> boundVariables = rs.getBoundVariables();
       boundVariables.remove(toString());
       boundVariables.add(toString());
-      return boundVariables.toArray(new String[0]);
+      columns = boundVariables.toArray(new String[0]);
     }
   }
 
-  public int getResultSize(LocalContext context) {
-    ResultSet rs = context.getResultSet(toString());
-    if (rs == null) {
-      return 1;
-    } else {
-      return rs.getBoundVariables().size();
-    }
+  public String[] getColumnNames() {
+    return columns;
+  }
+
+  public int getResultSize() {
+    return resultSize;
   }
 
   @Override
@@ -91,7 +95,7 @@ public class VariablePath extends AbstractVariable implements
     // TODO: Variables can be of any type, not just topics
 
     if (rs != null) {
-      if (getResultSize(context) > 1) {
+      if (getResultSize() > 1) {
         List<String> vars = rs.getBoundVariables();
         // FIXME: this is a hack to move the current bound variable to the end
         // of the list.

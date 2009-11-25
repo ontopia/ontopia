@@ -29,15 +29,19 @@ public class TopicPath extends AbstractTopic implements BasicPathElementIF {
     inputSet.add(TYPE.NONE);
   }
 
+  private static final String[] columns = new String[] { "TOPIC" };
+  
   public TopicPath(AbstractTopic.IDTYPE type, String id) {
     super(type, id);
   }
   
-  public String[] getColumnNames(LocalContext context) {
-    return new String[] { "TOPIC" };
+  public void initResultSet(LocalContext context) {}
+
+  public String[] getColumnNames() {
+    return columns;
   }
 
-  public int getResultSize(LocalContext context) {
+  public int getResultSize() {
     return 1;
   }
 

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -63,11 +64,11 @@ public class VariantPath extends AbstractBasicPathElement {
   }
   
   @SuppressWarnings("unchecked")
-  public Collection<VariantNameIF> evaluate(LocalContext context, Object input)
+  public Collection evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
     TopicNameIF name = (TopicNameIF) input;
     
-    if (getScope() != null) {
+    if (getScope() != null && !isAssignScope()) {
       PathExpression scope = (PathExpression) getScope();
       // Optimization: if the scope expression does not contain a variable, we
       // can cache it.
@@ -78,16 +79,33 @@ public class VariantPath extends AbstractBasicPathElement {
     }
 
     Collection<VariantNameIF> variants = name.getVariants();
-    if (validScopes == null) {
+    if (validScopes == null && !isAssignScope()) {
       return variants;
     } else {
-      Collection<VariantNameIF> result = new LinkedList<VariantNameIF>();
+      Collection<Object[]> result = new LinkedList<Object[]>();
       for (VariantNameIF var : variants) {
-        if (containsAny(var.getScope(), validScopes)) {
-          result.add(var);
+        if (validScopes == null || containsAny(var.getScope(), validScopes)) {
+          fillResultCollection(result, var);
         }
       }
       return result;
+    }
+  }
+  
+  @SuppressWarnings("unchecked")
+  private void fillResultCollection(Collection<Object[]> result,
+      VariantNameIF var) {
+    if (isAssignScope()) {
+      Collection<TopicIF> scopes = var.getScope();
+      if (scopes.isEmpty()) {
+        result.add(new Object[] { null, var });
+      } else {
+        for (TopicIF scope : scopes) {
+          result.add(new Object[] { scope, var });
+        }
+      }
+    } else {
+      result.add(new Object[] { var });
     }
   }
 }
