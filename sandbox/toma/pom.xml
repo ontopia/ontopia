@@ -3,9 +3,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.ontopia</groupId>
 	<artifactId>toma</artifactId>
-	<version>0.9-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>Ontopia TOMA query language implementation</name>
+	<name>Ontopia TOMA query language</name>
+	<version>0.9-SNAPSHOT</version>
+	<url>http://code.google.com/p/ontopia/wiki/TomaImplementation</url>
+	<inceptionYear>2009</inceptionYear>
+
+	<developers>
+		<developer>
+			<id>tn</id>
+			<name>Thomas Neidhart</name>
+			<email>thomas.neidhart@spaceapplications.com</email>
+			<organization>Space Applications Services</organization>
+			<organizationUrl>http://www.spaceapplications.com/</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<url>https://ontopia.googlecode.com/svn/trunk/sandbox/toma</url>
+	</scm>
 
 	<dependencies>
 		<dependency>
@@ -78,6 +93,30 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.google.code.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>${basedir}/doc/license.txt</header>
+					<includes>
+						<include>src/main/java/**/*.java</include>
+					</includes>
+					<properties>
+						<name>${project.name}</name>
+						<year>${project.inceptionYear}</year>
+						<holder>Space Applications Services</holder>
+						<contact>thomas.neidhart@spaceapplications.com</contact>
+					</properties>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>			
 		</plugins>
 	</build>
 
@@ -89,6 +128,13 @@
 		<repository>
 			<id>Ontopia-Snapshot</id>
 			<url>http://ontopia.googlecode.com/svn/maven-snapshot-repository</url>
-		</repository>
+		</repository>	
 	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>mc-release</id>
+			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+		</pluginRepository>		
+	</pluginRepositories>		
 </project>
