@@ -12,7 +12,6 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-
 public class QueryMapper<T> {
   
   private DeclarationContextIF context;
@@ -28,23 +27,31 @@ public class QueryMapper<T> {
     this.processor = processor;
     this.context = context;
   } 
+
   /**
    * EXPERIMENTAL: Returns true if the query produces a row and
-   * false if the query produces no rows. If the query produces 
-   * more than one row an exception is thrown.  
+   * false if the query produces no rows.  
    */
- public boolean isTrue(String query, Map<String,?> params) {
-   QueryResultIF result = null;
-   try {
-     result = processor.execute(query, params, context);
-     return result.next();
-   } catch (InvalidQueryException e) {
-     throw new OntopiaRuntimeException(e);
-   } finally {
-     if (result != null)
-       result.close();
-   }
-}
+  public boolean isTrue(String query) {
+    return isTrue(query, null);
+  }
+  
+  /**
+   * EXPERIMENTAL: Returns true if the query produces a row and
+   * false if the query produces no rows.  
+   */
+  public boolean isTrue(String query, Map<String,?> params) {
+    QueryResultIF result = null;
+    try {
+      result = execute(query, params);
+      return result.next();
+    } catch (InvalidQueryException e) {
+      throw new OntopiaRuntimeException(e);
+    } finally {
+      if (result != null)
+        result.close();
+    }
+  }
  
  /**
   * EXPERIMENTAL: Returns the value in the first column in the first
@@ -81,7 +88,7 @@ public class QueryMapper<T> {
   public T queryForObject(String query, RowMapperIF<T> mapper, Map<String,?> params) {
     QueryResultIF result = null;
     try {
-      result = processor.execute(query, params, context);
+      result = execute(query, params);
       int ix=0;
       if (result.next())
         return mapper.mapRow(result, ix++);
@@ -129,7 +136,7 @@ public class QueryMapper<T> {
     List<T> list = new ArrayList<T>();
     QueryResultIF result = null;
     try {
-      result = (params == null ? processor.execute(query, context) : processor.execute(query, params, context));
+      result = execute(query, params);
       int ix = 0;
       while (result.next())
         list.add(mapper.mapRow(result, ix++));
@@ -141,6 +148,17 @@ public class QueryMapper<T> {
     }
     return list;
   }
+
+  /**
+   * EXPERIMENTAL: Returns a map of the first row of the query
+   * results, with each variable name (without $) as a key and each
+   * variable value as the value of the key. If the query produces no
+   * rows the method returns null; if it produces more than one an
+   * exception is thrown.
+   */
+  public Map<String,T> queryForMap(String query) {
+    return queryForMap(query, null);
+  }
   
   /**
    * EXPERIMENTAL: Returns a map of the first row of the query
@@ -148,12 +166,12 @@ public class QueryMapper<T> {
    * variable value as the value of the key. If the query produces no
    * rows the method returns null.
    */
-  public Map queryForMap(String query, Map<String,?> params) {
+  public Map<String,T> queryForMap(String query, Map<String,?> params) {
     QueryResultIF result = null;
     try {
-      result = processor.execute(query, params, context);
+      result = execute(query, params);
       if (result.next()) {
-        Map<String,Object> row = new HashMap<String,Object>(result.getWidth());
+        Map<String,T> row = new HashMap<String,T>(result.getWidth());
         for (int ix = 0; ix < result.getWidth(); ix++)
           row.put(result.getColumnName(ix), wrapValue(result.getValue(ix)));
         return row;
@@ -167,7 +185,6 @@ public class QueryMapper<T> {
       if (result != null)
         result.close();
     }
-
   }
 
   @SuppressWarnings("unchecked")
@@ -175,4 +192,7 @@ public class QueryMapper<T> {
     return (T)value;
   }
   
+  protected QueryResultIF execute(String query, Map<String,?> params) throws InvalidQueryException {
+    return (params == null ? processor.execute(query, context) : processor.execute(query, params, context));
+  }
 }
