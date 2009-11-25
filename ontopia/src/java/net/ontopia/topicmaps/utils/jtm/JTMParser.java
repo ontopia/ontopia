@@ -26,8 +26,8 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
- * PRIVATE: Parses an JTM fragment from a reader and stores the result in a
- * provided topic map.
+ * INTERNAL: Parses an JTM fragment from a reader and stores the
+ * result in a provided topic map.
  * 
  * TODO: the parser currently uses a very simple and straightforward validation
  * mechanism, that could/should be changed, also the error reports from the
@@ -39,7 +39,8 @@ public class JTMParser {
   private TopicMapIF tm;
 
   private enum OBJECT_TYPE {
-    TOPICMAP, TOPIC, ASSOCIATION, NAME, VARIANT, OCCURRENCE, ROLE, STRING, REFERENCE
+    TOPICMAP, TOPIC, ASSOCIATION, NAME, VARIANT, OCCURRENCE, ROLE, STRING,
+      REFERENCE
   };
 
   public enum JSON_TYPE {

@@ -53,7 +53,8 @@ public class JTMTopicMapReader extends AbstractTopicMapReader {
    * given in the arguments.
    * @param stream The input stream from which the topic map is to be read.
    * @param base_address The base address to be used for resolving
-   * relative references.  */
+   * relative references.
+   */
   public JTMTopicMapReader(InputStream stream, LocatorIF base_address) {
     this(new InputSource(stream), base_address);
   }
