@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.ontopia</groupId>
+	<artifactId>ontopia-test-bootstrap</artifactId>
+	<packaging>jar</packaging>
+	<version>5.1.0-b1</version>
+	<name>Ontopia test bootstrap</name>
+	<description>Ontopia test bootstrap classes.</description>
+	<url>http://todo</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.ontopia</groupId>
+			<artifactId>ontopia-core</artifactId>
+			<version>5.1.0-b1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<sourceDirectory>../../../ontopia/src/</sourceDirectory>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.0.2</version>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+						<includes>
+							<include>**/net/ontopia/test/AbstractOntopiaTestCase.java</include>
+							<include>**/net/ontopia/test/TestCaseGeneratorIF.java</include>
+							<include>**/net/ontopia/topicmaps/test/AbstractTopicMapTestCase.java</include>
+							<include>**/net/ontopia/topicmaps/xml/test/AbstractCanonicalTestCase.java</include>
+						</includes>
+					</configuration>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

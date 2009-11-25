@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.ontopia</groupId>
+	<artifactId>ontopia-engine-maven</artifactId>
+	<packaging>pom</packaging>
+	<version>5.1.0-b1</version>
+	<name>Ontopia</name>
+	<description>Ontopia.</description>
+	<url>http://todo</url>
+
+	<modules>
+		<module>ontopia-core</module>
+		<module>ontopia-test-bootstrap</module>
+		<module>ontopia-navigator</module>
+		<module>ontopia-webed</module>
+		<module>ontopia-db2tm</module>
+		<module>ontopia-viz</module>
+		<module>ontopia-classify</module>
+	</modules>
+	
+</project>

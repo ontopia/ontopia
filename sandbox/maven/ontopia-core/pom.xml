@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.ontopia</groupId>
+	<artifactId>ontopia-core</artifactId>
+	<packaging>jar</packaging>
+	<version>5.1.0-b1</version>
+	<name>Ontopia Core</name>
+	<description>Ontopia Core.</description>
+	<url>http://todo</url>
+
+	<dependencies>
+		<!--dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.7.1</version>
+			<scope>provided</scope>
+		</dependency-->
+		<!--dependency>
+			<groupId>com.touchgraph</groupId>
+			<artifactId>touchgraph</artifactId>
+			<version>unknown</version>
+		</dependency-->
+		<dependency>
+			<groupId>org.tmapi</groupId>
+			<artifactId>tmapi</artifactId>
+			<version>2.0a2</version>
+		</dependency>
+		<dependency>
+			<groupId>gnu.trove</groupId>
+			<artifactId>trove4j</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thaiopensource</groupId>
+			<artifactId>jing</artifactId>
+			<version>20030619</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<!--dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.1</version>
+		</dependency-->
+		<!--dependency>
+			<groupId>crimson</groupId>
+			<artifactId>crimson</artifactId>
+			<version>1.1.3</version>
+		</dependency-->
+		<dependency>
+			<groupId>urbanophile</groupId>
+			<artifactId>java-getopt</artifactId>
+			<version>1.0.9</version>
+		</dependency>
+		<!--dependency>
+			<groupId>velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.3</version>
+		</dependency-->
+		<!-- Logging -->
+		<!--dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.8</version>
+		</dependency-->
+		<!-- Keep Log4J as standard logger -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.8</version>
+			<scope>test</scope>
+		</dependency>
+		<!--dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency-->
+		<!-- Delegate all projects which use Commons Logging to SLF4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+		<!--dependency>
+			<groupId>concurrent</groupId>
+			<artifactId>concurrent</artifactId>
+			<version>1.3.4</version>
+		</dependency-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!--dependency>
+			<groupId>httpunit</groupId>
+			<artifactId>httpunit</artifactId>
+			<version>1.6.1</version>
+			<!- -scope>test</scope- ->
+		</dependency-->
+		<dependency>
+			<groupId>net.sourceforge.jena</groupId>
+			<artifactId>jena</artifactId>
+			<version>2.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xmlbeans</groupId>
+					<artifactId>xmlbeans-jsr173-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>backport-util-concurrent</groupId>
+			<artifactId>backport-util-concurrent</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jgroups</groupId>
+			<artifactId>jgroups</artifactId>
+			<version>2.6.10.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>jtidy</artifactId>
+			<version>r8-20060801</version>
+		</dependency>
+		<!--dependency>
+			<groupId>de.jflex</groupId>
+			<artifactId>jflex</artifactId>
+			<version>1.4.3</version>
+		</dependency-->
+		<!--dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>1.8</version>
+		</dependency-->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<!--dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency-->
+		<!--dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+			<scope>provided</scope>
+		</dependency-->
+		<!--dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+			<scope>provided</scope>
+		</dependency-->
+		<!--dependency>
+			<groupId>saxon</groupId>
+			<artifactId>saxon</artifactId>
+			<version>6.5.3</version>
+		</dependency-->
+		<dependency>
+			<groupId>lucene</groupId>
+			<artifactId>lucene</artifactId>
+			<version>1.4.3</version>
+		</dependency>
+		<!--dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-snowball</artifactId>
+			<version>2.0.0</version>
+		</dependency-->
+		<!--dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.2-FINAL</version>
+		</dependency-->
+		<!--dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>3.2-FINAL</version>
+		</dependency-->
+		<!--dependency>
+			<groupId>pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>0.7.3</version>
+		</dependency-->
+		<!--dependency>
+			<groupId>org.ccil.cowan.tagsoup</groupId>
+			<artifactId>tagsoup</artifactId>
+			<version>1.2</version>
+		</dependency-->
+	</dependencies>
+
+	<build>
+		<sourceDirectory>../../../ontopia/src/</sourceDirectory>
+		<testSourceDirectory>../../../ontopia/src/</testSourceDirectory>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.0.2</version>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+						<includes>
+
+							<!--patternset refid="sources.engine" /-->
+							<include>**/net/ontopia/Ontopia.java</include>
+							<include>**/net/ontopia/product/*.java</include>
+							<include>**/net/ontopia/net/*.java</include>
+							<include>**/net/ontopia/net/data/*.java</include>
+							<include>**/net/ontopia/utils/*.java</include>
+							<include>**/net/ontopia/xml/*.java</include>
+							<include>**/net/ontopia/infoset/core/*.java</include>
+							<include>**/net/ontopia/infoset/utils/*.java</include>
+							<include>**/net/ontopia/infoset/impl/basic/*.java</include>
+							<include>**/net/ontopia/topicmaps/core/*.java</include>
+							<include>**/net/ontopia/topicmaps/core/index/*.java</include>
+							<include>**/net/ontopia/topicmaps/core/events/*.java</include>
+							<include>**/net/ontopia/topicmaps/entry/*.java</include>
+							<include>**/net/ontopia/topicmaps/helpers/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/ltm/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/ctm/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/rdf/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/xfml/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/tmrap/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/utils/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/basic/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/remote/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/basic/index/*.java</include>
+							<include>**/net/ontopia/topicmaps/xml/*.java</include>
+							<include>**/net/ontopia/topicmaps/cmdlineutils/**/*.java</include>
+
+							<!--patternset refid="sources.tmapi" /-->
+							<include>**/net/ontopia/topicmaps/impl/tmapi2/**/*.java</include>
+
+							<!--patternset refid="sources.query" /-->
+							<include>**/net/ontopia/topicmaps/query/core/*.java</include>
+							<include>**/net/ontopia/topicmaps/query/parser/*.java</include>
+							<include>**/net/ontopia/topicmaps/query/utils/*.java</include>
+							<include>**/net/ontopia/topicmaps/query/impl/utils/*.java</include>
+							<include>**/net/ontopia/topicmaps/query/impl/basic/*.java</include>
+							<include>**/net/ontopia/topicmaps/query/impl/rdbms/*.java</include>
+							<include>**/net/ontopia/topicmaps/query/spi/*.java</include>
+
+							<!--patternset refid="sources.schema" /-->
+							<include>**/net/ontopia/topicmaps/schema/**/*.java</include>
+
+							<!--patternset refid="sources.fulltext" /-->
+							<include>**/net/ontopia/infoset/fulltext/core/*.java</include>
+							<include>**/net/ontopia/infoset/fulltext/impl/lucene/*.java</include>
+							<include>**/net/ontopia/infoset/fulltext/impl/rdbms/*.java</include>
+							<include>**/net/ontopia/infoset/fulltext/topicmaps/*.java</include>
+							<include>**/net/ontopia/infoset/fulltext/topicmaps/nav/plugins/*.java</include>
+							<include>**/net/ontopia/infoset/fulltext/utils/*.java</include>
+
+							<!--patternset refid="sources.rdbms" /-->
+							<include>**/net/ontopia/persistence/proxy/*.java</include>
+							<include>**/net/ontopia/persistence/query/sql/*.java</include>
+							<include>**/net/ontopia/persistence/query/jdo/*.java</include>
+							<include>**/net/ontopia/persistence/rdbms/*.java</include>
+							<include>**/net/ontopia/persistence/jdbcspy/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/rdbms/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/rdbms/index/*.java</include>
+							<include>**/net/ontopia/topicmaps/cmdlineutils/rdbms/*.java</include>
+
+							<!-- added by hand because these modules are needed by other modules -->
+							<include>**/net/ontopia/infoset/content/*.java</include>
+
+							<!-- added by hand to comply -->
+							<include>**/net/ontopia/topicmaps/nav/utils/deciders/TMExporterDecider.java</include>
+								<!-- referenced from net/ontopia/topicmaps/utils/rdf/RDFTopicMapWriter, /ltm/LTMTopicMapWriter -->
+							<include>**/net/ontopia/topicmaps/webed/impl/basic/ActionValidationException.java</include>
+								<!-- referenced from net/ontopia/topicmaps/utils/ltm/LTMTopicMapWriter -->
+							
+							<!-- references from references -->
+							<include>**/net/ontopia/topicmaps/webed/core/ActionRuntimeException.java</include>
+								<!-- referenced from net/ontopia/topicmaps/webed/impl/basic/ActionValidationException -->
+
+						</includes>
+						<excludes>
+							<exclude>**/net/ontopia/topicmaps/cmdlineutils/test/*.java</exclude>
+							<exclude>**/net/ontopia/topicmaps/impl/tmapi2/test/**/*.java</exclude>
+							<exclude>**/net/ontopia/topicmaps/schema/**/test/*.java</exclude>
+
+							<exclude>**/net/ontopia/infoset/fulltext/topicmaps/nav/plugins/FulltextPlugin.java</exclude>
+								<!-- requires sources.ontopia.aux / sources.navigator / net.ontopia.topicmaps.nav2.plugins -->
+								<!-- nav2/plugins/DefaultPlugin requires nav2/taglibs/logic/ContextTag requires too much! (reason enough to exclude) -->
+							<exclude>**/net/ontopia/topicmaps/utils/tmrap/RAPServlet.java</exclude>
+								<!-- requires net.ontopia.topicmaps.nav2.core -->
+								<!-- requires NavigatorApplicationIF, NavigatorRuntimeException, see earlier -->
+							<exclude>**/net/ontopia/topicmaps/utils/tmrap/TMRAPImplementation.java</exclude>
+								<!-- requires net.ontopia.topicmaps.nav2.core -->
+								<!-- requires NavigatorApplicationIF requires ModuleIF requires too much! -->
+								<!-- requires NavigatorRuntimeException requires NavigatorTagException requires servlet.jsp -->
+							<exclude>**/net/ontopia/topicmaps/schema/impl/osl/nav/plugins/ValidationPlugin.java</exclude>
+								<!-- requires net.ontopia.topicmaps.nav2.utils -->
+								<!-- requires net.ontopia.topicmaps.nav2.plugins -->
+								<!-- requires net.ontopia.topicmaps.nav2.taglibs.logic -->
+							<exclude>**/net/ontopia/infoset/content/ContentStoreServlet.java</exclude>
+
+						</excludes>
+						<testIncludes>
+							<include>**/net/ontopia/test/*.java</include>
+							<include>**/net/ontopia/net/data/test/*.java</include>
+							<include>**/net/ontopia/test/threads/*.java</include>
+							<include>**/net/ontopia/test/threads/action/*.java</include>
+							<include>**/net/ontopia/test/threads/target/*.java</include>
+							<include>**/net/ontopia/utils/test/*.java</include>
+							<include>**/net/ontopia/xml/test/*.java</include>
+							<include>**/net/ontopia/infoset/impl/basic/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/test/AbstractTopicMapTestCase.java</include>
+							<include>**/net/ontopia/topicmaps/core/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/core/index/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/core/events/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/entry/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/xml/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/basic/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/basic/index/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/impl/utils/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/rdf/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/ltm/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/ctm/test/*.java</include>
+							<include>**/net/ontopia/topicmaps/utils/tmrap/test/**/*.java</include>
+							<include>**/net/ontopia/topicmaps/cmdlineutils/test/*.java</include>
+							<include>**/net/ontopia/test/perf/*.java</include>
+							<include>**/net/ontopia/net/data/test/*.java</include>
+
+							<!-- added by hand because these modules are needed by other modules -->
+							<include>**/net/ontopia/infoset/content/test/*.java</include>
+							
+							<!-- added by hand to comply -->
+							<include>**/net/ontopia/topicmaps/nav/utils/deciders/TMDecider.java</include>
+
+						</testIncludes>
+						<testExcludes>
+							<exclude>**/net/ontopia/topicmaps/utils/tmrap/test/TestRemoteTopicIndex.java</exclude>
+							<exclude>**/net/ontopia/topicmaps/utils/tmrap/test/TMRAPTestGenerator.java</exclude>
+							<exclude>**/net/ontopia/topicmaps/utils/tmrap/test/TestTMRAPOperation.java</exclude>
+							<exclude>**/net/ontopia/topicmaps/utils/tmrap/test/TestDeleteTopic.java</exclude>
+							<exclude>**/net/ontopia/topicmaps/utils/tmrap/test/TestGetTopic.java</exclude>
+							<exclude>**/net/ontopia/topicmaps/utils/tmrap/test/TestAddFragment.java</exclude>
+								<!-- all require net/ontopia/topicmaps/utils/tmrap/RAPServlet -->
+								<!-- some require net.ontopia.utils.ontojsp -->
+						</testExcludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<argLine>-Dnet.ontopia.test.root=../test-data</argLine>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
