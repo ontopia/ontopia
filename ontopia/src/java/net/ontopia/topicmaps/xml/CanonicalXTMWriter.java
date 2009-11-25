@@ -37,15 +37,11 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.CompactHashSet;
 
 /**
- * EXPERIMENTAL: A topic map writer that writes topic maps out to the
- * format defined in ISO 13250-4: Topic Maps -- Canonicalization.  The
- * format is also known as Canonical XTM, but should not be confused
- * with that defined by Ontopia. The current implementation conforms
- * to the 2008-04-11 draft.
- *
- * <p>The class is currently marked as EXPERIMENTAL because ISO
- * 13250-4 is not yet finalized. Once the definition of Canonical XTM
- * is finalized we will make this class PUBLIC.
+ * PUBLIC: A topic map writer that writes topic maps out to the format
+ * defined in ISO 13250-4: Topic Maps -- Canonicalization.  The format
+ * is also known as Canonical XTM, but should not be confused with
+ * that defined by Ontopia. The current implementation conforms to the
+ * final standard (ISO 13250-4:2009).
  *
  * @since 2.0.3
  */
