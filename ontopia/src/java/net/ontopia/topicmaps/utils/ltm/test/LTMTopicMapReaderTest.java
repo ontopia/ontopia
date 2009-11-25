@@ -60,6 +60,18 @@ public class LTMTopicMapReaderTest extends AbstractTopicMapTestCase {
     assertNotNull("Can't find topic with subject indicator '#example'",
                   tm.getTopicBySubjectIdentifier(example));
   }
+
+  public void testSubfileErrorReporting() throws IOException {
+    // test for issue 143: http://code.google.com/p/ontopia/issues/detail?id=143
+    try {
+      TopicMapIF tm = read("mergemap-error.ltm");
+      fail("No error found!");
+    } catch (IOException e) {
+      String msg = e.getMessage();
+      assertTrue("error message does not mention file containing error: " + msg,
+                 msg.indexOf("mergemap-error-sub.ltm") != -1);
+    }
+  }
   
   // --- Helpers
 
