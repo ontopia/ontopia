@@ -5,8 +5,8 @@ package net.ontopia.topicmaps.core;
   
 /**
  * PUBLIC: Implemented by topic map objects that are instances of a
- * single type, such as occurrences, associations, and association
- * roles.</p>
+ * single type, such as occurrences, associations, association roles,
+ * and topic names.</p>
  *
  * Types are always represented by topics.</p>
  */

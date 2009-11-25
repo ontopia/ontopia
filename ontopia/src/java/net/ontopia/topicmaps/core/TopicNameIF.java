@@ -19,7 +19,6 @@ public interface TopicNameIF extends ScopedIF, TypedIF, ReifiableIF {
    * PUBLIC: Gets the topic to which this topic name belongs.
    *
    * @return The topic named by this topic name; an object implementing TopicIF.
-   *
    */
   public TopicIF getTopic();
   
@@ -36,8 +35,9 @@ public interface TopicNameIF extends ScopedIF, TypedIF, ReifiableIF {
   public String getValue();
 
   /**
-   * PUBLIC: Sets the value of this topic name. This corresponds to the content of the
-   * 'baseNameString' element in XTM 1.0, as a string
+   * PUBLIC: Sets the value of this topic name. This corresponds to
+   * the content of the 'baseNameString' element in XTM 1.0, as a
+   * string.
    *
    * @param name A string which is the value of this topic name.
    */
