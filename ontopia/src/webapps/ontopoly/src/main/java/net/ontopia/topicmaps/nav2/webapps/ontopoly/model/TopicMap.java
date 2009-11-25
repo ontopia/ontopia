@@ -267,7 +267,8 @@ public class TopicMap {
   }
 
   /**
-   * INTERNAL: Sets the version of the Ontopoly meta-ontology used in this topic map. Used by code that performs upgrades.
+   * INTERNAL: Sets the version of the Ontopoly meta-ontology used in
+   * this topic map. Used by code that performs upgrades.
    */
   public void setOntologyVersion(float value) {
     String versionNumber = Float.toString(value);
@@ -293,18 +294,6 @@ public class TopicMap {
   public String getId() {
     return topicMapId;
   }
-
-//  /* get Types */
-//
-//  public List getSystemTopicTypes() {
-//    String query = "select $type from "
-//        + "{ instance-of($type, on:ontology-type) | $type = on:ontology-type }?";
-//
-//    List result = getQueryWrapper().queryForList(query,
-//        OntopolyModelUtils.getRowMapperOneColumn());
-//
-//    return castResultObjects(result, TopicType.class);
-//  }
 
   /**
    * Returns a list of the topic types that is not a system topic type.
