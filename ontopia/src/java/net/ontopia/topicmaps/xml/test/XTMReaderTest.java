@@ -302,6 +302,42 @@ public class XTMReaderTest extends AbstractXMLTestCase {
                  e.getCause() instanceof SAXParseException);
     }
   }
+
+  public void testErrorLocationReporting1() throws IOException {
+    // verifies that the XTM 1.0 reader actually reports where in the file
+    // invalidity errors occur
+    try {
+      readTopicMap("various", "invalid1.xtm");
+      fail("No error detected in invalid file!");
+    } catch (OntopiaRuntimeException e) {
+      if (e.getCause() instanceof SAXParseException) {
+        SAXParseException ex = (SAXParseException) e.getCause();
+        assertTrue("wrong error file: " + ex.getSystemId(),
+                   ex.getSystemId().endsWith("invalid1.xtm"));
+        assertTrue("wrong error line: " + ex.getLineNumber(),
+                   ex.getLineNumber() == 7);
+      } else
+        fail("Unknown cause of error: " + e);
+    }
+  }
+
+  public void testErrorLocationReporting2() throws IOException {
+    // verifies that the XTM 2.0 reader actually reports where in the file
+    // invalidity errors occur
+    try {
+      readTopicMap("various", "invalid2.xtm");
+      fail("No error detected in invalid file!");
+    } catch (OntopiaRuntimeException e) {
+      if (e.getCause() instanceof SAXParseException) {
+        SAXParseException ex = (SAXParseException) e.getCause();
+        assertTrue("wrong error file: " + ex.getSystemId(),
+                   ex.getSystemId().endsWith("invalid2.xtm"));
+        assertTrue("wrong error line: " + ex.getLineNumber(),
+                   ex.getLineNumber() == 2);
+      } else
+        fail("Unknown cause of error: " + e);
+    }
+  }
   
   // --- Supporting methods
 

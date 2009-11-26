@@ -1,0 +1,9 @@
+<topicMap xmlns="http://www.topicmaps.org/xtm/1.0/"
+          xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<topic id="jillstm-topic">
+  <baseName>
+    <!-- oops. we forgot the base name string. so error should be on line 7 -->
+  </baseName>
+</topic>
+</topicMap>
