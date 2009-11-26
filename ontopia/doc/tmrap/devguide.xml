@@ -580,5 +580,43 @@ and specific client used that we make no attempt to document their use
 here. The best way to get started is to use your SOAP development
 framework to generate client stubs from the WSDL file.</para>
 
-</section> 
+</section>
+
+<!--============================================================================
+    SECURITY                                                                 -->
+<section>
+<title>Security Considerations</title>
+
+<para>As it is possible to both modify the topic map and extract any
+information from it via TMRAP there are definite security concerns
+with providing an full TMRAP interface to the open internet. It is
+possible to configure the web server in such a way as to block some of
+the requests, or to require authentication in order to access some or
+all of the requests.</para>
+
+<para>The most common requirement is to block the
+<methodname>add-fragment</methodname> and
+<methodname>delete-topic</methodname> methods, as these allow
+modification of the topic map. To do this, simply add the following at
+the end of the <filename>web.xml</filename> for the
+<filename>tmrap</filename> web application:</para>
+
+<literallayout><![CDATA[
+  <security-constraint>
+    <display-name>Blocked TMRAP requests</display-name>
+    <web-resource-collection>
+      <web-resource-name>Blocked TMRAP requests</web-resource-name>
+      <url-pattern>/tmrap/add-fragment</url-pattern>
+      <url-pattern>/tmrap/delete-topic</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>user</role-name>
+    </auth-constraint>
+  </security-constraint>
+]]></literallayout>
+
+<para>The security role <symbol>user</symbol> is not defined, but this
+is not necessary, so long as the purpose is simply to block access to
+these requests.</para>
+</section>
 </article>
