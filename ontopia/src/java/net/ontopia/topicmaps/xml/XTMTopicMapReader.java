@@ -194,7 +194,6 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
     XMLReader parser;
     try {
       parser = getXMLReaderFactory().createXMLReader();
-      
     } catch (SAXException e) {
       throw new IOException("Problems occurred when creating SAX2 XMLReader: " + e.getMessage());
     }

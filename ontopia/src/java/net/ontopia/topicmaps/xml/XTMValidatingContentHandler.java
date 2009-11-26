@@ -29,6 +29,7 @@ public class XTMValidatingContentHandler implements ContentHandler {
 
   private ContentHandler child; // validated events are passed here
   private ContentHandler validator; // validating handler
+  private Locator locator; // stored until we can pass on to validator
   private int xtm_version; // which XTM version to validate against
   
   public XTMValidatingContentHandler(ContentHandler child) {
@@ -74,6 +75,8 @@ public class XTMValidatingContentHandler implements ContentHandler {
     // initialize validator
     if (EL_TOPICMAP == qName) {
       validator = createValidator();
+      if (locator != null) // if received already
+        validator.setDocumentLocator(locator); 
       validator.startDocument();
     }
     if (validator != null) validator.startElement(uri, name, qName, atts);
@@ -118,5 +121,6 @@ public class XTMValidatingContentHandler implements ContentHandler {
   public void setDocumentLocator(Locator docloc) {
     if (validator != null) validator.setDocumentLocator(docloc);
     child.setDocumentLocator(docloc);
+    locator = docloc; // stored in case we receive it before we have validator
   }
 }

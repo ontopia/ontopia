@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Collection;
 import java.util.Collections;
+import org.xml.sax.Locator;
 import org.xml.sax.Attributes;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
@@ -42,6 +43,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
   private TopicMapStoreFactoryIF store_factory;
   private Map entities;
   private int stack_depth; // used to avoid unbalanced stacks in XTM 1.0
+  private Locator locator; // stored to be passed on to real ContentHandlers
   private static final Attributes EMPTY_ATTS = new AttributesImpl();
 
   public static final int VERSION_UNKNOWN = 0;
@@ -91,8 +93,10 @@ public class XTMSnifferContentHandler extends DefaultHandler
         outer_handler = new XTMValidatingContentHandler(handler1);
         parser.setContentHandler(outer_handler);
       }
-
+      
       // pass on events
+      if (locator != null)
+        outer_handler.setDocumentLocator(locator);
       Iterator it = entities.keySet().iterator();
       while (it.hasNext()) {
         String ename = (String) it.next();
@@ -117,7 +121,9 @@ public class XTMSnifferContentHandler extends DefaultHandler
                                                         VERSION_XTM20);
         parser.setContentHandler(outer_handler);
       }
-      
+
+      if (locator != null)
+        outer_handler.setDocumentLocator(locator);
       outer_handler.startDocument();
       outer_handler.startElement(uri, name, qname, atts);
     }
@@ -133,6 +139,10 @@ public class XTMSnifferContentHandler extends DefaultHandler
     // if we get here it means we never found any 1.0 or 2.0 TMs
     if (reader.getValidation())
       throw new InvalidTopicMapException("XTM input is neither 1.0 nor 2.0");
+  }
+
+  public void setDocumentLocator(Locator locator) {
+    this.locator = locator; // store it so we can pass it on
   }
 
   // --- DeclHandler
