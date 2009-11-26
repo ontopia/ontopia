@@ -66,7 +66,10 @@ public class TopicMapConverter {
       if (e.getCause() != null) {
         if (e.getCause() instanceof SAXParseException) {
           SAXParseException ex = (SAXParseException) e.getCause();
-          System.err.println("XML parse error: " + ex.getMessage());
+          System.err.println("XML parse error: " + ex.getMessage() + " in " +
+                             ex.getSystemId() + ":" +
+                             ex.getLineNumber() + ":" +
+                             ex.getColumnNumber());
           System.exit(2);
         } else
           throw e.getCause();
