@@ -77,9 +77,6 @@ public abstract class AbstractOntopolyURLReference
 
     // deferred fulltext index manager registration
     if (getMaintainFulltextIndexes()) {
-      //! if (!replaceIndex)
-      //!   this.ftmanager = FulltextIndexManager.manageTopicMap(tm);
-
       // synchronize fulltext index
       synchronizeFulltextIndex(true);
 

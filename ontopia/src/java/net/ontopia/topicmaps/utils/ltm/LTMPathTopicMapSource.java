@@ -4,16 +4,20 @@
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.net.URL;
-import net.ontopia.topicmaps.entry.*;
-import net.ontopia.infoset.core.LocatorIF;
+import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.entry.*;
 
 /**
  * INTERNAL: Source that locates LTM topic map files in a directory on
  * the file system.
  * @since 1.1
  */
-public class LTMPathTopicMapSource extends AbstractPathTopicMapSource {
+public class LTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
 
   public LTMPathTopicMapSource() {
   }
@@ -34,11 +38,18 @@ public class LTMPathTopicMapSource extends AbstractPathTopicMapSource {
     super(path, filter);
   }
 
-  protected TopicMapReferenceIF createReference(URL url, String id, String title,
-                                                LocatorIF base) {
+  public TopicMapReferenceIF createReference(URL url, String id, String title,
+                                             LocatorIF base) {
     LTMTopicMapReference ref = new LTMTopicMapReference(url, id, title, base);
     ref.setDuplicateSuppression(duplicate_suppression);
     ref.setSource(this);
+    ref.setMaintainFulltextIndexes(maintainFulltextIndexes);
+    ref.setIndexDirectory(indexDirectory);
+    ref.setAlwaysReindexOnLoad(alwaysReindexOnLoad);
     return ref;
+  }
+
+  public TopicMapWriterIF getWriter(File file) throws IOException {
+    return new LTMTopicMapWriter(new FileOutputStream(file));
   }
 }
