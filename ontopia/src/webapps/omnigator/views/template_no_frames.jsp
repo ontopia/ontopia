@@ -2,8 +2,10 @@
 <%@ page language="java" import="net.ontopia.topicmaps.nav2.core.*,
                                  net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag,
                                  net.ontopia.topicmaps.nav2.plugins.PluginIF,
+                                 net.ontopia.topicmaps.nav2.utils.NavigatorUtils,
                                  net.ontopia.topicmaps.nav2.utils.FrameworkUtils,
                                  net.ontopia.topicmaps.core.TopicMapIF,
+                                 net.ontopia.topicmaps.entry.*,
                                  java.io.File,
                                  javax.servlet.ServletContext" %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template' prefix='template'   %>
@@ -77,6 +79,14 @@
                      boolean exists = false;
                      ServletContext ctxt = pageContext.getServletContext();
                      String path = ctxt.getRealPath("/") + "WEB-INF/indexes/" + tm;
+
+TopicMapRepositoryIF rep = NavigatorUtils.getTopicMapRepository(pageContext);
+TopicMapReferenceIF ref = rep.getReferenceByKey(tm);
+if (ref instanceof AbstractOntopolyURLReference) {
+  AbstractOntopolyURLReference oref = (AbstractOntopolyURLReference) ref;
+  path = oref.getIndexDirectory() + File.separator + tm;
+}
+                      
                      if (context != null) {
                        TopicMapIF topicmap = context.getTopicMap();
                        if (topicmap != null && topicmap.getStore().getProperty("net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type") != null) {

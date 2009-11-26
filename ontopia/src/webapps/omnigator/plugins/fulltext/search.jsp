@@ -5,8 +5,10 @@
     net.ontopia.utils.*,
     net.ontopia.topicmaps.core.*,
     net.ontopia.topicmaps.utils.*,
+    net.ontopia.topicmaps.entry.*,
     net.ontopia.topicmaps.nav2.core.*,
     net.ontopia.topicmaps.nav2.utils.ContextUtils,
+    net.ontopia.topicmaps.nav2.utils.NavigatorUtils,
     net.ontopia.infoset.fulltext.core.*,
     net.ontopia.topicmaps.nav2.plugins.PluginIF,
     net.ontopia.infoset.fulltext.impl.lucene.*"
@@ -42,7 +44,14 @@
        query = net.ontopia.utils.StringUtils.transcodeUTF8(query);
      }
      String tmid = request.getParameter("tm");
-     String path = "WEB-INF/indexes/" + tmid;
+     String fullpath = application.getRealPath("/") + "WEB-INF/indexes/" + tmid;
+
+     TopicMapRepositoryIF rep = NavigatorUtils.getTopicMapRepository(pageContext);
+     TopicMapReferenceIF ref = rep.getReferenceByKey(tmid);
+     if (ref instanceof AbstractOntopolyURLReference) {
+       AbstractOntopolyURLReference oref = (AbstractOntopolyURLReference) ref;
+       fullpath = oref.getIndexDirectory() + File.separator + tmid;
+     }
 
      TopicMapIF topicmap = (TopicMapIF)ContextUtils.getSingleValue("topicmap", pageContext);
      StringifierIF topic_stringifier = TopicStringifiers.getTopicNameStringifier(Collections.EMPTY_SET);
@@ -106,10 +115,9 @@ ranked by relevance.</p>
 
   <template:put name="content" body="true">
   <%
-    String fullpath = application.getRealPath("/") + path;
     if (fullpath == null) {
   %>
-      The fulltext index file '<%= path %>' is not accessible.
+      The fulltext index file '<%= fullpath %>' is not accessible.
   <%
     } else if (!query.equals("")) {
       SearcherIF sengine;
