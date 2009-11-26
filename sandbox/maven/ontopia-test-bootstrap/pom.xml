@@ -2,19 +2,22 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.ontopia</groupId>
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia</groupId>
+		<version>5.1.0-b1</version>
+	</parent>
+
 	<artifactId>ontopia-test-bootstrap</artifactId>
 	<packaging>jar</packaging>
-	<version>5.1.0-b1</version>
 	<name>Ontopia test bootstrap</name>
 	<description>Ontopia test bootstrap classes.</description>
-	<url>http://todo</url>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.ontopia</groupId>
 			<artifactId>ontopia-core</artifactId>
-			<version>5.1.0-b1</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

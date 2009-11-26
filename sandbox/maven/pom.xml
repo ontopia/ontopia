@@ -3,12 +3,19 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.ontopia</groupId>
-	<artifactId>ontopia-engine-maven</artifactId>
+	<artifactId>ontopia-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>5.1.0-b1</version>
 	<name>Ontopia</name>
-	<description>Ontopia.</description>
-	<url>http://todo</url>
+	<description>Ontopia: Complete Topic Maps solution</description>
+	<url>http://code.google.com/p/ontopia/</url>
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/ontopia/issues/list</url>
+	</issueManagement>
+	<scm>
+		<url>http://ontopia.googlecode.com/svn/trunk/</url>
+	</scm>
 
 	<modules>
 		<module>ontopia-core</module>

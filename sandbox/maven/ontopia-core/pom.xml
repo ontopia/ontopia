@@ -2,13 +2,16 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.ontopia</groupId>
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia</groupId>
+		<version>5.1.0-b1</version>
+	</parent>
+
 	<artifactId>ontopia-core</artifactId>
 	<packaging>jar</packaging>
-	<version>5.1.0-b1</version>
 	<name>Ontopia Core</name>
 	<description>Ontopia Core.</description>
-	<url>http://todo</url>
 
 	<dependencies>
 		<!--

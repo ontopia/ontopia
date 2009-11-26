@@ -2,24 +2,27 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>net.ontopia</groupId>
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia</groupId>
+		<version>5.1.0-b1</version>
+	</parent>
+
 	<artifactId>ontopia-navigator</artifactId>
 	<packaging>jar</packaging>
-	<version>5.1.0-b1</version>
 	<name>Ontopia Navigator</name>
 	<description>Ontopia Navigator.</description>
-	<url>http://todo</url>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.ontopia</groupId>
 			<artifactId>ontopia-core</artifactId>
-			<version>5.1.0-b1</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.ontopia</groupId>
 			<artifactId>ontopia-test-bootstrap</artifactId>
-			<version>5.1.0-b1</version>
+			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!--dependency>
