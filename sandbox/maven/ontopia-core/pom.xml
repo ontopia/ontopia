@@ -475,10 +475,10 @@
 								</java>
 
 								<echo>Compiling TMAPI code...</echo>
-								<mkdir dir="${build.classes}/META-INF/services" />
+								<mkdir dir="${build.root}/META-INF/services" />
 								<copy
 									file="${java.path}/net/ontopia/topicmaps/impl/tmapi2/tmsf.service"
-									tofile="${build.classes}/META-INF/services/org.tmapi.core.TopicMapSystemFactory" />
+									tofile="${build.root}/META-INF/services/org.tmapi.core.TopicMapSystemFactory" />
 							</tasks>
 						</configuration>
 						<goals>
