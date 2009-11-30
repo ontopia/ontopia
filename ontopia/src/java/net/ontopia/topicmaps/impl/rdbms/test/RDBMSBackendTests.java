@@ -6,6 +6,7 @@ package net.ontopia.topicmaps.impl.rdbms.test;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Arrays;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -645,6 +646,198 @@ public class RDBMSBackendTests extends AbstractTopicMapTestCase {
       store3 = new RDBMSTopicMapStore(tmid);
     } finally {
       if (store3 != null) store3.delete(true);
+    }
+
+  }
+
+  public void testIssue159a() throws Exception {
+    // make long string
+    char[] chars = new char[65536];
+    Arrays.fill(chars, 'a');
+    String largeValue = new String(chars);
+
+    // initialize storage
+    RDBMSTopicMapStore store1 = null;
+    long tmid;
+    String otypeid;
+    String occid;
+    try {
+      // create topic map with one topic and one occurrence
+      store1 = new RDBMSTopicMapStore();
+      TopicMapIF tm1 = store1.getTopicMap();
+      TopicIF topic = tm1.getBuilder().makeTopic();
+      TopicIF otype = tm1.getBuilder().makeTopic();
+      OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, largeValue);
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+
+      // look up arbitrary object to force flushing
+      tm1.getObjectByItemIdentifier(new URILocator("test:1"));
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+
+      TopicIF otype2 = tm1.getBuilder().makeTopic();
+      occurrence.setType(otype2);
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+
+      tmid = store1.getLongId();
+      otypeid = otype2.getObjectId();
+      occid = occurrence.getObjectId();
+      store1.commit();
+    } finally {
+      if (store1 != null) store1.close();
+    }
+
+    RDBMSTopicMapStore store2 = null;
+    try {
+      // create a second topic map with one topic
+      store2 = new RDBMSTopicMapStore(tmid);
+      store2.setReadOnly(true);
+      TopicMapIF tm2 = store2.getTopicMap();
+      TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
+      OccurrenceIF occurrence = (OccurrenceIF)tm2.getObjectById(occid);
+      occurrence.getType();
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+
+    } finally {
+      if (store2 != null) store2.close();
+    }
+
+  }
+
+  public void testIssue159b() throws Exception {
+    // make long string
+    char[] chars = new char[65536];
+    Arrays.fill(chars, 'a');
+    String largeValue = new String(chars);
+
+    // initialize storage
+    RDBMSTopicMapStore store1 = null;
+    long tmid;
+    String topicid;
+    String otypeid;
+    String occid;
+    try {
+      // create topic map with one topic and one occurrence
+      store1 = new RDBMSTopicMapStore();
+      TopicMapIF tm1 = store1.getTopicMap();
+      TopicIF topic = tm1.getBuilder().makeTopic();
+      TopicIF otype = tm1.getBuilder().makeTopic();
+      OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, largeValue);
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+
+      // look up arbitrary object to force flushing
+      tm1.getObjectByItemIdentifier(new URILocator("test:1"));
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+
+      TopicIF otype2 = tm1.getBuilder().makeTopic();
+      occurrence.setType(otype2);
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+
+      tmid = store1.getLongId();
+      topicid = topic.getObjectId();
+      otypeid = otype2.getObjectId();
+      occid = occurrence.getObjectId();
+      store1.commit();
+    } finally {
+      if (store1 != null) store1.close();
+    }
+
+    RDBMSTopicMapStore store2 = null;
+    try {
+      // create a second topic map with one topic
+      store2 = new RDBMSTopicMapStore(tmid);
+      store2.setReadOnly(true);
+      TopicMapIF tm2 = store2.getTopicMap();
+      TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
+      TopicIF topic = (TopicIF)tm2.getObjectById(topicid);
+      OccurrenceIF occurrence = (OccurrenceIF)topic.getOccurrences().iterator().next();
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+
+    } finally {
+      if (store2 != null) store2.close();
+    }
+
+  }
+
+  public void testIssue159c() throws Exception {
+    // make long string
+    char[] chars = new char[65536];
+    Arrays.fill(chars, 'a');
+    String smallValue = "abc";
+    String largeValue = new String(chars);
+
+    // initialize storage
+    RDBMSTopicMapStore store1 = null;
+    long tmid;
+    String topicid;
+    String otypeid;
+    String occid;
+    try {
+      // create topic map with one topic and one occurrence
+      store1 = new RDBMSTopicMapStore();
+      TopicMapIF tm1 = store1.getTopicMap();
+      TopicIF topic = tm1.getBuilder().makeTopic();
+      TopicIF otype = tm1.getBuilder().makeTopic();
+      OccurrenceIF occurrence = tm1.getBuilder().makeOccurrence(topic, otype, smallValue);
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), smallValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+
+      // look up arbitrary object to force flushing
+      tm1.getObjectByItemIdentifier(new URILocator("test:1"));
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), smallValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype));
+
+      TopicIF otype2 = tm1.getBuilder().makeTopic();
+      occurrence.setType(otype2);
+      occurrence.setValue(largeValue);
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+
+      // look up arbitrary object to force flushing
+      tm1.getObjectByItemIdentifier(new URILocator("test:2"));
+
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+
+      tmid = store1.getLongId();
+      topicid = topic.getObjectId();
+      otypeid = otype2.getObjectId();
+      occid = occurrence.getObjectId();
+      store1.commit();
+    } finally {
+      if (store1 != null) store1.close();
+    }
+
+    RDBMSTopicMapStore store2 = null;
+    try {
+      // create a second topic map with one topic
+      store2 = new RDBMSTopicMapStore(tmid);
+      store2.setReadOnly(true);
+      TopicMapIF tm2 = store2.getTopicMap();
+      TopicIF otype2 = (TopicIF)tm2.getObjectById(otypeid);
+      TopicIF topic = (TopicIF)tm2.getObjectById(topicid);
+      OccurrenceIF occurrence = (OccurrenceIF)topic.getOccurrences().iterator().next();
+      assertTrue("Wrong occurrence value", ObjectUtils.equals(occurrence.getValue(), largeValue));
+      assertTrue("Wrong occurrence type", ObjectUtils.equals(occurrence.getType(), otype2));
+
+    } finally {
+      if (store2 != null) store2.close();
     }
 
   }

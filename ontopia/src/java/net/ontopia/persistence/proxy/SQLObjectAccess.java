@@ -158,6 +158,12 @@ public class SQLObjectAccess implements ClassAccessIF {
           FieldInfoIF finfo = o2o_fields[i];
           // Load field value
           Object value = finfo.load(registrar, ticket, rs, rsindex, false);
+
+          if (value instanceof OnDemandValue) {
+            OnDemandValue odv = (OnDemandValue)value;
+            odv.setContext(identity, finfo);
+          }
+
           // Update cache
           registrar.registerField(ticket, identity, finfo.getIndex(), value);
           // Increment column index
