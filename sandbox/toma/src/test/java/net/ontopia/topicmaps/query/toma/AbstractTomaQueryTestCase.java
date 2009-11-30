@@ -199,7 +199,6 @@ public abstract class AbstractTomaQueryTestCase extends AbstractTopicMapTestCase
                matches.isEmpty());
   }
 
-  @SuppressWarnings("deprecation")
   protected void verifyQueryExists(List matches, String query)
     throws InvalidQueryException {
 

@@ -26,16 +26,6 @@ public class AggregateFunctionTest extends AbstractTomaQueryTestCase {
 
   /// checking query structure
 
-//  public void testInvalidAggregateQuery() throws InvalidQueryException,
-//      IOException {
-//    load("full.ltm");
-//
-//    try {
-//      parse("select $T, count($T) where exists $T;");
-//      fail("accepted invalid query");
-//    } catch (InvalidQueryException e) {}
-//  }
-  
   public void testCount() throws InvalidQueryException, IOException {
     load("full.ltm");
 
@@ -85,6 +75,18 @@ public class AggregateFunctionTest extends AbstractTomaQueryTestCase {
         "select avg($t.oc(pages)) where $t.type = standard and exists $t.oc(pages);");
   }
 
+  public void testGroupedAggregation() throws InvalidQueryException,
+      IOException {
+    load("full.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "$P", getTopicById("ontopia"), "COUNT($C)", new Integer(2));
+    addMatch(matches, "$P", getTopicById("tinytim"), "COUNT($C)", new Integer(1));
+    
+    verifyQuery(matches,
+        "select $P, count($c) where $p.(project)<-(contributes-to)->(person) = $c;");
+  }
+  
   public void testCombinedAggregate() throws InvalidQueryException, IOException {
     load("full.ltm");
 
