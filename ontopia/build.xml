@@ -118,7 +118,7 @@
     <property name="init.done" value="true" />
 
     <!-- svn-revision to the external xtm2 test suite -->
-    <property name="xtm2.revision" value="18" />
+    <property name="xtm2.revision" value="32" />
     <!-- svn-revision to the external tm/xml test suite -->
     <property name="tmxml.revision" value="28" />
   </target>
