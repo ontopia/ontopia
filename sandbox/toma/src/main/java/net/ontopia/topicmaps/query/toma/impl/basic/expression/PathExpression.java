@@ -28,7 +28,6 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.AssocPath;
-import net.ontopia.topicmaps.query.toma.impl.utils.QueryTracer;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathExpression;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 
@@ -39,14 +38,14 @@ public class PathExpression extends AbstractPathExpression implements
     BasicExpressionIF {
 
   public ResultSet evaluate(LocalContext context) throws InvalidQueryException {
-    QueryTracer.enter(this);
+    //QueryTracer.enter(this);
     initResultSets(context);
     ResultSet rs = createNewResultSet(context);
     if (!isEmpty()) {
       Row row = rs.createRow();
       evaluateElement(context, PathElementIF.TYPE.NONE, rs, row, 0, 0);
     }
-    QueryTracer.leave(rs);
+    //QueryTracer.leave(rs);
     return rs;
   }
   

@@ -23,7 +23,7 @@ import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 
 /**
- * INTERNAL: trims characters from a string.
+ * INTERNAL: Trims characters from a string.
  */
 public class TrimFunction extends AbstractSimpleFunction {
   

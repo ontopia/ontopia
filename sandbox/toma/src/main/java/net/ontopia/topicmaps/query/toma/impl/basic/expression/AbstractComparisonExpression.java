@@ -60,7 +60,6 @@ public abstract class AbstractComparisonExpression extends
     
     // TODO: improve code if the resultsets share at least one column
     ResultSet rs = new ResultSet(rs1, rs2);
-
     for (Row row1 : rs1) {
       Object o1 = row1.getLastValue();
       String str1 = Stringifier.toCompare(o1);
@@ -70,7 +69,8 @@ public abstract class AbstractComparisonExpression extends
         Object o2 = row2.getLastValue();
         String str2 = Stringifier.toCompare(o2);
         if (satisfiesExpression(str1, str2)) {
-          Row row3 = rs.mergeRow(row1, row2);
+          Row row3 = rs.createRow();
+          row3.fill(row1, row2);
           rs.addRow(row3);
         }
       }
@@ -108,11 +108,9 @@ public abstract class AbstractComparisonExpression extends
   /**
    * Checks whether the two string satisfy the expression.
    * 
-   * @param s1
-   *          the first string
-   * @param s2
-   *          the second string
-   * @return true if the expression is satisfied, false otherwise.
+   * @param s1 the first string.
+   * @param s2 the second string.
+   * @return true if the expression is satisfied; false otherwise.
    */
   protected abstract boolean satisfiesExpression(String s1, String s2);
 }

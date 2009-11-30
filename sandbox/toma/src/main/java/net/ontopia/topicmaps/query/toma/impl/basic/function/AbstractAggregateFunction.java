@@ -26,7 +26,7 @@ import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractFunction;
 
 /**
- * INTERNAL: Abstract base class for normal functions used for the
+ * INTERNAL: Abstract base class for aggregated functions used by the
  * {@link BasicQueryProcessor}.
  */
 public abstract class AbstractAggregateFunction extends AbstractFunction

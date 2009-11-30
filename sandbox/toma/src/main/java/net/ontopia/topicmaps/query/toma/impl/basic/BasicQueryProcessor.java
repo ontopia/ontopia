@@ -20,7 +20,6 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +33,7 @@ import net.ontopia.topicmaps.query.core.ParsedModificationStatementIF;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.toma.impl.basic.function.AbstractAggregateFunction;
 import net.ontopia.topicmaps.query.toma.impl.utils.QueryTracer;
 import net.ontopia.topicmaps.query.toma.parser.LocalParseContext;
 import net.ontopia.topicmaps.query.toma.parser.TomaParser;
@@ -52,6 +52,11 @@ public class BasicQueryProcessor implements QueryProcessorIF {
 
   private TopicMapIF topicmap;
 
+  /**
+   * Create a new query processor, that operates on the specified topic map.
+   * 
+   * @param topicmap the topic map to be used by this query processor.
+   */
   public BasicQueryProcessor(TopicMapIF topicmap) {
     this.topicmap = topicmap;
   }
@@ -59,7 +64,6 @@ public class BasicQueryProcessor implements QueryProcessorIF {
   public int update(String query) throws InvalidQueryException {
     throw new InvalidQueryException("Not implemented yet.");
   }
-
   
   public int update(String query, Map<String, ?> arguments,
       DeclarationContextIF context) throws InvalidQueryException {
@@ -88,7 +92,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
   }
 
   /**
-   * Executes the parsed TOMA query and returns a QueryResultIF object.
+   * Executes the parsed TOMA query and returns a {@link QueryResultIF} object.
    *
    * @param query the parsed TOMA query.
    * @return the result of the query.
@@ -123,13 +127,21 @@ public class BasicQueryProcessor implements QueryProcessorIF {
       }
     }
 
-    List<Row> rows = convertToList(rs);
+    List<Row> rows = rs.getList();
     sort(rows, query.getOrderBy());
     QueryTracer.endQuery();
     return new QueryResult(rs.getColumnDefinitions(), rows, query.getLimit(),
         query.getOffset());
   }
 
+  /**
+   * Returns a {@link ResultSet} containing all the matches of a single select
+   * statement.
+   * 
+   * @param stmt the select statement to evaluate.
+   * @return a {@link ResultSet} containing all matches.
+   * @throws InvalidQueryException if the statement could not be evaluated.
+   */
   private ResultSet satisfy(SelectStatement stmt) throws InvalidQueryException {
     BasicExpressionIF expr = (BasicExpressionIF) stmt.getClause();
     LocalContext context = new LocalContext(topicmap);
@@ -141,7 +153,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
       rs.setColumnName(i, selectPath.toString());
     }
 
-    // evaluate WHERE expression
+    // evaluate the WHERE expression tree
     expr.evaluate(context);
 
     Row r = rs.createRow();
@@ -174,7 +186,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
         newRow.setValue(index, val);
 
         // update the context with the current variable binding
-        localResult.clear();
+        localResult.removeAllRows();
         localResult.addRow(r);
 
         // if we are not at the end -> recursion
@@ -185,15 +197,24 @@ public class BasicQueryProcessor implements QueryProcessorIF {
         }
       }
     } catch (CloneNotSupportedException e) {
-      throw new InvalidQueryException("Internal QueryProcessor error", e);
+      throw new InvalidQueryException("Internal QueryProcessor error:\n", e);
     }
   }
 
+  /**
+   * Returns a {@link ResultSet} that has been aggregated according to the given
+   * {@link SelectStatement}.
+   * 
+   * @param stmt the {@link SelectStatement} containing the aggregation rules.
+   * @param rs the {@link ResultSet} containing the matches.
+   * @return an aggregated {@link ResultSet}.
+   * @throws InvalidQueryException if the {@link ResultSet} could not be aggregated.
+   */
   private ResultSet aggregate(SelectStatement stmt, ResultSet rs)
       throws InvalidQueryException {
-
-    // if the select is aggregated, evaluate the aggregate functions now;
-    // otherwise just return the ResultSet.
+    // if the select is aggregated (i.e. contains at least one aggregation
+    // function), evaluate the aggregate functions now; otherwise just return
+    // the ResultSet.
     if (stmt.isAggregated()) {
       // in case all select expressions are aggregated we can simply
       // evaluate the columns separately
@@ -201,7 +222,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
         ResultSet result = new ResultSet(rs);
         Row aggregatedRow = result.createRow();
         for (int i = 0; i < stmt.getSelectCount(); i++) {
-          // we know, that it has to be a FunctionIF
+          // we know, that it has to be a BasicFunctionIF
           BasicFunctionIF expr = (BasicFunctionIF) stmt.getSelect(i);
           aggregatedRow.setValue(i, expr.aggregate(rs.getValues(i)));
         }
@@ -210,40 +231,45 @@ public class BasicQueryProcessor implements QueryProcessorIF {
       } else {
         int selectCount = stmt.getSelectCount();
         int aggregateCount = stmt.getAggregatedSelectCount();
-        int groupIdx[] = new int[selectCount - aggregateCount];
         
+        // collect all columns that are used for grouping (i.e. not contain an
+        // aggregation function)
+        int groupIdx[] = new int[selectCount - aggregateCount];
         for (int i = 0, j = 0; i < stmt.getSelectCount(); i++) {
-          if (!(stmt.getSelect(i) instanceof BasicFunctionIF)) {
+          if (!(stmt.getSelect(i) instanceof AbstractAggregateFunction)) {
             groupIdx[j++] = i;
           }
         }
         
-        ResultSet groupingRS = new ResultSet(selectCount - aggregateCount, false);
+        ResultSet groupRS = new ResultSet(selectCount - aggregateCount, false);
         HashMap<Row, ResultSet> groupingMap = new HashMap<Row, ResultSet>(); 
         
         // group together all rows based on non-aggregated columns
         for (Row r : rs) {
-          Row gRow = groupingRS.createRow();
+          Row groupRow = groupRS.createRow();
+          
           int j = 0;
           for (int idx : groupIdx) {
-            gRow.setValue(j++, r.getValue(idx));
+            groupRow.setValue(j++, r.getValue(idx));
           }
           
-          ResultSet tmpRS = groupingMap.get(gRow);
+          ResultSet tmpRS = groupingMap.get(groupRow);
           if (tmpRS == null) {
             tmpRS = new ResultSet(rs);
-            groupingMap.put(gRow, tmpRS);
+            groupingMap.put(groupRow, tmpRS);
           }
           
           tmpRS.addRow(r);
         }
-        
+
+        // finally, collect all the group ResultSet's, evaluate the
+        // AggregateFunction's on them and store the result in the final ResultSet.
         ResultSet result = new ResultSet(rs);
         for (ResultSet tmpRS : groupingMap.values()) {
           Row tmpRow = tmpRS.iterator().next();
           Row aggregatedRow = result.createRow();
           for (int i = 0; i < stmt.getSelectCount(); i++) {
-            if (stmt.getSelect(i) instanceof BasicFunctionIF) {
+            if (stmt.getSelect(i) instanceof AbstractAggregateFunction) {
               BasicFunctionIF expr = (BasicFunctionIF) stmt.getSelect(i);
               aggregatedRow.setValue(i, expr.aggregate(tmpRS.getValues(i)));
             } else {
@@ -259,14 +285,12 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     }
   }
 
-  private List<Row> convertToList(ResultSet rs) {
-    List<Row> l = new ArrayList<Row>(rs.getRowCount());
-    for (Row r : rs) {
-      l.add(r);
-    }
-    return l;
-  }
-
+  /**
+   * Sort the matches according to the "order-by" definitions.
+   * 
+   * @param matches the query matches.
+   * @param orderings the order-by definitions of the query.
+   */
   private void sort(List<Row> matches, List<QueryOrder> orderings) {
     QueryTracer.enterOrderBy();
     if (!orderings.isEmpty())
@@ -279,14 +303,14 @@ public class BasicQueryProcessor implements QueryProcessorIF {
   }
 
   /**
-   * Not supported.
+   * Not supported, throws an {@link InvalidQueryException} if called.
    */
   public void load(Reader ruleset) throws InvalidQueryException, IOException {
     throw new InvalidQueryException("Not supported by this QueryProcessor");
   }
 
   /**
-   * Not supported.
+   * Not supported, throws an {@link InvalidQueryException} if called.
    */
   public void load(String ruleset) throws InvalidQueryException {
     throw new InvalidQueryException("Not supported by this QueryProcessor");
@@ -314,17 +338,26 @@ public class BasicQueryProcessor implements QueryProcessorIF {
   public ParsedQueryIF parse(String query) throws InvalidQueryException {
     return parse(query, null);
   }
-  
+
+  /**
+   * Not supported, throws an {@link InvalidQueryException} if called.
+   */
   public ParsedModificationStatementIF parseUpdate(String statement,
       DeclarationContextIF context) throws InvalidQueryException {
     throw new InvalidQueryException("Not supported by this QueryProcessor");
   }
 
+  /**
+   * Not supported, throws an {@link InvalidQueryException} if called.
+   */
   public ParsedModificationStatementIF parseUpdate(String statement)
       throws InvalidQueryException {
     throw new InvalidQueryException("Not supported by this QueryProcessor");
   }
 
+  /**
+   * Not supported, throws an {@link InvalidQueryException} if called.
+   */
   public int update(String query, DeclarationContextIF context)
       throws InvalidQueryException {
     throw new InvalidQueryException("Not supported by this QueryProcessor");

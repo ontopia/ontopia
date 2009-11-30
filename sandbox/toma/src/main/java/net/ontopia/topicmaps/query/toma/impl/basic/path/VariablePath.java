@@ -24,13 +24,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractVariable;
 import net.ontopia.topicmaps.query.toma.parser.ast.VariableDecl;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Represents a variable within a TOMA query.
@@ -106,19 +110,20 @@ public class VariablePath extends AbstractVariable implements
     return inputSet;
   }
 
-  public Collection<?> evaluate(LocalContext context, Object input) {
+  @SuppressWarnings("unchecked")
+  public Collection<?> evaluate(LocalContext context, Object input)
+      throws InvalidQueryException {
     // try to get a ResultSet that already bound the variable
     ResultSet rs = context.getResultSet(toString());
 
-    // TODO: Variables can be of any type, not just topics
-
+    String varName = toString();
     if (rs != null) {
       if (getResultSize() > 1) {
         List<String> vars = rs.getBoundVariables();
-        // FIXME: this is a hack to move the current bound variable to the end
-        // of the list.
-        vars.remove(toString());
-        vars.add(toString());
+        // move current var to the end of the list
+        vars.remove(varName);
+        vars.add(varName);
+        
         int[] indices = new int[vars.size()];
         int idx = 0;
         for (String var : vars) {
@@ -136,7 +141,7 @@ public class VariablePath extends AbstractVariable implements
         }
         return result;
       } else {
-        return rs.getValues(toString());
+        return rs.getValues(varName);
       }
     } else {
       TopicMapIF topicmap = context.getTopicMap();
@@ -145,10 +150,40 @@ public class VariablePath extends AbstractVariable implements
       case ASSOCIATION:
         return topicmap.getAssociations();
         
-      default:
-        // TODO: fix for other types
+      case TOPIC:
         return topicmap.getTopics();
+        
+      case NAME:
+      {
+        Collection names = new CompactHashSet();
+        for (Object topic : topicmap.getTopics()) {
+          names.addAll(((TopicIF) topic).getTopicNames());
+        }
+        return names;
+      }
+
+      case OCCURRENCE:
+      {
+        Collection ocs = new CompactHashSet();
+        for (Object topic : topicmap.getTopics()) {
+          ocs.addAll(((TopicIF) topic).getOccurrences());
+        }
+        return ocs;
+      }
+      
+      case VARIANT:
+      {
+        Collection vars = new CompactHashSet();
+        for (Object topic : topicmap.getTopics()) {
+          for (Object name : ((TopicIF) topic).getTopicNames()) {
+            vars.addAll(((TopicNameIF) name).getVariants());
+          }
+        }
+        return vars;
+      }
           
+      default:
+        throw new InvalidQueryException("Variable type '" + output() + "' not yet supported.");
       }
     }
   }

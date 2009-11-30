@@ -21,14 +21,15 @@ package net.ontopia.topicmaps.query.toma.impl.utils;
 import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 
 /**
- * PUBLIC: Interface for a QueryOptimizer. Used to optimize a query.
+ * PUBLIC: Interface for a query optimizer of TOMA queries.
  */
 public interface QueryOptimizerIF {
   /**
    * Optimize an expression.
    * 
    * @param expr the expression to be optimized.
-   * @return an optimized expression.
+   * @return an optimized version of the expression, or the expression itself,
+   *         if no optimization was possible/known.
    */
   public ExpressionIF optimize(ExpressionIF expr);
 }

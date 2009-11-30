@@ -43,8 +43,8 @@ public class SumFunction extends AbstractAggregateFunction {
           sum += Double.parseDouble(ToNumFunction.convertToNumber(val));
         }
       } catch (NumberFormatException e) {
-        // TODO: check design decision
-        // If the conversion fails, ignore it 
+        throw new InvalidQueryException("A value as input to the '" + getName()
+            + "' function could not be converted to a number.");
       }
     }
    

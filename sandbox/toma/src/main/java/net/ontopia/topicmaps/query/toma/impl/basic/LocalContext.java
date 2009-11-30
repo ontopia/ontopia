@@ -24,7 +24,9 @@ import java.util.List;
 import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
- * INTERNAL: The current context when evaluating a query.
+ * INTERNAL: The current context when evaluating a query. This class contains a
+ * reference map, which maps variables to {@link ResultSet}'s that bound this
+ * variable.
  */
 public class LocalContext implements Cloneable {
 
@@ -36,10 +38,22 @@ public class LocalContext implements Cloneable {
     this.resultsets = new HashMap<String, ResultSet>();
   }
 
+  /**
+   * Returns the {@link TopicMapIF} that is used in this query.
+   * 
+   * @return the topic map of the query.
+   */
   public TopicMapIF getTopicMap() {
     return topicmap;
   }
 
+  /**
+   * Adds a new {@link ResultSet} to this {@link LocalContext}.
+   * All bound variables of the {@link ResultSet} will be extracted,
+   * and their reference will be updated.
+   * 
+   * @param resultset the {@link ResultSet} to be added.
+   */
   public void addResultSet(ResultSet resultset) {
     List<String> variables = resultset.getBoundVariables();
     for (String var : variables) {
@@ -47,6 +61,14 @@ public class LocalContext implements Cloneable {
     }
   }
 
+  /**
+   * Returns the {@link ResultSet} that contains the specified variable; if
+   * there is no {@link ResultSet} that is bound by this variable, null will be
+   * returned.
+   * 
+   * @param boundVariable the variable to look for.
+   * @return the {@link ResultSet} containing this variable, or null.
+   */
   public ResultSet getResultSet(String boundVariable) {
     return resultsets.get(boundVariable.toUpperCase());
   }

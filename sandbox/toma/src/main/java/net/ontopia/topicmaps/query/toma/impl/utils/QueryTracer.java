@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * INTERNAL: Used for testing and timing of queries.
+ * PUBLIC: Query tracer for TOMA queries.
  */
 public class QueryTracer {
   // --- initialize logging facility.

@@ -123,6 +123,7 @@ public class Stringifier {
    * @param o the object to be converted.
    * @return a string representation of the object
    */
+  @SuppressWarnings("unchecked")
   public static Comparable toSort(Object o) {
     if (o == null)
       return null;

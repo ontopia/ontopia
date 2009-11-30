@@ -26,7 +26,8 @@ import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder.SORT_ORDER;
 
 /**
- * INTERNAL: Comparator for rows based on the order by definitions.
+ * INTERNAL: Comparator for {@link Row} objects based on the "order-by"
+ * definition of the TOMA query.
  */
 public class RowComparator implements Comparator<Row> {
 
@@ -37,6 +38,7 @@ public class RowComparator implements Comparator<Row> {
   }
   
   // FIXME: needs to be revised.
+  @SuppressWarnings("unchecked")
   public int compare(Row row1, Row row2) {
     // if we have no ordering defined, 
     if (ordering.isEmpty()) {

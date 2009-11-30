@@ -40,7 +40,8 @@ import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder.SORT_ORDER;
 
 /**
- * PUBLIC: implementation of the {@link ParsedQueryIF} interface for TOMA.
+ * PUBLIC: implementation of the {@link ParsedQueryIF} interface for a TOMA
+ * query processor.
  */
 public class ParsedQuery implements ParsedQueryIF {
 

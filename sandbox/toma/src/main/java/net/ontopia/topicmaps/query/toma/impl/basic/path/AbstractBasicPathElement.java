@@ -20,14 +20,15 @@ package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
 import java.util.Collection;
 
-import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathElement;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathExpressionIF;
 
+/**
+ * INTERNAL: Abstract base class for elements in a path expression.
+ */
 public abstract class AbstractBasicPathElement extends AbstractPathElement
     implements BasicPathElementIF {
   
@@ -83,14 +84,29 @@ public abstract class AbstractBasicPathElement extends AbstractPathElement
     return resultSize;
   }
   
+  /**
+   * Indicates whether the scope should be assigned to a variable.
+   * 
+   * @return true if the scope should be assigned; false otherwise.
+   */
   protected boolean isAssignScope() {
     return assignScope;
   }
-  
+
+  /**
+   * Indicates whether the type should be assigned to a variable.
+   * 
+   * @return true if the type should be assigned; false otherwise.
+   */
   protected boolean isAssignType() {
     return assignType;
   }
   
+  /**
+   * Returns the size of the resulting array.
+   * 
+   * @return the size of the result array.
+   */
   protected int getResultArraySize() {
     int size = 1;
     if (getBoundInputVariable() != null) {
@@ -104,7 +120,16 @@ public abstract class AbstractBasicPathElement extends AbstractPathElement
     }
     return size;
   }
-  
+
+  /**
+   * Indicates if the given path expression consists of a sole unbound (i.e.
+   * currently not bound in the current context) variable.
+   * 
+   * @param expr the path expression.
+   * @param context the current evaluation context.
+   * @return true if the path expression is a sole unbound variable; false
+   *         otherwise.
+   */
   protected boolean containsSoleUnboundVariable(PathExpressionIF expr,
       LocalContext context) {
     if (expr != null) {
@@ -119,6 +144,13 @@ public abstract class AbstractBasicPathElement extends AbstractPathElement
     return false;
   }
 
+  /**
+   * Returns the name of the variable that is part of this path expression.
+   * 
+   * @param expr the expression.
+   * @return the name of the variable within the expression, or null, if no
+   *         variable is present.
+   */
   protected String getVariableName(PathExpressionIF expr) {
     if (expr != null) {
       PathExpression e = (PathExpression) expr;

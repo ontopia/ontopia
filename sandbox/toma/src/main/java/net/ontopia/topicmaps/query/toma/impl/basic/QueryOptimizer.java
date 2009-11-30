@@ -43,6 +43,9 @@ import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.VariableDecl;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic.IDTYPE;
 
+/**
+ * INTERNAL: Query Optimizer for TOMA queries. 
+ */
 public class QueryOptimizer implements QueryOptimizerIF {
 
   private List<QueryOptimizerIF> optimizers;

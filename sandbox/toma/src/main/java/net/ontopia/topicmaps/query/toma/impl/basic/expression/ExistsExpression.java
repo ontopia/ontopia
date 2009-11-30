@@ -42,7 +42,6 @@ public class ExistsExpression extends AbstractUnaryExpression {
     ResultSet rs = child.evaluate(context);
 
     ResultSet result = new ResultSet(rs);
-
     for (Object r : rs) {
       Row row = (Row) r;
       Object val = row.getLastValue();

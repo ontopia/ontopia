@@ -21,17 +21,22 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+
+import net.ontopia.utils.CompactHashSet;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
 
 /**
- * INTERNAL: This is a simple implementation of a table.
+ * INTERNAL: This is a very simple implementation of a table, which is used to
+ * represent matching result for TOMA queries.
+ * <p>
+ * The underlying data-structure is a {@link Bag}, which allows transparent
+ * access to unique/duplicate rows.
+ * </p>
  */
 public class ResultSet implements Iterable<Row> {
 
@@ -39,10 +44,20 @@ public class ResultSet implements Iterable<Row> {
   private Bag rows;
   private boolean unique;
 
+  /**
+   * Create an empty {@link ResultSet}, i.e. with zero columns.
+   */
   public ResultSet() {
     this(0, false);
   }
 
+  /**
+   * Create a new {@link ResultSet} with the given number of columns.
+   * 
+   * @param cols the number of columns.
+   * @param unique indicates whether this {@link ResultSet} should only contain
+   *          unique rows, or allows duplicates.
+   */
   public ResultSet(int cols, boolean unique) {
     columns = new Vector<String>(cols);
     columns.setSize(cols);
@@ -51,10 +66,11 @@ public class ResultSet implements Iterable<Row> {
   }
 
   /**
-   * Create a new ResultSet based on the definition from one or more other
-   * ResultSets.
+   * Create a new {@link ResultSet} that is based on the column definition from
+   * one or more other {@link ResultSet}'s. The new {@link ResultSet} may
+   * contain duplicate rows.
    * 
-   * @param others
+   * @param others the {@link ResultSet}'s
    */
   public ResultSet(ResultSet... others) {
     int cols = 0;
@@ -71,123 +87,26 @@ public class ResultSet implements Iterable<Row> {
       }
     }
 
-    rows = new HashBag();
+    this.rows = new HashBag();
+    this.unique = false;
   }
 
   /**
-   * Get an unmodifiable list of the columns for this ResultSet.
-   *  
-   * @return
+   * Returns an unmodifiable {@link List} of the column definitions.
+   * 
+   * @return an unmodifiable {@link List} of the columns.
    */
   public List<String> getColumnDefinitions() {
     return Collections.unmodifiableList(columns);
   }
-  
-  public List<String> getSharedColumns(ResultSet rs) {
-    List<String> sharedCols = new ArrayList<String>();
-    
-    List<String> vars = getBoundVariables();
-    for (String var : vars) {
-      if (rs.containsColumn(var)) {
-        sharedCols.add(var);
-      }
-    }
-    
-    return sharedCols;
-  }
-  
-  public List<String> getBoundVariables() {
-    List<String> variables = new ArrayList<String>();
-    for (String col : columns) {
-      if (col.startsWith("$") && !col.contains(".")) {
-        variables.add(col);
-      }
-    }
-    return variables;
-  }
-
-  public int getRowCount() {
-    return rows.size();
-  }
-
-  public int getColumnCount() {
-    return columns.size();
-  }
-  
-  /**
-   * Convenience method the 
-   * @return
-   */
-  public int getLastIndex() {
-    return columns.size() - 1;
-  }
-
-  public void addColumn(String name) {
-    columns.add(name);
-    for (Object r : rows) {
-      ((Row) r).addColumn();
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  public Iterator<Row> iterator() {
-    if (unique) {
-      return rows.uniqueSet().iterator();
-    } else {
-      return rows.iterator();
-    }
-  }
-
-  public Row createRow() {
-    Row r = new Row(getColumnCount());
-    return r;
-  }
-
-  public Row mergeRow(Row... rows) {
-    Row newRow = createRow();
-
-    int i = 0;
-    for (Row r : rows) {
-      for (int j = 0; j < r.getColumnCount(); j++, i++) {
-        newRow.setValue(i, r.getValue(j));
-      }
-    }
-
-    return newRow;
-  }
-
-  public void addRow(Row row) {
-    rows.add(row);
-  }
 
   /**
-   * Adds all rows from the other ResultSet to this one. Note: the layout of the
-   * two ResultSets has to be the same, otherwise this operation will fail.
+   * Returns the name of the column at the given index.
    * 
-   * @param other the ResultSet to be added. 
-   */
-  @SuppressWarnings("unchecked")
-  public void addAll(ResultSet other) {
-    rows.addAll(other.rows);
-  }
-
-  public void removeRow(Row row) {
-    rows.remove(row);
-  }
-
-  public boolean containsRow(Row row) {
-    return rows.contains(row);
-  }
-  
-  public void clear() {
-    rows.clear();
-  }
-  
-  /**
-   * 
-   * @param index
-   * @return
-   * @throws IndexOutOfBoundsException
+   * @param index the column index.
+   * @return the name of the column.
+   * @throws IndexOutOfBoundsException if the index is outside the range of the
+   *           column definition (e.g. index < 0 or index >= getColumnCount()).
    */
   public String getColumnName(int index) throws IndexOutOfBoundsException {
     if (index < 0 || index >= columns.size()) {
@@ -197,14 +116,42 @@ public class ResultSet implements Iterable<Row> {
     return columns.get(index);
   }
 
+  /**
+   * Set the name of a specified column.
+   * 
+   * @param index the index of the column.
+   * @param name the new name of the column.
+   */
   public void setColumnName(int index, String name) {
     columns.set(index, name);
   }
 
+  /**
+   * Returns whether a column with the given name exists within this
+   * {@link ResultSet}.
+   * 
+   * @param name the name of the column to look for.
+   * @return true if a column with the given name exists; false otherwise.
+   */
   public boolean containsColumn(String name) {
     return (getColumnIndex(name) > -1);
   }
 
+  /**
+   * Returns the number of columns contained in this {@link ResultSet}.
+   * 
+   * @return the number of columns.
+   */
+  public int getColumnCount() {
+    return columns.size();
+  }
+
+  /**
+   * Returns the index of the column with the given name.
+   * 
+   * @param name the name of the column to look for.
+   * @return the index of the column, or -1 if no such column exists.
+   */
   public int getColumnIndex(String name) {
     int idx = 0;
     for (String column : columns) {
@@ -215,9 +162,194 @@ public class ResultSet implements Iterable<Row> {
     }
     return -1;
   }
+  
+  /**
+   * Returns whether this {@link ResultSet} contains unique or duplicate rows.
+   * 
+   * @return true if this {@link ResultSet} only contains unique rows; false
+   *         otherwise.
+   */
+  public boolean isUnique() {
+    return unique;
+  }
 
-  public Collection<?> getValues(int idx) {
-    Collection<Object> col = new HashSet<Object>(rows.size());
+  /**
+   * Set whether this {@link ResultSet} only allows unique rows, or can also
+   * store duplicate ones.
+   * 
+   * @param unique if this {@link ResultSet} should only store unique rows, use
+   *          true; false otherwise.
+   */
+  public void setUnique(boolean unique) {
+    this.unique = unique;
+  }
+
+  /**
+   * Returns a {@link List} of all shared columns with the given
+   * {@link ResultSet}.
+   * 
+   * @param rs the other {@link ResultSet}.
+   * @return a {@link List} containing the shared columns.
+   */
+  public List<String> getSharedColumns(ResultSet rs) {
+    List<String> sharedCols = new ArrayList<String>();
+
+    List<String> vars = getBoundVariables();
+    for (String var : vars) {
+      if (rs.containsColumn(var)) {
+        sharedCols.add(var);
+      }
+    }
+
+    return sharedCols;
+  }
+
+  /**
+   * Returns a {@link List} of variables that are present in this
+   * {@link ResultSet}.
+   * 
+   * @return a {@link List} of variables in this {@link ResultSet}.
+   */
+  public List<String> getBoundVariables() {
+    List<String> variables = new ArrayList<String>();
+    for (String col : columns) {
+      if (col.startsWith("$") && !col.contains(".")) {
+        variables.add(col);
+      }
+    }
+    return variables;
+  }
+
+  /**
+   * Returns the number of rows that are stored in this {@link ResultSet}.
+   * 
+   * @return the number of rows.
+   */
+  public int getRowCount() {
+    if (unique) {
+      return rows.uniqueSet().size();
+    } else {
+      return rows.size();
+    }
+  }
+
+  /**
+   * Returns the index of the last column in this {@link ResultSet}. This is a
+   * convenience method, and returns the same result as:
+   * 
+   * <pre>
+   *   getColumnCount() - 1;
+   * </pre>
+   * 
+   * @return the index of the last column.
+   */
+  public int getLastIndex() {
+    return columns.size() - 1;
+  }
+
+  /**
+   * Adds a new column to this {@link ResultSet}. The new column is appended at
+   * the end of the existing columns. Every row, that is currently stored in
+   * this {@link ResultSet} is adjusted to the new column size (filled with zero
+   * values).
+   * 
+   * @param name the name of the new column.
+   */
+  public void addColumn(String name) {
+    columns.add(name);
+    for (Object r : rows) {
+      ((Row) r).addColumn();
+    }
+  }
+
+  /**
+   * Returns an iterator over the rows of this {@link ResultSet}.
+   * 
+   * @return an iterator over all rows.
+   */
+  @SuppressWarnings("unchecked")
+  public Iterator<Row> iterator() {
+    if (unique) {
+      return rows.uniqueSet().iterator();
+    } else {
+      return rows.iterator();
+    }
+  }
+
+  /**
+   * Return a new {@link Row} that is based on the column definitions of this
+   * {@link ResultSet}.
+   * <p>
+   * <b>Note</b>: The returned {@link Row} is not added to the {@link ResultSet}.
+   * 
+   * @return a new {@link Row} that matches the column definitions of this
+   *         {@link ResultSet}.
+   */
+  public Row createRow() {
+    Row r = new Row(getColumnCount());
+    return r;
+  }
+
+  /**
+   * Adds a {@link Row} to this {@link ResultSet}.
+   * 
+   * @param row the {@link Row} to be added.
+   */
+  public void addRow(Row row) {
+    rows.add(row);
+  }
+
+  /**
+   * Adds all rows from the other {@link ResultSet} to this one.
+   * <p>
+   * <b>Note</b>: The layout of the two ResultSets has to be the same, otherwise
+   * this operation will fail.
+   * </p>
+   * 
+   * @param other the ResultSet to be added.
+   */
+  @SuppressWarnings("unchecked")
+  public void addAll(ResultSet other) {
+    rows.addAll(other.rows);
+  }
+
+  /**
+   * Remove the given {@link Row} from this {@link ResultSet}.
+   * 
+   * @param row the {@link Row} to be removed.
+   */
+  public void removeRow(Row row) {
+    rows.remove(row);
+  }
+
+  /**
+   * Indicates whether the given {@link Row} is contained in this
+   * {@link ResultSet}.
+   * 
+   * @param row the {@link Row} to be looked up.
+   * @return true if the {@link Row} is contained in the {@link ResultSet};
+   *         false otherwise.
+   */
+  public boolean containsRow(Row row) {
+    return rows.contains(row);
+  }
+
+  /**
+   * Remove all rows from this {@link ResultSet}.
+   */
+  public void removeAllRows() {
+    rows.clear();
+  }
+
+  /**
+   * Returns a unique {@link Collection} of all values in the specified column.
+   *  
+   * @param idx the column.
+   * @return a {@link Collection} of values in that column.
+   */
+  @SuppressWarnings("unchecked")
+  public Collection getValues(int idx) {
+    Collection col = new CompactHashSet(rows.size());
 
     if (idx == -1)
       return col;
@@ -232,14 +364,32 @@ public class ResultSet implements Iterable<Row> {
   }
 
   /**
-   * Get all valid values from a specified column of the ResultSet.
+   * Returns all values in a specified column. This is a convenience method and
+   * returns the same result as:
+   *
+   * <pre>
+   *   getValues(getColumnIndex(name));
+   * </pre>
+   * 
+   * @param column the column.
+   * @return a {@link Collection} of values in that column.
+   */
+  @SuppressWarnings("unchecked")
+  public Collection getValues(String column) {
+    int idx = getColumnIndex(column);
+    return getValues(idx);
+  }
+  
+  /**
+   * Returns all valid values from a specified column of this {@link ResultSet}. 
    * A valid value is a non-null value.
    * 
-   * @param idx the column of the ResultSet.
-   * @return a Collection containing all valid values.
+   * @param idx the column.
+   * @return a {@link Collection} containing all valid values.
    */
-  public Collection<?> getValidValues(int idx) {
-    Collection<Object> col = new HashSet<Object>(rows.size());
+  @SuppressWarnings("unchecked")
+  public Collection getValidValues(int idx) {
+    Collection col = new CompactHashSet(rows.size());
 
     if (idx == -1)
       return col;
@@ -254,12 +404,17 @@ public class ResultSet implements Iterable<Row> {
 
     return col;
   }
-  
-  public Collection<?> getValues(String column) {
-    int idx = getColumnIndex(column);
-    return getValues(idx);
-  }
-  
+
+  /**
+   * Returns a new {@link ResultSet} that is the result of a merge operation of
+   * the current {@link ResultSet} and the given one.
+   * 
+   * FIXME: this method has to be fixed, it does not produce correct results
+   * for ResultSet that share more than one column.
+   * 
+   * @param rs the other {@link ResultSet} to be used for the merging.
+   * @return a merged {@link ResultSet}.
+   */
   @SuppressWarnings("unchecked")
   public ResultSet merge(ResultSet rs) {
     List<String> sharedCols = getSharedColumns(rs);
@@ -269,43 +424,82 @@ public class ResultSet implements Iterable<Row> {
       String col = sharedCols.get(0);
       Collection vals1 = getValues(col);
       Collection vals2 = rs.getValues(col);
-      
+
       vals1.addAll(vals2);
       ResultSet result = new ResultSet(1, true);
       result.setColumnName(0, col);
-      
+
       for (Object o : vals1) {
         Row r = result.createRow();
         r.setLastValue(o);
         result.addRow(r);
       }
-      
+
       return result;
     }
   }
-  
-  public void union(ResultSet rs, boolean distinct) {
-    for (Row r : rs) {
+
+  /**
+   * Perform a union operation with the other {@link ResultSet}. As a result,
+   * the current {@link ResultSet} will be extended with the rows from the other
+   * {@link ResultSet}.
+   * 
+   * @param other the {@link ResultSet} that should be merged into the current
+   *          {@link ResultSet}.
+   * @param distinct indicates whether a distinct union operation should be
+   *          performed or not.
+   */
+  public void union(ResultSet other, boolean distinct) {
+    for (Row r : other) {
       if (!distinct || !containsRow(r)) {
         addRow(r);
       }
     }
   }
-  
-  public void intersect(ResultSet rs) {
-    List<Row> toDelete = new LinkedList<Row>();
+
+  /**
+   * Perform an intersect operation with the other {@link ResultSet}. As a
+   * result, the current {@link ResultSet} will be reduced to the intersection
+   * of the two {@link ResultSet}'s.
+   * 
+   * @param other the {@link ResultSet} that should be intersected with the
+   *          current {@link ResultSet}.
+   */
+  public void intersect(ResultSet other) {
+    List<Row> toDelete = new ArrayList<Row>(other.getRowCount());
     for (Row r : this) {
-      if (!rs.containsRow(r)) {
+      if (!other.containsRow(r)) {
         toDelete.add(r);
       }
     }
-    
     rows.removeAll(toDelete);
   }
-  
-  public void except(ResultSet rs) {
-    for (Row r : rs) {
+
+  /**
+   * Perform an except operation with the other {@link ResultSet}. As a result,
+   * the current {@link ResultSet} will be reduced with the rows from the other
+   * {@link ResultSet}.
+   * 
+   * @param other the {@link ResultSet} that should be removed from the current
+   *          {@link ResultSet}.
+   */
+  public void except(ResultSet other) {
+    for (Row r : other) {
       removeRow(r);
     }
+  }
+
+  /**
+   * Returns a {@link List} representation of this {@link ResultSet}.
+   * 
+   * @return a {@link List} containing all {@link Row} objects of the
+   *         {@link ResultSet}.
+   */
+  public List<Row> getList() {
+    List<Row> l = new ArrayList<Row>(getRowCount());
+    for (Row r : this) {
+      l.add(r);
+    }
+    return l;
   }
 }

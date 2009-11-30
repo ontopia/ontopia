@@ -70,8 +70,9 @@ public class ConcatStringExpression extends AbstractBinaryExpression {
         s2 = Stringifier.toString(row2.getLastValue());
       }
 
-      Row newRow = rs.mergeRow(row1, row2);
-      newRow.setValue(rs.getColumnCount() - 1, s1 + s2);
+      Row newRow = rs.createRow();
+      newRow.fill(row1, row2);
+      newRow.setLastValue(s1 + s2);
       rs.addRow(newRow);
     }
 
