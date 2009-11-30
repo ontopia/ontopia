@@ -73,4 +73,15 @@ public class InTest extends AbstractTomaQueryTestCase {
         matches,
         "select $t where $t.name IN ('XTM standard', 'LTM standard');");
   }
+  
+  public void testSubSelect() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "$T", getTopicById("standard"));
+    
+    verifyQuery(
+        matches,
+        "select $t where $t.instance IN (select $n where $n.type = standard);");
+  }
 }

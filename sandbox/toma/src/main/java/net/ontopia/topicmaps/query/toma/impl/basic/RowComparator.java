@@ -37,33 +37,60 @@ public class RowComparator implements Comparator<Row> {
     this.ordering = ordering;
   }
   
-  // FIXME: needs to be revised.
   @SuppressWarnings("unchecked")
   public int compare(Row row1, Row row2) {
     // if we have no ordering defined, 
     if (ordering.isEmpty()) {
-      String s1 = Stringifier.toString(row1.getFirstValue());
-      String s2 = Stringifier.toString(row2.getFirstValue());
-      return s1.compareTo(s2);
+      Comparable s1 = Stringifier.toSort(row1.getFirstValue());
+      Comparable s2 = Stringifier.toSort(row2.getFirstValue());
+      
+      if (s1 == null || s2 == null) {
+        if (s1 == null && s2 == null) {
+          return 0;
+        } else if (s1 == null) {
+          return +1;
+        } else {
+          return -1;
+        }
+      } else {
+        return s1.compareTo(s2);
+      }
     } else {
       for (QueryOrder order : ordering) {
         int col = order.getColumn() - 1;
         Comparable s1 = Stringifier.toSort(row1.getValue(col));
         Comparable s2 = Stringifier.toSort(row2.getValue(col));
-        
+
         int cmp = 0;
         if (order.getOrder() == SORT_ORDER.ASC) {
-          if (s1 == null) cmp = +1;
-          else if (s2 == null) cmp = -1;
-          else cmp = s1.compareTo(s2);
+          if (s1 == null || s2 == null) {
+            if (s1 == null && s2 == null) {
+              cmp = 0;
+            } else if (s1 == null) {
+              cmp = +1;
+            } else {
+              cmp = -1;
+            }
+          } else {
+            cmp = s1.compareTo(s2);
+          }
         } else {
-          if (s1 == null) cmp = -1;
-          else if (s2 == null) cmp = +1;
-          else cmp = s2.compareTo(s1);
+          if (s1 == null || s2 == null) {
+            if (s1 == null && s2 == null) {
+              cmp = 0;
+            } else if (s1 == null) {
+              cmp = -1;
+            } else {
+              cmp = +1;
+            }
+          } else {
+            cmp = s2.compareTo(s1);
+          }
         }
         
-        if (cmp != 0) 
+        if (cmp != 0) { 
           return cmp;
+        }
       }
     }
     

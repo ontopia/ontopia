@@ -31,10 +31,12 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 public class LocalContext implements Cloneable {
 
   private TopicMapIF topicmap;
+  private BasicQueryProcessor processor;
   private HashMap<String, ResultSet> resultsets;
 
-  public LocalContext(TopicMapIF topicmap) {
+  public LocalContext(TopicMapIF topicmap, BasicQueryProcessor processor) {
     this.topicmap = topicmap;
+    this.processor = processor;
     this.resultsets = new HashMap<String, ResultSet>();
   }
 
@@ -47,6 +49,15 @@ public class LocalContext implements Cloneable {
     return topicmap;
   }
 
+  /**
+   * Returns the {@link BasicQueryProcessor} that is used in this query.
+   * 
+   * @return the query processor of the query.
+   */
+  public BasicQueryProcessor getProcessor() {
+    return processor;
+  }
+  
   /**
    * Adds a new {@link ResultSet} to this {@link LocalContext}.
    * All bound variables of the {@link ResultSet} will be extracted,
@@ -76,7 +87,7 @@ public class LocalContext implements Cloneable {
   @Override
   @SuppressWarnings("unchecked")
   protected Object clone() throws CloneNotSupportedException {
-    LocalContext c = new LocalContext(this.topicmap);
+    LocalContext c = new LocalContext(this.topicmap, this.processor);
     c.resultsets = (HashMap<String, ResultSet>) this.resultsets.clone();
     return c;
   }

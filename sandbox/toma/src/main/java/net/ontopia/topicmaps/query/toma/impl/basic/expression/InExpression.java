@@ -20,20 +20,21 @@ package net.ontopia.topicmaps.query.toma.impl.basic.expression;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
+import net.ontopia.topicmaps.query.toma.impl.basic.BasicQueryProcessor;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
 import net.ontopia.topicmaps.query.toma.impl.utils.Stringifier;
 import net.ontopia.topicmaps.query.toma.parser.AntlrWrapException;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractExpression;
+import net.ontopia.topicmaps.query.toma.parser.ast.ExpressionIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
+import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF.TYPE;
 
 /**
  * INTERNAL: IN expression, checks whether the result of an expression matches
  * any of the specified values.
- * 
- * TODO: sub-select is not yet working.
  */
 public class InExpression extends AbstractExpression implements
     BasicExpressionIF {
@@ -104,8 +105,15 @@ public class InExpression extends AbstractExpression implements
     result.setColumnName(0, "MERGE");
 
     for (int i = 1; i < getChildCount(); i++) {
-      BasicExpressionIF expr = (BasicExpressionIF) getChild(i);
-      ResultSet rs = expr.evaluate(context);
+      ExpressionIF expr = getChild(i);
+      ResultSet rs = null;
+      
+      if (expr instanceof BasicExpressionIF) {
+        rs = ((BasicExpressionIF) expr).evaluate(context);
+      } else if (expr instanceof TomaQuery) {
+        BasicQueryProcessor processor = context.getProcessor();
+        rs = processor.evaluate((TomaQuery) expr);
+      }
 
       for (Row r : rs) {
         Row newRow = result.createRow();
@@ -126,8 +134,9 @@ public class InExpression extends AbstractExpression implements
     // check if all expressions return the same type
     PathElementIF.TYPE common = TYPE.UNKNOWN;
     for (int i = 1; i < getChildCount(); i++) {
-      BasicExpressionIF expr = (BasicExpressionIF) getChild(i);
       PathElementIF.TYPE output;      
+      ExpressionIF expr = getChild(i);
+      
       if (expr instanceof PathExpression) {
         output = ((PathExpression) expr).output();
       } else if (expr instanceof LiteralExpression) {

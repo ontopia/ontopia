@@ -26,11 +26,11 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 
 /**
- * INTERNAL: OR expression, returns the union of the resultsets of its child
- * expressions if the two resultsets have a column in common.
+ * INTERNAL: OR expression, returns the union of the {@link ResultSet}'s of its
+ * child expressions if the two {@link ResultSet}'s have a column in common.
  * 
- * In case, the two resultsets do not have a column in common, they are returned
- * separately.
+ * In case, the two {@link ResultSet}'s do not have a column in common, they are
+ * returned separately.
  * 
  * TODO: better describe the relation of LocalContext and ResultSet.
  */
@@ -47,10 +47,12 @@ public class OrExpression extends AbstractBinaryExpression {
     BasicExpressionIF left = (BasicExpressionIF) getChild(0);
     BasicExpressionIF right = (BasicExpressionIF) getChild(1);
 
-    LocalContext ctx1 = new LocalContext(context.getTopicMap());
+    LocalContext ctx1 = new LocalContext(context.getTopicMap(), context
+        .getProcessor());
     ResultSet rs1 = left.evaluate(ctx1);
 
-    LocalContext ctx2 = new LocalContext(context.getTopicMap());
+    LocalContext ctx2 = new LocalContext(context.getTopicMap(), context
+        .getProcessor());
     ResultSet rs2 = right.evaluate(ctx2);
 
     // TODO: check if this works for all situations with multiple shared columns

@@ -102,7 +102,7 @@ public class AggregateFunctionTest extends AbstractTomaQueryTestCase {
   public void testConcat() throws InvalidQueryException, IOException {
     load("family.ltm");
 
-    // TODO: rework this test, by now, it creates a permutation of the possible
+    // this test creates a permutation of the possible
     // result (as sorting is done after aggregating), and checks if the actual
     // result is within the available matches.
     List matches = new ArrayList();

@@ -205,12 +205,8 @@ public class SelectStatement implements ASTElementIF {
       expr.validate();
     }
 
-//    if (numAggregate > 0 && numAggregate != selects.size()) {
-//      throw new AntlrWrapException(new InvalidQueryException(
-//          "All select-clauses must contain a aggregate function."));
-//    }
-
-    // TODO: check that no aggregate functions are used in the where clause.
+    // check that no aggregate function is used in the where clause.
+    checkAggregate(clause);
     
     // validate the where clauses
     clause.validate();
@@ -234,6 +230,19 @@ public class SelectStatement implements ASTElementIF {
     return true;
   }
 
+  private void checkAggregate(ExpressionIF expr) throws AntlrWrapException {
+    if (expr instanceof FunctionIF) {
+      if (((FunctionIF) expr).isAggregateFunction()) {
+        throw new AntlrWrapException(new InvalidQueryException("Aggregate Function '"
+            + expr.toString() + "' not allowed in where clause."));
+      }
+    }
+    
+    for (int i = 0; i < expr.getChildCount(); i++) {
+      checkAggregate(expr.getChild(i));
+    }
+  }
+  
   public void fillParseTree(IndentedStringBuilder buf, int level) {
     switch (unionType) {
     case UNION:

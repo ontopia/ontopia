@@ -99,6 +99,22 @@ public class BasicQueryProcessor implements QueryProcessorIF {
    * @throws InvalidQueryException if the query can not be evaluated properly.
    */
   public QueryResultIF execute(TomaQuery query) throws InvalidQueryException {
+    ResultSet rs = evaluate(query);
+    List<Row> rows = rs.getList();
+    sort(rows, query.getOrderBy());
+    QueryTracer.endQuery();
+    return new QueryResult(rs.getColumnDefinitions(), rows, query.getLimit(),
+        query.getOffset());
+  }
+
+  /**
+   * Evaluates a {@link TomaQuery} and returns a {@link ResultSet}.
+   * 
+   * @param query the query to be evaluated
+   * @return the {@link ResultSet}.
+   * @throws InvalidQueryException if the query can not be evaluated properly.
+   */
+  public ResultSet evaluate(TomaQuery query) throws InvalidQueryException {
     ResultSet rs = null;
     QueryTracer.startQuery();
     for (int i = 0; i < query.getStatementCount(); i++) {
@@ -126,14 +142,9 @@ public class BasicQueryProcessor implements QueryProcessorIF {
         }
       }
     }
-
-    List<Row> rows = rs.getList();
-    sort(rows, query.getOrderBy());
-    QueryTracer.endQuery();
-    return new QueryResult(rs.getColumnDefinitions(), rows, query.getLimit(),
-        query.getOffset());
+    return rs;
   }
-
+  
   /**
    * Returns a {@link ResultSet} containing all the matches of a single select
    * statement.
@@ -144,7 +155,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
    */
   private ResultSet satisfy(SelectStatement stmt) throws InvalidQueryException {
     BasicExpressionIF expr = (BasicExpressionIF) stmt.getClause();
-    LocalContext context = new LocalContext(topicmap);
+    LocalContext context = new LocalContext(topicmap, this);
 
     // set column names
     ResultSet rs = new ResultSet(stmt.getSelectCount(), stmt.isDistinct());
