@@ -20,6 +20,7 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,50 +168,159 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     // evaluate the WHERE expression tree
     expr.evaluate(context);
 
-    Row r = rs.createRow();
-    
     QueryTracer.enterSelect(null);
-    calculateMatches(context, 0, r, rs, stmt);
+    //Row r = rs.createRow();
+    //calculateMatches(context, 0, r, rs, stmt);
+    calculateMatches(context, stmt, rs);
     QueryTracer.leaveSelect(null);
 
     return rs;
   }
 
-  private void calculateMatches(LocalContext context, int index, Row row,
-      ResultSet rs, SelectStatement stmt) throws InvalidQueryException {
-    BasicExpressionIF expr = (BasicExpressionIF) stmt.getSelect(index);
-    ResultSet values = expr.evaluate(context);
-    try {
-      LocalContext newContext = (LocalContext) context.clone();
-      ResultSet localResult = new ResultSet(values);
-      newContext.addResultSet(localResult);
+  private void calculateMatches(LocalContext context, SelectStatement stmt,
+      ResultSet rs) throws InvalidQueryException {
+    BasicExpressionIF firstExpr = (BasicExpressionIF) stmt.getSelect(0);
+    ResultSet firstRS = firstExpr.evaluate(context);
       
-      for (Row r : values) {
-        Object val = r.getLastValue();
-        // ignore null values in the first select clause
-        if (val == null && index == 0) {
-          continue;
-        }
-
-        // for each value, a new row in the ResultSet will be created
-        Row newRow = (Row) row.clone();
-        newRow.setValue(index, val);
-
-        // update the context with the current variable binding
-        localResult.removeAllRows();
-        localResult.addRow(r);
-
-        // if we are not at the end -> recursion
-        if (index < (stmt.getSelectCount() - 1)) {
-          calculateMatches(newContext, index + 1, newRow, rs, stmt);
-        } else {
-          rs.addRow(newRow);
-        }
+    Map<Integer, Integer> fillMap = new HashMap<Integer, Integer>();
+    List<Integer> evalList = new ArrayList<Integer>();
+    
+    for (int idx=1; idx<stmt.getSelectCount(); idx++) {
+      BasicExpressionIF expr = (BasicExpressionIF) stmt.getSelect(idx);
+      String exprStr = expr.toString();
+      if (firstRS.containsColumn(exprStr)) {
+        fillMap.put(idx, firstRS.getColumnIndex(exprStr));
+      } else {
+        evalList.add(idx);
       }
+    }
+
+    LocalContext newContext = null;
+    try {
+      newContext = (LocalContext) context.clone();
     } catch (CloneNotSupportedException e) {
       throw new InvalidQueryException("Internal QueryProcessor error:\n", e);
     }
+    
+    ResultSet localResult = new ResultSet(firstRS);
+    newContext.addResultSet(localResult);
+    
+    for (Row row : firstRS) {
+      Row newRow = rs.createRow();
+      
+      Object val = row.getLastValue();
+      // rows that contain a null value in their first column have to be removed
+      // completely.
+      if (val == null) {
+        continue;
+      } else {
+        newRow.setValue(0, val);
+      }
+      
+      // now fill the row with the values that can simply copied.
+      for (Map.Entry<Integer, Integer> mapEntry : fillMap.entrySet()) {
+        val = row.getValue(mapEntry.getValue());
+        newRow.setValue(mapEntry.getKey(), val);
+      }
+
+      // the rest of the select expressions has to be evaluated
+      if (!evalList.isEmpty()) {
+        localResult.removeAllRows();
+        localResult.addRow(row);
+      
+        calculateMatches(newContext, 0, evalList, newRow, rs, stmt);
+      } else {
+        rs.addRow(newRow);
+      }
+    }
   }
+
+  private void calculateMatches(LocalContext context, int evalIndex,
+      List<Integer> evalList, Row row, ResultSet rs, SelectStatement stmt)
+      throws InvalidQueryException {
+    int index = evalList.get(evalIndex);
+    BasicExpressionIF expr = (BasicExpressionIF) stmt.getSelect(index);
+    ResultSet values = expr.evaluate(context);
+
+    LocalContext newContext = null;
+    try {
+      newContext = (LocalContext) context.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new InvalidQueryException("Internal QueryProcessor error:\n", e);
+    }
+
+    ResultSet localResult = new ResultSet(values);
+    newContext.addResultSet(localResult);
+
+    int cnt = 0;
+    for (Row r : values) {
+      Object val = r.getLastValue();
+
+      // for each value, a new row in the ResultSet will be created
+      Row newRow = row;
+
+      // only clone the row if there are more than 1 value in the ResultSet
+      if (++cnt > 1) {
+        try {
+          newRow = (Row) row.clone();
+        } catch (CloneNotSupportedException e) {
+          throw new InvalidQueryException("Internal QueryProcessor error:\n", e);
+        }
+      }
+
+      newRow.setValue(index, val);
+
+      // update the context with the current variable binding
+      localResult.removeAllRows();
+      localResult.addRow(r);
+
+      // if we are not at the end -> recursion
+      if (evalIndex < (evalList.size() - 1)) {
+        calculateMatches(newContext, evalIndex + 1, evalList, newRow, rs, stmt);
+      } else {
+        rs.addRow(newRow);
+      }
+    }
+  }  
+
+//  NOTE: old code to create the select matches. This one is considerably
+//  slower than the new one.
+//  
+//  private void calculateMatches(LocalContext context, int index, Row row,
+//      ResultSet rs, SelectStatement stmt) throws InvalidQueryException {
+//    BasicExpressionIF expr = (BasicExpressionIF) stmt.getSelect(index);
+//    ResultSet values = expr.evaluate(context);
+//    try {
+//      LocalContext newContext = (LocalContext) context.clone();
+//      ResultSet localResult = new ResultSet(values);
+//      newContext.addResultSet(localResult);
+//      
+//      for (Row r : values) {
+//        Object val = r.getLastValue();
+//        // ignore null values in the first select clause
+//        if (val == null && index == 0) {
+//          continue;
+//        }
+//
+//        // for each value, a new row in the ResultSet will be created
+//        Row newRow = (Row) row.clone();
+//        newRow.setValue(index, val);
+//
+//        // update the context with the current variable binding
+//        localResult.removeAllRows();
+//        localResult.addRow(r);
+//
+//        // if we are not at the end -> recursion
+//        if (index < (stmt.getSelectCount() - 1)) {
+//          calculateMatches(newContext, index + 1, newRow, rs, stmt);
+//        } else {
+//          rs.addRow(newRow);
+//        }
+//      }
+//    } catch (CloneNotSupportedException e) {
+//      throw new InvalidQueryException("Internal QueryProcessor error:\n", e);
+//    }
+//  }
 
   /**
    * Returns a {@link ResultSet} that has been aggregated according to the given
