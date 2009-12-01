@@ -19,12 +19,12 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Subject Locator path element in an path expression. Returns all 
@@ -38,11 +38,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
  * <b>Output</b>: LOCATOR
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class SubjectLocatorPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.TOPIC);
   }
   
@@ -74,7 +75,6 @@ public class SubjectLocatorPath extends AbstractBasicPathElement {
     return TYPE.LOCATOR;
   }
   
-  @SuppressWarnings("unchecked")
   public Collection<LocatorIF> evaluate(LocalContext context, Object input) {
     TopicIF topic = (TopicIF) input;
     return topic.getSubjectLocators();

@@ -65,10 +65,10 @@ public abstract class AbstractBasicPathElement extends AbstractPathElement
     if (getBoundInputVariable() != null) {
       columns[idx++] = getBoundInputVariable().toString();
     }
-    if (containsSoleUnboundVariable(getScope(), context)) {
+    if (assignScope) {
       columns[idx++] = getVariableName(getScope());
     }
-    if (containsSoleUnboundVariable(getType(), context)) {
+    if (assignType) {
       columns[idx++] = getVariableName(getType());
     }
     if (getBoundVariable() != null) {

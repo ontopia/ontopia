@@ -18,9 +18,8 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -30,6 +29,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Variant path element in an path expression. Returns all variants
@@ -43,11 +43,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
  * <b>Output</b>: VARIANT
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class VariantPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.NAME);
   }
   
@@ -81,7 +82,6 @@ public class VariantPath extends AbstractBasicPathElement {
     return TYPE.VARIANT;
   }
   
-  @SuppressWarnings("unchecked")
   public Collection evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
     TopicNameIF name = (TopicNameIF) input;
@@ -100,7 +100,7 @@ public class VariantPath extends AbstractBasicPathElement {
     if (validScopes == null && !isAssignScope()) {
       return variants;
     } else {
-      Collection<Object[]> result = new LinkedList<Object[]>();
+      Collection<Object[]> result = new ArrayList<Object[]>();
       for (VariantNameIF var : variants) {
         if (validScopes == null || containsAny(var.getScope(), validScopes)) {
           fillResultCollection(result, var);
@@ -110,7 +110,6 @@ public class VariantPath extends AbstractBasicPathElement {
     }
   }
   
-  @SuppressWarnings("unchecked")
   private void fillResultCollection(Collection<Object[]> result,
       VariantNameIF var) {
     if (isAssignScope()) {

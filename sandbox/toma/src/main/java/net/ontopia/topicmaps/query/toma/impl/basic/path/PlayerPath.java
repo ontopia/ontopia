@@ -18,15 +18,16 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Player path element in an path expression. Returns all players
@@ -40,11 +41,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
  * <b>Output</b>: TOPIC
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class PlayerPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.ASSOCIATION);
   }
   
@@ -76,11 +78,10 @@ public class PlayerPath extends AbstractBasicPathElement {
     return TYPE.TOPIC;
   }
   
-  @SuppressWarnings("unchecked")
   public Collection<TopicIF> evaluate(LocalContext context, Object input) {
     AssociationIF assoc = (AssociationIF) input;
     Collection<AssociationRoleIF> roles = assoc.getRoles();
-    LinkedList<TopicIF> result = new LinkedList<TopicIF>();
+    List<TopicIF> result = new ArrayList<TopicIF>();
     for (AssociationRoleIF role : roles) {
       result.add(role.getPlayer());
     }

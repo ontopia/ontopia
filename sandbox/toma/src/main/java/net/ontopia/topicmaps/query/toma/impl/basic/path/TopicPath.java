@@ -18,9 +18,9 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -35,15 +35,17 @@ import net.ontopia.topicmaps.query.toma.impl.basic.BasicPathElementIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractTopic;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Represents a topic literal.
  */
+@SuppressWarnings("unchecked")
 public class TopicPath extends AbstractTopic implements BasicPathElementIF {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.NONE);
   }
 
@@ -100,82 +102,77 @@ public class TopicPath extends AbstractTopic implements BasicPathElementIF {
   public Collection<TopicIF> evaluate(LocalContext context, Object input) {
     TopicMapIF topicmap = context.getTopicMap();
 
+    List<TopicIF> result = new ArrayList<TopicIF>();
+    
     switch (getIDType()) {
 
     case IID:
-      return getTopicsByIID(topicmap);
+      getTopicsByIID(topicmap, result);
+      break;
 
     case SI:
-      return getTopicsBySI(topicmap);
+      getTopicsBySI(topicmap, result);
+      break;
 
     case SL:
-      return getTopicsBySL(topicmap);
+      getTopicsBySL(topicmap, result);
+      break;
 
     case NAME:
-      return getTopicsByName(topicmap);
+      getTopicsByName(topicmap, result);
+      break;
 
     case VAR:
-      return getTopicsByVar(topicmap);
+      getTopicsByVar(topicmap, result);
+      break;
     }
 
     // should not be reached anyways
-    return new LinkedList<TopicIF>();
+    return result;
   }
 
-  private Collection<TopicIF> getTopicsByIID(TopicMapIF topicmap) {
+  private void getTopicsByIID(TopicMapIF topicmap, List<TopicIF> coll) {
     LocatorIF locator = topicmap.getStore().getBaseAddress().resolveAbsolute(
         "#" + getIdentifier());
     TMObjectIF obj = topicmap.getObjectByItemIdentifier(locator);
-    Collection<TopicIF> coll = new LinkedList<TopicIF>();
     if (obj != null && obj instanceof TopicIF) {
       coll.add((TopicIF) obj);
     }
-    return coll;
   }
 
-  private Collection<TopicIF> getTopicsBySI(TopicMapIF topicmap) {
+  private void getTopicsBySI(TopicMapIF topicmap, List<TopicIF> coll) {
     LocatorIF locator = URILocator.create(getIdentifier());
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator);
-    Collection<TopicIF> coll = new LinkedList<TopicIF>();
     if (topic != null) {
       coll.add(topic);
     }
-    return coll;
   }
 
-  private Collection<TopicIF> getTopicsBySL(TopicMapIF topicmap) {
+  private void getTopicsBySL(TopicMapIF topicmap, List<TopicIF> coll) {
     LocatorIF locator = URILocator.create(getIdentifier());
     TopicIF topic = topicmap.getTopicBySubjectLocator(locator);
-    Collection<TopicIF> coll = new LinkedList<TopicIF>();
     if (topic != null) {
       coll.add(topic);
     }
-    return coll;
   }
 
-  @SuppressWarnings("unchecked")
-  private Collection<TopicIF> getTopicsByName(TopicMapIF topicmap) {
+  private void getTopicsByName(TopicMapIF topicmap, List<TopicIF> coll) {
     NameIndexIF index = (NameIndexIF) topicmap
         .getIndex("net.ontopia.topicmaps.core.index.NameIndexIF");
 
-    Collection<TopicNameIF> coll = index.getTopicNames(getIdentifier());
-    Collection<TopicIF> topics = new LinkedList<TopicIF>();
-    for (TopicNameIF name : coll) {
-      topics.add(name.getTopic());
+    Collection<TopicNameIF> names = index.getTopicNames(getIdentifier());
+    for (TopicNameIF name : names) {
+      coll.add(name.getTopic());
     }
-    return topics;
   }
 
-  @SuppressWarnings("unchecked")
-  private Collection<TopicIF> getTopicsByVar(TopicMapIF topicmap) {
+  private void getTopicsByVar(TopicMapIF topicmap, List<TopicIF> coll) {
     NameIndexIF index = (NameIndexIF) topicmap
         .getIndex("net.ontopia.topicmaps.core.index.NameIndexIF");
 
-    Collection<VariantNameIF> coll = index.getVariants(getIdentifier());
-    Collection<TopicIF> topics = new LinkedList<TopicIF>();
-    for (VariantNameIF name : coll) {
-      topics.add(name.getTopic());
+    Collection<VariantNameIF> variants = index.getVariants(getIdentifier());
+    for (VariantNameIF name : variants) {
+      coll.add(name.getTopic());
     }
-    return topics;
   }
 }

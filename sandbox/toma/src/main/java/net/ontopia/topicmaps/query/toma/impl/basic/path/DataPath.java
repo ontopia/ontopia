@@ -18,14 +18,14 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Data path element in an path expression. Returns the value of 
@@ -40,11 +40,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
  * <b>Output</b>: STRING
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class DataPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.OCCURRENCE);
     inputSet.add(TYPE.VARIANT);
   }
@@ -78,7 +79,7 @@ public class DataPath extends AbstractBasicPathElement {
   }
   
   public Collection<?> evaluate(LocalContext context, Object input) {
-    Collection<String> coll = new LinkedList<String>();
+    Collection<String> coll = new ArrayList<String>();
 
     if (input instanceof OccurrenceIF) {
       OccurrenceIF oc = (OccurrenceIF) input;

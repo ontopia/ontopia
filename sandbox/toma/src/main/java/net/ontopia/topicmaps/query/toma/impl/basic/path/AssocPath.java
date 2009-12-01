@@ -18,9 +18,8 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -31,6 +30,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Association path element in an path expression. Returns all topics
@@ -45,11 +45,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
  * <b>Output</b>: TOPIC
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class AssocPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
 
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.TOPIC);
     inputSet.add(TYPE.NONE);
   }
@@ -58,6 +59,9 @@ public class AssocPath extends AbstractBasicPathElement {
   private Collection<TopicIF> validTypes = null;
   private Collection<TopicIF> validLeftRoles = null;
   private Collection<TopicIF> validRightRoles = null;
+
+  private boolean leftTypeAssign;
+  private boolean rightTypeAssign;
   
   public AssocPath() {
     super("ASSOC");
@@ -79,6 +83,14 @@ public class AssocPath extends AbstractBasicPathElement {
     return true;
   }
 
+  protected boolean isAssignLeftType() {
+    return leftTypeAssign;
+  }
+  
+  protected boolean isAssignRightType() {
+    return rightTypeAssign;
+  }
+  
   public Set<TYPE> validInput() {
     return inputSet;
   }
@@ -87,7 +99,69 @@ public class AssocPath extends AbstractBasicPathElement {
     return TYPE.TOPIC;
   }
 
-  @SuppressWarnings("unchecked")
+  @Override
+  public void initResultSet(LocalContext context) {
+    resultSize = 0;
+    if (getBoundInputVariable() != null) {
+      resultSize++;
+    }
+    if (containsSoleUnboundVariable(getScope(), context)) {
+      assignScope = true;
+      resultSize++;
+    }
+    if (containsSoleUnboundVariable(getType(), context)) {
+      assignType = true;
+      resultSize++;
+    }
+    
+    PathExpression leftRole = null, rightRole = null;
+    switch (getChildCount()) {
+    case 1:
+      rightRole = (PathExpression) getChild(0);
+      break;
+    case 2:
+      leftRole = (PathExpression) getChild(0);
+      rightRole = (PathExpression) getChild(1);
+      break;
+    }
+    
+    if (leftRole != null && containsSoleUnboundVariable(leftRole, context)) {
+      leftTypeAssign = true;
+      resultSize++;
+    }
+
+    if (rightRole != null && containsSoleUnboundVariable(rightRole, context)) {
+      rightTypeAssign = true;
+      resultSize++;
+    }
+    
+    if (getBoundVariable() != null) {
+      resultSize++;
+    }
+    
+    columns = new String[resultSize];
+
+    int idx = 0;
+    if (getBoundInputVariable() != null) {
+      columns[idx++] = getBoundInputVariable().toString();
+    }
+    if (assignScope) {
+      columns[idx++] = getVariableName(getScope());
+    }
+    if (assignType) {
+      columns[idx++] = getVariableName(getType());
+    }
+    if (leftTypeAssign) {
+      columns[idx++] = getVariableName(leftRole);
+    }
+    if (rightTypeAssign) {
+      columns[idx++] = getVariableName(rightRole);
+    }
+    if (getBoundVariable() != null) {
+      columns[idx++] = getBoundVariable().toString();
+    }
+  }
+  
   public Collection<Object[]> evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
 
@@ -110,7 +184,7 @@ public class AssocPath extends AbstractBasicPathElement {
       topic = (TopicIF) input;
     }
 
-    if (getScope() != null) {
+    if (getScope() != null && !isAssignScope()) {
       PathExpression scope = (PathExpression) getScope();
       // Optimization: if the scope expression does not contain a variable, we
       // can cache it.
@@ -122,11 +196,14 @@ public class AssocPath extends AbstractBasicPathElement {
     }
 
     PathExpression type = (PathExpression) getType();
-    // Optimization: if the type expression does not contain a variable, we
-    // can cache it.
-    if (type.getVariableName() != null || validTypes == null) {
-      ResultSet types = type.evaluate(context);
-      validTypes = (Collection<TopicIF>) types.getValidValues(types.getLastIndex());
+    if (!isAssignType()) {
+      // Optimization: if the type expression does not contain a variable, we
+      // can cache it.
+      if (type.getVariableName() != null || validTypes == null) {
+        ResultSet types = type.evaluate(context);
+        validTypes = (Collection<TopicIF>) types.getValidValues(types
+            .getLastIndex());
+      }
     }
 
     if (leftRole != null) {
@@ -136,12 +213,19 @@ public class AssocPath extends AbstractBasicPathElement {
       ClassInstanceIndexIF index = (ClassInstanceIndexIF) context.getTopicMap()
           .getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
 
-      Collection<AssociationRoleIF> roles = new LinkedList<AssociationRoleIF>();
-      for (TopicIF t : validTypes) {
+      Collection<TopicIF> assocTypes = validTypes;
+      if (assocTypes == null) {
+        assocTypes = index.getAssociationTypes();
+      }
+      
+      Collection<Object[]> roles = new ArrayList<Object[]>();
+      for (TopicIF t : assocTypes) {
         Collection<AssociationIF> assocs = index.getAssociations((TopicIF) t);
         for (AssociationIF a : assocs) {
           if (validScopes == null || containsAny(a.getScope(), validScopes)) {
-            roles.addAll(a.getRoles());
+            for (Object role : a.getRoles()) {
+              roles.add(new Object[] { role });
+            }
           }
         }
       }
@@ -151,21 +235,22 @@ public class AssocPath extends AbstractBasicPathElement {
 
   }
 
-  @SuppressWarnings("unchecked")
   private Collection<Object[]> evaluateLeft(LocalContext context,
       TopicIF input, PathExpression left, PathExpression right,
       Collection<TopicIF> validTypes, Collection<TopicIF> validScopes)
       throws InvalidQueryException {
     Collection<AssociationRoleIF> inputRoles = input.getRoles();
-    Collection<AssociationRoleIF> result = new LinkedList<AssociationRoleIF>();
+    Collection<Object[]> result = new ArrayList<Object[]>(inputRoles.size());
 
-    // Optimization: if the type expression does not contain a variable, we
-    // can cache it.
-    if (!left.isEmpty()
-        && (left.getVariableName() != null || validRightRoles == null)) {
-      ResultSet roles = left.evaluate(context);
-      validLeftRoles = (Collection<TopicIF>) roles.getValidValues(roles
-          .getLastIndex());
+    if (!isAssignLeftType()) {
+      // Optimization: if the type expression does not contain a variable, we
+      // can cache it.
+      if (!left.isEmpty()
+          && (left.getVariableName() != null || validRightRoles == null)) {
+        ResultSet roles = left.evaluate(context);
+        validLeftRoles = (Collection<TopicIF>) roles.getValidValues(roles
+            .getLastIndex());
+      }
     }
 
     for (AssociationRoleIF role : inputRoles) {
@@ -174,10 +259,12 @@ public class AssocPath extends AbstractBasicPathElement {
         if (validTypes == null || validTypes.contains(a.getType())) {
           if (validScopes == null || containsAny(a.getScope(), validScopes)) {
             // add all the other roles of this assoc
-            Collection<AssociationRoleIF> tmp = new HashSet<AssociationRoleIF>(
-                a.getRoles());
+            Set<AssociationRoleIF> tmp = new CompactHashSet(a.getRoles());
             tmp.remove(role);
-            result.addAll(tmp);
+            
+            for (AssociationRoleIF otherRole : tmp) {
+              result.add(new Object[] { role.getType(), otherRole });
+            }
           }
         }
       }
@@ -186,30 +273,83 @@ public class AssocPath extends AbstractBasicPathElement {
     return evaluateRight(context, right, result);
   }
 
-  @SuppressWarnings("unchecked")
   private Collection<Object[]> evaluateRight(LocalContext context,
-      PathExpression right, Collection<AssociationRoleIF> roles)
+      PathExpression right, Collection<Object[]> roles)
       throws InvalidQueryException {
 
-    // Optimization: if the type expression does not contain a variable, we
-    // can cache it.
-    if (!right.isEmpty()
-        && (right.getVariableName() != null || validRightRoles == null)) {
-      ResultSet rs = right.evaluate(context);
-      validRightRoles = (Collection<TopicIF>) rs.getValidValues(rs.getLastIndex());
+    if (!isAssignRightType()) {
+      // Optimization: if the type expression does not contain a variable, we
+      // can cache it.
+      if (!right.isEmpty()
+          && (right.getVariableName() != null || validRightRoles == null)) {
+        ResultSet rs = right.evaluate(context);
+        validRightRoles = (Collection<TopicIF>) rs.getValidValues(rs
+            .getLastIndex());
+      }
     }
 
-    Collection<Object[]> result = new LinkedList<Object[]>();
-    boolean includeAssoc = getBoundInputVariable() != null;
-    for (AssociationRoleIF role : roles) {
+    Collection<Object[]> result = new ArrayList<Object[]>(roles.size());
+    for (Object[] row : roles) {
+      AssociationRoleIF role = (AssociationRoleIF) row[row.length - 1];
+      TopicIF leftRoleType = null;
+      if (row.length == 2) {
+        leftRoleType = (TopicIF) row[0];
+      }
       if (validRightRoles == null || validRightRoles.contains(role.getType())) {
-        if (includeAssoc) {
-          result.add(new Object[] { role.getAssociation(), role.getPlayer() });
-        } else {
-          result.add(new Object[] { role.getPlayer() });
-        }
+        fillResultCollection(result, role, leftRoleType);
       }
     }
     return result;
+  }
+  
+  private void fillResultCollection(Collection<Object[]> result,
+      AssociationRoleIF role, TopicIF leftRoleType) {
+    
+    if (isAssignScope()) {
+      Collection<TopicIF> scopes = role.getAssociation().getScope();
+      if (scopes != null && !scopes.isEmpty()) {
+        for (TopicIF scope : scopes) {
+          fillSingleResult(result, role, scope, leftRoleType);
+        }
+      } else {
+        fillSingleResult(result, role, null, leftRoleType);
+      }
+    } else {
+      fillSingleResult(result, role, null, leftRoleType);
+    }
+  }
+  
+  private void fillSingleResult(Collection<Object[]> result,
+      AssociationRoleIF role, TopicIF scope, TopicIF leftRoleType) {
+    int rsSize = getResultSize();
+    if (getBoundVariable() == null) {
+      rsSize++;
+    }
+    
+    Object[] row = new Object[rsSize];
+    int idx = 0;
+    
+    if (getBoundInputVariable() != null) {
+      row[idx++] = role.getAssociation();
+    }
+    
+    if (isAssignScope()) {
+      row[idx++] = scope;
+    }
+
+    if (isAssignType()) {
+      row[idx++] = role.getAssociation().getType();
+    }
+
+    if (isAssignLeftType()) {
+      row[idx++] = leftRoleType;
+    }
+      
+    if (isAssignRightType()) {
+      row[idx++] = role.getType();
+    }
+    
+    row[idx] = role.getPlayer();
+    result.add(row);
   }
 }

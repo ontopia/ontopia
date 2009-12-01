@@ -19,7 +19,6 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +29,7 @@ import net.ontopia.topicmaps.query.toma.parser.ast.Level;
 import net.ontopia.topicmaps.utils.AssociationWalker;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.SubjectIdentityDecider;
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.DeciderIF;
 
 /**
@@ -44,11 +44,12 @@ import net.ontopia.utils.DeciderIF;
  * <b>Output</b>: TOPIC
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class SubTypePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
 
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.TOPIC);
   }
 
@@ -88,7 +89,6 @@ public class SubTypePath extends AbstractBasicPathElement {
     return TYPE.TOPIC;
   }
 
-  @SuppressWarnings("unchecked")
   public Collection<TopicIF> evaluate(LocalContext context, Object input) {
     TopicIF topic = (TopicIF) input;
     
@@ -97,7 +97,7 @@ public class SubTypePath extends AbstractBasicPathElement {
     
     // use a set as collection for the types, as one type can occur multiple
     // times (and should only be counted once).
-    Collection<TopicIF> types = new HashSet<TopicIF>();
+    Collection<TopicIF> types = new CompactHashSet();
 
     int start = l.getStart()*2;
     int end = (l.getEnd() == Integer.MAX_VALUE) ? l.getEnd() : l.getEnd()*2;

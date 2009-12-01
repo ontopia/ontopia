@@ -19,13 +19,13 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.parser.ast.Level;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Instance path element in an path expression. Returns all topics
@@ -39,11 +39,12 @@ import net.ontopia.topicmaps.query.toma.parser.ast.Level;
  * <b>Output</b>: TOPIC
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class InstancePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.TOPIC);
   }
   
@@ -75,7 +76,6 @@ public class InstancePath extends AbstractBasicPathElement {
     return TYPE.TOPIC;
   }
 
-  @SuppressWarnings("unchecked")
   public Collection<TopicIF> evaluate(LocalContext context, Object input) {
     TopicIF topic = (TopicIF) input;
     
@@ -84,7 +84,7 @@ public class InstancePath extends AbstractBasicPathElement {
     
     // use a set as collection for the types, as one type can occur multiple
     // times (and should only be counted once).
-    Collection<TopicIF> types = new HashSet<TopicIF>();
+    Collection<TopicIF> types = new CompactHashSet();
 
     // include the topic itself, if the start level is 0
     if (l.getStart() == 0) {
@@ -98,7 +98,6 @@ public class InstancePath extends AbstractBasicPathElement {
     return types;
   }
   
-  @SuppressWarnings("unchecked")
   private void fillTypeList(Collection<TopicIF> types, Level l, int depth,
       Collection<TopicIF> result, ClassInstanceIndexIF index) {
     // we are finished if we reached the end of the range, or the typelist is empty

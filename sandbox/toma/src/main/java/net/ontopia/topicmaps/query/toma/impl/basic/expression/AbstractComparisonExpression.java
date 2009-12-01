@@ -18,7 +18,7 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.expression;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -52,7 +52,7 @@ public abstract class AbstractComparisonExpression extends
     ResultSet rs2 = right.evaluate(context);
 
     List<String> sharedColumns = rs1.getSharedColumns(rs2);
-    List<Pair<Integer, Integer>> cols = new LinkedList<Pair<Integer, Integer>>();
+    List<Pair<Integer, Integer>> cols = new ArrayList<Pair<Integer, Integer>>();
     for (String col : sharedColumns) {
       cols.add(new Pair<Integer, Integer>(rs1.getColumnIndex(col), rs2
           .getColumnIndex(col)));

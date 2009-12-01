@@ -18,14 +18,14 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Reifier path element in an path expression. Returns the reifier for
@@ -42,11 +42,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
  * <b>Output</b>: TOPIC
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class ReifierPath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.NAME);
     inputSet.add(TYPE.VARIANT);
     inputSet.add(TYPE.OCCURRENCE);
@@ -83,7 +84,7 @@ public class ReifierPath extends AbstractBasicPathElement {
   
   public Collection<TopicIF> evaluate(LocalContext context, Object input) {
     ReifiableIF construct = (ReifiableIF) input;
-    Collection<TopicIF> coll = new LinkedList<TopicIF>();
+    Collection<TopicIF> coll = new ArrayList<TopicIF>();
     coll.add(construct.getReifier());
     return coll;
   }

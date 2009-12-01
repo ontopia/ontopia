@@ -20,8 +20,6 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +36,7 @@ import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder;
 import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
 import net.ontopia.topicmaps.query.toma.parser.ast.QueryOrder.SORT_ORDER;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * PUBLIC: implementation of the {@link ParsedQueryIF} interface for a TOMA
@@ -79,7 +78,7 @@ public class ParsedQuery implements ParsedQueryIF {
    */
   public List<String> getSelectedVariables() {
     List<ExpressionIF> exprs = query.getSelectExpressions();
-    List<String> vars = new LinkedList<String>();
+    List<String> vars = new ArrayList<String>();
     
     for (ExpressionIF expr : exprs) {
       String name = getVariableName(expr);
@@ -126,9 +125,10 @@ public class ParsedQuery implements ParsedQueryIF {
    *         first select expression (in case there are multiple selects joined
    *         together in a UNION style).
    */
+  @SuppressWarnings("unchecked")
   public Collection<String> getAllVariables() {
     List<ExpressionIF> exprs = query.getSelectExpressions();
-    Set<String> vars = new HashSet<String>();
+    Set<String> vars = new CompactHashSet();
     
     for (ExpressionIF expr : exprs) {
       String name = getVariableName(expr);
@@ -147,9 +147,10 @@ public class ParsedQuery implements ParsedQueryIF {
    * @return a collection of all variables in the select clause of the first
    *         select expression, which are used in an aggregate function.
    */
+  @SuppressWarnings("unchecked")
   public Collection<String> getCountedVariables() {
     List<ExpressionIF> exprs = query.getSelectExpressions();
-    Set<String> vars = new HashSet<String>();
+    Set<String> vars = new CompactHashSet();
     
     for (ExpressionIF expr : exprs) {
       if (expr instanceof FunctionIF) {
@@ -166,9 +167,9 @@ public class ParsedQuery implements ParsedQueryIF {
 
   public List<String> getOrderBy() {
     List<QueryOrder> orders = query.getOrderBy();
-    ArrayList<ExpressionIF> exprs = query.getSelectExpressions();
+    List<ExpressionIF> exprs = query.getSelectExpressions();
     
-    List<String> vars = new LinkedList<String>();
+    List<String> vars = new ArrayList<String>();
     for (QueryOrder o : orders) {
       int column = o.getColumn();
       
@@ -182,7 +183,7 @@ public class ParsedQuery implements ParsedQueryIF {
 
   public boolean isOrderedAscending(String name) {
     List<QueryOrder> orders = query.getOrderBy();
-    ArrayList<ExpressionIF> exprs = query.getSelectExpressions();
+    List<ExpressionIF> exprs = query.getSelectExpressions();
     
     for (QueryOrder o : orders) {
       int column = o.getColumn();

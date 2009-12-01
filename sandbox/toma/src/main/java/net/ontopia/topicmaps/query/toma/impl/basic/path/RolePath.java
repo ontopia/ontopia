@@ -19,12 +19,12 @@
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Role path element in an path expression. Returns all roles for a
@@ -38,11 +38,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
  * <b>Output</b>: TOPIC
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class RolePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.ASSOCIATION);
   }
   
@@ -74,7 +75,6 @@ public class RolePath extends AbstractBasicPathElement {
     return TYPE.TOPIC;
   }
   
-  @SuppressWarnings("unchecked")
   public Collection<TopicIF> evaluate(LocalContext context, Object input) {
     AssociationIF assoc = (AssociationIF) input;
     return assoc.getRoleTypes();

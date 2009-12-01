@@ -18,9 +18,8 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -29,6 +28,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Name path element in an path expression. Returns all names
@@ -42,11 +42,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
  * <b>Output</b>: NAME
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class NamePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.TOPIC);
   }
   
@@ -81,7 +82,6 @@ public class NamePath extends AbstractBasicPathElement {
     return TYPE.NAME;
   }
 
-  @SuppressWarnings("unchecked")
   public Collection evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
     TopicIF topic = (TopicIF) input;
@@ -111,7 +111,7 @@ public class NamePath extends AbstractBasicPathElement {
         && !isAssignType()) {
       return names;
     } else {
-      Collection<Object[]> result = new LinkedList<Object[]>();
+      Collection<Object[]> result = new ArrayList<Object[]>();
       for (TopicNameIF name : names) {
         TopicIF nameType = name.getType();
         if (validTypes == null || validTypes.contains(nameType)) {
@@ -125,7 +125,6 @@ public class NamePath extends AbstractBasicPathElement {
     }
   }
   
-  @SuppressWarnings("unchecked")
   private void fillResultCollection(Collection<Object[]> result,
       TopicNameIF name) {
     if (isAssignScope()) {

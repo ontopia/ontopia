@@ -18,9 +18,8 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -29,6 +28,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Occurrence path element in an path expression. Returns all
@@ -43,11 +43,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.expression.PathExpression;
  * <b>Output</b>: OCCURRENCE
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class OccurrencePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
 
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.TOPIC);
   }
 
@@ -82,7 +83,6 @@ public class OccurrencePath extends AbstractBasicPathElement {
     return TYPE.OCCURRENCE;
   }
 
-  @SuppressWarnings("unchecked")
   public Collection evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
     TopicIF topic = (TopicIF) input;
@@ -114,7 +114,7 @@ public class OccurrencePath extends AbstractBasicPathElement {
         && !isAssignType()) {
       return ocs;
     } else {
-      Collection<Object[]> result = new LinkedList<Object[]>();
+      Collection<Object[]> result = new ArrayList<Object[]>();
       for (OccurrenceIF oc : ocs) {
         TopicIF ocType = oc.getType();
         if (validTypes == null || validTypes.contains(ocType)) {
@@ -127,7 +127,6 @@ public class OccurrencePath extends AbstractBasicPathElement {
     }
   }
   
-  @SuppressWarnings("unchecked")
   private void fillResultCollection(Collection<Object[]> result,
       OccurrenceIF oc) {
     if (isAssignScope()) {

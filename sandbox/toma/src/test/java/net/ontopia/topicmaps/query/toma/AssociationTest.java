@@ -94,4 +94,17 @@ public class AssociationTest extends AbstractTomaQueryTestCase {
         matches,
         "select $t where tn.($$)<-$a(contributes-to)->(project).($$)<-(implements)->(standard) = $t;");
   }
+  
+  public void testTypeAssignment() throws InvalidQueryException, IOException {
+    load("full.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "$ATYPE", getTopicById("contributes-to"), "$ROLE",
+        getTopicById("person"), "$PLAYER", getTopicById("tn"));
+    
+    verifyQuery(
+        matches,
+        "select $atype, $role, $player where exists ($atype)->($role)[$player] and $player = tn;");
+  }
+  
 }

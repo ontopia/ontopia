@@ -18,7 +18,7 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.ontopia.topicmaps.query.toma.impl.basic.expression.EqualsExpression;
@@ -51,7 +51,7 @@ public class QueryOptimizer implements QueryOptimizerIF {
   private List<QueryOptimizerIF> optimizers;
 
   public QueryOptimizer() {
-    optimizers = new LinkedList<QueryOptimizerIF>();
+    optimizers = new ArrayList<QueryOptimizerIF>();
     optimizers.add(new ReplaceExpressions());
   }
 

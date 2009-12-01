@@ -20,10 +20,10 @@ package net.ontopia.topicmaps.query.toma.parser.ast;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: The variable declaration within a SelectStatement.
@@ -32,9 +32,10 @@ public class VariableDecl {
   private String varName;
   private Set<PathElementIF.TYPE> validTypes;
   
+  @SuppressWarnings("unchecked")
   public VariableDecl(String name) {
     this.varName = name;
-    this.validTypes = new HashSet<PathElementIF.TYPE>();
+    this.validTypes = new CompactHashSet();
     
     // add all valid types
     validTypes.add(PathElementIF.TYPE.TOPIC);
@@ -83,10 +84,11 @@ public class VariableDecl {
    * @param types the further constrained types for this variable.
    * @throws InvalidQueryException if there resulting set is empty.
    */
+  @SuppressWarnings("unchecked")
   public void constrainTypes(Collection<PathElementIF.TYPE> types)
       throws InvalidQueryException {
     
-    Set<PathElementIF.TYPE> newTypes = new HashSet<PathElementIF.TYPE>();
+    Set<PathElementIF.TYPE> newTypes = new CompactHashSet();
     for (PathElementIF.TYPE type : types) {
       if (validTypes.contains(type)) {
         newTypes.add(type);

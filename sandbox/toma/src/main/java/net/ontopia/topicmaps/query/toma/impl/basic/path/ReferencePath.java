@@ -18,15 +18,15 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: Reference path element in an path expression. Returns the locator for
@@ -41,11 +41,12 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
  * <b>Output</b>: LOCATOR
  * </p>
  */
+@SuppressWarnings("unchecked")
 public class ReferencePath extends AbstractBasicPathElement {
   static final Set<TYPE> inputSet;
   
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.VARIANT);
     inputSet.add(TYPE.OCCURRENCE);
   }
@@ -79,7 +80,7 @@ public class ReferencePath extends AbstractBasicPathElement {
   }
   
   public Collection<LocatorIF> evaluate(LocalContext context, Object input) {
-    Collection<LocatorIF> coll = new LinkedList<LocatorIF>();
+    Collection<LocatorIF> coll = new ArrayList<LocatorIF>();
 
     if (input instanceof OccurrenceIF) {
       OccurrenceIF oc = (OccurrenceIF) input;

@@ -18,9 +18,8 @@
  */
 package net.ontopia.topicmaps.query.toma.impl.basic.path;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -39,12 +38,13 @@ import net.ontopia.utils.CompactHashSet;
 /**
  * INTERNAL: Represents a variable within a TOMA query.
  */
+@SuppressWarnings("unchecked")
 public class VariablePath extends AbstractVariable implements
     BasicPathElementIF {
   static final Set<TYPE> inputSet;
 
   static {
-    inputSet = new HashSet<TYPE>();
+    inputSet = new CompactHashSet();
     inputSet.add(TYPE.NONE);
   }
 
@@ -110,7 +110,6 @@ public class VariablePath extends AbstractVariable implements
     return inputSet;
   }
 
-  @SuppressWarnings("unchecked")
   public Collection<?> evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
     // try to get a ResultSet that already bound the variable
@@ -130,7 +129,7 @@ public class VariablePath extends AbstractVariable implements
           indices[idx++] = rs.getColumnIndex(var);
         }
 
-        Collection<Object[]> result = new LinkedList<Object[]>();
+        Collection<Object[]> result = new ArrayList<Object[]>(rs.getRowCount());
         for (Row r : rs) {
           Object[] obj = new Object[indices.length];
           idx = 0;
