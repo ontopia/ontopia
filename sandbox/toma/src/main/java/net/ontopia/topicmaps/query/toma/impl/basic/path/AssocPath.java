@@ -60,6 +60,9 @@ public class AssocPath extends AbstractBasicPathElement {
   private Collection<TopicIF> validLeftRoles = null;
   private Collection<TopicIF> validRightRoles = null;
 
+  private PathExpression leftRole = null;
+  private PathExpression rightRole = null;
+  
   private boolean leftTypeAssign;
   private boolean rightTypeAssign;
   
@@ -114,7 +117,6 @@ public class AssocPath extends AbstractBasicPathElement {
       resultSize++;
     }
     
-    PathExpression leftRole = null, rightRole = null;
     switch (getChildCount()) {
     case 1:
       rightRole = (PathExpression) getChild(0);
@@ -164,21 +166,6 @@ public class AssocPath extends AbstractBasicPathElement {
   
   public Collection<Object[]> evaluate(LocalContext context, Object input)
       throws InvalidQueryException {
-
-    PathExpression leftRole = null, rightRole = null;
-    switch (getChildCount()) {
-    case 1:
-      rightRole = (PathExpression) getChild(0);
-      break;
-    case 2:
-      leftRole = (PathExpression) getChild(0);
-      rightRole = (PathExpression) getChild(1);
-      break;
-    default:
-      throw new InvalidQueryException(
-          "Missing roles in association path element.");
-    }
-
     TopicIF topic = null;
     if (input instanceof TopicIF) {
       topic = (TopicIF) input;
@@ -239,9 +226,6 @@ public class AssocPath extends AbstractBasicPathElement {
       TopicIF input, PathExpression left, PathExpression right,
       Collection<TopicIF> validTypes, Collection<TopicIF> validScopes)
       throws InvalidQueryException {
-    Collection<AssociationRoleIF> inputRoles = input.getRoles();
-    Collection<Object[]> result = new ArrayList<Object[]>(inputRoles.size());
-
     if (!isAssignLeftType()) {
       // Optimization: if the type expression does not contain a variable, we
       // can cache it.
@@ -253,6 +237,8 @@ public class AssocPath extends AbstractBasicPathElement {
       }
     }
 
+    Collection<AssociationRoleIF> inputRoles = input.getRoles();
+    Collection<Object[]> result = new ArrayList<Object[]>(inputRoles.size());
     for (AssociationRoleIF role : inputRoles) {
       if (validLeftRoles == null || validLeftRoles.contains(role.getType())) {
         AssociationIF a = role.getAssociation();

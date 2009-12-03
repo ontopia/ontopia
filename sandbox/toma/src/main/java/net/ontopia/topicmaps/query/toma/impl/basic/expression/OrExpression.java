@@ -24,6 +24,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
+import net.ontopia.topicmaps.query.toma.impl.utils.QueryTracer;
 
 /**
  * INTERNAL: OR expression, returns the union of the {@link ResultSet}'s of its
@@ -44,6 +45,8 @@ public class OrExpression extends AbstractBinaryExpression {
     if (getChildCount() != 2)
       return null;
 
+    QueryTracer.enter(this);
+    
     BasicExpressionIF left = (BasicExpressionIF) getChild(0);
     BasicExpressionIF right = (BasicExpressionIF) getChild(1);
 
@@ -61,10 +64,12 @@ public class OrExpression extends AbstractBinaryExpression {
     if (sharedCols.isEmpty()) {
       context.addResultSet(rs1);
       context.addResultSet(rs2);
+      QueryTracer.leave(rs2);
       return rs2;
     } else {
       ResultSet rs = rs1.merge(rs2);
       context.addResultSet(rs);
+      QueryTracer.leave(rs);
       return rs;
     }
   }

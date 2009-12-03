@@ -188,6 +188,11 @@ public class BasicQueryProcessor implements QueryProcessorIF {
     for (int idx=1; idx<stmt.getSelectCount(); idx++) {
       BasicExpressionIF expr = (BasicExpressionIF) stmt.getSelect(idx);
       String exprStr = expr.toString();
+      // ignore aggregation functions by now, they are handled in the 
+      // aggregate method.
+      if (expr instanceof AbstractAggregateFunction) {
+        exprStr = expr.getChild(0).toString();
+      }
       if (firstRS.containsColumn(exprStr)) {
         fillMap.put(idx, firstRS.getColumnIndex(exprStr));
       } else {
@@ -259,7 +264,7 @@ public class BasicQueryProcessor implements QueryProcessorIF {
       // for each value, a new row in the ResultSet will be created
       Row newRow = row;
 
-      // only clone the row if there are more than 1 value in the ResultSet
+      // only clone the row if there is more than 1 value in the ResultSet
       if (++cnt > 1) {
         try {
           newRow = (Row) row.clone();

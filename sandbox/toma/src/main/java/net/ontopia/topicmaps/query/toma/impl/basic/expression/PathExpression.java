@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
 import net.ontopia.topicmaps.query.toma.impl.basic.Row;
 import net.ontopia.topicmaps.query.toma.impl.basic.path.AssocPath;
+import net.ontopia.topicmaps.query.toma.impl.utils.QueryTracer;
 import net.ontopia.topicmaps.query.toma.parser.ast.AbstractPathExpression;
 import net.ontopia.topicmaps.query.toma.parser.ast.PathElementIF;
 
@@ -38,14 +39,14 @@ public class PathExpression extends AbstractPathExpression implements
     BasicExpressionIF {
 
   public ResultSet evaluate(LocalContext context) throws InvalidQueryException {
-    //QueryTracer.enter(this);
+    QueryTracer.enter(this);
     initResultSets(context);
     ResultSet rs = createNewResultSet(context);
     if (!isEmpty()) {
       Row row = rs.createRow();
       evaluateElement(context, PathElementIF.TYPE.NONE, rs, row, 0, 0);
     }
-    //QueryTracer.leave(rs);
+    QueryTracer.leave(rs);
     return rs;
   }
   
@@ -95,13 +96,17 @@ public class PathExpression extends AbstractPathExpression implements
     }
 
     // iterate over all the result values
-    Row curRow;
+    Row curRow = row;
+    int cnt = 0;
     for (Object val : result) {
-      try {
-        curRow = (Row) row.clone();
-      } catch (CloneNotSupportedException e) {
-        // should not happen, as Row implements Cloneable
-        throw new InvalidQueryException(e);
+      // only clone the row if there is more than 1 value in the ResultSet
+      if (++cnt > 1) {
+        try {
+          curRow = (Row) row.clone();
+        } catch (CloneNotSupportedException e) {
+          // should not happen, as Row implements Cloneable
+          throw new InvalidQueryException("Internal QueryProcessor error:\n", e);
+        }
       }
 
       Object last = val;
@@ -109,10 +114,10 @@ public class PathExpression extends AbstractPathExpression implements
       
       // if the PathElement returned an array
       if (val instanceof Object[]) {
-        Object[] coll = (Object[]) val;
         int idx = 0;
-        for (Object obj : coll) {
-          if (idx < element.getResultSize()) {
+        int rsSize = element.getResultSize();
+        for (Object obj : (Object[]) val) {
+          if (idx < rsSize) {
             curRow.setValue(colIndex + idx++, obj);
           }
           last = obj;

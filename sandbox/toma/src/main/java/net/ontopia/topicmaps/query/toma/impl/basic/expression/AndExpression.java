@@ -22,6 +22,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.toma.impl.basic.BasicExpressionIF;
 import net.ontopia.topicmaps.query.toma.impl.basic.LocalContext;
 import net.ontopia.topicmaps.query.toma.impl.basic.ResultSet;
+import net.ontopia.topicmaps.query.toma.impl.utils.QueryTracer;
 
 /**
  * INTERNAL: AND expression, returns the intersection of the ResultSets 
@@ -37,11 +38,14 @@ public class AndExpression extends AbstractBinaryExpression {
     if (getChildCount() != 2)
       return null;
 
+    QueryTracer.enter(this);
+    
     BasicExpressionIF left = (BasicExpressionIF) getChild(0);
     BasicExpressionIF right = (BasicExpressionIF) getChild(1);
 
     left.evaluate(context);
     ResultSet rs2 = right.evaluate(context);
+    QueryTracer.leave(rs2);
     return rs2;
   }
 }
