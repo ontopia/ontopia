@@ -1886,7 +1886,7 @@ public class StringModuleTest extends AbstractPredicateTest {
                 "                \"ABCDEFGHIJKLMNOPQRSTUVXYZ\", " +
                 "                \"abcdefghijklmnopqrstuvxyz\", \"\")?");
   }
-
+  
   public void testTranslatePreserveDigits() throws InvalidQueryException,
       IOException {
     load("int-occs.ltm");
@@ -1948,5 +1948,37 @@ public class StringModuleTest extends AbstractPredicateTest {
           "    \"Addis Abeba (12)\", " +
           "    \"ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz \", " +
           "    \"abcdefghijklmnopqrstuvxyzabcdefghijklmnopqrstuvxyz \")?");
+  }
+  
+  public void testTranslatePreserveExtraChars() throws InvalidQueryException,
+      IOException {
+    load("int-occs.ltm");
+    
+    List matches = new ArrayList();
+    addMatch(matches, "OUT", "addis abeba (12)");
+    
+    verifyQuery(matches,
+                "import \"http://psi.ontopia.net/tolog/string/\" as str " +
+                "select $OUT from " +
+                "  str:translate($OUT, " +
+                "                \"Addis Abeba (12)\", " +
+                "                \"ABCDEFGHIJKLMNOPQRSTUVXYZ \", " +
+                "                \"abcdefghijklmnopqrstuvxyz\", \"\")?");
+  }
+  
+  public void testTranslateDeleteExtraChars() throws InvalidQueryException,
+      IOException {
+    load("int-occs.ltm");
+    
+    List matches = new ArrayList();
+    addMatch(matches, "OUT", "a a ");
+    
+    verifyQuery(matches,
+                "import \"http://psi.ontopia.net/tolog/string/\" as str " +
+                "select $OUT from " +
+                "  str:translate($OUT, " +
+                "                \"Addis Abeba (12)\", " +
+                "                \"ABCDEFGHIJKLMNOPQRSTUVXYZ \", " +
+                "                \"abcdefghijklmnopqrstuvxyz\")?");
   }
 }
