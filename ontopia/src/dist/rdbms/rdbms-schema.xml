@@ -87,7 +87,7 @@
 
   <datatypes platform="mysql">
     <datatype name="Text" type="text" class="constant"/>
-    <datatype name="Clob" type="text" class="constant"/>
+    <datatype name="Clob" type="mediumtext" class="constant"/>
     <datatype name="Address" type="varchar" size="255" class="variable"/>
   </datatypes>
   
