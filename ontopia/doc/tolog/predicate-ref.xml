@@ -2903,12 +2903,12 @@ those three topics will be found.
 </refsect1>
 </refentry>
 
-<!-- COMMENTED OUR FOR NOW. NEEDS MORE WORK BEFORE WE ADD IT -->
-<!--refentry id="p-str-translate">
+<refentry id="p-str-translate">
 <refnamediv>
 <refname>translate</refname>
 <refpurpose>
-Replace and/or delete characters in one string.
+Replace and/or delete characters in one string. Often used to remove
+whitespace or do case normalization.
 </refpurpose>
 </refnamediv>
 
@@ -2973,7 +2973,8 @@ Replace and/or delete characters in one string.
 <para>
 The predicate builds a translation table where the first character in
 <parameter>FROM</parameter> maps to the first character in
-<parameter>TO</parameter> (and so on). <remark>Wait with this one.</remark>
+<parameter>TO</parameter> (and so on). This is the basic function
+performed by the predicate.
 </para>
 
 <para>
@@ -2983,8 +2984,67 @@ into a predicate. If the <parameter>DELETE</parameter> parameter is
 provided it behaves like the Python function, and if not it behaves
 like the XPath function.
 </para>
+
+<para>
+That is, if the <parameter>DELETE</parameter> is not present, then the
+predicate translates characters as specified by the translation table,
+but any characters for which no mapping has been defined will be
+deleted. Characters in the <parameter>FROM</parameter> string for
+which there are no corresponding characters in the
+<parameter>TO</parameter> string will map to themselves (that is, if
+<parameter>FROM</parameter> is longer than <parameter>TO</parameter>).
+Conversely, if <parameter>TO</parameter> is longer than
+<parameter>FROM</parameter> any excess characters in
+<parameter>TO</parameter> will be ignored.
+</para>
+
+<example>
+<title>Lowercasing</title>
+<literallayout>
+import "http://psi.ontopia.net/tolog/string/" as str
+select $OUT from
+  str:translate($OUT,
+    "Addis Abeba (12)",
+    "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz ",
+    "abcdefghijklmnopqrstuvxyzabcdefghijklmnopqrstuvxyz ")?
+</literallayout>
+</example>
+
+<para>
+The example above produces "addis abeba " as the output. If we remove
+the space at the end of the <parameter>FROM</parameter> string the
+result is "addisabeba".
+</para>
+
+<para>
+If the <parameter>DELETE</parameter> <emphasis>is</emphasis> present,
+then the predicate translates characters as specified by the
+translation table and any characters for which no mapping has been
+defined will be mapped to themselves. Any characters in the
+<parameter>DELETE</parameter> string will be deleted, of course. If
+<parameter>FROM</parameter> and <parameter>TO</parameter> are of
+different lengths the effect is the same as specified above when
+<parameter>DELETE</parameter> is not present.
+</para>
+
+<example>
+<title>Lowercasing</title>
+<literallayout>
+import "http://psi.ontopia.net/tolog/string/" as str
+select $OUT from
+  str:translate($OUT,
+    "Addis Abeba (12)",
+    "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz",
+    "abcdefghijklmnopqrstuvxyzabcdefghijklmnopqrstuvxyz",
+    "()")?
+</literallayout>
+</example>
+
+<para>
+The example above produces "addis abeba 12" as the output.
+</para>
 </refsect1>
-</refentry-->
+</refentry>
 
 <refentry id="p-str-substring">
 <refnamediv>
