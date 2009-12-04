@@ -78,6 +78,7 @@
     <group-ref>net.ontopia.topicmaps.entry</group-ref>
     <group-ref>net.ontopia.topicmaps.utils.ltm</group-ref>
     <group-ref>net.ontopia.topicmaps.utils.ctm</group-ref>
+    <group-ref>net.ontopia.topicmaps.utils.jtm</group-ref>
     <group-ref>net.ontopia.topicmaps.utils.rdf</group-ref>
     <group-ref>tmxml</group-ref>
   </group>
@@ -411,6 +412,12 @@
     <name>net.ontopia.topicmaps.utils.ctm</name>
     <test>net.ontopia.topicmaps.utils.ctm.test.CTMTestGenerator</test>
     <test>net.ontopia.topicmaps.utils.ctm.test.CTMInvalidTestGenerator</test>
+  </group>
+
+  <group>
+    <name>net.ontopia.topicmaps.utils.jtm</name>
+    <test>net.ontopia.topicmaps.utils.jtm.test.JTMTestGenerator</test>
+    <test>net.ontopia.topicmaps.utils.jtm.test.JTMInvalidTestGenerator</test>
   </group>
   
   <group>

@@ -1,0 +1,36 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#en</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#no</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#se</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#topic1</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Navn 2</value>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+<scopingTopic topicref="2"></scopingTopic>
+<scopingTopic topicref="3"></scopingTopic>
+</scope>
+</name>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

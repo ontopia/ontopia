@@ -1,0 +1,22 @@
+<topicMap>
+<itemIdentifiers>
+<locator>#xtm-language</locator>
+</itemIdentifiers>
+<topic number="1">
+<itemIdentifiers>
+<locator>#topic1</locator>
+</itemIdentifiers>
+<name number="1">
+<value>Topic 1</value>
+<type topicref="2"></type>
+<itemIdentifiers>
+<locator>#baseName1</locator>
+</itemIdentifiers>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

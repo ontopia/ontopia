@@ -203,7 +203,8 @@
     <include name="net/ontopia/topicmaps/utils/*.java" />
     <include name="net/ontopia/topicmaps/utils/ltm/*.java" />
     <include name="net/ontopia/topicmaps/utils/ctm/*.java" />
-    <include name="net/ontopia/topicmaps/utils/rdf/*.java" />
+    <include name="net/ontopia/topicmaps/utils/jtm/*.java" />
+  	<include name="net/ontopia/topicmaps/utils/rdf/*.java" />
     <include name="net/ontopia/topicmaps/utils/xfml/*.java" />
     <include name="net/ontopia/topicmaps/utils/tmrap/*.java"/>
     <include name="net/ontopia/topicmaps/impl/utils/*.java" />
@@ -233,8 +234,9 @@
     <include name="net/ontopia/topicmaps/utils/*.class" />
     <include name="net/ontopia/topicmaps/utils/ltm/*.class" />
     <include name="net/ontopia/topicmaps/utils/ctm/*.class" />
+    <include name="net/ontopia/topicmaps/utils/jtm/*.class" />
     <include name="net/ontopia/topicmaps/utils/rdf/*.class" />
-    <include name="net/ontopia/topicmaps/utils/xfml/*.class" />
+  	<include name="net/ontopia/topicmaps/utils/xfml/*.class" />
     <include name="net/ontopia/topicmaps/utils/tmrap/*.class"/>
     <include name="net/ontopia/topicmaps/impl/utils/*.class" />
     <include name="net/ontopia/topicmaps/impl/basic/*.class" />
@@ -268,7 +270,8 @@
     <include name="net/ontopia/topicmaps/utils/rdf/test/*.java"/>
     <include name="net/ontopia/topicmaps/utils/ltm/test/*.java"/>
     <include name="net/ontopia/topicmaps/utils/ctm/test/*.java"/>
-    <include name="net/ontopia/topicmaps/utils/tmrap/test/**/*.java"/>
+    <include name="net/ontopia/topicmaps/utils/jtm/test/*.java"/>
+  	<include name="net/ontopia/topicmaps/utils/tmrap/test/**/*.java"/>
     <include name="net/ontopia/topicmaps/cmdlineutils/test/*.java"/>
     <include name="net/ontopia/test/perf/*.java"/>
     <include name="net/ontopia/net/data/test/*.java" />
@@ -295,7 +298,8 @@
     <include name="net/ontopia/topicmaps/utils/test/*.class"/>
     <include name="net/ontopia/topicmaps/utils/ltm/test/*.class"/>
     <include name="net/ontopia/topicmaps/utils/ctm/test/*.class"/>
-    <include name="net/ontopia/topicmaps/utils/rdf/test/*.class"/>
+    <include name="net/ontopia/topicmaps/utils/jtm/test/*.class"/>
+  	<include name="net/ontopia/topicmaps/utils/rdf/test/*.class"/>
     <include name="net/ontopia/topicmaps/utils/tmrap/test/**/*.class"/>
     <include name="net/ontopia/topicmaps/cmdlineutils/test/*.class"/>
     <include name="net/ontopia/test/perf/*.class"/>
@@ -753,7 +757,8 @@
        net.ontopia.topicmaps.utils.ltm,
        net.ontopia.topicmaps.utils.rdf,
        net.ontopia.topicmaps.utils.ctm,
-       net.ontopia.topicmaps.xml,
+       net.ontopia.topicmaps.utils.jtm,
+  	   net.ontopia.topicmaps.xml,
        net.ontopia.topicmaps.db2tm,
        net.ontopia.topicmaps.impl.basic" />
 
@@ -770,7 +775,8 @@
        net.ontopia.topicmaps.utils,
        net.ontopia.topicmaps.utils.ltm,
        net.ontopia.topicmaps.utils.ctm,
-       net.ontopia.topicmaps.utils.rdf,
+       net.ontopia.topicmaps.utils.jtm,
+  	   net.ontopia.topicmaps.utils.rdf,
        net.ontopia.topicmaps.xml,
        net.ontopia.topicmaps.impl.basic,
        net.ontopia.topicmaps.impl.basic.index,
@@ -1209,12 +1215,12 @@
           classpathref="project.classpath" fork="true" output="${build.root}/antlr.tolog.log">
        <arg line="tolog.g" />
     </java>
-
+  	
     <echo>Compiling TMAPI code...</echo>
     <mkdir dir="${build.classes}/META-INF/services"/>
     <copy file="${java.path}/net/ontopia/topicmaps/impl/tmapi2/tmsf.service"
-         tofile="${build.classes}/META-INF/services/org.tmapi.core.TopicMapSystemFactory"/>
-
+          tofile="${build.classes}/META-INF/services/org.tmapi.core.TopicMapSystemFactory"/>
+  	
     <patternset id="sources.ontopia.core">
       <patternset refid="sources.engine" />
       <patternset refid="sources.tmapi" />
@@ -1393,7 +1399,7 @@
     <copy file="${3rdparty.path}/jing.jar" tofile="${dist.path}/lib/jing.jar" />
     <copy file="${3rdparty.path}/tmapi-2.0RC1.jar" tofile="${dist.path}/lib/tmapi.jar" />
     <copy file="${3rdparty.path}/tmapi-2.0RC1-tests.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
-<copy file="${3rdparty.path}/touchgraph.jar" tofile="${dist.path}/lib/touchgraph.jar" />
+    <copy file="${3rdparty.path}/touchgraph.jar" tofile="${dist.path}/lib/touchgraph.jar" />
     <copy file="${3rdparty.path}/trove.jar" tofile="${dist.path}/lib/trove.jar" />
 
     <!-- Collect lib jar files -->

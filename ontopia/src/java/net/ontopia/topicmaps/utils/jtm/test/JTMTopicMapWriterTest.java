@@ -10,6 +10,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.jtm.JTMTopicMapReader;
+import net.ontopia.topicmaps.utils.jtm.JTMTopicMapWriter;
 import net.ontopia.topicmaps.utils.test.AbstractUtilsTestCase;
 
 public class JTMTopicMapWriterTest extends AbstractUtilsTestCase {
@@ -38,10 +39,10 @@ public class JTMTopicMapWriterTest extends AbstractUtilsTestCase {
     assertEquals(1, types.size());
     assertEquals(movie, types.iterator().next());
 
-    //JTMTopicMapWriter writer = new JTMTopicMapWriter(System.out);
+    JTMTopicMapWriter writer = new JTMTopicMapWriter(System.out);
     // LocatorIF base = tm.getStore().getBaseAddress();
     // TMObjectIF obj =
     // tm.getObjectByItemIdentifier(base.resolveAbsolute("#mother"));
-    //writer.write(tm);
+    writer.write(tm);
   }
 }

@@ -1,0 +1,3 @@
+assoc1(player1 : rtype1)
+assoc2(player1 : rtype2)
+assoc1(player2 : rtype1)

@@ -1,0 +1,13 @@
+<topicMap id="xtm-language"
+   xmlns="http://www.topicmaps.org/xtm/1.0/"
+   xmlns:xlink='http://www.w3.org/1999/xlink'> 
+  <topic id="topic1">
+    <baseName>
+      <baseNameString>Name 1</baseNameString>
+      <variant id="variant1">
+        <parameters><topicRef xlink:href="#scope1"/></parameters>
+        <variantName><resourceData>Variant 1</resourceData></variantName>
+      </variant>
+    </baseName>
+  </topic>
+</topicMap>

@@ -1,0 +1,67 @@
+<topicMap>
+<itemIdentifiers>
+<locator>#xtm-language</locator>
+</itemIdentifiers>
+<topic number="1">
+<itemIdentifiers>
+<locator>#scope1</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#scope2</locator>
+</itemIdentifiers>
+</topic>
+<topic number="3">
+<itemIdentifiers>
+<locator>#topic1</locator>
+</itemIdentifiers>
+<occurrence number="1">
+<value>Internal String</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</occurrence>
+<occurrence number="2">
+<value>Internal String</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="6"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</occurrence>
+</topic>
+<topic number="4">
+<itemIdentifiers>
+<locator>#topic2</locator>
+</itemIdentifiers>
+<occurrence number="1">
+<value>Internal String</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="1"></scopingTopic>
+</scope>
+</occurrence>
+<occurrence number="2">
+<value>Internal String</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="5"></type>
+<scope>
+<scopingTopic topicref="2"></scopingTopic>
+</scope>
+</occurrence>
+</topic>
+<topic number="5">
+<itemIdentifiers>
+<locator>#type1</locator>
+</itemIdentifiers>
+</topic>
+<topic number="6">
+<itemIdentifiers>
+<locator>#type2</locator>
+</itemIdentifiers>
+</topic>
+</topicMap>

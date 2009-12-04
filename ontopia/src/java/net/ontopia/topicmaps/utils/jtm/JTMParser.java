@@ -24,6 +24,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.utils.MergeUtils;
 
 /**
  * INTERNAL: Parses an JTM fragment from a reader and stores the
@@ -101,8 +102,8 @@ public class JTMParser {
       }
     }
 
-    setItemIdentifiers(topic, obj);
-    setSubjectIdentifiers(topic, obj);
+    topic = (TopicIF) setItemIdentifiers(topic, obj);
+    topic = setSubjectIdentifiers(topic, obj);
     setSubjectLocators(topic, obj);
   }
 
@@ -245,23 +246,35 @@ public class JTMParser {
     return null;
   }
 
-  private void setItemIdentifiers(TMObjectIF element, JSONObject obj)
+  private TMObjectIF setItemIdentifiers(TMObjectIF element, JSONObject obj)
       throws JSONException {
     if (obj.has("item_identifiers")) {
       JSONArray arr = obj.getJSONArray("item_identifiers");
       if (arr != null) {
         for (int i = 0; i < arr.length(); i++) {
           String ref = arr.getString(i);
-          LocatorIF iid = getLocator(ref);
+          LocatorIF iid = element.getTopicMap().getStore().getBaseAddress()
+              .resolveAbsolute("#" + ref);
+          
+          if (element instanceof TopicIF) {
+            TMObjectIF other = tm.getObjectByItemIdentifier(iid);
+            if (other != null) {
+              if (other instanceof TopicIF)
+              element = merge((TopicIF) element, (TopicIF) other);
+            }
+          }
+          
           if (iid != null) {
             element.addItemIdentifier(iid);
           }
         }
       }
     }
+    
+    return element;
   }
 
-  private void setSubjectIdentifiers(TopicIF element, JSONObject obj)
+  private TopicIF setSubjectIdentifiers(TopicIF element, JSONObject obj)
       throws JSONException {
     if (obj.has("subject_identifiers")) {
       JSONArray arr = obj.getJSONArray("subject_identifiers");
@@ -269,15 +282,23 @@ public class JTMParser {
         for (int i = 0; i < arr.length(); i++) {
           String ref = arr.getString(i);
           LocatorIF sid = getLocator(ref);
+          
+          TopicIF other = tm.getTopicBySubjectIdentifier(sid);
+          if (other != null) {
+            element = merge(element, other);
+          }
+          
           if (sid != null) {
             element.addSubjectIdentifier(sid);
           }
         }
       }
     }
+    
+    return element;
   }
 
-  private void setSubjectLocators(TopicIF element, JSONObject obj)
+  private TopicIF setSubjectLocators(TopicIF element, JSONObject obj)
       throws JSONException {
     if (obj.has("subject_locators")) {
       JSONArray arr = obj.getJSONArray("subject_locators");
@@ -285,12 +306,20 @@ public class JTMParser {
         for (int i = 0; i < arr.length(); i++) {
           String ref = arr.getString(i);
           LocatorIF sl = getLocator(ref);
+          
+          TopicIF other = tm.getTopicBySubjectIdentifier(sl);
+          if (other != null) {
+            element = merge(element, other);
+          }
+          
           if (sl != null) {
             element.addSubjectLocator(sl);
           }
         }
       }
     }
+    
+    return element;
   }
 
   private void setReifier(ReifiableIF element, JSONObject obj)
@@ -316,26 +345,26 @@ public class JTMParser {
 
   private TopicIF getReference(String reference) {
     String plainRef = reference.substring(3);
-    LocatorIF loc = getLocator(plainRef);
-    if (loc == null) {
-      return null;
-    }
-
     TopicIF topic = null;
 
     if (reference.startsWith("si:")) {
+      LocatorIF loc = getLocator(plainRef);
       topic = tm.getTopicBySubjectIdentifier(loc);
       if (topic == null) {
         topic = tm.getBuilder().makeTopic();
         topic.addSubjectIdentifier(loc);
       }
     } else if (reference.startsWith("sl:")) {
+      LocatorIF loc = getLocator(plainRef);
       topic = tm.getTopicBySubjectLocator(loc);
       if (topic == null) {
         topic = tm.getBuilder().makeTopic();
         topic.addSubjectLocator(loc);
       }
     } else if (reference.startsWith("ii:")) {
+      LocatorIF loc = tm.getStore().getBaseAddress().resolveAbsolute(
+          plainRef);
+      
       topic = (TopicIF) tm.getObjectByItemIdentifier(loc);
       if (topic == null) {
         topic = tm.getBuilder().makeTopic();
@@ -344,6 +373,20 @@ public class JTMParser {
     }
 
     return topic;
+  }
+
+  private TopicIF merge(TopicIF topic, TopicIF other) {
+    if (topic == other)
+      return topic;
+
+    // get rid of object with lowest id
+    if (topic.getObjectId().compareTo(other.getObjectId()) > 0) {
+      MergeUtils.mergeInto(other, topic); // topic is now lost...
+      return other;
+    } else {
+      MergeUtils.mergeInto(topic, other); // other is now lost...
+      return topic;
+    }
   }
 
   @SuppressWarnings("unchecked")

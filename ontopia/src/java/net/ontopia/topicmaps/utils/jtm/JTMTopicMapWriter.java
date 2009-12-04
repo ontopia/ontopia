@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Collection;
+import java.util.Iterator;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -37,7 +38,8 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
   private final static String VERSION = "1.0";
   
   private JSONWriter writer;
-
+  private LocatorIF baseLoc;
+  
   /**
    * PUBLIC: Create an JTMTopicMapWriter that writes to a given OutputStream in
    * UTF-8. <b>Warning:</b> Use of this method is discouraged, as it is very
@@ -77,9 +79,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * @param tm The topic map to be serialized as JTM.
    */
   public void write(TopicMapIF tm) throws IOException {
-    writer.object().pair("version", VERSION).pair("item_type", "topicmap");
-    writeTopicMap(tm);
-    writer.finish();
+    write((TMObjectIF) tm);
   }
 
   /**
@@ -88,6 +88,9 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * @param object The topic map construct to be serialized as JTM fragment.
    */
   public void write(TMObjectIF object) throws IOException {
+    // store the base address for this map
+    baseLoc = object.getTopicMap().getStore().getBaseAddress();
+    
     writer.object().pair("version", VERSION);
     
     String key = "item_type";
@@ -151,6 +154,8 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       writer.endArray();
     }
 
+    writeReifier(tm);
+    writeIdentifiers("item_identifiers", tm.getItemIdentifiers());
 
     writer.endObject();
   }
@@ -303,10 +308,27 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     if (!ids.isEmpty()) {
       writer.key(key).array();
       for (LocatorIF id : ids) {
-        writer.value(id.getExternalForm());
+        writer.value(getIdentifier(id));
       }
       writer.endArray();
     }
+  }
+  
+  private String getIdentifier(LocatorIF loc) {
+    String base = baseLoc.getAddress();
+    String id = null;
+    if (loc.getAddress().startsWith(base)) {
+      String addr = loc.getAddress();
+      int pos = addr.indexOf('#');
+      if (pos != -1) {
+        id = addr.substring(pos + 1);
+      }
+    }
+    
+    if (id == null) {
+      id = loc.getExternalForm();
+    }
+    return id;
   }
   
   private void writeRefArray(String key, Collection<TopicIF> coll)
@@ -350,7 +372,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     if (!ref.getItemIdentifiers().isEmpty()) {
       sb.append("ii:");
       LocatorIF loc = (LocatorIF) ref.getItemIdentifiers().iterator().next();
-      sb.append(loc.getExternalForm());
+      sb.append("#" + getIdentifier(loc));
     } else if (!ref.getSubjectIdentifiers().isEmpty()) {
       sb.append("si:");
       LocatorIF loc = (LocatorIF) ref.getSubjectIdentifiers().iterator().next();
