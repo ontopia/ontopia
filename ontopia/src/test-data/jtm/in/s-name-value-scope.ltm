@@ -1,5 +1,0 @@
-/* This line shows that names are first sorted by value (scope ignored). */
-[topic1 = "Name 1" / scope2 = "Name 2" / scope1]
-
-/* This line shows that when values are the same, sorting is by scope. */
-[topic2 = "Name 1" / scope2 = "Name 1" / scope1]

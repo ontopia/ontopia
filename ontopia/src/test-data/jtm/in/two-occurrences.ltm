@@ -1,2 +1,0 @@
-{topic1, type1, [[Internal string 1]]}
-{topic1, type1, "http://external.string"}

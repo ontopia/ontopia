@@ -1,5 +1,0 @@
-/* This line shows that roles are sorted first by player (type ignored). */
-atype1(player2 : rtype1, player1 : rtype2)
-
-/* This line shows that if role player are equal, sorting is by role type. */
-atype2(player1 : rtype1, player1 : rtype2)

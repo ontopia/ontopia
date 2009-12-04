@@ -1,5 +1,0 @@
-/* This line shows that variants are first sorted by value (scope ignored). */
-[topic1 = "Name" ("Variant 1" / scope2) ("Variant 2" / scope1)]
-
-/* This line shows that when values are the same, sorting is by scope. */
-[topic2 = "Name" ("Variant 1" / scope2) ("Variant 1" / scope1)]

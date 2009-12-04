@@ -1,7 +1,0 @@
-/* These 2 lines show that assocs are sorted first by type (roles ignored). */
-atype1(player2 : rtype1) / scope1
-atype1(player1 : rtype1) / scope2
-
-/* These two lines show that with equal types, sorting is by roles. */
-atype1(player3 : rtype1) / scope2
-atype1(player3 : rtype1) / scope1

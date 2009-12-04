@@ -1,2 +1,0 @@
-#PREFIX myprefix @"http://some-address/#"
-[myprefix:topic]
