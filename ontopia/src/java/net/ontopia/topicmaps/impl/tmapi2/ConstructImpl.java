@@ -106,7 +106,8 @@ abstract class ConstructImpl implements Construct {
   }
   
   public int hashCode() {
-    return getWrapped().hashCode();
+	// we need to be sure that the hascode of two equal objects is equal
+    return getId().hashCode();
   }
 
 }

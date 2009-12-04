@@ -477,7 +477,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
   public boolean equals(Object o) {
     // NOTE: overriding this method because it is slightly different
     // than for other topic map objects.
-    if (o == null || !(o instanceof TopicMap))
+    if (o == null || !(o instanceof TopicMapImpl))
       return false;
     return this.wrapped == ((TopicMapImpl) o).wrapped;
   }
