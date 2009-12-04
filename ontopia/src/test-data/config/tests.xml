@@ -417,7 +417,6 @@
   <group>
     <name>net.ontopia.topicmaps.utils.jtm</name>
     <test>net.ontopia.topicmaps.utils.jtm.test.JTMTestGenerator</test>
-    <test>net.ontopia.topicmaps.utils.jtm.test.JTMInvalidTestGenerator</test>
   </group>
   
   <group>
