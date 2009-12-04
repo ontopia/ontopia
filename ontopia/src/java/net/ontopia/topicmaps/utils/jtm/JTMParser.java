@@ -48,6 +48,9 @@ public class JTMParser {
     STRING, ARRAY, OBJECT
   };
 
+  private static final String DEFAULT_STRING_TYPE = "http://www.w3.org/2001/XMLSchema#string";
+  private static final String URI_TYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
+  
   public JTMParser(TopicMapIF topicmap) {
     this.tm = topicmap;
   }
@@ -171,8 +174,13 @@ public class JTMParser {
     Collection<TopicIF> scope = getScope(obj);
     LocatorIF datatype = getDataType(obj);
 
-    VariantNameIF variant = tm.getBuilder().makeVariantName(name, value,
-        datatype, scope);
+    VariantNameIF variant;
+    if (datatype.getAddress().equalsIgnoreCase(URI_TYPE)) {
+      variant = tm.getBuilder().makeVariantName(name, getLocator(value), scope);
+    } else {
+      variant = tm.getBuilder().makeVariantName(name, value,
+          datatype, scope);
+    }
 
     setItemIdentifiers(variant, obj);
     setReifier(variant, obj);
@@ -184,8 +192,12 @@ public class JTMParser {
     LocatorIF datatype = getDataType(obj);
     TopicIF type = getType(obj);
 
-    OccurrenceIF oc = tm.getBuilder().makeOccurrence(topic, type, value,
-        datatype);
+    OccurrenceIF oc;
+    if (datatype.getAddress().equalsIgnoreCase(URI_TYPE)) {
+      oc = tm.getBuilder().makeOccurrence(topic, type, getLocator(value));
+    } else {
+      oc = tm.getBuilder().makeOccurrence(topic, type, value, datatype);
+    }
 
     Collection<TopicIF> scopes = getScope(obj);
     for (TopicIF scope : scopes) {
@@ -219,7 +231,7 @@ public class JTMParser {
       type = obj.getString("datatype");
     }
     if (type == null) {
-      type = "http://www.w3.org/2001/XMLSchema#string";
+      type = DEFAULT_STRING_TYPE;
     }
     return getLocator(type);
   }
@@ -253,15 +265,28 @@ public class JTMParser {
       if (arr != null) {
         for (int i = 0; i < arr.length(); i++) {
           String ref = arr.getString(i);
-          LocatorIF iid = element.getTopicMap().getStore().getBaseAddress()
-              .resolveAbsolute("#" + ref);
+          LocatorIF iid = null;
           
-          if (element instanceof TopicIF) {
-            TMObjectIF other = tm.getObjectByItemIdentifier(iid);
-            if (other != null) {
-              if (other instanceof TopicIF)
-              element = merge((TopicIF) element, (TopicIF) other);
+          if (ref.startsWith("http://")) {
+            try {
+              iid = new URILocator(ref);
+            } catch (MalformedURLException e) {
+              continue;
             }
+          } else {
+            iid = element.getTopicMap().getStore().getBaseAddress()
+              .resolveAbsolute(ref);
+          }
+
+          TMObjectIF other = tm.getObjectByItemIdentifier(iid);
+          if (other != null) {
+            if (element instanceof TopicIF) {
+              if (other instanceof TopicIF) {
+                element = merge((TopicIF) element, (TopicIF) other);
+                continue;
+              }
+            }
+            continue;
           }
           
           if (iid != null) {
@@ -306,10 +331,10 @@ public class JTMParser {
         for (int i = 0; i < arr.length(); i++) {
           String ref = arr.getString(i);
           LocatorIF sl = getLocator(ref);
-          
-          TopicIF other = tm.getTopicBySubjectIdentifier(sl);
+          TopicIF other = tm.getTopicBySubjectLocator(sl);
           if (other != null) {
             element = merge(element, other);
+            continue;
           }
           
           if (sl != null) {
@@ -328,6 +353,13 @@ public class JTMParser {
       String reference = obj.getString("reifier");
       if (reference != null) {
         TopicIF ref = getReference(reference);
+        
+        // if the topic has already been used to reify a construct,
+        // ignore it.
+        if (ref != null && ref.getReified() != null) {
+          return;
+        }
+        
         if (ref != null) {
           element.setReifier(ref);
         }
@@ -336,11 +368,7 @@ public class JTMParser {
   }
 
   private LocatorIF getLocator(String url) {
-    try {
-      return new URILocator(url);
-    } catch (MalformedURLException e) {
-      return null;
-    }
+    return tm.getStore().getBaseAddress().resolveAbsolute(url);
   }
 
   private TopicIF getReference(String reference) {
@@ -402,7 +430,7 @@ public class JTMParser {
       } else {
         switch (schema.type) {
         case STRING:
-          String val = object.getString(key);
+          String val = object.getString(key).toLowerCase();
           if (schema.value != null && !schema.value.equals(val)) {
             throw new JSONException("value for element '" + key
                 + "' has to be '" + schema.value + "'.");
