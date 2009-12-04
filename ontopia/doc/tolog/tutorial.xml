@@ -15,7 +15,7 @@
 <para>
 This document is a tutorial introduction to the tolog topic map query
 language. It explains how to use all the features of the language, as
-defined in version 1.1.
+defined in version 1.2.
 </para>
 </abstract>
 </articleinfo>
@@ -25,13 +25,13 @@ defined in version 1.1.
 <title>Introduction</title>
 
 <para>
-tolog is a language for querying topic maps, inspired by Datalog (a
-subset of Prolog) and SQL. Using tolog one can query a topic map in
-much the same way as a relational database can be queried with SQL.
-It is possible to ask for all topics of a particular types, the names
-of all topics of a particular type in a particular scope, for all
-topics used as association role types, for all associations with more
-than two roles, and so on.
+tolog is a language for querying and updating topic maps, inspired by
+Datalog (a subset of Prolog) and SQL. Using tolog one can query a
+topic map in much the same way as a relational database can be queried
+with SQL.  It is possible to ask for all topics of a particular types,
+the names of all topics of a particular type in a particular scope,
+for all topics used as association role types, for all associations
+with more than two roles, and so on.
 </para>
 
 <para>
@@ -1608,7 +1608,269 @@ again with different parameters without having to pay the cost of
 parsing and optimizing the query more than once.
 </para>
 </section>
+</section>
 
+<section>
+<title>tolog updates</title>
+
+<para>
+In addition to querying the topic map to retrieve data tolog also
+supports making modifications to the topic map. This section explains
+how to use the <symbol>DELETE</symbol>, <symbol>UPDATE</symbol>,
+<symbol>INSERT</symbol>, and <symbol>MERGE</symbol> statements, in
+addition to the <symbol>SELECT</symbol> statement covered so far.
+</para>
+
+<para>
+Note that in all of these statement types, topic references and prefix
+declarations have exactly the same syntax as in
+<symbol>SELECT</symbol> statements.
+</para>
+
+<section>
+<title>The <symbol>DELETE</symbol> statement</title>
+
+<para>
+This statement is used to delete objects from the topic map. The
+simplest form of delete statements is as follows:
+</para>
+
+<example>
+<title>Deleting a topic</title>
+<literallayout>delete foo</literallayout>
+</example>
+
+<para>
+This would delete the topic map object with the ID
+<symbol>foo</symbol>. If it is a topic map everything in the topic map
+will be deleted. If it is an association, the association and all its
+roles will be deleted. If it's a topic the topic and all its names,
+occurrences, and all the associations it plays roles in will be
+deleted. It will also be removed as a reifier, a topic type, and from
+scopes, and statements typed with the topic will also be deleted.
+</para>
+
+<para>
+It's possible to run a query to delete things, as follows:
+</para>
+
+<example>
+<title>Deleting all person topics</title>
+<literallayout>delete $PERSON from
+  instance-of($PERSON, person)
+</literallayout>
+</example>
+
+<para>
+The <symbol>from</symbol> part of the query is the same as for
+<symbol>SELECT</symbol> statements, and so the above would find all
+topics of type <symbol>PERSON</symbol> and delete them. Any number of
+variables and topic references are allowed in the
+<symbol>delete</symbol> clause.
+</para>
+
+<para>
+Finally, there is a third form of <symbol>DELETE</symbol> statements,
+which calls a function to remove a value from a property. Here is an
+example, removing all Wikipedia PSIs from all topics in the topic map:
+</para>
+
+<example>
+<title>Removing Wikipedia PSIs</title>
+<literallayout>import "http://psi.ontopia.net/tolog/string/" as str
+  delete subject-identifier($TOPIC, $PSI) from
+  subject-identifier($TOPIC, $PSI),
+  str:starts-with($PSI, "http://en.wikipedia.org/wiki/")
+</literallayout>
+</example>
+
+<para>
+The deletion functions available in tolog are:
+</para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+  <entry>Function</entry>
+  <entry>Parameters</entry>
+  <entry>Meaning</entry>
+</row>
+</thead>
+<tbody>
+<row>
+  <entry>subject-identifier</entry>
+  <entry>topic, locator</entry>
+  <entry>Removes the locator as a subject identifier for the topic.</entry>
+</row>
+<row>
+  <entry>subject-locator</entry>
+  <entry>topic, locator</entry>
+  <entry>Removes the locator as a subject locator for the topic.</entry>
+</row>
+<row>
+  <entry>item-identifier</entry>
+  <entry>object, locator</entry>
+  <entry>Removes the locator as an item identifier for the object.</entry>
+</row>
+<row>
+  <entry>direct-instance-of</entry>
+  <entry>topic, topic</entry>
+  <entry>Removes the second topic as an a topic type of the first topic.</entry>
+</row>
+<row>
+  <entry>scope</entry>
+  <entry>statement, topic</entry>
+  <entry>Removes the topic from the scope of the statement.</entry>
+</row>
+<row>
+  <entry>reifies</entry>
+  <entry>statement, topic</entry>
+  <entry>Removes the topic as a reifier of the statement.</entry>
+</row>  
+</tbody>
+</tgroup>
+</informaltable>
+</section>
+
+<section>
+<title>The <symbol>INSERT</symbol> statement</title>
+
+<para>
+The <symbol>INSERT</symbol> statement is used to add new information
+to the topic map. In its simplest form it looks like this:
+</para>
+
+<example>
+<title>Adding a new topic</title>
+<literallayout>
+INSERT
+  tolog-updates isa update-language;
+    - "tolog updates".
+</literallayout>
+</example>
+
+<para>
+Basically, after the <symbol>INSERT</symbol> keyword follows topic map
+data in <ulink url="http://www.isotopicmaps.org/ctm/">CTM</ulink>
+syntax. Note that it is possible to use the CTM wildcard syntax to
+create new topics without giving them explicit IDs in the CTM
+fragment. Prefixes declared for the tolog query can also be used in
+the CTM fragment.
+</para>
+
+<para>
+There is another more powerful form of the <symbol>INSERT</symbol>
+statement which runs a query and instantiates the CTM part once for
+each row in the query result. An example of this might be as follows:
+</para>
+
+<example>
+<title>Adding Wikipedia PSIs</title>
+<literallayout>import "http://psi.ontopia.net/tolog/string/" as str
+  insert $topic $psi . from
+  article-about($topic, $psi),
+  str:starts-with($psi, "http://en.wikipedia.org/wiki"/)
+</literallayout>
+</example>
+
+<para>
+For every <symbol>article-about</symbol> occurrence which references a
+Wikipedia article this statement adds the URI of the article as a
+subject identifier of the topic.
+</para>
+</section>
+
+<section>
+<title>The <symbol>UPDATE</symbol> statement</title>
+
+<para>
+The <symbol>UPDATE</symbol> statement makes it possible to change the
+values of some properties in the topic map. The statement has two
+forms, of which the simplest is this:
+</para>
+
+<example>
+<title>Simple update</title>
+<literallayout>update value(@2312, "Ontopia")</literallayout>
+</example>
+
+<para>
+The above statement sets the string value of the object with ID
+<symbol>2312</symbol> to <literal>"Ontopia"</literal>. It is also
+possible to run a query to find the objects to change (and their
+values), as follows:
+</para>
+
+<example>
+<title>Query update</title>
+<literallayout>update value($TN, "Ontopia") from
+  topic-name(oks, $TN)
+</literallayout>
+</example>
+
+<para>
+The available update functions are:
+</para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+  <entry>Function</entry>
+  <entry>Parameters</entry>
+  <entry>Meaning</entry>
+</row>
+</thead>
+<tbody>
+<row>
+  <entry>value</entry>
+  <entry>object, string</entry>
+  <entry>Sets the string value of the object, which must be a topic
+  name, variant name, or occurrence.</entry>
+</row>
+<row>
+  <entry>resource</entry>
+  <entry>object, locator</entry>
+  <entry>Sets the value of the object to the given locator (and also
+  changes the datatype to URI), where the object must be a variant
+  name or an occurrence.</entry>
+</row>  
+</tbody>
+</tgroup>
+</informaltable>
+</section>
+
+<section>
+<title>The <symbol>MERGE</symbol> statement</title>
+
+<para>
+The <symbol>MERGE</symbol> statement can be used to merge topics
+either by running a query or directly, as in the example below.
+</para>
+
+<example>
+<title>Merging two topics</title>
+<literallayout>merge topic1, topic2</literallayout>
+</example>
+
+<para>
+It's also possible to find the topics to merge by running a query, as
+in the following:
+</para>
+
+<example>
+<title>Merging by email</title>
+<literallayout>merge $T1, $T2 from
+  email($T1, $EMAIL),
+  email($T2, $EMAIL)</literallayout>
+</example>
+
+<para>
+Rows where <symbol>T1</symbol> and <symbol>T2</symbol> refer to the
+same topic are ignored.
+</para>
+</section>
 </section>
 
 <section>
@@ -1632,6 +1894,9 @@ url="http://www.ontopia.net/topicmaps/materials/tolog.html">tolog - A
 topic map query language</ulink></citetitle>, from XML Europe
 2001.</para>
 
+<para>More about tolog updates can be found in <ulink
+url="http://www.tmra.de/2009/talks/tolog_updates">the TMRA 2009
+paper</ulink>.</para>
 </section>
 
 </article>
