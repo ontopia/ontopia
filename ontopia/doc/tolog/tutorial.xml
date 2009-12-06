@@ -560,7 +560,7 @@ This capability is essentially the same as the boolean operator
 results where the criteria are true if <symbol>{ A | B }</symbol>.
 </para>
 
-<section>
+<section id="sect-nonfailing-clause">
 <title>Non-failing clauses</title>
 
 <para>
@@ -857,6 +857,24 @@ influenced-by($A, $B) :- {
   based-on($OPERA : result, $WORK : source),
   written-by($WORK : work, $B : writer)
 }.
+</programlisting>
+
+<para>
+In the example above it may look as though the bodies of inference
+rules should be wrapped in curly braces, like blocks in Java or C, but
+the curlies are there because the entire rule is one big OR clause. If
+we drop the <symbol>pupil-of</symbol> part the rule would look as
+shown below. If we had wrapped this in curly braces we would have
+turned the body of the rule into a non-failing clause (<xref
+linkend="sect-nonfailing-clause"/>), allowing it to match topics which
+don't actually satisfy the rule. So beware of this.
+</para>
+
+<programlisting>
+influenced-by($A, $B) :-
+  composed-by($OPERA : opera, $A : composer),
+  based-on($OPERA : result, $WORK : source),
+  written-by($WORK : work, $B : writer).      
 </programlisting>
 
 <para>
