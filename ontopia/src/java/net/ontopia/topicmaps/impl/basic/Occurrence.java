@@ -20,6 +20,7 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+import net.ontopia.topicmaps.impl.utils.LocatorInterningTable;
 import net.ontopia.utils.UniqueSet;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -85,7 +86,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   protected void setDataType(LocatorIF datatype) {
     // Notify listeners
     fireEvent("OccurrenceIF.setDataType", value, getDataType());
-    this.datatype = datatype;
+    this.datatype = LocatorInterningTable.intern(datatype);
   }
 
   public String getValue() {

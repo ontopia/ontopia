@@ -22,6 +22,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+import net.ontopia.topicmaps.impl.utils.LocatorInterningTable;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.UniqueSet;
 import net.ontopia.utils.StreamUtils;
@@ -89,7 +90,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   protected void setDataType(LocatorIF datatype) {
     // Notify listeners
     fireEvent("VariantNameIF.setDataType", value, getDataType());
-    this.datatype = datatype;
+    this.datatype = LocatorInterningTable.intern(datatype);
   }
   
   public String getValue() {
