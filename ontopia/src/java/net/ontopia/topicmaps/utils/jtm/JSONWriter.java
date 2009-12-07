@@ -46,6 +46,7 @@ public class JSONWriter {
   private boolean prettify;
   private int depth;
   private boolean comma;
+  private boolean startOfDocument;
 
   /**
    * PUBLIC: Create an JSONWriter that writes to a given OutputStream in UTF-8.
@@ -77,6 +78,7 @@ public class JSONWriter {
     this.prettify = true;
     this.depth = -1;
     this.comma = false;
+    this.startOfDocument = true;
   }
 
   /**
@@ -123,6 +125,7 @@ public class JSONWriter {
     indent();
     out.write('{');
     comma = false;
+    startOfDocument = false;
     return this;
   }
 
@@ -215,7 +218,7 @@ public class JSONWriter {
 
   private void indent() throws IOException {
     if (prettify) {
-      if (depth >= 0) {
+      if (depth >= 0 && !startOfDocument) {
         out.write('\n');
       }
       
