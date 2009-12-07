@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * 
  * <b>Note:</b> a default instance of a JSONWriter will prettify the output,
  * i.e. include whitespace and newlines as appropriate. To disable this
- * behaviour, use the {@link setPrettify} method.
+ * behaviour, use <a href="#setPrettify">setPrettify</a>.
  * 
  * @since 5.1
  */

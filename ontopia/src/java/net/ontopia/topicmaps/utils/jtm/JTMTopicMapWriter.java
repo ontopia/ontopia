@@ -67,7 +67,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * PUBLIC: Create an JTMTopicMapWriter that writes to a given Writer.
    * 
    * @param out Where the output should be written.
-   * @param encoding The encoding used by the writer. 
    */
   public JTMTopicMapWriter(Writer out) {
     writer = new JSONWriter(out);
