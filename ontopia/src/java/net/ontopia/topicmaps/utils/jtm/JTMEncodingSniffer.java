@@ -3,8 +3,6 @@ package net.ontopia.topicmaps.utils.jtm;
 import java.io.IOException;
 import java.io.PushbackInputStream;
 
-import org.bouncycastle.util.Arrays;
-
 import net.ontopia.topicmaps.impl.utils.EncodingSnifferIF;
 
 /**

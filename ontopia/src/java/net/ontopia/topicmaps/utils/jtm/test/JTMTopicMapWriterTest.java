@@ -39,10 +39,10 @@ public class JTMTopicMapWriterTest extends AbstractUtilsTestCase {
     assertEquals(1, types.size());
     assertEquals(movie, types.iterator().next());
 
-    JTMTopicMapWriter writer = new JTMTopicMapWriter(System.out);
+    //JTMTopicMapWriter writer = new JTMTopicMapWriter(System.out);
     // LocatorIF base = tm.getStore().getBaseAddress();
     // TMObjectIF obj =
     // tm.getObjectByItemIdentifier(base.resolveAbsolute("#mother"));
-    writer.write(tm);
+    //writer.write(tm);
   }
 }

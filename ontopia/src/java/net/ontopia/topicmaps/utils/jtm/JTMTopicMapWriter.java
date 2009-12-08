@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Collection;
-import java.util.Iterator;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -36,7 +35,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       .getLogger(JTMTopicMapWriter.class.getName());
 
   private final static String VERSION = "1.0";
-  
+
   private JSONWriter writer;
   private LocatorIF baseLoc;
   
@@ -278,7 +277,15 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    */
   @SuppressWarnings("unchecked")
   private void writeVariant(VariantNameIF variant) throws IOException {
-    writer.object().pair("value", variant.getValue());
+    writer.object();
+    
+    if (variant.getLocator() != null) {
+      writer.pair("value", normaliseLocatorReference(variant.getLocator()
+          .getAddress()));
+    } else {
+      writer.pair("value", variant.getValue());
+    }
+    
     writeDataType(variant.getDataType());
     
     writeRefArray("scope", variant.getScope());
@@ -290,9 +297,16 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
 
   @SuppressWarnings("unchecked")
   private void writeOccurrence(OccurrenceIF occurrence) throws IOException {
-    writer.object().
-      pair("value", occurrence.getValue()).
-      pair("type", getTopicRef(occurrence.getType()));
+    writer.object();
+    
+    if (occurrence.getLocator() != null) {
+      writer.pair("value", normaliseLocatorReference(occurrence.getLocator()
+          .getAddress()));
+    } else {
+      writer.pair("value", occurrence.getValue());
+    }
+
+    writer.pair("type", getTopicRef(occurrence.getType()));
     
     writeDataType(occurrence.getDataType());
     writeRefArray("scope", occurrence.getScope());
@@ -315,19 +329,67 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
   
   private String getIdentifier(LocatorIF loc) {
     String base = baseLoc.getAddress();
-    String id = null;
+    String id = normaliseLocatorReference(loc.getAddress());
+    
     if (loc.getAddress().startsWith(base)) {
       String addr = loc.getAddress();
       int pos = addr.indexOf('#');
       if (pos != -1) {
-        id = addr.substring(pos + 1);
+        id = addr.substring(pos);
       }
     }
     
     if (id == null) {
-      id = loc.getExternalForm();
+      id = loc.getAddress();
     }
     return id;
+  }
+  
+  /**
+   * Normalise a given locator reference according to CXTM spec.
+   */
+  private String normaliseLocatorReference(String reference) {
+    String retVal = reference.substring(longestCommonPath(reference,
+            baseLoc.getAddress()).length());
+    if (retVal.startsWith("/"))
+      retVal = retVal.substring(1);
+    
+    return retVal;
+  }
+  
+  /**
+   * Returns the longest common path of two Strings.
+   * The longest common path is the longest common prefix that ends with a '/'.
+   * If one string is a prefix of the other, the the longest common path is
+   * the shortest (i.e. the one that is a prefix of the other).
+   */
+  private String longestCommonPath(String source1, String source2) {
+    String retVal = "";    
+
+    if (source1.startsWith(source2))
+      retVal = source2;
+      
+    else if (source2.startsWith(source1))
+      retVal = source1;
+    
+    else {
+      int i = 0;
+      int lastSlashIndex = 0;
+      
+      while (i < source1.length() && i < source2.length() 
+              && source1.charAt(i) == source2.charAt(i)) {
+        if (source1.charAt(i) == '/')
+          lastSlashIndex = i;
+        i++;
+      }
+  
+      if (lastSlashIndex == -1)
+        retVal = "";
+      else 
+        retVal = source1.substring(0, lastSlashIndex);
+    }
+       
+    return retVal;
   }
   
   private void writeRefArray(String key, Collection<TopicIF> coll)
@@ -371,7 +433,11 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     if (!ref.getItemIdentifiers().isEmpty()) {
       sb.append("ii:");
       LocatorIF loc = (LocatorIF) ref.getItemIdentifiers().iterator().next();
-      sb.append("#" + getIdentifier(loc));
+      String id = getIdentifier(loc);
+      if (!id.startsWith("http://") && !id.startsWith("#")) {
+        sb.append("#");
+      }
+      sb.append(id);
     } else if (!ref.getSubjectIdentifiers().isEmpty()) {
       sb.append("si:");
       LocatorIF loc = (LocatorIF) ref.getSubjectIdentifiers().iterator().next();

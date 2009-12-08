@@ -265,19 +265,8 @@ public class JTMParser {
       if (arr != null) {
         for (int i = 0; i < arr.length(); i++) {
           String ref = arr.getString(i);
-          LocatorIF iid = null;
+          LocatorIF iid = getLocator(ref);
           
-          if (ref.startsWith("http://")) {
-            try {
-              iid = new URILocator(ref);
-            } catch (MalformedURLException e) {
-              continue;
-            }
-          } else {
-            iid = element.getTopicMap().getStore().getBaseAddress()
-              .resolveAbsolute(ref);
-          }
-
           TMObjectIF other = tm.getObjectByItemIdentifier(iid);
           if (other != null) {
             if (element instanceof TopicIF) {
@@ -368,7 +357,20 @@ public class JTMParser {
   }
 
   private LocatorIF getLocator(String url) {
-    return tm.getStore().getBaseAddress().resolveAbsolute(url);
+    LocatorIF loc = null;
+    if (url.startsWith("http://")) {
+      try {
+        loc = new URILocator(url);
+      } catch (MalformedURLException e) {}
+    } else {
+      String s = url;
+      if (!url.startsWith("#") && !url.contains("/")
+          && !url.contains(".")) {
+        s = "#" + url;
+      }
+      loc = tm.getStore().getBaseAddress().resolveAbsolute(s);
+    }
+    return loc;
   }
 
   private TopicIF getReference(String reference) {
