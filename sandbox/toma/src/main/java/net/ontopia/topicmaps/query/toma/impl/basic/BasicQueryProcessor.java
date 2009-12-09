@@ -50,7 +50,6 @@ import net.ontopia.topicmaps.query.toma.parser.ast.TomaQuery;
  * slow.
  */
 public class BasicQueryProcessor implements QueryProcessorIF {
-
   private TopicMapIF topicmap;
 
   /**
