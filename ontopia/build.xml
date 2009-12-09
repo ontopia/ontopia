@@ -475,6 +475,7 @@
 		<include name="net/ontopia/topicmaps/query/impl/basic/*.class" />
 		<include name="net/ontopia/topicmaps/query/impl/rdbms/*.class" />
 		<include name="net/ontopia/topicmaps/query/spi/*.class" />
+		<include name="META-INF/services/net.ontopia.topicmaps.query.core.QueryProcessorFactoryIF" />
 	</patternset>
 
 	<patternset id="sources.test.query">
@@ -1215,6 +1216,10 @@
 			<arg line="tolog.g" />
 		</java>
 
+		<echo>Copy tolog Service Descriptor...</echo>
+		<mkdir dir="${build.classes}/META-INF/services" />
+		<copy file="${java.path}/net/ontopia/topicmaps/query/impl/service/tolog.service" tofile="${build.classes}/META-INF/services/net.ontopia.topicmaps.query.core.QueryProcessorFactoryIF" />
+		
 		<echo>Compiling TMAPI code...</echo>
 		<mkdir dir="${build.classes}/META-INF/services" />
 		<copy file="${java.path}/net/ontopia/topicmaps/impl/tmapi2/tmsf.service" tofile="${build.classes}/META-INF/services/org.tmapi.core.TopicMapSystemFactory" />

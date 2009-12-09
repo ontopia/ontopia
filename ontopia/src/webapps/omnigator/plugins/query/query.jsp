@@ -81,23 +81,8 @@ try {
   if (user != null)
     model = user.getModel();
 
-  QueryProcessorIF proc = null;
-  if ("tolog".equalsIgnoreCase(processor)) {
-    proc = QueryUtils.getQueryProcessor(topicmap);
-  } else if ("toma".equalsIgnoreCase(processor)) {
-    String className = "net.ontopia.topicmaps.query.toma.impl.basic.BasicQueryProcessor"; 
-    Class<?> processorClass = null;
-    try {
-      processorClass = Class.forName( className, true, Thread.currentThread().getContextClassLoader() );
-    } catch (ClassNotFoundException e) {
-      processorClass = Class.forName( className );
-    }
-    Constructor<?> con = processorClass.getConstructor(TopicMapIF.class);
-    proc = (QueryProcessorIF) con.newInstance(topicmap);
-  } else {
-    // use tolog if we could not find an engine yet
-    proc = QueryUtils.getQueryProcessor(topicmap);
-  }
+  QueryProcessorFactoryIF factory = QueryUtils.getQueryProcessorFactory(processor);
+  QueryProcessorIF proc = factory.createQueryProcessor(topicmap, null, null);
 
   if (update) {
     stmt = proc.parseUpdate(query);

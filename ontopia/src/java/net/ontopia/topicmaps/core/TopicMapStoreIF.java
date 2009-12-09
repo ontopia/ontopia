@@ -7,7 +7,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 
 /**
- * PUBLIC: A topic map store is used to represent the connexion
+ * PUBLIC: A topic map store is used to represent the connection
  * between one topic map and a repository where the data instantiating
  * that topic map is held (in an implementation-specific form).  This
  * interface is used to retrieve a topic map from such a repository
@@ -17,7 +17,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
  *
  * A topic map store is opened either explicitly through the open()
  * method or implicitly via the getTopicMap() method. If the store is
- * transactional a new transaction is created when the store is
+ * transactional, a new transaction is created when the store is
  * opened.<p>
  * 
  * To make persistent changes in the topic map, use the commit method.
@@ -47,9 +47,9 @@ public interface TopicMapStoreIF {
 
   /**
    * PUBLIC: Returns the topic map implementation identifier.
-   *
-   * @return int: IMPLEMENTATION_BASIC or IMPLEMENTATION_RDBMS flags
-   *
+   * 
+   * @return {@link #IN_MEMORY_IMPLEMENTATION} or {@link #RDBMS_IMPLEMENTATION}
+   *         flags.
    * @since 3.1
    */
   public int getImplementation();

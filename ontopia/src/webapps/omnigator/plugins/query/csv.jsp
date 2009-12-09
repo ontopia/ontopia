@@ -5,6 +5,7 @@
   net.ontopia.topicmaps.nav2.utils.NavigatorUtils,
   net.ontopia.topicmaps.nav2.utils.FrameworkUtils,
   net.ontopia.topicmaps.query.core.QueryProcessorIF,
+  net.ontopia.topicmaps.query.core.QueryProcessorFactoryIF,
   net.ontopia.topicmaps.query.core.ParsedQueryIF,
   net.ontopia.topicmaps.query.core.QueryResultIF,
   net.ontopia.topicmaps.query.core.InvalidQueryException,
@@ -36,23 +37,8 @@ String processor = request.getParameter("processor");
 TopicMapIF topicmap = navApp.getTopicMapById(tmid);
 
 try {
-  QueryProcessorIF proc = null;
-  if ("tolog".equalsIgnoreCase(processor)) {
-    proc = QueryUtils.getQueryProcessor(topicmap);
-  } else if ("toma".equalsIgnoreCase(processor)) {
-    String className = "net.ontopia.topicmaps.query.toma.impl.basic.BasicQueryProcessor"; 
-    Class<?> processorClass = null;
-    try {
-      processorClass = Class.forName( className, true, Thread.currentThread().getContextClassLoader() );
-    } catch (ClassNotFoundException e) {
-      processorClass = Class.forName( className );
-    }
-    Constructor<?> con = processorClass.getConstructor(TopicMapIF.class);
-    proc = (QueryProcessorIF) con.newInstance(topicmap);
-  } else {
-    // use tolog if we could not find an engine yet
-    proc = QueryUtils.getQueryProcessor(topicmap);
-  }
+  QueryProcessorFactoryIF factory = QueryUtils.getQueryProcessorFactory(processor);
+  QueryProcessorIF proc = factory.createQueryProcessor(topicmap, null, null);
     
   StringifierIF str = TopicStringifiers.getDefaultStringifier();
   QueryResultIF result = proc.execute(query);

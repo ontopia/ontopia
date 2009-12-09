@@ -1,7 +1,9 @@
 <%@ page
     import="
     net.ontopia.topicmaps.nav2.core.*,
-    net.ontopia.topicmaps.nav2.utils.FrameworkUtils"
+    net.ontopia.topicmaps.nav2.utils.FrameworkUtils,
+    net.ontopia.topicmaps.query.utils.QueryUtils,
+    java.util.Collection"
 %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/tmvalue'   prefix='tm'        %>
@@ -69,17 +71,20 @@ String skin = user.getSkin();
 <select name="processor"
  onChange='javascript:changeDescription(this.options[this.selectedIndex].value)'
  tabindex='1'>
-    <option value="tolog">Tolog (builtin)</option>
 <%
-// look for the toma QueryProcessor implementation
-try {
-  Class.forName("net.ontopia.topicmaps.query.toma.impl.basic.BasicQueryProcessor", true, Thread.currentThread().getContextClassLoader());
+	Collection<String> languages = QueryUtils.getAvailableQueryLanguages();
+	for (String language : languages) {
+	  StringBuilder sb = new StringBuilder(language.toLowerCase());
+	  sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+	  if ("TOLOG".equalsIgnoreCase(language)) {
+	    sb.append(" (builtin)");
+	  }
+	  String desc = sb.toString();
 %>
-    <option value="toma">Toma</option>
-<%  
-} catch (ClassNotFoundException e) {}
-%>
-    
+    <option value="<%= language.toLowerCase() %>"><%= desc %></option>
+<%
+	}
+%>    
 </select> 
 
 <div id="ProcessorDescription">

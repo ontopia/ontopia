@@ -1,6 +1,6 @@
 <plugin id="query" groups="topic,topicmap"> <!-- class="FQCN" -->
-  <title>Generic Query</title>
-  <descr>Generic Query Interface for topic maps.</descr>
+  <title>Query</title>
+  <descr>Query Interface for topic maps.</descr>
   <activated>no</activated>
   <uri>${plugins_rootdir}/query/form.jsp</uri>
 </plugin>
