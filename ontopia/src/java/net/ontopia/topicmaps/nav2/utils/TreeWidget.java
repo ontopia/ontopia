@@ -1,6 +1,4 @@
 
-// $Id: TreeWidget.java,v 1.22 2007/07/19 10:26:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.io.IOException;
@@ -8,7 +6,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +14,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -33,6 +29,7 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicTreeNode;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * PUBLIC: This class can output a nice collapsing/expanding tree view
@@ -71,7 +68,7 @@ public class TreeWidget {
   private boolean addAnchor = true;
 
   // initialization of logging facility
-  private static Logger log = LoggerFactory.getLogger(TreeWidget.class
+  private static Logger log = Logger.getLogger(TreeWidget.class
       .getName());
 
   // --- External interface
@@ -79,6 +76,8 @@ public class TreeWidget {
   /**
    * PUBLIC: Sets up the widget ready for use. The default constructor
    * must be accompanied by the appropriate setter methods.
+   * 
+   * @param topicmap The topic map being displayed.
    */
   public TreeWidget() {
   }
@@ -203,8 +202,6 @@ public class TreeWidget {
    */
   public void run(HttpServletRequest request, Writer writer)
       throws IOException, InvalidQueryException, NavigatorRuntimeException {
-    log.debug("run...");
-
     initializeContext(request);
     Map parameters = request.getParameterMap();
 
@@ -219,13 +216,12 @@ public class TreeWidget {
     if (action == EXPAND_ALL)
       openNodes = new UniversalSet();
     else if (action == CLOSE_ALL)
-      openNodes = new HashSet();
+      openNodes = new CompactHashSet();
     else {
       openNodes = getOpenNodes(request);
-      if (action == OPEN) {
+      if (action == OPEN)
         openNodes.add(current);
-        log.debug("opened node: " + current);
-      } else if (action == CLOSE)
+      else if (action == CLOSE)
         openNodes.remove(current);
     }
 
@@ -252,14 +248,12 @@ public class TreeWidget {
   }
 
   protected void initializeContext(HttpServletRequest request) {
-
     if (context == null)
       context = FrameworkUtils.getContextTag(request);
   }
 
   private void doQuery(int topline, Writer writer) throws IOException,
       InvalidQueryException {
-
     TopicTreeNode tree = buildTree();
     writeHTML(tree, topline, writer);
   }
@@ -310,7 +304,6 @@ public class TreeWidget {
     ancestors.add(topic);
     
     QueryResultIF children = getChildren(topic);
-
     while (children.next()) {
       TopicIF childtopic = (TopicIF) children.getValue(0);
       TopicTreeNode child = new TopicTreeNode(childtopic);
@@ -442,30 +435,34 @@ public class TreeWidget {
   // --- Utilities
 
   private Set makeSet(String[] open) {
-    Set nodes = new HashSet(open.length * 2);
+    Set nodes = new CompactHashSet(open.length * 2);
     for (int ix = 0; ix < open.length; ix++) {
       if (open[ix].equals(""))
         continue;
 
-      TMObjectIF object = topicmap.getObjectById(open[ix]);
+      TMObjectIF object = getObjectById(open[ix]);
       // if the ID list in the session is out of date, because the
       // topic map was reloaded or changed in the meantime, we may
       // get non-existent topics or non-topics back here. if this
       // happens we assume we have out-of-date info and stop
       if (object == null || !(object instanceof TopicIF))
-        return new HashSet();
+        return new CompactHashSet();
 
       nodes.add(object);
     }
     return nodes;
   }
 
-  protected TopicIF getTopic(String id) {
-    return (TopicIF) topicmap.getObjectById(id);
+  protected String getId(TopicIF topic) {
+    return NavigatorUtils.getStableId(topic);
   }
 
-  protected String getId(TopicIF topic) {
-    return topic.getObjectId();
+  protected TMObjectIF getObjectById(String id) {
+    return NavigatorUtils.stringID2Object(topicmap, id);
+  }
+  
+  protected TopicIF getTopic(String id) {
+    return (TopicIF) getObjectById(id);
   }
 
   protected String list(Set nodes) {
@@ -639,7 +636,7 @@ public class TreeWidget {
 
   // this class is a hack, and therefore defined as an internal class.
 
-  protected class UniversalSet extends HashSet {
+  protected class UniversalSet extends CompactHashSet {
     public boolean contains(Object object) {
       return true;
     }
