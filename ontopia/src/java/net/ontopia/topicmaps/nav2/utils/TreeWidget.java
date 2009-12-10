@@ -14,8 +14,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
-
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -66,10 +64,6 @@ public class TreeWidget {
   private String querystr; // string repr of query, parsed into 'query'
   protected String nodeFrame;
   private boolean addAnchor = true;
-
-  // initialization of logging facility
-  private static Logger log = Logger.getLogger(TreeWidget.class
-      .getName());
 
   // --- External interface
 
