@@ -5,7 +5,6 @@ package net.ontopia.topicmaps.impl.tmapi2;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -54,9 +53,6 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
   // the name index is for internal use and is definitely needed so we
   // instantiate it right now
   private NameIndex nameIndex = new NameIndex(this);
-
-  // this is used for the automatic item identifier creation in createTopic()
-  private static AtomicLong lastId = new AtomicLong(0);
 
   public TopicMapImpl(TopicMapSystemIF tmsystem, TopicMapStoreIF store) {
     super(null);
@@ -155,10 +151,16 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
 
   public TopicImpl createTopic() {
     TopicImpl topic = wrapTopic(wrapped.getBuilder().makeTopic());
-    Locator itemIdentifier = createLocator("urn:x-ontopia"
-        + (lastId.incrementAndGet()));
-    // TODO should we check if the item identifier is already used?
-    topic.addItemIdentifier(itemIdentifier);
+    Locator itemIdentifier = createLocator("urn:x-ontopia" + System.currentTimeMillis()); // using time to hopefully get an unique locator
+    
+    // check if we have a 
+    while (getConstructByItemIdentifier(itemIdentifier)!=null) {
+    	itemIdentifier = createLocator("urn:x-ontopia" + System.currentTimeMillis()); // using time to hopefully get an unique locator
+    }
+    topic.addItemIdentifier(itemIdentifier);	
+    
+    
+    
     return topic;
   }
 
@@ -439,7 +441,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
     // need to update variant cache of wrapper
     if (wrapper.getVariants().size() != name.getVariants().size()) {
       wrapper.clearVariants();
-      Iterator it = name.getVariants().iterator();
+      Iterator<?> it = name.getVariants().iterator();
       while (it.hasNext()) {
         VariantNameIF v = (VariantNameIF) it.next();
         wrapVariant(v);
