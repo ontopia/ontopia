@@ -405,7 +405,6 @@ iri_ref :
 template_def :
   DEF IDENTIFIER 
     { template_name = LT(0).getText(); 
-      System.out.println("TEMPLATE: " + template_name);
       parameters = new ArrayList(); }
   LEFTPAREN (VARIABLE 
     { parameters.add(LT(0).getText()); }
