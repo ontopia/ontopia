@@ -58,15 +58,47 @@ public class JTMParser {
   public void parse(Reader reader) throws JSONException {
     JSONObject root = new JSONObject(new JSONTokener(reader));
 
+    String type = root.getString("item_type");
+    OBJECT_TYPE ot = OBJECT_TYPE.TOPICMAP;
+    if ("topicmap".equalsIgnoreCase(type)) {
+      ot = OBJECT_TYPE.TOPICMAP;
+    } else if ("topic".equalsIgnoreCase(type)) {
+      ot = OBJECT_TYPE.TOPIC;
+    } else if ("name".equalsIgnoreCase(type)) {
+      ot = OBJECT_TYPE.NAME;
+    } else if ("occurrence".equalsIgnoreCase(type)) {
+      ot = OBJECT_TYPE.OCCURRENCE;
+    } else if ("variant".equalsIgnoreCase(type)) {
+      ot = OBJECT_TYPE.VARIANT;
+    } else if ("association".equalsIgnoreCase(type)) {
+      ot = OBJECT_TYPE.ASSOCIATION;
+    } else if ("role".equalsIgnoreCase(type)) {
+      ot = OBJECT_TYPE.ROLE;
+    }
+    
     // we can only import a JTM topicmap fragment
-    Map<String, SchemaInfo> keys = getSchema(OBJECT_TYPE.TOPICMAP);
+    Map<String, SchemaInfo> keys = getSchema(ot);
     keys.put("version", new SchemaInfo("1.0", true));
-    keys.put("item_type", new SchemaInfo("topicmap", true));
+    keys.put("item_type", new SchemaInfo(null, true));
 
     validate(root, keys);
 
     // validation was successful -> now import the jtm fragment
-    importTopicMap(root);
+    if ("topicmap".equalsIgnoreCase(type)) {
+      importTopicMap(root);
+    } else if ("topic".equalsIgnoreCase(type)) {
+      importTopic(root);
+    } else if ("name".equalsIgnoreCase(type)) {
+      importName(root, null);
+    } else if ("occurrence".equalsIgnoreCase(type)) {
+      importOccurrence(root, null);
+    } else if ("variant".equalsIgnoreCase(type)) {
+      importVariant(root, null);
+    } else if ("association".equalsIgnoreCase(type)) {
+      importAssociation(root);
+    } else if ("role".equalsIgnoreCase(type)) {
+      importRole(root, null);
+    }
   }
 
   private void importTopicMap(JSONObject root) throws JSONException {
@@ -144,6 +176,10 @@ public class JTMParser {
   }
 
   private void importName(JSONObject obj, TopicIF topic) throws JSONException {
+    if (topic == null) {
+      topic = getParent(obj);
+    }
+    
     String value = obj.getString("value");
     TopicNameIF name = tm.getBuilder().makeTopicName(topic, value);
 
@@ -188,6 +224,10 @@ public class JTMParser {
 
   private void importOccurrence(JSONObject obj, TopicIF topic)
       throws JSONException {
+    if (topic == null) {
+      topic = getParent(obj);
+    }
+    
     String value = obj.getString("value");
     LocatorIF datatype = getDataType(obj);
     TopicIF type = getType(obj);
@@ -236,6 +276,21 @@ public class JTMParser {
     return getLocator(type);
   }
 
+  private TopicIF getParent(JSONObject obj) throws JSONException {
+    TopicIF topic = null;
+    JSONArray parent = obj.getJSONArray("parent");
+    for (int i = 0; i < parent.length(); i++) {
+      String ref = parent.getString(i);
+      TopicIF newTopic = getReference(ref);
+      if (topic == null) {
+        topic = newTopic;
+      } else {
+        MergeUtils.mergeInto(topic, newTopic);
+      }
+    }
+    return topic;
+  }
+  
   private TopicIF getType(JSONObject obj) throws JSONException {
     if (obj.has("type")) {
       String type = obj.getString("type");
@@ -454,11 +509,8 @@ public class JTMParser {
             }
           }
           break;
-        case OBJECT:
-          // TODO: JTM schema does not contain JSONObject assignment, consider
-          // removing it here
-          // JSONObject obj = object.getJSONObject(key);
-          break;
+        default:
+          throw new JSONException("invalid type for element '" + key + "'");
         }
       }
     }
@@ -502,6 +554,8 @@ public class JTMParser {
       break;
 
     case ROLE:
+      keys.put("parent", new SchemaInfo(JSON_TYPE.ARRAY, OBJECT_TYPE.STRING,
+          false));
       keys.put("player", new SchemaInfo(JSON_TYPE.STRING,
           OBJECT_TYPE.REFERENCE, true));
       keys.put("type", new SchemaInfo(JSON_TYPE.STRING, OBJECT_TYPE.REFERENCE,
@@ -511,6 +565,8 @@ public class JTMParser {
       break;
 
     case NAME:
+      keys.put("parent", new SchemaInfo(JSON_TYPE.ARRAY, OBJECT_TYPE.STRING,
+          false));
       keys.put("value", new SchemaInfo(JSON_TYPE.STRING, OBJECT_TYPE.STRING,
           true));
       keys.put("type", new SchemaInfo(JSON_TYPE.STRING, OBJECT_TYPE.REFERENCE,
@@ -524,6 +580,8 @@ public class JTMParser {
       break;
 
     case VARIANT:
+      keys.put("parent", new SchemaInfo(JSON_TYPE.ARRAY, OBJECT_TYPE.STRING,
+          false));
       keys.put("value", new SchemaInfo(JSON_TYPE.STRING, OBJECT_TYPE.STRING,
           true));
       keys.put("datatype", new SchemaInfo(JSON_TYPE.STRING, OBJECT_TYPE.STRING,
@@ -535,6 +593,8 @@ public class JTMParser {
       break;
 
     case OCCURRENCE:
+      keys.put("parent", new SchemaInfo(JSON_TYPE.ARRAY, OBJECT_TYPE.STRING,
+          false));
       keys.put("value", new SchemaInfo(JSON_TYPE.STRING, OBJECT_TYPE.STRING,
           true));
       keys.put("type", new SchemaInfo(JSON_TYPE.STRING, OBJECT_TYPE.REFERENCE,

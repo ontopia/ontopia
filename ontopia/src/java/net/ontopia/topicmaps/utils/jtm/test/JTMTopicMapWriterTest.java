@@ -10,7 +10,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.jtm.JTMTopicMapReader;
-import net.ontopia.topicmaps.utils.jtm.JTMTopicMapWriter;
 import net.ontopia.topicmaps.utils.test.AbstractUtilsTestCase;
 
 public class JTMTopicMapWriterTest extends AbstractUtilsTestCase {
@@ -24,7 +23,8 @@ public class JTMTopicMapWriterTest extends AbstractUtilsTestCase {
    */
   @SuppressWarnings("unchecked")
   public void testImportExport() throws IOException {
-    String json = "{\"version\":\"1.0\", \"item_type\":\"topicmap\", \"topics\":[ {\"subject_identifiers\":[\"http://psi.topincs.com/movies/dear-wendy\"], \"names\":[ {\"value\":\"Dear Wendy\", \"type\":\"si:http://psi.topincs.com/title\", \"scope\":[ \"si:http://www.topicmaps.org/xtm/1.0/country.xtm#US\", \"si:http://www.topicmaps.org/xtm/1.0/country.xtm#DE\"]}], \"occurrences\":[ {\"value\":\"2005\", \"type\":\"si:http://psi.topincs.com/publication-year\", \"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"}]}], \"associations\":[ {\"type\":\"si:http://psi.topicmaps.org/iso13250/model/type-instance\", \"roles\":[ {\"player\":\"si:http://psi.topincs.com/movies/dear-wendy\", \"type\":\"si:http://psi.topicmaps.org/iso13250/model/instance\"}, {\"player\":\"si:http://psi.topincs.com/movie\", \"type\":\"si:http://psi.topicmaps.org/iso13250/model/type\"}]}]}";
+    String json = "{\"version\":\"1.0\", \"item_type\":\"topicmap\", " +
+    "\"topics\":[ {\"subject_identifiers\":[\"http://psi.topincs.com/movies/dear-wendy\"], \"names\":[ {\"value\":\"Dear Wendy\", \"type\":\"si:http://psi.topincs.com/title\", \"scope\":[ \"si:http://www.topicmaps.org/xtm/1.0/country.xtm#US\", \"si:http://www.topicmaps.org/xtm/1.0/country.xtm#DE\"]}], \"occurrences\":[ {\"value\":\"2005\", \"type\":\"si:http://psi.topincs.com/publication-year\", \"datatype\":\"http://www.w3.org/2001/XMLSchema#gYear\"}]}], \"associations\":[ {\"type\":\"si:http://psi.topicmaps.org/iso13250/model/type-instance\", \"roles\":[ {\"player\":\"si:http://psi.topincs.com/movies/dear-wendy\", \"type\":\"si:http://psi.topicmaps.org/iso13250/model/instance\"}, {\"player\":\"si:http://psi.topincs.com/movie\", \"type\":\"si:http://psi.topicmaps.org/iso13250/model/type\"}]}]}";
 
     Reader r = new StringReader(json);
 
@@ -43,6 +43,6 @@ public class JTMTopicMapWriterTest extends AbstractUtilsTestCase {
     // LocatorIF base = tm.getStore().getBaseAddress();
     // TMObjectIF obj =
     // tm.getObjectByItemIdentifier(base.resolveAbsolute("#mother"));
-    //writer.write(tm);
+    //writer.write((TopicNameIF) wendy.getTopicNames().iterator().next());
   }
 }

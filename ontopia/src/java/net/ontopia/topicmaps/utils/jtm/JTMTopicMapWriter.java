@@ -5,17 +5,20 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.PSI;
@@ -38,6 +41,12 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
 
   private JSONWriter writer;
   private LocatorIF baseLoc;
+
+  private enum LOCATOR_TYPE {
+    IID,
+    SID,
+    SL
+  }
   
   /**
    * PUBLIC: Create an JTMTopicMapWriter that writes to a given OutputStream in
@@ -94,38 +103,43 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     String key = "item_type";
     if (object instanceof TopicMapIF) {
       writer.pair(key, "topicmap");
-      writeTopicMap((TopicMapIF) object);
+      serializeTopicMap((TopicMapIF) object);
     } else if (object instanceof TopicIF) {
       writer.pair(key, "topic");
-      writeTopic((TopicIF) object);
+      serializeTopic((TopicIF) object, true);
     } else if (object instanceof TopicNameIF) {
       writer.pair(key, "name");
-      writeName((TopicNameIF) object);
+      serializeName((TopicNameIF) object, true);
     } else if (object instanceof VariantNameIF) {
       writer.pair(key, "variant");
-      writeVariant((VariantNameIF) object);
+      serializeVariant((VariantNameIF) object, true);
     } else if (object instanceof OccurrenceIF) {
       writer.pair(key, "occurrence");
-      writeOccurrence((OccurrenceIF) object);
+      serializeOccurrence((OccurrenceIF) object, true);
     } else if (object instanceof AssociationIF) {
       writer.pair(key, "association");
-      writeAssociation((AssociationIF) object);
+      serializeAssociation((AssociationIF) object, true);
     } else if (object instanceof AssociationRoleIF) {
       writer.pair(key, "role");
-      writeRole((AssociationRoleIF) object);
+      serializeRole((AssociationRoleIF) object, true);
     }
     
     writer.finish();
   }
 
+  /**
+   * INTERNAL: Serializes a complete topic map to the JTM output stream.
+   * 
+   * @param tm the topic map to be serialized as JTM.
+   */
   @SuppressWarnings("unchecked")
-  private void writeTopicMap(TopicMapIF tm) throws IOException {
+  private void serializeTopicMap(TopicMapIF tm) throws IOException {
     // ----------------- Topics --------------------
     Collection<TopicIF> topics = tm.getTopics();
     if (!topics.isEmpty()) {
       writer.key("topics").array();
       for (TopicIF topic : topics) {
-        writeTopic(topic);
+        serializeTopic(topic, false);
       }
       writer.endArray();
     }
@@ -133,100 +147,148 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     // ----------------- Associations --------------
     ClassInstanceIndexIF classIndex = (ClassInstanceIndexIF) tm
       .getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
-    
-    Collection<TopicIF> topicTypes = classIndex.getTopicTypes();
+
     Collection<AssociationIF> assocs = tm.getAssociations();
     
+    // type-instance associations have to be retrieved from the index,
+    // as they are not returned by tm.getAssociations()
+    Collection<TopicIF> topicTypes = classIndex.getTopicTypes();
+    
+    // only write the "associations" key if there are any associations defined.
     if (!assocs.isEmpty() || !topicTypes.isEmpty()) {
       writer.key("associations").array();
       
+      // first, write all type-instance associations
       for (TopicIF type : topicTypes) {
         Collection<TopicIF> instances = classIndex.getTopics(type);
         for (TopicIF instance : instances) {
-          writeTypeInstanceAssociation(type, instance);
+          serializeTypeInstanceAssociation(type, instance);
         }
       }
+      
+      // and now write the remaining associations
       for (AssociationIF assoc : assocs) {
-        writeAssociation(assoc);
+        serializeAssociation(assoc, false);
       }
+      
       writer.endArray();
     }
 
-    writeReifier(tm);
-    writeIdentifiers("item_identifiers", tm.getItemIdentifiers());
+    serializeItemIdentifiers(tm);
+    serializeReifier(tm);
 
     writer.endObject();
   }
   
-  // --------------------------------------------------------------------
-  // Methods used on Topics
-  // --------------------------------------------------------------------
-
+  /**
+   * INTERNAL: Serialize a topic to the underlying JTM stream.
+   *  
+   * @param topic the topic to be serialized.
+   * @param topLevel if the element is serialized as top-level element.
+   */
   @SuppressWarnings("unchecked")
-  private void writeTopic(TopicIF topic) throws IOException {
-    writer.object();
+  private void serializeTopic(TopicIF topic, boolean topLevel)
+      throws IOException {
+    if (!topLevel) {
+      writer.object();
+    }
 
-    writeIdentifiers("item_identifiers", topic.getItemIdentifiers());
-    writeIdentifiers("subject_identifiers", topic.getSubjectIdentifiers());
-    writeIdentifiers("subject_locators", topic.getSubjectLocators());
+    serializeItemIdentifiers(topic);
+    serializeSubjectIdentifiers(topic);
+    serializeSubjectLocators(topic);
 
+    // ------------------- Names -----------------
     Collection<TopicNameIF> names = topic.getTopicNames();
     if (!names.isEmpty()) {
       writer.key("names").array();
       for (TopicNameIF name : names) {
-        writeName(name);
+        serializeName(name, false);
       }
       writer.endArray();
     }
 
+    // ----------------- Occurrences --------------
     Collection<OccurrenceIF> occurrences = topic.getOccurrences();
     if (!occurrences.isEmpty()) {
       writer.key("occurrences").array();
       for (OccurrenceIF oc : occurrences) {
-        writeOccurrence(oc);
+        serializeOccurrence(oc, false);
       }
       writer.endArray();
     }
 
-    writer.endObject();
+    if (!topLevel) {
+      writer.endObject();
+    }
   }
 
   /**
-   * Write the given association.
+   * INTERNAL: Serialize an association to the underlying JTM stream.
+   * 
+   * @param association the association to be serialized.
+   * @param topLevel if the element is serialized as top-level element.
    */
   @SuppressWarnings("unchecked")
-  private void writeAssociation(AssociationIF association) throws IOException {
-    writer.object().pair("type", getTopicRef(association.getType()));
+  private void serializeAssociation(AssociationIF association, boolean topLevel)
+      throws IOException {
+    if (!topLevel) {
+      writer.object();
+    }
     
+    serializeType(association);
+
+    // ----------------- Roles --------------
     Collection<AssociationRoleIF> roles = association.getRoles();
     if (!roles.isEmpty()) {
       writer.key("roles").array();
       for (AssociationRoleIF role : roles) {
-        writeRole(role);
+        serializeRole(role, false);
       }
       writer.endArray();
     }
-    
-    writeRefArray("scope", association.getScope());
-    writeReifier(association);
-    writeIdentifiers("item_identifiers", association.getItemIdentifiers());
-    
-    writer.endObject();
+
+    serializeScope(association);
+    serializeItemIdentifiers(association);
+    serializeReifier(association);
+
+    if (!topLevel) {
+      writer.endObject();
+    }
   }
 
-  @SuppressWarnings("unchecked")
-  private void writeRole(AssociationRoleIF role) throws IOException {
-    writer.object().
+  /**
+   * INTERNAL: Serialize a role to the underlying JTM stream.
+   * 
+   * @param role the role to be serialized.
+   * @param topLevel if the element is serialized as top-level element.
+   */
+  private void serializeRole(AssociationRoleIF role, boolean topLevel)
+      throws IOException {
+    if (!topLevel) {
+      writer.object();
+    }
+    
+    serializeParent(role.getAssociation());
+    
+    writer.
       pair("player", getTopicRef(role.getPlayer())).
       pair("type", getTopicRef(role.getType()));
     
-    writeReifier(role);
-    writeIdentifiers("item_identifiers", role.getItemIdentifiers());
+    serializeItemIdentifiers(role);
+    serializeReifier(role);
 
-    writer.endObject();
+    if (!topLevel) {
+      writer.endObject();
+    }
   }
   
-  private void writeTypeInstanceAssociation(TopicIF type, TopicIF instance)
+  /**
+   * INTERNAL: Serialize a type-instance association.
+   * 
+   * @param type the given type topic.
+   * @param instance the given instance topic.
+   */
+  private void serializeTypeInstanceAssociation(TopicIF type, TopicIF instance)
       throws IOException {
     writer.object().pair("type", "si:" + PSI.getSAMTypeInstance().getExternalForm());
     writer.key("roles").array();
@@ -246,109 +308,291 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     writer.endArray();
     writer.endObject();
   }
-  
+
+  /**
+   * INTERNAL: Serialize a topic name to the underlying JTM stream.
+   * 
+   * @param name the name to be serialized.
+   * @param topLevel if the element is serialized as top-level element.
+   */
   @SuppressWarnings("unchecked")
-  private void writeName(TopicNameIF name) throws IOException {
-    writer.object().pair("value", name.getValue());
-    
-    if (name.getType() != null) {
-      writer.pair("type", getTopicRef(name.getType()));
+  private void serializeName(TopicNameIF name, boolean topLevel)
+      throws IOException {
+    if (!topLevel) {
+      writer.object();
+    } else {
+      serializeParent(name.getTopic());
     }
+
+    writer.pair("value", name.getValue());
+    serializeType(name);
     
+    // ----------------- Variants --------------
     Collection<VariantNameIF> variants = name.getVariants();
     if (!variants.isEmpty()) {
       writer.key("variants").array();
       for (VariantNameIF var : variants) {
-        writeVariant(var);
+        serializeVariant(var, false);
       }
       writer.endArray();
     }
     
-    writeRefArray("scope", name.getScope());
-    writeReifier(name);
-    writeIdentifiers("item_identifiers", name.getItemIdentifiers());
+    serializeScope(name);
+    serializeItemIdentifiers(name);
+    serializeReifier(name);
 
-    writer.endObject();
+    if (!topLevel) {
+      writer.endObject();
+    }
   }
 
   /**
-   * Write the given TopicNameIF to the given Writer, after line breaks with the
-   * given indentString.
+   * INTERNAL: Serialize a variant to the underlying JTM stream.
+   * 
+   * @param variant the variant to be serialized.
+   * @param topLevel if the element is serialized as top-level element.
+   */
+  private void serializeVariant(VariantNameIF variant, boolean topLevel)
+      throws IOException {
+    if (!topLevel) {
+      writer.object();
+    } else {
+      serializeParent(variant.getTopic());
+    }
+    
+    serializeValue(variant.getLocator(), variant.getValue());
+    serializeDataType(variant.getDataType());
+    serializeScope(variant);
+    serializeItemIdentifiers(variant);
+    serializeReifier(variant);
+    
+    if (!topLevel) {
+      writer.endObject();
+    }
+  }
+
+  /**
+   * INTERNAL: Serialize an occurrence to the underlying JTM stream.
+   * 
+   * @param occurrence the occurrence to be serialized.
+   * @param topLevel if the element is serialized as top-level element.
+   */
+  private void serializeOccurrence(OccurrenceIF occurrence, boolean topLevel)
+      throws IOException {
+    if (!topLevel) {
+      writer.object();
+    } else {
+      serializeParent(occurrence.getTopic());
+    }
+    
+    serializeValue(occurrence.getLocator(), occurrence.getValue());
+    serializeType(occurrence);
+    serializeDataType(occurrence.getDataType());
+    serializeScope(occurrence);
+    serializeItemIdentifiers(occurrence);
+    serializeReifier(occurrence);
+    
+    if (!topLevel) {
+      writer.endObject();
+    }
+  }
+
+  /**
+   * INTERNAL: Serialize the parent topic of a topic map construct. The parent
+   * is serialized by merging all his item/subject identifiers and subject
+   * locators together. If the parent is null, nothing will be serialized.
+   * 
+   * @param parent the parent topic to be serialized.
+   */
+  private void serializeParent(TopicIF parent)
+      throws IOException {
+    if (parent != null) {
+      Collection<String> ids = new LinkedList<String>();
+      
+      for (Object loc : parent.getItemIdentifiers()) {
+        ids.add(getJTMLocator(LOCATOR_TYPE.IID, (LocatorIF) loc));
+      }
+
+      for (Object loc : parent.getSubjectIdentifiers()) {
+        ids.add(getJTMLocator(LOCATOR_TYPE.SID, (LocatorIF) loc));
+      }
+
+      for (Object loc : parent.getSubjectLocators()) {
+        ids.add(getJTMLocator(LOCATOR_TYPE.SL, (LocatorIF) loc));
+      }
+      
+      if (!ids.isEmpty()) {
+        writer.key("parent").array();
+        for (String id : ids) {
+          writer.value(id);
+        }
+        writer.endArray();
+      }      
+    }
+  }
+
+  /**
+   * INTERNAL: Serialize the parent association of a role. If the parent is
+   * null, nothing will be serialized.
+   * 
+   * @param parent the parent association to be serialized.
    */
   @SuppressWarnings("unchecked")
-  private void writeVariant(VariantNameIF variant) throws IOException {
-    writer.object();
-    
-    if (variant.getLocator() != null) {
-      writer.pair("value", normaliseLocatorReference(variant.getLocator()
-          .getAddress()));
-    } else {
-      writer.pair("value", variant.getValue());
+  private void serializeParent(AssociationIF parent)
+      throws IOException {
+    if (parent != null) {
+      Collection<LocatorIF> ids = parent.getItemIdentifiers();
+      if (!ids.isEmpty()) {
+        writer.key("parent").array();
+        for (LocatorIF id : ids) {
+          writer.value(getJTMLocator(LOCATOR_TYPE.IID, id));
+        }
+        writer.endArray();
+      }      
     }
-    
-    writeDataType(variant.getDataType());
-    
-    writeRefArray("scope", variant.getScope());
-    writeReifier(variant);
-    writeIdentifiers("item_identifiers", variant.getItemIdentifiers());
-    
-    writer.endObject();
   }
-
+  
+  /**
+   * INTERNAL: Serialize the item identifiers of a {@link TMObjectIF}. If the
+   * object does not have an item identifier, nothing will be serialized.
+   * 
+   * @param obj the {@link TMObjectIF} to be serialized.
+   */
   @SuppressWarnings("unchecked")
-  private void writeOccurrence(OccurrenceIF occurrence) throws IOException {
-    writer.object();
-    
-    if (occurrence.getLocator() != null) {
-      writer.pair("value", normaliseLocatorReference(occurrence.getLocator()
-          .getAddress()));
-    } else {
-      writer.pair("value", occurrence.getValue());
-    }
-
-    writer.pair("type", getTopicRef(occurrence.getType()));
-    
-    writeDataType(occurrence.getDataType());
-    writeRefArray("scope", occurrence.getScope());
-    writeReifier(occurrence);
-    writeIdentifiers("item_identifiers", occurrence.getItemIdentifiers());
-    
-    writer.endObject();
+  private void serializeItemIdentifiers(TMObjectIF obj)
+      throws IOException {
+    Collection<LocatorIF> ids = obj.getItemIdentifiers();
+    serializeIdentifiers("item_identifiers", ids);
   }
 
-  private void writeIdentifiers(String key, Collection<LocatorIF> ids)
+  /**
+   * INTERNAL: Serialize the subject identifiers of a {@link TopicIF}. If the
+   * object does not have a subject identifier, nothing will be serialized.
+   * 
+   * @param topic the {@link TopicIF} to be serialized.
+   */
+  @SuppressWarnings("unchecked")
+  private void serializeSubjectIdentifiers(TopicIF topic)
+      throws IOException {
+    Collection<LocatorIF> sids = topic.getSubjectIdentifiers();
+    serializeIdentifiers("subject_identifiers", sids);
+  }
+
+  /**
+   * INTERNAL: Serialize the subject locators of a {@link TopicIF}. If the
+   * object does not have a subject locator, nothing will be serialized.
+   * 
+   * @param topic the {@link TopicIF} to be serialized.
+   */
+  @SuppressWarnings("unchecked")
+  private void serializeSubjectLocators(TopicIF topic)
+      throws IOException {
+    Collection<LocatorIF> slocs = topic.getSubjectLocators();
+    serializeIdentifiers("subject_locators", slocs);
+  }
+  
+  /**
+   * INTERNAL: Serialize a collection of {@link LocatorIF} objects.
+   * 
+   * @param key the key to be used for serialization.
+   * @param ids the collection of ids to be serialized.
+   */
+  private void serializeIdentifiers(String key, Collection<LocatorIF> ids)
       throws IOException {
     if (!ids.isEmpty()) {
       writer.key(key).array();
       for (LocatorIF id : ids) {
-        writer.value(getIdentifier(id));
+        writer.value(normaliseLocatorReference(id));
       }
       writer.endArray();
     }
   }
-  
-  private String getIdentifier(LocatorIF loc) {
-    String base = baseLoc.getAddress();
-    String id = normaliseLocatorReference(loc.getAddress());
-    
-    if (loc.getAddress().startsWith(base)) {
-      String addr = loc.getAddress();
-      int pos = addr.indexOf('#');
-      if (pos != -1) {
-        id = addr.substring(pos);
+
+  /**
+   * INTERNAL: Serialize the scopes for a given topic map construct. If the
+   * construct is not scoped, nothing will be serialized.
+   * 
+   * @param obj the scoped object to be used.
+   */
+  @SuppressWarnings("unchecked")
+  private void serializeScope(ScopedIF obj)
+      throws IOException {
+    Collection<TopicIF> scopes = obj.getScope();
+    if (!scopes.isEmpty()) {
+      writer.key("scope").array();
+      for (TopicIF ref : scopes) {
+        writer.value(getTopicRef(ref));
       }
+      writer.endArray();
     }
-    
-    if (id == null) {
-      id = loc.getAddress();
+  }
+
+  /**
+   * INTERNAL: Serialize the type for a given typed topic map construct. If the
+   * construct is not typed, nothing will be serialized.
+   * 
+   * @param obj the typed topic map construct to be used.
+   */
+  private void serializeType(TypedIF obj)
+      throws IOException {
+    TopicIF type = obj.getType();
+    if (type != null) {
+      writer.pair("type", getTopicRef(type));
     }
-    return id;
+  }
+
+  /**
+   * INTERNAL: Serialize the given datatype for a variant or occurrence
+   * construct. If the datatype is equal to the default datatype (
+   * {@link PSI#XSD_STRING}), nothing will be serialized.
+   * 
+   * @param type a locator defining the datatype.
+   * @see PSI#XSD_STRING
+   */
+  private void serializeDataType(LocatorIF type) throws IOException {
+    if (type != null && !PSI.getXSDString().equals(type)) {
+      writer.pair("datatype", type.getExternalForm());
+    }
+  }
+
+  /**
+   * INTERNAL: Serialize the value for a given typed topic map construct. If the
+   * locator representation is not null or empty, write a normalised version of
+   * it (relative to the base locator of the topic map), otherwise serialize the
+   * string version of the value.
+   * 
+   * @param loc the value as locator.
+   * @param value the value in string representation.
+   */
+  private void serializeValue(LocatorIF loc, String value)
+      throws IOException {
+    String v = value;
+    if (loc != null) {
+      v = normaliseLocatorReference(loc);
+    }
+    writer.pair("value", v);
   }
   
   /**
-   * Normalise a given locator reference according to CXTM spec.
+   * INTERNAL: Serialize the reference to the reifier of a topic map construct,
+   * if there is one present.
+   * 
+   * @param obj a reifiable topic map construct.
    */
-  private String normaliseLocatorReference(String reference) {
+  private void serializeReifier(ReifiableIF obj) throws IOException {
+    if (obj.getReifier() != null) {
+      writer.pair("reifier", getTopicRef(obj.getReifier()));
+    }
+  }
+
+  /**
+   * INTERNAL: Normalise a given locator reference according to the CXTM spec, i.e. make
+   * it relative to the base locator of the topic map.
+   * 
+   * @param reference the reference locator address.
+   */
+  private String normaliseLocatorReference(LocatorIF loc) {
+    String reference = loc.getAddress();
     String retVal = reference.substring(longestCommonPath(reference,
             baseLoc.getAddress()).length());
     if (retVal.startsWith("/"))
@@ -358,7 +602,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
   }
   
   /**
-   * Returns the longest common path of two Strings.
+   * INTERNAL: Returns the longest common path of two Strings.
    * The longest common path is the longest common prefix that ends with a '/'.
    * If one string is a prefix of the other, the the longest common path is
    * the shortest (i.e. the one that is a prefix of the other).
@@ -391,63 +635,75 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
        
     return retVal;
   }
-  
-  private void writeRefArray(String key, Collection<TopicIF> coll)
-      throws IOException {
-    if (!coll.isEmpty()) {
-      writer.key(key).array();
-      for (TopicIF ref : coll) {
-        writer.value(getTopicRef(ref));
-      }
-      writer.endArray();
-    }
-  }
-  
-  private void writeDataType(LocatorIF type) throws IOException {
-    if (type != null && !PSI.getXSDString().equals(type)) {
-      writer.pair("datatype", type.getExternalForm());
-    }
-  }
-  
-  private void writeReifier(ReifiableIF obj) throws IOException {
-    if (obj.getReifier() != null) {
-      writer.pair("reifier", getTopicRef(obj.getReifier()));
-    }
-  }
 
   /**
-   * Get the reference to a topic in JTM notation. When a topic is referred to
-   * by means of a locator L, the string is to be constructed as follows: 
+   * INTERNAL: Returns the reference to a topic in JTM notation. 
+   * 
+   * The order of preference for constructing a topic reference is as follows:
    * 
    * <ul>
-   *   <li>L is a subject identifier: si:L
-   *   <li>L is a subject locator: sl:L
-   *   <li>L is an item identifier: ii:L
+   * <li>subject identifier
+   * <li>subject locator
+   * <li>item identifier
    * </ul>
    * 
-   * @param ref The topic to be referenced.
-   * @return A reference to this topic in JTM notation.
+   * @param ref the topic to be referenced.
+   * @return a reference to this topic in JTM notation.
+   * @see #getJTMLocator(LOCATOR_TYPE, LocatorIF)
    */
   private String getTopicRef(TopicIF ref) {
+    // prefer subject identifiers if present
+    if (!ref.getSubjectIdentifiers().isEmpty()) {
+      return getJTMLocator(LOCATOR_TYPE.SID, (LocatorIF) ref
+          .getSubjectIdentifiers().iterator().next());
+    } else if (!ref.getSubjectLocators().isEmpty()) {
+      return getJTMLocator(LOCATOR_TYPE.SL, (LocatorIF) ref
+          .getSubjectLocators().iterator().next());
+    } else if (!ref.getItemIdentifiers().isEmpty()) {
+      return getJTMLocator(LOCATOR_TYPE.IID, (LocatorIF) ref
+          .getItemIdentifiers().iterator().next());
+    } else {
+      // should not happen, as every topic needs to have one of them
+      log.warn("Topic with objectID:" + ref.getObjectId()
+          + " has not a single item/subject identifier or locator.");
+      return new String("");
+    }
+  }
+  
+  /**
+   * INTERNAL: Returns a locator in JTM notation. When a construct is
+   * referred to by means of a locator L, the string is to be constructed as
+   * follows:
+   * 
+   * <ul>
+   * <li>L is a subject identifier: si:L
+   * <li>L is a subject locator: sl:L
+   * <li>L is an item identifier: ii:L
+   * </ul>   
+   * 
+   * @param type the type of the locator.
+   * @param loc the internal locator to be converted.
+   * @return a string representation of the internal locator in JTM notation.
+   */
+  private String getJTMLocator(LOCATOR_TYPE type, LocatorIF loc) {
     StringBuilder sb = new StringBuilder();
-    if (!ref.getItemIdentifiers().isEmpty()) {
+    switch (type) {
+    case IID:
       sb.append("ii:");
-      LocatorIF loc = (LocatorIF) ref.getItemIdentifiers().iterator().next();
-      String id = getIdentifier(loc);
+      String id = normaliseLocatorReference(loc);
       if (!id.startsWith("http://") && !id.startsWith("#")) {
         sb.append("#");
       }
       sb.append(id);
-    } else if (!ref.getSubjectIdentifiers().isEmpty()) {
+      break;
+    case SID:
       sb.append("si:");
-      LocatorIF loc = (LocatorIF) ref.getSubjectIdentifiers().iterator().next();
-      sb.append(loc.getExternalForm());
-    } else if (!ref.getSubjectLocators().isEmpty()) {
-      sb.append("sl:");
-      LocatorIF loc = (LocatorIF) ref.getSubjectLocators().iterator().next();
-      sb.append(loc.getExternalForm());
-    } else {
-      // TODO: throw an error
+      sb.append(loc.getAddress());
+      break;
+    case SL:
+      sb.append("si:");
+      sb.append(loc.getAddress());
+      break;
     }
     return sb.toString();
   }

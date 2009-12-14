@@ -28,7 +28,7 @@ public class JTMTestGenerator implements TestCaseGeneratorIF {
     if (infiles != null) {
       for (int i = 0; i < infiles.length; i++) {
         String name = infiles[i].getName ();
-        if (name.endsWith (".jtm") && !name.contains("detached")) {
+        if (name.endsWith (".jtm")) {
           tests.add (new JTMReaderTestCase (name, base));
           tests.add (new JTMWriterTestCase (name, base));
         }
