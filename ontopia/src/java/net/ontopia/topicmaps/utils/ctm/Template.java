@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
@@ -30,14 +31,17 @@ public class Template {
    * stored here. On invocation, the invoke() method sets the passed
    * arguments in the generators stored here.
    */
-  private Map generators;  
+  private Map<String, ParameterGenerator> generators;  
   
   public Template(String name, List<String> parameters) {
     this.name = name;
     this.parameters = parameters;
     this.events = new ArrayList();
-    this.generators = new HashMap();
+    this.generators = new HashMap<String, ParameterGenerator>();
     this.named_wilcards = new CompactHashSet();
+
+    for (String param : parameters)
+      generators.put(param, new ParameterGenerator());
   }
 
   public String getName() {
@@ -48,56 +52,14 @@ public class Template {
     events.add(event);
   }
 
-  public void registerWildcard(String name, TopicGeneratorIF gen) {
+  public void registerWildcard(String name, ValueGeneratorIF gen) {
     named_wilcards.add(gen);
   }
 
-  public VariableLiteralGenerator getLiteralVariable(String name) {
-    // FIXME: does variable actually exist in this template?
-    // FIXME: what if variable actually of another type?
-    VariableLiteralGenerator gen = (VariableLiteralGenerator)
-      generators.get(name);
-    if (gen == null) {
-      gen = new VariableLiteralGenerator(this, name);
-      generators.put(name, gen);
-    }
-    return gen;
-  }
-
-  public VariableTopicGenerator getTopicVariable(String name) {
-    // FIXME: does variable actually exist in this template?
-    // FIXME: what if variable actually of another type?
-    VariableTopicGenerator gen = (VariableTopicGenerator)
-      generators.get(name);
-    if (gen == null) {
-      gen = new VariableTopicGenerator(this, name);
-      generators.put(name, gen);
-    }
-    return gen;
-  }
-
-  /**
-   * Used for the special case:
-   *
-   * <pre>
-   * def foo($a)
-   *   $a.
-   * end;
-   * foo(topic); # we're passing a topic
-   * foo(<http://psi.example.com/topic>); # we're passing an IRI
-   * </pre>
-   */
-  public TopicIdentityVariableGenerator getTopicIdentityVariable(String name,
-                                                         TopicMapIF topicmap) {
-    // FIXME: does variable actually exist in this template?
-    // FIXME: what if variable actually of another type?
-    // FIXME: can fuck this up by first making topic ref, then topic id ref...
-    TopicIdentityVariableGenerator gen = (TopicIdentityVariableGenerator)
-      generators.get(name);
-    if (gen == null) {
-      gen = new TopicIdentityVariableGenerator(this, name, topicmap);
-      generators.put(name, gen);
-    }
+  public ValueGeneratorIF getGenerator(String name) {
+    ValueGeneratorIF gen = generators.get(name);
+    if (gen == null)
+      throw new InvalidTopicMapException("No such parameter: " + name);
     return gen;
   }
 
@@ -118,21 +80,11 @@ public class Template {
       // name of parameter
       String name = parameters.get(ix);
       // generator producing passed argument value
-      Object value = arguments.get(ix);
+      ValueGeneratorIF value = (ValueGeneratorIF) arguments.get(ix);
       // generator producing variable value inside invoked template
-      Object generator = generators.get(name);
-
-      if (generator instanceof VariableTopicGenerator) {
-        TopicGeneratorIF gen = (TopicGeneratorIF) value;
-        ((VariableTopicGenerator) generator).setTopic(gen.getTopic());
-      } else if (generator instanceof VariableLiteralGenerator)
-        ((VariableLiteralGenerator) generator).setValue(value);
-      else if (generator instanceof TopicIdentityVariableGenerator)
-        ((TopicIdentityVariableGenerator) generator).setValue(value);
-      else
-        throw new OntopiaRuntimeException("No generator for parameter " + name +
-                                          " to template " + this.name + ": " +
-                                          generator);
+      ParameterGenerator generator = generators.get(name);
+      // connecting parameter with its value
+      generator.setGenerator(value);
     }
 
     for (int ix = 0; ix < events.size(); ix++) {
@@ -146,6 +98,48 @@ public class Template {
     while (it.hasNext()) {
       NamedWildcardTopicGenerator gen = (NamedWildcardTopicGenerator) it.next();
       gen.contextEnd();
+    }
+  }
+
+  // --- Parameter generator
+
+  static class ParameterGenerator implements ValueGeneratorIF {
+    private ValueGeneratorIF gen;
+
+    public ParameterGenerator() {
+    }
+
+    public void setGenerator(ValueGeneratorIF gen) {
+      this.gen = gen;
+    }
+    
+    public boolean isTopic() {
+      return gen.isTopic();
+    }
+  
+    public String getLiteral() {
+      return gen.getLiteral();
+    }
+  
+    public LocatorIF getDatatype() {
+      return gen.getDatatype();
+    }
+
+    public LocatorIF getLocator() {
+      return gen.getLocator();
+    }
+  
+    public ValueGeneratorIF copy() {
+      return this;
+    }
+
+    public TopicIF getTopic() {
+      return gen.getTopic();
+    }
+
+
+    public String toString() {
+      return "[ParameterGenerator: " + gen + "]";
     }
   }
 }

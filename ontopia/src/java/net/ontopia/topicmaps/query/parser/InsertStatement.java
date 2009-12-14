@@ -22,9 +22,8 @@ import net.ontopia.topicmaps.utils.ctm.CTMParser;
 import net.ontopia.topicmaps.utils.ctm.Template;
 import net.ontopia.topicmaps.utils.ctm.BuilderEventHandler;
 import net.ontopia.topicmaps.utils.ctm.TemplateEventHandler;
-import net.ontopia.topicmaps.utils.ctm.TopicGeneratorIF;
-import net.ontopia.topicmaps.utils.ctm.BasicTopicGenerator;
-import net.ontopia.topicmaps.utils.ctm.BasicLiteralGenerator;
+import net.ontopia.topicmaps.utils.ctm.ValueGeneratorIF;
+import net.ontopia.topicmaps.utils.ctm.ValueGenerator;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 
@@ -131,12 +130,12 @@ public class InsertStatement extends ModificationStatement {
     }
   }
 
-  private static Object makeGenerator(Object value) {
+  private static ValueGeneratorIF makeGenerator(Object value) {
     if (value instanceof TopicIF)
-      return new BasicTopicGenerator((TopicIF) value);
+      return new ValueGenerator((TopicIF) value, null, null, null);
     else if (value instanceof String)
-      return new BasicLiteralGenerator((String) value, null,
-                                       DataTypes.TYPE_STRING);
+      return new ValueGenerator(null, (String) value, DataTypes.TYPE_STRING,
+                                null);
     else
       throw new OntopiaRuntimeException("Can't make generator for " + value);
   }
@@ -170,23 +169,23 @@ public class InsertStatement extends ModificationStatement {
       return tologctx.resolveQName(new QName(qname));
     }
 
-    public TopicGeneratorIF getTopicById(String id) {
+    public ValueGeneratorIF getTopicById(String id) {
       return ctmctx.getTopicById(id);
     }
   
-    public TopicGeneratorIF getTopicByItemIdentifier(LocatorIF itemid) {
+    public ValueGeneratorIF getTopicByItemIdentifier(LocatorIF itemid) {
       throw new UnsupportedOperationException();
     }
 
-    public TopicGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc) {
+    public ValueGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc) {
       throw new UnsupportedOperationException();
     }
 
-    public TopicGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid) {
+    public ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid) {
       throw new UnsupportedOperationException();
     }
 
-    public TopicGeneratorIF getTopicByQname(String qname) {
+    public ValueGeneratorIF getTopicByQname(String qname) {
       throw new UnsupportedOperationException();
     }
 

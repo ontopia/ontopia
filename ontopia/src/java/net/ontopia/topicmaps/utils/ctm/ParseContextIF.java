@@ -19,15 +19,15 @@ public interface ParseContextIF {
   
   public LocatorIF resolveQname(String qname);
 
-  public TopicGeneratorIF getTopicById(String id);
+  public ValueGeneratorIF getTopicById(String id);
   
-  public TopicGeneratorIF getTopicByItemIdentifier(LocatorIF itemid);
+  public ValueGeneratorIF getTopicByItemIdentifier(LocatorIF itemid);
 
-  public TopicGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc);
+  public ValueGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc);
 
-  public TopicGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid);
+  public ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid);
 
-  public TopicGeneratorIF getTopicByQname(String qname);
+  public ValueGeneratorIF getTopicByQname(String qname);
 
   public TopicIF makeTopicById(String id);
   

@@ -12,8 +12,7 @@ import net.ontopia.topicmaps.utils.PSI;
  * an argument to a template because this can be either a topic
  * reference or an IRI literal, and we don't know which.
  */
-public class IRIAsArgumentGenerator
-  implements TopicGeneratorIF, LiteralGeneratorIF {
+public class IRIAsArgumentGenerator implements ValueGeneratorIF {
   private ParseContextIF context;
   private LocatorIF locator;
   
@@ -21,16 +20,16 @@ public class IRIAsArgumentGenerator
     this.context = context;
     this.locator = locator;
   }
+
+  public boolean isTopic() {
+    return true;
+  }  
   
   public TopicIF getTopic() {
     return context.makeTopicBySubjectIdentifier(locator);
   }
 
-  public TopicGeneratorIF copyTopic() {
-    return this; // should be OK
-  }
-
-  public LiteralGeneratorIF copyLiteral() {
+  public ValueGeneratorIF copy() {
     return this; // should be OK
   }
   

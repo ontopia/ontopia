@@ -65,7 +65,11 @@ public class CTMTestGenerator implements TestCaseGeneratorIF {
       }
 
       DuplicateSuppressionUtils.removeDuplicates(source);
-      new CanonicalXTMWriter(new FileOutputStream(out)).write(source);
+      try {
+        new CanonicalXTMWriter(new FileOutputStream(out)).write(source);
+      } catch (Exception e) {
+        throw new OntopiaRuntimeException("Error in " + in, e);
+      }
   
       // compare results
       assertTrue("test file " + filename + " canonicalized wrongly",

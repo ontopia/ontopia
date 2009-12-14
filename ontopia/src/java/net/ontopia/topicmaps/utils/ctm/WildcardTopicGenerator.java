@@ -5,7 +5,7 @@ package net.ontopia.topicmaps.utils.ctm;
 
 import net.ontopia.topicmaps.core.TopicIF;
 
-public class WildcardTopicGenerator implements TopicGeneratorIF {
+public class WildcardTopicGenerator extends AbstractTopicGenerator {
   private ParseContextIF context;
   
   public WildcardTopicGenerator(ParseContextIF context) {
@@ -16,7 +16,7 @@ public class WildcardTopicGenerator implements TopicGeneratorIF {
     return context.makeAnonymousTopic();
   }
 
-  public TopicGeneratorIF copyTopic() {
+  public ValueGeneratorIF copy() {
     return this; // no state, so...
   }
 }

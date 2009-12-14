@@ -56,6 +56,7 @@ public class RAPServlet extends HttpServlet {
   public static final String TOPICMAP_PARAMETER_NAME  = "topicmap";
   public static final String VIEW_PARAMETER_NAME      = "view";
   public static final String COMPRESS_PARAMETER_NAME  = "compress";
+  public static final String STATEMENT_PARAMETER_NAME = "tolog";
 
   public static final String SYNTAX_ASTMA  = "text/x-astma";
   public static final String SYNTAX_LTM    = "text/x-ltm";
@@ -125,6 +126,8 @@ public class RAPServlet extends HttpServlet {
       addTypeListener(request, response);
     else if (URLString.endsWith("remove-type-listener"))
       removeTypeListener(request, response);
+    else if (URLString.endsWith("tolog-update"))
+      tologUpdate(request, response);
     else
       reportError(response, "No such POST request" + URLString);
   }
@@ -428,6 +431,32 @@ public class RAPServlet extends HttpServlet {
       closeIndex(topicIndex);
     }
   }
+
+  /**
+   * Run a tolog update statement.
+   */  
+  private void tologUpdate(HttpServletRequest request, 
+                           HttpServletResponse response) throws IOException {
+    try {
+      // get context
+      NavigatorApplicationIF navapp =
+        NavigatorUtils.getNavigatorApplication(getServletContext()); 
+      
+      // set up parameters
+      String[] tmids = request.getParameterValues(TOPICMAP_PARAMETER_NAME);
+      if (tmids.length != 1) {
+        reportError(response, "tolog-update: Exactly one topic map ID required");
+        return;
+      }
+      String stmt = request.getParameter(STATEMENT_PARAMETER_NAME);
+      int rows = TMRAPImplementation.tologUpdate(navapp, tmids[0], stmt);
+
+      response.setContentType("text/plain; charset=us-ascii");
+      response.getWriter().write("" + rows);
+    } catch (Exception e) {
+      reportError(response, e);
+    }
+  }  
   
   // --- Internal helpers
 

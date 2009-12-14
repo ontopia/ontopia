@@ -77,24 +77,24 @@ public class GlobalParseContext implements ParseContextIF {
     }
   }
   
-  public TopicGeneratorIF getTopicById(String id) {
+  public ValueGeneratorIF getTopicById(String id) {
     LocatorIF itemid = base.resolveAbsolute('#' + id);
     return new TopicByItemIdentifierGenerator(this, itemid, id);
   }
   
-  public TopicGeneratorIF getTopicByItemIdentifier(LocatorIF itemid) {
+  public ValueGeneratorIF getTopicByItemIdentifier(LocatorIF itemid) {
     return new TopicByItemIdentifierGenerator(this, itemid);
   }
 
-  public TopicGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc) {
+  public ValueGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc) {
     return new TopicBySubjectLocatorGenerator(this, subjloc);
   }
 
-  public TopicGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid) {
+  public ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid) {
     return new TopicBySubjectIdentifierGenerator(this, subjid);
   }
 
-  public TopicGeneratorIF getTopicByQname(String qname) {
+  public ValueGeneratorIF getTopicByQname(String qname) {
     return new TopicBySubjectIdentifierGenerator(this, resolveQname(qname));
   }
   
@@ -158,7 +158,7 @@ public class GlobalParseContext implements ParseContextIF {
   
   // --- Internal generator classes
 
-  static abstract class InternalTopicGenerator implements TopicGeneratorIF {
+  static abstract class InternalTopicGenerator extends AbstractTopicGenerator {
     protected ParseContextIF context;
     protected LocatorIF locator;
 
@@ -167,7 +167,7 @@ public class GlobalParseContext implements ParseContextIF {
       this.locator = locator;
     }
     
-    public TopicGeneratorIF copyTopic() {
+    public ValueGeneratorIF copy() {
       return this; // FIXME: this is safe as long as we keep making new generators
     }
   }

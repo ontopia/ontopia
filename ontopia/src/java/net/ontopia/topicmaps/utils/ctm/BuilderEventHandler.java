@@ -6,6 +6,7 @@ package net.ontopia.topicmaps.utils.ctm;
 import java.util.List;
 import java.util.Stack;
 import java.net.MalformedURLException;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.PSI;
@@ -21,7 +22,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   private TopicMapBuilderIF builder;
   private ParseContextIF context;
   private Stack framestack; // for embedded topics
-  private TopicGeneratorIF generator;
+  private ValueGeneratorIF generator;
   private TopicIF previous_embedded;
 
   // <framed>
@@ -49,27 +50,35 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     this.generator = new PreviousEmbeddedTopicGenerator();
   }
   
-  public void startTopicItemIdentifier(LiteralGeneratorIF locator) {
+  public void startTopicItemIdentifier(ValueGeneratorIF locator) {
     topic = context.makeTopicByItemIdentifier(locator.getLocator());
   }
   
-  public void startTopicSubjectIdentifier(LiteralGeneratorIF locator) {
+  public void startTopicSubjectIdentifier(ValueGeneratorIF locator) {
     topic = context.makeTopicBySubjectIdentifier(locator.getLocator());
   }
   
-  public void startTopicSubjectLocator(LiteralGeneratorIF locator) {
+  public void startTopicSubjectLocator(ValueGeneratorIF locator) {
     topic = context.makeTopicBySubjectLocator(locator.getLocator());
   }
 
-  public void startTopic(TopicGeneratorIF topicgen) {
-    topic = topicgen.getTopic();
+  public void startTopic(ValueGeneratorIF topicgen) {
+    // this is a special situation, because while we might be passed a
+    // topic, we might also be passed just an IRI to be interpreted as
+    // a subject identifier
+    if (topicgen.isTopic())
+      topic = topicgen.getTopic();
+    else if (topicgen.getLocator() != null)
+      startTopicSubjectIdentifier(topicgen);
+    else
+      throw new InvalidTopicMapException("Wrong type passed as topic identifier: " + topicgen.getLiteral());
   }
   
-  public void addItemIdentifier(LiteralGeneratorIF locator) {
+  public void addItemIdentifier(ValueGeneratorIF locator) {
     topic.addItemIdentifier(locator.getLocator());
   }
   
-  public void addSubjectIdentifier(LiteralGeneratorIF locator) {
+  public void addSubjectIdentifier(ValueGeneratorIF locator) {
     TopicMapIF tm = builder.getTopicMap();
     TopicIF other = tm.getTopicBySubjectIdentifier(locator.getLocator());
     if (other != null)
@@ -78,15 +87,15 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
       topic.addSubjectIdentifier(locator.getLocator());
   }
   
-  public void addSubjectLocator(LiteralGeneratorIF locator) {
+  public void addSubjectLocator(ValueGeneratorIF locator) {
     topic.addSubjectLocator(locator.getLocator());
   }
 
-  public void addTopicType(TopicGeneratorIF type) {
+  public void addTopicType(ValueGeneratorIF type) {
     topic.addType(type.getTopic());
   }
 
-  public void addSubtype(TopicGeneratorIF thesubtype) {
+  public void addSubtype(ValueGeneratorIF thesubtype) {
     // get typing topics
     if (assoctype == null)
       assoctype = getTopicByPSI(PSI.getSAMSupertypeSubtype());
@@ -101,17 +110,17 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     builder.makeAssociationRole(assoc, supertype, thesubtype.getTopic());
   }
   
-  public void startName(TopicGeneratorIF type, LiteralGeneratorIF value) {
+  public void startName(ValueGeneratorIF type, ValueGeneratorIF value) {
     name = builder.makeTopicName(topic, type.getTopic(), value.getLiteral());
     scoped = name;
     reifiable = name;    
   }
   
-  public void addScopingTopic(TopicGeneratorIF topic) {
+  public void addScopingTopic(ValueGeneratorIF topic) {
     scoped.addTheme(topic.getTopic());
   }
   
-  public void addReifier(TopicGeneratorIF topic) {
+  public void addReifier(ValueGeneratorIF topic) {
     TopicIF reifier = topic.getTopic();
     if (reifier.getReified() != null)
       throw new InvalidTopicMapException("Cannot reify " + reifiable + " because "+
@@ -120,7 +129,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     reifiable.setReifier(reifier);
   }
 
-  public void startVariant(LiteralGeneratorIF value) {
+  public void startVariant(ValueGeneratorIF value) {
     // FIXME: no support for datatypes here yet...
     VariantNameIF variant = builder.makeVariantName(name, value.getLiteral());
     scoped = variant;
@@ -130,7 +139,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   public void endName() {
   }
 
-  public void startOccurrence(TopicGeneratorIF type, LiteralGeneratorIF value) {
+  public void startOccurrence(ValueGeneratorIF type, ValueGeneratorIF value) {
     OccurrenceIF occurrence = 
       builder.makeOccurrence(topic,
                              type.getTopic(),
@@ -147,12 +156,12 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     topic = null; // so we can tell if we are in a block or not
   }
 
-  public void startAssociation(TopicGeneratorIF type) {
+  public void startAssociation(ValueGeneratorIF type) {
     association = builder.makeAssociation(type.getTopic()); 
     scoped = association;    
   }
   
-  public void addRole(TopicGeneratorIF type, TopicGeneratorIF player) {
+  public void addRole(ValueGeneratorIF type, ValueGeneratorIF player) {
     reifiable = builder.makeAssociationRole(association,
                                             type.getTopic(),
                                             player.getTopic());
@@ -171,7 +180,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     topic = context.makeAnonymousTopic();
   }
 
-  public TopicGeneratorIF endEmbeddedTopic() {
+  public ValueGeneratorIF endEmbeddedTopic() {
     previous_embedded = topic;
     ParseFrame frame = (ParseFrame) framestack.pop(); 
     topic = frame.topic;
@@ -190,9 +199,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     if (topic != null) {
       // invocations inside topic blocks need to have the current topic prepended
       // to the list of parameters. note that this needs to be as a generator.
-      VariableTopicGenerator gen = new VariableTopicGenerator(template, null);
-      gen.setTopic(topic);
-      arguments.add(0, gen);
+      arguments.add(0, new ValueGenerator(topic, null, null, null));
     }
 
     TopicIF tmp = topic; // template may end current topic block
@@ -223,14 +230,14 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
   
   // --- PreviousEmbeddedTopicGenerator
 
-  class PreviousEmbeddedTopicGenerator implements TopicGeneratorIF {
+  class PreviousEmbeddedTopicGenerator extends AbstractTopicGenerator {
     
     public TopicIF getTopic() {
       return previous_embedded;
     }
 
-    public TopicGeneratorIF copyTopic() {
-      return new BasicTopicGenerator(previous_embedded);
+    public ValueGeneratorIF copy() {
+      return new ValueGenerator(previous_embedded, null, null, null);
     }
   }
 }

@@ -5,7 +5,7 @@ package net.ontopia.topicmaps.utils.ctm;
 
 import net.ontopia.topicmaps.core.TopicIF;
 
-public class NamedWildcardTopicGenerator implements TopicGeneratorIF {
+public class NamedWildcardTopicGenerator extends AbstractTopicGenerator {
   private ParseContextIF context;
   private String name;
   private TopicIF topic; // made only once
@@ -21,8 +21,8 @@ public class NamedWildcardTopicGenerator implements TopicGeneratorIF {
     return topic;
   }
 
-  public TopicGeneratorIF copyTopic() {
-    return this; // no state, so... FIXME: well, that ain't entirely true...
+  public ValueGeneratorIF copy() {
+    return this; // no state, so...
   }
 
   /**

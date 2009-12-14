@@ -55,13 +55,13 @@ options {
   private ParseEventHandlerIF handler;
   private ParseEventHandlerIF real_handler;
 
-  private TopicGeneratorIF topic_ref;    // topic referenced by topic_ref
-  private TopicGeneratorIF type;      // used for role types
-  private LiteralGeneratorIF literal;    // last parsed literal
-  private BasicLiteralGenerator basic_literal; // reused generator
-  private BasicLiteralGenerator datatype_literal; // reused generator
-  private BasicLiteralGenerator tmp;              // used for swapping
-  private TopicGeneratorIF wildcard;           // reused generator
+  private ValueGeneratorIF topic_ref;    // topic referenced by topic_ref
+  private ValueGeneratorIF type;      // used for role types
+  private ValueGeneratorIF literal;    // last parsed literal
+  private ValueGenerator basic_literal; // reused generator
+  private ValueGenerator datatype_literal; // reused generator
+  private ValueGenerator tmp;              // used for swapping
+  private ValueGeneratorIF wildcard;           // reused generator
   private String id;                     // prefix name (used in declarations)
   private Template template;             // template to be invoked (only invoc)
 
@@ -80,8 +80,8 @@ options {
     this.context = new GlobalParseContext(topicmap, document);
     this.handler = new BuilderEventHandler(builder, context);
     this.real_handler = handler;
-    this.basic_literal = new BasicLiteralGenerator();
-    this.datatype_literal = new BasicLiteralGenerator();
+    this.basic_literal = new ValueGenerator();
+    this.datatype_literal = new ValueGenerator();
     this.wildcard = new WildcardTopicGenerator(context);
     this.wildcards = new HashMap();
     this.template_wildcards = new HashMap();
@@ -107,7 +107,7 @@ options {
     alreadyLoaded.add(document); // don't want to read top document again
   }
 
-  private TopicGeneratorIF getWildcard(String name) {
+  private ValueGeneratorIF getWildcard(String name) {
     Map map;
 
     if (current_template == null) 
@@ -115,7 +115,7 @@ options {
     else
       map = template_wildcards;
         
-    TopicGeneratorIF gen = (TopicGeneratorIF) map.get(name);
+    ValueGeneratorIF gen = (ValueGeneratorIF) map.get(name);
     if (gen == null) {
       gen = new NamedWildcardTopicGenerator(context, name);
       map.put(name, gen);
@@ -230,8 +230,7 @@ topic_identity :
      { if (current_template == null)
          throw new InvalidTopicMapException("Variable " + LT(0).getText() + 
                                             " referenced outside template");
-       topic_ref = current_template.getTopicIdentityVariable(LT(0).getText(), 
-                                                             topicmap);
+       topic_ref = current_template.getGenerator(LT(0).getText());
        handler.startTopic(topic_ref); } |
    item_identifier   { handler.startTopicItemIdentifier(literal);     } |
    subject_locator   { handler.startTopicSubjectLocator(literal);     } |
@@ -259,7 +258,7 @@ name :
     { basic_literal.setLiteral(LT(0).getText());
       handler.startName(topic_ref, basic_literal); }
   | VARIABLE
-    { literal = current_template.getLiteralVariable(LT(0).getText());
+    { literal = current_template.getGenerator(LT(0).getText());
       handler.startName(topic_ref, literal); } )
   (scope)? (reifier)? (variant)* 
     { handler.endName(); } ;
@@ -298,7 +297,7 @@ association :
 
 role :
   topic_ref 
-    { type = topic_ref.copyTopic(); }
+    { type = topic_ref.copy(); }
   COLON topic_ref 
     { handler.addRole(type, topic_ref); }
   (reifier)? ;
@@ -343,7 +342,7 @@ topic_ref :
     topic_ref = context.getTopicByItemIdentifier(literal.getLocator());
   } |
   VARIABLE {
-    topic_ref = current_template.getTopicVariable(LT(0).getText());
+    topic_ref = current_template.getGenerator(LT(0).getText());
   } |
   iri_ref {
     topic_ref = context.getTopicBySubjectIdentifier(literal.getLocator());
@@ -359,7 +358,7 @@ literal :
       basic_literal.setLiteral(LT(0).getText());
       basic_literal.setDatatype(PSI.getXSDString()); } 
   ( HATHAT 
-    { tmp = (BasicLiteralGenerator) basic_literal.copyLiteral(); }
+    { tmp = (ValueGenerator) basic_literal.copy(); }
     iri_ref
     { tmp.setDatatype(literal.getLocator()); 
       literal = tmp; } )?
@@ -386,7 +385,7 @@ literal :
     if (current_template == null)
       throw new InvalidTopicMapException("Variable " + LT(0).getText() +
                                          " referenced outside template");
-    literal = current_template.getLiteralVariable(LT(0).getText()); 
+    literal = current_template.getGenerator(LT(0).getText()); 
   });
 
 iri_ref :
@@ -400,12 +399,13 @@ iri_ref :
     { literal = basic_literal;
       basic_literal.setLocator(getRelativeLocator()); } 
   | VARIABLE
-    { literal = current_template.getLiteralVariable(LT(0).getText()); }
+    { literal = current_template.getGenerator(LT(0).getText()); }
     ;
 
 template_def :
   DEF IDENTIFIER 
     { template_name = LT(0).getText(); 
+      System.out.println("TEMPLATE: " + template_name);
       parameters = new ArrayList(); }
   LEFTPAREN (VARIABLE 
     { parameters.add(LT(0).getText()); }
@@ -455,7 +455,7 @@ argument :
    QNAME {
      parameters.add(new IRIAsArgumentGenerator(context, context.resolveQname(LT(0).getText())));
    } |
-   topic_ref { parameters.add(topic_ref.copyTopic());     } | 
-   literal   { parameters.add(literal.copyLiteral()); } );
+   topic_ref { parameters.add(topic_ref.copy());     } | 
+   literal   { parameters.add(literal.copy()); } );
 
 string : SINGLE_QUOTED_STRING | TRIPLE_QUOTED_STRING ;

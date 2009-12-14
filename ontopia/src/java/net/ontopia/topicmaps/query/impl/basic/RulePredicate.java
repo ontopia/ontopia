@@ -81,7 +81,10 @@ public class RulePredicate extends AbstractQueryProcessor
     if (open == 0)
       return PredicateDrivenCostEstimator.FILTER_RESULT;
     else
-      return PredicateDrivenCostEstimator.BIG_RESULT + open;
+      // we want to punish rules which have many open variables;
+      // at the same time we want to run rules early. this represents
+      // a compromise.
+      return PredicateDrivenCostEstimator.BIG_RESULT + open - 1;
   }
   
   // --- BasicPredicateIF implementation

@@ -23,6 +23,7 @@ import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
@@ -427,6 +428,28 @@ public class TMRAPImplementation {
     }
   }
 
+  // ===== TOLOG-UPDATE =====================================================
+  // ------------------------------------------------------------------------
+  // | Parameter  | Required? | Repeatable? | Type   | Value      | Default |
+  // ------------------------------------------------------------------------
+  // | topicmap   | yes       | no          | String | tm-handles |         |
+  // | tolog      | yes       | no          | String | query      |         |
+  // ------------------------------------------------------------------------
+  public static int tologUpdate(NavigatorApplicationIF navapp,
+                                String tmid,
+                                String statement)
+    throws IOException, NavigatorRuntimeException, InvalidQueryException {
+    TopicMapIF topicmap = navapp.getTopicMapById(tmid, false);
+    try {
+      QueryProcessorIF processor = QueryUtils.getQueryProcessor(topicmap);
+      int rows = processor.update(statement);
+      topicmap.getStore().commit();
+      return rows;
+    } finally {
+      topicmap.getStore().close();
+    }
+  }
+  
   // --- Internal helpers
 
   private static TopicIF makeTopic(TopicMapIF tm, String id)
