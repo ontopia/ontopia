@@ -101,6 +101,7 @@ Digit = [0-9]
 Sign = "+" | "-"                                             
 Integer = {Sign}? {Digit}+
 Decimal = {Sign}? {Digit}+ "." {Digit}+
+Infinity = "*"
 
 /* dates and times */
 Date = {Digit}{Digit}{Digit}{Digit}"-"{Digit}{Digit}"-"{Digit}{Digit}
@@ -141,6 +142,7 @@ DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
                                      yytext().substring(1)); }
   {Integer}        { return newToken(CTMParser.INTEGER); }
   {Decimal}        { return newToken(CTMParser.DECIMAL); }
+  {Infinity}       { return newToken(CTMParser.INFINITY); }
   {Date}           { return newToken(CTMParser.DATE); }
   {DateTime}       { return newToken(CTMParser.DATETIME); }
   /*  {SimpleString}   { return newToken(CTMParser.SINGLE_QUOTED_STRING,

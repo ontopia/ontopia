@@ -386,7 +386,9 @@ literal :
       throw new InvalidTopicMapException("Variable " + LT(0).getText() +
                                          " referenced outside template");
     literal = current_template.getGenerator(LT(0).getText()); 
-  });
+  } |
+  INFINITY {  basic_literal.setLiteral("*");
+              basic_literal.setDatatype(PSI.getCTMInteger()); });
 
 iri_ref :
   ( QNAME

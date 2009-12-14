@@ -50,6 +50,10 @@ public class PSI {
   public static final String XSD_DATE = XSD_BASE + "date";
   public static final String XSD_DATETIME = XSD_BASE + "dateTime";
   public static final String XSD_URI = XSD_BASE + "anyURI";
+
+  // FIXME: this PSI is not actually known yet
+  private static final String CTM_BASE = "http://psi.example.org/";
+  public static final String CTM_INTEGER = CTM_BASE + "integer";
   
   // --- Locator objects
         
@@ -187,6 +191,12 @@ public class PSI {
       xsdUri = makeLocator(XSD_URI);
     return xsdUri;
   }
+
+  public static URILocator getCTMInteger() {
+    if (ctmInteger == null)
+      ctmInteger = makeLocator(CTM_INTEGER);
+    return ctmInteger;
+  }
   
   // --- Internal cache
 
@@ -216,6 +226,8 @@ public class PSI {
   private static URILocator xsdDate;
   private static URILocator xsdDatetime;
   private static URILocator xsdUri;
+
+  private static URILocator ctmInteger;
   
   private static URILocator makeLocator(String loc) {
     try {
