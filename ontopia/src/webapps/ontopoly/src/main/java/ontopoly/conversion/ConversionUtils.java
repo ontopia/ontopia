@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import ontopoly.OntopolyApplication;
+
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -26,7 +28,6 @@ import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMapSourceIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapSource;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
@@ -142,7 +143,7 @@ public class ConversionUtils {
           tm.setReifier(reifier);
           tmbuilder.makeTopicName(reifier, tmname);
           TopicIF versionTopic  = tm.getTopicBySubjectIdentifier(versionTopicPSI);
-          tmbuilder.makeOccurrence(reifier, versionTopic, Float.toString(OntopolyRepository.CURRENT_VERSION_NUMBER));
+          tmbuilder.makeOccurrence(reifier, versionTopic, Float.toString(OntopolyApplication.CURRENT_VERSION_NUMBER));
         }
       }
       
@@ -183,7 +184,7 @@ public class ConversionUtils {
       }
       // Check ontology version:
       TopicIF versionTopic  = tm.getTopicBySubjectIdentifier(versionTopicPSI);
-      String versionNumber = Float.toString(OntopolyRepository.CURRENT_VERSION_NUMBER); 
+      String versionNumber = Float.toString(OntopolyApplication.CURRENT_VERSION_NUMBER); 
       OccurrenceIF versionOcc = getOccurrenceOfType(nreifier, versionTopic);
       if (versionOcc == null)
         // create new ontology version occurrence

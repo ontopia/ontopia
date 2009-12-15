@@ -21,6 +21,7 @@ import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.models.FieldAssignmentModel;
 import ontopoly.models.FieldDefinitionModel;
+import ontopoly.models.MutableLoadableDetachableModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.AbstractOntopolyPage;
 
@@ -40,7 +41,7 @@ public class FieldsEditor extends Panel {
   boolean readonly;
   
   ListView listView;
-  List<FieldAssignmentModel> fieldAssignmentModels;
+  MutableLoadableDetachableModel<List<FieldAssignmentModel>> fieldAssignmentModels;
   WebMarkupContainer addFieldsContainer;
   
   public FieldsEditor(String id, final TopicTypeModel topicTypeModel, final boolean readonly) {
@@ -50,8 +51,13 @@ public class FieldsEditor extends Panel {
     setOutputMarkupId(true);
 
     // existing fields
-    List<FieldAssignment> fieldAssignments = topicTypeModel.getTopicType().getFieldAssignments();
-    this.fieldAssignmentModels = FieldAssignmentModel.wrapInFieldAssignmentModels(fieldAssignments);
+    this.fieldAssignmentModels = new MutableLoadableDetachableModel<List<FieldAssignmentModel>>() {
+      @Override
+      protected List<FieldAssignmentModel> load() {
+        List<FieldAssignment> fieldAssignments = topicTypeModel.getTopicType().getFieldAssignments();
+        return FieldAssignmentModel.wrapInFieldAssignmentModels(fieldAssignments);
+      }      
+    };
     
     this.listView = new ListView<FieldAssignmentModel>("existingFields", fieldAssignmentModels) {
       public void populateItem(final ListItem<FieldAssignmentModel> item) {
@@ -62,20 +68,12 @@ public class FieldsEditor extends Panel {
         Component component = new FieldsEditorExistingPanel("field", topicTypeModel, fieldAssignmentModel, readonly) {
           @Override
           protected void onMoveAfter(FieldAssignmentModel fam_dg, FieldAssignmentModel fam_do, AjaxRequestTarget target) {
-            // remove draggable
-            int indexDg = fieldAssignmentModels.indexOf(fam_dg);
-            fieldAssignmentModels.remove(indexDg);
-            // add draggable
-            int indexDo = fieldAssignmentModels.indexOf(fam_do);
-            fieldAssignmentModels.add(indexDo+1, fam_dg);
             // notify parent
             onUpdate(target);
           }
 
           @Override
           protected void onRemove(FieldAssignmentModel fam, AjaxRequestTarget target) {
-            // remove field assignment
-            fieldAssignmentModels.remove(fam);
             TopicType topicType  = topicTypeModel.getTopicType();
             FieldAssignment fieldAssignment = fam.getFieldAssignment();
             topicType.removeField(fieldAssignment.getFieldDefinition());
@@ -184,12 +182,8 @@ public class FieldsEditor extends Panel {
         Component component = new FieldsEditorAddPanel("field", topicTypeModel, fieldDefinitionModel) {
           @Override
           protected void onAddField(FieldDefinitionModel fdm, AjaxRequestTarget target) {
-            FieldAssignment new_fa = topicTypeModel.getTopicType().addField(fdm.getFieldDefinition());
-            FieldAssignmentModel new_fam = new FieldAssignmentModel(new_fa);
             // remove field definition from available list
             fieldDefinitionModels.remove(fdm);
-            // add field assignment to existing list
-            fieldAssignmentModels.add(new_fam);
             ListView pListView = ((ListView)item.getParent()); 
             pListView.removeAll();
             onUpdate(target);
@@ -223,8 +217,9 @@ public class FieldsEditor extends Panel {
   
   private List<FieldDefinitionModel> filterAndWrapInFieldDefinitions(List fieldDefinitions) {
     // resolve existing field definitions
-    Set<FieldDefinition> existingFieldDefinitions = new HashSet<FieldDefinition>(fieldAssignmentModels.size());
-    Iterator iter = fieldAssignmentModels.iterator();
+    List<FieldAssignmentModel> fams = fieldAssignmentModels.getObject();
+    Set<FieldDefinition> existingFieldDefinitions = new HashSet<FieldDefinition>(fams.size());
+    Iterator iter = fams.iterator();
     while (iter.hasNext()) {
       FieldAssignmentModel fieldAssignmentModel = (FieldAssignmentModel)iter.next();
       existingFieldDefinitions.add(fieldAssignmentModel.getFieldAssignment().getFieldDefinition());
@@ -265,6 +260,7 @@ public class FieldsEditor extends Panel {
 
   protected void onUpdate(AjaxRequestTarget target) {
     listView.removeAll();
+    fieldAssignmentModels.detach(); // make sure list of field assignments is reloaded
     target.addComponent(FieldsEditor.this);
   }
 }

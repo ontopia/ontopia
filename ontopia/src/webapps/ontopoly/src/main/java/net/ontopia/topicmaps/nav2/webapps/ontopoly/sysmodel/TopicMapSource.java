@@ -64,7 +64,6 @@ public class TopicMapSource {
     // make reference
     TopicMapReferenceIF ref = source.createTopicMap(name, null);
 
-    
     TopicMapStoreIF store = null;
     try {
       store = ref.createStore(false);

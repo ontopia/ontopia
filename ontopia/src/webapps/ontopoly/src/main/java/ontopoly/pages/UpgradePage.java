@@ -1,8 +1,8 @@
 package ontopoly.pages;
 
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
+import ontopoly.OntopolyApplication;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.conversion.ConversionUtils;
 import ontopoly.models.HelpLinkResourceModel;
@@ -26,7 +26,7 @@ public class UpgradePage extends NonOntopolyAbstractPage {
     // redirect to topic types page if the topic map for some reason already has the current ontology version
     TopicMap topicMap = topicMapModel.getTopicMap();
     float ontologyVersion = topicMap.getOntologyVersion();  
-    if (ontologyVersion == OntopolyRepository.CURRENT_VERSION_NUMBER) {
+    if (ontologyVersion == OntopolyApplication.CURRENT_VERSION_NUMBER) {
       // register topic map in system topic map
       TopicMapReference ref = topicMap.getOntopolyRepository().getReference(topicMap.getId());
       ConversionUtils.makeOntopolyTopicMap(ref, topicMap.getName());
@@ -40,7 +40,7 @@ public class UpgradePage extends NonOntopolyAbstractPage {
     // version numbers
     add(new Label("message", new StringResourceModel("UpgradePage.message", this, null,
             new Object[] { new Model<String>(Float.toString(ontologyVersion)), 
-                           new Model<String>(Float.toString(OntopolyRepository.CURRENT_VERSION_NUMBER))  })));
+                           new Model<String>(Float.toString(OntopolyApplication.CURRENT_VERSION_NUMBER))  })));
     
     // Adding part containing title and help link
     createTitle();

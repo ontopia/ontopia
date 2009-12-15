@@ -185,12 +185,12 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         // if it is an old ontopoly topic map then do an upgrade
         if (!performingConvert) {
           float ontologyVersion = tm.getOntologyVersion(); 
-          if (ontologyVersion < OntopolyRepository.CURRENT_VERSION_NUMBER) {
+          if (ontologyVersion < OntopolyApplication.CURRENT_VERSION_NUMBER) {
             // not an ontopoly topic map, so we'll have to redirect to the upgrade page
             PageParameters pageParameters = new PageParameters();
             pageParameters.put("topicMapId", topicMapId);
             throw new RestartResponseException(UpgradePage.class, pageParameters);       
-          } else if (ontologyVersion > OntopolyRepository.CURRENT_VERSION_NUMBER) {
+          } else if (ontologyVersion > OntopolyApplication.CURRENT_VERSION_NUMBER) {
             // FIXME: should create separate page for warning about future topic maps
             PageParameters pageParameters = new PageParameters();
             pageParameters.put("message", "topicmap-is-created-by-a-newer-ontopoly");

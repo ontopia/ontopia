@@ -20,7 +20,6 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
@@ -218,33 +217,33 @@ public class TopicMap {
     return reifier == null ? null : TopicStringifiers.toString(reifier);
   }
 
-  /**
-   * Sets the name of the topic map, creating a new base name object if
-   * necessary. Also updates the name in the system topic map and saves that
-   * topic map.
-   */
-  public void setName(String _value) {
-    String value = (_value == null ? "" : _value);
-    TopicIF topic = makeReifier();
-    // update existing new name or create a new one
-    Collection names = OntopolyModelUtils.findTopicNames(null, topic, value,
-                                                         Collections.EMPTY_SET);
-    Iterator iter = names.iterator();
-    if (iter.hasNext()) {
-      TopicNameIF bn = (TopicNameIF) iter.next();
-      bn.setValue(value);
-    } else
-      getTopicMapIF().getBuilder().makeTopicName(topic, value);
-
-    // remove superflous names
-    while (iter.hasNext())
-      ((TopicNameIF) iter.next()).remove();
-    // update ontopoly repository if there is one
-    if (repository != null) {
-      TopicMapReference ref = repository.getReference(topicMapId);
-      ref.setName(value);
-    }
-  }
+//  /**
+//   * Sets the name of the topic map, creating a new base name object if
+//   * necessary. Also updates the name in the system topic map and saves that
+//   * topic map.
+//   */
+//  public void setName(String _value) {
+//    String value = (_value == null ? "" : _value);
+//    TopicIF topic = makeReifier();
+//    // update existing new name or create a new one
+//    Collection names = OntopolyModelUtils.findTopicNames(null, topic, value,
+//                                                         Collections.EMPTY_SET);
+//    Iterator iter = names.iterator();
+//    if (iter.hasNext()) {
+//      TopicNameIF bn = (TopicNameIF) iter.next();
+//      bn.setValue(value);
+//    } else
+//      getTopicMapIF().getBuilder().makeTopicName(topic, value);
+//
+//    // remove superflous names
+//    while (iter.hasNext())
+//      ((TopicNameIF) iter.next()).remove();
+//    // update ontopoly repository if there is one
+//    if (repository != null) {
+//      TopicMapReference ref = repository.getReference(topicMapId);
+//      ref.setName(value);
+//    }
+//  }
 
   /**
    * Returns the version of the Ontopoly meta-ontology used in this topic map.
@@ -266,27 +265,27 @@ public class TopicMap {
     }
   }
 
-  /**
-   * INTERNAL: Sets the version of the Ontopoly meta-ontology used in
-   * this topic map. Used by code that performs upgrades.
-   */
-  public void setOntologyVersion(float value) {
-    String versionNumber = Float.toString(value);
-    TopicIF reifier = makeReifier();
-    TopicIF ontologyVersion = getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_ONTOLOGY_VERSION);
-    Collection occs = OntopolyModelUtils.findOccurrences(ontologyVersion,
-        reifier, Collections.EMPTY_SET);
-    Iterator iter = occs.iterator();
-    if (iter.hasNext()) {
-      OccurrenceIF occ = (OccurrenceIF) iter.next();
-      occ.setValue(versionNumber);
-    } else {
-      getTopicMapIF().getBuilder().makeOccurrence(reifier, ontologyVersion, versionNumber);
-    }
-    // remove superflous occurrences
-    while (iter.hasNext())
-      ((OccurrenceIF) iter.next()).remove();
-  }
+//  /**
+//   * INTERNAL: Sets the version of the Ontopoly meta-ontology used in
+//   * this topic map. Used by code that performs upgrades.
+//   */
+//  public void setOntologyVersion(float value) {
+//    String versionNumber = Float.toString(value);
+//    TopicIF reifier = makeReifier();
+//    TopicIF ontologyVersion = getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_ONTOLOGY_VERSION);
+//    Collection occs = OntopolyModelUtils.findOccurrences(ontologyVersion,
+//        reifier, Collections.EMPTY_SET);
+//    Iterator iter = occs.iterator();
+//    if (iter.hasNext()) {
+//      OccurrenceIF occ = (OccurrenceIF) iter.next();
+//      occ.setValue(versionNumber);
+//    } else {
+//      getTopicMapIF().getBuilder().makeOccurrence(reifier, ontologyVersion, versionNumber);
+//    }
+//    // remove superflous occurrences
+//    while (iter.hasNext())
+//      ((OccurrenceIF) iter.next()).remove();
+//  }
 
   /**
    * Returns the Id of the topic map reference in the topic map registry.

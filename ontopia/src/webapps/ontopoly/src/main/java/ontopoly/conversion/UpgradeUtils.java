@@ -1,12 +1,13 @@
 package ontopoly.conversion;
 
+import ontopoly.OntopolyApplication;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
@@ -61,7 +62,7 @@ public class UpgradeUtils {
 //        }
         
         // update version number
-        version_occ.setValue(Float.toString(OntopolyRepository.CURRENT_VERSION_NUMBER));
+        version_occ.setValue(Float.toString(OntopolyApplication.CURRENT_VERSION_NUMBER));
       } catch (Exception e) {
         throw new OntopiaRuntimeException(e);
       }
@@ -70,7 +71,7 @@ public class UpgradeUtils {
    
   private static boolean needsUpgrade(float version_number) {
 //    System.out.println("VV: " + OntopolyRepository.CURRENT_VERSION_NUMBER +" "+ version_number + " " + (OntopolyRepository.CURRENT_VERSION_NUMBER > version_number));
-    return version_number != 0 && OntopolyRepository.CURRENT_VERSION_NUMBER > version_number;
+    return version_number != 0 && OntopolyApplication.CURRENT_VERSION_NUMBER > version_number;
   }
   
   private static OccurrenceIF getVersionOccurrence(TopicMapIF topicmap) throws Exception {

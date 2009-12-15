@@ -8,9 +8,9 @@ import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
 import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapSource;
+import ontopoly.OntopolyApplication;
 import ontopoly.components.AjaxOntopolyDropDownChoice;
 import ontopoly.components.AjaxOntopolyTextField;
 import ontopoly.components.AjaxRadioGroupPanel;
@@ -53,7 +53,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     // redirect to topic types page if the topic map for some reason already contains the ontology
     if (topicMap.containsOntology()) {
       // need upgrade if version number is lower than current version
-      if (topicMap.getOntologyVersion() < OntopolyRepository.CURRENT_VERSION_NUMBER) {
+      if (topicMap.getOntologyVersion() < OntopolyApplication.CURRENT_VERSION_NUMBER) {
         PageParameters pageParameters = new PageParameters();
         pageParameters.put("topicMapId", topicMap.getId());
         setResponsePage(UpgradePage.class, pageParameters);

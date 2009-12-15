@@ -41,8 +41,6 @@ import net.ontopia.utils.URIUtils;
  */
 public class OntopolyRepository {
 
-  public static final float CURRENT_VERSION_NUMBER = 1.9f;
-
   private TopicMapIF systemtm;
   private TopicMapRepositoryIF repository;
   private List<TopicMapReference> tms;
