@@ -95,7 +95,13 @@ public abstract class AbstractComparisonExpression extends
       List<Pair<Integer, Integer>> sharedColumns) {
     if (!sharedColumns.isEmpty()) {
       for (Pair<Integer, Integer> p : sharedColumns) {
-        if (!r1.getValue(p.a).equals(r2.getValue(p.b))) {
+        Object val1 = r1.getValue(p.a);
+        Object val2 = r2.getValue(p.b);
+        if (val1 != null) {
+          if (!val1.equals(val2)) {
+            return false;
+          }
+        } else if (val2 != null) {
           return false;
         }
       }
