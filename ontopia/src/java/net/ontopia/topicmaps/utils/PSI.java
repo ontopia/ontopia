@@ -51,8 +51,7 @@ public class PSI {
   public static final String XSD_DATETIME = XSD_BASE + "dateTime";
   public static final String XSD_URI = XSD_BASE + "anyURI";
 
-  // FIXME: this PSI is not actually known yet
-  private static final String CTM_BASE = "http://psi.example.org/";
+  private static final String CTM_BASE = "http://psi.topicmaps.org/iso13250/ctm-";
   public static final String CTM_INTEGER = CTM_BASE + "integer";
   
   // --- Locator objects
