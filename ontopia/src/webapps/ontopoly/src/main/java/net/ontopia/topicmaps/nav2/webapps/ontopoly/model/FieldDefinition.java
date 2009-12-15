@@ -33,7 +33,7 @@ public abstract class FieldDefinition extends Topic {
 	}
 
   /**
-   * @return a int that identify this fieldType
+   * @return an int that identifies this fieldType
    */
   public abstract int getFieldType();
 
@@ -52,11 +52,6 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
     Collection players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-readonly"));
-//    String query = "on:use-view-mode(%FD% : on:field-definition, %V% : on:fields-view, on:view-mode-readonly : on:view-mode)?";
-//    Map params = new HashMap(2);
-//    params.put("FD", getTopicIF());
-//    params.put("V", view.getTopicIF());
-//    return getTopicMap().getQueryWrapper().isTrue(query, params);
   }
 
   public boolean isHidden(FieldsView view) {
@@ -69,11 +64,6 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
     Collection players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-hidden"));
-//    String query = "on:use-view-mode(%FD% : on:field-definition, %V% : on:fields-view, on:view-mode-hidden : on:view-mode)?";
-//    Map params = new HashMap(2);
-//    params.put("FD", getTopicIF());
-//    params.put("V", view.getTopicIF());
-//    return getTopicMap().getQueryWrapper().isTrue(query, params);
   }
 
   public boolean isNotTraversable(FieldsView view) {
@@ -86,11 +76,6 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
     Collection players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-not-traversable"));
-//    String query = "on:use-view-mode(%FD% : on:field-definition, %V% : on:fields-view, on:view-mode-not-traversable : on:view-mode)?";
-//    Map params = new HashMap(2);
-//    params.put("FD", getTopicIF());
-//    params.put("V", view.getTopicIF());
-//    return getTopicMap().getQueryWrapper().isTrue(query, params);
   }
 
   public boolean isEmbedded(FieldsView view) {
@@ -124,13 +109,6 @@ public abstract class FieldDefinition extends Topic {
     } else {
       return new FieldsView(viewIf, tm);
     }
-//    // NOTE: returns null if no value view given
-//    String query = "select $CV from on:use-value-view(%FD% : on:field-definition, %PV% : on:parent-view, $CV : on:child-view)?";
-//    Map params = new HashMap(2);
-//    params.put("FD", getTopicIF());
-//    params.put("PV", view.getTopicIF());
-//    TopicIF embeddedView = getTopicMap().getQueryWrapper().queryForTopic(query, params);
-//    return embeddedView == null ? null : new FieldsView(embeddedView, getTopicMap());
   }
 
   /**
@@ -147,7 +125,7 @@ public abstract class FieldDefinition extends Topic {
     QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();    
     
     TopicIF card = qm.queryForObject(query, params);
-		Cardinality cardinality = (card == null ? Cardinality.getDefaultCardinality(getTopicMap()) : new Cardinality(card, getTopicMap()));
+		Cardinality cardinality = (card == null ? Cardinality.getDefaultCardinality(this) : new Cardinality(card, getTopicMap()));
 		cachedCardinality = cardinality;
 		return cardinality;
   }

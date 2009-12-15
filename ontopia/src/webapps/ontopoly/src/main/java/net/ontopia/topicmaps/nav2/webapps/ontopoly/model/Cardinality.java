@@ -4,6 +4,7 @@ package net.ontopia.topicmaps.nav2.webapps.ontopoly.model;
 
 import java.util.List;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 
 /**
@@ -61,8 +62,32 @@ public class Cardinality extends Topic {
   /**
    * Returns the default cardinality (zero or more)
    */
-  public static Cardinality getDefaultCardinality(TopicMap tm) {
-    return new Cardinality(tm.getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_CARDINALITY_0_M), tm);
+  public static Cardinality getDefaultCardinality(FieldDefinition fieldDefinition) {
+    TopicMap tm = fieldDefinition.getTopicMap();
+    LocatorIF cardPSI = PSI.ON_CARDINALITY_0_M; 
+    switch (fieldDefinition.getFieldType()) {
+      case FieldDefinition.FIELD_TYPE_IDENTITY: {
+        IdentityField identityField = (IdentityField)fieldDefinition;
+        if (identityField.isSubjectLocator())
+          cardPSI = PSI.ON_CARDINALITY_1_1;
+        else
+          cardPSI = PSI.ON_CARDINALITY_0_M;
+        break;
+      }
+      case FieldDefinition.FIELD_TYPE_NAME: {
+        cardPSI = PSI.ON_CARDINALITY_1_1;
+        break;
+      }
+      case FieldDefinition.FIELD_TYPE_OCCURRENCE: {
+        cardPSI = PSI.ON_CARDINALITY_0_1;
+        break;
+      }
+      case FieldDefinition.FIELD_TYPE_ROLE: {
+        cardPSI = PSI.ON_CARDINALITY_0_M;
+        break;
+      }
+    }
+    return new Cardinality(tm.getTopicMapIF().getTopicBySubjectIdentifier(cardPSI), tm);
   }
 
   /**

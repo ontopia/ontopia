@@ -42,10 +42,6 @@ public class TopicNode implements Serializable {
     return topicId;
   }
   
-  public void setName(String name) {
-    this.name = name;
-  }
-  
   public String getName() {
     if (name != null) 
       return name;

@@ -93,19 +93,6 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
             
           }));
         } else {
-//          
-//  		    FieldInstanceTextField nameField = new FieldInstanceTextField("fieldValue", fieldValueModel);
-//  		    nameField.setEnabled(!readonly);
-//  		    nameField.setCols(50);
-//  		    nameField.add(new FieldUpdatingBehaviour(true));
-//
-////  		     add focus behaviour to default name field
-////          NameField nf = (NameField)fieldInstanceModel.getFieldInstance().getFieldAssignment().getFieldDefinition();
-////          if (nf.getNameType().isUntypedName())
-////            nameField.add(new FocusOnLoadBehaviour());
-//  		    
-//  		    item.add(nameField);
-  		      		    
           NameField nf = (NameField)fieldInstanceModel.getFieldInstance().getFieldAssignment().getFieldDefinition();
           final FieldUpdatingBehaviour fuBehaviour = new FieldUpdatingBehaviour(true);
 
@@ -123,7 +110,10 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
             nameField.add(fuBehaviour);
             item.add(nameField);           
           }
-  		    
+
+          //// add focus behaviour to default name field
+          // if (nf.getNameType().isUntypedName())
+          //   nameField.add(new FocusOnLoadBehaviour());
         }
 	    }
 		};

@@ -240,7 +240,7 @@ public class TopicType extends AbstractTypingTopic {
     OntopolyModelUtils.makeTernaryAssociation(HAS_CARDINALITY, 
         topicTypeTopic, FIELD_OWNER, 
         fieldDefinitionTopic, FIELD_DEFINITION, 
-        Cardinality.getDefaultCardinality(tm).getTopicIF(), CARDINALITY);
+        Cardinality.getDefaultCardinality(fieldDefinition).getTopicIF(), CARDINALITY);
 
     // Add field-order occurrence for this topictype and all it's subtypes.
     addFieldOrder(this, fieldDefinition);
@@ -263,7 +263,7 @@ public class TopicType extends AbstractTypingTopic {
     AssociationIF associationIF = OntopolyModelUtils.findTernaryAssociation(tm, HAS_CARDINALITY, 
       topicTypeTopic, FIELD_OWNER, 
       fieldDefinitionTopic, FIELD_DEFINITION, 
-      Cardinality.getDefaultCardinality(tm).getTopicIF(), CARDINALITY);
+      Cardinality.getDefaultCardinality(fieldDefinition).getTopicIF(), CARDINALITY);
     if (associationIF != null)
       associationIF.remove();
 
