@@ -123,7 +123,7 @@ public class ActionConfigurator implements ConfigurationObservableIF {
   // ----------------------------------------------------------------
 
   private InputStream getInputStream(String realpath, String name) throws IOException {
-    log.debug("realpath: " + realpath + ", name: " + name);
+    //System.out.println("realpath: " + realpath + ", name: " + name);
     // adapted from StreamUtils.getInputStream(String)
     InputStream istream;
     if (name.startsWith("classpath:")) {
@@ -144,17 +144,17 @@ public class ActionConfigurator implements ConfigurationObservableIF {
       File f = (realPath == null ? null : new File(realPath, name));
       if (f != null && f.exists()) {
         log.debug("File loaded from file system: {}", f);
-        System.out.println("file system: " + f);
+        //System.out.println("file system: " + f);
         istream = new FileInputStream(f);
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         istream = cl.getResourceAsStream(name);
-        System.out.println("class loader: " + name);
+        //System.out.println("class loader: " + name);
         if (istream != null)
           log.debug("File loaded through class loader: {}", name);
       }
     }
-    log.debug("istream: " + istream);
+    //System.out.println("istream: " + istream);
     return istream;    
   }
 
