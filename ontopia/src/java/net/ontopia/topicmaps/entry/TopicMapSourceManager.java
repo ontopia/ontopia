@@ -108,7 +108,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     // Add source to set of sources
     if (sources.add(source)) {
       refreshed = false;
-      // Add to source id map if, if source has id.
+      // Add to source id map, if source has id.
       String id = source.getId();
       if (id != null) {
         if (!smap.containsKey(id))
