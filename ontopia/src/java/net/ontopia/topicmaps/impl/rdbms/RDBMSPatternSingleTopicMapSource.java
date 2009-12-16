@@ -1,6 +1,4 @@
 
-// $Id: RDBMSPatternSingleTopicMapSource.java,v 1.4 2007/11/15 09:42:01 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
@@ -75,7 +73,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
       RDBMSStorage storage = createStorage();
 
       // retrieve reference id from database
-      Connection conn = conn = storage.getConnectionFactory(true).requestConnection();
+      Connection conn = storage.getConnectionFactory(true).requestConnection();
       try {
 
         String sqlquery;
