@@ -268,8 +268,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       writer.object();
     }
     
-    serializeParent(role.getAssociation());
-    
     writer.
       pair("player", getTopicRef(role.getPlayer())).
       pair("type", getTopicRef(role.getType()));
@@ -356,8 +354,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       throws IOException {
     if (!topLevel) {
       writer.object();
-    } else {
-      serializeParent(variant.getTopic());
     }
     
     serializeValue(variant.getLocator(), variant.getValue());
@@ -431,27 +427,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     }
   }
 
-  /**
-   * INTERNAL: Serialize the parent association of a role. If the parent is
-   * null, nothing will be serialized.
-   * 
-   * @param parent the parent association to be serialized.
-   */
-  @SuppressWarnings("unchecked")
-  private void serializeParent(AssociationIF parent)
-      throws IOException {
-    if (parent != null) {
-      Collection<LocatorIF> ids = parent.getItemIdentifiers();
-      if (!ids.isEmpty()) {
-        writer.key("parent").array();
-        for (LocatorIF id : ids) {
-          writer.value(getJTMLocator(LOCATOR_TYPE.IID, id));
-        }
-        writer.endArray();
-      }      
-    }
-  }
-  
   /**
    * INTERNAL: Serialize the item identifiers of a {@link TMObjectIF}. If the
    * object does not have an item identifier, nothing will be serialized.

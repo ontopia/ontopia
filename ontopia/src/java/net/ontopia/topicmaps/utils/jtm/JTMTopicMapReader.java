@@ -114,7 +114,7 @@ public class JTMTopicMapReader extends AbstractTopicMapReader {
     Reader reader = null;
     try {
       reader = makeReader(source, new JTMEncodingSniffer());
-      JTMParser parser = new JTMParser(topicmap);
+      JTMStreamingParser parser = new JTMStreamingParser(topicmap);
       parser.parse(reader);
     } catch (JSONException e) {
       throw new IOException("Could not deserialize JTM fragment: " + e.getMessage());
