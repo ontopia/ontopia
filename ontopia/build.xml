@@ -127,7 +127,7 @@
 		<!-- svn-revision to the external tm/xml test suite -->
 		<property name="tmxml.revision" value="28" />
 		<!-- svn-revision to the external jtm test suite -->
-		<property name="jtm.revision" value="22" />
+		<property name="jtm.revision" value="45" />
 	</target>
 
 	<!-- ======================================================================
