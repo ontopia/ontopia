@@ -21,8 +21,6 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.json.JSONException;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -42,15 +40,15 @@ import net.ontopia.topicmaps.utils.PSI;
  * INTERNAL: A streaming JTM parser.
  * 
  * The JTM parser supports the top level item types "topicmap", "topic",
- * "association", "occurrence" and "name". Detached roles and variants are 
- * not supported.
+ * "association", "occurrence" and "name". Detached roles and variants are not
+ * supported.
  */
 final class JTMStreamingParser {
   /**
    * Supported version of the JTM notation is currently "1.0"
    */
   public final static String VERSION = "1.0";
-  
+
   private TopicMapIF tm;
   private TopicMapBuilderIF builder;
   private LocatorIF baseURI;
@@ -71,29 +69,29 @@ final class JTMStreamingParser {
    * 
    * @param reader the input to read the topic map from.
    * @throws IOException if some error occurs while reading from the input.
-   * @throws JSONException if the topic map to be parsed is not in JTM 1.0 syntax.
+   * @throws JTMException if the topic map to be parsed is not in JTM 1.0
+   *           syntax.
    */
-  public void parse(final Reader reader) throws IOException, JSONException {
+  public void parse(final Reader reader) throws IOException, JTMException {
     JSONParser parser = new JSONParser(reader);
-    
+
     if (parser.nextToken() != JSONToken.START_OBJECT) {
-      throw new JSONException("Expected input to start with an object: '"
+      throw new JTMException("Expected input to start with an object: '"
           + JSONToken.nameOf(JSONToken.START_OBJECT) + "'.");
     }
-    
+
     if (parser.nextToken() != JSONToken.KW_VERSION) {
-      throw new JSONException("Expected 'version' at the beginning.");
+      throw new JTMException("Expected 'version' at the beginning.");
     }
     parser.nextToken();
     if (!VERSION.equals(parser.getText())) {
-      throw new JSONException("Unsupported version: '" + parser.getText()
-          + "'.");
+      throw new JTMException("Unsupported version: '" + parser.getText() + "'.");
     }
 
     if (parser.nextToken() != JSONToken.KW_ITEM_TYPE) {
-      throw new JSONException("Expected 'item_type' after the version.");
+      throw new JTMException("Expected 'item_type' after the version.");
     }
-    
+
     handleItemType(parser);
   }
 
@@ -102,7 +100,7 @@ final class JTMStreamingParser {
    * handle method.
    */
   private void handleItemType(final JSONParser parser) throws IOException,
-      JSONException {
+      JTMException {
     parser.nextToken();
     // The item type is case-insensitive; force lower case.
     final String itemType = parser.getText().toLowerCase();
@@ -117,19 +115,19 @@ final class JTMStreamingParser {
     } else if ("name".equals(itemType)) {
       handleName(parser, null);
     } else if ("role".equals(itemType)) {
-      throw new JSONException("Detached roles are not supported.");
+      throw new JTMException("Detached roles are not supported.");
     } else if ("variant".equals(itemType)) {
-      throw new JSONException("Detached variants are not supported.");
+      throw new JTMException("Detached variants are not supported.");
     } else {
-      throw new JSONException("Unknown item type: " + itemType);
-    }      
+      throw new JTMException("Unknown item type: " + itemType);
+    }
   }
 
   /**
    * INTERNAL: Handle jtm object of type topic map.
    */
   private void handleTopicMap(final JSONParser parser) throws IOException,
-      JSONException {
+      JTMException {
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
       case JSONToken.KW_IIDS:
@@ -138,7 +136,7 @@ final class JTMStreamingParser {
           for (LocatorIF iid : iids) {
             TMObjectIF obj = tm.getObjectByItemIdentifier(iid);
             if (obj != null) {
-              throw new JSONException("Item Identifier for topic map already "
+              throw new JTMException("Item Identifier for topic map already "
                   + "used by another construct.");
             } else {
               tm.addItemIdentifier(iid);
@@ -168,14 +166,15 @@ final class JTMStreamingParser {
       }
     }
   }
-  
+
   /**
    * INTERNAL: Handle jtm object of type topic.
    */
-  private void handleTopic(final JSONParser parser) throws IOException, JSONException {
+  private void handleTopic(final JSONParser parser) throws IOException,
+      JTMException {
     boolean seenIdentity = false;
     TopicIF topic = tm.getBuilder().makeTopic();
-    
+
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
       case JSONToken.KW_SIDS:
@@ -229,7 +228,7 @@ final class JTMStreamingParser {
       case JSONToken.KW_OCCURRENCES:
         if (parser.nextToken() == JSONToken.START_ARRAY) {
           if (!seenIdentity) {
-            throw new JSONException(
+            throw new JTMException(
                 "Cannot process occurrences without a previously read identity");
           }
           while (parser.nextToken() != JSONToken.END_ARRAY) {
@@ -240,7 +239,7 @@ final class JTMStreamingParser {
       case JSONToken.KW_NAMES:
         if (parser.nextToken() == JSONToken.START_ARRAY) {
           if (!seenIdentity) {
-            throw new JSONException(
+            throw new JTMException(
                 "Cannot process names without a previously read identity");
           }
           while (parser.nextToken() != JSONToken.END_ARRAY) {
@@ -252,9 +251,9 @@ final class JTMStreamingParser {
         reportIllegalField(parser);
       }
     }
-    
+
     if (!seenIdentity) {
-      throw new JSONException("The topic has no identity.");
+      throw new JTMException("The topic has no identity.");
     }
   }
 
@@ -262,7 +261,7 @@ final class JTMStreamingParser {
    * INTERNAL: Handle jtm object of type occurrence.
    */
   private void handleOccurrence(final JSONParser parser, TopicIF topic)
-      throws IOException, JSONException {
+      throws IOException, JTMException {
     boolean seenType = false;
     LocatorIF datatype = PSI.getXSDString();
     String value = null;
@@ -271,7 +270,7 @@ final class JTMStreamingParser {
     Collection<TopicIF> scopes = null;
     TopicIF reifier = null;
     TopicIF parent = null;
-    
+
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
       case JSONToken.KW_TYPE:
@@ -308,26 +307,26 @@ final class JTMStreamingParser {
       }
     }
     if (value == null) {
-      throw new JSONException("The value of the occurrence is undefined.");
+      throw new JTMException("The value of the occurrence is undefined.");
     }
     if (!seenType) {
-      throw new JSONException("The type of the occurrence is undefined.");
+      throw new JTMException("The type of the occurrence is undefined.");
     }
     if (topic == null) {
       if (parent == null) {
-        throw new JSONException("The parent of the occurrence is undefined.");
+        throw new JTMException("The parent of the occurrence is undefined.");
       } else {
         topic = parent;
       }
     }
-    
+
     OccurrenceIF oc;
     if (datatype.equals(PSI.getXSDURI())) {
       oc = tm.getBuilder().makeOccurrence(topic, type, resolveIRI(value));
     } else {
       oc = tm.getBuilder().makeOccurrence(topic, type, value, datatype);
     }
-    
+
     setScopes(oc, scopes);
     setReifier(oc, reifier);
     setItemIdentifiers(oc, iids);
@@ -337,7 +336,7 @@ final class JTMStreamingParser {
    * INTERNAL: Handle jtm object of type name.
    */
   private void handleName(final JSONParser parser, TopicIF topic)
-      throws IOException, JSONException {
+      throws IOException, JTMException {
     boolean seenValue = false;
     boolean seenType = false;
     boolean seenParent = false;
@@ -355,7 +354,7 @@ final class JTMStreamingParser {
       requireParent = true;
     }
     TopicNameIF name = tm.getBuilder().makeTopicName(topic, "");
-    
+
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
       case JSONToken.KW_TYPE:
@@ -398,22 +397,22 @@ final class JTMStreamingParser {
     }
 
     if (!seenValue) {
-      throw new JSONException("The value of the name is undefined");
+      throw new JTMException("The value of the name is undefined");
     }
     if (!seenType) {
       type = makeTopicRef("si:" + PSI.SAM_NAMETYPE);
     }
     if (requireParent) {
       if (!seenParent) {
-        throw new JSONException("The parent of the occurrence is undefined.");
+        throw new JTMException("The parent of the occurrence is undefined.");
       } else {
         MergeUtils.mergeInto(topic, parent);
       }
     }
-    
+
     name.setValue(value);
     name.setType(type);
-    
+
     setScopes(name, scopes);
     setReifier(name, reifier);
     setItemIdentifiers(name, iids);
@@ -423,14 +422,14 @@ final class JTMStreamingParser {
    * INTERNAL: Handle jtm object of type variant.
    */
   private void handleVariant(final JSONParser parser, TopicNameIF name)
-      throws IOException, JSONException {
+      throws IOException, JTMException {
     boolean seenScope = false;
     LocatorIF datatype = PSI.getXSDString();
     String value = null;
     Collection<LocatorIF> iids = null;
     Collection<TopicIF> scopes = null;
     TopicIF reifier = null;
-    
+
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
       case JSONToken.KW_VALUE:
@@ -460,19 +459,20 @@ final class JTMStreamingParser {
       }
     }
     if (!seenScope) {
-      throw new JSONException("The scope of the variant is undefined.");
+      throw new JTMException("The scope of the variant is undefined.");
     }
     if (value == null) {
-      throw new JSONException("The value of the variant is undefined.");
+      throw new JTMException("The value of the variant is undefined.");
     }
-    
+
     VariantNameIF variant;
     if (datatype.equals(PSI.getXSDURI())) {
-      variant = tm.getBuilder().makeVariantName(name, resolveIRI(value), scopes);
+      variant = tm.getBuilder()
+          .makeVariantName(name, resolveIRI(value), scopes);
     } else {
       variant = tm.getBuilder().makeVariantName(name, value, datatype, scopes);
     }
-    
+
     setReifier(variant, reifier);
     setItemIdentifiers(variant, iids);
   }
@@ -480,7 +480,8 @@ final class JTMStreamingParser {
   /**
    * INTERNAL: Handle jtm object of type association.
    */
-  private void handleAssociation(final JSONParser parser) throws IOException, JSONException {
+  private void handleAssociation(final JSONParser parser) throws IOException,
+      JTMException {
     boolean seenType = false;
     boolean seenRoles = false;
     TopicIF type = null;
@@ -491,7 +492,7 @@ final class JTMStreamingParser {
     // create an empty type in advance, the real type will be set later
     TopicIF emptyType = tm.getBuilder().makeTopic();
     AssociationIF assoc = tm.getBuilder().makeAssociation(emptyType);
-    
+
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
       case JSONToken.KW_TYPE:
@@ -523,12 +524,12 @@ final class JTMStreamingParser {
       }
     }
     if (!seenType) {
-      throw new JSONException("The type of the association is undefined");
+      throw new JTMException("The type of the association is undefined");
     }
     if (!seenRoles) {
-      throw new JSONException("The association has no roles");
+      throw new JTMException("The association has no roles");
     }
-    
+
     assoc.setType(type);
     // remove the temporarily created type
     emptyType.remove();
@@ -542,14 +543,14 @@ final class JTMStreamingParser {
    * INTERNAL: Handle jtm object of type role.
    */
   private void handleRole(final JSONParser parser, AssociationIF assoc)
-      throws IOException, JSONException {
+      throws IOException, JTMException {
     boolean seenType = false;
     boolean seenPlayer = false;
     TopicIF type = null;
     TopicIF player = null;
     Collection<LocatorIF> iids = null;
     TopicIF reifier = null;
-    
+
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
       case JSONToken.KW_TYPE:
@@ -580,14 +581,14 @@ final class JTMStreamingParser {
       }
     }
     if (!seenType) {
-      throw new JSONException("The type of the role is undefined.");
+      throw new JTMException("The type of the role is undefined.");
     }
     if (!seenPlayer) {
-      throw new JSONException("The player of the role is undefined.");
+      throw new JTMException("The player of the role is undefined.");
     }
-    
-    AssociationRoleIF role = 
-      tm.getBuilder().makeAssociationRole(assoc, type, player);
+
+    AssociationRoleIF role = tm.getBuilder().makeAssociationRole(assoc, type,
+        player);
 
     setReifier(role, reifier);
     setItemIdentifiers(role, iids);
@@ -600,7 +601,7 @@ final class JTMStreamingParser {
    * @param tid A string which starts with 'si:', 'sl:' or 'ii:' followed by an
    *          IRI reference.
    */
-  private TopicIF makeTopicRef(final String tid) throws JSONException {
+  private TopicIF makeTopicRef(final String tid) throws JTMException {
     char[] chars = tid.toCharArray();
     if (chars.length > 3 && chars[2] == ':') {
       LocatorIF iri = resolveIRI(new String(chars, 3, chars.length - 3));
@@ -629,7 +630,7 @@ final class JTMStreamingParser {
         return topic;
       }
     }
-    throw new JSONException("Unknown topic reference: " + tid);
+    throw new JTMException("Unknown topic reference: " + tid);
   }
 
   /**
@@ -643,8 +644,8 @@ final class JTMStreamingParser {
   /**
    * INTERNAL: Returns the reifier iff it is not <tt>null</tt>.
    */
-  private TopicIF handleReifier(final JSONParser parser)
-      throws IOException, JSONException {
+  private TopicIF handleReifier(final JSONParser parser) throws IOException,
+      JTMException {
     TopicIF reifier = null;
     if (parser.nextToken() != JSONToken.VALUE_NULL) {
       reifier = makeTopicRef(parser.getText());
@@ -657,9 +658,9 @@ final class JTMStreamingParser {
    * occurrence).
    */
   private TopicIF getParentTopic(final JSONParser parser) throws IOException,
-      JSONException {
+      JTMException {
     if (parser.nextToken() != JSONToken.START_ARRAY) {
-      throw new JSONException("Expected an array for the parent value.");
+      throw new JTMException("Expected an array for the parent value.");
     }
     TopicIF topic = null;
     // iterate over all elements of the array, and merge the resulting topics
@@ -680,9 +681,9 @@ final class JTMStreamingParser {
    * the current jtm object.
    */
   private Collection<LocatorIF> handleItemIdentifiers(final JSONParser parser)
-      throws IOException, JSONException {
+      throws IOException, JTMException {
     if (parser.nextToken() != JSONToken.START_ARRAY) {
-      throw new JSONException("Expected an array for the item identifiers");
+      throw new JTMException("Expected an array for the item identifiers");
     }
     Collection<LocatorIF> iids = new LinkedList<LocatorIF>();
     while (parser.nextToken() != JSONToken.END_ARRAY) {
@@ -696,9 +697,9 @@ final class JTMStreamingParser {
    * object. The object itself has to check whether it allows scopes or not.
    */
   private Collection<TopicIF> handleScope(final JSONParser parser)
-      throws IOException, JSONException {
+      throws IOException, JTMException {
     if (parser.nextToken() != JSONToken.START_ARRAY) {
-      throw new JSONException("Expected an array for the scope themes.");
+      throw new JTMException("Expected an array for the scope themes.");
     }
     Collection<TopicIF> scopes = new LinkedList<TopicIF>();
     while (parser.nextToken() != JSONToken.END_ARRAY) {
@@ -713,16 +714,16 @@ final class JTMStreamingParser {
    * will be handled later.
    */
   private void setReifier(ReifiableIF object, TopicIF reifier)
-      throws JSONException {
+      throws JTMException {
     if (reifier != null) {
       if (reifier.getReified() == null) {
         object.setReifier(reifier);
       } else {
-//        TMObjectIF other = reifier.getReified();
-//        // if they are of the same class, try to merge them
-//        if (object.getClass().isAssignableFrom(other.getClass())) {
-//          MergeUtils.mergeInto(object, (ReifiableIF) other);
-//        }
+        // TMObjectIF other = reifier.getReified();
+        // // if they are of the same class, try to merge them
+        // if (object.getClass().isAssignableFrom(other.getClass())) {
+        // MergeUtils.mergeInto(object, (ReifiableIF) other);
+        // }
       }
     }
   }
@@ -754,10 +755,10 @@ final class JTMStreamingParser {
       }
     }
   }
-  
+
   private void reportIllegalField(final JSONParser parser) throws IOException,
-      JSONException {
-    throw new JSONException("Unknown key name: '" + parser.getText()
+      JTMException {
+    throw new JTMException("Unknown key name: '" + parser.getText()
         + "' current: " + JSONToken.nameOf(parser.getCurrentToken()));
   }
 }
