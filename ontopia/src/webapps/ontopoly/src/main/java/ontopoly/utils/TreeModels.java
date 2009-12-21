@@ -14,15 +14,15 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.PSI;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.OntopiaRuntimeException;
+import ontopoly.model.PSI;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pojos.TopicNode;
 

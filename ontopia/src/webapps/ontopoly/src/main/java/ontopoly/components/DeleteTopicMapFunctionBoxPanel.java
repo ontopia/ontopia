@@ -1,10 +1,10 @@
 package ontopoly.components;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
+import ontopoly.OntopolyContext;
+import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pages.ModalConfirmPage;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.sysmodel.TopicMapReference;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;

@@ -3,8 +3,8 @@ package ontopoly.utils;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
 import ontopoly.models.RoleFieldModel;
 import ontopoly.models.TopicModel;
 

@@ -1,6 +1,6 @@
 package ontopoly.components;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
+import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 

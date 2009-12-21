@@ -6,10 +6,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.components.AjaxOntopolyTextField;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.utils.ExportUtils;
 

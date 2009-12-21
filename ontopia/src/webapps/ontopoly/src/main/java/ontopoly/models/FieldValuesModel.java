@@ -8,7 +8,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
+
+import ontopoly.model.FieldInstance;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 

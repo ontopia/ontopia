@@ -11,15 +11,15 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import ontopoly.model.TopicMap;
 import ontopoly.pages.ConvertPage;
 import ontopoly.pages.InternalErrorPageWithException;
 import ontopoly.pages.PageExpiredErrorPage;
 import ontopoly.pages.StartPage;
 import ontopoly.pages.UpgradePage;
+import ontopoly.sysmodel.OntopolyRepository;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;

@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.TopicMap;
+
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldAssignment;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.utils.OntopiaRuntimeException;

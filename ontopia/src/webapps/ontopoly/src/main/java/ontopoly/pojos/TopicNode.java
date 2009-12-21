@@ -2,9 +2,9 @@ package ontopoly.pojos;
 
 import java.io.Serializable;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.OntopolyContext;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 
 public class TopicNode implements Serializable {
   

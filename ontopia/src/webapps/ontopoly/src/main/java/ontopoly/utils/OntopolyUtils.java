@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.PSI;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.utils.OntopolyModelUtils;
+import ontopoly.model.PSI;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
+
 
 public class OntopolyUtils {
 

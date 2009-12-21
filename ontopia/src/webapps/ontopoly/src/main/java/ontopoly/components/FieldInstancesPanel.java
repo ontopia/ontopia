@@ -2,12 +2,12 @@ package ontopoly.components;
 
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldAssignment;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldDefinition;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldsView;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
 import net.ontopia.utils.OntopiaRuntimeException;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.FieldsView;
+import ontopoly.model.RoleField;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldsViewModel;
 

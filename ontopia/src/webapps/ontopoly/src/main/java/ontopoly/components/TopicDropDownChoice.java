@@ -2,7 +2,7 @@ package ontopoly.components;
 
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.Topic;
 import ontopoly.utils.TopicChoiceRenderer;
 
 import org.apache.wicket.markup.ComponentTag;

@@ -7,8 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
+import ontopoly.OntopolyContext;
 import ontopoly.components.CreateNewTopicMapPanel;
 import ontopoly.components.FooterPanel;
 import ontopoly.components.HeaderPanel;
@@ -16,7 +15,8 @@ import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapReferenceModel;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.sysmodel.OntopolyRepository;
+import ontopoly.sysmodel.TopicMapReference;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;

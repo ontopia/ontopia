@@ -2,8 +2,9 @@ package ontopoly;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldsView;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.FieldsView;
+import ontopoly.model.Topic;
+
 import net.ontopia.utils.ObjectUtils;
 
 public class BergenKommuneAccessStrategy extends OntopolyAccessStrategy {

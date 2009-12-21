@@ -1,6 +1,6 @@
 package ontopoly.conversion;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
+import ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
 public class Upgrade_1_3 extends UpgradeBase {

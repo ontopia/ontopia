@@ -3,10 +3,10 @@ package ontopoly.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import ontopoly.OntopolySession;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;

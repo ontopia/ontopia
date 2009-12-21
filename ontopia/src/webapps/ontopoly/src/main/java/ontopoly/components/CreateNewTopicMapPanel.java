@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapSource;
+import ontopoly.OntopolyContext;
 import ontopoly.models.TopicMapSourceModel;
 import ontopoly.pages.TopicTypesPage;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.sysmodel.OntopolyRepository;
+import ontopoly.sysmodel.TopicMapReference;
+import ontopoly.sysmodel.TopicMapSource;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;

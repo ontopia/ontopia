@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
+import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pages.SearchPage;
 import ontopoly.pages.StartPage;

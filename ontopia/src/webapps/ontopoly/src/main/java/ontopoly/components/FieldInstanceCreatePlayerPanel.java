@@ -2,10 +2,10 @@ package ontopoly.components;
 
 import java.util.Collection;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.PlayerTypesModel;

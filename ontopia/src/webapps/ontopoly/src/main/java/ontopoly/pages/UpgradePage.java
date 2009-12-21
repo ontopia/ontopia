@@ -1,11 +1,11 @@
 package ontopoly.pages;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
 import ontopoly.OntopolyApplication;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.conversion.ConversionUtils;
+import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
+import ontopoly.sysmodel.TopicMapReference;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;

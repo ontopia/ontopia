@@ -2,10 +2,10 @@ package ontopoly.components;
 
 import java.util.Date;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import ontopoly.LockManager;
+import ontopoly.OntopolyContext;
 import ontopoly.OntopolySession;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.model.Topic;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;

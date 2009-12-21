@@ -1,12 +1,12 @@
 package ontopoly.components;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Cardinality;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.DataType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldAssignment;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldDefinition;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.OccurrenceField;
+import ontopoly.model.Cardinality;
+import ontopoly.model.DataType;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.OccurrenceField;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;

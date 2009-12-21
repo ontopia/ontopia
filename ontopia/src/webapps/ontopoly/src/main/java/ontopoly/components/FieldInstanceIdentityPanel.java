@@ -1,11 +1,11 @@
 package ontopoly.components;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Cardinality;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldAssignment;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldDefinition;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.IdentityField;
+import ontopoly.model.Cardinality;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.IdentityField;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;

@@ -1,9 +1,8 @@
 package ontopoly;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.Topic;
 import ontopoly.pages.AbstractProtectedOntopolyPage;
 import ontopoly.pages.SignInPage;
-import ontopoly.utils.OntopolyContext;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;

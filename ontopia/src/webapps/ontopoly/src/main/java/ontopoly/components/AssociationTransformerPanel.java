@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.AssociationType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.AssociationType;
+import ontopoly.model.RoleType;
+import ontopoly.model.Topic;
 import ontopoly.models.AssociationTypeModel;
 import ontopoly.models.ListModel;
 import ontopoly.models.RoleTypeModel;

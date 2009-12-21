@@ -3,7 +3,7 @@ package ontopoly.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.Topic;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AssociationTransformPage;
 

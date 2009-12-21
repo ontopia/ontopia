@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.OntopolyContext;
+import ontopoly.model.RoleField;
+import ontopoly.model.TopicMap;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 

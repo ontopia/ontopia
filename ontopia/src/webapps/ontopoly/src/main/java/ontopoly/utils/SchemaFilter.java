@@ -5,12 +5,13 @@ package ontopoly.utils;
 
 import java.util.Iterator;
 
+import ontopoly.model.PSI;
+
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.PSI;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 import net.ontopia.utils.DeciderIF;
 

@@ -9,9 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.AssociationType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.topicmaps.utils.ObjectIdComparator;
 import ontopoly.components.AssociationTransformerPanel;
 import ontopoly.components.FunctionBoxesPanel;
@@ -19,6 +16,9 @@ import ontopoly.components.LinkFunctionBoxPanel;
 import ontopoly.components.LockPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.model.AssociationType;
+import ontopoly.model.RoleType;
+import ontopoly.model.Topic;
 import ontopoly.models.AssociationTypeModel;
 import ontopoly.models.HelpLinkResourceModel;
 

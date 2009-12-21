@@ -6,9 +6,9 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.models.FieldInstanceModel;
 
 import org.apache.wicket.validation.IValidatable;

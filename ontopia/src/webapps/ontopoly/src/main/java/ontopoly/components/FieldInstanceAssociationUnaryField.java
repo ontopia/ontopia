@@ -1,8 +1,8 @@
 package ontopoly.components;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;

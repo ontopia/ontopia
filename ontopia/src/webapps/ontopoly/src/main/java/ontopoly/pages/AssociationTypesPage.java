@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.swing.tree.TreeModel;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import ontopoly.components.CreateInstanceFunctionBoxPanel;
 import ontopoly.components.FunctionBoxesPanel;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.utils.TreeModels;
 
 import org.apache.wicket.Component;

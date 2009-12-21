@@ -5,11 +5,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldsView;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.model.FieldsView;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;

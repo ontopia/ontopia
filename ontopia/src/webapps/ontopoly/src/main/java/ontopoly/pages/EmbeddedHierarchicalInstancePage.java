@@ -11,15 +11,15 @@ import javax.swing.tree.TreeNode;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.PSI;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.utils.OntopolyModelUtils;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.components.LinkPanel;
 import ontopoly.components.TreePanel;
+import ontopoly.model.PSI;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.TopicModel;
 import ontopoly.pojos.TopicNode;
+import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.OntopolyUtils;
 import ontopoly.utils.TreeModels;
 

@@ -1,6 +1,6 @@
 package ontopoly.components;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
+import ontopoly.model.TopicMap;
 import ontopoly.pages.TopicTypesPage;
 
 import org.apache.wicket.Page;

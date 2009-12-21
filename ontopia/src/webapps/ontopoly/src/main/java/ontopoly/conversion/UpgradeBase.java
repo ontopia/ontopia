@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
+import ontopoly.model.QueryMapper;
+import ontopoly.model.TopicMap;
+
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -19,8 +22,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.index.NameIndexIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.QueryMapper;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;

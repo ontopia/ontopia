@@ -7,10 +7,10 @@ import java.util.List;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.xml.XTMFragmentExporter;
 import ontopoly.components.FunctionBoxesPanel;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicModel;
 

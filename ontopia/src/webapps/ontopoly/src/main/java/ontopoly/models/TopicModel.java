@@ -2,15 +2,15 @@ package ontopoly.models;
 
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.AssociationType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.NameType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.OccurrenceType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleType;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.OntopolyContext;
+import ontopoly.model.AssociationType;
+import ontopoly.model.NameType;
+import ontopoly.model.OccurrenceType;
+import ontopoly.model.RoleType;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 
 public class TopicModel<T extends Topic> extends MutableLoadableDetachableModel<T> {
 

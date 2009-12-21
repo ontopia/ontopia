@@ -1,8 +1,8 @@
 package ontopoly.models;
 
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.OntopolyContext;
+import ontopoly.model.TopicMap;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 

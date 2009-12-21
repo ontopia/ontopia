@@ -1,12 +1,12 @@
 package ontopoly.components;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldDefinition;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.IdentityField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.NameField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.OccurrenceField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import ontopoly.images.ImageResource;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.IdentityField;
+import ontopoly.model.NameField;
+import ontopoly.model.OccurrenceField;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AbstractOntopolyPage;

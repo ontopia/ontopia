@@ -1,7 +1,8 @@
 package ontopoly.utils;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
+
+import ontopoly.model.Topic;
 
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;

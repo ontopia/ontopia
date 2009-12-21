@@ -2,12 +2,12 @@ package ontopoly.pages;
 
 import java.util.Collection;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldDefinition;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.LifeCycleListener;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
 import ontopoly.OntopolySession;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.LifeCycleListener;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.utils.OntopolyUtils;
 
 import org.apache.wicket.Page;

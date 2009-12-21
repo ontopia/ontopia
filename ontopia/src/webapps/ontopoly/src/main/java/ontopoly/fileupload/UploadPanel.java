@@ -1,8 +1,8 @@
 
 package ontopoly.fileupload;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.LifeCycleListener;
 import ontopoly.components.FieldInstanceImageField;
+import ontopoly.model.LifeCycleListener;
 import ontopoly.pages.AbstractOntopolyPage;
 
 import org.apache.wicket.Page;

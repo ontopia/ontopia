@@ -7,9 +7,9 @@ import java.io.Reader;
 import java.io.StringWriter;
 
 import net.ontopia.net.Base64;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.LifeCycleListener;
 import net.ontopia.utils.StreamUtils;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.LifeCycleListener;
 import ontopoly.models.FieldValueModel;
 
 import org.apache.wicket.markup.ComponentTag;

@@ -1,8 +1,8 @@
 package ontopoly.pages;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.components.InstancePanel;
+import ontopoly.model.Topic;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;

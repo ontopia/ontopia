@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
+import ontopoly.model.RoleField;
+import ontopoly.model.TopicType;
 import ontopoly.utils.TopicComparator;
 
 import org.apache.wicket.model.LoadableDetachableModel;

@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
 import ontopoly.pages.InstancesPage;

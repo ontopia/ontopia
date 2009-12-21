@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.Topic;
 import ontopoly.models.RoleFieldModel;
 import ontopoly.models.TopicModel;
 import ontopoly.utils.TopicComparator;

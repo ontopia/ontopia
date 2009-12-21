@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.utils.TopicComparator;
 
 import org.apache.wicket.model.LoadableDetachableModel;

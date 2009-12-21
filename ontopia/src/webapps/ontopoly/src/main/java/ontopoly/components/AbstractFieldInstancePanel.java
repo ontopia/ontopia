@@ -1,6 +1,6 @@
 package ontopoly.components;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Cardinality;
+import ontopoly.model.Cardinality;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValuesModel;
 

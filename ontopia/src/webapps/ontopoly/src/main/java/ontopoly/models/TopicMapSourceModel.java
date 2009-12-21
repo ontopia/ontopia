@@ -1,7 +1,7 @@
 package ontopoly.models;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapSource;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.OntopolyContext;
+import ontopoly.sysmodel.TopicMapSource;
 
 public class TopicMapSourceModel extends MutableLoadableDetachableModel<TopicMapSource> {
 

@@ -3,7 +3,8 @@ package ontopoly.utils;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.Topic;
+
 import net.ontopia.utils.StringUtils;
 
 public class TopicComparator implements Comparator<Topic>, Serializable {

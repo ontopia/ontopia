@@ -3,10 +3,10 @@ package ontopoly.pages;
 import java.util.Arrays;
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import ontopoly.components.FooterPanel;
 import ontopoly.components.MenuPanel;
 import ontopoly.components.SubSubHeaderPanel;
+import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pojos.MenuItem;
 

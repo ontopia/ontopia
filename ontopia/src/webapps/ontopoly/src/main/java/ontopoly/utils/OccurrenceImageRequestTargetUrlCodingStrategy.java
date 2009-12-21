@@ -3,8 +3,9 @@ package ontopoly.utils;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
+import ontopoly.OntopolyContext;
 import ontopoly.components.OccurrenceWebResource;
+import ontopoly.model.TopicMap;
 
 import org.apache.wicket.IRequestTarget;
 import org.apache.wicket.request.RequestParameters;

@@ -1,8 +1,8 @@
 package ontopoly.components;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import ontopoly.fileupload.UploadPanel;
+import ontopoly.model.TopicMap;
 import ontopoly.models.FieldValueModel;
 
 import org.apache.wicket.AttributeModifier;

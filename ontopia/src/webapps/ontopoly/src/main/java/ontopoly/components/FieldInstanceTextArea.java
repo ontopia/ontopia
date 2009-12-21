@@ -2,8 +2,8 @@ package ontopoly.components;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 

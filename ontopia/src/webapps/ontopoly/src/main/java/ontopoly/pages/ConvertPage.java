@@ -7,19 +7,19 @@ import java.util.List;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapReference;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.TopicMapSource;
 import ontopoly.OntopolyApplication;
+import ontopoly.OntopolyContext;
 import ontopoly.components.AjaxOntopolyDropDownChoice;
 import ontopoly.components.AjaxOntopolyTextField;
 import ontopoly.components.AjaxRadioGroupPanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.conversion.ConversionUtils;
+import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapModel;
 import ontopoly.models.TopicMapSourceModel;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.sysmodel.TopicMapReference;
+import ontopoly.sysmodel.TopicMapSource;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;

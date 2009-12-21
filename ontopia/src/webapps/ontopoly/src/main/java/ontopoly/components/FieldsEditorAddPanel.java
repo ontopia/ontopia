@@ -1,7 +1,7 @@
 package ontopoly.components;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldDefinition;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.Topic;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.TopicTypeModel;
 

@@ -3,11 +3,11 @@ package ontopoly.components;
 import java.util.Comparator;
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldAssignment;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldInstance;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
@@ -42,20 +42,7 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
     
     final boolean allowRemove = !roleField.getEditMode().isNoEdit();
 	  
-	//! add(new Label("fieldLabel", new Model(rolefield.getFieldName() + ":")));
-	//! add(new Label("fieldLabel", new Model(rolefield.getAssociationField().getFieldName() + " (" + rolefield.getName() + ")")));
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(roleField)));
-//    add(new TopicLink("fieldLabel", roleFieldModel) {
-//      @Override
-//      public String getLabel() {
-//        return roleFieldModel.getRoleField().getFieldName();
-//      }
-//      @Override
-//      public boolean isEnabled() {
-//        AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-//        return page.isAnnotationEnabled() && traversable && super.isEnabled();
-//      }
-//    });
     
     // set up container
 		this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");

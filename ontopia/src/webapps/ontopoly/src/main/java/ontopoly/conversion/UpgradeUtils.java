@@ -1,13 +1,13 @@
 package ontopoly.conversion;
 
 import ontopoly.OntopolyApplication;
+import ontopoly.model.TopicMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;

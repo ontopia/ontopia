@@ -2,7 +2,8 @@ package ontopoly.models;
 
 
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.RoleField;
+
+import ontopoly.model.RoleField;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;

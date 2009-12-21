@@ -7,10 +7,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
 import ontopoly.components.LinkPanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.components.TreePanel;
+import ontopoly.model.Topic;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.pojos.TopicNode;
 import ontopoly.utils.TreeModels;

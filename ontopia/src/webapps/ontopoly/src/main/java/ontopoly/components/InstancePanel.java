@@ -2,9 +2,9 @@ package ontopoly.components;
 
 import java.util.List;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.FieldsView;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
+import ontopoly.model.FieldsView;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;

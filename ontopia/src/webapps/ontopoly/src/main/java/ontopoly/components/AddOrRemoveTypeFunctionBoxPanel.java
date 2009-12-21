@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.AvailableTopicTypesModel;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AbstractOntopolyPage;

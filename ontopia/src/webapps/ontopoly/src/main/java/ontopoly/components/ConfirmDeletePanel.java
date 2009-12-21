@@ -3,8 +3,8 @@ package ontopoly.components;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.LifeCycleListener;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
+import ontopoly.model.LifeCycleListener;
+import ontopoly.model.Topic;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AbstractOntopolyPage;
 

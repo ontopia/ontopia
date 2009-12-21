@@ -2,8 +2,7 @@ package ontopoly;
 
 
 import net.ontopia.topicmaps.entry.TopicMaps;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.sysmodel.OntopolyRepository;
+import ontopoly.model.TopicMap;
 import ontopoly.pages.AdminPage;
 import ontopoly.pages.AssociationTransformPage;
 import ontopoly.pages.AssociationTypesPage;
@@ -24,6 +23,7 @@ import ontopoly.pages.SignOutPage;
 import ontopoly.pages.StartPage;
 import ontopoly.pages.TopicTypesPage;
 import ontopoly.pages.UpgradePage;
+import ontopoly.sysmodel.OntopolyRepository;
 import ontopoly.utils.OccurrenceImageRequestTargetUrlCodingStrategy;
 
 import org.apache.wicket.Page;

@@ -3,8 +3,8 @@ package ontopoly.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.Topic;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 
 import org.apache.wicket.Page;

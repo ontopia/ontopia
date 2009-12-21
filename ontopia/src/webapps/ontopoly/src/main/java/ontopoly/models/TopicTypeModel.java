@@ -2,9 +2,9 @@ package ontopoly.models;
 
 
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicMap;
-import net.ontopia.topicmaps.nav2.webapps.ontopoly.model.TopicType;
-import ontopoly.utils.OntopolyContext;
+import ontopoly.OntopolyContext;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
