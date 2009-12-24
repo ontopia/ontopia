@@ -182,7 +182,7 @@ public class InsertStatement extends ModificationStatement {
     }
 
     public ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid) {
-      throw new UnsupportedOperationException();
+      return ctmctx.getTopicBySubjectIdentifier(subjid);
     }
 
     public ValueGeneratorIF getTopicByQname(String qname) {

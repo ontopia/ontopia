@@ -109,6 +109,16 @@ public class InsertTest extends AbstractQueryTest {
 
   /// instance-of topic map
 
+  public void testName() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    update("insert topic1 - \"Emne1\" .");
+
+    TopicIF topic = getTopicById("topic1");
+    assertTrue("topic did not get new name",
+               topic.getTopicNames().size() == 2);
+  }
+  
   public void testAddOccurrence() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
