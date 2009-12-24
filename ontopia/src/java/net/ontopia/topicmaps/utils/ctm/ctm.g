@@ -362,8 +362,7 @@ literal :
     iri_ref
     { tmp.setDatatype(literal.getLocator()); 
       literal = tmp; } )?
-  | 
-  IRI 
+  |  IRI 
     { literal = basic_literal;
       basic_literal.setLocator(getAbsoluteLocator()); } |
   WRAPPED_IRI
@@ -388,7 +387,8 @@ literal :
     literal = current_template.getGenerator(LT(0).getText()); 
   } |
   INFINITY {  basic_literal.setLiteral("*");
-              basic_literal.setDatatype(PSI.getCTMInteger()); });
+              basic_literal.setDatatype(PSI.getCTMInteger());
+              literal = basic_literal; });
 
 iri_ref :
   ( QNAME
