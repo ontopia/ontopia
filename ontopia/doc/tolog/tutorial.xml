@@ -1788,7 +1788,7 @@ each row in the query result. An example of this might be as follows:
 <literallayout>import "http://psi.ontopia.net/tolog/string/" as str
   insert $topic $psi . from
   article-about($topic, $psi),
-  str:starts-with($psi, "http://en.wikipedia.org/wiki"/)
+  str:starts-with($psi, "http://en.wikipedia.org/wiki/")
 </literallayout>
 </example>
 
