@@ -652,8 +652,7 @@ Used to find the base locator of the topic map.
 
 <para>
 This predicate is true for a single value: the base locator of the
-topic map, if it has one. (This predicate will become much more useful
-when the string module is added to tolog.)
+topic map, if it has one.
 </para>
 
 <example>
