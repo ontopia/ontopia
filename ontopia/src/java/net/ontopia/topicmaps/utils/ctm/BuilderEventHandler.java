@@ -5,6 +5,7 @@ package net.ontopia.topicmaps.utils.ctm;
 
 import java.util.List;
 import java.util.Stack;
+import java.util.ArrayList;
 import java.net.MalformedURLException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
@@ -199,6 +200,9 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     if (topic != null) {
       // invocations inside topic blocks need to have the current topic prepended
       // to the list of parameters. note that this needs to be as a generator.
+      // however, argument lists may be stored in GenericParseEvent objects, so
+      // to modify the argument list we must first copy it.
+      arguments = new ArrayList(arguments);
       arguments.add(0, new ValueGenerator(topic, null, null, null));
     }
 

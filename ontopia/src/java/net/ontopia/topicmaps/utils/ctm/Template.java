@@ -69,7 +69,7 @@ public class Template {
    *                  for the arguments, in the same order as the
    *                  parameters list
    */
-  public void invoke(List arguments, ParseEventHandlerIF handler) {    
+  public void invoke(List arguments, ParseEventHandlerIF handler) {
     if (parameters.size() != arguments.size())
       throw new InvalidTopicMapException("Incorrect number of arguments to " +
                                          "template " + name + ", got " +

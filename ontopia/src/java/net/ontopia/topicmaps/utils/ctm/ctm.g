@@ -359,10 +359,10 @@ literal :
       basic_literal.setDatatype(PSI.getXSDString()); } 
   ( HATHAT 
     { tmp = (ValueGenerator) basic_literal.copy(); }
-    iri_ref
+    literal_iri_ref
     { tmp.setDatatype(literal.getLocator()); 
       literal = tmp; } )?
-  |  IRI 
+  | IRI 
     { literal = basic_literal;
       basic_literal.setLocator(getAbsoluteLocator()); } |
   WRAPPED_IRI
@@ -391,18 +391,21 @@ literal :
               literal = basic_literal; });
 
 iri_ref :
+  ( literal_iri_ref
+  | VARIABLE
+    { literal = current_template.getGenerator(LT(0).getText()); })
+    ;
+
+literal_iri_ref :
   ( QNAME
     { literal = basic_literal;
-      basic_literal.setLocator(context.resolveQname(LT(0).getText())); } )
+      basic_literal.setLocator(context.resolveQname(LT(0).getText())); } 
   | IRI
     { literal = basic_literal;
       basic_literal.setLocator(getAbsoluteLocator()); }
   | WRAPPED_IRI
     { literal = basic_literal;
-      basic_literal.setLocator(getRelativeLocator()); } 
-  | VARIABLE
-    { literal = current_template.getGenerator(LT(0).getText()); }
-    ;
+      basic_literal.setLocator(getRelativeLocator()); } );
 
 template_def :
   DEF IDENTIFIER 

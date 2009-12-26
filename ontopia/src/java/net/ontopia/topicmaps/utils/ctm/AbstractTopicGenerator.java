@@ -22,7 +22,7 @@ public abstract class AbstractTopicGenerator implements ValueGeneratorIF {
   }
 
   public LocatorIF getLocator() {
-    throw new OntopiaRuntimeException("FIXME");
+    throw new OntopiaRuntimeException("FIXME: " + this);
   }  
 
 }
