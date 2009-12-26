@@ -71,6 +71,7 @@ options {
   private Map wildcards;          // for top-level named wildcards
   private Map template_wildcards; // for named wildcards in templates
   private Template current_template; // this template inside template definition
+  private LocatorIF docuri;       // used for mergemap
 
   // --- configuration interface
 
@@ -208,9 +209,19 @@ include :
 
 mergemap :
   MERGEMAP iri_ref {
+    docuri = literal.getLocator();   
+  } iri_ref {
+    LocatorIF syntaxpsi = literal.getLocator();
     try {
-      LocatorIF docuri = literal.getLocator();   
-      TopicMapIF tm = new CTMTopicMapReader(docuri).read();
+      TopicMapReaderIF reader = null;
+      if (syntaxpsi.equals(PSI.getCTMSyntax()))
+        reader = new CTMTopicMapReader(docuri);
+      else if (syntaxpsi.equals(PSI.getCTMSyntax()))
+        reader = new XTMTopicMapReader(docuri);
+      else
+        throw new InvalidTopicMapException("Unknown mergemap syntax: " + 
+                                           syntaxpsi.getAddress());
+      TopicMapIF tm = reader.read();
       MergeUtils.mergeInto(topicmap, tm);
     } catch (IOException e) {
       throw new AntlrWrapException(e);
