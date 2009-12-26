@@ -216,7 +216,7 @@ mergemap :
       TopicMapReaderIF reader = null;
       if (syntaxpsi.equals(PSI.getCTMSyntax()))
         reader = new CTMTopicMapReader(docuri);
-      else if (syntaxpsi.equals(PSI.getCTMSyntax()))
+      else if (syntaxpsi.equals(PSI.getCTMXTMSyntax()))
         reader = new XTMTopicMapReader(docuri);
       else
         throw new InvalidTopicMapException("Unknown mergemap syntax: " + 
