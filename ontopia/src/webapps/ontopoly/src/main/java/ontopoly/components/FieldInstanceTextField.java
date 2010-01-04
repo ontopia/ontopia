@@ -67,7 +67,7 @@ public class FieldInstanceTextField extends TextField<String> {
       }
       oldValue = newValue;
     } catch (OntopolyModelRuntimeException e) {
-      error(AbstractFieldInstancePanel.createErrorMessage(fieldValueModel.getFieldInstanceModel(), e.getMessage()));
+      error(AbstractFieldInstancePanel.createErrorMessage(fieldValueModel.getFieldInstanceModel(), e));
     }
   }
   

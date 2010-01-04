@@ -6,11 +6,11 @@ import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.validators.ExternalValidation;
+import ontopoly.validators.RegexValidator;
 
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.validation.validator.PatternValidator;
 
 
 public class FieldInstanceNumberField extends TextField<String> {
@@ -27,9 +27,12 @@ public class FieldInstanceNumberField extends TextField<String> {
     this.oldValue = (occ == null ? null : occ.getValue());
     setModel(new Model<String>(oldValue));
     
-        
-    //add(new PatternValidator("-?\\d+\\.?\\d*"));
-    add(new PatternValidator("^[-+]?\\d+(\\.\\d+)?$"));
+    add(new RegexValidator(this, fieldValueModel.getFieldInstanceModel()) {
+      @Override
+      protected String getRegex() {
+        return "^[-+]?\\d+(\\.\\d+)?$";   
+      }
+    });
 
     // validate field using registered validators
     ExternalValidation.validate(this, oldValue);

@@ -1,12 +1,15 @@
 package ontopoly.components;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.jquery.DatePickerBehavior;
 import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
-import ontopoly.validators.DateTimeValidator;
+import ontopoly.validators.DateFormatValidator;
 import ontopoly.validators.ExternalValidation;
 
 import org.apache.wicket.markup.ComponentTag;
@@ -30,8 +33,16 @@ public class FieldInstanceDateTimeField extends TextField<String> implements ITe
     setDefaultModel(new Model<String>(oldValue));
 
     add(new DatePickerBehavior("yy-mm-dd 12:00:00"));
-    //! add(new DatePicker("yy-mm-dd 12:00:00"));
-    add(new DateTimeValidator());    
+    add(new DateFormatValidator(this, fieldValueModel.getFieldInstanceModel()) {
+      @Override
+      public DateFormat createDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      }
+      @Override
+      protected String resourceKey() {
+        return super.resourceKey() + ".datetime";
+      }
+    });
 
     // validate field using registered validators
     ExternalValidation.validate(this, oldValue);

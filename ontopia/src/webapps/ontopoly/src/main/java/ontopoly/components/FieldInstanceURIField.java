@@ -76,8 +76,8 @@ public class FieldInstanceURIField extends Panel {
       }
       
     };
-    textField.add(new URIValidator());
-    textField.add(new IdentityValidator(fieldValueModel.getFieldInstanceModel()));
+    textField.add(new URIValidator(this, fieldValueModel.getFieldInstanceModel()));
+    textField.add(new IdentityValidator(this, fieldValueModel.getFieldInstanceModel()));
     add(textField);
     
     this.button = new ExternalLink("button", new AbstractReadOnlyModel<String>() {

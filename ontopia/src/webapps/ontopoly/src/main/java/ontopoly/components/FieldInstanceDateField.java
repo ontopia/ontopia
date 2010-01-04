@@ -1,12 +1,15 @@
 package ontopoly.components;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.jquery.DatePickerBehavior;
 import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
-import ontopoly.validators.DateValidator;
+import ontopoly.validators.DateFormatValidator;
 import ontopoly.validators.ExternalValidation;
 
 import org.apache.wicket.markup.ComponentTag;
@@ -30,8 +33,16 @@ public class FieldInstanceDateField extends TextField<String> implements ITextFo
     setModel(new Model<String>(oldValue));
     
     add(new DatePickerBehavior("yy-mm-dd"));
-    add(new DateValidator());
-    //add(new PatternValidator("^((((19|20)(([02468][048])|([13579][26]))-02-29))|((20[0-9][0-9])|(19[0-9][0-9]))-((((0[1-9])|(1[0-2]))-((0[1-9])|(1\\d)|(2[0-8])))|((((0[13578])|(1[02]))-31)|(((0[1,3-9])|(1[0-2]))-(29|30)))))$"));
+    add(new DateFormatValidator(this, fieldValueModel.getFieldInstanceModel()) {
+      @Override
+      public DateFormat createDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
+      }
+      @Override
+      protected String resourceKey() {
+        return super.resourceKey() + ".date";
+      }
+    });
 
     // validate field using registered validators
     ExternalValidation.validate(this, oldValue);

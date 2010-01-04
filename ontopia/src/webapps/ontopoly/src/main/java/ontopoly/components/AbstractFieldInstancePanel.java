@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
 public abstract class AbstractFieldInstancePanel extends Panel {
@@ -89,42 +90,42 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     Cardinality card = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
     int size = fieldValuesModel.getNumberOfValues();
     if (card.isMinOne() && size < 1)
-      error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toofew").getObject().toString()));
+      error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toofew")));
     else if (card.isMaxOne() && size > 1)
-      error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toomany").getObject().toString()));      
+      error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toomany")));      
   }
   
   protected class AbstractFieldInstancePanelFeedbackMessageFilter implements IFeedbackMessageFilter {
 
     public boolean accept(FeedbackMessage message) {
       Serializable value = message.getMessage();
-      if (value instanceof FieldInstanceMessage) {
-        FieldInstanceMessage fim = (FieldInstanceMessage)value;        
-        return matchesThisField(fim);
+      if (value instanceof AbstractFieldInstanceMessage) {
+        return matchesThisField((AbstractFieldInstanceMessage)value);
       }
       return false;
     }
   }
  
-  protected static class FieldInstanceMessage implements Serializable {
+  protected static abstract class AbstractFieldInstanceMessage<T> implements Serializable {
     private String identifier;
-    private String message;
-    public FieldInstanceMessage(String identifier, String message) {
+    private T message;
+    
+    public AbstractFieldInstanceMessage(String identifier, T message) {
       this.identifier = identifier;
       this.message = message;     
     }
     public String getIdentifier() {
       return identifier;
-    }
-    public String getMessage() {
+    }    
+    public T getMessage() {
       return message;
     }
     public String toString() {
-      return message;
-    }
+      return getMessage().toString();
+    }    
   }
   
-  protected boolean matchesThisField(FieldInstanceMessage fim) {
+  protected boolean matchesThisField(AbstractFieldInstanceMessage fim) {
     return createIdentifier(fieldInstanceModel).equals(fim.getIdentifier());
   }
   
@@ -133,7 +134,22 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     return fieldInstance.getInstance().getId() + ':' + fieldInstance.getFieldAssignment().getFieldDefinition().getId();
   }
   
-  public static Serializable createErrorMessage(FieldInstanceModel fieldInstanceModel, String message) {
-    return new FieldInstanceMessage(createIdentifier(fieldInstanceModel), message);
+  public static Serializable createErrorMessage(FieldInstanceModel fieldInstanceModel, IModel<String> message) {
+    return new AbstractFieldInstanceMessage<IModel<String>>(createIdentifier(fieldInstanceModel), message) {      
+      @Override
+      public String toString() {
+        return getMessage().getObject();
+      }
+    };
   }
+  
+  public static Serializable createErrorMessage(FieldInstanceModel fieldInstanceModel, Throwable t) {
+    return new AbstractFieldInstanceMessage<Throwable>(createIdentifier(fieldInstanceModel), t) {
+      @Override
+      public String toString() {
+        return getMessage().getMessage();
+      }
+    };
+  }
+
 }

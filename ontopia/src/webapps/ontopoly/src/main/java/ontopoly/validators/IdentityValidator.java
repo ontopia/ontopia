@@ -1,24 +1,30 @@
 package ontopoly.validators;
 
-import java.util.Collections;
+import java.io.Serializable;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.components.AbstractFieldInstancePanel;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.models.FieldInstanceModel;
 
+import org.apache.wicket.Application;
+import org.apache.wicket.Component;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.validator.AbstractValidator;
 
 public class IdentityValidator extends AbstractValidator<String> {
 
   protected FieldInstanceModel fieldInstanceModel;
+  private final Component component;
   
-  public IdentityValidator(FieldInstanceModel fieldInstanceModel) {
+  public IdentityValidator(Component component, FieldInstanceModel fieldInstanceModel) {
+    this.component = component;
     this.fieldInstanceModel = fieldInstanceModel;
   }
   
@@ -37,14 +43,25 @@ public class IdentityValidator extends AbstractValidator<String> {
     TopicMap topicMap = topic.getTopicMap();
     TopicMapIF topicMapIf = topicMap.getTopicMapIF();
     TopicIF topicIf = topic.getTopicIF();
-    
+  
     TopicIF otopic = topicMapIf.getTopicBySubjectIdentifier(locator);
     if (otopic != null && ObjectUtils.different(topicIf, otopic))
-      error(validatable, "validators.IdentityValidator.subjectIdentifierClash", Collections.singletonMap("identity", (Object)value));
+      reportError("validators.IdentityValidator.subjectIdentifierClash", value);
 
     otopic = topicMapIf.getTopicBySubjectLocator(locator);
     if (otopic != null && ObjectUtils.different(topicIf, otopic))
-      error(validatable, "validators.IdentityValidator.subjectLocatorClash", Collections.singletonMap("identity", (Object)value));
+      reportError("validators.IdentityValidator.subjectLocatorClash", value);
+  }
+
+  private void reportError(String resourceKey, final String identity) {    
+    String message = Application.get().getResourceSettings().getLocalizer().getString(resourceKey, (Component)null, 
+        new Model<Serializable>(new Serializable() {
+          @SuppressWarnings("unused")
+          public String getIdentity() {
+            return identity;
+          }
+        }));
+    component.error(AbstractFieldInstancePanel.createErrorMessage(fieldInstanceModel, new Model<String>(message)));    
   }
 
 }
