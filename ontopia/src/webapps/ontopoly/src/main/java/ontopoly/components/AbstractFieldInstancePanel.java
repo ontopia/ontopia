@@ -1,10 +1,12 @@
 package ontopoly.components;
 
+import java.io.Serializable;
+
 import ontopoly.model.Cardinality;
+import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValuesModel;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.feedback.FeedbackMessage;
@@ -14,7 +16,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.util.lang.Objects;
 
 public abstract class AbstractFieldInstancePanel extends Panel {
 
@@ -88,22 +89,51 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     Cardinality card = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
     int size = fieldValuesModel.getNumberOfValues();
     if (card.isMinOne() && size < 1)
-      error(new ResourceModel("validators.CardinalityValidator.toofew").getObject().toString());
+      error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toofew").getObject().toString()));
     else if (card.isMaxOne() && size > 1)
-      error(new ResourceModel("validators.CardinalityValidator.toomany").getObject().toString());      
+      error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toomany").getObject().toString()));      
   }
   
   protected class AbstractFieldInstancePanelFeedbackMessageFilter implements IFeedbackMessageFilter {
 
     public boolean accept(FeedbackMessage message) {
-      Component current = message.getReporter();
-      while (true) {
-        if (current == null) return false;
-        if (current instanceof AbstractFieldInstancePanel)
-          return (Objects.equal(AbstractFieldInstancePanel.this, current));                    
-        current = current.getParent();
+      Serializable value = message.getMessage();
+      if (value instanceof FieldInstanceMessage) {
+        FieldInstanceMessage fim = (FieldInstanceMessage)value;        
+        return matchesThisField(fim);
       }
+      return false;
+    }
+  }
+ 
+  protected static class FieldInstanceMessage implements Serializable {
+    private String identifier;
+    private String message;
+    public FieldInstanceMessage(String identifier, String message) {
+      this.identifier = identifier;
+      this.message = message;     
+    }
+    public String getIdentifier() {
+      return identifier;
+    }
+    public String getMessage() {
+      return message;
+    }
+    public String toString() {
+      return message;
     }
   }
   
+  protected boolean matchesThisField(FieldInstanceMessage fim) {
+    return createIdentifier(fieldInstanceModel).equals(fim.getIdentifier());
+  }
+  
+  protected static String createIdentifier(FieldInstanceModel fieldInstanceModel) {
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    return fieldInstance.getInstance().getId() + ':' + fieldInstance.getFieldAssignment().getFieldDefinition().getId();
+  }
+  
+  public static Serializable createErrorMessage(FieldInstanceModel fieldInstanceModel, String message) {
+    return new FieldInstanceMessage(createIdentifier(fieldInstanceModel), message);
+  }
 }

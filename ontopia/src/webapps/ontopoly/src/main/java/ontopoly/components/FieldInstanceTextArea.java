@@ -4,6 +4,7 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.FieldInstance;
+import ontopoly.model.OntopolyModelRuntimeException;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 
@@ -59,17 +60,21 @@ public class FieldInstanceTextArea extends TextArea<String> {
   @Override
   protected void onModelChanged() {
     super.onModelChanged();
-    String newValue = (String)getModelObject();
-    if (ObjectUtils.equals(newValue, oldValue)) return;
-    AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-    FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
-    if (fieldValueModel.isExistingValue() && oldValue != null)
-      fieldInstance.removeValue(oldValue, page.getListener());
-    if (newValue != null && !newValue.equals("")) {
-      fieldInstance.addValue(newValue, page.getListener());
-      fieldValueModel.setExistingValue(newValue);
+    try {
+      String newValue = (String)getModelObject();
+      if (ObjectUtils.equals(newValue, oldValue)) return;
+      AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
+      FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+      if (fieldValueModel.isExistingValue() && oldValue != null)
+        fieldInstance.removeValue(oldValue, page.getListener());
+      if (newValue != null && !newValue.equals("")) {
+        fieldInstance.addValue(newValue, page.getListener());
+        fieldValueModel.setExistingValue(newValue);
+      }
+      oldValue = newValue;
+    } catch (OntopolyModelRuntimeException e) {
+      error(AbstractFieldInstancePanel.createErrorMessage(fieldValueModel.getFieldInstanceModel(), e.getMessage()));
     }
-    oldValue = newValue;
   }
 
 }

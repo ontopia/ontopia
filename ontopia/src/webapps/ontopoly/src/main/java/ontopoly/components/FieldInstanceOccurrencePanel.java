@@ -57,6 +57,7 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       }
       @Override
 		  public void populateItem(final ListItem<FieldValueModel> item) {
+        System.out.println("LIP: "+ item + " " + item.getParent());
 		    final FieldValueModel fieldValueModel = item.getModelObject();
         FieldInstanceModel fieldInstanceModel = fieldValueModel.getFieldInstanceModel();
 		    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
