@@ -32,6 +32,10 @@ public class FieldInstanceNumberField extends TextField<String> {
       protected String getRegex() {
         return "^[-+]?\\d+(\\.\\d+)?$";   
       }
+      @Override
+      protected String resourceKeyInvalidValue() {
+        return "validators.RegexValidator.number";
+      }
     });
 
     // validate field using registered validators

@@ -32,10 +32,10 @@ public abstract class RegexValidator extends AbstractValidator<String> {
       if (value.matches(regex))
         return;
       else
-        reportError("validators.RegexValidator", value, regex);
+        reportError(resourceKeyInvalidValue(), value, regex);
               
     } catch (PatternSyntaxException e) {
-      reportError("validators.RegexValidator.invalidPattern", value, regex);
+      reportError(resourceKeyInvalidRegex(), value, regex);
     }
   }
 
@@ -55,5 +55,13 @@ public abstract class RegexValidator extends AbstractValidator<String> {
   }
 
   protected abstract String getRegex();
+
+  protected String resourceKeyInvalidValue() {
+    return "validators.RegexValidator";
+  }
+
+  protected String resourceKeyInvalidRegex() {
+    return "validators.RegexValidator.invalidRegex";
+  }
   
 }
