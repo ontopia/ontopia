@@ -384,7 +384,6 @@ public abstract class ModalFindPage extends Panel {
       protected void onUpdate(AjaxRequestTarget target) {
         // replace tree model
         TopicType topicType = (TopicType)playerTypesDropDown.getDefaultModelObject();
-        System.out.println("UUU" + topicType);
         if (topicType == null) {
           treePanel.setDefaultModel(emptyTreeModelModel);
         } else {
@@ -393,8 +392,6 @@ public abstract class ModalFindPage extends Panel {
           treePanel.setDefaultModel(new AbstractReadOnlyModel<TreeModel>() {
             @Override
             public TreeModel getObject() {
-              System.out.println("XXX: " + ((TreeNode)treeModel.getRoot()).getChildCount());
-              new RuntimeException().printStackTrace();
               return treeModel;
             }
           });
