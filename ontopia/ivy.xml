@@ -44,9 +44,16 @@
     <dependency org="junit" name="junit" rev="3.8.2" conf="build" />
     <dependency org="httpunit" name="httpunit" rev="1.6.1" conf="build" />
 
-    <dependency org="net.sourceforge.jena" name="jena" rev="2.3" conf="build">
+    <dependency org="com.hp.hpl.jena" name="jena" rev="2.6.2" conf="build">
       <exclude org="xmlbeans" />
     </dependency>
+    <!-- not needed to build, but needed for runtime -->
+    <dependency org="com.hp.hpl.jena" name="iri" rev="0.8" conf="build">
+      <exclude org="xmlbeans" />
+    </dependency>
+    <!-- not needed to build, but needed for runtime -->
+    <dependency org="com.ibm.icu" name="icu4j" rev="3.4.4" conf="build"/>
+
     <dependency org="backport-util-concurrent" name="backport-util-concurrent" rev="3.1" conf="build" />
 
     <dependency org="jgroups" name="jgroups" rev="2.6.10.GA" conf="build" />

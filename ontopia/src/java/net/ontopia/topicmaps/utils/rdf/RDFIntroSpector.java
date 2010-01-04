@@ -14,7 +14,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 import com.hp.hpl.jena.rdf.arp.*;
 import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.n3.N3JenaReader;
 
 /**
  * INTERNAL: Used by the RDF2TM plugin.
@@ -64,7 +63,7 @@ public class RDFIntroSpector {
   private static void parseRDFXML(GrabMappingsHandler handler, String infileurl)
     throws IOException {
     ARP parser = new ARP();
-    parser.setStatementHandler(handler);
+    parser.getHandlers().setStatementHandler(handler);
 
     URLConnection conn = new URL(infileurl).openConnection();
     String encoding = conn.getContentEncoding();
@@ -81,8 +80,7 @@ public class RDFIntroSpector {
 
   private static void parseN3(GrabMappingsHandler handler, String infileurl) {
     Model model = ModelFactory.createDefaultModel();
-    N3JenaReader parser = new N3JenaReader();
-    parser.read(model, infileurl);
+    model.read(infileurl, "N3");
 
     AResourceImpl sub = new AResourceImpl();
     AResourceImpl pred = new AResourceImpl();

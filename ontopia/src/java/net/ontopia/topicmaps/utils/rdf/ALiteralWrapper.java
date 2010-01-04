@@ -19,7 +19,7 @@ public class ALiteralWrapper implements ALiteral {
   public Literal literal;
 
   public boolean isWellFormedXML() {
-    return literal.getWellFormed();
+    return literal.isWellFormedXML();
   }
 
   public String getParseType() {

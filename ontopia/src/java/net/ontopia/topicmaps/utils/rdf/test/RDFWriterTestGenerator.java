@@ -19,7 +19,7 @@ import net.ontopia.topicmaps.utils.rdf.*;
 import net.ontopia.topicmaps.xml.test.*;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.mem.ModelMem;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class RDFWriterTestGenerator implements TestCaseGeneratorIF {
 
@@ -88,9 +88,9 @@ public class RDFWriterTestGenerator implements TestCaseGeneratorIF {
       new RDFTopicMapWriter(new FileOutputStream(tmp)).write(tm);
 
       // read in base line and export
-      Model baseline = new ModelMem().read(new FileInputStream(bline), "file:"
+      Model baseline = ModelFactory.createDefaultModel().read(new FileInputStream(bline), "file:"
           + bline, "RDF/XML");
-      Model result = new ModelMem().read(new FileInputStream(tmp), "file:"
+      Model result = ModelFactory.createDefaultModel().read(new FileInputStream(tmp), "file:"
           + tmp, "RDF/XML");
 
       // compare results
@@ -142,9 +142,9 @@ public class RDFWriterTestGenerator implements TestCaseGeneratorIF {
         throw new OntopiaRuntimeException("Exception in RDF file '" + tmp, e);
       }
       // read in base line and export
-      Model baseline = new ModelMem().read(new FileInputStream(bline), "file:"
+      Model baseline = ModelFactory.createDefaultModel().read(new FileInputStream(bline), "file:"
           + bline, "RDF/XML");
-      Model result = new ModelMem().read(new FileInputStream(tmp), "file:"
+      Model result = ModelFactory.createDefaultModel().read(new FileInputStream(tmp), "file:"
           + tmp, "RDF/XML");
 
       // compare results

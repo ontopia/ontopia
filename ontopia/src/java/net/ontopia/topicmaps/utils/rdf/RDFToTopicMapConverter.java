@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import com.hp.hpl.jena.rdf.arp.*;
 import com.hp.hpl.jena.shared.JenaException;
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Literal;
@@ -39,7 +40,6 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.mem.ModelMem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,7 +176,7 @@ public class RDFToTopicMapConverter {
     this.builder = topicmap.getBuilder();
 
     if (mappingurl != null) {
-      Model model = new ModelMem();
+      Model model = ModelFactory.createDefaultModel();
       model.read(mappingurl, syntax);
       buildMappings(model);
     }
@@ -200,7 +200,7 @@ public class RDFToTopicMapConverter {
 
     if (mappings != null && (syntax == null || syntax.equals("RDF/XML"))) {
       ARP parser = new ARP();
-      parser.setStatementHandler(new ToTMStatementHandler());
+      parser.getHandlers().setStatementHandler(new ToTMStatementHandler());
 
       URLConnection conn = new URL(url).openConnection();
       String encoding = conn.getContentEncoding();
@@ -220,7 +220,7 @@ public class RDFToTopicMapConverter {
       }
 
     } else {
-      Model model = new ModelMem();
+      Model model = ModelFactory.createDefaultModel();
       model.read(url, syntax);
 
       if (mappings == null)
