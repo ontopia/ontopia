@@ -149,7 +149,7 @@ public class ActionConfigurator implements ConfigurationObservableIF {
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         istream = cl.getResourceAsStream(name);
-        //System.out.println("class loader: " + name);
+        //System.out.println("class loader: " + f);
         if (istream != null)
           log.debug("File loaded through class loader: {}", name);
       }
