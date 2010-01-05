@@ -100,7 +100,7 @@ public class RDBMSAccess implements StorageAccessIF {
    * INTERNAL: Returns the JDBC database connection used. It is important that 
    * this connection is neither closed, nor commited or rolled back. 
    */
-  public synchronized Connection getConnection() {    
+  public Connection getConnection() {    
     Connection conn = getConn();
     if (conn == null) {
       try {
