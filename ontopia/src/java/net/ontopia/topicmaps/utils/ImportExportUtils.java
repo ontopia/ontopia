@@ -98,7 +98,6 @@ public class ImportExportUtils {
    * @since 2.0
    */
   public static TopicMapReaderIF getReader (LocatorIF url) {
-
     String address = url.getAddress ();
 
     if (address.startsWith ("x-ontopia:tm-rdbms:"))
@@ -156,8 +155,16 @@ public class ImportExportUtils {
     else if (address.endsWith (".tmx"))
       return new TMXMLReader (url);
     else if (address.endsWith (".rdf"))
-      return (TopicMapImporterIF)makeRDFReader (url, "RDF/XML");
-      else
+      return (TopicMapImporterIF) makeRDFReader (url, "RDF/XML");
+    else if (address.endsWith (".n3"))
+      return (TopicMapImporterIF) makeRDFReader (url, "N3");
+    else if (address.endsWith (".nt"))
+      return (TopicMapImporterIF) makeRDFReader (url, "N-TRIPLE");
+    else if (address.endsWith (".xml"))
+      return new TMXMLReader(url); 
+    else if (address.endsWith (".ctm"))
+      return new CTMTopicMapReader(url);
+    else
       return new XTMTopicMapReader (url);
   }
 
