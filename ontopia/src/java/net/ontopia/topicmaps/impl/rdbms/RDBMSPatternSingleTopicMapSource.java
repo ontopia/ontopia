@@ -159,7 +159,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
 
   /**
    * PUBLIC: Returns the match type used by the source.
-  */
+   */
   public String getMatch() {
     return match;
   }
@@ -167,14 +167,14 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
   /**
    * PUBLIC: Sets the match type used by the source. This can either
    * be 'title' or 'comments'. The default is 'title'.
-  */
+   */
   public void setMatch(String match) {
     this.match = match;
   }
   
   /**
    * PUBLIC: Returns the pattern value used by the source.
-  */
+   */
   public String getPattern() {
     return pattern;
   }
@@ -184,7 +184,7 @@ public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
    * typically the title of the topic map, but can also be the
    * comments attached to a topic map. Which of the two the pattern
    * matches depends on the match type given.
-  */
+   */
   public void setPattern(String pattern) {
     this.pattern = pattern;
   }
