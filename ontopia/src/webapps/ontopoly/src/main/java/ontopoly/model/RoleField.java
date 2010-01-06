@@ -48,10 +48,12 @@ public class RoleField extends FieldDefinition {
     this.roleType = roleType;
   }
 
+  @Override
   public int getFieldType() {
     return FIELD_TYPE_ROLE;
   }
 
+  @Override
   public String getFieldName() {
     Collection names = getTopicIF().getTopicNames();
     Iterator it = names.iterator();
@@ -452,7 +454,8 @@ public class RoleField extends FieldDefinition {
    * 
    * @param topic the instance topic that takes part in the association.
    * @return the instance topics on the other side of an association an instance topic takes part in.
-   */  
+   */
+  @Override
   public List<ValueIF> getValues(Topic topic) { 
     Collection roles = getRoles(topic);
     
@@ -553,6 +556,7 @@ public class RoleField extends FieldDefinition {
    * @param _value an object representing the instance topic that will be added to the other
    * side of the association the instance topic (topic) takes part in.
    */
+  @Override
   public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     ValueIF value = (ValueIF) _value;
     ValueIF replacedValue = null;
@@ -626,6 +630,7 @@ public class RoleField extends FieldDefinition {
    * @param _value an object representing the instance topic that will be removed from the other
    * side of the association the instance topic (topic) takes part in.
    */  
+  @Override
   public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     ValueIF value = (ValueIF) _value;
 

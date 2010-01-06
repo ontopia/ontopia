@@ -32,10 +32,12 @@ public class OccurrenceField extends FieldDefinition {
 		this.occurrenceType = occurrenceType;
 	}
 
+  @Override
   public int getFieldType() {
     return FIELD_TYPE_OCCURRENCE;
   }
 
+  @Override
   public String getFieldName() {
     Collection names = getTopicIF().getTopicNames();
     Iterator it = names.iterator();
@@ -48,6 +50,7 @@ public class OccurrenceField extends FieldDefinition {
     return (otype == null ? null : otype.getName());
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof OccurrenceField))
       return false;
@@ -127,6 +130,7 @@ public class OccurrenceField extends FieldDefinition {
     return (occ == null ? 50 : Integer.parseInt(occ.getValue()));
   }
 
+  @Override
   public Collection getValues(Topic topic) {
     TopicIF topicIf = topic.getTopicIF();
     OccurrenceType otype = getOccurrenceType();
@@ -140,6 +144,7 @@ public class OccurrenceField extends FieldDefinition {
     return OntopolyModelUtils.findOccurrences(typeIf, topicIf);
   }
 
+  @Override
   public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
     String value = (String) _value;
@@ -169,6 +174,7 @@ public class OccurrenceField extends FieldDefinition {
     listener.onAfterAdd(fieldInstance, value);
   }
 
+  @Override
   public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
     String value = (_value instanceof OccurrenceIF ? ((OccurrenceIF) _value)

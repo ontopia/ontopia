@@ -452,8 +452,8 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
     RoleField.ValueIF value = RoleField.createValue(2);
     value.addPlayer(currentField, currentTopic);            
     value.addPlayer(selectedField, selectedTopic);
-    AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();    
-    currentField.addValue(fieldInstance, value, page.getListener());
+    AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
+    fieldInstance.addValue(value, page.getListener()); // currentField.addValue(fieldInstance, value, page.getListener());
     return value;
   }
 

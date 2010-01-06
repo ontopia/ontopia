@@ -33,6 +33,7 @@ public class IdentityField extends FieldDefinition {
 		this.identityType = identityType;
   }
 
+  @Override
   public int getFieldType() {
     return FIELD_TYPE_IDENTITY;
   }
@@ -40,6 +41,7 @@ public class IdentityField extends FieldDefinition {
   /**
    * Returns the name of the IdentityField object.
    */
+  @Override
   public String getFieldName() {
     Collection names = getTopicIF().getTopicNames();
     Iterator it = names.iterator();
@@ -52,6 +54,7 @@ public class IdentityField extends FieldDefinition {
     return (itype == null ? null : itype.getName());
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof IdentityField))
       return false;
@@ -124,6 +127,7 @@ public class IdentityField extends FieldDefinition {
    *            topic from which the values is retrieved.
    * @return A collection of LocatorIF objects.
    */
+  @Override
   public Collection getValues(Topic topic) {
     TopicIF topicIf = topic.getTopicIF();
     if (isSubjectLocator())
@@ -142,6 +146,7 @@ public class IdentityField extends FieldDefinition {
    * @param _value
    *            value which is going to be added to the topic.
    */
+  @Override
   public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 
@@ -166,6 +171,7 @@ public class IdentityField extends FieldDefinition {
    * @param _value
    *            value which is going to be removed from the topic.
    */
+  @Override
   public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 

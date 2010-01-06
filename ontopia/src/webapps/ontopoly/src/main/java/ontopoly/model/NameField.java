@@ -30,10 +30,12 @@ public class NameField extends FieldDefinition {
 		this.nameType = nameType;
 	}
 
+  @Override
   public int getFieldType() {
     return FIELD_TYPE_NAME;
   }
 
+  @Override
   public String getFieldName() {
     Collection names = getTopicIF().getTopicNames();
     Iterator it = names.iterator();
@@ -46,6 +48,7 @@ public class NameField extends FieldDefinition {
     return (ntype == null ? null : ntype.getName());
   }
 
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof NameField))
       return false;
@@ -87,6 +90,7 @@ public class NameField extends FieldDefinition {
    * @param topic the topic from which the values is retrieved.
    * @return a collection of TopicNameIFs.
    */
+  @Override
   public Collection getValues(Topic topic) {
     TopicIF topicIf = topic.getTopicIF();
     NameType ntype = getNameType();
@@ -105,6 +109,7 @@ public class NameField extends FieldDefinition {
    * @param _value
    *            value which is going to be added to the topic.
    */
+  @Override
   public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
     String value = (String) _value;
@@ -141,6 +146,7 @@ public class NameField extends FieldDefinition {
    * @param _value
    *            value which is going to be removed from the topic.
    */
+  @Override
   public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
     String value = (_value instanceof TopicNameIF ? ((TopicNameIF) _value)
