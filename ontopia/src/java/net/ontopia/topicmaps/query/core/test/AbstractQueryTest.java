@@ -86,15 +86,23 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
   }
   
   protected void makeEmpty() {
+    makeEmpty(true);
+  }
+
+  protected void makeEmpty(boolean setbase) {
     // IMPORTANT: This method is being overloaded by the RDBMS
     // implementation to provide the right object implementations.
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
-    try {
-      base = new URILocator("http://example.com");
-      store.setBaseAddress(base);
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
+
+    if (setbase) {
+      try {
+        base = new URILocator("http://example.com");
+        store.setBaseAddress(base);
+      } catch (MalformedURLException e) {
+        throw new OntopiaRuntimeException(e);
+      }
     }
+    
     topicmap = store.getTopicMap();    
       
     builder = store.getTopicMap().getBuilder();

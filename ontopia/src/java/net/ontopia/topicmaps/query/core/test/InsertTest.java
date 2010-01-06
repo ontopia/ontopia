@@ -4,7 +4,9 @@ package net.ontopia.topicmaps.query.core.test;
 import java.util.Map;
 import java.util.Iterator;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -199,5 +201,33 @@ public class InsertTest extends AbstractQueryTest {
 
     assertTrue("topic did not get new occurrence",
                topic.getOccurrences().size() == 1);
+  }
+
+  public void testNoBaseAddress() throws InvalidQueryException {
+    makeEmpty(false); // don't set base address
+
+    // this one is valid because there are no relative URIs
+    update("insert <urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304> .");
+
+    LocatorIF si;
+    try {
+      si = new URILocator("urn:uuid:d84e2777-8928-4bd4-a3e4-8ca835f92304");
+    } catch (MalformedURLException e) {
+      throw new OntopiaRuntimeException(e);
+    }
+    
+    TopicIF topic = topicmap.getTopicBySubjectIdentifier(si);
+    assertTrue("topic was not inserted", topic != null);
+  }
+
+  public void testNoBaseAddress2() throws InvalidQueryException {
+    makeEmpty(false); // don't set base address
+
+    // this one is invalid because "#topic" isn't an absolute URI
+    try {
+      update("insert topic .");
+      fail("relative URI allowed when no base locator");
+    } catch (InvalidQueryException e) {
+    }
   }
 }

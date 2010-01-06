@@ -26,6 +26,7 @@ import net.ontopia.topicmaps.utils.ctm.ValueGeneratorIF;
 import net.ontopia.topicmaps.utils.ctm.ValueGenerator;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
+import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamRecognitionException;
@@ -127,6 +128,8 @@ public class InsertStatement extends ModificationStatement {
       throw new InvalidQueryException("IO exception: " + ex.io);
     } catch (TokenStreamException ex) {
       throw new InvalidQueryException("Lexical error: " + ex.getMessage());
+    } catch (InvalidTopicMapException e) {
+      throw new InvalidQueryException("Error in CTM part: " + e.getMessage());
     }
   }
 

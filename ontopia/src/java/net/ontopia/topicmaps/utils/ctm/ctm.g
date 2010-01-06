@@ -137,7 +137,13 @@ options {
   }
 
   private LocatorIF getRelativeLocator() throws antlr.TokenStreamException {
-    return document.resolveAbsolute(LT(0).getText());
+    // we don't always have a document locator. when we don't have one, we
+    // only allow absolute URIs anywhere in the CTM. see issue 182.
+    // http://code.google.com/p/ontopia/issues/detail?id=182
+    if (document != null)
+      return document.resolveAbsolute(LT(0).getText());
+    else
+      return getAbsoluteLocator();
   }
 }
 

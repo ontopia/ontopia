@@ -38,11 +38,10 @@ public class AbstractRDBMSQueryTest extends AbstractQueryTest {
     processor = QueryUtils.createQueryProcessor(topicmap, base);
   }
   
-  protected void makeEmpty() {
+  protected void makeEmpty(boolean setbase) {
     try {
       RDBMSTopicMapStore store = new RDBMSTopicMapStore();
       topicmap = store.getTopicMap();
-      //! processor = new QueryProcessor(topicmap);
       processor = QueryUtils.createQueryProcessor(topicmap);
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
