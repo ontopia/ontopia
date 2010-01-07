@@ -532,6 +532,7 @@ public class TopicType extends AbstractTypingTopic {
               return new FieldsView(viewTopic, getTopicMap());
           }
         }, params);
+    // ISSUE: would like to have a coalesce predicate or a null predicate here so that we can get rid of the null return value.
   }
 
   /**
