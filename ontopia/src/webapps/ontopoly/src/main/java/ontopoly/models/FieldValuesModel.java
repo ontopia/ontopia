@@ -92,7 +92,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   @Override
   protected List<FieldValueModel> load() {
     FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
-    Collection values = fieldInstance.getValues();
+    Collection values = getValues(fieldInstance);
     if (values.isEmpty()) {
       return Collections.emptyList();
     } else {

@@ -5,7 +5,7 @@ import java.util.List;
 
 import ontopoly.components.FooterPanel;
 import ontopoly.components.MenuPanel;
-import ontopoly.components.SubSubHeaderPanel;
+import ontopoly.components.TopicMapHeaderPanel;
 import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pojos.MenuItem;
@@ -39,7 +39,7 @@ public abstract class OntopolyAbstractPage extends AbstractProtectedOntopolyPage
   }
 
   protected void initParentComponents() {
-    add(new SubSubHeaderPanel("header", topicMapModel , getMainMenuIndex(), getMainMenuItem(topicMapModel)));
+    add(new TopicMapHeaderPanel("header", topicMapModel, getMainMenuItems(topicMapModel), getMainMenuIndex()));
     add(new FooterPanel("footer"));
     
     add(new Label("title", new AbstractReadOnlyModel() {
@@ -48,7 +48,7 @@ public abstract class OntopolyAbstractPage extends AbstractProtectedOntopolyPage
         return "[Ontopoly] " + getTopicMapModel().getTopicMap().getName();   
       }
     }));
-    add(new MenuPanel("lowerMenu", getMainMenuItem(topicMapModel)));        
+    add(new MenuPanel("lowerMenu", getMainMenuItems(topicMapModel), NONE_SELECTED));        
   }
   
   protected abstract int getMainMenuIndex();
@@ -66,7 +66,7 @@ public abstract class OntopolyAbstractPage extends AbstractProtectedOntopolyPage
     super.onDetach();
   }
   
-  private static List<MenuItem> getMainMenuItem(TopicMapModel topicMapModel) {
+  private static List<MenuItem> getMainMenuItems(TopicMapModel topicMapModel) {
     PageParameters parameters = new PageParameters();
     parameters.add("topicMapId", topicMapModel.getTopicMap().getId());
 

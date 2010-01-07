@@ -11,7 +11,6 @@ import ontopoly.components.LinkPanel;
 import ontopoly.components.MenuHelpPanel;
 import ontopoly.components.TreePanel;
 import ontopoly.model.Topic;
-import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.pojos.MenuItem;
 import ontopoly.pojos.TopicNode;
@@ -52,7 +51,8 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     form.setOutputMarkupId(true);
 
     // add part containing title and help link
-    createMenuPanel();
+    add(new MenuHelpPanel("menuHelpPart", getSubMenuItems(), getSubMenuIndex(),
+        getNameModelForHelpLinkAddress(getSubMenuIndex())));
 
     // topic types title
     add(new Label("typesTitle", getNameModelForType(getSubMenuIndex())));
@@ -70,11 +70,6 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
   @Override
   protected int getMainMenuIndex() {
     return ONTOLOGY_INDEX_IN_MAINMENU; 
-  }
-  
-  private void createMenuPanel() {
-    add(new MenuHelpPanel("menuHelpPart", getSubMenuItem(getTopicMapModel()), getSubMenuIndex(),
-        getNameModelForHelpLinkAddress(getSubMenuIndex())));
   }
 
   protected abstract void createFunctionBoxes(MarkupContainer parent, String id);
@@ -113,9 +108,9 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     }
   }
 
-  private static List<MenuItem> getSubMenuItem(IModel model) {
+  private List<MenuItem> getSubMenuItems() {
     PageParameters parameters = new PageParameters();
-    parameters.add("topicMapId", ((TopicMap) model.getObject()).getId());
+    parameters.add("topicMapId", getTopicMapModel().getTopicMapId());
 
     List<MenuItem> subMenuItems = Arrays.asList(new MenuItem[] {
         new MenuItem(new Label("caption", new ResourceModel("topic.types")), TopicTypesPage.class, parameters),

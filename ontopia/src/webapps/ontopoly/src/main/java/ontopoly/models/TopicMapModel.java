@@ -25,6 +25,10 @@ public class TopicMapModel extends LoadableDetachableModel<TopicMap> {
     this.topicMapId = topicMapId;    
   }
 
+  public String getTopicMapId() {
+    return topicMapId;
+  }
+  
   public TopicMap getTopicMap() {
     return (TopicMap)getObject();
   }

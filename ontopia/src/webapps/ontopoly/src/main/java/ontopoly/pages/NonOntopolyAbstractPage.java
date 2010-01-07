@@ -1,10 +1,10 @@
 package ontopoly.pages;
 
-import org.apache.wicket.PageParameters;
-
 import ontopoly.components.FooterPanel;
-import ontopoly.components.SubHeaderPanel;
+import ontopoly.components.HeaderPanel;
 import ontopoly.models.TopicMapModel;
+
+import org.apache.wicket.PageParameters;
 
 
 public abstract class NonOntopolyAbstractPage extends AbstractProtectedOntopolyPage {
@@ -19,7 +19,7 @@ public abstract class NonOntopolyAbstractPage extends AbstractProtectedOntopolyP
 	
     this.topicMapModel = new TopicMapModel(parameters.getString("topicMapId"));
     
-    add(new SubHeaderPanel("header", topicMapModel));
+    add(new HeaderPanel("header"));
     add(new FooterPanel("footer"));    
   }
 

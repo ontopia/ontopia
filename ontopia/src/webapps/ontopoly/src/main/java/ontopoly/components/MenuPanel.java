@@ -13,28 +13,6 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 
 public class MenuPanel extends Panel {
-  //TODO remove this constructor. Make the callers call the other method instead with -1 (NONE_SELECTED) as
-  // the third argument.
-  public MenuPanel(String id, List<MenuItem> menuItemList) {
-    super(id); 
-
-    ListView menuItems = new ListView<MenuItem>("menuItems", menuItemList) {
-      int counter = 0;
-
-      protected void populateItem(ListItem<MenuItem> item) {
-        MenuItem menuItem = item.getModelObject();
-        BookmarkablePageLink link = new BookmarkablePageLink<Page>("menuItemLink",
-            menuItem.getPageClass(), menuItem.getPageParameters());
-        link.add(menuItem.getCaption());
-        item.add(link);
-        if (counter++ != 0) {
-          item.add(new SimpleAttributeModifier("class", "delimiter"));
-        }
-
-      }
-    };
-    add(menuItems);
-  }
 
   public MenuPanel(String id, List<MenuItem> menuItemList, final int selectedMenuItemIndex) {
     super(id);

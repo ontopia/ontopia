@@ -1,6 +1,7 @@
 package ontopoly.components;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -8,6 +9,7 @@ import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pages.SearchPage;
 import ontopoly.pages.StartPage;
+import ontopoly.pojos.MenuItem;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -20,12 +22,15 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
-public class SubHeaderPanel extends HeaderPanel {
-  public SubHeaderPanel(String id, TopicMapModel model) {
+public class TopicMapHeaderPanel extends HeaderPanel {
+  
+  public TopicMapHeaderPanel(String id, TopicMapModel model, List<MenuItem> tabMenuItem, int selectedTab) {
     super(id);
     
     final TopicMapModel topicMapModel = model;
-    
+
+    add(new MenuPanel("tabMenu", tabMenuItem, selectedTab));
+
     add(new Label("topicMap", new PropertyModel(topicMapModel, "name")));
 
     final TextField searchField = new TextField<String>("searchField", new Model<String>(""));

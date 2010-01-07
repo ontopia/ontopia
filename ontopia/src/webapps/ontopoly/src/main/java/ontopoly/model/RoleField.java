@@ -661,7 +661,7 @@ public class RoleField extends FieldDefinition {
    * 
    * @param roleField the role field containing the association type and the role type representing another side of the association.
    * @param role the role type on the side of the association that the instance topic is going to be created.
-   * @return the ValueIF object that represent an instance topic on one side of an association.
+   * @return the ValueIF object that represent an instance topic on one side of an association. Will return null if role does not match role field definition.
    */
   private static ValueIF createValue(RoleField roleField, AssociationRoleIF role) {
     Collection fields = roleField.getAssociationField().getFieldsForRoles();
