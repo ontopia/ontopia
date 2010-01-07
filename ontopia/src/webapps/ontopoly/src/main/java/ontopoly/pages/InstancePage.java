@@ -313,9 +313,15 @@ public class InstancePage extends OntopolyAbstractPage {
                   protected void onModelChanged() {
                     super.onModelChanged();
                     TopicType selectedTopicType = (TopicType)getModelObject();
-                    Topic topic = topicModel.getTopic();                 
-                    topic.addTopicType(selectedTopicType);
-                    topic.removeTopicType(getTopicTypeModel().getTopicType());
+                    Topic topic = topicModel.getTopic();  
+                    
+                    TopicType currentTopicType = getTopicTypeModel().getTopicType();
+                    if (topic.getTopicTypes().contains(currentTopicType)) {
+                      // Only replace current topic type if it still is an existing type of the current topic. 
+                      // This can actually happen if the user uses the back button in the browser.
+                      topic.addTopicType(selectedTopicType);
+                      topic.removeTopicType(currentTopicType);
+                    }
                     Map<String,String> pageParametersMap = new HashMap<String,String>();
                     pageParametersMap.put("topicMapId", topic.getTopicMap().getId());
                     pageParametersMap.put("topicId", topic.getId());
