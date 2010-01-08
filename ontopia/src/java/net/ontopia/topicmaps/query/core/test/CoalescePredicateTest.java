@@ -33,7 +33,7 @@ public class CoalescePredicateTest extends AbstractPredicateTest {
     addMatch(matches, "TOPIC", topic);
 
     try {
-      verifyQuery(matches, "coalesce($TOPIC, thequeen, )?");
+      verifyQuery(matches, "coalesce($TOPIC, thequeen)?");
       fail("Not valid, but still passed.");
     } catch (Exception e) {
       // ok
