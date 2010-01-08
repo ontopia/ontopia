@@ -46,12 +46,8 @@ public class CoalescePredicate implements BasicPredicateIF {
         Object coalescedValue = matches.data[ix][colindexes[i]];
         if (coalescedValue != null) {
           // if bound then compare and filter
-          if (isBound && ObjectUtils.different(matches.data[ix][colindexes[0]], coalescedValue)) {
-            if (i == arguments.length-1)
-              break;
-            else
-              continue;
-          }
+          if (isBound && ObjectUtils.different(matches.data[ix][colindexes[0]], coalescedValue))
+            continue;
         
           Object[] newRow = (Object[]) matches.data[ix].clone();
           

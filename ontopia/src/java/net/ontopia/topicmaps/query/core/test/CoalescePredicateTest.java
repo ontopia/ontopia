@@ -68,9 +68,10 @@ public class CoalescePredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     TopicIF topic = getTopicById("horse");
-    addMatch(matches, "TOPIC", topic);
+    addMatch(matches, "DESC", "The queen of england");
+    addMatch(matches, "DESC", "Foobar");
 
-    verifyQuery(matches, "select $TOPIC from $HORSE = horse, { $QUEEN = horse }, coalesce($TOPIC, $QUEEN, horse)?");
+    verifyQuery(matches, "select $DESC from { $X = thequeen | $X = gdm}, { beskrivelse($X, $BESKRIVELSE) }, coalesce($DESC, $BESKRIVELSE, \"Foobar\")?");
     closeStore();
   }
   
