@@ -71,8 +71,7 @@ public class QueryWrapper {
 
   /**
    * EXPERIMENTAL: Runs the query, and returns a the single value in
-   * each row. Throws an exception if the query produces more than one
-   * column.
+   * each row.
    */
   public List queryForList(String query) {
     return queryForList(query, new ObjectMapper(false), null);
@@ -80,8 +79,7 @@ public class QueryWrapper {
   
   /**
    * EXPERIMENTAL: Runs the query, and returns a the single value in
-   * each row. Throws an exception if the query produces more than one
-   * column.
+   * each row.
    */
   public List queryForList(String query, Map params) {
     return queryForList(query, new ObjectMapper(false), params);

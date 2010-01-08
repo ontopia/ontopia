@@ -58,6 +58,7 @@ public class PredicateFactory implements PredicateFactoryIF {
     predicatesById.put("base-locator", new BaseLocatorPredicate(topicmap));
     predicatesById.put("object-id", new ObjectIdPredicate(topicmap));
     predicatesById.put("datatype", new DatatypePredicate(topicmap));
+    predicatesById.put("coalesce", new CoalescePredicate());
     //predicatesById.put("name", new NamePredicate());
   }
   
