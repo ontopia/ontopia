@@ -441,6 +441,71 @@ $DATE &gt;= "1900"?</literallayout>
 </example>
 </refsect1>
 </refentry>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+<refentry id="p-coalesce">
+<refnamediv>
+<refname>coalesce</refname>
+<refpurpose>
+ This predicate is often used to assign fallback or default values to
+ variables. If the first argument is unbound then it is bound to the
+ first non-null argument following it. If the first argument is bound
+ then it will be compared to the first non-null argument following it.
+</refpurpose>
+</refnamediv>
+
+<refsect1>
+<title>Parameters</title>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Name</entry>
+<entry>Type</entry>
+<entry>Must be bound</entry>
+<entry>Required</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>result</entry>
+<entry>object</entry>
+<entry>no</entry>
+<entry>yes</entry>
+<entry>The result value.</entry>
+</row>
+<row>
+<entry>v1..vN</entry>
+<entry>object+</entry>
+<entry>yes</entry>
+<entry>yes</entry>
+<entry>The value to check to see if it is not null. If not null then it will be bound or compared to the result argument. In that case any following arguments will be ignored.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+</refsect1>
+
+<refsect1>
+<title>Description</title>
+
+<para>
+The coalesce predicate is often used to assign default values, and is
+quite often used with optional clauses as can be seen in the example
+below:
+</para>
+
+<example>
+<title>Find all operas and their illustrations. Assign a default illustration to the operas that do not have one already.</title>
+<literallayout>select $OPERA, $ILLUSTRATION from 
+instance-of($OPERA, opera), { illustration($OPERA, $I) }, 
+coalesce($ILLUSTRATION, $I, "http://example.org/nicephoto.jpg")?</literallayout>
+</example>
+</refsect1>
+</refentry>
+
 </section>
 
 <!-- ===== TOPIC MAPS =======================================================-->
