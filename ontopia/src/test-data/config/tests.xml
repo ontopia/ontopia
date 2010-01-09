@@ -475,6 +475,7 @@
     <test>net.ontopia.topicmaps.query.core.test.DatatypePredicateTest</test>
     <test>net.ontopia.topicmaps.query.core.test.NextPreviousOptimizerTest</test>
     <test>net.ontopia.topicmaps.query.core.test.QueryWrapperTest</test>
+    <test>net.ontopia.topicmaps.query.core.test.CoalescePredicateTest</test>
     <group-ref>query-updates</group-ref>        
   </group>
 
@@ -579,6 +580,7 @@
     <test>net.ontopia.topicmaps.utils.tmrap.test.TestGetTopic</test>
     <test>net.ontopia.topicmaps.utils.tmrap.test.TestAddFragment</test>
     <test>net.ontopia.topicmaps.utils.tmrap.test.TestDeleteTopic</test>
+    <test>net.ontopia.topicmaps.utils.tmrap.test.TestTologUpdate</test>
     <test>net.ontopia.topicmaps.utils.tmrap.test.TMRAPTestGenerator</test>
   </group>
 

@@ -155,7 +155,7 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
   /**
    * Tests whether the given query returns a single row with no columns,
    * i.e. a query match with no unbound variables.
-   * @param query The query to and test.
+   * @param query The query to test.
    */
   protected void verifyQuery(String query) throws InvalidQueryException {
     // verify that we do not get any parse or query errors
@@ -331,7 +331,7 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
     QueryResultIF result = processor.execute(query);
     try {
       assertTrue("found values, but shouldn't have",
-          !result.next());
+                 !result.next());
     } finally {
       result.close();
     }
@@ -341,7 +341,7 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
     QueryResultIF result = processor.execute(query, args);
     try {
       assertTrue("found values, but shouldn't have",
-          !result.next());
+                 !result.next());
     } finally {
       result.close();
     }
