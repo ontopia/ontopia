@@ -511,13 +511,13 @@ public class TopicType extends AbstractTypingTopic {
       "  xtm:superclass-subclass($SUP : xtm:superclass, $SUB : xtm:subclass) | " +
       "  xtm:superclass-subclass($SUP : xtm:superclass, $MID : xtm:subclass), subclasses-of($MID, $SUB) " +
       "}. " +
-      "select $FV from " +
+      "select $FIELDSVIEW from " +
       "{ $TT = %tt% | subclasses-of($TT, %tt%) }, " +
       "on:has-field($TT : on:field-owner, $FD : on:field-definition), " +
       "{ on:field-in-view($FD : on:field-definition, $FV : on:fields-view)" +
       (includeHiddenViews ? "" : ", not(on:is-hidden-view($FV : on:fields-view))") +
       (includeEmbeddedViews ? "" : ", not(on:is-embedded-view($FV : on:fields-view))") +
-      " } order by $FV?";
+      " }, coalesce($FIELDSVIEW, $FV, on:default-fields-view) order by $FIELDSVIEW?";
                                                         
     Map<String,TopicIF> params = Collections.singletonMap("tt", getTopicIF());
     
@@ -532,7 +532,6 @@ public class TopicType extends AbstractTypingTopic {
               return new FieldsView(viewTopic, getTopicMap());
           }
         }, params);
-    // ISSUE: would like to have a coalesce predicate or a null predicate here so that we can get rid of the null return value.
   }
 
   /**
