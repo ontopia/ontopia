@@ -224,10 +224,42 @@ public class InsertTest extends AbstractQueryTest {
     makeEmpty(false); // don't set base address
 
     // this one is invalid because "#topic" isn't an absolute URI
-    try {
-      update("insert topic .");
-      fail("relative URI allowed when no base locator");
-    } catch (InvalidQueryException e) {
-    }
+    updateError("insert topic .");
   }
+
+  // tests for CTM/tolog integration
+
+  // ===== VALID
+
+  public void testFromParsing() throws InvalidQueryException {
+    makeEmpty();
+    update("insert topic isa $tt . # from \n" +
+           "  from instance-of($t, $tt)");
+  }  
+
+  public void testFromParsing2() throws InvalidQueryException {
+    makeEmpty();
+    update("insert topic - \"Topic from CTM\" .");
+  }  
+
+// positions reported by lexer.getStartOfToken() make no sense after
+// multiline comments. don't know why, and can't see any way to fix it.
+// therefore disabling this test for now.
+//   public void testFromParsing3() throws InvalidQueryException {
+//     makeEmpty();
+//     update("insert topic isa $tt . #( from )# " +
+//            "  from instance-of($t, $tt)");
+//   }  
+
+  public void testFromParsing4() throws InvalidQueryException {
+    makeEmpty();
+    update("/* insert ... from test */ " +
+           "insert topic isa $tt . " +
+           "  from instance-of($t, $tt)");
+  }  
+
+  public void testFromParsing5() throws InvalidQueryException {
+    makeEmpty();
+    updateError("insert from isa topic .");
+  }  
 }

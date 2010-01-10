@@ -68,6 +68,10 @@ import net.ontopia.topicmaps.xml.InvalidTopicMapException;
     }
     return (char) number;
   }  
+
+  public int getStartOfToken() {
+    return zzStartRead;
+  }
 %}
             
 LineTerminator = \r|\n|\r\n
@@ -177,4 +181,4 @@ DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
 .|\n {
   throw new InvalidTopicMapException("Illegal character <"+yytext()+"> at " +
                                      docuri + ":" + (yyline+1) + ":" + yycolumn); }
-<<EOF>> { return newToken(CTMParser.EOF); }                                   
+<<EOF>> { return newToken(CTMParser.EOF); }

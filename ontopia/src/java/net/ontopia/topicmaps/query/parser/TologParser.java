@@ -14,8 +14,11 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import net.ontopia.topicmaps.utils.ctm.Template;
+import net.ontopia.topicmaps.utils.ctm.CTMLexer;
+import net.ontopia.topicmaps.utils.ctm.CTMParser;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
+import antlr.Token;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import antlr.TokenStreamIOException;
@@ -89,8 +92,19 @@ public class TologParser {
    */
   public TologStatement parseStatement(String query) throws InvalidQueryException {
     if (isInsertStatement(query)) {
-      String ctm = getCTMPart(query);
-      query = getTologPart(query);
+      int insertpos = findInsert(query);
+      int frompos = findFrom(query, insertpos);
+
+      String ctm;
+      if (frompos != -1) {
+        ctm = query.substring(insertpos + 6, frompos);
+        query = query.substring(0, insertpos + 6) + " " +
+                query.substring(frompos);
+      } else {
+        ctm = query.substring(insertpos + 6);
+        query = query.substring(0, insertpos + 6);
+      }
+        
       InsertStatement stmt = (InsertStatement) parseStatement(new StringReader(query));
       stmt.setCTMPart(ctm, localcontext);
       return stmt;
@@ -214,28 +228,28 @@ public class TologParser {
     return matcher.find();
   }
 
-  private String getCTMPart(String query) {
-    Matcher insertM = insertP.matcher(query);
-    insertM.find();
-    Matcher fromM = fromP.matcher(query);
-    boolean hasFrom = fromM.find(insertM.end());
-
-    if (hasFrom)
-      return query.substring(insertM.end(), fromM.start());
-    else
-      return query.substring(insertM.end());
+  private int findInsert(String query) {
+    Reader reader = new StringReader(query);
+    TologLexer lexer = new TologLexer(reader, options);
+    Token token = lexer.nextToken();
+    while (token.getType() != RealTologParser.INSERT)
+      token = lexer.nextToken();
+    return lexer.getStartOfToken();
   }
 
-  private String getTologPart(String query) {
-    Matcher insertM = insertP.matcher(query);
-    insertM.find();
-    Matcher fromM = fromP.matcher(query);
-    boolean hasFrom = fromM.find(insertM.end());
+  private int findFrom(String query, int insertpos) {
+    query = query.substring(insertpos + 6);
+    Reader reader = new StringReader(query);
+    CTMLexer lexer = new CTMLexer(reader);
+    Token token = lexer.nextToken();
+    while (!(token.getType() == CTMParser.IDENTIFIER &&
+             token.getText().equalsIgnoreCase("from")) && 
+           token.getType() != CTMParser.EOF)
+      token = lexer.nextToken();
 
-    if (hasFrom)
-      return query.substring(0, insertM.end()) +
-             query.substring(fromM.start());
+    if (token.getType() == CTMParser.EOF)
+      return -1;
     else
-      return query.substring(0, insertM.end());
+      return lexer.getStartOfToken() + insertpos + 6;
   }
 }

@@ -55,6 +55,11 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
   private Token newToken(int type) {
     return newToken(type, yytext());
   }
+
+  public int getStartOfToken() {
+    return zzStartRead;
+  }
+  
   // --- Option parsing
   
   // "#OPTION: name.of.option: value"
