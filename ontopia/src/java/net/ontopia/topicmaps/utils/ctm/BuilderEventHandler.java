@@ -192,11 +192,7 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
     return generator;
   }
 
-  public void templateInvocation(String name, List arguments) {
-    Template template = context.getTemplate(name);
-    if (template == null) // FIXME: change exception class
-      throw new InvalidTopicMapException("Template '" + name + "' not declared");
-    
+  public void templateInvocation(String name, List arguments) {    
     if (topic != null) {
       // invocations inside topic blocks need to have the current topic prepended
       // to the list of parameters. note that this needs to be as a generator.
@@ -206,6 +202,12 @@ public class BuilderEventHandler implements ParseEventHandlerIF {
       arguments.add(0, new ValueGenerator(topic, null, null, null));
     }
 
+    Template template = context.getTemplate(name, arguments.size());
+    if (template == null)
+      throw new InvalidTopicMapException("Template '" + name + "' not declared"+
+                                         " with " + arguments.size() +
+                                         " parameters");
+    
     TopicIF tmp = topic; // template may end current topic block
     template.invoke(arguments, this);
     topic = tmp; // preserves current topic, if any

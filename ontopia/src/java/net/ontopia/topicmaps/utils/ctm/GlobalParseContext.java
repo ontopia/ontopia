@@ -22,7 +22,7 @@ public class GlobalParseContext implements ParseContextIF {
   private TopicMapIF topicmap;
   private TopicMapBuilderIF builder;
   private Map prefixes;
-  private Map templates;
+  private Map<String, Template> templates; // String = name + paramcount
   private int counter;
   private Set include_uris; // extra base URIs passed in from include masters
 
@@ -31,7 +31,7 @@ public class GlobalParseContext implements ParseContextIF {
     this.base = base;
     this.builder = topicmap.getBuilder();
     this.prefixes = new HashMap();
-    this.templates = new HashMap();
+    this.templates = new HashMap<String, Template>();
     this.counter = 0;
     this.include_uris = new CompactHashSet();
     try {
@@ -117,13 +117,15 @@ public class GlobalParseContext implements ParseContextIF {
   }
 
   public void registerTemplate(String name, Template template) {
-    if (templates.containsKey(name))
-      throw new InvalidTopicMapException("Template " + name + " already defined");
-    templates.put(name, template);
+    String key = name + template.getParameterCount();
+    if (templates.containsKey(key))
+      throw new InvalidTopicMapException("Template " + name + " already defined"
+                                         + " with " + template.getParameterCount() + " parameters");
+    templates.put(key, template);
   }
 
-  public Template getTemplate(String name) {
-    return (Template) templates.get(name);
+  public Template getTemplate(String name, int paramcount) {
+    return templates.get(name + paramcount);
   }
 
   public Map getTemplates() {

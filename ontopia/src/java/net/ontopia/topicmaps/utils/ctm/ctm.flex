@@ -102,13 +102,14 @@ Hexdigit = [A-Fa-f0-9]
                        
 /* number */
 Digit = [0-9]
+NonZero = [1-9]
 Sign = "+" | "-"                                             
 Integer = {Sign}? {Digit}+
 Decimal = {Sign}? {Digit}+ "." {Digit}+
 Infinity = "*"
 
 /* dates and times */
-Date = {Digit}{Digit}{Digit}{Digit}"-"{Digit}{Digit}"-"{Digit}{Digit}
+Date = "-"?{NonZero}*{Digit}{Digit}{Digit}{Digit}"-"{Digit}{Digit}"-"{Digit}{Digit}
 DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
 
 %state STRING

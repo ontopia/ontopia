@@ -48,6 +48,10 @@ public class Template {
     return name;
   }
 
+  public int getParameterCount() {
+    return parameters.size();
+  }
+
   public void addEvent(ParseEventIF event) {
     events.add(event);
   }
@@ -136,7 +140,6 @@ public class Template {
     public TopicIF getTopic() {
       return gen.getTopic();
     }
-
 
     public String toString() {
       return "[ParameterGenerator: " + gen + "]";

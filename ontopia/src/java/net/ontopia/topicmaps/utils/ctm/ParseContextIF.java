@@ -43,7 +43,7 @@ public interface ParseContextIF {
 
   public void registerTemplate(String name, Template template);
 
-  public Template getTemplate(String name);
+  public Template getTemplate(String name, int paramcount);
 
   public Map getTemplates();
 }
