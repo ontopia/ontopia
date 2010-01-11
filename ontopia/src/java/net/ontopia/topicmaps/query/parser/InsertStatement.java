@@ -220,7 +220,7 @@ public class InsertStatement extends ModificationStatement {
       throw new UnsupportedOperationException();
     }
 
-    public Template getTemplate(String name) {
+    public Template getTemplate(String name , int paramcount) {
       throw new UnsupportedOperationException();
     }
 
