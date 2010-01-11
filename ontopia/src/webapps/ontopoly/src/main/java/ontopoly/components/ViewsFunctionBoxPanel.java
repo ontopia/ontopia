@@ -1,8 +1,7 @@
 package ontopoly.components;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import net.ontopia.utils.ObjectUtils;
@@ -29,7 +28,8 @@ public class ViewsFunctionBoxPanel extends Panel {
     add(new Label("title", new ResourceModel("views.list.header")));
 
     TopicType topicType = topicTypeModel.getTopicType();
-    List views = topicType.getFieldViews(false, false);
+    
+    Collection<FieldsView> views = topicType.getFieldViews(false, false);
     if (views.isEmpty())
       setVisible(false);
     
@@ -41,10 +41,7 @@ public class ViewsFunctionBoxPanel extends Panel {
     RepeatingView rv = new RepeatingView("rows");
     add(rv);
     
-    Iterator iter = views.iterator();
-    while (iter.hasNext()) {
-      FieldsView view = (FieldsView)iter.next();
-      
+    for (FieldsView view : views) {
       WebMarkupContainer parent =  new WebMarkupContainer(rv.newChildId());
       rv.add(parent);
       

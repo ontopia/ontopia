@@ -181,9 +181,12 @@ public class FieldsEditor extends Panel {
 
         Component component = new FieldsEditorAddPanel("field", topicTypeModel, fieldDefinitionModel) {
           @Override
-          protected void onAddField(FieldDefinitionModel fdm, AjaxRequestTarget target) {
+          protected void onAddField(TopicTypeModel topicTypeModel, FieldDefinitionModel fieldDefinitionModel, AjaxRequestTarget target) {
+            // add field to topic type
+            topicTypeModel.getTopicType().addField(fieldDefinitionModel.getFieldDefinition());
+
             // remove field definition from available list
-            fieldDefinitionModels.remove(fdm);
+            fieldDefinitionModels.remove(fieldDefinitionModel);
             ListView pListView = ((ListView)item.getParent()); 
             pListView.removeAll();
             onUpdate(target);

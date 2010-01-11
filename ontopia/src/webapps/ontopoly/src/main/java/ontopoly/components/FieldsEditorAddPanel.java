@@ -32,13 +32,13 @@ public abstract class FieldsEditorAddPanel extends Panel {
     OntopolyImageLink button = new OntopolyImageLink("button", "add-left.gif", new ResourceModel("icon.add-left.assign-field")) {
       @Override
       public void onClick(AjaxRequestTarget target) {
-        onAddField(fieldDefinitionModel, target);
+        onAddField(topicTypeModel, fieldDefinitionModel, target);
       }
     };
     container.add(button);
      
   }
 
-  protected abstract void onAddField(FieldDefinitionModel fdm, AjaxRequestTarget target);            
+  protected abstract void onAddField(TopicTypeModel topicTypeModel, FieldDefinitionModel fdm, AjaxRequestTarget target);            
 
 }
