@@ -565,6 +565,65 @@ public class CompactHashSetTest extends AbstractOntopiaTestCase {
     }
   }
 
+  public void testIteratorRemove2() {
+    set.add("1");
+    set.add("2");
+    set.add("3");
+    set.add("4");
+
+    assertTrue("wrong size", set.size() == 4);
+
+    Iterator it = set.iterator();
+    while (it.hasNext()) {
+      if (it.next().equals("2"))
+        it.remove();
+    }
+
+    assertTrue("1 was lost!", set.contains("1"));
+    assertFalse("2 was not removed!", set.contains("2"));
+    assertTrue("3 was lost!", set.contains("3"));
+    assertTrue("4 was lost!", set.contains("4"));
+    assertTrue("wrong number of elements", set.size() == 3);
+  }
+
+  public void testIteratorRemove3() {
+    set.add("1");
+    set.add("2");
+    set.add("3");
+    set.add("4");
+
+    assertTrue("wrong size", set.size() == 4);
+
+    Iterator it = set.iterator();
+    it.next();
+
+    Iterator it2 = set.iterator();
+    it.remove(); // whoa!
+
+    try {
+      it2.next(); // should fail, because we modified the set
+      fail("undetected modification");
+    } catch (ConcurrentModificationException e) {
+      // as required
+    }
+  }  
+
+  public void testIteratorRemove4() {
+    set.add("1");
+    set.add("2");
+    set.add("3");
+    set.add("4");
+
+    assertTrue("wrong size", set.size() == 4);
+
+    Iterator it = set.iterator();
+    it.next();
+    it.remove(); 
+    it.next(); // verifies that removing a value doesn't cause ConcModExc
+    
+    assertTrue("wrong size", set.size() == 3);    
+  }
+  
   // --- Internal helper methods
 
   private void checkIterator() {

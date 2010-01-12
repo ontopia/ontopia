@@ -329,13 +329,14 @@ public class CompactHashSet extends java.util.AbstractSet {
     public Object next() {
       if (modCount != expectedModCount)
         throw new ConcurrentModificationException();
-      if (index >= objects.length) {
+      int length = objects.length;
+      if (index >= length) {
         lastReturned = -2;
         throw new NoSuchElementException();
       }
 
       lastReturned = index;
-      for (index += 1; index < objects.length &&
+      for (index += 1; index < length &&
                        (objects[index] == null ||
                         objects[index] == deletedObject); index++)
         ;
@@ -354,6 +355,8 @@ public class CompactHashSet extends java.util.AbstractSet {
       if (objects[lastReturned] != null && objects[lastReturned] != deletedObject) {
         objects[lastReturned] = deletedObject;
         elements--;
+        modCount++;
+        expectedModCount = modCount; // this is expected; we made the change
       }
     }
   }
