@@ -999,6 +999,150 @@ run from inside the web server. There are three ways to do this:
 
 <!--=======================================================================
     TUTORIAL                                                            -->
+<section id="sect-logging">
+<title>Logging</title>
+
+<para>DB2TM can produce a lot of logging information if you tell it to
+do so. Set the <symbol>net.ontopia.topicmaps.db2tm</symbol> logging
+category to the <symbol>DEBUG</symbol> logging level. Most of the
+logging messages is produced by the
+<symbol>net.ontopia.topicmaps.db2tm.Processor</symbol> class. A lot of
+logging is made at this level can be vast because of the huge number
+of modications typically made to the topic map during processing.</para>
+
+<para>The information logged is a little terse and can be a little hard
+to interpret. The table below is an attempt at explaining what each of
+the messages mean.</para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Symbol</entry>
+<entry>Interpretation</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry>Adding tuples from data source &lt;datasource&gt;</entry>
+<entry>Relations and their tuples are being read from the given data source.</entry>
+</row>
+<row>
+<entry>ignoring relation: &lt;relation&gt;</entry>
+<entry>Ignored relation as there was no &lt;relation&gt; definition for it.</entry>
+</row>
+<row>
+<entry>adding relation: &lt;relation&gt;</entry>
+<entry>Reading tuples from the given relation and adding them according to its &lt;relation&gt; definition.</entry>
+</row>
+<row>
+<entry>removing relation: &lt;relation&gt;</entry>
+<entry>Reading tuples from the given relation and removing them according to its &lt;relation&gt; definition.</entry>
+</row>
+<row>
+<entry>synchronizing relation: &lt;relation&gt; type: &lt;synchronization-type&gt;</entry>
+<entry>Reading tuples from the given relation and synchronizing them according to its &lt;relation&gt; definition. The synchronization type can be either <symbol>2</symbol> (rescan) or <symbol>4</symbol> (changelog).</entry>
+</row>
+<row>
+<entry>&lt;number-of-tuples&gt; tuples, &lt;elapsed-time&gt; ms.</entry>
+<entry>Processed the given number of tuples in the given number of milliseconds.</entry>
+</row>
+<row>
+<entry>done: &lt;number-of-tuples&gt;, &lt;elapsed-time&gt; ms.</entry>
+<entry>Processed the given number of tuples from all relations in the data source in the given number of milliseconds.</entry>
+</row>
+<row>
+<entry>a(1|2|3)</entry>
+<entry>Adds a table row containing three values into the topic map. The tuple will be processed according to the rules of the current &lt;relation&gt; definition.</entry>
+</row>
+<row>
+<entry>r(1|2|3)</entry>
+<entry>Removes a table row containing three values into the topic map. The tuple will be processed according to the rules of the current &lt;relation&gt; definition.</entry>
+</row>
+<row>
+<entry>u(1|2|3)</entry>
+<entry>Updating a table row containing three values against the topic map. The tuple will be processed according to the rules of the current &lt;relation&gt; definition.</entry>
+</row>
+<row>
+<entry>+A &lt;association&gt; &lt;association-type&gt;</entry>
+<entry>Added the association of the given type.</entry>
+</row>
+<row>
+<entry>=A &lt;association&gt;</entry>
+<entry>The association already existed, so instead of creating a new one this one was reused.</entry>
+</row>
+<row>
+<entry>-A &lt;association&gt; &lt;association-type&gt;</entry>
+<entry>Removing an association.</entry>
+</row>
+<row>
+<entry>-P &lt;association&gt; : &lt;association-type&gt;</entry>
+<entry>Removing an association via a &lt;player&gt; defintion.</entry>
+</row>
+<row>
+<entry>&gt;A &lt;association&gt;</entry>
+<entry>Association is not primary, so we can't remove it here.</entry>
+</row>
+<row>
+<entry>+R &lt;role-player&gt; : &lt;role-type&gt;</entry>
+<entry>Added an association role with the given role player and role type.</entry>
+</row>
+<row>
+<entry>=R &lt;role-player&gt; : &lt;role-type&gt;</entry>
+<entry>The association role already existed, so instead of creating a new one this one was reused.</entry>
+</row>
+<row>
+<entry>-R &lt;role-player&gt; : &lt;role-type&gt;</entry>
+<entry>Removed an association role with the given role player and role type. The association role belongs to the association logged a little earlier.</entry>
+</row>
+<row>
+<entry>?R &lt;role-player&gt; : &lt;role-type&gt;</entry>
+<entry>Could not add role because role player retrieved from tuple was null.</entry>
+</row>
+<row>
+<entry>-A-reified &lt;topic&gt; -> &lt;association&gt; &lt;association-type&gt;</entry>
+<entry>Removed the given association and its reifier topic.</entry>
+</row>
+<row>
+<entry>&gt;T &lt;topic&gt;</entry>
+<entry>Removing characteristics defined in this &lt;relation&gt; definition from a non-primary topic. This will leave any other characteristics alone.</entry>
+</row>
+<row>
+<entry>-T &lt;topic&gt;</entry>
+<entry>Removing a topic.</entry>
+</row>
+<row>
+<entry>+N &lt;topic&gt; &lt;topic-name&gt;</entry>
+<entry>Added the topic name.</entry>
+</row>
+<row>
+<entry>=N &lt;topic&gt; : &lt;topic-name&gt;</entry>
+<entry>The topic name already existed, so instead of creating a new one this one was reused.</entry>
+</row>
+<row>
+<entry>-N &lt;topic&gt; : &lt;topic-name&gt;</entry>
+<entry>Removing a topic name.</entry>
+</row>
+<row>
+<entry>+O &lt;topic&gt; &lt;occurrence&gt;</entry>
+<entry>Added the occurrence.</entry>
+</row>
+<row>
+<entry>=O &lt;topic&gt; : &lt;occurrence&gt;</entry>
+<entry>The occurrence already existed, so instead of creating a new one this one was reused.</entry>
+</row>
+<row>
+<entry>-O &lt;topic&gt; : &lt;occurrence&gt;</entry>
+<entry>Removing an occurrence.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</section>
+
+<!--=======================================================================
+    TUTORIAL                                                            -->
 <section id="sect-tutorial">
 <title>Frequently Asked Questions (FAQ)</title>
 
