@@ -1,8 +1,11 @@
 package listener;
 
 import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.SystemException;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.wiki.model.WikiNode;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WikiNodeListener implements ModelListener<WikiNode>{
 
@@ -56,6 +59,12 @@ public class WikiNodeListener implements ModelListener<WikiNode>{
     System.out.println("CreateDate: " + arg0.getCreateDate());
     System.out.println("LastPost: " + arg0.getLastPostDate());
     System.out.println("Modified: " + arg0.getModifiedDate());
+    System.out.println("Username: " + arg0.getUserName());
+    try {
+      System.out.println("UsersUuid: " + arg0.getUserUuid());
+    } catch (SystemException ex) {
+      ex.printStackTrace();
+    }
   }
 
 }

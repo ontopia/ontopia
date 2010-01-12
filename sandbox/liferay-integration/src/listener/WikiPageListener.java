@@ -65,8 +65,7 @@ public class WikiPageListener implements ModelListener<WikiPage>{
     System.out.println("Username: " + arg0.getUserName());
     System.out.println("Version: " + arg0.getVersion());
     
-    System.out.println("IsNew: " + arg0.isNew());
-
+    System.out.println("IsNew: " + arg0.isNew()); 
     try {
       System.out.println("Attachments: " + arg0.getAttachmentsFiles());
     } catch (PortalException e1) {

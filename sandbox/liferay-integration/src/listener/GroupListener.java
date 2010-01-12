@@ -8,8 +8,6 @@ public class GroupListener implements ModelListener<Group>{
 
   public void onAfterAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    System.out.println("### GroupListener: onAfterAddAssociation ###");
-    
   }
 
   public void onAfterCreate(Group arg0) throws ModelListenerException {
@@ -36,33 +34,23 @@ public class GroupListener implements ModelListener<Group>{
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeCreate(Group arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeRemove(Group arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeUpdate(Group arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   private void printGroup(Group g){
-    g.getParentGroupId(); // for Communities this seems not to be of need
+    System.out.println("ParentGroup ID: " + g.getParentGroupId()); // for Communities this seems not to be of need
     System.out.println("FriendlyURL: " + g.getFriendlyURL()); // might serve as a psi
     System.out.println("Normalized URL: " );
     System.out.println("Name: " + g.getName()); // important
@@ -77,6 +65,10 @@ public class GroupListener implements ModelListener<Group>{
     System.out.println("isActive: " + g.isActive()); // maybe important?
     System.out.println("WfRoleNames: " + g.getWorkflowRoleNames());
     System.out.println("Wf Stages: " + g.getWorkflowStages());
+    System.out.println("Default Private Plid: " + g.getDefaultPrivatePlid());
+    System.out.println("Default Public Plid:" + g.getDefaultPublicPlid());
+    System.out.println("Class: " + g.getClassName());
+    g.getCreatorUserId();
     
   }
 }
