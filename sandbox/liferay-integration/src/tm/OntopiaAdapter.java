@@ -1,12 +1,15 @@
 package tm;
 
 import java.net.MalformedURLException;
+import java.util.Collection;
 import util.StructureData;
 import util.UserData;
 import util.WebContentData;
 import util.UuidIdentifiableIF;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
+import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -26,7 +29,13 @@ import net.ontopia.utils.OntopiaRuntimeException;
 public class OntopiaAdapter implements OntopiaAdapterIF{
   
   public static OntopiaAdapterIF instance = new OntopiaAdapter();
-  
+
+  private static final String PSI_PREFIX = "http://psi.ontopia.net/liferay/";
+
+  public static final String ASSOC_CREATED_BY_PSI = PSI_PREFIX + "created_by";
+  public static final String ASSOC_USER_APPROVING_PSI = PSI_PREFIX + "approved_by";
+  public static final String ASSOC_HAS_WORKFLOW_STATE_PSI = PSI_PREFIX + "has_workflow_state";
+
   private static final String TMNAME = "liferay_v30.ltm";
   
   private TopicMapIF topicmap;
@@ -296,6 +305,22 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     LocatorIF identifiablePsiLocator =  new GenericLocator("uri",urnify(identifiable.getUuid()));
     TopicIF source = tm.getTopicBySubjectIdentifier(identifiablePsiLocator);
     return source;
+  }
+
+
+  public static boolean isInAssociation(String psi, AssociationIF assoc){
+    TopicIF type = assoc.getType();
+      try {
+        LocatorIF locator = new URILocator(psi);
+        Collection locators = type.getSubjectIdentifiers();
+        if(locators.contains(locator)){
+          return true;
+        }
+
+      } catch (MalformedURLException ex) {
+        throw new OntopiaRuntimeException(ex);
+      }
+    return false;
   }
 
   public void finalize(){

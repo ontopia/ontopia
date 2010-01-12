@@ -5,8 +5,10 @@ import net.ontopia.utils.DeciderIF;
 public class StructureDecider implements DeciderIF{
 
   public boolean ok(Object arg0) {
-    // TODO Anything that should not be updated? Check type of arg0 and further info and return appropriate value
-    return true;
+    if(arg0.getClass().toString().equals(net.ontopia.topicmaps.impl.basic.Association.class.toString())){
+      return false; // do not update any associations
+    }
+    return true; // update everything else
   }
 
 }
