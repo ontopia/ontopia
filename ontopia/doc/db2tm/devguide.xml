@@ -1083,6 +1083,23 @@ the messages mean.</para>
 <entry>u(1|2|3)</entry>
 <entry>Updating a table row containing three values against the topic map. The tuple will be processed according to the rules of the current &lt;relation&gt; definition.</entry>
 </row>
+</tbody>
+</tgroup>
+</informaltable>
+</section>
+
+<section id="sect-logging-operations-entity">
+<title>Entity and characteristics operations</title>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Log message</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
 <row>
 <entry>+A &lt;association&gt; &lt;association-type&gt;</entry>
 <entry>Added the association of the given type.</entry>
