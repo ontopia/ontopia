@@ -80,8 +80,6 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
 
     // Get the TopicMap from the context.
     TopicMapIF topicmap = contextTag.getTopicMap();
-    if (topicmap == null)
-      throw new JspTagException("<tolog:set> found no topic map");
 
     // Check that a valid combination of input parameters has been used.
     // Otherwise, JspTagException is thrown with a suitable error message.
@@ -95,6 +93,8 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
         if (ids == null || ids.length == 0)
           outValue = Collections.EMPTY_LIST;
         else {
+          if (topicmap == null)
+            throw new JspTagException("<tolog:set> found no topic map");
           for (int i= 0; i < ids.length; i++) {
             TMObjectIF tempOutValue =
                     NavigatorUtils.stringID2Object(topicmap, ids[i]);
@@ -113,6 +113,8 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
     } else {
       log.debug("Set found query");     
       // Create a QueryProcessorIF for the topicmap.
+      if (topicmap == null)
+        throw new JspTagException("<tolog:set> found no topic map");
       super.doStartTag();
 
       if (queryResult.getWidth() == 0)
