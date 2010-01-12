@@ -998,7 +998,7 @@ run from inside the web server. There are three ways to do this:
 
 
 <!--=======================================================================
-    TUTORIAL                                                            -->
+    LOGGING                                                             -->
 <section id="sect-logging">
 <title>Logging</title>
 
@@ -1014,12 +1014,15 @@ of modications typically made to the topic map during processing.</para>
 to interpret. The table below is an attempt at explaining what each of
 the messages mean.</para>
 
+<section id="sect-logging-operations-relation">
+<title>Relation operations</title>
+
 <informaltable>
 <tgroup cols="3">
 <thead>
 <row>
-<entry>Symbol</entry>
-<entry>Interpretation</entry>
+<entry>Log message</entry>
+<entry>Description</entry>
 </row>
 </thead>
 <tbody>
@@ -1051,6 +1054,23 @@ the messages mean.</para>
 <entry>done: &lt;number-of-tuples&gt;, &lt;elapsed-time&gt; ms.</entry>
 <entry>Processed the given number of tuples from all relations in the data source in the given number of milliseconds.</entry>
 </row>
+</tbody>
+</tgroup>
+</informaltable>
+</section>
+
+<section id="sect-logging-operations-tuple">
+<title>Tuple operations</title>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry>Log message</entry>
+<entry>Description</entry>
+</row>
+</thead>
+<tbody>
 <row>
 <entry>a(1|2|3)</entry>
 <entry>Adds a table row containing three values into the topic map. The tuple will be processed according to the rules of the current &lt;relation&gt; definition.</entry>
@@ -1138,6 +1158,7 @@ the messages mean.</para>
 </tbody>
 </tgroup>
 </informaltable>
+</section>
 
 </section>
 
