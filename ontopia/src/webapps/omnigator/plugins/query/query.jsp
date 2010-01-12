@@ -204,7 +204,8 @@ try {
   <%= tmp %>
 
 <%
-  } else if (error != null) {
+  } 
+  if (error != null) {
 %><p><%= error %></p><%
   }
 %>
