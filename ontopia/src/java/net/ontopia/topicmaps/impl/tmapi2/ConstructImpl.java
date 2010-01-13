@@ -91,23 +91,16 @@ abstract class ConstructImpl implements Construct {
     getWrapped().remove();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   
   public boolean equals(Object obj) {
-    if (obj instanceof Construct) {
-    	String objId = ((Construct) obj).getId();
-        return getId().equals(objId);
+    if ((obj!=null) && (obj instanceof ConstructImpl)) {
+    	return getWrapped() == ((ConstructImpl) obj).getWrapped();
     }
     return false;
   }
   
   public int hashCode() {
-	// we need to be sure that the hascode of two equal objects is equal
-    return getId().hashCode();
+    return getWrapped().hashCode();
   }
 
 }
