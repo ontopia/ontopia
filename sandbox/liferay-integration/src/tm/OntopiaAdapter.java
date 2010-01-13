@@ -35,6 +35,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   public static final String ASSOC_CREATED_BY_PSI = PSI_PREFIX + "created_by";
   public static final String ASSOC_USER_APPROVING_PSI = PSI_PREFIX + "approved_by";
   public static final String ASSOC_HAS_WORKFLOW_STATE_PSI = PSI_PREFIX + "has_workflow_state";
+  public static final String SUB_SUPERTYPE_PSI = "http://psi.topicmaps.org/iso13250/model/supertype-subtype";
+
+  public static final String NULL = "null";
 
   private static final String TMNAME = "liferay_v30.ltm";
   
@@ -45,8 +48,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     super();
     prepareTopicmap();
   }
-  
-  // pub2
   
   private void prepareTopicmap(){
     TopicMapStoreIF store = TopicMaps.createStore(TMNAME, false);
@@ -162,16 +163,31 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     } else {
       classname = findStructureUrnByStructureId(content.getStructureId()); // may return "" -> will cause query to throw exception
     }
+
+    String approvedDateString = "";
+    if(content.getIsApproved()){
+      approvedDateString = "lr:approved_date : \"" + content.getApprovedDate() + "\"; \n";
+    }
     
+    String reviewDateString = "";
+    if(!content.getReviewDate().equalsIgnoreCase(NULL)){
+      reviewDateString = "lr:review_date : \"" + content.getReviewDate() + "\"; \n";
+    }
+    
+    String expiryDateString = "";
+    if(!content.getExpiryDate().equalsIgnoreCase(NULL)){
+      expiryDateString = "lr:expiry_date : \"" + content.getExpiryDate() + "\"; \n";
+    }
+
     String urn = urnifyCtm(content.getUuid());
     
     String query ="using lr for i\"http://psi.ontopia.net/liferay/\"\n" +
     		"insert " + urn + " isa " + classname + "; \n" +
         "- \"" + content.getTitle() + "\" ;\n" +
     		"lr:create_date : \"" + content.getCreateDate() + "\"; \n" +
-    		"lr:approved_date : \"" + content.getApprovedDate() + "\"; \n" +
-    		"lr:review_date : \"" + content.getReviewDate() + "\"; \n" +
-    		"lr:expiry_date : \"" + content.getExpiryDate() + "\"; \n" +
+    		approvedDateString +
+    		reviewDateString +
+    		expiryDateString +
     		"lr:modified_date : \"" + content.getModifyDate() + "\"; \n" +
     		"lr:display_date : \"" + content.getDisplayDate() + "\"; \n" +
     		"lr:version : \"" + content.getVersion() + "\"; \n" +
@@ -263,7 +279,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         Object[] results = new Object[result.getWidth()];
         results = result.getValues(results);
         Object retval = results[0];
-        return urnifyCtm((String) retval); // this is the expected case.
+        System.out.println("retval in findStructure is: " + (String) retval);
+        return "<" + (String) retval + ">"; // append <> to make it understandable for ctm
       }
     } catch (InvalidQueryException e) {
       System.err.println("*** Error executing query to findStructureByStructureId! ***");
@@ -276,7 +293,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   private void updateIdentifiable(UuidIdentifiableIF identifiable) throws MalformedURLException{
     System.out.println("*** updateIdentifiable called for " + identifiable.getUuid() + " ***");
     TopicMapStoreIF sourceStore = new InMemoryTopicMapStore();
-    TopicMapIF sourceTm = sourceStore.getTopicMap();
+    TopicMapIF sourceTm = sourceStore.getTopicMap(); // temporary topicmap f. sync
 
     String classname = identifiable.getClass().toString();
     
