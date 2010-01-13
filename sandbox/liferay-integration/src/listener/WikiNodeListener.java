@@ -4,8 +4,6 @@ import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.SystemException;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.wiki.model.WikiNode;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class WikiNodeListener implements ModelListener<WikiNode>{
 
