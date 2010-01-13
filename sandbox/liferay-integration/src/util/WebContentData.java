@@ -14,7 +14,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
  */
 public class WebContentData implements UuidIdentifiableIF{
   
-  private SimpleDateFormat format = new SimpleDateFormat("yyyy'-'MM'-'dd HH:mm:ss");
 
   private String _uuid;
   private String _createDate;
@@ -86,7 +85,7 @@ public class WebContentData implements UuidIdentifiableIF{
   }
 
   public void setCreateDate(Date createDate) {
-    _createDate = notNullDates(createDate);
+    _createDate = DateFormater.format(createDate);
   }
 
   public String getCreateDate() {
@@ -94,7 +93,7 @@ public class WebContentData implements UuidIdentifiableIF{
   }
 
   public void setApprovedDate(Date approvedDate) {
-    _approvedDate = notNullDates(approvedDate);
+    _approvedDate = DateFormater.format(approvedDate);
   }
 
   public String getApprovedDate() {
@@ -102,7 +101,7 @@ public class WebContentData implements UuidIdentifiableIF{
   }
 
   public void setReviewDate(Date reviewDate) {
-    _reviewDate = notNullDates(reviewDate);
+    _reviewDate = DateFormater.format(reviewDate);
   }
 
   public String getReviewDate() {
@@ -110,7 +109,7 @@ public class WebContentData implements UuidIdentifiableIF{
   }
 
   public void setExpiryDate(Date expiryDate) {
-    _expiryDate = notNullDates(expiryDate);
+    _expiryDate = DateFormater.format(expiryDate);
   }
 
   public String getExpiryDate() {
@@ -118,7 +117,7 @@ public class WebContentData implements UuidIdentifiableIF{
   }
 
   public void setModifyDate(Date modifyDate) {
-    _modifyDate = notNullDates(modifyDate);
+    _modifyDate = DateFormater.format(modifyDate);
   }
 
   public String getModifyDate() {
@@ -126,7 +125,7 @@ public class WebContentData implements UuidIdentifiableIF{
   }
 
   public void setDisplayDate(Date displayDate) {
-    _displayDate = notNullDates(displayDate);
+    _displayDate = DateFormater.format(displayDate);
   }
 
   public String getDisplayDate() {
@@ -229,8 +228,4 @@ public class WebContentData implements UuidIdentifiableIF{
     return _userId;
   }
 
-  private String notNullDates(Date date){
-    String result = date != null ? format.format(date) : "null";
-    return result;
-  }
 }
