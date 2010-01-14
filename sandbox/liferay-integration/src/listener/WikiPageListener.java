@@ -5,6 +5,8 @@ import com.liferay.portal.PortalException;
 import com.liferay.portal.SystemException;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.wiki.model.WikiPage;
+import tm.OntopiaAdapter;
+import util.WikiPageData;
 
 public class WikiPageListener implements ModelListener<WikiPage>{
 
@@ -15,11 +17,12 @@ public class WikiPageListener implements ModelListener<WikiPage>{
   public void onAfterCreate(WikiPage arg0) throws ModelListenerException {
     System.out.println("### OnAfterCreate WikiPage ###");  
     printWikiPage(arg0);
+    OntopiaAdapter.instance.addWikiPage(new WikiPageData(arg0));
   }
 
   public void onAfterRemove(WikiPage arg0) throws ModelListenerException {
-    System.out.println("### OnAfterRemove WikiPage ###");    
-    printWikiPage(arg0);
+    System.out.println("### OnAfterRemove WikiPage ###");
+    OntopiaAdapter.instance.deleteWikiPage(arg0.getUuid());
   }
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
@@ -29,6 +32,7 @@ public class WikiPageListener implements ModelListener<WikiPage>{
   public void onAfterUpdate(WikiPage arg0) throws ModelListenerException {
     System.out.println("### OnAfterUpdate WikiPage ###");   
     printWikiPage(arg0);
+    OntopiaAdapter.instance.updateWikiPage(new WikiPageData(arg0));
   }
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)
@@ -53,7 +57,6 @@ public class WikiPageListener implements ModelListener<WikiPage>{
     System.out.println("Title: " +arg0.getTitle());
     System.out.println("CreateDate: " + arg0.getCreateDate());
     System.out.println("PageId: " + arg0.getPageId());
-    
     System.out.println("ParentPages: " + arg0.getParentPages());
     System.out.println("ParentNodesUuid: " + arg0.getNode().getUuid());
     
@@ -67,7 +70,10 @@ public class WikiPageListener implements ModelListener<WikiPage>{
     
     System.out.println("IsNew: " + arg0.isNew()); 
     try {
-      System.out.println("Attachments: " + arg0.getAttachmentsFiles());
+      System.out.println("Attachments: ");
+      for(String s : arg0.getAttachmentsFiles()){
+        System.out.println("File: " + s);
+      }
     } catch (PortalException e1) {
       // TODO Auto-generated catch block
       e1.printStackTrace();

@@ -1,7 +1,11 @@
 
 package util;
 
+import com.liferay.portal.SystemException;
+import com.liferay.portlet.wiki.model.WikiPage;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class WikiPageData implements UuidIdentifiableIF{
@@ -12,15 +16,24 @@ public class WikiPageData implements UuidIdentifiableIF{
   private String _version;
   private String _createDate;
   private String _modifyDate;
+  private List<WikiPageData> _parentPages;
+  private String _userUuid;
 
 
-  public WikiPageData(String uuid, String title, String pageId, String version, Date createDate, Date modifyDate){
-    setUuid(uuid);
-    setTitle(title);
-    setPageId(pageId);
-    setVersion(version);
-    setCreateDate(createDate);
-    setModifyDate(modifyDate);
+  public WikiPageData(WikiPage wikipage){
+    setUuid(wikipage.getUuid());
+    setTitle(wikipage.getTitle());
+    setPageId(wikipage.getPageId());
+    setVersion(wikipage.getVersion());
+    setCreateDate(wikipage.getCreateDate());
+    setModifyDate(wikipage.getModifiedDate());
+    setParentPages(wikipage.getParentPages());
+
+    try {
+      setUserUuid(wikipage.getUserUuid());
+    } catch (SystemException ex) {
+      setUserUuid("");
+    }
   }
 
   private WikiPageData(){
@@ -42,16 +55,16 @@ public class WikiPageData implements UuidIdentifiableIF{
     return _title;
   }
 
-  public void setPageId(String pageId){
-    _pageId = pageId;
+  public void setPageId(long pageId){
+    _pageId = String.valueOf(pageId);
   }
 
   public String getPageId(){
     return _pageId;
   }
 
-  public void setVersion(String version){
-    _version = version;
+  public void setVersion(double version){
+    _version = String.valueOf(version);
   }
 
   public String getVersion(){
@@ -72,6 +85,27 @@ public class WikiPageData implements UuidIdentifiableIF{
 
   public String getModifyDate(){
     return _modifyDate;
+  }
+
+  public List<WikiPageData> getParentPages() {
+    return _parentPages;
+  }
+
+  public void setParentPages(List<WikiPage> parentPages) {
+    if(_parentPages == null){
+      _parentPages = new ArrayList<WikiPageData>();
+    }
+    for(WikiPage wp : parentPages){
+      _parentPages.add(new WikiPageData(wp)); // this will be recursive!
+    }
+  }
+
+  public String getUserUuid() {
+    return _userUuid;
+  }
+
+  public void setUserUuid(String userUuid) {
+    _userUuid = userUuid;
   }
 
 }

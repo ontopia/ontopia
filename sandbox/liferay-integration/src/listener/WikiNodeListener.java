@@ -4,6 +4,8 @@ import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.SystemException;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.wiki.model.WikiNode;
+import tm.OntopiaAdapter;
+import util.WikiNodeData;
 
 public class WikiNodeListener implements ModelListener<WikiNode>{
 
@@ -13,12 +15,14 @@ public class WikiNodeListener implements ModelListener<WikiNode>{
 
   public void onAfterCreate(WikiNode arg0) throws ModelListenerException {
     System.out.println("### onAfterCreate WikiNode ###");
-    printNode(arg0);    
+    printNode(arg0);
+    OntopiaAdapter.instance.addWikiNode(new WikiNodeData(arg0));
   }
 
   public void onAfterRemove(WikiNode arg0) throws ModelListenerException {
     System.out.println("### onAfterRemove WikiNode ###");
-    printNode(arg0);     
+    printNode(arg0);
+    OntopiaAdapter.instance.deleteWikiNode(arg0.getUuid());
   }
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
@@ -27,7 +31,8 @@ public class WikiNodeListener implements ModelListener<WikiNode>{
 
   public void onAfterUpdate(WikiNode arg0) throws ModelListenerException {
     System.out.println("### onAfterUpdate WikiNode ###");
-    printNode(arg0);     
+    printNode(arg0);
+    OntopiaAdapter.instance.updateWikiNode(new WikiNodeData(arg0));
   }
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)

@@ -21,6 +21,8 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
 import net.ontopia.utils.OntopiaRuntimeException;
+import util.WikiNodeData;
+import util.WikiPageData;
 
 /**
  * This class provides control to alter a topicmap in ontopia according to changes in Liferay.
@@ -39,7 +41,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   public static final String NULL = "null";
 
-  private static final String TMNAME = "liferay_v30.ltm";
+  private static final String TMNAME = "liferay_v39.ltm";
   
   private TopicMapIF topicmap;
   
@@ -65,7 +67,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   private void addWebContent(WebContentData content, TopicMapIF tm){
     addArticle(content,tm); // handles also structures
     setWorkflowstate(content,tm);
-    setCreator(content,tm);
+    String creatorUrn = urnifyCtm(content.getUserUuid());
+    setCreator(content, creatorUrn, tm);
     if(content.getIsApproved()){
       setUserApproving(content, tm);
     }
@@ -97,7 +100,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     System.out.println("*** addUser ***"); //DEBUG
     String uuidUrn = urnifyCtm(user.getUuid());
     
-    String query = "insert " + uuidUrn + " isa http://psi.ontopia.net/liferay/user;\n" +
+    String query = "insert " + uuidUrn + " isa " + PSI_PREFIX + "user;\n" +
     		"- \"" + user.getUsername() + "\"."; 
     runQuery(query, tm);
   }
@@ -124,7 +127,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     //System.out.println("*** DEBUG: ParentStructureUrn: '" + parentStructureUrn + "' ***");
     if(parentStructureUrn.equals(urnifyCtm(""))){
       System.out.println("*** No parentstructure provided. Using webcontent instead ***");
-      parent = "http://psi.ontopia.net/liferay/webcontent";
+      parent = PSI_PREFIX + "webcontent";
     } else {
       parent = parentStructureUrn;
     }
@@ -181,7 +184,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
     String urn = urnifyCtm(content.getUuid());
     
-    String query ="using lr for i\"http://psi.ontopia.net/liferay/\"\n" +
+    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
     		"insert " + urn + " isa " + classname + "; \n" +
         "- \"" + content.getTitle() + "\" ;\n" +
     		"lr:create_date : \"" + content.getCreateDate() + "\"; \n" +
@@ -196,12 +199,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
   
   
-  private void setCreator(WebContentData content, TopicMapIF tm){
+  private void setCreator(UuidIdentifiableIF content, String creatorUrn, TopicMapIF tm){
+    // TODO: creatorUrn might be "" in case of exception! Handling here
     System.out.println("*** setCreator ***");
-    String creatorUrn = urnifyCtm(content.getUserUuid()); // TODO: might return "" in case of exception! Handling here
     String workUrn = urnifyCtm(content.getUuid());
     
-    String query = "using lr for i\"http://psi.ontopia.net/liferay/\"\n" + 
+    String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
         "insert lr:created_by( lr:creator : " + creatorUrn + " , lr:work : " + workUrn + " )";
     runQuery(query, tm);
   }
@@ -211,7 +214,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     String workUrn = urnifyCtm(content.getUuid());
     String approverUrn = urnifyCtm(content.getApprovingUserUuid()); // TODO: What if approving User UUID is "" ? Handling here.
     
-    String query = "using lr for i\"http://psi.ontopia.net/liferay/\"\n" + 
+    String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
     "insert lr:approved_by( lr:approver : " + approverUrn + " , lr:work : " + workUrn + " )";
     runQuery(query,tm);
   }
@@ -231,7 +234,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       state ="workflow_new";
     }
     
-      String query = "using lr for i\"http://psi.ontopia.net/liferay/\"\n" + 
+      String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
           "insert lr:has_workflow_state( lr:state : lr:"+ state +" , lr:work : " + workplayerUrn + " )";
       runQuery(query,tm);
   }
@@ -301,7 +304,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     // the deciders are filters for features not to be updated
     if(classname.equalsIgnoreCase(WebContentData.class.toString())){
       WebContentData article = (WebContentData) identifiable;
-      addWebContent(article,sourceTm); 
+      addWebContent(article,sourceTm); // I think I could simply call addArticle() instead and leave the deciders be empty?
       TopicIF source = retrieveTopicByUuid(identifiable, sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new WebContentDecider(), new WebContentDecider());
     } else if(classname.equalsIgnoreCase(StructureData.class.toString())){
@@ -340,7 +343,86 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return false;
   }
 
-  public void finalize(){
+  public void addWikiNode(WikiNodeData wikinode){
+    addWikiNode(wikinode, topicmap);
+    setCreator(wikinode, urnifyCtm(wikinode.getUserUuid()), topicmap);
+    //may need assoc to connect to community
+  }
+
+  private void addWikiNode(WikiNodeData wikinode, TopicMapIF tm) {
+    String nodeUrn = urnifyCtm(wikinode.getUuid());
+    String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
+      "insert " + nodeUrn + " isa lr:wikinode; \n" +
+      "- \"" + wikinode.getName() + "\"; \n" +
+      "lr:create_date : \"" + wikinode.getCreateDate() + "\"; \n" +
+      "lr:modified_date : \"" + wikinode.getModifiedDate() + "\"; \n" +
+      "lr:lastpostdate : \"" + wikinode.getLastPostDate() + "\"; \n" +
+      "lr:wikinodeid : \"" + wikinode.getNodeId() + "\" .";
+
+    runQuery(query, tm);
+  }
+
+  public void deleteWikiNode(String uuid) {
+    deleteByUuid(uuid);
+  }
+
+  public void updateWikiNode(WikiNodeData wikinode) {
+    try {
+      updateIdentifiable(wikinode);
+    } catch (MalformedURLException ex) {
+      throw new OntopiaRuntimeException(ex);
+    }
+  }
+
+  public void addWikiPage(WikiPageData wikipage){
+    addWikiPage(wikipage, topicmap);
+    if(!wikipage.getParentPages().isEmpty()){
+      System.out.println("DEBUG: Parentpages for this wikipage!");
+      for(WikiPageData wpd : wikipage.getParentPages()){
+        setParentChild(wpd, wikipage, topicmap);
+      }
+    }
+    setCreator(wikipage, urnifyCtm(wikipage.getUserUuid()), topicmap);
+  }
+  
+  private void addWikiPage(WikiPageData wikipage, TopicMapIF tm) {
+    String pageUrn = urnifyCtm(wikipage.getUuid());
+    String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
+             "insert " + pageUrn + " isa lr:wikipage; \n" +
+             "- \"" + wikipage.getTitle() + "\"; \n" +
+             "lr:wikipageid : \"" + wikipage.getPageId() + "\"; \n"+
+             "lr:create_date : \"" + wikipage.getCreateDate() + "\"; \n" +
+             "lr:modified_date : \"" + wikipage.getModifyDate() + "\"; \n" +
+             "lr:version : \"" + wikipage.getVersion() + "\" .";
+
+    System.out.println(query);
+     runQuery(query, tm);
+  }
+
+  public void deleteWikiPage(String uuid) {
+    deleteByUuid(uuid);
+  }
+
+  public void updateWikiPage(WikiPageData wikipage) {
+    try {
+      updateIdentifiable(wikipage);
+    } catch (MalformedURLException ex) {
+      throw new OntopiaRuntimeException(ex);
+    }
+  }
+
+  private void setParentChild(UuidIdentifiableIF parent, UuidIdentifiableIF child, TopicMapIF tm){
+    String parentUrn = urnifyCtm(parent.getUuid());
+    String childUrn = urnifyCtm(child.getUuid());
+
+    String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
+            "insert lr:parent-child( lr:parent : " + parentUrn + ", lr:child : " + childUrn +" )";
+
+    System.out.println(query);
+    runQuery(query, tm);
+  }
+
+    public void finalize(){
   }
   
 }

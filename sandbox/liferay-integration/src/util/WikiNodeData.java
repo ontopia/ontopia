@@ -1,7 +1,11 @@
 
 package util;
 
+import com.liferay.portal.SystemException;
+import com.liferay.portlet.wiki.model.WikiNode;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class WikiNodeData implements UuidIdentifiableIF {
@@ -12,14 +16,21 @@ public class WikiNodeData implements UuidIdentifiableIF {
   private String _createDate;
   private String _modifiedDate;
   private String _lastPostDate;
+  private String _userUuid;
 
-  public WikiNodeData(String uuid, String name, String nodeId, Date createDate, Date modifiedDate, Date lastPostDate){
-    setUuid(uuid);
-    setName(name);
-    setNodeId(nodeId);
-    setCreateDate(createDate);
-    setModifiedDate(modifiedDate);
-    setLastPostDate(lastPostDate);
+  public WikiNodeData(WikiNode wikinode){
+    setUuid(wikinode.getUuid());
+    setName(wikinode.getName());
+    setNodeId(wikinode.getNodeId());
+    setCreateDate(wikinode.getCreateDate());
+    setModifiedDate(wikinode.getModifiedDate());
+    setLastPostDate(wikinode.getLastPostDate());
+
+    try {
+      setUserUuid(wikinode.getUserUuid());
+    } catch (SystemException ex) {
+      setUserUuid("");
+    }
   }
 
   private WikiNodeData(){
@@ -61,8 +72,8 @@ public class WikiNodeData implements UuidIdentifiableIF {
     return _nodeId;
   }
 
-  public void setNodeId(String nodeId) {
-    _nodeId = nodeId;
+  public void setNodeId(long nodeId) {
+    _nodeId = String.valueOf(nodeId);
   }
 
   public String getUuid() {
@@ -71,6 +82,14 @@ public class WikiNodeData implements UuidIdentifiableIF {
 
   public void setUuid(String uuid) {
     _uuid = uuid;
+  }
+
+  public String getUserUuid() {
+    return _userUuid;
+  }
+
+  public void setUserUuid(String userUuid) {
+    _userUuid = userUuid;
   }
 
 
