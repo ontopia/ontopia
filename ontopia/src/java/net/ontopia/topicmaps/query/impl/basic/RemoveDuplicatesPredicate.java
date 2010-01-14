@@ -11,7 +11,15 @@ import net.ontopia.topicmaps.query.impl.utils.PredicateDrivenCostEstimator;
  * INTERNAL: Implements the 'remove-duplicates()' predicate.
  */
 public class RemoveDuplicatesPredicate implements BasicPredicateIF {
+  private boolean first;
   private static final int CUTOFF = 100;
+
+  public RemoveDuplicatesPredicate(boolean first) {
+    // the optimizer inserts two duplicate removal predicates: one at
+    // the start of the predicate list (this has first=true), and one
+    // at the end (which has first=false).
+    this.first = first;
+  }
   
   public String getName() {
     return "remove-duplicates";
@@ -22,7 +30,12 @@ public class RemoveDuplicatesPredicate implements BasicPredicateIF {
   }
   
   public int getCost(boolean[] boundparams) {
-    return PredicateDrivenCostEstimator.FILTER_RESULT;
+    if (first)
+      // optimizer puts us first
+      return PredicateDrivenCostEstimator.FILTER_RESULT;
+    else
+      // optimizer puts us last
+      return PredicateDrivenCostEstimator.INFINITE_RESULT;
   }
 
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)

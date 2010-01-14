@@ -341,9 +341,9 @@ public class QueryOptimizer {
         if (clause instanceof PredicateClause &&
             ((PredicateClause) clause).getPredicate() instanceof RulePredicate) {
           // adding on both sides because that proved to be fastest
-          newclauses.add(new PredicateClause(new RemoveDuplicatesPredicate()));
+          newclauses.add(new PredicateClause(new RemoveDuplicatesPredicate(true)));
           newclauses.add(clause);
-          newclauses.add(new PredicateClause(new RemoveDuplicatesPredicate()));
+          newclauses.add(new PredicateClause(new RemoveDuplicatesPredicate(false)));
           
         } else
           newclauses.add(clause);
