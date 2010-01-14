@@ -1520,7 +1520,6 @@ public class Processor {
       // full extents?
       
       if (topic != null) {
-        
         // this is an existing object, so we need to track it
         boolean firstTimeSeen = ctx.registerOldObject(topic);
 

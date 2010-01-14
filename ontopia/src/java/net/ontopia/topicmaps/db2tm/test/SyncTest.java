@@ -3,6 +3,7 @@
 
 package net.ontopia.topicmaps.db2tm.test;
 
+import java.util.Map;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 
 import net.ontopia.utils.*;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
@@ -24,6 +26,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
   private Connection conn;
   private Statement stm;
   private TopicMapIF topicmap;
+  private RelationMapping mapping;
 
   public SyncTest(String name) {
     super(name);
@@ -37,11 +40,11 @@ public class SyncTest extends AbstractOntopiaTestCase {
     // (1) data table (id, name, type)
     // (2) changes table
     stm = conn.createStatement();
-//     stm.executeUpdate("create table testdata (id integer, name varchar, type integer)");
-//     stm.executeUpdate("create table testchanges (id integer, changetype integer, seq integer)");
-//     stm.executeUpdate("create table complexdata (id1 integer, id2 integer, name varchar)");
-//     stm.executeUpdate("create table complexchanges (id1 integer, id2 integer, changetype integer, seq integer)");
-//     conn.commit();
+    stm.executeUpdate("create table testdata (id integer, name varchar, type integer)");
+    stm.executeUpdate("create table testchanges (id integer, changetype integer, seq integer)");
+    stm.executeUpdate("create table complexdata (id1 integer, id2 integer, name varchar)");
+    stm.executeUpdate("create table complexchanges (id1 integer, id2 integer, changetype integer, seq integer)");
+    conn.commit();
 
     // make empty TM
     TopicMapStoreIF store = new InMemoryTopicMapStore();
@@ -51,16 +54,25 @@ public class SyncTest extends AbstractOntopiaTestCase {
   }
 
   public void tearDown() throws SQLException, IOException {
+    // must close DB2TM's connection to the database, otherwise the drop
+    // table statements below will hang indefinitely
+    if (mapping != null)
+      mapping.close();
+
+    // sometimes connnections get into an error state. reopening to avoid
+    // this problem.
+    stm.close();
+    conn.close();
+    conn = getConnection();
+    stm = conn.createStatement();
+    
     // next three lines cause JDBC driver to hang
-//     stm.executeUpdate("drop table testdata");
-//     stm.executeUpdate("drop table testchanges");
-//     stm.executeUpdate("drop table complexdata");
-//     stm.executeUpdate("drop table complexchanges");
-    // next three lines are workaround
-    stm.executeUpdate("delete from testdata");
-    stm.executeUpdate("delete from testchanges");
-    stm.executeUpdate("delete from complexdata");
-    stm.executeUpdate("delete from complexchanges");
+    stm.executeUpdate("drop table testdata");
+    stm.executeUpdate("drop table testchanges");
+    stm.executeUpdate("drop table complexdata");
+    stm.executeUpdate("drop table complexchanges");
+
+    // close everything
     conn.commit();
     stm.close();
     conn.close();
@@ -77,7 +89,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
     conn.commit();
 
     // read data into TM
-    RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
     Processor.addRelations(mapping, null, topicmap,
                            topicmap.getStore().getBaseAddress());
 
@@ -103,7 +115,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
     conn.commit();
 
     // read data into TM
-    RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
     Processor.addRelations(mapping, null, topicmap,
                            topicmap.getStore().getBaseAddress());
 
@@ -131,7 +143,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
     conn.commit();
 
     // read data into TM
-    RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
     Processor.addRelations(mapping, null, topicmap,
                            topicmap.getStore().getBaseAddress());
 
@@ -166,7 +178,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
     conn.commit();
 
     // read data into TM
-    RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
     Processor.addRelations(mapping, null, topicmap,
                            topicmap.getStore().getBaseAddress());
 
@@ -191,7 +203,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
     conn.commit();
 
     // read data into TM
-    RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
     Processor.addRelations(mapping, null, topicmap,
                            topicmap.getStore().getBaseAddress());
 
@@ -215,7 +227,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
     conn.commit();
 
     // read data into TM
-    RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
     Processor.addRelations(mapping, null, topicmap,
                            topicmap.getStore().getBaseAddress());
 
@@ -236,7 +248,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
     conn.commit();
 
     // read data into TM
-    RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
     Processor.addRelations(mapping, null, topicmap,
                            topicmap.getStore().getBaseAddress());
 
@@ -264,7 +276,7 @@ public class SyncTest extends AbstractOntopiaTestCase {
     conn.commit();
 
     // read data into TM
-    RelationMapping mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/SyncTest-mapping.xml");
     Processor.addRelations(mapping, null, topicmap,
                            topicmap.getStore().getBaseAddress());
 
@@ -278,12 +290,38 @@ public class SyncTest extends AbstractOntopiaTestCase {
                                    topicmap.getStore().getBaseAddress());
     exportTopicMap("compound-key");
   }
+
+  /**
+   * Tests for loss of types (as in issue 193).
+   */
+  public void testTypeLoss() throws SQLException, IOException {
+    // create initial data set
+    stm.executeUpdate("insert into testdata values (1, 'Topic', 2)");
+    conn.commit();
+
+    // create a topic for the topic type, and give it a topic type
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF topictype = builder.makeTopic();
+    TopicIF t2 = builder.makeTopic();
+    URILocator psi = new URILocator("psi:test/2");
+    t2.addSubjectIdentifier(psi); // will cause test data to match it
+
+    // synchronize
+    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/association-mapping.xml");
+    Processor.synchronizeRelations(mapping, null, topicmap,
+                                   topicmap.getStore().getBaseAddress());
+
+    // t2 should not have lost its topic type in the sync!
+    assertTrue("t2 lost its topic type", !t2.getTypes().isEmpty());
+  }
   
   // --- Internal methods
 
   private Connection getConnection() throws SQLException, IOException {
     String propfile = System.getProperty("net.ontopia.topicmaps.impl.rdbms.PropertyFile");
-    DefaultConnectionFactory cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(propfile), false);
+    Map props = PropertyUtils.loadProperties(propfile);
+    props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
+    DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);
     return cf.requestConnection();
   }
 
