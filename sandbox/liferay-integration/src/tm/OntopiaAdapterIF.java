@@ -1,6 +1,7 @@
 package tm;
 
 
+import util.GroupData;
 import util.StructureData;
 import util.UserData;
 import util.WebContentData;
@@ -30,4 +31,7 @@ public interface OntopiaAdapterIF {
   public void deleteWikiPage(String uuid);
   public void updateWikiPage(WikiPageData wikipage);
 
+  public void addGroup(GroupData group);
+  public void deleteGroup(GroupData group);
+  public void updateGroup(GroupData group);
 }

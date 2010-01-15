@@ -2,6 +2,8 @@ package listener;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
+import tm.OntopiaAdapter;
+import util.GroupData;
 
 
 public class GroupListener implements ModelListener<Group>{
@@ -13,22 +15,23 @@ public class GroupListener implements ModelListener<Group>{
   public void onAfterCreate(Group arg0) throws ModelListenerException {
     System.out.println("### onAfterCreateGroup ###");
     printGroup(arg0);
+    OntopiaAdapter.instance.addGroup(new GroupData(arg0));
   }
 
   public void onAfterRemove(Group arg0) throws ModelListenerException {
     System.out.println("### onAfterRemoveGroup ###");
     printGroup(arg0);
+    OntopiaAdapter.instance.deleteGroup(new GroupData(arg0));
   }
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    System.out.println("### GroupListener: onAfterRemoveAssociation ###");
-    
   }
 
   public void onAfterUpdate(Group arg0) throws ModelListenerException {
     System.out.println("### onAfterUpdateGroup ###");
     printGroup(arg0);
+    OntopiaAdapter.instance.updateGroup(new GroupData(arg0));
     
   }
 

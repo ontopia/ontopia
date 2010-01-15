@@ -2,6 +2,7 @@ package tm;
 
 import java.net.MalformedURLException;
 import java.util.Collection;
+import util.GroupData;
 import util.StructureData;
 import util.UserData;
 import util.WebContentData;
@@ -269,24 +270,28 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
   
   private String findStructureUrnByStructureId(String structureId){
-    QueryProcessorIF proc = QueryUtils.createQueryProcessor(topicmap);
     String query ="select $PSI from\n" +
     		"subject-identifier($TOPIC, $PSI),\n" +
     		"topic-name($TOPIC, $BASENAME),\n" +
-    		"value($BASENAME,\"" + structureId +"\")?";
-    
+    		"value($BASENAME,\"" + structureId +"\")?"; // TODO: I think this passes for cheating using the name to store the structureId ... not sure.. ?
+
+    String retval = "<" + executeQuery(query, topicmap) + ">";
+    return retval;
+    }
+
+
+  private String executeQuery(String query, TopicMapIF tm){ // TODO: unsuitable name
+    QueryProcessorIF proc = QueryUtils.createQueryProcessor(tm);
     try {
-      QueryResultIF result = proc.execute(query);// this might go into a separate method in the end. We may need it more often
-      System.out.println("*** Looking up structure by structureId, found: " + result.getWidth() + " ***");
+      QueryResultIF result = proc.execute(query);// this went into a separate method in the end. We need it more than once
       while(result.next()){
         Object[] results = new Object[result.getWidth()];
         results = result.getValues(results);
         Object retval = results[0];
-        System.out.println("retval in findStructure is: " + (String) retval);
-        return "<" + (String) retval + ">"; // append <> to make it understandable for ctm
+        return (String) retval ;
       }
     } catch (InvalidQueryException e) {
-      System.err.println("*** Error executing query to findStructureByStructureId! ***");
+      System.err.println("*** Error executing query  ***");
       System.err.println(query);
       throw new OntopiaRuntimeException(e);
     }
@@ -302,6 +307,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     
     // find out which class lies beneath and act accordingly
     // the deciders are filters for features not to be updated
+    // TODO: This needs change once the utility-classes are gone
     if(classname.equalsIgnoreCase(WebContentData.class.toString())){
       WebContentData article = (WebContentData) identifiable;
       addWebContent(article,sourceTm); // I think I could simply call addArticle() instead and leave the deciders be empty?
@@ -327,7 +333,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return source;
   }
 
-
+// for deciders
   public static boolean isInAssociation(String psi, AssociationIF assoc){
     TopicIF type = assoc.getType();
       try {
@@ -346,7 +352,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   public void addWikiNode(WikiNodeData wikinode){
     addWikiNode(wikinode, topicmap);
     setCreator(wikinode, urnifyCtm(wikinode.getUserUuid()), topicmap);
-    //may need assoc to connect to community
+    //setContains(group, wikinode, topicmap);
   }
 
   private void addWikiNode(WikiNodeData wikinode, TopicMapIF tm) {
@@ -422,7 +428,72 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query, tm);
   }
 
-    public void finalize(){
+  // All the group-stuff doesn't work properly. Identity is also an issue because:
+  // 'insert ?group isa ... '
+  // resulting in topics with the same identity to be merged into the existing tm, (because the ?group id is unique within the _ctm fragment_ that is being merged)
+  // resulting in only one (merged) topic with all the occurrences from the created groups so far (bcause they all share the same id).
+    public void addGroup(GroupData group) {
+    if(group.getIsCommunity()){
+      addCommunity(group, topicmap);
+    }
+    // TODO: Handling of parent-groups?
+  }
+    
+    private void addCommunity(GroupData group, TopicMapIF tm){
+      System.out.println("*** addCommunity ***");
+      String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
+               "insert ?group isa " + PSI_PREFIX + "community; \n" +
+               "- \"" + group.getName() + "\"; \n" +
+               "lr:groupid : \"" + group.getGroupId() + "\" .";
+
+       System.out.println(query);
+       runQuery(query, tm);
+    }
+
+  public void deleteGroup(GroupData group) {
+    System.out.println("*** deleteGroup ***");
+    String groupItemId = getTmIdByGroupId(group, topicmap);
+    String query = "delete " + groupItemId;
+
+    System.out.println(query);
+    runQuery(query);
+  }
+
+  public void updateGroup(GroupData group) {
+    // TODO: updateGroup logic here
+  }
+
+  private void setContains(GroupData group, WikiNodeData node, TopicMapIF tm){
+    System.out.println("*** setContains ***");
+    String groupItemId = getTmIdByGroupId(group, tm);
+    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
+            "insert contains( lr:container : " + groupItemId + "  , lr:containee : " + urnifyCtm(node.getUuid()) + " ) ";
+
+    System.out.println(query);
+    runQuery(query, tm);
+  }
+
+  // doesn't work properly
+  private String getTmIdByGroupId(GroupData group, TopicMapIF tm){
+    System.out.println("*** getTmIdByGroupId ***");
+    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
+            "select $ID from \n" +
+            "item-identifier($TOPIC,$ID)," +
+            "value($OCCURRENCE, \"" + group.getGroupId() + "\")," +
+            "type($OCCURRENCE, lr:groupid)," +
+            "occurrence($TOPIC, $OCCURRENCE)," +
+            "instance-of($TOPIC, lr:community)?";
+
+    System.out.println(query);
+    String retval = executeQuery(query, tm);
+    return retval;
   }
   
+  private void setContains(GroupData group, WikiPageData page){
+    // TODO: setContains f. WikiPages
+  }
+  
+    public void finalize(){
+  }
+
 }
