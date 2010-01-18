@@ -104,9 +104,6 @@ public class InsertTest extends AbstractQueryTest {
 
     assertTrue("wrong number of topics after insert",
                topicmap.getTopics().size() == 1);
-    TopicIF topic = (TopicIF) topicmap.getTopics().iterator().next();
-    assertTrue("topic has no item identifier",
-               !topic.getItemIdentifiers().isEmpty());
   }
 
   /// instance-of topic map
@@ -165,8 +162,8 @@ public class InsertTest extends AbstractQueryTest {
 
     TopicIF topic1 = getTopicById("type1");
     TopicIF topic2 = getTopicById("type2");
-    assertTrue("wrong number of topics after insert",
-               topicmap.getTopics().size() == topicsbefore + 2);
+    assertEquals("wrong number of topics after insert",
+                 topicmap.getTopics().size(), topicsbefore + 2);
     assertTrue("topic1 does not have new type after insert",
                !topic1.getTypes().isEmpty());
     assertTrue("topic2 does not have new type after insert",
@@ -177,6 +174,48 @@ public class InsertTest extends AbstractQueryTest {
                type1 != type2);
   }
 
+  public void testWildcard3() throws InvalidQueryException {
+    makeEmpty();
+
+    update("insert ?topic . ");
+
+    assertTrue("topic not created?", topicmap.getTopics().size() == 1);
+
+    update("insert ?topic . "); // should create *another* topic
+
+    assertEquals("wildcard topics merged across queries",
+                 topicmap.getTopics().size(), 2);
+  }
+
+  public void testWildcard4() throws InvalidQueryException {
+    makeEmpty();
+
+    update("insert ? . ");
+
+    assertEquals("problem in topic creation", topicmap.getTopics().size(), 1);
+
+    update("insert ? . "); // should create *another* topic
+
+    assertEquals("wildcard topics merged across queries",
+                 topicmap.getTopics().size(), 2);
+  }
+
+  public void testWildcard5() throws InvalidQueryException {
+    makeEmpty();
+
+    update("insert ? . ? .");
+
+    assertEquals("problem in topic creation", topicmap.getTopics().size(), 2);
+  }  
+
+  public void testWildcard6() throws InvalidQueryException {
+    makeEmpty();
+
+    update("insert ?topic . ?topic .");
+
+    assertEquals("problem in topic creation", topicmap.getTopics().size(), 1);
+  }  
+  
   public void testQName() throws InvalidQueryException, IOException {
     load("subclasses.ltm");
 

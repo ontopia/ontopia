@@ -6,6 +6,7 @@ package net.ontopia.topicmaps.query.parser;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.io.Reader;
@@ -17,6 +18,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.utils.ctm.CTMLexer;
 import net.ontopia.topicmaps.utils.ctm.CTMParser;
 import net.ontopia.topicmaps.utils.ctm.Template;
@@ -38,7 +40,7 @@ import antlr.TokenStreamIOException;
  */
 public class InsertStatement extends ModificationStatement {
   private Template template;
-  private net.ontopia.topicmaps.utils.ctm.ParseContextIF context;
+  private CTMParseContext context;
   private List<String> parameters; // the order of the parameters to the CTM part
 
   public InsertStatement() {
@@ -76,6 +78,7 @@ public class InsertStatement extends ModificationStatement {
       for (int ix = 0; ix < parameters.size(); ix++)
         arguments.set(ix, makeGenerator(matches.data[row][colix[ix]]));
       template.invoke(arguments, handler);
+      context.endContext();
     }
     
     return matches.last + 1;
@@ -145,15 +148,18 @@ public class InsertStatement extends ModificationStatement {
 
   // --- CTM parse context wrapping tolog parse context
 
+  // lifetime for this context is the duration of the update statement
   static class CTMParseContext
     implements net.ontopia.topicmaps.utils.ctm.ParseContextIF {
     private ParseContextIF tologctx;
     private net.ontopia.topicmaps.utils.ctm.ParseContextIF ctmctx;
+    private Map<String, TopicIF> wildcards;
 
     private CTMParseContext(ParseContextIF tologctx,
                             net.ontopia.topicmaps.utils.ctm.ParseContextIF ctmctx) {
       this.tologctx = tologctx;
       this.ctmctx = ctmctx;
+      this.wildcards = new HashMap<String, TopicIF>();
     }
 
     public void addPrefix(String prefix, LocatorIF locator) {
@@ -209,11 +215,19 @@ public class InsertStatement extends ModificationStatement {
     }
   
     public TopicIF makeAnonymousTopic() {
-      return ctmctx.makeAnonymousTopic();
+      TopicMapIF topicmap = tologctx.getTopicMap();
+      TopicMapBuilderIF builder = topicmap.getBuilder();
+      TopicIF topic = builder.makeTopic();
+      return topic;
     }
 
     public TopicIF makeAnonymousTopic(String wildcard_name) {
-      return ctmctx.makeAnonymousTopic(wildcard_name);
+      TopicIF topic = wildcards.get(wildcard_name);
+      if (topic == null) {
+        topic = makeAnonymousTopic();
+        wildcards.put(wildcard_name, topic);
+      }
+      return topic;
     }
 
     public void registerTemplate(String name, Template template) {
@@ -226,6 +240,11 @@ public class InsertStatement extends ModificationStatement {
 
     public Map getTemplates() {
       throw new UnsupportedOperationException();
+    }
+
+    // finished one row; named wildcards must be released
+    private void endContext() {
+      wildcards.clear();
     }
   }
 }

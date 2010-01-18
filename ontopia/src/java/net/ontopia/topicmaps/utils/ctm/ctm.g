@@ -93,6 +93,7 @@ options {
                          ParseContextIF context) {
     this.handler = handler;
     this.context = context;
+    this.wildcard = new WildcardTopicGenerator(context); // redo to new context
   }
 
   public ParseContextIF getContext() {
