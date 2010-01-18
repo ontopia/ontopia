@@ -15,13 +15,13 @@ public class GroupListener implements ModelListener<Group>{
   public void onAfterCreate(Group arg0) throws ModelListenerException {
     System.out.println("### onAfterCreateGroup ###");
     printGroup(arg0);
-    OntopiaAdapter.instance.addGroup(new GroupData(arg0));
+    OntopiaAdapter.instance.addGroup(arg0);
   }
 
   public void onAfterRemove(Group arg0) throws ModelListenerException {
     System.out.println("### onAfterRemoveGroup ###");
     printGroup(arg0);
-    OntopiaAdapter.instance.deleteGroup(new GroupData(arg0));
+    OntopiaAdapter.instance.deleteGroup(arg0);
   }
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
@@ -31,7 +31,7 @@ public class GroupListener implements ModelListener<Group>{
   public void onAfterUpdate(Group arg0) throws ModelListenerException {
     System.out.println("### onAfterUpdateGroup ###");
     printGroup(arg0);
-    OntopiaAdapter.instance.updateGroup(new GroupData(arg0));
+    OntopiaAdapter.instance.updateGroup(arg0);
     
   }
 

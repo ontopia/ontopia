@@ -16,7 +16,7 @@ public class WikiNodeListener implements ModelListener<WikiNode>{
   public void onAfterCreate(WikiNode arg0) throws ModelListenerException {
     System.out.println("### onAfterCreate WikiNode ###");
     printNode(arg0);
-    OntopiaAdapter.instance.addWikiNode(new WikiNodeData(arg0));
+    OntopiaAdapter.instance.addWikiNode(arg0);
   }
 
   public void onAfterRemove(WikiNode arg0) throws ModelListenerException {
@@ -32,7 +32,7 @@ public class WikiNodeListener implements ModelListener<WikiNode>{
   public void onAfterUpdate(WikiNode arg0) throws ModelListenerException {
     System.out.println("### onAfterUpdate WikiNode ###");
     printNode(arg0);
-    OntopiaAdapter.instance.updateWikiNode(new WikiNodeData(arg0));
+    OntopiaAdapter.instance.updateWikiNode(arg0);
   }
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)

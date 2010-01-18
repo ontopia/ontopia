@@ -16,7 +16,7 @@ public class JournalStructureListener implements ModelListener<JournalStructure>
   public void onAfterCreate(JournalStructure arg0)
       throws ModelListenerException {
     System.out.println("### onAfterCreateJournalStructure ###");
-    OntopiaAdapter.instance.addStructure(new StructureData(arg0));
+    OntopiaAdapter.instance.addStructure(arg0);
     //printStructure(arg0);
   }
 
@@ -38,7 +38,7 @@ public class JournalStructureListener implements ModelListener<JournalStructure>
       throws ModelListenerException {
     System.out.println("### onAfterUpdateJournalStructure ###");
     //printStructure(arg0);
-    OntopiaAdapter.instance.updateStructure(new StructureData(arg0));
+    OntopiaAdapter.instance.updateStructure(arg0);
     
   }
 

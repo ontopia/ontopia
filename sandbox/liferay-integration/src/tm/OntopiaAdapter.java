@@ -1,7 +1,18 @@
 package tm;
 
+import com.liferay.portal.SystemException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.model.WikiPage;
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.GroupData;
 import util.StructureData;
 import util.UserData;
@@ -22,6 +33,7 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
 import net.ontopia.utils.OntopiaRuntimeException;
+import util.DateFormater;
 import util.WikiNodeData;
 import util.WikiPageData;
 
@@ -61,16 +73,22 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   // Webcontent
-  public void addWebContent(WebContentData content){
+  public void addWebContent(JournalArticle content){
     addWebContent(content, topicmap);
   }
   
-  private void addWebContent(WebContentData content, TopicMapIF tm){
+  private void addWebContent(JournalArticle content, TopicMapIF tm){
     addArticle(content,tm); // handles also structures
     setWorkflowstate(content,tm);
-    String creatorUrn = urnifyCtm(content.getUserUuid());
-    setCreator(content, creatorUrn, tm);
-    if(content.getIsApproved()){
+    
+    try {
+      String creatorUuid = content.getUserUuid();
+      setCreator(content.getUuid(), creatorUuid, tm);
+    } catch (SystemException ex) {
+      throw new OntopiaRuntimeException(ex);
+    }
+    
+    if(content.isApproved()){
       setUserApproving(content, tm);
     }
   }
@@ -79,53 +97,54 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     deleteByUuid(uuid);
   }
   
-  public void updateWebContent(WebContentData content){
+  public void updateWebContent(JournalArticle content){
     // using tmsync to implement update
     try {
-      updateIdentifiable(content);
+      update(content, "webcontent");
     } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
   
   // Users
-  public void addStructure(StructureData structure) {
+  public void addStructure(JournalStructure structure) {
     addStructure(structure, topicmap);    
   }
 
-  public void addUser(UserData user) {
+  public void addUser(User user) {
     addUser(user, topicmap);    
   }
   
-  private void addUser(UserData user, TopicMapIF tm){
+  private void addUser(User user, TopicMapIF tm){
     System.out.println("*** addUser ***"); //DEBUG
-    String uuidUrn = urnifyCtm(user.getUuid());
+    HashMap valueMap = getUserHashMap(user);
     
-    String query = "insert " + uuidUrn + " isa " + PSI_PREFIX + "user;\n" +
-    		"- \"" + user.getUsername() + "\"."; 
-    runQuery(query, tm);
+    String query = "insert " + urnifyCtm(user.getUuid()) +" isa " + PSI_PREFIX + "user;\n" +
+    		"- $username. from \n" +
+        "$username = %username%";
+    runQuery(query, tm, valueMap);
   }
   
   public void deleteUser(String uuid){
     deleteByUuid(uuid); 
   }
   
-  public void updateUser(UserData user){
+  public void updateUser(User user){
     try {
-      updateIdentifiable(user);
+      update(user, "user");
     } catch (MalformedURLException e) {
         throw new OntopiaRuntimeException(e);    }
   }
 
   // Structures
-  private void addStructure(StructureData structure, TopicMapIF tm){
+  private void addStructure(JournalStructure structure, TopicMapIF tm){
     System.out.println("*** addStructure ***");
+    HashMap valueMap = getStructureHashMap(structure);
     String structureUrn = urnifyCtm(structure.getUuid());
-    String parentStructureUrn = findStructureUrnByStructureId(structure.getParentId());
-    String id = structure.getStructureId();
-    
+    String parentStructureUrn = findStructureUrnByStructureId(structure.getParentStructureId());
+    // id needs be escaped, the user can edit it
+
     String parent;
-    //System.out.println("*** DEBUG: ParentStructureUrn: '" + parentStructureUrn + "' ***");
     if(parentStructureUrn.equals(urnifyCtm(""))){
       System.out.println("*** No parentstructure provided. Using webcontent instead ***");
       parent = PSI_PREFIX + "webcontent";
@@ -134,17 +153,19 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     }
     
     String query ="insert " + structureUrn + " ako " + parent + ";\n" +
-    		"- \"" + id + "\" .";
-    runQuery(query, tm); 
+    		"- $id . from" +
+        "$id = %structureId%";
+    
+    runQuery(query, tm, valueMap); // is it considered cheating to use the ID as a name?
   }
   
   public void deleteStructure(String uuid){
     deleteByUuid(uuid);
   }
   
-  public void updateStructure(StructureData structure){
+  public void updateStructure(JournalStructure structure){
     try {
-      updateIdentifiable(structure);
+      update(structure, "structure");
     } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -159,77 +180,94 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query);
   }
   
-  private void addArticle(WebContentData content, TopicMapIF tm){
+  private void addArticle(JournalArticle content, TopicMapIF tm){
     System.out.println("*** addArticle ***");
+    HashMap<String, String> valueMap = getWebContentHashmap(content);
     String classname;
     if(content.getStructureId().equals("")){
       classname = "lr:article";
     } else {
-      classname = findStructureUrnByStructureId(content.getStructureId()); // may return "" -> will cause query to throw exception
+      classname = findStructureUrnByStructureId(content.getStructureId()); // may return "" -> will trigger creation of 'urn:uuid:' topic :( and fail silently
     }
 
     String approvedDateString = "";
-    if(content.getIsApproved()){
-      approvedDateString = "lr:approved_date : \"" + content.getApprovedDate() + "\"; \n";
+    if(content.isApproved()){
+      approvedDateString = "lr:approved_date : $approvedDate; \n";
     }
     
     String reviewDateString = "";
-    if(!content.getReviewDate().equalsIgnoreCase(NULL)){
-      reviewDateString = "lr:review_date : \"" + content.getReviewDate() + "\"; \n";
+    if(!valueMap.get("reviewDate").equals(NULL)){
+      reviewDateString = "lr:review_date : $reviewDate; \n";
     }
     
     String expiryDateString = "";
-    if(!content.getExpiryDate().equalsIgnoreCase(NULL)){
-      expiryDateString = "lr:expiry_date : \"" + content.getExpiryDate() + "\"; \n";
+    if(!valueMap.get("expiryDate").equals(NULL)){
+      expiryDateString = "lr:expiry_date : $expiryDate; \n";
     }
 
-    String urn = urnifyCtm(content.getUuid());
+    String urn = urnifyCtm(valueMap.get("uuid"));
     
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
     		"insert " + urn + " isa " + classname + "; \n" +
-        "- \"" + content.getTitle() + "\" ;\n" +
-    		"lr:create_date : \"" + content.getCreateDate() + "\"; \n" +
+        "- $title ;\n" +
+    		"lr:create_date : $createDate; \n" +
     		approvedDateString +
     		reviewDateString +
     		expiryDateString +
-    		"lr:modified_date : \"" + content.getModifyDate() + "\"; \n" +
-    		"lr:display_date : \"" + content.getDisplayDate() + "\"; \n" +
-    		"lr:version : \"" + content.getVersion() + "\"; \n" +
-    		"lr:article_id : \"" + content.getArticleId() + "\" .";
-    runQuery(query, tm);
+    		"lr:modified_date : $modifyDate; \n" +
+    		"lr:display_date : $displayDate; \n" +
+    		"lr:version : $version; \n" +
+    		"lr:article_id : $articleId . from \n" +
+        "$approvedDate = %approvedDate%, \n" +
+        "$reviewDate = %reviewDate%, \n" +
+        "$expiryDate = %expiryDate%, \n" +
+        "$createDate = %createDate%, \n" +
+        "$modifyDate = %modifyDate%, \n" +
+        "$displayDate = %displayDate%, \n" +
+        "$version = %version%, \n" +
+        "$title = %title%, \n" +
+        "$articleId = %articleId%";
+    runQuery(query, tm, valueMap);
   }
   
   
-  private void setCreator(UuidIdentifiableIF content, String creatorUrn, TopicMapIF tm){
+  private void setCreator(String workUuid, String creatorUuid, TopicMapIF tm){
     // TODO: creatorUrn might be "" in case of exception! Handling here
     System.out.println("*** setCreator ***");
-    String workUrn = urnifyCtm(content.getUuid());
+    String workUrn = urnifyCtm(workUuid);
+    String creatorUrn = urnifyCtm(creatorUuid);
     
     String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
         "insert lr:created_by( lr:creator : " + creatorUrn + " , lr:work : " + workUrn + " )";
     runQuery(query, tm);
   }
   
-  private void setUserApproving(WebContentData content, TopicMapIF tm){
+  private void setUserApproving(JournalArticle content, TopicMapIF tm){
     System.out.println("*** setUserApproving ***");
     String workUrn = urnifyCtm(content.getUuid());
-    String approverUrn = urnifyCtm(content.getApprovingUserUuid()); // TODO: What if approving User UUID is "" ? Handling here.
     
+    String approverUrn; // TODO: What if approving User UUID is "" ? 
+    try {
+      approverUrn = urnifyCtm(content.getApprovedByUserUuid());
+    } catch (SystemException ex) {
+      approverUrn = "";
+    }
+
     String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
     "insert lr:approved_by( lr:approver : " + approverUrn + " , lr:work : " + workUrn + " )";
     runQuery(query,tm);
   }
   
   
-  private void setWorkflowstate(WebContentData content, TopicMapIF tm){
+  private void setWorkflowstate(JournalArticle content, TopicMapIF tm){
     System.out.println("*** setWorkflowState ***");
     
     String workplayerUrn = urnifyCtm(content.getUuid());
     String state;
     
-    if(content.getIsExpired()){ 
+    if(content.isExpired()){
       state = "workflow_expired";
-    } else if(content.getIsApproved()){
+    } else if(content.isApproved()){
       state = "workflow_approved";
     } else {
       state ="workflow_new";
@@ -246,6 +284,23 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     store.open();
     try {
           int number = proc.update(query);
+          System.out.println("*** Query processed successfully # "+ number + " ***");
+          store.commit();
+        } catch (Exception e) {
+            System.err.println("*** Error while processing query: " + e.getLocalizedMessage() + " ***");
+            System.out.println(query);
+            throw new OntopiaRuntimeException(e);
+        } finally{
+          store.close();
+        }
+  }
+
+   private synchronized void runQuery(String query, TopicMapIF tm, Map map){
+    QueryProcessorIF proc = QueryUtils.createQueryProcessor(tm);
+    TopicMapStoreIF store = tm.getStore();
+    store.open();
+    try {
+          int number = proc.update(query, map);
           System.out.println("*** Query processed successfully # "+ number + " ***");
           store.commit();
         } catch (Exception e) {
@@ -275,7 +330,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     		"topic-name($TOPIC, $BASENAME),\n" +
     		"value($BASENAME,\"" + structureId +"\")?"; // TODO: I think this passes for cheating using the name to store the structureId ... not sure.. ?
 
-    String retval = "<" + executeQuery(query, topicmap) + ">";
+    String retval = executeQuery(query, topicmap);
     return retval;
     }
 
@@ -298,37 +353,35 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return urnifyCtm(""); // this may change to return "";
   }
   
-  private void updateIdentifiable(UuidIdentifiableIF identifiable) throws MalformedURLException{
-    System.out.println("*** updateIdentifiable called for " + identifiable.getUuid() + " ***");
+  private void update(Object obj, String type) throws MalformedURLException{
+    System.out.println("*** updateIdentifiable called  ***");
     TopicMapStoreIF sourceStore = new InMemoryTopicMapStore();
     TopicMapIF sourceTm = sourceStore.getTopicMap(); // temporary topicmap f. sync
 
-    String classname = identifiable.getClass().toString();
-    
     // find out which class lies beneath and act accordingly
     // the deciders are filters for features not to be updated
-    // TODO: This needs change once the utility-classes are gone
-    if(classname.equalsIgnoreCase(WebContentData.class.toString())){
-      WebContentData article = (WebContentData) identifiable;
+
+    if(type.equalsIgnoreCase("webcontent")){
+      JournalArticle article = (JournalArticle) obj;
       addWebContent(article,sourceTm); // I think I could simply call addArticle() instead and leave the deciders be empty?
-      TopicIF source = retrieveTopicByUuid(identifiable, sourceTm);
+      TopicIF source = retrieveTopicByUuid(article.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new WebContentDecider(), new WebContentDecider());
-    } else if(classname.equalsIgnoreCase(StructureData.class.toString())){
-      StructureData structure = (StructureData) identifiable;
+    } else if(type.equalsIgnoreCase("structure")){
+      JournalStructure structure = (JournalStructure) obj;
       addStructure(structure,sourceTm);
-      TopicIF source = retrieveTopicByUuid(identifiable, sourceTm);
+      TopicIF source = retrieveTopicByUuid(structure.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new StructureDecider(), new StructureDecider());
-    } else if(classname.equalsIgnoreCase(UserData.class.toString())){
-      UserData user = (UserData) identifiable;
+    } else if(type.equalsIgnoreCase("user")){
+      User user = (User) obj;
       addUser(user, sourceTm);
-      TopicIF source = retrieveTopicByUuid(identifiable, sourceTm);
+      TopicIF source = retrieveTopicByUuid(user.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new UserDecider(), new UserDecider());
     } // other classes to be considered go here 
      
   }
 
-  private TopicIF retrieveTopicByUuid(UuidIdentifiableIF identifiable, TopicMapIF tm){
-    LocatorIF identifiablePsiLocator =  new GenericLocator("uri",urnify(identifiable.getUuid()));
+  private TopicIF retrieveTopicByUuid(String uuid, TopicMapIF tm){
+    LocatorIF identifiablePsiLocator =  new GenericLocator("uri",urnify(uuid));
     TopicIF source = tm.getTopicBySubjectIdentifier(identifiablePsiLocator);
     return source;
   }
@@ -349,77 +402,99 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return false;
   }
 
-  public void addWikiNode(WikiNodeData wikinode){
+  public void addWikiNode(WikiNode wikinode){
     addWikiNode(wikinode, topicmap);
-    setCreator(wikinode, urnifyCtm(wikinode.getUserUuid()), topicmap);
-    //setContains(group, wikinode, topicmap);
+
+    try {
+      setCreator(wikinode.getUuid(), wikinode.getUserUuid(), topicmap);
+    } catch (SystemException ex) {
+      throw new OntopiaRuntimeException(ex);
+    }
+    setContains(String.valueOf(wikinode.getGroupId()), wikinode.getUuid(), topicmap);
   }
 
-  private void addWikiNode(WikiNodeData wikinode, TopicMapIF tm) {
+  private void addWikiNode(WikiNode wikinode, TopicMapIF tm) {
     String nodeUrn = urnifyCtm(wikinode.getUuid());
+    HashMap valueMap = getWikiNodeHashMap(wikinode);
     String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
       "insert " + nodeUrn + " isa lr:wikinode; \n" +
-      "- \"" + wikinode.getName() + "\"; \n" +
-      "lr:create_date : \"" + wikinode.getCreateDate() + "\"; \n" +
-      "lr:modified_date : \"" + wikinode.getModifiedDate() + "\"; \n" +
-      "lr:lastpostdate : \"" + wikinode.getLastPostDate() + "\"; \n" +
-      "lr:wikinodeid : \"" + wikinode.getNodeId() + "\" .";
+      "- $name; \n" +
+      "lr:create_date : $createDate; \n" +
+      "lr:modified_date : $modifiedDate; \n" +
+      "lr:lastpostdate : $lastPostDate; \n" +
+      "lr:wikinodeid : $nodeId . from \n" +
+      "$name = %name%, \n" +
+      "$createDate = %createDate%, \n" +
+      "$modifiedDate = %modifiedDate%, \n" +
+      "$lastPostDate = %lastPostDate%, \n" +
+      "$nodeId = %nodeId%";
 
-    runQuery(query, tm);
+    runQuery(query, tm, valueMap);
   }
 
   public void deleteWikiNode(String uuid) {
     deleteByUuid(uuid);
   }
 
-  public void updateWikiNode(WikiNodeData wikinode) {
+  public void updateWikiNode(WikiNode wikinode) {
     try {
-      updateIdentifiable(wikinode);
+      update(wikinode, "wikinode");
     } catch (MalformedURLException ex) {
       throw new OntopiaRuntimeException(ex);
     }
   }
 
-  public void addWikiPage(WikiPageData wikipage){
+  public void addWikiPage(WikiPage wikipage){
     addWikiPage(wikipage, topicmap);
     if(!wikipage.getParentPages().isEmpty()){
       System.out.println("DEBUG: Parentpages for this wikipage!");
-      for(WikiPageData wpd : wikipage.getParentPages()){
-        setParentChild(wpd, wikipage, topicmap);
+      for(WikiPage wpd : wikipage.getParentPages()){
+        setParentChild(wpd.getUuid(), wikipage.getUuid(), topicmap);
       }
     }
-    setCreator(wikipage, urnifyCtm(wikipage.getUserUuid()), topicmap);
+    
+    try {
+      setCreator(wikipage.getUuid(), wikipage.getUserUuid(), topicmap);
+    } catch (SystemException ex) {
+      throw new OntopiaRuntimeException(ex);
+    }
   }
   
-  private void addWikiPage(WikiPageData wikipage, TopicMapIF tm) {
+  private void addWikiPage(WikiPage wikipage, TopicMapIF tm) {
     String pageUrn = urnifyCtm(wikipage.getUuid());
+    HashMap valueMap = getWikiPageHashMap(wikipage);
     String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
              "insert " + pageUrn + " isa lr:wikipage; \n" +
-             "- \"" + wikipage.getTitle() + "\"; \n" +
-             "lr:wikipageid : \"" + wikipage.getPageId() + "\"; \n"+
-             "lr:create_date : \"" + wikipage.getCreateDate() + "\"; \n" +
-             "lr:modified_date : \"" + wikipage.getModifyDate() + "\"; \n" +
-             "lr:version : \"" + wikipage.getVersion() + "\" .";
+             "- $title; \n" +
+             "lr:wikipageid : $pageId; \n"+
+             "lr:create_date : $createDate; \n" +
+             "lr:modified_date : $modifyDate; \n" +
+             "lr:version : $version . from \n" +
+             "$title = %title%, \n" +
+             "$pageId = %pageId%, \n" +
+             "$createDate = %createDate%, \n" +
+             "$modifyDate = %modifyDate%, \n" +
+             "$version = %version%";
 
     System.out.println(query);
-     runQuery(query, tm);
+    runQuery(query, tm, valueMap);
   }
 
   public void deleteWikiPage(String uuid) {
     deleteByUuid(uuid);
   }
 
-  public void updateWikiPage(WikiPageData wikipage) {
+  public void updateWikiPage(WikiPage wikipage) {
     try {
-      updateIdentifiable(wikipage);
+      update(wikipage, "wikipage");
     } catch (MalformedURLException ex) {
       throw new OntopiaRuntimeException(ex);
     }
   }
 
-  private void setParentChild(UuidIdentifiableIF parent, UuidIdentifiableIF child, TopicMapIF tm){
-    String parentUrn = urnifyCtm(parent.getUuid());
-    String childUrn = urnifyCtm(child.getUuid());
+  private void setParentChild(String parentUuid, String childUuid, TopicMapIF tm){
+    String parentUrn = urnifyCtm(parentUuid);
+    String childUrn = urnifyCtm(childUuid);
 
     String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
             "insert lr:parent-child( lr:parent : " + parentUrn + ", lr:child : " + childUrn +" )";
@@ -428,58 +503,66 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query, tm);
   }
 
-  // All the group-stuff doesn't work properly. Identity is also an issue because:
-  // 'insert ?group isa ... '
-  // resulting in topics with the same identity to be merged into the existing tm, (because the ?group id is unique within the _ctm fragment_ that is being merged)
-  // resulting in only one (merged) topic with all the occurrences from the created groups so far (bcause they all share the same id).
-    public void addGroup(GroupData group) {
-    if(group.getIsCommunity()){
+  // All the group-stuff doesn't work properly.
+    public void addGroup(Group group) {
+    if(group.isCommunity()){
       addCommunity(group, topicmap);
     }
     // TODO: Handling of parent-groups?
   }
     
-    private void addCommunity(GroupData group, TopicMapIF tm){
+    private void addCommunity(Group group, TopicMapIF tm){
       System.out.println("*** addCommunity ***");
+      HashMap valueMap = getGroupHashMap(group);
       String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
                "insert ?group isa " + PSI_PREFIX + "community; \n" +
-               "- \"" + group.getName() + "\"; \n" +
-               "lr:groupid : \"" + group.getGroupId() + "\" .";
+               "- $name; \n" +
+               "lr:groupid : $groupId . from \n" +
+               "$name = %name%, \n" +
+               "$groupId = %groupId%";
 
        System.out.println(query);
-       runQuery(query, tm);
+       runQuery(query, tm, valueMap);
     }
 
-  public void deleteGroup(GroupData group) {
+  public void deleteGroup(Group group) {
     System.out.println("*** deleteGroup ***");
-    String groupItemId = getTmIdByGroupId(group, topicmap);
-    String query = "delete " + groupItemId;
+        String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
+            "delete $TOPIC from \n" +
+            "value($OCCURRENCE, \"" + group.getGroupId() + "\")," +
+            "type($OCCURRENCE, lr:groupid)," +
+            "occurrence($TOPIC, $OCCURRENCE)," +
+            "instance-of($TOPIC, lr:community)";
 
     System.out.println(query);
     runQuery(query);
   }
 
-  public void updateGroup(GroupData group) {
-    // TODO: updateGroup logic here
+  public void updateGroup(Group group) {
+    try {
+      update(group, "group");
+    } catch (MalformedURLException ex) {
+      throw new OntopiaRuntimeException(ex);
+    }
   }
 
-  private void setContains(GroupData group, WikiNodeData node, TopicMapIF tm){
+  private void setContains(String groupId, String uuid, TopicMapIF tm){
     System.out.println("*** setContains ***");
-    String groupItemId = getTmIdByGroupId(group, tm);
+    String groupObjectId = getObjectIdByGroupId(groupId, tm);
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
-            "insert contains( lr:container : " + groupItemId + "  , lr:containee : " + urnifyCtm(node.getUuid()) + " ) ";
+            "insert contains( lr:container : <@" + groupObjectId + ">  , lr:containee : " + urnifyCtm(uuid) + " ) ";
 
     System.out.println(query);
     runQuery(query, tm);
   }
 
   // doesn't work properly
-  private String getTmIdByGroupId(GroupData group, TopicMapIF tm){
+  private String getObjectIdByGroupId(String groupId, TopicMapIF tm){
     System.out.println("*** getTmIdByGroupId ***");
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
             "select $ID from \n" +
-            "item-identifier($TOPIC,$ID)," +
-            "value($OCCURRENCE, \"" + group.getGroupId() + "\")," +
+            "object-id($TOPIC,$ID)," +
+            "value($OCCURRENCE, \"" + groupId + "\")," +
             "type($OCCURRENCE, lr:groupid)," +
             "occurrence($TOPIC, $OCCURRENCE)," +
             "instance-of($TOPIC, lr:community)?";
@@ -489,8 +572,113 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return retval;
   }
   
-  private void setContains(GroupData group, WikiPageData page){
-    // TODO: setContains f. WikiPages
+
+  // Hashmap methods following
+  private HashMap getWebContentHashmap(JournalArticle content){
+    HashMap<String, String> retval = new HashMap();
+    retval.put("title", content.getTitle());
+    retval.put("uuid", content.getUuid());
+    retval.put("createDate", DateFormater.format(content.getCreateDate()));
+    retval.put("displayDate", DateFormater.format(content.getDisplayDate()));
+    retval.put("modifyDate", DateFormater.format(content.getModifiedDate()));
+    retval.put("reviewDate", DateFormater.format(content.getReviewDate()));
+    retval.put("expiryDate", DateFormater.format(content.getExpirationDate()));
+    retval.put("articleId", content.getArticleId());
+    retval.put("version", String.valueOf(content.getVersion()));
+    retval.put("userId", String.valueOf(content.getUserId()));
+    retval.put("structureId", content.getStructureId());
+    retval.put("approvingUserId", String.valueOf(content.getApprovedByUserId()));
+    retval.put("approvingUserName", content.getApprovedByUserName());
+    retval.put("approvedDate", DateFormater.format(content.getApprovedDate()));
+
+    try {
+      retval.put("approvingUserUuid", content.getApprovedByUserUuid());
+    } catch (SystemException ex) {
+      throw new OntopiaRuntimeException(ex);
+      //retval.put("approvingUserUuid", NULL);
+    }
+    
+    try {
+      retval.put("useruuid", content.getUserUuid());
+    } catch (SystemException ex) {
+      retval.put("useruuid", NULL);
+    }
+
+    return retval;
+  }
+
+  private HashMap getUserHashMap(User user){
+    HashMap<String, String> retval = new HashMap();
+
+    retval.put("uuid", user.getUuid());
+    retval.put("username", user.getEmailAddress());
+    retval.put("urnCtm", urnify(user.getUuid()));
+
+    return retval;
+  }
+
+  private HashMap getStructureHashMap(JournalStructure structure){
+    HashMap<String, String> retval = new HashMap();
+
+    retval.put("uuid", structure.getUuid());
+    retval.put("structureId", structure.getStructureId());
+    retval.put("parentId", structure.getParentStructureId());
+    retval.put("name", structure.getName());
+
+    return retval;
+  }
+
+  private HashMap getGroupHashMap(Group group){
+    HashMap<String, String> retval = new HashMap();
+
+    retval.put("groupId", String.valueOf(group.getGroupId()));
+    retval.put("parentGroupId", String.valueOf(group.getParentGroupId()));
+    retval.put("name", group.getName());
+
+    return retval;
+  }
+
+  private HashMap getWikiNodeHashMap(WikiNode node){
+    HashMap<String, String> retval = new HashMap();
+
+    retval.put("uuid", node.getUuid());
+    retval.put("nodeId", String.valueOf(node.getNodeId()));
+    retval.put("name", node.getName());
+    retval.put("createDate", DateFormater.format(node.getCreateDate()));
+    retval.put("modifiedDate", DateFormater.format(node.getModifiedDate()));
+    retval.put("lastPostDate", DateFormater.format(node.getLastPostDate()));
+    try {
+      retval.put("userUuid", node.getUserUuid());
+    } catch (SystemException ex) {
+      throw new OntopiaRuntimeException(ex);
+      //retval.put("userUuid", NULL);
+    }
+
+    return retval;
+  }
+
+  private HashMap getWikiPageHashMap(WikiPage page){
+    HashMap retval = new HashMap();
+
+    retval.put("uuid", page.getUuid());
+    retval.put("pageId", String.valueOf(page.getPageId()));
+    retval.put("title", page.getTitle());
+    retval.put("version", String.valueOf(page.getVersion()));
+    retval.put("createDate", DateFormater.format(page.getCreateDate()));
+    retval.put("modifyDate", DateFormater.format(page.getModifiedDate()));
+
+    if(page.getParentPage() != null){
+      retval.put("parentPageUuid", page.getParentPage().getUuid());
+    }
+
+    try {
+      retval.put("userUuid", page.getUserUuid());
+    } catch (SystemException ex) {
+      throw new OntopiaRuntimeException(ex);
+      //retval.put("userUuid", NULL);
+    }
+
+    return retval;
   }
   
     public void finalize(){

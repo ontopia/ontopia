@@ -17,7 +17,7 @@ public class WikiPageListener implements ModelListener<WikiPage>{
   public void onAfterCreate(WikiPage arg0) throws ModelListenerException {
     System.out.println("### OnAfterCreate WikiPage ###");  
     printWikiPage(arg0);
-    OntopiaAdapter.instance.addWikiPage(new WikiPageData(arg0));
+    OntopiaAdapter.instance.addWikiPage(arg0);
   }
 
   public void onAfterRemove(WikiPage arg0) throws ModelListenerException {
@@ -32,7 +32,7 @@ public class WikiPageListener implements ModelListener<WikiPage>{
   public void onAfterUpdate(WikiPage arg0) throws ModelListenerException {
     System.out.println("### OnAfterUpdate WikiPage ###");   
     printWikiPage(arg0);
-    OntopiaAdapter.instance.updateWikiPage(new WikiPageData(arg0));
+    OntopiaAdapter.instance.updateWikiPage(arg0);
   }
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)

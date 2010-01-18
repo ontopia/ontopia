@@ -17,7 +17,7 @@ public class UserListener implements ModelListener<User>{
 
   public void onAfterCreate(User arg0) throws ModelListenerException {
     System.out.println("### User Created! ###");
-    OntopiaAdapter.instance.addUser(new UserData(arg0));
+    OntopiaAdapter.instance.addUser(arg0);
     //printUserInfo(arg0);
   }
 
@@ -35,7 +35,7 @@ public class UserListener implements ModelListener<User>{
 
   public void onAfterUpdate(User arg0) throws ModelListenerException {
     System.out.println("### User updated! ###");
-    OntopiaAdapter.instance.updateUser(new UserData(arg0));
+    OntopiaAdapter.instance.updateUser(arg0);
     //printUserInfo(arg0);
   }
 

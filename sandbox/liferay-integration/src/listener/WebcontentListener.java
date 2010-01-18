@@ -24,7 +24,7 @@ public class WebcontentListener implements ModelListener<JournalArticle> {
     
     System.out.println("### OnAfterCreateArticle ###");
     //System.out.println("Passed argument:" + arg0);
-    adapter.addWebContent(new WebContentData(arg0));
+    adapter.addWebContent(arg0);
     
     //printArticle(arg0);   
     
@@ -45,7 +45,7 @@ public class WebcontentListener implements ModelListener<JournalArticle> {
   public void onAfterUpdate(JournalArticle arg0) throws ModelListenerException {
     System.out.println("### OnAfterUpdateArticle ###");
     //printArticle(arg0);    
-    OntopiaAdapter.instance.updateWebContent(new WebContentData(arg0));
+    OntopiaAdapter.instance.updateWebContent(arg0);
   }
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)

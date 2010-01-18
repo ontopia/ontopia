@@ -4,8 +4,6 @@ package util;
 import com.liferay.portal.SystemException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class WikiNodeData implements UuidIdentifiableIF {
