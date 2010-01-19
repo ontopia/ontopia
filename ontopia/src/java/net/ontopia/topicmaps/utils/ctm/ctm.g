@@ -264,8 +264,12 @@ subject_locator    : EQUALS iri_ref;
 subject_identifier : iri_ref;
 
 property :
-  name | occurrence | instance_of | item_identifier_add | subject_locator_add |
-  subject_identifier_add | a_kind_of | template_invocation ;
+  name | 
+  ((topic_ref COLON) => occurrence | 
+   subject_locator_add |
+   item_identifier_add | 
+  subject_identifier_add) |
+  instance_of |  a_kind_of | template_invocation ;
 
 name :
     { topic_ref = null; } // in case no type

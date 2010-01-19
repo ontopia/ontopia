@@ -129,7 +129,7 @@
     <!-- svn-revision to the external jtm test suite -->
     <property name="jtm.revision" value="46" />
     <!-- svn-revision to the external ctm test suite -->
-    <property name="ctm.revision" value="47" />
+    <property name="ctm.revision" value="49" />
   </target>
 
   <!-- ======================================================================
