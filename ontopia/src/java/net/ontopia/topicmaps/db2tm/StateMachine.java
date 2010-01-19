@@ -18,7 +18,7 @@ public class StateMachine {
   // 5: ignore (also start position)
   private static int[][] TRANSITIONS = {
     /* 0: error  */ {0, 0, 0, 0, 0, 0},
-    /* 1: create */ {0, 1, 1, 0, 4, 1},
+    /* 1: create */ {0, 0, 1, 0, 4, 1},
     /* 2: update */ {0, 2, 2, 0, 4, 2},
     /* 3: nothing*/ {0, 0, 0, 3, 0, 0},
     /* 4: delete */ {0, 2, 0, 0, 4, 4},
