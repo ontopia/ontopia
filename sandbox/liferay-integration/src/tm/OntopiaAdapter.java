@@ -11,13 +11,6 @@ import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import util.GroupData;
-import util.StructureData;
-import util.UserData;
-import util.WebContentData;
-import util.UuidIdentifiableIF;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -34,8 +27,6 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
 import net.ontopia.utils.OntopiaRuntimeException;
 import util.DateFormater;
-import util.WikiNodeData;
-import util.WikiPageData;
 
 /**
  * This class provides control to alter a topicmap in ontopia according to changes in Liferay.
@@ -51,10 +42,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   public static final String ASSOC_USER_APPROVING_PSI = PSI_PREFIX + "approved_by";
   public static final String ASSOC_HAS_WORKFLOW_STATE_PSI = PSI_PREFIX + "has_workflow_state";
   public static final String SUB_SUPERTYPE_PSI = "http://psi.topicmaps.org/iso13250/model/supertype-subtype";
+  public static final String ASSOC_CONTAINS_PSI = PSI_PREFIX + "contains";
+  public static final String ASSOC_PARENT_CHILD_PSI = PSI_PREFIX + "parent-child";
 
   public static final String NULL = "null";
 
-  private static final String TMNAME = "liferay_v39.ltm";
+  private static final String TMNAME = "liferay_v43.ltm";
   
   private TopicMapIF topicmap;
   
@@ -78,7 +71,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
   
   private void addWebContent(JournalArticle content, TopicMapIF tm){
-    addArticle(content,tm); // handles also structures
+    addArticle(content,tm); // TODO: Needs to be renamed to createWebContent
     setWorkflowstate(content,tm);
     
     try {
@@ -239,6 +232,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     
     String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
         "insert lr:created_by( lr:creator : " + creatorUrn + " , lr:work : " + workUrn + " )";
+    System.out.println(query);
     runQuery(query, tm);
   }
   
@@ -350,11 +344,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       System.err.println(query);
       throw new OntopiaRuntimeException(e);
     }
-    return urnifyCtm(""); // this may change to return "";
+    return urnifyCtm(""); // this may change to return ""; or may become an exception
   }
   
   private void update(Object obj, String type) throws MalformedURLException{
-    System.out.println("*** updateIdentifiable called  ***");
+    System.out.println("*** update called  for " + type +" ***");
     TopicMapStoreIF sourceStore = new InMemoryTopicMapStore();
     TopicMapIF sourceTm = sourceStore.getTopicMap(); // temporary topicmap f. sync
 
@@ -376,8 +370,19 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       addUser(user, sourceTm);
       TopicIF source = retrieveTopicByUuid(user.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new UserDecider(), new UserDecider());
-    } // other classes to be considered go here 
-     
+    } else if(type.equals("wikinode")){
+      WikiNode node = (WikiNode) obj;
+      createWikiNode(node, sourceTm);
+      TopicIF source = retrieveTopicByUuid(node.getUuid(), sourceTm);
+      TopicMapSynchronizer.update(topicmap, source , new WikiNodeDecider(), new WikiNodeDecider());
+    } else if(type.equals("wikipage")){
+      WikiPage page = (WikiPage) obj;
+      addWikiPage(page, sourceTm);
+      TopicIF source = retrieveTopicByUuid(page.getUuid(), sourceTm);
+      TopicMapSynchronizer.update(topicmap, source , new WikiPageDecider(), new WikiPageDecider());
+    }
+
+    System.out.println("*** update ended! ***");
   }
 
   private TopicIF retrieveTopicByUuid(String uuid, TopicMapIF tm){
@@ -402,26 +407,36 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return false;
   }
 
-  public void addWikiNode(WikiNode wikinode){
-    addWikiNode(wikinode, topicmap);
+  public void addWikiNode(WikiNode node){
+    addWikiNode(node, topicmap);
+  }
+
+  private void addWikiNode(WikiNode wikinode, TopicMapIF tm){
+    createWikiNode(wikinode, tm);
 
     try {
-      setCreator(wikinode.getUuid(), wikinode.getUserUuid(), topicmap);
+      setCreator(wikinode.getUuid(), wikinode.getUserUuid(), tm);
     } catch (SystemException ex) {
       throw new OntopiaRuntimeException(ex);
     }
-    setContains(String.valueOf(wikinode.getGroupId()), wikinode.getUuid(), topicmap);
+    setGroupContains(String.valueOf(wikinode.getGroupId()), wikinode.getUuid(), tm);
   }
 
-  private void addWikiNode(WikiNode wikinode, TopicMapIF tm) {
+  private void createWikiNode(WikiNode wikinode, TopicMapIF tm) {
     String nodeUrn = urnifyCtm(wikinode.getUuid());
+
+    String lastPostDateString = "";
+    if(wikinode.getLastPostDate() != null){
+      lastPostDateString = "lr:lastpostdate : $lastPostDate; \n";
+    }
+
     HashMap valueMap = getWikiNodeHashMap(wikinode);
     String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
       "insert " + nodeUrn + " isa lr:wikinode; \n" +
       "- $name; \n" +
       "lr:create_date : $createDate; \n" +
       "lr:modified_date : $modifiedDate; \n" +
-      "lr:lastpostdate : $lastPostDate; \n" +
+      lastPostDateString +
       "lr:wikinodeid : $nodeId . from \n" +
       "$name = %name%, \n" +
       "$createDate = %createDate%, \n" +
@@ -446,21 +461,27 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   public void addWikiPage(WikiPage wikipage){
     addWikiPage(wikipage, topicmap);
+  }
+  
+  private void addWikiPage(WikiPage wikipage, TopicMapIF tm){
+    createWikiPage(wikipage, tm);
     if(!wikipage.getParentPages().isEmpty()){
       System.out.println("DEBUG: Parentpages for this wikipage!");
       for(WikiPage wpd : wikipage.getParentPages()){
-        setParentChild(wpd.getUuid(), wikipage.getUuid(), topicmap);
+        setParentChild(wpd.getUuid(), wikipage.getUuid(), tm);
       }
     }
     
     try {
-      setCreator(wikipage.getUuid(), wikipage.getUserUuid(), topicmap);
+      setCreator(wikipage.getUuid(), wikipage.getUserUuid(), tm);
     } catch (SystemException ex) {
       throw new OntopiaRuntimeException(ex);
     }
+
+    setContains(wikipage.getNode().getUuid(), wikipage.getUuid(), tm);
   }
   
-  private void addWikiPage(WikiPage wikipage, TopicMapIF tm) {
+  private void createWikiPage(WikiPage wikipage, TopicMapIF tm) {
     String pageUrn = urnifyCtm(wikipage.getUuid());
     HashMap valueMap = getWikiPageHashMap(wikipage);
     String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
@@ -525,7 +546,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
        runQuery(query, tm, valueMap);
     }
 
-  public void deleteGroup(Group group) {
+  public void deleteGroup(Group group) { // TODO: Easify this using getObjectIdFrom .... 
     System.out.println("*** deleteGroup ***");
         String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
             "delete $TOPIC from \n" +
@@ -546,14 +567,28 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     }
   }
 
-  private void setContains(String groupId, String uuid, TopicMapIF tm){
-    System.out.println("*** setContains ***");
-    String groupObjectId = getObjectIdByGroupId(groupId, tm);
+  private void setContains(String containerUuid, String containeeUuid, TopicMapIF tm){
+    String containeeUrn = urnifyCtm(containeeUuid);
+    String containerUrn = urnifyCtm(containerUuid);
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
-            "insert contains( lr:container : <@" + groupObjectId + ">  , lr:containee : " + urnifyCtm(uuid) + " ) ";
+            "insert lr:contains( lr:container : " + containerUrn + " , lr:containee : " + containeeUrn + " )";
+
+    runQuery(query);
+  }
+
+  private void setGroupContains(String groupId, String uuid, TopicMapIF tm){
+    System.out.println("*** setGroupContains ***");
+    String groupObjectId = getObjectIdByGroupId(groupId, tm);
+    TopicIF topic = (TopicIF) tm.getObjectById(groupObjectId);
+    HashMap<String, TopicIF> map = new HashMap();
+    map.put("topic", topic);
+
+    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
+            "insert lr:contains( lr:container : $topic  , lr:containee : " + urnifyCtm(uuid) + " ) from \n" +
+            "$topic = %topic%";
 
     System.out.println(query);
-    runQuery(query, tm);
+    runQuery(query, tm, map);
   }
 
   // doesn't work properly
@@ -569,8 +604,10 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
     System.out.println(query);
     String retval = executeQuery(query, tm);
+    System.out.println("*** ObjectId = " + retval + " ***");
     return retval;
   }
+
   
 
   // Hashmap methods following
@@ -681,7 +718,5 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return retval;
   }
   
-    public void finalize(){
-  }
 
 }
