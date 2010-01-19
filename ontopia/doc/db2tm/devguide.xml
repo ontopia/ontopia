@@ -1272,13 +1272,16 @@ discarded. The application can now be restarted.</para>
 </section>
 
 <section>
-<title>How do delete objects that were added to the topic map by db2tm?</title>
+<title>How to delete objects that were added to the topic map by DB2TM?</title>
 
 <para>The <symbol>net.ontopia.topicmaps.cmdlineutils.TologDelete</symbol>
 command-line utility is very useful for this purpose. Just hand it a
 tolog query and it will delete the objects returned by the
 query.</para>
 
+<para>Alternatively, you can use tolog updates in the query plug-in in
+Omnigator, where you just run a DELETE statement to remove whatever
+you want to remove.</para>
 </section>
 
 <section>
@@ -1289,13 +1292,13 @@ query.</para>
 </section>
 
 <section>
-<title>Oops, I made a mistake in the db2tm mapping. How do I repair the topic map?</title>
+<title>Oops, I made a mistake in the DB2TM mapping. How do I repair the topic map?</title>
 
 <para>Doing a <symbol>rescan</symbol> or <symbol>add</symbol> on the
 relation together with the tolog delete utility mentioned above will
 allow you to repair most mistakes. Note that you can override the
 synchronization type without modifying the mapping file by passing the
-<symbol>--force-reload</symbol> option to the
+<symbol>--force-rescan</symbol> option to the
 <symbol>net.ontopia.topicmaps.db2tm.Execute</symbol> command line
 utility.</para>
 
