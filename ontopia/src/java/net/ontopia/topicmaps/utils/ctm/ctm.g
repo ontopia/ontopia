@@ -150,7 +150,7 @@ options {
 
 topicmap :
   (encoding_decl)? (version)?
-  /* (directive)* */ (tm_reifier)?
+  (directive)* (tm_reifier)?
   (directive | 
    topic | 
    template_def | 
