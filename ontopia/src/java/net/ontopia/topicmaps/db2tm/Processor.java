@@ -35,80 +35,87 @@ public class Processor {
   public static void addRelations(RelationMapping rmapping, Collection relnames, TopicMapIF topicmap, LocatorIF baseloc) {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
-
-    // verify relation mapping
-    Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
-
-    // set up context object
     Context ctx = new Context();
-    ctx.setMapping(rmapping);
-    ctx.setTopicMap(topicmap);
-    if (baseloc != null)
-      ctx.setBaseLocator(baseloc);
-    else {
-      log.info("No base locator specified, so using base of topic maps store.");
-      ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
-    }
-    
-    // loop over datasources
-    Iterator dsiter = ds_relations.keySet().iterator();
-    while (dsiter.hasNext()) {
-      DataSourceIF datasource = (DataSourceIF)dsiter.next();
-      log.debug("Adding tuples from data source " + datasource);
+    if (log.isInfoEnabled()) log.info("Adding relations: " + new Date());
 
-      // loop over relations
-      Collection rels = (Collection)ds_relations.get(datasource);
-      Iterator riter = rels.iterator();
-      while (riter.hasNext()) {
-        Relation relation = (Relation)riter.next();
-
-        // do not process non-listed relations
-        if (relnames != null && !relnames.contains(relation.getName())) {
-          log.debug("  ignoring relation: " + relation.getName());
-          continue;
-        } else {
-          log.debug("  adding relation: " + relation.getName());
-        }
-
-        int rtuples = 0;
-        long rstime1 = System.currentTimeMillis();
-        long rstime2 = 0;
-
-        // set current relation
-        ctx.setRelation(relation);
-
-        // changelog synchronization; set start order values
-        Collection syncs = relation.getSyncs();
-        if (!syncs.isEmpty()) {
-          Iterator siter = syncs.iterator();
-          while (siter.hasNext()) {
-            Changelog sync = (Changelog)siter.next();
-            String maxOrderValue = datasource.getMaxOrderValue(sync);
-            log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
-            setStartOrder(sync, ctx, maxOrderValue);
-          }
-        }
-        
-        // loop over tuples        
-        TupleReaderIF reader = datasource.getReader(relation.getName());
-        String [] tuple = null;
-        while ((tuple = reader.readNext()) != null) {
-          if (tuple == null) break;
-
-          // process individual tuple
-          long time = System.currentTimeMillis();
-          Processor.addTuple(relation, tuple, ctx);
-          rstime2 += (System.currentTimeMillis()-time);
-          rtuples++;
-        }
-        log.debug("    " + rtuples + " tuples, " + 
-                  (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
-        ttuples += rtuples;
-        reader.close();
+    try {      
+      // verify relation mapping
+      Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
+      
+      // set up context object
+      ctx.setMapping(rmapping);
+      ctx.setTopicMap(topicmap);
+      if (baseloc != null)
+        ctx.setBaseLocator(baseloc);
+      else {
+        log.info("No base locator specified, so using base of topic maps store.");
+        ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
       }
+      
+      // loop over datasources
+      Iterator dsiter = ds_relations.keySet().iterator();
+      while (dsiter.hasNext()) {
+        DataSourceIF datasource = (DataSourceIF)dsiter.next();
+        log.debug("Adding tuples from data source " + datasource);
+      
+        // loop over relations
+        Collection rels = (Collection)ds_relations.get(datasource);
+        Iterator riter = rels.iterator();
+        while (riter.hasNext()) {
+          Relation relation = (Relation)riter.next();
+      
+          // do not process non-listed relations
+          if (relnames != null && !relnames.contains(relation.getName())) {
+            log.debug("  ignoring relation: " + relation.getName());
+            continue;
+          } else {
+            log.debug("  adding relation: " + relation.getName());
+          }
+      
+          int rtuples = 0;
+          long rstime1 = System.currentTimeMillis();
+          long rstime2 = 0;
+      
+          // set current relation
+          ctx.setRelation(relation);
+      
+          // changelog synchronization; set start order values
+          Collection syncs = relation.getSyncs();
+          if (!syncs.isEmpty()) {
+            Iterator siter = syncs.iterator();
+            while (siter.hasNext()) {
+              Changelog sync = (Changelog)siter.next();
+              String maxOrderValue = datasource.getMaxOrderValue(sync);
+              log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
+              setStartOrder(sync, ctx, maxOrderValue);
+            }
+          }
+          
+          // loop over tuples        
+          TupleReaderIF reader = datasource.getReader(relation.getName());
+          String [] tuple = null;
+          while ((tuple = reader.readNext()) != null) {
+            if (tuple == null) break;
+      
+            // process individual tuple
+            long time = System.currentTimeMillis();
+            addTuple(relation, tuple, ctx);
+            rstime2 += (System.currentTimeMillis()-time);
+            rtuples++;
+          }
+          log.info("    Added " + rtuples + " tuples from " + relation.getName() + ", " + 
+                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          ttuples += rtuples;
+          reader.close();
+        }
+      }
+    } catch (Exception e) {
+       throw new DB2TMException("Error occurred in addRelations call.", e);
+    } finally {
+      ctx.close();
     }
-    log.debug("done: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms");
-    ctx.close();
+    if (log.isInfoEnabled())
+      log.info("done adding relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
   }
 
   /**
@@ -117,68 +124,75 @@ public class Processor {
   public static void removeRelations(RelationMapping rmapping, Collection relnames, TopicMapIF topicmap, LocatorIF baseloc) {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
-
-    // verify relation mapping
-    Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
-
-    // set up context object
     Context ctx = new Context();
-    ctx.setMapping(rmapping);
-    ctx.setTopicMap(topicmap);
-    if (baseloc != null)
-      ctx.setBaseLocator(baseloc);
-    else {
-      log.info("No base locator specified, so using base of topic maps store.");
-      ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
-    }
-    
-    // loop over datasources
-    Iterator dsiter = ds_relations.keySet().iterator();
-    while (dsiter.hasNext()) {
-      DataSourceIF datasource = (DataSourceIF)dsiter.next();
-      log.debug("Removing tuples from data source: " + datasource);
+    if (log.isInfoEnabled()) log.info("Removing relations: " + new Date());
 
-      // loop over relations
-      Collection rels = (Collection)ds_relations.get(datasource);
-      Iterator riter = rels.iterator();
-      while (riter.hasNext()) {
-        Relation relation = (Relation)riter.next();
-
-        // do not process non-listed relations
-        if (relnames != null && !relnames.contains(relation.getName())) {
-          log.debug("  ignoring relation: " + relation.getName());
-          continue;
-        } else {
-          log.debug("  removing relation: " + relation.getName());
-        }
-
-        int rtuples = 0;
-        long rstime1 = System.currentTimeMillis();
-        long rstime2 = 0;
-
-        // set current relation
-        ctx.setRelation(relation);
-        
-        // loop over tuples        
-        TupleReaderIF reader = datasource.getReader(relation.getName());
-        
-        String [] tuple = null;
-        while ((tuple = reader.readNext()) != null) {
-          if (tuple == null) break;
-        
-          // process individual tuple
-          long time = System.currentTimeMillis();
-          Processor.removeTuple(relation, tuple, ctx);
-          rstime2 += (System.currentTimeMillis()-time);
-          rtuples++;
-        }
-        log.debug("    " + rtuples + " tuples, " + 
-                  (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
-        ttuples += rtuples;
+    try {
+      // verify relation mapping
+      Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
+      
+      // set up context object
+      ctx.setMapping(rmapping);
+      ctx.setTopicMap(topicmap);
+      if (baseloc != null)
+        ctx.setBaseLocator(baseloc);
+      else {
+        log.info("No base locator specified, so using base of topic maps store.");
+        ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
       }
+      
+      // loop over datasources
+      Iterator dsiter = ds_relations.keySet().iterator();
+      while (dsiter.hasNext()) {
+        DataSourceIF datasource = (DataSourceIF)dsiter.next();
+        log.debug("Removing tuples from data source: " + datasource);
+      
+        // loop over relations
+        Collection rels = (Collection)ds_relations.get(datasource);
+        Iterator riter = rels.iterator();
+        while (riter.hasNext()) {
+          Relation relation = (Relation)riter.next();
+      
+          // do not process non-listed relations
+          if (relnames != null && !relnames.contains(relation.getName())) {
+            log.debug("  ignoring relation: " + relation.getName());
+            continue;
+          } else {
+            log.debug("  removing relation: " + relation.getName());
+          }
+      
+          int rtuples = 0;
+          long rstime1 = System.currentTimeMillis();
+          long rstime2 = 0;
+      
+          // set current relation
+          ctx.setRelation(relation);
+          
+          // loop over tuples        
+          TupleReaderIF reader = datasource.getReader(relation.getName());
+          
+          String [] tuple = null;
+          while ((tuple = reader.readNext()) != null) {
+            if (tuple == null) break;
+          
+            // process individual tuple
+            long time = System.currentTimeMillis();
+            removeTuple(relation, tuple, ctx);
+            rstime2 += (System.currentTimeMillis()-time);
+            rtuples++;
+          }
+          log.info("    Removed " + rtuples + " tuples from " + relation.getName() + ", " + 
+                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          ttuples += rtuples;
+        }
+      }
+    } catch (Exception e) {
+      throw new DB2TMException("Error occurred in removeRelations call.", e);
+    } finally {
+      ctx.close();
     }
-    log.debug("done: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms");
-    ctx.close();
+    if (log.isInfoEnabled())
+      log.info("done removing relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
   }
   
   public static void addTuple(Relation relation, String[] tuple, Context ctx) {
@@ -187,8 +201,12 @@ public class Processor {
     List entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
       Entity entity = (Entity)entities.get(i);
-      Object o = addEntity(relation, entity, tuple, ctx);
-      ctx.setEntityObject(i, o);
+      try {
+        Object o = addEntity(relation, entity, tuple, ctx);
+        ctx.setEntityObject(i, o);
+      } catch (Exception e) {
+        throw new DB2TMException("Error occurred while adding tuple " + Arrays.asList(tuple) + " from relation " + relation.getName() + " to entity " + entity, e);
+      }
     }
   }
 
@@ -383,7 +401,11 @@ public class Processor {
     // then try to remove each of them (note: reverse order)
     for (int i=entities.size()-1; i >=0; i--) {
       Entity entity = (Entity)entities.get(i);
-      removeEntity(relation, entity, tuple, ctx);
+      try {
+        removeEntity(relation, entity, tuple, ctx);
+      } catch (Exception e) {
+        throw new DB2TMException("Error occurred while removing tuple " + Arrays.asList(tuple) + " from relation " + relation.getName() + " to entity " + entity, e);
+      }
     }
   }
 
@@ -1231,178 +1253,185 @@ public class Processor {
                                           LocatorIF baseloc, boolean forceRescan) {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
-
-    // verify relation mapping
-    Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
-
-    // set up context object
     Context ctx = new Context();
-    ctx.setMapping(rmapping);
-    ctx.setTopicMap(topicmap);
-    if (baseloc != null)
-      ctx.setBaseLocator(baseloc);
-    else {
-      log.info("No base locator specified, so using base of topic maps store.");
-      ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
-    }
-    
-    // loop over datasources
-    Iterator dsiter = ds_relations.keySet().iterator();
-    while (dsiter.hasNext()) {
-      DataSourceIF datasource = (DataSourceIF)dsiter.next();
-      log.debug("Synchronizing relations in data source: " + datasource);
+    if (log.isInfoEnabled()) log.info("Synchronizing relations: " + new Date());
 
-      // loop over relations
-      Collection rels = (Collection)ds_relations.get(datasource);
-      Iterator riter = rels.iterator();
-      while (riter.hasNext()) {
-        Relation relation = (Relation)riter.next();
-
-        // do not process non-listed relations
-        if (relnames != null && !relnames.contains(relation.getName())) {
-          log.debug("  ignoring relation: " + relation.getName());
-          continue;
-        }
-
-        // figure out what the synchronization type is
-        int synctype = relation.getSynchronizationType();
-
-        if (forceRescan)
-          synctype = Relation.SYNCHRONIZATION_RESCAN;
-
-        if (synctype == Relation.SYNCHRONIZATION_UNKNOWN) {
-          if (!relation.getSyncs().isEmpty()) {
-            synctype = Relation.SYNCHRONIZATION_CHANGELOG;
-            log.debug("  defaulting synchronization type for relation " + relation.getName() + " to " + synctype);
-          } else {
-            synctype = Relation.SYNCHRONIZATION_RESCAN;
-            log.debug("  defaulting synchronization type for relation " + relation.getName() + " to " + synctype);
+    try {
+      // verify relation mapping
+      Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
+      
+      // set up context object
+      ctx.setMapping(rmapping);
+      ctx.setTopicMap(topicmap);
+      if (baseloc != null)
+        ctx.setBaseLocator(baseloc);
+      else {
+        log.info("No base locator specified, so using base of topic maps store.");
+        ctx.setBaseLocator(topicmap.getStore().getBaseAddress());
+      }
+      
+      // loop over datasources
+      Iterator dsiter = ds_relations.keySet().iterator();
+      while (dsiter.hasNext()) {
+        DataSourceIF datasource = (DataSourceIF)dsiter.next();
+        log.debug("Synchronizing relations in data source: " + datasource);
+      
+        // loop over relations
+        Collection rels = (Collection)ds_relations.get(datasource);
+        Iterator riter = rels.iterator();
+        while (riter.hasNext()) {
+          Relation relation = (Relation)riter.next();
+      
+          // do not process non-listed relations
+          if (relnames != null && !relnames.contains(relation.getName())) {
+            log.debug("  ignoring relation: " + relation.getName());
+            continue;
           }
-        }
-        log.debug("  synchronizing relation: " + relation.getName() + " type: " +
-                  synctype + " " + Relation.getSynchronizationTypeName(synctype) + " force: " + forceRescan);
-        
-        int rtuples = 0;
-        long rstime1 = System.currentTimeMillis();
-        long rstime2 = 0;
-
-        // set current relation
-        ctx.setRelation(relation);
+      
+          // figure out what the synchronization type is
+          int synctype = relation.getSynchronizationType();
+      
+          if (forceRescan)
+            synctype = Relation.SYNCHRONIZATION_RESCAN;
+      
+          if (synctype == Relation.SYNCHRONIZATION_UNKNOWN) {
+            if (!relation.getSyncs().isEmpty()) {
+              synctype = Relation.SYNCHRONIZATION_CHANGELOG;
+              log.debug("  defaulting synchronization type for relation " + relation.getName() + " to " + synctype);
+            } else {
+              synctype = Relation.SYNCHRONIZATION_RESCAN;
+              log.debug("  defaulting synchronization type for relation " + relation.getName() + " to " + synctype);
+            }
+          }
+          log.debug("  synchronizing relation: " + relation.getName() + " type: " +
+                    synctype + " " + Relation.getSynchronizationTypeName(synctype) + " force: " + forceRescan);
           
-        // synchronize relation if configured to do so
-        if (synctype == Relation.SYNCHRONIZATION_CHANGELOG) {
-          // changelog synchronization
-          Collection syncs = relation.getSyncs();
-          if (!syncs.isEmpty()) {
-            Iterator siter = syncs.iterator();
-            while (siter.hasNext()) {
-              Changelog sync = (Changelog)siter.next();
-              log.debug("  changelog, table " + sync.getTable());
-              
-              // get start order from topic map
-              String startOrder = getStartOrder(sync, ctx);
-              String highestOrder = startOrder;
-              log.debug("Old order value: " + sync.getTable() + "=" + startOrder);
-              ChangelogReaderIF reader = datasource.getChangelogReader(sync, startOrder);
-              reader = new ChangelogReaderWrapper(reader,
-                                                  sync.getPrimaryKey().length);
-              
-              try {
-                String[] tuple;
-                while ((tuple = reader.readNext()) != null) {
-                  // process individual tuple
-                  long time = System.currentTimeMillis();
-                  
-                  // track order value
-                  String orderValue = reader.getOrderValue();                
-                  if (highestOrder == null ||
-                      highestOrder.compareTo(orderValue) < 0)
-                    highestOrder = orderValue;
-                  
-                  switch (reader.getChangeType()) {
-                  case ChangelogReaderIF.CHANGE_TYPE_CREATE:
-                    addTuple(relation, tuple, ctx);
-                    break;
-                  case ChangelogReaderIF.CHANGE_TYPE_UPDATE:
-                    updateTuple(relation, tuple, ctx);
-                    break;
-                  case ChangelogReaderIF.CHANGE_TYPE_DELETE:
-                    removeTuple(relation, tuple, ctx);
-                    break;
-                  case ChangelogReaderIF.CHANGE_TYPE_IGNORE:
-                    // ignore tuple
-                    break;
-                  default:
-                    throw new DB2TMInputException("Illegal change type: " + reader.getChangeType());
+          int rtuples = 0;
+          long rstime1 = System.currentTimeMillis();
+          long rstime2 = 0;
+      
+          // set current relation
+          ctx.setRelation(relation);
+            
+          // synchronize relation if configured to do so
+          if (synctype == Relation.SYNCHRONIZATION_CHANGELOG) {
+            // changelog synchronization
+            Collection syncs = relation.getSyncs();
+            if (!syncs.isEmpty()) {
+              Iterator siter = syncs.iterator();
+              while (siter.hasNext()) {
+                Changelog sync = (Changelog)siter.next();
+                log.debug("  changelog, table " + sync.getTable());
+                
+                // get start order from topic map
+                String startOrder = getStartOrder(sync, ctx);
+                String highestOrder = startOrder;
+                log.debug("Old order value: " + sync.getTable() + "=" + startOrder);
+                ChangelogReaderIF reader = datasource.getChangelogReader(sync, startOrder);
+                reader = new ChangelogReaderWrapper(reader,
+                                                    sync.getPrimaryKey().length);
+                
+                try {
+                  String[] tuple;
+                  while ((tuple = reader.readNext()) != null) {
+                    // process individual tuple
+                    long time = System.currentTimeMillis();
+                    
+                    // track order value
+                    String orderValue = reader.getOrderValue();                
+                    if (highestOrder == null ||
+                        highestOrder.compareTo(orderValue) < 0)
+                      highestOrder = orderValue;
+                    
+                    switch (reader.getChangeType()) {
+                    case ChangelogReaderIF.CHANGE_TYPE_CREATE:
+                      addTuple(relation, tuple, ctx);
+                      break;
+                    case ChangelogReaderIF.CHANGE_TYPE_UPDATE:
+                      updateTuple(relation, tuple, ctx);
+                      break;
+                    case ChangelogReaderIF.CHANGE_TYPE_DELETE:
+                      removeTuple(relation, tuple, ctx);
+                      break;
+                    case ChangelogReaderIF.CHANGE_TYPE_IGNORE:
+                      // ignore tuple
+                      break;
+                    default:
+                      throw new DB2TMInputException("Illegal change type: " + reader.getChangeType());
+                    }
+                    
+                    rstime2 += (System.currentTimeMillis()-time);
+                    rtuples++;
                   }
                   
-                  rstime2 += (System.currentTimeMillis()-time);
-                  rtuples++;
+                  // update start order
+                  log.debug("New order value: " + sync.getTable() + "=" + highestOrder);
+                  setStartOrder(sync, ctx, highestOrder);
+                  
+                } finally {
+                  reader.close();
                 }
-                
-                // update start order
-                log.debug("New order value: " + sync.getTable() + "=" + highestOrder);
-                setStartOrder(sync, ctx, highestOrder);
-                
-              } finally {
-                reader.close();
-              }
-            }            
-          }
-        }
-        else if (synctype == Relation.SYNCHRONIZATION_RESCAN) {
-          
-          // EXPERIMENTAL: load extents
-          ctx.loadExtents();
-
-          // update start order values if there are changelogs declared
-          Collection syncs = relation.getSyncs();
-          if (!syncs.isEmpty()) {
-            Iterator siter = syncs.iterator();
-            while (siter.hasNext()) {
-              Changelog sync = (Changelog)siter.next();
-              String maxOrderValue = datasource.getMaxOrderValue(sync);
-              log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
-              setStartOrder(sync, ctx, maxOrderValue);
+              }            
             }
           }
-          
-          // full relation rescan
-          TupleReaderIF reader = datasource.getReader(relation.getName());
-          
-          try {
-            log.debug("  full rescan, table " + relation.getName());
-              
-            String [] tuple = null;
-            while ((tuple = reader.readNext()) != null) {
-              if (tuple == null) break;
-                
-              // process individual tuple
-              long time = System.currentTimeMillis();
-                
-              updateTuple(relation, tuple, ctx);
-                
-              rstime2 += (System.currentTimeMillis()-time);
-              rtuples++;
-            }
-          } finally {
-            reader.close();
-          }
+          else if (synctype == Relation.SYNCHRONIZATION_RESCAN) {
             
-          // EXPERIMENTAL: remove untouched extent objects from the topic map
-          ctx.removeExtentObjects();
+            // EXPERIMENTAL: load extents
+            ctx.loadExtents();
+      
+            // update start order values if there are changelogs declared
+            Collection syncs = relation.getSyncs();
+            if (!syncs.isEmpty()) {
+              Iterator siter = syncs.iterator();
+              while (siter.hasNext()) {
+                Changelog sync = (Changelog)siter.next();
+                String maxOrderValue = datasource.getMaxOrderValue(sync);
+                log.debug("New order value: " + sync.getTable() + "=" + maxOrderValue);
+                setStartOrder(sync, ctx, maxOrderValue);
+              }
+            }
+            
+            // full relation rescan
+            TupleReaderIF reader = datasource.getReader(relation.getName());
+            
+            try {
+              log.debug("  full rescan, table " + relation.getName());
+                
+              String [] tuple = null;
+              while ((tuple = reader.readNext()) != null) {
+                if (tuple == null) break;
+                  
+                // process individual tuple
+                long time = System.currentTimeMillis();
+                  
+                updateTuple(relation, tuple, ctx);
+                  
+                rstime2 += (System.currentTimeMillis()-time);
+                rtuples++;
+              }
+            } finally {
+              reader.close();
+            }
+              
+            // EXPERIMENTAL: remove untouched extent objects from the topic map
+            ctx.removeExtentObjects();
+          }
+      
+          // EXPERIMENTAL: remove expired field values (characteristics)
+          ctx.removeOldValues();
+          
+          log.info("    Synchronized " + rtuples + " tuples for " + relation.getName() + ", " + 
+                    (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
+          ttuples += rtuples;
         }
-
-        // EXPERIMENTAL: remove expired field values (characteristics)
-        ctx.removeOldValues();
-        
-        log.debug("    " + rtuples + " tuples, " + 
-                  (System.currentTimeMillis()-rstime1) + "/" + rstime2 + " ms");
-        ttuples += rtuples;
       }
+    } catch (Exception e) {
+      throw new DB2TMException("Error occurred in synchronizeRelations call.", e);
+    } finally {
+      ctx.close();
     }
-    log.debug("done: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms");
-    ctx.close();
+    if (log.isInfoEnabled())
+      log.info("done synchronizing relations: " + ttuples + " tuples, " + (System.currentTimeMillis()-tstime) + " ms. " + new Date());
   }
   
   /**
@@ -1501,8 +1530,12 @@ public class Processor {
     List entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
       Entity entity = (Entity)entities.get(i);
-      Object o = updateEntity(relation, entity, tuple, ctx);
-      ctx.setEntityObject(i, o);
+      try {
+        Object o = updateEntity(relation, entity, tuple, ctx);
+        ctx.setEntityObject(i, o);
+      } catch (Exception e) {
+        throw new DB2TMException("Error occurred while updating tuple " + Arrays.asList(tuple) + " from relation " + relation.getName() + " to entity " + entity, e);
+      }
     }
 
   }
@@ -1515,7 +1548,7 @@ public class Processor {
     if (entity.requiresTopic()) {
       // find candidate topic
       topic = findTopicByIdentities(relation, entity, tuple, ctx);
-
+      //! topic = addIdentities(topic, relation, entity, tuple, ctx);
       // FIXME: if we track updated objects can we then avoid loading
       // full extents?
       
@@ -1555,11 +1588,13 @@ public class Processor {
         // update identities
         topic = updateIdentities(topic, relation, entity, tuple, ctx);
         
-        // update topic types
-        if (entity.getEntityType() == Entity.TYPE_TOPIC)
+        // update topic types if primary
+        if (entity.getEntityType() == Entity.TYPE_TOPIC) {
           // NOTE: association reifiers cannot have types
-          updateTypes(topic, entity.getTypes(), entity, tuple, ctx);
-        
+          if (entity.isPrimary())
+            updateTypes(topic, entity.getTypes(), entity, tuple, ctx);
+        }
+
         // update characteristics
         for (int i=0; i < cfields.size(); i++) {
           Field field = (Field) cfields.get(i);

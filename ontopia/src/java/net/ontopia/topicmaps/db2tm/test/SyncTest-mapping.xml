@@ -1,7 +1,7 @@
 <!-- $Id: SyncTest-mapping.xml,v 1.2 2009/01/23 13:13:48 lars.garshol Exp $ -->
 <db2tm name='SyncTest'>
   <sources>
-    <jdbc id="jdbc" propfile='/Users/larsga/cvs-co/src/java/test-data/config/toplink.properties'/>
+    <jdbc id="jdbc" propfile='/Users/grove/grove.postgresql.props'/>
   </sources>
 
   <relation name='testdata' columns='id name type' synctype='changelog'>

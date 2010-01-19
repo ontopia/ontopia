@@ -8,10 +8,16 @@ import java.io.IOException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * PUBLIC: The driver class used to do conversions with DB2TM.
  */
 public class DB2TM {
+  
+  // --- define a logging category.
+  static Logger log = LoggerFactory.getLogger(DB2TM.class.getName());
 
   private DB2TM() {
     // not possible to instantiate
@@ -27,7 +33,13 @@ public class DB2TM {
    */
   public static void add(String cfgfile, TopicMapIF topicmap)
     throws IOException {
-    RelationMapping mapping = RelationMapping.read(new File(cfgfile));
+    log.info("Reading DB2TM configuration file: " + cfgfile);
+    RelationMapping mapping;
+    try {
+      mapping = RelationMapping.read(new File(cfgfile));
+    } catch (Exception e) {
+      throw new DB2TMException("Error occurred while reading DB2TM configuration file: " + cfgfile, e);
+    }
     LocatorIF baseloc = topicmap.getStore().getBaseAddress();
     Processor.addRelations(mapping, null, topicmap, baseloc);
   }
@@ -42,7 +54,13 @@ public class DB2TM {
    */
   public static void sync(String cfgfile, TopicMapIF topicmap)
     throws IOException {
-    RelationMapping mapping = RelationMapping.read(new File(cfgfile));
+    log.info("Reading DB2TM configuration file: " + cfgfile);
+    RelationMapping mapping;
+    try {
+      mapping = RelationMapping.read(new File(cfgfile));
+    } catch (Exception e) {
+      throw new DB2TMException("Error occurred while reading DB2TM configuration file: " + cfgfile, e);
+    }
     LocatorIF baseloc = topicmap.getStore().getBaseAddress();
     Processor.synchronizeRelations(mapping, null, topicmap, baseloc);
   }

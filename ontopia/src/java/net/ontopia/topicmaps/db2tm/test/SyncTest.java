@@ -309,11 +309,17 @@ public class SyncTest extends AbstractOntopiaTestCase {
     // verify that t2 has a topic type
     t2.addType(topictype);
     assertTrue("t2 has no topic type", !t2.getTypes().isEmpty());
-    
+
+    TopicIF t1 = topicmap.getTopicBySubjectIdentifier(URIUtils.getURILocator("http://example.org/test/1"));
+    assertTrue("t1 was found", t1 == null);
+
     // synchronize
     mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/association-mapping.xml");
     Processor.synchronizeRelations(mapping, null, topicmap,
                                    topicmap.getStore().getBaseAddress());
+    t1 = topicmap.getTopicBySubjectIdentifier(URIUtils.getURILocator("http://example.org/test/1"));
+    assertTrue("t1 was not found", t1 != null);
+    assertTrue("t1 did not have t2 as its type", t1.getTypes().size() == 1 && t1.getTypes().contains(t2));
 
     // t2 should not have lost its topic type in the sync!
     assertTrue("t2 lost its topic type", !t2.getTypes().isEmpty());
