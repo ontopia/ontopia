@@ -306,6 +306,10 @@ public class SyncTest extends AbstractOntopiaTestCase {
     URILocator psi = new URILocator("psi:test/2");
     t2.addSubjectIdentifier(psi); // will cause test data to match it
 
+    // verify that t2 has a topic type
+    t2.addType(topictype);
+    assertTrue("t2 has no topic type", !t2.getTypes().isEmpty());
+    
     // synchronize
     mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/test/association-mapping.xml");
     Processor.synchronizeRelations(mapping, null, topicmap,
