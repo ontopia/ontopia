@@ -18,6 +18,7 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -46,6 +47,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   public static final String ASSOC_PARENT_CHILD_PSI = PSI_PREFIX + "parent-child";
 
   public static final String NULL = "null";
+  private static final String WEBCONTENT_TYPE = "webcontent";
+  private static final String USER_TYPE = "user";
+  private static final String WIKIPAGE_TYPE = "wikipage";
+  private static final String WIKINODE_TYPE = "wikinode";
+  private static final String STRUCTURE_TYPE = "structure";
+  private static final String COMMUNITY_TYPE = "community";
 
   private static final String TMNAME = "liferay_v43.ltm";
   
@@ -71,7 +78,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
   
   private void addWebContent(JournalArticle content, TopicMapIF tm){
-    addArticle(content,tm); // TODO: Needs to be renamed to createWebContent
+    createWebContent(content,tm);
     setWorkflowstate(content,tm);
     
     try {
@@ -124,7 +131,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   
   public void updateUser(User user){
     try {
-      update(user, "user");
+      update(user, USER_TYPE);
     } catch (MalformedURLException e) {
         throw new OntopiaRuntimeException(e);    }
   }
@@ -135,7 +142,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     HashMap valueMap = getStructureHashMap(structure);
     String structureUrn = urnifyCtm(structure.getUuid());
     String parentStructureUrn = findStructureUrnByStructureId(structure.getParentStructureId());
-    // id needs be escaped, the user can edit it
 
     String parent;
     if(parentStructureUrn.equals(urnifyCtm(""))){
@@ -149,7 +155,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     		"- $id . from" +
         "$id = %structureId%";
     
-    runQuery(query, tm, valueMap); // is it considered cheating to use the ID as a name?
+    runQuery(query, tm, valueMap); // is it considered cheating to use the ID as a oldName?
   }
   
   public void deleteStructure(String uuid){
@@ -158,7 +164,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   
   public void updateStructure(JournalStructure structure){
     try {
-      update(structure, "structure");
+      update(structure, STRUCTURE_TYPE);
     } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -173,7 +179,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query);
   }
   
-  private void addArticle(JournalArticle content, TopicMapIF tm){
+  private void createWebContent(JournalArticle content, TopicMapIF tm){
     System.out.println("*** addArticle ***");
     HashMap<String, String> valueMap = getWebContentHashmap(content);
     String classname;
@@ -240,11 +246,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     System.out.println("*** setUserApproving ***");
     String workUrn = urnifyCtm(content.getUuid());
     
-    String approverUrn; // TODO: What if approving User UUID is "" ? 
+    String approverUrn;
     try {
       approverUrn = urnifyCtm(content.getApprovedByUserUuid());
     } catch (SystemException ex) {
-      approverUrn = "";
+      throw new OntopiaRuntimeException(ex);
     }
 
     String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
@@ -272,21 +278,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       runQuery(query,tm);
   }
   
-  private synchronized void runQuery(String query, TopicMapIF tm){
-    QueryProcessorIF proc = QueryUtils.createQueryProcessor(tm);
-    TopicMapStoreIF store = tm.getStore();
-    store.open();
-    try {
-          int number = proc.update(query);
-          System.out.println("*** Query processed successfully # "+ number + " ***");
-          store.commit();
-        } catch (Exception e) {
-            System.err.println("*** Error while processing query: " + e.getLocalizedMessage() + " ***");
-            System.out.println(query);
-            throw new OntopiaRuntimeException(e);
-        } finally{
-          store.close();
-        }
+  private void runQuery(String query, TopicMapIF tm){
+    HashMap map = new HashMap();
+    runQuery(query, tm, map);
   }
 
    private synchronized void runQuery(String query, TopicMapIF tm, Map map){
@@ -322,29 +316,34 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     String query ="select $PSI from\n" +
     		"subject-identifier($TOPIC, $PSI),\n" +
     		"topic-name($TOPIC, $BASENAME),\n" +
-    		"value($BASENAME,\"" + structureId +"\")?"; // TODO: I think this passes for cheating using the name to store the structureId ... not sure.. ?
+    		"value($BASENAME,\"" + structureId +"\")?"; // TODO: I think this passes for cheating using the oldName to store the structureId ... not sure.. ?
 
-    String retval = executeQuery(query, topicmap);
+    String retval = getSingleStringFromQuery(query, topicmap);
     return retval;
     }
 
 
-  private String executeQuery(String query, TopicMapIF tm){ // TODO: unsuitable name
-    QueryProcessorIF proc = QueryUtils.createQueryProcessor(tm);
-    try {
-      QueryResultIF result = proc.execute(query);// this went into a separate method in the end. We need it more than once
-      while(result.next()){
+  private String getSingleStringFromQuery(String query, TopicMapIF tm){
+    QueryResultIF result = executeQuery(query, tm);
+     while(result.next()){
         Object[] results = new Object[result.getWidth()];
         results = result.getValues(results);
         Object retval = results[0];
         return (String) retval ;
       }
+    return urnifyCtm("");
+  }
+  
+  private QueryResultIF executeQuery(String query, TopicMapIF tm){ 
+    QueryProcessorIF proc = QueryUtils.createQueryProcessor(tm);
+    try {
+      QueryResultIF result = proc.execute(query);
+     return result;
     } catch (InvalidQueryException e) {
       System.err.println("*** Error executing query  ***");
       System.err.println(query);
       throw new OntopiaRuntimeException(e);
     }
-    return urnifyCtm(""); // this may change to return ""; or may become an exception
   }
   
   private void update(Object obj, String type) throws MalformedURLException{
@@ -352,36 +351,52 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     TopicMapStoreIF sourceStore = new InMemoryTopicMapStore();
     TopicMapIF sourceTm = sourceStore.getTopicMap(); // temporary topicmap f. sync
 
-    // find out which class lies beneath and act accordingly
     // the deciders are filters for features not to be updated
 
-    if(type.equalsIgnoreCase("webcontent")){
+    if(type.equalsIgnoreCase(WEBCONTENT_TYPE)){
       JournalArticle article = (JournalArticle) obj;
-      addWebContent(article,sourceTm); // I think I could simply call addArticle() instead and leave the deciders be empty?
+      addWebContent(article,sourceTm); // I think I could simply call createWebContent() instead and leave the deciders be empty?
       TopicIF source = retrieveTopicByUuid(article.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new WebContentDecider(), new WebContentDecider());
-    } else if(type.equalsIgnoreCase("structure")){
+    } else if(type.equalsIgnoreCase(STRUCTURE_TYPE)){
       JournalStructure structure = (JournalStructure) obj;
       addStructure(structure,sourceTm);
       TopicIF source = retrieveTopicByUuid(structure.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new StructureDecider(), new StructureDecider());
-    } else if(type.equalsIgnoreCase("user")){
+    } else if(type.equalsIgnoreCase(USER_TYPE)){
       User user = (User) obj;
       addUser(user, sourceTm);
       TopicIF source = retrieveTopicByUuid(user.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new UserDecider(), new UserDecider());
-    } else if(type.equals("wikinode")){
+    } else if(type.equals(WIKINODE_TYPE)){
       WikiNode node = (WikiNode) obj;
       createWikiNode(node, sourceTm);
       TopicIF source = retrieveTopicByUuid(node.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new WikiNodeDecider(), new WikiNodeDecider());
-    } else if(type.equals("wikipage")){
+    } else if(type.equals(WIKIPAGE_TYPE)){
       WikiPage page = (WikiPage) obj;
       addWikiPage(page, sourceTm);
       TopicIF source = retrieveTopicByUuid(page.getUuid(), sourceTm);
       TopicMapSynchronizer.update(topicmap, source , new WikiPageDecider(), new WikiPageDecider());
-    }
+    } else if(type.equals(COMMUNITY_TYPE)){ // TODO: See if the update code should go into an extra method
+      Group group = (Group) obj;
+      String objectId = getObjectIdByGroupId(String.valueOf(group.getGroupId()), topicmap);
+      TopicIF topic = (TopicIF) topicmap.getObjectById(objectId);
+      if(topic != null){
+        TopicNameIF oldName = (TopicNameIF) topic.getTopicNames().iterator().next();
+        HashMap<String, String> valueMap = new HashMap();
+        valueMap.put("name", group.getName());
 
+        // This changes names only because as of now this is the only value that can be changed by users
+        String query = "update value($NAME, $name) from " +
+                "topic-name($TOPIC, $NAME), \n" +
+                "instance-of($TOPIC, lr:community)" + //TODO: Has to be tested yet
+                "value($NAME, \"" + oldName.getValue() + "\")," +
+                "$name = %name%";
+
+        runQuery(query, topicmap, valueMap);
+      }
+    }
     System.out.println("*** update ended! ***");
   }
 
@@ -453,7 +468,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   public void updateWikiNode(WikiNode wikinode) {
     try {
-      update(wikinode, "wikinode");
+      update(wikinode, WIKINODE_TYPE);
     } catch (MalformedURLException ex) {
       throw new OntopiaRuntimeException(ex);
     }
@@ -466,7 +481,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   private void addWikiPage(WikiPage wikipage, TopicMapIF tm){
     createWikiPage(wikipage, tm);
     if(!wikipage.getParentPages().isEmpty()){
-      System.out.println("DEBUG: Parentpages for this wikipage!");
       for(WikiPage wpd : wikipage.getParentPages()){
         setParentChild(wpd.getUuid(), wikipage.getUuid(), tm);
       }
@@ -507,7 +521,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   public void updateWikiPage(WikiPage wikipage) {
     try {
-      update(wikipage, "wikipage");
+      update(wikipage, WIKIPAGE_TYPE);
     } catch (MalformedURLException ex) {
       throw new OntopiaRuntimeException(ex);
     }
@@ -524,7 +538,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query, tm);
   }
 
-  // All the group-stuff doesn't work properly.
     public void addGroup(Group group) {
     if(group.isCommunity()){
       addCommunity(group, topicmap);
@@ -546,7 +559,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
        runQuery(query, tm, valueMap);
     }
 
-  public void deleteGroup(Group group) { // TODO: Easify this using getObjectIdFrom .... 
+  public void deleteGroup(Group group) {
     System.out.println("*** deleteGroup ***");
         String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
             "delete $TOPIC from \n" +
@@ -554,16 +567,17 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
             "type($OCCURRENCE, lr:groupid)," +
             "occurrence($TOPIC, $OCCURRENCE)," +
             "instance-of($TOPIC, lr:community)";
-
     System.out.println(query);
     runQuery(query);
   }
 
   public void updateGroup(Group group) {
-    try {
-      update(group, "group");
-    } catch (MalformedURLException ex) {
-      throw new OntopiaRuntimeException(ex);
+    if(group.isCommunity()){
+      try {
+        update(group, COMMUNITY_TYPE);
+      } catch (MalformedURLException ex) {
+        throw new OntopiaRuntimeException(ex);
+      }
     }
   }
 
@@ -573,7 +587,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
             "insert lr:contains( lr:container : " + containerUrn + " , lr:containee : " + containeeUrn + " )";
 
-    runQuery(query);
+    runQuery(query, tm);
   }
 
   private void setGroupContains(String groupId, String uuid, TopicMapIF tm){
@@ -591,7 +605,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query, tm, map);
   }
 
-  // doesn't work properly
   private String getObjectIdByGroupId(String groupId, TopicMapIF tm){
     System.out.println("*** getTmIdByGroupId ***");
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
@@ -603,7 +616,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
             "instance-of($TOPIC, lr:community)?";
 
     System.out.println(query);
-    String retval = executeQuery(query, tm);
+    String retval = getSingleStringFromQuery(query, tm);
     System.out.println("*** ObjectId = " + retval + " ***");
     return retval;
   }
@@ -640,7 +653,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     } catch (SystemException ex) {
       retval.put("useruuid", NULL);
     }
-
     return retval;
   }
 
@@ -650,7 +662,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     retval.put("uuid", user.getUuid());
     retval.put("username", user.getEmailAddress());
     retval.put("urnCtm", urnify(user.getUuid()));
-
     return retval;
   }
 
@@ -661,7 +672,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     retval.put("structureId", structure.getStructureId());
     retval.put("parentId", structure.getParentStructureId());
     retval.put("name", structure.getName());
-
     return retval;
   }
 
@@ -671,7 +681,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     retval.put("groupId", String.valueOf(group.getGroupId()));
     retval.put("parentGroupId", String.valueOf(group.getParentGroupId()));
     retval.put("name", group.getName());
-
     return retval;
   }
 
@@ -690,7 +699,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       throw new OntopiaRuntimeException(ex);
       //retval.put("userUuid", NULL);
     }
-
     return retval;
   }
 
@@ -714,7 +722,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       throw new OntopiaRuntimeException(ex);
       //retval.put("userUuid", NULL);
     }
-
     return retval;
   }
   
