@@ -47,6 +47,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   public static final String ASSOC_PARENT_CHILD_PSI = PSI_PREFIX + "parent-child";
 
   public static final String NULL = "null";
+  
   private static final String WEBCONTENT_TYPE = "webcontent";
   private static final String USER_TYPE = "user";
   private static final String WIKIPAGE_TYPE = "wikipage";
@@ -54,7 +55,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   private static final String STRUCTURE_TYPE = "structure";
   private static final String COMMUNITY_TYPE = "community";
 
-  private static final String TMNAME = "liferay_v43.ltm";
+  private static final String TMNAME = "liferay_v45.ltm";
   
   private TopicMapIF topicmap;
   
@@ -390,7 +391,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         // This changes names only because as of now this is the only value that can be changed by users
         String query = "update value($NAME, $name) from " +
                 "topic-name($TOPIC, $NAME), \n" +
-                "instance-of($TOPIC, lr:community)" + //TODO: Has to be tested yet
+                "instance-of($TOPIC, lr:community)" + 
                 "value($NAME, \"" + oldName.getValue() + "\")," +
                 "$name = %name%";
 
