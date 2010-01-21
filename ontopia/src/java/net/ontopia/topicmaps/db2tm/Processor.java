@@ -1547,8 +1547,8 @@ public class Processor {
     TopicIF topic = null;
     if (entity.requiresTopic()) {
       // find candidate topic
-      topic = findTopicByIdentities(relation, entity, tuple, ctx);
-      //! topic = addIdentities(topic, relation, entity, tuple, ctx);
+      topic = addIdentities(topic, relation, entity, tuple, ctx);
+
       // FIXME: if we track updated objects can we then avoid loading
       // full extents?
       
