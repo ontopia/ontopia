@@ -3,7 +3,7 @@ import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelListener;
 import tm.OntopiaAdapter;
-import util.GroupData;
+
 
 
 public class GroupListener implements ModelListener<Group>{

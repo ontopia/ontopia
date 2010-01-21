@@ -6,7 +6,6 @@ import com.liferay.portal.SystemException;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.wiki.model.WikiPage;
 import tm.OntopiaAdapter;
-import util.WikiPageData;
 
 public class WikiPageListener implements ModelListener<WikiPage>{
 

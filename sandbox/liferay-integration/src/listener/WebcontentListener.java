@@ -2,7 +2,6 @@ package listener;
 
 import tm.OntopiaAdapter;
 import tm.OntopiaAdapterIF;
-import util.WebContentData;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.ModelListener;

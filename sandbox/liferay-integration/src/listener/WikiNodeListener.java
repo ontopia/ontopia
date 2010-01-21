@@ -5,7 +5,6 @@ import com.liferay.portal.SystemException;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.wiki.model.WikiNode;
 import tm.OntopiaAdapter;
-import util.WikiNodeData;
 
 public class WikiNodeListener implements ModelListener<WikiNode>{
 
