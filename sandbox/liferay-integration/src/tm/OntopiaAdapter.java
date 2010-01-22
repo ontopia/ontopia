@@ -76,6 +76,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   // Webcontent
   public void addWebContent(JournalArticle content){
     addWebContent(content, topicmap);
+    setGroupContains(String.valueOf(content.getGroupId()), content.getUuid(), topicmap); // TODO: For the time being this cannot be used within the private method, because the update will fail
   }
   
   private void addWebContent(JournalArticle content, TopicMapIF tm){
@@ -92,6 +93,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     if(content.isApproved()){
       setUserApproving(content, tm);
     }
+    
+    
   }
   
   public void deleteWebContent(String uuid){
@@ -99,7 +102,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
   
   public void updateWebContent(JournalArticle content){
-    // using tmsync to implement update
     try {
       update(content, "webcontent");
     } catch (MalformedURLException e) {
@@ -145,7 +147,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     String parentStructureUrn = findStructureUrnByStructureId(structure.getParentStructureId());
 
     String parent;
-    if(parentStructureUrn.equals(urnifyCtm(""))){
+    if(parentStructureUrn.equals(NULL)){
       System.out.println("*** No parentstructure provided. Using webcontent instead ***");
       parent = PSI_PREFIX + "webcontent";
     } else {
@@ -156,7 +158,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     		"- $id . from" +
         "$id = %structureId%";
     
-    runQuery(query, tm, valueMap); // is it considered cheating to use the ID as a oldName?
+    runQuery(query, tm, valueMap); // is it considered cheating to use the ID as a Name?
   }
   
   public void deleteStructure(String uuid){
@@ -171,8 +173,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     }
   }
   
-
-  // private methods
   private void deleteByUuid(String uuid){
     System.out.println("*** delete " + uuid + " ***");
     String psi = urnify(uuid);
@@ -187,7 +187,10 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     if(content.getStructureId().equals("")){
       classname = "lr:article";
     } else {
-      classname = findStructureUrnByStructureId(content.getStructureId()); // may return "" -> will trigger creation of 'urn:uuid:' topic :( and fail silently
+      classname = findStructureUrnByStructureId(content.getStructureId());
+      if(classname.equals(NULL)){
+        throw new OntopiaRuntimeException("Structure with id + " + content.getStructureId() + " not found!");
+      }
     }
 
     String approvedDateString = "";
@@ -232,7 +235,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   
   
   private void setCreator(String workUuid, String creatorUuid, TopicMapIF tm){
-    // TODO: creatorUrn might be "" in case of exception! Handling here
     System.out.println("*** setCreator ***");
     String workUrn = urnifyCtm(workUuid);
     String creatorUrn = urnifyCtm(creatorUuid);
@@ -332,7 +334,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         Object retval = results[0];
         return (String) retval ;
       }
-    return urnifyCtm("");
+    return NULL;
   }
   
   private QueryResultIF executeQuery(String query, TopicMapIF tm){ 
@@ -591,7 +593,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query, tm);
   }
 
-  private void setGroupContains(String groupId, String uuid, TopicMapIF tm){
+  private void setGroupContains(String groupId, String uuid, TopicMapIF tm){ //TODO: Could expect a long value instead of string for groupId then be renamed to setContains()
     System.out.println("*** setGroupContains ***");
     String groupObjectId = getObjectIdByGroupId(groupId, tm);
     TopicIF topic = (TopicIF) tm.getObjectById(groupObjectId);
