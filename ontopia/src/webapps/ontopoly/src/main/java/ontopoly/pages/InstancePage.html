@@ -4,18 +4,17 @@
 		<wicket:extend>
 
     <div wicket:id="titlePartPanel" />
+    
+    <form wicket:id="form">     
+  
+      <div wicket:id="functionBoxes" id="functionBoxes" />  
 
-    <div wicket:id="functionBoxes" id="functionBoxes" ></div>
+      <h1 wicket:id="subTitle" class="title" />     
 
-    <form wicket:id="form">
-      <table>
-      <tr><td>
-        <div wicket:id="instanceContainer">     
-          <div wicket:id="instancePanel"/>
-        </div>
-      </td></tr>
-      <tr><td><div class="fieldsEditor" wicket:id="fieldsEditor"/></td></tr>
-      </table>
+      <div wicket:id="instancePanel" />
+
+      <div wicket:id="fieldsEditor" class="fieldsEditor" />
+      
 		</form>
 		
 		</wicket:extend>

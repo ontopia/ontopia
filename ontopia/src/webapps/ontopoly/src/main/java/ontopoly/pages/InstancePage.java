@@ -10,14 +10,15 @@ import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolySession;
 import ontopoly.components.AddOrRemoveTypeFunctionBoxPanel;
 import ontopoly.components.AssociationTransformFunctionBoxPanel;
-import ontopoly.components.CreateOrCopyInstanceFunctionBoxPanel;
 import ontopoly.components.CreateInstanceFunctionBoxPanel;
+import ontopoly.components.CreateOrCopyInstanceFunctionBoxPanel;
 import ontopoly.components.DeleteTopicFunctionBoxPanel;
 import ontopoly.components.FieldsEditor;
 import ontopoly.components.FunctionBoxPanel;
 import ontopoly.components.FunctionBoxesPanel;
 import ontopoly.components.InstancePanel;
 import ontopoly.components.LinkFunctionBoxPanel;
+import ontopoly.components.MenuHelpPanel;
 import ontopoly.components.OmnigatorLinkFunctionBoxPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
@@ -37,12 +38,12 @@ import ontopoly.models.TopicTypeModel;
 import ontopoly.utils.OntopolyUtils;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
@@ -54,10 +55,7 @@ public class InstancePage extends OntopolyAbstractPage {
   private TopicModel<Topic> topicModel;
   private TopicTypeModel topicTypeModel;
   private FieldsViewModel fieldsViewModel;
-
-  protected WebMarkupContainer instanceContainer;
   
-  private TitleHelpPanel titlePartPanel;
   private boolean isOntologyPage;
   
   public InstancePage() {	  
@@ -97,15 +95,37 @@ public class InstancePage extends OntopolyAbstractPage {
     }
     
     this.isOntologyPage = (parameters.get("ontology") != null);
+
+    // Add form
+    Form form = new Form("form");
+    add(form);
+    form.setOutputMarkupId(true);
     
-    // Adding part containing title and help link
-    createTitle();
-    
+    int subMenuIndex = -1;
+    if (isOntologyPage) {
+      // Adding part containing title and help link    
+      add(new MenuHelpPanel("titlePartPanel", AbstractTypesPage.getSubMenuItems(getTopicMapModel()), subMenuIndex,
+          AbstractTypesPage.getNameModelForHelpLinkAddress(subMenuIndex)));
+    } else { 
+      // Adding part containing title and help link
+      TitleHelpPanel titlePartPanel = new TitleHelpPanel("titlePartPanel", 
+          new PropertyModel<String>(topicModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
+      titlePartPanel.setOutputMarkupId(true);
+      add(titlePartPanel);    
+    }
+    // topic title
+    form.add(new Label("subTitle", new PropertyModel<String>(topicModel, "name")) {
+      @Override
+      public boolean isVisible() {
+        return isOntologyPage;
+      }
+    });
+
     // Add fields panel
-    createFields();
-    
+    createFields(form);
+
     // Function boxes
-    createFunctionBoxes();
+    createFunctionBoxes(form, "functionBoxes");
     
     // initialize parent components
     initParentComponents();    
@@ -136,18 +156,13 @@ public class InstancePage extends OntopolyAbstractPage {
     return true; // NOTE: hardcoded
   }
   
-  private void createFields() {
-    Form form = new Form("form");
-    add(form);
+  private void createFields(Form form) {
     
     // display fields
-    this.instanceContainer = new WebMarkupContainer("instanceContainer");
-    instanceContainer.setOutputMarkupId(true);
-    form.add(instanceContainer);
 
     InstancePanel instancePanel = createInstancePanel("instancePanel");
     if (instancePanel.isReadOnly()) setReadOnlyPage(true); // page is readonly if instance panel is    
-    instanceContainer.add(instancePanel);
+    form.add(instancePanel);
 
     // if topic is a topic type then display fields editor
     Topic topic = getTopicModel().getTopic();
@@ -171,18 +186,10 @@ public class InstancePage extends OntopolyAbstractPage {
       }      
     };
   }
-   
-  private void createTitle() {
-    // Adding part containing title and help link
-    this.titlePartPanel = new TitleHelpPanel("titlePartPanel", 
-        new PropertyModel<String>(topicModel, "name"), new HelpLinkResourceModel("help.link.instancepage"));
-    titlePartPanel.setOutputMarkupId(true);
-    add(titlePartPanel);    
-  }
 
-  private void createFunctionBoxes() {
+  private void createFunctionBoxes(MarkupContainer parent, String id) {
 
-    add(new FunctionBoxesPanel("functionBoxes") {
+    parent.add(new FunctionBoxesPanel(id) {
 
       @Override
       protected List<Component> getFunctionBoxesList(String id) {

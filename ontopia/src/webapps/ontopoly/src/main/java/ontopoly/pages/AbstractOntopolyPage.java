@@ -146,7 +146,7 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
    * @param topic
    * @return
    */
-  public String toString(Topic topic) {
+  public String getLabel(Topic topic) {
     if (topic instanceof FieldDefinition)
       return ((FieldDefinition)topic).getFieldName();
     else

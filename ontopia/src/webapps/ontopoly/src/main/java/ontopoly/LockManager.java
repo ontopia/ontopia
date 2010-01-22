@@ -1,12 +1,13 @@
 package ontopoly;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import net.ontopia.utils.ObjectUtils;
 
-public class LockManager {
+public class LockManager implements Serializable {
 
   public static final long DEFAULT_LOCK_TIMESPAN_MINUTES = 5; // 5 minutes 
   public static final long DEFAULT_LOCK_REACQUIRE_TIMESPAN_MINUTES = DEFAULT_LOCK_TIMESPAN_MINUTES - 1; // 4 minutes 

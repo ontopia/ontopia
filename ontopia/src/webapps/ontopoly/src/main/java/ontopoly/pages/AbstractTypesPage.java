@@ -12,6 +12,7 @@ import ontopoly.components.MenuHelpPanel;
 import ontopoly.components.TreePanel;
 import ontopoly.model.Topic;
 import ontopoly.models.HelpLinkResourceModel;
+import ontopoly.models.TopicMapModel;
 import ontopoly.pojos.MenuItem;
 import ontopoly.pojos.TopicNode;
 
@@ -46,22 +47,23 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
   public AbstractTypesPage(PageParameters parameters) {
     super(parameters);
 
+    // add part containing title and help link
+    int subMenuIndex = getSubMenuIndex();
+    add(new MenuHelpPanel("titlePartPanel", getSubMenuItems(getTopicMapModel()), subMenuIndex,
+        getNameModelForHelpLinkAddress(subMenuIndex)));
+
     Form form = new Form("form");
     add(form);
     form.setOutputMarkupId(true);
 
-    // add part containing title and help link
-    add(new MenuHelpPanel("menuHelpPart", getSubMenuItems(), getSubMenuIndex(),
-        getNameModelForHelpLinkAddress(getSubMenuIndex())));
-
     // topic types title
-    add(new Label("typesTitle", getNameModelForType(getSubMenuIndex())));
+    form.add(new Label("subTitle", getNameModelForType(subMenuIndex)));
 
     // function boxes
     createFunctionBoxes(form, "functionBoxes");
 
     // add tree panel
-    add(createTreePanel("tree"));
+    form.add(createTreePanel("tree"));
     
     // initialize parent components
     initParentComponents();
@@ -76,7 +78,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
 
   protected abstract int getSubMenuIndex();
 
-  private static IModel getNameModelForType(int type) {
+  public static IModel getNameModelForType(int type) {
     if (type == TOPIC_TYPES_INDEX_IN_SUBMENU) {
       return new ResourceModel("topic.types");
     } else if (type == OCCURRENCE_TYPES_INDEX_IN_SUBMENU) {
@@ -92,7 +94,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     }
   }
 
-  private static IModel<String> getNameModelForHelpLinkAddress(int type) {
+  public static IModel<String> getNameModelForHelpLinkAddress(int type) {
     if (type == TOPIC_TYPES_INDEX_IN_SUBMENU) {
       return new HelpLinkResourceModel("help.link.topictypespage");
     } else if (type == OCCURRENCE_TYPES_INDEX_IN_SUBMENU) {
@@ -108,9 +110,9 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     }
   }
 
-  private List<MenuItem> getSubMenuItems() {
+  public static List<MenuItem> getSubMenuItems(TopicMapModel topicMapModel) {
     PageParameters parameters = new PageParameters();
-    parameters.add("topicMapId", getTopicMapModel().getTopicMapId());
+    parameters.add("topicMapId", topicMapModel.getTopicMapId());
 
     List<MenuItem> subMenuItems = Arrays.asList(new MenuItem[] {
         new MenuItem(new Label("caption", new ResourceModel("topic.types")), TopicTypesPage.class, parameters),

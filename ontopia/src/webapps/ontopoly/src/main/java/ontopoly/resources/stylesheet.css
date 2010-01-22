@@ -131,8 +131,6 @@ span.italic { font-style: italic;}
 #formContainer { margin-right: 250px; margin-bottom: 10px; }
 #formContainer #buttonsRow{ padding: 20px 0; }
 
-#leftContentContainer { margin-right: 250px; }
-
 .hide { display: none; }
 
 .start { width: 20%; height: 100%; vertical-align: top; border: 1px solid #000000; background-color: white; margin: 0 auto; padding: 5px; }

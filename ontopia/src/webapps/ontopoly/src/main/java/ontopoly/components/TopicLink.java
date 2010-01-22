@@ -81,7 +81,7 @@ public class TopicLink extends AbstractBookmarkablePageLink {
 
   protected String getLabel() {
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-    return page.toString(getTopic());    
+    return page.getLabel(getTopic());    
   }
   
   @Override
