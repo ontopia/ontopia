@@ -383,14 +383,17 @@ literal :
     { tmp = (ValueGenerator) basic_literal.copy(); }
     literal_iri_ref
     { tmp.setDatatype(literal.getLocator()); 
-      literal = tmp; } )?
-  | IRI 
+      literal = tmp; } )? | 
+  QNAME
+    { literal = basic_literal;
+      basic_literal.setLocator(context.resolveQname(LT(0).getText())); } |
+  IRI
     { literal = basic_literal;
       basic_literal.setLocator(getAbsoluteLocator()); } |
   WRAPPED_IRI
     { literal = basic_literal;
       basic_literal.setLocator(getRelativeLocator()); } |
-  INTEGER  { literal = basic_literal;
+  INTEGER  {  literal = basic_literal;
              basic_literal.setLiteral(LT(0).getText());
              basic_literal.setDatatype(PSI.getXSDInteger()); } |
   DECIMAL  { literal = basic_literal;
