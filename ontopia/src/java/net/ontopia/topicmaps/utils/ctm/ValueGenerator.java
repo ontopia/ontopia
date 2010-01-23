@@ -73,6 +73,7 @@ public class ValueGenerator implements ValueGeneratorIF {
   public void setLocator(LocatorIF locator) {
     this.locator = locator;
     this.datatype = null;
+    this.literal = null;
   }
 
   public void setLiteral(String literal) {
