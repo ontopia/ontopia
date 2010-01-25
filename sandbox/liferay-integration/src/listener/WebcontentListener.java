@@ -4,6 +4,7 @@ import tm.OntopiaAdapter;
 import tm.OntopiaAdapterIF;
 
 import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.journal.model.JournalArticle;
 import net.ontopia.Ontopia;
@@ -11,7 +12,6 @@ import net.ontopia.Ontopia;
 
 public class WebcontentListener implements ModelListener<JournalArticle> {
   
-  private String ontopiainfo = Ontopia.getInfo();
   private OntopiaAdapterIF adapter = OntopiaAdapter.instance;
 
 

@@ -17,6 +17,9 @@ public class WebContentDecider implements DeciderIF {
     if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_USER_APPROVING_PSI, assoc)){
       return true;
     }
+    if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_PARENT_IS_ABOUT_PSI, assoc)){
+        return false;
+      }
 
     return false; // it is an association of none of the above mentioned types. Do not update!
 

@@ -29,8 +29,6 @@ public class JournalStructureListener implements ModelListener<JournalStructure>
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // System.out.println("### JournalStructure: onAfterRemoveAssociation ###");
-    
   }
 
   public void onAfterUpdate(JournalStructure arg0)
@@ -43,32 +41,22 @@ public class JournalStructureListener implements ModelListener<JournalStructure>
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeCreate(JournalStructure arg0)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeRemove(JournalStructure arg0)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeUpdate(JournalStructure arg0)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
   
   private void printStructure(JournalStructure structure){

@@ -33,8 +33,6 @@ public class BlogsEntryListener implements ModelListener<BlogsEntry>{
   }
 
   public void onAfterRemove(BlogsEntry arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
@@ -42,8 +40,6 @@ public class BlogsEntryListener implements ModelListener<BlogsEntry>{
   }
 
   public void onAfterUpdate(BlogsEntry arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)

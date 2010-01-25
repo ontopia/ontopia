@@ -9,8 +9,6 @@ public class LayoutListener implements ModelListener<Layout>{
 
   public void onAfterAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onAfterCreate(Layout arg0) throws ModelListenerException {
@@ -27,8 +25,6 @@ public class LayoutListener implements ModelListener<Layout>{
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onAfterUpdate(Layout arg0) throws ModelListenerException {
@@ -39,29 +35,19 @@ public class LayoutListener implements ModelListener<Layout>{
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
-  public void onBeforeCreate(Layout arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
+  public void onBeforeCreate(Layout arg0) throws ModelListenerException { 
   }
 
-  public void onBeforeRemove(Layout arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
+  public void onBeforeRemove(Layout arg0) throws ModelListenerException { 
   }
 
   public void onBeforeRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
   public void onBeforeUpdate(Layout arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
   
   private void printLayout(Layout l){

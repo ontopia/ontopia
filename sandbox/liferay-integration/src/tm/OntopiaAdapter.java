@@ -45,6 +45,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   public static final String SUB_SUPERTYPE_PSI = "http://psi.topicmaps.org/iso13250/model/supertype-subtype";
   public static final String ASSOC_CONTAINS_PSI = PSI_PREFIX + "contains";
   public static final String ASSOC_PARENT_CHILD_PSI = PSI_PREFIX + "parent-child";
+  public static final String ASSOC_PARENT_IS_ABOUT_PSI = PSI_PREFIX + "is-about";
 
   public static final String NULL = "null";
   
@@ -488,6 +489,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         setParentChild(wpd.getUuid(), wikipage.getUuid(), tm);
       }
     }
+
+    if(!wikipage.getChildPages().isEmpty()){
+      for(WikiPage wpd : wikipage.getChildPages()){
+        setParentChild(wikipage.getUuid(), wpd.getUuid(), tm);
+      }
+    }
     
     try {
       setCreator(wikipage.getUuid(), wikipage.getUserUuid(), tm);
@@ -654,7 +661,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     try {
       retval.put("useruuid", content.getUserUuid());
     } catch (SystemException ex) {
-      retval.put("useruuid", NULL);
+      throw new OntopiaRuntimeException(ex);
+      //retval.put("useruuid", NULL);
     }
     return retval;
   }

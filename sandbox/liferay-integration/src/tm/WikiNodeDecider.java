@@ -11,9 +11,13 @@ public class WikiNodeDecider implements DeciderIF {
       AssociationIF assoc = (AssociationIF) arg0;
       if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_CONTAINS_PSI, assoc)){
         return false;
-      } else {
-        return false; // == return false if you are an association
+      } 
+      if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_CREATED_BY_PSI, assoc)){
+        return false;
       }
+
+      return false; // == return false if you are an association
+      
   } else {
       return true; // == return true if you are anything but an association
   }

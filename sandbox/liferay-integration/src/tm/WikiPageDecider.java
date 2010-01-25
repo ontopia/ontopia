@@ -15,6 +15,13 @@ public class WikiPageDecider implements DeciderIF {
       if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_CREATED_BY_PSI, assoc)){
         return true;
       }
+      if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_CONTAINS_PSI, assoc)){
+        return false;
+      }
+      if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_PARENT_IS_ABOUT_PSI, assoc)){
+        return false;
+      }
+
       return false; // do not update if you are anything but one of the above mentioned association types (i.e. 'is-about')
 
       }
