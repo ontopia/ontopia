@@ -1101,6 +1101,14 @@ the messages mean.</para>
 </thead>
 <tbody>
 <row>
+<entry>-T &lt;topic&gt;</entry>
+<entry>Removing a topic.</entry>
+</row>
+<row>
+<entry>&gt;T &lt;topic&gt;</entry>
+<entry>Removing characteristics defined in this &lt;relation&gt; definition from a non-primary topic entity. This will leave any other characteristics alone.</entry>
+</row>
+<row>
 <entry>+A &lt;association&gt; &lt;association-type&gt;</entry>
 <entry>Added the association of the given type.</entry>
 </row>
@@ -1113,12 +1121,20 @@ the messages mean.</para>
 <entry>Removing an association.</entry>
 </row>
 <row>
+<entry>+P &lt;association&gt; &lt;association-type&gt;</entry>
+<entry>Added the association of the given type (via &lt;player&gt; defintion).</entry>
+</row>
+<row>
+<entry>=P &lt;association&gt;</entry>
+<entry>The association already existed, so instead of creating a new one this one was reused (via &lt;player&gt; defintion).</entry>
+</row>
+<row>
 <entry>-P &lt;association&gt; : &lt;association-type&gt;</entry>
-<entry>Removing an association via a &lt;player&gt; defintion.</entry>
+<entry>Removing an association (via &lt;player&gt; defintion).</entry>
 </row>
 <row>
 <entry>&gt;A &lt;association&gt;</entry>
-<entry>Association is not primary, so we can't remove it here.</entry>
+<entry>Association is not primary entity, so we can't remove it here.</entry>
 </row>
 <row>
 <entry>+R &lt;role-player&gt; : &lt;role-type&gt;</entry>
@@ -1139,14 +1155,6 @@ the messages mean.</para>
 <row>
 <entry>-A-reified &lt;topic&gt; -> &lt;association&gt; &lt;association-type&gt;</entry>
 <entry>Removed the given association and its reifier topic.</entry>
-</row>
-<row>
-<entry>&gt;T &lt;topic&gt;</entry>
-<entry>Removing characteristics defined in this &lt;relation&gt; definition from a non-primary topic. This will leave any other characteristics alone.</entry>
-</row>
-<row>
-<entry>-T &lt;topic&gt;</entry>
-<entry>Removing a topic.</entry>
 </row>
 <row>
 <entry>+N &lt;topic&gt; &lt;topic-name&gt;</entry>
