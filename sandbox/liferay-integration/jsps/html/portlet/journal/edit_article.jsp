@@ -884,6 +884,27 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 				</table>
 			</td>
 		</tr>
+		<tr><td> <%
+			String myText = "";
+			String topicId;
+			String topicTypeId;
+			String topicmapId;
+			if(article == null){
+			     article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
+			}
+	        if(article == null){
+		         myText = "Article is still null";
+		     } else {
+		       myText = article.getUuid();
+		       
+		       topicmapId = tm.OntopiaAdapter.instance.getTopicmapId();
+		       topicTypeId = tm.OntopiaAdapter.instance.getTopicTypeId(article.getUuid());
+		       topicId = tm.OntopiaAdapter.instance.getTopicId(article.getUuid());
+		     }%>
+			Message: <%= myText %>
+            <a href="javascript: void(0)" 
+                onclick="popup('/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=topicId%>&topicTypeId=<%=topicTypeId%>&topicMapId=<%=topicMapId%>')">Show Ontopoly</a>
+    	</td></tr>
 		</table>
 
 		<br />
@@ -962,7 +983,7 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 
 				_format(groupId, contentDoc.getRootElement(), xsdDoc.getRootElement(), new IntegerWrapper(0), new Integer(-1), pageContext, request);
 				%>
-
+    
 				</table>
 			</c:otherwise>
 		</c:choose>
@@ -984,13 +1005,6 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 					/>
 				</td>
 			</tr>
-			<tr><td> 
-            <a href="javascript: void(0)" 
-               onclick="popup('/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=
-               request.getParameter("topicId") %>&topicTypeId=<%=
-               request.getParameter("topicTypeId") %>&topicMapId=<%=
-               request.getParameter("topicMapId") %>')">Show Ontopoly</a>
-			</td></tr>
 			</table>
 		</c:if>
 

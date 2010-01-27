@@ -10,6 +10,7 @@ import com.liferay.portlet.wiki.model.WikiPage;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
@@ -734,6 +735,30 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       //retval.put("userUuid", NULL);
     }
     return retval;
+  }
+
+  public String getObjectIdForUuid(String uuid) {
+    LocatorIF locator = new GenericLocator("uri", urnify(uuid));
+    TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator); // may raise exception if topic can not be found. That's ok.
+    return topic.getObjectId();
+  }
+
+  public String getTopicMapId() {
+    return TMNAME;
+  }
+
+  public String getTopicTypeIdForUuid(String uuid) {
+     LocatorIF locator = new GenericLocator("uri", urnify(uuid));
+    TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator);
+    Collection collection = topic.getTypes();
+    if(!collection.isEmpty()){
+      Iterator collIt = collection.iterator();
+      while(collIt.hasNext()){
+        TopicIF type = (TopicIF) collIt.next(); //TODO: returns only the first type. What to do if there are more? Can there be more?!
+        return type.getObjectId();
+      }
+    }
+    return NULL;
   }
   
 

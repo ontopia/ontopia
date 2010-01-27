@@ -35,4 +35,8 @@ public interface OntopiaAdapterIF {
   public void addGroup(Group group);
   public void deleteGroup(Group group);
   public void updateGroup(Group group);
+
+  public String getObjectIdForUuid(String uuid);
+  public String getTopicMapId();
+  public String getTopicTypeIdForUuid(String uuid);
 }
