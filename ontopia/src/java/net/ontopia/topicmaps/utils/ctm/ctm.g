@@ -68,8 +68,7 @@ options {
   private String template_name;  // definition only
   private String template_name2; // invocation only
   private List parameters;
-  private Map wildcards;          // for top-level named wildcards
-  private Map template_wildcards; // for named wildcards in templates
+  private Map<String, NamedWildcardTopicGenerator> wildcards; // for top-level
   private Template current_template; // this template inside template definition
   private LocatorIF docuri;       // used for mergemap
 
@@ -87,8 +86,7 @@ options {
     this.basic_literal = new ValueGenerator();
     this.datatype_literal = new ValueGenerator();
     this.wildcard = new WildcardTopicGenerator(context);
-    this.wildcards = new HashMap();
-    this.template_wildcards = new HashMap();
+    this.wildcards = new HashMap<String, NamedWildcardTopicGenerator>();
   }
 
   // only used for tolog INSERT
@@ -114,20 +112,16 @@ options {
 
   private ValueGeneratorIF getWildcard(String name) {
     Map map;
-
     if (current_template == null) 
       map = wildcards;
     else
-      map = template_wildcards;
+      map = current_template.getWildcardMap();
         
     ValueGeneratorIF gen = (ValueGeneratorIF) map.get(name);
     if (gen == null) {
       gen = new NamedWildcardTopicGenerator(context, name);
       map.put(name, gen);
     }
-
-    if (current_template != null)
-      current_template.registerWildcard(name, gen);
 
     return gen;
   }

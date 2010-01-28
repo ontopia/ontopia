@@ -4,13 +4,11 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -25,7 +23,7 @@ public class Template {
   private String name;
   private List<String> parameters; // just the names, in declared order
   private List events;
-  private Set named_wilcards;
+  private Map<String, NamedWildcardTopicGenerator> named_wildcards;
   /**
    * Each variable used in the template has a corresponding generator
    * stored here. On invocation, the invoke() method sets the passed
@@ -38,7 +36,7 @@ public class Template {
     this.parameters = parameters;
     this.events = new ArrayList();
     this.generators = new HashMap<String, ParameterGenerator>();
-    this.named_wilcards = new CompactHashSet();
+    this.named_wildcards = new HashMap<String, NamedWildcardTopicGenerator>();
 
     for (String param : parameters)
       generators.put(param, new ParameterGenerator());
@@ -56,15 +54,15 @@ public class Template {
     events.add(event);
   }
 
-  public void registerWildcard(String name, ValueGeneratorIF gen) {
-    named_wilcards.add(gen);
-  }
-
   public ValueGeneratorIF getGenerator(String name) {
     ValueGeneratorIF gen = generators.get(name);
     if (gen == null)
       throw new InvalidTopicMapException("No such parameter: " + name);
     return gen;
+  }
+
+  public Map<String, NamedWildcardTopicGenerator> getWildcardMap() {
+    return named_wildcards;
   }
 
   /**
@@ -98,11 +96,8 @@ public class Template {
 
     // release all topics created by named wildcards so that on next
     // invocation we create new ones
-    Iterator it = named_wilcards.iterator();
-    while (it.hasNext()) {
-      NamedWildcardTopicGenerator gen = (NamedWildcardTopicGenerator) it.next();
+    for (NamedWildcardTopicGenerator gen : named_wildcards.values())
       gen.contextEnd();
-    }
   }
 
   // --- Parameter generator
