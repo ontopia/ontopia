@@ -1702,7 +1702,7 @@
   
   <target name="download-apache-tomcat" depends="checkfiles-apache-tomcat" unless="apache-tomcat.exists">
     <!-- download apache-tomcat -->
-    <get src="http://www.urlstructure.com/apache/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.zip" dest="${lib.path}/apache-tomcat-5.5.27.zip" usetimestamp="true" />
+    <get src="http://archive.apache.org/dist/tomcat/tomcat-5/v5.5.27/bin/apache-tomcat-5.5.27.zip" dest="${lib.path}/apache-tomcat-5.5.27.zip" usetimestamp="true" />
   </target>
   
   <target name="dist.navigator.collect">
