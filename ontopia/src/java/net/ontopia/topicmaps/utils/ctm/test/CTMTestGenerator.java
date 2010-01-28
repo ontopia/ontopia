@@ -34,14 +34,8 @@ public class CTMTestGenerator implements TestCaseGeneratorIF {
       // ambiguities in the spec
       if (name.equals("template-subject-locator3.ctm") ||
           // http://projects.topicmapslab.de/issues/1908
-          name.equals("template-item-identifier3.ctm") ||
+          name.equals("template-item-identifier3.ctm") 
           // http://projects.topicmapslab.de/issues/1908
-          name.equals("include-wildcard.ctm") ||
-          // http://projects.topicmapslab.de/issues/1907
-          name.equals("include-wildcard2.ctm") ||
-          // http://projects.topicmapslab.de/issues/1907
-          name.equals("include-template-wildcard.ctm") 
-          // http://projects.topicmapslab.de/issues/1907
           )
         continue;
       

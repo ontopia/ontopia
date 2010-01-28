@@ -135,7 +135,7 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
       lexer.setDocuri(getBaseAddress().getAddress());
       CTMParser parser = new CTMParser(lexer);
       parser.setBase(getBaseAddress());
-      parser.setTopicMap(topicmap);
+      parser.setTopicMap(topicmap, null);
       parser.init();
       parser.topicmap();
       reader.close();

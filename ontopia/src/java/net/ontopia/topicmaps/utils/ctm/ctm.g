@@ -75,10 +75,13 @@ options {
 
   // --- configuration interface
 
-  public void setTopicMap(TopicMapIF topicmap) {
+  public void setTopicMap(TopicMapIF topicmap, ParseContextIF parent) {
     this.topicmap = topicmap;
     this.builder = topicmap.getBuilder();
-    this.context = new GlobalParseContext(topicmap, document);
+    if (parent == null)
+      this.context = new GlobalParseContext(topicmap, document);
+    else
+      this.context = new LocalParseContext(topicmap, document, parent);
     this.handler = new BuilderEventHandler(builder, context);
     this.real_handler = handler;
     this.basic_literal = new ValueGenerator();
@@ -181,12 +184,12 @@ include :
     ParseContextIF othercontext;
     Reader reader = null;
     try {
-       reader = CTMTopicMapReader.makeReader(source, new CTMEncodingSniffer());
+      reader = CTMTopicMapReader.makeReader(source, new CTMEncodingSniffer());
       CTMLexer lexer = new CTMLexer(reader);
       lexer.setDocuri(docuri.getExternalForm());
       CTMParser parser = new CTMParser(lexer);
       parser.setBase(docuri);
-      parser.setTopicMap(topicmap);
+      parser.setTopicMap(topicmap, context);
       parser.init();
       othercontext = parser.getContext();
       Iterator it = context.getIncludeUris().iterator();
