@@ -885,25 +885,30 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 			</td>
 		</tr>
 		<tr><td> <%
+		  /* Ontopia Plugin Code */
+		  /* Note: Does only work with tweaked catalina config. See Docs */
 			String myText = "";
-			String topicId;
-			String topicTypeId;
-			String topicmapId;
+			String topicId = "";
+			String topicTypeId = "";
+			String topicMapId = "";
 			if(article == null){
 			     article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 			}
 	        if(article == null){
 		         myText = "Article is still null";
 		     } else {
-		       myText = article.getUuid();
 		       
-		       topicmapId = tm.OntopiaAdapter.instance.getTopicmapId();
-		       topicTypeId = tm.OntopiaAdapter.instance.getTopicTypeId(article.getUuid());
-		       topicId = tm.OntopiaAdapter.instance.getTopicId(article.getUuid());
+		       topicMapId = tm.OntopiaAdapter.instance.getTopicMapId();
+		       topicTypeId = tm.OntopiaAdapter.instance.getTopicTypeIdForUuid(article.getUuid());
+		       topicId = tm.OntopiaAdapter.instance.getObjectIdForUuid(article.getUuid());
 		     }%>
-			Message: <%= myText %>
-            <a href="javascript: void(0)" 
-                onclick="popup('/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=topicId%>&topicTypeId=<%=topicTypeId%>&topicMapId=<%=topicMapId%>')">Show Ontopoly</a>
+		     <c:if test="<%= article != null %>">
+              <a href="javascript: void(0)" 
+                  onclick="popup('/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=
+     topicId %>&topicTypeId=<%=
+     topicTypeId %>&topicMapId=<%=
+     topicMapId %>')">Show Ontopoly!</a>
+     </c:if>
     	</td></tr>
 		</table>
 

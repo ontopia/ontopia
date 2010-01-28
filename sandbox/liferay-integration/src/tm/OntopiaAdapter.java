@@ -57,7 +57,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   private static final String STRUCTURE_TYPE = "structure";
   private static final String COMMUNITY_TYPE = "community";
 
-  private static final String TMNAME = "liferay_v45.ltm";
+  private static final String TMNAME = "liferay_v46.ltm";
   
   private TopicMapIF topicmap;
   
@@ -748,7 +748,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   public String getTopicTypeIdForUuid(String uuid) {
-     LocatorIF locator = new GenericLocator("uri", urnify(uuid));
+    LocatorIF locator = new GenericLocator("uri", urnify(uuid));
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator);
     Collection collection = topic.getTypes();
     if(!collection.isEmpty()){
