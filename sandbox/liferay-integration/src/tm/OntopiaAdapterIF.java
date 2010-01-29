@@ -39,4 +39,5 @@ public interface OntopiaAdapterIF {
   public String getObjectIdForUuid(String uuid);
   public String getTopicMapId();
   public String getTopicTypeIdForUuid(String uuid);
+  public String getConceptViewId();
 }

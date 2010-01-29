@@ -57,7 +57,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   private static final String STRUCTURE_TYPE = "structure";
   private static final String COMMUNITY_TYPE = "community";
 
-  private static final String TMNAME = "liferay_v46.ltm";
+  private static final String TMNAME = "liferay_v47.ltm";
   
   private TopicMapIF topicmap;
   
@@ -759,6 +759,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       }
     }
     return NULL;
+  }
+
+  public String getConceptViewId(){
+    TopicIF conceptView = topicmap.getTopicBySubjectIdentifier(new GenericLocator("uri", "http://psi.ontopia.net/liferay/conceptview"));
+    return conceptView.getObjectId();
+
   }
   
 
