@@ -80,7 +80,7 @@ WhiteSpace     = {LineTerminator} | [ \t\f]
 
 /* comments */
 Comment = {EndOfLineComment} | {MultilineComment}
-EndOfLineComment     = "#" {InputCharacter}* {LineTerminator}
+EndOfLineComment     = "#" {InputCharacter}* {LineTerminator}?
 MultilineComment     = "#(" ([^)]* [^#])*  ")#"
 
 /* identifiers */
