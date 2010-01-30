@@ -34,36 +34,6 @@ public class RoleType extends AbstractTypingTopic {
     return (getTopicIF().equals(other.getTopicIF()));
   }
 
-//  /**
-//   * Indicates whether the role type can also be used as a topic type.
-//   */
-//  public boolean isValidTopicType() {
-//    String query = "instance-of(%topic% , on:topic-type)?";
-//
-//    Map params = Collections.singletonMap("topic", getTopicIF());
-//
-//    return getTopicMap().getQueryWrapper().isTrue(query, params);
-//  }
-//
-//  /**
-//   * Enable or disable this role type to be used as a topic type depending of
-//   * the parameter (value) and the RoleType object's current state.
-//   * 
-//   * @param value
-//   *            value indicates whether this RoleType object is going to be used
-//   *            as a TopicType.
-//   */
-//  public void setValidTopicType(boolean value) {
-//    TopicIF tType = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "topic-type");
-//
-//		boolean validTopicType = isValidTopicType();
-//    if (value && !validTopicType) {
-//      getTopicIF().addType(tType);
-//    } else if (!value && validTopicType) {
-//      getTopicIF().removeType(tType);
-//    }
-//  }
-
   @Override
 	public Collection<RoleField> getDeclaredByFields() {
     String query = "select $RF from "
@@ -73,20 +43,5 @@ public class RoleType extends AbstractTypingTopic {
     QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
     return qm.queryForList(query, params);
 	}
-
-//	public Collection getUsedBy() {
-//    String query = "select $TT from "
-//			+ "on:has-role-type(%RT% : on:role-type, $FD : on:role-field), "
-//			+ "on:has-field($FD : on:field-definition, $TT : on:topic-type)?";
-//    Map params = Collections.singletonMap("RT", getTopicIF());
-//
-//    return getTopicMap().getQueryWrapper().queryForList(query,
-//        new RowMapperIF() {
-//          public Object mapRow(QueryResultIF result, int rowno) {
-//						TopicIF topicType = (TopicIF)result.getValue(0);
-//						return new TopicType(topicType, getTopicMap());
-//					}
-//				}, params);
-//	}
 
 }

@@ -44,54 +44,6 @@ public class TopicType extends AbstractTypingTopic {
     return isTrueAssociation("is-abstract", "topic-type");
   }
 
-//  /**
-//   * Makes this topic type either abstract or turn it off.
-//   * 
-//   * @param value
-//   *            value indicates whether this topic type is going to
-//   *            be abstract.
-//   */
-//  public void setAbstract(boolean value) {
-//    TopicMap tm = getTopicMap();
-//    TopicIF topicIF = getTopicIF();
-//    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "is-abstract");
-//    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "topic-type");
-//
-//    AssociationIF assoc = OntopolyModelUtils.findUnaryAssociation(tm, aType,
-//        topicIF, rType);
-//
-//    if (value && assoc == null)
-//      OntopolyModelUtils.makeUnaryAssociation(aType, topicIF, rType);
-//    else if (!value && assoc != null)
-//      assoc.remove();
-//  }
-
-//  /**
-//   * Tests whether this topic type can be used as a role type.
-//   */
-//  public boolean isValidRoleType() {
-//    String query = "instance-of(%topic% , on:role-type)?";
-//
-//    Map params = Collections.singletonMap("topic", getTopicIF());
-//
-//    return getTopicMap().getQueryWrapper().isTrue(query, params);
-//  }
-//
-//  /**
-//   * Sets whether the topic type can be used as a role type.
-//   */
-//  public void setValidRoleType(boolean value) {
-//    TopicMap tm = getTopicMap();
-//    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-type");
-//
-//		boolean validRoleType = isValidRoleType();
-//    TopicIF topicIF = getTopicIF();
-//    if (value && !validRoleType)
-//      topicIF.addType(rType);
-//    else if (validRoleType)
-//      topicIF.removeType(rType);
-//  }
-
   /**
    * Tests whether this topic type has a large instance set.
    */
@@ -108,24 +60,6 @@ public class TopicType extends AbstractTypingTopic {
     AssociationIF assoc = OntopolyModelUtils.findUnaryAssociation(tm, aType, topicIF, rType);
     return (assoc != null);
   }
-
-//!   /**
-//!    * Sets whether the topic type has a large instance set.
-//!    */
-//!   public void setLargeInstanceSet(boolean value) {
-//!     TopicMap tm = getTopicMap();
-//!     TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-large-instance-set");
-//!     TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "topic-type");
-//! 
-//!     TopicIF topicIF = getTopicIF();
-//!     AssociationIF assoc = OntopolyModelUtils.findUnaryAssociation(tm, aType,
-//!         topicIF, rType);
-//! 
-//!     if (value && assoc == null)
-//!       OntopolyModelUtils.makeUnaryAssociation(aType, topicIF, rType);
-//!     else if (assoc != null)
-//!       assoc.remove();
-//!   }
 
   /**
    * Gets the direct subtypes of this type.
@@ -169,56 +103,6 @@ public class TopicType extends AbstractTypingTopic {
     QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
     return qm.queryForObject(query, params);
   }
-
-//  /**
-//   * Sets the supertype of this type. If parameter topic is null, only remove
-//   * the current superclass-subclass association without making a new one.
-//   */
-//  public void setSuperType(TopicType tt) {
-//
-//    TopicMap tm = getTopicMap();
-//    TopicIF topicIF = getTopicIF();
-//    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.XTM, "#superclass-subclass");
-//    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.XTM, "#subclass");
-//    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.XTM, "#superclass");
-//
-//    TopicType superType = getSuperType();
-//    if (superType != null) { // Previous supertype exist
-//      AssociationIF associationIF = OntopolyModelUtils.findBinaryAssociation(
-//          tm, aType, topicIF, rType1, getSuperType().getTopicIF(), rType2);
-//      // remove the old super type association
-//      if (associationIF != null)
-//        associationIF.remove();
-//
-//      // For every FieldAssignment inherited through the old supertype,
-//      // remove field-order occurrences on the current TopicType and all its
-//      // subtypes.
-//      Iterator it = superType.getFieldAssignments().iterator();
-//      while (it.hasNext()) {
-//        FieldAssignment fa = (FieldAssignment) it.next();
-//        FieldDefinition fieldDefinition = fa.getFieldDefinition();
-//
-//        removeFieldOrder(this, fieldDefinition);
-//      }
-//    }
-//
-//    if (tt != null) { // create the new super type association
-//      fieldOrderMaintainance(this);
-//
-//      OntopolyModelUtils.makeBinaryAssociation(aType, getTopicIF(), rType1, tt
-//          .getTopicIF(), rType2);
-//
-//      // For every FieldAssignment inherited through the new supertype,
-//      // create field-order occurrences on the current TopicType and all its
-//      // subtypes.
-//      Iterator it = tt.getFieldAssignments().iterator();
-//      while (it.hasNext()) {
-//        FieldAssignment fa = (FieldAssignment) it.next();
-//        FieldDefinition fieldDefinition = fa.getFieldDefinition();
-//        addFieldOrder(this, fieldDefinition);
-//      }
-//    }
-//  }
 
   public FieldAssignment addField(FieldDefinition fieldDefinition) {
     TopicMap tm = getTopicMap();
@@ -358,17 +242,6 @@ public class TopicType extends AbstractTypingTopic {
     // create role field
     TopicIF roleFieldType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-field");
     TopicIF roleFieldTopic = builder.makeTopic(roleFieldType);
-
-    //! // create role type
-    //! TopicIF roleTypeTopic = tm.createRoleType(null);
-    
-    //! // on:has-role-type($TT : on:role-type, $FD : on:role-field)
-    //! final TopicIF HAS_ROLE_TYPE = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-role-type");
-    //! final TopicIF ROLE_TYPE = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-type");
-    //! final TopicIF ROLE_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-field");
-    //! OntopolyModelUtils.makeBinaryAssociation(HAS_ROLE_TYPE, 
-    //! 		roleTypeTopic, ROLE_TYPE,
-    //!     roleFieldTopic, ROLE_FIELD);
 
     // create association field
     TopicIF associationFieldType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-field");
@@ -639,63 +512,6 @@ public class TopicType extends AbstractTypingTopic {
     return StringUtils.pad(fieldOrder + 1, '0', 9);
   }
 
-//!   /**
-//!    * Returns the set of hierarchical association types associated with this
-//!    * topic type.
-//!    * 
-//!    * @return a list of AssociationType objects
-//!    */
-//!   public Collection getHierarchicalAssociationTypes() {
-//!     String query = "on:forms-hierarchy-for($hierAssocTypes : on:association-type, %topic% : on:topic-type)?";
-//! 
-//!     Map params = Collections.singletonMap("topic", getTopicIF());
-//! 
-//!     TopicMap tm = getTopicMap();
-//!     Collection result = tm.getQueryWrapper().queryForList(query,
-//!         OntopolyModelUtils.getRowMapperOneColumn(), params);
-//! 
-//!     if (result.isEmpty())
-//!       return Collections.EMPTY_SET;
-//! 
-//!     List hierAssocTypes = new ArrayList();
-//!     Iterator it = result.iterator();
-//!     while (it.hasNext()) {
-//!       hierAssocTypes.add(new AssociationType((TopicIF) it.next(), tm));
-//!     }
-//!     Collections.sort(hierAssocTypes, TopicComparator.INSTANCE);
-//!     return hierAssocTypes;
-//!   }
-
-//!   /**
-//!    * Add the hierarchical association type (at) to this topic type
-//!    */
-//!   public void addHierarchicalAssociationType(AssociationType at) {
-//!     // create forms-hierarchy-for association
-//!     TopicMap tm = getTopicMap();
-//!     OntopolyModelUtils.makeBinaryAssociation(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "forms-hierarchy-for"), 
-//! 																						 getTopicIF(), 
-//! 																						 OntopolyModelUtils.getTopicIF(tm, PSI.ON, "topic-type"), 
-//! 																						 at.getTopicIF(), 
-//! 																						 OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-type"));
-//!   }
-//! 
-//!   /**
-//!    * Remove the hierarchical association type (at) from this topic type
-//!    */
-//!   public void removeHierarchicalAssociationType(AssociationType at) {
-//!     // find forms-hierarchy-for association
-//!     TopicMap tm = getTopicMap();
-//!     AssociationIF associationIF = OntopolyModelUtils.findBinaryAssociation(tm,
-//!         OntopolyModelUtils.getTopicIF(tm, PSI.ON, "forms-hierarchy-for"),
-//!         getTopicIF(), OntopolyModelUtils.getTopicIF(tm, PSI.ON, "topic-type"), at
-//!             .getTopicIF(), OntopolyModelUtils.getTopicIF(tm,
-//!             PSI.ON, "association-type"));
-//! 
-//!     // remove forms-hierarchy-for association if it exist
-//!     if (associationIF != null)
-//!       associationIF.remove();
-//!   }
-
   /**
    * Returns the set of all instances of this topic type.
    * 
@@ -709,127 +525,6 @@ public class TopicType extends AbstractTypingTopic {
     QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
     return qm.queryForList(query, params);
   }
-
-//!   public void moveUpInFieldOrder(FieldAssignment fa) {
-//!     fieldOrderMaintainance(this);
-//!     // find the fa above the current fa
-//!     List fieldAssignments = getFieldAssignments();
-//!     int indexOfCurrent = fieldAssignments.indexOf(fa);
-//!     int indexOfPrevious = indexOfCurrent - 1;
-//!     FieldAssignment fa_prev = (FieldAssignment) fieldAssignments
-//!         .get(indexOfPrevious);
-//! 
-//!     // find
-//!     TopicMap tm = getTopicMap();
-//!     TopicIF topicIF = getTopicIF();
-//!     final TopicIF FIELD_ORDER = OntopolyModelUtils.getTopicIF(tm,
-//!         PSI.ON, "field-order");
-//!     Collection previousFieldOrderScope = new HashSet(2);
-//!     previousFieldOrderScope.add(fa_prev.getFieldDefinition().getTopicIF());
-//! 
-//!     OccurrenceIF previousFAFieldOrderOccurrenceIF = OntopolyModelUtils
-//!         .findOccurrence(FIELD_ORDER, topicIF, DataTypes.TYPE_STRING,
-//!             previousFieldOrderScope);
-//!     if (previousFAFieldOrderOccurrenceIF == null) {
-//!       // create field-order occurrence
-//!       previousFAFieldOrderOccurrenceIF = OntopolyModelUtils.makeOccurrence(
-//!           FIELD_ORDER, topicIF,
-//!           StringUtils.pad(fa_prev.getOrder(this), '0', 9),
-//!           DataTypes.TYPE_STRING, previousFieldOrderScope);
-//!     }
-//!     String previousValue = previousFAFieldOrderOccurrenceIF.getValue();
-//! 
-//!     Collection fieldOrderScope = new HashSet(2);
-//!     fieldOrderScope.add(fa.getFieldDefinition().getTopicIF());
-//! 
-//!     OccurrenceIF currentFAFieldOrderOccurrenceIF = OntopolyModelUtils
-//!         .findOccurrence(FIELD_ORDER, topicIF, DataTypes.TYPE_STRING,
-//!             fieldOrderScope);
-//!     if (currentFAFieldOrderOccurrenceIF == null) {
-//!       // create field-order occurrence
-//!       currentFAFieldOrderOccurrenceIF = OntopolyModelUtils.makeOccurrence(
-//!           FIELD_ORDER, topicIF, StringUtils.pad(fa.getOrder(this), '0', 9),
-//!           DataTypes.TYPE_STRING, fieldOrderScope);
-//!     }
-//!     String currentValue = currentFAFieldOrderOccurrenceIF.getValue();
-//! 
-//! 		System.out.println("MU: " + previousValue + " -> " + currentValue);
-//!     previousFAFieldOrderOccurrenceIF.setValue(currentValue);
-//!     currentFAFieldOrderOccurrenceIF.setValue(previousValue);
-//! 		// make sure cached state is updated
-//! 		fa.refresh();
-//! 		fa_prev.refresh();
-//!   }
-//! 
-//!   public void moveDownInFieldOrder(FieldAssignment fa) {
-//!     fieldOrderMaintainance(this);
-//!     // find the fa below the current fa
-//!     List fieldAssignments = getFieldAssignments();
-//!     int indexOfCurrent = fieldAssignments.indexOf(fa);
-//!     int indexOfNext = indexOfCurrent + 1;
-//!     FieldAssignment fa_next = (FieldAssignment) fieldAssignments
-//!         .get(indexOfNext);
-//! 
-//!     // find
-//!     TopicMap tm = getTopicMap();
-//!     TopicIF topicIF = getTopicIF();
-//!     final TopicIF FIELD_ORDER = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-order");
-//!     Collection nextFieldOrderScope = new HashSet();
-//!     nextFieldOrderScope.add(fa_next.getFieldDefinition().getTopicIF());
-//! 
-//!     OccurrenceIF nextFAFieldOrderOccurrenceIF = OntopolyModelUtils
-//!         .findOccurrence(FIELD_ORDER, topicIF, DataTypes.TYPE_STRING,
-//!             nextFieldOrderScope);
-//!     if (nextFAFieldOrderOccurrenceIF == null) {
-//!       // create field-order occurrence
-//!       nextFAFieldOrderOccurrenceIF = OntopolyModelUtils.makeOccurrence(
-//!           FIELD_ORDER, topicIF,
-//!           StringUtils.pad(fa_next.getOrder(this), '0', 9),
-//!           DataTypes.TYPE_STRING, nextFieldOrderScope);
-//!     }
-//!     String nextValue = nextFAFieldOrderOccurrenceIF.getValue();
-//! 
-//!     Collection fieldOrderScope = new HashSet();
-//!     fieldOrderScope.add(fa.getFieldDefinition().getTopicIF());
-//! 
-//!     OccurrenceIF currentFAFieldOrderOccurrenceIF = OntopolyModelUtils
-//!         .findOccurrence(FIELD_ORDER, topicIF, DataTypes.TYPE_STRING,
-//!             fieldOrderScope);
-//!     if (currentFAFieldOrderOccurrenceIF == null) {
-//!       // create field-order occurrence
-//!       currentFAFieldOrderOccurrenceIF = OntopolyModelUtils.makeOccurrence(
-//!           FIELD_ORDER, topicIF, StringUtils.pad(fa.getOrder(this), '0', 9),
-//!           DataTypes.TYPE_STRING, fieldOrderScope);
-//!     }
-//!     String currentValue = currentFAFieldOrderOccurrenceIF.getValue();
-//! 
-//! 		System.out.println("MD: " + currentValue + " -> " + nextValue);
-//! 
-//!     nextFAFieldOrderOccurrenceIF.setValue(currentValue);
-//!     currentFAFieldOrderOccurrenceIF.setValue(nextValue);
-//! 		// make sure cached state is updated
-//! 		fa.refresh();
-//! 		fa_next.refresh();
-//!   }
-
-//!   public static List getHierarchicalRelationTypes(TopicMap tm) {
-//!     String query = "instance-of($t, tech:hierarchical-relation-type),"
-//!         + "not (instance-of($t, on:system-topic))?";
-//! 
-//!     Collection result = tm.getQueryWrapper().queryForList(query,
-//!         OntopolyModelUtils.getRowMapperOneColumn());
-//! 
-//!     if (result.isEmpty())
-//!       return Collections.EMPTY_LIST;
-//! 
-//!     List hierRelaTypes = new ArrayList();
-//!     Iterator it = result.iterator();
-//!     while (it.hasNext()) {
-//!       hierRelaTypes.add(new AssociationType((TopicIF) it.next(), tm));
-//!     }
-//!     Collections.sort(hierRelaTypes, TopicComparator.INSTANCE);
-//!     return hierRelaTypes;
-//!   }
 
   /**
    * Create a new topic instance of this topic type.
@@ -895,9 +590,5 @@ public class TopicType extends AbstractTypingTopic {
   public Collection<? extends FieldDefinition> getDeclaredByFields() {
     return Collections.emptyList();
   }
-
-//  public Collection getUsedBy() {
-//    return Collections.EMPTY_LIST;
-//  }
 
 }

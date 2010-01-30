@@ -58,32 +58,7 @@ public class AssociationType extends AbstractTypingTopic {
     TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-type");
     TopicIF player = getTopicIF();
     return OntopolyModelUtils.isUnaryPlayer(tm, aType, player, rType);
-//    String query = "on:is-symmetric(%assocTopic% : on:association-type)?";
-//    Map params = Collections.singletonMap("assocTopic", getTopicIF());
-//    return getTopicMap().getQueryWrapper().isTrue(query, params);
   }
-
-//  /**
-//   * Decides whether this AssociationType object is going to be a symmetric
-//   * association.
-//   * 
-//   * @param value
-//   *            value indicates whether this AssociationType object is going to
-//   *            be a symmetric association.
-//   */
-//  public void setSymmetric(boolean value) {
-//    TopicMap tm = getTopicMap();
-//    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "is-symmetric");
-//    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-type");
-//
-//    AssociationIF assoc = OntopolyModelUtils.findUnaryAssociation(tm, aType,
-//        getTopicIF(), rType);
-//
-//    if (value && assoc == null) 
-//      OntopolyModelUtils.makeUnaryAssociation(aType, getTopicIF(), rType);
-//    else if (!value && assoc != null)
-//      assoc.remove();
-//  }
 
   /**
    * Tests whether this association type is hierarchical.
@@ -95,22 +70,6 @@ public class AssociationType extends AbstractTypingTopic {
 			OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.TECH, "#hierarchical-relation-type");
     return getTopicIF().getTypes().contains(hierarchicalRelationType);
   }
-
-//  /**
-//   * Registers this association type as being hierarchical.
-//   * 
-//   * @param value true if association type should be hierarchical.
-//   */
-//  public void setHierarchical(boolean value) {
-//    TopicIF hierarchicalRelationType = 
-//			OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.TECH, "#hierarchical-relation-type");
-//
-//    boolean isHierarchical = isHierarchical();
-//    if (value && !isHierarchical)
-//      getTopicIF().addType(hierarchicalRelationType);
-//    else if (!value && isHierarchical)
-//      getTopicIF().removeType(hierarchicalRelationType);
-//  }
 
   @Override
 	public Collection<RoleField> getDeclaredByFields() {
@@ -131,21 +90,6 @@ public class AssociationType extends AbstractTypingTopic {
 					}
 				}, params);
 	}
-
-//	public Collection getUsedBy() {
-//    String query = "select $TT from "
-//			+ "on:has-association-type(%AT% : on:association-type, $AF : on:role-field), "
-//			+ "on:has-field($FD : on:field-definition, $TT : on:field-owner)?";
-//    Map params = Collections.singletonMap("AT", getTopicIF());
-//
-//    return getTopicMap().getQueryWrapper().queryForList(query,
-//        new RowMapperIF() {
-//          public Object mapRow(QueryResultIF result, int rowno) {
-//						TopicIF topicType = (TopicIF)result.getValue(0);
-//						return new TopicType(topicType, getTopicMap());
-//					}
-//				}, params);
-//	}
 
 	/**
 	 * Returns all role types that have been declared for this association type.
@@ -250,15 +194,12 @@ public class AssociationType extends AbstractTypingTopic {
         }
       }
       if (match) {
-//        System.out.println("Match: " + assoc);
         for (int i=0; i < size; i++) {
           AssociationRoleIF role = (AssociationRoleIF)roleMatches[i];
           RoleType fromType = (RoleType)roleTypesFrom.get(i);
           RoleType toType = (RoleType)roleTypesTo.get(i);
           if (role.getType().equals(fromType.getTopicIF())) {
             if (!role.getType().equals(toType.getTopicIF())) role.setType(toType.getTopicIF());
-          } else {
-//            System.out.println("OOPS: " + role + " " + fromType + " " + toType);
           }
         }        
       }

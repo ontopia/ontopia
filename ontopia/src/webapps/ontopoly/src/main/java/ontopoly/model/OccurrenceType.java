@@ -52,19 +52,4 @@ public class OccurrenceType extends AbstractTypingTopic {
         }, params);
   }
 
-//  public Collection getUsedBy() {
-//    String query = "select $TT from "
-//        + "on:has-occurrence-type(%OT% : on:occurrence-type, $FD : on:occurrence-field), "
-//        + "on:has-field($FD : on:field-definition, $TT : on:field-owner)?";
-//    Map params = Collections.singletonMap("OT", getTopicIF());
-//
-//    return getTopicMap().getQueryWrapper().queryForList(query,
-//        new RowMapperIF() {
-//          public Object mapRow(QueryResultIF result, int rowno) {
-//              TopicIF topicType = (TopicIF)result.getValue(0);
-//              return new TopicType(topicType, getTopicMap());
-//          }
-//        }, params);
-//  }
-
 }

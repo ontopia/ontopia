@@ -39,12 +39,6 @@ public class FieldInstance {
   }
 
   /**
-   * Set a new FieldValue object.
-   */
-  // public void setValue(Object value) {
-  // throw new UnsupportedOperationException();
-  // }
-  /**
    * Add a new FieldValue object.
    */
   public void addValue(Object value, LifeCycleListener listener) {

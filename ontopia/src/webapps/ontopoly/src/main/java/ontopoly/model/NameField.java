@@ -72,13 +72,6 @@ public class NameField extends FieldDefinition {
       Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF nameTypeIf = (TopicIF)CollectionUtils.getFirst(players);
       this.nameType = (nameTypeIf == null ? null : new NameType(nameTypeIf, getTopicMap()));      
-      
-//			String query = "select $NT from on:has-name-type(%THIS% : on:name-field, $NT : on:name-type)?";
-//			Map params = Collections.singletonMap("THIS", getTopicIF());
-//			TopicMap tm = getTopicMap();
-//			TopicIF ntype = (TopicIF)tm.getQueryWrapper().queryForObject(query, params);
-//      if (ntype == null) return null;
-//			this.nameType = new NameType(ntype, tm);
 		}
     return nameType;
 	}

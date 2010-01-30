@@ -43,27 +43,4 @@ public class CreateAction extends Topic {
     return new CreateAction(tm.getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_CREATE_ACTION_POPUP), tm);
   }
 
-//!   /**
-//!    * Returns all available cardinalities.
-//!    * 
-//!    * @return A list containing CreateAction objects of all available
-//!    *         cardinalities.
-//!    */
-//!   public static List getCreateActionTypes(TopicMap tm) {
-//!     String query = "instance-of($d, on:edit-mode)?";
-//! 
-//!     Collection result = tm.getQueryWrapper().queryForList(query,
-//!         OntopolyModelUtils.getRowMapperOneColumn());
-//! 
-//!     if (result.isEmpty())
-//!       return Collections.EMPTY_LIST;
-//! 
-//!     List cardinalityTypes = new ArrayList();
-//!     Iterator it = result.iterator();
-//!     while (it.hasNext()) {
-//!       cardinalityTypes.add(new CreateAction((TopicIF) it.next(), tm));
-//!     }
-//!     return cardinalityTypes;
-//!   }
-
 }

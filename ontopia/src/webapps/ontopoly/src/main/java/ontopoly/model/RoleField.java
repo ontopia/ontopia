@@ -126,41 +126,9 @@ public class RoleField extends FieldDefinition {
       Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF roleType = (TopicIF)CollectionUtils.getFirst(players);
       return (roleType == null ? null : new RoleType(roleType, getTopicMap()));      
-//			String query = "select $RT from on:has-role-type(%THIS% : on:role-field, $RT : on:role-type)?";
-//			Map params = Collections.singletonMap("THIS", getTopicIF());
-//			TopicIF rtype = (TopicIF)getTopicMap().getQueryWrapper().queryForObject(query, params);
-//      if (rtype == null) return null;
-//			this.roleType = new RoleType(rtype, getTopicMap());
 		}
     return roleType;
   }
-
-//!   /**
-//!    * Sets the role type.
-//!    * 
-//!    * @param newRoleType the RoleType object to set. It cannot be null. 
-//!    */
-//!   public void setRoleType(RoleType newRoleType) {
-//! 		TopicMap tm = getTopicMap();
-//!     TopicIF HAS_ROLE_TYPE = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-role-type");
-//!     TopicIF ROLE_FIELD = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-field");
-//!     TopicIF ROLE_TYPE = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-type");
-//! 
-//!     // on:has-role-type($FD : on:role-field, $RT : on:role-type)
-//!     RoleType oldRoleType = getRoleType();
-//!     if (oldRoleType != null) {
-//!       AssociationIF associationIF = OntopolyModelUtils.findBinaryAssociation(tm, HAS_ROLE_TYPE,
-//!         getTopicIF(), ROLE_FIELD,
-//! 		  	oldRoleType.getTopicIF(), ROLE_TYPE);
-//!       if (associationIF != null)
-//!         associationIF.remove();
-//!     }
-//!     OntopolyModelUtils.makeBinaryAssociation(HAS_ROLE_TYPE, 
-//! 			getTopicIF(), ROLE_FIELD,
-//!       newRoleType.getTopicIF(), ROLE_TYPE);
-//! 
-//!     this.roleType = newRoleType;
-//!   }
 
   public AssociationField getAssociationField() {
     if (associationField == null) {
@@ -188,30 +156,6 @@ public class RoleField extends FieldDefinition {
     return ofields;
   }
 
-//!   /**
-//!    * Sets the name of the association type in this direction. Means setting the
-//!    * value of the the base name on the association type with the role type as
-//!    * scope. If no such base name exists, it must be created.
-//!    * 
-//!    * @param label the name of the association type in this direction.
-//!    */
-//!   public void setLabel(String _label) {
-//! 		String label = (_label == null ? "" : _label);
-//! 		// replace existing
-//!     Collection names = getTopicIF().getTopicNames();
-//!     Iterator it = names.iterator();
-//!     while (it.hasNext()) {
-//!       TopicNameIF name = (TopicNameIF) it.next();
-//!       if (name.getType() == null && name.getScope().isEmpty()) {
-//!         name.setValue(label);
-//!         return;
-//!       }
-//!     }
-//! 		// or, create new name
-//!     TopicMapBuilderIF builder = getTopicMap().getTopicMapIF().getBuilder();
-//!     builder.makeTopicName(getTopicIF(), label);
-//!   }
-
   /**
    * Gets the interface control assigned for this association field. If no interface control object is assigned, the
    * method will return the default interface control, which is drop-down-list.
@@ -228,27 +172,6 @@ public class RoleField extends FieldDefinition {
 		
 		return interfaceControl == null ? InterfaceControl.getDefaultInterfaceControl(getTopicMap()) : new InterfaceControl(interfaceControl, getTopicMap());
   }
-
-//  /**
-//   * Assigns an interface control to this association field.
-//   *  
-//   * @param control the interface control to be assigned to this association field.
-//   */
-//  public void setInterfaceControl(InterfaceControl control) {
-//		TopicMap tm = getTopicMap();
-//    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "use-interface-control");
-//    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-//    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "interface-control");
-//
-//    Collection interfaceControlAssocs = OntopolyModelUtils
-//        .findBinaryAssociations(tm, aType, getTopicIF(), rType1, rType2);
-//    Iterator it = interfaceControlAssocs.iterator();
-//    while (it.hasNext()) {
-//      ((AssociationIF) it.next()).remove();
-//    }
-//    OntopolyModelUtils.makeBinaryAssociation(aType, getTopicIF(), rType1,
-//        control.getTopicIF(), rType2);
-//  }
 
   /**
    * Gets the topic types that have been declared as valid and which
@@ -371,83 +294,6 @@ public class RoleField extends FieldDefinition {
       return Collections.emptyList();
     }
   }
-
-//!   /**
-//!    * Adds this association field to a topic type.
-//!    * 
-//!    * @param player the topic type this association field will be assigned to.
-//!    */
-//!   public void addUsedBy(TopicType player) {
-//!     if (getUsedBy().contains(player))
-//!       return; // The topic type player has already this field.
-//!     player.addField(this);
-//!   }
-//! 
-//!   /**
-//!    * Removes this association field from a topic type.
-//!    * 
-//!    * @param player the topic type this association field will be removed from.
-//!    */
-//!   public void removeUsedBy(TopicType player) {
-//!     if (getUsedBy().contains(player))
-//!       player.removeField(this);
-//!   }
-//! 
-//!   /**
-//!    * Tests whether this association field is hierarchical.
-//!    * 
-//!    * @return true if this is association field is hierarchical.
-//!    */
-//!   public boolean isHierarchical() {
-//!     AssociationType atype = getAssociationType();
-//!     return (atype == null ? false : atype.isHierarchical());
-//!   }
-//! 
-//!   /**
-//!    * Sets this association field to parent (superordinate-role-type). 
-//!    * This affects which role it takes in a hierarchical association.
-//!    */
-//!   public void setParent() {
-//! 		TopicMap tm = getTopicMap();
-//! 		RoleType roleType = getRoleType();
-//!     roleType.getTopicIF().removeType(
-//! 			OntopolyModelUtils.getTopicIF(tm, PSI.TECH, "#subordinate-role-type"));
-//!     roleType.getTopicIF().addType(
-//! 			OntopolyModelUtils.getTopicIF(tm, PSI.TECH, "#superordinate-role-type"));
-//!   }
-//! 
-//!   /**
-//!    * Sets this association field to child (subordinate-role-type). 
-//!    * This affects which role it takes in a hierarchical association.
-//!    */
-//!   public void setChild() {
-//! 		TopicMap tm = getTopicMap();
-//! 		RoleType roleType = getRoleType();
-//!     roleType.getTopicIF().removeType(
-//! 		  OntopolyModelUtils.getTopicIF(tm, PSI.TECH, "#superordinate-role-type"));
-//!     roleType.getTopicIF().addType(
-//!       OntopolyModelUtils.getTopicIF(tm, PSI.TECH, "#subordinate-role-type"));
-//!   }
-//! 
-//!   /**
-//!    * Tests whether this association field is playing the parent role in hierarchical associations.
-//!    * 
-//!    * @return true if it is playing the parent role in hierarchical associations.
-//!    */
-//!   public boolean isParent() {
-//!     TopicIF superordinate = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.TECH, "#superordinate-role-type");
-//!     return getRoleType().getTopicIF().getTypes().contains(superordinate);
-//!   }
-//! 
-//!   /**
-//!    * Tests whether this association field is playing the child role in hierarchical associations.
-//!    * 
-//!    * @return true if it is playing the child role in hierarchical associations.
-//!    */
-//!   public boolean isChild() {
-//!     TopicIF subordinate = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.TECH, "#subordinate-role-type");
-//!     return getRoleType().getTopicIF().getTypes().contains(subordinate);
-//!   }
 
   /**
    * Gets the instance topics on the other side of an association an instance topic takes part in.
@@ -852,7 +698,6 @@ public class RoleField extends FieldDefinition {
   public void moveAfter(Topic instance, RoleField ofield, RoleField.ValueIF rfv1, RoleField.ValueIF rfv2) {
     Topic p1 = rfv1.getPlayer(ofield, instance);
     Topic p2 = rfv2.getPlayer(ofield, instance);
-//    System.out.println("P1: " + p1 + " P2: " + p2);
 
     TopicIF typeIf = OntopolyModelUtils.getTopicIF(instance.getTopicMap(), PSI.ON, "field-value-order");
     LocatorIF datatype = DataTypes.TYPE_STRING;
@@ -863,10 +708,8 @@ public class RoleField extends FieldDefinition {
     TopicIF p2topic = p2.getTopicIF();
 
     Collection alltopics = getValues(instance, ofield);
-//    System.out.println("ALL: " + alltopics);
 
     Map<Topic,OccurrenceIF> topics_occs = getValuesWithOrdering(instance);
-//    System.out.println("TO: " + topics_occs);
 
     List<OccurrenceIF> occs = new ArrayList<OccurrenceIF>(topics_occs.values());
     Collections.sort(occs, new Comparator<OccurrenceIF>() {
@@ -886,7 +729,6 @@ public class RoleField extends FieldDefinition {
     OccurrenceIF next_occ = null;
     int fieldOrderP2;
     int nextOrder = Ordering.MAX_ORDER;
-//    System.out.println("PO1: " + p1occ + " PO2: " + p2occ);
     if (p2occ == null) {
       fieldOrderP2 = (fieldOrderMax == 0 ? 0 : fieldOrderMax + Ordering.ORDER_INCREMENTS);
       p2occ = builder.makeOccurrence(topicIf, typeIf, Ordering.orderToString(fieldOrderP2), datatype);
@@ -902,7 +744,6 @@ public class RoleField extends FieldDefinition {
         // if next then average this and next field orders
         int fieldOrderNext = Ordering.stringToOrder(next_occ.getValue());
         nextOrder = (fieldOrderP2 + fieldOrderNext)/2;
-//        System.out.println("NO1: " + nextOrder + " " + fieldOrderP2);
         if (nextOrder != fieldOrderP2) {
           p1occ = (OccurrenceIF)topics_occs.get(p1);
           if (p1occ != null) {
@@ -915,11 +756,8 @@ public class RoleField extends FieldDefinition {
         }
       }
     }
-//    System.out.println("FO2: " + fieldOrderP2);
-//    System.out.println("PO1: " + p1occ + " PO2: " + p2occ);
     if (nextOrder == Ordering.MAX_ORDER)
       nextOrder = fieldOrderP2;
-//    System.out.println("NO2: " + nextOrder);
     if (p1occ == null) {
       nextOrder += Ordering.ORDER_INCREMENTS;
       p1occ = (OccurrenceIF)topics_occs.get(p1);
@@ -949,19 +787,11 @@ public class RoleField extends FieldDefinition {
       Topic atopic = (Topic)aiter.next();
       if (!topics_occs.containsKey(atopic)) {
         nextOrder += Ordering.ORDER_INCREMENTS;
-//        System.out.println("NN: " + atopic + " " + nextOrder);
         OccurrenceIF occ = builder.makeOccurrence(topicIf, typeIf, Ordering.orderToString(nextOrder), datatype);
         occ.addTheme(fieldDefinitionIf);
         occ.addTheme(atopic.getTopicIF());
       }
     }
-
-//    System.out.println("OCCS: " + occs);
-//    System.out.println("OCC MAX: " + fieldOrderMax);
-//    System.out.println("Last: " + nextOrder);
-//
-//    System.out.println("P2 order: " + p2occ.getValue()); 
-//    System.out.println("P1 order: " + p1occ.getValue());   
   }
 
 }

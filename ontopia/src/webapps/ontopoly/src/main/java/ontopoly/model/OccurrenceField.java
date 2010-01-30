@@ -91,27 +91,6 @@ public class OccurrenceField extends FieldDefinition {
     return dataType == null ? DataType.getDefaultDataType(getTopicMap()) : new DataType(dataType, getTopicMap());
   }
 
-//  /**
-//   * Sets the data type of the occurrence type.
-//   */
-//  public void setDataType(DataType dataType) {
-//    TopicMap tm = getTopicMap();
-//    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-datatype");
-//    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-//    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "datatype");
-//
-//    Collection hasDatatypeAssocs = OntopolyModelUtils.findBinaryAssociations(
-//        tm, aType, getTopicIF(), rType1, rType2);
-//
-//    Iterator it = hasDatatypeAssocs.iterator();
-//    while (it.hasNext()) {
-//      ((AssociationIF) it.next()).remove();
-//    }
-//
-//    OntopolyModelUtils.makeBinaryAssociation(aType, getTopicIF(), rType1,
-//        dataType.getTopicIF(), rType2);
-//  }
-
   /**
    * Returns the assigned height of the occurrence text field.
    */

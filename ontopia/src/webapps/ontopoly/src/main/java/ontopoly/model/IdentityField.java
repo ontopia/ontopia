@@ -78,13 +78,6 @@ public class IdentityField extends FieldDefinition {
       Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF identityTypeIf = (TopicIF)CollectionUtils.getFirst(players);
       this.identityType = (identityTypeIf == null ? null : new IdentityType(identityTypeIf, getTopicMap()));      
-
-//			String query = "select $IT from on:has-identity-type(%THIS% : on:identity-field, $IT : on:identity-type)?";
-//			Map params = Collections.singletonMap("THIS", getTopicIF());
-//			TopicMap tm = getTopicMap();
-//			TopicIF itype = (TopicIF)tm.getQueryWrapper().queryForObject(query, params);
-//      if (itype == null) return null;
-//			this.identityType = new IdentityType(itype, tm);
 		}
     return identityType;
 	}
