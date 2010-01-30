@@ -138,7 +138,7 @@ public class SearchPage extends OntopolyAbstractPage {
   private void createTitle() {
     TitleHelpPanel titlePartPanel = new TitleHelpPanel("titlePartPanel",
         new ResourceModel("search.results"), new HelpLinkResourceModel("help.link.namefieldconfigpage"));
-    titlePartPanel.setOutputMarkupId(true);
+    titlePartPanel.setRenderBodyOnly(true);
     add(titlePartPanel);
   }
 

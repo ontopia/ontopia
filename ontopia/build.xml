@@ -720,7 +720,8 @@
   <target name="test" depends="init, download-xtm2, download-tmxml, download-ctm, download-jtm">
     <property name="test.config" value="${test.path}/config/tests.xml" />
     <property name="test.name" value="complete-non-rdbms" />
-    <echo>Using configuration file ${test.config}</echo>
+    <echo>Using configuration file '${test.config}'.</echo>
+    <echo>Tests: '${test.name}'. </echo>
     <java classname="net.ontopia.test.TestRunner" fork="true" classpathref="project.classpath">
       <jvmarg value="-Dnet.ontopia.xml.Slf4jSaxErrorHandler.ignoreNamespaceErrors=true" />
       <jvmarg value="-Dnet.ontopia.test.root=${test.path}" />
@@ -1750,9 +1751,7 @@
     <chmod dir="${dist.path}/apache-tomcat/bin" perm="a+rx" includes="*.sh" />
     
     <!-- Delete web applications -->
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/server/webapps/manager" />
-    <delete quiet="true" file="${dist.path}/apache-tomcat/conf/Catalina/localhost/manager.xml" />
-    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/webdav" />
+    <antcall inheritRefs="true" target="delete.tomcat.webapps" />
     
     <!-- Build Ontopia realm -->
     <antcall inheritRefs="true" target="jar.topicmaprealm" />
@@ -1913,6 +1912,13 @@
     <!-- Add ontopoly web application -->
     <antcall inheritRefs="true" target="dist.ontopia.webapp.ontopoly" />
     
+  </target>
+
+  <target name="delete.tomcat.webapps" unless="keep.tomcat.webapps">
+    <echo>Deleting tomcat web applications</echo>
+    <delete quiet="true" dir="${dist.path}/apache-tomcat/server/webapps/manager" />
+    <delete quiet="true" file="${dist.path}/apache-tomcat/conf/Catalina/localhost/manager.xml" />
+    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/webdav" />
   </target>
   
   <target name="dist.navigator.test.collect">

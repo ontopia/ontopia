@@ -1,16 +1,17 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <name>Ontopoly WAR</name>
-    <groupId>net.ontopia.ontopoly</groupId>
-    <artifactId>ontopoly-war</artifactId>
+    <name>Ontopoly</name>
+    <groupId>net.ontopia</groupId>
+    <artifactId>ontopoly</artifactId>
     <packaging>war</packaging>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
 
     <dependencies>
         <dependency>
             <groupId>net.ontopia</groupId>
             <artifactId>ontopia-engine</artifactId>
             <version>5.0.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
@@ -26,6 +27,17 @@
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-extensions</artifactId>
             <version>1.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-extensions</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.8</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -65,9 +77,35 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <!-- Should use jetty-maven-plugin -->
-                <artifactId>maven-jetty-plugin</artifactId>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <container>
+                        <containerId>tomcat6x</containerId>
+                        <type>remote</type>
+                    </container>
+                    <configuration>
+                        <type>runtime</type>
+                        <properties>
+                            <cargo.tomcat.manager.url>http://localhost:8080/manager</cargo.tomcat.manager.url>
+                            <cargo.remote.username>admin</cargo.remote.username>
+                            <cargo.remote.password>admin</cargo.remote.password>
+                        </properties>
+                    </configuration>
+                    <deployer>
+                        <type>remote</type>
+                        <deployables>
+                            <deployable>
+                                <groupId>${project.groupId}</groupId>
+                                <artifactId>${project.artifactId}</artifactId>
+                                <type>war</type>
+                                <properties>
+                                  <context>ontopoly</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
+                    </deployer>
+                </configuration>
             </plugin>
         </plugins>
     </build>

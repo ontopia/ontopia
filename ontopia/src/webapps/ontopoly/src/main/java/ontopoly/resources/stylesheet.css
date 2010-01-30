@@ -1,6 +1,8 @@
 
 @import url("jquery-ui-theme/theme.css"); /* default theme is 'smoothness'. see http://jqueryui.com/themeroller */
 
+.clear { clear: both; }
+
 body { font-family: Verdana, Geneva, Arial, sans-serif; font-size: small; margin: 0; padding: 0; }
 
 a img { border: 0; }
@@ -9,9 +11,7 @@ a:link { text-decoration: none; }
 a:visited { color: blue; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-h1 { color: #CC0000; margin: 2px; font-size: 180%; }
-h2 { color: black; margin: 2px; font-size: 125%; }
-h2.title { margin: 0; padding: 0; color: #C00; }
+h1 { color: #CC0000; margin: 0px; padding-bottom: 5px; font-size: 180%; }
 
 ul, p, form { margin: 0; }
 
@@ -20,8 +20,8 @@ p { padding: 5px; }
 table td { vertical-align: top; }
 table th { text-align: left; }
 
-/* FORM COMPONENTS */
-select, input, textarea { font-size: 90%; font-family: Verdana, GeneVa,Arial, sans-serif; }
+/* Form components */
+select, input, textarea { font-size: 90%; font-family: Verdana, Geneva,Arial, sans-serif; }
 select, option { max-width: 500px; }
 
 /* Header */
@@ -39,7 +39,7 @@ select, option { max-width: 500px; }
 #header #outer-tabMenu { height: 34px; }
 #header #tabMenu { float: left; font-size: 93%; line-height: normal; }
 #header #tabMenu ul { list-style: none; margin: 0; padding: 10px 10px 0; }
-#header #tabMenu li { background: url("../../resources/ontopoly.images.ImageResource/tab_first_inactive_left.gif") no-repeat left top; float: left; margin: 0; padding: 0 0 0 14px; }
+#header #tabMenu li { background: url("../../resources/ontopoly.images.ImageResource/tab_first_inactive_left.gif") no-repeat left top; float: left; margin: 0; padding: 0 0 0 13px; }
 #header #tabMenu a { background: url("../../resources/ontopoly.images.ImageResource/tab_last_inactive_right.gif") no-repeat right top; display: block; float: left; padding: 5px 15px 5px 1px; }
   
 /* Popups */
@@ -58,16 +58,15 @@ li .feedbackPanelERROR { color: red; font-weight: bold; }
 
 #header #tabMenu a:link, #tabMenu a:visited, #tabMenu a:hover, #tabMenu a:active {color: black; text-decoration: none;}
 #header #tabMenu a:hover {text-decoration: underline;}
-#header #tabMenu .selected { background-image: url("../../resources/ontopoly.images.ImageResource/tab_first_active_left.gif"); padding: 0 0 0 14px; }
-#header #tabMenu .selected a { background-image: url("../../resources/ontopoly.images.ImageResource/tab_mid_active_right.gif"); padding-left: 1px; }
+#header #tabMenu .selected { background-image: url("../../resources/ontopoly.images.ImageResource/tab_first_active_left.gif"); padding: 0 0 0 13px; }
+#header #tabMenu .selected a { background-image: url("../../resources/ontopoly.images.ImageResource/tab_mid_active_right.gif");  }
     
-#header #editingPanelContainer { float: right; text-align: right; vertical-align: top; white-space: nowrap; }
-#header #editingPanel{ border: solid 1px black; margin: 15px 15px 0 0; text-align: left; width: 280px; }
-#header #editingPanel p { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); border-bottom: solid 1px black; margin: 0; padding: 0; }
-#header #editingPanel form { margin: 0; }
-#header #editingPanel #tmfuncopen { background: url('../../resources/ontopoly.images.ImageResource/tmopen.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
-#header #editingPanel #tmfuncsave { background: url('../../resources/ontopoly.images.ImageResource/tmsave.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
-
+#editingPanelContainer { float: right; text-align: right; vertical-align: top; white-space: nowrap; }
+#editingPanel{ border: solid 1px black; margin: 15px 15px 0 0; text-align: left; width: 280px; }
+#editingPanel p { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); border-bottom: solid 1px black; margin: 0; padding: 0; }
+#editingPanel form { margin: 0; }
+#editingPanel #tmfuncopen { background: url('../../resources/ontopoly.images.ImageResource/tmopen.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
+#editingPanel #tmfuncsave { background: url('../../resources/ontopoly.images.ImageResource/tmsave.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
 
 /* TODO check if some of the rules for the footer is unnecessary*/ 
 
@@ -85,24 +84,21 @@ li .feedbackPanelERROR { color: red; font-weight: bold; }
 #footerTable a { color: white; font-weight: bold; }
 
 /* Content */
-#content { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); }
-#inner-content { background: url('../../resources/ontopoly.images.ImageResource/contentbgtop.gif') repeat-x left top; padding: 0px 10px;}
+#content { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); padding: 0px 10px;}
 
-.clear { clear: both; }
 span.comment { color: #999; }
 span.emphasis { font-weight: bold;}
 span.italic { font-style: italic;}
 
 /* Help part section */
-.titleContainer { padding: 7px 0; border-bottom: dashed 1px #ccc; }
-.titleContainer table { width: 100%; }
-.titleContainer td { vertical-align: middle; }
+.titleContainer { padding: 7px 0; border-bottom: dashed 1px #ccc; width: 100%; float: left; clear: both; }
+.titleContainer div { vertical-align: middle; }
 .titleContainer .help { float: right; }
 .titleContainer .help img { padding: 0 4px 0 0; }
 
 /* Ontology menu */
-.submenu { float:left; font-size: 93%; line-height:normal; }
-.submenu ul { margin: 0; padding: 0; list-style: none; }
+.submenu { float: left; font-size: 93%; line-height: normal; }
+.submenu ul { margin: 0; padding: 3px; list-style: none; }
 .submenu li { float: left; margin: 0; padding: 0; }
 .submenu a { display: block; padding-right: 4px;	}
 .submenu a:link, .submenu a:visited, .submenu a:hover, .submenu a:active { color: blue; }
@@ -131,13 +127,9 @@ span.italic { font-style: italic;}
 #formContainer { margin-right: 250px; margin-bottom: 10px; }
 #formContainer #buttonsRow{ padding: 20px 0; }
 
-.hide { display: none; }
-
-.start { width: 20%; height: 100%; vertical-align: top; border: 1px solid #000000; background-color: white; margin: 0 auto; padding: 5px; }
+.startPageBox { width: 20%; height: 100%; vertical-align: top; border: 1px solid #000000; background-color: white; margin: 0 auto; padding: 5px; }
    
 table#exportFormTable td { vertical-align: top; }   
-
-.helptip {font-size: 80%; color: #BBB;}
 
 div.ontopoly-tree div.wicket-tree { border: none; overflow: auto;  width: auto; white-space: normal; margin: 2px; }
 div.ontopoly-tree div.wicket-tree span.junction { background-image: url("../../resources/ontopoly.images.ImageResource/boxed.gif"); background-position: 0px center; background-repeat: no-repeat; }
@@ -151,27 +143,15 @@ div.ontopoly-tree div.wicket-tree div.row { height: auto; }
 
 a.treeLink { color: #999;}
 
-div#navigationLinksPanel { margin: 15px 0; }
-div#interfaceControl { margin: 10px 0; }
-div#usedByPanel { margin: 10px 0; }
-
 /* Tables */
 
-#fieldPropertiesTable td { vertical-align: top; }
-#fieldPropertiesTable #psiTable { border-collapse: collapse; }
-#fieldPropertiesTable #psiTable td { padding: 1px 4px 1px 0px; vertical-align: middle; }
+#searchFieldContainer { margin-bottom: 10px;}
+#searchResult {width: 100%;}
+#searchResult td {width: 50%;}
 
-div#searchFieldContainer { margin: 10px 0;}
-table#searchResult {width: 100%;}
-table#searchResult td {width: 50%;}
-
-span#errorReportForm {color: white; background-color: red; display: block; line-height: 16pt; font-weight: 700; font-size: 115%; margin: 6px 0; padding: 2px; } 
+#errorReportForm {color: white; background-color: red; display: block; line-height: 16pt; font-weight: 700; font-size: 115%; margin: 6px 0; padding: 2px; } 
 
 .occurrenceImage {border: 1px solid #999; vertical-align: top}
-
-.border-collapse {border-collapse: collapse;}
-
-.roleTable {display:inline-table; border: 1px dashed #999; padding: .2em; color: #333; vertical-align: top; margin-bottom: 2px; }
 
 .confirmBox { width: 400px; border: 2px solid; padding: 7px; background-color: #F22; }
 
@@ -217,6 +197,8 @@ td.fieldInstanceButtons {
 }
 	 */
 
+.naryRoleTable {display:inline-table; border: 1px dashed #999; padding: .2em; color: #333; vertical-align: top; margin-bottom: 2px; }
+
 td.fieldEmbeddedLabel {
  font-weight: bold;
 }
@@ -233,7 +215,11 @@ td.fieldEmbeddedInstanceButtons {
   float: left;
 }
 
-table.fieldsEditorExistingTable {
+.fieldsEditorHeader {
+  margin: 10px 0px 0px 5px;
+}
+
+.fieldsEditorExistingTable {
   display: inline-table;
   table-layout: fixed;
   border-spacing: 5px 3px; /*cellspacing:poor IE support for  this*/
@@ -242,9 +228,10 @@ table.fieldsEditorExistingTable {
   float: left;
   border: 1px solid #666666;
 	background-color: #eee;
+  margin: 10px 0px 0px 5px;
 }
 
-table.fieldsEditorAddTable {
+.fieldsEditorAddTable {
   display: inline-table;
   table-layout: fixed;
   border-spacing: 5px 3px; /*cellspacing:poor IE support for  this*/
@@ -252,6 +239,7 @@ table.fieldsEditorAddTable {
   width: auto;
   float: left;
   border: 1px dotted #666666;
+  margin: 10px 0px 0px 5px;
 }
 
 /* drag and drop */

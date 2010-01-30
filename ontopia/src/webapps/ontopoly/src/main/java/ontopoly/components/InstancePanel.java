@@ -11,6 +11,7 @@ import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -53,13 +54,14 @@ public abstract class InstancePanel extends Panel {
     createFields(isReadOnly, traversable);
     
     // optional close button
-    Button button = new Button("okButton", new ResourceModel("button.ok")) {
+    WebMarkupContainer instanceButtons = new WebMarkupContainer("instanceButtons") {
       @Override
       public boolean isVisible() {
         return isButtonsVisible();
-      }
+      }     
     };
-    add(button);
+    instanceButtons.add(new Button("okButton", new ResourceModel("button.ok")));
+    add(instanceButtons);
   }
   
   protected boolean isButtonsVisible() {
@@ -83,7 +85,9 @@ public abstract class InstancePanel extends Panel {
     FieldsView fieldsView = fieldsViewModel.getFieldsView();
     
     List<FieldInstanceModel> fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(topic.getFieldInstances(specificType, fieldsView));
-    add(new FieldInstancesPanel("fieldsPanel", fieldInstanceModels, fieldsViewModel, isReadOnly, traversable));    
+    FieldInstancesPanel fieldInstancesPanel = new FieldInstancesPanel("fieldsPanel", fieldInstanceModels, fieldsViewModel, isReadOnly, traversable);
+    fieldInstancesPanel.setRenderBodyOnly(true);
+    add(fieldInstancesPanel);    
   }
 
   @Override
