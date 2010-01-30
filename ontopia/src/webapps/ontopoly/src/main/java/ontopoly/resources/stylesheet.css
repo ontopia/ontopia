@@ -216,7 +216,11 @@ td.fieldEmbeddedInstanceButtons {
 }
 
 .fieldsEditorHeader {
-  margin: 10px 0px 0px 5px;
+  border-spacing:5px 3px;
+  border-top:1px dotted #666666;
+  margin:10px 0 0 5px;
+  padding:5px 0 0;
+  width:125%;
 }
 
 .fieldsEditorExistingTable {
