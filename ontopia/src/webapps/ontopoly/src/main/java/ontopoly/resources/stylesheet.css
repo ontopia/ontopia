@@ -62,9 +62,9 @@ li .feedbackPanelERROR { color: red; font-weight: bold; }
 #header #tabMenu .selected a { background-image: url("../../resources/ontopoly.images.ImageResource/tab_mid_active_right.gif");  }
     
 #editingPanelContainer { float: right; text-align: right; vertical-align: top; white-space: nowrap; }
-#editingPanel{ border: solid 1px black; margin: 15px 15px 0 0; text-align: left; width: 280px; }
-#editingPanel p { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); border-bottom: solid 1px black; margin: 0; padding: 0; }
-#editingPanel form { margin: 0; }
+#editingPanel{ border: solid 1px black; margin: 5px 5px 0 0; text-align: left; width: 290px; }
+#editingPanel p { background-image: url('../../resources/ontopoly.images.ImageResource/contentbg.gif'); border-bottom: solid 1px black; margin: 0; padding: 1px; }
+#editingPanel form { margin: 1px; padding: 2px; }
 #editingPanel #tmfuncopen { background: url('../../resources/ontopoly.images.ImageResource/tmopen.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
 #editingPanel #tmfuncsave { background: url('../../resources/ontopoly.images.ImageResource/tmsave.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
 
