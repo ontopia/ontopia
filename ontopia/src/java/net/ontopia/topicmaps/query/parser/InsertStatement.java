@@ -110,7 +110,7 @@ public class InsertStatement extends ModificationStatement {
       CTMParser parser = new CTMParser(lexer);
       parser.init();
       parser.setBase(context.getTopicMap().getStore().getBaseAddress());
-      parser.setTopicMap(context.getTopicMap());
+      parser.setTopicMap(context.getTopicMap(), null);
       TemplateEventHandler handler = 
         new TemplateEventHandler(null, parameters, null);
       this.context = new CTMParseContext(context, parser.getContext());
