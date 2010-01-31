@@ -42,7 +42,7 @@ public class TopicMapHeaderPanel extends HeaderPanel {
         pageParametersMap.put("topicMapId", topicMapModel.getTopicMap().getId());
         pageParametersMap.put("searchTerm", searchField.getDefaultModelObjectAsString());
         setResponsePage(SearchPage.class, new PageParameters(pageParametersMap));
-        setRedirect(false);
+        setRedirect(true);
       }
     };
     add(form);

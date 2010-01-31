@@ -569,19 +569,23 @@ public class TopicType extends AbstractTypingTopic {
     Map<String,Object> params = new HashMap<String,Object>();
     params.put("searchTerm", searchTerm);
     params.put("topicType", getTopicIF());
-
+    
     QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
     Collection<Topic> rows = qm.queryForList(query, params);
-
-    Iterator it = rows.iterator();
+    
+    Iterator<Topic> it = rows.iterator();
     List<Topic> results = new ArrayList<Topic>(rows.size());
-    Set<TopicIF> duplicateChecks = new HashSet<TopicIF>(rows.size());
+    try {
+    Set<Topic> duplicateChecks = new HashSet<Topic>(rows.size());
     while (it.hasNext()) {
-      TopicIF topic = (TopicIF) it.next();
+      Topic topic = it.next();
       if (duplicateChecks.contains(topic))
         continue; // avoid duplicates
-      results.add(new Topic(topic, getTopicMap()));
+      results.add(topic);
       duplicateChecks.add(topic);
+    }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     return results;

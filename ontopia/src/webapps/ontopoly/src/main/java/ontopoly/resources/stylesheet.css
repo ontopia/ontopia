@@ -119,7 +119,7 @@ span.italic { font-style: italic;}
 #lowmenu .delimiter { background: url('../ontopoly.images.ImageResource/delimiter.gif') no-repeat left center; padding: 0 0 0 6px; }
 
 #functionBoxes { float: right; width: 250px; }
-#functionBoxes #functionBoxesList { width: 100%; margin: 0; padding:  5px 0;}
+#functionBoxes #functionBoxesList { width: 100%; margin-top: 5px }
 #functionBoxes #functionBoxesList .functionBox { width: 100%; margin: 0; padding: 0; background-color: rgb(230,230,230);}
 #functionBoxes select, option  { max-width: 230px; }
 
@@ -144,11 +144,10 @@ a.treeLink { color: #999;}
 
 /* Tables */
 
-#searchFieldContainer { margin-bottom: 10px;}
-#searchResult {width: 100%;}
-#searchResult td {width: 50%;}
+.searchField { margin-top: 10px; margin-bottom: 10px; }
+.searchResult { width: 60%; }
 
-#errorReportForm {color: white; background-color: red; display: block; line-height: 16pt; font-weight: 700; font-size: 115%; margin: 6px 0; padding: 2px; } 
+#errorReportForm { color: white; background-color: red; display: block; line-height: 16pt; font-weight: 700; font-size: 115%; margin: 6px 0; padding: 2px; } 
 
 .occurrenceImage {border: 1px solid #999; vertical-align: top}
 
@@ -164,6 +163,7 @@ table.fieldsTable {
   table-layout: auto;
   border-spacing: 5px 3px; /*cellspacing:poor IE support for  this*/
   border-collapse: separate;
+  margin-top: 5px;
 }
 
 table.fieldsTable table.fieldsTable {

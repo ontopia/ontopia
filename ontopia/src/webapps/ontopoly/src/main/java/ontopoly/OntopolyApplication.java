@@ -18,6 +18,7 @@ import ontopoly.pages.NameTypesPage;
 import ontopoly.pages.OccurrenceTypesPage;
 import ontopoly.pages.PageExpiredErrorPage;
 import ontopoly.pages.RoleTypesPage;
+import ontopoly.pages.SearchPage;
 import ontopoly.pages.SignInPage;
 import ontopoly.pages.SignOutPage;
 import ontopoly.pages.StartPage;
@@ -94,6 +95,8 @@ public class OntopolyApplication extends WebApplication {
     mount(new MixedParamUrlCodingStrategy("signin", SignInPage.class, new String[] {}));
     mount(new MixedParamUrlCodingStrategy("signout", SignOutPage.class, new String[] {}));
 
+    mount(new MixedParamUrlCodingStrategy("search", SearchPage.class, new String[] {"topicMapId"}));
+    
     mount(new MixedParamUrlCodingStrategy("convert-topicmap", ConvertPage.class, new String[] {"topicMapId"}));
     mount(new MixedParamUrlCodingStrategy("upgrade-topicmap", UpgradePage.class, new String[] {"topicMapId"}));
     

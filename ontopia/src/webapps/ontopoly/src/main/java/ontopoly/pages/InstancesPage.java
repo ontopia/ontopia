@@ -25,10 +25,12 @@ import ontopoly.pojos.TopicNode;
 import ontopoly.utils.TreeModels;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -53,11 +55,16 @@ public class InstancesPage extends OntopolyAbstractPage {
     // Adding part containing title and help link
     createTitle();
     
+    // Add form
+    Form form = new Form("form");
+    add(form);
+    form.setOutputMarkupId(true);
+
     // Add list of instances
     TopicType topicType = topicTypeModel.getTopicType();
     
     if(topicType.isLargeInstanceSet()) {
-      add(new InstanceSearchPanel("contentPanel", topicTypeModel));
+      form.add(new InstanceSearchPanel("contentPanel", topicTypeModel));
     } else {
       // create a tree
       final TreeModel treeModel = TreeModels.createInstancesTreeModel(topicTypeModel.getTopicType(), isAdministrationEnabled());
@@ -99,11 +106,11 @@ public class InstancesPage extends OntopolyAbstractPage {
         }
       };
       treePanel.setOutputMarkupId(true);
-      add(treePanel);
+      form.add(treePanel);
     }
     
     // Function boxes
-    createFunctionBoxes();
+    createFunctionBoxes(form, "functionBoxes");
     
     // initialize parent components
     initParentComponents();    
@@ -120,9 +127,9 @@ public class InstancesPage extends OntopolyAbstractPage {
         new PropertyModel<String>(topicTypeModel, "name"), new HelpLinkResourceModel("help.link.instancespage")));
   }
 
-  private void createFunctionBoxes() {
+  private void createFunctionBoxes(MarkupContainer parent, String id) {
 
-    add(new FunctionBoxesPanel("functionBoxes") {
+    parent.add(new FunctionBoxesPanel(id) {
       @Override
       protected List<Component> getFunctionBoxesList(String id) {
         List<Component> list = new ArrayList<Component>();
