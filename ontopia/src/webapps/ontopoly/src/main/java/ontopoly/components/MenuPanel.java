@@ -26,7 +26,6 @@ public class MenuPanel extends Panel {
             menuItem.getPageClass(), menuItem.getPageParameters());
         link.add(menuItem.getCaption());
         item.add(link);
-        item.add(new SimpleAttributeModifier("id", menuItem.getId()));
 
         if (counter == selectedMenuItemIndex) {
           if (counter > 0)          

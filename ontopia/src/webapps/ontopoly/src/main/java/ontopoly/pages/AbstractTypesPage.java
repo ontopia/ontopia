@@ -115,11 +115,11 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     parameters.add("topicMapId", topicMapModel.getTopicMapId());
 
     List<MenuItem> subMenuItems = Arrays.asList(new MenuItem[] {
-        new MenuItem("submenu.topic.types", new Label("caption", new ResourceModel("topic.types")), TopicTypesPage.class, parameters),
-        new MenuItem("submenu.occurrence.types", new Label("caption",new ResourceModel("occurrence.types")), OccurrenceTypesPage.class, parameters),
-        new MenuItem("submenu.association.types", new Label("caption",new ResourceModel("association.types")), AssociationTypesPage.class, parameters),
-        new MenuItem("submenu.role.types", new Label("caption",new ResourceModel("role.types")), RoleTypesPage.class, parameters),
-        new MenuItem("submenu.name.types", new Label("caption",new ResourceModel("name.types")), NameTypesPage.class, parameters) });
+        new MenuItem(new Label("caption", new ResourceModel("topic.types")), TopicTypesPage.class, parameters),
+        new MenuItem(new Label("caption",new ResourceModel("occurrence.types")), OccurrenceTypesPage.class, parameters),
+        new MenuItem(new Label("caption",new ResourceModel("association.types")), AssociationTypesPage.class, parameters),
+        new MenuItem(new Label("caption",new ResourceModel("role.types")), RoleTypesPage.class, parameters),
+        new MenuItem(new Label("caption",new ResourceModel("name.types")), NameTypesPage.class, parameters) });
     return subMenuItems;
   }
 

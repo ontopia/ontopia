@@ -18,18 +18,11 @@ public class MenuItem implements Serializable {
   /** the (bookmarkable) page the menu item links to */
   private PageParameters pageParameters;
 
-  private final String id;
-
-  public MenuItem(String id, Label caption, Class<? extends Page> destination,
+  public MenuItem(Label caption, Class<? extends Page> destination,
       PageParameters pageParameters) {
-    this.id = id;
     this.caption = caption;
     this.pageClass = destination;
     this.pageParameters = pageParameters;
-  }
-
-  public String getId() {
-    return id;
   }
   
   public Label getCaption() {
