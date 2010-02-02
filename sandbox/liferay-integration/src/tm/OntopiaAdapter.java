@@ -179,7 +179,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     System.out.println("*** delete " + uuid + " ***");
     String psi = urnify(uuid);
     String query = "delete i\"" + psi +"\"";
-    runQuery(query);
+    try{
+      runQuery(query);
+    } catch (OntopiaRuntimeException ore){
+      // log exception and go on if topic to be deleted can not be found. It's gone already obviously.
+      ore.printStackTrace();
+    }
   }
   
   private void createWebContent(JournalArticle content, TopicMapIF tm){
@@ -738,9 +743,13 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   public String getObjectIdForUuid(String uuid) {
-    LocatorIF locator = new GenericLocator("uri", urnify(uuid));
-    TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator); // may raise exception if topic can not be found. That's ok.
-    return topic.getObjectId();
+    TopicIF topic = retrieveTopicByUuid(uuid, topicmap); // may raise exception if topic can not be found. That's ok.
+    if(topic != null){
+      System.out.println("Topic to return : " + topic);
+      return topic.getObjectId();
+    } else {
+      return NULL;
+    }
   }
 
   public String getTopicMapId() {
@@ -748,14 +757,15 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   public String getTopicTypeIdForUuid(String uuid) {
-    LocatorIF locator = new GenericLocator("uri", urnify(uuid));
-    TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator);
-    Collection collection = topic.getTypes();
-    if(!collection.isEmpty()){
-      Iterator collIt = collection.iterator();
-      while(collIt.hasNext()){
-        TopicIF type = (TopicIF) collIt.next(); //TODO: returns only the first type. What to do if there are more? Can there be more?!
-        return type.getObjectId();
+    TopicIF topic = retrieveTopicByUuid(uuid, topicmap);
+    if(topic != null){
+      Collection collection = topic.getTypes();
+      if(!collection.isEmpty()){
+        Iterator collIt = collection.iterator();
+        while(collIt.hasNext()){
+          TopicIF type = (TopicIF) collIt.next(); //TODO: returns only the first type. What to do if there are more? Can there be more?!
+          return type.getObjectId();
+        }
       }
     }
     return NULL;

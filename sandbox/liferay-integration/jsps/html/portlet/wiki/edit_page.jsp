@@ -208,6 +208,15 @@ if (Validator.isNull(redirect)) {
 		document.<portlet:namespace />fm.<portlet:namespace />saveAndContinue.value = "true";
 		<portlet:namespace />savePage();
 	}
+	
+	// Ontopia Plugin Code
+    function calcHeight() {
+     //find the height of the internal page
+     var odoc = document.getElementById('the_iframe').contentWindow.document;
+     var the_height = odoc.body.scrollHeight;
+     //change the height of the iframe 
+     document.getElementById('the_iframe').height = the_height+50;
+    }
 </script>
 
 <form action="<portlet:actionURL><portlet:param name="struts_action" value="/wiki/edit_page" /></portlet:actionURL>" method="post" name="<portlet:namespace />fm" onSubmit="<portlet:namespace />savePage(); return false;">
@@ -362,6 +371,33 @@ if (Validator.isNull(redirect)) {
 	}
 	%>
 
+    <%
+    /* Ontopia Plugin Code */
+    String topicId = null;
+    String topicTypeId = null;
+    String topicMapId = null;
+    String viewId = null;
+    
+    if(wikiPage != null || !wikiPage.isNew()){
+        topicId = tm.OntopiaAdapter.instance.getObjectIdForUuid(wikiPage.getUuid());
+        topicTypeId = tm.OntopiaAdapter.instance.getTopicTypeIdForUuid(wikiPage.getUuid());
+        topicMapId = tm.OntopiaAdapter.instance.getTopicMapId();
+        viewId = tm.OntopiaAdapter.instance.getConceptViewId();
+    }
+    %>
+    <c:if test="<%= !wikiPage.isNew() %>">
+        <tr>
+            <td>
+            <iframe width="100%" id="the_iframe" onLoad="calcHeight();" scrolling="NO" frameborder="0" src="/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=
+              topicId %>&topicTypeId=<%=
+              topicTypeId %>&topicMapId=<%=
+              topicMapId %>&viewId=<%=
+              viewId %>"></iframe>
+
+            </td>
+        </tr>
+    </c:if>
+    <% /* Ontopia Plugin Code end */ %>
 	<tr>
 		<td>
 			<liferay-ui:message key="categories" />

@@ -219,7 +219,7 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 %>
 
 <script type="text/javascript">
-    function popup(url) {
+    function popup(url) { // this is probably old, because we use the iFrame now
         var width  = 700;
         var height = 600;
         var left   = (screen.width  - width)/2;
@@ -238,6 +238,15 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
         if (window.focus) {newwin.focus()}
         return false;
     }
+    
+    function calcHeight() {
+     //find the height of the internal page
+     var odoc = document.getElementById('the_iframe').contentWindow.document;
+     var the_height = odoc.body.scrollHeight;
+     //change the height of the iframe 
+     document.getElementById('the_iframe').height = the_height+50;
+    }
+
 
 	var <portlet:namespace />count = 0;
 	var <portlet:namespace />documentLibraryInput = null;
@@ -884,13 +893,15 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 				</table>
 			</td>
 		</tr>
-		<tr><td> <%
+		<tr><td>Ontopoly:</td>
+		<td> <%
 		  /* Ontopia Plugin Code */
 		  /* Note: Does only work with tweaked catalina config. See Docs */
 			String myText = "";
 			String topicId = "";
 			String topicTypeId = "";
 			String topicMapId = "";
+			String viewId = "";
 			if(article == null){
 			     article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 			}
@@ -901,14 +912,15 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 		       topicMapId = tm.OntopiaAdapter.instance.getTopicMapId();
 		       topicTypeId = tm.OntopiaAdapter.instance.getTopicTypeIdForUuid(article.getUuid());
 		       topicId = tm.OntopiaAdapter.instance.getObjectIdForUuid(article.getUuid());
+		       viewId = tm.OntopiaAdapter.instance.getConceptViewId();
 		     }%>
 		     <c:if test="<%= article != null %>">
-              <a href="javascript: void(0)" 
-                  onclick="popup('/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=
-     topicId %>&topicTypeId=<%=
-     topicTypeId %>&topicMapId=<%=
-     topicMapId %>')">Show Ontopoly!</a>
-     </c:if>
+                      <iframe width="100%" id="the_iframe" onLoad="calcHeight();" scrolling="NO" frameborder="0" src="/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=
+              topicId %>&topicTypeId=<%=
+              topicTypeId %>&topicMapId=<%=
+              topicMapId %>&viewId=<%=
+              viewId %>"></iframe>
+            </c:if>
     	</td></tr>
 		</table>
 

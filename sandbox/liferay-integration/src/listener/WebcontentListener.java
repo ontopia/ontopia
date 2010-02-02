@@ -1,18 +1,14 @@
 package listener;
 
 import tm.OntopiaAdapter;
-import tm.OntopiaAdapterIF;
 
 import com.liferay.portal.ModelListenerException;
-import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.journal.model.JournalArticle;
-import net.ontopia.Ontopia;
+
 
 
 public class WebcontentListener implements ModelListener<JournalArticle> {
-  
-  private OntopiaAdapterIF adapter = OntopiaAdapter.instance;
 
 
   public void onAfterAddAssociation(Object arg0, String arg1, Object arg2)
@@ -23,7 +19,7 @@ public class WebcontentListener implements ModelListener<JournalArticle> {
     
     System.out.println("### OnAfterCreateArticle ###");
     //System.out.println("Passed argument:" + arg0);
-    adapter.addWebContent(arg0);
+    OntopiaAdapter.instance.addWebContent(arg0);
     
     //printArticle(arg0);   
     
@@ -32,7 +28,7 @@ public class WebcontentListener implements ModelListener<JournalArticle> {
   
   public void onAfterRemove(JournalArticle arg0) throws ModelListenerException {
     System.out.println("### OnAfterRemoveArticle ###");
-    adapter.deleteWebContent(arg0.getUuid());
+    OntopiaAdapter.instance.deleteWebContent(arg0.getUuid());
     //printArticle(arg0);
     
   }
