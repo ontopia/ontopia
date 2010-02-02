@@ -72,10 +72,9 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         }
       }
     }
-    if(tms != null) {
+    if (tms != null) {
       tms.clear();
     }
-    
   }
   
   @Override
@@ -107,14 +106,14 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         }
       }
     }
-    if(tms != null) {
+    if (tms != null) {
       tms.clear();
     }
     
     Throwable cause = e;
-    if(cause instanceof WicketRuntimeException) 
+    if (cause instanceof WicketRuntimeException) 
     cause = cause.getCause(); 
-    if(cause instanceof InvocationTargetException) 
+    if (cause instanceof InvocationTargetException) 
     cause = cause.getCause();
     if (e instanceof PageExpiredException) {
 

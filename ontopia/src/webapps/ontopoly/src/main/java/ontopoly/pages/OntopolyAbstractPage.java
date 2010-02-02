@@ -71,13 +71,13 @@ public abstract class OntopolyAbstractPage extends AbstractProtectedOntopolyPage
     parameters.add("topicMapId", topicMapModel.getTopicMap().getId());
 
     List<MenuItem> mainMenuItems = Arrays.asList(new MenuItem[] {
-        new MenuItem(new Label("caption", new ResourceModel("description")),
+        new MenuItem("tabMenu_description", new Label("caption", new ResourceModel("description")),
             DescriptionPage.class, parameters),
-        new MenuItem(new Label("caption", new ResourceModel("administration")),
+        new MenuItem("tabMenu.administration", new Label("caption", new ResourceModel("administration")),
             AdminPage.class, parameters),
-        new MenuItem(new Label("caption", new ResourceModel("ontology")),
+        new MenuItem("tabMenu.ontology", new Label("caption", new ResourceModel("ontology")),
             TopicTypesPage.class, parameters),
-        new MenuItem(new Label("caption", new ResourceModel("instances")),
+        new MenuItem("tabMenu.instances", new Label("caption", new ResourceModel("instances")),
             InstanceTypesPage.class, parameters) });
     return mainMenuItems;
   }
