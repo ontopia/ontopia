@@ -67,12 +67,7 @@ public abstract class ModalFindPage extends Panel {
   
   private boolean errorInSearch = false;
 
-  protected final IModel<TreeModel> emptyTreeModelModel = new LoadableDetachableModel<TreeModel>() {
-    @Override
-    protected TreeModel load() {
-      return TreeModels.createEmptyTreeModel();
-    }
-  };
+  protected TreeModel emptyTreeModel = TreeModels.createEmptyTreeModel();
 
   public ModalFindPage(String id, FieldInstanceModel fieldInstanceModel, int activeTab) {
     super(id);
@@ -302,7 +297,9 @@ public abstract class ModalFindPage extends Panel {
         return topicTypes; 
       }
     };
-    final TopicModel<TopicType> selectedTypeModel = new TopicModel<TopicType>(null, TopicModel.TYPE_TOPIC_TYPE);
+    List<TopicType> playerTypes = playerTypesChoicesModel.getObject();
+    TopicType selectedType = playerTypes.size() == 1 ? playerTypes.get(0) : null;
+    final TopicModel<TopicType> selectedTypeModel = new TopicModel<TopicType>(selectedType, TopicModel.TYPE_TOPIC_TYPE);
     
     final WebMarkupContainer resultsContainer = new WebMarkupContainer("resultsContainer");
     resultsContainer.setOutputMarkupId(true);
@@ -328,7 +325,7 @@ public abstract class ModalFindPage extends Panel {
     resultsContainer.add(checkGroup);
         
     // create a tree
-    final TreePanel treePanel = new TreePanel("results", emptyTreeModelModel) {
+    final TreePanel treePanel = new TreePanel("results", getTreeModel(null)) {
       @Override
       protected Component populateNode(String id, TreeNode treeNode) {
         DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
@@ -378,24 +375,18 @@ public abstract class ModalFindPage extends Panel {
     treePanel.setOutputMarkupId(true);
     checkGroup.add(treePanel);
     
+    // NOTE: need to readd model here because page, which we depend on in the construction 
+    // of the tree model, is not available in TreePanel constructor
+    if (selectedTypeModel != null)
+      treePanel.setDefaultModel(getTreeModel(selectedType));
+    
     final TopicDropDownChoice<TopicType> playerTypesDropDown = new TopicDropDownChoice<TopicType>("playerTypes", selectedTypeModel, playerTypesChoicesModel);
     
     playerTypesDropDown.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       protected void onUpdate(AjaxRequestTarget target) {
         // replace tree model
         TopicType topicType = (TopicType)playerTypesDropDown.getDefaultModelObject();
-        if (topicType == null) {
-          treePanel.setDefaultModel(emptyTreeModelModel);
-        } else {
-          AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-          final TreeModel treeModel = TreeModels.createInstancesTreeModel(topicType, page.isAdministrationEnabled());
-          treePanel.setDefaultModel(new AbstractReadOnlyModel<TreeModel>() {
-            @Override
-            public TreeModel getObject() {
-              return treeModel;
-            }
-          });
-        }
+        treePanel.setDefaultModel(getTreeModel(topicType));
         target.addComponent(resultsContainer);
       }
     });
@@ -420,7 +411,7 @@ public abstract class ModalFindPage extends Panel {
 
         // reset selected topic type, choice group and tree model
         selectedTypeModel.setObject(null);
-        treePanel.setDefaultModel(emptyTreeModelModel);
+        treePanel.setDefaultModel(getTreeModel(null));
         radioGroupModel.setObject(null);
         checkGroupModel.clear();
       }
@@ -435,7 +426,7 @@ public abstract class ModalFindPage extends Panel {
 
         // reset selected topic type, choice group and tree model
         selectedTypeModel.setObject(null);
-        treePanel.setDefaultModel(emptyTreeModelModel);
+        treePanel.setDefaultModel(getTreeModel(null));
         radioGroupModel.setObject(null);
         checkGroupModel.clear();
       }
@@ -445,6 +436,20 @@ public abstract class ModalFindPage extends Panel {
     return browseTab;
   }
   
+  protected IModel<TreeModel> getTreeModel(final TopicType topicType) {
+    return new AbstractReadOnlyModel<TreeModel>() {
+      @Override
+      public TreeModel getObject() {
+        if (topicType == null) {
+          return emptyTreeModel;
+        } else {
+          AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
+          return TreeModels.createInstancesTreeModel(topicType, page.isAdministrationEnabled());
+        }
+      }
+    };
+  }
+
   protected abstract void onSelectionConfirmed(AjaxRequestTarget target, Collection selected);
   
   protected abstract void onCloseOk(AjaxRequestTarget target);

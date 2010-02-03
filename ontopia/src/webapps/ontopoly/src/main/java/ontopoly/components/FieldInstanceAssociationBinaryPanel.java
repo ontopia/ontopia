@@ -362,7 +362,6 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       int activeTab = (interfaceControl.isSearchDialog() ?
                        ModalFindPage.ACTIVE_TAB_SEARCH : ModalFindPage.ACTIVE_TAB_BROWSE);
       
-     
       findModal.setContent(new ModalFindPage(findModal.getContentId(), fieldInstanceModel, activeTab) {
         @Override
         protected void onSelectionConfirmed(AjaxRequestTarget target, Collection selected) {
