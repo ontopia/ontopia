@@ -76,9 +76,21 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   // Webcontent
+  /**
+   * This method creates a topic of a subclass of Liferay_WebContent.
+   * It sets associations to user for creation and if applicable approval.
+   * It also tries to set the contains association to the community in which it is created.
+   * If that fails, a RuntimeException is raised and no topic will be created.
+   * @param content
+   */
   public void addWebContent(JournalArticle content){
-    addWebContent(content, topicmap);
-    setGroupContains(String.valueOf(content.getGroupId()), content.getUuid(), topicmap); // TODO: For the time being this cannot be used within the private method, because the update will fail
+      addWebContent(content, topicmap);
+      try{
+        setGroupContains(String.valueOf(content.getGroupId()), content.getUuid(), topicmap); // TODO: For the time being this cannot be used within the private method, because the update will fail due to the group association (no group in update tm)
+      }catch (Exception e){
+        deleteByUuid(content.getUuid()); // do not allow liferay to create a webcontent w/o attaching it to a group. if group can't be found, throw exception and don't create webcontent.
+        throw new OntopiaRuntimeException(e); // when throwing exception, liferay does not save the webcontent the user has been working on - therefore no topic must be created.
+      }
   }
   
   private void addWebContent(JournalArticle content, TopicMapIF tm){
@@ -98,11 +110,19 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     
     
   }
-  
+
+  /**
+   * Deletes an instance of a subclass of Liferay_WebContent by a given Uuid
+   * @param uuid The uuid of the document in question
+   */
   public void deleteWebContent(String uuid){
     deleteByUuid(uuid);
   }
-  
+
+  /**
+   * Updates the values of an existing document with the values from 'content'
+   * @param content
+   */
   public void updateWebContent(JournalArticle content){
     try {
       update(content, "webcontent");
@@ -111,11 +131,18 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     }
   }
   
-  // Users
+  /**
+   * This method add a user defined structure as a subclass of Liferay_WebContent to the ontology
+   * @param structure
+   */
   public void addStructure(JournalStructure structure) {
-    addStructure(structure, topicmap);    
+    addStructure(structure, topicmap); //TODO: Shall structures have information on their group as well?
   }
 
+  /**
+   * This methods adds a new User to the ontology
+   * @param user
+   */
   public void addUser(User user) {
     addUser(user, topicmap);    
   }
@@ -129,11 +156,20 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         "$username = %username%";
     runQuery(query, tm, valueMap);
   }
-  
+
+  /**
+   * This methods removes a user from the ontology.
+   * The user is identified only by the uuid.
+   * @param uuid
+   */
   public void deleteUser(String uuid){
     deleteByUuid(uuid); 
   }
-  
+
+  /**
+   * This method updates an instance of a User with new values from 'user'
+   * @param user
+   */
   public void updateUser(User user){
     try {
       update(user, USER_TYPE);
@@ -166,7 +202,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   public void deleteStructure(String uuid){
     deleteByUuid(uuid);
   }
-  
+
+  /**
+   * This method updates a structure with new values from the passed object
+   * @param structure
+   */
   public void updateStructure(JournalStructure structure){
     try {
       update(structure, STRUCTURE_TYPE);
@@ -416,7 +456,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return source;
   }
 
-// for deciders
+ /**
+  * This method is called by DeciderIF implementations to check if the PSI provided is the type of the Association provided
+  * @param psi
+  * @param assoc
+  * @return true/false
+  */
   public static boolean isInAssociation(String psi, AssociationIF assoc){
     TopicIF type = assoc.getType();
       try {
@@ -432,6 +477,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return false;
   }
 
+  /**
+   * This method adds a new WikiNode into the ontology and sets associations to the creating user and the containing group.
+   * Should the latter fail, a RuntimeException is raised and no WikiNode is created.
+   * @param node
+   */
   public void addWikiNode(WikiNode node){
     addWikiNode(node, topicmap);
   }
@@ -444,7 +494,13 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     } catch (SystemException ex) {
       throw new OntopiaRuntimeException(ex);
     }
-    setGroupContains(String.valueOf(wikinode.getGroupId()), wikinode.getUuid(), tm);
+
+    try{
+      setGroupContains(String.valueOf(wikinode.getGroupId()), wikinode.getUuid(), tm);
+    } catch (OntopiaRuntimeException ore){
+      deleteByUuid(wikinode.getUuid()); // if there is no group, alert and don't create topic!
+      throw new OntopiaRuntimeException(ore);
+    }
   }
 
   private void createWikiNode(WikiNode wikinode, TopicMapIF tm) {
@@ -472,10 +528,18 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query, tm, valueMap);
   }
 
+  /**
+   * Removes the WikiNode identified by the Uuid
+   * @param uuid
+   */
   public void deleteWikiNode(String uuid) {
     deleteByUuid(uuid);
   }
 
+  /**
+   * This method updates a WikiNode using the updated object 'wikinode'
+   * @param wikinode
+   */
   public void updateWikiNode(WikiNode wikinode) {
     try {
       update(wikinode, WIKINODE_TYPE);
@@ -484,6 +548,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     }
   }
 
+  /**
+   * This method adds a new WikiPage. It sets associations to the creating user, parent/child pages and the group it is contained by.
+   * Should the latter fail a RuntimeException is raised and no WikiPage is created.
+   * @param wikipage
+   */
   public void addWikiPage(WikiPage wikipage){
     addWikiPage(wikipage, topicmap);
   }
@@ -508,7 +577,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       throw new OntopiaRuntimeException(ex);
     }
 
-    setContains(wikipage.getNode().getUuid(), wikipage.getUuid(), tm);
+    try{
+      setContains(wikipage.getNode().getUuid(), wikipage.getUuid(), tm);
+    } catch (OntopiaRuntimeException ore){
+      deleteByUuid(wikipage.getUuid()); // if there is no group, alert and don't add page.
+      throw new OntopiaRuntimeException(ore);
+    }
   }
   
   private void createWikiPage(WikiPage wikipage, TopicMapIF tm) {
@@ -531,10 +605,18 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query, tm, valueMap);
   }
 
+  /**
+   * This method deletes a WikiPage identified by the uuid.
+   * @param uuid
+   */
   public void deleteWikiPage(String uuid) {
     deleteByUuid(uuid);
   }
 
+  /**
+   * This method updates the values of a WikiPage by using the updated WikiPage provided
+   * @param wikipage
+   */
   public void updateWikiPage(WikiPage wikipage) {
     try {
       update(wikipage, WIKIPAGE_TYPE);
@@ -554,6 +636,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query, tm);
   }
 
+  /**
+   * This method adds a new Group to the ontology.
+   * It checks the Group Object for the type of group (Community, User Group ...) and acts accordingly
+   * @param group
+   */
     public void addGroup(Group group) {
     if(group.isCommunity()){
       addCommunity(group, topicmap);
@@ -575,6 +662,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
        runQuery(query, tm, valueMap);
     }
 
+    /**
+     * This method removes a group from the ontology.
+     * To identify a group the groupId is used, as groups do not offer Uuids to identify them.
+     * @param group
+     */
   public void deleteGroup(Group group) {
     System.out.println("*** deleteGroup ***");
         String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
@@ -587,6 +679,10 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     runQuery(query);
   }
 
+  /**
+   * This method updated the name of a group at the moment.
+   * @param group
+   */
   public void updateGroup(Group group) {
     if(group.isCommunity()){
       try {
@@ -617,7 +713,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
             "insert lr:contains( lr:container : $topic  , lr:containee : " + urnifyCtm(uuid) + " ) from \n" +
             "$topic = %topic%";
 
-    System.out.println(query);
     runQuery(query, tm, map);
   }
 
@@ -742,20 +837,34 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return retval;
   }
 
+  // the following methods are for the tweaked jsps
+  /**
+   * Returns the ObjectId for the topic identified by the uuid provided.
+   * @param uuid
+   * @return A String representing the objectId of the topic in the tm
+   */
   public String getObjectIdForUuid(String uuid) {
     TopicIF topic = retrieveTopicByUuid(uuid, topicmap); // may raise exception if topic can not be found. That's ok.
     if(topic != null){
-      System.out.println("Topic to return : " + topic);
       return topic.getObjectId();
     } else {
       return NULL;
     }
   }
 
+  /**
+   * Returns the identifier of the topicmap
+   * @return a String containing the identidier of the topicmap
+   */
   public String getTopicMapId() {
     return TMNAME;
   }
 
+  /**
+   * This method returns the objectId of the *first* type of a topic which is identified by a uuid that it finds.
+   * @param uuid The uuid of the topic in question
+   * @return a String containing the objectId for the type of the topic in question
+   */
   public String getTopicTypeIdForUuid(String uuid) {
     TopicIF topic = retrieveTopicByUuid(uuid, topicmap);
     if(topic != null){
@@ -771,6 +880,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return NULL;
   }
 
+  /**
+   * Views are needed to display selections of occurrence fields to users.
+   * This method returns the objectId of the "conceptView" topic.
+   * "conceptView" only exposes the "is-about" association.
+   * @return The objectId of the "conceptView" topic
+   */
   public String getConceptViewId(){
     TopicIF conceptView = topicmap.getTopicBySubjectIdentifier(new GenericLocator("uri", "http://psi.ontopia.net/liferay/conceptview"));
     return conceptView.getObjectId();
