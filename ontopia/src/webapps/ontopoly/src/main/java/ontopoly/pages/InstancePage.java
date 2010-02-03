@@ -387,8 +387,8 @@ public class InstancePage extends OntopolyAbstractPage {
                   TopicType topicType = getTopicTypeModel().getTopicType();
                   Map<String,String> pageParametersMap = new HashMap<String,String>();
                   pageParametersMap.put("topicMapId", topicMap.getId());
-                  pageParametersMap.put("topicId", topicType.getId());            
-                  setResponsePage(InstancesPage.class, new PageParameters(pageParametersMap));                      
+                  pageParametersMap.put("topicId", topicType.getId());
+                  setResponsePage(InstancesPage.class, new PageParameters(pageParametersMap));
                 }            
               });
             }

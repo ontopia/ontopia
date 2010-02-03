@@ -5,6 +5,7 @@ import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pages.ModalConfirmPage;
 import ontopoly.sysmodel.TopicMapReference;
+import ontopoly.utils.WicketHacks;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -59,6 +60,7 @@ public abstract class DeleteTopicMapFunctionBoxPanel extends Panel {
     createButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
+        WicketHacks.disableWindowUnloadConfirmation(target);        
         deleteModal.show(target);
       }          
     });

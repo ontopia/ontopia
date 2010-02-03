@@ -37,7 +37,7 @@ public abstract class ModalConfirmPage extends Panel {
         onCloseCancel(target);
       }
     });
-    popupContent.add(closeCancelButton);    
+    popupContent.add(closeCancelButton);
   }  
   
   protected abstract Component getTitleComponent(String id);
