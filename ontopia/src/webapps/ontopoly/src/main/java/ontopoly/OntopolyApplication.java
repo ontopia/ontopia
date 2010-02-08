@@ -76,7 +76,7 @@ public class OntopolyApplication extends WebApplication {
   public RequestCycle newRequestCycle(Request request, Response response) {
     return new OntopolyRequestCycle(repository, this, request, response);
   }
-
+  
 //  @Override
 //  protected IRequestCycleProcessor newRequestCycleProcessor() {
 //    return new WebRequestCycleProcessor() {

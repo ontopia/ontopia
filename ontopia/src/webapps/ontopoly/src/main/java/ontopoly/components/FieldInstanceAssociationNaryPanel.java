@@ -132,7 +132,9 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
         // n-ary
         FieldInstanceAssociationNaryField naryField = new FieldInstanceAssociationNaryField("fieldValue", FieldInstanceAssociationNaryPanel.this, 
             roleFieldModel, otherRoleFieldModels, fieldValueModel, fieldsViewModel, readonly, traversable, arity);
-        item.add(naryField);                    
+        item.add(naryField); 
+        
+        addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
 	    }
 		};
 	  listView.setReuseItems(true);	  
@@ -148,7 +150,7 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
       @Override
       public void onClick(AjaxRequestTarget target) {
         boolean showExtraField = !fieldValuesModel.getShowExtraField();
-        fieldValuesModel.setShowExtraField(showExtraField);
+        fieldValuesModel.setShowExtraField(showExtraField, true);
         listView.removeAll();
         updateDependentComponents(target);
       }

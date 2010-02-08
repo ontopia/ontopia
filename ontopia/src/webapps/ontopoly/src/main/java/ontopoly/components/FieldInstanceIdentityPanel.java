@@ -112,6 +112,7 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
           };
         fieldValueButtons.add(removeButton);  
 		    
+        addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
 	    }
 		};
 	  listView.setReuseItems(true);	  
@@ -125,7 +126,7 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
       @Override
       public void onClick(AjaxRequestTarget target) {
         boolean showExtraField = !fieldValuesModel.getShowExtraField();
-        fieldValuesModel.setShowExtraField(showExtraField);
+        fieldValuesModel.setShowExtraField(showExtraField, true);
         listView.removeAll();
         updateDependentComponents(target);
       }

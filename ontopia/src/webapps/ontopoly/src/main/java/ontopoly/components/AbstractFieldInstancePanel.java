@@ -5,10 +5,12 @@ import java.io.Serializable;
 import ontopoly.model.Cardinality;
 import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldInstanceModel;
+import ontopoly.models.FieldValueModel;
 import ontopoly.models.FieldValuesModel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.behavior.SimpleAttributeModifier;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.IFeedbackMessageFilter;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -60,6 +62,17 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     e.printStackTrace();
   }
 
+  protected void addNewFieldValueCssClass(WebMarkupContainer component, FieldValuesModel fieldValuesModel, FieldValueModel fieldValueModel) {
+    // add css class if field is new, there are no other exiting values, and the cardinality requires at least one value
+//    Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+//    if (!fieldValueModel.isExistingValue() && !fieldValuesModel.containsExisting() && cardinality.isMinOne()) 
+//      component.add(new SimpleAttributeModifier("class", "newFieldValue"));
+    
+    // add css class if field value is new, and the display of it was user triggered.
+    if (!fieldValueModel.isExistingValue() && fieldValuesModel.getShowExtraField() && fieldValuesModel.getShowExtraFieldUserTriggered()) 
+      component.add(new SimpleAttributeModifier("class", "newFieldValue"));
+  }
+
   @Override
   protected void onDetach() {
     super.onDetach();
@@ -76,7 +89,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     }   
     @Override
     protected void onUpdate(AjaxRequestTarget target) {
-      fieldValuesModel.setShowExtraField(false);
+      fieldValuesModel.setShowExtraField(false, false);
       if (updateListView)
         listView.removeAll();
       updateDependentComponents(target);

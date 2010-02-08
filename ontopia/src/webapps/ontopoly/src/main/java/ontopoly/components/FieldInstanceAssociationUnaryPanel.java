@@ -53,7 +53,9 @@ public class FieldInstanceAssociationUnaryPanel extends AbstractFieldInstancePan
         // unary
         FieldInstanceAssociationUnaryField unaryField = new FieldInstanceAssociationUnaryField("fieldValue", fieldValueModel, readonly);
         unaryField.getCheckBox().add(new FieldUpdatingBehaviour(false));
-        item.add(unaryField);                    
+        item.add(unaryField);
+        
+        addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
 	    }
 		};
 	  listView.setReuseItems(true);	  

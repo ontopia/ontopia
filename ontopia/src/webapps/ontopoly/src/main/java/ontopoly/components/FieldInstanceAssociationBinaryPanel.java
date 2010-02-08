@@ -303,7 +303,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         };
         if (binaryField.getUpdateableComponent() != null)
           binaryField.getUpdateableComponent().add(new FieldUpdatingBehaviour(true));
-        item.add(binaryField);           		      
+        item.add(binaryField); 
+        
+        addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
 	    }
 		};
 	  listView.setReuseItems(true);	  
@@ -327,17 +329,15 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         @Override
         public void onClick(AjaxRequestTarget target) {
           boolean showExtraField = !fieldValuesModel.getShowExtraField();
-          fieldValuesModel.setShowExtraField(showExtraField);
+          fieldValuesModel.setShowExtraField(showExtraField, true);
           listView.removeAll();
           updateDependentComponents(target);
         }
         @Override
         public boolean isVisible() {
-          if (readonlyField) return false;
-//          Cardinality cardinality = fieldInstanceModel.getFieldInstance().getFieldAssignment().getCardinality();
-//          if (cardinality.isMaxOne())
-//            return fieldValuesModel.size() <= 1;
-//          else
+          if (readonlyField) 
+            return false;
+          else
             return fieldValuesModel.containsExisting();
         }
         @Override public String getImage() {

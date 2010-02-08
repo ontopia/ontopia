@@ -2,6 +2,7 @@ package ontopoly.components;
 
 import java.util.Collection;
 
+import ontopoly.images.ImageResource;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
@@ -16,15 +17,18 @@ import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.pages.ModalInstancePage;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.ResourceModel;
 
 public abstract class FieldInstanceCreatePlayerPanel extends Panel {
@@ -54,33 +58,51 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     Collection allowedValueTypes = associationField.getAllowedPlayerTypes(_fieldInstanceModel.getFieldInstance().getInstance());
     if (allowedValueTypes.isEmpty()) {
       setVisible(false);
-      add(new Label("button"));
+      OntopolyImageLink button = new OntopolyImageLink("button", "create.gif", new ResourceModel("icon.create.player")) {
+        @Override
+        public void onClick(AjaxRequestTarget target) {
+        }        
+      };
+      add(button);
       add(new Label("createMenu"));
       add(new Label("createModal"));
     } else if (allowedValueTypes.size() == 1) {
       final TopicTypeModel topicTypeModel = new TopicTypeModel((TopicType)allowedValueTypes.iterator().next());
-      AjaxLink createLink = new AjaxLink("button") {
+      OntopolyImageLink button = new OntopolyImageLink("button", "create.gif", new ResourceModel("icon.create.player")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
           FieldInstanceCreatePlayerPanel.this.onClick(target, topicTypeModel.getTopicType());
         }        
       };
-      add(createLink);
+      add(button);
       add(new Label("createMenu").setVisible(false));
       add(new Label("createModal").setVisible(false));
     } else  {
-      final String menuId = id + "_" + 
-        associationField.getId() + "_" + 
+      final String menuId = id + "_" + associationField.getId() + "_" + 
         _fieldInstanceModel.getFieldInstance().getInstance().getId();
-      
-      add(new WebMarkupContainer("button") {      
+      Link button = new Link("button") {
+        { 
+          add(new Image("image", new AbstractReadOnlyModel() {
+            @Override
+            public Object getObject() {
+              return new ResourceReference(ImageResource.class, "create.gif");
+            }      
+          }));
+        }
         @Override
         protected void onComponentTag(ComponentTag tag) {
-          tag.put("onclick", "menuItemPopup(this)");
-          tag.put("id", "main" + menuId);
           super.onComponentTag(tag);
+          tag.put("onclick", "menuItemPopup(this)");
+
+          tag.put("id", "main" + menuId);
+          tag.put("href", "#");
+        }
+        @Override
+        public void onClick() {
         }      
-      });
+      };
+      add(button);
+      
       add(new ContextMenuPanel("createMenu", menuId) {
         @Override
         protected ListView createListView(final String menuId, final String menuItemId) {

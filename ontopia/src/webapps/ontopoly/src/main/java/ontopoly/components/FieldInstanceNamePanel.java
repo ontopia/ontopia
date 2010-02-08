@@ -115,6 +115,8 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
           // if (nf.getNameType().isUntypedName())
           //   nameField.add(new FocusOnLoadBehaviour());
         }
+        
+        addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
 	    }
 		};
 	  listView.setReuseItems(true);	  
@@ -128,7 +130,7 @@ public class FieldInstanceNamePanel extends AbstractFieldInstancePanel {
       @Override
       public void onClick(AjaxRequestTarget target) {
         boolean showExtraField = !fieldValuesModel.getShowExtraField();
-        fieldValuesModel.setShowExtraField(showExtraField);
+        fieldValuesModel.setShowExtraField(showExtraField, true);
         updateDependentComponents(target);
         listView.removeAll();
       }

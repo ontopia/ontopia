@@ -96,6 +96,7 @@ public class FieldInstanceURIField extends Panel {
     button.setPopupSettings(new PopupSettings(PopupSettings.LOCATION_BAR | PopupSettings.MENU_BAR | 
                                               PopupSettings.RESIZABLE | PopupSettings.SCROLLBARS | 
                                               PopupSettings.STATUS_BAR | PopupSettings.TOOL_BAR));
+    button.add(new OntopolyImage("icon", "goto.gif"));
     add(button);
 
     // validate field using registered validators

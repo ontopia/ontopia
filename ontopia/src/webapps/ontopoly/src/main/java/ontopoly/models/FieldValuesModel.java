@@ -18,6 +18,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   private FieldInstanceModel fieldInstanceModel;
   private Comparator<Object> comparator;
   private boolean showExtraField;
+  private boolean showExtraFieldUserTriggered;
   
   public FieldValuesModel(FieldInstanceModel fieldInstanceModel) {
     this(fieldInstanceModel, null);
@@ -37,9 +38,14 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   public boolean getShowExtraField() {
     return showExtraField;
   }
+
+  public boolean getShowExtraFieldUserTriggered() {
+    return showExtraFieldUserTriggered;
+  }
   
-  public void setShowExtraField(boolean showExtraField) {
+  public void setShowExtraField(boolean showExtraField, boolean userTriggered) {
     this.showExtraField = showExtraField;
+    this.showExtraFieldUserTriggered = userTriggered;
   }
   
   /**
@@ -78,7 +84,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   public List<FieldValueModel> getObject() {
     List<FieldValueModel> values = super.getObject();
     if (values.isEmpty())
-      setShowExtraField(true);
+      setShowExtraField(true, false);
     if (getShowExtraField()) {
       List<FieldValueModel> result = new ArrayList<FieldValueModel>(values);
       FieldValueModel fieldValueModel = FieldValueModel.createModel(fieldInstanceModel, null, false); 

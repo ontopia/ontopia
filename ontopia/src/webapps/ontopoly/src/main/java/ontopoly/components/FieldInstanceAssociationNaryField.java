@@ -327,7 +327,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
   
   protected void onUpdate(AjaxRequestTarget target) {
     if (needsUpdate) {
-      parentPanel.fieldValuesModel.setShowExtraField(false);
+      parentPanel.fieldValuesModel.setShowExtraField(false, false);
       parentPanel.onUpdate(target);              
     }
     needsUpdate = false;

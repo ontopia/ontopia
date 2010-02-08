@@ -158,6 +158,8 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
   	        }
   	      }
         }
+        
+        addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
 	    }
 		};
 	  listView.setReuseItems(true);
@@ -171,7 +173,7 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       @Override
       public void onClick(AjaxRequestTarget target) {
         boolean showExtraField = !fieldValuesModel.getShowExtraField();
-        fieldValuesModel.setShowExtraField(showExtraField);
+        fieldValuesModel.setShowExtraField(showExtraField, true);
         listView.removeAll();
         updateDependentComponents(target);
       }      

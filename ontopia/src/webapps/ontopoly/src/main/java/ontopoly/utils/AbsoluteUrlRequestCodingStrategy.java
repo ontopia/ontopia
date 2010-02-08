@@ -20,16 +20,10 @@ public class AbsoluteUrlRequestCodingStrategy implements IRequestCodingStrategy 
   }
   
   public static CharSequence toAbsoluteUrl(String url) {
+    // make relative links absolute
     if (url.startsWith("../../")) {
-      // make relative links absolute
       HttpServletRequest req = ((WebRequest)RequestCycle.get().getRequest()).getHttpServletRequest();
       return req.getContextPath() + "/" + url.substring("../../".length());
-      
-//    } else if (url.startsWith("../")) {
-//      // make relative links absolute
-//      HttpServletRequest req = ((WebRequest)RequestCycle.get().getRequest()).getHttpServletRequest();
-//      return req.getContextPath() + "/" + url.substring("../".length());
-//      
     } else {
       return RequestUtils.toAbsolutePath(url);
     }

@@ -63,7 +63,7 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
       }
       
     } else {
-      
+
       InterfaceControl interfaceControl = valueField.getInterfaceControl();
       
       if (readonly || interfaceControl.isSearchDialog() || interfaceControl.isBrowseDialog() || !allowAdd) {

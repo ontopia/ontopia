@@ -10,6 +10,10 @@ import org.apache.wicket.model.IModel;
 public class OntopolyImage extends Image {
   protected IModel titleModel;
   
+  public OntopolyImage(String id, final String image) {
+    this(id, image, null);
+  }
+  
   public OntopolyImage(String id, final String image, IModel titleModel) {
     super(id, new ResourceReference(ImageResource.class, image));
     this.titleModel = titleModel;
@@ -17,7 +21,11 @@ public class OntopolyImage extends Image {
 
   @Override
   protected void onComponentTag(ComponentTag tag) {
-    tag.put("title", titleModel.getObject().toString());
+    if (titleModel != null) {
+      if (titleModel.getObject() != null) {
+        tag.put("title", titleModel.getObject().toString());
+      }
+    }
     super.onComponentTag(tag);
   }
 
