@@ -30,15 +30,6 @@ public class CTMTestGenerator implements TestCaseGeneratorIF {
     for (int ix = 0; infiles != null && ix < infiles.length; ix++) {
       String name = infiles[ix].getName();
 
-      // disabling some test suite failures which are really due to
-      // ambiguities in the spec
-      if (name.equals("template-subject-locator3.ctm") ||
-          // http://projects.topicmapslab.de/issues/1908
-          name.equals("template-item-identifier3.ctm") 
-          // http://projects.topicmapslab.de/issues/1908
-          )
-        continue;
-      
       if (name.endsWith(".ctm")) 
         tests.add(new CanonicalTestCase(name, base));
     }
