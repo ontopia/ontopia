@@ -177,6 +177,23 @@ public class GlobalParseContext implements ParseContextIF {
     public ValueGeneratorIF copy() {
       return this; // FIXME: this is safe as long as we keep making new generators
     }
+    
+    public String getLiteral() {
+      throw new InvalidTopicMapException("Topic reference passed, but literal "+
+                                         "expected: " + getDescription());
+    }
+  
+    public LocatorIF getDatatype() {
+      throw new InvalidTopicMapException("Topic reference passed, but literal "+
+                                         "expected: " + getDescription());
+    }
+
+    public LocatorIF getLocator() {
+      throw new InvalidTopicMapException("Topic reference passed, but locator "+
+                                         "expected: " + getDescription());
+    }
+
+    protected abstract String getDescription();
   }
   
   static class TopicByItemIdentifierGenerator extends InternalTopicGenerator {
@@ -205,6 +222,13 @@ public class GlobalParseContext implements ParseContextIF {
       }
       return topic;
     }
+
+    protected String getDescription() {
+      if (id != null)
+        return "item identifier #" + id;
+      else
+        return "item identifier " + locator.getExternalForm();
+    }
   }
 
   static class TopicBySubjectIdentifierGenerator extends InternalTopicGenerator {
@@ -217,6 +241,10 @@ public class GlobalParseContext implements ParseContextIF {
     public TopicIF getTopic() {
       return context.makeTopicBySubjectIdentifier(locator);
     }
+
+    protected String getDescription() {
+      return "subject identifier " + locator.getExternalForm();
+    }
   }
 
   static class TopicBySubjectLocatorGenerator extends InternalTopicGenerator {
@@ -228,6 +256,10 @@ public class GlobalParseContext implements ParseContextIF {
     
     public TopicIF getTopic() {
       return context.makeTopicBySubjectLocator(locator);
+    }
+    
+    protected String getDescription() {
+      return "subject locator " + locator.getExternalForm();
     }
   }
 }
