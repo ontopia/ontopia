@@ -217,9 +217,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       writer.endArray();
     }
 
-    if (!topLevel) {
-      writer.endObject();
-    }
+    writer.endObject();
   }
 
   /**
@@ -251,9 +249,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     serializeItemIdentifiers(association);
     serializeReifier(association);
 
-    if (!topLevel) {
-      writer.endObject();
-    }
+    writer.endObject();
   }
 
   /**
@@ -275,9 +271,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     serializeItemIdentifiers(role);
     serializeReifier(role);
 
-    if (!topLevel) {
-      writer.endObject();
-    }
+    writer.endObject();
   }
   
   /**
@@ -339,9 +333,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     serializeItemIdentifiers(name);
     serializeReifier(name);
 
-    if (!topLevel) {
-      writer.endObject();
-    }
+    writer.endObject();
   }
 
   /**
@@ -362,9 +354,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     serializeItemIdentifiers(variant);
     serializeReifier(variant);
     
-    if (!topLevel) {
-      writer.endObject();
-    }
+    writer.endObject();
   }
 
   /**
@@ -388,9 +378,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
     serializeItemIdentifiers(occurrence);
     serializeReifier(occurrence);
     
-    if (!topLevel) {
-      writer.endObject();
-    }
+    writer.endObject();
   }
 
   /**
