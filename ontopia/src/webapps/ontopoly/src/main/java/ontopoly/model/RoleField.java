@@ -418,6 +418,7 @@ public class RoleField extends FieldDefinition {
       // remove all existing values
       ValueIF existingValue = null;
       Collection roles = getRoles(fieldInstance.getInstance());
+      boolean replaceValues = roles.size() == 1;
       Iterator iter = roles.iterator();
       while (iter.hasNext()) {
         AssociationRoleIF role = (AssociationRoleIF)iter.next();
@@ -426,7 +427,8 @@ public class RoleField extends FieldDefinition {
           continue;
         } if (valueIf.equals(value)) {
           existingValue = valueIf;
-        } else {
+        } else if (replaceValues) {
+          // issue-204: only replace values if there is just a single value 
           if (replacedValue == null) 
             replacedValue = valueIf; // keep track of one replaced value
           removeValue(fieldInstance, valueIf, listener);
