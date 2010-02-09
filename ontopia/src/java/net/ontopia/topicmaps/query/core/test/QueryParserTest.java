@@ -412,6 +412,14 @@ public class QueryParserTest extends AbstractQueryTest {
                   "parenthood(may : mother, petter : father, $C : child) " +
                   "order by $C desc?");
   }
+
+  public void testCommentWithNewline() throws InvalidQueryException {
+    makeEmpty();
+    List matches = new ArrayList();
+    addMatch(matches, "A", "foo");
+    verifyQuery(matches, "/* hey \n ho */ " +
+                "$A = \"foo\"?"); 
+  }
   
   /// prefix binding tests
 

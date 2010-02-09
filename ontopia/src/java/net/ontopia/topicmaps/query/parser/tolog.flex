@@ -251,6 +251,7 @@ String = "\"" ([^\"] | "\"\"" )* "\""
     }
   }
   .      { comment.append(yytext()); }
+  "\n"   { comment.append(yytext()); }
 }
 
 /* error fallback */
