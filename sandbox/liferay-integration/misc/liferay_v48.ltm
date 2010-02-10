@@ -1,0 +1,1731 @@
+@"utf-8"
+#VERSION "1.3"
+/*
+   Generator: Ontopia
+   Date:      2010-02-10 16:15
+*/
+
+/* ----------------- TOPIC MAP ----------------- */
+
+#TOPICMAP~ id168
+[id168 : id32 = "Liferay_V10"
+    @"file:/Users/mfi/Desktop/FH/ontopia-read-only/ontopia/build/dists/ontopia-5.1.0b1/apache-tomcat/webapps/ontopoly/WEB-INF/config/ontopoly-ontology.xtm#reified-id68"
+    @"file:/Users/mfi/Desktop/FH/ontopia-read-only/ontopia/build/dists/ontopia-5.1.0b1/apache-tomcat/webapps/ontopoly/WEB-INF/config/ontopoly-ontology.xtm#reified-id206"]
+   {id168, id187, [[This topicmap shall provide a framework of topics to model entities from liferay portal into topicmaps]]}
+   {id168, id204, [[0.1]]}
+   {id168, id68, [[1.9]]}
+   {id168, id76, [[Matthias Fischer]]}
+
+/* ----------------- ONTOLOGY ------------------ */
+
+/* ----------------- Topic Types --------------- */
+
+
+/* -- TT: id131 -- */
+[id109 : id131 id35 id40 = "Association type"
+    @"http://psi.ontopia.net/ontology/association-type"]
+   {id109, id52, [[000000000]]} / id134
+   {id109, id52, [[000001000]]} / id47
+   {id109, id52, [[000003000]]} / id186
+   {id109, id52, [[000017000]]} / id144
+   {id109, id52, [[000018000]]} / id242
+   {id109, id52, [[000020000]]} / id48
+   {id109, id52, [[000022000]]} / id178
+   {id109, id52, [[000067000]]} / id152
+   {id109, id52, [[000069000]]} / id275
+   {id109, id52, [[000071000]]} / id281
+[id113 : id131 id35 id40 = "Association role type"
+    @"http://psi.ontopia.net/ontology/role-type"]
+   {id113, id52, [[000000000]]} / id134
+   {id113, id52, [[000001000]]} / id47
+   {id113, id52, [[000003000]]} / id186
+   {id113, id52, [[000017000]]} / id144
+   {id113, id52, [[000018000]]} / id242
+   {id113, id52, [[000026000]]} / id132
+   {id113, id52, [[000068000]]} / id101
+   {id113, id52, [[000070000]]} / id124
+[id115 : id131 id35 id40 = "Name type"
+    @"http://psi.ontopia.net/ontology/name-type"]
+   {id115, id52, [[000000000]]} / id134
+   {id115, id52, [[000001000]]} / id47
+   {id115, id52, [[000003000]]} / id186
+   {id115, id52, [[000017000]]} / id144
+   {id115, id52, [[000018000]]} / id242
+   {id115, id52, [[000036000]]} / id1
+[id169 : id131 id35 id40 = "Occurrence type"
+    @"http://psi.ontopia.net/ontology/occurrence-type"]
+   {id169, id52, [[000000000]]} / id134
+   {id169, id52, [[000001000]]} / id47
+   {id169, id52, [[000003000]]} / id186
+   {id169, id52, [[000017000]]} / id144
+   {id169, id52, [[000018000]]} / id242
+   {id169, id52, [[000038000]]} / id287
+[id35 : id131 id35 id40 = "Topic type"
+    @"http://psi.ontopia.net/ontology/topic-type"]
+   {id35, id52, [[000000000]]} / id134
+   {id35, id52, [[000001000]]} / id47
+   {id35, id52, [[000003000]]} / id186
+   {id35, id52, [[000014000]]} / id167
+   {id35, id52, [[000017000]]} / id144
+   {id35, id52, [[000018000]]} / id242
+   {id35, id52, [[000030000]]} / id209
+   {id35, id52, [[000039000]]} / id255
+   {id35, id52, [[000072000]]} / id10
+   {id35, id52, [[000080000]]} / id285
+
+/* -- TT: id35 -- */
+[id110 : id35 id40 = "Role field"
+    @"http://psi.ontopia.net/ontology/role-field"]
+   {id110, id52, [[000000000]]} / id134
+   {id110, id52, [[000001000]]} / id47
+   {id110, id52, [[000019000]]} / id6
+   {id110, id52, [[000024000]]} / id130
+   {id110, id52, [[000025000]]} / id208
+   {id110, id52, [[000029000]]} / id188
+   {id110, id52, [[000032000]]} / id91
+   {id110, id52, [[000041000]]} / id84
+   {id110, id52, [[000043000]]} / id185
+   {id110, id52, [[000044000]]} / id146
+   {id110, id52, [[000046000]]} / id271
+   {id110, id52, [[000048000]]} / id81
+   {id110, id52, [[000051000]]} / id210
+   {id110, id52, [[000075000]]} / id248
+   {id110, id52, [[000076000]]} / id96
+   {id110, id52, [[000077000]]} / id41
+[id114 : id35 id40 = "Occurrence field"
+    @"http://psi.ontopia.net/ontology/occurrence-field"]
+   {id114, id52, [[000000000]]} / id134
+   {id114, id52, [[000001000]]} / id47
+   {id114, id52, [[000019000]]} / id6
+   {id114, id52, [[000028000]]} / id3
+   {id114, id52, [[000029000]]} / id188
+   {id114, id52, [[000032000]]} / id91
+   {id114, id52, [[000037000]]} / id205
+   {id114, id52, [[000041000]]} / id84
+   {id114, id52, [[000043000]]} / id185
+   {id114, id52, [[000044000]]} / id146
+   {id114, id52, [[000048000]]} / id81
+   {id114, id52, [[000051000]]} / id210
+   {id114, id52, [[000073000]]} / id246
+   {id114, id52, [[000074000]]} / id62
+[id131 : id35 id40 = "Ontology type"
+    @"http://psi.ontopia.net/ontology/ontology-type"]
+   {id131, id52, [[000000000]]} / id134
+[id141 : id35 = "Category"
+    @"http://psi.ontopia.net/liferay/category"]
+   {id141, id187, [[A general notion of the things contained by it.]]}
+   {id141, id52, [[000000001]]} / id134
+   {id141, id52, [[000000002]]} / id73
+   {id141, id52, [[000000003]]} / id47
+[id156 : id35 id40 = "Association field"
+    @"http://psi.ontopia.net/ontology/association-field"]
+   {id156, id52, [[000000000]]} / id134
+   {id156, id52, [[000001000]]} / id47
+   {id156, id52, [[000021000]]} / id67
+   {id156, id52, [[000023000]]} / id163
+[id161 : id35 id40 = "Cardinality"
+    @"http://psi.ontopia.net/ontology/cardinality"]
+   {id161, id52, [[000000000]]} / id134
+   {id161, id52, [[000001000]]} / id47
+   {id161, id52, [[000031000]]} / id17
+   {id161, id52, [[000078000]]} / id171
+   {id161, id52, [[000079000]]} / id207
+[id170 : id35 id40 = "Datatype"
+    @"http://psi.ontopia.net/ontology/datatype"]
+   {id170, id52, [[000000000]]} / id134
+   {id170, id52, [[000001000]]} / id47
+   {id170, id52, [[000008000]]} / id151
+   {id170, id52, [[000027000]]} / id82
+[id19 : id35 id40 = "Interface control"
+    @"http://psi.ontopia.net/ontology/interface-control"]
+   {id19, id52, [[000000000]]} / id134
+   {id19, id52, [[000001000]]} / id47
+   {id19, id52, [[000047000]]} / id261
+[id190 : id35 id40 = "Hierarchical Relation Type"
+    @"http://www.techquila.com/psi/hierarchy/#hierarchical-relation-type"]
+   {id190, id52, [[000000000]]} / id134
+[id197 : id35 id40 = "Subordinate Role Type"
+    @"http://www.techquila.com/psi/hierarchy/#subordinate-role-type"]
+   {id197, id52, [[000000000]]} / id134
+[id22 : id35 id40 = "Identity type"
+    @"http://psi.ontopia.net/ontology/identity-type"]
+   {id22, id52, [[000000000]]} / id134
+   {id22, id52, [[000001000]]} / id47
+   {id22, id52, [[000003000]]} / id186
+   {id22, id52, [[000017000]]} / id144
+   {id22, id52, [[000018000]]} / id242
+   {id22, id52, [[000034000]]} / id174
+[id221 : id35 id40 = "Fields view"
+    @"http://psi.ontopia.net/ontology/fields-view"]
+   {id221, id52, [[000000000]]} / id134
+   {id221, id52, [[000001000]]} / id47
+   {id221, id52, [[000015000]]} / id264
+   {id221, id52, [[000016000]]} / id277
+   {id221, id52, [[000045000]]} / id21
+   {id221, id52, [[000049000]]} / id202
+   {id221, id52, [[000052000]]} / id273
+   {id221, id52, [[000053000]]} / id220
+[id222 : id35 id40 = "Superordinate Role Type"
+    @"http://www.techquila.com/psi/hierarchy/#superordinate-role-type"]
+   {id222, id52, [[000000000]]} / id134
+[id224 : id35 id40 = "Public system topic"
+    @"http://psi.ontopia.net/ontology/public-system-topic"]
+   {id224, id52, [[000000000]]} / id134
+[id24 : id35 id40 = "View mode"
+    @"http://psi.ontopia.net/ontology/view-mode"]
+   {id24, id52, [[000000000]]} / id134
+   {id24, id52, [[000001000]]} / id47
+   {id24, id52, [[000050000]]} / id155
+[id278 : id35 = "Workflow state"
+    @"http://psi.ontopia.net/liferay/workflow_state"]
+   {id278, id187, [[The state of a document within the workflow of liferay portal]]}
+   {id278, id52, [[000000001]]} / id134
+   {id278, id52, [[000000002]]} / id14
+   {id278, id52, [[000000003]]} / id47
+[id33 : id35 id40 = "Create action"
+    @"http://psi.ontopia.net/ontology/create-action"]
+   {id33, id52, [[000000000]]} / id134
+   {id33, id52, [[000001000]]} / id47
+   {id33, id52, [[000042000]]} / id223
+[id34 : id35 id40 = "Name field"
+    @"http://psi.ontopia.net/ontology/name-field"]
+   {id34, id52, [[000000000]]} / id134
+   {id34, id52, [[000001000]]} / id47
+   {id34, id52, [[000019000]]} / id6
+   {id34, id52, [[000029000]]} / id188
+   {id34, id52, [[000032000]]} / id91
+   {id34, id52, [[000035000]]} / id59
+   {id34, id52, [[000041000]]} / id84
+   {id34, id52, [[000043000]]} / id185
+   {id34, id52, [[000044000]]} / id146
+   {id34, id52, [[000048000]]} / id81
+   {id34, id52, [[000051000]]} / id210
+[id40 : id35 id40 = "System topic"
+    @"http://psi.ontopia.net/ontology/system-topic"]
+   {id40, id52, [[000000000]]} / id134
+[id44 : id35 id40 = "Edit mode"
+    @"http://psi.ontopia.net/ontology/edit-mode"]
+   {id44, id52, [[000000000]]} / id134
+   {id44, id52, [[000001000]]} / id47
+   {id44, id52, [[000040000]]} / id259
+[id70 : id35 = "Community"
+    @"http://psi.ontopia.net/liferay/community"]
+   {id70, id187, [[A community is a group and will be treated as one]]}
+   {id70, id52, [[000000001]]} / id134
+   {id70, id52, [[000000002]]} / id159
+[id83 : id35 id40 = "Identity field"
+    @"http://psi.ontopia.net/ontology/identity-field"]
+   {id83, id52, [[000000000]]} / id134
+   {id83, id52, [[000001000]]} / id47
+   {id83, id52, [[000019000]]} / id6
+   {id83, id52, [[000029000]]} / id188
+   {id83, id52, [[000032000]]} / id91
+   {id83, id52, [[000033000]]} / id249
+   {id83, id52, [[000041000]]} / id84
+   {id83, id52, [[000043000]]} / id185
+   {id83, id52, [[000044000]]} / id146
+   {id83, id52, [[000048000]]} / id81
+   {id83, id52, [[000051000]]} / id210
+[id89 : id35 id40 = "Ontology"
+    @"http://psi.ontopia.net/ontology/ontology"]
+   {id89, id52, [[000000000]]} / id134
+
+/* ----------------- Type Hierarchy ------------ */
+
+id280( id244 : id72, id63 : id238 )
+id280( id292 : id72, id110 : id238 )
+id280( id292 : id72, id114 : id238 )
+id280( id292 : id72, id34 : id238 )
+id280( id292 : id72, id83 : id238 )
+id280( id40 : id72, id224 : id238 )
+id280( id78 : id72, id70 : id238 )
+
+/* ----------------- Role Types ---------------- */
+
+
+/* -- TT: id113 -- */
+[id153 : id113 id40 = "Parent view"
+    @"http://psi.ontopia.net/ontology/parent-view"]
+[id225 : id113 id40 = "Field owner"
+    @"http://psi.ontopia.net/ontology/field-owner"]
+[id238 : id113 id197 id40 = "Subclass"
+    @"http://psi.ontopia.net/ontology/subclass"
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"]
+[id7 : id113 id40 = "Child view"
+    @"http://psi.ontopia.net/ontology/child-view"]
+[id72 : id113 id222 id40 = "Superclass"
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"
+    @"http://psi.ontopia.net/ontology/superclass"]
+
+/* -- TT: id35 -- */
+[id292 : id35 id40 = "Field definition"
+    @"http://psi.ontopia.net/ontology/field-definition"]
+   {id292, id52, [[000000000]]} / id134
+   {id292, id52, [[000001000]]} / id47
+   {id292, id52, [[000019000]]} / id6
+   {id292, id52, [[000029000]]} / id188
+   {id292, id52, [[000032000]]} / id91
+   {id292, id52, [[000041000]]} / id84
+   {id292, id52, [[000043000]]} / id185
+   {id292, id52, [[000044000]]} / id146
+   {id292, id52, [[000048000]]} / id81
+   {id292, id52, [[000051000]]} / id210
+
+/* ----------------- Association Types --------- */
+
+
+/* -- TT: id109 -- */
+[id105 : id109 id40 = "Is hidden view"
+    @"http://psi.ontopia.net/ontology/is-hidden-view"]
+[id119 : id109 id40 = "Use View mode"
+    @"http://psi.ontopia.net/ontology/use-view-mode"]
+[id12 : id109 id40 = "Use value view"
+    @"http://psi.ontopia.net/ontology/use-value-view"]
+[id13 : id109 id40 = "Is abstract"
+    @"http://psi.ontopia.net/ontology/is-abstract"]
+[id145 : id109 id40 = "Has occurrence type"
+    @"http://psi.ontopia.net/ontology/has-occurrence-type"]
+[id148 : id109 id40 = "Has association field"
+    @"http://psi.ontopia.net/ontology/has-association-field"]
+[id157 : id109 id40 = "Has role type"
+    @"http://psi.ontopia.net/ontology/has-role-type"]
+[id16 : id109 id40 = "Has datatype"
+    @"http://psi.ontopia.net/ontology/has-datatype"]
+[id179 : id109 id40 = "Is hidden type"
+    @"http://psi.ontopia.net/ontology/is-hidden-type"]
+[id203 : id109 id40 = "Subordinate role"
+    @"http://psi.ontopia.net/ontology/subordinate-role-type"]
+[id217 : id109 id40 = "Superordinate role"
+    @"http://psi.ontopia.net/ontology/superordinate-role-type"]
+[id218 : id109 id40 = "Has cardinality"
+    @"http://psi.ontopia.net/ontology/has-cardinality"]
+[id231 : id109 id40 = "Field in view"
+    @"http://psi.ontopia.net/ontology/field-in-view"]
+[id237 : id109 id40 = "Has association type"
+    @"http://psi.ontopia.net/ontology/has-association-type"]
+[id270 : id109 id40 = "Has field"
+    @"http://psi.ontopia.net/ontology/has-field"]
+[id280 : id109 id190 id40 = "Superclass/subclass"
+                          = "Subclass of" / id238
+                          = "Superclass of" / id72
+    @"http://psi.ontopia.net/ontology/superclass-subclass"
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"]
+[id291 : id109 id40 = "Has name type"
+    @"http://psi.ontopia.net/ontology/has-name-type"]
+[id30 : id109 id40 = "Is embedded view"
+    @"http://psi.ontopia.net/ontology/is-embedded-view"]
+[id51 : id109 id40 = "Use edit mode"
+    @"http://psi.ontopia.net/ontology/use-edit-mode"]
+[id74 : id109 id40 = "Use interface control"
+    @"http://psi.ontopia.net/ontology/use-interface-control"]
+[id94 : id109 id40 = "Has identity type"
+    @"http://psi.ontopia.net/ontology/has-identity-type"]
+
+/* ----------------- Occurrence Types ---------- */
+
+
+/* -- TT: id169 -- */
+[id111 : id169 id40 = "Players query"
+    @"http://psi.ontopia.net/ontology/allowed-players-query"]
+[id147 : id169 = "GroupId"
+    @"http://psi.ontopia.net/liferay/groupid"]
+   {id147, id187, [[The groupId used in liferay to identify different groups]]}
+[id187 : id169 id224 = "Description"
+    @"http://purl.org/dc/elements/1.1/description"
+    @"http://psi.ontopia.net/ontology/description"]
+[id239 : id169 id40 = "Players types query"
+    @"http://psi.ontopia.net/ontology/allowed-players-types-query"]
+[id258 : id169 id40 = "Height"
+    @"http://psi.ontopia.net/ontology/height"]
+[id276 : id169 id40 = "Datatype locator"
+    @"http://psi.ontopia.net/ontology/datatype-locator"]
+[id46 : id169 id40 = "Maximum cardinality"
+    @"http://psi.ontopia.net/ontology/max-cardinality"]
+[id52 : id169 id40 = "Field order"
+    @"http://psi.ontopia.net/ontology/field-order"]
+[id64 : id169 id40 = "Width"
+    @"http://psi.ontopia.net/ontology/width"]
+[id95 : id169 id40 = "Minimum cardinality"
+    @"http://psi.ontopia.net/ontology/min-cardinality"]
+
+/* ----------------- INSTANCES ----------------- */
+
+/* ----------------- Topics -------------------- */
+
+
+/* -- TT: id109 -- */
+[id149 : id109 = "Approved_by"
+    @"http://psi.ontopia.net/liferay/approved_by"]
+   {id149, id187, [[This relation shows who (which user) approved a certain document (webcontent).]]}
+[id160 : id109 = "Parent_Child"
+    @"http://psi.ontopia.net/liferay/parent-child"]
+   {id160, id187, [[A parent-child relation for WikiPages]]}
+[id165 : id109 = "Created_by"
+    @"http://psi.ontopia.net/liferay/created_by"]
+   {id165, id187, [[Connects a creator and his/her work to indicate, that it has been created by him/her.]]}
+[id196 : id109 id40 = "Has large instance set"
+    @"http://psi.ontopia.net/ontology/has-large-instance-set"]
+[id200 : id109 id40 = "Use create action"
+    @"http://psi.ontopia.net/ontology/use-create-action"]
+[id216 : id109 = "Has_workflow_state"
+    @"http://psi.ontopia.net/liferay/has_workflow_state"]
+   {id216, id187, [[This association indicates the state of a work within the workflow as described by the liferay portal system.]]}
+[id226 : id109 id40 = "Is sortable"
+    @"http://psi.ontopia.net/ontology/is-sortable-field"]
+[id252 : id109 = "broader-narrower"
+    @"http://www.techquila.com/psi/thesaurus/#broader-narrower"]
+   {id252, id187, [[An association between two category terms. The "broader" role referring to a more general concept whereas the "narrower" role refers to a more specifiy concept.]]}
+[id260 : id109 id40 = "Is symmetric"
+    @"http://psi.ontopia.net/ontology/is-symmetric"]
+[id262 : id109 id40 = "Is read-only type"
+    @"http://psi.ontopia.net/ontology/is-readonly-type"]
+[id27 : id109 = "Contains"
+    @"http://psi.ontopia.net/liferay/contains"]
+[id38 : id109 id40 = "Forms hierarchy for"
+                   = "Forms hierarchy for" / id109
+                   = "Hierarchy" / id35
+    @"http://psi.ontopia.net/ontology/forms-hierarchy-for"]
+[id42 : id109 = "is-about"
+    @"http://psi.ontopia.net/liferay/is-about"]
+   {id42, id187, [[An association stating that a work is about a certain concept]]}
+
+/* -- TT: id110 -- */
+[id1 : id110 id40 = "Name field"
+    @"http://psi.ontopia.net/ontology/rf-name-type_has-name-type"]
+[id10 : id110 id40 = "Hierarchical associations"
+    @"http://psi.ontopia.net/ontology/rf-topic-type_forms-hierarchy-for"]
+[id101 : id110 id40 = "Superordinate role type for"
+    @"http://psi.ontopia.net/ontology/rf-role-type_superordinate-role-type"]
+[id106 : id110 = "User approving"]
+[id11 : id110 id40 = "Superclass"
+    @"http://psi.ontopia.net/ontology/rf-subclass_superclass-subclass"]
+   {id11, id111, [[select $T from direct-instance-of(%topic%, $TT), direct-instance-of($T, $TT), $T /= %topic%?]]}
+   {id11, id239, [[select $TT from direct-instance-of(%topic%, $TT), {$TT = on:topic-type | $TT = on:association-type | $TT = on:occurrence-type | $TT = on:name-type | $TT = on:role-type}?]]}
+[id123 : id110 = "Approved work"]
+[id124 : id110 id40 = "Subordinate role type for"
+    @"http://psi.ontopia.net/ontology/rf-role-type_subordinate-role-type"]
+[id125 : id110 = "Work"]
+[id130 : id110 id40 = "Association field"
+    @"http://psi.ontopia.net/ontology/rf-role-field_has-association-field"]
+[id132 : id110 id40 = "Role field"
+    @"http://psi.ontopia.net/ontology/rf-role-type_has-role-type"]
+   {id132, id111, [[select $T from { instance-of($T, on:topic-type) | instance-of($T, on:role-type) }?]]}
+[id135 : id110 = "the container"]
+[id14 : id110 = "has_state"]
+[id142 : id110 = "Child"]
+[id144 : id110 id40 = "Hidden"
+    @"http://psi.ontopia.net/ontology/rf-ontology-type_is-hidden-type"]
+[id146 : id110 id40 = "Part of views"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_field-in-view"]
+[id152 : id110 id40 = "Superordinate role type"
+    @"http://psi.ontopia.net/ontology/rf-association-type_superordinate-role-type"]
+[id155 : id110 id40 = "View mode"
+    @"http://psi.ontopia.net/ontology/rf-view-mode_use-view-mode"]
+[id163 : id110 id40 = "Roles"
+    @"http://psi.ontopia.net/ontology/rf-association-field_has-association-field"]
+[id167 : id110 id40 = "Abstract"
+    @"http://psi.ontopia.net/ontology/rf-topic-type_is-abstract"]
+[id17 : id110 id40 = "Field cardinalities"
+    @"http://psi.ontopia.net/ontology/rf-cardinality_has-cardinality"]
+[id174 : id110 id40 = "Identity field"
+    @"http://psi.ontopia.net/ontology/rf-identity-type_has-identity-type"]
+[id178 : id110 id40 = "Association field"
+    @"http://psi.ontopia.net/ontology/rf-association-type_has-association-type"]
+[id185 : id110 id40 = "Create actions"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_use-create-action"]
+[id188 : id110 id40 = "Used by"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_has-field"]
+[id193 : id110 id40 = "Subclass"
+    @"http://psi.ontopia.net/ontology/rf-superclass_superclass-subclass"]
+   {id193, id111, [[select $T from direct-instance-of(%topic%, $TT), direct-instance-of($T, $TT), $T /= %topic%?]]}
+   {id193, id239, [[select $TT from direct-instance-of(%topic%, $TT), {$TT = on:topic-type | $TT = on:association-type | $TT = on:occurrence-type | $TT = on:name-type | $TT = on:role-type}?]]}
+[id202 : id110 id40 = "Used by"
+    @"http://psi.ontopia.net/ontology/rf-fields-view_use-view-mode"]
+[id205 : id110 id40 = "Occurrence type"
+    @"http://psi.ontopia.net/ontology/rf-occurrence-field_has-occurrence-type"]
+[id208 : id110 id40 = "Role type"
+    @"http://psi.ontopia.net/ontology/rf-role-field_has-role-type"]
+[id209 : id110 id40 = "Fields"
+    @"http://psi.ontopia.net/ontology/rf-field-owner_has-field"]
+[id21 : id110 id40 = "Fields in view"
+    @"http://psi.ontopia.net/ontology/rf-fields-view_field-in-view"]
+[id210 : id110 id40 = "Value view"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_use-value-view"]
+[id219 : id110 = "Parent"]
+[id220 : id110 id40 = "Child view"
+    @"http://psi.ontopia.net/ontology/rf-child-view_use-value-view"]
+[id223 : id110 id40 = "Used by"
+    @"http://psi.ontopia.net/ontology/rf-create-action_use-create-action"]
+[id228 : id110 = "Broader Term"]
+[id230 : id110 = "creator of work"
+    @"http://psi.ontopia.net/liferay/created_work"]
+[id242 : id110 id40 = "Read-only"
+    @"http://psi.ontopia.net/ontology/rf-ontology-type_is-readonly-type"]
+[id249 : id110 id40 = "Identity type"
+    @"http://psi.ontopia.net/ontology/rf-identity-field_has-identity-type"]
+[id255 : id110 id40 = "Large instance set"
+    @"http://psi.ontopia.net/ontology/rf-topic-type_has-large-instance-set"]
+[id256 : id110 = "Concept"]
+[id259 : id110 id40 = "Used by"
+    @"http://psi.ontopia.net/ontology/rf-edit-mode_use-edit-mode"]
+[id261 : id110 id40 = "Field"
+    @"http://psi.ontopia.net/ontology/rf-interface-control_use-interface-control"]
+[id264 : id110 id40 = "Is hidden view"
+    @"http://psi.ontopia.net/ontology/rf-fields-view_is-hidden-view"]
+[id271 : id110 id40 = "Interface control"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_use-interface-control"]
+[id273 : id110 id40 = "Parent view"
+    @"http://psi.ontopia.net/ontology/rf-parent-view_use-value-view"]
+[id275 : id110 id40 = "Subordinate role type"
+    @"http://psi.ontopia.net/ontology/rf-association-type_subordinate-role-type"]
+[id277 : id110 id40 = "Is embedded view"
+    @"http://psi.ontopia.net/ontology/rf-fields-view_is-embedded-view"]
+[id281 : id110 id40 = "Hierarchical for"
+    @"http://psi.ontopia.net/ontology/rf-association-type_forms-hierarchy-for"]
+[id287 : id110 id40 = "Occurrence field"
+    @"http://psi.ontopia.net/ontology/rf-occurrence-type_has-occurrence-type"]
+[id3 : id110 id40 = "Data type"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_has-datatype"]
+[id48 : id110 id40 = "Symmetric"
+    @"http://psi.ontopia.net/ontology/rf-association-type_is-symmetric"]
+[id53 : id110 = "created work"]
+[id59 : id110 id40 = "Name type"
+    @"http://psi.ontopia.net/ontology/rf-name-field_has-name-type"]
+[id6 : id110 id40 = "Sortable"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_is-sortable-field"]
+[id67 : id110 id40 = "Association type"
+    @"http://psi.ontopia.net/ontology/rf-association-field_has-association-type"]
+[id73 : id110 = "the contained thing"]
+[id77 : id110 = "Narrower Term"]
+[id81 : id110 id40 = "View mode"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_use-view-mode"]
+[id82 : id110 id40 = "Occurrence field"
+    @"http://psi.ontopia.net/ontology/rf-datatype_has-datatype"]
+[id84 : id110 id40 = "Edit modes"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_use-edit-mode"]
+[id90 : id110 = "workflow_state"]
+[id91 : id110 id40 = "Cardinality"
+    @"http://psi.ontopia.net/ontology/rf-field-definition_has-cardinality"]
+
+/* -- TT: id113 -- */
+[id121 : id113 = "Work"
+    @"http://psi.ontopia.net/liferay/work"]
+   {id121, id187, [[A work that has been created by a person]]}
+[id143 : id113 = "Approver"
+    @"http://psi.ontopia.net/liferay/approver"]
+   {id143, id187, [[A person (usually a user) who is approving of a certain webcontent.]]}
+[id236 : id113 = "Concept"
+    @"http://psi.ontopia.net/liferay/concept"]
+   {id236, id187, [[A concept on which a work can be about]]}
+[id243 : id113 = "Container"
+    @"http://psi.ontopia.net/liferay/container"]
+[id25 : id113 = "Containee"
+    @"http://psi.ontopia.net/liferay/containee"]
+[id257 : id113 = "Parent"
+    @"http://psi.ontopia.net/liferay/parent"]
+   {id257, id187, [[The parent in a parent-child relation]]}
+[id279 : id113 = "Broader"
+    @"http://www.techquila.com/psi/thesaurus/#broader-term"]
+   {id279, id187, [[A more general notion of a certain concept]]}
+[id283 : id113 = "Creator"
+    @"http://psi.ontopia.net/liferay/creator"]
+   {id283, id187, [[A person who created a certain thing]]}
+[id284 : id113 = "Narrower Term"
+    @"http://www.techquila.com/psi/thesaurus/#narrower-term"]
+   {id284, id187, [[A more specific notion of a certain concept]]}
+[id29 : id113 = "State"
+    @"http://psi.ontopia.net/liferay/state"]
+   {id29, id187, [[The representation of a state]]}
+[id45 : id113 = "Child"
+    @"http://psi.ontopia.net/liferay/child"]
+   {id45, id187, [[The child in a parent-child relationship]]}
+
+/* -- TT: id114 -- */
+[id103 : id114 = "ArticleID"]
+[id151 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-datatype-locator"]
+[id164 : id114]
+[id171 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-min-cardinality"]
+[id176 : id114 = "Last Post Date"]
+[id181 : id114 = "Review Date"]
+[id186 : id114 id224
+    @"http://psi.ontopia.net/ontology/of-description"]
+   {id186, id258, [[5]]}
+   {id186, id64, [[50]]}
+[id189 : id114 = "Approved Date"]
+[id194 : id114]
+[id2 : id114 = "Modify Date"]
+[id201 : id114 = "NodeId"]
+[id206 : id114 = "PageId"]
+[id207 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-max-cardinality"]
+[id245 : id114 = "GroupId"]
+[id246 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-height"]
+[id248 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-allowed-players-query"]
+   {id248, id258, [[5]]}
+   {id248, id64, [[50]]}
+[id254 : id114 = "Display Date"]
+[id285 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-hierarchy-definition-query"]
+   {id285, id258, [[5]]}
+   {id285, id64, [[50]]}
+[id41 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-allowed-players-types-query"]
+   {id41, id258, [[5]]}
+   {id41, id64, [[50]]}
+[id57 : id114 = "Version"]
+[id62 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-width"]
+[id79 : id114 = "Expiry Date"]
+[id96 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-allowed-players-search-query"]
+   {id96, id258, [[5]]}
+   {id96, id64, [[50]]}
+[id97 : id114 = "Create Date"]
+[id99 : id114 id40
+    @"http://psi.ontopia.net/ontology/of-tolog-declarations"]
+   {id99, id258, [[5]]}
+   {id99, id64, [[50]]}
+
+/* -- TT: id115 -- */
+[id60 : id115 id224 = "Name"
+    @"http://psi.ontopia.net/ontology/untyped-name"
+    @"http://psi.topicmaps.org/iso13250/model/topic-name"]
+
+/* -- TT: id141 -- */
+[id274 : id141 = "car"
+    @"http://en.wikipedia.org/wiki/car"]
+
+/* -- TT: id156 -- */
+[id108 : id156 id40 = "Subordinate role type"
+    @"http://psi.ontopia.net/ontology/af-subordinate-role-type"]
+[id112 : id156 id40 = "Is hidden type"
+    @"http://psi.ontopia.net/ontology/af-is-hidden-type"]
+[id118 : id156 id40 = "Is sortable field"
+    @"http://psi.ontopia.net/ontology/af-is-sortable-field"]
+[id120 : id156 id40 = "Hidden views"
+    @"http://psi.ontopia.net/ontology/af-is-hidden-view"]
+[id122 : id156 id40 = "Has association type"
+    @"http://psi.ontopia.net/ontology/af-has-association-type"]
+[id127 : id156 id40 = "Is symmetric"
+    @"http://psi.ontopia.net/ontology/af-is-symmetric"]
+[id138 : id156 id40 = "Embedded views"
+    @"http://psi.ontopia.net/ontology/af-is-embedded-view"]
+[id139 : id156]
+[id150 : id156 id40 = "Has large instance set"
+    @"http://psi.ontopia.net/ontology/af-has-large-instance-set"]
+[id172 : id156 id40 = "Has data type"
+    @"http://psi.ontopia.net/ontology/af-has-datatype"]
+[id175 : id156 id40 = "Superordinate role type"
+    @"http://psi.ontopia.net/ontology/af-superordinate-role-type"]
+[id18 : id156]
+[id180 : id156 id40 = "Use create action"
+    @"http://psi.ontopia.net/ontology/af-use-create-action"]
+[id199 : id156 id40 = "Has name type"
+    @"http://psi.ontopia.net/ontology/af-has-name-type"]
+[id20 : id156 id40 = "Is read-only type"
+    @"http://psi.ontopia.net/ontology/af-is-readonly-type"]
+[id212 : id156 id40 = "Has role type"
+    @"http://psi.ontopia.net/ontology/af-has-role-type"]
+[id227 : id156 id40 = "Has cardinality"
+    @"http://psi.ontopia.net/ontology/af-has-cardinality"]
+[id23 : id156 id40 = "Has association field"
+    @"http://psi.ontopia.net/ontology/af-has-association-field"]
+[id234 : id156]
+[id240 : id156 id40 = "Forms hierarchy for"
+    @"http://psi.ontopia.net/ontology/af-forms-hierarchy-for"]
+[id265 : id156]
+[id269 : id156]
+[id272 : id156]
+[id286 : id156 id40 = "Superclass-subclass"
+    @"http://psi.ontopia.net/ontology/af-superclass-subclass"]
+[id288 : id156 id40 = "Use value view"
+    @"http://psi.ontopia.net/ontology/af-use-value-view"]
+[id4 : id156 id40 = "Has occurrence type"
+    @"http://psi.ontopia.net/ontology/af-has-occurrence-type"]
+[id43 : id156 id40 = "Has field"
+    @"http://psi.ontopia.net/ontology/af-has-field"]
+[id5 : id156 id40 = "Uses interface control"
+    @"http://psi.ontopia.net/ontology/af-use-interface-control"]
+[id55 : id156]
+[id56 : id156 id40 = "Is abstract"
+    @"http://psi.ontopia.net/ontology/af-is-abstract"]
+[id69 : id156 id40 = "Fields in view"
+    @"http://psi.ontopia.net/ontology/af-field-in-view"]
+[id71 : id156 id40 = "Has identity type"
+    @"http://psi.ontopia.net/ontology/af-has-identity-type"]
+[id88 : id156 id40 = "Use view mode"
+    @"http://psi.ontopia.net/ontology/af-use-view-mode"]
+[id92 : id156 id40 = "Use edit mode"
+    @"http://psi.ontopia.net/ontology/af-use-edit-mode"]
+
+/* -- TT: id161 -- */
+[id129 : id161 id224 = "One or more"
+    @"http://psi.ontopia.net/ontology/cardinality-1-M"]
+   {id129, id95, [[1]]}
+[id154 : id161 id224 = "Zero or one"
+    @"http://psi.ontopia.net/ontology/cardinality-0-1"]
+   {id154, id46, [[1]]}
+   {id154, id95, [[0]]}
+[id182 : id161 id224 = "Zero or more"
+    @"http://psi.ontopia.net/ontology/cardinality-0-M"]
+   {id182, id95, [[0]]}
+[id290 : id161 id224 = "Exactly one"
+    @"http://psi.ontopia.net/ontology/cardinality-1-1"]
+   {id290, id46, [[1]]}
+   {id290, id95, [[1]]}
+
+/* -- TT: id169 -- */
+[id100 : id169 = "Version"
+    @"http://psi.ontopia.net/liferay/version"]
+   {id100, id187, [[The version of an article]]}
+[id136 : id169 = "PageId"
+    @"http://psi.ontopia.net/liferay/wikipageid"]
+   {id136, id187, [[The id of a wikipage]]}
+[id162 : id169 = "Expiry Date"
+    @"http://psi.ontopia.net/liferay/expiry_date"]
+   {id162, id187, [[The date of expiry]]}
+[id183 : id169 = "Modified Date"
+    @"http://psi.ontopia.net/liferay/modified_date"]
+   {id183, id187, [[The date of modification]]}
+[id198 : id169 = "Review Date"
+    @"http://psi.ontopia.net/liferay/review_date"]
+   {id198, id187, [[The date of review]]}
+[id204 : id169 = "Version"
+    @"http://psi.ontopia.net/ontology/version"
+    @"http://purl.org/dc/elements/1.1/version"]
+[id229 : id169 id40 = "Field value order"
+    @"http://psi.ontopia.net/ontology/field-value-order"]
+[id235 : id169 = "ArticleID"
+    @"http://psi.ontopia.net/liferay/article_id"]
+   {id235, id187, [[The ID of an article, composed in Liferay portal. Through the ID it is possible to find different versions of the same article within the topicmap.]]}
+[id247 : id169 id40 = "Tolog declarations"
+    @"http://psi.ontopia.net/ontology/tolog-declarations"]
+[id263 : id169 id40 = "Players search query"
+    @"http://psi.ontopia.net/ontology/allowed-players-search-query"]
+[id267 : id169 = "NodeId"
+    @"http://psi.ontopia.net/liferay/wikinodeid"]
+   {id267, id187, [[The NodeId of a WikiNode]]}
+[id28 : id169 = "Approved Date"
+    @"http://psi.ontopia.net/liferay/approved_date"]
+   {id28, id187, [[Date of approval]]}
+[id49 : id169 = "Last Post Date"
+    @"http://psi.ontopia.net/liferay/lastpostdate"]
+   {id49, id187, [[The date on which the last post has been made.]]}
+[id58 : id169 = "Create Date"
+    @"http://psi.ontopia.net/liferay/create_date"]
+   {id58, id187, [[Date of creation]]}
+[id68 : id169 id40 = "Ontology Version"
+    @"http://psi.ontopia.net/ontology/ted-ontology-version"]
+[id75 : id169 = "Display Date"
+    @"http://psi.ontopia.net/liferay/display_date"]
+   {id75, id187, [[The date of display]]}
+[id76 : id169 = "Creator"
+    @"http://psi.ontopia.net/ontology/creator"
+    @"http://purl.org/dc/elements/1.1/creator"]
+[id87 : id169 id40 = "Hierarchy definition query"
+    @"http://psi.ontopia.net/ontology/hierarchy-definition-query"]
+
+/* -- TT: id170 -- */
+[id102 : id170 id224 = "HTML"
+    @"http://psi.ontopia.net/ontology/datatype-html"]
+   {id102, id276, "http://psi.ontopia.net/ontology/datatype-html"}
+[id128 : id170 id224 = "Date"
+    @"http://www.w3.org/2001/XMLSchema#date"
+    @"http://psi.ontopia.net/ontology/datatype-date"]
+   {id128, id276, "http://www.w3.org/2001/XMLSchema#date"}
+[id213 : id170 id224 = "String"
+    @"http://www.w3.org/2001/XMLSchema#string"
+    @"http://psi.ontopia.net/ontology/datatype-string"]
+   {id213, id276, "http://www.w3.org/2001/XMLSchema#string"}
+[id232 : id170 id224 = "URI"
+    @"http://psi.ontopia.net/ontology/datatype-uri"
+    @"http://www.w3.org/2001/XMLSchema#anyURI"]
+   {id232, id276, "http://www.w3.org/2001/XMLSchema#anyURI"}
+[id250 : id170 id224 = "Number"
+    @"http://psi.ontopia.net/ontology/datatype-number"
+    @"http://www.w3.org/2001/XMLSchema#decimal"]
+   {id250, id276, "http://www.w3.org/2001/XMLSchema#decimal"}
+[id289 : id170 id224 = "Image"
+    @"http://psi.ontopia.net/ontology/datatype-image"]
+   {id289, id276, "http://psi.ontopia.net/ontology/datatype-image"}
+[id50 : id170 id224 = "Datetime"
+    @"http://psi.ontopia.net/ontology/datatype-datetime"
+    @"http://www.w3.org/2001/XMLSchema#dateTime"]
+   {id50, id276, "http://www.w3.org/2001/XMLSchema#dateTime"}
+
+/* -- TT: id19 -- */
+[id191 : id19 id224 = "Auto-complete"
+    @"http://psi.ontopia.net/ontology/auto-complete"]
+[id253 : id19 id224 = "Search dialog"
+    @"http://psi.ontopia.net/ontology/search-dialog"]
+[id54 : id19 id224 = "Browse dialog"
+    @"http://psi.ontopia.net/ontology/browse-dialog"]
+[id65 : id19 id224 = "Drop-down list"
+    @"http://psi.ontopia.net/ontology/drop-down-list"]
+
+/* -- TT: id22 -- */
+[id116 : id22 id40 = "Subject locator"
+    @"http://psi.ontopia.net/ontology/subject-locator"]
+[id140 : id22 id40 = "Item identifier"
+    @"http://psi.ontopia.net/ontology/item-identifier"]
+[id85 : id22 id40 = "Subject identifier"
+    @"http://psi.ontopia.net/ontology/subject-identifier"]
+
+/* -- TT: id221 -- */
+[id15 : id221 id40 = "Association field view"
+    @"http://psi.ontopia.net/ontology/association-field-embedded-view"]
+[id177 : id221 id40 = "Name field view"
+    @"http://psi.ontopia.net/ontology/name-field-embedded-view"]
+[id195 : id221 id40 = "Role field view"
+    @"http://psi.ontopia.net/ontology/role-field-embedded-view"]
+[id214 : id221 id40 = "Declared fields"
+    @"http://psi.ontopia.net/ontology/declared-fields-view"]
+[id268 : id221 id40 = "Identity field view"
+    @"http://psi.ontopia.net/ontology/identity-field-embedded-view"]
+[id282 : id221 id224 = "Advanced"
+    @"http://psi.ontopia.net/ontology/advanced-fields-view"]
+[id61 : id221 = "conceptView"
+    @"http://psi.ontopia.net/liferay/conceptview"]
+[id80 : id221 id40 = "Occurrence field view"
+    @"http://psi.ontopia.net/ontology/occurrence-field-embedded-view"]
+[id93 : id221 id224 = "Default"
+    @"http://psi.ontopia.net/ontology/default-fields-view"]
+
+/* -- TT: id224 -- */
+[id107 : id224 id33 = "Edit new topic in popup window"
+    @"http://psi.ontopia.net/ontology/create-action-popup"]
+[id134 : id224 id34 = "Name"
+    @"http://psi.ontopia.net/ontology/nf-untyped-name"]
+[id158 : id224 id44 = "Normal"
+    @"http://psi.ontopia.net/ontology/edit-mode-normal"]
+[id166 : id224 id33 = "None"
+    @"http://psi.ontopia.net/ontology/create-action-none"]
+[id184 : id224 id44 = "Owned values"
+    @"http://psi.ontopia.net/ontology/edit-mode-owned-values"]
+[id211 : id224 id24 = "Embedded"
+    @"http://psi.ontopia.net/ontology/view-mode-embedded"]
+[id26 : id224 id24 = "Hidden"
+    @"http://psi.ontopia.net/ontology/view-mode-hidden"]
+[id266 : id224 id33 = "Go to new topic"
+    @"http://psi.ontopia.net/ontology/create-action-navigate"]
+[id31 : id224 id24 = "Read-only"
+    @"http://psi.ontopia.net/ontology/view-mode-readonly"]
+[id39 : id224 id44 = "Existing values only"
+    @"http://psi.ontopia.net/ontology/edit-mode-existing-values-only"]
+[id8 : id224 id44 = "No edit"
+    @"http://psi.ontopia.net/ontology/edit-mode-no-edit"]
+[id86 : id224 id44 = "New values only"
+    @"http://psi.ontopia.net/ontology/edit-mode-new-values-only"]
+[id98 : id224 id24 = "Not traversable"
+    @"http://psi.ontopia.net/ontology/view-mode-not-traversable"]
+
+/* -- TT: id278 -- */
+[id137 : id278 = "New"
+    @"http://psi.ontopia.net/liferay/workflow_new"]
+[id173 : id278 = "Approved"
+    @"http://psi.ontopia.net/liferay/workflow_approved"]
+[id215 : id278 = "Expired"
+    @"http://psi.ontopia.net/liferay/workflow_expired"]
+
+/* -- TT: id35 -- */
+[id133 : id35 = "WikiNode"
+    @"http://psi.ontopia.net/liferay/wikinode"]
+   {id133, id187, [[The wikinode represents a wiki]]}
+   {id133, id52, [[000000001]]} / id134
+   {id133, id52, [[000000002]]} / id47
+   {id133, id52, [[000000003]]} / id97
+   {id133, id52, [[000000004]]} / id2
+   {id133, id52, [[000000005]]} / id201
+   {id133, id52, [[000000006]]} / id176
+[id241 : id35 = "WikiPage"
+    @"http://psi.ontopia.net/liferay/wikipage"]
+   {id241, id187, [[The page of a certain wiki]]}
+   {id241, id52, [[000000001]]} / id134
+   {id241, id52, [[000000002]]} / id47
+   {id241, id52, [[000000003]]} / id97
+   {id241, id52, [[000000004]]} / id2
+   {id241, id52, [[000000005]]} / id57
+   {id241, id52, [[000000006]]} / id206
+[id244 : id35 = "Liferay_Webcontent"
+    @"http://psi.ontopia.net/liferay/webcontent"]
+   {id244, id187, [[Webcontent created within the liferay portal]]}
+   {id244, id52, [[000000002]]} / id189
+   {id244, id52, [[000000005]]} / id97
+   {id244, id52, [[000000006]]} / id135
+   {id244, id52, [[000000007]]} / id90
+   {id244, id52, [[000000008]]} / id230
+   {id244, id52, [[000000009]]} / id134
+   {id244, id52, [[000000010]]} / id181
+   {id244, id52, [[000000011]]} / id79
+   {id244, id52, [[000000012]]} / id2
+   {id244, id52, [[000000013]]} / id254
+   {id244, id52, [[000000015]]} / id106
+   {id244, id52, [[000000016]]} / id57
+   {id244, id52, [[000000017]]} / id47
+   {id244, id52, [[000000018]]} / id256
+[id251 : id35 = "User"
+    @"http://psi.ontopia.net/liferay/user"]
+   {id251, id187, [[A user of the liferay portal system]]}
+   {id251, id52, [[000000001]]} / id134
+   {id251, id52, [[000000002]]} / id53
+   {id251, id52, [[000000003]]} / id123
+   {id251, id52, [[000000004]]} / id47
+[id32 : id35 id40 = "Topic map"
+    @"http://psi.ontopia.net/ontology/topic-map"]
+   {id32, id52, [[000000000]]} / id134
+   {id32, id52, [[000003000]]} / id186
+   {id32, id52, [[000007000]]} / id99
+   {id32, id52, [[000012000]]} / id164
+   {id32, id52, [[000013000]]} / id194
+[id63 : id35 = "Article"
+    @"http://psi.ontopia.net/liferay/article"]
+   {id63, id187, [[An Article authored within the liferay portal]]}
+   {id63, id52, [[000000001]]} / id134
+   {id63, id52, [[000000002]]} / id97
+   {id63, id52, [[000000007]]} / id189
+   {id63, id52, [[000000008]]} / id181
+   {id63, id52, [[000000009]]} / id79
+   {id63, id52, [[000000010]]} / id2
+   {id63, id52, [[000000011]]} / id254
+   {id63, id52, [[000000012]]} / id106
+   {id63, id52, [[000000013]]} / id230
+   {id63, id52, [[000000014]]} / id135
+   {id63, id52, [[000000015]]} / id90
+   {id63, id52, [[000000016]]} / id57
+   {id63, id52, [[000000018]]} / id103
+   {id63, id52, [[000000019]]} / id47
+[id78 : id35 = "Group"
+    @"http://psi.ontopia.net/liferay/group"]
+   {id78, id187, [[A Group in liferay covers the following subclasses: User, UserGroup, Organization, Community, Staging Group. None of these subclasses are subclasses in an OOP-way because they are all represented by a Group-Object]]}
+   {id78, id52, [[000000001]]} / id134
+   {id78, id52, [[000000002]]} / id245
+   {id78, id52, [[000000003]]} / id159
+
+/* -- TT: id40 -- */
+[id117 : id40 id89 = "User-interface ontology"
+    @"http://psi.ontopia.net/ontology/ontopoly-ui-ontology"]
+[id47 : id40 id83
+    @"http://psi.ontopia.net/ontology/if-subject-identifier"]
+[id9 : id40 id89 = "Topic Maps ontology"
+    @"http://psi.ontopia.net/ontology/ontopoly-topicmaps-ontology"]
+
+/* -- TT: id70 -- */
+[id37 : id70 = "Guest"]
+   {id37, id147, [[16]]}
+
+/* -- TT: id83 -- */
+[id159 : id83 = "Unique ID:"
+    @"http://psi.ontopia.net/liferay/unique_id"]
+[id233 : id83]
+
+/* -- TT: (untyped) -- */
+[contains]
+[id104
+    @"file:/Users/mfi/Projects/liferay/523/tomcat-5.5.27/webapps/omnigator/WEB-INF/topicmaps/@2655"]
+[id126
+    @"file:/Users/mfi/Projects/liferay/523/tomcat-5.5.27/webapps/omnigator/WEB-INF/topicmaps/@2654"]
+[id192
+    @"file:/Users/mfi/Projects/liferay/523/tomcat-5.5.27/webapps/omnigator/WEB-INF/topicmaps/@2649"]
+[id36
+    @"http://psi.ontopia.net/liferaycontainer"]
+[id66
+    @"http://psi.ontopia.net/liferaycontainee"]
+
+/* ----------------- Associations -------------- */
+
+/* -- AT: id105 */
+id105( id214 : id221 )
+
+/* -- AT: id119 */
+id119( id211 : id24,
+       id15 : id221,
+       id178 : id292 )
+id119( id211 : id24,
+       id177 : id221,
+       id1 : id292 )
+id119( id211 : id24,
+       id195 : id221,
+       id132 : id292 )
+id119( id211 : id24,
+       id195 : id221,
+       id163 : id292 )
+id119( id211 : id24,
+       id268 : id221,
+       id174 : id292 )
+id119( id211 : id24,
+       id80 : id221,
+       id287 : id292 )
+
+/* -- AT: id12 */
+id12( id15 : id153,
+      id195 : id7,
+      id163 : id292 )
+id12( id93 : id153,
+      id15 : id7,
+      id178 : id292 )
+id12( id93 : id153,
+      id177 : id7,
+      id1 : id292 )
+id12( id93 : id153,
+      id195 : id7,
+      id132 : id292 )
+id12( id93 : id153,
+      id195 : id7,
+      id163 : id292 )
+id12( id93 : id153,
+      id268 : id7,
+      id174 : id292 )
+id12( id93 : id153,
+      id80 : id7,
+      id287 : id292 )
+
+/* -- AT: id13 */
+id13( id244 : id35 )
+id13( id292 : id35 )
+
+/* -- AT: id145 */
+id145( id103 : id114, id235 : id169 )
+id145( id151 : id114, id276 : id169 )
+id145( id164 : id114, id76 : id169 )
+id145( id171 : id114, id95 : id169 )
+id145( id176 : id114, id49 : id169 )
+id145( id181 : id114, id198 : id169 )
+id145( id186 : id114, id187 : id169 )
+id145( id189 : id114, id28 : id169 )
+id145( id194 : id114, id204 : id169 )
+id145( id2 : id114, id183 : id169 )
+id145( id201 : id114, id267 : id169 )
+id145( id206 : id114, id136 : id169 )
+id145( id207 : id114, id46 : id169 )
+id145( id245 : id114, id147 : id169 )
+id145( id246 : id114, id258 : id169 )
+id145( id248 : id114, id111 : id169 )
+id145( id254 : id114, id75 : id169 )
+id145( id285 : id114, id87 : id169 )
+id145( id41 : id114, id239 : id169 )
+id145( id57 : id114, id100 : id169 )
+id145( id62 : id114, id64 : id169 )
+id145( id79 : id114, id162 : id169 )
+id145( id96 : id114, id263 : id169 )
+id145( id97 : id114, id58 : id169 )
+id145( id99 : id114, id247 : id169 )
+
+/* -- AT: id148 */
+id148( id108 : id156, id124 : id110 )
+id148( id108 : id156, id275 : id110 )
+id148( id112 : id156, id144 : id110 )
+id148( id118 : id156, id6 : id110 )
+id148( id120 : id156, id264 : id110 )
+id148( id122 : id156, id178 : id110 )
+id148( id122 : id156, id67 : id110 )
+id148( id127 : id156, id48 : id110 )
+id148( id138 : id156, id277 : id110 )
+id148( id139 : id156, id142 : id110 )
+id148( id139 : id156, id219 : id110 )
+id148( id150 : id156, id255 : id110 )
+id148( id172 : id156, id3 : id110 )
+id148( id172 : id156, id82 : id110 )
+id148( id175 : id156, id101 : id110 )
+id148( id175 : id156, id152 : id110 )
+id148( id18 : id156, id228 : id110 )
+id148( id18 : id156, id77 : id110 )
+id148( id180 : id156, id185 : id110 )
+id148( id180 : id156, id223 : id110 )
+id148( id199 : id156, id1 : id110 )
+id148( id199 : id156, id59 : id110 )
+id148( id20 : id156, id242 : id110 )
+id148( id212 : id156, id132 : id110 )
+id148( id212 : id156, id208 : id110 )
+id148( id227 : id156, id17 : id110 )
+id148( id227 : id156, id91 : id110 )
+id148( id23 : id156, id130 : id110 )
+id148( id23 : id156, id163 : id110 )
+id148( id234 : id156, id230 : id110 )
+id148( id234 : id156, id53 : id110 )
+id148( id240 : id156, id10 : id110 )
+id148( id240 : id156, id281 : id110 )
+id148( id265 : id156, id14 : id110 )
+id148( id265 : id156, id90 : id110 )
+id148( id269 : id156, id106 : id110 )
+id148( id269 : id156, id123 : id110 )
+id148( id272 : id156, id135 : id110 )
+id148( id272 : id156, id73 : id110 )
+id148( id286 : id156, id11 : id110 )
+id148( id286 : id156, id193 : id110 )
+id148( id288 : id156, id210 : id110 )
+id148( id288 : id156, id220 : id110 )
+id148( id288 : id156, id273 : id110 )
+id148( id4 : id156, id205 : id110 )
+id148( id4 : id156, id287 : id110 )
+id148( id43 : id156, id188 : id110 )
+id148( id43 : id156, id209 : id110 )
+id148( id5 : id156, id261 : id110 )
+id148( id5 : id156, id271 : id110 )
+id148( id55 : id156, id125 : id110 )
+id148( id55 : id156, id256 : id110 )
+id148( id56 : id156, id167 : id110 )
+id148( id69 : id156, id146 : id110 )
+id148( id69 : id156, id21 : id110 )
+id148( id71 : id156, id174 : id110 )
+id148( id71 : id156, id249 : id110 )
+id148( id88 : id156, id155 : id110 )
+id148( id88 : id156, id202 : id110 )
+id148( id88 : id156, id81 : id110 )
+id148( id92 : id156, id259 : id110 )
+id148( id92 : id156, id84 : id110 )
+
+/* -- AT: id157 */
+id157( id109 : id113, id152 : id110 )
+id157( id109 : id113, id178 : id110 )
+id157( id109 : id113, id275 : id110 )
+id157( id109 : id113, id281 : id110 )
+id157( id109 : id113, id48 : id110 )
+id157( id110 : id113, id130 : id110 )
+id157( id110 : id113, id208 : id110 )
+id157( id113 : id113, id101 : id110 )
+id157( id113 : id113, id124 : id110 )
+id157( id113 : id113, id132 : id110 )
+id157( id114 : id113, id205 : id110 )
+id157( id115 : id113, id1 : id110 )
+id157( id121 : id113, id106 : id110 )
+id157( id121 : id113, id230 : id110 )
+id157( id121 : id113, id256 : id110 )
+id157( id121 : id113, id90 : id110 )
+id157( id131 : id113, id144 : id110 )
+id157( id131 : id113, id242 : id110 )
+id157( id143 : id113, id123 : id110 )
+id157( id153 : id113, id273 : id110 )
+id157( id156 : id113, id163 : id110 )
+id157( id156 : id113, id67 : id110 )
+id157( id161 : id113, id17 : id110 )
+id157( id169 : id113, id287 : id110 )
+id157( id170 : id113, id82 : id110 )
+id157( id19 : id113, id261 : id110 )
+id157( id22 : id113, id174 : id110 )
+id157( id221 : id113, id202 : id110 )
+id157( id221 : id113, id21 : id110 )
+id157( id221 : id113, id264 : id110 )
+id157( id221 : id113, id277 : id110 )
+id157( id225 : id113, id209 : id110 )
+id157( id236 : id113, id125 : id110 )
+id157( id238 : id113, id11 : id110 )
+id157( id24 : id113, id155 : id110 )
+id157( id243 : id113, id73 : id110 )
+id157( id25 : id113, id135 : id110 )
+id157( id257 : id113, id142 : id110 )
+id157( id279 : id113, id228 : id110 )
+id157( id283 : id113, id53 : id110 )
+id157( id284 : id113, id77 : id110 )
+id157( id29 : id113, id14 : id110 )
+id157( id292 : id113, id146 : id110 )
+id157( id292 : id113, id185 : id110 )
+id157( id292 : id113, id188 : id110 )
+id157( id292 : id113, id210 : id110 )
+id157( id292 : id113, id271 : id110 )
+id157( id292 : id113, id3 : id110 )
+id157( id292 : id113, id6 : id110 )
+id157( id292 : id113, id81 : id110 )
+id157( id292 : id113, id84 : id110 )
+id157( id292 : id113, id91 : id110 )
+id157( id33 : id113, id223 : id110 )
+id157( id34 : id113, id59 : id110 )
+id157( id35 : id113, id10 : id110 )
+id157( id35 : id113, id167 : id110 )
+id157( id35 : id113, id255 : id110 )
+id157( id44 : id113, id259 : id110 )
+id157( id45 : id113, id219 : id110 )
+id157( id7 : id113, id220 : id110 )
+id157( id72 : id113, id193 : id110 )
+id157( id83 : id113, id249 : id110 )
+
+/* -- AT: id16 */
+id16( id213 : id170, id103 : id292 )
+id16( id213 : id170, id164 : id292 )
+id16( id213 : id170, id186 : id292 )
+id16( id213 : id170, id194 : id292 )
+id16( id213 : id170, id201 : id292 )
+id16( id213 : id170, id206 : id292 )
+id16( id213 : id170, id245 : id292 )
+id16( id213 : id170, id248 : id292 )
+id16( id213 : id170, id285 : id292 )
+id16( id213 : id170, id41 : id292 )
+id16( id213 : id170, id96 : id292 )
+id16( id213 : id170, id99 : id292 )
+id16( id232 : id170, id151 : id292 )
+id16( id250 : id170, id171 : id292 )
+id16( id250 : id170, id207 : id292 )
+id16( id250 : id170, id246 : id292 )
+id16( id250 : id170, id57 : id292 )
+id16( id250 : id170, id62 : id292 )
+id16( id50 : id170, id176 : id292 )
+id16( id50 : id170, id181 : id292 )
+id16( id50 : id170, id189 : id292 )
+id16( id50 : id170, id2 : id292 )
+id16( id50 : id170, id254 : id292 )
+id16( id50 : id170, id79 : id292 )
+id16( id50 : id170, id97 : id292 )
+
+/* -- AT: id179 */
+id179( id13 : id131 )
+id179( id16 : id131 )
+id179( id196 : id131 )
+id179( id218 : id131 )
+id179( id258 : id131 )
+id179( id260 : id131 )
+id179( id270 : id131 )
+id179( id280 : id131 )
+id179( id52 : id131 )
+id179( id64 : id131 )
+
+/* -- AT: id203 */
+id203( id27 : id109, id25 : id113 )
+
+/* -- AT: id217 */
+id217( id27 : id109, id243 : id113 )
+
+/* -- AT: id218 */
+id218( id154 : id161,
+       id133 : id225,
+       id2 : id292 )
+id218( id154 : id161,
+       id241 : id225,
+       id2 : id292 )
+id218( id182 : id161,
+       id133 : id225,
+       id47 : id292 )
+id218( id182 : id161,
+       id241 : id225,
+       id47 : id292 )
+id218( id182 : id161,
+       id244 : id225,
+       id135 : id292 )
+id218( id182 : id161,
+       id63 : id225,
+       id103 : id292 )
+id218( id290 : id161,
+       id133 : id225,
+       id134 : id292 )
+id218( id290 : id161,
+       id241 : id225,
+       id134 : id292 )
+id218( id290 : id161,
+       id78 : id225,
+       id134 : id292 )
+id218( id129 : id161,
+       id188 : id292 )
+id218( id154 : id161,
+       id106 : id292 )
+id218( id154 : id161,
+       id11 : id292 )
+id218( id154 : id161,
+       id152 : id292 )
+id218( id154 : id161,
+       id159 : id292 )
+id218( id154 : id161,
+       id164 : id292 )
+id218( id154 : id161,
+       id171 : id292 )
+id218( id154 : id161,
+       id176 : id292 )
+id218( id154 : id161,
+       id181 : id292 )
+id218( id154 : id161,
+       id185 : id292 )
+id218( id154 : id161,
+       id186 : id292 )
+id218( id154 : id161,
+       id189 : id292 )
+id218( id154 : id161,
+       id194 : id292 )
+id218( id154 : id161,
+       id2 : id292 )
+id218( id154 : id161,
+       id207 : id292 )
+id218( id154 : id161,
+       id246 : id292 )
+id218( id154 : id161,
+       id248 : id292 )
+id218( id154 : id161,
+       id254 : id292 )
+id218( id154 : id161,
+       id264 : id292 )
+id218( id154 : id161,
+       id271 : id292 )
+id218( id154 : id161,
+       id275 : id292 )
+id218( id154 : id161,
+       id277 : id292 )
+id218( id154 : id161,
+       id285 : id292 )
+id218( id154 : id161,
+       id41 : id292 )
+id218( id154 : id161,
+       id6 : id292 )
+id218( id154 : id161,
+       id62 : id292 )
+id218( id154 : id161,
+       id79 : id292 )
+id218( id154 : id161,
+       id84 : id292 )
+id218( id154 : id161,
+       id91 : id292 )
+id218( id154 : id161,
+       id96 : id292 )
+id218( id154 : id161,
+       id99 : id292 )
+id218( id182 : id161,
+       id1 : id292 )
+id218( id182 : id161,
+       id10 : id292 )
+id218( id182 : id161,
+       id101 : id292 )
+id218( id182 : id161,
+       id123 : id292 )
+id218( id182 : id161,
+       id124 : id292 )
+id218( id182 : id161,
+       id130 : id292 )
+id218( id182 : id161,
+       id132 : id292 )
+id218( id182 : id161,
+       id135 : id292 )
+id218( id182 : id161,
+       id14 : id292 )
+id218( id182 : id161,
+       id142 : id292 )
+id218( id182 : id161,
+       id144 : id292 )
+id218( id182 : id161,
+       id146 : id292 )
+id218( id182 : id161,
+       id155 : id292 )
+id218( id182 : id161,
+       id163 : id292 )
+id218( id182 : id161,
+       id167 : id292 )
+id218( id182 : id161,
+       id17 : id292 )
+id218( id182 : id161,
+       id174 : id292 )
+id218( id182 : id161,
+       id178 : id292 )
+id218( id182 : id161,
+       id193 : id292 )
+id218( id182 : id161,
+       id202 : id292 )
+id218( id182 : id161,
+       id205 : id292 )
+id218( id182 : id161,
+       id209 : id292 )
+id218( id182 : id161,
+       id21 : id292 )
+id218( id182 : id161,
+       id210 : id292 )
+id218( id182 : id161,
+       id219 : id292 )
+id218( id182 : id161,
+       id220 : id292 )
+id218( id182 : id161,
+       id223 : id292 )
+id218( id182 : id161,
+       id233 : id292 )
+id218( id182 : id161,
+       id242 : id292 )
+id218( id182 : id161,
+       id249 : id292 )
+id218( id182 : id161,
+       id255 : id292 )
+id218( id182 : id161,
+       id259 : id292 )
+id218( id182 : id161,
+       id261 : id292 )
+id218( id182 : id161,
+       id273 : id292 )
+id218( id182 : id161,
+       id281 : id292 )
+id218( id182 : id161,
+       id287 : id292 )
+id218( id182 : id161,
+       id3 : id292 )
+id218( id182 : id161,
+       id48 : id292 )
+id218( id182 : id161,
+       id53 : id292 )
+id218( id182 : id161,
+       id59 : id292 )
+id218( id182 : id161,
+       id67 : id292 )
+id218( id182 : id161,
+       id73 : id292 )
+id218( id182 : id161,
+       id81 : id292 )
+id218( id182 : id161,
+       id82 : id292 )
+id218( id290 : id161,
+       id103 : id292 )
+id218( id290 : id161,
+       id134 : id292 )
+id218( id290 : id161,
+       id151 : id292 )
+id218( id290 : id161,
+       id201 : id292 )
+id218( id290 : id161,
+       id206 : id292 )
+id218( id290 : id161,
+       id208 : id292 )
+id218( id290 : id161,
+       id230 : id292 )
+id218( id290 : id161,
+       id245 : id292 )
+id218( id290 : id161,
+       id47 : id292 )
+id218( id290 : id161,
+       id57 : id292 )
+id218( id290 : id161,
+       id90 : id292 )
+id218( id290 : id161,
+       id97 : id292 )
+
+/* -- AT: id231 */
+id231( id15 : id221, id163 : id292 )
+id231( id177 : id221, id1 : id292 )
+id231( id177 : id221, id134 : id292 )
+id231( id177 : id221, id188 : id292 )
+id231( id177 : id221, id91 : id292 )
+id231( id195 : id221, id134 : id292 )
+id231( id195 : id221, id188 : id292 )
+id231( id195 : id221, id208 : id292 )
+id231( id195 : id221, id271 : id292 )
+id231( id195 : id221, id91 : id292 )
+id231( id214 : id221, id17 : id292 )
+id231( id214 : id221, id209 : id292 )
+id231( id268 : id221, id134 : id292 )
+id231( id268 : id221, id174 : id292 )
+id231( id268 : id221, id188 : id292 )
+id231( id268 : id221, id91 : id292 )
+id231( id282 : id221, id10 : id292 )
+id231( id282 : id221, id101 : id292 )
+id231( id282 : id221, id124 : id292 )
+id231( id282 : id221, id144 : id292 )
+id231( id282 : id221, id146 : id292 )
+id231( id282 : id221, id152 : id292 )
+id231( id282 : id221, id185 : id292 )
+id231( id282 : id221, id210 : id292 )
+id231( id282 : id221, id242 : id292 )
+id231( id282 : id221, id248 : id292 )
+id231( id282 : id221, id255 : id292 )
+id231( id282 : id221, id275 : id292 )
+id231( id282 : id221, id281 : id292 )
+id231( id282 : id221, id285 : id292 )
+id231( id282 : id221, id41 : id292 )
+id231( id282 : id221, id6 : id292 )
+id231( id282 : id221, id81 : id292 )
+id231( id282 : id221, id84 : id292 )
+id231( id282 : id221, id96 : id292 )
+id231( id282 : id221, id99 : id292 )
+id231( id61 : id221, id256 : id292 )
+id231( id80 : id221, id134 : id292 )
+id231( id80 : id221, id188 : id292 )
+id231( id80 : id221, id246 : id292 )
+id231( id80 : id221, id287 : id292 )
+id231( id80 : id221, id3 : id292 )
+id231( id80 : id221, id62 : id292 )
+id231( id80 : id221, id91 : id292 )
+id231( id93 : id221, id1 : id292 )
+id231( id93 : id221, id134 : id292 )
+id231( id93 : id221, id163 : id292 )
+id231( id93 : id221, id174 : id292 )
+id231( id93 : id221, id188 : id292 )
+id231( id93 : id221, id208 : id292 )
+id231( id93 : id221, id246 : id292 )
+id231( id93 : id221, id271 : id292 )
+id231( id93 : id221, id287 : id292 )
+id231( id93 : id221, id3 : id292 )
+id231( id93 : id221, id62 : id292 )
+id231( id93 : id221, id91 : id292 )
+
+/* -- AT: id237 */
+id237( id105 : id109, id120 : id156 )
+id237( id119 : id109, id88 : id156 )
+id237( id12 : id109, id288 : id156 )
+id237( id13 : id109, id56 : id156 )
+id237( id145 : id109, id4 : id156 )
+id237( id148 : id109, id23 : id156 )
+id237( id149 : id109, id269 : id156 )
+id237( id157 : id109, id212 : id156 )
+id237( id16 : id109, id172 : id156 )
+id237( id160 : id109, id139 : id156 )
+id237( id165 : id109, id234 : id156 )
+id237( id179 : id109, id112 : id156 )
+id237( id196 : id109, id150 : id156 )
+id237( id200 : id109, id180 : id156 )
+id237( id203 : id109, id108 : id156 )
+id237( id216 : id109, id265 : id156 )
+id237( id217 : id109, id175 : id156 )
+id237( id218 : id109, id227 : id156 )
+id237( id226 : id109, id118 : id156 )
+id237( id231 : id109, id69 : id156 )
+id237( id237 : id109, id122 : id156 )
+id237( id252 : id109, id18 : id156 )
+id237( id260 : id109, id127 : id156 )
+id237( id262 : id109, id20 : id156 )
+id237( id27 : id109, id272 : id156 )
+id237( id270 : id109, id43 : id156 )
+id237( id280 : id109, id286 : id156 )
+id237( id291 : id109, id199 : id156 )
+id237( id30 : id109, id138 : id156 )
+id237( id38 : id109, id240 : id156 )
+id237( id42 : id109, id55 : id156 )
+id237( id51 : id109, id92 : id156 )
+id237( id74 : id109, id5 : id156 )
+id237( id94 : id109, id71 : id156 )
+
+/* -- AT: id270 */
+id270( id109 : id225, id134 : id292 )
+id270( id109 : id225, id144 : id292 )
+id270( id109 : id225, id152 : id292 )
+id270( id109 : id225, id178 : id292 )
+id270( id109 : id225, id186 : id292 )
+id270( id109 : id225, id242 : id292 )
+id270( id109 : id225, id275 : id292 )
+id270( id109 : id225, id281 : id292 )
+id270( id109 : id225, id47 : id292 )
+id270( id109 : id225, id48 : id292 )
+id270( id110 : id225, id130 : id292 )
+id270( id110 : id225, id208 : id292 )
+id270( id110 : id225, id248 : id292 )
+id270( id110 : id225, id271 : id292 )
+id270( id110 : id225, id41 : id292 )
+id270( id110 : id225, id96 : id292 )
+id270( id113 : id225, id101 : id292 )
+id270( id113 : id225, id124 : id292 )
+id270( id113 : id225, id132 : id292 )
+id270( id113 : id225, id134 : id292 )
+id270( id113 : id225, id144 : id292 )
+id270( id113 : id225, id186 : id292 )
+id270( id113 : id225, id242 : id292 )
+id270( id113 : id225, id47 : id292 )
+id270( id114 : id225, id205 : id292 )
+id270( id114 : id225, id246 : id292 )
+id270( id114 : id225, id3 : id292 )
+id270( id114 : id225, id62 : id292 )
+id270( id115 : id225, id1 : id292 )
+id270( id115 : id225, id134 : id292 )
+id270( id115 : id225, id144 : id292 )
+id270( id115 : id225, id186 : id292 )
+id270( id115 : id225, id242 : id292 )
+id270( id115 : id225, id47 : id292 )
+id270( id131 : id225, id134 : id292 )
+id270( id133 : id225, id134 : id292 )
+id270( id133 : id225, id135 : id292 )
+id270( id133 : id225, id176 : id292 )
+id270( id133 : id225, id2 : id292 )
+id270( id133 : id225, id201 : id292 )
+id270( id133 : id225, id230 : id292 )
+id270( id133 : id225, id47 : id292 )
+id270( id133 : id225, id73 : id292 )
+id270( id133 : id225, id97 : id292 )
+id270( id141 : id225, id125 : id292 )
+id270( id141 : id225, id134 : id292 )
+id270( id141 : id225, id228 : id292 )
+id270( id141 : id225, id47 : id292 )
+id270( id141 : id225, id77 : id292 )
+id270( id156 : id225, id134 : id292 )
+id270( id156 : id225, id163 : id292 )
+id270( id156 : id225, id47 : id292 )
+id270( id156 : id225, id67 : id292 )
+id270( id161 : id225, id134 : id292 )
+id270( id161 : id225, id17 : id292 )
+id270( id161 : id225, id171 : id292 )
+id270( id161 : id225, id207 : id292 )
+id270( id161 : id225, id47 : id292 )
+id270( id169 : id225, id134 : id292 )
+id270( id169 : id225, id144 : id292 )
+id270( id169 : id225, id186 : id292 )
+id270( id169 : id225, id242 : id292 )
+id270( id169 : id225, id287 : id292 )
+id270( id169 : id225, id47 : id292 )
+id270( id170 : id225, id134 : id292 )
+id270( id170 : id225, id151 : id292 )
+id270( id170 : id225, id47 : id292 )
+id270( id170 : id225, id82 : id292 )
+id270( id19 : id225, id134 : id292 )
+id270( id19 : id225, id261 : id292 )
+id270( id19 : id225, id47 : id292 )
+id270( id190 : id225, id134 : id292 )
+id270( id197 : id225, id134 : id292 )
+id270( id22 : id225, id134 : id292 )
+id270( id22 : id225, id144 : id292 )
+id270( id22 : id225, id174 : id292 )
+id270( id22 : id225, id186 : id292 )
+id270( id22 : id225, id242 : id292 )
+id270( id22 : id225, id47 : id292 )
+id270( id221 : id225, id134 : id292 )
+id270( id221 : id225, id202 : id292 )
+id270( id221 : id225, id21 : id292 )
+id270( id221 : id225, id220 : id292 )
+id270( id221 : id225, id264 : id292 )
+id270( id221 : id225, id273 : id292 )
+id270( id221 : id225, id277 : id292 )
+id270( id221 : id225, id47 : id292 )
+id270( id222 : id225, id134 : id292 )
+id270( id24 : id225, id134 : id292 )
+id270( id24 : id225, id155 : id292 )
+id270( id24 : id225, id47 : id292 )
+id270( id241 : id225, id134 : id292 )
+id270( id241 : id225, id135 : id292 )
+id270( id241 : id225, id142 : id292 )
+id270( id241 : id225, id2 : id292 )
+id270( id241 : id225, id206 : id292 )
+id270( id241 : id225, id219 : id292 )
+id270( id241 : id225, id230 : id292 )
+id270( id241 : id225, id256 : id292 )
+id270( id241 : id225, id47 : id292 )
+id270( id241 : id225, id57 : id292 )
+id270( id241 : id225, id97 : id292 )
+id270( id244 : id225, id106 : id292 )
+id270( id244 : id225, id134 : id292 )
+id270( id244 : id225, id135 : id292 )
+id270( id244 : id225, id181 : id292 )
+id270( id244 : id225, id189 : id292 )
+id270( id244 : id225, id2 : id292 )
+id270( id244 : id225, id230 : id292 )
+id270( id244 : id225, id254 : id292 )
+id270( id244 : id225, id256 : id292 )
+id270( id244 : id225, id47 : id292 )
+id270( id244 : id225, id57 : id292 )
+id270( id244 : id225, id79 : id292 )
+id270( id244 : id225, id90 : id292 )
+id270( id244 : id225, id97 : id292 )
+id270( id251 : id225, id123 : id292 )
+id270( id251 : id225, id134 : id292 )
+id270( id251 : id225, id47 : id292 )
+id270( id251 : id225, id53 : id292 )
+id270( id278 : id225, id134 : id292 )
+id270( id278 : id225, id14 : id292 )
+id270( id278 : id225, id47 : id292 )
+id270( id292 : id225, id134 : id292 )
+id270( id292 : id225, id146 : id292 )
+id270( id292 : id225, id185 : id292 )
+id270( id292 : id225, id188 : id292 )
+id270( id292 : id225, id210 : id292 )
+id270( id292 : id225, id47 : id292 )
+id270( id292 : id225, id6 : id292 )
+id270( id292 : id225, id81 : id292 )
+id270( id292 : id225, id84 : id292 )
+id270( id292 : id225, id91 : id292 )
+id270( id32 : id225, id134 : id292 )
+id270( id32 : id225, id164 : id292 )
+id270( id32 : id225, id186 : id292 )
+id270( id32 : id225, id194 : id292 )
+id270( id32 : id225, id99 : id292 )
+id270( id33 : id225, id134 : id292 )
+id270( id33 : id225, id223 : id292 )
+id270( id33 : id225, id47 : id292 )
+id270( id34 : id225, id59 : id292 )
+id270( id35 : id225, id10 : id292 )
+id270( id35 : id225, id11 : id292 )
+id270( id35 : id225, id134 : id292 )
+id270( id35 : id225, id144 : id292 )
+id270( id35 : id225, id167 : id292 )
+id270( id35 : id225, id186 : id292 )
+id270( id35 : id225, id193 : id292 )
+id270( id35 : id225, id209 : id292 )
+id270( id35 : id225, id242 : id292 )
+id270( id35 : id225, id255 : id292 )
+id270( id35 : id225, id285 : id292 )
+id270( id35 : id225, id47 : id292 )
+id270( id40 : id225, id134 : id292 )
+id270( id44 : id225, id134 : id292 )
+id270( id44 : id225, id259 : id292 )
+id270( id44 : id225, id47 : id292 )
+id270( id63 : id225, id103 : id292 )
+id270( id78 : id225, id134 : id292 )
+id270( id78 : id225, id159 : id292 )
+id270( id78 : id225, id245 : id292 )
+id270( id78 : id225, id73 : id292 )
+id270( id83 : id225, id249 : id292 )
+id270( id89 : id225, id134 : id292 )
+
+/* -- AT: id291 */
+id291( id60 : id115, id134 : id34 )
+
+/* -- AT: id30 */
+id30( id15 : id221 )
+id30( id177 : id221 )
+id30( id195 : id221 )
+id30( id268 : id221 )
+id30( id80 : id221 )
+
+/* -- AT: id51 */
+id51( id184 : id44, id1 : id292 )
+id51( id184 : id44, id163 : id292 )
+id51( id184 : id44, id174 : id292 )
+id51( id184 : id44, id178 : id292 )
+id51( id184 : id44, id287 : id292 )
+id51( id39 : id44, id101 : id292 )
+id51( id39 : id44, id124 : id292 )
+id51( id39 : id44, id152 : id292 )
+id51( id39 : id44, id185 : id292 )
+id51( id39 : id44, id275 : id292 )
+id51( id39 : id44, id84 : id292 )
+id51( id8 : id44, id132 : id292 )
+
+/* -- AT: id74 */
+id74( id65 : id19, id1 : id292 )
+id74( id65 : id19, id10 : id292 )
+id74( id65 : id19, id101 : id292 )
+id74( id65 : id19, id11 : id292 )
+id74( id65 : id19, id124 : id292 )
+id74( id65 : id19, id130 : id292 )
+id74( id65 : id19, id132 : id292 )
+id74( id65 : id19, id144 : id292 )
+id74( id65 : id19, id146 : id292 )
+id74( id65 : id19, id152 : id292 )
+id74( id65 : id19, id155 : id292 )
+id74( id65 : id19, id163 : id292 )
+id74( id65 : id19, id167 : id292 )
+id74( id65 : id19, id17 : id292 )
+id74( id65 : id19, id174 : id292 )
+id74( id65 : id19, id178 : id292 )
+id74( id65 : id19, id185 : id292 )
+id74( id65 : id19, id188 : id292 )
+id74( id65 : id19, id193 : id292 )
+id74( id65 : id19, id202 : id292 )
+id74( id65 : id19, id205 : id292 )
+id74( id65 : id19, id208 : id292 )
+id74( id65 : id19, id209 : id292 )
+id74( id65 : id19, id21 : id292 )
+id74( id65 : id19, id210 : id292 )
+id74( id65 : id19, id220 : id292 )
+id74( id65 : id19, id223 : id292 )
+id74( id65 : id19, id242 : id292 )
+id74( id65 : id19, id249 : id292 )
+id74( id65 : id19, id255 : id292 )
+id74( id65 : id19, id259 : id292 )
+id74( id65 : id19, id261 : id292 )
+id74( id65 : id19, id264 : id292 )
+id74( id65 : id19, id271 : id292 )
+id74( id65 : id19, id273 : id292 )
+id74( id65 : id19, id275 : id292 )
+id74( id65 : id19, id277 : id292 )
+id74( id65 : id19, id281 : id292 )
+id74( id65 : id19, id287 : id292 )
+id74( id65 : id19, id3 : id292 )
+id74( id65 : id19, id48 : id292 )
+id74( id65 : id19, id59 : id292 )
+id74( id65 : id19, id6 : id292 )
+id74( id65 : id19, id67 : id292 )
+id74( id65 : id19, id81 : id292 )
+id74( id65 : id19, id82 : id292 )
+id74( id65 : id19, id84 : id292 )
+id74( id65 : id19, id91 : id292 )
+
+/* -- AT: id94 */
+id94( id116 : id22, id233 : id83 )
+id94( id140 : id22, id159 : id83 )
+id94( id85 : id22, id47 : id83 )
