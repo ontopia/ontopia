@@ -891,6 +891,35 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return conceptView.getObjectId();
 
   }
+
+  /**
+   * Return the object id for the topic that represents the article that will be displayed, providing an articleId.
+   * The rule is: The topic, with the highest version AND which has an "approved" state, is returned
+   * 
+   * @param articleId the article id from liferay
+   * @return The object for the topic
+   */
+  public String getCurrentObjectIdForArticleId(String articleId){
+    String query ="using lr for i\"http://psi.ontopia.net/liferay/\" \n" +
+            "select $id, $number from \n" +
+            "object-id($topic, $id), \n"+
+            "occurrence($topic , $aid), \n" +
+            "type($aid, lr:article_id), \n" +
+            "value($aid, \"" + articleId +"\"), \n" +
+            "lr:has_workflow_state( $topic :  lr:work , lr:workflow_approved : lr:state ), \n" +
+            "occurrence($topic, $version), \n" +
+            "type($version, lr:version), \n" +
+            "value($version, $number) \n" +
+            "order by $number desc?";
+
+    String retval = getSingleStringFromQuery(query, topicmap);
+    if(retval != null){
+      return retval;
+    } else {
+      System.err.println("Error! Query was: " + query);
+      throw new OntopiaRuntimeException("No Article with articleId " + articleId  + " found!");
+    }
+  }
   
 
 }
