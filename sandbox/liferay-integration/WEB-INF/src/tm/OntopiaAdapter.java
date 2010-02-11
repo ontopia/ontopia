@@ -57,7 +57,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   private static final String STRUCTURE_TYPE = "structure";
   private static final String COMMUNITY_TYPE = "community";
 
-  private static final String TMNAME = "liferay_v47.ltm";
+  private static final String TMNAME = "liferay_v48.ltm";
   
   private TopicMapIF topicmap;
   
