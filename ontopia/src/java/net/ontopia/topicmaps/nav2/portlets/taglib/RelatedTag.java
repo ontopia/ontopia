@@ -6,7 +6,6 @@ package net.ontopia.topicmaps.nav2.portlets.taglib;
 import java.util.List;
 import java.util.Collection;
 import java.util.Set;
-import java.util.HashSet;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
@@ -20,6 +19,7 @@ import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
 import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
 import net.ontopia.topicmaps.nav2.portlets.pojos.RelatedTopics;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.CompactHashSet;
 
 public class RelatedTag extends TagSupport {
   private RelatedTopics related;
@@ -242,7 +242,7 @@ public class RelatedTag extends TagSupport {
     try {
       List values = TagUtils.evaluateParameterList(pageContext, config);
       if (values.isEmpty()) return null;
-      Set result = new HashSet();
+      Set result = new CompactHashSet();
       for (int i=0; i < values.size(); i++) {
         Collection v = (Collection)values.get(i);
         if (v != null)
