@@ -59,8 +59,8 @@ public class LocatorImpl implements Locator {
    */
   
   public boolean equals(Object obj) {
-    return obj instanceof LocatorImpl
-        && getReference().equals(((LocatorImpl) obj).getReference());
+    return obj instanceof Locator
+        && getReference().equals(((Locator) obj).getReference());
   }
 
   /*
