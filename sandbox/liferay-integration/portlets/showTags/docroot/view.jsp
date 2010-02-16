@@ -19,6 +19,9 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+
+This Page will display the tags for an article by using the "related topics" taglibs from ontopia
+
  */
 %>
 
@@ -31,7 +34,8 @@
 
 <portlet:defineObjects />
 <tolog:context topicmap="liferay.ltm">
-    <portal:related topic="topic" var="headings" includeAssociations="assocTypes">
+    <!-- TODO: Take parameter and check whether white or blacklisting should be done (use appropriate tags then)-->
+    <portal:related topic="topic" var="headings" excludeAssociations="assocTypes">
       <ul>
         <c:forEach items="${headings}" var="heading">
           <li><b><c:out value="${heading.title}"/></b>
@@ -42,8 +46,9 @@
                   // get the topic we want to display next as a TopicIF object
                   TopicIF t =(TopicIF) pageContext.getAttribute("player");
                   String oid = t.getObjectId();
+                  System.out.println("ShowTags View.jsp OID: " + oid);
                   // every topic should have an url template set, so that we can see how to display it depending on its type
-                  String query = "using lr for i\"http://psi.ontopia.net/liferay/\" select $value from value($occ, $value), occurrence( @" + oid + ", $occ), type($occ, lr:url-template)?";
+                  String query = "using lr for i\"http://psi.ontopia.net/liferay/\" select $value from value($occ, $value), occurrence($type, $occ), type($occ, lr:url-template), direct-instance-of(@" + oid + ", $type)?";
 
                   // the next two queries might be needed if we are looking at articles from webcontent
                   String queryForGroupId = "using lr for i\"http://psi.ontopia.net/liferay/\" select $value from value($occ, $value), type($occ, lr:groupid), occurrence($group, $occ), lr:contains( @"+oid+" : lr:containee , $group : lr:container )?";
@@ -57,18 +62,26 @@
                   String url = (String) ContextUtils.getSingleValue("url", pageContext);
 
                   System.out.println("ShowTags view.jsp URL: " + url);
-                  // if this is an article (we can tell by the url template we have received previously), we need to lookup its groupid and article id in order to present it to the user
-                  if(url.contains("${groupid}") && url.contains("${articleid}")){%>
-                    <tolog:set query="<%= queryForGroupId %>" var = "groupid"/>
-                    <tolog:set query="<%= queryForArticleId %>" var = "articleid"/>
-                    <%
-                    // Then go and retrieve the appropriate values for the placeholders
-                    String groupid =(String) ContextUtils.getSingleValue("groupid", pageContext);
-                    String articleid = (String) ContextUtils.getSingleValue("articleid", pageContext);
-                    System.out.println("ShowTags view.jsp: " + groupid + ", " + articleid);
-                    url = url.replace("${groupid}", groupid);
-                    url = url.replace("${articleid}", articleid);
-                  }
+                  if(url != null){
+                      // if this is an article (we can tell by the url template we have received previously), we need to lookup its groupid and article id in order to present it to the user
+                      if(url.contains("${groupid}") && url.contains("${articleid}")){%>
+                        <tolog:set query="<%= queryForGroupId %>" var = "groupid"/>
+                        <tolog:set query="<%= queryForArticleId %>" var = "articleid"/>
+                        <%
+                        // Then go and retrieve the appropriate values for the placeholders
+                        String groupid =(String) ContextUtils.getSingleValue("groupid", pageContext);
+                        String articleid = (String) ContextUtils.getSingleValue("articleid", pageContext);
+                        System.out.println("ShowTags view.jsp: " + groupid + ", " + articleid);
+                        // TODO: Easify using Ontopias StringTemplateUtil
+                        url = url.replace("${groupid}", groupid);
+                        url = url.replace("${articleid}", articleid);
+                        System.out.println("URL has been replaced to : " + url );
+                      } else if(url.contains("${topicid}")){
+                          System.out.println("In for changing the topicid!");
+                          url = url.replace("${topicid}", oid);
+                      }
+                      System.out.println("URL processing finished, url = " + url);
+                   }
                   %>
                   <li><a href="<%= url %>"><tolog:out var="assoc.player"/></a></li>
               </c:forEach>

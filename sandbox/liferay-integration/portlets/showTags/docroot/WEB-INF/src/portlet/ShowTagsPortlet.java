@@ -25,12 +25,9 @@ package portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.theme.ThemeDisplay;
 import java.io.IOException;
-
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -39,14 +36,16 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
- * <a href="ShowTagsPortlet.java.html"><b><i>View Source</i></b></a>
+ * ShowTags will display the tags of an article. It will try to look up the topic for that article in the topic map and check
+ * what concepts are associated with it. This class dispatches the incoming requests to the right JSPs and reads and writes some config.
  *
- * @author Brian Wing Shun Chan
+ * @author Matthias Fischer
  *
  */
 public class ShowTagsPortlet extends GenericPortlet {
@@ -55,7 +54,7 @@ public class ShowTagsPortlet extends GenericPortlet {
 		editJSP = getInitParameter("edit-jsp");
 		helpJSP = getInitParameter("help-jsp");
 		viewJSP = getInitParameter("view-jsp");
-        config = Configurator.instance;
+        config = new Configurator();
 	}
 
 	public void doDispatch(
@@ -80,15 +79,42 @@ public class ShowTagsPortlet extends GenericPortlet {
 			super.doEdit(renderRequest, renderResponse);
 		}
 		else {
-            String friendlyUrl;
+            // Most of this will have to be rethought as it should use PortletPreferences to store customizations.
+            // This requires a change in the edit.jsp and the actuel storing takes place in processAction() in this class
+            // An ActionURL is required to trigger the processAction() method. actionUrls can be obtained through taglibs or code.
+            // some parts of the Configurator will become parts of the PortletPreferences, but probably not everything (like finding the next wcd)
+            // only stuff that needs static storage seems to belong into the PortletPreferences
+      
+            String topicid = renderRequest.getParameter("topicid");
+            String associds = renderRequest.getParameter("associd");
 
-            ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
-            friendlyUrl = themeDisplay.getPathFriendlyURLPublic();
+            // associd contains a comma separated list of oids for associations -> deserialize
+            if(associds != null){
+              config.resetAssoctypes(); // clear the previous set of associds
+              String[] assocArray = associds.split(",");
+              for(String s : assocArray){
+                s = s.trim();
+                Integer.parseInt(s); // provoke an Exception here to make it easier to track down problems with providing letters i.e.
+                config.addAssoctype(s);
+              }
+            }
 
-            String renderUrl = renderResponse.createActionURL().toString();
-            
-            System.out.println("render url: " + renderUrl);
-            renderRequest.setAttribute("renderUrl", renderUrl);
+            if(topicid != null){
+              config.setTopicId(topicid, renderRequest);
+            } else {
+              // failed? try attributes
+              String topicAtt = (String) renderRequest.getAttribute("topicid");
+
+              if(topicAtt != null){
+                config.setTopicId(topicAtt, renderRequest);
+              }
+            }
+
+
+      // Get the topic id from the config and pass them to the edit page to display them to the user
+      String topicParam = config.getTopicId();
+      renderRequest.setAttribute("topicid", topicParam);
+      renderRequest.setAttribute("associd", config.getAssocOids());
 			include(editJSP, renderRequest, renderResponse);
 		}
 	}
@@ -104,49 +130,55 @@ public class ShowTagsPortlet extends GenericPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-        System.out.println("## ShowTagsPortlet.doView(), RenderResponse resource URL: " + renderResponse.createRenderURL().toString());
+    // trying logger here instead of stdout just to see how it works out
+
+      _log.debug("## ShowTagsPortlet.doView(), RenderResponse resource URL: " + renderResponse.createRenderURL().toString());
         String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
-        System.out.println("## query_string:" + queryString );
+        _log.debug("## query_string:" + queryString );
         /* this is the place where the stuff goes that uses the renderRequest/Response */
-        
+
+        // TODO: Maybe the order of these should be rearranged and #1 should come last
         // 1. try to find out what topic to use by asking the configurator
         String topicId = config.getTopicId();
         if(topicId == null){
-          System.out.println("1 fail");
+          _log.debug("1 fail");
             // 2. try tp parse topicId from Url
             topicId = config.getTopicIdFromUrl(renderRequest);
             if(topicId == null){
-              System.out.println("2 fail");
+              _log.debug("2 fail");
                 // 3. try to parse the articleId from the url and resolve it into a topic id
                 topicId = config.getTopicIdFromUrlByArticleId(renderRequest);
                 if(topicId == null){
-                  System.out.println("3 fail");
+                  _log.debug("3 fail");
                     // 4. try to find the next WCD on this page and return the topic Id of the article that's being displayed
                     topicId = config.findTopicIdFromNextWCD(renderRequest);
                     if(topicId == null){
-                      System.out.println("4 fail");
+                      _log.debug("4 fail");
                     throw new OntopiaRuntimeException("Unable to find Topic ID!");
                     }
                 }
             }
         }
-
-        // this can be done as elaborately as above in the future.
-        String associationTypeId = config.getAssocOid();
+        
 
         TopicMapIF topicmap = config.getTopicmap();
         TopicIF topic = (TopicIF) topicmap.getObjectById(topicId);
-        TopicIF associationType = (TopicIF) topicmap.getObjectById(associationTypeId);
-        System.out.println("topic: " + topic.toString());
-        System.out.println("assocType: " + associationType.toString());
 
-        // make up a set for the association(s)
+        // Transform oid's into TopicIF Objects
+        Set associationTypeOids = config.getAssocOids();
         Set assocs = new HashSet();
-        assocs.add(associationType);
 
+        Iterator associationIterator = associationTypeOids.iterator();
+        while(associationIterator.hasNext()){
+          String associationTypeId = (String) associationIterator.next();
+          TopicIF associationType = (TopicIF) topicmap.getObjectById(associationTypeId);
+          assocs.add(associationType);
+        }
+        
         // pass the objects on to the JSP
         renderRequest.setAttribute("topic", topic);
         renderRequest.setAttribute("assocTypes", assocs);
+        renderRequest.setAttribute("blacklist", "true");
 
 		include(viewJSP, renderRequest, renderResponse);
 	}
@@ -154,6 +186,7 @@ public class ShowTagsPortlet extends GenericPortlet {
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
+    actionRequest.getPreferences();
 	}
 
 	protected void include(

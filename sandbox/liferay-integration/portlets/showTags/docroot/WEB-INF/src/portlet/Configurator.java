@@ -6,7 +6,9 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.portlet.RenderRequest;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -15,25 +17,38 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import tm.OntopiaAdapter;
 
 /**
- *
+ * This class provides some basic in memo storage for configuration parameters of its portlet.
+ * Some of the stuff in here should go into PortletPreferences rather soon. Not everything will fit in there though.
+ * 
  * @author mfi
  */
 public class Configurator {
-
-    public static Configurator instance = new Configurator();
     
-    private Configurator(){
+    public Configurator(){
     }
 
     private String topicId = null;
-    // TODO: This will change to a different approach: "All assocs except : ....." instead of: "only this one  : ...."
-    private String assocOid = "419";
+    
+    private Set<String> assocOids = new HashSet<String>();
 
-    public void setTopicId(String tid){
+    // determine in what way the set of associations should be interpreted.
+    private boolean blacklist = true;
+
+    public void setTopicId(String tid, RenderRequest renderRequest){
+      PortletPreferences pref = (PortletPreferences) renderRequest.getPreferences();
+      
         topicId = tid;
         System.out.println("Configurator: TopicId has been set to " + topicId);
     }
 
+    public boolean isAssocsWhitelist(){
+      return !blacklist;
+    }
+
+    public boolean isAssocsBlacklist(){
+      return blacklist;
+    }
+    
     public String getTopicId(){
         return topicId;
     }
@@ -51,31 +66,41 @@ public class Configurator {
               System.out.println("Configurator, TopicId from Url : " + result);
                 return result;
             }
-
         } else {
-            return null;
+          // indexOf() returned -1. No topic information in the url available.
+          return null;
         }
     }
 
     public String getTopicIdFromUrlByArticleId(RenderRequest renderRequest){
+      
         String articleid = renderRequest.getParameter("article");
-        // try to find find topic id for article id here
+        // TODO: try to find find topic id for article id here
         return null;
     }
 
-    public void setAssoctype(String oid){
-        assocOid = oid;
-        System.out.println("Confgurator: AssocId has been set to " + assocOid);
+    public void addAssoctype(String oid){
+      assocOids.add(oid);
+      System.out.println("Configurator: AssocId has been added " + oid);
     }
 
-    public String getAssocOid(){
-        return assocOid;
+    public Set getAssocOids(){
+        return assocOids;
+    }
+
+    public void resetAssoctypes(){
+      assocOids.clear();
+    }
+
+    public void resetTopicId(){
+      topicId = null;
+      System.out.println("Configurator: Reset TopicID!");
     }
 
     public String findTopicIdFromNextWCD(RenderRequest renderRequest){
         Layout layout = (Layout) renderRequest.getAttribute(WebKeys.LAYOUT);
         if(layout == null){
-            throw new OntopiaRuntimeException("Unable to find layout for this page!");
+            throw new OntopiaRuntimeException("Configurator: Unable to find layout for this page!");
         }
 
         String typesettings = layout.getTypeSettings(); // a string containing information about the portlets displayed on the page
