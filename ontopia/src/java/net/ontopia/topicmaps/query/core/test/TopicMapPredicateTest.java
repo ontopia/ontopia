@@ -66,5 +66,11 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     verifyQuery(matches, "select $SRCLOC from topicmap($TM), item-identifier($TM, $SRCLOC)?");
     closeStore();
   }
-  
+    
+  public void testFiltering() throws InvalidQueryException, IOException {
+    load("family.ltm");
+
+    findNothing("/* #OPTION: optimizer.reorder = false */ " +
+                "$A = 1, topicmap($A)?");
+  }
 }

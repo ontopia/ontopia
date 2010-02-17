@@ -74,4 +74,10 @@ public class AssociationPredicateTest extends AbstractPredicateTest {
                 "{ association($OBJECT) | topicmap($OBJECT) }?");
   }
   
+  public void testFiltering() throws InvalidQueryException, IOException {
+    load("family.ltm");
+
+    findNothing("/* #OPTION: optimizer.reorder = false */ " +
+                "$A = 1, association($A)?");
+  }
 }

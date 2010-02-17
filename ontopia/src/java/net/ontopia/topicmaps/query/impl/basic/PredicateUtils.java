@@ -474,7 +474,7 @@ public class PredicateUtils {
                                              Object[] objects,
                                              int fromix, int toix,
                                              int operation) {
-    
+
     QueryMatches result = new QueryMatches(matches);
 
     // for each object in input collection...
@@ -648,7 +648,7 @@ public class PredicateUtils {
       result.data[result.last] = matches.data[ix];
     }
 
-    return matches;
+    return result;
   }
 
   /**

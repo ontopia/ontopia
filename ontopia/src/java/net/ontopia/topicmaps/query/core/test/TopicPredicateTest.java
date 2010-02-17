@@ -58,5 +58,11 @@ public class TopicPredicateTest extends AbstractPredicateTest {
                 "topic($NOTHING), association($NOTHING)?");
     closeStore();
   }
-  
+
+  public void testFiltering() throws InvalidQueryException, IOException {
+    load("family.ltm");
+
+    findNothing("/* #OPTION: optimizer.reorder = false */ " +
+                "$A = 1, topic($A)?");
+  }
 }
