@@ -1,16 +1,13 @@
 /**
- * This is controller for the view/edit/help jsps.
- * It provides access to the portals api and provides the jsps with parameters
  */
 
 package portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Layout;
 
 import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -20,17 +17,17 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
- * 
+ * show content as provided by identifiers in the url
+ *
  * @author mfi
+ *
  */
-
-public class TopicNamePortlet extends GenericPortlet {
+public class DynamicWcdPortlet extends GenericPortlet {
 
 	public void init() throws PortletException {
 		editJSP = getInitParameter("edit-jsp");
 		helpJSP = getInitParameter("help-jsp");
 		viewJSP = getInitParameter("view-jsp");
-    config = new Configurator();
 	}
 
 	public void doDispatch(
@@ -70,33 +67,6 @@ public class TopicNamePortlet extends GenericPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-        Layout layout = (Layout) renderRequest.getAttribute(WebKeys.LAYOUT);
-        System.out.println("Layout's friendly url: " + layout.getFriendlyURL());
-        System.out.println("Typesettings for layout: " + layout.getTypeSettings());
-
-        //String typesettings = layout.getTypeSettings();
-        String renderurl = renderResponse.createRenderURL().toString();
-
-        // 1. ask the configurator for the topic id
-        String topicId = config.getTopicId();
-        if(topicId == null){
-            // 2. try to parse topicId from Url
-            topicId = config.getTopicIdFromUrl(renderRequest);
-            if(topicId == null){
-                // 3. Not sure if this makes any sense in this portlet, therefore commented out.
-                //topicId = config.getTopicIdFromUrlByArticleId(renderRequest);
-                if(topicId == null){
-                    // 4. Also not useful I think? Is there a use case where this would be of use?
-                    //topicId = config.findTopicIdFromNextWCD(renderRequest);
-                    if(topicId == null){
-                    //throw new OntopiaRuntimeException("Unable to find Topic ID!");
-                    }
-                }
-            }
-        }
-        renderRequest.setAttribute("renderurl", renderurl);
-        renderRequest.setAttribute("topic", topicId);
-        
 		include(viewJSP, renderRequest, renderResponse);
 	}
 
@@ -124,8 +94,7 @@ public class TopicNamePortlet extends GenericPortlet {
 	protected String editJSP;
 	protected String helpJSP;
 	protected String viewJSP;
-    private Configurator config;
 
-	private static Log _log = LogFactoryUtil.getLog(TopicNamePortlet.class);
+	private static Log _log = LogFactoryUtil.getLog(DynamicWcdPortlet.class);
 
 }

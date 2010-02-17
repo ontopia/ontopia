@@ -73,10 +73,22 @@ public class Configurator {
     }
 
     public String getTopicIdFromUrlByArticleId(RenderRequest renderRequest){
-      
-        String articleid = renderRequest.getParameter("article");
-        // TODO: try to find find topic id for article id here
-        return null;
+    // see above. Not very reusable I reckon.
+      String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
+        if(queryString != null && (queryString.lastIndexOf("article=") != -1)){
+            String result = queryString.substring(queryString.lastIndexOf("article=")+"article=".length()); // get to the topic id number
+            if(result.indexOf("&") != -1){ // there are more parameters
+                result = result.substring(0, result.indexOf("&")); // the next ampersand is the delimiter for the topic id
+                System.out.println("Configurator, ArticleId from Url : " + result);
+                return OntopiaAdapter.instance.getCurrentObjectIdForArticleId(result);
+            } else { // no more parameters, that means we are at the end of the url
+              System.out.println("Configurator, ArticleId from Url : " + result);
+                return OntopiaAdapter.instance.getCurrentObjectIdForArticleId(result);
+            }
+        } else {
+          // indexOf() returned -1. No article information in the url available.
+          return null;
+        }
     }
 
     public void addAssoctype(String oid){
@@ -105,23 +117,29 @@ public class Configurator {
 
         String typesettings = layout.getTypeSettings(); // a string containing information about the portlets displayed on the page
         String portletId="";
-        portletId = typesettings.substring(typesettings.indexOf("56_INSTANCE_"), typesettings.indexOf("56_INSTANCE_")+"56_INSTANCE_".length()+4); // this brings us the first WebContentDisplay Portlet (identified by 56_INSTANCE_") on that page. Returns instance-id
-        System.out.println("PortletId: '" + portletId + "'");
-        System.out.println("plid: " + String.valueOf(layout.getPlid()));
 
         try{
-            List pref = PortletPreferencesLocalServiceUtil.getPortletPreferences(layout.getPlid(), portletId); // These objects contain useful information like the article id as a string
-            
-            PortletPreferences pPrefs = (PortletPreferences) pref.get(0); // TODO:there can only be one hit at the moment (on this page there only is one wcd)
-            String preferences = pPrefs.getPreferences(); // unfortunately there is no getter for the article id
-            String articleId = preferences.substring(preferences.lastIndexOf("article-id</name><value>")+"article-id</name><value>".length(), preferences.lastIndexOf("</value>")).trim();  // that's why I parse it out like this. Awkward!
-            System.out.println("ArticleID : " + articleId);
-            // Now we need to get the topicId for this article Id!
-            return OntopiaAdapter.instance.getCurrentObjectIdForArticleId(articleId);
+          portletId = typesettings.substring(typesettings.indexOf("56_INSTANCE_"), typesettings.indexOf("56_INSTANCE_")+"56_INSTANCE_".length()+4); // this brings us the first WebContentDisplay Portlet (identified by 56_INSTANCE_") on that page. Returns instance-id
+          System.out.println("PortletId: '" + portletId + "'");
+          System.out.println("plid: " + String.valueOf(layout.getPlid()));
 
-            } catch (Exception e){
-                throw new OntopiaRuntimeException(e);
-            }
+          try{
+              List pref = PortletPreferencesLocalServiceUtil.getPortletPreferences(layout.getPlid(), portletId); // These objects contain useful information like the article id as a string
+
+              PortletPreferences pPrefs = (PortletPreferences) pref.get(0); // TODO:there can only be one hit at the moment (on this page there only is one wcd)
+              String preferences = pPrefs.getPreferences(); // unfortunately there is no getter for the article id
+              String articleId = preferences.substring(preferences.lastIndexOf("article-id</name><value>")+"article-id</name><value>".length(), preferences.lastIndexOf("</value>")).trim();  // that's why I parse it out like this. Awkward!
+              System.out.println("ArticleID : " + articleId);
+              // Now we need to get the topicId for this article Id!
+              return OntopiaAdapter.instance.getCurrentObjectIdForArticleId(articleId);
+
+              } catch (Exception e){
+                  throw new OntopiaRuntimeException(e);
+              }
+          } catch(StringIndexOutOfBoundsException siobe){
+            System.out.println("configurator tries to find WCD but there is none!");
+            return null;
+          }
     }
 
     public TopicMapIF getTopicmap(){

@@ -6,24 +6,24 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+
 import java.util.List;
 import javax.portlet.RenderRequest;
+
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.utils.OntopiaRuntimeException;
+
 import tm.OntopiaAdapter;
 
 /**
- *
+ * In memory storage of configuration for the TopicName portlet +
+ * logic for looking up things in the tm.
+ * 
  * @author mfi
  */
 public class Configurator {
-
-    public static Configurator instance = new Configurator();
-    
-    private Configurator(){
-    }
 
     private String topicId = null;
 
@@ -55,7 +55,9 @@ public class Configurator {
 
     public String getTopicIdFromUrlByArticleId(RenderRequest renderRequest){
         String articleid = renderRequest.getParameter("article");
-        //TODO: try to find find topic id for article id here
+        //TODO: try to find find topic id for article id here and resolve the tags of it
+
+        //renderRequest.getPreferences().getMap();
         return null;
     }
 
@@ -78,7 +80,7 @@ public class Configurator {
             String preferences = pPrefs.getPreferences(); // unfortunately there is no getter for the article id
             String articleId = preferences.substring(preferences.lastIndexOf("article-id</name><value>")+"article-id</name><value>".length(), preferences.lastIndexOf("</value>")).trim();  // that's why I parse it out like this. Awkward!
 
-            // Now we need to get the topicId for this article Id!
+            // Now we need to get the topicId for this article Id! and resolve the tags for it
             return OntopiaAdapter.instance.getCurrentObjectIdForArticleId(articleId);
 
             } catch (Exception e){
