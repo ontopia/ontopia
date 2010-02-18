@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,7 +35,7 @@ public class ShowTagsPortlet extends GenericPortlet {
 		editJSP = getInitParameter("edit-jsp");
 		helpJSP = getInitParameter("help-jsp");
 		viewJSP = getInitParameter("view-jsp");
-        config = new Configurator();
+    config = new Configurator();
 	}
 
 	public void doDispatch(
@@ -63,7 +62,7 @@ public class ShowTagsPortlet extends GenericPortlet {
 		else {
       
       /*
-       * Nothing to do here, it is all gone into the jsp !
+       * Nothing to do here, it all went into the jsp !
        */
 
 			include(editJSP, renderRequest, renderResponse);
@@ -81,9 +80,10 @@ public class ShowTagsPortlet extends GenericPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-    // trying logger here instead of stdout just to see how it works out
 
-    _log.debug("## ShowTagsPortlet.doView(), RenderResponse resource URL: " + renderResponse.createRenderURL().toString());
+    // trying logger here instead of stdout just to see how it works out
+    _log.debug("ShowTagsPortlet.doView: Entering method.")
+            ;
     String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
     _log.debug("## query_string:" + queryString );
 
@@ -105,23 +105,20 @@ public class ShowTagsPortlet extends GenericPortlet {
                 if(topicId == null){
                   _log.debug("4 fail");
                   // too bad, but w/o a topic id this portlet does not know what to display.
-                  // TODO: Maybe some default content should be created.
+                  // TODO: Maybe some default content should be displayed.
                 throw new OntopiaRuntimeException("Unable to find Topic ID!");
                 }
             }
         }
     }
 
-
     TopicMapIF topicmap = config.getTopicmap();
-
     TopicIF topic = (TopicIF) topicmap.getObjectById(topicId);
 
     Set assocs = new HashSet();
 
     // Transform oid's into TopicIF Objects
     String[] assocOids = renderRequest.getPreferences().getValues("associds", null);
-    System.out.println("ShowTagsPortlet.doView: Contents of assocOids = " + assocOids );
 
     if(assocOids != null){
       for(String s : assocOids){
@@ -131,13 +128,36 @@ public class ShowTagsPortlet extends GenericPortlet {
       }
     }
 
-    // pass the objects on to the JSP
-    renderRequest.setAttribute("topic", topic);
-    renderRequest.setAttribute("assocTypes", assocs);
-    renderRequest.setAttribute("blacklist", "true");
-    //TODO: Set Filterquery for relatedTopics portlet
+    // has a filterquery been provided?
+    String filterQuery = renderRequest.getPreferences().getValue("filterquery", null);
+    if(filterQuery != null){
+      System.out.println("ShowTagsPortlet.doView(): passing Attribute 'filterquery' with '" + filterQuery + "'");
+      renderRequest.setAttribute("filterquery", filterQuery);
+    }
 
-  include(viewJSP, renderRequest, renderResponse);
+    // has the user made a choice whether she wants the associations to be included or excluded?
+    String assocMode = renderRequest.getPreferences().getValue("assocmode", null);
+    if(assocMode != null){
+      if(assocMode.equalsIgnoreCase("include")){
+        System.out.println("ShowTagsPortlet.doView(): passing Attribute 'mode' with '" + assocMode + "'");
+        renderRequest.setAttribute("mode", "include");
+      } else {
+        System.out.println("ShowTagsPortlet.doView(): passing Attribute 'mode' with '" + assocMode + "'");
+        renderRequest.setAttribute("mode", "exclude");
+      }
+    } else {
+      // if no choice has been made presume "exclude" as default
+      System.out.println("ShowTagsPortlet.doView(): passing Attribute 'mode' with '" + assocMode + "'");
+      renderRequest.setAttribute("mode", "exclude");
+    }
+
+    // these two are needed in any case, although assocs may be an empty set
+    System.out.println("ShowTagsPortlet.doView(): passing Attribute 'topic' with '" + topic + "'");
+    renderRequest.setAttribute("topic", topic);
+    System.out.println("ShowTagsPortlet.doView(): passing Attribute 'assocTypes' with '" + assocs + "'");
+    renderRequest.setAttribute("assocTypes", assocs);
+
+    include(viewJSP, renderRequest, renderResponse);
 	}
 
 	public void processAction(
@@ -208,5 +228,5 @@ public class ShowTagsPortlet extends GenericPortlet {
 	private static Log _log = LogFactoryUtil.getLog(ShowTagsPortlet.class);
 
 
-    Configurator config;
+  Configurator config;
 }
