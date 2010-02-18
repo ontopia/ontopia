@@ -1672,4 +1672,21 @@ public class QueryProcessorTest extends AbstractQueryTest {
                 "select $Z from a(x1, $Z)?");
   }
 
+  public void testIssue208() throws InvalidQueryException, IOException {
+    load("family.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "TOPIC", getTopicById("magnus"));
+
+    verifyQuery(matches,
+                "type-of($topic_, $type_) :- { " +
+                "  instance-of($topic_, $type_) " +
+                "| " +
+                "  instance-of($topic_, $type), " +
+                "  type-of($type, $type_) " +
+                "}. " +
+
+                "select $TOPIC from " +
+                "type-of($TOPIC, father), $TOPIC = magnus?");
+  }
 }

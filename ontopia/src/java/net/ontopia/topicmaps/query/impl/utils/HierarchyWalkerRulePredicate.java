@@ -98,7 +98,7 @@ public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
     QueryMatches result = runPredicate(extmatches, extarguments);
     
     log.debug("table size: " + (result.last + 1));
-    
+
     // 2) find transitive closure from starting object
     int startcol = ix1;
     int goalcol = ix2;
@@ -115,18 +115,29 @@ public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
       resstartcol = result.getIndex(secondvar);
       resgoalcol = result.getIndex(firstvar);
     }
-    
+
     Set closure = findTransitiveClosure(result, resstartcol, resgoalcol, startval);
 
     log.debug("closure found, size: " + closure.size());
     
     // 3) produce situation-specific response
     QueryMatches ownresult = new QueryMatches(extmatches);
-    ownresult.ensureCapacity(closure.size());
-    Iterator it = closure.iterator();
-    for (int ix = 0; ix < closure.size(); ix++) {
-      ownresult.data[++ownresult.last] = (Object[]) extmatches.data[0].clone();
-      ownresult.data[ownresult.last][goalcol] = it.next();
+    if (!extmatches.bound(goalcol)) {
+      // output all goal values
+      ownresult.ensureCapacity(closure.size());
+      Iterator it = closure.iterator();
+      for (int ix = 0; ix < closure.size(); ix++) {
+        ownresult.data[++ownresult.last] = (Object[]) extmatches.data[0].clone();
+        ownresult.data[ownresult.last][goalcol] = it.next();
+      }
+    } else {
+      // goal column is bound, so just check the result, and output
+      // if correct
+      Object goalval = extmatches.data[0][goalcol];
+      if (closure.contains(goalval)) {
+        ownresult.data[++ownresult.last] = (Object[]) extmatches.data[0].clone();
+        ownresult.data[ownresult.last][goalcol] = goalval;
+      }
     }
 
     QueryTracer.trace("finished hierarchywalker " + getName());
@@ -151,11 +162,12 @@ public class HierarchyWalkerRulePredicate implements BasicPredicateIF {
     // bind internal variables to external arguments
     for (int ix = 0; ix < extargs.length; ix++) {
       Variable intvar = (Variable) rule.getParameters().get(ix);
+
       if (intvar.equals(firstvar) ||
           intvar.equals(secondvar) ||
           intvar.equals(midvar))
         continue;
-
+      
       if (extargs[ix] instanceof TMObjectIF || extargs[ix] instanceof String) {
         int col = matches.getIndex(intvar);
         matches.data[0][col] = extargs[ix];
