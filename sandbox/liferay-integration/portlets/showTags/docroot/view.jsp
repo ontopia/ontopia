@@ -1,19 +1,23 @@
-<%
-/**
- * This Page will display the tags for an article by using the "related topics" taglibs from ontopia
- */
-%>
+<%--
+
+ This Page will display the tags for an article by using the "related topics" taglibs from ontopia
+ 
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@ taglib uri="http://psi.ontopia.net/jsp/taglib/portlets" prefix="portal" %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/tolog' prefix='tolog'%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+
 <%@ page import = "net.ontopia.topicmaps.core.TopicIF" %>
 <%@ page import = "net.ontopia.topicmaps.nav2.utils.ContextUtils" %>
 
 <portlet:defineObjects />
 <tolog:context topicmap="liferay.ltm">
     <!-- TODO: Take parameter and check whether white or blacklisting should be done (use appropriate tags then)-->
+    <!-- topic is to contain a topic object, that has been passed from the portlets java code, assocTypes contains a set of association type -->
     <portal:related topic="topic" var="headings" excludeAssociations="assocTypes">
       <ul>
         <c:forEach items="${headings}" var="heading">

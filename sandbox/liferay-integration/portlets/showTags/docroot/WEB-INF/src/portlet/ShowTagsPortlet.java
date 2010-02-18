@@ -61,42 +61,11 @@ public class ShowTagsPortlet extends GenericPortlet {
 			super.doEdit(renderRequest, renderResponse);
 		}
 		else {
-            // Most of this will have to be rethought as it should use PortletPreferences to store customizations.
-            // This requires a change in the edit.jsp and the actuel storing takes place in processAction() in this class
-            // An ActionURL is required to trigger the processAction() method. actionUrls can be obtained through taglibs or code.
-            // some parts of the Configurator will become parts of the PortletPreferences, but probably not everything (like finding the next wcd)
-            // only stuff that needs static storage seems to belong into the PortletPreferences
       
-            String topicid = renderRequest.getParameter("topicid");
-            String associds = renderRequest.getParameter("associd");
+      /*
+       * Nothing to do here, it is all gone into the jsp !
+       */
 
-            // associd contains a comma separated list of oids for associations -> deserialize
-            if(associds != null){
-              config.resetAssoctypes(); // clear the previous set of associds
-              String[] assocArray = associds.split(",");
-              for(String s : assocArray){
-                s = s.trim();
-                Integer.parseInt(s); // provoke an Exception here to make it easier to track down problems with providing letters i.e.
-                config.addAssoctype(s);
-              }
-            }
-
-            if(topicid != null){
-              config.setTopicId(topicid, renderRequest);
-            } else {
-              // failed? try attributes
-              String topicAtt = (String) renderRequest.getAttribute("topicid");
-
-              if(topicAtt != null){
-                config.setTopicId(topicAtt, renderRequest);
-              }
-            }
-
-
-      // Get the topic id from the config and pass them to the edit page to display them to the user
-      String topicParam = config.getTopicId();
-      renderRequest.setAttribute("topicid", topicParam);
-      renderRequest.setAttribute("associd", config.getAssocOids());
 			include(editJSP, renderRequest, renderResponse);
 		}
 	}
@@ -114,61 +83,105 @@ public class ShowTagsPortlet extends GenericPortlet {
 
     // trying logger here instead of stdout just to see how it works out
 
-      _log.debug("## ShowTagsPortlet.doView(), RenderResponse resource URL: " + renderResponse.createRenderURL().toString());
-        String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
-        _log.debug("## query_string:" + queryString );
-        /* this is the place where the stuff goes that uses the renderRequest/Response */
+    _log.debug("## ShowTagsPortlet.doView(), RenderResponse resource URL: " + renderResponse.createRenderURL().toString());
+    String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
+    _log.debug("## query_string:" + queryString );
 
-        // TODO: Maybe the order of these should be rearranged and #1 should come last
-        // 1. try to find out what topic to use by asking the configurator
-        String topicId = config.getTopicId();
+    // TODO: Maybe the order of these should be rearranged and #1 should come last?
+    // 1. try to find out what topic to use by checking the PortletPreferences
+    String topicId = renderRequest.getPreferences().getValue("topicid", null);
+    if(topicId == null || topicId.equalsIgnoreCase("")){
+      _log.debug("1 fail");
+        // 2. try tp parse topicId from Url
+        topicId = config.getTopicIdFromUrl(renderRequest);
         if(topicId == null){
-          _log.debug("1 fail");
-            // 2. try tp parse topicId from Url
-            topicId = config.getTopicIdFromUrl(renderRequest);
+          _log.debug("2 fail");
+            // 3. try to parse the articleId from the url and resolve it into a topic id
+            topicId = config.getTopicIdFromUrlByArticleId(renderRequest);
             if(topicId == null){
-              _log.debug("2 fail");
-                // 3. try to parse the articleId from the url and resolve it into a topic id
-                topicId = config.getTopicIdFromUrlByArticleId(renderRequest);
+              _log.debug("3 fail");
+                // 4. try to find the next WCD on this page and return the topic Id of the article that's being displayed
+                topicId = config.findTopicIdFromNextWCD(renderRequest);
                 if(topicId == null){
-                  _log.debug("3 fail");
-                    // 4. try to find the next WCD on this page and return the topic Id of the article that's being displayed
-                    topicId = config.findTopicIdFromNextWCD(renderRequest);
-                    if(topicId == null){
-                      _log.debug("4 fail");
-                    throw new OntopiaRuntimeException("Unable to find Topic ID!");
-                    }
+                  _log.debug("4 fail");
+                  // too bad, but w/o a topic id this portlet does not know what to display.
+                  // TODO: Maybe some default content should be created.
+                throw new OntopiaRuntimeException("Unable to find Topic ID!");
                 }
             }
         }
-        
+    }
 
-        TopicMapIF topicmap = config.getTopicmap();
-        TopicIF topic = (TopicIF) topicmap.getObjectById(topicId);
 
-        // Transform oid's into TopicIF Objects
-        Set associationTypeOids = config.getAssocOids();
-        Set assocs = new HashSet();
+    TopicMapIF topicmap = config.getTopicmap();
 
-        Iterator associationIterator = associationTypeOids.iterator();
-        while(associationIterator.hasNext()){
-          String associationTypeId = (String) associationIterator.next();
-          TopicIF associationType = (TopicIF) topicmap.getObjectById(associationTypeId);
-          assocs.add(associationType);
-        }
-        
-        // pass the objects on to the JSP
-        renderRequest.setAttribute("topic", topic);
-        renderRequest.setAttribute("assocTypes", assocs);
-        renderRequest.setAttribute("blacklist", "true");
+    TopicIF topic = (TopicIF) topicmap.getObjectById(topicId);
 
-		include(viewJSP, renderRequest, renderResponse);
+    Set assocs = new HashSet();
+
+    // Transform oid's into TopicIF Objects
+    String[] assocOids = renderRequest.getPreferences().getValues("associds", null);
+    System.out.println("ShowTagsPortlet.doView: Contents of assocOids = " + assocOids );
+
+    if(assocOids != null){
+      for(String s : assocOids){
+        System.out.println("ShowTagsPortlet.doView: Looking up Assoc Oid " + s + " in the topicmap.");
+        TopicIF associationType = (TopicIF) topicmap.getObjectById(s);
+        assocs.add(associationType);
+      }
+    }
+
+    // pass the objects on to the JSP
+    renderRequest.setAttribute("topic", topic);
+    renderRequest.setAttribute("assocTypes", assocs);
+    renderRequest.setAttribute("blacklist", "true");
+    //TODO: Set Filterquery for relatedTopics portlet
+
+  include(viewJSP, renderRequest, renderResponse);
 	}
 
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
-    actionRequest.getPreferences();
+
+    System.out.println("ShowTagsPortlet.processAction: entering method.");
+
+    // read the users input
+    String serializedAssocIds = actionRequest.getParameter("associd");
+    String topicId = actionRequest.getParameter("topicid");
+    String assocMode = actionRequest.getParameter("assocmode");
+    String filterQuery = actionRequest.getParameter("filterquery");
+
+    // and set it to the PortletPreferences for this portlet
+    if(serializedAssocIds != null){
+      System.out.println("ShowTagsPortlet.processAction: associd received.");
+      String[] assocIdArray = serializedAssocIds.split(",");
+
+      for(int count = 0; count < assocIdArray.length; count++){
+        assocIdArray[count] = assocIdArray[count].trim();
+      }
+
+      actionRequest.getPreferences().setValues("associds", assocIdArray);
+    }
+
+    if(topicId != null){
+      System.out.println("ShowTagsPortlet.processAction: topicid received.");
+      actionRequest.getPreferences().setValue("topicid", topicId);
+    }
+
+    if(assocMode != null){
+      System.out.println("ShowTagsPortlet.processAction: assocmode received.");
+      actionRequest.getPreferences().setValue("assocmode", assocMode);
+    }
+
+    if(filterQuery != null){
+      System.out.println("ShowTagsPortlet.processAction: filterquery received.");
+      actionRequest.getPreferences().setValue("filterquery", filterQuery);
+    }
+
+    // persist changes
+    System.out.println("ShowTagsPortlet.processAction: persisting changes to preferences.");
+    actionRequest.getPreferences().store();
 	}
 
 	protected void include(

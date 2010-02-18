@@ -8,48 +8,56 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
 <%@page import="portlet.Configurator"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.Iterator"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-
-
+<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.RenderResponse" %>
+<%@ page import="javax.portlet.RenderRequest" %>
+   
 <%
-String topicid= null;
-Set associd = null;
+// need this to provide the actionUrl below. Using tags from the portlet namespace instead did not work out.
+RenderResponse portletResponse = (RenderResponse)request.getAttribute("javax.portlet.response");
+PortletURL actionUrl = portletResponse.createActionURL();
 
-topicid = (String) request.getAttribute("topicid");
-associd = (Set) request.getAttribute("associd");
+String assocIdsParameter = "";
+String topicId;
+String assocMode;
+String filterQuery;
 
-String assocsString = "";
-// if a set has been passed, make it readable as a String.
-if(associd != null){
-    Iterator associationsIterator = associd.iterator();
-    while(associationsIterator.hasNext()){
-        assocsString += (String) associationsIterator.next();
-        if(associationsIterator.hasNext()){
-            assocsString += ",";
+RenderRequest renderRequest = (RenderRequest) request.getAttribute("javax.portlet.request");
+
+String[] assocIdArray = renderRequest.getPreferences().getValues("associds", null);
+      if(assocIdArray != null){
+        for(String s : assocIdArray){
+          assocIdsParameter += s + ",";
         }
-    }
-}
+
+        if(assocIdsParameter.endsWith(",")){ // remove trailing comma
+          assocIdsParameter = assocIdsParameter.substring(0, assocIdsParameter.length()-1);
+        }
+      }
+
+      topicId = renderRequest.getPreferences().getValue("topicid", "");
+
+      assocMode = renderRequest.getPreferences().getValue("assocmode", "");
+
+      filterQuery = renderRequest.getPreferences().getValue("filterquery", "");
+
 %>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Preferences</title>
-    </head>
-    <body>
-        <h5>Preferences:</h5>
-        <form name="frm_edit" method="post">
-                <table>
-                    <!-- TODO: Also add a radiobutton to select white/blacklisting of associations -->
-                    <!-- TODO: <tr><td>Topic Id: </td><td><input type="text" name="<portlet:namespace/>topicid" value="<%= topicid%>" /></td></tr> -->
-                    <tr><td>Association Id:</td><td><input type="text" name="<portlet:namespace/>associd" value="<%= assocsString %>" /></td></tr>
-                </table>
-            <input type="submit" value="Save" name="save" />
-        </form>
-    </body>
-</html>
+
+<h5>Preferences:</h5>
+<form name="frm_edit" action="<%=actionUrl%>" method="post">
+        <table>
+            <!-- TODO: Also add a radiobutton to select white/blacklisting of associations -->
+            <tr><td>Topic Id: </td><td><input type="text" name="topicid" value="<%= topicId %>" /></td></tr>
+            <tr><td>Association Id:</td><td><input type="text" name="associd" value="<%= assocIdsParameter %>" /></td></tr>
+            <tr><td>Mode:</td><td><input type="text" name="assocmode" value="<%= assocMode %>" /></td></tr>
+            <tr><td>Filterquery:</td><td><input type="text" name="filterquery" value="<%= filterQuery %>" /></td></tr>
+        </table>
+    <input type="submit" value="Save" name="save" />
+</form>
