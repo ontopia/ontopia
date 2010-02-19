@@ -12,23 +12,23 @@ public class GroupListener implements ModelListener<Group>{
       throws ModelListenerException {
   }
 
-  public void onAfterCreate(Group arg0) throws ModelListenerException {
+  public void onAfterCreate(Group group) throws ModelListenerException {
     System.out.println("### onAfterCreateGroup ###");
-    OntopiaAdapter.instance.addGroup(arg0);
+    OntopiaAdapter.instance.addGroup(group);
   }
 
-  public void onAfterRemove(Group arg0) throws ModelListenerException {
+  public void onAfterRemove(Group group) throws ModelListenerException {
     System.out.println("### onAfterRemoveGroup ###");
-    OntopiaAdapter.instance.deleteGroup(arg0);
+    OntopiaAdapter.instance.deleteGroup(group);
   }
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
   }
 
-  public void onAfterUpdate(Group arg0) throws ModelListenerException {
+  public void onAfterUpdate(Group group) throws ModelListenerException {
     System.out.println("### onAfterUpdateGroup ###");
-    OntopiaAdapter.instance.updateGroup(arg0);
+    OntopiaAdapter.instance.updateGroup(group);
     
   }
 
@@ -36,17 +36,17 @@ public class GroupListener implements ModelListener<Group>{
       throws ModelListenerException {
   }
 
-  public void onBeforeCreate(Group arg0) throws ModelListenerException {
+  public void onBeforeCreate(Group group) throws ModelListenerException {
   }
 
-  public void onBeforeRemove(Group arg0) throws ModelListenerException {
+  public void onBeforeRemove(Group group) throws ModelListenerException {
   }
 
   public void onBeforeRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
   }
 
-  public void onBeforeUpdate(Group arg0) throws ModelListenerException {
+  public void onBeforeUpdate(Group group) throws ModelListenerException {
   }
 
   private void printGroup(Group g){

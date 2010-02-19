@@ -5,6 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import tm.OntopiaAdapter;
 
+/**
+ * This class provides a convenient way to tranform Date objects into strings that fit into ontopoly
+ * @author mfi
+ */
 
 public class DateFormater {
 

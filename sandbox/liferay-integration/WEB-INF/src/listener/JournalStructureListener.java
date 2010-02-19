@@ -8,22 +8,19 @@ import com.liferay.portlet.journal.model.JournalStructure;
 public class JournalStructureListener implements ModelListener<JournalStructure>{
 
   public void onAfterAddAssociation(Object arg0, String arg1, Object arg2)
-      throws ModelListenerException {
-    // System.out.println("### JournalStructure: onAfterAddAssociation ###");    
+      throws ModelListenerException { 
   }
 
-  public void onAfterCreate(JournalStructure arg0)
+  public void onAfterCreate(JournalStructure structure)
       throws ModelListenerException {
     System.out.println("### onAfterCreateJournalStructure ###");
-    OntopiaAdapter.instance.addStructure(arg0);
-    //printStructure(arg0);
+    OntopiaAdapter.instance.addStructure(structure);
   }
 
-  public void onAfterRemove(JournalStructure arg0)
+  public void onAfterRemove(JournalStructure structure)
       throws ModelListenerException {
     System.out.println("### onAfterRemoveJournalStructure ###");
-    OntopiaAdapter.instance.deleteStructure(arg0.getUuid());
-    //printStructure(arg0);
+    OntopiaAdapter.instance.deleteStructure(structure.getUuid());
     
   }
 
@@ -31,11 +28,10 @@ public class JournalStructureListener implements ModelListener<JournalStructure>
       throws ModelListenerException {
   }
 
-  public void onAfterUpdate(JournalStructure arg0)
+  public void onAfterUpdate(JournalStructure structure)
       throws ModelListenerException {
     System.out.println("### onAfterUpdateJournalStructure ###");
-    //printStructure(arg0);
-    OntopiaAdapter.instance.updateStructure(arg0);
+    OntopiaAdapter.instance.updateStructure(structure);
     
   }
 
@@ -43,11 +39,11 @@ public class JournalStructureListener implements ModelListener<JournalStructure>
       throws ModelListenerException {
   }
 
-  public void onBeforeCreate(JournalStructure arg0)
+  public void onBeforeCreate(JournalStructure structure)
       throws ModelListenerException {
   }
 
-  public void onBeforeRemove(JournalStructure arg0)
+  public void onBeforeRemove(JournalStructure structure)
       throws ModelListenerException {
   }
 
@@ -55,7 +51,7 @@ public class JournalStructureListener implements ModelListener<JournalStructure>
       throws ModelListenerException {
   }
 
-  public void onBeforeUpdate(JournalStructure arg0)
+  public void onBeforeUpdate(JournalStructure structure)
       throws ModelListenerException {
   }
   

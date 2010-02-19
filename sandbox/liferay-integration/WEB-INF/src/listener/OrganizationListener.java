@@ -1,26 +1,25 @@
 package listener;
+
 import com.liferay.portal.ModelListenerException;
-import com.liferay.portal.SystemException;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Organization;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 
 
 public class OrganizationListener implements ModelListener<Organization> {
   
 
-  private void printOrganization(Organization arg0){
+  private void printOrganization(Organization org){
     
-    System.out.println("CompanyID: " + arg0.getCompanyId());
-    System.out.println("Name: " + arg0.getName());
-    System.out.println("CountryID:" + arg0.getCountryId());
-    System.out.println("OrganizationID: " + arg0.getOrganizationId());
-    System.out.println("ParentOrg: " + arg0.getParentOrganizationId());
-    System.out.println("PK: " + arg0.getPrimaryKey());
-    System.out.println("GroupID: " + arg0.getGroup());
-    System.out.println("RegionID: " + arg0.getRegionId());
-    System.out.println("Type: " + arg0.getType());
+    System.out.println("CompanyID: " + org.getCompanyId());
+    System.out.println("Name: " + org.getName());
+    System.out.println("CountryID:" + org.getCountryId());
+    System.out.println("OrganizationID: " + org.getOrganizationId());
+    System.out.println("ParentOrg: " + org.getParentOrganizationId());
+    System.out.println("PK: " + org.getPrimaryKey());
+    System.out.println("GroupID: " + org.getGroup());
+    System.out.println("RegionID: " + org.getRegionId());
+    System.out.println("Type: " + org.getType());
     
   }
   
@@ -32,47 +31,38 @@ public class OrganizationListener implements ModelListener<Organization> {
     System.out.println("OrganizationListener: AfterAddAssociation");    
   }
   
-  public void onAfterCreate(Organization arg0) throws ModelListenerException {
+  public void onAfterCreate(Organization org) throws ModelListenerException {
     System.out.println("### onAfterCreateOrganization ###");
-    printOrganization(arg0);
-    
   }
-  public void onAfterRemove(Organization arg0) throws ModelListenerException {
+
+  public void onAfterRemove(Organization org) throws ModelListenerException {
     System.out.println("### onAfterRemoveOrganization ###");
-    printOrganization(arg0);
-    
   }
+
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    System.out.println("OrganizationListener: AfterRemoveAssociation");    
-    
+    System.out.println("OrganizationListener: AfterRemoveAssociation");      
   }
-  public void onAfterUpdate(Organization arg0) throws ModelListenerException {
+
+  public void onAfterUpdate(Organization org) throws ModelListenerException {
     System.out.println("### onAfterUpdateOrganization ###");
-    printOrganization(arg0);
-    
   }
+
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
-  public void onBeforeCreate(Organization arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
+
+  public void onBeforeCreate(Organization org) throws ModelListenerException {
   }
-  public void onBeforeRemove(Organization arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
+
+  public void onBeforeRemove(Organization org) throws ModelListenerException {
   }
+
   public void onBeforeRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
-  public void onBeforeUpdate(Organization arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
+
+  public void onBeforeUpdate(Organization org) throws ModelListenerException {
   }
 
 }

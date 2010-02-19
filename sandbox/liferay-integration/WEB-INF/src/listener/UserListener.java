@@ -1,4 +1,5 @@
 package listener;
+
 import tm.OntopiaAdapter;
 
 import com.liferay.portal.ModelListenerException;
@@ -10,59 +11,42 @@ public class UserListener implements ModelListener<User>{
 
   public void onAfterAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
-  public void onAfterCreate(User arg0) throws ModelListenerException {
+  public void onAfterCreate(User user) throws ModelListenerException {
     System.out.println("### User Created! ###");
-    OntopiaAdapter.instance.addUser(arg0);
-    //printUserInfo(arg0);
+    OntopiaAdapter.instance.addUser(user);
   }
 
-  public void onAfterRemove(User arg0) throws ModelListenerException {
+  public void onAfterRemove(User user) throws ModelListenerException {
    System.out.println("### User Removed! ###");
-   OntopiaAdapter.instance.deleteUser(arg0.getUuid());
-   //printUserInfo(arg0); 
+   OntopiaAdapter.instance.deleteUser(user.getUuid());
   }
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
-  public void onAfterUpdate(User arg0) throws ModelListenerException {
+  public void onAfterUpdate(User user) throws ModelListenerException {
     System.out.println("### User updated! ###");
-    OntopiaAdapter.instance.updateUser(arg0);
-    //printUserInfo(arg0);
+    OntopiaAdapter.instance.updateUser(user);
   }
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // System.out.println("### OnBeforeCreateAssociation called with " + arg0.toString() + " - " + arg1 + " - " + arg1.toString());
-
   }
 
-  public void onBeforeCreate(User arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
+  public void onBeforeCreate(User user) throws ModelListenerException {
   }
 
-  public void onBeforeRemove(User arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
+  public void onBeforeRemove(User user) throws ModelListenerException {
   }
 
   public void onBeforeRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
   }
 
-  public void onBeforeUpdate(User arg0) throws ModelListenerException {
-    // TODO Auto-generated method stub
-    
+  public void onBeforeUpdate(User user) throws ModelListenerException {
   }
   
   private void printUserInfo(User user){

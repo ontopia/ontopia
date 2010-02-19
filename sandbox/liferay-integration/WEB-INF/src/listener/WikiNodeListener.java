@@ -4,6 +4,7 @@ import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.SystemException;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.wiki.model.WikiNode;
+
 import tm.OntopiaAdapter;
 
 public class WikiNodeListener implements ModelListener<WikiNode>{
@@ -12,58 +13,53 @@ public class WikiNodeListener implements ModelListener<WikiNode>{
       throws ModelListenerException {
   }
 
-  public void onAfterCreate(WikiNode arg0) throws ModelListenerException {
+  public void onAfterCreate(WikiNode node) throws ModelListenerException {
     System.out.println("### onAfterCreate WikiNode ###");
-    printNode(arg0);
-    OntopiaAdapter.instance.addWikiNode(arg0);
+    OntopiaAdapter.instance.addWikiNode(node);
   }
 
-  public void onAfterRemove(WikiNode arg0) throws ModelListenerException {
+  public void onAfterRemove(WikiNode node) throws ModelListenerException {
     System.out.println("### onAfterRemove WikiNode ###");
-    printNode(arg0);
-    OntopiaAdapter.instance.deleteWikiNode(arg0.getUuid());
+    OntopiaAdapter.instance.deleteWikiNode(node.getUuid());
   }
 
   public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
   }
 
-  public void onAfterUpdate(WikiNode arg0) throws ModelListenerException {
+  public void onAfterUpdate(WikiNode node) throws ModelListenerException {
     System.out.println("### onAfterUpdate WikiNode ###");
-    printNode(arg0);
-    OntopiaAdapter.instance.updateWikiNode(arg0);
+    OntopiaAdapter.instance.updateWikiNode(node);
   }
 
   public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
   }
 
-  public void onBeforeCreate(WikiNode arg0) throws ModelListenerException {
-    
+  public void onBeforeCreate(WikiNode node) throws ModelListenerException {
   }
 
-  public void onBeforeRemove(WikiNode arg0) throws ModelListenerException {
-    
+  public void onBeforeRemove(WikiNode node) throws ModelListenerException {
   }
 
   public void onBeforeRemoveAssociation(Object arg0, String arg1, Object arg2)
       throws ModelListenerException {
   }
 
-  public void onBeforeUpdate(WikiNode arg0) throws ModelListenerException {
+  public void onBeforeUpdate(WikiNode node) throws ModelListenerException {
   }
   
-  private void printNode(WikiNode arg0){
-    System.out.println("Uuid: " + arg0.getUuid());
-    System.out.println("Group: " + arg0.getGroupId());
-    System.out.println("Name: " + arg0.getName());
-    System.out.println("NodeId: " + arg0.getNodeId());
-    System.out.println("CreateDate: " + arg0.getCreateDate());
-    System.out.println("LastPost: " + arg0.getLastPostDate());
-    System.out.println("Modified: " + arg0.getModifiedDate());
-    System.out.println("Username: " + arg0.getUserName());
+  private void printNode(WikiNode node){
+    System.out.println("Uuid: " + node.getUuid());
+    System.out.println("Group: " + node.getGroupId());
+    System.out.println("Name: " + node.getName());
+    System.out.println("NodeId: " + node.getNodeId());
+    System.out.println("CreateDate: " + node.getCreateDate());
+    System.out.println("LastPost: " + node.getLastPostDate());
+    System.out.println("Modified: " + node.getModifiedDate());
+    System.out.println("Username: " + node.getUserName());
     try {
-      System.out.println("UsersUuid: " + arg0.getUserUuid());
+      System.out.println("UsersUuid: " + node.getUserUuid());
     } catch (SystemException ex) {
       ex.printStackTrace();
     }
