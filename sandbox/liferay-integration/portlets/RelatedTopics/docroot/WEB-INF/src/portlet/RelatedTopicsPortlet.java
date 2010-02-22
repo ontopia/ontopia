@@ -23,13 +23,13 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
- * ShowTags will display the tags of an article. It will try to look up the topic for that article in the topic map and check
+ * RelatedTopics will display the tags of an article. It will try to look up the topic for that article in the topic map and check
  * what concepts are associated with it. This class dispatches the incoming requests to the right JSPs and reads and writes some config.
  *
  * @author Matthias Fischer
  *
  */
-public class ShowTagsPortlet extends GenericPortlet {
+public class RelatedTopicsPortlet extends GenericPortlet {
 
 	public void init() throws PortletException {
 		editJSP = getInitParameter("edit-jsp");
@@ -225,7 +225,7 @@ public class ShowTagsPortlet extends GenericPortlet {
 	protected String helpJSP;
 	protected String viewJSP;
 
-	private static Log _log = LogFactoryUtil.getLog(ShowTagsPortlet.class);
+	private static Log _log = LogFactoryUtil.getLog(RelatedTopicsPortlet.class);
 
 
   Configurator config;

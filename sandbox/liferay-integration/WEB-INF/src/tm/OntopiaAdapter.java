@@ -31,15 +31,21 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
 import net.ontopia.utils.OntopiaRuntimeException;
 
-import util.DateFormater;
+import util.DateFormatter;
 
 /**
  * This class provides control to alter a topicmap in ontopia according to changes in Liferay.
- * TODO: Replace System.out.println with a logger
+ *
+ * TODO: Move some javadoc into the Interface
+ * TODO: Replace System.out.println with a logger and remove unnessecary output.
+ * TODO: Make topicmap name configurable from the outside using i.e. properties
+ * TODO: Find all \t and replace them with spaces
  */
 
 public class OntopiaAdapter implements OntopiaAdapterIF{
-  
+
+  // This is an eager init singleton that is being created when the class objects are created
+  // It is being removed along with all other objects when the container is shutdown
   public static OntopiaAdapterIF instance = new OntopiaAdapter();
 
   // this prefix is pretty much the same in all tolog queries
@@ -53,8 +59,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   public static final String ASSOC_PARENT_CHILD_PSI = PSI_PREFIX + "parent-child";
   public static final String ASSOC_PARENT_IS_ABOUT_PSI = PSI_PREFIX + "is-about";
 
-  public static final String NULL = "null";
-
   // type information for updates
   private static final String WEBCONTENT_TYPE = "webcontent";
   private static final String USER_TYPE = "user";
@@ -65,7 +69,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   // By what name the topicmap can be retrieved from ontopia
   private static final String TMNAME = "liferay.ltm";
-  
+
+  // The topicmap that is being worked on
   private TopicMapIF topicmap;
   
   
@@ -81,16 +86,17 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
 
   /**
-  * This method creates a topic of a subclass of Liferay_WebContent.
+  * Creates a topic of a subclass of Liferay_WebContent.
   * It sets associations to user for creation and if applicable approval.
   * It also tries to set the contains association to the community in which it is created.
-  * If that fails, a RuntimeException is raised and no topic will be created.
-  * @param content
+  * If that fails, a RuntimeException is raised and the created topic will be removed.
+  * @param content The journalarticle object from liferay
   */
   public void addWebContent(JournalArticle content){
     addWebContent(content, topicmap);
     try{
-      setGroupContains(String.valueOf(content.getGroupId()), content.getUuid(), topicmap); // TODO: For the time being this cannot be used within the private method, because the update will fail due to the group association (no group in update tm)
+      // TODO: For the time being this cannot be used within the private method, because the update will fail due to the group association (no group in update tm)
+      setGroupContains(String.valueOf(content.getGroupId()), content.getUuid(), topicmap); 
     }catch (Exception e){
       deleteByUuid(content.getUuid()); // do not allow liferay to create a webcontent w/o attaching it to a group. if group can't be found, throw exception and don't create webcontent.
       throw new OntopiaRuntimeException(e); // when throwing exception, liferay does not save the webcontent the user has been working on - therefore no topic must be created.
@@ -107,7 +113,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   /**
   * Updates the values of an existing document with the values from 'content'
-  * @param content
+  * @param content The updated journalarticle object from liferay.
   */
   public void updateWebContent(JournalArticle content){
     try {
@@ -119,25 +125,25 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
 
   /**
-  * This method adds a new User to the ontology
-  * @param user
+  * Adds a new User to the ontology
+  * @param user The user object from Liferay
   */
   public void addUser(User user) {
     addUser(user, topicmap);
   }
 
   /**
-  * This methods removes a user from the ontology.
+  * Removes a user from the ontology.
   * The user is identified only by the uuid.
-  * @param uuid
+  * @param uuid The UUID identifying the user to be deleted
   */
   public void deleteUser(String uuid){
     deleteByUuid(uuid);
   }
 
   /**
-  * This method updates an instance of a User with new values from 'user'
-  * @param user
+  * Updates an instance of a User with new values from 'user'
+  * @param user The updated user object from Liferay.
   */
   public void updateUser(User user){
     try {
@@ -148,20 +154,24 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
 
   /**
-  * This method add a user defined structure as a subclass of Liferay_WebContent to the ontology
-  * @param structure
+  * Add a user defined structure as a subclass of Liferay_WebContent to the ontology
+  * @param structure The structure object from Liferay
   */
   public void addStructure(JournalStructure structure) {
     addStructure(structure, topicmap); //TODO: Shall structures have information on their group as well?
   }
 
+  /**
+   * Deletes the structure identified by the UUID
+   * @param uuid The UUID identifying the structure to be deleted
+   */
   public void deleteStructure(String uuid){
     deleteByUuid(uuid);
   }
 
   /**
-  * This method updates a structure with new values from the passed object
-  * @param structure
+  * Updates a structure with new values from the passed object
+  * @param structure The updated structure object from Liferay
   */
   public void updateStructure(JournalStructure structure){
     try {
@@ -173,9 +183,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   
 
   /**
-  * This method adds a new WikiNode into the ontology and sets associations to the creating user and the containing group.
+  * Adds a new WikiNode topic into the ontology and sets associations to the creating user and the containing group.
   * Should the latter fail, a RuntimeException is raised and no WikiNode is created.
-  * @param node
+  * @param node The wikinode object from liferay
   */
   public void addWikiNode(WikiNode node){
     addWikiNode(node, topicmap);
@@ -183,15 +193,15 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   /**
   * Removes the WikiNode identified by the Uuid
-  * @param uuid
+  * @param uuid The UUID identifying the wikinode to be deleted
   */
   public void deleteWikiNode(String uuid) {
     deleteByUuid(uuid);
   }
 
   /**
-  * This method updates a WikiNode using the updated object 'wikinode'
-  * @param wikinode
+  * Updates a WikiNode using the updated object 'wikinode'
+  * @param wikinode The updated wikinode object from liferay
   */
   public void updateWikiNode(WikiNode wikinode) {
     try {
@@ -203,25 +213,25 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
 
   /**
-  * This method adds a new WikiPage. It sets associations to the creating user, parent/child pages and the group it is contained by.
+  * Adds a new WikiPage. It sets associations to the creating user, parent/child pages and the group it is contained by.
   * Should the latter fail a RuntimeException is raised and no WikiPage is created.
-  * @param wikipage
+  * @param wikipage The wikipage object from liferay
   */
   public void addWikiPage(WikiPage wikipage){
     addWikiPage(wikipage, topicmap);
   }
 
   /**
-  * This method deletes a WikiPage identified by the uuid.
-  * @param uuid
+  * Deletes a WikiPage identified by the uuid.
+  * @param uuid The UUID identifying the wikipage to be deleted
   */
   public void deleteWikiPage(String uuid) {
     deleteByUuid(uuid);
   }
 
   /**
-  * This method updates the values of a WikiPage by using the updated WikiPage provided
-  * @param wikipage
+  * Updates the values of a WikiPage by using the updated WikiPage provided
+  * @param wikipage The updated wikipage from liferay
   */
   public void updateWikiPage(WikiPage wikipage) {
     try {
@@ -233,9 +243,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
 
   /**
-  * This method adds a new Group to the ontology.
+  * Adds a new Group to the ontology.
   * It checks the Group Object for the type of group (Community, User Group ...) and acts accordingly
-  * @param group
+  * @param group The Group Object from Liferay
   */
   public void addGroup(Group group) {
     if(group.isCommunity()){
@@ -245,9 +255,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   /**
-  * This method removes a group from the ontology.
+  * Removes a group from the ontology.
   * To identify a group the groupId is used, as groups do not offer Uuids to identify them.
-  * @param group
+  * @param group The Group Object from Liferay to be deleted
   */
   public void deleteGroup(Group group) {
     System.out.println("*** deleteGroup ***");
@@ -262,8 +272,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   /**
-  * This method updated the name of a group at the moment.
-  * @param group
+  * Updates the name of a group at the moment.
+  * @param group The updated Group Object from Liferay
   */
   public void updateGroup(Group group) {
     if(group.isCommunity()){
@@ -277,9 +287,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
 
   /**
-  * This method is called by DeciderIF implementations to check if the PSI provided is the type of the Association provided
-  * @param psi
-  * @param assoc
+  * Is called by DeciderIF implementations to check if the PSI provided is the type of the Association provided
+  * @param psi The PSI as a String
+  * @param assoc The association to check (as AssociationIF)
   * @return true/false
   */
   public static boolean isInAssociation(String psi, AssociationIF assoc){
@@ -302,7 +312,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   
   /**
   * Returns the ObjectId for the topic identified by the uuid provided.
-  * @param uuid
+  * @param uuid The UUID identifying the Object from Liferay
   * @return A String representing the objectId of the topic in the tm
   */
   public String getObjectIdForUuid(String uuid) {
@@ -310,7 +320,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     if(topic != null){
       return topic.getObjectId();
     } else {
-      return NULL;
+      return null;
     }
   }
 
@@ -323,7 +333,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   /**
-  * This method returns the objectId of the *first* type of a topic which is identified by a uuid that it finds.
+  * Returns the objectId of the *first* type of a topic which is identified by a uuid that it finds.
   * @param uuid The uuid of the topic in question
   * @return a String containing the objectId for the type of the topic in question
   */
@@ -339,12 +349,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         }
       }
     }
-    return NULL;
+    return null;
   }
 
   /**
-  * Views are needed to display selections of occurrence fields to users.
-  * This method returns the objectId of the "conceptView" topic.
+  * Returns the objectId of the "conceptView" topic.
   * "conceptView" only exposes the "is-about" association.
   * @return The objectId of the "conceptView" topic
   */
@@ -354,7 +363,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   /**
-  * Return the object id for the topic that represents the article that will be displayed, providing an articleId.
+  * Returns the object id for the topic that represents the article that will be displayed, providing an articleId.
   * The rule is: The topic, with the highest version AND which has an "approved" state, is returned
   *
   * @param articleId the article id from liferay
@@ -383,9 +392,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   /**
-   * Non-public  methods
+   * Non-public methods acting as helpers
    */
-
 
   private void prepareTopicmap(){
     TopicMapStoreIF store = TopicMaps.createStore(TMNAME, false);
@@ -411,30 +419,37 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   private void createWebContent(JournalArticle content, TopicMapIF tm){
     System.out.println("*** addArticle ***");
-    HashMap<String, String> valueMap = getWebContentHashmap(content);
+    Map<String, String> valueMap = getWebContentMap(content);
+    System.out.println(valueMap);
     String classname;
     if(content.getStructureId().equals("")){
       classname = "lr:article";
     } else {
       classname = findStructureUrnByStructureId(content.getStructureId());
-      if(classname.equals(NULL)){
+      if(classname.equals(null)){
         throw new OntopiaRuntimeException("Structure with id + " + content.getStructureId() + " not found!");
       }
     }
 
     String approvedDateString = "";
+    String approvedMapString = "";
     if(content.isApproved()){
       approvedDateString = "lr:approved_date : $approvedDate; \n";
+      approvedMapString = "$approvedDate = %approvedDate%, \n";
     }
 
     String reviewDateString = "";
-    if(!valueMap.get("reviewDate").equals(NULL)){
+    String reviewMapString = "";
+    if(valueMap.get("reviewDate") != null){
       reviewDateString = "lr:review_date : $reviewDate; \n";
+      reviewMapString = "$reviewDate = %reviewDate%, \n";
     }
 
     String expiryDateString = "";
-    if(!valueMap.get("expiryDate").equals(NULL)){
+    String expiryMapString ="";
+    if(valueMap.get("expiryDate") != null){
       expiryDateString = "lr:expiry_date : $expiryDate; \n";
+      expiryMapString = "$expiryDate = %expiryDate%, \n";
     }
 
     String urn = urnifyCtm(valueMap.get("uuid"));
@@ -450,9 +465,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         "lr:display_date : $displayDate; \n" +
         "lr:version : $version; \n" +
         "lr:article_id : $articleId . from \n" +
-        "$approvedDate = %approvedDate%, \n" +
-        "$reviewDate = %reviewDate%, \n" +
-        "$expiryDate = %expiryDate%, \n" +
+        approvedMapString +
+        reviewMapString +
+        expiryMapString +
         "$createDate = %createDate%, \n" +
         "$modifyDate = %modifyDate%, \n" +
         "$displayDate = %displayDate%, \n" +
@@ -465,12 +480,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   private void addStructure(JournalStructure structure, TopicMapIF tm){
     System.out.println("*** addStructure ***");
-    HashMap valueMap = getStructureHashMap(structure);
+    Map valueMap = getStructureMap(structure);
     String structureUrn = urnifyCtm(structure.getUuid());
     String parentStructureUrn = findStructureUrnByStructureId(structure.getParentStructureId());
 
     String parent;
-    if(parentStructureUrn.equals(NULL)){
+    if(parentStructureUrn != null){
       System.out.println("*** No parentstructure provided. Using webcontent instead ***");
       parent = PSI_PREFIX + "webcontent";
     } else {
@@ -480,14 +495,13 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     String query ="insert " + structureUrn + " ako " + parent + ";\n" +
     		"- $id . from" +
         "$id = %structureId%";
-
     runQuery(query, tm, valueMap); // is it considered cheating to use the ID as a Name?
   }
 
 
   private void addUser(User user, TopicMapIF tm){
     System.out.println("*** addUser ***"); //DEBUG
-    HashMap valueMap = getUserHashMap(user);
+    Map valueMap = getUserMap(user);
 
     String query = "insert " + urnifyCtm(user.getUuid()) +" isa " + PSI_PREFIX + "user;\n" +
     		"- $username. from \n" +
@@ -518,11 +532,13 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     String nodeUrn = urnifyCtm(wikinode.getUuid());
 
     String lastPostDateString = "";
+    String lastPostDateMapString = "";
     if(wikinode.getLastPostDate() != null){
       lastPostDateString = "lr:lastpostdate : $lastPostDate; \n";
+      lastPostDateMapString = "$lastPostDate = %lastPostDate%, \n";
     }
 
-    HashMap valueMap = getWikiNodeHashMap(wikinode);
+    Map valueMap = getWikiNodeMap(wikinode);
     String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
       "insert " + nodeUrn + " isa lr:wikinode; \n" +
       "- $name; \n" +
@@ -533,13 +549,17 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       "$name = %name%, \n" +
       "$createDate = %createDate%, \n" +
       "$modifiedDate = %modifiedDate%, \n" +
-      "$lastPostDate = %lastPostDate%, \n" +
+      lastPostDateMapString +
       "$nodeId = %nodeId%";
-
     runQuery(query, tm, valueMap);
   }
 
 
+  /**
+   * Calls <code>createWikiPage</code> to create a topic for a wikipage and then sets all necessary associations if applicable.
+   * @param wikipage The wikipage containing the information
+   * @param tm The topicmap to work on
+   */
   private void addWikiPage(WikiPage wikipage, TopicMapIF tm){
     createWikiPage(wikipage, tm);
     if(!wikipage.getParentPages().isEmpty()){
@@ -547,7 +567,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         setParentChild(wpd.getUuid(), wikipage.getUuid(), tm);
       }
     }
-
+    // setting the parent-child assocs in both ways is needed when updating a single page.
     if(!wikipage.getChildPages().isEmpty()){
       for(WikiPage wpd : wikipage.getChildPages()){
         setParentChild(wikipage.getUuid(), wpd.getUuid(), tm);
@@ -563,15 +583,25 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     try{
       setContains(wikipage.getNode().getUuid(), wikipage.getUuid(), tm);
     } catch (OntopiaRuntimeException ore){
-      deleteByUuid(wikipage.getUuid()); // if there is no group, alert and don't add page.
+      /* if there is no group, alert and don't add page to tm, to avoid running out of sync.
+       * As of now there is imho no other way to do it. A rollback won't help because the transaction that actually creates the topic for the wikipage
+       * has been already processed and presumably can't be rolled back now.
+       */
+      deleteByUuid(wikipage.getUuid());
+      // This is not supposed to happen. Throwing Exception to alert the user.
       throw new OntopiaRuntimeException(ore);
     }
   }
 
-
+/**
+ * Creates a topic representing a WikiPage in liferay.
+ *
+ * @param wikipage The wikipage from liferay containing the information
+ * @param tm The topicmap on which to work
+ */
   private void createWikiPage(WikiPage wikipage, TopicMapIF tm) {
     String pageUrn = urnifyCtm(wikipage.getUuid());
-    HashMap valueMap = getWikiPageHashMap(wikipage);
+    Map valueMap = getWikiPageMap(wikipage);
     String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
              "insert " + pageUrn + " isa lr:wikipage; \n" +
              "- $title; \n" +
@@ -584,23 +614,19 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
              "$createDate = %createDate%, \n" +
              "$modifyDate = %modifyDate%, \n" +
              "$version = %version%";
-
-    System.out.println(query);
     runQuery(query, tm, valueMap);
   }
 
 
   private void addCommunity(Group group, TopicMapIF tm){
     System.out.println("*** addCommunity ***");
-    HashMap valueMap = getGroupHashMap(group);
+    Map valueMap = getGroupMap(group);
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
              "insert ?group isa " + PSI_PREFIX + "community; \n" +
              "- $name; \n" +
              "lr:groupid : $groupId . from \n" +
              "$name = %name%, \n" +
              "$groupId = %groupId%";
-
-     System.out.println(query);
      runQuery(query, tm, valueMap);
   }
 
@@ -609,12 +635,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     System.out.println("*** delete " + uuid + " ***");
     String psi = urnify(uuid);
     String query = "delete i\"" + psi +"\"";
-    try{
-      runQuery(query);
-    } catch (OntopiaRuntimeException ore){
-      // log exception and go on if topic to be deleted can not be found. It's gone already obviously.
-      ore.printStackTrace();
-    }
+    runQuery(query);
   }
 
 
@@ -625,7 +646,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     
     String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
         "insert lr:created_by( lr:creator : " + creatorUrn + " , lr:work : " + workUrn + " )";
-    System.out.println(query);
     runQuery(query, tm);
   }
 
@@ -673,7 +693,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   /**
-   * This is the central method that runs all the update queries
+   * Central method that runs all the tolog-update queries
    * @param query The query to runb
    * @param tm The topicmap to work on
    * @param map A Map containing values for variable substitution (see tolog documentation)
@@ -684,11 +704,14 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     store.open();
     try {
       int number = proc.update(query, map);
+      // TODO: Make this logger output for "debug"
       System.out.println("*** Query processed successfully # "+ number + " ***");
       store.commit();
     } catch (Exception e) {
         System.err.println("*** Error while processing query: " + e.getLocalizedMessage() + " ***");
         System.out.println(query);
+        //rollback the transaction
+        store.abort();
         throw new OntopiaRuntimeException(e);
     } finally{
       store.close();
@@ -719,7 +742,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   /**
-   * This method only returns the first result in the first row of a resultset produced by a tolog query
+   * Returns only the first result in the first row of a resultset produced by a tolog query
    * @param query The query to produce the ResultSet
    * @param tm The topicmap on which to work
    * @return The value in the first cell of the first row inside the resultset, NULL if no results are returned by the query
@@ -732,7 +755,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       Object retval = results[0];
       return (String) retval ;
     }
-    return NULL;
+    return null;
   }
 
 /**
@@ -822,8 +845,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
     String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
             "insert lr:parent-child( lr:parent : " + parentUrn + ", lr:child : " + childUrn +" )";
-
-    System.out.println(query);
     runQuery(query, tm);
   }
 
@@ -833,12 +854,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     String containerUrn = urnifyCtm(containerUuid);
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
             "insert lr:contains( lr:container : " + containerUrn + " , lr:containee : " + containeeUrn + " )";
-
     runQuery(query, tm);
   }
 
 
-  private void setGroupContains(String groupId, String uuid, TopicMapIF tm){ //TODO: Could expect a long value instead of string for groupId then be renamed to setContains()
+  //TODO: Could expect a long value instead of string for groupId then be renamed to setContains()
+  private void setGroupContains(String groupId, String uuid, TopicMapIF tm){ 
     System.out.println("*** setGroupContains ***");
     String groupObjectId = getObjectIdByGroupId(groupId, tm);
     TopicIF topic = (TopicIF) tm.getObjectById(groupObjectId);
@@ -848,7 +869,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
             "insert lr:contains( lr:container : $topic  , lr:containee : " + urnifyCtm(uuid) + " ) from \n" +
             "$topic = %topic%";
-
     runQuery(query, tm, map);
   }
 
@@ -862,50 +882,53 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
             "type($OCCURRENCE, lr:groupid)," +
             "occurrence($TOPIC, $OCCURRENCE)," +
             "instance-of($TOPIC, lr:community)?";
-
-    System.out.println(query);
     String retval = getSingleStringFromQuery(query, tm);
-    System.out.println("*** ObjectId = " + retval + " ***");
     return retval;
   }
 
 
-  // Hashmap methods following
-  private HashMap getWebContentHashmap(JournalArticle content){
-    HashMap<String, String> retval = new HashMap();
+  /**
+   * Maps methods follow
+   *
+   * The Maps methods job is to fill a Map with values from the Liferay Objects.
+   * While about it, it also converts the values to other types if nessecary.
+   * Through doing this it is possible to pass the map to the tolo QueryProcessor and to substitute String in tolog queries with values from the map (using their keys).
+   * See the tolog documentation and the JavaDoc of the QueryProcessorIF for more details.
+   */
+
+  private Map getWebContentMap(JournalArticle content){
+    Map<String, String> retval = new HashMap();
     retval.put("title", content.getTitle());
     retval.put("uuid", content.getUuid());
-    retval.put("createDate", DateFormater.format(content.getCreateDate()));
-    retval.put("displayDate", DateFormater.format(content.getDisplayDate()));
-    retval.put("modifyDate", DateFormater.format(content.getModifiedDate()));
-    retval.put("reviewDate", DateFormater.format(content.getReviewDate()));
-    retval.put("expiryDate", DateFormater.format(content.getExpirationDate()));
+    retval.put("createDate", DateFormatter.format(content.getCreateDate()));
+    retval.put("displayDate", DateFormatter.format(content.getDisplayDate()));
+    retval.put("modifyDate", DateFormatter.format(content.getModifiedDate()));
+    retval.put("reviewDate", DateFormatter.format(content.getReviewDate()));
+    retval.put("expiryDate", DateFormatter.format(content.getExpirationDate()));
     retval.put("articleId", content.getArticleId());
     retval.put("version", String.valueOf(content.getVersion()));
     retval.put("userId", String.valueOf(content.getUserId()));
     retval.put("structureId", content.getStructureId());
     retval.put("approvingUserId", String.valueOf(content.getApprovedByUserId()));
     retval.put("approvingUserName", content.getApprovedByUserName());
-    retval.put("approvedDate", DateFormater.format(content.getApprovedDate()));
+    retval.put("approvedDate", DateFormatter.format(content.getApprovedDate()));
 
     try {
       retval.put("approvingUserUuid", content.getApprovedByUserUuid());
     } catch (SystemException ex) {
       throw new OntopiaRuntimeException(ex);
-      //retval.put("approvingUserUuid", NULL);
     }
     
     try {
       retval.put("useruuid", content.getUserUuid());
     } catch (SystemException ex) {
       throw new OntopiaRuntimeException(ex);
-      //retval.put("useruuid", NULL);
     }
     return retval;
   }
 
-  private HashMap getUserHashMap(User user){
-    HashMap<String, String> retval = new HashMap();
+  private Map getUserMap(User user){
+    Map<String, String> retval = new HashMap();
 
     retval.put("uuid", user.getUuid());
     retval.put("username", user.getEmailAddress());
@@ -913,8 +936,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return retval;
   }
 
-  private HashMap getStructureHashMap(JournalStructure structure){
-    HashMap<String, String> retval = new HashMap();
+  private Map getStructureMap(JournalStructure structure){
+    Map<String, String> retval = new HashMap();
 
     retval.put("uuid", structure.getUuid());
     retval.put("structureId", structure.getStructureId());
@@ -923,8 +946,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return retval;
   }
 
-  private HashMap getGroupHashMap(Group group){
-    HashMap<String, String> retval = new HashMap();
+  private Map getGroupMap(Group group){
+    Map<String, String> retval = new HashMap();
 
     retval.put("groupId", String.valueOf(group.getGroupId()));
     retval.put("parentGroupId", String.valueOf(group.getParentGroupId()));
@@ -932,33 +955,32 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
     return retval;
   }
 
-  private HashMap getWikiNodeHashMap(WikiNode node){
-    HashMap<String, String> retval = new HashMap();
+  private Map getWikiNodeMap(WikiNode node){
+    Map<String, String> retval = new HashMap();
 
     retval.put("uuid", node.getUuid());
     retval.put("nodeId", String.valueOf(node.getNodeId()));
     retval.put("name", node.getName());
-    retval.put("createDate", DateFormater.format(node.getCreateDate()));
-    retval.put("modifiedDate", DateFormater.format(node.getModifiedDate()));
-    retval.put("lastPostDate", DateFormater.format(node.getLastPostDate()));
+    retval.put("createDate", DateFormatter.format(node.getCreateDate()));
+    retval.put("modifiedDate", DateFormatter.format(node.getModifiedDate()));
+    retval.put("lastPostDate", DateFormatter.format(node.getLastPostDate()));
     try {
       retval.put("userUuid", node.getUserUuid());
     } catch (SystemException ex) {
       throw new OntopiaRuntimeException(ex);
-      //retval.put("userUuid", NULL);
     }
     return retval;
   }
 
-  private HashMap getWikiPageHashMap(WikiPage page){
-    HashMap retval = new HashMap();
+  private Map getWikiPageMap(WikiPage page){
+    Map retval = new HashMap();
 
     retval.put("uuid", page.getUuid());
     retval.put("pageId", String.valueOf(page.getPageId()));
     retval.put("title", page.getTitle());
     retval.put("version", String.valueOf(page.getVersion()));
-    retval.put("createDate", DateFormater.format(page.getCreateDate()));
-    retval.put("modifyDate", DateFormater.format(page.getModifiedDate()));
+    retval.put("createDate", DateFormatter.format(page.getCreateDate()));
+    retval.put("modifyDate", DateFormatter.format(page.getModifiedDate()));
 
     if(page.getParentPage() != null){
       retval.put("parentPageUuid", page.getParentPage().getUuid());
@@ -968,7 +990,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       retval.put("userUuid", page.getUserUuid());
     } catch (SystemException ex) {
       throw new OntopiaRuntimeException(ex);
-      //retval.put("userUuid", NULL);
     }
     return retval;
   }

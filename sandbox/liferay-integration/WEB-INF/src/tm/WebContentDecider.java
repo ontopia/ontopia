@@ -3,10 +3,22 @@ package tm;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.utils.DeciderIF;
 
+/**
+ * This class provides a way to find out whether this should be part of an update or not.
+ * No associations shall be updated except:
+ * - Created By
+ * - Has_workflow_state
+ * - approving
+ *
+ * "is-about" shall explicitly NOT be updated, because that would break user's tagging on any WebContent whenever it is changed in Liferay.
+ *
+ * @author mfi
+ */
+
 public class WebContentDecider implements DeciderIF {
 
   public boolean ok(Object obj) {
-  if(obj.getClass().toString().equals(net.ontopia.topicmaps.impl.basic.Association.class.toString())){
+  if(obj instanceof AssociationIF){
     AssociationIF assoc = (AssociationIF) obj;
     if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_CREATED_BY_PSI, assoc)){
       return true;

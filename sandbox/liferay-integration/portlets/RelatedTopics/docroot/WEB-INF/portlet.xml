@@ -2,9 +2,9 @@
 
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
 	<portlet>
-		<portlet-name>show-tags</portlet-name>
-		<display-name>ShowTags</display-name>
-		<portlet-class>portlet.ShowTagsPortlet</portlet-class>
+		<portlet-name>relatedTopics</portlet-name>
+		<display-name>RelatedTopics</display-name>
+		<portlet-class>portlet.RelatedTopicsPortlet</portlet-class>
 			<init-param>
 			<name>view-jsp</name>
 			<value>/view.jsp</value>
@@ -25,9 +25,9 @@
             <portlet-mode>help</portlet-mode>
 		</supports>
 		<portlet-info>
-			<title>ShowTags</title>
-			<short-title>ShowTags</short-title>
-			<keywords>ShowTags</keywords>
+			<title>RelatedTopics</title>
+			<short-title>RelatedTopics</short-title>
+			<keywords>RelatedTopics</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>

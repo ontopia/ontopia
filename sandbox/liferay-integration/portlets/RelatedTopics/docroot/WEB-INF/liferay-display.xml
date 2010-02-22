@@ -3,6 +3,6 @@
 
 <display>
 	<category name="category.sample">
-		<portlet id="show-tags" />
+		<portlet id="relatedTopics" />
 	</category>
 </display>
