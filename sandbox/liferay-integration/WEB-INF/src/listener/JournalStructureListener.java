@@ -1,70 +1,43 @@
 package listener;
+
 import tm.OntopiaAdapter;
 
 import com.liferay.portal.ModelListenerException;
-import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portlet.journal.model.JournalStructure;
 
-public class JournalStructureListener implements ModelListener<JournalStructure>{
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
-  public void onAfterAddAssociation(Object arg0, String arg1, Object arg2)
-      throws ModelListenerException { 
-  }
+/**
+ * This class is notified by liferay whenever changes in JournalStructure objects occur.
+ * * It passes these information on to the integration.
+ * 
+ * Structures are used by liferay whenever a user wants to design her own forms. 
+ * In liferay structures require templates to be used. Templates define the visual appeal of a structure. There is no template listener yet.
+ *
+ * @author mfi
+ */
+
+public class JournalStructureListener extends BaseModelListener<JournalStructure>{
+
+  private static Logger log = LoggerFactory.getLogger(JournalStructureListener.class);
 
   public void onAfterCreate(JournalStructure structure)
       throws ModelListenerException {
-    System.out.println("### onAfterCreateJournalStructure ###");
+    log.debug("### onAfterCreateJournalStructure ###");
     OntopiaAdapter.instance.addStructure(structure);
   }
 
   public void onAfterRemove(JournalStructure structure)
       throws ModelListenerException {
-    System.out.println("### onAfterRemoveJournalStructure ###");
+    log.debug("### onAfterRemoveJournalStructure ###");
     OntopiaAdapter.instance.deleteStructure(structure.getUuid());
-    
-  }
-
-  public void onAfterRemoveAssociation(Object arg0, String arg1, Object arg2)
-      throws ModelListenerException {
   }
 
   public void onAfterUpdate(JournalStructure structure)
       throws ModelListenerException {
-    System.out.println("### onAfterUpdateJournalStructure ###");
+    log.debug("### onAfterUpdateJournalStructure ###");
     OntopiaAdapter.instance.updateStructure(structure);
-    
   }
-
-  public void onBeforeAddAssociation(Object arg0, String arg1, Object arg2)
-      throws ModelListenerException {
-  }
-
-  public void onBeforeCreate(JournalStructure structure)
-      throws ModelListenerException {
-  }
-
-  public void onBeforeRemove(JournalStructure structure)
-      throws ModelListenerException {
-  }
-
-  public void onBeforeRemoveAssociation(Object arg0, String arg1, Object arg2)
-      throws ModelListenerException {
-  }
-
-  public void onBeforeUpdate(JournalStructure structure)
-      throws ModelListenerException {
-  }
-  
-  private void printStructure(JournalStructure structure){
-   System.out.println("UUID: " + structure.getUuid());
-   System.out.println("Parent StructureID: " + structure.getParentStructureId());
-   System.out.println("ID: " + structure.getId());
-   System.out.println("Name: " + structure.getName());
-   System.out.println("StructureID: " + structure.getStructureId());
-   System.out.println("PrimaryKey: " + structure.getPrimaryKey());
-   System.out.println("GroupID: "+ structure.getGroupId());
-   System.out.println("UserID: " + structure.getUserId());
-   System.out.println("Username: " + structure.getUserName());
-  }
-
 }

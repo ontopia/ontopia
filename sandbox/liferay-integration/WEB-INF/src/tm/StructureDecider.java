@@ -8,6 +8,7 @@ import net.ontopia.utils.DeciderIF;
  * All associations shall not be updated except for sub/supertype.
  * Everythings that's not an association shall be updated.
  *
+ * @see DeciderIF
  * @author mfi
  */
 

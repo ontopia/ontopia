@@ -12,6 +12,7 @@ import net.ontopia.utils.DeciderIF;
  *
  * "is-about" shall explicitly NOT be updated, because that would break user's tagging on any WebContent whenever it is changed in Liferay.
  *
+ * @see DeciderIF
  * @author mfi
  */
 
@@ -29,7 +30,7 @@ public class WebContentDecider implements DeciderIF {
     if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_USER_APPROVING_PSI, assoc)){
       return true;
     }
-    if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_PARENT_IS_ABOUT_PSI, assoc)){
+    if(OntopiaAdapter.isInAssociation(OntopiaAdapter.ASSOC_IS_ABOUT_PSI, assoc)){
         return false;
       }
 

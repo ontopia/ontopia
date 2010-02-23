@@ -8,6 +8,7 @@ import net.ontopia.utils.DeciderIF;
  * No associations shall be updated.
  * Those that might be included in the future are listed anyway. Just change the returnvalue to true to enable updates.
  *
+ * @see DeciderIF
  * @author mfi
  */
 

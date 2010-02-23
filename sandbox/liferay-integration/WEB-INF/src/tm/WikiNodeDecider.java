@@ -8,7 +8,8 @@ import net.ontopia.utils.DeciderIF;
  * This class provides a way to find out whether this should be part of an update or not.
  * Do not update any associations. 
  * Should the future require one of the explicitly named ones here to be updated, just set the returnvalue to true.
- * 
+ *
+ * @see DeciderIF
  * @author mfi
  */
 
