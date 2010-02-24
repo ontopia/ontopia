@@ -29,7 +29,6 @@
                   // get the topic we want to display next as a TopicIF object
                   TopicIF t =(TopicIF) pageContext.getAttribute("player");
                   String oid = t.getObjectId();
-                  System.out.println("ShowTags View.jsp OID: " + oid);
                   // every topic should have an url template set, so that we can see how to display it depending on its type
                   String query = "using lr for i\"http://psi.ontopia.net/liferay/\" select $value from value($occ, $value), occurrence($type, $occ), type($occ, lr:url-template), direct-instance-of(@" + oid + ", $type)?";
 
@@ -44,7 +43,6 @@
                   // url now contains the page we want to link, possibly containing placeholders for values we need to look up first!
                   String url = (String) ContextUtils.getSingleValue("url", pageContext);
 
-                  System.out.println("ShowTags view.jsp URL: " + url);
                   if(url != null){
                       // if this is an article (we can tell by the url template we have received previously), we need to lookup its groupid and article id in order to present it to the user
                       if(url.contains("${groupid}") && url.contains("${articleid}")){%>
@@ -54,16 +52,13 @@
                         // Then go and retrieve the appropriate values for the placeholders
                         String groupid =(String) ContextUtils.getSingleValue("groupid", pageContext);
                         String articleid = (String) ContextUtils.getSingleValue("articleid", pageContext);
-                        System.out.println("ShowTags view.jsp: " + groupid + ", " + articleid);
                         // TODO: Easify using Ontopias StringTemplateUtil
                         url = url.replace("${groupid}", groupid);
                         url = url.replace("${articleid}", articleid);
-                        System.out.println("URL has been replaced to : " + url );
                       } else if(url.contains("${topicid}")){
-                          System.out.println("In for changing the topicid!");
+                          // a topic id shall be replaced. Doing so by presenting the oid of the "player"
                           url = url.replace("${topicid}", oid);
                       }
-                      System.out.println("URL processing finished, url = " + url);
                    }
                   %>
                   <li><a href="<%= url %>"><tolog:out var="assoc.player"/></a></li>

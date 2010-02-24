@@ -219,26 +219,6 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 %>
 
 <script type="text/javascript">
-    function popup(url) { // this is probably old, because we use the iFrame now
-        var width  = 700;
-        var height = 600;
-        var left   = (screen.width  - width)/2;
-        var top    = (screen.height - height)/2;
-        var params = 'width='+width+', height='+height;
-        params += ', top='+top+', left='+left;
-        params += ', directories=no';
-        params += ', location=no';
-        params += ', menubar=no';
-        params += ', resizable=no';
-        params += ', scrollbars=no';
-        params += ', status=no';
-        params += ', toolbar=no';
-        newwin=window.open(url,'windowname5', params);
-        newwin.onbeforeunload = window.opener.reloadIframe;
-        if (window.focus) {newwin.focus()}
-        return false;
-    }
-    
     function calcHeight() {
      //find the height of the internal page
      var odoc = document.getElementById('the_iframe').contentWindow.document;
@@ -897,7 +877,6 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 		<td> <%
 		  /* Ontopia Plugin Code */
 		  /* Note: Does only work with tweaked catalina config. See Docs */
-			String myText = "";
 			String topicId = "";
 			String topicTypeId = "";
 			String topicMapId = "";
@@ -905,10 +884,7 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 			if(article == null){
 			     article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 			}
-	        if(article == null){
-		         myText = "Article is still null";
-		     } else {
-		       
+	        if(article != null){
 		       topicMapId = tm.OntopiaAdapter.instance.getTopicMapId();
 		       topicTypeId = tm.OntopiaAdapter.instance.getTopicTypeIdForUuid(article.getUuid());
 		       topicId = tm.OntopiaAdapter.instance.getObjectIdForUuid(article.getUuid());

@@ -16,8 +16,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import java.util.Properties;
+
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
 import net.ontopia.utils.OntopiaRuntimeException;
-
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -53,7 +52,7 @@ import util.DateFormatter;
  * TODO: Find all \t and replace them with spaces
  */
 
-public class OntopiaAdapter implements OntopiaAdapterIF{
+public class OntopiaAdapter implements OntopiaAdapterIF {
 
   private static Logger log = LoggerFactory.getLogger(OntopiaAdapter.class);
   // This is an eager init singleton that is being created when the class objects are created
@@ -90,7 +89,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   /**
    * Only contstructor is private in order to avoid multiple instances of this class.
    */
-  private OntopiaAdapter(){
+  private OntopiaAdapter() {
     super();
     prepareTopicmap();
   }
@@ -107,7 +106,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       // TODO: For the time being this cannot be used within the private method, because the update will fail due to the group association (no group in update tm)
       setGroupContains(String.valueOf(content.getGroupId()), content.getUuid(), topicmap); 
     } catch (Exception e) {
-      deleteByUuid(content.getUuid()); // do not allow liferay to create a webcontent w/o attaching it to a group. if group can't be found, throw exception and don't create webcontent.
+      deleteByUuid(content.getUuid()); // do not allow liferay to create a webcontent w/o attaching it to a group. if group can't be found, throw exception and don't create webcontent. See addWikiNode()
       throw new OntopiaRuntimeException(e); // when throwing exception, liferay does not save the webcontent the user has been working on - therefore no topic must be created.
     }
   }
@@ -161,6 +160,15 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   public void addWikiNode(WikiNode node) {
     addWikiNode(node, topicmap);
+
+    try {
+      // this cannot be used inside the private method because update() calls it
+      // setGroupContains fails inside an empty inMemo topicmap (like there is in update())
+      setGroupContains(String.valueOf(node.getGroupId()), node.getUuid(), topicmap);
+    } catch (OntopiaRuntimeException ore) {
+      deleteByUuid(node.getUuid()); // if there is no group, alert and don't create topic!
+      throw new OntopiaRuntimeException(ore);
+    }
   }
 
   public void deleteWikiNode(String uuid) {
@@ -297,8 +305,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
   }
 
   /**
-   * Returns the objectId of the "conceptView" topic.
-   * "conceptView" only exposes the "is-about" association.
+   * Returns the objectId of the "conceptView" topic by trying to look up the PSI:
+   * http://psi.ontopia.net/liferay/conceptview
+   * Will throw an exception if the PSI can not be found.
    *
    * @return The objectId of the "conceptView" topic
    */
@@ -491,7 +500,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
 
   /**
    * Adds a <code>WikiNode</code> into the topicmap by calling createWikiNode.
-   * Also sets "created_by" and "contains" associations.
+   * Also sets "created_by" association.
    *
    * @param wikinode The <code>WikiNode</code> from Liferay
    * @param tm The topicmap to work on
@@ -505,12 +514,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
       throw new OntopiaRuntimeException(ex);
     }
 
-    try {
-      setGroupContains(String.valueOf(wikinode.getGroupId()), wikinode.getUuid(), tm);
-    } catch (OntopiaRuntimeException ore) {
-      deleteByUuid(wikinode.getUuid()); // if there is no group, alert and don't create topic!
-      throw new OntopiaRuntimeException(ore);
-    }
   }
 
 
@@ -859,7 +862,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF{
         TopicMapSynchronizer.update(topicmap, source , new UserDecider(), new UserDecider());
     } else if(type.equals(WIKINODE_TYPE)) {
         WikiNode node = (WikiNode) obj;
-        createWikiNode(node, sourceTm);
+        addWikiNode(node, sourceTm);
         TopicIF source = retrieveTopicByUuid(node.getUuid(), sourceTm);
         TopicMapSynchronizer.update(topicmap, source , new WikiNodeDecider(), new WikiNodeDecider());
     } else if(type.equals(WIKIPAGE_TYPE)) {

@@ -14,8 +14,11 @@ public class DateFormatter {
   private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd HH:mm:ss");
 
   public static String format(Date date){
-    String result = date != null ? simpleDateFormat.format(date) : null;
+
+    String result = null;
+    if(date != null){
+      result = simpleDateFormat.format(date);
+    }
     return result;
   }
-
 }

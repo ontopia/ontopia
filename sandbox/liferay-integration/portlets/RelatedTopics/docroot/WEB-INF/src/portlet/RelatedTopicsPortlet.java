@@ -31,59 +31,46 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class RelatedTopicsPortlet extends GenericPortlet {
 
-	public void init() throws PortletException {
-		editJSP = getInitParameter("edit-jsp");
-		helpJSP = getInitParameter("help-jsp");
-		viewJSP = getInitParameter("view-jsp");
+  public void init() throws PortletException {
+    editJSP = getInitParameter("edit-jsp");
+    helpJSP = getInitParameter("help-jsp");
+    viewJSP = getInitParameter("view-jsp");
     config = new Configurator();
-	}
+  }
 
-	public void doDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
+  public void doDispatch(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+    String jspPage = renderRequest.getParameter("jspPage");
 
-		String jspPage = renderRequest.getParameter("jspPage");
+    if (jspPage != null) {
+      include(jspPage, renderRequest, renderResponse);
+    }
+    else {
+      super.doDispatch(renderRequest, renderResponse);
+    }
+  }
 
-		if (jspPage != null) {
-			include(jspPage, renderRequest, renderResponse);
-		}
-		else {
-			super.doDispatch(renderRequest, renderResponse);
-		}
-	}
+  public void doEdit(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 
-	public void doEdit(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		if (renderRequest.getPreferences() == null) {
-			super.doEdit(renderRequest, renderResponse);
-		}
-		else {
-      
+    if (renderRequest.getPreferences() == null) {
+      super.doEdit(renderRequest, renderResponse);
+    }
+    else {
       /*
        * Nothing to do here, it all went into the jsp !
        */
 
-			include(editJSP, renderRequest, renderResponse);
-		}
-	}
+      include(editJSP, renderRequest, renderResponse);
+    }
+  }
 
-	public void doHelp(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
+  public void doHelp(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 
-		include(helpJSP, renderRequest, renderResponse);
-	}
+    include(helpJSP, renderRequest, renderResponse);
+  }
 
-	public void doView(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-
+	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
     // trying logger here instead of stdout just to see how it works out
-    _log.debug("ShowTagsPortlet.doView: Entering method.")
-            ;
+    _log.debug("ShowTagsPortlet.doView: Entering method.");
     String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
     _log.debug("## query_string:" + queryString );
 
@@ -92,24 +79,24 @@ public class RelatedTopicsPortlet extends GenericPortlet {
     String topicId = renderRequest.getPreferences().getValue("topicid", null);
     if(topicId == null || topicId.equalsIgnoreCase("")){
       _log.debug("1 fail");
-        // 2. try tp parse topicId from Url
-        topicId = config.getTopicIdFromUrl(renderRequest);
+      // 2. try tp parse topicId from Url
+      topicId = config.getTopicIdFromUrl(renderRequest);
+      if(topicId == null){
+        _log.debug("2 fail");
+        // 3. try to parse the articleId from the url and resolve it into a topic id
+        topicId = config.getTopicIdFromUrlByArticleId(renderRequest);
         if(topicId == null){
-          _log.debug("2 fail");
-            // 3. try to parse the articleId from the url and resolve it into a topic id
-            topicId = config.getTopicIdFromUrlByArticleId(renderRequest);
-            if(topicId == null){
-              _log.debug("3 fail");
-                // 4. try to find the next WCD on this page and return the topic Id of the article that's being displayed
-                topicId = config.findTopicIdFromNextWCD(renderRequest);
-                if(topicId == null){
-                  _log.debug("4 fail");
-                  // too bad, but w/o a topic id this portlet does not know what to display.
-                  // TODO: Maybe some default content should be displayed.
-                throw new OntopiaRuntimeException("Unable to find Topic ID!");
-                }
-            }
+          _log.debug("3 fail");
+          // 4. try to find the next WCD on this page and return the topic Id of the article that's being displayed
+          topicId = config.findTopicIdFromNextWCD(renderRequest);
+          if(topicId == null){
+            _log.debug("4 fail");
+            // too bad, but w/o a topic id this portlet does not know what to display.
+            // TODO: Maybe some default content should be displayed.
+            throw new OntopiaRuntimeException("Unable to find Topic ID!");
+          }
         }
+      }
     }
 
     TopicMapIF topicmap = config.getTopicmap();
@@ -122,7 +109,6 @@ public class RelatedTopicsPortlet extends GenericPortlet {
 
     if(assocOids != null){
       for(String s : assocOids){
-        System.out.println("ShowTagsPortlet.doView: Looking up Assoc Oid " + s + " in the topicmap.");
         TopicIF associationType = (TopicIF) topicmap.getObjectById(s);
         assocs.add(associationType);
       }
@@ -131,7 +117,6 @@ public class RelatedTopicsPortlet extends GenericPortlet {
     // has a filterquery been provided?
     String filterQuery = renderRequest.getPreferences().getValue("filterquery", null);
     if(filterQuery != null){
-      System.out.println("ShowTagsPortlet.doView(): passing Attribute 'filterquery' with '" + filterQuery + "'");
       renderRequest.setAttribute("filterquery", filterQuery);
     }
 
@@ -139,32 +124,23 @@ public class RelatedTopicsPortlet extends GenericPortlet {
     String assocMode = renderRequest.getPreferences().getValue("assocmode", null);
     if(assocMode != null){
       if(assocMode.equalsIgnoreCase("include")){
-        System.out.println("ShowTagsPortlet.doView(): passing Attribute 'mode' with '" + assocMode + "'");
         renderRequest.setAttribute("mode", "include");
       } else {
-        System.out.println("ShowTagsPortlet.doView(): passing Attribute 'mode' with '" + assocMode + "'");
         renderRequest.setAttribute("mode", "exclude");
       }
     } else {
       // if no choice has been made presume "exclude" as default
-      System.out.println("ShowTagsPortlet.doView(): passing Attribute 'mode' with '" + assocMode + "'");
       renderRequest.setAttribute("mode", "exclude");
     }
 
     // these two are needed in any case, although assocs may be an empty set
-    System.out.println("ShowTagsPortlet.doView(): passing Attribute 'topic' with '" + topic + "'");
     renderRequest.setAttribute("topic", topic);
-    System.out.println("ShowTagsPortlet.doView(): passing Attribute 'assocTypes' with '" + assocs + "'");
     renderRequest.setAttribute("assocTypes", assocs);
 
     include(viewJSP, renderRequest, renderResponse);
 	}
 
-	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
-
-    System.out.println("ShowTagsPortlet.processAction: entering method.");
+	public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
 
     // read the users input
     String serializedAssocIds = actionRequest.getParameter("associd");
@@ -174,7 +150,6 @@ public class RelatedTopicsPortlet extends GenericPortlet {
 
     // and set it to the PortletPreferences for this portlet
     if(serializedAssocIds != null){
-      System.out.println("ShowTagsPortlet.processAction: associd received.");
       String[] assocIdArray = serializedAssocIds.split(",");
 
       for(int count = 0; count < assocIdArray.length; count++){
@@ -185,48 +160,38 @@ public class RelatedTopicsPortlet extends GenericPortlet {
     }
 
     if(topicId != null){
-      System.out.println("ShowTagsPortlet.processAction: topicid received.");
       actionRequest.getPreferences().setValue("topicid", topicId);
     }
 
     if(assocMode != null){
-      System.out.println("ShowTagsPortlet.processAction: assocmode received.");
       actionRequest.getPreferences().setValue("assocmode", assocMode);
     }
 
     if(filterQuery != null){
-      System.out.println("ShowTagsPortlet.processAction: filterquery received.");
       actionRequest.getPreferences().setValue("filterquery", filterQuery);
     }
 
     // persist changes
-    System.out.println("ShowTagsPortlet.processAction: persisting changes to preferences.");
     actionRequest.getPreferences().store();
-	}
+  }
 
-	protected void include(
-			String path, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws IOException, PortletException {
+  protected void include(String path, RenderRequest renderRequest,RenderResponse renderResponse) throws IOException, PortletException {
 
-		PortletRequestDispatcher portletRequestDispatcher =
-			getPortletContext().getRequestDispatcher(path);
+    PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(path);
 
-		if (portletRequestDispatcher == null) {
-			_log.error(path + " is not a valid include");
-		}
-		else {
-			portletRequestDispatcher.include(renderRequest, renderResponse);
-		}
-	}
+    if (portletRequestDispatcher == null) {
+      _log.error(path + " is not a valid include");
+    } else {
+      portletRequestDispatcher.include(renderRequest, renderResponse);
+    }
+  }
 
 
-	protected String editJSP;
-	protected String helpJSP;
-	protected String viewJSP;
+  protected String editJSP;
+  protected String helpJSP;
+  protected String viewJSP;
 
-	private static Log _log = LogFactoryUtil.getLog(RelatedTopicsPortlet.class);
-
+  private static Log _log = LogFactoryUtil.getLog(RelatedTopicsPortlet.class);
 
   Configurator config;
 }

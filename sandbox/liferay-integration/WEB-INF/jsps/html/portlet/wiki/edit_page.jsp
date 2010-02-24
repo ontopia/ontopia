@@ -378,24 +378,28 @@ if (Validator.isNull(redirect)) {
     String topicMapId = null;
     String viewId = null;
     
-    if(wikiPage != null || !wikiPage.isNew()){
-        topicId = tm.OntopiaAdapter.instance.getObjectIdForUuid(wikiPage.getUuid());
-        topicTypeId = tm.OntopiaAdapter.instance.getTopicTypeIdForUuid(wikiPage.getUuid());
-        topicMapId = tm.OntopiaAdapter.instance.getTopicMapId();
-        viewId = tm.OntopiaAdapter.instance.getConceptViewId();
+    if(wikiPage != null) {
+        if(!wikiPage.isNew()) {
+            topicId = tm.OntopiaAdapter.instance.getObjectIdForUuid(wikiPage.getUuid());
+            topicTypeId = tm.OntopiaAdapter.instance.getTopicTypeIdForUuid(wikiPage.getUuid());
+            topicMapId = tm.OntopiaAdapter.instance.getTopicMapId();
+            viewId = tm.OntopiaAdapter.instance.getConceptViewId();
+        }
     }
     %>
-    <c:if test="<%= !wikiPage.isNew() %>">
-        <tr>
-            <td>
-            <iframe width="100%" id="the_iframe" onLoad="calcHeight();" scrolling="NO" frameborder="0" src="/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=
-              topicId %>&topicTypeId=<%=
-              topicTypeId %>&topicMapId=<%=
-              topicMapId %>&viewId=<%=
-              viewId %>"></iframe>
-
-            </td>
-        </tr>
+    <c:if test="<%= wikiPage != null %>">
+        <c:if test="<%= !wikiPage.isNew() %>">
+            <tr>
+                <td>
+                <iframe width="100%" id="the_iframe" onLoad="calcHeight();" scrolling="NO" frameborder="0" src="/ontopoly/?wicket:bookmarkablePage=:ontopoly.pages.EmbeddedInstancePage&topicId=<%=
+                  topicId %>&topicTypeId=<%=
+                  topicTypeId %>&topicMapId=<%=
+                  topicMapId %>&viewId=<%=
+                  viewId %>"></iframe>
+    
+                </td>
+            </tr>
+        </c:if>
     </c:if>
     <% /* Ontopia Plugin Code end */ %>
 	<tr>
