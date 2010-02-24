@@ -164,9 +164,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
               FieldValueModel fvm_do = (FieldValueModel)getComponent().getDefaultModelObject();
               RoleField.ValueIF rfv_dg = (RoleField.ValueIF)fvm_dg.getFieldValue();
               RoleField.ValueIF rfv_do = (RoleField.ValueIF)fvm_do.getFieldValue();
-		          
-//              System.out.println("DG: " + rfv_dg);            
-//              System.out.println("DO: " + rfv_do);
+
               Topic topic = topicModel.getTopic();
               RoleField rfield = roleFieldModel.getRoleField();
               RoleField ofield = ofieldModel.getRoleField();
@@ -194,8 +192,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
             @Override
             public boolean isVisible() {
               boolean visible = !readonly && fieldValueModel.isExistingValue() && allowRemove; // && !isValueProtected;
-              if (visible) {
-                
+              if (visible) {               
                 // filter by player
                 AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
                 RoleField.ValueIF value = (RoleField.ValueIF)fieldValueModel.getObject();
@@ -203,14 +200,6 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
                 for (int i=0; i < players.length; i++) {
                   if (!page.filterTopic(players[i])) return false;
                 }
-                
-//                // show remove button on 1:1 field unless just one value left
-//                FieldInstance fi = fieldValueModel.getFieldInstanceModel().getFieldInstance();
-//                Cardinality cardinality = fi.getFieldAssignment().getCardinality();
-//                if (cardinality.isMinOne() && cardinality.isMaxOne() && 
-//                    ((fieldValuesModel.size() == 1 && !fieldValuesModel.getShowExtraField()) ||
-//                      (fieldValuesModel.size() == 2 && fieldValuesModel.getShowExtraField())))
-//                  return false;
               }
               return visible;
             }
@@ -236,17 +225,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
                   
                   // don't remove system topics
                   if (!selectedTopic.isSystemTopic()) {
-//                    RoleField rfield = roleFieldModel.getRoleField();
-//                    Topic rplayer = valueIf.getPlayer(rfield, fieldInstance.getInstance());
-//                    System.out.println("Removing dependent object: " + rplayer + " -> " + selectedTopic);
-                    //!Collection dependentObjects = selectedTopic.getDependentObjects();
-                    //!if (!dependentObjects.isEmpty()) {
-                      FieldInstanceAssociationBinaryPanel.this.confirmDeletePanel.setTopic(selectedTopic);
-//                    } else {
-//                      // remove object
-//                      System.out.println("Removing selected: " + selectedTopic.getName());
-//                      selectedTopic.remove(page);                      
-//                    }
+                    FieldInstanceAssociationBinaryPanel.this.confirmDeletePanel.setTopic(selectedTopic);
                     changesMade = true;
                   }
                 } else {

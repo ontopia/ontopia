@@ -7,8 +7,6 @@ public interface LifeCycleListener {
   public void onBeforeDelete(Topic topic);
   
   public void onAfterAdd(FieldInstance fieldInstance, Object value);
-
-  public void onAfterReplace(FieldInstance fieldInstance, Object oldValue, Object newValue);
   
   public void onBeforeRemove(FieldInstance fieldInstance, Object value);    
   

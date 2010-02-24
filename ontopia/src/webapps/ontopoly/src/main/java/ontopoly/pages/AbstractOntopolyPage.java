@@ -1,13 +1,21 @@
 package ontopoly.pages;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import ontopoly.OntopolySession;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.LifeCycleListener;
+import ontopoly.model.PSI;
+import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicType;
+import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.OntopolyUtils;
 
 import org.apache.wicket.Page;
@@ -102,14 +110,58 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
 
   public void onAfterAdd(FieldInstance fieldInstance, Object value) {
 //    System.out.println("oAA: " + fieldInstance + " " + value);
-  }
+    FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition(); 
 
-  public void onAfterReplace(FieldInstance fieldInstance, Object oldValue, Object newValue) {
-//    System.out.println("oAP: " + fieldInstance + " " + oldValue + " -> " + newValue);
+    // add name scoped by role type to association type
+    if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_NAME) {
+      Topic topic = fieldInstance.getInstance();
+      if (topic.isInstanceOf(PSI.ON_ROLE_FIELD)) {
+        RoleField rfield = new RoleField(topic.getTopicIF(), topic.getTopicMap());
+        TopicIF atype = rfield.getAssociationField().getAssociationType().getTopicIF();
+        TopicIF rtype = rfield.getRoleType().getTopicIF();
+        if (atype != null && rtype != null) {
+          Collection<TopicIF> scope = Collections.singleton(rtype);
+          List<TopicNameIF> names = OntopolyModelUtils.findTopicNames(null, atype, (String)value, scope);
+          if (names.isEmpty()) {
+            OntopolyModelUtils.makeTopicName(null, atype, (String)value, scope);
+          } else {
+            // remove all except the first one
+            Iterator iter = names.iterator();
+            iter.next();
+            while (iter.hasNext()) {
+              TopicNameIF name = (TopicNameIF) iter.next();
+              name.remove();
+            }
+          }
+        }
+      }
+    }
   }
 
   public void onBeforeRemove(FieldInstance fieldInstance, Object value) {    
 //    System.out.println("oBR: " + fieldInstance + " " + value);
+    FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition(); 
+
+    // remove name scoped by role type from association type
+    if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_NAME) {
+      Topic topic = fieldInstance.getInstance();
+      if (topic.isInstanceOf(PSI.ON_ROLE_FIELD)) {
+        RoleField rfield = new RoleField(topic.getTopicIF(), topic.getTopicMap());
+        TopicIF atype = rfield.getAssociationField().getAssociationType().getTopicIF();
+        TopicIF rtype = rfield.getRoleType().getTopicIF();
+        if (atype != null && rtype != null) {
+          Collection<TopicIF> scope = Collections.singleton(rtype);
+          List<TopicNameIF> names = OntopolyModelUtils.findTopicNames(null, atype, (String)value, scope);
+          if (!names.isEmpty()) {
+            Iterator iter = names.iterator();
+            while (iter.hasNext()) {
+              TopicNameIF name = (TopicNameIF) iter.next();
+              name.remove();
+            }
+          }
+        }
+      }
+    }
   }
   
   /**

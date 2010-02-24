@@ -120,7 +120,8 @@ public class OccurrenceField extends FieldDefinition {
     // HACK: we're ignoring the datatype when looking up existing ones
     // return OntopolyModelUtils.findOccurrences(getTopicIF(), topicIf,
     // datatype, Collections.EMPTY_SET);
-    return OntopolyModelUtils.findOccurrences(typeIf, topicIf);
+    Collection<TopicIF> scope = Collections.emptySet();
+    return OntopolyModelUtils.findOccurrences(typeIf, topicIf, scope);
   }
 
   @Override
@@ -135,11 +136,11 @@ public class OccurrenceField extends FieldDefinition {
     // HACK: we're ignoring the datatype when looking up existing ones
     // Collection occs = OntopolyModelUtils.findOccurrences(getTopicIF(),
     // topicIf, value, datatype, Collections.EMPTY_SET);
-    Collection occs = OntopolyModelUtils.findOccurrences(typeIf, topicIf,
-        value, Collections.EMPTY_SET);
+    Collection<TopicIF> scope = Collections.emptySet();      
+    Collection occs = OntopolyModelUtils.findOccurrences(typeIf, topicIf, value, scope);
     if (occs.isEmpty()) {
       // create new
-      OntopolyModelUtils.makeOccurrence(typeIf, topicIf, value, datatype, Collections.EMPTY_SET);
+      OntopolyModelUtils.makeOccurrence(typeIf, topicIf, value, datatype, scope);
     } else {
       // remove all except the first one
       Iterator iter = occs.iterator();
@@ -168,8 +169,8 @@ public class OccurrenceField extends FieldDefinition {
     // HACK: we're ignoring the datatype when looking up existing ones
     // Collection occs = OntopolyModelUtils.findOccurrences(typeIf,
     // topicIf, value, datatype, Collections.EMPTY_SET);
-    Collection occs = OntopolyModelUtils.findOccurrences(typeIf, topicIf,
-        value, Collections.EMPTY_SET);
+    Collection<TopicIF> scope = Collections.emptySet();      
+    Collection occs = OntopolyModelUtils.findOccurrences(typeIf, topicIf, value, scope);
     if (!occs.isEmpty()) {
       // remove all the matching
       Iterator iter = occs.iterator();

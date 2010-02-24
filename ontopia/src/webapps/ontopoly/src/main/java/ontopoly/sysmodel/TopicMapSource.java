@@ -94,8 +94,8 @@ public class TopicMapSource {
           tm.setReifier(newReifier);
           reifier = tm.getReifier();
         }
-                    
-        OntopolyModelUtils.setName(null, reifier, name, Collections.EMPTY_SET);
+        Collection<TopicIF> scope = Collections.emptySet();
+        OntopolyModelUtils.setName(null, reifier, name, scope);
       } finally {
         ontologyTopicMapStore.close();
       }

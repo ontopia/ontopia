@@ -20,13 +20,13 @@ public class AssociationFieldValueModel extends LoadableDetachableModel<RoleFiel
       throw new NullPointerException(
           "association field value  parameter cannot be null.");
 
-    RoleField[] fields = afv.getRoleFields();    
+    RoleField[] rfields = afv.getRoleFields();    
     Topic[] players = afv.getPlayers();
-    afvinfo = new String[fields.length][3];
-    for (int i=0; i < fields.length; i++) {
-      if (fields[i] == null) continue; // REALLY?
-      afvinfo[i][0] = fields[i].getTopicMap().getId();
-      afvinfo[i][1] = fields[i].getId();
+    afvinfo = new String[rfields.length][3];
+    for (int i=0; i < rfields.length; i++) {
+      if (rfields[i] == null) continue; // REALLY?
+      afvinfo[i][0] = rfields[i].getTopicMap().getId();
+      afvinfo[i][1] = rfields[i].getId();
       afvinfo[i][2] = players[i].getId();
     }
   }

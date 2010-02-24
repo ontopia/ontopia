@@ -23,7 +23,7 @@ import net.ontopia.utils.ObjectUtils;
  * FieldDefinition, and the topic type a TopicType. This object primarily
  * holds the cardinality and order in the list of fields.
  */
-public class FieldAssignment {
+public final class FieldAssignment {
 
   private FieldDefinition fieldDefinition;
   private TopicType topicType;
@@ -133,7 +133,7 @@ public class FieldAssignment {
     TopicIF typeIf = OntopolyModelUtils.getTopicIF(topicmap, PSI.ON, "field-order");
     TopicIF themeIf = fd;
 
-    Collection scope = Collections.singleton(themeIf);
+    Collection<TopicIF> scope = Collections.singleton(themeIf);
     Collection occs = OntopolyModelUtils.findOccurrences(typeIf, topicIf, datatype, scope);
     if (!occs.isEmpty()) {
       if (!replace) return; // stop here if we're not replacing

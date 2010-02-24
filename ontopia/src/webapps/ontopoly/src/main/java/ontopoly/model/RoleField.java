@@ -326,8 +326,9 @@ public class RoleField extends FieldDefinition {
     TopicIF roleTypeIf = rtype.getTopicIF();
 
     TopicIF playerIf = topic.getTopicIF();
-    
-    return OntopolyModelUtils.findRoles(associationTypeIf, roleTypeIf, playerIf);    
+    Collection<TopicIF> scope = Collections.emptySet();
+
+    return OntopolyModelUtils.findRoles(associationTypeIf, roleTypeIf, playerIf, scope);    
   }
   
   public List getOrderedValues(Topic topic, RoleField ofield) { 
@@ -405,13 +406,13 @@ public class RoleField extends FieldDefinition {
   @Override
   public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     ValueIF value = (ValueIF) _value;
-    ValueIF replacedValue = null;
     
     AssociationType atype = getAssociationType();
     if (atype == null) return;
 		TopicIF atypeIf = atype.getTopicIF();
     TopicIF[] rtypes = getRoleTypes(value);
     TopicIF[] players = getPlayers(value);
+    Collection<TopicIF> scope = Collections.emptySet();      
     
     // if cardinality is 0:1 or 1:1 then clear existing values
     if (fieldInstance.getFieldAssignment().getCardinality().isMaxOne()) {      
@@ -429,22 +430,20 @@ public class RoleField extends FieldDefinition {
           existingValue = valueIf;
         } else if (replaceValues) {
           // issue-204: only replace values if there is just a single value 
-          if (replacedValue == null) 
-            replacedValue = valueIf; // keep track of one replaced value
           removeValue(fieldInstance, valueIf, listener);
         }
       }
       
       // create new
-      if (existingValue == null)
-        OntopolyModelUtils.makeAssociation(atypeIf, rtypes, players, Collections.EMPTY_SET);
+      if (existingValue == null) {
+        OntopolyModelUtils.makeAssociation(atypeIf, rtypes, players, scope);
+      }
     } else {
-      Collection assocs = OntopolyModelUtils.findAssociations(atypeIf,
-          rtypes, players, Collections.EMPTY_SET);
+      Collection assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);
       
       if (assocs.isEmpty()) {
         // create new
-        OntopolyModelUtils.makeAssociation(atypeIf, rtypes, players, Collections.EMPTY_SET);
+        OntopolyModelUtils.makeAssociation(atypeIf, rtypes, players, scope);
       } else {
         // remove all except the first one
         Iterator iter = assocs.iterator();
@@ -455,10 +454,7 @@ public class RoleField extends FieldDefinition {
         }
       }
     }
-    if (replacedValue != null)
-      listener.onAfterReplace(fieldInstance, replacedValue, value);
-    else
-      listener.onAfterAdd(fieldInstance, value);
+    listener.onAfterAdd(fieldInstance, value);
   }
 
 //  protected void clear(FieldInstance fieldInstance, LifeCycleListener listener) {
@@ -490,8 +486,8 @@ public class RoleField extends FieldDefinition {
 
     listener.onBeforeRemove(fieldInstance, value);
     
-    Collection assocs = OntopolyModelUtils.findAssociations(atypeIf,
-        rtypes, players, Collections.EMPTY_SET);
+    Collection<TopicIF> scope = Collections.emptySet();          
+    Collection assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);
 
     if (!assocs.isEmpty()) {
       // remove all the matching

@@ -12,6 +12,7 @@ import java.util.Map;
 
 import ontopoly.utils.TopicComparator;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.utils.CopyUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
@@ -361,6 +362,11 @@ public class Topic {
   
   public boolean isInstanceOf(Topic type) {
     return thutils.isInstanceOf(getTopicIF(), type.getTopicIF());
+  }
+  
+  public boolean isInstanceOf(LocatorIF psi) {
+    TopicIF topic = getTopicIF().getTopicMap().getTopicBySubjectIdentifier(psi);
+    return thutils.isInstanceOf(getTopicIF(), topic);
   }
 
 }

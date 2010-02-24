@@ -7,7 +7,7 @@ import java.util.Collection;
 /**
  * Represents a populated field attached to an instance topic.
  */
-public class FieldInstance {
+public final class FieldInstance {
 
   private Topic instance;
   private FieldAssignment fieldAssignment;

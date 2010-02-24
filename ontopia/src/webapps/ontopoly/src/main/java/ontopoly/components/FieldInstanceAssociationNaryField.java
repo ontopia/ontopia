@@ -253,7 +253,6 @@ public class FieldInstanceAssociationNaryField extends Panel {
             // check with page to see if add is allowed
             AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
             if (page.isCreateAllowed(currentTopic, currentField, topicType, createField)) {
-              // TODO: Should we instead display a name text field?
               // create a new topic instance
               createdTopic = topicType.createInstance(null);              
               topicModel.setObject(createdTopic);

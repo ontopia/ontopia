@@ -295,7 +295,7 @@ public class TopicType extends AbstractTypingTopic {
       FieldAssignment fa = (FieldAssignment) it.next();
 
       FieldDefinition fieldDefinition = fa.getFieldDefinition();
-      Collection scope = Collections.singleton(fieldDefinition.getTopicIF());
+      Collection<TopicIF> scope = Collections.singleton(fieldDefinition.getTopicIF());
 
       OccurrenceIF occurrenceIF = OntopolyModelUtils.findOccurrence(
           FIELD_ORDER, topicIF, DataTypes.TYPE_STRING, scope);
@@ -321,7 +321,7 @@ public class TopicType extends AbstractTypingTopic {
 
     TopicIF topicTypeTopic = tt.getTopicIF();
     TopicIF fieldDefinitionTopic = fieldDefinition.getTopicIF();
-    Collection scope = Collections.singleton(fieldDefinitionTopic);
+    Collection<TopicIF> scope = Collections.singleton(fieldDefinitionTopic);
 
     // see if field-order occurrence already exist for the same field
     OccurrenceIF occurrenceIF = OntopolyModelUtils.findOccurrence(FIELD_ORDER,
@@ -361,7 +361,7 @@ public class TopicType extends AbstractTypingTopic {
       return;
 
     // find field-order occurrence
-    Collection scope = Collections.singleton(fieldDefinitionTopic);
+    Collection<TopicIF> scope = Collections.singleton(fieldDefinitionTopic);
     OccurrenceIF occurrenceIF = OntopolyModelUtils.findOccurrence(
         OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-order"), 
         tt.getTopicIF(), DataTypes.TYPE_STRING, scope);

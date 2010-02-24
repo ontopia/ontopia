@@ -225,8 +225,8 @@ public class TopicMap {
     TopicIF reifier = getTopicMapIF().getReifier();
     if (reifier == null) return 0;
     TopicIF ontologyVersion = getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_ONTOLOGY_VERSION);
-    Collection occs = OntopolyModelUtils.findOccurrences(ontologyVersion,
-        reifier, Collections.EMPTY_SET);
+    Collection<TopicIF> scope = Collections.emptySet();    
+    Collection occs = OntopolyModelUtils.findOccurrences(ontologyVersion, reifier, scope);
     if (occs.isEmpty())
       return 0;
  

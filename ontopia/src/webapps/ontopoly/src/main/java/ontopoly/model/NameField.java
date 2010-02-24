@@ -89,7 +89,9 @@ public class NameField extends FieldDefinition {
     NameType ntype = getNameType();
     if (ntype == null) return Collections.EMPTY_SET;
 		TopicIF typeIf = ntype.getTopicIF();
-    return OntopolyModelUtils.findTopicNames(typeIf, topicIf);
+		
+    Collection<TopicIF> scope = Collections.emptySet();
+    return OntopolyModelUtils.findTopicNames(typeIf, topicIf); // , scope);
   }
 
   /**
@@ -108,14 +110,13 @@ public class NameField extends FieldDefinition {
     String value = (String) _value;
     NameType ntype = getNameType();
     if (ntype == null) return;
-		TopicIF typeIf = ntype.getTopicIF();
-
-    Collection names = OntopolyModelUtils.findTopicNames(typeIf, topicIf,
-        value, Collections.EMPTY_SET);
+    TopicIF typeIf = ntype.getTopicIF();
+   
+    Collection<TopicIF> scope = Collections.emptySet();
+    Collection<TopicNameIF> names = OntopolyModelUtils.findTopicNames(typeIf, topicIf, value); //, scope);
     if (names.isEmpty()) {
       // create new
-      OntopolyModelUtils.makeTopicName(typeIf, topicIf, value,
-          Collections.EMPTY_SET);
+      OntopolyModelUtils.makeTopicName(typeIf, topicIf, value, scope);
     } else {
       // remove all except the first one
       Iterator iter = names.iterator();
@@ -150,8 +151,8 @@ public class NameField extends FieldDefinition {
 
 		listener.onBeforeRemove(fieldInstance, value);
 		
-    Collection names = OntopolyModelUtils.findTopicNames(typeIf, topicIf,
-        value, Collections.EMPTY_SET);
+    Collection<TopicIF> scope = Collections.emptySet();
+    Collection names = OntopolyModelUtils.findTopicNames(typeIf, topicIf, value); // , scope);
     if (!names.isEmpty()) {
       // remove all matching
       Iterator iter = names.iterator();
