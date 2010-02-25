@@ -10,7 +10,11 @@
 
 <portlet:defineObjects />
 <tolog:context topicmap="liferay.ltm">
-  <tolog:set var="topic" reqparam="topic"/>
+<%
+  String topicid = (String) request.getAttribute("topic");
+  String query = "object-id($topic, \"" + topicid + "\")?";
+%>
+  <tolog:set var="topic" query="<%=query%>"/>
 
   <tolog:choose>
     <tolog:when var="topic">
