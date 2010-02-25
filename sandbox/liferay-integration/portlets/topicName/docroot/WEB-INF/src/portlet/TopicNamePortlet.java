@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -16,14 +17,15 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 
 /**
  * The logic for displaying information on  a concept to the user.
- * view.jsp is th place where most of the magic happens.
- * 
+ * view.jsp is the place where most of the magic happens.
+ *
  * @author mfi
  */
 
@@ -65,9 +67,6 @@ public class TopicNamePortlet extends GenericPortlet {
 
   public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 
-    //String typesettings = layout.getTypeSettings();
-    //String renderurl = renderResponse.createRenderURL().toString();
-
     // 1. ask the configurator for the topic id
     String topicId = config.getTopicId();
     if(topicId == null){
@@ -86,8 +85,6 @@ public class TopicNamePortlet extends GenericPortlet {
       }
     }
 
-    //TopicIF topic = (TopicIF) config.getTopicmap().getObjectById(topicId);
-    //renderRequest.setAttribute("renderurl", renderurl);
     renderRequest.setAttribute("topic", topicId);
         
     include(viewJSP, renderRequest, renderResponse);

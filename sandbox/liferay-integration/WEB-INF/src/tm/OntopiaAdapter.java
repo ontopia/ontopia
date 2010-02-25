@@ -79,7 +79,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   private static final String COMMUNITY_TYPE = "community";
 
   // By what name the topicmap can be retrieved from ontopia
-  private String tmName = "liferay.ltm";
+  private String tmName;
   private static final String TOPICMAPNAMEKEY = "topicmapname";
   private static final String PROPERTYFILEPATH ="../ontopia.properties";
 
@@ -768,7 +768,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    * Creates a ctm-compatible urn from a UUID
    *
    * @param uuid The UUID to use
-   * @return A String containing the URN made from the UUID inside '<' and '>' to make the processable by ctm.
+   * @return A String, containing the URN made from the UUID, inside '<' and '>' to make it processable by ctm.
    */
   private String urnifyCtm(String uuid) {
     // in ctm uuid's need to be put into < > in order to process them
@@ -836,7 +836,6 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    *
    * @param obj The updated object from Liferay
    * @param type A String containing information on the type of this object. Will be used to cast obj to the correct type.
-   * @throws java.net.MalformedURLException
    */
   private void update(Object obj, String type) throws MalformedURLException {
     log.debug("*** update called  for {} ***", type);

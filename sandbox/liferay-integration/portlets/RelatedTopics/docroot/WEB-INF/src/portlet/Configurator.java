@@ -1,6 +1,7 @@
 
 package portlet;
 
+import com.liferay.portal.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
@@ -31,7 +32,7 @@ public class Configurator {
    * @return A String representing the topic id as provided in the URL or null if none could be found
    */
   public String getTopicIdFromUrl(RenderRequest renderRequest) {
-      // manualy parsing the topic id from the url
+      // manualy parsing the topic id from the url which is in the addressline of the browser. Not the renderURL of this portlet.
       String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
       if(queryString != null && (queryString.lastIndexOf("topic=") != -1)) {
           String result = queryString.substring(queryString.lastIndexOf("topic=")+"topic=".length()); // get to the topic id number
@@ -55,7 +56,7 @@ public class Configurator {
    * @return A String representing the topic id for the article id from the URL or null if whether article id or the id of the topic could not be found.
    */
   public String getTopicIdFromUrlByArticleId(RenderRequest renderRequest) {
-  // see above. Not very reusable I reckon.
+  // see above. Not very reusable I reckon. Again using the URL "official" URL (see above) and not the renderURL of this portlet.
     String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
       if(queryString != null && (queryString.lastIndexOf("article=") != -1)) {
         String result = queryString.substring(queryString.lastIndexOf("article=")+"article=".length()); // get to the topic id number
@@ -103,11 +104,13 @@ public class Configurator {
 
         return OntopiaAdapter.instance.getCurrentObjectIdForArticleId(articleId);
 
-      } catch (Exception e) {
-        throw new OntopiaRuntimeException(e);
-      }
+        } catch (SystemException se) {
+          // not sure how to handle this SystemException so throwing it at runtime
+          throw new OntopiaRuntimeException(se);
+        }
     } catch(StringIndexOutOfBoundsException siobe) {
-      throw new OntopiaRuntimeException(siobe);
+      // this is expected and not too unusual really. No WebContentDisplay there, to indicate the failure to produce useful information we return null.
+      return null;
     }
   }
 

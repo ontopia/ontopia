@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
@@ -24,7 +25,8 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * RelatedTopics will display the tags of an article. It will try to look up the topic for that article in the topic map and check
- * what concepts are associated with it. This class dispatches the incoming requests to the right JSPs and reads and writes some config.
+ * what concepts are associated with it. This class dispatches the incoming requests to the right JSPs and reads and writes some config
+ * from and to the <code>PortletPreferences</code>.
  *
  * @author Matthias Fischer
  *
@@ -68,6 +70,15 @@ public class RelatedTopicsPortlet extends GenericPortlet {
     include(helpJSP, renderRequest, renderResponse);
   }
 
+  /**
+   * Prepares values to pass to the <code>view.jsp</code> for displaying.
+   * Tries to obtain information on the topic (representing an article) it shall display.
+   *
+   * @param renderRequest The request to render the <code>view.jsp</code> page
+   *
+   * @throws java.io.IOException Thrown by <code>include(viewJSP, renderRequest, renderResponse);</code>
+   * @throws javax.portlet.PortletException Thrown by <code>include(viewJSP, renderRequest, renderResponse);</code>
+   */
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
     // trying logger here instead of stdout just to see how it works out
     _log.debug("ShowTagsPortlet.doView: Entering method.");
@@ -137,9 +148,23 @@ public class RelatedTopicsPortlet extends GenericPortlet {
     renderRequest.setAttribute("topic", topic);
     renderRequest.setAttribute("assocTypes", assocs);
 
+    // forwarding to the jsp
     include(viewJSP, renderRequest, renderResponse);
 	}
 
+  /**
+   * Handles <code>ActionRequests</code> as produced by calling <code>PortletURL actionUrl = portletResponse.createActionURL();</code> in <code>edit.jsp</code>.
+   * In this portlet this method is only used for setting preferences through the portlet's <code>edit.jsp</code>.
+   *
+   * @see ActionRequest
+   * @see ActionResponse
+   *
+   * @param actionRequest The request from the <code>edit.jsp</code> containing parameters which shall be set
+   * @param actionResponse Not used but presumably the answer of this portlet
+   * 
+   * @throws java.io.IOException Might be thrown by <code>actionRequest.getPreferences().store()</code>.
+   * @throws javax.portlet.PortletException Might be thrown by any of the <code>actionRequest.getPreferences()</code> methods.
+   */
 	public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
 
     // read the users input
@@ -193,5 +218,5 @@ public class RelatedTopicsPortlet extends GenericPortlet {
 
   private static Log _log = LogFactoryUtil.getLog(RelatedTopicsPortlet.class);
 
-  Configurator config;
+  private Configurator config;
 }
