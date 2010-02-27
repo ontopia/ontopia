@@ -165,11 +165,15 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   // Helper methods
   // -----------------------------------------------------------------------------
 
-	private Collection extractExactValues(Map map, String value) {
-		Collection result = (Collection)map.get(value);
-    if (result == null) return Collections.EMPTY_SET;
-    // Create new collection
-    return new ArrayList(result);
-	}
+  /**
+   * Returns the collection under the specified {@code value}.
+   * 
+   * @return A the collection under {@code value} or a new new collection if the key
+   *          {@code value} does not exist.
+   */
+  private Collection extractExactValues(Map map, String value) {
+    Collection result = (Collection)map.get(value);
+    return result == null ? Collections.EMPTY_SET : new ArrayList(result);
+  }
   
 }
