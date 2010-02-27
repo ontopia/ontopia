@@ -58,19 +58,14 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
       // NOTE: need this comparator because otherwise we will get
       // null pointer exceptions when comparing with null values.
       public int compare(Object o1, Object o2) {
-	String s1 = (String)o1;
-	String s2 = (String)o2;
-	if (s1 == null) {
-	  if (s2 == null)
-	    return 0;
-	  else
-	    return -1;
-	} else {
-	  if (s2 == null)
-	    return 1;
-	  else
-	    return s1.compareTo(s2);
-	}
+        String s1 = (String)o1;
+        String s2 = (String)o2;
+        if (s1 == null) {
+          return s2 == null ? 0 : -1;
+        } 
+        else {
+          return s2 == null ? 1 : s1.compareTo(s2);
+        }
       }
     };
   
@@ -79,7 +74,7 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   // ----------------------------------------------------------------------------
   
   public Collection getOccurrences(String value) {
-		return extractExactValues(occurs, value);
+    return extractExactValues(occurs, value);
   }
   
   public Collection getOccurrences(String value, final LocatorIF datatype) {
@@ -189,8 +184,4 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
   }
  
 }
-
-
-
-
 
