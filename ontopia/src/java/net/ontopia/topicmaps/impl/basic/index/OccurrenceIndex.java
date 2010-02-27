@@ -134,8 +134,9 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     Iterator iter = tail.keySet().iterator();
     while (iter.hasNext()) {
       String key = (String)iter.next();
-      if (key == null || !key.startsWith(prefix))
-				break;
+      if (key == null || !key.startsWith(prefix)) {
+        break;
+      }
       // add values to result
       if (result == null) result = new HashSet();
       Collection c = (Collection)map.get(key);
