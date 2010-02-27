@@ -168,8 +168,8 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
   /**
    * Returns the collection under the specified {@code value}.
    * 
-   * @return A the collection under {@code value} or a new new collection if the key
-   *          {@code value} does not exist.
+   * @return An immutable collection if the {@code value} does not exist or a modifiable
+   *          collection iff {@code value} exists in the {@code map}.
    */
   private Collection extractExactValues(Map map, String value) {
     Collection result = (Collection)map.get(value);
