@@ -95,8 +95,6 @@
     <path id="project.classpath.nolog4j">
       <pathelement location="${basedir}/3rdparty/ontoboot.jar" />
       <pathelement location="${basedir}/3rdparty/jing.jar" />
-      <pathelement location="${basedir}/3rdparty/tmapi-2.0RC1.jar" />
-      <pathelement location="${basedir}/3rdparty/tmapi-2.0RC1-tests.jar" />
       <pathelement location="${basedir}/3rdparty/touchgraph.jar" />
       <pathelement location="${basedir}/3rdparty/trove.jar" />
       <path refid="project.classpath.ivy" />
@@ -1401,8 +1399,6 @@
     
     <!-- Collect 3rdparty jar files -->
     <copy file="${3rdparty.path}/jing.jar" tofile="${dist.path}/lib/jing.jar" />
-    <copy file="${3rdparty.path}/tmapi-2.0RC1.jar" tofile="${dist.path}/lib/tmapi.jar" />
-    <copy file="${3rdparty.path}/tmapi-2.0RC1-tests.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
     <copy file="${3rdparty.path}/touchgraph.jar" tofile="${dist.path}/lib/touchgraph.jar" />
     <copy file="${3rdparty.path}/trove.jar" tofile="${dist.path}/lib/trove.jar" />
     
@@ -1431,6 +1427,7 @@
     <copy file="${lib.path}/velocity-1.3.jar" tofile="${dist.path}/lib/velocity.jar" />
     <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
     <copy file="${lib.path}/lucene-snowball-2.0.0.jar" tofile="${dist.path}/lib/lucene-snowball.jar" />
+    <copy file="${lib.path}/tmapi-2.0.jar" tofile="${dist.path}/lib/tmapi.jar" />
     
     <copy todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes">
       <fileset dir="${dist.path}/lib">

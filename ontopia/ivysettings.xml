@@ -9,6 +9,9 @@
       <url name="jboss-repository" m2compatible="true">
         <artifact pattern="http://repository.jboss.com/maven2/[module]/[artifact]/[revision]/[artifact]-[revision].[ext]"/>
       </url>
+      <url name="tmapi-repository" m2compatible="true">
+        <artifact pattern="http://www.tmapi.org/maven-repository/[organisation]/[artifact]/[revision]/[artifact]-[revision].[ext]"/>
+      </url>
     </chain>
   </resolvers>
 </ivysettings>
