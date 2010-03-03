@@ -1,6 +1,4 @@
 
-// $Id: JavaPredicate.java,v 1.1 2007/11/27 09:13:38 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.spi;
 
 import java.util.Map;
@@ -16,10 +14,11 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 /**
  * INTERNAL: Abstract predicate class that works as a common
  * superclass for the real predicate classes. Don't subclass this one
- * directly.<p>
+ * directly; instead, subclass one of its subclasses, FilterPredicate
+ * or ProcessPredicated, depending on what kind of predicate you
+ * want.
  */
 public abstract class JavaPredicate implements BasicPredicateIF {
-
   private String moduleURI;
   private String predicateName;
   private TopicMapIF topicmap;
@@ -34,9 +33,10 @@ public abstract class JavaPredicate implements BasicPredicateIF {
   }
 
   public int getCost(boolean[] boundparams) {
-    for (int i=0; i < boundparams.length; i++) {
-      if (!boundparams[i]) return PredicateDrivenCostEstimator.INFINITE_RESULT;
-    }
+    for (int i=0; i < boundparams.length; i++)
+      if (!boundparams[i])
+        return PredicateDrivenCostEstimator.INFINITE_RESULT;
+
     return PredicateDrivenCostEstimator.FILTER_RESULT;
   }
   
@@ -77,6 +77,7 @@ public abstract class JavaPredicate implements BasicPredicateIF {
   /**
    * INTERNAL: Internal machinery.
    */
-  public abstract QueryMatches satisfy(QueryMatches matches, Object[] arguments) throws InvalidQueryException;
+  public abstract QueryMatches satisfy(QueryMatches matches, Object[] arguments)
+    throws InvalidQueryException;
   
 }
