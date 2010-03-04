@@ -1,6 +1,4 @@
 /*
- * 
- *
  * $Id:$
  */
 package net.ontopia.topicmaps.impl.tmapi2.test;
@@ -26,10 +24,7 @@ import net.ontopia.topicmaps.impl.tmapi2.MemoryTopicMapSystemImpl;
 import junit.framework.TestCase;
 
 /**
- * 
- * 
- * @author Lars Heuer (heuer[at]semagia.com) <a href="http://www.semagia.com/">Semagia</a>
- * @version $Rev:$ - $Date:$
+ * Test for issue <a href="http://code.google.com/p/ontopia/issues/detail?id=214">http://code.google.com/p/ontopia/issues/detail?id=214</a>
  */
 public class TestTMAPIScopedIndexWithVariants extends TestCase {
 
@@ -59,7 +54,8 @@ public class TestTMAPIScopedIndexWithVariants extends TestCase {
         assertNotNull(theTheme);
         final Collection<Variant> variants = scopedIdx.getVariants(theTheme);
         assertEquals(variants.size(), 1);
-        final Variant theVariant = variants.iterator().next();  // Boom!
+        // The following line raises the NPE.
+        final Variant theVariant = variants.iterator().next();
         assertNotNull(theVariant);
         assertEquals(value, theVariant.getValue());
     }
