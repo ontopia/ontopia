@@ -76,6 +76,36 @@ public final class Check {
       reportError(sender, "The scope must not be null");
     }
   }
+  
+  /**
+   * Throws a {@link ModelConstraintException} iff the <tt>scope</tt> is
+   * empty.
+   * 
+   * @param sender
+   *          The sender.
+   * @param scope
+   *          The scope.
+   */
+  public static void scopeNotEmpty(Construct sender, Collection<Topic> scope) {
+    if (scope.size() == 0) {
+      reportError(sender, "The scope must not be empty");
+    }
+  }
+  
+  /**
+   * Throws a {@link ModelConstraintException} iff the <tt>scope</tt> is
+   * empty.
+   * 
+   * @param sender
+   *          The sender.
+   * @param scope
+   *          The scope.
+   */
+  public static void scopeNotEmpty(Construct sender, Topic[] scope) {
+    if (scope.length == 0) {
+      reportError(sender, "The scope must not be empty");
+    }
+  }
 
   /**
    * Throws a {@link ModelConstraintException} iff the <tt>type</tt> is

@@ -57,6 +57,7 @@ public class NameImpl extends ScopedImpl implements Name {
 
   public Variant createVariant(String value, Topic... scope) {
     Check.scopeNotNull(this, scope);
+    Check.scopeNotEmpty(this, scope);
     return createVariant(value, Arrays.asList(scope));
   }
 
@@ -70,7 +71,8 @@ public class NameImpl extends ScopedImpl implements Name {
   public Variant createVariant(String value, Collection<Topic> scope) {
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
-
+    Check.scopeNotEmpty(this, scope);
+    
     checkScope(scope);
     Collection<Topic> explScope = new ArrayList<Topic>(scope);
 
@@ -84,9 +86,6 @@ public class NameImpl extends ScopedImpl implements Name {
   }
 
   private void checkScope(Collection<org.tmapi.core.Topic> scope) {
-    if (scope.isEmpty())
-      throw new ModelConstraintException(this, "No scope for variant given!");
-
     if (getScope().containsAll(scope))
       throw new ModelConstraintException(this,
           "The variant has the same scope as the name!");
@@ -128,7 +127,8 @@ public class NameImpl extends ScopedImpl implements Name {
   public Variant createVariant(Locator value, Collection<Topic> scope) {
     Check.valueNotNull(this, value);
     Check.scopeNotNull(this, scope);
-
+    Check.scopeNotEmpty(this, scope);
+    
     Collection<Topic> explicitScope = new ArrayList<Topic>(scope);
 
     VariantNameIF variant = topicMap.getWrapped().getBuilder().makeVariantName(
@@ -148,6 +148,7 @@ public class NameImpl extends ScopedImpl implements Name {
 
   public Variant createVariant(String value, Locator datatype, Topic... scope) {
     Check.scopeNotNull(this, scope);
+    Check.scopeNotEmpty(this, scope);
     return createVariant(value, datatype, Arrays.asList(scope));
   }
 
@@ -162,6 +163,7 @@ public class NameImpl extends ScopedImpl implements Name {
       Collection<Topic> scope) {
     Check.valueNotNull(this, value, datatype);
     Check.scopeNotNull(this, scope);
+    Check.scopeNotEmpty(this, scope);
     Check.scopeInTopicMap(getTopicMap(), scope.toArray(new Topic[scope.size()]));
     VariantNameIF variant = topicMap.getWrapped().getBuilder().makeVariantName(
         wrapped, value, topicMap.unwrapLocator(datatype), unwrapScope(scope));
