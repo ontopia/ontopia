@@ -105,6 +105,12 @@
       <!--pathelement location="${3rdparty.path}/log4j.jar" /-->
       <pathelement location="${basedir}/build/classes" />
     </path>
+  	
+  	<path id="project.classpath.test">
+  	      <path refid="project.classpath" />
+  	      <pathelement location="${3rdparty.path}/tmapi-2.0-tests.jar" />
+  	      <pathelement location="${basedir}/build/classes" />
+  	</path>
 
     <taskdef classname="JFlex.anttask.JFlexTask" name="jflex">
       <classpath refid="project.classpath" />
@@ -720,7 +726,7 @@
     <property name="test.name" value="complete-non-rdbms" />
     <echo>Using configuration file '${test.config}'.</echo>
     <echo>Tests: '${test.name}'. </echo>
-    <java classname="net.ontopia.test.TestRunner" fork="true" classpathref="project.classpath">
+    <java classname="net.ontopia.test.TestRunner" fork="true" classpathref="project.classpath.test">
       <jvmarg value="-Dnet.ontopia.xml.Slf4jSaxErrorHandler.ignoreNamespaceErrors=true" />
       <jvmarg value="-Dnet.ontopia.test.root=${test.path}" />
       <arg value="--loglevel=ERROR" />
