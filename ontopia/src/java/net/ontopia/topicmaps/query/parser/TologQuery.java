@@ -105,6 +105,15 @@ public class TologQuery extends TologStatement {
     return selected_variables;
   }
 
+  /**
+   * Used to override the actual query string and set the projection from
+   * code. Not usually used, but used by the tolog INSERT statement.
+   */
+  public void setSelectedVariables(List<Variable> vars) {
+    selected_variables = null;
+    variables = vars;
+  }
+
   public boolean hasSelectClause() {
     return !variables.isEmpty() || !countVariables.isEmpty();
   }

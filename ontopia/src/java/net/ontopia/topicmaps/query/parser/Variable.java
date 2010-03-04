@@ -7,7 +7,7 @@ package net.ontopia.topicmaps.query.parser;
  * INTERNAL: Used to represent variable references in tolog queries.
  */
 public class Variable {
-  protected String name;
+  protected String name; // does NOT include the initial '$'
   
   public Variable(String name) {
     this.name = name.substring(1);

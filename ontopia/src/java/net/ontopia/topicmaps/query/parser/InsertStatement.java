@@ -73,10 +73,11 @@ public class InsertStatement extends ModificationStatement {
       String name = parameters.get(ix).substring(1); // remove the $
       colix[ix] = matches.getVariableIndex(name);
     }
-    
+
     for (int row = 0; row <= matches.last; row++) {
       for (int ix = 0; ix < parameters.size(); ix++)
         arguments.set(ix, makeGenerator(matches.data[row][colix[ix]]));
+
       template.invoke(arguments, handler);
       context.endContext();
     }
@@ -94,6 +95,11 @@ public class InsertStatement extends ModificationStatement {
   public void setCTMPart(String ctm, ParseContextIF context)
     throws InvalidQueryException {
 
+    // this sets parameter list to all parameters used in the query,
+    // but these aren't necessarily all used in the INSERT part. still,
+    // this list allows the CTM parser to reject unknown parameters and
+    // still work the way it usually does. we reset the parameter list
+    // once the CTM has been parsed.
     if (query == null)
       parameters = Collections.EMPTY_LIST;
     else {
@@ -102,7 +108,8 @@ public class InsertStatement extends ModificationStatement {
       for (int ix = 0; ix < varnames.length; ix++)
         parameters.add("$" + varnames[ix]);
     }
-    
+
+    // actually do the CTM parsing
     try {
       // see ctm.g tolog_insert comment for why we add an "end"
       Reader reader = new StringReader(ctm + " end");
@@ -116,8 +123,7 @@ public class InsertStatement extends ModificationStatement {
       this.context = new CTMParseContext(context, parser.getContext());
       parser.setHandler(handler, this.context);
       parser.tolog_insert();
-      template = handler.getTemplate();
-      
+      template = handler.getTemplate();      
     } catch (AntlrWrapException ex) {
       throw new InvalidQueryException("IO exception: " + ex.getException());
     } catch (RecognitionException ex) {
@@ -133,6 +139,23 @@ public class InsertStatement extends ModificationStatement {
       throw new InvalidQueryException("Lexical error: " + ex.getMessage());
     } catch (InvalidTopicMapException e) {
       throw new InvalidQueryException("Error in CTM part: " + e.getMessage());
+    }
+
+    if (query != null) {
+      // deducing the set of parameters to the virtual template based on
+      // what parameters are actually used in the INSERT part.
+      Set<String> used = template.getUsedParameters();
+      parameters = new ArrayList<String>(used.size());
+      for (String param : used)
+        parameters.add(param);
+      template.setParameters(parameters);
+
+      // finally, adjust the SELECT part of the query to match the parameters
+      // actually used in the INSERT, to project the query down correctly.
+      List<Variable> vars = new ArrayList<Variable>(parameters.size());
+      for (String name : parameters)
+        vars.add(new Variable(name));
+      query.setSelectedVariables(vars);
     }
   }
 

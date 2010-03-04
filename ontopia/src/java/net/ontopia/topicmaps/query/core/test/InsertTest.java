@@ -266,6 +266,19 @@ public class InsertTest extends AbstractQueryTest {
     updateError("insert topic .");
   }
 
+  public void testIssue211() throws InvalidQueryException, IOException {
+    load("JillsMusic.xtm");
+
+    update("using on for i\"http://psi.ontopia.net/ontology/\" " +
+           "insert $ATYPE - $VALUE @ $RTYPE . " +
+           "from " +
+           "on:has-role-type($RF : on:role-field, $RTYPE : on:role-type), " +
+           "topic-name($RF, $RFN), not(type($RFN, $RFNTYPE)), " +
+           "not(scope($RFN, $RFNTHEME)), value($RFN, $VALUE), " +
+           "on:has-association-field($RF : on:role-field, $AF : on:association-field), " +
+           "on:has-association-type($AF : on:association-field, $ATYPE : on:association-type)");
+  }
+
   // tests for CTM/tolog integration
 
   // ===== VALID

@@ -4,8 +4,10 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.List;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.ArrayList;
 
@@ -27,9 +29,15 @@ public class Template {
   /**
    * Each variable used in the template has a corresponding generator
    * stored here. On invocation, the invoke() method sets the passed
-   * arguments in the generators stored here.
+   * arguments in the generators stored here. The map is populated
+   * from the declared list of parameters.
    */
-  private Map<String, ParameterGenerator> generators;  
+  private Map<String, ParameterGenerator> generators;
+  /**
+   * Each variable actually occurring in the template is listed here.
+   * The map is populated by the getGenerator() method.
+   */
+  private Set<String> used_parameters;
   
   public Template(String name, List<String> parameters) {
     this.name = name;
@@ -37,6 +45,7 @@ public class Template {
     this.events = new ArrayList();
     this.generators = new HashMap<String, ParameterGenerator>();
     this.named_wildcards = new HashMap<String, NamedWildcardTopicGenerator>();
+    this.used_parameters = new HashSet<String>();
 
     for (String param : parameters)
       generators.put(param, new ParameterGenerator());
@@ -50,6 +59,10 @@ public class Template {
     return parameters.size();
   }
 
+  public Set<String> getUsedParameters() {
+    return used_parameters;
+  }
+
   public void addEvent(ParseEventIF event) {
     events.add(event);
   }
@@ -58,6 +71,7 @@ public class Template {
     ValueGeneratorIF gen = generators.get(name);
     if (gen == null)
       throw new InvalidTopicMapException("No such parameter: " + name);
+    used_parameters.add(name);
     return gen;
   }
 
@@ -98,6 +112,15 @@ public class Template {
     // invocation we create new ones
     for (NamedWildcardTopicGenerator gen : named_wildcards.values())
       gen.contextEnd();
+  }
+
+  /**
+   * This method is only used by the tolog INSERT statement. It is
+   * <em>not</em> meant to be called during normal operation. If you
+   * do, don't complain if it breaks.
+   */
+  public void setParameters(List<String> parameters) {
+    this.parameters = parameters;
   }
 
   // --- Parameter generator

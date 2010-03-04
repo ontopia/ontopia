@@ -59,7 +59,7 @@ public class JavaModule implements ModuleIF {
         searcher.setParameters(parseParameters(parameters));
         return new JavaSearcherPredicate(name, topicmap, searcher);
       } else if (o instanceof JavaPredicate) {
-        JavaPredicate pred = (JavaPredicate)o;
+        JavaPredicate pred = (JavaPredicate) o;
         pred.setModuleURI(moduleURI);
         pred.setPredicateName(name);
         pred.setTopicMap(topicmap);
