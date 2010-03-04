@@ -3,6 +3,7 @@
 package net.ontopia.topicmaps.impl.tmapi2;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -460,6 +461,9 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
       return null;
 
     NameImpl name = nameIndex.getName(variant.getTopicName());
+    if (name==null) {
+    	name = wrapName(variant.getTopicName());
+    }
     VariantImpl v = null;
 
     for (Variant tmp : name.getVariants()) {

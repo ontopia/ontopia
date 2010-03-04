@@ -87,6 +87,7 @@
     <name>tmapi</name>
     <test>net.ontopia.topicmaps.impl.tmapi2.test.TopicMapSystemFactoryTest</test>
     <test>net.ontopia.topicmaps.impl.tmapi2.test.MemoryTopicMapSystemTest</test>
+    <test>net.ontopia.topicmaps.impl.tmapi2.test.TestTMAPIScopedIndexWithVariants</test>
     <test>org.tmapi.core.TestReifiable</test>
     <test>org.tmapi.core.TestScoped</test>
     <test>org.tmapi.core.TestTyped</test>
