@@ -21,11 +21,10 @@ package net.ontopia.topicmaps.query.toma.impl.basic;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import edu.emory.mathcs.backport.java.util.Collections;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;

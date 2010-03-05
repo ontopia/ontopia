@@ -25,10 +25,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import net.ontopia.utils.CompactHashSet;
-
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
+
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: This is a very simple implementation of a table, which is used to
