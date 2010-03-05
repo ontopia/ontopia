@@ -64,4 +64,12 @@ public class FieldValueModel extends LoadableDetachableModel<Object> {
       return value;
   }
   
+  @Override
+  public void detach() {
+    if (value instanceof IModel) {
+      ((IModel)value).detach(); 
+    }
+    super.detach();
+  }
+  
 }

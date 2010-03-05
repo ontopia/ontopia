@@ -131,6 +131,11 @@
   </group>
 
   <group>
+    <name>rdbms-experimental</name>
+    <test>net.ontopia.topicmaps.impl.rdbms.test.RDBMSBackendTests</test>
+  </group>
+
+  <group>
     <name>storepool</name>
     <test>net.ontopia.topicmaps.impl.utils.test.StorePoolManagerTest</test>
   </group>
@@ -526,10 +531,10 @@
   </group>
 
   <group>
-    <name>query.rdbms.dev</name>
+    <name>query.dev</name>
     <!--test>net.ontopia.topicmaps.query.impl.rdbms.test.ValueLikePredicateTest</test-->
     <!--test>net.ontopia.topicmaps.query.impl.rdbms.test.RolePlayerPredicateTest</test-->
-    <test>net.ontopia.topicmaps.query.impl.rdbms.test.DatatypePredicateTest</test>
+    <test>net.ontopia.topicmaps.query.core.test.CoalescePredicateTest</test>
   </group>
 
   <group>

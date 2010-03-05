@@ -25,6 +25,7 @@ import ontopoly.pages.StartPage;
 import ontopoly.pages.TopicTypesPage;
 import ontopoly.pages.UpgradePage;
 import ontopoly.sysmodel.OntopolyRepository;
+import ontopoly.utils.AbsoluteUrlRequestCodingStrategy;
 import ontopoly.utils.OccurrenceImageRequestTargetUrlCodingStrategy;
 
 import org.apache.wicket.Page;
@@ -33,6 +34,10 @@ import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.protocol.http.WebRequestCycleProcessor;
+import org.apache.wicket.protocol.http.request.WebRequestCodingStrategy;
+import org.apache.wicket.request.IRequestCodingStrategy;
+import org.apache.wicket.request.IRequestCycleProcessor;
 import org.apache.wicket.request.target.coding.MixedParamUrlCodingStrategy;
 import org.apache.wicket.settings.IApplicationSettings;
 import org.apache.wicket.settings.IExceptionSettings;
@@ -77,15 +82,15 @@ public class OntopolyApplication extends WebApplication {
     return new OntopolyRequestCycle(repository, this, request, response);
   }
   
-//  @Override
-//  protected IRequestCycleProcessor newRequestCycleProcessor() {
-//    return new WebRequestCycleProcessor() {
-//      @Override
-//      protected IRequestCodingStrategy newRequestCodingStrategy() {
-//        return new AbsoluteUrlRequestCodingStrategy(new WebRequestCodingStrategy());
-//      }
-//    };
-//  }
+  @Override
+  protected IRequestCycleProcessor newRequestCycleProcessor() {
+    return new WebRequestCycleProcessor() {
+      @Override
+      protected IRequestCodingStrategy newRequestCodingStrategy() {
+        return new AbsoluteUrlRequestCodingStrategy(new WebRequestCodingStrategy());
+      }
+    };
+  }
 
   public OntopolyRepository getOntopolyRepository() {
     return repository;

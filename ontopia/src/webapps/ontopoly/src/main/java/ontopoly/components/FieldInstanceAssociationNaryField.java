@@ -34,15 +34,15 @@ import org.apache.wicket.model.ResourceModel;
 
 public class FieldInstanceAssociationNaryField extends Panel {
 
-  protected final FieldValueModel fieldValueModel;
   protected int arity;
+  protected final FieldValueModel fieldValueModel;
   protected final Map<RoleFieldModel,TopicModel> selectedPlayers = new HashMap<RoleFieldModel,TopicModel>();
   protected final FieldInstanceAssociationNaryPanel parentPanel;
   protected boolean needsUpdate;
   
-  protected RoleFieldModel currentFieldModel;
-  protected TopicModel<Topic> currentTopicModel;
-  
+  protected final RoleFieldModel currentFieldModel;
+  protected final TopicModel<Topic> currentTopicModel;
+
   public FieldInstanceAssociationNaryField(String id, 
       FieldInstanceAssociationNaryPanel _parentPanel,
       RoleFieldModel roleFieldModel, List otherRoleFieldModels,
@@ -145,7 +145,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
           parent.add(new Label("findModal").setVisible(false));
           
         } else if (interfaceControl.isDropDownList()) {
-          final PossiblePlayersModel choicesModel = new PossiblePlayersModel(fieldInstanceModel, ofieldModel) {
+          PossiblePlayersModel choicesModel = new PossiblePlayersModel(fieldInstanceModel, ofieldModel) {
             @Override
             protected void filterPlayers(Collection<Topic> players) {
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
@@ -351,6 +351,18 @@ public class FieldInstanceAssociationNaryField extends Panel {
       value.addPlayer(roleField, topic);
     }
     return value;
+  }
+
+  @Override
+  public void onDetach() {
+    fieldValueModel.detach();
+    currentFieldModel.detach();
+    currentTopicModel.detach();
+    for (Map.Entry<RoleFieldModel,TopicModel> selectedPlayer : selectedPlayers.entrySet()) {
+      selectedPlayer.getKey().detach();
+      selectedPlayer.getValue().detach();
+    }
+    super.onDetach();
   }
 
 }

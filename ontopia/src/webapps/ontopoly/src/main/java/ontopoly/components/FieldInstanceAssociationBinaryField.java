@@ -20,7 +20,6 @@ import ontopoly.utils.OntopolyUtils;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 public abstract class FieldInstanceAssociationBinaryField extends Panel {
@@ -72,7 +71,7 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
       } else if (interfaceControl.isDropDownList()) {
         // default is drop-down list
         TopicModel<Topic> selectedModel = new TopicModel<Topic>(null);
-        IModel<List<Topic>> choicesModel = new PossiblePlayersModel(fieldInstanceModel, valueFieldModel) {
+        PossiblePlayersModel choicesModel = new PossiblePlayersModel(fieldInstanceModel, valueFieldModel) {
           @Override
           protected void filterPlayers(Collection<Topic> players) {
             AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();

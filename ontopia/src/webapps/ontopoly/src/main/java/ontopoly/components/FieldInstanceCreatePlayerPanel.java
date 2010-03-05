@@ -37,10 +37,12 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
   public static final int CREATE_ACTION_POPUP = 2;
   public static final int CREATE_ACTION_NAVIGATE = 4;
   
-  FieldInstanceModel fieldInstanceModel;
-  FieldsViewModel fieldsViewModel;
-  RoleFieldModel roleFieldModel;
-  AbstractFieldInstancePanel fieldInstancePanel;
+  protected AbstractFieldInstancePanel fieldInstancePanel;
+  
+  protected FieldInstanceModel fieldInstanceModel;
+  protected FieldsViewModel fieldsViewModel;
+  protected RoleFieldModel roleFieldModel;
+  protected TopicTypeModel topicTypeModel;
   
   int createAction;
   
@@ -67,7 +69,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
       add(new Label("createMenu"));
       add(new Label("createModal"));
     } else if (allowedValueTypes.size() == 1) {
-      final TopicTypeModel topicTypeModel = new TopicTypeModel((TopicType)allowedValueTypes.iterator().next());
+      this.topicTypeModel = new TopicTypeModel((TopicType)allowedValueTypes.iterator().next());
       OntopolyImageLink button = new OntopolyImageLink("button", "create.gif", new ResourceModel("icon.create.player")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
@@ -209,10 +211,11 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
   
   @Override
   protected void onDetach() {
-    super.onDetach();
     fieldInstanceModel.detach();
     fieldsViewModel.detach();
     roleFieldModel.detach();
+    if (topicTypeModel != null) topicTypeModel.detach();
+    super.onDetach();
   }
 
 }

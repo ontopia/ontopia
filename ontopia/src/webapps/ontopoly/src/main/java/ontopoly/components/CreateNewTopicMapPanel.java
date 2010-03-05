@@ -33,7 +33,6 @@ public class CreateNewTopicMapPanel extends Panel {
     List sources = repository.getSources();  
     NUMBER_OF_SOURCES = sources.size();
     
- // sources dropdown   
     IModel<List<TopicMapSource>> sourcesChoicesModel = new LoadableDetachableModel<List<TopicMapSource>>() {
       @Override
       protected List<TopicMapSource> load() {

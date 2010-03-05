@@ -20,12 +20,13 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.ResourceModel;
 
 public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
+
+  protected final TopicModel<TopicType> selectedModel = new TopicModel<TopicType>(null, TopicModel.TYPE_TOPIC_TYPE);
   
   public AddOrRemoveTypeFunctionBoxPanel(String id, final TopicModel topicModel) {
     super(id);
     add(new Label("title", new ResourceModel("add.remove.type.instance")));   
 
-    final TopicModel<TopicType> selectedModel = new TopicModel<TopicType>(null, TopicModel.TYPE_TOPIC_TYPE);
     AvailableTopicTypesModel choicesModel = new AvailableTopicTypesModel(topicModel) {
       @Override
       protected boolean getShouldIncludeExistingTypes() {
@@ -83,6 +84,12 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
   
   protected Class getInstancePageClass() {
     return InstancePage.class;
+  }
+
+  @Override
+  public void onDetach() {
+    selectedModel.detach();
+    super.onDetach();
   }
   
 }

@@ -44,30 +44,33 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
 public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePanel {
-  
-  protected ConfirmDeletePanel confirmDeletePanel;
-  
+
+  protected final ConfirmDeletePanel confirmDeletePanel;
+  protected final RoleFieldModel ofieldModel;
+  protected final TopicModel<Topic> topicModel;
+  protected final RoleFieldModel roleFieldModel;
+
   public FieldInstanceAssociationBinaryPanel(String id, 
       final FieldInstanceModel fieldInstanceModel, final FieldsViewModel fieldsViewModel, 
       final boolean readonlyField, final boolean traversable) {
     this(id, fieldInstanceModel, fieldsViewModel, readonlyField, false, traversable);
   }
-  
+
   protected FieldInstanceAssociationBinaryPanel(String id, 
-	    final FieldInstanceModel fieldInstanceModel, final FieldsViewModel fieldsViewModel, 
-	    final boolean readonlyField, final boolean embedded, final boolean traversable) {
+      final FieldInstanceModel fieldInstanceModel, final FieldsViewModel fieldsViewModel, 
+      final boolean readonlyField, final boolean embedded, final boolean traversable) {
     super(id, fieldInstanceModel);
 
-  	FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
-  	FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
-  	RoleField roleField = (RoleField)fieldAssignment.getFieldDefinition(); 
-  	final RoleFieldModel roleFieldModel = new RoleFieldModel(roleField);
-  		
-  	add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(roleField)));
-      
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
+    RoleField roleField = (RoleField)fieldAssignment.getFieldDefinition(); 
+    this.roleFieldModel = new RoleFieldModel(roleField);
+
+    add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(roleField)));
+
     // set up container
-  	this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");
-  	fieldValuesContainer.setOutputMarkupId(true);    
+    this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");
+    fieldValuesContainer.setOutputMarkupId(true);    
     add(fieldValuesContainer);
 
     // add feedback panel
@@ -84,26 +87,26 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
     };
     confirmDeletePanel.setOutputMarkupId(true);
     fieldValuesContainer.add(confirmDeletePanel);
-    
+
     RoleField ofield = (RoleField)roleField.getFieldsForOtherRoles().iterator().next();
-    final RoleFieldModel ofieldModel = new RoleFieldModel(ofield);
-    final TopicModel<Topic> topicModel = new TopicModel<Topic>(fieldInstance.getInstance());
-    
+    this.ofieldModel = new RoleFieldModel(ofield);
+    this.topicModel = new TopicModel<Topic>(fieldInstance.getInstance());
+
     InterfaceControl interfaceControl = ofield.getInterfaceControl();
 
     WebMarkupContainer fieldValuesList = new WebMarkupContainer("fieldValuesList");
     fieldValuesContainer.add(fieldValuesList);
-    
+
     final String fieldDefinitionId = roleField.getId();
 
     EditMode editMode = roleField.getEditMode();
-    
+
     final boolean ownedvalues = editMode.isOwnedValues();
     final boolean allowAdd = !(ownedvalues || editMode.isNewValuesOnly() || editMode.isNoEdit());
     final boolean allowCreate = !(editMode.isExistingValuesOnly() || editMode.isNoEdit());
     final boolean allowRemove = !editMode.isNoEdit();    
     final boolean sortable = roleField.isSortable(); 
-    
+
     // add field values component(s)
     // TODO: consider moving ordering logic into object model
     if (sortable) {
@@ -120,24 +123,25 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       Comparator<Object> comparator = new RoleFieldValueComparator(topicModel, ofieldModel);
       this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel, comparator);
     }
-    
+
     this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
       @Override
       protected void onBeforeRender() {
         validateCardinality();        
         super.onBeforeRender();
       }
-		  public void populateItem(final ListItem<FieldValueModel> item) {        
-		    final FieldValueModel fieldValueModel = item.getModelObject();
+      public void populateItem(final ListItem<FieldValueModel> item) {        
+        FieldValueModel fieldValueModel = item.getModelObject();
 
-		    // get topic
-		    Topic oplayer = null;
-		    if (fieldValueModel.isExistingValue()) {
-		      RoleField.ValueIF valueIf = (RoleField.ValueIF)fieldValueModel.getObject();              
-		      RoleField ofield = ofieldModel.getRoleField();
-		      oplayer = valueIf.getPlayer(ofield, fieldInstanceModel.getFieldInstance().getInstance());
-		    }
-        final TopicModel<Topic> oplayerModel = new TopicModel<Topic>(oplayer);
+        // get topic
+        Topic oplayer = null;
+        if (fieldValueModel.isExistingValue()) {
+          RoleField.ValueIF valueIf = (RoleField.ValueIF)fieldValueModel.getObject();              
+          RoleField ofield = ofieldModel.getRoleField();
+          oplayer = valueIf.getPlayer(ofield, fieldInstanceModel.getFieldInstance().getInstance());
+        }
+        final String topicMapId = (oplayer == null ? null : oplayer.getTopicMap().getId());
+        final String topicId = (oplayer == null ? null : oplayer.getId());
 
         // acquire lock for embedded topic
         final boolean isLockedByOther;
@@ -150,16 +154,16 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
           isLockedByOther = false;
         }
         final boolean readonly = readonlyField || isLockedByOther;
-        
-		    boolean itemSortable = !readonly && sortable && fieldValueModel.isExistingValue(); 
-		    if (itemSortable) {
-		      item.add(new DroppableBehavior(fieldDefinitionId) {
-		        @Override
-		        protected MarkupContainer getDropContainer() {
-		          return listView;
-		        }
-		        @Override
-		        protected void onDrop(Component component, AjaxRequestTarget target) {
+
+        boolean itemSortable = !readonly && sortable && fieldValueModel.isExistingValue(); 
+        if (itemSortable) {
+          item.add(new DroppableBehavior(fieldDefinitionId) {
+            @Override
+            protected MarkupContainer getDropContainer() {
+              return listView;
+            }
+            @Override
+            protected void onDrop(Component component, AjaxRequestTarget target) {
               FieldValueModel fvm_dg = (FieldValueModel)component.getDefaultModelObject();
               FieldValueModel fvm_do = (FieldValueModel)getComponent().getDefaultModelObject();
               RoleField.ValueIF rfv_dg = (RoleField.ValueIF)fvm_dg.getFieldValue();
@@ -171,94 +175,94 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
               rfield.moveAfter(topic, ofield, rfv_dg, rfv_do);
               getModel().detach(); // FIXME: better if we could just tweak model directly without detaching
               listView.removeAll();
-		          target.addComponent(fieldValuesContainer);
-		        }		      
-		      });
-	        item.add(new DraggableBehavior(fieldDefinitionId));
-		    }
-		    
-		    item.setOutputMarkupId(true);
+              target.addComponent(fieldValuesContainer);
+            }		      
+          });
+          item.add(new DraggableBehavior(fieldDefinitionId));
+        }
+
+        item.setOutputMarkupId(true);
         WebMarkupContainer fieldIconContainer = new WebMarkupContainer("fieldIconContainer");
         fieldIconContainer.add(new OntopolyImage("fieldIcon", "dnd.gif", new ResourceModel("icon.dnd.reorder")));
         fieldIconContainer.setVisible(itemSortable);
         item.add(fieldIconContainer);
-        
+
         final WebMarkupContainer fieldValueButtons = new WebMarkupContainer("fieldValueButtons");
         fieldValueButtons.setOutputMarkupId(true);
         item.add(fieldValueButtons);
 
         FieldInstanceRemoveButton removeButton = 
           new FieldInstanceRemoveButton("remove", "remove-value.gif", fieldValueModel) { 
-            @Override
-            public boolean isVisible() {
-              boolean visible = !readonly && fieldValueModel.isExistingValue() && allowRemove; // && !isValueProtected;
-              if (visible) {               
-                // filter by player
-                AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-                RoleField.ValueIF value = (RoleField.ValueIF)fieldValueModel.getObject();
-                Topic[] players = value.getPlayers();
-                for (int i=0; i < players.length; i++) {
-                  if (!page.filterTopic(players[i])) return false;
-                }
-              }
-              return visible;
-            }
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-              // FIXME: could reuse some of these variable from above
-              FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
-              Object value = fieldValueModel.getObject();
-
-              Topic currentTopic = fieldInstance.getInstance();
-              
-              RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();          
-              RoleField selectedField = ofieldModel.getRoleField();
-
-              RoleField.ValueIF valueIf = (RoleField.ValueIF)value;                
-              Topic selectedTopic = valueIf.getPlayer(selectedField, fieldInstance.getInstance());
-
-              // check with page to see if add is allowed
-              boolean changesMade = false;
+          @Override
+          public boolean isVisible() {
+            boolean visible = !readonly && fieldValueModel.isExistingValue() && allowRemove; // && !isValueProtected;
+            if (visible) {               
+              // filter by player
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-              if (page.isRemoveAllowed(currentTopic, currentField, selectedTopic, selectedField)) {
-                if (ownedvalues) {
-                  
-                  // don't remove system topics
-                  if (!selectedTopic.isSystemTopic()) {
-                    FieldInstanceAssociationBinaryPanel.this.confirmDeletePanel.setTopic(selectedTopic);
-                    changesMade = true;
-                  }
-                } else {
-                  fieldInstance.removeValue(value, page.getListener());        
+              RoleField.ValueIF value = (RoleField.ValueIF)fieldValueModel.getObject();
+              Topic[] players = value.getPlayers();
+              for (int i=0; i < players.length; i++) {
+                if (!page.filterTopic(players[i])) return false;
+              }
+            }
+            return visible;
+          }
+          @Override
+          public void onClick(AjaxRequestTarget target) {
+            // FIXME: could reuse some of these variable from above
+            FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+            Object value = fieldValueModel.getObject();
+
+            Topic currentTopic = fieldInstance.getInstance();
+
+            RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();          
+            RoleField selectedField = ofieldModel.getRoleField();
+
+            RoleField.ValueIF valueIf = (RoleField.ValueIF)value;                
+            Topic selectedTopic = valueIf.getPlayer(selectedField, fieldInstance.getInstance());
+
+            // check with page to see if add is allowed
+            boolean changesMade = false;
+            AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
+            if (page.isRemoveAllowed(currentTopic, currentField, selectedTopic, selectedField)) {
+              if (ownedvalues) {
+
+                // don't remove system topics
+                if (!selectedTopic.isSystemTopic()) {
+                  FieldInstanceAssociationBinaryPanel.this.confirmDeletePanel.setTopic(selectedTopic);
                   changesMade = true;
                 }
+              } else {
+                fieldInstance.removeValue(value, page.getListener());        
+                changesMade = true;
               }
-              // notify association panel so that it can update itself
-              if (changesMade)
-                FieldInstanceAssociationBinaryPanel.this.onUpdate(target);
             }
-          };
+            // notify association panel so that it can update itself
+            if (changesMade)
+              FieldInstanceAssociationBinaryPanel.this.onUpdate(target);
+          }
+        };
         fieldValueButtons.add(removeButton);
-        
+
         // embedded goto button
         OntopolyImageLink gotoButton = new OntopolyImageLink("goto", "goto.gif", new ResourceModel("icon.goto.topic")) {
           @Override
           public boolean isVisible() {
+            FieldValueModel fieldValueModel = item.getModelObject();
             return embedded && fieldValueModel.isExistingValue();  
           }
           @Override
           public void onClick(AjaxRequestTarget target) {
             // navigate to topic
-            Topic oplayer = oplayerModel.getTopic();
             PageParameters pageParameters = new PageParameters();
-            pageParameters.put("topicMapId", oplayer.getTopicMap().getId());
-            pageParameters.put("topicId", oplayer.getId());
+            pageParameters.put("topicMapId", topicMapId);
+            pageParameters.put("topicId", topicId);
             setResponsePage(getPage().getClass(), pageParameters);
             setRedirect(true);
           }
         };
         fieldValueButtons.add(gotoButton);
-        
+
         // embedded lock button
         OntopolyImageLink lockButton = new OntopolyImageLink("lock", "lock.gif", new ResourceModel("icon.topic.locked")) {
           @Override
@@ -270,7 +274,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
           }
         };
         fieldValueButtons.add(lockButton);
-        
+
         // binary
         // ISSUE: should not really pass in readonly-parameter here as it is only relevant if page is readonly
         FieldInstanceAssociationBinaryField binaryField = new FieldInstanceAssociationBinaryField("fieldValue", ofieldModel, fieldValueModel, fieldsViewModel, readonly, embedded, traversable, allowAdd) {
@@ -283,28 +287,28 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         if (binaryField.getUpdateableComponent() != null)
           binaryField.getUpdateableComponent().add(new FieldUpdatingBehaviour(true));
         item.add(binaryField); 
-        
+
         addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
-	    }
-		};
-	  listView.setReuseItems(true);	  
-	  fieldValuesList.add(listView);
-	  
-	  // figure out which buttons to show
+      }
+    };
+    listView.setReuseItems(true);	  
+    fieldValuesList.add(listView);
+
+    // figure out which buttons to show
     this.fieldInstanceButtons = new WebMarkupContainer("fieldInstanceButtons");
     fieldInstanceButtons.setOutputMarkupId(true);
     add(fieldInstanceButtons);	  
-    
+
     if (readonlyField || !allowAdd) {
       // unused components
       fieldInstanceButtons.add(new Label("add", new Model<String>("unused")).setVisible(false));
       fieldInstanceButtons.add(new Label("find", new Model<String>("unused")).setVisible(false));
       fieldInstanceButtons.add(new Label("findModal", new Model<String>("unused")).setVisible(false));
-    
-    // add/find button
+
+      // add/find button
     } else if (interfaceControl.isDropDownList() || interfaceControl.isAutoComplete()) {
-  	  // "add" button
-  	  OntopolyImageLink addButton = new OntopolyImageLink("add", "add.gif") { 
+      // "add" button
+      OntopolyImageLink addButton = new OntopolyImageLink("add", "add.gif") { 
         @Override
         public void onClick(AjaxRequestTarget target) {
           boolean showExtraField = !fieldValuesModel.getShowExtraField();
@@ -327,20 +331,20 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         }
       };
       fieldInstanceButtons.add(addButton);
-      
+
       // unused components
       fieldInstanceButtons.add(new Label("find", new Model<String>("unused")).setVisible(false));
       fieldInstanceButtons.add(new Label("findModal", new Model<String>("unused")).setVisible(false));
-      
+
     } else if (interfaceControl.isSearchDialog() || interfaceControl.isBrowseDialog()) {
-      
+
       // "search"/"browse" button
       final ModalWindow findModal = new ModalWindow("findModal");
       fieldInstanceButtons.add(findModal);
-      
+
       int activeTab = (interfaceControl.isSearchDialog() ?
-                       ModalFindPage.ACTIVE_TAB_SEARCH : ModalFindPage.ACTIVE_TAB_BROWSE);
-      
+          ModalFindPage.ACTIVE_TAB_SEARCH : ModalFindPage.ACTIVE_TAB_BROWSE);
+
       findModal.setContent(new ModalFindPage(findModal.getContentId(), fieldInstanceModel, activeTab) {
         @Override
         protected void onSelectionConfirmed(AjaxRequestTarget target, Collection selected) {
@@ -358,10 +362,10 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
             Iterator iter = selected.iterator();
             while (iter.hasNext()) {
               String objectId = (String)iter.next();
-              
+
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
               Topic selectedTopic = topicMap.getTopicById(objectId);
-              
+
               if (page.isAddAllowed(currentTopic, currentField, selectedTopic, selectedField)) {
                 performNewSelection(selectedField, selectedTopic);
                 changesMade = true;
@@ -369,7 +373,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
             }          
             // notify association panel so that it can update itself
             if (changesMade)
-            FieldInstanceAssociationBinaryPanel.this.onUpdate(target);
+              FieldInstanceAssociationBinaryPanel.this.onUpdate(target);
           }
         }        
         @Override
@@ -383,7 +387,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       });
       findModal.setTitle(new ResourceModel("ModalWindow.title.find.topic").getObject().toString());
       findModal.setCookieName("findModal");
-     
+
       OntopolyImageLink findButton = new OntopolyImageLink("find", "search.gif", new ResourceModel("find.topic")) { 
         @Override
         public void onClick(AjaxRequestTarget target) {
@@ -401,7 +405,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
     if (readonlyField || !allowCreate) {
       fieldInstanceButtons.add(new Label("create").setVisible(false));
     } else {
-      
+
       CreateAction ca = roleField.getCreateAction();
       int createAction;
       if (embedded || ca.isNone())
@@ -410,19 +414,19 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         createAction = FieldInstanceCreatePlayerPanel.CREATE_ACTION_NAVIGATE;
       else
         createAction = FieldInstanceCreatePlayerPanel.CREATE_ACTION_POPUP;
-      
+
       FieldInstanceCreatePlayerPanel createPanel = new FieldInstanceCreatePlayerPanel("create", fieldInstanceModel, fieldsViewModel, new RoleFieldModel(ofield), this, createAction) {
         @Override
         protected void performNewSelection(RoleFieldModel ofieldModel, Topic selectedTopic) {
           FieldInstanceAssociationBinaryPanel.this.performNewSelection(ofieldModel.getRoleField(), selectedTopic);           
         }          
-        
+
       };
       createPanel.setOutputMarkupId(true);
       fieldInstanceButtons.add(createPanel);
     }
-	}
-  
+  }
+
   protected RoleField.ValueIF performNewSelection(RoleField selectedField, Topic selectedTopic) {
     FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
     RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
@@ -433,6 +437,14 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     fieldInstance.addValue(value, page.getListener()); // currentField.addValue(fieldInstance, value, page.getListener());
     return value;
+  }
+
+  @Override
+  public void onDetach() {
+    ofieldModel.detach();
+    topicModel.detach();
+    roleFieldModel.detach();
+    super.onDetach();
   }
 
 }

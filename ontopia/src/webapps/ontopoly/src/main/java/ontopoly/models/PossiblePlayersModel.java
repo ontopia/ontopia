@@ -35,5 +35,12 @@ public abstract class PossiblePlayersModel extends LoadableDetachableModel<List<
   }
 
   protected abstract void filterPlayers(Collection<Topic> players);
+
+  @Override
+  protected void onDetach() {
+      fieldInstanceModel.detach();
+      roleFieldModel.detach();
+      super.onDetach();
+  }   
   
 }

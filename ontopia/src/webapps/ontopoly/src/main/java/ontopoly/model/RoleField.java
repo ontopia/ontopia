@@ -614,12 +614,12 @@ public class RoleField extends FieldDefinition {
 			offset++;
 		}
 
-    public Topic getPlayer(RoleField roleField, Topic oPlayer) {
+    public Topic getPlayer(RoleField ofield, Topic oPlayer) {
 			// NOTE: all this logic is here to cater for symmetric associations
 			Topic xPlayer = null;
 			for (int i=0; i < roleFields.length; i++) {
 				RoleField rf = roleFields[i];
-				if (rf.equals(roleField)) {
+				if (rf.equals(ofield)) {
 					Topic player = players[i];
 					if (ObjectUtils.different(player, oPlayer))
 						return player;
@@ -628,7 +628,7 @@ public class RoleField extends FieldDefinition {
 				}
 			}
 			if (xPlayer == null)
-				throw new RuntimeException("Could not find player for RoleField: " + roleField + " (" + oPlayer + ")");			
+				throw new RuntimeException("Could not find player for RoleField: " + ofield + " (" + oPlayer + ")");			
 			else
 				return xPlayer;
 		}
