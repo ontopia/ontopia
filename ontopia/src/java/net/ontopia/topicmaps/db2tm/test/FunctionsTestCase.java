@@ -4,7 +4,6 @@ package net.ontopia.topicmaps.db2tm.test;
 import net.ontopia.topicmaps.db2tm.*;
 import net.ontopia.test.AbstractOntopiaTestCase;
 
-
 public class FunctionsTestCase extends AbstractOntopiaTestCase {
 
   public FunctionsTestCase(String name) {
@@ -117,4 +116,15 @@ public class FunctionsTestCase extends AbstractOntopiaTestCase {
     }
   }
 
+  public void testMakePsi() {
+    assertEquals("abcabc-foo-bar", Functions.makePSI("abcABC foo BAR"));
+  }
+  
+  public void testMakePsiDoesNotStripBoundaryChars() {
+    assertEquals("1979za", Functions.makePSI("1979za"));
+  }
+
+  public void testMakePsiBadChars() {
+    assertEquals("is-a--fail", Functions.makePSI("'is a זרו #fail'"));
+  }
 }

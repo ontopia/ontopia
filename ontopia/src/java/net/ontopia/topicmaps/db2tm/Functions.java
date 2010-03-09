@@ -166,9 +166,9 @@ public class Functions {
     for (int ix = 0; ix < str.length(); ix++) {
       char ch = str.charAt(ix);
       if (ch >= 'A' && ch <= 'Z')
-        tmp[pos++] = (char) ((int) ch + 32); // upcase
-      else if ((ch >= 'a' && ch < 'z') ||
-               (ch >= '0' && ch < '9') ||
+        tmp[pos++] = (char) ((int) ch + 32); // downcase
+      else if ((ch >= 'a' && ch <= 'z') ||
+               (ch >= '0' && ch <= '9') ||
                ch == '-' && ch == '_')
         tmp[pos++] = ch;
       else if (ch == ' ')
