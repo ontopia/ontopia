@@ -105,12 +105,11 @@
       <!--pathelement location="${3rdparty.path}/log4j.jar" /-->
       <pathelement location="${basedir}/build/classes" />
     </path>
-  	
-  	<path id="project.classpath.test">
-  	      <path refid="project.classpath" />
-  	      <pathelement location="${3rdparty.path}/tmapi-2.0-tests.jar" />
-  	      <pathelement location="${basedir}/build/classes" />
-  	</path>
+
+    <path id="project.classpath.test">
+      <path refid="project.classpath" />
+      <pathelement location="${basedir}/build/classes" />
+    </path>
 
     <taskdef classname="JFlex.anttask.JFlexTask" name="jflex">
       <classpath refid="project.classpath" />
@@ -1424,16 +1423,17 @@
     <copy file="${lib.path}/iri-0.8.jar" tofile="${dist.path}/lib/iri.jar" />
     <copy file="${lib.path}/jgroups-2.6.10.GA.jar" tofile="${dist.path}/lib/jgroups.jar" />
     <copy file="${lib.path}/junit-3.8.2.jar" tofile="${dist.path}/lib/junit.jar" />
-    <copy file="${lib.path}/slf4j-api-1.5.8.jar" tofile="${dist.path}/lib/slf4j-api.jar" />
-    <copy file="${lib.path}/slf4j-log4j12-1.5.8.jar" tofile="${dist.path}/lib/slf4j-log4j12.jar" />
-    <copy file="${lib.path}/jcl-over-slf4j-1.5.8.jar" tofile="${dist.path}/lib/jcl-over-slf4j.jar" />
+    <copy file="${lib.path}/slf4j-api-1.5.11.jar" tofile="${dist.path}/lib/slf4j-api.jar" />
+    <copy file="${lib.path}/slf4j-log4j12-1.5.11.jar" tofile="${dist.path}/lib/slf4j-log4j12.jar" />
+    <copy file="${lib.path}/jcl-over-slf4j-1.5.11.jar" tofile="${dist.path}/lib/jcl-over-slf4j.jar" />
     <copy file="${lib.path}/log4j-1.2.14.jar" tofile="${dist.path}/lib/log4j.jar" />
     <copy file="${lib.path}/lucene-1.4.3.jar" tofile="${dist.path}/lib/lucene.jar" />
     <copy file="${lib.path}/opencsv-1.8.jar" tofile="${dist.path}/lib/opencsv.jar" />
     <copy file="${lib.path}/velocity-1.3.jar" tofile="${dist.path}/lib/velocity.jar" />
     <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
     <copy file="${lib.path}/lucene-snowball-2.0.0.jar" tofile="${dist.path}/lib/lucene-snowball.jar" />
-    <copy file="${lib.path}/tmapi-2.0.jar" tofile="${dist.path}/lib/tmapi.jar" />
+    <copy file="${lib.path}/tmapi-2.0.1.jar" tofile="${dist.path}/lib/tmapi.jar" />
+    <copy file="${lib.path}/tmapi-tests-2.0.1.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
     
     <copy todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes">
       <fileset dir="${dist.path}/lib">
