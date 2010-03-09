@@ -1433,7 +1433,6 @@
     <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
     <copy file="${lib.path}/lucene-snowball-2.0.0.jar" tofile="${dist.path}/lib/lucene-snowball.jar" />
     <copy file="${lib.path}/tmapi-2.0.1.jar" tofile="${dist.path}/lib/tmapi.jar" />
-    <copy file="${lib.path}/tmapi-tests-2.0.1.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
     
     <copy todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes">
       <fileset dir="${dist.path}/lib">
