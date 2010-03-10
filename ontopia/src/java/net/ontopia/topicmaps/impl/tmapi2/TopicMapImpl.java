@@ -69,6 +69,10 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
     return defaultNameType;
   }
 
+  public Locator getLocator() {
+	return wrapLocator(wrapped.getStore().getBaseAddress());
+  }
+  
   /*
    * (non-Javadoc)
    * 
