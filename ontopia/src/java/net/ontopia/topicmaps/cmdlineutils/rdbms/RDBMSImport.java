@@ -4,9 +4,16 @@
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.nio.channels.FileChannel;
 import java.util.Properties;
 
+import org.xml.sax.InputSource;
+
 import net.ontopia.persistence.jdbcspy.SpyDriver;
+import net.ontopia.xml.AbstractXMLFormatReader;
 import net.ontopia.utils.*;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.xml.*;
@@ -40,6 +47,7 @@ public class RDBMSImport {
     options.addLong(ohandler, "loadExternal", 'e', true);
     options.addLong(ohandler, "validate", 'v', true);
     options.addLong(ohandler, "jdbcspy", 'j', true);
+    options.addLong(ohandler, "progress", 'p', true);
       
     // parse command line options
     try {
@@ -90,11 +98,26 @@ public class RDBMSImport {
       System.out.println("Importing " + filename + " into " + tm.getObjectId());
       long start = System.currentTimeMillis();
       
+      if (ohandler.progress) {
+        // user has asked for a progress report, so we do all this
+        // complicated stuff to make it happen. the basic idea is that
+        // we create the input stream ourselves, instead of letting
+        // the parser do it, and use a subclass of FileIS which outputs
+        // status reports as the parser reads from it.
+        File file = new File(filename);
+        if (importer instanceof AbstractXMLFormatReader &&
+            file.exists()) {
+          FileInputStream fis = new WrappedFileInputStream(file);
+          InputSource src = ((AbstractXMLFormatReader) importer).getInputSource();
+          src.setByteStream(fis);
+        }
+      }
+
       importer.importInto(tm);
 
       if (ohandler.suppress)
         DuplicateSuppressionUtils.removeDuplicates(tm);
-      
+
       store.commit();
       
       long end = System.currentTimeMillis();      
@@ -123,6 +146,7 @@ public class RDBMSImport {
     System.out.println("    --suppress=true|false: suppress duplicate characteristics (default: false)");
     System.out.println("    --loadExternal=true|false : if true external topic references will be resolved (default: true)");
     System.out.println("    --jdbcspy=<filename> : write jdbcspy report to the given file");
+    System.out.println("    --progress=true|false: write progress report while importing (default: false)");
     System.out.println("");
     System.out.println("  <dbprops>:   the database configuration file");
     System.out.println("  <tmfile#>:   the topic map files to import");
@@ -137,6 +161,8 @@ public class RDBMSImport {
     String jdbcspyFile;
     String topicMapTitle;
     String topicMapComments;
+    boolean progress;
+    
     public void processOption(char option, String value) {
       if (option == 'i') topicMapId = ImportExportUtils.getTopicMapId(value);
       if (option == 'v') validate = Boolean.valueOf(value).booleanValue();
@@ -145,7 +171,60 @@ public class RDBMSImport {
       if (option == 'j') jdbcspyFile = value;
       if (option == 't') topicMapTitle = value;
       if (option == 'c') topicMapComments = value;
+      if (option == 'p') progress = Boolean.valueOf(value).booleanValue();
     }
   }
-  
+
+  private static class WrappedFileInputStream extends FileInputStream {
+    private long filesize;
+    private int prevperc;
+    private FileChannel fc;
+    private boolean hasComplained;
+
+    private WrappedFileInputStream(File file) throws FileNotFoundException {
+      super(file);
+      this.filesize = file.length();
+      this.prevperc = -1;
+      this.fc = getChannel();
+    }
+    
+    public int read() throws IOException {
+      int res = super.read();
+      status();
+      return res;
+    }
+
+    public int read(byte[] b) throws IOException {
+      int res = super.read(b);
+      status();
+      return res;
+    }
+
+    public int read(byte[] b, int off, int len) throws IOException {
+      int res = super.read(b, off, len);
+      status();
+      return res;
+    }
+
+    public long skip(long n) throws IOException {
+      long res = super.skip(n);
+      status();
+      return res;
+    }
+
+    private void status() {
+      try {
+        int perc = (int) (((float) fc.position() / (float) filesize) * 100.0);
+        if (perc != prevperc) {
+          System.out.println("" + perc + "%");
+          prevperc = perc;
+        }
+      } catch (IOException e) {
+        if (!hasComplained) {
+          e.printStackTrace();
+          hasComplained = true;
+        }
+      }
+    }
+  }
 }
