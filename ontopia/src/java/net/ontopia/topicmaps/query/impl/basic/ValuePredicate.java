@@ -191,26 +191,26 @@ public class ValuePredicate implements BasicPredicateIF {
     return objects.toArray();
   }
 
-	private static Collection filterOccurrences(Collection occs) {
-		Collection result = new ArrayList(occs.size());
-		Iterator iter = occs.iterator();
-		while (iter.hasNext()) {
-			OccurrenceIF occ = (OccurrenceIF)iter.next();
-			if (ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_URI))
-				result.add(occ);
-		}
-		return result;
-	}
+  private static Collection filterOccurrences(Collection occs) {
+    Collection result = new ArrayList(occs.size());
+    Iterator iter = occs.iterator();
+    while (iter.hasNext()) {
+      OccurrenceIF occ = (OccurrenceIF) iter.next();
+      if (ObjectUtils.different(occ.getDataType(), DataTypes.TYPE_URI))
+        result.add(occ);
+    }
+    return result;
+  }
 
-	private static Collection filterVariants(Collection vns) {
-		Collection result = new ArrayList(vns.size());
-		Iterator iter = vns.iterator();
-		while (iter.hasNext()) {
-			VariantNameIF vn = (VariantNameIF)iter.next();
-			if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_URI))
-				result.add(vn);
-		}
-		return result;
-	}
-
+  private static Collection filterVariants(Collection vns) {
+    Collection result = new ArrayList(vns.size());
+    Iterator iter = vns.iterator();
+    while (iter.hasNext()) {
+      VariantNameIF vn = (VariantNameIF) iter.next();
+      if (ObjectUtils.different(vn.getDataType(), DataTypes.TYPE_URI))
+        result.add(vn);
+    }
+    return result;
+  }
+  
 }
