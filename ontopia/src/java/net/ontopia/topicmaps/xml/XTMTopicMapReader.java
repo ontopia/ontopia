@@ -219,7 +219,8 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
     try {
       if (log.isInfoEnabled()) {
         log.info("Parsing source " + source.getSystemId());
-        if (source.getEncoding() != null) log.info("Encoding: " + source.getEncoding());
+        if (source.getEncoding() != null)
+          log.info("Encoding: " + source.getEncoding());
         log.info("Parser: " + parser + " (namespace support: " + parser.getFeature("http://xml.org/sax/features/namespaces") + ")");
       }
       parser.parse(source);

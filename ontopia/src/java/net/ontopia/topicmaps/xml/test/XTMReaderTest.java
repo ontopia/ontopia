@@ -338,6 +338,26 @@ public class XTMReaderTest extends AbstractXMLTestCase {
         fail("Unknown cause of error: " + e);
     }
   }
+
+  public void testReificationMergeBug() throws IOException {
+    // tests a tricky case where topics are merged because of reification,
+    // and this causes the current topic to become a merged-away stub, thus
+    // leading to failures down the line.
+
+    // first read one topic map
+    TopicMapIF tm = readTopicMap("various", "reification-bug-1.xtm");
+
+    // then import the second one into it
+    String file = resolveFileName("various", "reification-bug-2.xtm");
+    XTMTopicMapReader reader = new XTMTopicMapReader(new File(file));
+    reader.importInto(tm); // this should not crash!
+
+    // do some testing verifying that the XTM was interpreted correctly
+    assertTrue("wrong number of topics", tm.getTopics().size() == 1);
+    assertTrue("topic map is reified", tm.getReifier() != null);
+    assertTrue("topic has no name",
+               !((TopicIF) tm.getTopics().iterator().next()).getTopicNames().isEmpty());
+  }
   
   // --- Supporting methods
 

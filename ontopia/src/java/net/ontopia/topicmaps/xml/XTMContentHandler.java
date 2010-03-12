@@ -674,7 +674,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
           // another topic.
           
           if (info.get(EL_TOPIC) == this.lazyTopic && this.lazyTopic != null) {
-            addSubjectIdentifier(this.lazyTopic, indicator);
+            TopicIF t = addSubjectIdentifier(this.lazyTopic, indicator);
+            if (t != this.lazyTopic) // topic was merged away
+              info.put(EL_TOPIC, t);
           } else {
             // Check to see if another topic has this addressable topic.
             TopicIF current_topic = (TopicIF)info.get(EL_TOPIC);
@@ -943,7 +945,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
       // E: subjectIdentity
       // -----------------------------------------------------------------------------
       else if (qName == EL_SUBJECTIDENTITY) {
-        // Pop element of parent stack
+        // Pop element off parent stack
         parents.pop();
       }
       // -----------------------------------------------------------------------------
@@ -1020,8 +1022,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
   // Misc. methods
   // ---------------------------------------------------------------------------
 
-  private void reify(ReifiableIF reifiable, TopicIF reifier) {
-    ReificationUtils.reify(reifiable, reifier);
+  // returns topic because reify() can merge topics
+  private TopicIF reify(ReifiableIF reifiable, TopicIF reifier) {
+    return ReificationUtils.reify(reifiable, reifier);
   }
 
   private boolean logError() {
@@ -1140,8 +1143,7 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     }
     
     // add subject indicator
-    addSubjectIdentifier(topic, locator);
-    return topic;
+    return addSubjectIdentifier(topic, locator);
   }
   
   protected TopicIF resolveSourceLocatorOrSubjectIndicator(LocatorIF locator) {
@@ -1337,16 +1339,19 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
         reify((ReifiableIF)tmobject, reifier);
     }
   }
-  
-  protected void addSubjectIdentifier(TopicIF topic, LocatorIF subjectIndicator) {
+
+  // can cause merging, therefore returns topic
+  protected TopicIF addSubjectIdentifier(TopicIF topic, LocatorIF subjectIndicator) {
     topic.addSubjectIdentifier(subjectIndicator);
     
     // handle implicit reification
     if (!(topic instanceof LazyTopic)) {
       TMObjectIF reified = topicmap.getObjectByItemIdentifier(subjectIndicator);
       if (reified != null && reified instanceof ReifiableIF)
-        reify((ReifiableIF)reified, topic);
+        return reify((ReifiableIF)reified, topic);
     }
+
+    return topic;
   }
 
   // --------------------------------------------------------------------------
