@@ -88,9 +88,9 @@
 
     <ivy:settings id="ivy.instance" file="${basedir}/ivysettings.xml" />
     <ivy:resolve />
-    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" />
+    <ivy:retrieve organisation="net.ontopia" module="ontopia-engine" conf="build" />
 
-    <ivy:cachepath pathid="project.classpath.ivy" organisation="net.ontopia" module="ontopia" conf="build" />
+    <ivy:cachepath pathid="project.classpath.ivy" organisation="net.ontopia" module="ontopia-engine" conf="build" />
 
     <path id="project.classpath.nolog4j">
       <pathelement location="${basedir}/3rdparty/ontoboot.jar" />
