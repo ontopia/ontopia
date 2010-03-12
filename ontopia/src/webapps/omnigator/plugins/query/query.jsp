@@ -163,6 +163,7 @@ try {
 
 } catch (InvalidQueryException e) {
   error = "<p>Error: " + e.getMessage() + "</p>";
+  millis = 0;
 } finally {
   navApp.returnTopicMap(topicmap);
 }
