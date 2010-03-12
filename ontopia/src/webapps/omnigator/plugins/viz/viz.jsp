@@ -28,10 +28,10 @@
       w_newWidth=window.innerWidth - netscapeScrollWidth;
       w_newHeight=window.innerHeight - netscapeScrollWidth;
     }
-    // The use of max-width was there when I donwloaded this code.
+    // The use of max-width was there when I downloaded this code.
     // I don't really see the need to have bounds, and the initial
     // width was too small (gave white space area when maximizing
-    // The window.
+    // the window.
     // if (w_newWidth > w_maxWidth)
     //     w_newWidth = w_maxWidth;
     // if (w_newHeight > w_maxHeight)
