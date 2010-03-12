@@ -104,7 +104,7 @@ and Debian) and SunSolaris.</li>
     <table width="99%" border="0" cellpadding="0" cellspacing="0"
       id="footerTable">
       <tr>
-        <td>Copyright &copy; 2001-2009 <a href="http://www.ontopia.net/">Ontopia
+        <td>Copyright &copy; 2001-2010 <a href="http://www.ontopia.net/">Ontopia
         AS</a>.</td>
         <td align="right"><b>*</b> built using <a
           href="http://www.ontopia.net/">Ontopia</a>.</td>
