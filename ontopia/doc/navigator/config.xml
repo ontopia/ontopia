@@ -428,6 +428,79 @@ Below is shown an example configuration element.
 </example>
 </section>
 
+<section id="sect-pattern-source">
+<title>RDBMSPatternSingleTopicMapSource</title>
+
+<para>A source producing a single topic map with a defined reference
+ID (Omnigator ID) by searching the RDBMS for a matching topic map. If
+multiple topic maps match the given search pattern the one with the
+highest ID is used. This source is useful when you have a topic map in
+the RDBMS which is frequently deleted and re-imported. You can then
+use this source to avoid having to change
+<filename>tm-sources.xml</filename> every time the topic map is
+reimported.</para>
+
+<para>These are the parameters supported by the source:</para>
+
+<variablelist>
+<varlistentry>
+<term>id</term>
+<listitem>
+<para>The ID of the source. Must not be the same as any other source
+ID in the repository, but can otherwise be anything at all.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>referenceId</term>
+<listitem>
+<para>The Omnigator ID of the topic map produced by the source. This
+is the ID used in your code to refer to the topic map.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>propertyFile</term>
+<listitem>
+<para>The RDBMS properties file.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>match</term>
+<listitem>
+<para>Which field in the database to match. It is best to set this to
+<symbol>title</symbol>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>pattern</term>
+<listitem>
+<para>The value to search for.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para>Below is an example configuration for this source:</para>
+
+<literallayout><![CDATA[
+<source class="net.ontopia.topicmaps.impl.rdbms.RDBMSPatternSingleTopicMapSource">
+  <param name="id" value="pattern"/>
+  <param name="referenceId" value="mytopicmap.xtm"/>
+  <param name="propertyFile" value="rdbms.properties"/>
+  <param name="match" value="title"/>
+  <param name="pattern" value="mytopicmap.xtm"/>
+</source>]]>
+</literallayout>
+
+<para>If, when importing topic maps from file, using the following
+command will ensure that the title of the topic map is set correctly,
+so that the source as configured above will pick it up.</para>
+
+<literallayout>
+java net.ontopia.topicmaps.cmdlineutils.RDBMSImport \
+  --title mytopicmap.xtm \
+  rdbms.properties whateverfile.xtm
+</literallayout>
+</section>
+
 <section>
 <title>The URLTopicMapSource</title>
 
