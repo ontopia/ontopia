@@ -11,7 +11,7 @@
 
 <body>
 
-<%@ include file="fragments/topbox.jsp"%>
+<%@ include file="topbox.jsp"%>
 
 <div class=home>Home/</div>
 <div class=breadcrumbs><template:get name="breadcrumbs"/></div>

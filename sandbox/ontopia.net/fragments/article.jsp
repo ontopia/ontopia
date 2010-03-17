@@ -1,4 +1,4 @@
-<%@ include file="../declarations.jsp"%>
+<%@ include file="declarations.jsp"%>
 
   <p>
     <tolog:choose>

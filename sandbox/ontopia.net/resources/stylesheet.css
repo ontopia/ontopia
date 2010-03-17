@@ -263,9 +263,11 @@ td.column p {
 
 #bottombox {
   font-size: 10pt;
+  height: 550px;
 }
 
 #spacer {
+  width: 7%;
 }
 
 /* SEcTION PAGES */

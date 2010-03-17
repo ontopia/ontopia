@@ -11,7 +11,7 @@
 
 <body>
 
-<%@ include file="fragments/topbox.jsp"%>
+<%@ include file="topbox.jsp"%>
 
 <template:get name="body"/>
 
