@@ -4,15 +4,15 @@
     <ivy:settings id="ivy.instance" file="${basedir}/ivysettings.xml" />
     <ivy:cleancache />
     <ivy:resolve file="ivy.xml" />
-    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" sync="true" />
+    <ivy:retrieve organisation="net.ontopia" module="ontopia-engine" conf="build" sync="true" />
   </target>
   <target name="resolve.ivy">
     <ivy:settings id="ivy.instance" file="${basedir}/ivysettings.xml" />
     <ivy:resolve file="ivy.xml" />
-    <ivy:retrieve organisation="net.ontopia" module="ontopia" conf="build" sync="true" />
+    <ivy:retrieve organisation="net.ontopia" module="ontopia-engine" conf="build" sync="true" />
   </target>
   <target name="report.ivy">
     <ivy:settings id="ivy.instance" file="${basedir}/ivysettings.xml" />
-    <ivy:report organisation="net.ontopia" module="ontopia" conf="build" todir="build/ivy" />
+    <ivy:report organisation="net.ontopia" module="ontopia-engine" conf="build" todir="build/ivy" />
   </target>
 </project>
