@@ -1251,10 +1251,22 @@
     </patternset>
     
     <echo>Compiling net.ontopia classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+    <javac srcdir="${java.path}" 
+            destdir="${build.classes}" 
+            optimize="${optimize}" 
+            deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            includeantruntime="false" 
+            classpathref="project.classpath" source="1.5">
       <patternset refid="sources.ontopia.core" />
     </javac>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+    <javac srcdir="${java.path}" 
+            destdir="${build.classes}" 
+            optimize="${optimize}" 
+            deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            includeantruntime="false" 
+            classpathref="project.classpath" source="1.5">
       <patternset refid="sources.ontopia.aux" />
     </javac>
     <echo>Copying RelaxNG schemas</echo>
@@ -2103,7 +2115,11 @@
     <!-- Bump build numbers and update product version information -->
     <delete file="${build.classes}/net/ontopia/Ontopia.class" />
     <delete file="${src.path}/java/net/ontopia/Ontopia.java" />
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+    <javac srcdir="${java.path}" destdir="${build.classes}" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            includeantruntime="false" 
+            classpathref="project.classpath" source="1.5">
       <patternset refid="sources.product" />
     </javac>
     <java classname="net.ontopia.product.CreateProductClass" fork="true" classpathref="project.classpath">
