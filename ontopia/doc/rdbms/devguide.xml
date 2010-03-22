@@ -786,4 +786,30 @@ Done.
 
   </section>
 
+<section>
+<title>Performance tuning</title>
+
+<para>Ontopia comes with a SQL profiler called jdbcspy, which can be
+used to check the performance of the SQL queries sent to the database
+by the database backend. To enable jdbcspy, please add "jdbcspy:" at
+the front of your JDBC URL in the
+<filename>rdbms.properties</filename> file. That is, if the setting
+was:</para>
+
+<literallayout>
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:mysql://localhost/topicmaps  
+</literallayout>
+
+<para>then change it to:</para>
+
+<literallayout>
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbcspy:jdbc:mysql://localhost/topicmaps  
+</literallayout>
+
+<para>This is sufficient to make jdbcspy log all SQL queries. To get a
+report, go to the "Manage" page in the Ontopia web interface, and
+click on the jdbcspy report button on the right-hand side. This will
+show a report of all SQL queries sent, which can then be used to
+analyze performance problems.</para>
+</section>
 </article>
