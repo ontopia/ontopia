@@ -8,12 +8,7 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic' %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/output'    prefix='output' %>
 
-<% 
-// get id of topic map from request parameter
-String refkey = request.getParameter("tm");
-%>
-
-<logic:context tmparam="tm" settm="topicmap">
+<logic:context>
   <template:insert template='/views/template-one-column1.jsp'>
     <template:put name='title' body='true'>[Admin] jdbcspy report</template:put>
  
