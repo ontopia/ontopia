@@ -71,7 +71,7 @@ Total memory: <%= Runtime.getRuntime().totalMemory() %>,
 Free memory: <%= Runtime.getRuntime().freeMemory() %>, 
 Processors: <%= Runtime.getRuntime().availableProcessors() %>
 </p>
-<p>Report generated: <%= new java.util.Date() %>, <%= net.ontopia.products.TopicMapEngine.getInstance().toString() %></p>
+<p>Report generated: <%= new java.util.Date() %>, <%= net.ontopia.Ontopia.getInfo() %></p>
 <% } %>
     </template:put>
 
