@@ -85,6 +85,7 @@
 
   <group>
     <name>tmapi</name>
+    <test>net.ontopia.topicmaps.impl.tmapi2.test.LocatorExternalFormTest</test>
     <test>net.ontopia.topicmaps.impl.tmapi2.test.TopicMapSystemFactoryTest</test>
     <test>net.ontopia.topicmaps.impl.tmapi2.test.MemoryTopicMapSystemTest</test>
     <test>net.ontopia.topicmaps.impl.tmapi2.test.TestTMAPIScopedIndexWithVariants</test>
