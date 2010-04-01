@@ -99,6 +99,16 @@ There were 4 failures:
       </section>
 
       <section>
+      <title>MySQL</title>
+
+      <para>To create a database which stores text in UTF-8 and uses case-insensitive collation, use the following DDL command:</para>
+
+<literallayout>
+CREATE DATABASE topicmaps DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_bin;
+</literallayout>
+      </section>
+
+      <section>
       <title>Oracle</title>
 
       <para>To modify a database to store text in UTF-8,
