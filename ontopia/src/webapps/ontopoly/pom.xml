@@ -148,7 +148,7 @@
     <repositories>
         <repository>
             <id>Ontopia</id>
-            <url>http://ontopia.googlecode.com/svn/maven-repository</url>
+            <url>http://ontopia.googlecode.com/svn/maven-snapshot-repository</url>
         </repository>
     </repositories>
 </project>
