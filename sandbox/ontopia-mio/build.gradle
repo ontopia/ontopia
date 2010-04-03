@@ -1,0 +1,45 @@
+
+group = 'net.ontopia'
+version = '0.1.0'
+
+apply plugin: 'java'
+apply plugin: 'osgi'
+apply plugin: 'maven'
+
+gradle.taskGraph.whenReady {taskGraph ->
+   if (!taskGraph.hasTask(':release')) {
+       version += '-SNAPSHOT'
+   }
+}
+
+repositories {
+    mavenCentral()
+    mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-repository'
+    mavenRepo urls: 'http://www.tmapi.org/maven-repository/'
+    mavenRepo urls: 'http://repository.jboss.com/maven2/'
+}
+
+dependencies {
+    compile group: 'net.ontopia', name: 'ontopia-engine', version: '5.0.2'
+    compile group: 'org.tmapi', name: 'tmapi', version: '2.0.2'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.5.11'
+    compile files('lib/semagia-mio-0.9.5.jar')
+
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+jar {
+    manifest {
+      attributes 'Implementation-Title': 'Ontopia MIO', 'Implementation-Version': version
+    }
+}
+
+artifacts {
+    archives jar
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "file://$buildDir/maven-repo/")
+    }
+}
