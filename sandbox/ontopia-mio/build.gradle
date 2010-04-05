@@ -15,14 +15,14 @@ gradle.taskGraph.whenReady {taskGraph ->
 repositories {
     mavenCentral()
     mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-repository'
+    mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-snapshot-repository'
+    mavenRepo urls: 'http://repository.jboss.org/maven2'
     mavenRepo urls: 'http://www.tmapi.org/maven-repository/'
-    mavenRepo urls: 'http://repository.jboss.com/maven2/'
 }
 
 dependencies {
-    compile group: 'net.ontopia', name: 'ontopia-engine', version: '5.0.2'
-    compile group: 'org.tmapi', name: 'tmapi', version: '2.0.2'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.5.11'
+    compile 'net.ontopia:ontopia-engine:5.1.0-SNAPSHOT'
+    compile 'org.slf4j:slf4j-api:1.5.11'
     compile files('lib/semagia-mio-0.9.5.jar')
 
     testCompile group: 'junit', name: 'junit', version: '4.+'
