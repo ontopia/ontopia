@@ -924,6 +924,213 @@ cause the following property to be ignored.
 </section>
 
     <section>
+      <title>Native RDBMS full-text</title>
+
+      <para>Instead of using the Lucene integration with the RDBMS
+      Backend Connector one can take advantage of the native full-text
+      support that the database may have. This support can range from
+      simple LIKE operator queries to advanced full-text indexing
+      support. Starting with version 2.0 of the OKS Enterprise Edition
+      one can make use of these native features.</para>
+
+      <para>In the
+      <symbol>net.ontopia.infoset.fulltext.impl.rdbms</symbol> package
+      there is a class called <symbol>RDBMSSearcher</symbol> that
+      implements the <symbol>SearcherIF</symbol> interface. Pass your
+      RDBMS <symbol>TopicMapIF</symbol> instance to the single
+      constructor of this class and you have a searcher instance that
+      let you search for topic name, variant name, and occurrences using
+      the native pattern language.</para>
+
+      <para>The actual queries that are issued and the syntax that are
+      supported is usually database specific, but the default
+      behaviour is to use the LIKE operator. This means that you can
+      use the '%' symbol to specify wildcards in your queries. Most
+      relational databases support the LIKE operator, and therefore
+      the default should be ok for most databases. Note that the
+      actual query will make use of the <symbol>lower</symbol> function
+      to make it a case-insensitive query.</para>
+
+      <para>In addition to the generic RDBMS full-text support the OKS
+      comes has support for several database-specific full-text
+      implementations. They are all described below.</para>
+
+      <para>Note that enabling native RDBMS full-text through the <symbol>net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type</symbol> database property will also enable it for the
+<symbol>value-like</symbol> tolog predicate.</para>
+
+    <section>
+      <title>Oracle Text</title>
+
+      <para>Recent versions of Oracle comes with full-text
+support included. The component is called Oracle Text. In older versions Oracle
+Text was an optional component and had to be purchased and installed
+separately.</para>
+
+      <para>To enable use of  Oracle Text in the OKS you will have to set the
+      <symbol>net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type</symbol>
+      database property to
+      <symbol>oracle_text</symbol>. You will also have to make sure that the
+      columns <symbol>TM_TOPIC_NAME.content</symbol>,
+      <symbol>TM_VARIANT_NAME.content</symbol>, and
+      <symbol>TM_OCCURRENCE.content</symbol> are setup to be indexed
+      by Oracle Text.</para>
+
+      <para>Here are some sample statements to set this up for
+      Oracle. Note that they require the Oracle Context Option, which
+      for Oracle 8.x needs to be installed separately, but for Oracle
+      9i and later it should be installed by default.</para>
+
+    <programlisting><![CDATA[
+create index TEXT_TOPIC_NAME on TM_TOPIC_NAME(content) 
+  indextype is ctxsys.context 
+  parameters ('sync(on commit) datastore ctxsys.default_datastore filter ctxsys.null_filter section group ctxsys.auto_section_group');
+create index TEXT_OCCURRENCE on TM_OCCURRENCE(content) 
+  indextype is ctxsys.context 
+  parameters ('sync(on commit) datastore ctxsys.default_datastore filter ctxsys.null_filter section group ctxsys.auto_section_group');
+create index TEXT_VARIANT_NAME on TM_VARIANT_NAME(content) 
+  indextype is ctxsys.context 
+  parameters ('sync(on commit) datastore ctxsys.default_datastore filter ctxsys.null_filter section group ctxsys.auto_section_group');
+]]></programlisting>
+
+    <para>These indexes will be kept up to date on every commit. If
+    you don't need to have them synced that often, consider changing
+    the sync parameter.</para>
+
+<!--
+      <para>Be aware that Oracle Text does not keep the indexes up to
+      date automatically. A possible solution to this is to make sure
+      that the ctxsrv process is running and altering the indexes so
+      that they are rebuilt automatically. Note that this is not
+      neccessarily what you want.</para>
+
+    <programlisting><![CDATA[
+alter index TEXT_TOPIC_NAME rebuild online parameters('sync memory 45M'); 
+alter index TEXT_OCCURRENCE rebuild online parameters('sync memory 45M');
+alter index TEXT_VARIANT_NAME rebuild online parameters('sync memory 45M'); 
+]]></programlisting>
+-->
+
+      <para>An error message will be issued by the Oracle RDBMS if one
+      attempts to use the Oracle Text query when the columns have not been
+      full-text indexed, so if this happens you will have to run the
+      create index statements above or similar ones.</para>
+
+      <para>Please consult your database documentation for more
+      information on Oracle Text.</para>
+
+      <!--para>You can customize the queries by modifying the
+      'RDBMSSearcher.searchLike' query in your queries.xml file. Note
+      that the queries.xml file that is currently shipped with the OKS
+      is stored inside the <symbol>oks-enterprise.jar</symbol>
+      file. You will need to unzip the file to modify the
+      <symbol>queries.xml</symbol> file.</para-->
+
+    </section>
+
+    <section>
+      <title>PostgreSQL full-text</title>
+
+      <para>The full-text support in PostgreSQL is implemented through
+a module called <ulink
+url="http://www.sai.msu.su/~megera/postgres/gist/tsearch/V2/">tsearch2</ulink>. This
+module will usually have to be installed manually before it can be
+used. This is typically done by logging in as the PostgreSQL
+administrator user and running the
+<filename>${PSQL_LIB}/contrib/tsearch2.sql</filename> script in the
+database, e.g. using the <symbol>psql</symbol> command line
+utility. If you later which to uninstall tsearch2 that can be done
+with the <filename>${PSQL_LIB}/contrib/untsearch2.sql</filename>
+script.</para>
+
+    <para>The next step is to grant access to the tsearch2 tables to
+the database user that is used by the OKS. Replace
+<symbol>myuser</symbol> with the name of your database user below.</para>
+
+      <programlisting><![CDATA[
+grant all on pg_ts_cfg to myuser;
+grant all on pg_ts_cfgmap to myuser;
+grant all on pg_ts_dict to myuser;
+grant all on pg_ts_parser to myuser;
+]]></programlisting>
+  
+      <para>tsearch2 will then have to be told which of its configurations that are to be used. The OKS uses a configuration called <symbol>default</symbol>. The configurations are mapped to the server encoding. Issue the following statement to set the locale for the default configration.</para>
+
+      <programlisting><![CDATA[
+update pg_ts_cfg set locale='en_US.UTF-8' where ts_name='default';
+]]></programlisting>
+
+      <para>If you don't know what the server encoding is then the following query will tell you:</para>
+      <programlisting><![CDATA[
+select setting from pg_settings where name='lc_ctype';
+]]></programlisting>
+
+      <para>The last step is to add a tsearch2 column and an index to
+each of the three tables that are to be searched. To keep the index
+up-to-date a set of triggers will also have to be added.</para>
+
+      <programlisting><![CDATA[
+/* add columns */
+alter table TM_TOPIC_NAME add column tsearch2 tsvector;
+alter table TM_VARIANT_NAME add column tsearch2 tsvector;
+alter table TM_OCCURRENCE add column tsearch2 tsvector;
+/* create indexes */
+create index tsearch2_index_tbn on TM_TOPIC_NAME using gist(tsearch2);
+create index tsearch2_index_tvn on TM_VARIANT_NAME using gist(tsearch2);
+create index tsearch2_index_to on TM_OCCURRENCE using gist(tsearch2);
+/* populate indexed columns */
+update TM_TOPIC_NAME set tsearch2=to_tsvector('default', coalesce(content,''));
+update TM_VARIANT_NAME set tsearch2=to_tsvector('default', coalesce(content, ''));
+update TM_OCCURRENCE set tsearch2=to_tsvector('default', coalesce(content, ''));
+/* add triggers */
+create trigger tsearch2_update_tbn before update or insert on TM_TOPIC_NAME for each row execute procedure tsearch2(tsearch2, content);
+create trigger tsearch2_update_tvn before update or insert on TM_VARIANT_NAME for each row execute procedure tsearch2(tsearch2, content);
+create trigger tsearch2_update_to before update or insert on TM_OCCURRENCE for each row execute procedure tsearch2(tsearch2, content);
+]]></programlisting>
+
+      <para>To enable use of tsearch2 in the OKS you will have to
+set the
+<symbol>net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type</symbol>
+database property to <symbol>postgresql</symbol> or <symbol>tsearch2</symbol>.</para>
+    </section>
+
+    <section>
+      <title>Microsoft SQL Server full-text</title>
+
+      <para>The full-text support in SQL Server is not enabled by default, so it will have to be enabled:</para>
+
+      <programlisting><![CDATA[
+EXEC sp_fulltext_database 'enable';
+]]></programlisting>
+
+      <para>Then a full-text catalog has to be created and one
+full-text index added to each of the three tables that are be
+indexed. The database server will keep the full-text indexes
+automatically up to date as changes occur.</para>
+
+      <programlisting><![CDATA[
+create fulltext catalog okscatalog as default;
+create fulltext index on TM_TOPIC_NAME(content) key index TM_TOPIC_NAME_pkey;
+create fulltext index on TM_VARIANT_NAME(content) key index TM_VARIANT_NAME_pkey;
+create fulltext index on TM_OCCURRENCE(content) key index TM_OCCURRENCE_pkey;
+alter fulltext catalog okscatalog reorganize;
+]]></programlisting>
+
+      <para>Note that the <symbol>TM_TOPIC_NAME_pkey</symbol>,
+<symbol>TM_VARIANT_NAME_pkey</symbol> and
+<symbol>TM_OCCURRENCE_pkey</symbol> indexes referenced above are
+primary key indexe names, but they may not actually have those names in
+your database. You will have to look up the actual names of those
+three indexes of the given three names don't work.</para>
+
+      <para>To enable use of Microsoft SQL Server full-text in the OKS you will have to
+set the
+<symbol>net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type</symbol>
+database property to <symbol>sqlserver</symbol>.</para>
+                
+    </section>
+                
+    </section>
+    <section>
       <title>Setting the CLASSPATH</title>
 
       <para>In order for the Java Virtual Machine to be able to load
