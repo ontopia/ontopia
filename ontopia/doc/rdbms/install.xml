@@ -863,7 +863,7 @@ alter database topicmaps set read_committed_snapshot on;
       configuration files. The first one is a mapping file that
       describes the mapping between the database schema and the topic
       map object model. The second contains all queries that are used
-      by the topic map implementation. The OKS is able to locate the
+      by the topic map implementation. Ontopia is able to locate the
       default mapping files automatically.</para>
 
       <para>In the rare situations where you'd want to override the
@@ -930,8 +930,7 @@ cause the following property to be ignored.
       Backend Connector one can take advantage of the native full-text
       support that the database may have. This support can range from
       simple LIKE operator queries to advanced full-text indexing
-      support. Starting with version 2.0 of the OKS Enterprise Edition
-      one can make use of these native features.</para>
+      support.</para>
 
       <para>In the
       <symbol>net.ontopia.infoset.fulltext.impl.rdbms</symbol> package
@@ -951,8 +950,8 @@ cause the following property to be ignored.
       actual query will make use of the <symbol>lower</symbol> function
       to make it a case-insensitive query.</para>
 
-      <para>In addition to the generic RDBMS full-text support the OKS
-      comes has support for several database-specific full-text
+      <para>In addition to the generic RDBMS full-text support Ontopia
+      comes with support for several database-specific full-text
       implementations. They are all described below.</para>
 
       <para>Note that enabling native RDBMS full-text through the <symbol>net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type</symbol> database property will also enable it for the
@@ -966,7 +965,7 @@ support included. The component is called Oracle Text. In older versions Oracle
 Text was an optional component and had to be purchased and installed
 separately.</para>
 
-      <para>To enable use of  Oracle Text in the OKS you will have to set the
+      <para>To enable use of  Oracle Text in Ontopia you will have to set the
       <symbol>net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type</symbol>
       database property to
       <symbol>oracle_text</symbol>. You will also have to make sure that the
@@ -1020,7 +1019,7 @@ alter index TEXT_VARIANT_NAME rebuild online parameters('sync memory 45M');
 
       <!--para>You can customize the queries by modifying the
       'RDBMSSearcher.searchLike' query in your queries.xml file. Note
-      that the queries.xml file that is currently shipped with the OKS
+      that the queries.xml file that is currently shipped with the Ontopia
       is stored inside the <symbol>oks-enterprise.jar</symbol>
       file. You will need to unzip the file to modify the
       <symbol>queries.xml</symbol> file.</para-->
@@ -1043,7 +1042,7 @@ with the <filename>${PSQL_LIB}/contrib/untsearch2.sql</filename>
 script.</para>
 
     <para>The next step is to grant access to the tsearch2 tables to
-the database user that is used by the OKS. Replace
+the database user that is used by Ontopia. Replace
 <symbol>myuser</symbol> with the name of your database user below.</para>
 
       <programlisting><![CDATA[
@@ -1053,7 +1052,7 @@ grant all on pg_ts_dict to myuser;
 grant all on pg_ts_parser to myuser;
 ]]></programlisting>
   
-      <para>tsearch2 will then have to be told which of its configurations that are to be used. The OKS uses a configuration called <symbol>default</symbol>. The configurations are mapped to the server encoding. Issue the following statement to set the locale for the default configration.</para>
+      <para>tsearch2 will then have to be told which of its configurations that are to be used. Ontopia uses a configuration called <symbol>default</symbol>. The configurations are mapped to the server encoding. Issue the following statement to set the locale for the default configration.</para>
 
       <programlisting><![CDATA[
 update pg_ts_cfg set locale='en_US.UTF-8' where ts_name='default';
@@ -1087,7 +1086,7 @@ create trigger tsearch2_update_tvn before update or insert on TM_VARIANT_NAME fo
 create trigger tsearch2_update_to before update or insert on TM_OCCURRENCE for each row execute procedure tsearch2(tsearch2, content);
 ]]></programlisting>
 
-      <para>To enable use of tsearch2 in the OKS you will have to
+      <para>To enable use of tsearch2 in Ontopia you will have to
 set the
 <symbol>net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type</symbol>
 database property to <symbol>postgresql</symbol> or <symbol>tsearch2</symbol>.</para>
@@ -1122,7 +1121,7 @@ primary key indexe names, but they may not actually have those names in
 your database. You will have to look up the actual names of those
 three indexes of the given three names don't work.</para>
 
-      <para>To enable use of Microsoft SQL Server full-text in the OKS you will have to
+      <para>To enable use of Microsoft SQL Server full-text in Ontopia you will have to
 set the
 <symbol>net.ontopia.infoset.fulltext.impl.rdbms.RDBMSSearcher.type</symbol>
 database property to <symbol>sqlserver</symbol>.</para>
