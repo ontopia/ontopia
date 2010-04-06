@@ -1,6 +1,20 @@
-
+/*
+ * Gradle 0.9 build file.
+ * 
+ * - Download Gradle from <http://www.gradle.org/>
+ * - Execute gradle build
+ * 
+ * TODO:
+ * - Zip/Tar
+ * - Include snapshot repository into POM
+ * - Use semagia-mio from Maven repository
+ * 
+ */
 group = 'net.ontopia'
 version = '0.1.0'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.5
 
 apply plugin: 'java'
 apply plugin: 'osgi'
