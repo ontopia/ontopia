@@ -110,7 +110,12 @@ public class Processor {
         }
       }
     } catch (Exception e) {
-       throw new DB2TMException("Error occurred in addRelations call.", e);
+      if (e instanceof DB2TMException)
+        // don't wrap if it's already a DB2TMException, because this causes
+        // the cmd-line tool to hide the real error
+        throw (DB2TMException) e; 
+      else
+        throw new DB2TMException("Error occurred in addRelations call.", e);
     } finally {
       ctx.close();
     }
