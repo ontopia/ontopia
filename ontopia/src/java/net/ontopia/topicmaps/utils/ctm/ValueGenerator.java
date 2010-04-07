@@ -1,8 +1,11 @@
 
 package net.ontopia.topicmaps.utils.ctm;
 
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 
@@ -52,6 +55,18 @@ public class ValueGenerator implements ValueGeneratorIF {
   }
 
   public LocatorIF getLocator() {
+    if (locator == null && literal != null &&
+        datatype.equals(DataTypes.TYPE_STRING)) {
+      // it's possible for tolog updates to put us in this position, because
+      // tolog may produce string values which it then attempts to use as
+      // locator values in the CTM part. here we make a best-effort attempt
+      // to handle this.
+      try {
+        return new URILocator(literal);
+      } catch (java.net.MalformedURLException e) {
+        throw new OntopiaRuntimeException("Malformed URL: <" + literal + ">");
+      }
+    }
     return locator;
   }  
   

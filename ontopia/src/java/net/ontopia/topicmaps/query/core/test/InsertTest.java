@@ -279,6 +279,19 @@ public class InsertTest extends AbstractQueryTest {
            "on:has-association-type($AF : on:association-field, $ATYPE : on:association-type)");
   }
 
+  public void testTurnStringIntoURI() throws InvalidQueryException, IOException {
+    makeEmpty();
+
+    update("insert " +
+           "  topic $psi . " +
+           "from " +
+           "  $psi = \"http://example.com\" ");
+
+    LocatorIF psi = new URILocator("http://example.com");
+    TopicIF topic = topicmap.getTopicBySubjectIdentifier(psi);
+    assertTrue("topic not found by PSI", topic != null);
+  }
+
   // tests for CTM/tolog integration
 
   // ===== VALID
