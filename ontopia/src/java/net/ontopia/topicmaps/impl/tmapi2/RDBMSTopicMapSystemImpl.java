@@ -54,7 +54,24 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
   }
 
   public void close() {
-    // nothing to do
+    for (Object obj: source.getReferences()) {
+      TopicMapReferenceIF ref = (TopicMapReferenceIF) obj;
+      if (ref.isOpen() && !ref.isDeleted()) {
+        TopicMapStoreIF store = null;
+        try {
+           store = ref.createStore(false);
+        }
+        catch (IOException ex) {
+          //TODO: Log the error? Raise a TMAPIRuntimeEx?
+          continue;
+        }
+        store.commit();
+      }
+      // The underlying store gets closed as well.
+      ref.close();
+    }
+    source = null;
+    storeFactory = null;
   }
 
   private LocatorIF createLocatorIF(String reference) {

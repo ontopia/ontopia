@@ -100,8 +100,8 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * 
    * @see org.tmapi.core.TopicMap#close()
    */
-
   public void close() {
+    wrapped.getStore().commit();
     wrapped.getStore().close();
   }
 
@@ -111,7 +111,6 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
    * @see org.tmapi.core.TopicMap#createAssociation(org.tmapi.core.Topic,
    * org.tmapi.core.Topic[])
    */
-
   public Association createAssociation(Topic type, Topic... scope) {
     Check.typeNotNull(this, type);
     Check.scopeNotNull(this, scope);
