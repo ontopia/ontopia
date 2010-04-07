@@ -579,6 +579,15 @@ table below.
 </tbody>
 </tgroup>
 </informaltable>
+
+<para>Note that quoting characters in text strings are escaped by
+repeating them. In other words, if you use (") to quote your strings,
+and you want to put a " in a string, write it as "". Below is an
+example:</para>
+
+<literallayout>
+40;"Foo";"This is a ""real"" example"
+</literallayout>
 </section>
 
 <section>
