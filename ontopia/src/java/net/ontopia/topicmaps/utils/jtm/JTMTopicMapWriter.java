@@ -128,6 +128,37 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
   }
 
   /**
+   * EXPERIMENTAL: Write out a collections of topics and associations
+   * as a JTM fragment, disguised as a complete topic map.
+   */
+  public void write(Collection<TopicIF> topics,
+                    Collection<AssociationIF> assocs) throws IOException {
+    baseLoc = null;
+    writer.object().pair("version", VERSION);
+    writer.pair("item_type", "topicmap");
+
+    writer.key("topics").array();
+    for (TopicIF topic : topics) {
+      if (baseLoc == null)
+        baseLoc = topic.getTopicMap().getStore().getBaseAddress();
+      serializeTopic(topic, false);
+    }
+    writer.endArray();
+
+    writer.key("associations").array();
+    for (AssociationIF assoc : assocs)
+      serializeAssociation(assoc, false);
+    for (TopicIF instance : topics)
+      for (TopicIF type : (Collection<TopicIF>) instance.getTypes())
+        serializeTypeInstanceAssociation(type, instance);
+
+    writer.endArray();
+
+    writer.endObject();
+    writer.finish();
+  }
+
+  /**
    * INTERNAL: Serializes a complete topic map to the JTM output stream.
    * 
    * @param tm the topic map to be serialized as JTM.
