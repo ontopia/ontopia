@@ -308,7 +308,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
   }
 
   public void remove() {
-		// DeletionUtils.removeDependencies(this);
+    // DeletionUtils.removeDependencies(this);
     getStore().delete(true);
   }
 
@@ -354,19 +354,19 @@ public class TopicMap extends TMObject implements TopicMapIF {
   // -----------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return (TopicIF)loadField(LF_reifier);
-	}
+    return (TopicIF)loadField(LF_reifier);
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null) oldReifier.setReified(null);
+    if (reifier != null) reifier.setReified(this);
+  }
   
   // -----------------------------------------------------------------------------
   // Misc. methods
