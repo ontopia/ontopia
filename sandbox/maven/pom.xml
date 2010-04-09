@@ -25,6 +25,7 @@
 		<module>ontopia-db2tm</module>
 		<module>ontopia-viz</module>
 		<module>ontopia-classify</module>
+		<module>ontopia-realm</module>
 	</modules>
 	
 </project>
