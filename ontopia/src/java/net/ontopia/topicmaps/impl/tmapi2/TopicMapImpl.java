@@ -158,12 +158,10 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
     
     // check if we have a 
     while (getConstructByItemIdentifier(itemIdentifier)!=null) {
-    	itemIdentifier = createLocator("urn:x-ontopia" + System.currentTimeMillis()); // using time to hopefully get an unique locator
+      itemIdentifier = createLocator("urn:x-ontopia" + System.currentTimeMillis()); // using time to hopefully get an unique locator
     }
     topic.addItemIdentifier(itemIdentifier);	
-    
-    
-    
+
     return topic;
   }
 
