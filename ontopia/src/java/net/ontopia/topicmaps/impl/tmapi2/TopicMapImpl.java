@@ -156,12 +156,11 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
     TopicImpl topic = wrapTopic(wrapped.getBuilder().makeTopic());
     Locator itemIdentifier = createLocator("urn:x-ontopia" + System.currentTimeMillis()); // using time to hopefully get an unique locator
     
-    // check if we have a 
+    // check if we have a construct with the generated item identifier
     while (getConstructByItemIdentifier(itemIdentifier)!=null) {
       itemIdentifier = createLocator("urn:x-ontopia" + System.currentTimeMillis()); // using time to hopefully get an unique locator
     }
-    topic.addItemIdentifier(itemIdentifier);	
-
+    topic.addItemIdentifier(itemIdentifier);
     return topic;
   }
 
