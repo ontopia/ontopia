@@ -18,9 +18,9 @@ public class TestableTMLoginModule extends TMLoginModule {
   /**
    * INTERNAL: Return a topicmap via a hard-coded file-path.
    */
-  protected TopicMapIF getTopicMap(String jndiname, String tmid) {
+  protected TopicMapIF getTopicMap() {
     try {
-      return ImportExportUtils.getReader(new java.io.File(tmid)).read();
+      return ImportExportUtils.getReader(new java.io.File(topicmapId)).read();
     } catch (java.io.IOException e) {
       throw new OntopiaRuntimeException(e);
     } 

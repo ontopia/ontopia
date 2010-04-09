@@ -820,6 +820,7 @@
     <include name="net/ontopia/topicmaps/nav2/servlets/*.java" />
     <include name="net/ontopia/topicmaps/nav2/appservers/**/*.java" />
     <include name="net/ontopia/topicmaps/nav2/webapps/**/*.java" />
+    <include name="net/ontopia/topicmaps/nav2/realm/*.java" />
     
     <exclude name="net/ontopia/topicmaps/nav2/webapps/ontopoly/**/*.java" />
     
@@ -856,6 +857,8 @@
     <include name="net/ontopia/topicmaps/nav2/webapps/**/*.class" />
     
     <exclude name="net/ontopia/topicmaps/nav2/webapps/ontopoly/**/*.class" />
+
+	<exclude name="net/ontopia/topicmaps/nav2/realm/*.class" />
     
     <!-- Using packages from old nav framework -->
     <include name="net/ontopia/topicmaps/nav/context/*.class" />
@@ -909,6 +912,7 @@
     <include name="net/ontopia/topicmaps/nav2/plugins/test/*.java" />
     <include name="net/ontopia/topicmaps/nav2/utils/test/*.java" />
     <include name="net/ontopia/topicmaps/nav2/portlets/pojos/test/*.java" />
+	<include name="net/ontopia/topicmaps/nav2/realm/test/*.java" />
   </patternset>
   
   <patternset id="classes.test.navigator">

@@ -1,5 +1,9 @@
 #PREFIX um @"http://psi.ontopia.net/userman/"
 
+[um:has-privilege = "Has privilege"]
+[um:privilege = "Privilege"]
+[um:receiver = "Reciever"]
+
 [admin : um:role = "Administrator"]
 [user : um:role = "User"]
 [janitor : um:role = "Janitor"]

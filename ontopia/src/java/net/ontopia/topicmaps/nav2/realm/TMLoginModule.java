@@ -82,7 +82,7 @@ public class TMLoginModule implements LoginModule {
   private List rolePrincipals;
 
   private String jndiname;
-  private String topicmapId;
+  protected String topicmapId;
   private String repositoryId;
   
   public TMLoginModule() {
@@ -327,13 +327,15 @@ public class TMLoginModule implements LoginModule {
         }
         // register privilege
         TopicIF p = (TopicIF) queryResult.getValue(1);
-        if (!visited.contains(p)) {
-          String rolename = getName(p);
-          if (rolename != null)
-            rolePrincipals.add(new RolePrincipal(rolename));
-          visited.add(p);
-          log.info("Added role-principal from privilege '" + rolename + "' for user '" + username + "'");
-        }
+		if (p != null) {
+	      if (!visited.contains(p)) {
+	        String rolename = getName(p);
+	        if (rolename != null)
+	          rolePrincipals.add(new RolePrincipal(rolename));
+	        visited.add(p);
+	        log.info("Added role-principal from privilege '" + rolename + "' for user '" + username + "'");
+	      }
+		}
       }
       // all users have implicit role 'user'
       log.info("Added implicit role-principal 'user' for user '" + username + "'");

@@ -154,7 +154,7 @@
     <group-ref>net.ontopia.topicmaps.nav2.plugins</group-ref>
     <group-ref>net.ontopia.topicmaps.nav2.utils</group-ref>
     <!-- NOTE: realm test commented out because of 1.4 dependency -->
-    <!--group-ref>net.ontopia.topicmaps.nav2.realm</group-ref--> 
+    <group-ref>net.ontopia.topicmaps.nav2.realm</group-ref> 
     <group-ref>TMRAP</group-ref>
     <group-ref>ontopoly</group-ref>
   </group>

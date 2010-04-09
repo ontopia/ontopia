@@ -41,7 +41,7 @@ public class TMLoginModuleTest extends AbstractTopicMapTestCase {
       "plaintext", "hemmelig3",
       "plaintext", "hemmelig1"
     };
-    String[] pnames = new String[] { "plaintext", "user", "admin" };
+    String[] pnames = new String[] { "plaintext", "user", "Administrator" };
 
     Map options = new java.util.HashMap();
     options.put("hashmethod", "plaintext");
@@ -57,7 +57,9 @@ public class TMLoginModuleTest extends AbstractTopicMapTestCase {
       "base64", "hemmelig1",
       "base64", "hemmelig2"
     };
-    String[] pnames = new String[] { "base64", "user", "admin", "janitor" };
+
+	// "user" = implicit role, "User" = explicit role
+    String[] pnames = new String[] { "base64", "user", "Administrator", "Janitor", "User" };
 
     Map options = new java.util.HashMap();
     options.put("hashmethod", "base64");
@@ -122,7 +124,7 @@ public class TMLoginModuleTest extends AbstractTopicMapTestCase {
     //! assertTrue("Subject does not have correct number of principals", 
     //!            principals.size() == pnames.length);
     assertTrue("Subject does not have correct number of principals", 
-	       principals.size() == 2);
+	       principals.size() == pnames.length);
 
     Iterator iter = principals.iterator();
     while (iter.hasNext()) {
