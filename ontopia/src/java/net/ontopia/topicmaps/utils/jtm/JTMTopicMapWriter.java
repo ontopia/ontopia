@@ -128,8 +128,14 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
   }
 
   /**
-   * EXPERIMENTAL: Write out a collections of topics and associations
-   * as a JTM fragment, disguised as a complete topic map.
+   * EXPERIMENTAL: Write out a collection of topics and associations
+   * as a JTM fragment, represented as a complete topic map. The
+   * identities, names, variants, occurrences, and types of the topics
+   * are output, as are the complete associations. Note that the
+   * associations of topics in the topics collection are not output,
+   * unless they are contained in the assocs collection.
+   *
+   * @since %NEXT%
    */
   public void write(Collection<TopicIF> topics,
                     Collection<AssociationIF> assocs) throws IOException {
