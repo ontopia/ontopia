@@ -13,8 +13,7 @@
 group = 'net.ontopia'
 version = '0.1.0'
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.5
+targetCompatibility = '1.5'
 
 apply plugin: 'java'
 apply plugin: 'osgi'
@@ -35,11 +34,11 @@ repositories {
 }
 
 dependencies {
-    compile 'net.ontopia:ontopia-engine:5.1.0-SNAPSHOT'
+    compile 'net.ontopia:ontopia-engine:5.1.0-SNAPSHOT@jar'
     compile 'org.slf4j:slf4j-api:1.5.11'
     compile files('lib/semagia-mio-0.9.5.jar')
 
-    testCompile group: 'junit', name: 'junit', version: '4.+'
+    testCompile 'junit:junit:4.+'
 }
 
 jar {
