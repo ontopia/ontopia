@@ -18,6 +18,7 @@ targetCompatibility = '1.5'
 apply plugin: 'java'
 apply plugin: 'osgi'
 apply plugin: 'maven'
+apply plugin: 'eclipse'
 
 gradle.taskGraph.whenReady {taskGraph ->
    if (!taskGraph.hasTask(':release')) {
