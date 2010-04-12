@@ -425,15 +425,15 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
       Collection<String> ids = new LinkedList<String>();
       
       for (Object loc : parent.getItemIdentifiers()) {
-        ids.add(getJTMLocator(LOCATOR_TYPE.IID, (LocatorIF) loc));
+        ids.add(getJTMTopicRef(LOCATOR_TYPE.IID, (LocatorIF) loc));
       }
 
       for (Object loc : parent.getSubjectIdentifiers()) {
-        ids.add(getJTMLocator(LOCATOR_TYPE.SID, (LocatorIF) loc));
+        ids.add(getJTMTopicRef(LOCATOR_TYPE.SID, (LocatorIF) loc));
       }
 
       for (Object loc : parent.getSubjectLocators()) {
-        ids.add(getJTMLocator(LOCATOR_TYPE.SL, (LocatorIF) loc));
+        ids.add(getJTMTopicRef(LOCATOR_TYPE.SL, (LocatorIF) loc));
       }
       
       if (!ids.isEmpty()) {
@@ -643,18 +643,18 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * 
    * @param ref the topic to be referenced.
    * @return a reference to this topic in JTM notation.
-   * @see #getJTMLocator(LOCATOR_TYPE, LocatorIF)
+   * @see #getJTMTopicRef(LOCATOR_TYPE, LocatorIF)
    */
   private String getTopicRef(TopicIF ref) {
     // prefer subject identifiers if present
     if (!ref.getSubjectIdentifiers().isEmpty()) {
-      return getJTMLocator(LOCATOR_TYPE.SID, (LocatorIF) ref
+      return getJTMTopicRef(LOCATOR_TYPE.SID, (LocatorIF) ref
           .getSubjectIdentifiers().iterator().next());
     } else if (!ref.getSubjectLocators().isEmpty()) {
-      return getJTMLocator(LOCATOR_TYPE.SL, (LocatorIF) ref
+      return getJTMTopicRef(LOCATOR_TYPE.SL, (LocatorIF) ref
           .getSubjectLocators().iterator().next());
     } else if (!ref.getItemIdentifiers().isEmpty()) {
-      return getJTMLocator(LOCATOR_TYPE.IID, (LocatorIF) ref
+      return getJTMTopicRef(LOCATOR_TYPE.IID, (LocatorIF) ref
           .getItemIdentifiers().iterator().next());
     } else {
       // should not happen, as every topic needs to have one of them
@@ -679,7 +679,7 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * @param loc the internal locator to be converted.
    * @return a string representation of the internal locator in JTM notation.
    */
-  private String getJTMLocator(LOCATOR_TYPE type, LocatorIF loc) {
+  private String getJTMTopicRef(LOCATOR_TYPE type, LocatorIF loc) {
     StringBuilder sb = new StringBuilder();
     switch (type) {
     case IID:
