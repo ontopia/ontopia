@@ -485,7 +485,7 @@ public class TopicMapView {
     // GREAT CARE.
     // Specifically VizController.hideNode(), VizController.collapseNode()
     // and TopicMapView.setTopicTypeVisible() rely on hideNode functioning
-    // WITH THE CURRENT BEHAVOIR!
+    // WITH THE CURRENT BEHAVIOUR!
     
     // Workaround that avoids mouseover icon hanging around after hiding node.
     if (node instanceof TMAssociationNode)
