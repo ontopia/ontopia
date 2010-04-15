@@ -264,7 +264,6 @@ public class InstancePage extends OntopolyAbstractPage {
             // add box for creating new instances of this topic
             if (topicModel.getTopic().isTopicType()) {
               TopicType topicType = new TopicType(topicModel.getTopic().getTopicIF(), getTopicMapModel().getTopicMap());
-              final TopicTypeModel topicTypeModel = new TopicTypeModel(topicType);
               if (!topicType.isAbstract() && !topicType.isReadOnly()) {
                 list.add(new CreateInstanceFunctionBoxPanel(id, getTopicMapModel()) {
                   @Override
@@ -277,7 +276,7 @@ public class InstancePage extends OntopolyAbstractPage {
                   }
                   @Override
                   protected Topic createInstance(TopicMap topicMap, String name) {
-                    TopicType topicType = topicTypeModel.getTopicType();
+                    TopicType topicType = new TopicType(topicModel.getTopic().getTopicIF(), getTopicMapModel().getTopicMap());
                     return topicType.createInstance(name);
                   }
                   @Override

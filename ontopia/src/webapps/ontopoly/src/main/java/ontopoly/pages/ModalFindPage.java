@@ -68,6 +68,9 @@ public abstract class ModalFindPage extends Panel {
   private boolean errorInSearch = false;
 
   protected TreeModel emptyTreeModel = TreeModels.createEmptyTreeModel();
+  
+  private IModel<List<TopicType>> playerTypesChoicesModel;
+  private TopicModel<TopicType> selectedTypeModel;
 
   public ModalFindPage(String id, FieldInstanceModel fieldInstanceModel, int activeTab) {
     super(id);
@@ -274,8 +277,7 @@ public abstract class ModalFindPage extends Panel {
     final WebMarkupContainer browseTab = new WebMarkupContainer("browseTab");
     browseTab.setOutputMarkupId(true);
 
-    // types select
-    IModel<List<TopicType>> playerTypesChoicesModel = new LoadableDetachableModel<List<TopicType>>() {
+    this.playerTypesChoicesModel = new LoadableDetachableModel<List<TopicType>>() {
       @Override
       protected List<TopicType> load() {
         // TODO: should merge with PlayerTypesModel.java (extend to filter my large instance types)
@@ -299,7 +301,7 @@ public abstract class ModalFindPage extends Panel {
     };
     List<TopicType> playerTypes = playerTypesChoicesModel.getObject();
     TopicType selectedType = playerTypes.size() == 1 ? playerTypes.get(0) : null;
-    final TopicModel<TopicType> selectedTypeModel = new TopicModel<TopicType>(selectedType, TopicModel.TYPE_TOPIC_TYPE);
+    this.selectedTypeModel = new TopicModel<TopicType>(selectedType, TopicModel.TYPE_TOPIC_TYPE);
     
     final WebMarkupContainer resultsContainer = new WebMarkupContainer("resultsContainer");
     resultsContainer.setOutputMarkupId(true);
@@ -377,10 +379,10 @@ public abstract class ModalFindPage extends Panel {
     
     // NOTE: need to readd model here because page, which we depend on in the construction 
     // of the tree model, is not available in TreePanel constructor
-    if (selectedTypeModel != null)
+    if (this.selectedTypeModel != null)
       treePanel.setDefaultModel(getTreeModel(selectedType));
     
-    final TopicDropDownChoice<TopicType> playerTypesDropDown = new TopicDropDownChoice<TopicType>("playerTypes", selectedTypeModel, playerTypesChoicesModel);
+    final TopicDropDownChoice<TopicType> playerTypesDropDown = new TopicDropDownChoice<TopicType>("playerTypes", this.selectedTypeModel, playerTypesChoicesModel);
     
     playerTypesDropDown.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       protected void onUpdate(AjaxRequestTarget target) {
@@ -455,5 +457,12 @@ public abstract class ModalFindPage extends Panel {
   protected abstract void onCloseOk(AjaxRequestTarget target);
 
   protected abstract void onCloseCancel(AjaxRequestTarget target);    
-    
+
+  @Override
+  public void onDetach() {
+    playerTypesChoicesModel.detach();
+    selectedTypeModel.detach();
+    super.onDetach();
+  }
+
 }
