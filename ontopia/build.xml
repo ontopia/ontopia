@@ -141,7 +141,11 @@
 
   <target name="jar.ontoboot" depends="init">
     <echo>Creating engine runtime jar file...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
+    <javac srcdir="${java.path}" destdir="${build.classes}" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath"
+            includeantruntime="false">
       <patternset>
         <include name="net/ontopia/ant/TestTask.java" />
         <include name="net/ontopia/ant/TemplateTexenTask.java" />
@@ -601,11 +605,19 @@
   <target name="jar.vizlet" depends="compile.dummyLoggers">
     <echo>Creating vizlet jar file...</echo>
     
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j" source="1.5">
+    <javac srcdir="${java.path}" destdir="${build.classes}" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath.nolog4j" source="1.5"
+            includeantruntime="false">
       <patternset refid="sources.viz" />
     </javac>
     <echo>Compiling viz classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath.nolog4j">
+    <javac srcdir="${java.path}" destdir="${build.classes}" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath.nolog4j"
+            includeantruntime="false">
       <patternset refid="sources.viz" />
     </javac>
     <echo>Copying vizigator resources ... </echo>
@@ -1333,10 +1345,18 @@
   
   <target name="compile.ontopia.test">
     <echo>Compiling test cases for net.ontopia...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+    <javac srcdir="${java.path}" destdir="${build.classes}" 
+            optimize="false" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath" source="1.5"
+            includeantruntime="false">
       <patternset refid="sources.test.ontopia.core" />
     </javac>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="false" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+    <javac srcdir="${java.path}" destdir="${build.classes}" 
+            optimize="false" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath" source="1.5"
+            includeantruntime="false">
       <patternset refid="sources.test.ontopia.aux" />
     </javac>
     <!-- copy db2tm mapping files -->
@@ -1544,7 +1564,11 @@
     </copy>
     
     <!-- Compile code examples -->
-    <javac srcdir="${doc.path}/engine" destdir="${doc.path}/engine" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
+    <javac srcdir="${doc.path}/engine" destdir="${doc.path}/engine" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath"
+            includeantruntime="false">
       <patternset>
         <include name="*.java" />
       </patternset>
@@ -2021,7 +2045,11 @@
     <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/rdbms/devguide.xml" />
     </antcall>
-    <javac srcdir="${doc.path}/rdbms" destdir="${doc.path}/rdbms" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
+    <javac srcdir="${doc.path}/rdbms" destdir="${doc.path}/rdbms" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath"
+            includeantruntime="false">
       <patternset>
         <include name="*.java" />
       </patternset>
@@ -2327,7 +2355,11 @@
         </patternset>
       </fileset>
     </copy>
-    <javac srcdir="${webapps.path}/ontopoly/src/main/java" destdir="${build.ontopoly}/WEB-INF/classes" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath">
+    <javac srcdir="${webapps.path}/ontopoly/src/main/java" destdir="${build.ontopoly}/WEB-INF/classes" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath"
+            includeantruntime="false">
       <include name="**/*.java" />
     </javac>
     <jar basedir="${build.ontopoly}/WEB-INF/classes" jarfile="${build.ontopoly}/WEB-INF/lib/ontopoly.jar" />
@@ -2380,7 +2412,10 @@
   
   <target name="compile.dummyLoggers">
     <echo>Compiling dummy logger classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" source="1.5">
+    <javac srcdir="${java.path}" destdir="${build.classes}" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" source="1.5"
+            includeantruntime="false">
       <patternset refid="sources.dummyLoggers" />
     </javac>
   </target>
@@ -2400,7 +2435,11 @@
   
   <target name="jar.topicmaprealm">
     <echo>Compiling topicmaprealm classes...</echo>
-    <javac srcdir="${java.path}" destdir="${build.classes}" optimize="${optimize}" deprecation="${deprecation}" debug="${debug}" debuglevel="${debuglevel}" classpathref="project.classpath" source="1.5">
+    <javac srcdir="${java.path}" destdir="${build.classes}" 
+            optimize="${optimize}" deprecation="${deprecation}" 
+            debug="${debug}" debuglevel="${debuglevel}" 
+            classpathref="project.classpath" source="1.5"
+            includeantruntime="false">
       <patternset refid="sources.topicmaprealm" />
     </javac>
     <echo>Building topicmaprealm jar file...</echo>
