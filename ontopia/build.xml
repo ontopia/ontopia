@@ -1154,7 +1154,13 @@
                            ${dist.webed.packagenames},
                            ${dist.db2tm.packagenames},
                            ${dist.rdbms.packagenames}
-                           " sourcepath="${java.path}" destdir="${build.javadoc}/ontopia" author="true" version="true" use="true" public="true" windowtitle="Ontopia" doctitle="Ontopia API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;.&lt;/i&gt;" classpathref="project.classpath">
+                           " sourcepath="${java.path}" destdir="${build.javadoc}/ontopia" 
+                           author="true" version="true" use="true" public="true" 
+                           windowtitle="Ontopia" 
+                           doctitle="Ontopia API documentation" 
+                           header="&lt;img src='{@docroot}/logo.gif'&gt;" 
+                           bottom="&lt;i&gt;Copyright &#169; 2000-2010 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;.&lt;/i&gt;" 
+                           classpathref="project.classpath">
       <group title="Core Topic Map Packages" packages="net.ontopia.topicmaps.*" />
       <group title="Core Information Set Packages" packages="net.ontopia.infoset.*" />
       <group title="Query Engine Packages" packages="net.ontopia.topicmaps.query.*" />
@@ -1179,7 +1185,12 @@
                            ${dev.schema.packagenames},
                            ${dev.webed.packagenames},
                            ${dev.rdbms.packagenames}
-                           " sourcepath="${java.path}" destdir="${build.javadoc}/ontopia-dev" author="true" version="true" use="true" public="true" windowtitle="Ontopia" doctitle="Ontopia API documentation" header="&lt;img src='{@docroot}/logo.gif'&gt;" bottom="&lt;i&gt;Copyright &#169; 2000-2009 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;" classpathref="project.classpath">
+                           " sourcepath="${java.path}" destdir="${build.javadoc}/ontopia-dev" 
+                           author="true" version="true" use="true" public="true" 
+                           windowtitle="Ontopia" doctitle="Ontopia API documentation" 
+                           header="&lt;img src='{@docroot}/logo.gif'&gt;" 
+                           bottom="&lt;i&gt;Copyright &#169; 2000-2010 &lt;a href='http://www.ontopia.net'&gt;Ontopia&lt;/a&gt;. All Rights Reserved.&lt;/i&gt;" 
+                           classpathref="project.classpath">
       <group title="Core Topic Map Packages" packages="net.ontopia.topicmaps.*" />
       <group title="Core Information Set Packages" packages="net.ontopia.infoset.*" />
       <group title="Query Engine Packages" packages="net.ontopia.topicmaps.query.*" />
@@ -1530,7 +1541,10 @@
     
     <!-- Generate index pages -->
     <echo message="Generating HTML index pages..." />
-    <texen controlTemplate="docindex-control.vm" templatePath="${src.path}/dist/doc/" outputFile="docindex.report" outputDirectory="${build.tmp}" productVersion="Version ${dist.version}, builddate ${dist.date.full}" />
+    <texen controlTemplate="docindex-control.vm" 
+            templatePath="${src.path}/dist/doc/" 
+            outputFile="docindex.report" outputDirectory="${build.tmp}" 
+            productVersion="Version ${dist.version}, builddate ${dist.date.full}" />
     <copy file="${build.tmp}/docindex.html" overwrite="yes" tofile="${dist.path}/index.html" />
     
     <!-- Copy license -->
@@ -2519,7 +2533,9 @@
     
     <!-- Generate index pages -->
     <echo message="Generating HTML index pages..." />
-    <texen controlTemplate="docindex-control.vm" templatePath="${src.path}/dist/doc/" outputFile="docindex.report" outputDirectory="${build.tmp}" productVersion="Version ${dist.version}, builddate ${dist.date.full}" theDir="" />
+    <texen controlTemplate="docindex-control.vm" templatePath="${src.path}/dist/doc/" 
+            outputFile="docindex.report" outputDirectory="${build.tmp}" 
+            productVersion="Version ${dist.version}, builddate ${dist.date.full}" theDir="" />
     <copy file="${build.tmp}/docindex.html" overwrite="yes" tofile="${dist.path}/doc/index.html" />
     
     <!-- Copy license -->
