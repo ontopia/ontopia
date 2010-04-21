@@ -27,6 +27,7 @@ import ontopoly.components.TopicTypesFunctionBoxPanel;
 import ontopoly.components.ViewsFunctionBoxPanel;
 import ontopoly.components.VizigatorLinkFunctionBoxPanel;
 import ontopoly.model.FieldsView;
+import ontopoly.model.OntopolyModelRuntimeException;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
@@ -35,6 +36,7 @@ import ontopoly.models.FieldsViewModel;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
+import ontopoly.utils.NoSuchTopicException;
 import ontopoly.utils.OntopolyUtils;
 
 import org.apache.wicket.Component;
@@ -65,8 +67,12 @@ public class InstancePage extends OntopolyAbstractPage {
     super(parameters);
     
     String topicMapId = parameters.getString("topicMapId");
-    this.topicModel = new TopicModel<Topic>(topicMapId, parameters.getString("topicId"));
+    String topicId = parameters.getString("topicId");
+    
+    this.topicModel = new TopicModel<Topic>(topicMapId, topicId);
     Topic topic = topicModel.getTopic();
+    if (topic == null)
+        throw new NoSuchTopicException("No topic with id " + topicId + " found.");
     
     // if "topicType" parameter is specified, pull out most specific direct type    
     TopicType tt = null;
@@ -157,9 +163,6 @@ public class InstancePage extends OntopolyAbstractPage {
   }
   
   private void createFields(Form form) {
-    
-    // display fields
-
     InstancePanel instancePanel = createInstancePanel("instancePanel");
     if (instancePanel.isReadOnly()) setReadOnlyPage(true); // page is readonly if instance panel is    
     form.add(instancePanel);
@@ -170,8 +173,7 @@ public class InstancePage extends OntopolyAbstractPage {
     if (fieldsView.isDefaultView() && topic.isTopicType() && isOntologyPage)
       form.add(new FieldsEditor("fieldsEditor", new TopicTypeModel(new TopicType(topic.getTopicIF(), topic.getTopicMap())), isReadOnlyPage()));
     else
-      form.add(new Label("fieldsEditor").setVisible(false));
-    
+      form.add(new Label("fieldsEditor").setVisible(false));    
   }
 
   protected InstancePanel createInstancePanel(final String id) {

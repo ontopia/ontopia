@@ -60,6 +60,7 @@ public class TopicModel<T extends Topic> extends MutableLoadableDetachableModel<
     if (topicMapId == null) return null;
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
+    if (topicIf == null) return null;
     switch (returnType) {
       case TYPE_ASSOCIATION_TYPE:
         return (T)new AssociationType(topicIf, tm);

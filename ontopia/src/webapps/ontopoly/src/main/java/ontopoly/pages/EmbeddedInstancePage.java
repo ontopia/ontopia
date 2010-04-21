@@ -8,6 +8,7 @@ import ontopoly.model.TopicType;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
+import ontopoly.utils.NoSuchTopicException;
 import ontopoly.utils.OntopolyUtils;
 
 import org.apache.wicket.PageParameters;
@@ -30,9 +31,13 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
     super(parameters);
 	  
     String topicMapId = parameters.getString("topicMapId");
-    this.topicModel = new TopicModel<Topic>(topicMapId, parameters.getString("topicId"));
+    String topicId = parameters.getString("topicId");
+
+    this.topicModel = new TopicModel<Topic>(topicMapId, topicId);
     Topic topic = topicModel.getTopic();
-    
+    if (topic == null)
+        throw new NoSuchTopicException("No topic with id " + topicId + " found.");
+
     // if "topicType" parameter is specified, pull out most specific direct type    
     TopicType tt = null;
     String topicTypeId = parameters.getString("topicTypeId");

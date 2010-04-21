@@ -71,7 +71,8 @@ public abstract class ModalFindPage extends Panel {
   
   private IModel<List<TopicType>> playerTypesChoicesModel;
   private TopicModel<TopicType> selectedTypeModel;
-
+  private IModel<List<Topic>> results;
+  
   public ModalFindPage(String id, FieldInstanceModel fieldInstanceModel, int activeTab) {
     super(id);
     this.fieldInstanceModel = fieldInstanceModel;
@@ -151,7 +152,7 @@ public abstract class ModalFindPage extends Panel {
     resultsContainer.setOutputMarkupId(true);
     searchTab.add(resultsContainer);
     
-    final IModel<List<Topic>> results = new LoadableDetachableModel<List<Topic>>() {
+    this.results = new LoadableDetachableModel<List<Topic>>() {
       @Override
       protected List<Topic> load() {
         String searchTerm = (String)searchTermField.getModelObject();
@@ -207,7 +208,7 @@ public abstract class ModalFindPage extends Panel {
     Label message = new Label("message", new ResourceModel(errorInSearch ? "search.error" : "search.empty"));
     unsuccessfulSearchContainer.add(message);
     
-    final ListView listView = new ListView<Topic>("results", results) {
+    ListView listView = new ListView<Topic>("results", results) {
       public void populateItem(final ListItem<Topic> item) {
         Topic hit = item.getModelObject();
         if (maxOneCardinality) {
@@ -462,6 +463,7 @@ public abstract class ModalFindPage extends Panel {
   public void onDetach() {
     playerTypesChoicesModel.detach();
     selectedTypeModel.detach();
+    results.detach();
     super.onDetach();
   }
 

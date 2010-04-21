@@ -44,9 +44,9 @@ public class FieldsEditor extends Panel {
   MutableLoadableDetachableModel<List<FieldAssignmentModel>> fieldAssignmentModels;
   WebMarkupContainer addFieldsContainer;
   
-  public FieldsEditor(String id, final TopicTypeModel topicTypeModel, final boolean readonly) {
+  public FieldsEditor(String id, TopicTypeModel _topicTypeModel, final boolean readonly) {
     super(id);
-    this.topicTypeModel = topicTypeModel;
+    this.topicTypeModel = _topicTypeModel;
     this.readonly = readonly;   
     setOutputMarkupId(true);
 
@@ -266,4 +266,14 @@ public class FieldsEditor extends Panel {
     fieldAssignmentModels.detach(); // make sure list of field assignments is reloaded
     target.addComponent(FieldsEditor.this);
   }
+
+  @Override
+  public void onDetach() {
+    topicTypeModel.detach();
+//    listView.detach();
+//    fieldAssignmentModels.detach();
+//    addFieldsContainer.detach();
+    super.onDetach();
+  }
+
 }
