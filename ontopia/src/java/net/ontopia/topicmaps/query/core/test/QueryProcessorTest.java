@@ -146,6 +146,21 @@ public class QueryProcessorTest extends AbstractQueryTest {
                 "select count($INST) from " +
                 "instance-of($INST, topic4)?");
   }
+
+  public void testZeroCount2() throws InvalidQueryException, IOException {
+    load("instance-of.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches,
+             "TOPIC", getTopicById("type1"),
+             "TYPE", new Integer(0));
+    
+    // there should be no types for type1
+    verifyQuery(matches,
+                "select $TOPIC, count($TYPE) from " +
+                "$TOPIC = type1, " +
+                "{ instance-of($TOPIC, $TYPE) }?");
+  }
   
   /// subclasses topic map
   

@@ -338,24 +338,34 @@ public class QueryProcessor extends AbstractQueryProcessor implements
       matches.last = 0;
       return matches;
     }
-      
+
+    // do the actual counting
     ArrayWrapper wrapper = new ArrayWrapper(); // for instance reuse...
     Map counters = new HashMap();
 
     for (ix = 0; ix <= matches.last; ix++) {
       Object[] row = matches.data[ix];
-      for (int i = 0; i < countcols.length; i++)
+      boolean nonnull = false; // is at least one counted value non-null?
+      for (int i = 0; i < countcols.length; i++) {
+        if (row[countcols[i]] != null)
+          nonnull = true;
         row[countcols[i]] = null;
+      }
 
       wrapper.setArray(row);
+      Counter counter;
       if (counters.containsKey(wrapper))
-        ((Counter) counters.get(wrapper)).counter++;
+        counter = (Counter) counters.get(wrapper);
       else {
-        counters.put(wrapper, new Counter());
+        counter = new Counter();
+        counters.put(wrapper, counter);
         wrapper = new ArrayWrapper();
       }
+      if (nonnull)
+        counter.counter++; // only count if we have non-null counted values
     }
 
+    // replace variable values in result set with counts
     int next = 0; // next row to use
     Iterator it = counters.keySet().iterator();
     while (it.hasNext()) {
@@ -402,7 +412,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
   // --- Internal classes
 
   class Counter {
-    public int counter = 1;
+    public int counter = 0;
   }
 
   class RowComparator implements java.util.Comparator {
