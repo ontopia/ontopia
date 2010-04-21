@@ -287,6 +287,8 @@ public class QueryOptimizer {
       AbstractClause clause = (AbstractClause) clauses.get(best);
       if (clause instanceof OrClause) 
         reorder((OrClause) clause, boundvars, literalvars, rulename, estimator);
+      else if (clause instanceof NotClause)
+        reorder((NotClause) clause, boundvars, literalvars, rulename, estimator);
       context.addAll(clause.getAllVariables());
       
       newOrder.add(clauses.get(best));
@@ -317,6 +319,20 @@ public class QueryOptimizer {
                                 estimator);
       alts.set(ix++, newclauses);
     }
+  }
+
+  /**
+   * INTERNAL: Reorders the clauses inside the alternatives in the NOT
+   * branch. 
+   */
+  private static void reorder(NotClause clause, Set boundvars, Set literalvars,
+                              String rulename, CostEstimator estimator) {
+    List newclauses = reorder(clause.getClauses(),
+                              new HashSet(boundvars),
+                              new HashSet(literalvars),
+                              rulename,
+                              estimator);
+    clause.setClauseList(newclauses);
   }
 
   // ===== RECURSIVE DUPLICATES ================================================
