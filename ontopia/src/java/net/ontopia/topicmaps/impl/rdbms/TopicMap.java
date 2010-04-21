@@ -308,7 +308,6 @@ public class TopicMap extends TMObject implements TopicMapIF {
   }
 
   public void remove() {
-    // DeletionUtils.removeDependencies(this);
     getStore().delete(true);
   }
 

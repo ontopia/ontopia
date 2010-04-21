@@ -145,7 +145,6 @@ public class ImportExportUtils {
    * @since 2.0
    */
   public static TopicMapImporterIF getImporter (LocatorIF url) {
-
     String address = url.getAddress ();
 
     if (address.endsWith (".xtm"))

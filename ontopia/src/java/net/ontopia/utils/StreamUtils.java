@@ -62,7 +62,6 @@ public class StreamUtils {
    * @since 1.4
    */
   public static String read(Reader in) throws IOException {
-
     StringBuffer buffer = new StringBuffer();
     char[] buf = new char[BUFFER_SIZE];
     while (true) {
