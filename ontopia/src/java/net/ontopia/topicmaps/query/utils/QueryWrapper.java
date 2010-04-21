@@ -145,7 +145,15 @@ public class QueryWrapper {
     else
       throw new OntopiaRuntimeException("Query produced more than one row");
   }
- 
+
+  /**
+   * EXPERIMENTAL: Write!
+   * @since %NEXT%
+   */
+  public List queryForMaps(String query) {
+    return queryForMaps(query, null);
+  }
+  
   /**
    * EXPERIMENTAL: Write!
    */
