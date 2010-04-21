@@ -110,7 +110,8 @@ public class RDBMSImport {
           FileInputStream fis = new WrappedFileInputStream(file);
           InputSource src = ((AbstractXMLFormatReader) importer).getInputSource();
           src.setByteStream(fis);
-        }
+        } else
+          System.out.println("Cannot produce progress report!");
       }
 
       importer.importInto(tm);
