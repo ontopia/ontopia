@@ -1,7 +1,6 @@
 
-import validator
+import sys, validator
 from glob import glob
-from net.ontopia.topicmaps.utils import ImportExportUtils
 
 BASE = "/Users/larsga/cvs-co/cxtm-tests/trunk/tmcl/level-1/"
 INVALID = "invalid/"
@@ -9,7 +8,7 @@ VALID = "valid/"
 PATTERN = "*.ctm"
 
 for file in glob(BASE + INVALID + PATTERN):
-    tm = ImportExportUtils.getReader(file).read()
+    tm = validator.load_tm([file])
     errors = validator.validate(tm)
 
     if not errors:
@@ -19,7 +18,7 @@ for file in glob(BASE + INVALID + PATTERN):
         validator.report(errors)
 
 for file in glob(BASE + VALID + PATTERN):
-    tm = ImportExportUtils.getReader(file).read()
+    tm = validator.load_tm([file])
     errors = validator.validate(tm)
 
     if errors:

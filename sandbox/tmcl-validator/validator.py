@@ -1,9 +1,15 @@
 
 import sys
-from net.ontopia.topicmaps.utils import ImportExportUtils
+from net.ontopia.topicmaps.xml import InvalidTopicMapException
+from net.ontopia.topicmaps.utils import ImportExportUtils, DuplicateSuppressionUtils
 from net.ontopia.topicmaps.query.utils import QueryUtils, QueryWrapper, RowMapperIF
 
+# TODO
+#  - figure out the subtyping problem
+
 prefixes = """
+using xtm for i"http://www.topicmaps.org/xtm/1.0/core.xtm#"
+
 overlaps($C, $TT) :-
   association-role($A, $R1),
   type($A, $TO),
@@ -21,7 +27,7 @@ constrained-tt($C, $TT) :-
   type($A, $TO),
   subject-identifier($TO, "http://psi.topicmaps.org/tmcl/constrained-topic-type"),
   type($R1, $TAS),
-  subject-identifier($TAS, "http://psi.topicmaps.org/tmcl/constrains"),
+  subject-identifier($TAS, "http://psi.topicmaps.org/tmcl/constraint"),
   association-role($A, $R2),
   type($R2, $TAD),
   subject-identifier($TAD, "http://psi.topicmaps.org/tmcl/constrained"),
@@ -33,7 +39,7 @@ constrained-s($C, $ST) :-
   type($A, $TO),
   subject-identifier($TO, "http://psi.topicmaps.org/tmcl/constrained-statement"),
   type($R1, $TAS),
-  subject-identifier($TAS, "http://psi.topicmaps.org/tmcl/constrains"),
+  subject-identifier($TAS, "http://psi.topicmaps.org/tmcl/constraint"),
   association-role($A, $R2),
   type($R2, $TAD),
   subject-identifier($TAD, "http://psi.topicmaps.org/tmcl/constrained"),
@@ -63,13 +69,32 @@ card-max($C, $MAX) :-
   type($OCC, $OT),
   subject-identifier($OT, "http://psi.topicmaps.org/tmcl/card-max"),
   value($OCC, $MAX).
+
+direct-subclass-of($SUB, $SUPER) :-
+  association-role($A, $R1),
+  type($A, $TO),
+  subject-identifier($TO, "http://www.topicmaps.org/xtm/1.0/core.xtm#superclass-subclass"),
+  type($R1, $TAS),
+  subject-identifier($TAS, "http://www.topicmaps.org/xtm/1.0/core.xtm#subclass"),
+  association-role($A, $R2),
+  type($R2, $TAD),
+  subject-identifier($TAD, "http://www.topicmaps.org/xtm/1.0/core.xtm#superclass"),
+  role-player($R1, $SUB),
+  role-player($R2, $SUPER).
+
+subclass-of($SUB, $SUPER) :- {
+  direct-subclass-of($SUB, $SUPER) |
+  direct-subclass-of($SUB, $MID),
+  subclass-of($MID, $SUPER)
+}.
 """
 
-def noresults(qp, query, msg):
+def noresults(tm, query, msg):
     errors = []
-    result = qp.execute(prefixes + query)
-    while result.next():
-        errors.append((result.getValue(0), msg))
+    qw = QueryWrapper(tm)
+    qw.setDeclarations(prefixes)
+    for map in qw.queryForMaps(query):
+        errors.append((map["BAD"], msg % map))
     return errors
 
 def get_list(tm, query, params):
@@ -100,7 +125,7 @@ class Constraint:
         self._tt = tt
         self._st = st
         self._min = int(min or "0")
-        if max:
+        if max and not max == "*":
             self._max = int(max)
         else:
             self._max = "*" # numbers are smaller than strings in python
@@ -125,95 +150,54 @@ def validate_constraints(topicmap, query1, query2, what):
     return errors
             
 def validate(topicmap):
-    qp = QueryUtils.getQueryProcessor(topicmap)
-
     # clause 6.2, gvc
-    errors = noresults(qp, """
-select $TT from
-  instance-of($T, $TT),
-  not({ instance-of($TT, $TTT),
-        subject-identifier($TTT, "http://psi.topicmaps.org/tmcl/topic-type") |
-        subject-identifier($TT, $SI), {
-          $SI = "http://psi.topicmaps.org/tmcl/topic-type" |
-          $SI = "http://psi.topicmaps.org/tmcl/name-type" |
-          $SI = "http://psi.topicmaps.org/tmcl/occurrence-type" |
-          $SI = "http://psi.topicmaps.org/tmcl/association-type" |
-          $SI = "http://psi.topicmaps.org/tmcl/role-type" |
-          $SI = "http://psi.topicmaps.org/tmcl/overlap-declaration" |
-          $SI = "http://psi.topicmaps.org/tmcl/topic-name-constraint" |
-          $SI = "http://psi.topicmaps.org/tmcl/variant-name-constraint" |
-          $SI = "http://psi.topicmaps.org/tmcl/topic-occurrence-constraint" |
-          $SI = "http://psi.topicmaps.org/tmcl/abstract-constraint" }
-        })?
+    errors = noresults(topicmap, """
+select $BAD from
+  instance-of($T, $BAD),
+  not(instance-of($BAD, $TTT),
+      subject-identifier($TTT, "http://psi.topicmaps.org/tmcl/topic-type"))?
 """, "has instances, but is not an instance of tmcl:topic-type")
 
     # clause 6.3, gvc
-    errors += noresults(qp, """
-select $NT from
-  topic-name($T, $TN), type($TN, $NT),
-  not({ instance-of($NT, $TNT),
-        subject-identifier($TNT, "http://psi.topicmaps.org/tmcl/name-type") |
-        subject-identifier($TT, $SI),
-        $SI = "http://psi.topicmaps.org/iso13250/model/topic-name"
-        })?
+    errors += noresults(topicmap, """
+select $BAD from
+  topic-name($T, $TN), type($TN, $BAD),
+  not(instance-of($BAD, $TNT),
+      subject-identifier($TNT, "http://psi.topicmaps.org/tmcl/name-type"))?
 """, "is used as a name type, but is not an instance of tmcl:name-type")
 
     # clause 6.4, gvc
-    errors += noresults(qp, """
-select $OT from
-  occurrence($T, $OCC), type($OCC, $OT),
-  not({ instance-of($OT, $TOT),
-        subject-identifier($TOT, "http://psi.topicmaps.org/tmcl/occurrence-type") |
-        subject-identifier($TT, $SI), {
-          $SI = "http://psi.topicmaps.org/tmcl/card-min" |
-          $SI = "http://psi.topicmaps.org/tmcl/card-max"
-        }
-})?
+    errors += noresults(topicmap, """
+select $BAD from
+  occurrence($T, $OCC), type($OCC, $BAD),
+  not(instance-of($BAD, $TOT),
+      subject-identifier($TOT, "http://psi.topicmaps.org/tmcl/occurrence-type"))?
 """, "is used as an occurrence type, but is not an instance of tmcl:occurrence-type")
 
     # clause 6.5, gvc
-    errors += noresults(qp, """
-select $AT from
-  association($A), type($A, $AT),
-  not({ instance-of($AT, $TAT),
-        subject-identifier($TAT, "http://psi.topicmaps.org/tmcl/association-type") |
-        subject-identifier($AT, $SI), {
-          $SI = "http://psi.topicmaps.org/iso13250/model/supertype-subtype" |
-          $SI = "http://psi.topicmaps.org/iso13250/model/type-instance" |
-          $SI = "http://psi.topicmaps.org/tmcl/constrained-topic-type" |
-          $SI = "http://psi.topicmaps.org/tmcl/constrained-statement" |
-          $SI = "http://psi.topicmaps.org/tmcl/required-scope" |
-          $SI = "http://psi.topicmaps.org/tmcl/overlaps"
-        }
-      })?
+    errors += noresults(topicmap, """
+select $BAD from
+  association($A), type($A, $BAD),
+  not(instance-of($BAD, $TAT),
+      subject-identifier($TAT, "http://psi.topicmaps.org/tmcl/association-type"))?
 """, "is used as an association type, but is not an instance of tmcl:association-type")
 
     # clause 6.6, gvc
-    errors += noresults(qp, """
-select $RT from
-  association-role($A, $AR), type($AR, $RT),
-  not({ instance-of($RT, $TRT),
-        subject-identifier($TRT, "http://psi.topicmaps.org/tmcl/role-type") |
-        subject-identifier($RT, $SI), {
-          $SI = "http://psi.topicmaps.org/iso13250/model/supertype" |
-          $SI = "http://psi.topicmaps.org/iso13250/model/subtype" |
-          $SI = "http://psi.topicmaps.org/iso13250/model/type" |
-          $SI = "http://psi.topicmaps.org/iso13250/model/instance" |
-          $SI = "http://psi.topicmaps.org/tmcl/constrains" |
-          $SI = "http://psi.topicmaps.org/tmcl/constrained" |
-          $SI = "http://psi.topicmaps.org/tmcl/constraint" |
-          $SI = "http://psi.topicmaps.org/tmcl/allowed" |
-          $SI = "http://psi.topicmaps.org/tmcl/allows"
-        }
-      })?
+    errors += noresults(topicmap, """
+select $BAD from
+  association-role($A, $AR), type($AR, $BAD),
+  not(instance-of($BAD, $TRT),
+      subject-identifier($TRT, "http://psi.topicmaps.org/tmcl/role-type"))?
 """, "is used as a role type, but is not an instance of tmcl:role-type")
 
     # clause 6.7, gvc
-    errors += noresults(qp, """
-select $T from
-  instance-of($T, $TT1),
-  instance-of($T, $TT2),
+    errors += noresults(topicmap, """
+select $BAD from
+  instance-of($BAD, $TT1),
+  instance-of($BAD, $TT2),
   $TT1 /= $TT2,
+  not(subclass-of($TT1, $TT2)),
+  not(subclass-of($TT2, $TT1)),
   not(instance-of($C, $TOD),
       subject-identifier($SI, "http://psi.topicmaps.org/tmcl/overlap-declaration"),
       overlaps($C, $TT1),
@@ -221,12 +205,12 @@ select $T from
 """, "has two topic types, which are not declared as overlapping")
 
     # clause 7.2, cvr
-    errors += noresults(qp, """
-select $TT from
+    errors += noresults(topicmap, """
+select $BAD from
   instance-of($AC, $TAC),
-  subject-identifier($SI, "http://psi.topicmaps.org/tmcl/abstract-constraint"),
-  constrained-tt($AC, $TT),
-  direct-instance-of($T, $TT)?
+  subject-identifier($TAC, "http://psi.topicmaps.org/tmcl/abstract-constraint"),
+  constrained-tt($AC, $BAD),
+  direct-instance-of($T, $BAD)?
 """, "has direct instances, but is declared as abstract")
 
     # clause 7.3, cvr
@@ -255,15 +239,17 @@ select $T, count($OBJ) from
     errors += validate_constraints(topicmap, query1, query2, "names")
 
     # clause 7.6, gvr
-    errors += noresults(qp, """
-select $NT from
-  instance-of($T, $TT),
+    errors += noresults(topicmap, """
+select $BAD from
   topic-name($T, $TN),
-  type($TN, $NT),
-  not(instance-of($TNC, $TTNC),
+  type($TN, $BAD),
+  not({ instance-of($T, $TT) |
+        not(direct-instance-of($T, $TT)),
+        subject-identifier($TT, "http://psi.topicmaps.org/iso13250/model/subject") }, 
+      instance-of($TNC, $TTNC),
       subject-identifier($TTNC, "http://psi.topicmaps.org/tmcl/topic-name-constraint"),
       constrained-tt($TNC, $TT),
-      constrained-s($TNC, $ST))?
+      constrained-s($TNC, $BAD))?
 """, "is used as a name type on topic types where this is not allowed")
 
     # clause 7.7, cvr
@@ -288,11 +274,11 @@ select $TN, count($OBJ) from
     errors += validate_constraints(topicmap, query1, query2, "variant names")
 
     # clause 7.7, gvr
-    errors += noresults(qp, """
-select $T from
-  instance-of($T, $TT),
-  topic-name($T, $TN),
-  type($TN, $NT),
+    errors += noresults(topicmap, """
+select $BAD from
+  instance-of($BAD, $TT),
+  topic-name($BAD, $TN),
+  type($TN, $ST),
   variant($TN, $VN),
   scope($VN, $S),  
   not(instance-of($VNC, $TVNC),
@@ -321,15 +307,18 @@ select $T, count($OBJ) from
     errors += validate_constraints(topicmap, query1, query2, "occurrences")
 
     # clause 7.8, gvr
-    errors += noresults(qp, """
-select $OT from
-  instance-of($T, $TT),
+    # FIXME: tmdm:subject
+    # FIXME: must handle subtyping here!
+    # FIXME: no errors if $T has no type
+    errors += noresults(topicmap, """
+select $BAD from
+  direct-instance-of($T, $TT),
   occurrence($T, $OCC),
-  type($OCC, $OT),
+  type($OCC, $BAD),
   not(instance-of($TOC, $TTOC),
-      subject-identifier($TTNC, "http://psi.topicmaps.org/tmcl/topic-occurrence-constraint"),
+      subject-identifier($TTOC, "http://psi.topicmaps.org/tmcl/topic-occurrence-constraint"),
       constrained-tt($TOC, $TT),
-      constrained-s($TOC, $ST))?
+      constrained-s($TOC, $BAD))?
 """, "is used as an occurrence type on topic types where this is not allowed")
     
     return errors
@@ -345,9 +334,20 @@ def report(errors):
     else:
         print "Topic map is not valid"
 
+def load_tm(files):
+    SEED_TM = "/Users/larsga/cvs-co/iso-13250/tmcl/specification/schema.ctm"
+    try:
+        topicmap = ImportExportUtils.getReader(SEED_TM).read()
+        for file in files:
+            ImportExportUtils.getImporter(file).importInto(topicmap)
+    except InvalidTopicMapException, e:
+        print "Invalid topic map", file
+        print "  ", e.getMessage()
+        sys.exit(1)
+    DuplicateSuppressionUtils.removeDuplicates(topicmap)
+    return topicmap
+        
 if __name__ == "__main__":
-    topicmap = ImportExportUtils.getReader("seed.ctm").read()
-    for file in sys.argv[1 : ]:
-        ImportExportUtils.getImporter(file).importInto(topicmap)
+    topicmap = load_tm(sys.argv[1 : ])
     errors = validate(topicmap)
     report(errors)
