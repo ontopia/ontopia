@@ -17,10 +17,6 @@ for file in glob(BASE + INVALID + PATTERN):
     if not errors:
         print "No errors in", file
         fails += 1
-    elif len(errors) != 1:
-        print "More than one error in", file
-        validator.report(errors)
-        fails += 1
 
 for file in glob(BASE + VALID + PATTERN):
     total += 1

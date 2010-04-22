@@ -9,6 +9,7 @@ from net.ontopia.topicmaps.query.utils import QueryUtils, QueryWrapper, RowMappe
 
 prefixes = """
 using tmcl for i"http://psi.topicmaps.org/tmcl/"
+using tmdm for i"http://psi.topicmaps.org/iso13250/model/"
 using xtm for i"http://www.topicmaps.org/xtm/1.0/core.xtm#"
 
 subclass-of($SUB, $SUPER) :- {
@@ -36,23 +37,21 @@ def get_constraints(tm, query):
     qw.setDeclarations(prefixes)
     return qw.queryForList(query, ConstraintBuilder())
 
-class ConstraintBuilder(RowMapperIF):
-  def mapRow(self, result, rowno):
-      scope = self.getOptional(result, "S")
-      roletype = self.getOptional(result, "RT")
-      return Constraint(result.getValue("TT"),
-                        result.getValue("ST"),
-                        result.getValue("MIN"),
-                        result.getValue("MAX"),
-                        scope,
-                        roletype)
+def getOptional(result, name):
+    index = result.getIndex(name)
+    if index != -1:
+        return result.getValue(index)
+    else:
+        return None
 
-  def getOptional(self, result, name):
-      index = result.getIndex(name)
-      if index != -1:
-          return result.getValue(index)
-      else:
-          return None
+class ConstraintBuilder(RowMapperIF):
+    def mapRow(self, result, rowno):
+        return Constraint(getOptional(result, "TT"),
+                          result.getValue("ST"),
+                          result.getValue("MIN"),
+                          result.getValue("MAX"),
+                          getOptional(result, "S"),
+                          getOptional(result, "RT"))
   
 class Constraint:
     def __init__(self, tt, st, min, max, scope, roletype):
@@ -73,6 +72,7 @@ def validate_constraints(topicmap, query1, query2, what):
         # FIXME: must make it illegal to have max < min
         params = {"TT" : c._tt, "ST" : c._st, "S" : c._scope,
                   "RT" : c._rt}
+
         for i in get_list(topicmap, query2, params):
             count = int(i["OBJ"])
             if count < c._min:
@@ -173,7 +173,7 @@ select $BAD from
   type($TN, $BAD),
   not({ instance-of($T, $TT) |
         not(direct-instance-of($T, $TT)),
-        subject-identifier($TT, "http://psi.topicmaps.org/iso13250/model/subject") }, 
+        $TT = tmdm:subject }, 
       instance-of($C, tmcl:topic-name-constraint),
       tmcl:constrained-topic-type($C : tmcl:constraint, $TT : tmcl:constrained),
       tmcl:constrained-statement($C : tmcl:constraint, $BAD : tmcl:constrained))?
@@ -272,12 +272,45 @@ select $BAD from
   type($ROLE, $RT),
   association-role($ASSOC, $ROLE),
   type($ASSOC, $BAD),
-  not(instance-of($T, $TT),
+  not({ instance-of($T, $TT) |
+        not(instance-of($T, $TT)),
+        $TT = tmdm:subject },
       instance-of($C, tmcl:topic-role-constraint),
       tmcl:constrained-topic-type($C : tmcl:constraint, $TT : tmcl:constrained),
       tmcl:constrained-statement($C : tmcl:constraint, $BAD : tmcl:constrained),
       tmcl:constrained-role($C : tmcl:constraint, $RT : tmcl:constrained))?
 """, "is used as an association type on topic types where this is not allowed")
+
+    # clause 7.10, cvr
+    query1 = """
+select $ST, $S, $MAX, $MIN from
+  instance-of($C, tmcl:scope-constraint),
+  tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+  tmcl:allowed-scope($C : tmcl:allows, $S : tmcl:allowed),
+  { tmcl:card-max($C, $MAX) },
+  { tmcl:card-min($C, $MIN) }?
+"""
+    query2 = """
+select $T, count($OBJ) from
+  type($T, %ST%),
+  { scope($T, $OBJ),
+    { instance-of($OBJ, %S%) | %S% = tmdm:subject} }?
+        """
+    errors += validate_constraints(topicmap, query1, query2, "scopes")
+    
+    # clause 7.10, gvr
+    # FIXME: subclassing
+    errors += noresults(topicmap, """
+select $BAD from  
+  type($OBJ, $ST),
+  scope($OBJ, $BAD),
+  not({ instance-of($BAD, $TT) |
+        not(instance-of($BAD, $TT)),
+        $TT = tmdm:subject },
+      instance-of($C, tmcl:scope-constraint),
+      tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+      tmcl:allowed-scope($C : tmcl:allows, $TT : tmcl:allowed))?
+""", "is used as a scope on statements where this is not allowed")
     
     return errors
 
