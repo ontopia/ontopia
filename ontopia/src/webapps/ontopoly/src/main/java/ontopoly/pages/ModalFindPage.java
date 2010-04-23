@@ -209,7 +209,7 @@ public abstract class ModalFindPage extends Panel {
     unsuccessfulSearchContainer.add(message);
     
     ListView listView = new ListView<Topic>("results", results) {
-      public void populateItem(final ListItem<Topic> item) {
+      public void populateItem(ListItem<Topic> item) {
         Topic hit = item.getModelObject();
         if (maxOneCardinality) {
           Radio check = new Radio<String>("check", new Model<String>(hit.getId())) {
