@@ -5,7 +5,8 @@ from net.ontopia.topicmaps.utils import ImportExportUtils, DuplicateSuppressionU
 from net.ontopia.topicmaps.query.utils import QueryUtils, QueryWrapper, RowMapperIF
 
 # TODO
-#  - figure out the subtyping problem
+#  - make sure that when a constraint is being violated, its ID is
+#    'violated'
 
 prefixes = """
 using tmcl for i"http://psi.topicmaps.org/tmcl/"
@@ -65,7 +66,11 @@ class Constraint:
         self._scope = scope
         self._rt = roletype
 
-def validate_constraints(topicmap, query1, query2, what):
+def validate_constraints(topicmap, query1, query2, error):
+    if type(error) == type(""):
+        what = error
+        error = lambda env: "%s of type %s" % (env["what"], env["c"]._st)
+    
     errors = []
     constraints = get_constraints(topicmap, query1)
     for c in constraints:
@@ -76,13 +81,13 @@ def validate_constraints(topicmap, query1, query2, what):
         for i in get_list(topicmap, query2, params):
             count = int(i["OBJ"])
             if count < c._min:
-                errors.append((i["T"], ("must have at least %s %s of type " +
-                               "%s, but had only %s") %
-                               (c._min, what, c._st, count)))
+                errors.append((i["T"], ("must have at least %s %s" +
+                                        ", but had only %s") %
+                               (c._min, error(locals()), count)))
             elif count > c._max:
-                errors.append((i["T"], ("must have at most %s %s of type " +
-                               "%s, but had %s") %
-                               (c._max, what, c._st, count)))
+                errors.append((i["T"], ("must have at most %s %s" +
+                                        ", but had %s") %
+                               (c._max, error(locals()), count)))
     return errors
             
 def validate(topicmap):
@@ -311,6 +316,102 @@ select $BAD from
       tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
       tmcl:allowed-scope($C : tmcl:allows, $TT : tmcl:allowed))?
 """, "is used as a scope on statements where this is not allowed")
+    
+    # clause 7.11, cvr
+    query1 = """
+select $TT, $ST, $S, $MAX, $MIN from
+  instance-of($C, tmcl:scope-required-constraint),
+  tmcl:constrained-topic-type($C : tmcl:constraint, $TT : tmcl:constrained),
+  tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+  tmcl:required-scope($C : tmcl:constraint, $S : tmcl:constrained),
+  { tmcl:card-max($C, $MAX) },
+  { tmcl:card-min($C, $MIN) }?
+"""
+    query2 = """
+select $T, count($OBJ) from
+  instance-of($T, %TT%),
+  { { topic-name($T, $OBJ) |
+      occurrence($T, $OBJ) |
+      role-player($ROLE, $T),
+      association-role($OBJ, $ROLE) },
+    type($OBJ, %ST%),
+    scope($OBJ, %S%) }?
+        """
+    error = (lambda env: "statements of type %s in scope %s" %
+             (env["c"]._st, env["c"]._scope))
+    errors += validate_constraints(topicmap, query1, query2, error)
+
+    # clause 7.12, cvr
+    # FIXME: tmdm:subject
+    # FIXME: subtyping
+    query1 = """
+select $TT, $ST, $MAX, $MIN from
+  instance-of($C, tmcl:reifier-constraint),
+  tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+  tmcl:allowed-reifier($C : tmcl:allows, $TT : tmcl:allowed),
+  { tmcl:card-max($C, $MAX) },
+  { tmcl:card-min($C, $MIN) }?
+"""
+    query2 = """
+select $T, count($OBJ) from
+  type($T, %ST%),
+  { reifies($OBJ, $T),
+    instance-of($OBJ, %TT%) }?
+        """
+    error = (lambda env: "reifiers of type %s, since it is of type %s" %
+             (env["c"]._tt, env["c"]._st))
+    errors += validate_constraints(topicmap, query1, query2, error)
+
+    # clause 7.13, cvr
+    # FIXME: tmdm:subject
+    # FIXME: subtyping
+    query1 = """
+select $TT, $ST, $MAX, $MIN from
+  instance-of($C, tmcl:topic-reifies-constraint),
+  tmcl:constrained-topic-type($C : tmcl:constraint, $TT : tmcl:constrained),
+  tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+  { tmcl:card-max($C, $MAX) },
+  { tmcl:card-min($C, $MIN) }?
+"""
+    query2 = """
+select $T, count($OBJ) from
+  instance-of($T, %TT%),
+  { reifies($T, $OBJ),
+    type($OBJ, %ST%) }?
+        """
+    error = (lambda env: "statements of type %s that it reifies" %
+             (env["c"]._st))
+    errors += validate_constraints(topicmap, query1, query2, error)
+
+    # clause 7.14, cvr
+    query1 = """
+select $ST, $RT, $MAX, $MIN from
+  instance-of($C, tmcl:association-role-constraint),
+  tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+  tmcl:constrained-role($C : tmcl:constraint, $RT : tmcl:constrained),
+  { tmcl:card-max($C, $MAX) },
+  { tmcl:card-min($C, $MIN) }?
+"""
+    query2 = """
+select $T, count($OBJ) from
+  type($T, %ST%),
+  { association-role($T, $OBJ),
+    type($OBJ, %RT%) }?
+        """
+#     error = (lambda env: "statements of type %s that it reifies" %
+#              (env["c"]._st))
+    errors += validate_constraints(topicmap, query1, query2, "roles")
+
+    # clause 7.14, gvr
+    errors += noresults(topicmap, """
+select $BAD, $ST from  
+  type($OBJ, $ST),
+  association-role($OBJ, $ROLE),
+  type($ROLE, $BAD),
+  not(instance-of($C, tmcl:association-role-constraint),
+      tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+      tmcl:constrained-role($C : tmcl:constraint, $BAD : tmcl:constrained))?
+""", "is used as a role type in associations of type %(ST)s, where this is not allowed")
     
     return errors
 
