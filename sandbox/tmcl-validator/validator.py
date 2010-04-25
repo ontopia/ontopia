@@ -4,20 +4,30 @@ from net.ontopia.topicmaps.xml import InvalidTopicMapException
 from net.ontopia.topicmaps.utils import ImportExportUtils, DuplicateSuppressionUtils
 from net.ontopia.topicmaps.query.utils import QueryUtils, QueryWrapper, RowMapperIF
 
-# TODO
-#  - make sure that when a constraint is being violated, its ID is
-#    'violated'
-
 prefixes = """
 using tmcl for i"http://psi.topicmaps.org/tmcl/"
 using tmdm for i"http://psi.topicmaps.org/iso13250/model/"
 using xtm for i"http://www.topicmaps.org/xtm/1.0/core.xtm#"
+using dt for i"http://psi.garshol.priv.no/datatypes/"
+using xsd for i"http://www.w3.org/2001/XMLSchema#"
 
 subclass-of($SUB, $SUPER) :- {
   xtm:superclass-subclass($SUB : xtm:subclass, $SUPER : xtm:superclass) |
   xtm:superclass-subclass($SUB : xtm:subclass, $MID : xtm:superclass),
   subclass-of($MID, $SUPER)
 }.
+
+subdatatype-of($SUB, $SUPER) :- {
+  dt:subdatatype-of($SUB : dt:subtype, $SUPER : dt:supertype) |
+  dt:subdatatype-of($SUB : dt:subtype, $MID : dt:supertype),
+  subdatatype-of($MID, $SUPER)
+}.
+
+validly-substitutable-for($SUB, $SUPER) :- {
+  $SUB = $SUPER |
+  subdatatype-of($SUB, $SUPER)
+}.
+ 
 """
 
 def noresults(tm, query, msg):
@@ -27,6 +37,12 @@ def noresults(tm, query, msg):
     for map in qw.queryForMaps(query):
         errors.append((map["BAD"], msg % map))
     return errors
+
+def display(tm, query):
+    qw = QueryWrapper(tm)
+    qw.setDeclarations(prefixes)
+    for map in qw.queryForMaps(query):
+        print map
 
 def get_list(tm, query, params):
     qw = QueryWrapper(tm)
@@ -89,7 +105,7 @@ def validate_constraints(topicmap, query1, query2, error):
                                         ", but had %s") %
                                (c._max, error(locals()), count)))
     return errors
-            
+
 def validate(topicmap):
     # clause 6.2, gvc
     errors = noresults(topicmap, """
@@ -412,6 +428,71 @@ select $BAD, $ST from
       tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
       tmcl:constrained-role($C : tmcl:constraint, $BAD : tmcl:constrained))?
 """, "is used as a role type in associations of type %(ST)s, where this is not allowed")
+ 
+    # clause 7.15, gvr
+    errors += noresults(topicmap, """
+select $BAD, $RT1, $TT1, $RT2, $TT2 from
+  instance-of($SOMEC, tmcl:role-combination-constraint),
+  tmcl:constrained-statement($SOMEC : tmcl:constraint, $BAD : tmcl:constrained),
+  type($ASSOC, $BAD),
+  association-role($ASSOC, $R1),
+  association-role($ASSOC, $R2),
+  $R1 /= $R2,
+  role-player($R1, $T1),
+  role-player($R2, $T2),
+  type($R1, $RT1),
+  type($R2, $RT2),
+  direct-instance-of($T1, $TT1),
+  direct-instance-of($T2, $TT2),
+  not(instance-of($C, tmcl:role-combination-constraint),
+      tmcl:constrained-statement($C : tmcl:constraint, $BAD : tmcl:constrained),
+      { tmcl:constrained-role($C : tmcl:constraint, $RT1 : tmcl:constrained),
+        tmcl:constrained-topic-type($C : tmcl:constraint, $TT1 : tmcl:constrained),
+        tmcl:other-constrained-role($C : tmcl:constraint, $RT2 : tmcl:constrained),
+        tmcl:other-constrained-topic-type($C : tmcl:constraint, $TT2 : tmcl:constrained)
+      | tmcl:constrained-role($C : tmcl:constraint, $RT2 : tmcl:constrained),
+        tmcl:constrained-topic-type($C : tmcl:constraint, $TT2 : tmcl:constrained),
+        tmcl:other-constrained-role($C : tmcl:constraint, $RT1 : tmcl:constrained),
+        tmcl:other-constrained-topic-type($C : tmcl:constraint, $TT1 : tmcl:constrained) }),
+  /* trick to remove duplicate error messages */
+  object-id($RT1, $ID1),
+  object-id($RT2, $ID2),
+  $ID1 < $ID2?
+""", "has illegal role player combination (%(RT1)s, %(TT1)s) and (%(RT2)s, %(TT2)s)")
+
+    # clause 7.16, cvr
+    errors += noresults(topicmap, """
+select $BAD, $RDTPSI, $CDTPSI from
+  instance-of($C, tmcl:occurrence-datatype-constraint),
+  tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+  tmcl:datatype($C, $CDTPSI),
+  type($BAD, $ST),
+  datatype($BAD, $RDTPSI),
+  not({ subject-identifier($CDT, $CDTPSI),
+        subject-identifier($RDT, $RDTPSI),
+        validly-substitutable-for($RDT, $CDT) |
+        $CDTPSI = $RDTPSI })?
+""", "has illegal datatype %(RDTPSI)s, should be %(CDTPSI)s")
+
+    # clause 7.17, cvr
+    errors += noresults(topicmap, """
+select $BAD, $OCC2 from
+  instance-of($C, tmcl:unique-value-constraint),
+  tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
+  occurrence($TOPIC1, $BAD),
+  type($BAD, $ST),
+  occurrence($TOPIC2, $OCC2),
+  type($OCC2, $ST),
+  $BAD /= $OCC2,
+  value($BAD, $VALUE),
+  value($OCC2, $VALUE),
+  object-id($BAD, $ID1),
+  object-id($OCC2, $ID2),
+  $ID1 < $ID2?
+""", "has same value as %(OCC2)s, but should be unique")
+
+    # clause 7.18, cvr
+    # FIXME: cannot implement without regexp
     
     return errors
 
@@ -428,6 +509,7 @@ def report(errors):
 
 def load_tm(files):
     SEED_TM = "/Users/larsga/cvs-co/iso-13250/tmcl/specification/schema.ctm"
+    files = files + ["datatypes.ctm"]
     try:
         topicmap = ImportExportUtils.getReader(SEED_TM).read()
         for file in files:
@@ -438,8 +520,20 @@ def load_tm(files):
         sys.exit(1)
     DuplicateSuppressionUtils.removeDuplicates(topicmap)
     return topicmap
+
+def run():
+    if len(sys.argv) == 1:
+        print """
+jython validator.py tmfile [tmfile tmfile tmfile ...]
+
+  Loads all the given files, merges them together, and then runs TMCL
+  validation to ensure that the resulting topic map is valid.
+"""
+        sys.exit(1)
         
-if __name__ == "__main__":
     topicmap = load_tm(sys.argv[1 : ])
     errors = validate(topicmap)
     report(errors)
+
+if __name__ == "__main__":
+    run()

@@ -1,4 +1,8 @@
 
+# TODO
+#  - make sure that when a constraint is being violated, its ID is
+#    'violated'
+
 import sys, validator
 from glob import glob
 
