@@ -1,0 +1,21 @@
+
+%include <templates.ctm>
+%prefix dt http://psi.garshol.priv.no/datatypes/
+%prefix xsd http://www.w3.org/2001/XMLSchema#
+%prefix iso http://psi.topicmaps.org/iso13250/
+%prefix tmcl http://psi.topicmaps.org/tmcl/
+
+dt:datatype isa tmcl:topic-type;
+  plays-role(dt:subtype, dt:subdatatype-of, 0, *);
+  plays-role(dt:supertype, dt:subdatatype-of, 0, *).
+
+dt:subdatatype-of isa tmcl:association-type;
+  has-role(dt:subtype, 1, 1);
+  has-role(dt:supertype, 1, 1).
+
+dt:subtype isa tmcl:role-type.
+dt:supertype isa tmcl:role-type.
+
+xsd:integer isa dt:datatype.
+iso:ctm-integer isa dt:datatype.
+dt:subdatatype-of(dt:subtype: xsd:integer, dt:supertype: iso:ctm-integer)
