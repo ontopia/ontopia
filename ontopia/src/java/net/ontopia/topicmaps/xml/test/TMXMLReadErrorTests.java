@@ -19,7 +19,7 @@ public class TMXMLReadErrorTests extends AbstractCanonicalTests {
   }
 
   protected String getFileDirectory() {
-    return "errors";
+    return "invalid";
   }
 
   protected boolean filter(String filename) {
