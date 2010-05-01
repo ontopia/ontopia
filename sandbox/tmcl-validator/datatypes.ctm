@@ -4,6 +4,12 @@
 %prefix xsd http://www.w3.org/2001/XMLSchema#
 %prefix iso http://psi.topicmaps.org/iso13250/
 %prefix tmcl http://psi.topicmaps.org/tmcl/
+%prefix xtm http://www.topicmaps.org/xtm/1.0/core.xtm#
+%prefix tmdm http://psi.topicmaps.org/iso13250/model/
+
+xtm:superclass-subclass tmdm:supertype-subtype.
+xtm:superclass tmdm:supertype.
+xtm:subclass tmdm:subtype.
 
 dt:datatype isa tmcl:topic-type;
   plays-role(dt:subtype, dt:subdatatype-of, 0, *);

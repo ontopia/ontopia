@@ -206,7 +206,7 @@ select $TT, $ST, $S, $MAX, $MIN from
   instance-of($C, tmcl:variant-name-constraint),
   tmcl:constrained-topic-type($C : tmcl:constraint, $TT : tmcl:constrained),
   tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
-  tmcl:required-scope($C : tmcl:constraint, $S : tmcl:constrained),
+  tmcl:constrained-scope-topic($C : tmcl:constraint, $S : tmcl:constrained),
   { tmcl:card-max($C, $MAX) },
   { tmcl:card-min($C, $MIN) }?
 """
@@ -231,7 +231,7 @@ select $BAD from
   not(instance-of($C, tmcl:variant-name-constraint),
       tmcl:constrained-topic-type($C : tmcl:constraint, $TT : tmcl:constrained),
       tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
-      tmcl:required-scope($C : tmcl:constraint, $S : tmcl:constrained))?
+      tmcl:constrained-scope-topic($C : tmcl:constraint, $S : tmcl:constrained))?
 """, "is used as a variant name on topic names where this is not allowed")
     
     # clause 7.8, cvr
@@ -307,7 +307,7 @@ select $BAD from
 select $ST, $S, $MAX, $MIN from
   instance-of($C, tmcl:scope-constraint),
   tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
-  tmcl:allowed-scope($C : tmcl:allows, $S : tmcl:allowed),
+  tmcl:constrained-scope($C : tmcl:constraint, $S : tmcl:constrained),
   { tmcl:card-max($C, $MAX) },
   { tmcl:card-min($C, $MIN) }?
 """
@@ -330,7 +330,7 @@ select $BAD from
         $TT = tmdm:subject },
       instance-of($C, tmcl:scope-constraint),
       tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
-      tmcl:allowed-scope($C : tmcl:allows, $TT : tmcl:allowed))?
+      tmcl:constrained-scope($C : tmcl:constraint, $TT : tmcl:constrained))?
 """, "is used as a scope on statements where this is not allowed")
     
     # clause 7.11, cvr
@@ -339,7 +339,7 @@ select $TT, $ST, $S, $MAX, $MIN from
   instance-of($C, tmcl:scope-required-constraint),
   tmcl:constrained-topic-type($C : tmcl:constraint, $TT : tmcl:constrained),
   tmcl:constrained-statement($C : tmcl:constraint, $ST : tmcl:constrained),
-  tmcl:required-scope($C : tmcl:constraint, $S : tmcl:constrained),
+  tmcl:constrained-scope-topic($C : tmcl:constraint, $S : tmcl:constrained),
   { tmcl:card-max($C, $MAX) },
   { tmcl:card-min($C, $MIN) }?
 """
