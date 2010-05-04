@@ -3,6 +3,7 @@ package ontopoly.components;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
@@ -76,8 +77,11 @@ public class FieldInstanceURIField extends Panel {
       }
       
     };
-    textField.add(new URIValidator(this, fieldValueModel.getFieldInstanceModel()));
-    textField.add(new IdentityValidator(this, fieldValueModel.getFieldInstanceModel()));
+    if (fieldValueModel.getFieldInstanceModel().getFieldType() == FieldDefinition.FIELD_TYPE_IDENTITY) {
+        textField.add(new IdentityValidator(this, fieldValueModel.getFieldInstanceModel()));
+    } else { 
+        textField.add(new URIValidator(this, fieldValueModel.getFieldInstanceModel()));
+    }
     add(textField);
     
     this.button = new ExternalLink("button", new AbstractReadOnlyModel<String>() {

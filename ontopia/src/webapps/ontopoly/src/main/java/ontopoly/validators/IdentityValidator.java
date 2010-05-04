@@ -34,9 +34,10 @@ public class IdentityValidator extends AbstractValidator<String> {
     if (value == null) return;
     LocatorIF locator;
     try {
-      locator = URILocator.create(value);
+      locator = new URILocator(value);
     } catch (Exception e) {
-      return; // ignore this as it will be caught by another validator
+      reportError("validators.IdentityValidator.invalidURI", value);
+      return;
     }
 
     Topic topic = fieldInstanceModel.getFieldInstance().getInstance();

@@ -42,7 +42,7 @@ public class URIValidator extends AbstractValidator<String> {
 
   @Override
   protected String resourceKey() {
-    return "validators.URIValidator";
+    return "validators.URIValidator.invalidURI";
   }
   
 }
