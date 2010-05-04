@@ -25,6 +25,7 @@ import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.TopicModel;
+import ontopoly.models.TopicTypeModel;
 import ontopoly.pojos.TopicNode;
 import ontopoly.utils.TreeModels;
 
@@ -439,16 +440,22 @@ public abstract class ModalFindPage extends Panel {
     return browseTab;
   }
   
-  protected IModel<TreeModel> getTreeModel(final TopicType topicType) {
-    return new AbstractReadOnlyModel<TreeModel>() {
+  protected IModel<TreeModel> getTreeModel(TopicType _topicType) {
+    final TopicTypeModel topicTypeModel = new TopicTypeModel(_topicType);
+    return new LoadableDetachableModel<TreeModel>() {
       @Override
-      public TreeModel getObject() {
+      public TreeModel load() {
+        TopicType topicType = topicTypeModel.getTopicType();
         if (topicType == null) {
           return emptyTreeModel;
         } else {
           AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
           return TreeModels.createInstancesTreeModel(topicType, page.isAdministrationEnabled());
         }
+      }
+      @Override
+      public void onDetach() {
+        topicTypeModel.detach();
       }
     };
   }
