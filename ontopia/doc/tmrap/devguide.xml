@@ -66,6 +66,14 @@ The methods provided by TMRAP are:
 
   <listitem>
     <formalpara>
+      <title>tolog-update</title>
+      <para>Runs a tolog update statement on the server, modifying one
+      topic map.</para>
+    </formalpara>
+  </listitem>  
+
+  <listitem>
+    <formalpara>
       <title>add-fragment</title>
       <para>Adds a Topic Maps fragment to a topic map on the server.</para>
     </formalpara>
@@ -370,6 +378,48 @@ they must produce a one-column result consisting only of topics. The
 topics are then returned in a fragment in the same way as with the
 get-topic method (see <xref linkend="sect-get-topic"/>), except that
 the topics returned are not merged.
+</para>
+</section>
+
+<!-- TOLOG-UPDATE ========================================================== -->
+<section>
+<title>tolog-update</title>
+
+<para>
+The <symbol>tolog-update</symbol> method runs a tolog update statement
+on the server against the specified topic map, modifying it in place.
+The return value is simply the number of rows modified. The supported
+parameters are shown below.
+</para>
+
+<informaltable>
+<tgroup cols="5">
+<thead>
+<row>
+  <entry>Parameter</entry>
+  <entry>Req.?</entry>
+  <entry>Repeat?</entry>
+  <entry>Type</entry>
+  <entry>Description</entry>
+</row>
+</thead>
+<tbody>
+<row>
+  <entry>tolog</entry> <entry>yes</entry> <entry>no</entry> <entry>string</entry>
+  <entry>The tolog statement.</entry>
+</row>
+<row>
+  <entry>topicmap</entry> <entry>yes</entry> <entry>no</entry> 
+  <entry>string</entry>
+  <entry>The ID of the topic map being modified.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para>
+The statement is run against the topic map. The modifications are
+committed.
 </para>
 </section>
 
