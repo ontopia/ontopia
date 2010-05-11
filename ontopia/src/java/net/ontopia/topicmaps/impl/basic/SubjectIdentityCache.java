@@ -20,9 +20,8 @@ import net.ontopia.utils.CollectionFactoryIF;
  *
  * This class uses the event model to maintain its indexes.</p>
  */
-
-public class SubjectIdentityCache extends AbstractSubjectIdentityCache implements java.io.Serializable {
-
+public class SubjectIdentityCache extends AbstractSubjectIdentityCache
+  implements java.io.Serializable {
   private static final long serialVersionUID = -2503061122276743151L;
 
   protected TopicMapTransactionIF txn;  
@@ -30,7 +29,6 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache implement
 
   protected long counter;
 
-  protected Map object_ids;  
   protected Map id_objects;
   protected Map subjects;
   protected Map subject_indicators;
@@ -63,7 +61,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache implement
   // --------------------------------------------------------------------------
   
   public TMObjectIF getObjectById(String object_id) {
-    TMObject o = (TMObject)id_objects.get(object_id);
+    TMObject o = (TMObject) id_objects.get(object_id);
     if (o == null || o.parent == null)
       return null;
     else
@@ -71,15 +69,15 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache implement
   }
   
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
-    return (TMObjectIF)source_locators.get(locator);
+    return (TMObjectIF) source_locators.get(locator);
   }
   
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) {
-    return (TopicIF)subjects.get(locator);
+    return (TopicIF) subjects.get(locator);
   }
   
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
-    return (TopicIF)subject_indicators.get(locator);    
+    return (TopicIF) subject_indicators.get(locator);    
   }
 
   // --------------------------------------------------------------------------
@@ -135,10 +133,8 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache implement
     // Add new map entries
     TMObject object = (TMObject)o;
     // Create new id if not already created
-    if (object.oid == null) {
-      String id = ("" + counter++).intern();
-      object.oid =  id;
-    }
+    if (object.oid == null)
+      object.oid = ("" + counter++);
     if (!id_objects.containsKey(object.oid))
       id_objects.put(object.oid, object);
   }
@@ -153,14 +149,4 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache implement
     // Remove map entries
     id_objects.remove(((TMObject)o).oid);
   }
-
-//  /**
-//   * INTERNAL: Returns the object id of the specified object. This
-//   * method is used by the individual TMObjectIFs to retrieve their
-//   * object ids, since the id itself is not stored on those instances.
-//   */
-//  String getIdOfObject(TMObjectIF object) {
-//    return (String)object_ids.get(object);
-//  }
-  
 }
