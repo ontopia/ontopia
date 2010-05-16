@@ -32,14 +32,16 @@ repositories {
     mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-snapshot-repository'
     mavenRepo urls: 'http://repository.jboss.org/maven2'
     mavenRepo urls: 'http://www.tmapi.org/maven-repository/'
+    mavenRepo urls: 'http://repository.semagia.com/snapshots/'
 }
 
 dependencies {
-    compile 'net.ontopia:ontopia-engine:5.1.0-SNAPSHOT@jar'
+    compile 'net.ontopia:ontopia-engine:5.1.0-SNAPSHOT'
     compile 'org.slf4j:slf4j-api:1.5.11'
-    compile files('lib/semagia-mio-0.9.5.jar')
+    compile 'com.semagia.mio:mio-core:0.9.6-SNAPSHOT'
 
     testCompile 'junit:junit:4.+'
+    testCompile 'com.semagia.mio:mio-core-tests:0.9.6-SNAPSHOT'
 }
 
 jar {
