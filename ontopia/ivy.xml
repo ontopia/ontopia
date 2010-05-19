@@ -75,9 +75,9 @@
     <dependency org="pdfbox" name="pdfbox" rev="0.7.3" conf="build" />
     <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2" conf="build" />
 
-    <dependency org="org.apache.wicket" name="wicket" rev="1.4.7" conf="build" />
-    <dependency org="org.apache.wicket" name="wicket-datetime" rev="1.4.7" conf="build" />
-    <dependency org="org.apache.wicket" name="wicket-extensions" rev="1.4.7" conf="build" />
+    <dependency org="org.apache.wicket" name="wicket" rev="1.4.8" conf="build" />
+    <dependency org="org.apache.wicket" name="wicket-datetime" rev="1.4.8" conf="build" />
+    <dependency org="org.apache.wicket" name="wicket-extensions" rev="1.4.8" conf="build" />
     <dependency org="org.tmapi" name="tmapi" rev="2.0.2" conf="build"/>
     <dependency org="org.tmapi" name="tmapi-tests" rev="2.0.2" conf="build"/>
 	
