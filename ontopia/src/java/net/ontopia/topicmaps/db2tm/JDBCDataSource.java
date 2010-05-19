@@ -349,7 +349,7 @@ public class JDBCDataSource implements DataSourceIF {
         sb.append(")");
       }
       
-      sb.append("order by m1." + changelog.getOrderColumn());
+      sb.append(" order by m1." + changelog.getOrderColumn());
       sb.append(") c");
 
       // then left outer join with data table
