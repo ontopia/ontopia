@@ -387,6 +387,7 @@ public class TopicType extends AbstractTypingTopic {
       "select $FIELDSVIEW from " +
       "{ $TT = %tt% | subclasses-of($TT, %tt%) }, " +
       "on:has-field($TT : on:field-owner, $FD : on:field-definition), " +
+      "direct-instance-of($FV, on:fields-view), " +
       "{ on:field-in-view($FD : on:field-definition, $FV : on:fields-view)" +
       (includeHiddenViews ? "" : ", not(on:is-hidden-view($FV : on:fields-view))") +
       (includeEmbeddedViews ? "" : ", not(on:is-embedded-view($FV : on:fields-view))") +
