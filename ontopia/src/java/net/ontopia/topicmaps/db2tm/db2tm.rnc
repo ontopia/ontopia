@@ -7,7 +7,9 @@ nameatt = attribute name { text }
 
 using = element using { 
   attribute prefix { xsd:ID },
-  attribute subject-identifier { text }
+  ( attribute subject-identifier { text } |
+    attribute item-identifier { text } |
+    attribute subject-locator { text })
 }
 
 columnatt = attribute column { text }
