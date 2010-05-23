@@ -25,12 +25,10 @@ package net.ontopia.topicmaps.utils.jtm;
 
 %unicode
 
-//%line 
-//%column
+%line 
+%column
 
 %pack
-
-//%public
 
 %int
 
@@ -42,6 +40,14 @@ package net.ontopia.topicmaps.utils.jtm;
 
     private int _leftOffset;
     private int _rightOffset;
+
+    public int getLine() {
+        return yyline+1;
+    }
+
+    public int getColumn() {
+        return yycolumn;
+    }
 
     public String value() {
         return new String(zzBuffer, zzStartRead+_leftOffset, yylength()-_leftOffset-_rightOffset);
@@ -96,5 +102,5 @@ String          = \"([^\\\"]|(\\[\\\"rntu/]))*\"
     ":"                 { return _token(JSONToken.COLON); }
 }
 
-.|\n                    { throw new Error("Illegal character <" + yytext() + ">"); }
+.|\n                    { throw new Error("Illegal character <" + yytext() + "> at line " + getLine() + " column: " + getColumn()); }
 
