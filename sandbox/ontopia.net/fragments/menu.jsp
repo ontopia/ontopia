@@ -1,10 +1,13 @@
-<tolog:foreach query="
+<tolog:foreach query='
   instance-of($SECTION, o:section),
   not(o:contained-in($SECTION : o:containee, $PARENT : o:container)),
   o:order($SECTION, $ORDER),
-  { o:internal-url($SECTION, $URL) }
+  { o:internal-url($SECTION, $URL) |
+    not(o:internal-url($SECTION, $URLL)),
+    o:id($SECTION, $ID),
+    str:concat($URL, "section.jsp?id=", $ID) }
   order by $ORDER?
-  ">
+  '>
 
     <tolog:choose>
       <tolog:when var="URL">
@@ -50,11 +53,12 @@
     <tolog:foreach query="
       o:contained-in($PAGE : o:containee, %SECTION% : o:container),
       instance-of($PAGE, o:page),
+      o:id($PAGE, $ID),
       o:order($PAGE, $ORDER)
       order by $ORDER?
     ">
     <p class="child"
-      ><a href="page.jsp?id=<tolog:id var="PAGE"/>"
+      ><a href="page.jsp?id=<tolog:out var="ID"/>"
        <tolog:if query="%topic% = %PAGE%?">class=selected</tolog:if>
          ><tolog:out var="PAGE"/></a></p>
   

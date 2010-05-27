@@ -5,8 +5,8 @@
   <% } %>
 
   <div id="searchbox">
-    <form action="#" method="get" ">
-      <input type="text" name="query:ustring:utf8" class="topSearchField" />
+    <form action="search.jsp" method="get">
+      <input type="text" name="query" class="topSearchField" />
       <input type="submit" value="Search" class="topSearchBut" />
     </form>
   </div>

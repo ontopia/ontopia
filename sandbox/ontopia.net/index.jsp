@@ -86,10 +86,11 @@
 <tolog:foreach query="
   instance-of($SECTION, o:section),
   o:order($SECTION, $ORDER),
-  dc:description($SECTION, $DESC)
+  dc:description($SECTION, $DESC),
+  o:id($SECTION, $ID)
   order by $ORDER limit 2?
   ">
-  <p><b><a href="section.jsp?id=<tolog:id var="SECTION"/>"
+  <p><b><a href="section.jsp?id=<tolog:out var="ID"/>"
           ><tolog:out var="SECTION"/></a></b><br>
   <tolog:out var="DESC"/></p>
 </tolog:foreach>
@@ -99,7 +100,7 @@
 <td class=normal id=rightcol>
 <p><b>GET INVOLVED</b></p>
 
-<p><b><a href="...">It's up to you</a></b><br>
+<p><b><a href="page.jsp?id=get-involved">It's up to you</a></b><br>
 The Ontopia product is created by the Ontopia community, and so the
 product is what the community makes it. Anyone can join and contribute
 to help make the product better. Follow the links below to get involved.</p>
@@ -110,7 +111,7 @@ to help make the product better. Follow the links below to get involved.</p>
 <li><a href="http://code.google.com/p/ontopia/source/checkout">Check out the source code</a>
 </ul>
 
-<p><a href="page.jsp?id=2756">Get involved <img src="images/arrows.png"></a></p>
+<p><a href="page.jsp?id=get-involved">Get involved <img src="images/arrows.png"></a></p>
 
 <div class=ider> </div>
 

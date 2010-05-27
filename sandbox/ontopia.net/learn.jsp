@@ -20,13 +20,16 @@
 <%
   int ix = 0;
 %>
-<tolog:foreach query="
+<tolog:foreach query='
   instance-of($SECTION, o:section),
   o:order($SECTION, $ORDER),
   dc:description($SECTION, $DESC),
-  { o:internal-url($SECTION, $URL) }
+  { o:internal-url($SECTION, $URL) |
+    not(o:internal-url($SECTION, $URLL)),
+    o:id($SECTION, $ID),
+    str:concat($URL, "section.jsp?id=", $ID) }
   order by $ORDER?
-  ">
+  '>
   <%
     if (ix % 2 == 0)
       out.write("<tr>");

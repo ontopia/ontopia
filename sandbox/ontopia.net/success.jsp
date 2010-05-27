@@ -24,13 +24,14 @@
 <tolog:foreach query="
   instance-of($PROJECT, o:project),
   o:image($PROJECT, $IMAGE),
-  o:abstract($PROJECT, $ABSTRACT)
+  o:abstract($PROJECT, $ABSTRACT),
+  o:id($PROJECT, $ID)
   order by $PROJECT?">
 
   <h3><tolog:out var="PROJECT"/></h3>
 
   <div class=logobox>
-    <a href="page.jsp?id=<tolog:id var="PROJECT"/>"
+    <a href="page.jsp?id=<tolog:out var="ID"/>"
       ><img src="images/<tolog:out var="IMAGE"/>"></a>
   </div>
 
