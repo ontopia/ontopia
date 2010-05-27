@@ -46,7 +46,7 @@
     <!--skin  name="grellgruen"    title="Schrillgreen"/-->
     <!--skin  name="blue-comet"    title="Blue Comet"/-->
     <skin  name="ontopia"       title="Ontopia Colours (default)" default="yes"/>
-    <skin  name="winter"        title="Norwegian Winter"/>
+    <!--skin  name="winter"        title="Norwegian Winter"/-->
     <!--skin  name="compact"       title="Compact"/-->
   </mvs>
 
