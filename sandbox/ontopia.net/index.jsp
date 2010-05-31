@@ -14,7 +14,7 @@
   <div id="top_section">
     <div id="top_section_left">
       <h3>WELCOME TO THE LAND OF ONTOPIA</h3>
-      <div id="frontpage_ingress">A complete set of tools for
+      <div id="frontpage_ingress">Open source tools for
       building, maintaining and deploying Topic Maps-based
       applications</div>
 
@@ -70,10 +70,11 @@
 
 <tolog:foreach query="
   instance-of($POST, o:news-item),
+  o:id($POST, $ID),
   dc:date($POST, $DATE),
   o:abstract($POST, $ABSTRACT)
   order by $DATE desc limit 1?">
-<p><b><a href="page.jsp?id=<tolog:id var="POST"/>"
+<p><b><a href="page.jsp?id=<tolog:out var="ID"/>"
   ><tolog:out var="POST"/></a></b><br>
   <tolog:out var="ABSTRACT"/>...
 </p>

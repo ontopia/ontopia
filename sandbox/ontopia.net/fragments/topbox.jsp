@@ -34,8 +34,8 @@
          ><a href="services.jsp">SERVICES</a></span>
     <span class="sep"> | </span>
     <span class="item"
-      <% if (fullurl.contains("section.jsp?id=ontopia-the-product")) { %> id="itemselected" <% } %>
-         ><a href="section.jsp?id=ontopia-the-product">ABOUT</a></span>
+      <% if (fullurl.contains("page.jsp?id=about")) { %> id="itemselected" <% } %>
+         ><a href="page.jsp?id=about">ABOUT</a></span>
     <span class="sep"> | </span>
     <span class="item"
       <% if (fullurl.contains("page.jsp?id=ontopia-forge")) { %> id="itemselected" <% } %>
