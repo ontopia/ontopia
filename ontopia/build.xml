@@ -2466,9 +2466,9 @@
        Posting online docs
        ======================================================================
        
-       This target is used to produce a documentation bundle which can be uploaded
-       to ontopia.net so that we have all the product documentation available
-       online.
+       This target is used to produce a documentation bundle which can
+       be uploaded to ontopia.net so that we have all the product
+       documentation available online.
        
        The target will produce build/ontopia-docs.zip 
   -->
@@ -2482,9 +2482,9 @@
     
     <!-- Get javadoc -->
     <!--antcall inheritRefs="true" target="javadoc.ontopia" />
-        <copy todir="${dist.path}/doc/api">
-          <fileset dir="${build.javadoc}/ontopia" />
-        </copy-->
+    <copy todir="${dist.path}/doc/api">
+      <fileset dir="${build.javadoc}/ontopia" />
+    </copy-->
         
     <!-- (from dist.product.collect) -->
     <antcall inheritRefs="true" target="makehtml">
@@ -2531,11 +2531,13 @@
     <!-- Collect documentation -->
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc" />
     
-    <!-- Generate index pages -->
-    <echo message="Generating HTML index pages..." />
-    <texen controlTemplate="docindex-control.vm" templatePath="${src.path}/dist/doc/" 
-            outputFile="docindex.report" outputDirectory="${build.tmp}" 
-            productVersion="Version ${dist.version}, builddate ${dist.date.full}" theDir="" />
+    <!-- Generate index page -->
+    <echo message="Generating HTML index page..." />
+    <texen controlTemplate="onlineindex-control.vm"
+           templatePath="${src.path}/dist/doc/" 
+           outputFile="docindex.report"
+           outputDirectory="${build.tmp}" 
+           productVersion="Version ${dist.version}, builddate ${dist.date.full}"/>
     <copy file="${build.tmp}/docindex.html" overwrite="yes" tofile="${dist.path}/doc/index.html" />
     
     <!-- Copy license -->
@@ -2587,7 +2589,7 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/navigator" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/navigator" />
     
-    <!-- Copy the user guide to the web application -->
+    <!-- Copy the user guide to correct directory -->
     <mkdir dir="${dist.path}/doc/omnigator/" />
     <copy file="${doc.path}/omnigator/user-guide.xml.html" tofile="${dist.path}/doc/omnigator/userguide.html" />
     <copy todir="${dist.path}/doc/omnigator/graphics">
@@ -2631,10 +2633,9 @@
     </antcall>
     
     <!-- Collect documentation -->
-    <mkdir dir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
-    <copy file="${doc.path}/vizigator/user-guide.xml.html" tofile="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator/userguide.html" />
-    
-    <copy todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator">
+    <mkdir dir="${dist.path}/doc/vizigator" />
+    <copy file="${doc.path}/vizigator/user-guide.xml.html" tofile="${dist.path}/doc/vizigator/userguide.html" />
+    <copy todir="${dist.path}/doc/vizigator">
       <fileset dir="${doc.path}/vizigator">
         <patternset>
           <include name="*.gif" />
@@ -2644,10 +2645,9 @@
         </patternset>
       </fileset>
     </copy>
-    
-    <!-- Copy logo and stylesheet -->
-    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/apache-tomcat/webapps/omnigator/docs/vizigator" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/vizigator" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css"
+          todir="${dist.path}/doc/vizigator" />
     
     <!-- (from dist.viz.collect) -->
     <antcall inheritRefs="true" target="makehtml">
@@ -2656,6 +2656,39 @@
     <copy file="${doc.path}/tmrap/devguide.xml.html" tofile="${dist.path}/doc/tmrap/dev-guide.html" />
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/tmrap" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/tmrap" />
+
+        <!-- (from dist.viz.collect) -->
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/vizigator/user-guide.xml" />
+    </antcall>
+    
+    <!-- Build Ontopoly documentation -->
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
+    </antcall>
+    <mkdir dir="${dist.path}/doc/ontopoly" />
+    <mkdir dir="${dist.path}/doc/ontopoly/images" />
+    <copy file="${doc.path}/ontopoly/user-guide.xml.html" tofile="${dist.path}/doc/ontopoly/userguide.html" />
+    <copy todir="${dist.path}/doc/ontopoly/images">
+      <fileset dir="${doc.path}/ontopoly/images">
+        <patternset>
+          <include name="*.gif" />
+        </patternset>
+        <patternset>
+          <include name="*.png" />
+        </patternset>
+      </fileset>
+    </copy>
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/ontopoly" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css"
+          todir="${dist.path}/doc/ontopoly" />
+
+    <!-- finally, package it -->
+    <zip destFile="${build.dists}/ontopia-docs.zip" duplicate="preserve">
+      <zipfileset dir="${dist.path}/doc">
+        <include name="**/*" />
+      </zipfileset>
+    </zip>    
   </target>
   
   <!-- ======================================================================
