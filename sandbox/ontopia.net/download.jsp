@@ -40,9 +40,9 @@ installation guide.</p>
 <p><b>RELATED INFORMATION</b></p>
 
 <ul>
+<li><a href="doc/current/">The product documentation</a>
+<li><a href="doc/current/install.html">The install guide</a>
 <li><a href="http://groups.google.com/group/ontopia">Join the mailing list</a>
-<li><a href="http://code.google.com/p/ontopia/downloads/list">Download the software</a>
-<li><a href="http://code.google.com/p/ontopia/source/checkout">Check out the source code</a>
 </ul>
 
 </table>
