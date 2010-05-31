@@ -5,7 +5,7 @@
 	<artifactId>toma</artifactId>
 	<packaging>jar</packaging>
 	<name>Ontopia TOMA query language</name>
-	<version>1.0</version>
+	<version>1.0.1</version>
 	<url>http://code.google.com/p/ontopia/wiki/TomaImplementation</url>
 	<inceptionYear>2009</inceptionYear>
 

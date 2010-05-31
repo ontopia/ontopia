@@ -21,7 +21,10 @@ package net.ontopia.topicmaps.query.toma.tools;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import java.util.*;
+
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.ParsedQueryIF;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
@@ -38,9 +41,10 @@ public class TomaQueryTest
 
   public static void main(String[] args)
   {
+    String tmfile = "./toma/src/test/resources/query/ItalianOpera.ltm";
     //String tmfile = "./toma/src/test/resources/query/ItalianOpera.ltm";
     //String tmfile = "./toma/src/test/int-occs.ltm";
-    String tmfile = "./toma/src/test/resources/query/full.ltm";
+    //String tmfile = "./toma/src/test/resources/query/full.ltm";
     //String tmfile = "./toma/src/test/resources/query/hierarchies.ltm";
     //String tmfile = "./toma/src/test/resources/query/family.ltm";
     
@@ -73,7 +77,14 @@ public class TomaQueryTest
       //String query = "select $p, $c where exists $p.(project)<-(contributes-to)->(person)[$c];";
       //String query = "select $t.name, $t.oc where exists $t order by 1;";
       //String query = "select $COMPOSER, count($OPERA) where exists $COMPOSER.(composer)<-(composed-by)->(work)[$OPERA] order by 2 desc;";
-      String query = "select $topic.name($type)@$scope, $type, $scope where $topic.type = city;";
+      //String query = "select $topic.name($type)@$scope, $type, $scope where $topic.type = city;";
+      //String query = "select sum($pages) where $t.type = standard and $pages = $t.oc(pages);";
+      //String query = "select $t where $t.instance IN (select $n where $n.type = standard);";
+      //String query = "select $a, $association, $role, $player where $a($association)->($role) = $player;";
+      //String query = "select $a, $person, $association, $place where $person.(person)<-$a($association)->(place) = $place;";
+      //String query = "select $PLACE, $PERSON where exists $PERSON.(person)<-(born-in)->(place)[$PLACE] and $PERSON.(person)<-(died-in)->(place) = $PLACE order by 1, 2;";
+      //String query = "select $PERSON where $person.type = composer and exists $PERSON.($$)<-(composed-by)->($$);";
+      String query = "select $person, $city where ($t.super = writer or $t = writer) and $person.type = $t and $city.name = 'Rome' and $person.($$)<-(died-in)->($$) = $city;";      
       
       QueryProcessorIF processor = new BasicQueryProcessor(tm);
       ParsedQueryIF pquery = processor.parse(query);
@@ -89,7 +100,7 @@ public class TomaQueryTest
       long elapsed = (System.currentTimeMillis() - time);
       int rows = 0;
 
-//      QueryTracer.removeListener(tracer);
+      QueryTracer.removeListener(tracer);
       
       for (int ix = 0; ix < result.getWidth(); ix++)
         System.out.print(result.getColumnName(ix) + " | ");
@@ -106,7 +117,8 @@ public class TomaQueryTest
       System.out.println("Query time: " + elapsed + "ms");
       System.out.println("Rows: " + rows);
       
-      //System.out.println("Trace: \n" + writer.toString());
+//      System.out.println("Trace: \n" + writer.toString());
+      
     } catch (IOException e) {
       e.printStackTrace();
     } catch (InvalidQueryException e) {

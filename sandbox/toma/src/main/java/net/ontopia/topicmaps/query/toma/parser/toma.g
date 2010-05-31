@@ -14,7 +14,7 @@ class RealTomaParser extends Parser;
 
 options {
   defaultErrorHandler = false;
-  k = 2;
+  k = 3;
 }
 
 {
@@ -120,7 +120,7 @@ orclause returns [ExpressionIF e]:
                        { ExpressionIF left, right;                                }
   e=andclause 
   (
-    OR right=andclause { left=e; e = context.createExpression("OR", left, right); }
+	OR right=andclause { left=e; e = context.createExpression("OR", left, right); }
   )*;
 
 andclause returns [ExpressionIF e]:
@@ -137,6 +137,7 @@ clause returns [ExpressionIF e]:
     (NOT                       { exprID = "NOTEXISTS";                            })? 
      EXISTS left=expr           
                                { e = context.createExpression(exprID, left);      }
+  | LPAREN e=orclause RPAREN                               
   |                            
     left=expr                               
     ( 
