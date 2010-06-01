@@ -11,7 +11,7 @@ import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.*;
 
 /**
- * INTERNAL: Command-line tool for extracting keywords from a document.
+ * PUBLIC: Command-line tool for extracting keywords from a document.
  */
 public class Chew {
 
@@ -36,31 +36,18 @@ public class Chew {
 
     // Get command line arguments
     String[] args = options.getArguments();
-
     if (args.length == 0 || args.length > 2) {
       usage();
       System.exit(3);
     }
 
+    String infile = (args.length == 1 ? args[0] : args[1]);
+    
     // load the topic maps
     TopicMapIF topicmap = (args.length == 2 ? ImportExportUtils.getReader(args[0]).read() : null);
 
-    // create classifier
-    TopicMapClassification tcl;
-    if (topicmap == null)
-      tcl = new TopicMapClassification();
-    else
-      tcl = new TopicMapClassification(topicmap);
-
-    // read document
-    String infile = (args.length == 1 ? args[0] : args[1]);
-    ClassifiableContentIF cc = ClassifyUtils.getClassifiableContent(infile);
-
-    // classify document
-    tcl.classify(cc);
-
-    // dump the ranked terms
-    TermDatabase tdb = tcl.getTermDatabase();
+    // rank and dump
+    TermDatabase tdb = SimpleClassifier.classify(infile, topicmap);
     tdb.dump(ohandler.terms);
   }
 

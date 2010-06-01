@@ -13,7 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
 /**
- * INTERNAL: 
+ * PUBLIC: Represents a concept which occurs in the classified
+ * content.  A term can have many variants, all of which can be found
+ * from this object. It also has a score, indicating the importance of
+ * the term within the content.
  */
 public class Term {
   // Define a logging category.
@@ -30,58 +33,52 @@ public class Term {
     this.stem = stem;
   }
 
+  /**
+   * PUBLIC: Returns the stem common to all variants of the term.
+   * Often, the stem does not actually occur in the content.
+   */
   public String getStem() {
     return stem;
   }
   
+  /**
+   * PUBLIC: Returns the term's score, a number in the range 0-1,
+   * indicating its importance within the content.   
+   */
   public double getScore() {
     return score;
   }
-  
-  public void setScore(double score, String reason) {
-    if (score <= 0.0d)
-      throw new RuntimeException("Score is not nillable: " + score + " term: " + this);
-    log.debug(">" + stem + "< =" + score + ", " + reason);
-    this.score = score;    
-  }
 
-  public void addScore(double ascore, String reason) {
-    this.score += ascore;
-    log.debug(">" + stem + "< +" + ascore + "=" + score + ", " + reason);
-  }
-
-  public void multiplyScore(double factor, String reason) {
-    this.score = score * factor;
-    log.debug(">" + stem + "< *" + factor + "=" + score + ", " + reason);
-  }
-
-  public void divideScore(double factor, String reason) {
-    this.score = score / factor;
-    log.debug(">" + stem + "< /" + factor + "=" + score + ", " + reason);
-  }
-  
+  /**
+   * PUBLIC: Returns all variant spellings of this term within the
+   * content.
+   */
   public Variant[] getVariants() {
     return variants.keys(new Variant[] {});
   }
 
+  /**
+   * PUBLIC: Returns all variant spellings of this term within the
+   * content, with the most important first.
+   */
   public Variant[] getVariantsByRank() {
     Variant[] ranked = getVariants();
     Arrays.sort(ranked, new VariantComparator());
     return ranked;
   }
 
-  public double getScore(Variant v) {
-    return (1.0d * getOccurrences(v)) / totalOccurrences;
-}
-
+  /**
+   * PUBLIC: Returns the number of times the term occurred within the
+   * classified content.
+   */
   public int getOccurrences() {
     return totalOccurrences;
   }
-  
-  public int getOccurrences(Variant variant) {
-    return variants.get(variant);
-  }
 
+  /**
+   * PUBLIC: Returns the preferred variant of the term. This is a form
+   * of the term which actually occurred in the classified content.
+   */
   public String getPreferredName() {
     if (variants.isEmpty())
       return getStem();
@@ -102,11 +99,41 @@ public class Term {
     return maxKey.getValue();
   }
   
-  public void addVariant(Variant variant) {
+  protected double getScore(Variant v) {
+    return (1.0d * getOccurrences(v)) / totalOccurrences;
+  }
+  
+  protected int getOccurrences(Variant variant) {
+    return variants.get(variant);
+  }
+  
+  protected void setScore(double score, String reason) {
+    if (score <= 0.0d)
+      throw new RuntimeException("Score is not nillable: " + score + " term: " + this);
+    log.debug(">" + stem + "< =" + score + ", " + reason);
+    this.score = score;    
+  }
+
+  protected void addScore(double ascore, String reason) {
+    this.score += ascore;
+    log.debug(">" + stem + "< +" + ascore + "=" + score + ", " + reason);
+  }
+
+  protected void multiplyScore(double factor, String reason) {
+    this.score = score * factor;
+    log.debug(">" + stem + "< *" + factor + "=" + score + ", " + reason);
+  }
+
+  protected void divideScore(double factor, String reason) {
+    this.score = score / factor;
+    log.debug(">" + stem + "< /" + factor + "=" + score + ", " + reason);
+  }
+  
+  protected void addVariant(Variant variant) {
     addVariant(variant, 1);
   }
   
-  public void addVariant(Variant variant, int occurrences) {
+  protected void addVariant(Variant variant, int occurrences) {
     if (variants.get(variant) > 0)
       variants.increment(variant);
     else
@@ -114,7 +141,7 @@ public class Term {
     totalOccurrences += occurrences;
   }
   
-  public void merge(Term other) {
+  protected void merge(Term other) {
     if (other == this) return;
     
     this.score = this.score + other.score;    
@@ -137,7 +164,7 @@ public class Term {
     return '\'' + getStem() + "\'" + getScore() + ":" + (variants.isEmpty() ? "" : Arrays.asList(variants.keys()).toString());
   }
   
-  public static Comparator SCORE_COMPARATOR =
+  protected static Comparator SCORE_COMPARATOR =
     new Comparator() {
       public int compare(Object o1, Object o2) {
         Term t1 = (Term)o1;

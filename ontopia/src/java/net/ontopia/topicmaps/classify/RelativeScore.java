@@ -3,15 +3,10 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
-
 /**
  * INTERNAL: 
  */
 public class RelativeScore implements TermAnalyzerIF {
-
   TermDatabase tdb;
   double maxScore;
   
@@ -26,6 +21,5 @@ public class RelativeScore implements TermAnalyzerIF {
 
   public void endAnalysis() {
     this.tdb = null;
-  }
-  
+  }  
 }

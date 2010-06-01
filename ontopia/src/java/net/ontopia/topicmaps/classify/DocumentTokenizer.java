@@ -11,9 +11,7 @@ import net.ontopia.utils.*;
  * INTERNAL: 
  */
 public class DocumentTokenizer {
-
   TermDatabase tdb;
-
   TokenizerIF tokenizer;
   DelimiterTrimmerIF delimiterTrimmer;
   List termNormalizers = new ArrayList();

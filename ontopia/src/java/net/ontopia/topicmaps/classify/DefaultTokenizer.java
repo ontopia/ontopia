@@ -3,15 +3,12 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.StringTokenizer;
 
 /**
  * INTERNAL: 
  */
 public class DefaultTokenizer implements TokenizerIF {
-
   private StringTokenizer tokenizer;
 
   public DefaultTokenizer() {
