@@ -68,7 +68,7 @@
 
     <dependency org="saxon" name="saxon" rev="6.5.3" conf="build" />
 
-    <dependency org="lucene" name="lucene" rev="1.4.3" conf="build" />
+    <dependency org="org.apache.lucene" name="lucene-core" rev="2.2.0" conf="build" />
     <dependency org="org.apache.lucene" name="lucene-snowball" rev="2.0.0" conf="build" />
     <dependency org="org.apache.poi" name="poi" rev="3.2-FINAL" conf="build" />
     <dependency org="org.apache.poi" name="poi-scratchpad" rev="3.2-FINAL" conf="build" />

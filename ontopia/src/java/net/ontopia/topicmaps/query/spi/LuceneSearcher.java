@@ -52,7 +52,7 @@ public class LuceneSearcher extends AbstractSearcher {
     
     LuceneSearchResult(String query) {
       try {
-        Query q = QueryParser.parse(query, defaultField, analyzer);
+        Query q = new QueryParser(defaultField, analyzer).parse(query);
         this.searcher = new IndexSearcher(getDirectory());
         this.hits = this.searcher.search(q);
       } catch (Exception e) {

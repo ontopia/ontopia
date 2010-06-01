@@ -61,7 +61,7 @@ public class LuceneSearcher implements SearcherIF {
    * @param analyzer The token stream analyzer that the searcer is to use.
    */
   public LuceneSearcher(String path, Analyzer analyzer) throws IOException {
-    this(FSDirectory.getDirectory(path, false), analyzer);
+    this(FSDirectory.getDirectory(path), analyzer);
     this.path = path;
   }
 
@@ -120,7 +120,7 @@ public class LuceneSearcher implements SearcherIF {
     // ! Searcher searcher = new IndexSearcher(dir);
     try {
       log.debug("Searching for: '" + query + "'");
-      Query _query = QueryParser.parse(query, default_field, analyzer);
+      Query _query = new QueryParser(this.default_field, this.analyzer).parse(query);
       return new LuceneSearchResult(searcher.search(_query));
     } catch (org.apache.lucene.queryParser.ParseException e) {
       log.info("Error parsing query: '" + e.getMessage() + "'");

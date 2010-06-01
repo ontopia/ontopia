@@ -174,7 +174,7 @@ public class LuceneIndexer implements IndexerIF {
   
   public synchronized int delete(String field, String value) throws IOException {
     // delete the term and return count
-    return getReader().delete(new Term(field, value));
+    return getReader().deleteDocuments(new Term(field, value));
   }
 
   public synchronized void flush() throws IOException {
@@ -216,15 +216,35 @@ public class LuceneIndexer implements IndexerIF {
     Field lucene_field;
     if (field.getReader() != null) {
       if (!field.isStored() && field.isIndexed() && field.isTokenized())
-        lucene_field = Field.Text(field.getName(), field.getReader()); // Reader based field
+        lucene_field = new Field(field.getName(), field.getReader()); // Reader based field
       else {
         lucene_field = new Field(field.getName(), getStringValue(field.getReader()),
-                                 field.isStored(), field.isIndexed(), field.isTokenized());
+            getStoreSetting(field), getIndexSetting(field));
       }
     } else {
-      lucene_field = new Field(field.getName(), field.getValue(), field.isStored(), field.isIndexed(), field.isTokenized());
+      lucene_field = new Field(field.getName(), field.getValue(), getStoreSetting(field), getIndexSetting(field));
     }
     return lucene_field;
+  }
+  
+  protected Field.Store getStoreSetting(FieldIF field) {
+    if (field.isStored()) {
+      return Field.Store.YES;
+    } else {
+      return Field.Store.NO;
+    }
+  }
+  
+  protected Field.Index getIndexSetting(FieldIF field) {
+    if (field.isIndexed()) {
+      if (field.isTokenized()) {
+        return Field.Index.TOKENIZED;
+      } else {
+        return Field.Index.UN_TOKENIZED;
+      }
+    } else {
+      return Field.Index.NO;
+    }
   }
 
   protected String getStringValue(Reader reader) throws IOException {
