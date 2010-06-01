@@ -1,6 +1,4 @@
 
-// $Id: WordFormatModule.java,v 1.7 2007/05/07 08:11:39 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.io.*;
@@ -9,14 +7,17 @@ import java.util.*;
 import net.ontopia.xml.*;
 import net.ontopia.utils.*;
 
-import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 
 /**
- * INTERNAL: A format module for the old binary Word format.
+ * INTERNAL: A format module for the OOXML WordProcessingML format.
  */
-public class WordFormatModule implements FormatModuleIF {
-  protected String[] extensions = new String[] {".doc", ".dot"};
-  protected byte[] magicBytes = new byte[] {(byte)0xd0, (byte)0xcf, (byte)0x11, (byte)0xe0, (byte)0xa1, (byte)0xb1, (byte)0x1a, (byte)0xe1, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00};
+public class OOXMLWordFormatModule implements FormatModuleIF {
+  protected String[] extensions = new String[] {".docx"};
+  // these are really magic bytes for all zip files...
+  protected byte[] magicBytes = new byte[] {
+    (byte) 0x50, (byte) 0x4B, (byte) 0x03, (byte) 0x04 };
   
   public boolean matchesContent(ClassifiableContentIF cc) {
     return false;
@@ -31,7 +32,8 @@ public class WordFormatModule implements FormatModuleIF {
 
   public void readContent(ClassifiableContentIF cc, TextHandlerIF handler) {
     try {
-      WordExtractor extractor = new WordExtractor(new BufferedInputStream(new ByteArrayInputStream(cc.getContent())));
+      OPCPackage opc = OPCPackage.open(new ByteArrayInputStream(cc.getContent()));
+      XWPFWordExtractor extractor = new XWPFWordExtractor(opc);
       String s = extractor.getText();
       char[] c = s.toCharArray();
       handler.startRegion("document");
@@ -41,5 +43,4 @@ public class WordFormatModule implements FormatModuleIF {
       throw new OntopiaRuntimeException(e);
     }    
   }
-  
 }

@@ -29,6 +29,8 @@ public class FormatModule implements FormatModuleIF {
     modules.add(new PDFFormatModule());
     modules.add(new WordFormatModule());
     modules.add(new PowerPointFormatModule());
+    modules.add(new OOXMLWordFormatModule());
+    modules.add(new OOXMLPowerpointFormatModule());
     fallout_module = new PlainTextFormatModule();
     modules.add(fallout_module);
   }

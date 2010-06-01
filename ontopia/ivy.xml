@@ -70,8 +70,9 @@
 
     <dependency org="org.apache.lucene" name="lucene-core" rev="2.2.0" conf="build" />
     <dependency org="org.apache.lucene" name="lucene-snowball" rev="2.0.0" conf="build" />
-    <dependency org="org.apache.poi" name="poi" rev="3.2-FINAL" conf="build" />
-    <dependency org="org.apache.poi" name="poi-scratchpad" rev="3.2-FINAL" conf="build" />
+    <dependency org="org.apache.poi" name="poi" rev="3.6" conf="build" />
+    <dependency org="org.apache.poi" name="poi-ooxml" rev="3.6" conf="build" />
+    <dependency org="org.apache.poi" name="poi-scratchpad" rev="3.6" conf="build" />
     <dependency org="pdfbox" name="pdfbox" rev="0.7.3" conf="build" />
     <dependency org="org.ccil.cowan.tagsoup" name="tagsoup" rev="1.2" conf="build" />
 
