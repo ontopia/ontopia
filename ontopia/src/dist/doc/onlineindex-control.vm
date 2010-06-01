@@ -1,0 +1,7 @@
+#* 
+  This control template is used for the online documentation, since
+  some of the variables need to be set differently there.
+*# 
+
+#set ($theDir = "")
+$generator.parse("docindex-template.vm", "docindex.html")

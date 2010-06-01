@@ -5,4 +5,5 @@
     documentation index HTML page generator.
 *# 
 
+#set ($theDir = "doc/")
 $generator.parse("docindex-template.vm", "docindex.html")
