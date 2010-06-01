@@ -13,7 +13,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
- * INTERNAL: Class that represents the association object to which a
+ * INTERNAL: Class that represents the association object which a
  * deleted role might have belonged to. Note that this class exists
  * just to make the API behave gracefully in the cases where
  * association roles are deleted, so that applications do not fail
