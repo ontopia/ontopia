@@ -16,35 +16,15 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: 
  */
 public class Term {
-
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(Term.class.getName());
   
-  public static Comparator SCORE_COMPARATOR =
-    new Comparator() {
-      public int compare(Object o1, Object o2) {
-        Term t1 = (Term)o1;
-        Term t2 = (Term)o2;
-        return ObjectUtils.compare(t2.getScore(), t1.getScore()); // NOTE: reverse order
-      }
-    };
-  
-  private class VariantComparator implements Comparator {    
-      public int compare(Object o1, Object o2) {
-        Variant v1 = (Variant)o1;
-        Variant v2 = (Variant)o2;
-        int c = ObjectUtils.compare(getOccurrences(v2), getOccurrences(v1)); // NOTE: reverse order
-        if (c != 0) return c;
-        return v1.getValue().compareTo(v2.getValue());
-      }
-    };
-  
-  protected String stem;
-  
+  protected String stem;  
   protected double score = 1.0d;
   protected int totalOccurrences;
-
-  protected TObjectIntHashMap variants = new TObjectIntHashMap(); // key: variant, value: int
+  
+  // key: variant, value: int
+  protected TObjectIntHashMap<Variant> variants = new TObjectIntHashMap<Variant>(); 
   
   Term(String stem) {
     this.stem = stem;
@@ -80,12 +60,12 @@ public class Term {
     log.debug(">" + stem + "< /" + factor + "=" + score + ", " + reason);
   }
   
-  public Object[] getVariants() {
-    return variants.keys();
+  public Variant[] getVariants() {
+    return variants.keys(new Variant[] {});
   }
 
-  public Object[] getVariantsByRank() {
-    Object[] ranked = variants.keys();
+  public Variant[] getVariantsByRank() {
+    Variant[] ranked = getVariants();
     Arrays.sort(ranked, new VariantComparator());
     return ranked;
   }
@@ -107,11 +87,11 @@ public class Term {
       return getStem();
     Variant maxKey = null;
     int maxValue = -1;
-    TObjectIntIterator iter = variants.iterator();
+    TObjectIntIterator<Variant> iter = variants.iterator();
     while (iter.hasNext()) {
       iter.advance();
       int thisValue = iter.value();
-      Variant thisKey = (Variant)iter.key();
+      Variant thisKey = iter.key();
       // select variant with most occurrences, or lowest lexical value if equal for predictability
       if ((thisValue > maxValue) ||
           ((thisValue == maxValue) && (thisKey.getValue().compareTo(maxKey.getValue()) < 0))) {
@@ -140,22 +120,40 @@ public class Term {
     this.score = this.score + other.score;    
     this.totalOccurrences = this.totalOccurrences + other.totalOccurrences;
 
-    TObjectIntIterator iter = other.variants.iterator();
+    TObjectIntIterator<Variant> iter = other.variants.iterator();
     while (iter.hasNext()) {
       iter.advance();
-      Object key = iter.key();
+      Variant key = iter.key();
       int value = iter.value();
       if (this.variants.containsKey(key))
         this.variants.adjustValue(key, value);
       else
         this.variants.put(key, value);
-      Variant variant = (Variant)key;
-      variant.replaceTerm(this);
+      key.replaceTerm(this);
     }
   }
   
   public String toString() {
     return '\'' + getStem() + "\'" + getScore() + ":" + (variants.isEmpty() ? "" : Arrays.asList(variants.keys()).toString());
   }
+  
+  public static Comparator SCORE_COMPARATOR =
+    new Comparator() {
+      public int compare(Object o1, Object o2) {
+        Term t1 = (Term)o1;
+        Term t2 = (Term)o2;
+        return ObjectUtils.compare(t2.getScore(), t1.getScore()); // NOTE: reverse order
+      }
+    };
+  
+  private class VariantComparator implements Comparator {    
+    public int compare(Object o1, Object o2) {
+      Variant v1 = (Variant)o1;
+      Variant v2 = (Variant)o2;
+      int c = ObjectUtils.compare(getOccurrences(v2), getOccurrences(v1)); // NOTE: reverse order
+      if (c != 0) return c;
+      return v1.getValue().compareTo(v2.getValue());
+    }
+  };
   
 }

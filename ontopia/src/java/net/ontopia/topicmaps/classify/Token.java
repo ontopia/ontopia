@@ -11,7 +11,6 @@ import net.ontopia.utils.*;
  * INTERNAL: 
  */
 public class Token {
-
   public static final int TYPE_VARIANT = 1;
   public static final int TYPE_DELIMITER = 2;
   

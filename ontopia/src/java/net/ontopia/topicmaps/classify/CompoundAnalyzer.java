@@ -111,9 +111,9 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
     if (t1Score < term1ScoreThreshold) return;
 
     // loop over all variants and look at their followers
-    Object[] variants = t1.getVariants();
+    Variant[] variants = t1.getVariants();
     for (int x=0; x < variants.length; x++) {
-      Variant v1 = (Variant)variants[x];      
+      Variant v1 = variants[x];      
       Followers f1 = (Followers)followers.get(v1);
       if (f1 != null) {
         double limit = f1.getLimit();

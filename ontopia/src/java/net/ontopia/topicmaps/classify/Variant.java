@@ -3,16 +3,12 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
-import gnu.trove.TObjectIntHashMap;
+import net.ontopia.utils.OntopiaRuntimeException;
   
 /**
  * INTERNAL: 
  */
 public class Variant extends Token {
-
   protected Term term;
   
   Variant(String value) {
@@ -24,7 +20,8 @@ public class Variant extends Token {
   }
 
   void setTerm(Term term) {
-    if (this.term != null) throw new OntopiaRuntimeException("Cannot set parent term on variant more than once." + this + " " + this.term + " " + term);
+    if (this.term != null)
+      throw new OntopiaRuntimeException("Cannot set parent term on variant more than once." + this + " " + this.term + " " + term);
     this.term = term;
   }
 

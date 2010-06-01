@@ -85,9 +85,9 @@ public class FrequencyAnalyzer implements TermAnalyzerIF {
 
   public void analyzeTerm(Term term) {
     double total = 0;
-    Object[] variants = term.getVariants();
+    Variant[] variants = term.getVariants();
     for (int i=0; i < variants.length; i++) {
-      Variant variant = (Variant)variants[i];
+      Variant variant = variants[i];
       double freq = freqs.get(variant.getValue().toLowerCase());
       if (freq > 0d)
         total += freq;

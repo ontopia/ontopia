@@ -11,25 +11,24 @@ import net.ontopia.utils.*;
  * INTERNAL: 
  */
 public class TermDatabase {
-  
-  protected Map terms = new HashMap();
-  protected Map variants = new HashMap();  
-  protected Map delimiter_terms = new HashMap();
+  protected Map<String, Term> terms = new HashMap<String, Term>();
+  protected Map<String, Variant> variants = new HashMap<String, Variant>();  
+  protected Map<String, Token> delimiter_terms = new HashMap<String, Token>();
   
   TermDatabase() {
   }
 
   public double getMaxScore() {
-    Object[] terms = getTermsByRank();
-    return ((Term)terms[0]).getScore();
+    Term[] terms = getTermsByRank();
+    return terms[0].getScore();
   }
 
-  public Collection getTerms() {
+  public Collection<Term> getTerms() {
     return terms.values();
   }
 
-  public Object[] getTermsByRank() {
-    Object[] ranked = terms.values().toArray();
+  public Term[] getTermsByRank() {
+    Term[] ranked = terms.values().toArray(new Term[] {});
     Arrays.sort(ranked, Term.SCORE_COMPARATOR);
     return ranked;
   }
@@ -39,11 +38,11 @@ public class TermDatabase {
   }
   
   public Term getTerm(String stem) {
-    return (Term)terms.get(stem);
+    return terms.get(stem);
   }
   
   public Term createTerm(String stem) {
-    Term term = (Term)terms.get(stem);
+    Term term = terms.get(stem);
     if (term == null) {
       term = new Term(stem);
       terms.put(stem, term);
@@ -52,11 +51,11 @@ public class TermDatabase {
   }
 
   public Variant getVariant(String variant) {
-    return (Variant)variants.get(variant);
+    return variants.get(variant);
   }
 
   public Variant createVariant(String variant) {
-    Variant v = (Variant)variants.get(variant);
+    Variant v = variants.get(variant);
     if (v == null) {
       v = new Variant(variant);
       variants.put(variant, v);
@@ -65,7 +64,7 @@ public class TermDatabase {
   }
   
   public Token createDelimiter(String delimiter) {
-    Token token = (Token)delimiter_terms.get(delimiter);
+    Token token = delimiter_terms.get(delimiter);
     if (token == null) {
       token = new Token(delimiter, Token.TYPE_DELIMITER);
       delimiter_terms.put(delimiter, token);
@@ -89,13 +88,13 @@ public class TermDatabase {
   
   public void dump(int firstN) {
     // rank terms by score
-    Object[] terms = getTermsByRank();
+    Term[] terms = getTermsByRank();
     
     // output top N terms
     int num = (firstN <= 0 ? terms.length : Math.min(terms.length, firstN));
     
     for (int i=0; i < num; i++) {
-      Term t = (Term)terms[i];
+      Term t = terms[i];
       System.out.println(Integer.toString(i+1) + ": " + t.getPreferredName() + " " + t.getScore() + ", " + t.getOccurrences());
     }
     System.out.println("Total: " + terms.length + " terms.");
