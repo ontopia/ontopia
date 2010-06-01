@@ -58,5 +58,7 @@ function popup(url) {
    request.getParameter("ro") %>">
 </iframe>
 
+<%-- note that views are also supported, using viewId=xxx --%>
+
 </body>
 </html>
