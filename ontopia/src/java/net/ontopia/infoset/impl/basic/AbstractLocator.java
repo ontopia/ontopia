@@ -1,4 +1,3 @@
-// $Id: AbstractLocator.java,v 1.10 2002/05/29 13:38:36 hca Exp $
 
 package net.ontopia.infoset.impl.basic;
 

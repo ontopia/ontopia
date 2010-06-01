@@ -1,4 +1,3 @@
-// $Id: GenericLocatorTest.java,v 1.5 2002/05/29 13:38:36 hca Exp $	
 
 package net.ontopia.infoset.impl.basic.test;
 
@@ -43,11 +42,4 @@ public class GenericLocatorTest extends AbstractLocatorTest {
     assertTrue("comparison of notation name not case-insensitive",
 	   locator.equals(locator2));
   }
-  
 }
-
-
-
-
-
-
