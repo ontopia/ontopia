@@ -54,7 +54,7 @@
   </xsl:choose>
 
 
-  </td><td><a href="http://www.ontopia.net"><img src="logo.gif" alt="" align="right" border="0"/></a></td></tr></table>
+  </td><td><a href="http://www.ontopia.net"><img src="logo.gif" alt="" align="right" border="0" id="logo"/></a></td></tr></table>
 
   <xsl:apply-templates select="articleinfo / abstract | bookinfo / abstract"/>
 
@@ -620,6 +620,7 @@
 
     <dl>
       <xsl:for-each select="biblioentry">
+        <xsl:sort select="abbrev"/>
         <dt><a name="{@id}"><xsl:value-of select="abbrev"/></a></dt>
         <dd><xsl:apply-templates select="* [local-name() != 'abbrev']" mode="bib"
             />.</dd>
@@ -631,9 +632,13 @@
     <i><xsl:apply-templates/></i>
   </xsl:template>
 
+  <xsl:template match="subtitle" mode="bib">
+    &#x2014; <i><xsl:apply-templates/></i>
+  </xsl:template>
+  
   <xsl:template match="editor | orgname | city | country |
                        conftitle | confdates | pubdate | publishername |
-                       isbn"
+                       date | isbn"
                 mode="bib">
     <xsl:text>, </xsl:text><xsl:value-of select="."/>
   </xsl:template>
