@@ -105,12 +105,6 @@
   <li><a href="${theDir}api/index.html">The Ontopia API javadoc</a></li>
 </ul>
 
-<h3>Whitepapers</h3>
-
-<ul>
-  <li><a href="${theDir}misc/overview.html">The Ontopia Knowledge Suite, An Introduction</a></li>
-</ul>
-
 #if( $theDir == "doc/" )
 <h3>Technology notes</h3>
 
