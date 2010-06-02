@@ -11,13 +11,10 @@ import net.ontopia.utils.*;
  * INTERNAL: 
  */
 public class DocumentClassifier {
-
   TermDatabase tdb;
-
   TermStemmerIF termStemmer;
-
   List docAnalyzers = new ArrayList();
-  List termAnalyzers = new ArrayList();
+  List<TermAnalyzerIF> termAnalyzers = new ArrayList<TermAnalyzerIF>();
 
   public DocumentClassifier(TermDatabase tdb) {
     this.tdb = tdb;
@@ -153,15 +150,13 @@ public class DocumentClassifier {
   
   public void analyzeTerms() {
     if (termAnalyzers != null && !termAnalyzers.isEmpty()) {
-      int size = termAnalyzers.size();
-      for (int i=0; i < size; i++) {
-        TermAnalyzerIF analyzer = (TermAnalyzerIF)termAnalyzers.get(i);
+      for (TermAnalyzerIF analyzer : termAnalyzers) {
         analyzer.startAnalysis(tdb);
         try {
-          Object[] terms = tdb.getTerms().toArray(); // create array to avoid CME
-          for (int x=0; x < terms.length; x++) {
-            analyzer.analyzeTerm((Term)terms[x]);
-          }
+          Term[] terms = tdb.getTerms().toArray(new Term[] {}); // create array to avoid CME
+          for (int x=0; x < terms.length; x++)
+            analyzer.analyzeTerm(terms[x]);
+
         } finally {
           analyzer.endAnalysis();
         }
@@ -174,17 +169,16 @@ public class DocumentClassifier {
   // --------------------------------------------------------------------------
 
   public void dump() {
-    Iterator iter = termAnalyzers.iterator();
+    Iterator<TermAnalyzerIF> iter = termAnalyzers.iterator();
     while (iter.hasNext()) {
-      Object ta = iter.next();
+      TermAnalyzerIF ta = iter.next();
       if (ta instanceof CompoundAnalyzer) {
         CompoundAnalyzer ca = (CompoundAnalyzer)ta;
-        Object[] terms = tdb.getTermsByRank();
+        Term[] terms = tdb.getTermsByRank();
         for (int i=0; i < terms.length; i++) {
-          ca.dump((Term)terms[i]);
+          ca.dump(terms[i]);
         }
       }
     }
-  }
-  
+  }  
 }

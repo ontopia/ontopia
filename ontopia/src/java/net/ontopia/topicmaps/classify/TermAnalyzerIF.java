@@ -3,10 +3,6 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.Collection;
-
-import net.ontopia.utils.*;
-
 /**
  * INTERNAL: 
  */

@@ -14,7 +14,6 @@ import net.ontopia.topicmaps.query.utils.*;
  * INTERNAL: 
  */
 public class TopicMapClassification {
-
   TermDatabase tdb;
   TopicMapAnalyzer ta;
   TermAnalyzerIF customTermAnalyzer;
@@ -72,6 +71,7 @@ public class TopicMapClassification {
     
     dc.addTermAnalyzer(CharacterAnalyzer.getInstance());
     dc.addTermAnalyzer(language.getFrequencyAnalyzer());
+    dc.addTermAnalyzer(new RegexpTermAnalyzer());
 
     // FIXME: wrap and hand over to compound analyzer instead?
     dc.addTermAnalyzer(language.getStopListAnalyzer());
