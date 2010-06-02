@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
+import net.ontopia.topicmaps.utils.ctm.CTMTopicMapReader;
 import net.ontopia.topicmaps.xml.TMXMLWriter;
 import net.ontopia.topicmaps.xml.XTMFragmentExporter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
@@ -198,7 +199,8 @@ public class TMRAPImplementation {
   // | Parameter | Required? | Repeatable? | Type   | Value      | Default |
   // -----------------------------------------------------------------------
   // | syntax    | yes       | no          | String | "XTM"/     | XTM     |
-  // |           |           |             |        |   "LTM"(+) |         |
+  // |           |           |             |        |   "LTM"/   |         |
+  // |           |           |             |        |   "CTM"(+) |         |
   // | fragment  | yes       | no          | String |            |         |
   // | topicmap  | yes       | no          | String | tm-handles |         |
   // -----------------------------------------------------------------------
@@ -217,6 +219,8 @@ public class TMRAPImplementation {
         new XTMTopicMapReader(reader, base).importInto(topicmap);
       else if (syntax.equals(RAPServlet.SYNTAX_LTM))
         new LTMTopicMapReader(reader, base).importInto(topicmap);
+      else if (syntax.equals(RAPServlet.SYNTAX_CTM))
+        new CTMTopicMapReader(reader, base).importInto(topicmap);
       else
         throw new TMRAPException("Bad syntax value: '" + syntax + "'");
       topicmap.getStore().commit();

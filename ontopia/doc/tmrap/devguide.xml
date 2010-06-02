@@ -143,6 +143,12 @@ supported by Ontopia are given below.
     <para>This is the identifier for the LTM syntax.</para>
   </formalpara>
 </listitem>
+<listitem>
+  <formalpara>
+    <title>text/x-ctm</title>
+    <para>This is the identifier for the CTM syntax.</para>
+  </formalpara>
+</listitem>
 </itemizedlist>
 
 <para>
@@ -453,7 +459,7 @@ topic map on the server. The parameters are listed below.
   <entry>syntax</entry> <entry>yes</entry> <entry>no</entry> 
   <entry>string</entry>
   <entry>The syntax of the fragment to be added. The only supported
-  values are LTM and XTM. Note that the values supplied must be the
+  values are CTM, LTM, and XTM. Note that the values supplied must be the
   syntax identifiers defined above.</entry>
 </row>
 <row>

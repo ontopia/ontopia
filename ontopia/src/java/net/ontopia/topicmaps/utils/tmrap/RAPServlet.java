@@ -62,12 +62,10 @@ public class RAPServlet extends HttpServlet {
   public static final String SYNTAX_LTM    = "text/x-ltm";
   public static final String SYNTAX_TM_XML = "text/x-tmxml";
   public static final String SYNTAX_TOLOG  = "text/x-tolog";
+  public static final String SYNTAX_CTM    = "text/x-ctm";
   public static final String SYNTAX_XTM    = "application/x-xtm";
   
   public static final String RAP_NAMESPACE = "http://psi.ontopia.net/tmrap/";
-  
-  private static final String LKEY_PARAMETER_NAME     = "iwant";
-  private static final String LKEY_PARAMETER_VALUE    = "alicensekeyplease";
   
   // Used to register type listeners
   Map clientListeners = new HashMap();
@@ -287,13 +285,6 @@ public class RAPServlet extends HttpServlet {
   private void getTopic(HttpServletRequest request, 
                         HttpServletResponse response)
     throws IOException, ServletException {
-    // this is a magic undocumented request used by the Vizlet to get
-    // the license key used on the server side.    
-    if (LKEY_PARAMETER_VALUE.equals(request.getParameter(LKEY_PARAMETER_NAME))) {
-      getLKEY(response);
-      return;
-    }
-
     // get context
     NavigatorApplicationIF navapp =
       NavigatorUtils.getNavigatorApplication(getServletContext()); 
@@ -595,16 +586,6 @@ public class RAPServlet extends HttpServlet {
       retVal = words[i] + separator + retVal;
     }
     return retVal;
-  }
-  
-  /**
-   * Magic undocumented TMRAP method used by the Vizlet to get its
-   * license key.
-   */
-  private void getLKEY(HttpServletResponse response)
-    throws IOException, ServletException {
-    response.setContentType("text/plain; charset=iso-8859-1");
-    response.getWriter().write("no-need-for-a-licence-anymore");
   }
   
   private void closeIndex(TopicIndexIF topicIndex) {
