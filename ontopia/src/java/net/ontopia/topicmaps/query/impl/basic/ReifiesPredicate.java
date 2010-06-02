@@ -24,7 +24,7 @@ public class ReifiesPredicate implements BasicPredicateIF {
   }
 
   public String getSignature() {
-    return "t x";
+    return "t marbvo";
   }
   
   public int getCost(boolean[] boundparams) {

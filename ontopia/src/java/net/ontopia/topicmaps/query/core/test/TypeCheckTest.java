@@ -206,5 +206,11 @@ public class TypeCheckTest extends AbstractQueryTest {
                          "$DATE < $PDATE " +
                          "order by $PDATE asc limit 1?");
   }
+
+  public void testIssue254() throws InvalidQueryException, IOException {
+    load("jill.xtm");
+    getParseError("reifies($R, $T), " +
+                  "subject-identifier($T, \"http://psi.ontopia.net/xtm/occurrence-type/description\")?");
+  }
   
 }
