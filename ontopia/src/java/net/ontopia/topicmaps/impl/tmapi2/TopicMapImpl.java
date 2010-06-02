@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -92,7 +93,12 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
   }
 
   public LocatorIF unwrapLocator(Locator loc) {
-    return ((LocatorImpl) loc).getWrapped();
+	// other lcoators implementation should be supported to
+	if (loc instanceof LocatorImpl) {
+		return ((LocatorImpl) loc).getWrapped();
+	} else {
+		return URILocator.create(loc.toExternalForm());
+	}
   }
 
   /*
