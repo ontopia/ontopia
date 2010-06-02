@@ -722,11 +722,9 @@
     <include name="net/ontopia/topicmaps/classify/test/**/*.class" />
   </patternset>
   
-  <property name="dist.classify.packagenames" value="
-                                                     net.ontopia.topicmaps.classify" />
+  <property name="dist.classify.packagenames" value="net.ontopia.topicmaps.classify" />
   
-  <property name="dev.classify.packagenames" value="
-                                                    net.ontopia.topicmaps.classify" />
+  <property name="dev.classify.packagenames" value="net.ontopia.topicmaps.classify" />
   
   <!-- ======================================================================
        Unit tests
@@ -772,8 +770,7 @@
        Engine api documentation (javadoc)
        ====================================================================== -->
   
-  <property name="dist.engine.packagenames" value="
-                                                   net.ontopia.utils,
+  <property name="dist.engine.packagenames" value="net.ontopia.utils,
                                                    net.ontopia.infoset.core,
                                                    net.ontopia.infoset.impl.basic,
                                                    net.ontopia.topicmaps.core,
@@ -787,10 +784,10 @@
                                                    net.ontopia.topicmaps.utils.jtm,
                                                    net.ontopia.topicmaps.xml,
                                                    net.ontopia.topicmaps.db2tm,
-                                                   net.ontopia.topicmaps.impl.basic" />
+                                                   net.ontopia.topicmaps.impl.basic,
+                                                   net.ontopia.topicmaps.classify" />
   
-  <property name="dev.engine.packagenames" value="
-                                                  net.ontopia.utils,
+  <property name="dev.engine.packagenames" value="net.ontopia.utils,
                                                   net.ontopia.xml,
                                                   net.ontopia.infoset.core,
                                                   net.ontopia.infoset.utils,
@@ -2043,7 +2040,14 @@
   
   <target name="dist.classify.collect">
     <echo>Collecting classify components...</echo>
-    
+
+    <mkdir dir="${doc.path}/classify"/>
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/classify/devguide.xml" />
+    </antcall>
+    <copy file="${doc.path}/classify/devguide.xml.html" tofile="${dist.path}/doc/classify/dev-guide.html" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/classify" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/classify" />    
   </target>
   
   <!-- - - - Collect rdbms components  - - - - - - - - - - - - - - - - - - - -->
@@ -2649,10 +2653,19 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/tmrap" />
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/tmrap" />
 
-        <!-- (from dist.viz.collect) -->
+    <!-- (from dist.viz.collect) -->
     <antcall inheritRefs="true" target="makehtml">
       <param name="file" value="${doc.path}/vizigator/user-guide.xml" />
     </antcall>
+
+    <!-- (from dist.classify.collect) -->
+    <mkdir dir="${doc.path}/classify"/>
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/classify/devguide.xml" />
+    </antcall>
+    <copy file="${doc.path}/classify/devguide.xml.html" tofile="${dist.path}/doc/classify/dev-guide.html" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${dist.path}/doc/classify" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/classify" />    
     
     <!-- Build Ontopoly documentation -->
     <antcall inheritRefs="true" target="makehtml">

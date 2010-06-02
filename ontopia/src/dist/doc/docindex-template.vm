@@ -99,6 +99,13 @@
   <li><a href="${theDir}tmrap/dev-guide.html">TMRAP, Developer's Guide</a></li>
 </ul>
 
+<h3>Automated classification</h3>
+
+<ul>
+  <li><a href="${theDir}classify/dev-guide.html">Automatic
+  Classification, Developer's Guide</a></li>
+</ul>
+
 <h3>API documentation</h3>
 
 <ul>
