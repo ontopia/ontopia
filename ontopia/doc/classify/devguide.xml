@@ -97,6 +97,15 @@ classification on this developer's guide:</para>
 Total: 186 terms.
 </literallayout>
 
+<para>The module is still fairly immature, and so it's hard to predict
+how well the module will perform on any given collection of content.
+In general, however, the longer the text and the more focused on
+particular concepts it is, the better the module will perform. It also
+tends to be confused by mixed-language content, and by embedded code
+and markup. These last two problems can be handled, but not through
+the PUBLIC API. For help on this sort of issue, please contact the
+mailing list.</para>
+
 <para>The following formats are supported:</para>
 
 <itemizedlist>
