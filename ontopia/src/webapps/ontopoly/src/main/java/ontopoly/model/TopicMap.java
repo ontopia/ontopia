@@ -223,7 +223,17 @@ public class TopicMap {
    */
   public float getOntologyVersion() {
     TopicIF reifier = getTopicMapIF().getReifier();
-    if (reifier == null) return 0;
+
+    if (reifier == null) {
+      // this is where issue 10 kicks in: if two topic maps have been
+      // merged there is no reifier for the topic map any more. however,
+      // the reifier will still be there, as a topic type type "topic map".
+      // so we find that topic by simply querying for it, and then move on
+      // from there.
+      QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
+      reifier = qm.queryForObject("instance-of($T, on:topic-map)?");
+    }
+    
     TopicIF ontologyVersion = getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_ONTOLOGY_VERSION);
     Collection<TopicIF> scope = Collections.emptySet();    
     Collection occs = OntopolyModelUtils.findOccurrences(ontologyVersion, reifier, scope);
@@ -523,9 +533,9 @@ public class TopicMap {
 		
     QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
     TopicIF fieldTopic = qm.queryForObject(query, params);		
-		if (fieldTopic == null) 
-			throw new OntopolyModelRuntimeException("Could not find association field for " + atype);
-
+    if (fieldTopic == null) 
+      throw new OntopolyModelRuntimeException("Could not find association field for " + atype);
+    
     return new AssociationField(fieldTopic, this, atype);
   }
 
@@ -536,15 +546,15 @@ public class TopicMap {
 
   public RoleField getRoleField(final AssociationType atype, final RoleType rtype) {
 
-		String query = "select $AF, $RF from "
-			+ "on:has-association-type(%atype% : on:association-type, $AF : on:association-field), " 
-			+ "on:has-association-field($AF : on:association-field, $RF : on:role-field), " 
-			+ "on:has-role-type($RF : on:role-field, %rtype% : on:role-type) limit 1?";
-		Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
-		params.put("atype", atype.getTopicIF());
-		params.put("rtype", rtype.getTopicIF());
-
-		QueryMapper<RoleField> qm = newQueryMapperNoWrap();
+    String query = "select $AF, $RF from "
+      + "on:has-association-type(%atype% : on:association-type, $AF : on:association-field), " 
+      + "on:has-association-field($AF : on:association-field, $RF : on:role-field), " 
+      + "on:has-role-type($RF : on:role-field, %rtype% : on:role-type) limit 1?";
+    Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
+    params.put("atype", atype.getTopicIF());
+    params.put("rtype", rtype.getTopicIF());
+    
+    QueryMapper<RoleField> qm = newQueryMapperNoWrap();
     RoleField roleField = qm.queryForObject(query,
         new RowMapperIF<RoleField>() {
           public RoleField mapRow(QueryResultIF result, int rowno) {

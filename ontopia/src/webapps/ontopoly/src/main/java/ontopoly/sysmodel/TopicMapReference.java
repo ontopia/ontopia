@@ -112,17 +112,17 @@ public class TopicMapReference implements Serializable {
    * becomes useless.
    */
   public void delete() {
-		// remove from topic map repository
-	  if (reference != null && !reference.isDeleted()) reference.delete();
-		
-		// update and save system TM
-		topic.remove();    
-		repository.removeReference(this);
-		
-		// self-destruct
-		topic = null;
-		id = null;
-		repository = null;
+    // remove from topic map repository
+    if (reference != null && !reference.isDeleted()) reference.delete();
+    
+    // update and save system TM
+    topic.remove();    
+    repository.removeReference(this);
+    
+    // self-destruct
+    topic = null;
+    id = null;
+    repository = null;
   }
 
   /**
