@@ -9,15 +9,13 @@ import java.util.*;
 import net.ontopia.xml.*;
 import net.ontopia.utils.*;
 
-import org.pdfbox.pdmodel.PDDocument;
-import org.pdfbox.util.PDFTextStripper;
-
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.util.PDFTextStripper;
 
 /**
  * INTERNAL: 
  */
 public class PDFFormatModule implements FormatModuleIF {
-  
   protected String[] extensions = new String[] {".pdf"};
   protected byte[] magicBytes = FormatModule.getBytes("%PDF-");
   
