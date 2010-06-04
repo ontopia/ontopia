@@ -23,7 +23,7 @@ public interface ScopeIndexIF extends IndexIF {
    * @return A collection of TopicNameIF objects; the topic names that have the 
    *           given topic in their direct scope. 
    */
-  public Collection getTopicNames(TopicIF theme);
+  public Collection<TopicNameIF> getTopicNames(TopicIF theme);
   
   /**
    * PUBLIC: Gets all variant names that have the given topic in their direct
@@ -36,7 +36,7 @@ public interface ScopeIndexIF extends IndexIF {
    * @return A collection of VariantNameIF objects; the  variant names that have the 
    *           given topic in their parameters.
    */
-  public Collection getVariants(TopicIF theme);
+  public Collection<VariantNameIF> getVariants(TopicIF theme);
   
   /**
    * PUBLIC: Gets all occurrences that have the given topic in their direct scope.
@@ -46,7 +46,7 @@ public interface ScopeIndexIF extends IndexIF {
    * @return A collection of OccurrenceIF objects; the occurrences that have the 
    *           given topic in their direct scope.
    */
-  public Collection getOccurrences(TopicIF theme);
+  public Collection<OccurrenceIF> getOccurrences(TopicIF theme);
   
   /**
    * PUBLIC: Gets all associations that have the given topic in their direct scope.
@@ -56,7 +56,7 @@ public interface ScopeIndexIF extends IndexIF {
    * @return A collection of AssociationIF objects; the associations that have the 
    *           given topic in their direct scope.
    */
-  public Collection getAssociations(TopicIF theme);
+  public Collection<AssociationIF> getAssociations(TopicIF theme);
     
   /**
    * PUBLIC: Gets the set of all topics that are used in the direct scope
@@ -64,7 +64,7 @@ public interface ScopeIndexIF extends IndexIF {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection getTopicNameThemes();
+  public Collection<TopicIF> getTopicNameThemes();
 
   /**
    * PUBLIC: Gets the set of all topics that are used in the direct scope
@@ -72,7 +72,7 @@ public interface ScopeIndexIF extends IndexIF {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection getVariantThemes();
+  public Collection<TopicIF> getVariantThemes();
 
   /**
    * PUBLIC: Gets the set of all topics that are used in the direct scope
@@ -80,7 +80,7 @@ public interface ScopeIndexIF extends IndexIF {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection getOccurrenceThemes();
+  public Collection<TopicIF> getOccurrenceThemes();
   
   /**
    * PUBLIC: Gets the set of all topics that are used in the direct scope
@@ -88,7 +88,7 @@ public interface ScopeIndexIF extends IndexIF {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection getAssociationThemes();
+  public Collection<TopicIF> getAssociationThemes();
 
   /**
    * PUBLIC: Returns true if the topic has been used in the direct scope of at

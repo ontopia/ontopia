@@ -28,7 +28,7 @@ public interface ScopedIF extends TMObjectIF {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection getScope();
+  public Collection<TopicIF> getScope();
 
   /**
    * PUBLIC: Add a topic to this scope. (A topic used in a scope is

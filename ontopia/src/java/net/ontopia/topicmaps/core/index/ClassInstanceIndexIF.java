@@ -25,7 +25,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * @return A collection of TopicIF objects; the instances of the type 
    *         represented by the given topic.
    */
-  public Collection getTopics(TopicIF topic_type);
+  public Collection<TopicIF> getTopics(TopicIF topic_type);
   
   /**
    * PUBLIC: Gets all topic names that are of the given type.
@@ -36,7 +36,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    *         represented by the given topic.
    * @since 3.0
    */
-  public Collection getTopicNames(TopicIF name_type);
+  public Collection<TopicNameIF> getTopicNames(TopicIF name_type);
   
   /**
    * PUBLIC: Gets all occurrences that are of the given type.
@@ -46,7 +46,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * @return A collection of OccurrenceIF objects; occurrences with the type 
    *         represented by the given topic.
    */
-  public Collection getOccurrences(TopicIF occurrence_type);
+  public Collection<OccurrenceIF> getOccurrences(TopicIF occurrence_type);
   
   /**
    * PUBLIC: Gets all associations that are of the given type.
@@ -56,7 +56,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * @return A collection of AssociationIF objects; associations with the type 
    *         represented by the given topic.
    */
-  public Collection getAssociations(TopicIF association_type);
+  public Collection<AssociationIF> getAssociations(TopicIF association_type);
 
   /**
    * PUBLIC: Gets all association roles that are of the given type.
@@ -66,7 +66,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * @return A collection of AssociationRoleIF objects; association roles with the type 
    *         represented by the given topic.
    */
-  public Collection getAssociationRoles(TopicIF association_role_type);
+  public Collection<AssociationRoleIF> getAssociationRoles(TopicIF association_role_type);
 
   /**
    * PUBLIC: Gets all topics that are used as topic types.
@@ -74,7 +74,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * @return A collection of TopicIF objects, each of which serves as a type
    *          for some topic.
    */
-  public Collection getTopicTypes();
+  public Collection<TopicIF> getTopicTypes();
   
   /**
    * PUBLIC: Gets the topics that are used as topic name types.
@@ -83,7 +83,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    *          for some topic name.
    * @since 3.0
    */
-  public Collection getTopicNameTypes();
+  public Collection<TopicIF> getTopicNameTypes();
   
   /**
    * PUBLIC: Gets the topics that are used as occurrence types.
@@ -91,7 +91,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * @return A collection of TopicIF objects, each of which serves as a type
    *          for some occurrence.
    */
-  public Collection getOccurrenceTypes();
+  public Collection<TopicIF> getOccurrenceTypes();
   
   /**
    * PUBLIC: Gets the topics that are used as association types.
@@ -99,7 +99,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * @return A collection of TopicIF objects, each of which serves as a type
    *          for some association.
    */
-  public Collection getAssociationTypes();
+  public Collection<TopicIF> getAssociationTypes();
   
   /**
    * PUBLIC: Gets the topics that are used as association role types.
@@ -107,7 +107,7 @@ public interface ClassInstanceIndexIF extends IndexIF {
    * @return A collection of TopicIF objects, each of which serves as a type
    *          for some association role.
    */
-  public Collection getAssociationRoleTypes();
+  public Collection<TopicIF> getAssociationRoleTypes();
   
   /**
    * PUBLIC: Returns true if the topic is used as a topic type somewhere.

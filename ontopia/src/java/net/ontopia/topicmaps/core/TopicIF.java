@@ -37,7 +37,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of LocatorIF objects serving as subject locators.
    * @since 4.0
    */
-  public Collection getSubjectLocators();
+  public Collection<LocatorIF> getSubjectLocators();
 
   /**
    * PUBLIC: Adds the given subject locator to the set of subject locators
@@ -75,7 +75,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of LocatorIF objects serving as subject identifiers.
    * @since 4.0
    */
-  public Collection getSubjectIdentifiers();
+  public Collection<LocatorIF> getSubjectIdentifiers();
 
   /**
    * PUBLIC: Adds the given subject identifier to the set of subject identifiers
@@ -108,7 +108,7 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection getTypes();
+  public Collection<TopicIF> getTypes();
 
   /**
    * PUBLIC: Adds a type to this topic.
@@ -130,7 +130,7 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of TopicNameIF objects.
    */
-  public Collection getTopicNames();
+  public Collection<TopicNameIF> getTopicNames();
   
   /**
    * PUBLIC: Gets the occurrences of this topic. The occurrences are
@@ -138,7 +138,7 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of OccurrenceIF objects.
    */
-  public Collection getOccurrences();
+  public Collection<OccurrenceIF> getOccurrences();
 
   /**
    * PUBLIC: Gets the association roles played by this topic. There
@@ -146,7 +146,7 @@ public interface TopicIF extends TMObjectIF {
    *
    * @return A collection of AssociationRoleIF objects.
    */
-  public Collection getRoles(); 
+  public Collection<AssociationRoleIF> getRoles();
 
   /**
    * PUBLIC: Gets the association roles of the specifed type played
@@ -156,7 +156,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of AssociationRoleIF objects.
    * @since 2.2
    */
-  public Collection getRolesByType(TopicIF roletype);
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype);
 
   /**
    * PUBLIC: Gets the association roles of the specifed type played
@@ -167,7 +167,7 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of AssociationRoleIF objects.
    * @since 2.2
    */
-  public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type);
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype, TopicIF assoc_type);
 
   /**
    * EXPERIMENTAL: Merges the characteristics of one topic into

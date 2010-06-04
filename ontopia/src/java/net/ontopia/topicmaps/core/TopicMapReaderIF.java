@@ -47,6 +47,6 @@ public interface TopicMapReaderIF {
    * @return A collection containing all the topic maps read from the
    * source; objects implementing TopicMapIF.
    */
-  public Collection readAll() throws IOException;
+  public Collection<TopicMapIF> readAll() throws IOException;
   
 }

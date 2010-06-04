@@ -51,7 +51,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @return A collection of TopicIF objects.
    */
-  public Collection getTopics();
+  public Collection<TopicIF> getTopics();
 
   /**
    * PUBLIC: Gets all associations in this topic map. No specific order is
@@ -59,7 +59,7 @@ public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
    *
    * @return A collection of AssociationIF objects.
    */
-  public Collection getAssociations(); 
+  public Collection<AssociationIF> getAssociations();
   
   /**
    * PUBLIC: Gets the topic map object that has the given object

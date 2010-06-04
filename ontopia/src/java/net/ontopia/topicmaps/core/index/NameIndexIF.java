@@ -4,6 +4,8 @@ package net.ontopia.topicmaps.core.index;
 
 import java.util.*;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
  * PUBLIC: Index that holds information about the names of topics in
@@ -20,7 +22,7 @@ public interface NameIndexIF extends IndexIF {
    *
    * @return A collection of TopicNameIF objects with the given name value.
    */
-  public Collection getTopicNames(String name_value);
+  public Collection<TopicNameIF> getTopicNames(String name_value);
 
   /**
    * INTERNAL: Gets all variants that have the specified value 
@@ -28,7 +30,7 @@ public interface NameIndexIF extends IndexIF {
    *
    * @return A collection of VariantNameIF objects.
    */
-  public Collection getVariants(String value);
+  public Collection<VariantNameIF> getVariants(String value);
 
   /**
    * INTERNAL: Gets all variants that have the specified value and
@@ -37,7 +39,7 @@ public interface NameIndexIF extends IndexIF {
    * @return A collection of VariantNameIF objects.
    * @since 4.0
    */
-  public Collection getVariants(String value, LocatorIF datatype);
+  public Collection<VariantNameIF> getVariants(String value, LocatorIF datatype);
   
 }
 

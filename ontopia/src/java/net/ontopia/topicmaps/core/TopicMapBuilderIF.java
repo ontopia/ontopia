@@ -55,7 +55,7 @@ public interface TopicMapBuilderIF {
    * current topic map.
    * @since 1.3.2
    */ 
-  public TopicIF makeTopic(Collection topic_types);
+  public TopicIF makeTopic(Collection<TopicIF> topic_types);
 
   /**
    * PUBLIC: Makes a new untyped topic name with the given value for
@@ -111,7 +111,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
    * @since 4.0
    */
-  public VariantNameIF makeVariantName(TopicNameIF name, String value, Collection scope); // NEW
+  public VariantNameIF makeVariantName(TopicNameIF name, String value, Collection<TopicIF> scope); // NEW
 
   /**
    * DEPRECATED: Makes a new variant name with the given locator for
@@ -137,7 +137,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
 	 * @since 4.0
    */
-  public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection scope); // NEW
+  public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection<TopicIF> scope); // NEW
 
   /**
    * DEPRECATED: Makes a new variant name with the specified name value and datatype
@@ -165,7 +165,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
 	 * @since 4.0
    */
-  public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection scope); // NEW
+  public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection<TopicIF> scope); // NEW
 
   /**
    * DEPRECATED: Makes a new variant name with the specified name value reader and datatype
@@ -195,7 +195,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
 	 * @since 4.0
    */
-  public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype, Collection scope); // NEW
+  public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype, Collection<TopicIF> scope); // NEW
   
   /**
    * PUBLIC: Makes a new internal occurrence with the given type and value

@@ -57,7 +57,7 @@ public interface TMObjectIF {
    * @return A collection of LocatorIF objects addressing the item.
    * @since 4.0
    */
-  public Collection getItemIdentifiers();
+  public Collection<LocatorIF> getItemIdentifiers();
 
   /**
    * PUBLIC: Adds the given item identifier to the set of item

@@ -5,6 +5,7 @@ package net.ontopia.topicmaps.core.index;
 
 import java.util.*;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 
 /**
  * INTERNAL: Index that holds information about occurrences in the
@@ -22,7 +23,7 @@ public interface OccurrenceIndexIF extends IndexIF {
    *
    * @return A collection of OccurrenceIF objects.
    */
-  public Collection getOccurrences(String value);
+  public Collection<OccurrenceIF> getOccurrences(String value);
 
   /**
    * INTERNAL: Gets all occurrences that have the specified value and
@@ -31,7 +32,7 @@ public interface OccurrenceIndexIF extends IndexIF {
    * @return A collection of OccurrenceIF objects.
    * @since 4.0
    */
-  public Collection getOccurrences(String value, LocatorIF datatype);
+  public Collection<OccurrenceIF> getOccurrences(String value, LocatorIF datatype);
 
   /**
    * INTERNAL: Gets all occurrences of any datatype that have a value
@@ -39,7 +40,7 @@ public interface OccurrenceIndexIF extends IndexIF {
    *
    * @return A collection of OccurrenceIF objects.
    */
-  public Collection getOccurrencesByPrefix(String prefix);
+  public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix);
 
   /**
    * INTERNAL: Gets all occurrences that have the specifed datatype
@@ -48,17 +49,17 @@ public interface OccurrenceIndexIF extends IndexIF {
    * @return A collection of OccurrenceIF objects.
    * @since 4.0
    */
-  public Collection getOccurrencesByPrefix(String prefix, LocatorIF datatype);
+  public Collection<OccurrenceIF> getOccurrencesByPrefix(String prefix, LocatorIF datatype);
 
   /**
    * INTERNAL: Gets all occurrence values that are greather than or
    * equal to the given value.
    */
-  public Iterator getValuesGreaterThanOrEqual(String value);
+  public Iterator<OccurrenceIF> getValuesGreaterThanOrEqual(String value);
 
   /**
    * INTERNAL: Gets all occurrence values that are smaller than or
    * equal to the given value.
    */
-  public Iterator getValuesSmallerThanOrEqual(String value);
+  public Iterator<OccurrenceIF> getValuesSmallerThanOrEqual(String value);
 }

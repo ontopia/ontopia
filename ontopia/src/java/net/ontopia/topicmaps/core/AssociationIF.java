@@ -25,7 +25,7 @@ public interface AssociationIF extends ScopedIF, TypedIF, ReifiableIF {
    *
    * @return A Collection of TopicIF objects.
    */
-  public Collection getRoleTypes();
+  public Collection<TopicIF> getRoleTypes();
   
   /**
    * PUBLIC: Gets the association roles in this association which are of the given
@@ -36,7 +36,7 @@ public interface AssociationIF extends ScopedIF, TypedIF, ReifiableIF {
    *
    * @return A Collection of AssociationRoleIF objects.
    */
-  public Collection getRolesByType(TopicIF roletype);
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype);
 
   /**
    * PUBLIC: Gets all the association roles of the association. The
@@ -44,6 +44,6 @@ public interface AssociationIF extends ScopedIF, TypedIF, ReifiableIF {
    *
    * @return A collection of AssociationRoleIF objects.
    */
-  public Collection getRoles();
+  public Collection<AssociationRoleIF> getRoles();
 
 }

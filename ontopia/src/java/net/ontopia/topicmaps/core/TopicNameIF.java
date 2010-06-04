@@ -51,6 +51,6 @@ public interface TopicNameIF extends ScopedIF, TypedIF, ReifiableIF {
    *
    * @return A collection of VariantNameIF objects.
    */
-  public Collection getVariants();
+  public Collection<VariantNameIF> getVariants();
 
 }
