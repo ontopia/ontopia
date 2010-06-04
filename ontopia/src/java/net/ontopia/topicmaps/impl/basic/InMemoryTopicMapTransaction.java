@@ -3,19 +3,12 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
-import java.util.ArrayList;
-import java.util.List;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
-import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
 import net.ontopia.topicmaps.impl.basic.index.IndexManager;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapTransaction;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
-import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
 import net.ontopia.topicmaps.impl.utils.TopicModificationManager;
-import net.ontopia.topicmaps.impl.utils.SnapshotTopic;
-import net.ontopia.topicmaps.impl.utils.SnapshotTMObject;
 import net.ontopia.utils.OntopiaUnsupportedException;
 import net.ontopia.utils.SynchronizedCollectionFactory;
 

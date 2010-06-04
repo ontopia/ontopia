@@ -20,32 +20,32 @@ public interface CollectionFactoryIF {
   /**
    * INTERNAL: Creates a set that is expected to contain a small number of objects.
    */
-  public Set makeSmallSet();
+  public <T> Set<T> makeSmallSet();
 
   /**
    * INTERNAL: Creates a set that is expected to contain a large number of objects.
    */
-  public Set makeLargeSet();
+  public <T> Set<T> makeLargeSet();
 
   /**
    * INTERNAL: Creates a map that is expected to contain a small number of objects.
    */
-  public Map makeSmallMap();
+  public <V, K> Map<V, K> makeSmallMap();
 
   /**
    * INTERNAL: Creates a map that is expected to contain a large number of objects.
    */
-  public Map makeLargeMap();
+  public <V, K> Map<V, K> makeLargeMap();
 
   /**
    * INTERNAL: Creates a list that is expected to contain a small number of objects.
    */
-  public List makeSmallList();
+  public <T> List<T> makeSmallList();
 
   /**
    * INTERNAL: Creates a list that is expected to contain a large number of objects.
    */
-  public List makeLargeList();
+  public <T> List<T> makeLargeList();
   
 }
 

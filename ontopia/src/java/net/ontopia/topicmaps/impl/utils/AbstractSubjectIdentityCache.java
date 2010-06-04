@@ -25,9 +25,9 @@ import net.ontopia.topicmaps.core.UniquenessViolationException;
 public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
     java.io.Serializable {
 
-  protected Map handlers;
+  protected Map<String, EventHandler> handlers;
 
-  public AbstractSubjectIdentityCache(Map handlers) {
+  public AbstractSubjectIdentityCache(Map<String, EventHandler> handlers) {
     this.handlers = handlers;
   }
 
@@ -69,9 +69,9 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
     handlers.put("TMObjectIF.removeItemIdentifier", new TMObjectIF_removeItemIdentifier());
 
     // Register as event listener
-    Iterator iter = handlers.keySet().iterator();
+    Iterator<String> iter = handlers.keySet().iterator();
     while (iter.hasNext()) {
-      emanager.addListener(this, (String) iter.next());
+      emanager.addListener(this, iter.next());
     }
   }
 
@@ -109,25 +109,25 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
   // Event handler methods
   // -----------------------------------------------------------------------------
 
-  protected abstract Object _getObjectByItemIdentifier(Object source_locator);
+  protected abstract TMObjectIF _getObjectByItemIdentifier(LocatorIF source_locator);
 
-  protected abstract void registerSourceLocator(Object source_locator,
-      Object object);
+  protected abstract void registerSourceLocator(LocatorIF source_locator,
+      TMObjectIF object);
 
-  protected abstract void unregisterSourceLocator(Object source_locator);
+  protected abstract void unregisterSourceLocator(LocatorIF source_locator);
 
-  protected abstract Object _getTopicBySubjectIdentifier(Object subject_indicator);
+  protected abstract TopicIF _getTopicBySubjectIdentifier(LocatorIF subject_indicator);
 
-  protected abstract void registerSubjectIndicator(Object subject_indicator,
-      Object object);
+  protected abstract void registerSubjectIndicator(LocatorIF subject_indicator,
+      TopicIF object);
 
-  protected abstract void unregisterSubjectIndicator(Object subject_indicator);
+  protected abstract void unregisterSubjectIndicator(LocatorIF subject_indicator);
 
-  protected abstract Object _getTopicBySubjectLocator(Object subject);
+  protected abstract TopicIF _getTopicBySubjectLocator(LocatorIF subject);
 
-  protected abstract void registerSubject(Object subject, Object object);
+  protected abstract void registerSubject(LocatorIF subject, TopicIF object);
 
-  protected abstract void unregisterSubject(Object subject);
+  protected abstract void unregisterSubject(LocatorIF subject);
 
   // -----------------------------------------------------------------------------
   // EventListenerIF
@@ -136,8 +136,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
   public void processEvent(Object object, String event, Object new_value,
       Object old_value) {
     if (handlers.containsKey(event)) {
-      ((EventListenerIF) handlers.get(event)).processEvent(object, event,
-          new_value, old_value);
+      handlers.get(event).processEvent(object, event, new_value, old_value);
     }
   }
 
@@ -153,15 +152,14 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
     protected void addEvent(Object object, String event, Object value) {
       // if (!handlers.containsKey(event)) System.out.println("+event> " +
       // event);
-      ((EventListenerIF) handlers.get(event)).processEvent(object, event,
+      handlers.get(event).processEvent(object, event,
           value, null);
     }
 
     protected void removeEvent(Object object, String event, Object value) {
       // if (!handlers.containsKey(event)) System.out.println("-event> " +
       // event);
-      ((EventListenerIF) handlers.get(event)).processEvent(object, event, null,
-          value);
+      handlers.get(event).processEvent(object, event, null, value);
     }
   }
 
@@ -253,14 +251,14 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
         Object old_value) {
 
       // Check subject locator uniqueness
-      Object existing = _getTopicBySubjectLocator(new_value);
+      TopicIF existing = _getTopicBySubjectLocator((LocatorIF)new_value);
       if (existing != null && existing != object)
         throw new UniquenessViolationException("Another topic " + existing
             + " already has this subject locator: " + new_value + " ("
             + object + ")");
 
       // Register new subject locator
-      registerSubject(new_value, object);
+      registerSubject((LocatorIF)new_value, (TopicIF)object);
     }
   }
 
@@ -271,7 +269,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       // Unregister subject locator
-      unregisterSubject(old_value);
+      unregisterSubject((LocatorIF)old_value);
     }
   }
 
@@ -283,21 +281,21 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
         Object old_value) {
 
       // Check indicator uniqueness
-      Object existing = _getTopicBySubjectIdentifier(new_value);
+      TopicIF existing = _getTopicBySubjectIdentifier((LocatorIF)new_value);
       if (existing != null && existing != object)
         throw new UniquenessViolationException("Another topic " + existing
             + " already has this subject identifier: " + new_value + " ("
             + object + ")");
       // Check for source locator clash
-      existing = _getObjectByItemIdentifier(new_value);
-      if (existing != null && existing != object
-          && (existing instanceof TopicIF))
-        throw new UniquenessViolationException("Another topic " + existing
+      TMObjectIF existing_tmo = _getObjectByItemIdentifier((LocatorIF)new_value);
+      if (existing_tmo != null && existing_tmo != object
+          && (existing_tmo instanceof TopicIF))
+        throw new UniquenessViolationException("Another topic " + existing_tmo
             + " already has this subject identifier as its item identifier: "
             + new_value + " (" + object + ")");
 
       // Register new subject indicator
-      registerSubjectIndicator(new_value, object);
+      registerSubjectIndicator((LocatorIF)new_value, (TopicIF)object);
     }
   }
 
@@ -308,7 +306,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       // Unregister subject indicator
-      unregisterSubjectIndicator(old_value);
+      unregisterSubjectIndicator((LocatorIF)old_value);
     }
   }
 
@@ -320,7 +318,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
         Object old_value) throws ConstraintViolationException {
 
       // Check source locator uniqueness
-      Object existing = _getObjectByItemIdentifier(new_value);
+      TMObjectIF existing = _getObjectByItemIdentifier((LocatorIF)new_value);
       // NOTE: we should not get this far if existing == object,
       // because we're checking for this in
       // TMObject.addItemIdentifier(). If we get here it is often an
@@ -332,14 +330,14 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
             + ") " + (existing == object));
       
       // Check for subject identifier clash
-      existing = _getTopicBySubjectIdentifier(new_value);
+      existing = _getTopicBySubjectIdentifier((LocatorIF)new_value);
       if (existing != null && existing != object && (object instanceof TopicIF))
         throw new UniquenessViolationException("Another topic " + existing
             + " already has this item identifier as its subject identifier: "
             + new_value + " (" + object + ")");
 
       // Register new source locator
-      registerSourceLocator(new_value, object);
+      registerSourceLocator((LocatorIF)new_value, (TMObjectIF)object);
     }
   }
 
@@ -350,7 +348,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
     public void processEvent(Object object, String event, Object new_value,
         Object old_value) {
       // Unregister source locator
-      unregisterSourceLocator(old_value);
+      unregisterSourceLocator((LocatorIF)old_value);
     }
   }
 }

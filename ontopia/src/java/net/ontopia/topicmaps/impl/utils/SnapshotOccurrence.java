@@ -4,7 +4,6 @@
 package net.ontopia.topicmaps.impl.utils;
 
 import java.io.Reader;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,11 +15,9 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReadOnlyException;
-import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -32,10 +29,10 @@ public class SnapshotOccurrence extends SnapshotTMObject implements OccurrenceIF
   protected TopicIF topic;
   protected LocatorIF datatype;
   protected String value;
-  protected Collection scope;
+  protected Collection<TopicIF> scope;
   protected TopicIF type;
   
-  SnapshotOccurrence(OccurrenceIF original, int snapshotType, Map processed) {
+  SnapshotOccurrence(OccurrenceIF original, int snapshotType, Map<TMObjectIF, SnapshotTMObject> processed) {
     this.snapshotType = snapshotType;
 
     switch (snapshotType) {
@@ -44,14 +41,14 @@ public class SnapshotOccurrence extends SnapshotTMObject implements OccurrenceIF
       break;
     case SNAPSHOT_COMPLETE:
       this.objectId = original.getObjectId();
-      this.srclocs = new ArrayList(original.getItemIdentifiers());
+      this.srclocs = new ArrayList<LocatorIF>(original.getItemIdentifiers());
       this.topic = SnapshotTopic.makeSnapshot(original.getTopic(), SnapshotTopic.SNAPSHOT_REFERENCE, processed);
       this.datatype = original.getDataType();
       this.value = original.getValue();
-      this.scope = new ArrayList();
-      Iterator siter = original.getScope().iterator();
+      this.scope = new ArrayList<TopicIF>();
+      Iterator<TopicIF> siter = original.getScope().iterator();
       while (siter.hasNext()) {
-        this.scope.add(SnapshotTopic.makeSnapshot((TopicIF)siter.next(), snapshotType, processed));
+        this.scope.add(SnapshotTopic.makeSnapshot(siter.next(), snapshotType, processed));
       }
       this.type = SnapshotTopic.makeSnapshot(original.getType(), 
 																						 SnapshotTopic.SNAPSHOT_REFERENCE, processed);      
@@ -63,7 +60,7 @@ public class SnapshotOccurrence extends SnapshotTMObject implements OccurrenceIF
     }
   }
 
-  public static OccurrenceIF makeSnapshot(OccurrenceIF original, int snapshotType, Map processed) {
+  public static OccurrenceIF makeSnapshot(OccurrenceIF original, int snapshotType, Map<TMObjectIF, SnapshotTMObject> processed) {
     return new SnapshotOccurrence(original, snapshotType, processed);
   }
 
@@ -117,8 +114,9 @@ public class SnapshotOccurrence extends SnapshotTMObject implements OccurrenceIF
     return (value == null ? 0 : value.length());
   }
   
-  public Collection getScope() {
-    return (scope == null ? Collections.EMPTY_SET : scope);
+  public Collection<TopicIF> getScope() {
+    Collection<TopicIF> empty = Collections.emptyList();
+    return (scope == null ? empty : scope);
   }
   
   public void addTheme(TopicIF theme) {

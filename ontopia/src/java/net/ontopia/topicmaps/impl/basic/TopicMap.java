@@ -16,7 +16,6 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
-import net.ontopia.topicmaps.core.NotRemovableException;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -40,19 +39,19 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
 
   transient InMemoryTopicMapTransaction txn;  
   transient CollectionFactoryIF cfactory;
-  public transient UniqueSet setpool = new UniqueSet();
+  public transient UniqueSet<TopicIF> setpool = new UniqueSet<TopicIF>();
   
   protected transient SubjectIdentityCache sicache;
 
 	protected TopicIF reifier;
-  protected UniqueSet scope;
-  protected Set topics;
-  protected Set assocs;
+  protected UniqueSet<TopicIF> scope;
+  protected Set<TopicIF> topics;
+  protected Set<AssociationIF> assocs;
 
-  protected Map object_ids;
-  protected Map id_objects;
+  //protected Map object_ids; // unused
+  //protected Map id_objects; // unused
 
-  protected Map listeners;
+  protected Map<String, EventListenerIF[]> listeners;
   
   TopicMap(InMemoryTopicMapTransaction txn) {
     this.txn = txn;
@@ -60,10 +59,11 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     this.parent = this;
     this.cfactory = txn.getCollectionFactory();
     
-    object_ids = cfactory.makeLargeMap();
-    id_objects = cfactory.makeLargeMap();
-    
-    scope = setpool.get(Collections.EMPTY_SET);
+    //object_ids = cfactory.makeLargeMap(); // unused
+    //id_objects = cfactory.makeLargeMap(); // unused
+
+    Set<TopicIF> empty = Collections.emptySet();
+    scope = setpool.get(empty);
     topics = cfactory.makeLargeSet();
     assocs = cfactory.makeLargeSet();
 
@@ -112,7 +112,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     this.sicache = sicache;
   }
   
-  public Collection getTopics() {
+  public Collection<TopicIF> getTopics() {
     return Collections.unmodifiableSet(topics);
   }
 
@@ -164,7 +164,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     topics.remove(topic);
   }
   
-  public Collection getAssociations() {
+  public Collection<AssociationIF> getAssociations() {
     return Collections.unmodifiableSet(assocs);
   }
 
@@ -188,11 +188,11 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     assocs.add(association);
 
     // Make sure roles are added to player's list
-    Collection roles = association.getRoles();
+    Collection<AssociationRoleIF> roles = association.getRoles();
     synchronized (roles) {
-      Iterator iter = roles.iterator();
+      Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+        AssociationRoleIF role = iter.next();
         Topic player = (Topic) role.getPlayer();
         if (player != null)
           player.addRole(role);      
@@ -212,11 +212,11 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     fireEvent("TopicMapIF.removeAssociation", null, association);
 
     // Remove players of the association roles
-    Collection roles = association.roles;
+    Collection<AssociationRoleIF> roles = association.roles;
     synchronized (roles) {
-      Iterator iter = roles.iterator();
+      Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+        AssociationRoleIF role = iter.next();
         Topic player = (Topic) role.getPlayer();
         if (player != null)
           player.removeRole(role);      
@@ -306,10 +306,10 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
       // Add listener to list of event entry listeners. This is not
       // very elegant, but it works.
       if (!listeners.containsKey(event))
-        listeners.put(event, new Object[0]);
-      Collection event_listeners = new ArrayList(Arrays.asList((Object[])listeners.get(event)));
+        listeners.put(event, new EventListenerIF[0]);
+      Collection<EventListenerIF> event_listeners = new ArrayList<EventListenerIF>(Arrays.asList(listeners.get(event)));
       event_listeners.add(listener);
-      listeners.put(event, event_listeners.toArray());      
+      listeners.put(event, event_listeners.toArray(new EventListenerIF[0]));
     }
   }
 
@@ -318,12 +318,12 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
       if (listeners.containsKey(event)) {
         // Remove listener from list of event entry listeners. This is
         // not very elegant, but it works.
-        Collection event_listeners = new ArrayList(Arrays.asList((Object[])listeners.get(event)));
+        Collection<EventListenerIF> event_listeners = new ArrayList<EventListenerIF>(Arrays.asList(listeners.get(event)));
         event_listeners.remove(listener);
         if (event_listeners.isEmpty())
           listeners.remove(event);
         else
-          listeners.put(event, event_listeners.toArray());
+          listeners.put(event, event_listeners.toArray(new EventListenerIF[1]));
       }
     }
   }
@@ -334,13 +334,13 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
 
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     // Look up event listeners
-    Object[] event_listeners = (Object[])listeners.get(event);
+    EventListenerIF[] event_listeners = listeners.get(event);
     if (event_listeners != null) {
       // Loop over event listeners
       int size = event_listeners.length;
       for (int i=0; i < size; i++)
         // Notify listener
-        ((EventListenerIF)event_listeners[i]).processEvent(object, event, new_value, old_value);
+        (event_listeners[i]).processEvent(object, event, new_value, old_value);
     }
   }
   

@@ -41,7 +41,8 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
   protected TransactionalLookupIndexIF subjects;
         
   public SubjectIdentityCache(TopicMapTransactionIF txn, CollectionFactoryIF cfactory) {
-    super(cfactory.makeLargeMap());
+    super(null);
+    this.handlers = cfactory.makeLargeMap();
     this.txn = txn;
     this.ptxn = ((RDBMSTopicMapTransaction)txn).getTransaction();
     
@@ -129,42 +130,42 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache {
   // The following methods populate the various caches when object
   // model events are triggered.
   
-  protected Object _getObjectByItemIdentifier(Object source_locator) {
+  protected TMObjectIF _getObjectByItemIdentifier(LocatorIF source_locator) {
     Object o = source_locators.get(source_locator);
-    return (o == null ? null : ptxn.getObject((IdentityIF)o));
+    return (TMObjectIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
   }
 
-  protected void registerSourceLocator(Object source_locator, Object object) {
+  protected void registerSourceLocator(LocatorIF source_locator, TMObjectIF object) {
     source_locators.put(source_locator, ((PersistentIF)object)._p_getIdentity());
   }
   
-  protected void unregisterSourceLocator(Object source_locator) {
+  protected void unregisterSourceLocator(LocatorIF source_locator) {
     source_locators.remove(source_locator);
   }
 
-  protected Object _getTopicBySubjectIdentifier(Object subject_indicator) {
+  protected TopicIF _getTopicBySubjectIdentifier(LocatorIF subject_indicator) {
     Object o = subject_indicators.get(subject_indicator);
-    return (o == null ? null : ptxn.getObject((IdentityIF)o));
+    return (TopicIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
   }
 
-  protected void registerSubjectIndicator(Object subject_indicator, Object object) {
+  protected void registerSubjectIndicator(LocatorIF subject_indicator, TopicIF object) {
     subject_indicators.put(subject_indicator, ((PersistentIF)object)._p_getIdentity());
   }
   
-  protected void unregisterSubjectIndicator(Object subject_indicator) {
+  protected void unregisterSubjectIndicator(LocatorIF subject_indicator) {
     subject_indicators.remove(subject_indicator);
   }
 
-  protected Object _getTopicBySubjectLocator(Object subject) {
+  protected TopicIF _getTopicBySubjectLocator(LocatorIF subject) {
     Object o = subjects.get(subject);
-    return (o == null ? null : ptxn.getObject((IdentityIF)o));
+    return (TopicIF)(o == null ? null : ptxn.getObject((IdentityIF)o));
   }
 
-  protected void registerSubject(Object subject, Object object) {
+  protected void registerSubject(LocatorIF subject, TopicIF object) {
     subjects.put(subject, ((PersistentIF)object)._p_getIdentity());
   }
   
-  protected void unregisterSubject(Object subject) {
+  protected void unregisterSubject(LocatorIF subject) {
     subjects.remove(subject);
   }
         

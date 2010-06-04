@@ -4,13 +4,12 @@
 package net.ontopia.topicmaps.impl.basic;
 
 import java.io.Reader;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.io.IOException;
-import net.ontopia.utils.ReaderInputStream;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -37,7 +36,7 @@ public class VariantName extends TMObject implements VariantNameIF {
 
   protected TopicIF reifier;
   protected String value;
-  protected UniqueSet scope;
+  protected UniqueSet<TopicIF> scope;
   protected LocatorIF datatype;
 
   VariantName(TopicMap tm) {
@@ -45,7 +44,8 @@ public class VariantName extends TMObject implements VariantNameIF {
     // WARNING: This means that the unique set will not get
     // dereferenced even though the variant name has been
     // dereferenced.
-    scope = topicmap.setpool.get(Collections.EMPTY_SET);
+    Set<TopicIF> empty = Collections.emptySet();
+    scope = topicmap.setpool.get(empty);
   }
   
   // -----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   // ScopedIF implementation
   // -----------------------------------------------------------------------------
   
-  public Collection getScope() {
+  public Collection<TopicIF> getScope() {
     // Return scope defined on this object
     return scope;
   }

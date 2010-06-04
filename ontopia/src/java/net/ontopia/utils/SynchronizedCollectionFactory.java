@@ -22,28 +22,28 @@ public class SynchronizedCollectionFactory implements CollectionFactoryIF, java.
     this.initsize = initsize;
   }
 
-  public Set makeSmallSet() {
-    return new SynchronizedCompactHashSet();
+  public <T> Set<T> makeSmallSet() {
+    return new SynchronizedCompactHashSet<T>();
   }
 
-  public Set makeLargeSet() {
-    return new SynchronizedCompactHashSet();
+  public <T> Set<T> makeLargeSet() {
+    return new SynchronizedCompactHashSet<T>();
   }
 
-  public Map makeSmallMap() {
-    return Collections.synchronizedMap(new HashMap(initsize));
+  public <K, V> Map<K, V> makeSmallMap() {
+    return Collections.synchronizedMap(new HashMap<K, V>(initsize));
   }
 
-  public Map makeLargeMap() {
-    return Collections.synchronizedMap(new HashMap());
+  public <K, V> Map<K, V> makeLargeMap() {
+    return Collections.synchronizedMap(new HashMap<K, V>());
   }
   
-  public List makeSmallList() {
-    return Collections.synchronizedList(new ArrayList(initsize));
+  public <T> List<T> makeSmallList() {
+    return Collections.synchronizedList(new ArrayList<T>(initsize));
   }
 
-  public List makeLargeList() {
-    return Collections.synchronizedList(new ArrayList());
+  public <T> List<T> makeLargeList() {
+    return Collections.synchronizedList(new ArrayList<T>());
   }
 
 }

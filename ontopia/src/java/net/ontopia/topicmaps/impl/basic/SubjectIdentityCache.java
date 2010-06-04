@@ -29,13 +29,14 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
 
   protected long counter;
 
-  protected Map id_objects;
-  protected Map subjects;
-  protected Map subject_indicators;
-  protected Map source_locators;
+  protected Map<String, TMObject> id_objects;
+  protected Map<LocatorIF, TopicIF> subjects;
+  protected Map<LocatorIF, TopicIF> subject_indicators;
+  protected Map<LocatorIF, TMObjectIF> source_locators;
   
   public SubjectIdentityCache(TopicMapTransactionIF txn, CollectionFactoryIF cfactory) {
-    super(cfactory.makeLargeMap());
+    super(null);
+    this.handlers = cfactory.makeLargeMap();
     this.txn = txn;
     this.cfactory = cfactory;
     
@@ -61,7 +62,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   // --------------------------------------------------------------------------
   
   public TMObjectIF getObjectById(String object_id) {
-    TMObject o = (TMObject) id_objects.get(object_id);
+    TMObject o = id_objects.get(object_id);
     if (o == null || o.parent == null)
       return null;
     else
@@ -69,11 +70,11 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   }
   
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
-    return (TMObjectIF) source_locators.get(locator);
+    return source_locators.get(locator);
   }
   
   public TopicIF getTopicBySubjectLocator(LocatorIF locator) {
-    return (TopicIF) subjects.get(locator);
+    return subjects.get(locator);
   }
   
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
@@ -84,39 +85,39 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   // Event handler methods
   // --------------------------------------------------------------------------
 
-  protected Object _getObjectByItemIdentifier(Object source_locator) {
+  protected TMObjectIF _getObjectByItemIdentifier(LocatorIF source_locator) {
     return source_locators.get(source_locator);
   }
 
-  protected void registerSourceLocator(Object source_locator, Object object) {
+  protected void registerSourceLocator(LocatorIF source_locator, TMObjectIF object) {
     source_locators.put(source_locator, object);
   }
   
-  protected void unregisterSourceLocator(Object source_locator) {
+  protected void unregisterSourceLocator(LocatorIF source_locator) {
     source_locators.remove(source_locator);
   }
 
-  protected Object _getTopicBySubjectIdentifier(Object subject_indicator) {
+  protected TopicIF _getTopicBySubjectIdentifier(LocatorIF subject_indicator) {
     return subject_indicators.get(subject_indicator);
   }
 
-  protected void registerSubjectIndicator(Object subject_indicator, Object object) {
+  protected void registerSubjectIndicator(LocatorIF subject_indicator, TopicIF object) {
     subject_indicators.put(subject_indicator, object);
   }
   
-  protected void unregisterSubjectIndicator(Object subject_indicator) {
+  protected void unregisterSubjectIndicator(LocatorIF subject_indicator) {
     subject_indicators.remove(subject_indicator);
   }
 
-  protected Object _getTopicBySubjectLocator(Object subject) {
+  protected TopicIF _getTopicBySubjectLocator(LocatorIF subject) {
     return subjects.get(subject);
   }
 
-  protected void registerSubject(Object subject, Object object) {
+  protected void registerSubject(LocatorIF subject, TopicIF object) {
     subjects.put(subject, object);
   }
-  
-  protected void unregisterSubject(Object subject) {
+
+  protected void unregisterSubject(LocatorIF subject) {
     subjects.remove(subject);
   }
 

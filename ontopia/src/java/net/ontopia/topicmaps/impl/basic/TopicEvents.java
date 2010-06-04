@@ -4,6 +4,7 @@
 package net.ontopia.topicmaps.impl.basic;
 
 import java.util.*;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.events.*;
 import net.ontopia.topicmaps.impl.utils.*;
@@ -37,7 +38,7 @@ public class TopicEvents implements EventListenerIF {
         TopicMapListenerIF[] topic_listeners = store.topic_listeners;
         for (int i=0; i < topic_listeners.length; i++) {
           try {
-            topic_listeners[i].objectAdded(SnapshotTopic.makeSnapshot(topic, SnapshotTMObject.SNAPSHOT_REFERENCE, new HashMap()));
+            topic_listeners[i].objectAdded(SnapshotTopic.makeSnapshot(topic, SnapshotTMObject.SNAPSHOT_REFERENCE, new HashMap<TMObjectIF, SnapshotTMObject>()));
           } catch (Exception e) {
             log.error("Exception was thrown from topic map listener " + topic_listeners[i], e);
           }
@@ -53,7 +54,7 @@ public class TopicEvents implements EventListenerIF {
         TopicMapListenerIF[] topic_listeners = store.topic_listeners;
         for (int i=0; i < topic_listeners.length; i++) {
           try {
-            topic_listeners[i].objectRemoved(SnapshotTopic.makeSnapshot(topic, SnapshotTMObject.SNAPSHOT_COMPLETE, new HashMap()));
+            topic_listeners[i].objectRemoved(SnapshotTopic.makeSnapshot(topic, SnapshotTMObject.SNAPSHOT_COMPLETE, new HashMap<TMObjectIF, SnapshotTMObject>()));
           } catch (Exception e) {
             log.error("Exception was thrown from topic map listener " + topic_listeners[i], e);
           }
@@ -79,7 +80,7 @@ public class TopicEvents implements EventListenerIF {
         if (topic_listeners != null) {
           for (int i=0; i < topic_listeners.length; i++) {
             try {
-              topic_listeners[i].objectModified(SnapshotTopic.makeSnapshot(topic, SnapshotTMObject.SNAPSHOT_REFERENCE, new HashMap()));
+              topic_listeners[i].objectModified(SnapshotTopic.makeSnapshot(topic, SnapshotTMObject.SNAPSHOT_REFERENCE, new HashMap<TMObjectIF, SnapshotTMObject>()));
             } catch (Exception e) {
               log.error("Exception was thrown from topic map listener " + topic_listeners[i], e);
             }

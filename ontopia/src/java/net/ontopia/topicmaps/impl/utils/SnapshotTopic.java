@@ -10,13 +10,14 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReadOnlyException;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -26,14 +27,14 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
 
 	protected ReifiableIF reified;
 
-  protected Collection sublocs;  
-  protected Collection subinds;
+  protected Collection<LocatorIF> sublocs;
+  protected Collection<LocatorIF> subinds;
 
-  protected Collection basenames;
-  protected Collection occurrences;
-  protected Collection types;
+  protected Collection<TopicNameIF> basenames;
+  protected Collection<OccurrenceIF> occurrences;
+  protected Collection<TopicIF> types;
   
-  SnapshotTopic(TopicIF original, int snapshotType, Map processed) {
+  SnapshotTopic(TopicIF original, int snapshotType, Map<TMObjectIF, SnapshotTMObject> processed) {
     this.snapshotType = snapshotType;
 
     switch (snapshotType) {
@@ -42,23 +43,23 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
       break;
     case SNAPSHOT_COMPLETE:
       this.objectId = original.getObjectId();
-      this.sublocs = new ArrayList(original.getSubjectLocators());
-      this.subinds = new ArrayList(original.getSubjectIdentifiers());
-      this.srclocs = new ArrayList(original.getItemIdentifiers());
-      this.basenames = new ArrayList();
-      Iterator biter = original.getTopicNames().iterator();
+      this.sublocs = new ArrayList<LocatorIF>(original.getSubjectLocators());
+      this.subinds = new ArrayList<LocatorIF>(original.getSubjectIdentifiers());
+      this.srclocs = new ArrayList<LocatorIF>(original.getItemIdentifiers());
+      this.basenames = new ArrayList<TopicNameIF>();
+      Iterator<TopicNameIF> biter = original.getTopicNames().iterator();
       while (biter.hasNext()) {
-        this.basenames.add(SnapshotTopicName.makeSnapshot((TopicNameIF)biter.next(), snapshotType, processed));
+        this.basenames.add(SnapshotTopicName.makeSnapshot(biter.next(), snapshotType, processed));
       }
-      this.occurrences = new ArrayList();
-      Iterator oiter = original.getOccurrences().iterator();
+      this.occurrences = new ArrayList<OccurrenceIF>();
+      Iterator<OccurrenceIF> oiter = original.getOccurrences().iterator();
       while (oiter.hasNext()) {
-        this.occurrences.add(SnapshotOccurrence.makeSnapshot((OccurrenceIF)oiter.next(), snapshotType, processed));
+        this.occurrences.add(SnapshotOccurrence.makeSnapshot(oiter.next(), snapshotType, processed));
       }
-      this.types = new ArrayList();
-      Iterator titer = original.getTypes().iterator();
+      this.types = new ArrayList<TopicIF>();
+      Iterator<TopicIF> titer = original.getTypes().iterator();
       while (titer.hasNext()) {
-        this.types.add(SnapshotTopic.makeSnapshot((TopicIF)titer.next(), snapshotType, processed));
+        this.types.add(SnapshotTopic.makeSnapshot(titer.next(), snapshotType, processed));
       }
 			// TODO: add support for this when needed
       //! this.reified = SnapshotTopic.makeSnapshot(original.getReified(),
@@ -69,11 +70,11 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
     }
   }
 
-  public static TopicIF makeSnapshot(TopicIF original, int snapshotType, Map processed) {
+  public static TopicIF makeSnapshot(TopicIF original, int snapshotType, Map<TMObjectIF, SnapshotTMObject> processed) {
     if (original == null)
       return null; // this avoids a thousand ifs elsewhere
     else if (processed.containsKey(original))
-			return (SnapshotTopic)processed.get(original);
+			return (TopicIF)processed.get(original);
 		
 		SnapshotTopic st = new SnapshotTopic(original, snapshotType, processed);
 		processed.put(original, st);
@@ -84,20 +85,24 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
   // TopicIF implementation
   // ---------------------------------------------------------------------------
 
-  public Collection getSubjectLocators() {
-    return (sublocs == null ? Collections.EMPTY_SET : sublocs);
+  public Collection<LocatorIF> getSubjectLocators() {
+    Collection<LocatorIF> empty = Collections.emptyList();
+    return (sublocs == null ? empty : sublocs);
 	}
 
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
     throw new UnsupportedOperationException();
+    // should this be throw new ReadOnlyException(); ?
 	}
 
 	public void removeSubjectLocator(LocatorIF subject_locator) {
     throw new UnsupportedOperationException();
+    // should this be throw new ReadOnlyException(); ?
 	}
 
-  public Collection getSubjectIdentifiers() {
-    return (subinds == null ? Collections.EMPTY_SET : subinds);
+  public Collection<LocatorIF> getSubjectIdentifiers() {
+    Collection<LocatorIF> empty = Collections.emptyList();
+    return (subinds == null ? empty : subinds);
   }
 
   public void addSubjectIdentifier(LocatorIF locator) throws ConstraintViolationException {
@@ -108,8 +113,9 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
     throw new ReadOnlyException();
   }
 
-  public Collection getTypes() {
-    return (types == null ? Collections.EMPTY_SET : types);
+  public Collection<TopicIF> getTypes() {
+    Collection<TopicIF> empty = Collections.emptyList();
+    return (types == null ? empty : types);
   }
   
   public void addType(TopicIF type) {
@@ -120,24 +126,26 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
     throw new ReadOnlyException();
   }
   
-  public Collection getTopicNames() {
-    return (basenames == null ? Collections.EMPTY_SET : basenames);
+  public Collection<TopicNameIF> getTopicNames() {
+    Collection<TopicNameIF> empty = Collections.emptyList();
+    return (basenames == null ? empty : basenames);
   }
   
-  public Collection getOccurrences() {
-    return (occurrences == null ? Collections.EMPTY_SET : occurrences);
+  public Collection<OccurrenceIF> getOccurrences() {
+    Collection<OccurrenceIF> empty = Collections.emptyList();
+    return (occurrences == null ? empty : occurrences);
   }
   
-  public Collection getRoles() {
-    return Collections.EMPTY_SET;
+  public Collection<AssociationRoleIF> getRoles() {
+    return Collections.emptyList();
   }
   
-  public Collection getRolesByType(TopicIF rtype) {
-    return Collections.EMPTY_SET;
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF rtype) {
+    return Collections.emptyList();
   }
   
-  public Collection getRolesByType(TopicIF rtype, TopicIF atype) {
-    return Collections.EMPTY_SET;
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF rtype, TopicIF atype) {
+    return Collections.emptyList();
   }
   
   public void merge(TopicIF topic) {

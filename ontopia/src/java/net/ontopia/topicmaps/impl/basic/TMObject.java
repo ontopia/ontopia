@@ -22,7 +22,7 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
   TopicMap topicmap;
   String oid;
   TMObject parent;
-  protected Set sources;
+  protected Set<LocatorIF> sources;
 
   TMObject() {
   }
@@ -48,9 +48,9 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
     return isConnected() ? topicmap : null;
   }
 
-  public Collection getItemIdentifiers() {
+  public Collection<LocatorIF> getItemIdentifiers() {
     if (sources == null)
-      return Collections.EMPTY_SET;
+      return Collections.emptySet();
     else
       return Collections.unmodifiableSet(sources);
   }

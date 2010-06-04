@@ -23,28 +23,28 @@ public class CollectionFactory implements CollectionFactoryIF, java.io.Serializa
     this.initsize = initsize;
   }
 
-  public Set makeSmallSet() {
-    return new HashSet(initsize);
+  public <T> Set<T> makeSmallSet() {
+    return (Set<T>) new HashSet<T>(initsize);
   }
 
-  public Set makeLargeSet() {
-    return new HashSet();
+  public <T> Set<T> makeLargeSet() {
+    return (Set<T>) new HashSet<T>();
   }
 
-  public Map makeSmallMap() {
-    return new HashMap(initsize);
+  public <V, K> Map<V, K> makeSmallMap() {
+    return (Map<V, K>) new HashMap<V, K>(initsize);
   }
 
-  public Map makeLargeMap() {
-    return new HashMap();
+  public <V, K> Map<V, K> makeLargeMap() {
+    return (Map<V, K>) new HashMap<V, K>();
   }
   
-  public List makeSmallList() {
-    return new ArrayList(initsize);
+  public <T> List<T> makeSmallList() {
+    return (List<T>) new ArrayList<T>(initsize);
   }
 
-  public List makeLargeList() {
-    return new ArrayList();
+  public <T> List<T> makeLargeList() {
+    return (List<T>) new ArrayList<T>();
   }
 
 }

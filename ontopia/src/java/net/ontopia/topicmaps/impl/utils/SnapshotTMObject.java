@@ -3,20 +3,14 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReadOnlyException;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: 
@@ -29,7 +23,7 @@ public abstract class SnapshotTMObject implements TMObjectIF {
   protected int snapshotType;
 
   protected String objectId;
-  protected Collection srclocs;
+  protected Collection<LocatorIF> srclocs;
   
   // -----------------------------------------------------------------------------
   // TMObjectIF implementation
@@ -47,8 +41,9 @@ public abstract class SnapshotTMObject implements TMObjectIF {
     return null;
   }
 
-  public Collection getItemIdentifiers() {
-    return (srclocs == null ? Collections.EMPTY_SET : srclocs);
+  public Collection<LocatorIF> getItemIdentifiers() {
+    Collection<LocatorIF> empty = Collections.emptyList();
+    return (srclocs == null ? empty : srclocs);
   }
 
   public void addItemIdentifier(LocatorIF locator) throws ConstraintViolationException {

@@ -5,7 +5,6 @@ package net.ontopia.topicmaps.impl.basic;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -28,8 +27,8 @@ public class Association extends TMObject implements AssociationIF {
   
   protected TopicIF reifier;
   protected TopicIF type;
-  protected UniqueSet scope;
-  protected Set roles;
+  protected UniqueSet<TopicIF> scope;
+  protected Set<AssociationRoleIF> roles;
   
   protected Association(TopicMap tm) {
     super(tm);
@@ -56,12 +55,12 @@ public class Association extends TMObject implements AssociationIF {
     this.parent = parent;
   }
 
-  public Collection getRoleTypes() {
-    Collection result = topicmap.cfactory.makeSmallSet();
+  public Collection<TopicIF> getRoleTypes() {
+    Collection<TopicIF> result = topicmap.cfactory.makeSmallSet();
     synchronized (roles) {    
-      Iterator iter = roles.iterator();
+      Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+        AssociationRoleIF role = iter.next();
         TopicIF type = role.getType();
         if (type != null)
           result.add(role.getType());
@@ -70,14 +69,14 @@ public class Association extends TMObject implements AssociationIF {
     return result;
   }
   
-  public Collection getRolesByType(TopicIF roletype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     if (roletype == null) throw new NullPointerException("Role type must not be null.");
     CrossTopicMapException.check(roletype, this);
-    Collection result = new HashSet();
-    synchronized (roles) {    
-      Iterator iter = roles.iterator();
+    Collection<AssociationRoleIF> result = topicmap.cfactory.makeSmallSet();
+    synchronized (roles) {
+      Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+        AssociationRoleIF role = iter.next();
         if (role.getType() == roletype)
           result.add(role);
       }
@@ -85,7 +84,7 @@ public class Association extends TMObject implements AssociationIF {
     return result;
   }
 
-  public Collection getRoles() {
+  public Collection<AssociationRoleIF> getRoles() {
     return Collections.unmodifiableSet(roles);
   }
 
@@ -141,9 +140,10 @@ public class Association extends TMObject implements AssociationIF {
   // ScopedIF implementation
   // -----------------------------------------------------------------------------
 
-  public Collection getScope() {
+  public Collection<TopicIF> getScope() {
     // Return scope defined on this object
-    return (scope == null ? Collections.EMPTY_SET : scope);
+    Collection<TopicIF> empty = Collections.emptyList();
+    return (scope == null ? empty : scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -153,8 +153,10 @@ public class Association extends TMObject implements AssociationIF {
     // Notify listeners
     fireEvent("AssociationIF.addTheme", theme, null);
     // Add theme to scope
-    if (scope == null)
-      scope = topicmap.setpool.get(Collections.EMPTY_SET);
+    if (scope == null) {
+      Set<TopicIF> empty = Collections.emptySet();
+      scope = topicmap.setpool.get(empty);
+    }
     scope = topicmap.setpool.add(scope, theme, true);
   }
 

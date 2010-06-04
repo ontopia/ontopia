@@ -115,7 +115,7 @@ public class Topic extends TMObject implements TopicIF {
     subjects.remove(subject_locator);
   }
 
-  public Collection getSubjectIdentifiers() {
+  public Collection<LocatorIF> getSubjectIdentifiers() {
     if (indicators == null)
       return Collections.EMPTY_SET;
     else
@@ -154,7 +154,7 @@ public class Topic extends TMObject implements TopicIF {
     indicators.remove(subject_indicator);
   }
   
-  public Collection getTopicNames() {
+  public Collection<TopicNameIF> getTopicNames() {
     // Return names
     return Collections.unmodifiableSet(names);
   }
@@ -192,7 +192,7 @@ public class Topic extends TMObject implements TopicIF {
     names.remove(name);
   }
   
-  public Collection getOccurrences() {
+  public Collection<OccurrenceIF> getOccurrences() {
     return Collections.unmodifiableSet(occurs);
   }
 
@@ -229,11 +229,11 @@ public class Topic extends TMObject implements TopicIF {
     occurs.remove(occurrence);
   }
 
-  public Collection getRoles() {
+  public Collection<AssociationRoleIF> getRoles() {
     return Collections.unmodifiableSet(roles);
   }
   
-  public Collection getRolesByType(TopicIF roletype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     if (roletype == null) throw new NullPointerException("Role type cannot be null.");
     // see below for rationale for next line
     Collection result = new ArrayList();
@@ -248,7 +248,7 @@ public class Topic extends TMObject implements TopicIF {
     return result;
   }
 
-  public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype, TopicIF assoc_type) {
     if (roletype == null) throw new NullPointerException("Role type cannot be null.");
     if (assoc_type == null) throw new NullPointerException("Association type cannot be null.");
 

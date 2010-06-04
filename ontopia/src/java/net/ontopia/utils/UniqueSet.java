@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * INTERNAL: 
  */
-public class UniqueSet extends CompactHashSet {
+public class UniqueSet<E> extends CompactHashSet<E> {
   
   public UniqueSet() {
     super();
@@ -24,9 +24,9 @@ public class UniqueSet extends CompactHashSet {
     super(size);
   }
   
-  public UniqueSet(Collection c) {
+  public UniqueSet(Collection<E> c) {
     super(c.size() < INITIAL_SIZE ? INITIAL_SIZE : c.size());
-    Iterator e = c.iterator();
+    Iterator<E> e = c.iterator();
     while (e.hasNext()) {
       super.add(e.next());
     }
@@ -39,7 +39,7 @@ public class UniqueSet extends CompactHashSet {
   private final static int OP_ADD = 1;
   private final static int OP_REMOVE = 2;
 
-  public UniqueSet(UniqueSet s) {
+  public UniqueSet(UniqueSet<E> s) {
     super(s.objects.length);
     // clone members
     System.arraycopy(s.objects, 0, this.objects, 0, s.objects.length);
@@ -47,11 +47,11 @@ public class UniqueSet extends CompactHashSet {
     this.freecells = s.freecells;
   }
 
-  public UniqueSet(UniqueSet s1, UniqueSet s2) {
+  public UniqueSet(UniqueSet<E> s1, UniqueSet<E> s2) {
     super((s1.objects.length > s2.objects.length ? s1.objects.length : s2.objects.length));
 
-    UniqueSet set1;
-    UniqueSet set2;
+    UniqueSet<E> set1;
+    UniqueSet<E> set2;
     if (s1.elements > s2.elements) {
       set1 = s1; set2 = s2;
     } else {
@@ -64,13 +64,13 @@ public class UniqueSet extends CompactHashSet {
     this.freecells = set1.freecells;
 
     // add other sets elements individually
-    Iterator iter = set2.iterator();
+    Iterator<E> iter = set2.iterator();
     for (int i=0; i < set2.elements; i++) {
       super.add(iter.next());
     }
   }
   
-  private UniqueSet(UniqueSet s, int op, Object o) {
+  private UniqueSet(UniqueSet<E> s, int op, E o) {
     this(s);
     if (op == OP_ADD) {
       // add object
@@ -91,8 +91,8 @@ public class UniqueSet extends CompactHashSet {
    * INTERNAL: Get the internal representation of a given set. The
    * initial reference count is 1.
    */
-  public UniqueSet get(Set set) {
-    UniqueSet set2;
+  public UniqueSet<E> get(Set<E> set) {
+    UniqueSet<E> set2;
 
     //! if (set.isEmpty()) {
     //!   // Replace with EMPTY_SET if empty.
@@ -100,11 +100,11 @@ public class UniqueSet extends CompactHashSet {
     //!   if (set2.refcount == 0) super.add(EMPTY_SET);
     //! } else {
       // Look up candidate set in set pool
-      set2 = (UniqueSet)lookup(set);
+      set2 = (UniqueSet<E>)lookup(set);
       if (set2 == null) {
         // Create new set if no existing set found
         // FIXME: Could use 'set' variable if compatible and manageable
-        set2 = new UniqueSet(set);
+        set2 = new UniqueSet<E>(set);
         super.add(set2);
       }
     //!}
@@ -117,7 +117,7 @@ public class UniqueSet extends CompactHashSet {
    * actual object stored at the hashset. Note that this might be
    * another object, but one that is considered to be equal.
    */
-  protected Object lookup(Object o) {
+  protected E lookup(Object o) {
     if (o == null) o = nullObject;
     
     int hash = o.hashCode();
@@ -138,7 +138,7 @@ public class UniqueSet extends CompactHashSet {
     return objects[index];
   }
   
-  public void dereference(UniqueSet set) {
+  public void dereference(UniqueSet<E> set) {
     //! if (set == EMPTY_SET) {
     //!   if (set.refcount < 1)
     //!     throw new IllegalArgumentException("Set " + set + " is not registered with this pool.");
@@ -149,34 +149,34 @@ public class UniqueSet extends CompactHashSet {
     //!   // decrement reference count
     //!   set.refcount--;
     //! }
-    if (!contains(set))
+    if (!contains((E)set))
       throw new IllegalArgumentException("Set " + set + " is not registered with this pool.");
     set.refcount--;
-    if (set.refcount == 0) super.remove(set);
+    if (set.refcount == 0) super.remove((E)set);
     //! if (set.refcount == 0) System.out.println("DEREF: " + set);
   }
   
-  protected boolean equalsAdd(UniqueSet other, Object o) {
-    if (other.elements+1 != elements || !contains(o)) return false;    
+  protected boolean equalsAdd(UniqueSet<E> other, Object o) {
+    if (other.elements+1 != elements || !contains((E)o)) return false;
     for (int i=0; i < other.objects.length; i++) {
       if (other.objects[i] == null || other.objects[i] == deletedObject) continue;
-      if (!contains(other.objects[i])) return false;
+      if (!contains((E)other.objects[i])) return false;
     }
     return true;
   }
 
-  protected boolean equalsRemove(UniqueSet other, Object o) {
-    if (other.elements-1 != elements || contains(o)) return false;    
+  protected boolean equalsRemove(UniqueSet<E> other, Object o) {
+    if (other.elements-1 != elements || contains((E)o)) return false;
     for (int i=0; i < other.objects.length; i++) {
       if (other.objects[i] == null || other.objects[i] == deletedObject) continue;
-      if (!contains(other.objects[i]) && !other.objects[i].equals(o)) return false;
+      if (!contains((E)other.objects[i]) && !other.objects[i].equals(o)) return false;
     }
     return true;
   }
   
-  public UniqueSet add(UniqueSet set, Object o, boolean dereference) {
+  public UniqueSet<E> add(UniqueSet<E> set, Object o, boolean dereference) {
     if (o == null) o = nullObject;
-    if (set.contains(o)) return set;
+    if (set.contains((E)o)) return set;
     
     // decrement reference count
     if (dereference) dereference(set);
@@ -212,9 +212,10 @@ public class UniqueSet extends CompactHashSet {
     }
   }
 
-  public UniqueSet remove(UniqueSet set, Object o, boolean dereference) {
+  @SuppressWarnings("unchecked")
+  public UniqueSet<E> remove(UniqueSet<E> set, Object o, boolean dereference) {
     if (o == null) o = nullObject;
-    if (!set.contains(o)) return set;
+    if (!set.contains((E)o)) return set;
     
     // decrement reference count
     if (dereference) dereference(set);
@@ -226,7 +227,7 @@ public class UniqueSet extends CompactHashSet {
     // search for the removed set
     while(objects[index] != null &&
           !(objects[index].hashCode() == hash &&
-            ((UniqueSet)objects[index]).equalsRemove(set, o))) {
+            ((UniqueSet<E>)objects[index]).equalsRemove(set, o))) {
       index = ((index + offset) & 0x7FFFFFFF) % objects.length;
       offset = offset*2 + 1;
 
@@ -235,7 +236,7 @@ public class UniqueSet extends CompactHashSet {
     }
 
     if (objects[index] == null || objects[index] == deletedObject) { // wasn't present already
-      UniqueSet newset = new UniqueSet(set, OP_REMOVE, o);
+      UniqueSet<E> newset = new UniqueSet<E>(set, OP_REMOVE, (E)o);
       // reference count = 1
       newset.refcount = 1;
       //! System.out.println("ADDED: " + newset.refcount + " " + newset);
@@ -243,18 +244,19 @@ public class UniqueSet extends CompactHashSet {
       return newset;
     } else { // was there already
       // increment reference count
-      UniqueSet oldset = (UniqueSet)objects[index];
+      UniqueSet<E> oldset = (UniqueSet<E>)objects[index];
       oldset.refcount++;
       //! System.out.println("REUSE: " + oldset.refcount + " " + oldset);
       return oldset;
     }
   }
   
+  @SuppressWarnings("unchecked")
   public void dump() {
     System.out.println("Reference count: " + refcount);
-    Iterator iter = iterator();
+    Iterator<E> iter = iterator();
     for (int i=0; i < elements; i++) {
-      UniqueSet set = (UniqueSet)iter.next();
+      UniqueSet<E> set = (UniqueSet<E>)iter.next();
       System.out.println("=> " + set.refcount + ": " + set);
     }
   }
@@ -267,13 +269,13 @@ public class UniqueSet extends CompactHashSet {
 	public boolean remove(Object o) {
     throw new UnsupportedOperationException();
   }
-	public boolean addAll(Collection coll) {
+	public boolean addAll(Collection<? extends E> coll) {
     throw new UnsupportedOperationException();
   }
-	public boolean removeAll(Collection coll) {
+	public boolean removeAll(Collection<?> coll) {
     throw new UnsupportedOperationException();
   }
-	public boolean retainAll(Collection coll) {
+	public boolean retainAll(Collection<?> coll) {
     throw new UnsupportedOperationException();
   }
 	public void clear() {

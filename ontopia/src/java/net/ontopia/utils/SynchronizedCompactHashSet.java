@@ -10,7 +10,7 @@ import java.util.Iterator;
  * INTERNAL: Extends CompactHashSet to make it synchronized. Saves
  * memory compared with having to wrap the set in a SynchronizedSet.
  */
-public class SynchronizedCompactHashSet extends CompactHashSet {
+public class SynchronizedCompactHashSet<E> extends CompactHashSet<E> {
 
   public SynchronizedCompactHashSet() {
     super();
@@ -31,16 +31,16 @@ public class SynchronizedCompactHashSet extends CompactHashSet {
     synchronized(this) {return super.isEmpty();}
   }
   public boolean contains(Object o) {
-    synchronized(this) {return super.contains(o);}
+    synchronized(this) {return super.contains((E)o);}
   }
   public Object[] toArray() {
     synchronized(this) {return super.toArray();}
   }
-  public Object[] toArray(Object[] a) {
+  public <E> E[] toArray(E[] a) {
     synchronized(this) {return super.toArray(a);}
   }
 
-  public Iterator iterator() {
+  public Iterator<E> iterator() {
     return super.iterator(); // Must be manually synched by user!
   }
 
@@ -48,7 +48,7 @@ public class SynchronizedCompactHashSet extends CompactHashSet {
     synchronized(this) {return super.add(o);}
   }
   public boolean remove(Object o) {
-    synchronized(this) {return super.remove(o);}
+    synchronized(this) {return super.remove((E)o);}
   }
 
   public boolean containsAll(Collection coll) {

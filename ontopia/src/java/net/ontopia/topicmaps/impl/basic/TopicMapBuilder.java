@@ -7,7 +7,6 @@ import java.io.Reader;
 import java.util.*;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.infoset.core.*;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: The default topic map builder implementation.
@@ -45,12 +44,12 @@ public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable 
   }
 
 
-  public TopicIF makeTopic(Collection topic_types) {
+  public TopicIF makeTopic(Collection<TopicIF> topic_types) {
 		checkCollection(topic_types);
     TopicIF topic = createTopic();
-    Iterator types = topic_types.iterator();
+    Iterator<TopicIF> types = topic_types.iterator();
     while (types.hasNext())
-      topic.addType((TopicIF) types.next());
+      topic.addType(types.next());
     return topic;
   }
 
@@ -153,22 +152,22 @@ public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable 
   
 	// New builder methods in OKS 4.0
 
-	protected void checkCollection(Collection objects) {
-    Iterator iter = objects.iterator();
+	protected void checkCollection(Collection<? extends TMObjectIF> objects) {
+    Iterator<? extends TMObjectIF> iter = objects.iterator();
     while (iter.hasNext())
-			CrossTopicMapException.check((TMObjectIF)iter.next(), this.tm);
+			CrossTopicMapException.check(iter.next(), this.tm);
 	}
 
-	protected void addScope(ScopedIF scoped, Collection scope) {
+  protected void addScope(ScopedIF scoped, Collection<TopicIF> scope) {
 		if (!scope.isEmpty()) {
-			Iterator iter = scope.iterator();
+			Iterator<TopicIF> iter = scope.iterator();
 			while (iter.hasNext()) {
-				scoped.addTheme((TopicIF)iter.next());
+				scoped.addTheme(iter.next());
 			}
 		}
 	}
 
-  public VariantNameIF makeVariantName(TopicNameIF name, String value, Collection scope) {
+  public VariantNameIF makeVariantName(TopicNameIF name, String value, Collection<TopicIF> scope) {
 		if (name == null) throw new NullPointerException("Topic name must not be null.");
 		if (value == null) throw new NullPointerException("Variant value must not be null.");
 		CrossTopicMapException.check(name, this.tm);
@@ -180,7 +179,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable 
     return vname;
 	}
 
-  public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection scope) {
+  public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator, Collection<TopicIF> scope) {
 		if (name == null) throw new NullPointerException("Topic name must not be null.");
 		if (locator == null) throw new NullPointerException("Variant locator must not be null.");
 		CrossTopicMapException.check(name, this.tm);
@@ -203,7 +202,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable 
     return vname;
   }
 
-  public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection scope) {
+  public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype, Collection<TopicIF> scope) {
 		if (name == null) throw new NullPointerException("Topic name must not be null.");
 		if (value == null) throw new NullPointerException("Variant value must not be null.");
 		if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
@@ -227,7 +226,7 @@ public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable 
     return vname;
 	}
 
-  public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype, Collection scope) {
+  public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype, Collection<TopicIF> scope) {
 		if (name == null) throw new NullPointerException("Topic name must not be null.");
 		if (value == null) throw new NullPointerException("Variant value must not be null.");
 		if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");

@@ -28,8 +28,8 @@ public class TopicName extends TMObject implements TopicNameIF {
   protected TopicIF reifier;
   protected String value;
   protected TopicIF type;
-  protected UniqueSet scope;
-  protected Set variants;
+  protected UniqueSet<TopicIF> scope;
+  protected Set<VariantNameIF> variants;
 
   TopicName(TopicMap tm) {
     super(tm);
@@ -75,9 +75,9 @@ public class TopicName extends TMObject implements TopicNameIF {
     this.value = value;
   }
 
-  public Collection getVariants() {
+  public Collection<VariantNameIF> getVariants() {
     if (variants == null)
-      return Collections.EMPTY_SET;
+      return Collections.emptyList();
     else
       return Collections.unmodifiableSet(variants);
   }
@@ -103,9 +103,9 @@ public class TopicName extends TMObject implements TopicNameIF {
 
     // Add inherited themes to variant name
     if (scope != null && !scope.isEmpty()) {
-      Iterator themes = scope.iterator();
+      Iterator<TopicIF> themes = scope.iterator();
       while (themes.hasNext()) 
-        variant._addTheme((TopicIF)themes.next(), false);
+        variant._addTheme(themes.next(), false);
     }    
   }
 
@@ -121,9 +121,9 @@ public class TopicName extends TMObject implements TopicNameIF {
 
     // Remove inherited themes from variant name
     if (scope != null && !scope.isEmpty()) {
-      Iterator themes = scope.iterator();
+      Iterator<TopicIF> themes = scope.iterator();
       while (themes.hasNext()) 
-        variant._removeTheme((TopicIF)themes.next(), false);
+        variant._removeTheme(themes.next(), false);
     }    
     
     // Unset topic name property
@@ -145,9 +145,10 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ScopedIF implementation
   // -----------------------------------------------------------------------------
 
-  public Collection getScope() {
+  public Collection<TopicIF> getScope() {
     // Return scope defined on this object
-    return (scope == null ? Collections.EMPTY_SET : scope);
+    Collection<TopicIF> empty = Collections.emptyList();
+    return (scope == null ? empty : scope);
   }
   
   public void addTheme(TopicIF theme) {
@@ -157,13 +158,15 @@ public class TopicName extends TMObject implements TopicNameIF {
     // Notify listeners
     fireEvent("TopicNameIF.addTheme", theme, null);
     // Add theme to scope
-    if (scope == null)
-      scope = topicmap.setpool.get(Collections.EMPTY_SET);
+    if (scope == null) {
+      Set<TopicIF> empty = Collections.emptySet();
+      scope = topicmap.setpool.get(empty);
+    }
     scope = topicmap.setpool.add(scope, theme, true);
 
     // add theme to variants
     if (variants != null && !variants.isEmpty()) {
-      Iterator iter = variants.iterator();
+      Iterator<VariantNameIF> iter = variants.iterator();
       while (iter.hasNext()) {
         VariantName v = (VariantName)iter.next();
         v._addTheme(theme, false);
@@ -180,7 +183,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
     // remove theme from variants
     if (variants != null && !variants.isEmpty()) {      
-      Iterator iter = variants.iterator();
+      Iterator<VariantNameIF> iter = variants.iterator();
       while (iter.hasNext()) {
         VariantName v = (VariantName)iter.next();
         v._removeTheme(theme, false);

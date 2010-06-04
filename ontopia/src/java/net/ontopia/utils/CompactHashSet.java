@@ -7,6 +7,7 @@ package net.ontopia.utils;
 // update CompactIdentityHashSet.java, UniqueSet.java and
 // SoftHashMapIndex.java accordingly.
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -16,7 +17,7 @@ import java.util.NoSuchElementException;
  * INTERNAL: Implements the Set interface more compactly than
  * java.util.HashSet by using a closed hashtable. 
  */
-public class CompactHashSet extends java.util.AbstractSet {
+public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   
   protected final static int INITIAL_SIZE = 3;
   protected final static double LOAD_FACTOR = 0.75;
@@ -34,14 +35,15 @@ public class CompactHashSet extends java.util.AbstractSet {
   protected final static Object deletedObject = new Object();
   protected int elements;
   protected int freecells;
-  protected Object[] objects;
+  protected E[] objects;
   protected int modCount;
   
   /**
    * Constructs a new, empty set.
    */
+  @SuppressWarnings("unchecked")
   public CompactHashSet() {
-    objects = new Object[INITIAL_SIZE];
+    objects = (E[]) new Object[INITIAL_SIZE];
     elements = 0;
     freecells = objects.length;
     modCount = 0;
@@ -50,10 +52,11 @@ public class CompactHashSet extends java.util.AbstractSet {
   /**
    * Constructs a new, empty set.
    */
+  @SuppressWarnings("unchecked")
   public CompactHashSet(int size) {
     // NOTE: If array size is 0, we get a
     // "java.lang.ArithmeticException: / by zero" in add(Object).
-    objects = new Object[(size==0 ? 1 : size)]; 
+    objects = (E[]) new Object[(size==0 ? 1 : size)];
     elements = 0;
     freecells = objects.length;
     modCount = 0;
@@ -65,7 +68,7 @@ public class CompactHashSet extends java.util.AbstractSet {
    *
    * @param c the collection whose elements are to be placed into this set.
    */
-  public CompactHashSet(Collection c) {
+  public CompactHashSet(Collection<E> c) {
     this(c.size());
     addAll(c);
   }
@@ -79,8 +82,8 @@ public class CompactHashSet extends java.util.AbstractSet {
    * @return an Iterator over the elements in this set.
    * @see ConcurrentModificationException
    */
-  public Iterator iterator() {
-    return new CompactHashIterator();
+  public Iterator<E> iterator() {
+    return new CompactHashIterator<E>();
   }
 
   /**
@@ -132,6 +135,7 @@ public class CompactHashSet extends java.util.AbstractSet {
    * @return <tt>true</tt> if the set did not already contain the specified
    * element.
    */
+  @SuppressWarnings("unchecked")
   public boolean add(Object o) {
     if (o == null) o = nullObject;
 
@@ -165,7 +169,14 @@ public class CompactHashSet extends java.util.AbstractSet {
 
       modCount++;
       elements++;
-      objects[index] = o;
+
+      // here we face a problem regarding generics:
+      // add(E o) is not possible because of the null Object. We cant do 'new E()' or '(E) new Object()'
+      // so adding an empty object is a problem here
+      // If (! o instanceof E) : This will cause a class cast exception
+      // If (o instanceof E) : This will work fine
+
+      objects[index] = (E) o;
       
       // rehash with same capacity
       if (1 - (freecells / (double) objects.length) > LOAD_FACTOR) {
@@ -183,6 +194,7 @@ public class CompactHashSet extends java.util.AbstractSet {
   /**
    * Removes the specified element from the set.
    */
+  @SuppressWarnings("unchecked")
   public boolean remove(Object o) {
     if (o == null) o = nullObject;
     
@@ -204,7 +216,9 @@ public class CompactHashSet extends java.util.AbstractSet {
     // we found the right position, now do the removal
     if (objects[index] != null) {
       // we found the object
-      objects[index] = deletedObject;
+
+      // same problem here as with add
+      objects[index] = (E) deletedObject;
       modCount++;
       elements--;
       return true;
@@ -235,25 +249,28 @@ public class CompactHashSet extends java.util.AbstractSet {
         else
           result[pos++] = objects[i];
       }
+    // unchecked because it should only contain E
     return result;
   }
 
-  public Object[] toArray(Object a[]) {
+  // not sure if this needs to have generics
+  @SuppressWarnings("unchecked")
+  public <T> T[] toArray(T[] a) {
     int size = elements;
     if (a.length < size)
-      a = (Object[])java.lang.reflect.Array.newInstance(
+      a = (T[])java.lang.reflect.Array.newInstance(
                                  a.getClass().getComponentType(), size);
-    Object[] objects = this.objects;
+    E[] objects = this.objects;
     int pos = 0;
     for (int i = 0; i < objects.length; i++)
       if (objects[i] != null && objects[i] != deletedObject) {
         if (objects[i] == nullObject)
           a[pos++] = null;
         else
-          a[pos++] = objects[i];
+          a[pos++] = (T) objects[i];
       }
     return a;
-  }  
+  }
   
   // ===== INTERNAL METHODS ===============================================
 
@@ -272,9 +289,11 @@ public class CompactHashSet extends java.util.AbstractSet {
   /**
    * INTERNAL: Rehashes the hashset to a bigger size.
    */
+  @SuppressWarnings("unchecked")
   protected void rehash(int newCapacity) {
     int oldCapacity = objects.length;
-    Object[] newObjects = new Object[newCapacity];
+    @SuppressWarnings("unchecked")
+    E[] newObjects = (E[]) new Object[newCapacity];
 
     for (int ix = 0; ix < oldCapacity; ix++) {
       Object o = objects[ix];
@@ -294,7 +313,7 @@ public class CompactHashSet extends java.util.AbstractSet {
           offset = 2;
       }
 
-      newObjects[index] = o;
+      newObjects[index] = (E) o;
     }
 
     objects = newObjects;
@@ -303,10 +322,10 @@ public class CompactHashSet extends java.util.AbstractSet {
   
   // ===== ITERATOR IMPLEMENTATON =========================================
   
-  private class CompactHashIterator implements Iterator {
+  private class CompactHashIterator<T> implements Iterator<T> {
     private int index;
     private int lastReturned = -1;
-    
+
     /**
      * The modCount value that the iterator believes that the backing
      * CompactHashSet should have.  If this expectation is violated,
@@ -314,6 +333,7 @@ public class CompactHashSet extends java.util.AbstractSet {
      */
     private int expectedModCount;
 
+    @SuppressWarnings("empty-statement")
     public CompactHashIterator() {
       for (index = 0; index < objects.length &&
                       (objects[index] == null ||
@@ -326,7 +346,8 @@ public class CompactHashSet extends java.util.AbstractSet {
       return index < objects.length;
     }
 
-    public Object next() {
+    @SuppressWarnings({"empty-statement", "unchecked"})
+    public T next() {
       if (modCount != expectedModCount)
         throw new ConcurrentModificationException();
       int length = objects.length;
@@ -343,9 +364,10 @@ public class CompactHashSet extends java.util.AbstractSet {
       if (objects[lastReturned] == nullObject)
         return null;
       else
-        return objects[lastReturned];
+        return (T) objects[lastReturned];
     }
 
+    @SuppressWarnings("unchecked")
     public void remove() {
       if (modCount != expectedModCount)
         throw new ConcurrentModificationException();
@@ -353,7 +375,7 @@ public class CompactHashSet extends java.util.AbstractSet {
         throw new IllegalStateException();
       // delete object
       if (objects[lastReturned] != null && objects[lastReturned] != deletedObject) {
-        objects[lastReturned] = deletedObject;
+        objects[lastReturned] = (E) deletedObject;
         elements--;
         modCount++;
         expectedModCount = modCount; // this is expected; we made the change

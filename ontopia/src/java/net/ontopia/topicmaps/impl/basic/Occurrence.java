@@ -3,13 +3,12 @@
 package net.ontopia.topicmaps.impl.basic;
 
 import java.io.Reader;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.io.IOException;
-import net.ontopia.utils.ReaderInputStream;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -22,7 +21,6 @@ import net.ontopia.topicmaps.impl.utils.DeletionUtils;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.topicmaps.impl.utils.LocatorInterningTable;
 import net.ontopia.utils.UniqueSet;
-import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 
@@ -36,7 +34,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
 
   protected TopicIF reifier;
   protected TopicIF type;
-  protected UniqueSet scope;
+  protected UniqueSet<TopicIF> scope;
   protected String value;
   protected LocatorIF datatype;
   
@@ -166,9 +164,10 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   // ScopedIF implementation
   // -----------------------------------------------------------------------------
 
-  public Collection getScope() {
+  public Collection<TopicIF> getScope() {
     // Return scope defined on this object
-    return (scope == null ? Collections.EMPTY_SET : scope);
+    Collection<TopicIF> empty = Collections.emptySet();
+    return (scope == null ? empty : scope);
   }
   public void addTheme(TopicIF theme) {
     if (theme == null) 
@@ -177,8 +176,10 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     // Notify listeners
     fireEvent("OccurrenceIF.addTheme", theme, null);
     // Add theme to scope
-    if (scope == null)
-      scope = topicmap.setpool.get(Collections.EMPTY_SET);
+    if (scope == null) {
+      Set<TopicIF> empty = Collections.emptySet();
+      scope = topicmap.setpool.get(empty);
+    }
     scope = topicmap.setpool.add(scope, theme, true);
   }
   public void removeTheme(TopicIF theme) {
