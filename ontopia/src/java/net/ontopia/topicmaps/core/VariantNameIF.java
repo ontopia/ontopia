@@ -3,7 +3,6 @@
 package net.ontopia.topicmaps.core;
 
 import java.io.Reader;
-import java.io.InputStream;
 
 import net.ontopia.infoset.core.LocatorIF;
 
