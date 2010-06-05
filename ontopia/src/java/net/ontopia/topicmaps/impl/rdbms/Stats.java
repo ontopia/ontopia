@@ -12,20 +12,19 @@ import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 
-
 /**
  * INTERNAL: An internal utility class that generates statistics based on 
  * the data that exists in the topic map.
  *
  * @since 2.2.3
  */
-
 public class Stats {
         
-  public static Map getStatistics(TopicMapIF topicmap) throws SQLException {
+  public static Map<String, Integer> getStatistics(TopicMapIF topicmap)
+    throws SQLException {
     RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
     
-    Map stats = new HashMap();
+    Map<String, Integer> stats = new HashMap<String, Integer>();
 
     Integer c;
     Integer[] cs;

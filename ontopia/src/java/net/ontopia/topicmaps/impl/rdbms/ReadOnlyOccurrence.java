@@ -16,27 +16,26 @@ import net.ontopia.persistence.proxy.*;
 /**
  * INTERNAL: The read-only rdbms occurrence implementation.
  */
-
 public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public ReadOnlyOccurrence() {  
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return Occurrence.fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return Occurrence.CLASS_INDICATOR;
@@ -46,9 +45,9 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
     return (id == null ? null : Occurrence.CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // OccurrenceIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getTopic() {
     return (TopicIF)loadField(Occurrence.LF_topic);
@@ -120,12 +119,12 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
       return len;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ScopedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  public Collection getScope() {
-    return loadCollectionField(Occurrence.LF_scope);
+  public Collection<TopicIF> getScope() {
+    return (Collection<TopicIF>) loadCollectionField(Occurrence.LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -136,9 +135,9 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
     throw new ReadOnlyException();
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TypedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
     return (TopicIF)loadField(Occurrence.LF_type);
@@ -148,21 +147,21 @@ public class ReadOnlyOccurrence extends ReadOnlyTMObject implements OccurrenceIF
     throw new ReadOnlyException();
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return (TopicIF)loadField(Occurrence.LF_reifier);
-	}
+    return (TopicIF)loadField(Occurrence.LF_reifier);
+  }
   
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
-	}
+  }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnlyOccurrence", (OccurrenceIF)this);

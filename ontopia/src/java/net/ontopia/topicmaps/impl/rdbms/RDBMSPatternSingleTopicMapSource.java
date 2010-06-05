@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * @since 3.4.2
  */
 public class RDBMSPatternSingleTopicMapSource implements TopicMapSourceIF {
-
   protected String id;
   protected String referenceId;
   protected String title;  

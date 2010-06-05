@@ -20,9 +20,8 @@ import org.apache.commons.collections.map.LRUMap;
 /**
  * INTERNAL: Non-shared locator lookup index.
  */
-
+// <LocatorIF, TMObjectIF>
 public class LocatorLookup implements TransactionalLookupIndexIF {
-
   protected String qname;
   protected TransactionIF txn;
   protected TopicMapIF tm;

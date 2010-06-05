@@ -12,9 +12,7 @@ import java.util.NoSuchElementException;
  * column is 0. The iterator does not currently support the remove()
  * method.
  */
-
-public class QueryResultIterator implements Iterator {
-
+public class QueryResultIterator<E> implements Iterator<E> {
   protected QueryResultIF result;
   protected int index;
 
@@ -36,12 +34,12 @@ public class QueryResultIterator implements Iterator {
     return has_next;
   }
   
-  public Object next() {
+  public E next() {
     if (!has_next)
       throw new NoSuchElementException();
     synchronized (this) {
       // return value at given index
-      Object value = result.getValue(index);
+      E value = (E) result.getValue(index);
       // skip to next row
       has_next = result.next();
       return value;

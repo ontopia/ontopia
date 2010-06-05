@@ -18,24 +18,24 @@ import net.ontopia.persistence.proxy.*;
  */
 public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantNameIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public ReadOnlyVariantName() {  
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return VariantName.fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return VariantName.CLASS_INDICATOR;
@@ -45,13 +45,14 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
     return (id == null ? null : VariantName.CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TopicNameIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public TopicIF getTopic() {
     TopicNameIF name = getTopicName();
-    if (name == null) return null;
+    if (name == null)
+      return null;
     return name.getTopic();
   }
 
@@ -106,12 +107,12 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
       return len;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ScopedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  public Collection getScope() {
-    return loadCollectionField(VariantName.LF_scope);
+  public Collection<TopicIF> getScope() {
+    return (Collection<TopicIF>) loadCollectionField(VariantName.LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -122,21 +123,21 @@ public class ReadOnlyVariantName extends ReadOnlyTMObject implements VariantName
     throw new ReadOnlyException();
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return (TopicIF)loadField(VariantName.LF_reifier);
-	}
+    return (TopicIF)loadField(VariantName.LF_reifier);
+  }
   
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
-	}
+  }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnlyVariantName", (VariantNameIF)this);

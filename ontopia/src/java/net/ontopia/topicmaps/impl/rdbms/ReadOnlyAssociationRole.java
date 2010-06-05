@@ -16,26 +16,27 @@ import net.ontopia.persistence.proxy.*;
  * INTERNAL: The read-only rdbms association role implementation.
  */
 
-public class ReadOnlyAssociationRole extends ReadOnlyTMObject implements AssociationRoleIF {
+public class ReadOnlyAssociationRole extends ReadOnlyTMObject
+  implements AssociationRoleIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public ReadOnlyAssociationRole() {
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return AssociationRole.fields.length;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return AssociationRole.CLASS_INDICATOR;
@@ -45,9 +46,9 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject implements Associa
     return (id == null ? null : AssociationRole.CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // AssociationRoleIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public AssociationIF getAssociation() {
     try {
@@ -72,9 +73,9 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject implements Associa
     throw new ReadOnlyException();
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TypedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
     try {
@@ -89,9 +90,9 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject implements Associa
     throw new ReadOnlyException();
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
     try {
@@ -106,9 +107,9 @@ public class ReadOnlyAssociationRole extends ReadOnlyTMObject implements Associa
     throw new ReadOnlyException();
 	}
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnly.AssociationRole", (AssociationRoleIF)this);

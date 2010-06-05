@@ -25,7 +25,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * PUBLIC: A topic map source that holds the list of <i>all</i> topic
  * map references accessible by a rdbms session.
  */
-
 public class RDBMSTopicMapSource implements TopicMapSourceIF {
 
   protected boolean supportsCreate;

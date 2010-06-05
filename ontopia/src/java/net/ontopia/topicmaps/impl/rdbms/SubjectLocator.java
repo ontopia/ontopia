@@ -8,7 +8,6 @@ import net.ontopia.infoset.core.*;
 /**
  * INTERNAL: 
  */
-
 public class SubjectLocator extends RDBMSLocator {
   
   public SubjectLocator() {

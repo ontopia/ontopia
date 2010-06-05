@@ -20,24 +20,28 @@ import net.ontopia.utils.OntopiaUnsupportedException;
 /**
  * INTERNAL: The rdbms index manager.</p>
  */
-
 public class IndexManager extends AbstractIndexManager {
-  
   protected transient TopicMapTransactionIF transaction;
-  protected Map indexes;
+  protected Map<String, IndexIF> indexes;
 
-  public IndexManager(TopicMapTransactionIF transaction, CollectionFactoryIF cfactory) {
+  public IndexManager(TopicMapTransactionIF transaction,
+                      CollectionFactoryIF cfactory) {
     this.transaction = transaction;
       
     // initialize index map
     indexes = cfactory.makeSmallMap();
 
     // register default indexes
-    indexes.put("net.ontopia.topicmaps.core.index.NameIndexIF", new NameIndex(this));
-    indexes.put("net.ontopia.topicmaps.core.index.OccurrenceIndexIF", new OccurrenceIndex(this));
-    indexes.put("net.ontopia.topicmaps.core.index.ScopeIndexIF", new ScopeIndex(this));
-    indexes.put("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF", new ClassInstanceIndex(this));
-    indexes.put("net.ontopia.infoset.fulltext.core.SearcherIF", new RDBMSSearcher((RDBMSTopicMapTransaction)transaction));
+    indexes.put("net.ontopia.topicmaps.core.index.NameIndexIF",
+                new NameIndex(this));
+    indexes.put("net.ontopia.topicmaps.core.index.OccurrenceIndexIF",
+                new OccurrenceIndex(this));
+    indexes.put("net.ontopia.topicmaps.core.index.ScopeIndexIF",
+                new ScopeIndex(this));
+    indexes.put("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF",
+                new ClassInstanceIndex(this));
+    indexes.put("net.ontopia.infoset.fulltext.core.SearcherIF",
+                new RDBMSSearcher((RDBMSTopicMapTransaction)transaction));
   }
 
   public TopicMapTransactionIF getTransaction() {
@@ -46,7 +50,8 @@ public class IndexManager extends AbstractIndexManager {
   
   public IndexIF getIndex(String name) {
     // Check to see if transaction is active.
-    if (!transaction.isActive()) throw new TransactionNotActiveException("Transaction to which the index manager belongs is not active.");
+    if (!transaction.isActive())
+      throw new TransactionNotActiveException("Transaction to which the index manager belongs is not active.");
 
     // Create index
     AbstractIndex ix = (AbstractIndex)indexes.get(name);
@@ -56,11 +61,11 @@ public class IndexManager extends AbstractIndexManager {
     return ix.getIndex();
   }
 
-  public Collection getSupportedIndexes() {
+  public Collection<String> getSupportedIndexes() {
     return indexes.keySet();
   }
 
-  public Collection getActiveIndexes() {
+  public Collection<IndexIF> getActiveIndexes() {
     return indexes.values();
   }
 

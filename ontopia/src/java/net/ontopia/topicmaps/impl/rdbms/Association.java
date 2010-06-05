@@ -16,9 +16,9 @@ import net.ontopia.persistence.proxy.*;
 
 public class Association extends TMObject implements AssociationIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Persistent property declarations
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   protected static final int LF_scope = 2;
   protected static final int LF_type = 3;
@@ -35,9 +35,9 @@ public class Association extends TMObject implements AssociationIF {
     detachCollectionField(LF_roles);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   static final String CLASS_INDICATOR = "A";
 
@@ -48,17 +48,17 @@ public class Association extends TMObject implements AssociationIF {
     super(txn);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return fields.length;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return CLASS_INDICATOR;
@@ -68,9 +68,9 @@ public class Association extends TMObject implements AssociationIF {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // AssociationIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   /**
    * INTERNAL: Sets the topic map that the object belongs to. [parent]
@@ -88,46 +88,45 @@ public class Association extends TMObject implements AssociationIF {
     }
   }
 
-  public Collection getRoleTypes() {
-    Collection roles = loadCollectionField(LF_roles);
-    Iterator iter = roles.iterator();
-    Collection result = new HashSet();
-    while (iter.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF)iter.next();
+  public Collection<TopicIF> getRoleTypes() {
+    Collection<TopicIF> result = new CompactHashSet<TopicIF>();
+    for (AssociationRoleIF role : (Collection<AssociationRoleIF>) loadCollectionField(LF_roles)) {
       TopicIF type = role.getType();
-      if (type != null) result.add(role.getType());
+      if (type != null)
+        result.add(role.getType());
     }
     return result;
   }
   
-  public Collection getRolesByType(TopicIF roletype) {
-		if (roletype == null) throw new NullPointerException("Role type must not be null.");
-		CrossTopicMapException.check(roletype, this);
-    Collection roles = loadCollectionField(LF_roles);
-    Iterator iter = roles.iterator();
-    Collection result = new HashSet();
-    while (iter.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF)iter.next();
-      if (role.getType() == roletype) result.add(role);
-    }
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
+    if (roletype == null)
+      throw new NullPointerException("Role type must not be null.");
+    CrossTopicMapException.check(roletype, this);
+    Collection<AssociationRoleIF> result = new CompactHashSet<AssociationRoleIF>();
+    for (AssociationRoleIF role : (Collection<AssociationRoleIF>) loadCollectionField(LF_roles))
+      if (role.getType() == roletype)
+        result.add(role);
     return result;
   }
 
-  public Collection getRoles() {
+  public Collection<AssociationRoleIF> getRoles() {
     try {
-      return loadCollectionField(LF_roles);
+      return (Collection<AssociationRoleIF>) loadCollectionField(LF_roles);
     } catch (IdentityNotFoundException e) {
       // association has been deleted by somebody else, so return empty set
-      return Collections.EMPTY_SET;
+      return (Collection<AssociationRoleIF>) Collections.EMPTY_SET;
     }
   }
 
   void addRole(AssociationRoleIF assoc_role) {
-    if (assoc_role == null) throw new NullPointerException("null is not a valid argument.");
+    if (assoc_role == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Check to see if association role is already a member of this association
-    if (assoc_role.getAssociation() == this) return;
+    if (assoc_role.getAssociation() == this)
+      return;
     // Check if used elsewhere.
-    if (assoc_role.getAssociation() != null) throw new ConstraintViolationException("Moving objects is not allowed.");
+    if (assoc_role.getAssociation() != null)
+      throw new ConstraintViolationException("Moving objects is not allowed.");
 
     // Notify listeners
     fireEvent("AssociationIF.addRole", assoc_role, null);    
@@ -143,9 +142,11 @@ public class Association extends TMObject implements AssociationIF {
   }
 
   void removeRole(AssociationRoleIF assoc_role) {
-    if (assoc_role == null) throw new NullPointerException("null is not a valid argument.");
+    if (assoc_role == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Check to see if association role is not a member of this association
-    if (assoc_role.getAssociation() != this) return;
+    if (assoc_role.getAssociation() != this)
+      return;
 
     // Notify listeners
     fireEvent("AssociationIF.removeRole", null, assoc_role);    
@@ -163,22 +164,23 @@ public class Association extends TMObject implements AssociationIF {
   public void remove() {
     TopicMap topicmap = (TopicMap)getTopicMap();
     if (topicmap != null) {
-			DeletionUtils.removeDependencies(this);
+      DeletionUtils.removeDependencies(this);
       topicmap.removeAssociation(this);
-		}
+    }
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ScopedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  public Collection getScope() {
-    return loadCollectionField(LF_scope);
+  public Collection<TopicIF> getScope() {
+    return (Collection<TopicIF>) loadCollectionField(LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    if (theme == null)
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("AssociationIF.addTheme", theme, null);
     // Notify transaction
@@ -186,17 +188,18 @@ public class Association extends TMObject implements AssociationIF {
   }
 
   public void removeTheme(TopicIF theme) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    if (theme == null)
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("AssociationIF.removeTheme", null, theme);
     // Notify transaction
     valueRemoved(LF_scope, theme, true);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TypedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
     try {
@@ -208,17 +211,18 @@ public class Association extends TMObject implements AssociationIF {
   }
 
   public void setType(TopicIF type) {
-		if (type == null) throw new NullPointerException("Association type must not be null.");
-		CrossTopicMapException.check(type, this);
+    if (type == null)
+      throw new NullPointerException("Association type must not be null.");
+    CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("AssociationIF.setType", type, getType());
     // Notify transaction
     valueChanged(LF_type, type, true);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
     try {
@@ -227,25 +231,25 @@ public class Association extends TMObject implements AssociationIF {
       // association has been deleted by somebody else, so return null
       return null;
     }
-	}
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null)
+      CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null) oldReifier.setReified(null);
+    if (reifier != null) reifier.setReified(this);
+  }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public String toString() {
     return ObjectStrings.toString("rdbms.Association", (AssociationIF) this);
   }
-  
 }

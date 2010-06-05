@@ -25,27 +25,26 @@ import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 /**
  * INTERNAL: The read-only rdbms topic implementation.
  */
-
 public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public ReadOnlyTopic() {
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public int _p_getFieldCount() {
     return Topic.fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public String getClassIndicator() {
     return Topic.CLASS_INDICATOR;
@@ -55,24 +54,24 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     return (id == null ? null : Topic.CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TopicIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  public Collection getSubjectLocators() {
-    return loadCollectionField(Topic.LF_subjects);
+  public Collection<LocatorIF> getSubjectLocators() {
+    return (Collection<LocatorIF>) loadCollectionField(Topic.LF_subjects);
   }
 
   public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
     throw new ReadOnlyException();
-	}
+  }
 
-	public void removeSubjectLocator(LocatorIF subject_locator) {
+  public void removeSubjectLocator(LocatorIF subject_locator) {
     throw new ReadOnlyException();
-	}
+  }
 
-  public Collection getSubjectIdentifiers() {
-    return loadCollectionField(Topic.LF_indicators);
+  public Collection<LocatorIF> getSubjectIdentifiers() {
+    return (Collection<LocatorIF>) loadCollectionField(Topic.LF_indicators);
   }
 
   public void addSubjectIdentifier(LocatorIF subject_identifier) throws ConstraintViolationException {
@@ -83,8 +82,8 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     throw new ReadOnlyException();
   }
   
-  public Collection getTopicNames() {
-    return loadCollectionField(Topic.LF_names);
+  public Collection<TopicNameIF> getTopicNames() {
+    return (Collection<TopicNameIF>) loadCollectionField(Topic.LF_names);
   }
   
   void addTopicName(TopicNameIF name) {
@@ -95,8 +94,8 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     throw new ReadOnlyException();
   }
   
-  public Collection getOccurrences() {
-    return loadCollectionField(Topic.LF_occurrences);
+  public Collection<OccurrenceIF> getOccurrences() {
+    return (Collection<OccurrenceIF>) loadCollectionField(Topic.LF_occurrences);
   }
   
   void addOccurrence(OccurrenceIF occurrence) {
@@ -107,11 +106,11 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     throw new ReadOnlyException();
   }
   
-  public Collection getRoles() {
-    return loadCollectionField(Topic.LF_roles);
+  public Collection<AssociationRoleIF> getRoles() {
+    return (Collection<AssociationRoleIF>) loadCollectionField(Topic.LF_roles);
   }
   
-  public Collection getRolesByType(TopicIF roletype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     // lookup roles by type
     if (roletype == null) {
       ReadOnlyTopicMap tm = (ReadOnlyTopicMap)getTopicMap();

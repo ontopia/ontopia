@@ -1,6 +1,4 @@
 
-// $Id: LookupIndexIF.java,v 1.7 2007/09/10 07:16:28 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 /**
@@ -8,13 +6,12 @@ package net.ontopia.utils;
  * look up information, but which can do no more. A simplified version
  * of the Map interface, used for lookup.
  */
+public interface LookupIndexIF<K, E> {
 
-public interface LookupIndexIF {
+  public E get(K key);
 
-  public Object get(Object key);
+  public E put(K key, E value);
 
-  public Object put(Object key, Object value);
-
-  public Object remove(Object key);
+  public E remove(K key);
   
 }

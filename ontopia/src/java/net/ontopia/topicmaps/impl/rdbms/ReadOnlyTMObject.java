@@ -16,15 +16,14 @@ import org.slf4j.LoggerFactory;
 /**
  * INTERNAL: 
  */
-
 public abstract class ReadOnlyTMObject extends AbstractROPersistent implements TMObjectIF {
 
   public ReadOnlyTMObject() {
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   /**
    * INTERNAL: Returns the token that can be used to indicate the
@@ -37,9 +36,9 @@ public abstract class ReadOnlyTMObject extends AbstractROPersistent implements T
     return ((Long)id.getKey(0)).longValue();
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public abstract String getObjectId();
 
@@ -56,8 +55,8 @@ public abstract class ReadOnlyTMObject extends AbstractROPersistent implements T
     }
   }
 
-  public Collection getItemIdentifiers() {
-    return loadCollectionField(TMObject.LF_sources);
+  public Collection<LocatorIF> getItemIdentifiers() {
+    return (Collection<LocatorIF>) loadCollectionField(TMObject.LF_sources);
   }
 
   public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {

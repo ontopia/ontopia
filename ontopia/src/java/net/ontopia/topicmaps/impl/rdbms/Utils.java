@@ -42,7 +42,8 @@ public class Utils {
   /**
    * INTERNAL: Helper function that clears or deletes a topic map.
    */
-  private static void truncateTopicMap(TopicMapIF topicmap, boolean clear_only) throws SQLException {
+  private static void truncateTopicMap(TopicMapIF topicmap, boolean clear_only)
+    throws SQLException {
     RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
     // Get database connection
     Connection conn = store.getConnection();

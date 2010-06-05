@@ -16,15 +16,15 @@ import org.slf4j.LoggerFactory;
 /**
  * INTERNAL: 
  */
-
-public abstract class TMObject extends AbstractRWPersistent implements TMObjectIF {
+public abstract class TMObject extends AbstractRWPersistent
+  implements TMObjectIF {
 
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(TMObject.class.getName());
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Field declarations
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   // Implementation specific field indexes
   static final int LF_sources = 0;
@@ -32,9 +32,9 @@ public abstract class TMObject extends AbstractRWPersistent implements TMObjectI
   
   // static String[] fields; // Defined in concrete class
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   static String CLASS_INDICATOR;
 
@@ -48,9 +48,9 @@ public abstract class TMObject extends AbstractRWPersistent implements TMObjectI
     txn.assignIdentity(this);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   /**
    * INTERNAL: Returns the token that can be used to indicate the
@@ -81,9 +81,9 @@ public abstract class TMObject extends AbstractRWPersistent implements TMObjectI
     return ((Long)id.getKey(0)).longValue();
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public abstract String getObjectId();
 
@@ -100,17 +100,20 @@ public abstract class TMObject extends AbstractRWPersistent implements TMObjectI
     }
   }
 
-  public Collection getItemIdentifiers() {
-    return loadCollectionField(LF_sources);
+  public Collection<LocatorIF> getItemIdentifiers() {
+    return (Collection<LocatorIF>) loadCollectionField(LF_sources);
   }
 
-  public void addItemIdentifier(LocatorIF source_locator) throws ConstraintViolationException {
-    if (source_locator == null) throw new NullPointerException("null is not a valid argument.");
+  public void addItemIdentifier(LocatorIF source_locator)
+    throws ConstraintViolationException {
+    if (source_locator == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     if (getTopicMap() == null)
       throw new ConstraintViolationException("Cannot modify source locators when object isn't attached to a topic map.");
 
-    // Check to see if the source locator is already a source locator of this topic.
+    // Check to see if the source locator is already a source locator
+    // of this topic.    
     Collection sources = loadCollectionField(LF_sources);
     if (sources.contains(source_locator)) return;    
 
@@ -132,10 +135,12 @@ public abstract class TMObject extends AbstractRWPersistent implements TMObjectI
   }
 
   public void removeItemIdentifier(LocatorIF source_locator) {
-    if (source_locator == null) throw new NullPointerException("null is not a valid argument.");
+    if (source_locator == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     if (getTopicMap() == null)
-      throw new ConstraintViolationException("Cannot modify source locators when object isn't attached to a topic map.");
+      throw new ConstraintViolationException("Cannot modify source locators " +
+                                 "when object isn't attached to a topic map.");
     
     // Check to see if source locator is a source locator of this topic.
     Collection sources = loadCollectionField(LF_sources);
@@ -154,9 +159,9 @@ public abstract class TMObject extends AbstractRWPersistent implements TMObjectI
     valueRemoved(LF_sources, _source_locator, true);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Event handling
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   /**
    * INTERNAL: Fires an event, so that listeners can be informed about
@@ -173,20 +178,5 @@ public abstract class TMObject extends AbstractRWPersistent implements TMObjectI
     // System.out.println("->Object: " + this + " event: " + event + " new: " + new_value + " old:" + old_value);
     emanager.processEvent(this, event, new_value, old_value);
   }
-
-  // -----------------------------------------------------------------------------
-  // Misc
-  // -----------------------------------------------------------------------------
-
-  //! public boolean equals(Object object) {
-  //!   boolean result = (this == object);
-  //!   // NOTE: Following code is there for debugging purposes only
-  //!   if (!result && object != null && object instanceof TMObjectIF &&
-  //!       this.getObjectId().equals(((TMObjectIF)object).getObjectId())) {
-  //!     //! log.error("equals(Object): Different instances, but same object id: " + this + " and " + object);
-  //!     new OntopiaRuntimeException("equals(Object): Different instances, but same object id: " + this + " and " + object).printStackTrace();
-  //!   }
-  //!   return result;
-  //! }
   
 }

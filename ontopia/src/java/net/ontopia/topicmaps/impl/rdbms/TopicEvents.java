@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 /**
  * INTERNAL: Internal event listener class that handles topic events.<p>
  */
-
 public class TopicEvents implements EventListenerIF {
   
   // Define a logging category.

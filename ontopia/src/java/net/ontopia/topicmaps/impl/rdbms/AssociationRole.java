@@ -18,9 +18,9 @@ import net.ontopia.persistence.proxy.*;
 
 public class AssociationRole extends TMObject implements AssociationRoleIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Persistent property declarations
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   protected static final int LF_sources = 0;
   protected static final int LF_topicmap = 1;
@@ -45,9 +45,9 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     loadField(LF_association);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public static final String CLASS_INDICATOR = "R";
 
@@ -58,17 +58,17 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     super(txn);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return fields.length;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return CLASS_INDICATOR;
@@ -78,9 +78,9 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // AssociationRoleIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public AssociationIF getAssociation() {
     try {
@@ -128,8 +128,9 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   }
   
   public void setPlayer(TopicIF player) {
-		if (player == null) throw new NullPointerException("Association role player must not be null.");
-		CrossTopicMapException.check(player, this);
+    if (player == null)
+      throw new NullPointerException("Association role player must not be null.");
+    CrossTopicMapException.check(player, this);
     TopicIF oldplayer = getPlayer();
     
     // Notify listeners
@@ -151,14 +152,14 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   public void remove() {
     Association parent = (Association)getAssociation();
     if (parent != null) {
-			DeletionUtils.removeDependencies(this);
+      DeletionUtils.removeDependencies(this);
       parent.removeRole(this);
-		}
+    }
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TypedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
     try {
@@ -170,17 +171,18 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
   }
 
   public void setType(TopicIF type) {
-		if (type == null) throw new NullPointerException("Association role type must not be null.");
-		CrossTopicMapException.check(type, this);
+    if (type == null)
+      throw new NullPointerException("Association role type must not be null.");
+    CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("AssociationRoleIF.setType", type, getType());
     // Notify transaction
     valueChanged(LF_type, type, true);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
     try {
@@ -189,25 +191,25 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
       // association has been deleted by somebody else, so return null
       return null;
     }
-	}
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null)
+      CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null) oldReifier.setReified(null);
+    if (reifier != null) reifier.setReified(this);
+  }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.AssociationRole", (AssociationRoleIF)this);
   }
-
 }

@@ -5,7 +5,6 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -22,16 +21,16 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.CompactHashSet;
 
 /**
  * INTERNAL: The rdbms topic implementation.
  */
-
 public class Topic extends TMObject implements TopicIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Persistent property declarations
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   protected static final int LF_subjects = 2;
   protected static final int LF_indicators = 3;
@@ -40,7 +39,9 @@ public class Topic extends TMObject implements TopicIF {
   protected static final int LF_occurrences = 6;
   protected static final int LF_roles = 7; // Query field?
   protected static final int LF_reified = 8;
-  protected static final String[] fields = {"sources", "topicmap", "subjects", "indicators", "types", "names", "occurs", "roles", "reified"};
+  protected static final String[] fields = {"sources", "topicmap", "subjects",
+                                            "indicators", "types", "names",
+                                            "occurs", "roles", "reified"};
   
   public void detach() {
     detachCollectionField(LF_sources);
@@ -54,9 +55,9 @@ public class Topic extends TMObject implements TopicIF {
     detachCollectionField(LF_roles);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public static final String CLASS_INDICATOR = "T";
   
@@ -67,17 +68,17 @@ public class Topic extends TMObject implements TopicIF {
     super(txn);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public int _p_getFieldCount() {
     return fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public String getClassIndicator() {
     return CLASS_INDICATOR;
@@ -109,16 +110,18 @@ public class Topic extends TMObject implements TopicIF {
     }
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TopicIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  public Collection getSubjectLocators() {
-    return loadCollectionField(LF_subjects);
+  public Collection<LocatorIF> getSubjectLocators() {
+    return (Collection<LocatorIF>) loadCollectionField(LF_subjects);
   }
 
-  public void addSubjectLocator(LocatorIF subject_locator) throws ConstraintViolationException {
-    if (subject_locator == null) throw new NullPointerException("null is not a valid argument.");
+  public void addSubjectLocator(LocatorIF subject_locator)
+    throws ConstraintViolationException {
+    if (subject_locator == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
     if (tm == null)
@@ -135,9 +138,9 @@ public class Topic extends TMObject implements TopicIF {
     fireEvent("TopicIF.addSubjectLocator", subject_locator, null);    
     // Notify transaction
     valueAdded(LF_subjects, subject_locator, true);
-	}
+  }
 
-	public void removeSubjectLocator(LocatorIF subject_locator) {
+  public void removeSubjectLocator(LocatorIF subject_locator) {
     if (subject_locator == null) throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
@@ -155,13 +158,14 @@ public class Topic extends TMObject implements TopicIF {
     fireEvent("TopicIF.removeSubjectLocator", null, subject_locator);    
     // Notify transaction
     valueRemoved(LF_subjects, subject_locator, true);
-	}
-
-  public Collection getSubjectIdentifiers() {
-    return loadCollectionField(LF_indicators);
   }
 
-  public void addSubjectIdentifier(LocatorIF subject_indicator) throws ConstraintViolationException {
+  public Collection<LocatorIF> getSubjectIdentifiers() {
+    return (Collection<LocatorIF>) loadCollectionField(LF_indicators);
+  }
+
+  public void addSubjectIdentifier(LocatorIF subject_indicator)
+    throws ConstraintViolationException {
     if (subject_indicator == null) throw new NullPointerException("null is not a valid argument.");
     // Notify topic map
     TopicMap tm = (TopicMap)getTopicMap();
@@ -201,16 +205,18 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_indicators, subject_indicator, true);
   }
   
-  public Collection getTopicNames() {
-    return loadCollectionField(LF_names);
+  public Collection<TopicNameIF> getTopicNames() {
+    return (Collection<TopicNameIF>) loadCollectionField(LF_names);
   }
   
   void addTopicName(TopicNameIF name) {
-    if (name == null) throw new NullPointerException("null is not a valid argument.");
+    if (name == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Check to see if name is already a member of this topic
     if (name.getTopic() == this) return;
     // Check if used elsewhere.
-    if (name.getTopic() != null) throw new ConstraintViolationException("Moving objects is not allowed.");
+    if (name.getTopic() != null)
+      throw new ConstraintViolationException("Moving objects is not allowed.");
     
     // Notify listeners
     fireEvent("TopicIF.addTopicName", name, null);    
@@ -221,7 +227,8 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   void removeTopicName(TopicNameIF name) {
-    if (name == null) throw new NullPointerException("null is not a valid argument.");
+    if (name == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Check to see if name is not a member of this topic
     if (name.getTopic() != this) return;
     
@@ -233,16 +240,19 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_names, name, false);
   }
   
-  public Collection getOccurrences() {
-    return loadCollectionField(LF_occurrences);
+  public Collection<OccurrenceIF> getOccurrences() {
+    return (Collection<OccurrenceIF>) loadCollectionField(LF_occurrences);
   }
   
   void addOccurrence(OccurrenceIF occurrence) {
-    if (occurrence == null) throw new NullPointerException("null is not a valid argument.");
+    if (occurrence == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Check to see if occurrence is already a member of this topic
-    if (occurrence.getTopic() == this) return;
+    if (occurrence.getTopic() == this)
+      return;
     // Check if used elsewhere.
-    if (occurrence.getTopic() != null) throw new ConstraintViolationException("Moving objects is not allowed.");
+    if (occurrence.getTopic() != null)
+      throw new ConstraintViolationException("Moving objects is not allowed.");
     
     // Notify listeners
     fireEvent("TopicIF.addOccurrence", occurrence, null);    
@@ -253,7 +263,8 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   void removeOccurrence(OccurrenceIF occurrence) {
-    if (occurrence == null) throw new NullPointerException("null is not a valid argument.");
+    if (occurrence == null)
+      throw new NullPointerException("null is not a valid argument.");
     // Check to see if occurrence is not a member of this topic
     if (occurrence.getTopic() != this) return;
     
@@ -265,27 +276,32 @@ public class Topic extends TMObject implements TopicIF {
     valueRemoved(LF_occurrences, occurrence, false);
   }
   
-  public Collection getRoles() {
-    return loadCollectionField(LF_roles);
+  public Collection<AssociationRoleIF> getRoles() {
+    return (Collection<AssociationRoleIF>) loadCollectionField(LF_roles);
   }
   
-  public Collection getRolesByType(TopicIF roletype) {
-		if (roletype == null) throw new NullPointerException("Role type cannot be null.");
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
+    if (roletype == null)
+      throw new NullPointerException("Role type cannot be null.");
     // if roles already loaded filter by role type
     if (isLoaded(LF_roles)) {
-      Collection roles = (Collection)getValue(LF_roles);
-      if (roles.isEmpty()) return Collections.EMPTY_SET;
+      Collection<AssociationRoleIF> roles = (Collection<AssociationRoleIF>)
+        getValue(LF_roles);
+      if (roles.isEmpty())
+        return (Collection<AssociationRoleIF>) Collections.EMPTY_SET;
       
-      Collection result = new HashSet();
-      Iterator iter = roles.iterator();
-      while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+      Collection<AssociationRoleIF> result =
+        new CompactHashSet<AssociationRoleIF>();
+      for (AssociationRoleIF role : roles) {
         if (role.getType() == roletype)
           result.add(role);
       }
       return result;
     } else {
       // lookup roles by type
+      // FIXME: is it possible to get rid of this if statement? looks like
+      // the two branches are doing the same thing. if not possible, add
+      // a comment explaining why not
       if (roletype == null) {
         TopicMap tm = (TopicMap)getTopicMap();
         if (tm == null)
@@ -293,24 +309,28 @@ public class Topic extends TMObject implements TopicIF {
         return tm.getRolesByType(this, roletype);
         
       } else {
-        TopicMap tm = (TopicMap)roletype.getTopicMap();
+        TopicMap tm = (TopicMap) roletype.getTopicMap();
         return tm.getRolesByType(this, roletype);
       }
     }
   }
   
-  public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type) {
-		if (roletype == null) throw new NullPointerException("Role type cannot be null.");
-		if (assoc_type == null) throw new NullPointerException("Association type cannot be null.");
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype,
+                                                      TopicIF assoc_type) {
+    if (roletype == null)
+      throw new NullPointerException("Role type cannot be null.");
+    if (assoc_type == null)
+      throw new NullPointerException("Association type cannot be null.");
     // if roles already loaded filter by role type
     if (isLoaded(LF_roles)) {
-      Collection roles = (Collection)getValue(LF_roles);
-      if (roles.isEmpty()) return Collections.EMPTY_SET;
+      Collection<AssociationRoleIF> roles = (Collection<AssociationRoleIF>)
+        getValue(LF_roles);
+      if (roles.isEmpty())
+        return (Collection<AssociationRoleIF>) Collections.EMPTY_SET;
       
-      Collection result = new HashSet();
-      Iterator iter = roles.iterator();
-      while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+      Collection<AssociationRoleIF> result =
+        new CompactHashSet<AssociationRoleIF>();
+      for (AssociationRoleIF role : roles) {
         if (role.getType() == roletype) {
           AssociationIF assoc = role.getAssociation();
           if (assoc != null && assoc.getType() == assoc_type)
@@ -321,7 +341,7 @@ public class Topic extends TMObject implements TopicIF {
     } else {
       // lookup roles by type
       if (roletype == null) {
-        TopicMap tm = (TopicMap)getTopicMap();
+        TopicMap tm = (TopicMap) getTopicMap();
         if (tm == null)
           throw new ConstraintViolationException("Cannot retrieve roles by type when topic isn't attached to a topic map.");
         return tm.getRolesByType(this, roletype, assoc_type);
@@ -334,7 +354,7 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   public void merge(TopicIF topic) {
-		CrossTopicMapException.check(topic, this);
+    CrossTopicMapException.check(topic, this);
     net.ontopia.topicmaps.utils.MergeUtils.mergeInto(this, topic);
   } 
   
@@ -362,13 +382,14 @@ public class Topic extends TMObject implements TopicIF {
       topicmap.removeTopic(this);
   }
   
-  public Collection getTypes() {
-    return loadCollectionField(LF_types);
+  public Collection<TopicIF> getTypes() {
+    return (Collection<TopicIF>) loadCollectionField(LF_types);
   }
   
   public void addType(TopicIF type) {
-    if (type == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(type, this);    
+    if (type == null)
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(type, this);    
     // Notify listeners
     fireEvent("TopicIF.addType", type, null);
     // Notify transaction
@@ -376,34 +397,36 @@ public class Topic extends TMObject implements TopicIF {
   }
   
   public void removeType(TopicIF type) {
-    if (type == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(type, this);    
+    if (type == null)
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(type, this);    
     // Notify listeners
     fireEvent("TopicIF.removeType", null, type);
     // Notify transaction
     valueRemoved(LF_types, type, true);
   }
 
-	public ReifiableIF getReified() {
-		String reifiedId = (String)loadField(Topic.LF_reified);
-		if (reifiedId == null) return null;
-		return (ReifiableIF)getTopicMap().getObjectById(reifiedId);
-	}
+  public ReifiableIF getReified() {
+    String reifiedId = (String) loadField(Topic.LF_reified);
+    if (reifiedId == null)
+      return null;
+    return (ReifiableIF) getTopicMap().getObjectById(reifiedId);
+  }
 
-	void setReified(ReifiableIF reified) {
-		ReifiableIF oldReified = getReified();
-		if (ObjectUtils.different(oldReified, reified)) {
-			String reifiedId = (reified == null ? null : reified.getObjectId());
-			valueChanged(LF_reified, reifiedId, true);
-		}
-	}
+  void setReified(ReifiableIF reified) {
+    ReifiableIF oldReified = getReified();
+    if (ObjectUtils.different(oldReified, reified)) {
+      String reifiedId = (reified == null ? null : reified.getObjectId());
+      valueChanged(LF_reified, reifiedId, true);
+    }
+  }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public String toString() {
-    return ObjectStrings.toString("rdbms.Topic", (TopicIF)this);
+    return ObjectStrings.toString("rdbms.Topic", (TopicIF) this);
   }
   
 }

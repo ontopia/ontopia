@@ -14,9 +14,7 @@ import java.util.NoSuchElementException;
  * is stored by this instance except for the current TransactionIF and
  * the wrapped identities collection.
  */
-
 public class IdentityCollectionWrapper implements Collection {
-
   protected TransactionIF txn;
   protected Collection other;
 

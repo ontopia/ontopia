@@ -1,4 +1,3 @@
-// $Id: RDBMSIndex.java,v 1.3 2008/06/11 17:14:48 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.impl.rdbms.index;
 
@@ -11,9 +10,7 @@ import net.ontopia.topicmaps.impl.utils.AbstractIndex;
 /**
  * INTERNAL: An abstract super class used by the rdbms indexes.
  */
-
 public abstract class RDBMSIndex extends AbstractIndex implements IndexIF {
-
   IndexManagerIF imanager;
   RDBMSTopicMapTransaction transaction;
   TopicMapIF topicmap;
@@ -27,9 +24,9 @@ public abstract class RDBMSIndex extends AbstractIndex implements IndexIF {
     return this;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Query
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   TopicMapIF getTopicMap() {
     return transaction.getTopicMap();

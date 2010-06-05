@@ -259,7 +259,6 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
       // Commit and close transaction
       commit();
       deleted = true;
-
     } catch (java.sql.SQLException e) {
       throw new OntopiaRuntimeException("Could not delete topicmap. Transaction has been rolled back.", e);
     } finally {
@@ -288,7 +287,6 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
   }
 
   public void close(boolean returnStore) {
-
     if (returnStore) {
       // return store
       if (reference != null) {
@@ -374,7 +372,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
    *
    * @since 2.2.1
    */
-  public void writeReport(String filename, boolean dumpCaches) throws java.io.IOException {
+  public void writeReport(String filename, boolean dumpCaches) throws IOException {
     if (transaction != null && transaction.isActive()) {
       java.io.FileWriter out = new java.io.FileWriter(filename);
       try {
@@ -392,7 +390,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
    *
    * @since 2.2.1
    */
-  public void writeReport(java.io.Writer out, boolean dumpCaches) throws java.io.IOException {
+  public void writeReport(java.io.Writer out, boolean dumpCaches) throws IOException {
     if (transaction != null && transaction.isActive()) {
       //! RDBMSStorage storage = (RDBMSStorage)transaction.getTransaction().getStorageAccess().getStorage();
       if (storage != null) {
@@ -409,16 +407,16 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
    * @since 3.0
    */
   public void writeIdentityMap(java.io.Writer out, boolean dump)
-    throws java.io.IOException {
+    throws IOException {
     if (transaction != null && transaction.isActive()) {
       AbstractTransaction txn = (AbstractTransaction)transaction.getTransaction();
       txn.writeIdentityMap(out, dump);
     }
   }
     
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Prefetch objects by object id
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public boolean prefetchObjectsById(Collection object_ids) {
     TransactionIF txn = transaction.getTransaction();
@@ -501,9 +499,9 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     }
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Prefetching
-  // ----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   protected static final Class[] types = new Class[] { Association.class, AssociationRole.class, TopicName.class, Occurrence.class, Topic.class, TopicMap.class, VariantName.class };
 
@@ -557,18 +555,18 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
     return true;
   }
     
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Prefetch: roles by type and association type
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public void prefetchRolesByType(Collection players, 
                                   TopicIF rtype, TopicIF atype) {
     transaction.prefetchRolesByType(players, rtype, atype);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public long getLongId() {
     return transaction.getActualId();

@@ -15,9 +15,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * wrapper class is purely used to make it possible to use arrays as
  * map keys.<p>
  */
-
 public class ParameterArray implements Externalizable {
-  
   protected Object[] params;
   
   public ParameterArray() {
@@ -63,9 +61,9 @@ public class ParameterArray implements Externalizable {
     return true;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Externalization
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public void writeExternal(ObjectOutput out) throws IOException {
     out.writeObject(params);
@@ -83,5 +81,4 @@ public class ParameterArray implements Externalizable {
       throw new OntopiaRuntimeException(e);
     }
   }
-
 }

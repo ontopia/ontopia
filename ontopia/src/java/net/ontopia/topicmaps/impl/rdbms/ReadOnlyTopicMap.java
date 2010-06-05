@@ -38,9 +38,9 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   protected transient RDBMSTopicMapTransaction transaction;  
 
@@ -69,17 +69,17 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     throw new ReadOnlyException();
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return TopicMap.fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return TopicMap.CLASS_INDICATOR;
@@ -93,9 +93,9 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     return this;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TopicMapIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicMapStoreIF getStore() {
     return transaction.getStore();
@@ -121,9 +121,7 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     this.transaction = transaction;
   }
   
-  public Collection getTopics() {
-    //! return (Collection)executeQuery("TopicMapIF.getTopics", new Object[] { getTopicMap() });
-
+  public Collection<TopicIF> getTopics() {
     Object[] params = new Object[] { getTopicMap() };
     return new QueryCollection(txn, "TopicMap.getTopics_size", params,
                                "TopicMap.getTopics_iterator", params);
@@ -144,11 +142,9 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
   }
   
   public Collection getAssociations() {
-    //! return (Collection)executeQuery("TopicMapIF.getAssociations", new Object[] { getTopicMap() });
     Object[] params = new Object[] { getTopicMap() };
     return new QueryCollection(txn, "TopicMap.getAssociations_size", params,
                                "TopicMap.getAssociations_iterator", params);
-    
   }
 
   /**
@@ -233,17 +229,17 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     throw new ReadOnlyException();    
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnlyTopicMap", (TopicMapIF)this);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Subject identity cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     return transaction.getObjectByItemIdentifier(locator);
@@ -257,33 +253,33 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
     return transaction.getTopicBySubjectIdentifier(locator);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Role type cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public Collection getRolesByType(TopicIF player, TopicIF rtype) {
     return transaction.getRolesByType(player, rtype);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Role type and association type cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
 
   public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return transaction.getRolesByType(player, rtype, atype);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return (TopicIF)loadField(TopicMap.LF_reifier);
-	}
+    return (TopicIF)loadField(TopicMap.LF_reifier);
+  }
   
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
-	}
+  }
   
 }

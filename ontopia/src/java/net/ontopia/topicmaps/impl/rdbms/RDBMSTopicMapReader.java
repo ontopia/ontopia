@@ -12,9 +12,7 @@ import net.ontopia.topicmaps.core.*;
  *
  * @since 1.2.5
  */
-
 public class RDBMSTopicMapReader implements TopicMapReaderIF {
-
   protected String propfile;
   protected Map properties;
   protected long topicmap_id;
@@ -42,8 +40,7 @@ public class RDBMSTopicMapReader implements TopicMapReaderIF {
       return new RDBMSTopicMapStore(topicmap_id).getTopicMap();
   }
 
-  public Collection readAll() throws java.io.IOException {
-    return Collections.singleton(read());
-  }
-        
+  public Collection<TopicMapIF> readAll() throws java.io.IOException {
+    return (Collection<TopicMapIF>) Collections.singleton(read());
+  }        
 }

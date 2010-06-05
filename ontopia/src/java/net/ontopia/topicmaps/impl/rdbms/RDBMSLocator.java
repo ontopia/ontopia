@@ -16,7 +16,6 @@ import net.ontopia.infoset.impl.basic.URILocator;
  */
 
 public class RDBMSLocator extends AbstractLocator implements Externalizable {
-
   protected String address;
 
   public RDBMSLocator() {
@@ -109,6 +108,5 @@ public class RDBMSLocator extends AbstractLocator implements Externalizable {
 
   public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
     address = in.readUTF();
-  }
-  
+  }  
 }

@@ -18,9 +18,9 @@ import java.lang.ref.ReferenceQueue;
  * We simplify a little by assuming that null keys do not occur in
  * put() and remove().
  */
-public class SoftHashMapIndex implements LookupIndexIF {
+public class SoftHashMapIndex<K, E> implements LookupIndexIF<K, E> {
   private ReferenceQueue queue;
-  public SoftEntry[] entries;
+  public SoftEntry<K, E>[] entries;
   private int freecells; // number of free cells in entries array
   private int operations; // used to trigger processQueue every MAX_OPS
 
@@ -35,7 +35,7 @@ public class SoftHashMapIndex implements LookupIndexIF {
     freecells = INITIAL_SIZE;
   }
 
-  public Object get(Object key) {
+  public E get(K key) {
     if (++operations % MAX_OPS == 0)
       processQueue();
     
@@ -69,7 +69,7 @@ public class SoftHashMapIndex implements LookupIndexIF {
   // same as get(Object), but this method returns the key object. the
   // method is used by the rdbms o/r mapper for interning of identity
   // objects.
-  public Object getKey(Object key) {
+  public K getKey(K key) {
     if (++operations % MAX_OPS == 0)
       processQueue();
     
@@ -101,7 +101,7 @@ public class SoftHashMapIndex implements LookupIndexIF {
   }
 
   // doesn't support null!
-  public Object put(Object key, Object value) {
+  public E put(K key, E value) {
     if (++operations % MAX_OPS == 0)
       processQueue();
     
@@ -144,14 +144,14 @@ public class SoftHashMapIndex implements LookupIndexIF {
       }
       return null;
     } else { // was there already 
-      Object oldvalue = entries[index].value;
+      E oldvalue = entries[index].value;
       entries[index].value = value;
       return oldvalue;
     }
   }
 
   // doesn't support null!
-  public Object remove(Object key) {
+  public E remove(K key) {
     if (++operations % MAX_OPS == 0)
       processQueue();
     
@@ -173,7 +173,7 @@ public class SoftHashMapIndex implements LookupIndexIF {
     // we found the right position, now do the removal
     if (entries[index] != null) {
       // we found the object
-      Object value = entries[index].value;
+      E value = entries[index].value;
       entries[index] = DELETED;
       return value;
     } else
@@ -190,7 +190,7 @@ public class SoftHashMapIndex implements LookupIndexIF {
     operations = 0;
   }
 
-  private void removeSoftEntry(SoftEntry entry) {
+  private void removeSoftEntry(SoftEntry<K, E> entry) {
     // in this case the key in the entry will have gone to null
     // so we have to use entry identity to find the right object
     
@@ -253,7 +253,7 @@ public class SoftHashMapIndex implements LookupIndexIF {
     processQueue();
     int size = 0;
     for (int ix = 0; ix < entries.length; ix++) {
-      SoftEntry o = entries[ix];
+      SoftEntry<K, E> o = entries[ix];
       if (o != null && o != DELETED)
         size++;
     }
@@ -280,26 +280,26 @@ public class SoftHashMapIndex implements LookupIndexIF {
 
   // --- SoftEntry
 
-  public static class SoftEntry extends SoftReference {
+  public static class SoftEntry<K, E> extends SoftReference<K> {
     public int keyhash; // hashcode of key
-    public Object value; // the value the key is bound to
+    public E value; // the value the key is bound to
 
     // only used for DELETED object
     public SoftEntry() {
       super(null);
     }
     
-    public SoftEntry(Object key, Object value, ReferenceQueue queue) {
+    public SoftEntry(K key, E value, ReferenceQueue queue) {
       super(key, queue);
       this.keyhash = key.hashCode();
       this.value = value;
     }
 
-    public Object getKey() {
+    public K getKey() {
       return this.get();
     }
 
-    public Object getValue() {
+    public E getValue() {
       return this.value;
     }
     

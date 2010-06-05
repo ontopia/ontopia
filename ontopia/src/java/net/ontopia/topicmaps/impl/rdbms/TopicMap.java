@@ -20,6 +20,7 @@ import net.ontopia.persistence.proxy.RDBMSAccess;
 import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.NotRemovableException;
@@ -39,9 +40,9 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public class TopicMap extends TMObject implements TopicMapIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Persistent property declarations
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   protected static final int LF_sources = 0;
   protected static final int LF_title = 1;
@@ -56,9 +57,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
     detachField(LF_reifier);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public static final String CLASS_INDICATOR = "M";
 
@@ -83,8 +84,6 @@ public class TopicMap extends TMObject implements TopicMapIF {
 
   public void setBaseAddress(LocatorIF baseAddress) {
     String base_address = (baseAddress == null ? null : baseAddress.getAddress());
-    // Notify listeners
-    //! fireEvent("TopicMapIF.setBaseAddress", base_address, loadField(LF_base_address));
     // Notify transaction
     valueChanged(LF_base_address, base_address, true);
   }
@@ -111,17 +110,17 @@ public class TopicMap extends TMObject implements TopicMapIF {
     valueChanged(LF_comments, comments, true);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return CLASS_INDICATOR;
@@ -139,9 +138,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
     // Shouldn't do anything here.
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TopicMapIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicMapStoreIF getStore() {
     return transaction.getStore();
@@ -167,12 +166,10 @@ public class TopicMap extends TMObject implements TopicMapIF {
     this.transaction = transaction;
   }
   
-  public Collection getTopics() {
-    //! return (Collection)executeQuery("TopicMapIF.getTopics", new Object[] { getTopicMap() });
-
+  public Collection<TopicIF> getTopics() {
     Object[] params = new Object[] { getTopicMap() };
-    return new QueryCollection(txn, "TopicMap.getTopics_size", params,
-                               "TopicMap.getTopics_iterator", params);
+    return new QueryCollection<TopicIF>(txn, "TopicMap.getTopics_size", params,
+                                        "TopicMap.getTopics_iterator", params);
   }
 
   /**
@@ -180,9 +177,11 @@ public class TopicMap extends TMObject implements TopicMapIF {
    */
   void addTopic(TopicIF topic) {
     // Check to see if topic is already a member of this topic map
-    if (topic.getTopicMap() == this) return;
+    if (topic.getTopicMap() == this)
+      return;
     // Check if used elsewhere.
-    if (topic.getTopicMap() != null) throw new ConstraintViolationException("Moving objects is not allowed.");
+    if (topic.getTopicMap() != null)
+      throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
     fireEvent("TopicMapIF.addTopic", topic, null);
     // Set topic map property
@@ -196,7 +195,8 @@ public class TopicMap extends TMObject implements TopicMapIF {
    */
   void removeTopic(TopicIF topic) {
     // Check to see if topic is not a member of this topic map
-    if (topic.getTopicMap() != this) return;
+    if (topic.getTopicMap() != this)
+      return;
 
     // Remove dependencies
     DeletionUtils.removeDependencies(topic);    
@@ -209,11 +209,11 @@ public class TopicMap extends TMObject implements TopicMapIF {
     ((Topic)topic).setTopicMap(null);
   }
   
-  public Collection getAssociations() {
-    //! return (Collection)executeQuery("TopicMapIF.getAssociations", new Object[] { getTopicMap() });
+  public Collection<AssociationIF> getAssociations() {
     Object[] params = new Object[] { getTopicMap() };
-    return new QueryCollection(txn, "TopicMap.getAssociations_size", params,
-                               "TopicMap.getAssociations_iterator", params);
+    return new QueryCollection<AssociationIF>
+      (txn, "TopicMap.getAssociations_size", params,
+       "TopicMap.getAssociations_iterator", params);
     
   }
 
@@ -222,9 +222,11 @@ public class TopicMap extends TMObject implements TopicMapIF {
    */
   void addAssociation(AssociationIF association) {
     // Check to see if association is already a member of this topic map
-    if (association.getTopicMap() == this) return;
+    if (association.getTopicMap() == this)
+      return;
     // Check if used elsewhere.
-    if (association.getTopicMap() != null) throw new ConstraintViolationException("Moving objects is not allowed.");
+    if (association.getTopicMap() != null)
+      throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
     fireEvent("TopicMapIF.addAssociation", association, null);    
     // Set topic map property
@@ -236,7 +238,8 @@ public class TopicMap extends TMObject implements TopicMapIF {
    */
   void removeAssociation(AssociationIF association) {
     // Check to see if association is not a member of this topic map
-    if (association.getTopicMap() != this) return;
+    if (association.getTopicMap() != this)
+      return;
     // Notify listeners
     fireEvent("TopicMapIF.removeAssociation", null, association);
     // Unset topic map property
@@ -244,7 +247,8 @@ public class TopicMap extends TMObject implements TopicMapIF {
   }
 
   public TMObjectIF getObjectById(String object_id) {
-    if (object_id == null) throw new NullPointerException("null is not a valid argument.");
+    if (object_id == null)
+      throw new NullPointerException("null is not a valid argument.");
 
     // Cut off the indicator character and lookup identity in the database.
     try {
@@ -315,9 +319,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
     DeletionUtils.clear(this);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Subject identity cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     return transaction.getObjectByItemIdentifier(locator);
@@ -331,26 +335,26 @@ public class TopicMap extends TMObject implements TopicMapIF {
     return transaction.getTopicBySubjectIdentifier(locator);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Role type cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  public Collection getRolesByType(TopicIF player, TopicIF rtype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype) {
     return transaction.getRolesByType(player, rtype);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Role type and association type cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
 
-  public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return transaction.getRolesByType(player, rtype, atype);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
     return (TopicIF)loadField(LF_reifier);
@@ -367,9 +371,9 @@ public class TopicMap extends TMObject implements TopicMapIF {
     if (reifier != null) reifier.setReified(this);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.TopicMap", (TopicMapIF)this);

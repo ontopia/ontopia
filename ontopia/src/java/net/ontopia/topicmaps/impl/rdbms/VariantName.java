@@ -17,9 +17,9 @@ import net.ontopia.persistence.proxy.*;
  */
 public class VariantName extends TMObject implements VariantNameIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Persistent property declarations
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   protected static final int LF_name = 2;
   protected static final int LF_scope = 3;
@@ -42,9 +42,9 @@ public class VariantName extends TMObject implements VariantNameIF {
     detachField(LF_value);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public static final String CLASS_INDICATOR = "N";
 
@@ -55,17 +55,17 @@ public class VariantName extends TMObject implements VariantNameIF {
     super(txn);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return CLASS_INDICATOR;
@@ -75,16 +75,16 @@ public class VariantName extends TMObject implements VariantNameIF {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TopicNameIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public void remove() {
     TopicName parent = (TopicName)getTopicName();
     if (parent != null) {
-			DeletionUtils.removeDependencies(this);
+      DeletionUtils.removeDependencies(this);
       parent.removeVariant(this);
-		}
+    }
   }
   
   public TopicIF getTopic() {
@@ -100,7 +100,6 @@ public class VariantName extends TMObject implements VariantNameIF {
   /**
    * INTERNAL: Set the name that the variant name belongs to. [parent]
    */
-
   void setTopicName(TopicNameIF name) {
     // Set parent topic map
     setTopicMap((name == null ? null : (TopicMap)name.getTopicMap()));
@@ -154,10 +153,12 @@ public class VariantName extends TMObject implements VariantNameIF {
   }
 
   public void setValue(String value, LocatorIF datatype) {
-		if (value == null) throw new NullPointerException("Variant value must not be null.");
-		if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
-		if (!"URI".equals(datatype.getNotation()))
-			throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    if (value == null)
+      throw new NullPointerException("Variant value must not be null.");
+    if (datatype == null)
+      throw new NullPointerException("Variant value datatype must not be null.");
+    if (!"URI".equals(datatype.getNotation()))
+      throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setValue(value, datatype, value.length(), value.hashCode());
   }
   
@@ -186,25 +187,29 @@ public class VariantName extends TMObject implements VariantNameIF {
   }
 
   public void setReader(Reader value, long length, LocatorIF datatype) {
-		if (value == null) throw new NullPointerException("Variant value must not be null.");
-		if (datatype == null) throw new NullPointerException("Variant value datatype must not be null.");
+    if (value == null)
+      throw new NullPointerException("Variant value must not be null.");
+    if (datatype == null)
+      throw new NullPointerException("Variant value datatype must not be null.");
     if (length < 0)
       throw new OntopiaRuntimeException("Length of reader is negative.");
-		if (!"URI".equals(datatype.getNotation()))
-			throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    if (!"URI".equals(datatype.getNotation()))
+      throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setValue(new OnDemandValue(new ContentReader(value, length)), datatype, length, length);
   }
 
   public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
+    if (!DataTypes.TYPE_URI.equals(getDataType()))
+      return null;
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
   
   public void setLocator(LocatorIF locator) {
-		if (locator == null) throw new NullPointerException("Variant locator must not be null.");
-		if (!"URI".equals(locator.getNotation()))
-			throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
+    if (locator == null)
+      throw new NullPointerException("Variant locator must not be null.");
+    if (!"URI".equals(locator.getNotation()))
+      throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
@@ -217,20 +222,22 @@ public class VariantName extends TMObject implements VariantNameIF {
       return len;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ScopedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  public Collection getScope() {
+  public Collection<TopicIF> getScope() {
     return loadCollectionField(LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
     _addTheme(theme, true);
   }
+  
   void _addTheme(TopicIF theme, boolean validate) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    if (theme == null)
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("VariantNameIF.addTheme", theme, null);
     // Notify transaction
@@ -240,9 +247,11 @@ public class VariantName extends TMObject implements VariantNameIF {
   public void removeTheme(TopicIF theme) {
     _removeTheme(theme, true);
   }
+  
   void _removeTheme(TopicIF theme, boolean validate) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    if (theme == null)
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("VariantNameIF.removeTheme", null, theme);
     // Notify transaction
@@ -256,28 +265,31 @@ public class VariantName extends TMObject implements VariantNameIF {
     }
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return (TopicIF)loadField(LF_reifier);
-	}
+    return (TopicIF)loadField(LF_reifier);
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null)
+      CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null)
+      oldReifier.setReified(null);
+    if (reifier != null)
+      reifier.setReified(this);
+  }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.VariantName", (VariantNameIF)this);

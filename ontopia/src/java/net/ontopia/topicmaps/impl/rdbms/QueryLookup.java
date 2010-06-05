@@ -17,9 +17,7 @@ import org.apache.commons.collections.map.LRUMap;
 /**
  * INTERNAL: Non-shared locator lookup index.
  */
-
 public class QueryLookup implements TransactionalLookupIndexIF {
-
   protected String qname;
   protected TransactionIF txn;
 

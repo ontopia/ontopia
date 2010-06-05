@@ -16,9 +16,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * data retrieval to QueryIFs. This class is very useful in cases
  * where the collection is extremely large.
  */
-
-public class QueryCollection extends AbstractCollection {
-
+public class QueryCollection<E> extends AbstractCollection<E> {
   protected TransactionIF txn;
   protected String query_size;
   protected String query_iterator;
@@ -35,11 +33,11 @@ public class QueryCollection extends AbstractCollection {
     this.params_iterator = params_iterator;
   }
 
-  public boolean add(Object o) {
+  public boolean add(E o) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean addAll(Collection c) {
+  public boolean addAll(Collection<? extends E> c) {
     throw new UnsupportedOperationException();
   }
   
@@ -61,11 +59,11 @@ public class QueryCollection extends AbstractCollection {
     return (size() == 0);
   }
   
-  public Iterator iterator() {
+  public Iterator<E> iterator() {
     QueryResultIF result = null;
     try {
       result = (QueryResultIF)txn.executeQuery(query_iterator, params_iterator);
-      return new QueryResultIterator(result);
+      return new QueryResultIterator<E>(result);
     } catch (Throwable e) {
       if (result != null) try { result.close(); } catch (Throwable t) {};
       if (e instanceof OntopiaRuntimeException) throw (OntopiaRuntimeException)e;
@@ -77,11 +75,11 @@ public class QueryCollection extends AbstractCollection {
     throw new UnsupportedOperationException();
   }
   
-  public boolean removeAll(Collection c) {
+  public boolean removeAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
   
-  public boolean retainAll(Collection c) {
+  public boolean retainAll(Collection<?> c) {
     throw new UnsupportedOperationException();
   }
   
@@ -109,9 +107,9 @@ public class QueryCollection extends AbstractCollection {
     return result.toArray();
   }
   
-  public Object[] toArray(Object a[]) {
-    List result = new ArrayList();
-    Iterator it = iterator();
+  public <T> T[] toArray(T a[]) {
+    List<E> result = new ArrayList<E>();
+    Iterator<E> it = iterator();
     while (it.hasNext()) {
       result.add(it.next());
     }

@@ -13,27 +13,26 @@ import net.ontopia.persistence.proxy.*;
 /**
  * INTERNAL: The read-only rdbms topic name implementation.
  */
-
 public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public ReadOnlyTopicName() {
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return TopicName.fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return TopicName.CLASS_INDICATOR;
@@ -43,9 +42,9 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
     return (id == null ? null : TopicName.CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // NameIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public TopicIF getTopic() {
     return (TopicIF)loadField(TopicName.LF_topic);
@@ -71,12 +70,12 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
     throw new ReadOnlyException();
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ScopedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  public Collection getScope() {
-    return loadCollectionField(TopicName.LF_scope);
+  public Collection<TopicIF> getScope() {
+    return (Collection<TopicIF>) loadCollectionField(TopicName.LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
@@ -87,9 +86,9 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
     throw new ReadOnlyException();
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TypedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
     return (TopicIF)loadField(TopicName.LF_type);
@@ -99,21 +98,21 @@ public class ReadOnlyTopicName extends ReadOnlyTMObject implements TopicNameIF {
     throw new ReadOnlyException();
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return (TopicIF)loadField(TopicName.LF_reifier);
-	}
+    return (TopicIF)loadField(TopicName.LF_reifier);
+  }
   
   public void setReifier(TopicIF reifier) {
     throw new ReadOnlyException();
-	}
+  }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.ReadOnlyTopicName", (TopicNameIF)this);

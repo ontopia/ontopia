@@ -20,9 +20,9 @@ import net.ontopia.utils.ObjectUtils;
 
 public class Occurrence extends TMObject implements OccurrenceIF {
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Persistent property declarations
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   protected static final int LF_topic = 2;
   protected static final int LF_scope = 3;
@@ -47,9 +47,9 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     detachField(LF_value);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Data members
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public static final String CLASS_INDICATOR = "O";
 
@@ -60,17 +60,17 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     super(txn);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // PersistentIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int _p_getFieldCount() {
     return fields.length;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TMObjectIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String getClassIndicator() {
     return CLASS_INDICATOR;
@@ -80,16 +80,16 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // OccurrenceIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public void remove() {
     Topic parent = (Topic)getTopic();
     if (parent != null) {
-			DeletionUtils.removeDependencies(this);
+      DeletionUtils.removeDependencies(this);
       parent.removeOccurrence(this);
-		}
+    }
   }
 
   public TopicIF getTopic() {
@@ -113,7 +113,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public LocatorIF getDataType() {
-    return (LocatorIF)loadField(LF_datatype);    
+    return (LocatorIF) loadField(LF_datatype);    
   }
 
   protected void setDataType(LocatorIF datatype) {
@@ -152,10 +152,12 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public void setValue(String value, LocatorIF datatype) {
-		if (value == null) throw new NullPointerException("Occurrence value must not be null.");
-		if (datatype == null) throw new NullPointerException("Occurrence value datatype must not be null.");
-		if (!"URI".equals(datatype.getNotation()))
-			throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    if (value == null)
+      throw new NullPointerException("Occurrence value must not be null.");
+    if (datatype == null)
+      throw new NullPointerException("Occurrence value datatype must not be null.");
+    if (!"URI".equals(datatype.getNotation()))
+      throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setValue(value, datatype, value.length(), value.hashCode());
   }
   
@@ -184,59 +186,29 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public void setReader(Reader value, long length, LocatorIF datatype) {
-		if (value == null) throw new NullPointerException("Occurrence value must not be null.");
-		if (datatype == null) throw new NullPointerException("Occurrence value datatype must not be null.");
+    if (value == null)
+      throw new NullPointerException("Occurrence value must not be null.");
+    if (datatype == null)
+      throw new NullPointerException("Occurrence value datatype must not be null.");
     if (length < 0)
       throw new OntopiaRuntimeException("Length of reader is negative.");
-		if (!"URI".equals(datatype.getNotation()))
-			throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
+    if (!"URI".equals(datatype.getNotation()))
+      throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setValue(new OnDemandValue(new ContentReader(value, length)), datatype, length, length);
   }
-  
-  //! public InputStream getInputStream() {
-  //!   Object value = loadField(LF_value);
-  //!   try {
-  //!     if (value instanceof char[])
-  //!       return new Base64.InputStream(new ReaderInputStream(new CharArrayReader((char[])value), "utf-8"), Base64.DECODE);
-  //!     else if (value instanceof Reader)
-  //!       return new Base64.InputStream(new ReaderInputStream((Reader)value, "utf-8"), Base64.DECODE);
-  //!     else if (value == null)
-  //!       return null;
-  //!   } catch (Exception e) {
-  //!     throw new OntopiaRuntimeException(e);
-  //!   }
-  //!   throw new OntopiaRuntimeException("Unsupported value: " + value);
-  //! }
-  
-  //! public void setInputStream(InputStream value, long length, LocatorIF datatype) {
-  //!   // NOTE: complain if length < 0
-  //!   if (length < 0)
-  //!     throw new OntopiaRuntimeException("Length of input stream is negative.");
-  //!   // NOTE: setLength(len * -1)
-  //!   try {
-  //!     setValue(new ContentReader(new InputStreamReader(new Base64.InputStream(value, Base64.ENCODE), "utf-8"), length), datatype, length * -1L, length);
-  //!   } catch (Exception e) {
-  //!     throw new OntopiaRuntimeException(e);
-  //!   }
-  //!   // NOTE: must flush
-  //! }
-  //! 
-  //! public boolean isBinary() {
-  //!   Integer length = (Integer)loadField(LF_length);
-  //!   int len = (length == null ? 0 : length.intValue());
-  //!   return len < 0;
-  //! }
 
   public LocatorIF getLocator() {
-    if (!DataTypes.TYPE_URI.equals(getDataType())) return null;
+    if (!DataTypes.TYPE_URI.equals(getDataType()))
+      return null;
     String value = getValue();
     return (value == null ? null : URILocator.create(value));
   }
   
   public void setLocator(LocatorIF locator) {
-		if (locator == null) throw new NullPointerException("Occurrence locator must not be null.");
-		if (!"URI".equals(locator.getNotation()))
-			throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
+    if (locator == null)
+      throw new NullPointerException("Occurrence locator must not be null.");
+    if (!"URI".equals(locator.getNotation()))
+      throw new ConstraintViolationException("Only locators with notation 'URI' are supported: " + locator);
     setValue(locator.getAddress(), DataTypes.TYPE_URI);
   }
 
@@ -249,17 +221,18 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       return len;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ScopedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public Collection getScope() {
     return loadCollectionField(LF_scope);
   }
 
   public void addTheme(TopicIF theme) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    if (theme == null)
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("OccurrenceIF.addTheme", theme, null);
     // Notify transaction
@@ -267,53 +240,58 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   }
 
   public void removeTheme(TopicIF theme) {
-    if (theme == null) throw new NullPointerException("null is not a valid argument.");
-		CrossTopicMapException.check(theme, this);
+    if (theme == null)
+      throw new NullPointerException("null is not a valid argument.");
+    CrossTopicMapException.check(theme, this);
     // Notify listeners
     fireEvent("OccurrenceIF.removeTheme", null, theme);
     // Notify transaction
     valueRemoved(LF_scope, theme, true);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // TypedIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
     return (TopicIF)loadField(LF_type);
   }
 
   public void setType(TopicIF type) {
-		if (type == null) throw new NullPointerException("Occurrence type must not be null.");
-		CrossTopicMapException.check(type, this);
+    if (type == null)
+      throw new NullPointerException("Occurrence type must not be null.");
+    CrossTopicMapException.check(type, this);
     // Notify listeners
     fireEvent("OccurrenceIF.setType", type, getType());
     // Notify transaction
     valueChanged(LF_type, type, true);
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // ReifiableIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return (TopicIF)loadField(LF_reifier);
-	}
+    return (TopicIF)loadField(LF_reifier);
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null)
+      CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic) _reifier;
+    Topic oldReifier = (Topic) getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null)
+      oldReifier.setReified(null);
+    if (reifier != null)
+      reifier.setReified(this);
+  }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Misc. methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public String toString() {
     return ObjectStrings.toString("rdbms.Occurrence", (OccurrenceIF)this);

@@ -39,8 +39,8 @@ import net.ontopia.utils.OntopiaUnsupportedException;
  * INTERNAL: The rdbms topic map transaction implementation.<p>
  */
 
-public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction implements EventManagerIF {
-
+public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
+  implements EventManagerIF {
   protected TransactionIF txn;
   protected boolean readonly; 
 
@@ -216,9 +216,9 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction implem
     return txn;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // EventManagerIF implementation
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public void addListener(EventListenerIF listener, String event) {
     // Adding itself causes infinite loops.
@@ -262,18 +262,18 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction implem
     }
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Prefetch: roles by type and association type
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public void prefetchRolesByType(Collection players, 
                                   TopicIF rtype, TopicIF atype) {
     this.rtatcache.prefetchRolesByType(players, rtype, atype);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Subject identity cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public TMObjectIF getObjectByItemIdentifier(LocatorIF locator) {
     if (locator == null) throw new NullPointerException("null is not a valid argument.");
@@ -296,17 +296,17 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction implem
     return sicache.getTopicBySubjectIdentifier(locator);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Role type cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public Collection getRolesByType(TopicIF player, TopicIF rtype) {
     return rtcache.getRolesByType(player, rtype);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Role type and association type cache
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
 
   public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
