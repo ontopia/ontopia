@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
  * PUBLIC: A topic map writer that can write topic maps out into the
  * interchange syntax defined by XTM 2.0.
  *
- * @since 4.0.0
+ * @since 5.1.0
  */
 public final class XTM20TopicMapWriter extends AbstractXTM2TopicMapWriter {
 
