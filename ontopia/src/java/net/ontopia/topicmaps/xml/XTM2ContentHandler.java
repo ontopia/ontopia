@@ -546,7 +546,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     if (topic == null) {
       // Does a topic with an item identifier equals to the provided sid exists?
       final TMObjectIF obj = topicmap.getObjectByItemIdentifier(sid);
-      if (obj != null && obj instanceof TopicIF) {
+      if (obj instanceof TopicIF) {
         topic = (TopicIF) obj;
       }
       else {
