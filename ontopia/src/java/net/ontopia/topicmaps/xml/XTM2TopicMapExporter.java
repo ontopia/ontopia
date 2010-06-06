@@ -35,13 +35,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributeListImpl;
 
 /**
- * INTERNAL: Exports topic maps to the XTM 2.0 interchange format.
+ * INTERNAL: Exports topic maps to the XTM 2.0 or 2.1 interchange format.
  */
 public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   protected boolean export_itemids = false;
   protected AttributeListImpl atts;
-  protected static final AttributeListImpl EMPTY_ATTR_LIST =
-    new AttributeListImpl();
+  protected static final AttributeListImpl EMPTY_ATTR_LIST = new AttributeListImpl();
+  private final boolean xtm21Mode;
   private static final LocatorIF XTM2_NAMETYPE;
 
   static {
@@ -55,6 +55,16 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   }
 
   public XTM2TopicMapExporter() {
+    this(false);
+  }
+
+  /**
+   * EXPERIMENTAL: XTM 2.0 or XTM 2.1 output.
+   *
+   * @param xtm21 {@code true} to enable XTM 2.1, otherwise XTM 2.0 will be written.
+   */
+  public XTM2TopicMapExporter(final boolean xtm21) {
+    this.xtm21Mode = xtm21;
     this.atts = new AttributeListImpl();
   }
 
@@ -80,9 +90,10 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     dh.startDocument();
 
     atts.addAttribute("xmlns", "CDATA", "http://www.topicmaps.org/xtm/");
-    atts.addAttribute("version", "CDATA", "2.0");
+    atts.addAttribute("version", "CDATA", xtm21Mode ? "2.1" : "2.0");
     addReifier(atts, tm);
     dh.startElement("topicMap", atts);
+    writeReifier(tm, dh);
     writeItemIdentities(tm, dh);
     
     Iterator it = filterCollection(tm.getTopics()).iterator();
@@ -101,8 +112,14 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   // --- INTERNAL
   
   private void write(TopicIF topic, DocumentHandler dh) throws SAXException {
+    final Collection<LocatorIF> iids = topic.getItemIdentifiers();
+    final Collection<LocatorIF> sids = topic.getSubjectIdentifiers();
+    final Collection<LocatorIF> slos = topic.getSubjectLocators();
+
     atts.clear();
-    atts.addAttribute("id", "CDATA", getElementId(topic));
+    if (!xtm21Mode || (iids.isEmpty() && sids.isEmpty() && slos.isEmpty())) {
+      atts.addAttribute("id", "CDATA", getElementId(topic));
+    }
     dh.startElement("topic", atts);
 
     write(topic.getItemIdentifiers(), "itemIdentity", dh);
@@ -132,6 +149,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     atts.clear();
     addReifier(atts, bn);
     dh.startElement("name", atts);
+    writeReifier(bn, dh);
     writeItemIdentities(bn, dh);
     writeType(bn, dh);
     writeScope(bn, dh);
@@ -153,6 +171,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     atts.clear();
     addReifier(atts, vn);
     dh.startElement("variant", atts);
+    writeReifier(vn, dh);
     writeItemIdentities(vn, dh);
     writeScope(vn, dh);
 
@@ -175,6 +194,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     atts.clear();
     addReifier(atts, occ);
     dh.startElement("occurrence", atts);
+    writeReifier(occ, dh);
     writeItemIdentities(occ, dh);
     writeType(occ, dh);
     writeScope(occ, dh);
@@ -203,6 +223,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     atts.clear();
     addReifier(atts, assoc);
     dh.startElement("association", atts);
+    writeReifier(assoc, dh);
     writeItemIdentities(assoc, dh);
     writeType(assoc, dh);
     writeScope(assoc, dh);
@@ -219,6 +240,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     atts.clear();
     addReifier(atts, role);
     dh.startElement("role", atts);
+    writeReifier(role, dh);
     writeItemIdentities(role, dh);
     writeType(role, dh);
     writeTopicRef(role.getPlayer(), dh);
@@ -232,11 +254,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     while (it.hasNext()) {
       LocatorIF loc = (LocatorIF) it.next();
       atts.clear();
-
       String uri = loc.getExternalForm();
-//       if (element.equals("itemIdentity") && loc.getAddress().startsWith(
-//                                                                         uri = loc.getExternalForm();
-      
       atts.addAttribute("href", "CDATA", uri);
       dh.startElement(element, atts);
       dh.endElement(element);
@@ -260,12 +278,51 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     dh.endElement("type");
   }
 
-  private void writeTopicRef(TopicIF topic, DocumentHandler dh)
+  private void writeReifier(final ReifiableIF reifiable, final DocumentHandler dh) throws SAXException {
+    if (!xtm21Mode // Reifier attribute was used already.
+          || reifiable.getReifier() == null) {
+      return; 
+    }
+    dh.startElement("reifier", EMPTY_ATTR_LIST);
+    writeTopicRef(reifiable.getReifier(), dh);
+    dh.endElement("reifier");
+  }
+
+  private void writeTopicRef(final TopicIF topic, final DocumentHandler dh)
     throws SAXException {
     atts.clear();
-    atts.addAttribute("href", "CDATA", "#" + getElementId(topic));
-    dh.startElement("topicRef", atts);
-    dh.endElement("topicRef");
+    if (!xtm21Mode) {
+      atts.addAttribute("href", "CDATA", "#" + getElementId(topic));
+      dh.startElement("topicRef", atts);
+      dh.endElement("topicRef");
+    }
+    else {
+      // XTM 2.1
+      // 1st try: Write subject identifier reference
+      Iterator<LocatorIF> iter = topic.getSubjectIdentifiers().iterator();
+      if (iter.hasNext()) {
+        atts.addAttribute("href", "CDATA", iter.next().getExternalForm());
+        dh.startElement("subjectIdentifierRef", atts);
+        dh.endElement("subjectIdentifierRef");
+      }
+      else {
+        iter = topic.getSubjectLocators().iterator();
+        // 2nd try: Write subject locator reference
+        if (iter.hasNext()) {
+          atts.addAttribute("href", "CDATA", iter.next().getExternalForm());
+          dh.startElement("subjectLocatorRef", atts);
+          dh.endElement("subjectLocatorRef");
+        }
+        else {
+          // 3rd: Neither sid nor slo found, write an item identifier or generate an id
+          iter = topic.getItemIdentifiers().iterator();
+          final String ref = iter.hasNext() ? iter.next().getExternalForm() : "#" + getElementId(topic);
+          atts.addAttribute("href", "CDATA", ref);
+          dh.startElement("topicRef", atts);
+          dh.endElement("topicRef");
+        }
+      }
+    }
   }
 
   private void writeScope(ScopedIF obj, DocumentHandler dh)
@@ -292,8 +349,10 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   }
 
   private void addReifier(AttributeListImpl atts, ReifiableIF reified) {
-    if (reified.getReifier() != null)
-      atts.addAttribute("reifier", "CDATA",
+    if (xtm21Mode || reified.getReifier() == null) {
+      return;
+    }
+    atts.addAttribute("reifier", "CDATA",
                         "#" + getElementId(reified.getReifier()));
   }
 
