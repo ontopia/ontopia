@@ -514,8 +514,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     else if (obj instanceof TopicIF) {
       return (TopicIF) obj;
     }
-    // Another TM construct with the item identifier ``itemid`` exists.
-    throw new InvalidTopicMapException("Another Topic Maps construct has already the item identifier " + itemid.getAddress());
+    throw new InvalidTopicMapException("Another Topic Maps construct " + obj + " has already the item identifier " + itemid.getAddress());
   }
 
   /**
