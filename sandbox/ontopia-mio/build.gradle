@@ -1,19 +1,15 @@
 /*
- * Gradle 0.9 build file.
+ * Gradle build file.
  * 
  * - Download Gradle from <http://www.gradle.org/>
- * - Execute gradle build
- * 
- * TODO:
- * - Zip/Tar
- * - Include snapshot repository into POM
- * - Use semagia-mio from Maven repository
- * 
+ * - Execute gradle
  */
 group = 'net.ontopia'
 version = '0.1.0'
 
 targetCompatibility = '1.5'
+
+defaultTasks 'clean', 'build'
 
 apply plugin: 'java'
 apply plugin: 'osgi'
@@ -30,7 +26,7 @@ repositories {
     mavenCentral()
     mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-repository'
     mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-snapshot-repository'
-    mavenRepo urls: 'http://repository.jboss.org/maven2'
+    mavenRepo urls: 'http://repository.jboss.org/maven2/'
     mavenRepo urls: 'http://www.tmapi.org/maven-repository/'
     mavenRepo urls: 'http://repository.semagia.com/snapshots/'
 }
@@ -40,7 +36,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.5.11'
     compile 'com.semagia.mio:mio-core:0.9.6-SNAPSHOT'
 
-    testCompile 'junit:junit:4.+'
+    testCompile 'junit:junit:4.8'
     testCompile 'com.semagia.mio:mio-core-tests:0.9.6-SNAPSHOT'
 }
 

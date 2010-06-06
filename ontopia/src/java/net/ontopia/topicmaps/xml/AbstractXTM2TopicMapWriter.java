@@ -12,15 +12,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapWriterIF;
-import net.ontopia.utils.DeciderIF;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.xml.PrettyPrinter;
-
-import org.xml.sax.DocumentHandler;
-import org.xml.sax.SAXException;
-
 /**
  * PUBLIC: A topic map writer that can write topic maps out into the
  * interchange syntax defined by XTM 2.0 or 2.1.
