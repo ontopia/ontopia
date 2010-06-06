@@ -23,9 +23,14 @@ import org.xml.sax.SAXException;
 
 /**
  * PUBLIC: A topic map writer that can write topic maps out as either
- * XTM 1.0 or 2.0. The default is XTM 1.0.
+ * XTM 1.0, 2.0 or 2.1. The default is XTM 1.0.
  */
 public class XTMTopicMapWriter implements TopicMapWriterIF {
+
+  /**
+   * EXPERIMENTAL: Constants for XML Topic Maps versions
+   */
+  public static enum Version {XTM_1_0, XTM_2_0, XTM_2_1};
 
   protected DocumentHandler out;
   
@@ -36,10 +41,10 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
 
   protected boolean export_srclocs = false;
   protected boolean add_ids = false;
-  protected int xtm_version;
+  private Version xtm_version;
 
-  private static int DEFAULT_XTM_VERSION = XTMSnifferContentHandler.VERSION_XTM10;
-  
+  private static Version DEFAULT_XTM_VERSION = Version.XTM_1_0;
+
   /**
    * PUBLIC: Creates a topic map writer bound to the file given in the
    * arguments.  The topic map will be written out in the UTF-8
@@ -136,28 +141,43 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
    * PUBLIC: Set XTM version to use on export.
    * @since 4.0.0
    */
-  public void setVersion(int version) {
+  public void setVersion(final int version) {
+    if (version == 1) {
+      setVersion(Version.XTM_1_0);
+    }
+    else if (version == 2) {
+      setVersion(Version.XTM_2_0);
+    }
+    else {
+      throw new IllegalArgumentException("Unknown XTM version: " + version);
+    }
+  }
+
+  /**
+   * EXPERIMENTAL: Set XTM version to use on export.
+   * @since 5.1.0
+   */
+  public void setVersion(final Version version) {
     xtm_version = version;
   }
 
   public void write(TopicMapIF topicmap) throws IOException {
     try {
-      if (xtm_version == XTMSnifferContentHandler.VERSION_XTM10) {
+      if (xtm_version == Version.XTM_1_0) {
         XTMTopicMapExporter exporter = new XTMTopicMapExporter();
         if (filter != null)
           exporter.setFilter(filter);
         exporter.setExportSourceLocators(getExportSourceLocators());
         exporter.setAddIds(getAddIds());
         exporter.export(topicmap, out);
-      } else if (xtm_version == XTMSnifferContentHandler.VERSION_XTM20) {
-        XTM2TopicMapExporter exporter = new XTM2TopicMapExporter();
+      } 
+      else {
+        XTM2TopicMapExporter exporter = new XTM2TopicMapExporter(Version.XTM_2_1 == xtm_version);
         if (filter != null)
           exporter.setFilter(filter);
         exporter.setExportItemIdentifiers(getExportSourceLocators());
         exporter.export(topicmap, out);
-      } else
-        throw new OntopiaRuntimeException("Unknown XTM version: " + xtm_version);
-      
+      }
       if (writer != null) writer.close();
     }
     catch (SAXException e) {

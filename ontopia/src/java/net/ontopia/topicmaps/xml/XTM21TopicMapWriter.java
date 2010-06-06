@@ -1,5 +1,5 @@
 
-// $Id: XTM2TopicMapWriter.java,v 1.3 2008/07/04 10:20:49 lars.garshol Exp $
+// $Id$
 
 package net.ontopia.topicmaps.xml;
 
@@ -23,13 +23,13 @@ import org.xml.sax.SAXException;
 
 /**
  * PUBLIC: A topic map writer that can write topic maps out into the
- * interchange syntax defined by XTM 2.0.
+ * interchange syntax defined by XTM 2.1.
  *
- * @since 4.0
+ * @since 5.1.0
  */
-public class XTM2TopicMapWriter extends XTMTopicMapWriter {
+public class XTM21TopicMapWriter extends XTMTopicMapWriter {
 
-  private static final XTMTopicMapWriter.Version _VERSION = XTMTopicMapWriter.Version.XTM_2_0;
+  private static final XTMTopicMapWriter.Version _VERSION = XTMTopicMapWriter.Version.XTM_2_1;
 
   
   /**
@@ -39,7 +39,7 @@ public class XTM2TopicMapWriter extends XTMTopicMapWriter {
    * @param filename The name of the file to which the topic map is to
    * be written.
    */ 
-  public XTM2TopicMapWriter(String filename) throws IOException {
+  public XTM21TopicMapWriter(String filename) throws IOException {
     this(new File(filename), "utf-8");
   }
   
@@ -49,7 +49,7 @@ public class XTM2TopicMapWriter extends XTMTopicMapWriter {
    * encoding.   
    * @param file The file object to which the topic map is to be written.
    */
-  public XTM2TopicMapWriter(File file) throws IOException {
+  public XTM21TopicMapWriter(File file) throws IOException {
     this(file, "utf-8");
   }
 
@@ -59,7 +59,7 @@ public class XTM2TopicMapWriter extends XTMTopicMapWriter {
    * @param file The file object to which the topic map is to be written.
    * @param encoding The character encoding to write the topic map in.
    */
-  public XTM2TopicMapWriter(File file, String encoding) throws IOException {
+  public XTM21TopicMapWriter(File file, String encoding) throws IOException {
     super(file, encoding);
     setVersion(_VERSION);
   }
@@ -73,7 +73,7 @@ public class XTM2TopicMapWriter extends XTMTopicMapWriter {
    * @exception UnsupportedEncodingException Thrown when the character
    * encoding is not supported by the Java environment.
    */
-  public XTM2TopicMapWriter(OutputStream stream, String encoding)
+  public XTM21TopicMapWriter(OutputStream stream, String encoding)
     throws IOException, UnsupportedEncodingException {
     this(new OutputStreamWriter(stream, encoding), encoding);
   }
@@ -89,7 +89,7 @@ public class XTM2TopicMapWriter extends XTMTopicMapWriter {
    * Note that this <em>must</em> be set correctly, or the XML
    * document will not parse correctly.
    */
-  public XTM2TopicMapWriter(Writer writer, String encoding) throws IOException {
+  public XTM21TopicMapWriter(Writer writer, String encoding) throws IOException {
     super(writer, encoding);
     setVersion(_VERSION);
   }
