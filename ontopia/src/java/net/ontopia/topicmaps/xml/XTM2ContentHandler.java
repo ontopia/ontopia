@@ -510,10 +510,12 @@ public class XTM2ContentHandler extends DefaultHandler {
       TopicIF topic = builder.makeTopic();
       topic.addItemIdentifier(itemid);
       return topic;
-    } else if (obj instanceof TopicIF)
+    } 
+    else if (obj instanceof TopicIF) {
       return (TopicIF) obj;
-    // FIXME: else what?
-    return null;
+    }
+    // Another TM construct with the item identifier ``itemid`` exists.
+    throw new InvalidTopicMapException("Another Topic Maps construct has already the item identifier " + itemid.getAddress());
   }
 
   /**
@@ -546,12 +548,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     if (topic == null) {
       // Does a topic with an item identifier equals to the provided sid exists?
       final TMObjectIF obj = topicmap.getObjectByItemIdentifier(sid);
-      if (obj instanceof TopicIF) {
-        topic = (TopicIF) obj;
-      }
-      else {
-        topic = builder.makeTopic();
-      }
+      topic = (obj instanceof TopicIF) ? (TopicIF) obj : builder.makeTopic();
       topic.addSubjectIdentifier(sid);
     }
     return topic;
