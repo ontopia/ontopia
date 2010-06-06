@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * INTERNAL: Reads XTM 2.0.
+ * INTERNAL: Reads XTM 2.0 / 2.1.
  */
 public class XTM2ContentHandler extends DefaultHandler {
   static final String NS_XTM2 = "http://www.topicmaps.org/xtm/";
@@ -57,6 +57,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   private List scope;
   private TopicIF nametype;
   private int context; // used for simple state tracking
+  private int nextContext; // used for elements like <reifier/> where have to fall back to the previous state
   private LocatorIF locator;
   private AssociationIF association; // created when we hit the first role
   private TopicIF player;
@@ -66,18 +67,25 @@ public class XTM2ContentHandler extends DefaultHandler {
   private TopicIF stacked_reifier; // used for associations (roles can be reified)
   private List<LocatorIF> stacked_itemids; // used for associations
   private List<RoleReification> delayedRoleReification; // see issue 116 below
+  private boolean xtm21;  // Indicates if we are in XTM 2.1 oder 2.0 mode (needed handle the fragment identifier in <topicRef/> right)
+  private boolean seenReifier; // Indicates if the reifier attribute has been processed. 
+                               // Used to validate the XTM 2.1 topic map even if validation against the
+                               // RELAX-NG schema is disabled
+  private boolean seenIdentity; // Indicates if the topic has an identity
+                                // Used to ensure that XTM 2.1 topics have an iid, sid or slo even if
+                                // the validation against the RELAX-NG schema is disabled.
 
   private static final int CONTEXT_TYPE        = 1;
   private static final int CONTEXT_SCOPE       = 2;
   private static final int CONTEXT_INSTANCEOF  = 3;
   private static final int CONTEXT_ROLE        = 4;
-  private static final int CONTEXT_ROLE_TYPE   = 5;
   private static final int CONTEXT_TOPIC_MAP   = 6;
   private static final int CONTEXT_TOPIC       = 7;
   private static final int CONTEXT_TOPIC_NAME  = 8;
   private static final int CONTEXT_OCCURRENCE  = 9;
   private static final int CONTEXT_ASSOCIATION = 10;
   private static final int CONTEXT_VARIANT     = 11;
+  private static final int CONTEXT_REIFIER     = 12;
 
   public XTM2ContentHandler(TopicMapStoreFactoryIF store_factory,
                             XMLReaderFactoryIF xrfactory,
@@ -136,25 +144,26 @@ public class XTM2ContentHandler extends DefaultHandler {
       topicmap = store.getTopicMap();
       builder = topicmap.getBuilder();
       context = CONTEXT_TOPIC_MAP;
+      xtm21 = "2.1".equals(atts.getValue("", "version"));
 
       if ((store instanceof net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore) &&
           store.getBaseAddress() == null)
         ((net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore)store).setBaseAddress(doc_address);
 
-      reifier = getReifier(atts);
-      if (read_documents.size() == 1) {
-        // this means we are reading the master XTM file, and thus can accept
-        // reifiers. had we been reading a sub-file there would be more
-        // read_documents, and then we couldn't actually set the reifier, as
-        // sub-topicmaps are considered different topic maps from the master,
-        // and their reifiers are consequently to be discarded.
-        reify(topicmap, reifier);
-      }
+      handleTopicMapReifier(getReifier(atts));
 
       // <TOPIC
     } else if (name == "topic") {
       topic = builder.makeTopic();
-      addItemIdentifier(topic, makeIDLocator(atts.getValue("", "id")));
+      seenIdentity = false;
+      final String id = atts.getValue("", "id");
+      if (id != null) {
+        seenIdentity = true;
+        addItemIdentifier(topic, makeIDLocator(id));
+      }
+      else if (!xtm21) {
+        throw new InvalidTopicMapException("No id-attribute found.");
+      }
       context = CONTEXT_TOPIC;
 
       // <ITEMIDENTITY
@@ -175,6 +184,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // <SUBJECTLOCATOR
     } else if (name == "subjectLocator") {
+      seenIdentity = true;
       LocatorIF sl = makeLocator(atts.getValue("", "href"));
       TopicIF other = topicmap.getTopicBySubjectLocator(sl);
       if (other == null)
@@ -184,6 +194,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
       // <SUBJECTIDENTIFIER
     } else if (name == "subjectIdentifier") {
+      seenIdentity = true;
       LocatorIF si = makeLocator(atts.getValue("", "href"));
       TopicIF other = topicmap.getTopicBySubjectIdentifier(si);
       if (other == null)
@@ -202,28 +213,26 @@ public class XTM2ContentHandler extends DefaultHandler {
     
       // <TYPE
     } else if (name == "type") {
-      if (context == CONTEXT_ROLE)
-        context = CONTEXT_ROLE_TYPE; // must remember role context after </type
-      else
-        context = CONTEXT_TYPE;
+      nextContext = context;
+      context = CONTEXT_TYPE;
 
       // <TOPICREF
     } else if (name == "topicRef") {
-      TopicIF ref = getTopicByIid(makeLocator(atts.getValue("", "href")));
-      if (context == CONTEXT_TYPE)
-        type = ref;
-      else if (context == CONTEXT_ROLE_TYPE) {
-        type = ref;
-        context = CONTEXT_ROLE;
-      } else if (context == CONTEXT_SCOPE)
-        scope.add(ref);
-      else if (context == CONTEXT_INSTANCEOF)
-        topic.addType(ref);
-      else if (context == CONTEXT_ROLE)
-        player = ref;
-      else
-        throw new InvalidTopicMapException("topicRef in unknown context " +
-                                           context);
+      handleTopicReference(getTopicByIid(makeLocator(atts.getValue("", "href"))));
+
+      // <SUBJECTIDENTIFIERREF
+    } else if (name == "subjectIdentifierRef") {
+      if (!xtm21) {
+        throw new InvalidTopicMapException("The <subjectIdentifierRef/> is illegal in XTM 2.0");
+      }
+      handleTopicReference(getTopicBySid(makeLocator(atts.getValue("", "href"))));
+      
+      // <SUBJECTLOCATORREF
+    } else if (name == "subjectLocatorRef") {
+      if (!xtm21) {
+        throw new InvalidTopicMapException("The <subjectLocatorRef/> is illegal in XTM 2.0");
+      }
+      handleTopicReference(getTopicBySlo(makeLocator(atts.getValue("", "href"))));
       
       // <SCOPE
     } else if (name == "scope")
@@ -274,6 +283,17 @@ public class XTM2ContentHandler extends DefaultHandler {
     } else if (name == "association") {
       context = CONTEXT_ASSOCIATION;
       stacked_reifier = getReifier(atts);
+      
+      // <REIFIER
+    } else if (name == "reifier") {
+      if (!xtm21) {
+        throw new InvalidTopicMapException("The <reifier/> is illegal in XTM 2.0");
+      }
+      if (seenReifier) {
+        throw new InvalidTopicMapException("Having a reifier attribute and a reifier element is illegal in XTM 2.1");
+      }
+      nextContext = context;
+      context = CONTEXT_REIFIER;
     }
   }
 
@@ -287,8 +307,13 @@ public class XTM2ContentHandler extends DefaultHandler {
     if (uri != NS_XTM2) // we only react to XTM 2.0 elements
       return;
 
+    if (name == "topic") {
+      if (!seenIdentity) {
+        throw new InvalidTopicMapException("The topic has neither an id nor a subject identifier, item identifier, or subject locator");
+      }
+    }
       // </VALUE
-    if (name == "value" || name == "resourceData")
+    else if (name == "value" || name == "resourceData")
       keep_content = false;
 
       // </NAME
@@ -390,6 +415,58 @@ public class XTM2ContentHandler extends DefaultHandler {
     itemids.clear();
   }
 
+  /**
+   * Assigns the provided reifier to the topic map iff the reifier is not
+   * {@code null} and iff the reifier comes from the master XTM file.
+   */
+  private void handleTopicMapReifier(final TopicIF reifier) {
+    if (reifier != null && read_documents.size() == 1) {
+      // this means we are reading the master XTM file, and thus can accept
+      // reifiers. had we been reading a sub-file there would be more
+      // read_documents, and then we couldn't actually set the reifier, as
+      // sub-topicmaps are considered different topic maps from the master,
+      // and their reifiers are consequently to be discarded.
+      reify(topicmap, reifier);
+    }
+  }
+
+  /**
+   * Handles a topic reference (created by <topicRef/>, 
+   * <subjectIdentifierRef/> and <subjectLocatorRef/>) conext-senitively.
+   *
+   * @param ref The topic.
+   */
+  private void handleTopicReference(final TopicIF ref) {
+      if (context == CONTEXT_TYPE) {
+        type = ref;
+        context = nextContext;
+      }
+      else if (context == CONTEXT_SCOPE) {
+        scope.add(ref);
+      }
+      else if (context == CONTEXT_INSTANCEOF) {
+        topic.addType(ref);
+      }
+      else if (context == CONTEXT_ROLE) {
+        player = ref;
+      }
+      else if (context == CONTEXT_REIFIER) {
+        if (nextContext == CONTEXT_TOPIC_MAP) {
+          handleTopicMapReifier(ref);
+        }
+        else if (nextContext == CONTEXT_ASSOCIATION) {
+          stacked_reifier = ref;
+        }
+        else {
+          reifier = ref;
+        }
+        context = nextContext;
+      }
+      else {
+        throw new InvalidTopicMapException("topicRef in unknown context " + context);
+      }
+  }
+
   private TopicIF getDefaultNameType() {
     if (nametype == null) {
       LocatorIF psi = makeLocator(XTM_NAMETYPE);
@@ -425,7 +502,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   }
 
   private TopicIF getTopicByIid(LocatorIF itemid) {
-    if (itemid.getAddress().indexOf('#') == -1)
+    if (!xtm21 && itemid.getAddress().indexOf('#') == -1)
       throw new InvalidTopicMapException("Topic references must have fragment identifiers; invalid reference: " + itemid.getAddress());
     
     TMObjectIF obj = topicmap.getObjectByItemIdentifier(itemid);
@@ -439,12 +516,54 @@ public class XTM2ContentHandler extends DefaultHandler {
     return null;
   }
 
+  /**
+   * Returns a topic by its subject locator. If no topic with the provided subject locator
+   * exists in the topic map, a new topic with the provided subject locator will
+   * be created.
+   *
+   * @param slo The subject locator
+   * @return A topic with the provided subject locator.
+   */
+  private TopicIF getTopicBySlo(final LocatorIF slo) {
+    TopicIF topic = topicmap.getTopicBySubjectLocator(slo);
+    if (topic == null) {
+      topic = builder.makeTopic();
+      topic.addSubjectLocator(slo);
+    }
+    return topic;
+  }
+
+  /**
+   * Returns a topic by its subject identifier. If no topic with the provided subject identifier
+   * exists in the topic map, a new topic with the provided subject identifier will
+   * be created.
+   *
+   * @param slo The subject identifier
+   * @return A topic with the provided subject identifier.
+   */
+  private TopicIF getTopicBySid(final LocatorIF sid) {
+    TopicIF topic = topicmap.getTopicBySubjectIdentifier(sid);
+    if (topic == null) {
+      // Does a topic with an item identifier equals to the provided sid exists?
+      final TMObjectIF obj = topicmap.getObjectByItemIdentifier(sid);
+      if (obj != null && obj instanceof TopicIF) {
+        topic = (TopicIF) obj;
+      }
+      else {
+        topic = builder.makeTopic();
+      }
+      topic.addSubjectIdentifier(sid);
+    }
+    return topic;
+  }
+
   private void addScope(ScopedIF obj) {
     for (int ix = 0; ix < scope.size(); ix++)
       obj.addTheme((TopicIF) scope.get(ix));
   }
 
   private void addItemIdentifier(TopicIF topic, LocatorIF ii) {
+    seenIdentity = true;
     TMObjectIF obj = topicmap.getObjectByItemIdentifier(ii);
     if (obj == null)
       topic.addItemIdentifier(ii);
@@ -511,9 +630,11 @@ public class XTM2ContentHandler extends DefaultHandler {
 
   private TopicIF getReifier(Attributes atts) {
     String ref = atts.getValue("", "reifier");
-    if (ref == null)
+    if (ref == null) {
+      seenReifier = false;
       return null;
-
+    }
+    seenReifier = true;
     LocatorIF itemid = makeLocator(ref);
     return getTopicByIid(itemid);
   }

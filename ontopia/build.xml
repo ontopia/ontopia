@@ -127,6 +127,8 @@
 
     <!-- svn-revision to the external xtm2 test suite -->
     <property name="xtm2.revision" value="32" />
+    <!-- svn-revision to the external xtm21 test suite -->
+    <property name="xtm21.revision" value="88" />
     <!-- svn-revision to the external tm/xml test suite -->
     <property name="tmxml.revision" value="68" />
     <!-- svn-revision to the external jtm test suite -->
@@ -730,7 +732,7 @@
        Unit tests
        ====================================================================== -->
   
-  <target name="test" depends="init, download-xtm2, download-tmxml, download-ctm, download-jtm">
+  <target name="test" depends="init, download-xtm2, download-xtm21, download-tmxml, download-ctm, download-jtm">
     <property name="test.config" value="${test.path}/config/tests.xml" />
     <property name="test.name" value="complete-non-rdbms" />
     <echo>Using configuration file '${test.config}'.</echo>
@@ -1583,7 +1585,7 @@
     
   </target>
   
-  <target name="dist.engine.test.collect" depends="download-xtm2, download-tmxml, download-ctm, download-jtm">
+  <target name="dist.engine.test.collect" depends="download-xtm2, download-xtm21, download-tmxml, download-ctm, download-jtm">
     
     <!-- Test data -->
     <copy todir="${dist.path}/tests/test-data/canonical/baseline">
@@ -1655,6 +1657,9 @@
     <copy todir="${dist.path}/tests/test-data/xtm2">
       <fileset dir="${test.path}/xtm2" />
     </copy>
+    <copy todir="${dist.path}/tests/test-data/xtm21">
+      <fileset dir="${test.path}/xtm21" />
+    </copy>
     <copy todir="${dist.path}/tests/test-data/tmxml">
       <fileset dir="${test.path}/tmxml" />
     </copy>
@@ -1679,6 +1684,25 @@
     <untar src="${xtm2.basename}.tar" dest="${test.path}/">
       <patternset>
         <include name="xtm2/**" />
+      </patternset>
+    </untar>
+  </target>
+
+  <target name="checkfiles-xtm21" depends="init">
+    <property name="xtm21.basename" value="${test.path}/xtm21-r${xtm2.revision}" />
+    <!-- checks if file has already been downloaded -->
+    <available file="${xtm21.basename}.tar.gz" property="xtm21.exists" />
+  </target>
+  
+  <target name="download-xtm21" depends="checkfiles-xtm21" unless="xtm21.exists">
+    <!-- TODO download to ${build.root}, so 'ant clean.build' would clean up instead -->
+    <delete dir="${test.path}/xtm21" />
+    <!-- download and extract xtm2 -->
+    <get src="http://cxtm-tests.svn.sourceforge.net/viewvc/cxtm-tests/trunk/xtm21.tar.gz?view=tar&amp;pathrev=${xtm21.revision}" dest="${xtm21.basename}.tar.gz" />
+    <gunzip src="${xtm21.basename}.tar.gz" />
+    <untar src="${xtm21.basename}.tar" dest="${test.path}/">
+      <patternset>
+        <include name="xtm21/**" />
       </patternset>
     </untar>
   </target>

@@ -247,6 +247,7 @@
     <test>net.ontopia.topicmaps.xml.test.ExternalRefTest</test>
     <test>net.ontopia.topicmaps.xml.test.XTMReadErrorTests</test>
     <test>net.ontopia.topicmaps.xml.test.CanonicalXTM2ReaderTestGenerator</test>
+    <test>net.ontopia.topicmaps.xml.test.CanonicalXTM21ReaderTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.InvalidXTM2ReaderTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.CanonicalXTM2WriterTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.CanonicalXTMWriterTest</test>
