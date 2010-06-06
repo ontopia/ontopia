@@ -54,7 +54,7 @@ public class XTM2ContentHandler extends DefaultHandler {
   private StringBuffer content;
   private String datatype; // datatype attribute content
   private TopicIF type;
-  private List scope;
+  private List<TopicIF> scope;
   private TopicIF nametype;
   private int context; // used for simple state tracking
   private int nextContext; // used for elements like <reifier/> where have to fall back to the previous state
@@ -103,7 +103,7 @@ public class XTM2ContentHandler extends DefaultHandler {
     this.doc_address = doc_address;
     this.read_documents = read_documents;
     this.content = new StringBuffer();
-    this.scope = new ArrayList();
+    this.scope = new ArrayList<TopicIF>();
     this.itemids = new ArrayList<LocatorIF>();
     this.delayedRoleReification = new ArrayList<RoleReification>();
 
@@ -557,9 +557,10 @@ public class XTM2ContentHandler extends DefaultHandler {
     return topic;
   }
 
-  private void addScope(ScopedIF obj) {
-    for (int ix = 0; ix < scope.size(); ix++)
-      obj.addTheme((TopicIF) scope.get(ix));
+  private void addScope(final ScopedIF obj) {
+    for(TopicIF theme: scope) {
+      obj.addTheme(theme);
+    }
   }
 
   private void addItemIdentifier(TopicIF topic, LocatorIF ii) {
