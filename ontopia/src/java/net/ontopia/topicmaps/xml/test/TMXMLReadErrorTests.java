@@ -47,7 +47,7 @@ public class TMXMLReadErrorTests extends AbstractCanonicalTests {
     }
 
     public void testFile() throws IOException {
-      String in = base + File.separator + "errors" + File.separator + filename;
+      String in = base + File.separator + "invalid" + File.separator + filename;
       TMXMLReader reader = new TMXMLReader(in);
 
       try {
