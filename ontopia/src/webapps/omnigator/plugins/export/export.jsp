@@ -39,6 +39,8 @@
       writer = new XTMTopicMapWriter(out, charset);
     else if (format.equals("xtm2")) 
       writer = new XTM2TopicMapWriter(out, charset);
+    else if (format.equals("xtm21")) 
+      writer = new XTM21TopicMapWriter(out, charset);
     else if (format.equals("rdf")) 
       writer = new RDFTopicMapWriter(out);
     else if (format.equals("cxtm")) {

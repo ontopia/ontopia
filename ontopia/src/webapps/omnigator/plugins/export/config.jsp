@@ -36,7 +36,9 @@
       <p>
       Using this plug-in you can export the current topic map as an
       XML document, in
-      <a href="http://www.topicmaps.org/xtm/1.0/">XTM 1.0</a>, CXTM, TM/XML,
+      <a href="http://www.topicmaps.org/xtm/1.0/">XTM 1.0</a>, 
+      <a href="http://www.isotopicmaps.org/sam/sam-xtm/2006-06-19/">XTM 2.0</a>,
+      <a href="http://www.itscj.ipsj.or.jp/sc34/open/1378.htm">XTM 2.1</a>, CXTM, TM/XML,
       or <a href="http://www.w3.org/RDF/">RDF</a> syntax, or you can export
       it to the much more readable LTM plain-text format. You can
       choose to either download it or view it in your browser.
@@ -74,12 +76,18 @@
             <td>&nbsp; &nbsp;
             <td>
             <td>Save as: <input type='text' name='filename' value='<%= request.getParameter("tm") %>.xtm'>
+        <tr valign="top">
+            <td><input type='radio' name='format' value='xtm21' checked='checked'
+                 onClick="setFilename('export', 'filename', '<%= request.getParameter("tm") %>', '.xtm')">
+            <td>XTM 2.1 syntax
+            <td>&nbsp; &nbsp;
+            <td><input type='radio' name='type' value='xml'>
+            <td>View
         <tr><td><input type='radio' name='format' value='rdf'
                  onClick="setFilename('export', 'filename', '<%= request.getParameter("tm") %>', '.rdf')">
             <td>RDF/XML syntax
             <td>&nbsp; &nbsp;
-            <td><input type='radio' name='type' value='xml'>
-            <td>View
+            <td colspan='2' align='right'>
         <tr><td><input type='radio' name='format' value='cxtm'
                  onClick="setFilename('export', 'filename', '<%= request.getParameter("tm") %>', '.cxtm')">
             <td>CXTM syntax
