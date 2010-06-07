@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 
 /**
  * PUBLIC: A topic map writer that can write topic maps out into the
@@ -19,11 +20,11 @@ import java.io.UnsupportedEncodingException;
 public final class XTM21TopicMapWriter extends AbstractXTM2TopicMapWriter {
 
   public XTM21TopicMapWriter(String filename) throws IOException {
-    super(new File(filename), "utf-8");
+    super(filename);
   }
   
   public XTM21TopicMapWriter(File file) throws IOException {
-    super(file, "utf-8");
+    super(file);
   }
 
   public XTM21TopicMapWriter(File file, String encoding) throws IOException {
@@ -32,7 +33,11 @@ public final class XTM21TopicMapWriter extends AbstractXTM2TopicMapWriter {
 
   public XTM21TopicMapWriter(OutputStream stream, String encoding)
     throws IOException, UnsupportedEncodingException {
-    super(new OutputStreamWriter(stream, encoding), encoding);
+    super(stream, encoding);
+  }
+
+  public XTM21TopicMapWriter(Writer writer, String encoding) throws IOException {
+    super(writer, encoding);
   }
 
   @Override

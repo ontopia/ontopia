@@ -12,7 +12,9 @@ import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.utils.rdf.RDFTopicMapWriter;
 import net.ontopia.topicmaps.xml.TMXMLWriter;
 import net.ontopia.topicmaps.xml.XTM2TopicMapWriter;
+import net.ontopia.topicmaps.xml.XTM21TopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
+import net.ontopia.topicmaps.xml.XTMVersion;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 public class ExportUtils {
@@ -33,13 +35,19 @@ public class ExportUtils {
         XTMTopicMapWriter filterer = new XTMTopicMapWriter(out, charset);
         if (!includeSchema)
           filterer.setFilter(decider);
-        filterer.setVersion(1);
+        filterer.setVersion(XTMVersion.XTM_1_0);
         writer = filterer;
       } else if (format.equalsIgnoreCase("xtm2")) { 
         XTM2TopicMapWriter filterer = new XTM2TopicMapWriter(out, charset);
         if (!includeSchema)
           filterer.setFilter(decider);
-        filterer.setVersion(2);
+        filterer.setVersion(XTMVersion.XTM_2_0);
+        writer = filterer;
+      } else if (format.equalsIgnoreCase("xtm21")) { 
+        XTM21TopicMapWriter filterer = new XTM21TopicMapWriter(out, charset);
+        if (!includeSchema)
+          filterer.setFilter(decider);
+        filterer.setVersion(XTMVersion.XTM_2_1);
         writer = filterer;
       } else if (format.equalsIgnoreCase("rdf")) { 
         RDFTopicMapWriter filterer = new RDFTopicMapWriter(out);
