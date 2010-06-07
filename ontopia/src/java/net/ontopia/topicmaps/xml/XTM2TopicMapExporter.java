@@ -249,12 +249,9 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
 
   private void write(Collection<LocatorIF> locators, String element, DocumentHandler dh)
     throws SAXException {
-    Iterator<LocatorIF> it = locators.iterator();
-    while (it.hasNext()) {
-      LocatorIF loc = it.next();
+    for (LocatorIF loc: locators) {
       atts.clear();
-      String uri = loc.getExternalForm();
-      atts.addAttribute("href", "CDATA", uri);
+      atts.addAttribute("href", "CDATA", loc.getExternalForm());
       dh.startElement(element, atts);
       dh.endElement(element);
     }
