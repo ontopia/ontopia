@@ -1,4 +1,3 @@
-// $Id:$
 
 package net.ontopia.topicmaps.impl.tmapi2;
 
@@ -71,7 +70,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
   }
 
   public Locator getLocator() {
-	return wrapLocator(wrapped.getStore().getBaseAddress());
+    return wrapLocator(wrapped.getStore().getBaseAddress());
   }
   
   /*
@@ -93,12 +92,12 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
   }
 
   public LocatorIF unwrapLocator(Locator loc) {
-	// other lcoators implementation should be supported to
-	if (loc instanceof LocatorImpl) {
-		return ((LocatorImpl) loc).getWrapped();
-	} else {
-		return URILocator.create(loc.toExternalForm());
-	}
+    // other lcoators implementation should be supported to
+    if (loc instanceof LocatorImpl) {
+      return ((LocatorImpl) loc).getWrapped();
+    } else {
+      return URILocator.create(loc.toExternalForm());
+    }
   }
 
   /*
@@ -468,7 +467,7 @@ public class TopicMapImpl extends ReifiableImpl implements TopicMap {
     NameImpl name = nameIndex.getName(variant.getTopicName());
     // if we don't have a wrapped name, we create one
     if (name==null) {
-    	name = wrapName(variant.getTopicName());
+      name = wrapName(variant.getTopicName());
     }
     VariantImpl v = null;
 
