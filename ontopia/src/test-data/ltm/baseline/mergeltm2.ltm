@@ -1,22 +1,30 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <scope>
-<topicRef href="#id3"></topicRef>
+<topicRef href="#id4"></topicRef>
 </scope>
 <baseNameString>Topic number one</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Topic number two</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
+<subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/country.xtm#en"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>English</baseNameString>
 </baseName>
 </topic>

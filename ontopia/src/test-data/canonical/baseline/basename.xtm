@@ -5,6 +5,7 @@
 </topic>
 <topic id="id3">
 <baseName>
+<instanceOf href="#id6"></instanceOf>
 <baseNameString>Country</baseNameString>
 </baseName>
 </topic>
@@ -22,5 +23,10 @@
 <instanceOf href="#id2"></instanceOf>
 <baseNameString>John Doe</baseNameString>
 </baseName>
+</topic>
+<topic id="id6">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 </topicMap>

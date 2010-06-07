@@ -1,4 +1,3 @@
-// $Id: Occurrence.java,v 1.62 2008/06/04 11:42:23 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.impl.basic;
 

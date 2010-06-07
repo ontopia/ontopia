@@ -241,8 +241,9 @@ public class Context {
    * INTERNAL: Return the existing field values of an old object.
    */    
   Object reuseOldFieldValue(Object object, int fieldIndex) {
-    List[] fieldValues = (List[])this.oldValues.get(object);
-    if (fieldValues == null || fieldIndex > fieldValues.length-1) return null;
+    List[] fieldValues = (List[]) this.oldValues.get(object);
+    if (fieldValues == null || fieldIndex > fieldValues.length-1)
+      return null;
     List values = fieldValues[fieldIndex];
     if (values == null || values.isEmpty())
       return null;

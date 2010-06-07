@@ -1,11 +1,13 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>inverse name</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>inverse name</baseNameString>
 </baseName>
 </topic>
@@ -15,22 +17,31 @@
 <subjectIndicatorRef href="http://a.b.com/tm_a_b.xtm#topic-b"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>the a topic</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>the b topic</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <scope>
 <topicRef href="#id2"></topicRef>
 </scope>
 <baseNameString>topic the a</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <scope>
 <topicRef href="#id2"></topicRef>
 </scope>
 <baseNameString>topic the b</baseNameString>
 </baseName>
+</topic>
+<topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 </topicMap>

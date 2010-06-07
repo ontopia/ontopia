@@ -1,33 +1,44 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id7"></instanceOf>
 <baseNameString>Bergen</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id7"></instanceOf>
 <baseNameString>Contained in</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <baseName>
+<instanceOf href="#id7"></instanceOf>
 <baseNameString>Containee</baseNameString>
 </baseName>
 </topic>
 <topic id="id4">
 <baseName>
+<instanceOf href="#id7"></instanceOf>
 <baseNameString>Container</baseNameString>
 </baseName>
 </topic>
 <topic id="id5">
 <baseName>
+<instanceOf href="#id7"></instanceOf>
 <baseNameString>Norway</baseNameString>
 </baseName>
 </topic>
 <topic id="id6">
 <baseName>
+<instanceOf href="#id7"></instanceOf>
 <baseNameString>Oslo</baseNameString>
 </baseName>
+</topic>
+<topic id="id7">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 <association>
 <instanceOf href="#id2"></instanceOf>

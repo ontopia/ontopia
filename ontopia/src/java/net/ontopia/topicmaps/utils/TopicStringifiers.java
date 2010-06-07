@@ -3,18 +3,20 @@
 
 package net.ontopia.topicmaps.utils;
 
+import java.util.Iterator;
 import java.util.Collection;
 import java.util.Collections;
 import net.ontopia.utils.*;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
  * PUBLIC: Creates stringifiers that extract strings representing
  * names from topics, according to various criteria, including scope.
  */
-
 public class TopicStringifiers {
-
   private static final StringifierIF DEFAULT_STRINGIFIER
     = new GrabberStringifier(TopicCharacteristicGrabbers.getDisplayNameGrabber(),
                              new NameStringifier());
@@ -83,6 +85,17 @@ public class TopicStringifiers {
   }
 
   /**
+   * PUBLIC: Gets a fast stringifier that will return the sort names
+   * of topics, when they have one. If the topics have no sort name,
+   * one of the topic names will be used instead. This stringifier is
+   * the one used by tolog.
+   * @since %NEXT%
+   */
+  public static StringifierIF getFastSortNameStringifier(TopicMapIF tm) {
+    return new FastSortNameStringifier(tm);
+  }
+
+  /**
    * PUBLIC: Gets a stringifier that will return the name it
    * determines matches the given scopes best. There is no guarantee
    * as to <em>which</em> name it will return if more than one name
@@ -144,7 +157,6 @@ public class TopicStringifiers {
     return strfy.toString(topic);
   }
 
-
   /**
    * PUBLIC: Returns the name of the topic given the specified
    * topic name and variant name themes.
@@ -179,5 +191,73 @@ public class TopicStringifiers {
     StringifierIF strfy = getStringifier(tnscope, vnscope);
     return strfy.toString(topic);
   }
-  
+
+  // ===== INTERNAL
+
+  public static class FastSortNameStringifier implements StringifierIF {
+    private TopicIF defnametype;
+    private TopicIF sort;
+
+    public FastSortNameStringifier(TopicMapIF tm) {
+      this.defnametype = tm.getTopicBySubjectIdentifier(PSI.getSAMNameType());
+      this.sort = tm.getTopicBySubjectIdentifier(PSI.getXTMSort());
+    }
+
+    public String toString(Object t) {
+      // 0: verify that we have a topic at all
+      if (t == null)
+        return "[No name]";
+
+      TopicIF topic = (TopicIF) t;
+      
+      // 1: pick base name with the fewest topics in scope
+      //    (and avoid typed names)
+      TopicNameIF bn = null;
+      int least = 0xEFFF;
+      Collection bns = topic.getTopicNames();
+      if (!bns.isEmpty()) {
+        Iterator it = bns.iterator();
+        while (it.hasNext()) {
+          TopicNameIF candidate = (TopicNameIF) it.next();
+          int score = candidate.getScope().size() * 10;
+          if (candidate.getType() != defnametype)
+            score++;
+          
+          if (score < least) {
+            bn = candidate;
+            least = score;
+          }
+        }
+      }
+      if (bn == null)
+        return "[No name]";
+      
+      // 2: if we have a sort name, pick variant with fewest topics in scope
+      //    beyond sort name; penalty for no sort name = 0xFF topics
+      if (sort == null)
+        return bn.getValue();
+      VariantNameIF vn = null;
+      least = 0xEFFF;
+      Collection vns = bn.getVariants();
+      if (!vns.isEmpty()) {
+        Iterator it = vns.iterator();
+        while (it.hasNext()) {
+          VariantNameIF candidate = (VariantNameIF) it.next();
+          Collection scope = candidate.getScope();
+          int themes;
+          if (scope.contains(sort))
+            themes = scope.size() - 1;
+          else
+            themes = 0xFF + scope.size();
+          if (themes < least) {
+            vn = candidate;
+            least = themes;
+          }
+        }
+      }
+      if (vn == null || vn.getValue() == null)
+        return bn.getValue();
+      return vn.getValue();
+    }
+  }
 }

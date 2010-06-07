@@ -45,4 +45,11 @@
   </association>
 
 
+  <!-- have to add this element so that default name type will get a
+  deterministic ID after reimport -->
+<topic id="defnametype">
+  <subjectIdentity>
+    <subjectIndicatorRef xlink:href="http://psi.topicmaps.org/iso13250/model/topic-name"/>
+  </subjectIdentity>
+</topic>
 </topicMap>

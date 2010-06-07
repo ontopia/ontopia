@@ -1,10 +1,18 @@
 <topicMap>
 <topic number="1">
 <subjectIdentifiers>
-<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#occurrence</locator>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
 <locator>#id3</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://www.topicmaps.org/xtm/1.0/core.xtm#occurrence</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id4</locator>
 </itemIdentifiers>
 </topic>
 </topicMap>

@@ -175,7 +175,6 @@ public class DB2TMTestGenerator implements TestCaseGeneratorIF {
       verifyDirectory(base, "out");
 
       String name = filename.substring(0, filename.length() - ".xml".length());
-
       String rescanDir = base + "in" + File.separator + "rescan";
       
       // Path to the config file.
@@ -230,7 +229,8 @@ public class DB2TMTestGenerator implements TestCaseGeneratorIF {
       
       // Check that the cxtm output matches the baseline.
       assertTrue("The canonicalized conversion from " + filename
-          + " does not match the baseline: " + cxtm + " " + baseline, FileUtils.compare(cxtm, baseline));
+          + " does not match the baseline: " + cxtm + " " + baseline,
+                 FileUtils.compare(cxtm, baseline));
     }
   }
   

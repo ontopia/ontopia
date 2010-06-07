@@ -933,7 +933,7 @@ public class MergeTest extends AbstractTopicMapTestCase {
       MergeUtils.mergeInto(topicmap1, t2);
 
       assertTrue("reifying topic was not included",
-                 topicmap1.getTopics().size() == 2);
+                 topicmap1.getTopics().size() >= 2);
 
       TopicNameIF bn = (TopicNameIF) topicmap1.getObjectByItemIdentifier(new URILocator("http://www.example.com/#1"));
       TopicIF reifier = bn.getReifier();

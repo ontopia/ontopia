@@ -50,7 +50,13 @@ public class TypePredicateTest extends AbstractPredicateTest {
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();      
 
-      Iterator it2 = topic.getOccurrences().iterator();
+      Iterator it2 = topic.getTopicNames().iterator();
+      while (it2.hasNext()) {
+        TopicNameIF tn = (TopicNameIF) it2.next();
+        addMatch(matches, "TYPED", tn, "TOPIC", tn.getType());
+      }
+      
+      it2 = topic.getOccurrences().iterator();
       while (it2.hasNext()) {
         OccurrenceIF occ = (OccurrenceIF) it2.next();
         addMatch(matches, "TYPED", occ, "TOPIC", occ.getType());
@@ -64,7 +70,8 @@ public class TypePredicateTest extends AbstractPredicateTest {
     load("bb-test.ltm");
 
     findNothing(OPT_TYPECHECK_OFF +
-                "topic-name($TOPIC, $TNAME), type($TNAME, $TYPE)?");
+                "topic-name($TOPIC, $TNAME), type($TNAME, $TYPE), " +
+                "$TYPE /= i\"http://psi.topicmaps.org/iso13250/model/topic-name\"?");
   } 
   
   public void testTopicType() throws InvalidQueryException, IOException {
@@ -119,6 +126,7 @@ public class TypePredicateTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "BNAME", bname1, "TYPE", type1);
     addMatch(matches, "BNAME", bname2, "TYPE", type2);
+    addMatch(matches, "BNAME", bnameN, "TYPE", getTopicBySI("http://psi.topicmaps.org/iso13250/model/topic-name"));
     
     verifyQuery(matches, "type($BNAME, $TYPE)?");
   }

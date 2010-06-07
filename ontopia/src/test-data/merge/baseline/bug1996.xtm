@@ -1,28 +1,35 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
-<instanceOf href="#id2"></instanceOf>
+<instanceOf href="#id3"></instanceOf>
 <subjectIdentity>
 <subjectIndicatorRef href="http://cch.com/xtm/fedtax/#(lea04b)-(cch-internal-ref)-(184)"></subjectIndicatorRef>
 <subjectIndicatorRef href="http://cch.com/xtm/fedtax/#ftd18059"></subjectIndicatorRef>
 <subjectIndicatorRef href="http://cch.com/xtm/statetax/#std18059"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Effect on Estates</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Effect on Estates State</baseNameString>
 </baseName>
 <occurrence>
-<instanceOf href="#id3"></instanceOf>
+<instanceOf href="#id4"></instanceOf>
 <resourceData>184</resourceData>
 </occurrence>
 </topic>
 <topic id="id2">
 <subjectIdentity>
-<subjectIndicatorRef href="http://wolterskluwer.com/psi/#document"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://wolterskluwer.com/psi/#document"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
 <subjectIdentity>
 <subjectIndicatorRef href="http://wolterskluwer.com/psi/#normval"></subjectIndicatorRef>
 </subjectIdentity>

@@ -1,12 +1,19 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Bæ bæ lille lam, har du noe øl</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>øl noe du har, lam lille bæ Bæ</baseNameString>
 </baseName>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 </topicMap>

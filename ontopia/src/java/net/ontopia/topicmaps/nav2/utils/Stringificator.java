@@ -182,9 +182,11 @@ public final class Stringificator {
   static class FastStringifier extends CustomNameStringifier {
     private TopicMapIF topicmap;
     private TopicIF vntheme;
+    private TopicIF defnametype;
   
     public FastStringifier(TopicMapIF topicmap) {
       this.topicmap = topicmap;
+      this.defnametype = topicmap.getTopicBySubjectIdentifier(PSI.getSAMNameType());
       this.vntheme = topicmap.getTopicBySubjectIdentifier(PSI.getXTMDisplay());
     }
 
@@ -210,7 +212,8 @@ public final class Stringificator {
       while (it.hasNext()) {
        TopicNameIF candidate = (TopicNameIF) it.next();
         int themes = candidate.getScope().size();
-        if (candidate.getType() == null) themes += Integer.MIN_VALUE; // prefer untyped names
+        if (candidate.getType() == defnametype)
+          themes += Integer.MIN_VALUE; // prefer default name type
         if (themes < bn_least) {
           bn = candidate;
           bn_least = themes;

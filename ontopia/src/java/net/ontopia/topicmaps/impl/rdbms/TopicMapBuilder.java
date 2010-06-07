@@ -4,17 +4,17 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.Reader;
+import java.io.Serializable;
 import java.util.*;
 import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.infoset.core.*;
 import net.ontopia.persistence.proxy.TransactionIF;
-import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: The default topic map builder implementation.
  */
-public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable {
-
+public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
   static final long serialVersionUID = 5405384048878296268L;
 
   protected TransactionIF txn;
@@ -57,12 +57,14 @@ public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable 
   }
 
   public TopicNameIF makeTopicName(TopicIF topic, String value) {
-		if (topic == null) throw new NullPointerException("Topic must not be null.");
-		if (value == null) throw new NullPointerException("Topic name value must not be null.");
-		CrossTopicMapException.check(topic, this.tm);
+    if (topic == null) throw new NullPointerException("Topic must not be null.");
+    if (value == null) throw new NullPointerException("Topic name value must not be null.");
+    CrossTopicMapException.check(topic, this.tm);
+		
     TopicNameIF name = new TopicName(txn);
     ((Topic)topic).addTopicName(name);
     name.setValue(value);
+    name.setType(getDefaultNameType());
     return name;
   }
 
@@ -74,6 +76,12 @@ public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable 
     CrossTopicMapException.check(topic, this.tm);
     if (bntype != null)
       CrossTopicMapException.check(bntype, this.tm);
+    // if type has not been specified, use the default name type
+    if (bntype == null)
+      bntype = getDefaultNameType();
+    else
+      CrossTopicMapException.check(bntype, this.tm);		  
+		
     TopicNameIF name = new TopicName(txn);
     ((Topic)topic).addTopicName(name);
     name.setType(bntype);
@@ -81,6 +89,15 @@ public class TopicMapBuilder implements TopicMapBuilderIF, java.io.Serializable 
     return name;
   }
 
+  private TopicIF getDefaultNameType() {
+    TopicIF nameType = tm.getTopicBySubjectIdentifier(PSI.getSAMNameType());
+    if (nameType == null) {
+      nameType = makeTopic();
+      nameType.addSubjectIdentifier(PSI.getSAMNameType());
+    }
+    return nameType;
+  }
+  
   public VariantNameIF makeVariantName(TopicNameIF name, String variant_name) {
     if (name == null)
       throw new NullPointerException("Topic name must not be null.");

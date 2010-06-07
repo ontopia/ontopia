@@ -1,21 +1,25 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>Bingo</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>Bongo</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>Rongo</baseNameString>
 </baseName>
 </topic>
 <topic id="id4">
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <scope>
 <topicRef href="#id1"></topicRef>
 <topicRef href="#id2"></topicRef>
@@ -23,5 +27,10 @@
 </scope>
 <baseNameString>ugga</baseNameString>
 </baseName>
+</topic>
+<topic id="id5">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 </topicMap>

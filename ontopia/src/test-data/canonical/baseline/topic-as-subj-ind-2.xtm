@@ -4,10 +4,17 @@
 <subjectIndicatorRef href="#land"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Country</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Land</baseNameString>
 </baseName>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 </topicMap>

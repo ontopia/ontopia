@@ -2,12 +2,19 @@
 <topic id="id1">
 <instanceOf href="#id2"></instanceOf>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Person</baseNameString>
 </baseName>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 </topicMap>

@@ -43,13 +43,13 @@ public class DeleteTest extends AbstractQueryTest {
   public void testStaticDelete() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
+    assertTrue("topic4 missing", getTopicById("topic4") != null);
     
     update("delete topic4");
 
     assertTrue("wrong number of topics after delete",
-               topicmap.getTopics().size() == 5);
+               topicmap.getTopics().size() == (before - 1));
     assertTrue("topic4 still available after delete",
                getTopicById("topic4") == null);
   }
@@ -57,13 +57,13 @@ public class DeleteTest extends AbstractQueryTest {
   public void testSimpleDelete() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
+    assertTrue("topic4 missing", getTopicById("topic4") != null);
     
     update("delete $A from $A = topic4");
 
     assertTrue("wrong number of topics after delete",
-               topicmap.getTopics().size() == 5);
+               topicmap.getTopics().size() == (before - 1));
     assertTrue("topic4 still available after delete",
                getTopicById("topic4") == null);
   }
@@ -71,13 +71,13 @@ public class DeleteTest extends AbstractQueryTest {
   public void testProjectedDelete() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
+    assertTrue("topic4 missing", getTopicById("topic4") != null);
     
     update("delete $A from $A = topic4, $B = topic3");
 
     assertTrue("wrong number of topics after delete",
-               topicmap.getTopics().size() == 5);
+               topicmap.getTopics().size() == (before - 1));
     assertTrue("topic4 still available after delete",
                getTopicById("topic4") == null);
     assertTrue("topic3 not still available after delete",
@@ -87,13 +87,14 @@ public class DeleteTest extends AbstractQueryTest {
   public void testMixedDelete() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
+    assertTrue("topic4 missing", getTopicById("topic4") != null);
+    assertTrue("topic3 missing", getTopicById("topic3") != null);
     
     update("delete $A, topic3 from $A = topic4");
 
     assertTrue("wrong number of topics after delete",
-               topicmap.getTopics().size() == 4);
+               topicmap.getTopics().size() == (before - 2));
     assertTrue("topic4 still available after delete",
                getTopicById("topic4") == null);
     assertTrue("topic3 still available after delete",
@@ -103,13 +104,15 @@ public class DeleteTest extends AbstractQueryTest {
   public void testTopicTypeDelete() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
+    assertTrue("topic4 missing", getTopicById("topic4") != null);
+    assertTrue("topic3 missing", getTopicById("topic3") != null);
+    assertTrue("type2 missing", getTopicById("type2") != null);
     
     update("delete type2");
 
     assertTrue("wrong number of topics after delete",
-               topicmap.getTopics().size() == 3);
+               topicmap.getTopics().size() == (before - 3));
     assertTrue("type2 still available after delete",
                getTopicById("type2") == null);
     assertTrue("topic4 still available after delete",
@@ -121,13 +124,13 @@ public class DeleteTest extends AbstractQueryTest {
   public void testDeleteTwice() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
+    assertTrue("topic4 missing", getTopicById("topic4") != null);
     
     update("delete $A, topic4 from $A = topic4");
 
     assertTrue("wrong number of topics after delete",
-               topicmap.getTopics().size() == 5);
+               topicmap.getTopics().size() == (before - 1));
     assertTrue("topic4 still available after delete",
                getTopicById("topic4") == null);
   }
@@ -135,13 +138,14 @@ public class DeleteTest extends AbstractQueryTest {
   public void testBiggerDelete() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
+    assertTrue("topic4 missing", getTopicById("topic4") != null);
+    assertTrue("topic3 missing", getTopicById("topic3") != null);
     
     update("delete $A from instance-of($A, type2)");
 
     assertTrue("wrong number of topics after delete",
-               topicmap.getTopics().size() == 4);
+               topicmap.getTopics().size() == (before - 2));
     assertTrue("topic4 still available after delete",
                getTopicById("topic4") == null);
     assertTrue("topic3 still available after delete",
@@ -150,14 +154,12 @@ public class DeleteTest extends AbstractQueryTest {
 
   public void testDeleteAll() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
-
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
     
     update("delete $A, $B from instance-of($A, $B)");
 
+    // only the implicitly defined default name type remains after this
     assertTrue("wrong number of topics after delete",
-               topicmap.getTopics().size() == 0);
+               topicmap.getTopics().size() == 1);
   }
 
   /// delete function tests

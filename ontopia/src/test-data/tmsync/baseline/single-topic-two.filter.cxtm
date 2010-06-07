@@ -26,6 +26,11 @@
 <locator>http://psi.example.org/type-one</locator>
 </subjectIdentifiers>
 </topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
 <association number="1">
 <type topicref="5"></type>
 <role number="1">

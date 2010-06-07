@@ -9,6 +9,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.utils.PSI;
 
 public class ClassInstanceIndexTest extends AbstractIndexTest {
   
@@ -180,6 +181,7 @@ public class ClassInstanceIndexTest extends AbstractIndexTest {
   }
 
   public void testTopicNameTypes() {
+    
     // STATE 1: empty topic map
     assertTrue("index finds spurious basename types",
            clsix.getTopicNames(null).size() == 0);
@@ -190,21 +192,24 @@ public class ClassInstanceIndexTest extends AbstractIndexTest {
     assertTrue("index finds basename types in empty topic map",
            clsix.getTopicNameTypes().size() == 0);
     
-    // STATE 2: Contains untyped basenames
+    // STATE 2: Contains basenames with default name type
     TopicIF topic = builder.makeTopic();
     TopicNameIF inst = builder.makeTopicName(topic, "");
 
-    assertTrue("not exactly one untyped basename",
-           clsix.getTopicNames(null).size() == 1);
+    TopicIF defaultNameType = topicMap.getTopicBySubjectIdentifier(PSI
+        .getSAMNameType());
+    
+    assertTrue("not exactly one default name type basename",
+           clsix.getTopicNames(defaultNameType).size() == 1);
 
-    assertTrue("Found basename type when none expected.", 
-           clsix.getTopicNameTypes().size() == 0);
+    assertTrue("Found no basename type when one expected.", 
+           clsix.getTopicNameTypes().size() == 1);
     assertTrue("<type> incorrectly indexed as an basename type.", 
            !clsix.usedAsTopicNameType(type));
     assertTrue("Expected no basenames of type <type>", 
            clsix.getTopicNames(type).size() == 0);
-    assertTrue("Expected <inst> to be indexed with null type.", 
-           clsix.getTopicNames(null).contains(inst));
+    assertTrue("Expected <inst> to be indexed with default name type.", 
+           clsix.getTopicNames(defaultNameType).contains(inst));
         
     // STATE 3: Contains typed basenames
     inst.setType(type);
@@ -235,7 +240,7 @@ public class ClassInstanceIndexTest extends AbstractIndexTest {
     dup.setType(null);
 
     assertTrue("not exactly one untyped basename",
-           clsix.getTopicNames(null).size() == 1);
+           clsix.getTopicNames(defaultNameType).size() == 1);
     
   }
 

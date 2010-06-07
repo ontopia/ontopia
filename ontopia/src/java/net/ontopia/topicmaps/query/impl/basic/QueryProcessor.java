@@ -415,12 +415,11 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     public int counter = 0;
   }
 
-  class RowComparator implements java.util.Comparator {
-    
+  class RowComparator implements java.util.Comparator {    
     private int[] orderColumns;
     private int[] orderType;
     private boolean[] isAscending;
-    private TopicIF sort;
+    private StringifierIF sort;
 
     private final static int ORDER_UNKNOWN = -1;
     private final static int ORDER_TOPIC = 0;
@@ -469,9 +468,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
         isAscending[ix] = query.isOrderedAscending(orderBy.getName());
       }
 
-      sort = result.getQueryContext().getTopicMap()
-                   .getTopicBySubjectIdentifier(PSI.getXTMSort());
-      
+      TopicMapIF tm = result.getQueryContext().getTopicMap();
+      sort = TopicStringifiers.getFastSortNameStringifier(tm);
     }
 
     public int compare(Object o1, Object o2) {
@@ -499,8 +497,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           if (row1[orderColumns[ix]] == row2[orderColumns[ix]])
             comp = 0;
           else {
-            String name1 = getSortName((TopicIF) row1[orderColumns[ix]], sort);
-            String name2 = getSortName((TopicIF) row2[orderColumns[ix]], sort);
+            String name1 = sort.toString(row1[orderColumns[ix]]);
+            String name2 = sort.toString(row2[orderColumns[ix]]);
             
             if (name1 == null)
               comp = name2 == null ? 0 : -1;
@@ -533,8 +531,8 @@ public class QueryProcessor extends AbstractQueryProcessor implements
             if (row1[orderColumns[ix]] == row2[orderColumns[ix]])
               comp = 0;
             else {
-              String name1 = getSortName((TopicIF) row1[orderColumns[ix]], sort);
-              String name2 = getSortName((TopicIF) row2[orderColumns[ix]], sort);
+              String name1 = sort.toString(row1[orderColumns[ix]]);
+              String name2 = sort.toString(row2[orderColumns[ix]]);
               
               if (name1 == null)
                 comp = name2 == null ? 0 : -1;
@@ -606,65 +604,6 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           return false;
       return true;
     }
-  }
-
-  // -- helper method
-
-  /**
-   * Returns the sort name used to sort the given topic.
-   */
-  public static String getSortName(TopicIF topic, TopicIF sort) {
-    // 0: verify that we have a topic at all
-    if (topic == null)
-      return "[No name]";
-    
-    // 1: pick base name with the fewest topics in scope
-    //    (and avoid typed names)
-    TopicNameIF bn = null;
-    int least = 0xEFFF;
-    Collection bns = topic.getTopicNames();
-    if (!bns.isEmpty()) {
-      Iterator it = bns.iterator();
-      while (it.hasNext()) {
-        TopicNameIF candidate = (TopicNameIF) it.next();
-        int score = candidate.getScope().size() * 10;
-        if (candidate.getType() != null)
-          score++;
-        if (score < least) {
-          bn = candidate;
-          least = score;
-        }
-      }
-    }
-    if (bn == null)
-        return "[No name]";
-    
-    // 2: if we have a sort name, pick variant with fewest topics in scope
-    //    beyond sort name; penalty for no sort name = 0xFF topics
-    if (sort == null)
-      return bn.getValue();
-    VariantNameIF vn = null;
-    least = 0xEFFF;
-    Collection vns = bn.getVariants();
-    if (!vns.isEmpty()) {
-      Iterator it = vns.iterator();
-      while (it.hasNext()) {
-        VariantNameIF candidate = (VariantNameIF) it.next();
-        Collection scope = candidate.getScope();
-        int themes;
-        if (scope.contains(sort))
-          themes = scope.size() - 1;
-        else
-          themes = 0xFF + scope.size();
-        if (themes < least) {
-          vn = candidate;
-          least = themes;
-        }
-      }
-    }
-    if (vn == null || vn.getValue() == null)
-      return bn.getValue();
-    return vn.getValue();
   }
 
   // -- Prefetcher constants

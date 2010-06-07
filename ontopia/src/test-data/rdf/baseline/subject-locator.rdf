@@ -1,39 +1,46 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <subjectIdentity>
-<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/Person"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id2">
 <subjectIdentity>
-<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/knows"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/Person"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id3">
 <subjectIdentity>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/knows"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
+<subjectIdentity>
 <resourceRef href="mailto:grove@ontopia.net"></resourceRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id1"></instanceOf>
 <baseNameString>Geir Ove Grønmo</baseNameString>
 </baseName>
 </topic>
-<topic id="id4">
+<topic id="id5">
 <subjectIdentity>
 <resourceRef href="mailto:larsga@garshol.priv.no"></resourceRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id1"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 </topic>
 <association>
-<instanceOf href="#id2"></instanceOf>
+<instanceOf href="#id3"></instanceOf>
 <member>
-<instanceOf href="#id1"></instanceOf>
-<topicRef href="#id3"></topicRef>
+<instanceOf href="#id2"></instanceOf>
+<topicRef href="#id4"></topicRef>
 </member>
 <member>
-<instanceOf href="#id1"></instanceOf>
-<topicRef href="#id4"></topicRef>
+<instanceOf href="#id2"></instanceOf>
+<topicRef href="#id5"></topicRef>
 </member>
 </association>
 </topicMap>

@@ -4,6 +4,7 @@
 package net.ontopia.topicmaps.webed.impl.actions.test;
 
 import java.util.*;
+import java.io.IOException;
 import net.ontopia.test.AbstractOntopiaTestCase;
 import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.FakeServletResponse;
@@ -30,30 +31,25 @@ public class TestRemoveType extends AbstractWebedTestCase {
     4. Double remove of type
   */
   
-  public void testNormalOperation() throws java.io.IOException{
-    try{
-      
-			TopicMapBuilderIF builder = tm.getBuilder();
-			TopicIF topic = builder.makeTopic();
-			TopicIF type = builder.makeTopic();
-      TopicNameIF bn = builder.makeTopicName(topic, type, "");
+  public void testNormalOperation() throws IOException {
+    TopicMapBuilderIF builder = tm.getBuilder();
+    TopicIF topic = builder.makeTopic();
+    TopicIF type = builder.makeTopic();
+    TopicNameIF bn = builder.makeTopicName(topic, type, "");
             
-      //make action
-      ActionIF action = new RemoveType();
+    //make action
+    ActionIF action = new RemoveType();
             
-      //build parms
-      ActionParametersIF params = makeParameters(makeList(bn));
-      ActionResponseIF response = makeResponse();
+    //build parms
+    ActionParametersIF params = makeParameters(makeList(bn));
+    ActionResponseIF response = makeResponse();
       
-      //execute    
-      action.perform(params, response);
-      //test      
-      TopicIF bntype = bn.getType();
-      assertFalse("We still have type", bntype != null);
+    //execute    
+    action.perform(params, response);
 
-    }catch (ActionRuntimeException e){
-      fail("Good everything, should work");
-    }
+    //test      
+    TopicIF deftype = tm.getTopicBySubjectIdentifier(PSI.getSAMNameType());
+    assertFalse("Type is not default name type", bn.getType() != deftype);
   }
   
   public void testWrongObjectParam() throws java.io.IOException{
@@ -77,10 +73,10 @@ public class TestRemoveType extends AbstractWebedTestCase {
   }
 
   public void testMultipleDelete() throws java.io.IOException{
-		TopicMapBuilderIF builder = tm.getBuilder();
-		TopicIF topic = builder.makeTopic();
-		TopicIF type = builder.makeTopic();
-		TopicNameIF bn = builder.makeTopicName(topic, type, "");
+    TopicMapBuilderIF builder = tm.getBuilder();
+    TopicIF topic = builder.makeTopic();
+    TopicIF type = builder.makeTopic();
+    TopicNameIF bn = builder.makeTopicName(topic, type, "");
             
     //make action
     ActionIF action = new RemoveType();
@@ -96,7 +92,7 @@ public class TestRemoveType extends AbstractWebedTestCase {
     action.perform(params, response);
 
     //test      
-    TopicIF bntype = bn.getType();
-    assertFalse("We still have type", bntype != null);
+    TopicIF deftype = tm.getTopicBySubjectIdentifier(PSI.getSAMNameType());
+    assertFalse("Type is not default name type", bn.getType() != deftype);
   }
 }

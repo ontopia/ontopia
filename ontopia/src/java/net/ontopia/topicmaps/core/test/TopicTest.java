@@ -399,6 +399,29 @@ public class TopicTest extends AbstractTMObjectTest {
     topic.remove();
     assertTrue("topic was not deleted", topic.getTopicMap() == null);
   }
+
+  public void testDeleteTopicWithRole() {
+    // first create a ternary association
+    TopicIF atype = builder.makeTopic();
+    TopicIF other = builder.makeTopic(); 
+    TopicIF roletype = builder.makeTopic();
+
+    for (int ix = 0; ix < 150; ix++) {
+      // must do this 100 times to trigger creation of TreeSet
+      AssociationIF assoc = builder.makeAssociation(atype);
+      AssociationRoleIF role1 = builder.makeAssociationRole(assoc, roletype, other);
+      AssociationRoleIF role2 = builder.makeAssociationRole(assoc, roletype, topic);
+    }
+
+    // then delete the topic
+    topic.remove(); // boom
+
+    // now verify that it's gone
+    assertEquals("wrong number of topics in TM",
+                 3, topicmap.getTopics().size());
+    assertTrue("wrong number of associations in TM",
+               topicmap.getAssociations().size() == 0);
+  }
   
   // --- Internal methods
 

@@ -53,7 +53,7 @@ public class TestRemoteTopicIndex extends TestTMRAPOperation {
 
     TopicPage page = (TopicPage) pages.iterator().next();
     assertTrue("Bad view URL in topic page: " + page.getURL(),
-               "http://localhost:8080/omnigator/plugins/viz/get-topic/models/topic_complete.jsp?tm=opera.xtm&id=431".equals(page.getURL()));
+               "http://localhost:8080/omnigator/plugins/viz/get-topic/models/topic_complete.jsp?tm=opera.xtm&id=432".equals(page.getURL()));
   }
 
   // --- Internal classes

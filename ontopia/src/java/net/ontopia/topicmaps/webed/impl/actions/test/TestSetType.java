@@ -52,31 +52,11 @@ public class TestSetType extends AbstractWebedTestCase {
     assertFalse("Type not changed", newType == currType);    
   }
   
-  public void testBadObjectId() throws java.io.IOException{
-		TopicMapBuilderIF builder = tm.getBuilder();
-		TopicIF topic = builder.makeTopic();
-		TopicIF type = builder.makeTopic();
-		TopicNameIF bn = builder.makeTopicName(topic, type, "");
-			
-    // make action
-    ActionIF action = new SetType();
-   
-    // build params
-    ActionParametersIF params = makeParameters(bn, "mambojambo");
-    ActionResponseIF response = makeResponse();
-
-    // execute
-    action.perform(params, response);
-
-    // verify that the object has no type
-    assertFalse("The basename still has a type", bn.getType() != null);
-  }
-  
   public void testBadParams() throws java.io.IOException{
-		TopicMapBuilderIF builder = tm.getBuilder();
-		TopicIF topic = builder.makeTopic();
-		TopicIF type = builder.makeTopic();
-		TopicNameIF bn = builder.makeTopicName(topic, type, "");
+    TopicMapBuilderIF builder = tm.getBuilder();
+    TopicIF topic = builder.makeTopic();
+    TopicIF type = builder.makeTopic();
+    TopicNameIF bn = builder.makeTopicName(topic, type, "");
         
     //make action
     ActionIF action = new SetType();

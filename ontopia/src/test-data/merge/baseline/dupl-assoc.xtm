@@ -1,58 +1,68 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Borders with</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Borders with</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#country"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
-<baseName>
-<baseNameString>Country</baseNameString>
-</baseName>
 </topic>
 <topic id="id4">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/country.xtm#no"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#country"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
-<baseNameString>Norway</baseNameString>
+<instanceOf href="#id3"></instanceOf>
+<baseNameString>Country</baseNameString>
 </baseName>
 </topic>
 <topic id="id5">
 <subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/country.xtm#no"></subjectIndicatorRef>
+</subjectIdentity>
+<baseName>
+<instanceOf href="#id3"></instanceOf>
+<baseNameString>Norway</baseNameString>
+</baseName>
+</topic>
+<topic id="id6">
+<subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/country.xtm#se"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Sweden</baseNameString>
 </baseName>
 </topic>
 <association>
 <instanceOf href="#id1"></instanceOf>
 <member>
-<instanceOf href="#id3"></instanceOf>
-<topicRef href="#id4"></topicRef>
+<instanceOf href="#id4"></instanceOf>
+<topicRef href="#id5"></topicRef>
 </member>
 <member>
-<instanceOf href="#id3"></instanceOf>
-<topicRef href="#id5"></topicRef>
+<instanceOf href="#id4"></instanceOf>
+<topicRef href="#id6"></topicRef>
 </member>
 </association>
 <association>
 <instanceOf href="#id2"></instanceOf>
 <member>
-<instanceOf href="#id3"></instanceOf>
-<topicRef href="#id4"></topicRef>
+<instanceOf href="#id4"></instanceOf>
+<topicRef href="#id5"></topicRef>
 </member>
 <member>
-<instanceOf href="#id3"></instanceOf>
-<topicRef href="#id5"></topicRef>
+<instanceOf href="#id4"></instanceOf>
+<topicRef href="#id6"></topicRef>
 </member>
 </association>
 </topicMap>

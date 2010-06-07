@@ -559,174 +559,6 @@ public class MergeTMTest extends AbstractTopicMapTestCase {
     }
   }
 
-  public void _testTNCMergeTrivial() {
-    TopicIF t1 = builder1.makeTopic();
-    builder1.makeTopicName(t1, "basename");
-    TopicIF t2 = builder2.makeTopic();
-    builder2.makeTopicName(t2, "basename");
-
-    MergeUtils.mergeInto(topicmap1, topicmap2);
-
-    assertTrue("topics with equal base names in unconstrained scope not merged",
-           topicmap1.getTopics().size() == 1);
-
-    assertTrue("base name duplicates not suppressed",
-           ((TopicIF) topicmap1.getTopics().iterator().next()).getTopicNames().size() == 1);
-  }
-
-  public void _testTNCMergeTrivialThreeWay() {
-    TopicMapIF empty = makeTopicMap();
-    TopicIF t1 = builder1.makeTopic();
-    builder1.makeTopicName(t1, "basename");
-    TopicIF t2 = builder2.makeTopic();
-    builder2.makeTopicName(t2, "basename");
-
-    MergeUtils.mergeInto(empty, topicmap1);
-    MergeUtils.mergeInto(empty, topicmap2);
-
-    assertTrue("topics with equal base names in unconstrained scope not merged",
-           empty.getTopics().size() == 1);
-
-    assertTrue("base name duplicates not suppressed",
-           ((TopicIF) empty.getTopics().iterator().next()).getTopicNames().size() == 1);
-  }
-
-  public void _testTNCMergeWithScope() {
-    TopicIF tt1 = builder1.makeTopic();
-    tt1.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
-    TopicIF tt2 = builder2.makeTopic();
-    tt2.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
-    
-    TopicIF t1 = builder1.makeTopic();
-    TopicNameIF bn1 = builder1.makeTopicName(t1, "basename");
-    bn1.addTheme(tt1);
-    
-    TopicIF t2 = builder2.makeTopic();
-    TopicNameIF bn2 = builder2.makeTopicName(t2, "basename");
-    bn2.addTheme(tt2);
-
-    MergeUtils.mergeInto(topicmap1, topicmap2);
-
-    assertTrue("topics with equal base names in same scope not merged",
-           topicmap1.getTopics().size() == 2);
-
-    assertTrue("base name duplicates not suppressed",
-           t1.getTopicNames().size() == 1);
-  }
-
-  public void _testTNCMerge2_1() {
-    TopicIF t1 = builder1.makeTopic();
-    builder1.makeTopicName(t1, "basename1");
-    TopicIF t2 = builder1.makeTopic();
-    builder1.makeTopicName(t2, "basename2");
-    
-    TopicIF t3 = builder2.makeTopic();
-    builder2.makeTopicName(t3, "basename1");
-    builder2.makeTopicName(t3, "basename2");
-
-    MergeUtils.mergeInto(topicmap1, topicmap2);
-
-    assertTrue("topics with equal base names in same scope not merged",
-           topicmap1.getTopics().size() == 1);
-
-    t1 = (TopicIF) topicmap1.getTopics().iterator().next();
-    
-    assertTrue("base name duplicates not suppressed",
-           t1.getTopicNames().size() == 2);
-  }
-  
-  public void _testTNCMerge1_2() {
-    TopicIF t1 = builder1.makeTopic();
-    builder1.makeTopicName(t1, "basename1");
-    builder1.makeTopicName(t1, "basename2");
-    
-    TopicIF t2 = builder2.makeTopic();
-    builder2.makeTopicName(t2, "basename1");
-    TopicIF t3 = builder2.makeTopic();
-    builder2.makeTopicName(t3, "basename2");
-
-    MergeUtils.mergeInto(topicmap1, topicmap2);
-
-    assertTrue("topics with equal base names in same scope not merged",
-           topicmap1.getTopics().size() == 1);
-    assertTrue("base name duplicates not suppressed",
-           t1.getTopicNames().size() == 2);
-  }
-
-  public void _testTNCMergeCascade() {
-    TopicIF tt1 = builder1.makeTopic();
-    builder1.makeTopicName(tt1, "basename1");
-    TopicIF tt2 = builder2.makeTopic();
-    builder2.makeTopicName(tt2, "basename1");
-    
-    TopicIF t1 = builder1.makeTopic();
-    TopicNameIF bn1 = builder1.makeTopicName(t1, "basename2");
-    bn1.addTheme(tt1);
-    
-    TopicIF t2 = builder2.makeTopic();
-    TopicNameIF bn2 = builder2.makeTopicName(t2, "basename2");
-    bn2.addTheme(tt2);
-
-    MergeUtils.mergeInto(topicmap1, topicmap2);
-
-    assertTrue("topics with equal base names in same scope not merged",
-           topicmap1.getTopics().size() == 2);
-  }
-  
-  public void _testTNCMergeCascadeDeep() {
-    TopicIF ttt1 = builder1.makeTopic();
-    builder1.makeTopicName(ttt1, "basename1");
-    TopicIF ttt2 = builder2.makeTopic();
-    builder2.makeTopicName(ttt2, "basename1");
-    
-    TopicIF tt1 = builder1.makeTopic();
-    TopicNameIF bn1 = builder1.makeTopicName(tt1, "basename2");
-    bn1.addTheme(ttt1);
-    
-    TopicIF tt2 = builder2.makeTopic();
-    TopicNameIF bn2 = builder2.makeTopicName(tt2, "basename2");
-    bn2.addTheme(ttt2);
-
-    TopicIF t1 = builder1.makeTopic();
-    TopicNameIF bn3 = builder1.makeTopicName(t1, "basename3");
-    bn3.addTheme(tt1);
-    
-    TopicIF t2 = builder2.makeTopic();
-    TopicNameIF bn4 = builder2.makeTopicName(t2, "basename3");
-    bn4.addTheme(tt2);
-
-    MergeUtils.mergeInto(topicmap1, topicmap2);
-
-    assertTrue("topics with equal base names in same scope not merged",
-           topicmap1.getTopics().size() == 3);
-  }
-  
-  public void _testTNCMergeWide() {
-    TopicIF tt1 = builder1.makeTopic();
-    builder1.makeTopicName(tt1, "basename1");
-    TopicIF tt2 = builder2.makeTopic();
-    builder2.makeTopicName(tt2, "basename1");
-    
-    TopicIF t1 = builder1.makeTopic();
-    TopicNameIF bn1 = builder1.makeTopicName(t1, "basename2");
-    bn1.addTheme(tt1);
-    TopicNameIF bn4 = builder1.makeTopicName(t1, "basename3");
-    bn4.addTheme(tt1);
-    
-    TopicIF t2 = builder2.makeTopic();
-    TopicNameIF bn2 = builder2.makeTopicName(t2, "basename2");
-    bn2.addTheme(tt2);
-
-    TopicIF t3 = builder2.makeTopic();
-    TopicNameIF bn3 = builder2.makeTopicName(t3, "basename3");
-    bn3.addTheme(tt2);
-
-    MergeUtils.mergeInto(topicmap1, topicmap2);
-
-    assertTrue("topics with equal base names in same scope not merged",
-           topicmap1.getTopics().size() == 2);
-  }
-
   public void testTopicNameScopeCopy() {
     // used to have a bug on this, hence the test
     TopicIF tt1 = builder1.makeTopic();
@@ -738,41 +570,47 @@ public class MergeTMTest extends AbstractTopicMapTestCase {
     TopicNameIF bn1 = builder2.makeTopicName(t2, "basename2");
     bn1.addTheme(tt2);
 
+    int before = topicmap1.getTopics().size();
+    
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
     assertTrue("incorrect number of topics in merged topic map",
-           topicmap1.getTopics().size() == 3);
+               topicmap1.getTopics().size() == (before + 2));
 
     t2 = (TopicIF) topicmap1.getObjectByItemIdentifier(makeLocator("http://www.ontopia.net"));
     bn1 = (TopicNameIF) t2.getTopicNames().iterator().next();
     assertTrue("merged topic lost base name",
-           bn1 != null);
+               bn1 != null);
     assertTrue("merged base name lost scope",
-           bn1.getScope().size() == 1);
+               bn1.getScope().size() == 1);
   }
 
-  public void _testVariantNameCopy() {
+  public void testVariantNameCopy() {
     TopicIF t1 = builder1.makeTopic();
+    t1.addSubjectIdentifier(makeLocator("http://psi.ontopia.net"));
     TopicNameIF bn1 = builder1.makeTopicName(t1, "basename1");
     
     TopicIF t2 = builder2.makeTopic();
+    t2.addSubjectIdentifier(makeLocator("http://psi.ontopia.net"));
     TopicNameIF bn2 = builder2.makeTopicName(t2, "basename1");
     builder2.makeVariantName(bn2, "variant1");
 
+    int before = topicmap1.getTopics().size();
+    
     MergeUtils.mergeInto(topicmap1, topicmap2);
 
     assertTrue("incorrect number of topics in merged topic map",
-           topicmap1.getTopics().size() == 1);
+               topicmap1.getTopics().size() == before);
 
     TopicNameIF bnx = (TopicNameIF) t1.getTopicNames().iterator().next();
     assertTrue("merged topic lost base name",
-           bnx != null);
+               bnx != null);
 
     VariantNameIF vn1 = (VariantNameIF) bnx.getVariants().iterator().next();
     assertTrue("merged topic lost variant name",
-           vn1 != null);
+               vn1 != null);
     assertTrue("variant name lost value",
-           vn1.getValue() != null && vn1.getValue().equals("variant1"));
+               vn1.getValue() != null && vn1.getValue().equals("variant1"));
   }
 
   public void testSourceLocSubjIndConflict() {
@@ -869,39 +707,37 @@ public class MergeTMTest extends AbstractTopicMapTestCase {
   }    
 
   public void testMergeBug657() {
-    try {
-      TopicIF t1 = builder1.makeTopic();
-      t1.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
-      builder1.makeTopicName(t1, "Ontopia");
-      builder1.makeTopicName(t1, "Ontopia AS");
-      builder1.makeTopicName(t1, "Ontopia Ltd.");
-      builder1.makeTopicName(t1, "Ontopia Ltd");
+    LocatorIF psi = makeLocator("http://www.ontopia.net");
+    TopicIF t1 = builder1.makeTopic();
+    t1.addSubjectIdentifier(psi);
+    builder1.makeTopicName(t1, "Ontopia");
+    builder1.makeTopicName(t1, "Ontopia AS");
+    builder1.makeTopicName(t1, "Ontopia Ltd.");
+    builder1.makeTopicName(t1, "Ontopia Ltd");
+    
+    TopicIF t2 = builder1.makeTopic();
+    t2.addSubjectIdentifier(makeLocator("http://www.ontopia.com"));
+    builder1.makeTopicName(t2, "Ontopia");
+    builder1.makeTopicName(t2, "Ontopia AS");
+    builder1.makeTopicName(t2, "Ontopia Ltd.");
+    builder1.makeTopicName(t2, "Ontopopia");
       
-      TopicIF t2 = builder1.makeTopic();
-      t2.addSubjectIdentifier(makeLocator("http://www.ontopia.com"));
-      builder1.makeTopicName(t2, "Ontopia");
-      builder1.makeTopicName(t2, "Ontopia AS");
-      builder1.makeTopicName(t2, "Ontopia Ltd.");
-      builder1.makeTopicName(t2, "Ontopopia");
+    TopicIF t3 = builder2.makeTopic();
+    t3.addSubjectIdentifier(psi);
+    t3.addSubjectIdentifier(makeLocator("http://www.ontopia.com"));
+    
+    int before = topicmap1.getTopics().size();
       
-      TopicIF t3 = builder2.makeTopic();
-      t3.addSubjectIdentifier(makeLocator("http://www.ontopia.net"));
-      t3.addSubjectIdentifier(makeLocator("http://www.ontopia.com"));
+    MergeUtils.mergeInto(topicmap1, topicmap2);
 
-      MergeUtils.mergeInto(topicmap1, topicmap2);
-
-      TopicIF merged = (TopicIF) topicmap1.getTopics().iterator().next();
-      assertTrue("topics merged incorrectly",
-                 topicmap1.getTopics().size() == 1);
-      assertTrue("base names lost in merge",
-                 merged.getTopicNames().size() == 5);
-      assertTrue("topic subject indicator lost in merge",
-                 merged.getSubjectIdentifiers().size() == 2);
-    }
-    catch (ConstraintViolationException e) {
-      fail("spurious ConstraintViolationException", e);
-    }
-  }    
+    TopicIF merged = topicmap1.getTopicBySubjectIdentifier(psi);
+    assertTrue("topics merged incorrectly",
+               topicmap1.getTopics().size() == (before - 1));
+    assertTrue("base names lost in merge",
+               merged.getTopicNames().size() == 5);
+    assertTrue("topic subject indicator lost in merge",
+               merged.getSubjectIdentifiers().size() == 2);
+  }
   
   public void testBug1790() {
     // test case for bug #1790

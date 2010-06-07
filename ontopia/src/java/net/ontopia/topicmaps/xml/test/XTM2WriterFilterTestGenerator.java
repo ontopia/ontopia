@@ -1,6 +1,4 @@
 
-// $Id: XTM2WriterFilterTestGenerator.java,v 1.1 2008/07/04 10:22:30 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml.test;
 
 import java.io.File;
@@ -100,9 +98,9 @@ public class XTM2WriterFilterTestGenerator implements TestCaseGeneratorIF {
       (new CanonicalXTMWriter(new FileOutputStream(out))).write(xtmMap);
 
       // compare results
-      assertTrue("canonicalizing the test file " + filename
-          + " gives a different result than canonicalizing the XTM 2.0 export of "
-          + filename + ".", FileUtils.compare(out, baseline));
+      assertTrue("canonicalizing the test file " + filename +
+                 " into " + out + " is different from " + baseline,
+                 FileUtils.compare(out, baseline));
     }
   }
 }

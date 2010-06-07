@@ -86,6 +86,9 @@
 <subjectIdentifiers>
 <locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
 </subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id5</locator>
+</itemIdentifiers>
 </topic>
 <topic number="6">
 <subjectIdentifiers>

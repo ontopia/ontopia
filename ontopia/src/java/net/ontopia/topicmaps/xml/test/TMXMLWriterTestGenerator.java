@@ -21,7 +21,7 @@ import net.ontopia.utils.FileUtils;
 
 public class TMXMLWriterTestGenerator implements TestCaseGeneratorIF {
 
-  protected boolean recanonicalizeSource = true;
+  protected boolean recanonicalizeSource = false;
 
   public Iterator generateTests() {
     Set tests = new HashSet();

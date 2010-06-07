@@ -1,38 +1,50 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id8"></instanceOf>
 <baseNameString>Bjørg England Garshol</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id8"></instanceOf>
 <baseNameString>Child</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <baseName>
+<instanceOf href="#id8"></instanceOf>
 <baseNameString>Father</baseNameString>
 </baseName>
 </topic>
 <topic id="id4">
 <baseName>
+<instanceOf href="#id8"></instanceOf>
 <baseNameString>Knut Finn Garshol</baseNameString>
 </baseName>
 </topic>
 <topic id="id5">
 <baseName>
+<instanceOf href="#id8"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 </topic>
 <topic id="id6">
 <baseName>
+<instanceOf href="#id8"></instanceOf>
 <baseNameString>Mother</baseNameString>
 </baseName>
 </topic>
 <topic id="id7">
 <baseName>
+<instanceOf href="#id8"></instanceOf>
 <baseNameString>Parent/child</baseNameString>
 </baseName>
+</topic>
+<topic id="id8">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 <association>
 <instanceOf href="#id7"></instanceOf>

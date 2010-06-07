@@ -4,14 +4,21 @@
 <topic id="id2">
 <instanceOf href="#id1"></instanceOf>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Norway</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
+<subjectIdentity>
 <resourceRef href="http://www.topicmaps.org/xtm/1.0/#country"></resourceRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Country</baseNameString>
 </baseName>
 </topic>

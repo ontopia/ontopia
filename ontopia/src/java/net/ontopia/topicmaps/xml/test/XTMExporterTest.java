@@ -4,13 +4,11 @@
 package net.ontopia.topicmaps.xml.test;
 
 import java.io.*;
+import java.util.Collection;
 import java.util.Iterator;
-import junit.framework.*;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.*;
 
 public class XTMExporterTest extends AbstractXMLTestCase {
@@ -29,10 +27,15 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     writer.setVersion(1);
     writer.write(tm);
     TopicMapIF tm2 = new XTMTopicMapReader(new File(out)).read();
-    TopicIF topic = (TopicIF) tm2.getTopics().iterator().next();
-    TopicNameIF bn = (TopicNameIF) topic.getTopicNames().iterator().next();
-    assertTrue("base name value did not survive encoding change roundtrip",
-           bn.getValue().equals("B\u00E6 b\u00E6 lille lam, har du noe \u00F8l"));
+    // check for a topic that has at least one name
+    for (Object obj : tm2.getTopics()) {
+      Collection<TopicNameIF> names = ((TopicIF) obj).getTopicNames();
+      if (names != null && names.size() > 0) {
+        TopicNameIF bn = names.iterator().next();
+        assertTrue("base name value did not survive encoding change roundtrip",
+               bn.getValue().equals("B\u00E6 b\u00E6 lille lam, har du noe \u00F8l"));
+      }
+    }
   }
 
   public void testEncoding2() throws IOException {
@@ -42,10 +45,15 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     writer.setVersion(1);
     writer.write(tm);
     TopicMapIF tm2 = new XTMTopicMapReader(new File(out)).read();
-    TopicIF topic = (TopicIF) tm2.getTopics().iterator().next();
-    TopicNameIF bn = (TopicNameIF) topic.getTopicNames().iterator().next();
-    assertTrue("base name value did not survive encoding change roundtrip",
-           bn.getValue().equals("B\u00E6 b\u00E6 lille lam, har du noe \u00F8l"));
+    // check for a topic that has at least one name
+    for (Object obj : tm2.getTopics()) {
+      Collection<TopicNameIF> names = ((TopicIF) obj).getTopicNames();
+      if (names != null && names.size() > 0) {
+        TopicNameIF bn = names.iterator().next();
+        assertTrue("base name value did not survive encoding change roundtrip",
+            bn.getValue().equals("B\u00E6 b\u00E6 lille lam, har du noe \u00F8l"));
+      }
+    }
   }
 
   /// id preservation
@@ -86,7 +94,18 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     bn.addItemIdentifier(sourceLoc);
   
     reload();
-    topic = (TopicIF) topicmap.getTopics().iterator().next();
+    
+    // get a topic with at least one name
+    topic = null;
+    for (Object obj : topicmap.getTopics()) {
+      Collection<TopicNameIF> names = ((TopicIF) obj).getTopicNames();
+      if (names != null && names.size() > 0) {
+        topic = (TopicIF) obj;
+        break;
+      }
+    }
+    
+    assertNotNull("no topic found with a topic name after reload", topic);
     check("base name", (TopicNameIF) topic.getTopicNames().iterator().next());
   }
 
@@ -99,7 +118,18 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     vn.addItemIdentifier(sourceLoc);
   
     reload();
-    topic = (TopicIF) topicmap.getTopics().iterator().next();
+    
+    // get a topic with at least one name
+    topic = null;
+    for (Object obj : topicmap.getTopics()) {
+      Collection<TopicNameIF> names = ((TopicIF) obj).getTopicNames();
+      if (names != null && names.size() > 0) {
+        topic = (TopicIF) obj;
+        break;
+      }
+    }
+    
+    assertNotNull("no topic found with a topic name after reload", topic);
     bn = (TopicNameIF) topic.getTopicNames().iterator().next();
     check("variant name", (VariantNameIF) bn.getVariants().iterator().next());
   }
@@ -141,7 +171,17 @@ public class XTMExporterTest extends AbstractXMLTestCase {
 
     reload();
 
-    topic = (TopicIF) topicmap.getTopics().iterator().next();
+    // get a topic with at least one name
+    topic = null;
+    for (Object obj : topicmap.getTopics()) {
+      Collection<TopicNameIF> names = ((TopicIF) obj).getTopicNames();
+      if (names != null && names.size() > 0) {
+        topic = (TopicIF) obj;
+        break;
+      }
+    }
+    
+    assertNotNull("no topic found with a topic name after reload", topic);
 
     Iterator it = topic.getTopicNames().iterator();
     assertTrue("empty base name lost on export and re-import",
@@ -161,7 +201,17 @@ public class XTMExporterTest extends AbstractXMLTestCase {
 
     reload();
 
-    topic = (TopicIF) topicmap.getTopics().iterator().next();
+    // get a topic with at least one name
+    topic = null;
+    for (Object obj : topicmap.getTopics()) {
+      Collection<TopicNameIF> names = ((TopicIF) obj).getTopicNames();
+      if (names != null && names.size() > 0) {
+        topic = (TopicIF) obj;
+        break;
+      }
+    }
+    
+    assertNotNull("no topic found with a topic name after reload", topic);
     bn = (TopicNameIF) topic.getTopicNames().iterator().next();
     
     Iterator it = bn.getVariants().iterator();

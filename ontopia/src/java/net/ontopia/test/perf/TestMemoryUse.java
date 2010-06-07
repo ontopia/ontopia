@@ -28,6 +28,8 @@ public class TestMemoryUse {
     System.gc(); System.gc(); System.gc(); System.gc();
     System.gc(); System.gc(); System.gc(); System.gc();
 
+    //new BufferedReader(new InputStreamReader(System.in)).readLine();
+    
     reader = ImportExportUtils.getReader(file);
     long before = Runtime.getRuntime().totalMemory() -
                   Runtime.getRuntime().freeMemory();
@@ -43,6 +45,8 @@ public class TestMemoryUse {
                  Runtime.getRuntime().freeMemory();
 
     System.out.println(file + ": " + (after - before));
+
+    //new BufferedReader(new InputStreamReader(System.in)).readLine();
 
     reader = null;
     tm = null;

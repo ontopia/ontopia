@@ -1,15 +1,17 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>Home page</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>Norway</baseNameString>
 </baseName>
 <occurrence>
-<instanceOf href="#id4"></instanceOf>
+<instanceOf href="#id5"></instanceOf>
 <resourceData>Norway is a nice country.</resourceData>
 </occurrence>
 <occurrence>
@@ -17,11 +19,11 @@
 <resourceRef href="http://www.norge.no/"></resourceRef>
 </occurrence>
 <occurrence>
-<instanceOf href="#id4"></instanceOf>
+<instanceOf href="#id5"></instanceOf>
 <resourceRef href="http://www.norway.com/"></resourceRef>
 </occurrence>
 <occurrence>
-<instanceOf href="#id4"></instanceOf>
+<instanceOf href="#id5"></instanceOf>
 <scope>
 <topicRef href="#id3"></topicRef>
 </scope>
@@ -30,10 +32,16 @@
 </topic>
 <topic id="id3">
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>Tourism</baseNameString>
 </baseName>
 </topic>
 <topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id5">
 <subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#occurrence"></subjectIndicatorRef>
 </subjectIdentity>

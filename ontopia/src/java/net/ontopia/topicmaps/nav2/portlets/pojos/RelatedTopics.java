@@ -24,7 +24,6 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
-import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.KeyGenerator;
 
 import net.ontopia.topicmaps.query.utils.QueryUtils;
@@ -65,7 +64,8 @@ public class RelatedTopics {
   private Set exclassocs_cache;
   private Set exclroles_cache;
   private Set excltopics_cache;
-
+  private StringifierIF sort; // this one is also cached
+  
   // the maximum number of children to show
   private int maxchildren = -1;
 
@@ -525,6 +525,8 @@ public class RelatedTopics {
       // happens if the port:* topics don't exist in the TM; that's OK
     }
 
+    sort = TopicStringifiers.getFastSortNameStringifier(topicmap);
+    
     storeid = System.identityHashCode(topicmap.getStore());
     tmid = System.identityHashCode(topicmap);
   }
@@ -579,9 +581,8 @@ public class RelatedTopics {
       // compare topics
       TopicIF t1 = (TopicIF)o1;
       TopicIF t2 = (TopicIF)o2;
-      TopicIF sort = t1.getTopicMap().getTopicBySubjectIdentifier(PSI.getXTMSort());
-      String s1 = QueryProcessor.getSortName(t1, sort);
-      String s2 = QueryProcessor.getSortName(t2, sort);
+      String s1 = sort.toString(t1);
+      String s2 = sort.toString(t2);
       return ObjectUtils.compareIgnoreCase(s1, s2);      
     }
     //! else if (o1 instanceof TMObjectIF && o2 instanceof TMObjectIF) {

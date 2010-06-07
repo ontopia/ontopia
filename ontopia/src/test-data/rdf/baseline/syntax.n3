@@ -1,70 +1,78 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
-<instanceOf href="#id7"></instanceOf>
+<instanceOf href="#id8"></instanceOf>
 <subjectIdentity>
 <subjectIndicatorRef href="http://piss.ontopia.net/ontosaurus/#bad-thing"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>Bad thing</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
-<instanceOf href="#id7"></instanceOf>
+<instanceOf href="#id8"></instanceOf>
 <subjectIdentity>
 <subjectIndicatorRef href="http://piss.ontopia.net/ontosaurus/#good-thing"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>Good thing</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
-<instanceOf href="#id7"></instanceOf>
+<instanceOf href="#id8"></instanceOf>
 <subjectIdentity>
 <subjectIndicatorRef href="http://piss.ontopia.net/ontosaurus/#thing"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>Thing</baseNameString>
 </baseName>
 </topic>
 <topic id="id4">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#broader"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id5">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#broader-narrower"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#broader"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id6">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#narrower"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#broader-narrower"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id7">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#narrower"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id8">
 <subjectIdentity>
 <subjectIndicatorRef href="http://www.techquila.com/psi/thesaurus/#term"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <association>
-<instanceOf href="#id5"></instanceOf>
+<instanceOf href="#id6"></instanceOf>
 <member>
-<instanceOf href="#id4"></instanceOf>
+<instanceOf href="#id5"></instanceOf>
 <topicRef href="#id3"></topicRef>
 </member>
 <member>
-<instanceOf href="#id6"></instanceOf>
+<instanceOf href="#id7"></instanceOf>
 <topicRef href="#id1"></topicRef>
 </member>
 </association>
 <association>
-<instanceOf href="#id5"></instanceOf>
+<instanceOf href="#id6"></instanceOf>
 <member>
-<instanceOf href="#id4"></instanceOf>
+<instanceOf href="#id5"></instanceOf>
 <topicRef href="#id3"></topicRef>
 </member>
 <member>
-<instanceOf href="#id6"></instanceOf>
+<instanceOf href="#id7"></instanceOf>
 <topicRef href="#id2"></topicRef>
 </member>
 </association>

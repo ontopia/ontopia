@@ -1,13 +1,15 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
-<instanceOf href="#id5"></instanceOf>
+<instanceOf href="#id6"></instanceOf>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>Display</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <instanceOf href="#id4"></instanceOf>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>Language code</baseNameString>
 </baseName>
 </topic>
@@ -16,6 +18,7 @@
 <subjectIndicatorRef href="bug750.sub2#en"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>EN</baseNameString>
 </baseName>
 </topic>
@@ -24,17 +27,25 @@
 <subjectIndicatorRef href="bug750.sub3#class"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>CLASS</baseNameString>
 </baseName>
 </topic>
 <topic id="id5">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id6">
+<subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#topic"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>topic</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <scope>
 <topicRef href="#id3"></topicRef>
 </scope>

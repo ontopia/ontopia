@@ -1,30 +1,38 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Geir Ove Grønmo</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <scope>
-<topicRef href="#id4"></topicRef>
+<topicRef href="#id5"></topicRef>
 </scope>
 <baseNameString>grove</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 <occurrence>
-<instanceOf href="#id3"></instanceOf>
+<instanceOf href="#id4"></instanceOf>
 <resourceRef href="mailto:larsga@garshol.priv.no"></resourceRef>
 </occurrence>
 </topic>
 <topic id="id3">
 <subjectIdentity>
-<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/mbox"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/mbox"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id5">
 <subjectIdentity>
 <subjectIndicatorRef href="http://xmlns.com/foaf/0.1/nick"></subjectIndicatorRef>
 </subjectIdentity>

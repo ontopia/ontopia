@@ -6,9 +6,15 @@
 </topic>
 <topic id="id2">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#country"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Country</baseNameString>
 </baseName>
 <occurrence>
@@ -18,7 +24,7 @@
 <occurrence>
 <instanceOf href="#id1"></instanceOf>
 <scope>
-<topicRef href="#id3"></topicRef>
+<topicRef href="#id4"></topicRef>
 </scope>
 <resourceRef href="http://www.country.no/"></resourceRef>
 </occurrence>
@@ -27,11 +33,12 @@
 <resourceRef href="http://www.country.org/"></resourceRef>
 </occurrence>
 </topic>
-<topic id="id3">
+<topic id="id4">
 <subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#no"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Norwegian</baseNameString>
 </baseName>
 </topic>

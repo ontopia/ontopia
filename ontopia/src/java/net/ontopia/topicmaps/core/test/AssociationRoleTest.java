@@ -18,27 +18,27 @@ public class AssociationRoleTest extends AbstractTypedTest {
     
   // --- Test cases
 
-	public void testReification() {
-		TopicIF reifier = builder.makeTopic();
-		ReifiableIF reifiable = role;
-
+  public void testReification() {
+    TopicIF reifier = builder.makeTopic();
+    ReifiableIF reifiable = role;
+    
     assertTrue("Object reified by the reifying topic was found",
-							 reifier.getReified() == null);
+               reifier.getReified() == null);
     assertTrue("Topic reifying the reifiable was found",
-							 reifiable.getReifier() == null);
-
-		reifiable.setReifier(reifier);
+               reifiable.getReifier() == null);
+    
+    reifiable.setReifier(reifier);
     assertTrue("No topic reifying the reifiable was found",
-							 reifiable.getReifier() == reifier);
+               reifiable.getReifier() == reifier);
     assertTrue("No object reified by the reifying topic was found",
-							 reifier.getReified() == reifiable);
-
-		reifiable.setReifier(null);
+               reifier.getReified() == reifiable);
+    
+    reifiable.setReifier(null);
     assertTrue("Object reified by the reifying topic was found",
-							 reifier.getReified() == null);
+               reifier.getReified() == null);
     assertTrue("Topic reifying the first reifiable was found",
-							 reifiable.getReifier() == null);
-	}
+               reifiable.getReifier() == null);
+  }
 
   public void testPlayer() {
     assertTrue("player null initially", role.getPlayer() != null);
@@ -47,11 +47,11 @@ public class AssociationRoleTest extends AbstractTypedTest {
     role.setPlayer(player);
     assertTrue("player not set properly", role.getPlayer().equals(player));
 
-		try {
-			role.setPlayer(null);
-			fail("player could be set to null");
-		} catch (NullPointerException e) {
-		}
+    try {
+      role.setPlayer(null);
+      fail("player could be set to null");
+    } catch (NullPointerException e) {
+    }
     assertTrue("player not retained", role.getPlayer().equals(player));
   }
 

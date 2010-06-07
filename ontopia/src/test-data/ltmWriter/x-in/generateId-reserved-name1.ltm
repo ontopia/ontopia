@@ -1,1 +1,6 @@
-[topicA = "id5"]
+
+/* we do this with a subject identifier instead of a name to avoid
+   non-deterministic test results because of the default name type
+   (two topics, thus no control over which is #id1 and which is
+   #id2. */
+[topicA @"http://psi.ontopia.net"]

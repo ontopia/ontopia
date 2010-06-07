@@ -1,17 +1,24 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <scope>
-<topicRef href="#id2"></topicRef>
+<topicRef href="#id3"></topicRef>
 </scope>
 <baseNameString>Norway</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/#country"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Country</baseNameString>
 </baseName>
 </topic>

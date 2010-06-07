@@ -26,5 +26,8 @@
 <subjectIdentifiers>
 <locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
 </subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id3</locator>
+</itemIdentifiers>
 </topic>
 </topicMap>

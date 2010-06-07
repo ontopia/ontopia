@@ -27,8 +27,8 @@
   
     
     Setting Egypt of type: country.
-    type: 60 
-    country: 60 
+    type: 61 
+    country: 61 
     
       Opera is set in a country.
       

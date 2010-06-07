@@ -759,7 +759,6 @@ public class Processor {
                                      String[] tuple, Context ctx) {
     String value = Utils.getValue(relation, entity, field, tuple, ctx);
     if (!Utils.isValueEmpty(value)) {
-
       TopicIF type = Utils.getTopic(field.getType(), ctx);
       if (type == null && field.getType() != null)
         throw new DB2TMInputException("Name type not found", entity, tuple, field.getType());
@@ -778,12 +777,19 @@ public class Processor {
     }
   }
 
-  protected static List getTopicNames(TopicIF topic, Relation relation, Entity entity, Field field,
+  protected static List getTopicNames(TopicIF topic, Relation relation,
+                                      Entity entity, Field field,
                                       String[] tuple, Context ctx) {
     String value = Utils.getValue(relation, entity, field, tuple, ctx);
     TopicIF type = Utils.getTopic(field.getType(), ctx);
-    if (type == null && field.getType() != null)
-      throw new DB2TMInputException("Name type not found", entity, tuple, field.getType());
+    if (type == null) {
+      if (field.getType() != null)
+        throw new DB2TMInputException("Name type not found", entity, tuple,
+                                      field.getType());
+      // this means the type is the default name type. sync of this will fail
+      // because null != defaultnametype.
+      type = getDefaultNameType(ctx);
+    }
     
     // loop over names and update
     List result = new ArrayList();
@@ -794,21 +800,36 @@ public class Processor {
         TopicNameIF _bn = (TopicNameIF)ba[i];
         // check type
         TopicIF _type = _bn.getType();
-        if (ObjectUtils.different(_type, type)) continue;
+        if (ObjectUtils.different(_type, type))
+          continue;
         // check scope
-        if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx)) continue;
+        if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx))
+          continue;
         result.add(_bn);          
       }
     }
     return result;
   }
 
+  private static TopicIF getDefaultNameType(Context ctx) {
+    // if the default topic name type doesn't exist this will return nothing.
+    // that's OK, because in that case there will be no existing names with
+    // this type, either.
+    return ctx.getTopicMap().getTopicBySubjectIdentifier(PSI.getSAMNameType());
+  }
+
   protected static void removeTopicName(TopicIF topic, Relation relation, Entity entity, Field field,
                                         String[] tuple, Context ctx) {
     String value = Utils.getValue(relation, entity, field, tuple, ctx);
     TopicIF type = Utils.getTopic(field.getType(), ctx);
-    if (type == null && field.getType() != null)
-      throw new DB2TMInputException("Name type not found", entity, tuple, field.getType());
+    if (type == null) {
+      if (field.getType() != null)
+        throw new DB2TMInputException("Name type not found", entity, tuple,
+                                      field.getType());
+      // this means the type is the default name type. remove will fail
+      // because null != defaultnametype.
+      type = getDefaultNameType(ctx);
+    }
 
     // loop over names and remove first matching
     Iterator iter = topic.getTopicNames().iterator();

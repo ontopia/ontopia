@@ -4,7 +4,13 @@
 <topic id="id2">
 <instanceOf href="#id1"></instanceOf>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Test</baseNameString>
 </baseName>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 </topicMap>

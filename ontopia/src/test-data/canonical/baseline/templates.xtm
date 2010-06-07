@@ -5,8 +5,9 @@
 <subjectIndicatorRef href="http://psi.topicmapping.com/cpan-psi.rdf#psi-at-tti"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <scope>
-<topicRef href="#id5"></topicRef>
+<topicRef href="#id6"></topicRef>
 </scope>
 <baseNameString>Association Template (technology/technique/implementation)</baseNameString>
 </baseName>
@@ -17,8 +18,9 @@
 <subjectIndicatorRef href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-applied-technique"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <scope>
-<topicRef href="#id5"></topicRef>
+<topicRef href="#id6"></topicRef>
 </scope>
 <baseNameString>Applied Technique (role)</baseNameString>
 </baseName>
@@ -29,8 +31,9 @@
 <subjectIndicatorRef href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-implementation"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <scope>
-<topicRef href="#id5"></topicRef>
+<topicRef href="#id6"></topicRef>
 </scope>
 <baseNameString>Implementation (role)</baseNameString>
 </baseName>
@@ -41,62 +44,68 @@
 <subjectIndicatorRef href="http://psi.topicmapping.com/cpan-psi.rdf#psi-role-implemented-technology"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <scope>
-<topicRef href="#id5"></topicRef>
+<topicRef href="#id6"></topicRef>
 </scope>
 <baseNameString>Implemented Technology (role)</baseNameString>
 </baseName>
 </topic>
 <topic id="id5">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id6">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#at-template-role-rpc"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/language.xtm#en"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id7">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-role"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#at-template-role-rpc"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id8">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-role"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id9">
 <subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/psi1.xtm#role-template"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <association>
-<instanceOf href="#id6"></instanceOf>
-<member>
 <instanceOf href="#id7"></instanceOf>
+<member>
+<instanceOf href="#id8"></instanceOf>
 <topicRef href="#id2"></topicRef>
 </member>
 <member>
-<instanceOf href="#id8"></instanceOf>
+<instanceOf href="#id9"></instanceOf>
 <topicRef href="#id1"></topicRef>
 </member>
 </association>
 <association>
-<instanceOf href="#id6"></instanceOf>
-<member>
 <instanceOf href="#id7"></instanceOf>
+<member>
+<instanceOf href="#id8"></instanceOf>
 <topicRef href="#id3"></topicRef>
 </member>
 <member>
-<instanceOf href="#id8"></instanceOf>
+<instanceOf href="#id9"></instanceOf>
 <topicRef href="#id1"></topicRef>
 </member>
 </association>
 <association>
-<instanceOf href="#id6"></instanceOf>
-<member>
 <instanceOf href="#id7"></instanceOf>
+<member>
+<instanceOf href="#id8"></instanceOf>
 <topicRef href="#id4"></topicRef>
 </member>
 <member>
-<instanceOf href="#id8"></instanceOf>
+<instanceOf href="#id9"></instanceOf>
 <topicRef href="#id1"></topicRef>
 </member>
 </association>

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -347,13 +348,13 @@ final class JTMStreamingParser {
     Collection<TopicIF> scopes = null;
     TopicIF reifier = null;
     TopicIF parent = null;
+    Collection<Variant> variants = new ArrayList<Variant>();
 
     // Create an empty name object.
     if (topic == null) {
       topic = tm.getBuilder().makeTopic();
       requireParent = true;
     }
-    TopicNameIF name = tm.getBuilder().makeTopicName(topic, "");
 
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
@@ -383,7 +384,7 @@ final class JTMStreamingParser {
       case JSONToken.KW_VARIANTS:
         if (parser.nextToken() == JSONToken.START_ARRAY) {
           while (parser.nextToken() != JSONToken.END_ARRAY) {
-            handleVariant(parser, name);
+            variants.add(handleVariant(parser));
           }
           break;
         }
@@ -404,53 +405,62 @@ final class JTMStreamingParser {
     }
     if (requireParent) {
       if (!seenParent) {
-        throw new JTMException("The parent of the occurrence is undefined.");
+        throw new JTMException("The parent of the name is undefined.");
       } else {
         MergeUtils.mergeInto(topic, parent);
       }
     }
 
-    name.setValue(value);
-    name.setType(type);
-
+    TopicNameIF name = tm.getBuilder().makeTopicName(topic, type, value);
     setScopes(name, scopes);
     setReifier(name, reifier);
     setItemIdentifiers(name, iids);
+
+    // create the variants
+    for (Variant tmp : variants) {
+      VariantNameIF variant;
+      if (tmp.datatype.equals(PSI.getXSDURI())) {
+        variant = tm.getBuilder()
+          .makeVariantName(name, resolveIRI(tmp.value), tmp.scope);
+      } else {
+        variant = tm.getBuilder().makeVariantName(name, tmp.value,
+                                                  tmp.datatype, tmp.scope);
+      }
+
+      setReifier(variant, tmp.reifier);
+      setItemIdentifiers(variant, tmp.iids);
+    }
   }
 
   /**
    * INTERNAL: Handle jtm object of type variant.
    */
-  private void handleVariant(final JSONParser parser, TopicNameIF name)
+  private Variant handleVariant(final JSONParser parser)
       throws IOException, JTMException {
     boolean seenScope = false;
-    LocatorIF datatype = PSI.getXSDString();
-    String value = null;
-    Collection<LocatorIF> iids = null;
-    Collection<TopicIF> scopes = null;
-    TopicIF reifier = null;
+    Variant variant = new Variant();
 
     while (parser.nextToken() != JSONToken.END_OBJECT) {
       switch (parser.getCurrentToken()) {
       case JSONToken.KW_VALUE:
-        if (value == null) {
+        if (variant.value == null) {
           parser.nextToken();
-          value = parser.getText();
+          variant.value = parser.getText();
           break;
         }
       case JSONToken.KW_DATATYPE:
         parser.nextToken();
-        datatype = resolveIRI(parser.getText());
+        variant.datatype = resolveIRI(parser.getText());
         break;
       case JSONToken.KW_IIDS:
-        iids = handleItemIdentifiers(parser);
+        variant.iids = handleItemIdentifiers(parser);
         break;
       case JSONToken.KW_REIFIER:
-        reifier = handleReifier(parser);
+        variant.reifier = handleReifier(parser);
         break;
       case JSONToken.KW_SCOPE:
         if (!seenScope) {
-          scopes = handleScope(parser);
+          variant.scope = handleScope(parser);
           seenScope = true;
           break;
         }
@@ -461,20 +471,10 @@ final class JTMStreamingParser {
     if (!seenScope) {
       throw new JTMException("The scope of the variant is undefined.");
     }
-    if (value == null) {
+    if (variant.value == null) {
       throw new JTMException("The value of the variant is undefined.");
     }
-
-    VariantNameIF variant;
-    if (datatype.equals(PSI.getXSDURI())) {
-      variant = tm.getBuilder()
-          .makeVariantName(name, resolveIRI(value), scopes);
-    } else {
-      variant = tm.getBuilder().makeVariantName(name, value, datatype, scopes);
-    }
-
-    setReifier(variant, reifier);
-    setItemIdentifiers(variant, iids);
+    return variant;
   }
 
   /**
@@ -760,5 +760,23 @@ final class JTMStreamingParser {
       JTMException {
     throw new JTMException("Unknown key name: '" + parser.getText()
         + "' current: " + JSONToken.nameOf(parser.getCurrentToken()));
+  }
+
+  // --- Temporary variant data holder
+  // this is necessary to hold the variant data until the topic name
+  // is created. we can't create the topic name until after the entire
+  // topic has been read, since otherwise we wind up creating the
+  // default topic name type, which may not be needed.
+
+  private static class Variant {
+    private LocatorIF datatype;
+    private String value;
+    private Collection<LocatorIF> iids;
+    private Collection<TopicIF> scope;
+    private TopicIF reifier;
+
+    private Variant() {
+      this.datatype = PSI.getXSDString();
+    }
   }
 }

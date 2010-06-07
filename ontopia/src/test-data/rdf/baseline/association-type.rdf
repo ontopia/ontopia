@@ -1,6 +1,7 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>Geir Ove Grønmo</baseNameString>
 </baseName>
 </topic>
@@ -14,10 +15,16 @@
 <subjectIndicatorRef href="bogus:larsga"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id4"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 </topic>
 <topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id5">
 <subjectIdentity>
 <subjectIndicatorRef href="http://xmlns.com/foaf/0.1/Person"></subjectIndicatorRef>
 </subjectIdentity>
@@ -25,11 +32,11 @@
 <association>
 <instanceOf href="#id2"></instanceOf>
 <member>
-<instanceOf href="#id4"></instanceOf>
+<instanceOf href="#id5"></instanceOf>
 <topicRef href="#id1"></topicRef>
 </member>
 <member>
-<instanceOf href="#id4"></instanceOf>
+<instanceOf href="#id5"></instanceOf>
 <topicRef href="#id3"></topicRef>
 </member>
 </association>

@@ -4,26 +4,33 @@
 <subjectIndicatorRef href="http://psi.ontopia.net/rdf2tm/#generated-name"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Generated Name</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
+<subjectIdentity>
 <subjectIndicatorRef href="http://xmlns.com/foaf/0.1/mbox"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <scope>
 <topicRef href="#id1"></topicRef>
 </scope>
 <baseNameString>mbox</baseNameString>
 </baseName>
 </topic>
-<topic id="id3">
+<topic id="id4">
 <subjectIdentity>
 <subjectIndicatorRef href="urn:x-perverse:LarsMariusGarshol/"></subjectIndicatorRef>
 </subjectIdentity>
 <occurrence>
-<instanceOf href="#id2"></instanceOf>
+<instanceOf href="#id3"></instanceOf>
 <resourceRef href="mailto:larsga@garshol.priv.no"></resourceRef>
 </occurrence>
 </topic>

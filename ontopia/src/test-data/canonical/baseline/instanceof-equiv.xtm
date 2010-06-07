@@ -1,51 +1,60 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>City</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>Country</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <instanceOf href="#id2"></instanceOf>
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>Norway</baseNameString>
 </baseName>
 </topic>
 <topic id="id4">
 <baseName>
+<instanceOf href="#id5"></instanceOf>
 <baseNameString>Oslo</baseNameString>
 </baseName>
 </topic>
 <topic id="id5">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#class"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id6">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#class-instance"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#class"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id7">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#class-instance"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id8">
 <subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#instance"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <association>
-<instanceOf href="#id6"></instanceOf>
+<instanceOf href="#id7"></instanceOf>
 <scope>
 <topicRef href="#id3"></topicRef>
 </scope>
 <member>
-<instanceOf href="#id5"></instanceOf>
+<instanceOf href="#id6"></instanceOf>
 <topicRef href="#id1"></topicRef>
 </member>
 <member>
-<instanceOf href="#id7"></instanceOf>
+<instanceOf href="#id8"></instanceOf>
 <topicRef href="#id4"></topicRef>
 </member>
 </association>

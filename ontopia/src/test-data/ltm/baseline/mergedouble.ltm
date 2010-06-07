@@ -1,6 +1,7 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id6"></instanceOf>
 <baseNameString>Employed by</baseNameString>
 </baseName>
 </topic>
@@ -9,6 +10,7 @@
 <subjectIndicatorRef href="http://psi.ontopia.net/fake/company"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id6"></instanceOf>
 <baseNameString>Company</baseNameString>
 </baseName>
 </topic>
@@ -18,6 +20,7 @@
 <subjectIndicatorRef href="http://psi.ontopia.net/fake/lmg"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id6"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 </topic>
@@ -32,8 +35,14 @@
 <subjectIndicatorRef href="http://psi.ontopia.net/ontopia/ontopia.xtm#ontopia"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id6"></instanceOf>
 <baseNameString>Ontopia</baseNameString>
 </baseName>
+</topic>
+<topic id="id6">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 <association>
 <instanceOf href="#id1"></instanceOf>

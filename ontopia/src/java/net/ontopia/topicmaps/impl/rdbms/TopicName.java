@@ -1,21 +1,19 @@
 
-// $Id: TopicName.java,v 1.18 2008/06/12 14:37:15 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.*;
 import net.ontopia.utils.*;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.utils.*;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.*;
-  
+
 /**
  * INTERNAL: The rdbms topic name implementation.
  */
-
 public class TopicName extends TMObject implements TopicNameIF {
-  
+
   // ---------------------------------------------------------------------------
   // Persistent property declarations
   // ---------------------------------------------------------------------------
@@ -49,7 +47,7 @@ public class TopicName extends TMObject implements TopicNameIF {
 
   public TopicName() {
   }
-  
+
   public TopicName(TransactionIF txn) {
     super(txn);
   }
@@ -61,7 +59,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   public int _p_getFieldCount() {
     return fields.length;
   }
-  
+
   // ---------------------------------------------------------------------------
   // TMObjectIF implementation
   // ---------------------------------------------------------------------------
@@ -73,13 +71,13 @@ public class TopicName extends TMObject implements TopicNameIF {
   public String getObjectId() {
     return (id == null ? null : CLASS_INDICATOR + id.getKey(0));
   }
-  
+
   // ---------------------------------------------------------------------------
   // NameIF implementation
   // ---------------------------------------------------------------------------
-  
+
   public TopicIF getTopic() {
-    return (TopicIF)loadField(LF_topic);
+    return (TopicIF) loadField(LF_topic);
   }
 
   /**
@@ -87,7 +85,7 @@ public class TopicName extends TMObject implements TopicNameIF {
    */
   void setTopic(TopicIF topic) {
     // Set parent topic map
-    setTopicMap((topic == null ? null : (TopicMap)topic.getTopicMap()));
+    setTopicMap((topic == null ? null : (TopicMap) topic.getTopicMap()));
     // Notify transaction
     valueChanged(LF_topic, topic, true);
   }
@@ -101,14 +99,14 @@ public class TopicName extends TMObject implements TopicNameIF {
     Collection variants = loadCollectionField(LF_variants);
     Iterator iter = variants.iterator();
     while (iter.hasNext()) {
-      ((VariantName)iter.next()).setTopicMap(topicmap);
+      ((VariantName) iter.next()).setTopicMap(topicmap);
     }
   }
-  
+
   public String getValue() {
-    return (String)loadField(LF_value);    
+    return (String) loadField(LF_value);
   }
-  
+
   public void setValue(String value) {
     if (value == null)
       throw new NullPointerException("Topic name value must not be null.");
@@ -133,9 +131,9 @@ public class TopicName extends TMObject implements TopicNameIF {
       throw new ConstraintViolationException("Moving objects is not allowed.");
     
     // Notify listeners
-    fireEvent("TopicNameIF.addVariant", variant, null);    
+    fireEvent("TopicNameIF.addVariant", variant, null);
     // Set parent name property
-    ((VariantName)variant).setTopicName(this);
+    ((VariantName) variant).setTopicName(this);
     // Notify transaction
     valueAdded(LF_variants, variant, false);
 
@@ -159,13 +157,13 @@ public class TopicName extends TMObject implements TopicNameIF {
       ((VariantName)variant)._removeTheme(theme, false);
     
     // Unset parent name property
-    ((VariantName)variant).setTopicName(null);
+    ((VariantName) variant).setTopicName(null);
     // Notify transaction
     valueRemoved(LF_variants, variant, false);
   }
 
   public void remove() {
-    Topic parent = (Topic)getTopic();
+    Topic parent = (Topic) getTopic();
     if (parent != null) {
       DeletionUtils.removeDependencies(this);
       parent.removeTopicName(this);
@@ -194,7 +192,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     if (!variants.isEmpty()) {
       Iterator iter = variants.iterator();
       while (iter.hasNext()) {
-        VariantName v = (VariantName)iter.next();
+        VariantName v = (VariantName) iter.next();
         v._addTheme(theme, false);
       }
     }
@@ -212,11 +210,11 @@ public class TopicName extends TMObject implements TopicNameIF {
     if (!variants.isEmpty()) {
       Iterator iter = variants.iterator();
       while (iter.hasNext()) {
-        VariantName v = (VariantName)iter.next();
+        VariantName v = (VariantName) iter.next();
         v._removeTheme(theme, false);
       }
     }
-    
+
     // Notify transaction
     valueRemoved(LF_scope, theme, true);
   }
@@ -226,32 +224,46 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public TopicIF getType() {
-    return (TopicIF)loadField(LF_type);
+    return (TopicIF) loadField(LF_type);
   }
 
   public void setType(TopicIF type) {
-    if (type != null)
+    if (type == null) {
+      type = getDefaultNameType();
+    } else {
       CrossTopicMapException.check(type, this);
+    }
+
     // Notify listeners
     fireEvent("TopicNameIF.setType", type, getType());
     // Notify transaction
     valueChanged(LF_type, type, true);
   }
-  
+
+  private TopicIF getDefaultNameType() {
+    TopicMapIF tm = getTopicMap();
+    TopicIF nameType = tm.getTopicBySubjectIdentifier(PSI.getSAMNameType());
+    if (nameType == null) {
+      nameType = tm.getBuilder().makeTopic();
+      nameType.addSubjectIdentifier(PSI.getSAMNameType());
+    }
+    return nameType;
+  }
+
   // ---------------------------------------------------------------------------
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-    return (TopicIF)loadField(LF_reifier);
+    return (TopicIF) loadField(LF_reifier);
   }
-  
+
   public void setReifier(TopicIF _reifier) {
     if (_reifier != null)
       CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-    Topic reifier = (Topic)_reifier;
-    Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic) _reifier;
+    Topic oldReifier = (Topic) getReifier();
     fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
     if (oldReifier != null)
@@ -265,7 +277,7 @@ public class TopicName extends TMObject implements TopicNameIF {
   // ---------------------------------------------------------------------------
 
   public String toString() {
-    return ObjectStrings.toString("rdbms.TopicName", (TopicNameIF)this);
+    return ObjectStrings.toString("rdbms.TopicName", (TopicNameIF) this);
   }
 
 }

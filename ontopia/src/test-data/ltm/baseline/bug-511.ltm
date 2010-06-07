@@ -1,43 +1,56 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id9"></instanceOf>
 <baseNameString>Contact at</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id9"></instanceOf>
 <baseNameString>GMD</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <baseName>
+<instanceOf href="#id9"></instanceOf>
 <baseNameString>Michael Towsey</baseNameString>
 </baseName>
 </topic>
 <topic id="id4">
 <baseName>
+<instanceOf href="#id9"></instanceOf>
 <baseNameString>No longer</baseNameString>
 </baseName>
 </topic>
 <topic id="id5">
 <baseName>
+<instanceOf href="#id9"></instanceOf>
 <baseNameString>Organisation</baseNameString>
 </baseName>
 </topic>
 <topic id="id6">
 <baseName>
+<instanceOf href="#id9"></instanceOf>
 <baseNameString>Person</baseNameString>
 </baseName>
 </topic>
 <topic id="id7">
 <baseName>
+<instanceOf href="#id9"></instanceOf>
 <baseNameString>Person who found the bug</baseNameString>
 </baseName>
 </topic>
 <topic id="id8">
 <baseName>
+<instanceOf href="#id9"></instanceOf>
 <baseNameString>Responsible</baseNameString>
 </baseName>
+</topic>
+<topic id="id9">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 <association>
 <instanceOf href="#id1"></instanceOf>

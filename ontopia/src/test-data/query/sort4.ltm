@@ -5,4 +5,4 @@
 [t4 = "A"; "Topic 4"
     = "XX" / scope]
 [scope = "Z"]
-[sort @"http://www.topicmaps.org/xtm/1.0/core.xtm#sort"]
+[sort = "Sort" @"http://www.topicmaps.org/xtm/1.0/core.xtm#sort"]

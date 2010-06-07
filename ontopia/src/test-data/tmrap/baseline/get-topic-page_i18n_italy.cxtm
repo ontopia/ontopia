@@ -1,7 +1,7 @@
 <topicMap>
 <topic number="1">
 <itemIdentifiers>
-<locator>#id11</locator>
+<locator>#id12</locator>
 </itemIdentifiers>
 <occurrence number="1">
 <value>i18n.ltm</value>
@@ -25,10 +25,10 @@
 </topic>
 <topic number="3">
 <subjectLocators>
-<locator>http://localhost:8080/omnigator/models/topic_complete.jsp?tm=i18n.ltm&amp;id=3685</locator>
+<locator>http://localhost:8080/omnigator/models/topic_complete.jsp?tm=i18n.ltm&amp;id=3686</locator>
 </subjectLocators>
 <itemIdentifiers>
-<locator>#id17</locator>
+<locator>#id18</locator>
 </itemIdentifiers>
 <rolePlayed ref="association.2.role.2"></rolePlayed>
 <rolePlayed ref="association.5.role.1"></rolePlayed>
@@ -38,7 +38,7 @@
 <locator>http://psi.ontopia.net/tmrap/contained-in</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
-<locator>#id8</locator>
+<locator>#id9</locator>
 </itemIdentifiers>
 </topic>
 <topic number="5">
@@ -46,7 +46,7 @@
 <locator>http://psi.ontopia.net/tmrap/containee</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
-<locator>#id10</locator>
+<locator>#id11</locator>
 </itemIdentifiers>
 </topic>
 <topic number="6">
@@ -54,7 +54,7 @@
 <locator>http://psi.ontopia.net/tmrap/container</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
-<locator>#id9</locator>
+<locator>#id10</locator>
 </itemIdentifiers>
 </topic>
 <topic number="7">
@@ -62,7 +62,7 @@
 <locator>http://psi.ontopia.net/tmrap/handle</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
-<locator>#id7</locator>
+<locator>#id8</locator>
 </itemIdentifiers>
 </topic>
 <topic number="8">
@@ -79,7 +79,7 @@
 <locator>http://psi.ontopia.net/tmrap/topicmap</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
-<locator>#id6</locator>
+<locator>#id7</locator>
 </itemIdentifiers>
 <rolePlayed ref="association.3.role.2"></rolePlayed>
 </topic>
@@ -88,7 +88,7 @@
 <locator>http://psi.ontopia.net/tmrap/view-page</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
-<locator>#id16</locator>
+<locator>#id17</locator>
 </itemIdentifiers>
 <rolePlayed ref="association.5.role.2"></rolePlayed>
 </topic>
@@ -101,6 +101,9 @@
 <subjectIdentifiers>
 <locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
 </subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id4</locator>
+</itemIdentifiers>
 </topic>
 <topic number="13">
 <subjectIdentifiers>
@@ -117,7 +120,7 @@
 <locator>http://www.topicmaps.org/xtm/1.0/country.xtm#IT</locator>
 </subjectIdentifiers>
 <itemIdentifiers>
-<locator>#id4</locator>
+<locator>#id5</locator>
 </itemIdentifiers>
 <name number="1">
 <value>Italy</value>

@@ -1,18 +1,24 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Ontopia</baseNameString>
 </baseName>
 <occurrence>
-<instanceOf href="#id2"></instanceOf>
+<instanceOf href="#id3"></instanceOf>
 <resourceRef href="http://www.garshol.priv.no/"></resourceRef>
 </occurrence>
 <occurrence>
-<instanceOf href="#id2"></instanceOf>
+<instanceOf href="#id3"></instanceOf>
 <resourceRef href="http://www.ontopia.net/"></resourceRef>
 </occurrence>
 </topic>
 <topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id3">
 <subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#occurrence"></subjectIndicatorRef>
 </subjectIdentity>

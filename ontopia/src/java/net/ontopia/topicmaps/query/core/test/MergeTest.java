@@ -37,14 +37,12 @@ public class MergeTest extends AbstractQueryTest {
   public void testSelfMerge() throws InvalidQueryException, IOException {
     load("instance-of.ltm");
 
-    TopicIF topic1 = getTopicById("topic1");
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
     
     update("merge topic1, topic1");
 
     assertTrue("wrong number of topics after merge",
-               topicmap.getTopics().size() == 6);
+               topicmap.getTopics().size() == before);
   }
   
   public void testStaticMerge() throws InvalidQueryException, IOException {
@@ -52,13 +50,12 @@ public class MergeTest extends AbstractQueryTest {
 
     TopicIF topic1 = getTopicById("topic1");
     TopicIF topic2 = getTopicById("topic2");
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
     
     update("merge topic1, topic2");
 
     assertTrue("wrong number of topics after merge",
-               topicmap.getTopics().size() == 5);
+               topicmap.getTopics().size() == (before - 1));
     assertTrue("topic1 not available after merge",
                getTopicById("topic1") != null);
     assertTrue("topic2 not available after merge",
@@ -75,13 +72,12 @@ public class MergeTest extends AbstractQueryTest {
 
     TopicIF topic1 = getTopicById("topic1");
     TopicIF topic2 = getTopicById("topic2");
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
     
     update("merge $A, $B from $A = topic1, $B = topic2");
 
     assertTrue("wrong number of topics after merge: " + topicmap.getTopics().size(),
-               topicmap.getTopics().size() == 5);
+               topicmap.getTopics().size() == (before - 1));
     assertTrue("topic1 not available after merge",
                getTopicById("topic1") != null);
     assertTrue("topic2 not available after merge",
@@ -98,13 +94,12 @@ public class MergeTest extends AbstractQueryTest {
 
     TopicIF topic1 = getTopicById("topic1");
     TopicIF topic2 = getTopicById("topic2");
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
     
     update("merge $A, topic2 from $A = topic1");
 
     assertTrue("wrong number of topics after merge: " + topicmap.getTopics().size(),
-               topicmap.getTopics().size() == 5);
+               topicmap.getTopics().size() == (before - 1));
     assertTrue("topic1 not available after merge",
                getTopicById("topic1") != null);
     assertTrue("topic2 not available after merge",
@@ -121,14 +116,13 @@ public class MergeTest extends AbstractQueryTest {
 
     TopicIF topic1 = getTopicById("topic1");
     TopicIF topic2 = getTopicById("topic2");
-    assertTrue("wrong number of topics to start with",
-               topicmap.getTopics().size() == 6);
+    int before = topicmap.getTopics().size();
 
     // merges topic1, topic2, topic3, and topic4 into a single topic
     update("merge $A, $B from instance-of($A, $C), instance-of($B, $D)");
 
     assertTrue("wrong number of topics after merge: " + topicmap.getTopics().size(),
-               topicmap.getTopics().size() == 3);
+               topicmap.getTopics().size() == (before - 3));
     assertTrue("topic1 not available after merge",
                getTopicById("topic1") != null);
     assertTrue("topic2 not available after merge",

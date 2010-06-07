@@ -1,12 +1,19 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id2">
+<subjectIdentity>
 <resourceRef href="http://psi.ontopia.net/people/lmg"></resourceRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id1"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id1"></instanceOf>
 <baseNameString>larsga@ontopia.net</baseNameString>
 </baseName>
 </topic>

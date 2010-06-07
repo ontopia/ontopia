@@ -1,12 +1,10 @@
 
-// $Id: MergeCopyTest.java,v 1.9 2008/06/13 08:36:29 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.test;
 
+import java.util.Iterator;
 import java.util.Collection;
 import net.ontopia.topicmaps.test.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.infoset.core.*;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.utils.DeciderUtils;
@@ -167,8 +165,17 @@ public class MergeCopyTest extends AbstractTopicMapTestCase {
     MergeUtils.mergeInto(topicmap1, topic);
     
     assertTrue("topic map has wrong number of topics after merge",
-               topicmap1.getTopics().size() == 1);
-    topic = (TopicIF) topicmap1.getTopics().iterator().next();
+               topicmap1.getTopics().size() == 2);
+
+    // a bit tricky, but of the two topics in the TM (the copied one
+    // and default name type) we have to pick the copied one, which
+    // has no identifier
+    TopicIF defnametype = topicmap1.getTopicBySubjectIdentifier(PSI.getSAMNameType());
+    Iterator it = topicmap1.getTopics().iterator();
+    topic = (TopicIF) it.next();
+    if (topic == defnametype)
+      topic = (TopicIF) it.next();
+      
     assertTrue("empty topic suddenly has source locators",
                topic.getItemIdentifiers().isEmpty());
     assertTrue("empty topic suddenly has subject indicators",
@@ -206,7 +213,7 @@ public class MergeCopyTest extends AbstractTopicMapTestCase {
     MergeUtils.mergeInto(topicmap1, topic);
     
     assertTrue("topic map has wrong number of topics after merge",
-               topicmap1.getTopics().size() == 2); // topic + theme
+               topicmap1.getTopics().size() == 3); // topic + theme + default name type
     topic = topicmap1.getTopicBySubjectIdentifier(makeLocator("http://www.ontopia.com"));
     assertTrue("empty topic suddenly has source locators",
                topic.getItemIdentifiers().isEmpty());
@@ -292,7 +299,7 @@ public class MergeCopyTest extends AbstractTopicMapTestCase {
     MergeUtils.mergeInto(topicmap1, topic, DeciderUtils.getTrueDecider());
     
     assertTrue("topic map has wrong number of topics after merge",
-               topicmap1.getTopics().size() == 2); // topic + theme
+               topicmap1.getTopics().size() == 3); // topic + theme + default name type
     topic = topicmap1.getTopicBySubjectLocator(makeLocator("http://www.ontopia.com"));
     theme = topicmap1.getTopicBySubjectIdentifier(PSI.getXTMSort());
 

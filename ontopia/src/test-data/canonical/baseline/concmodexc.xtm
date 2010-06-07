@@ -1,27 +1,35 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Norway</baseNameString>
 </baseName>
 <occurrence>
-<instanceOf href="#id3"></instanceOf>
+<instanceOf href="#id4"></instanceOf>
 <resourceRef href="http://www.norge.no/"></resourceRef>
 </occurrence>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Sweden</baseNameString>
 </baseName>
 <occurrence>
-<instanceOf href="#id3"></instanceOf>
+<instanceOf href="#id4"></instanceOf>
 <resourceRef href="http://www.sverige.se/"></resourceRef>
 </occurrence>
 </topic>
 <topic id="id3">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
+<subjectIdentity>
 <subjectIndicatorRef href="http://www.ikke.no/"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Nei</baseNameString>
 </baseName>
 </topic>

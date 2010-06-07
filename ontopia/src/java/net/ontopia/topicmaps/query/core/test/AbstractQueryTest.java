@@ -50,6 +50,10 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
   
   // ===== Helper methods (topic maps)
 
+  protected TopicIF getTopicBySI(String uri) throws MalformedURLException {
+    return topicmap.getTopicBySubjectIdentifier(new URILocator(uri));
+  }
+  
   protected TopicIF getTopicById(String id) {
     return getTopicById(topicmap, base, id);
   }
@@ -302,8 +306,11 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
     QueryResultIF result = processor.execute(query);
     try {
       while (result.next()) {
+        if (matches.size() <= pos)
+          fail("too many rows in query result");
+        
         Map match = getMatch(result);
-        assertTrue("match not found in position " +  pos + ": " + match + " => " + matches,
+        assertTrue("match not found in position " +  pos + ": " + match + " => " + matches.get(pos),
             matches.get(pos).equals(match));
         pos++;
       }

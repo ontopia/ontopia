@@ -1,5 +1,3 @@
-// $Id: LTMTopicMapWriterTestGenerator.java,v 1.2 2005/04/01 14:06:57 opland Exp
-// $
 
 package net.ontopia.topicmaps.utils.ltm.test;
 
@@ -123,9 +121,9 @@ public class LTMTopicMapWriterTestGenerator implements TestCaseGeneratorIF {
       fos.close();
 
       // compare results
-      assertTrue("canonicalizing the test file " + filename
-          + " gives a different result than canonicalizing the ltm export of "
-          + filename + ".", FileUtils.compare(out, baseline));
+      assertTrue("canonicalizing the test file " + filename +
+          " produces " + out + " which is different from " +
+          baseline, FileUtils.compare(out, baseline));
     }
   }
 
@@ -179,9 +177,9 @@ public class LTMTopicMapWriterTestGenerator implements TestCaseGeneratorIF {
       fos.close();
 
       // compare results
-      assertTrue("canonicalizing the test file " + filename
-          + " gives a different result than canonicalizing the ltm export of "
-          + filename + ".", FileUtils.compare(out, baseline));
+      assertTrue("canonicalizing the test file " + filename +
+          " produces " + out + " which is different from " +
+          baseline, FileUtils.compare(out, baseline));
     }
   }
 
@@ -244,9 +242,9 @@ public class LTMTopicMapWriterTestGenerator implements TestCaseGeneratorIF {
       fos.close();
 
       // compare results
-      assertTrue("canonicalizing the test file " + filename
-          + " gives a different result than canonicalizing the ltm export of "
-          + filename + ".", FileUtils.compare(out, baseline));
+      assertTrue("canonicalizing the test file " + filename +
+          " produces " + out + " which is different from " +
+          baseline, FileUtils.compare(out, baseline));
     }
   }
 }

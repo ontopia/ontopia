@@ -77,7 +77,8 @@ public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTes
         writer.write(tm);
         tm.getStore().close();
         
-        // Read exported document (Note: guaranteed to be only one topic map per document)
+        // Read exported document (Note: guaranteed to be only one
+        // topic map per document)        
         TopicMapIF source2 = sfactory.createStore().getTopicMap();
         new XTMTopicMapReader(new File(tempfile)).importInto(source2);
         
@@ -92,7 +93,8 @@ public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTes
                 
         // Compare results
         String basefile = basepath + filename + "-" + counter;
-        assertTrue("test file " + filename + " canonicalized wrongly",
+        assertTrue("test file " + filename + " canonicalized wrongly, " +
+                   outfile + " not equal to " + basefile,
                    FileUtils.compare(outfile, basefile));
       }      
     }

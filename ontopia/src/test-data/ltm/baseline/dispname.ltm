@@ -1,10 +1,11 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>huhei</baseNameString>
 <variant>
 <scope>
-<topicRef href="#id3"></topicRef>
+<topicRef href="#id4"></topicRef>
 </scope>
 <variantName>
 <resourceData>heihu</resourceData>
@@ -12,7 +13,7 @@
 </variant>
 <variant>
 <scope>
-<topicRef href="#id2"></topicRef>
+<topicRef href="#id3"></topicRef>
 </scope>
 <variantName>
 <resourceData>uuuu</resourceData>
@@ -22,10 +23,15 @@
 </topic>
 <topic id="id2">
 <subjectIdentity>
-<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
 <subjectIdentity>
 <subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"></subjectIndicatorRef>
 </subjectIdentity>

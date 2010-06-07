@@ -4,10 +4,17 @@
 <subjectIndicatorRef href="http://psi.ontopia.net/people/lmg-desc"></subjectIndicatorRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id2"></instanceOf>
 <baseNameString>larsga@ontopia.net</baseNameString>
 </baseName>
+</topic>
+<topic id="id2">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
 </topic>
 </topicMap>

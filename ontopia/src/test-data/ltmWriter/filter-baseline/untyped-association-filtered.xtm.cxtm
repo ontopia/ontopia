@@ -30,5 +30,8 @@
 <subjectIdentifiers>
 <locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
 </subjectIdentifiers>
+<itemIdentifiers>
+<locator>#defnametype</locator>
+</itemIdentifiers>
 </topic>
 </topicMap>

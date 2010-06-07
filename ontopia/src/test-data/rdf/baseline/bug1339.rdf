@@ -1,49 +1,58 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Geir Ove Grønmo</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <scope>
-<topicRef href="#id4"></topicRef>
+<topicRef href="#id5"></topicRef>
 </scope>
 <baseNameString>grove</baseNameString>
 </baseName>
 </topic>
 <topic id="id2">
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <baseNameString>Lars Marius Garshol</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id3"></instanceOf>
 <scope>
-<topicRef href="#id4"></topicRef>
+<topicRef href="#id5"></topicRef>
 </scope>
 <baseNameString>larsbot</baseNameString>
 </baseName>
 </topic>
 <topic id="id3">
 <subjectIdentity>
-<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/knows"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id4">
 <subjectIdentity>
-<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/nick"></subjectIndicatorRef>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/knows"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <topic id="id5">
+<subjectIdentity>
+<subjectIndicatorRef href="http://xmlns.com/foaf/0.1/nick"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id6">
 <subjectIdentity>
 <subjectIndicatorRef href="http://xmlns.com/foaf/0.1/person"></subjectIndicatorRef>
 </subjectIdentity>
 </topic>
 <association>
-<instanceOf href="#id3"></instanceOf>
+<instanceOf href="#id4"></instanceOf>
 <member>
-<instanceOf href="#id5"></instanceOf>
+<instanceOf href="#id6"></instanceOf>
 <topicRef href="#id1"></topicRef>
 </member>
 <member>
-<instanceOf href="#id5"></instanceOf>
+<instanceOf href="#id6"></instanceOf>
 <topicRef href="#id2"></topicRef>
 </member>
 </association>

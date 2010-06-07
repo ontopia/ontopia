@@ -834,11 +834,11 @@ public class QueryProcessorTest extends AbstractQueryTest {
              "REIFIED", null);
     addMatch(matches, "REIFIER", getTopicById("ontopia"),
              "REIFIED", null);
+    addMatch(matches, "REIFIER", getTopicBySI("http://psi.topicmaps.org/iso13250/model/topic-name"),
+             "REIFIED", null);
     addMatch(matches, "REIFIER", getTopicById("company"),
              "REIFIED", null);
     addMatch(matches, "REIFIER", getTopicById("contract"),
-             "REIFIED", null);
-    addMatch(matches, "REIFIER", getTopicById("description"),
              "REIFIED", null);
 
     verifyQueryOrder(matches,
@@ -1273,6 +1273,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     addMatch(matches, "T", getTopicById("t2"));
     addMatch(matches, "T", getTopicById("t3"));
     addMatch(matches, "T", getTopicById("t4"));
+    addMatch(matches, "T", getTopicBySI("http://psi.topicmaps.org/iso13250/model/topic-name"));
     
     verifyQueryOrder(matches, "topic($T) order by $T?");
   }
@@ -1281,11 +1282,12 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("sort2.ltm");
 
     List matches = new ArrayList();
+    addMatch(matches, "T", getTopicById("scope"));
     addMatch(matches, "T", getTopicById("t1"));
     addMatch(matches, "T", getTopicById("t2"));
     addMatch(matches, "T", getTopicById("t3"));
     addMatch(matches, "T", getTopicById("t4"));
-    addMatch(matches, "T", getTopicById("scope"));
+    addMatch(matches, "T", getTopicBySI("http://psi.topicmaps.org/iso13250/model/topic-name"));
     
     verifyQueryOrder(matches, "topic($T) order by $T?");
   }
@@ -1294,11 +1296,12 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("sort3.ltm");
 
     List matches = new ArrayList();
+    addMatch(matches, "T", getTopicById("sort"));
     addMatch(matches, "T", getTopicById("t1"));
     addMatch(matches, "T", getTopicById("t2"));
     addMatch(matches, "T", getTopicById("t3"));
     addMatch(matches, "T", getTopicById("t4"));
-    addMatch(matches, "T", getTopicById("sort"));
+    addMatch(matches, "T", getTopicBySI("http://psi.topicmaps.org/iso13250/model/topic-name"));
     
     verifyQueryOrder(matches, "topic($T) order by $T?");
   }
@@ -1307,12 +1310,13 @@ public class QueryProcessorTest extends AbstractQueryTest {
     load("sort4.ltm");
 
     List matches = new ArrayList();
+    addMatch(matches, "T", getTopicById("sort"));
     addMatch(matches, "T", getTopicById("t1"));
     addMatch(matches, "T", getTopicById("t2"));
     addMatch(matches, "T", getTopicById("t3"));
     addMatch(matches, "T", getTopicById("t4"));
     addMatch(matches, "T", getTopicById("scope"));
-    addMatch(matches, "T", getTopicById("sort"));
+    addMatch(matches, "T", getTopicBySI("http://psi.topicmaps.org/iso13250/model/topic-name"));
     
     verifyQueryOrder(matches, "topic($T) order by $T?");
   }
@@ -1592,6 +1596,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     addMatch(matches, "A", getTopicById("test-topic"));
     addMatch(matches, "A", getTopicById("test-topic2"));
     addMatch(matches, "A", getTopicById("test-type"));
+    addMatch(matches, "A", getTopicBySI("http://psi.topicmaps.org/iso13250/model/topic-name"));
     
     verifyQuery(matches, "topic($A) order by $A?");
   }

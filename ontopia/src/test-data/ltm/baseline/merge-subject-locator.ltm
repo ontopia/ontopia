@@ -1,12 +1,19 @@
 <topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
 <topic id="id1">
 <subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id2">
+<subjectIdentity>
 <resourceRef href="http://www.ontopia.net/"></resourceRef>
 </subjectIdentity>
 <baseName>
+<instanceOf href="#id1"></instanceOf>
 <baseNameString>Topic1</baseNameString>
 </baseName>
 <baseName>
+<instanceOf href="#id1"></instanceOf>
 <baseNameString>Topic2</baseNameString>
 </baseName>
 </topic>

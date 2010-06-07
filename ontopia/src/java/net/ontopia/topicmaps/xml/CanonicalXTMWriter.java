@@ -3,8 +3,6 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -22,14 +20,12 @@ import java.util.TreeSet;
 
 import org.xml.sax.AttributeList;
 import org.xml.sax.helpers.AttributeListImpl;
-import net.ontopia.topicmaps.core.TopicMapReaderIF;
 
 import net.ontopia.xml.CanonicalPrinter;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.IteratorComparator;
 import net.ontopia.utils.ObjectUtils;
@@ -56,7 +52,6 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   private TopicIF typeInstance; // possibly fake
   private TopicIF instance; // possibly fake
   private TopicIF type; // possibly fake
-  private TopicIF nametype; // possibly fake
   private static TopicMapIF tmForFake; 
           // should only be used by fake nested classes.
 
@@ -347,12 +342,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   private void writeType(TypedIF object) {
     TopicIF topic = object.getType();
     if (topic == null) {
-      // NOTE: THIS IS A WORKAROUND FOR DEFAULT NAME TYPING; IT WILL BECOME
-      // UNNECESSARY WHEN THE XTM AND LTM READERS ARE FIXED
-      if (object instanceof TopicNameIF)
-        topic = nametype;
-      else
-        throw new OntopiaRuntimeException("TypedIF had null type: " + object);
+      throw new OntopiaRuntimeException("TypedIF had null type: " + object);
     }
     startElement("type", topicRef(topic));
     endElement("type");
@@ -451,17 +441,11 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       type = getTopic(topicmap, PSI.getSAMType(), topics);
     }
 
-    // add the name type PSI topic, if necessary
-    // NOTE: THE NEED FOR THIS CODE WILL DISAPPEAR BEFORE 4.0 IS RELEASED!
-    // NOTE: CHECK THE WRITETYPE METHOD, TOO
-    if (!index.getTopicNames(null).isEmpty())
-      nametype = getTopic(topicmap, PSI.getSAMNameType(), topics);
-
     return topics.toArray();
   }
 
   /**
-   * @return an array with all the associatons a given topic map.
+   * @return an array with all the associations a given topic map.
    */
   private Object[] getAssociations(TopicMapIF topicmap) {
     ClassInstanceIndexIF index = (ClassInstanceIndexIF) topicmap
