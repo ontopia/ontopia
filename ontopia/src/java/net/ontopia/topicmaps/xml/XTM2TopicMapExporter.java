@@ -122,9 +122,9 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     }
     dh.startElement("topic", atts);
 
-    write(topic.getItemIdentifiers(), "itemIdentity", dh);
-    write(topic.getSubjectIdentifiers(), "subjectIdentifier", dh);
-    write(topic.getSubjectLocators(), "subjectLocator", dh);
+    write(iids, "itemIdentity", dh);
+    write(sids, "subjectIdentifier", dh);
+    write(slos, "subjectLocator", dh);
 
     Iterator it = filterCollection(topic.getTypes()).iterator();
     if (it.hasNext()) {
