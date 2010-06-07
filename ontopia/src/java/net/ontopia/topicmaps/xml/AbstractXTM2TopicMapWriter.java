@@ -82,6 +82,9 @@ abstract class AbstractXTM2TopicMapWriter extends XTMTopicMapWriter {
     setVersion(getVersion());
   }
 
-  protected abstract Version getVersion();
+  /**
+   * Returns the XTM version of the derived class.
+   */
+  protected abstract XTMVersion getVersion();
 
 }

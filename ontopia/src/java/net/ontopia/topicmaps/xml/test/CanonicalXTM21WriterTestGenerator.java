@@ -77,7 +77,7 @@ public class CanonicalXTM21WriterTestGenerator implements TestCaseGeneratorIF {
 
       // Export to XTM 2.1
       XTMTopicMapWriter writer = new XTMTopicMapWriter(tmp);
-      writer.setVersion(XTMTopicMapWriter.Version.XTM_2_1);
+      writer.setVersion(XTMVersion.XTM_2_1);
       // Do not omit the item identifiers
       writer.setExportSourceLocators(true);
       writer.write(tm);

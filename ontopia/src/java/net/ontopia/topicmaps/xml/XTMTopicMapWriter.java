@@ -27,11 +27,6 @@ import org.xml.sax.SAXException;
  */
 public class XTMTopicMapWriter implements TopicMapWriterIF {
 
-  /**
-   * EXPERIMENTAL: Constants for XML Topic Maps versions
-   */
-  public static enum Version {XTM_1_0, XTM_2_0, XTM_2_1};
-
   protected DocumentHandler out;
   
   // If writer is instantiated here we'll close it when we're done.
@@ -41,9 +36,9 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
 
   protected boolean export_srclocs = false;
   protected boolean add_ids = false;
-  private Version xtm_version;
+  private XTMVersion xtm_version;
 
-  private static Version DEFAULT_XTM_VERSION = Version.XTM_1_0;
+  private static XTMVersion DEFAULT_XTM_VERSION = XTMVersion.XTM_1_0;
 
   /**
    * PUBLIC: Creates a topic map writer bound to the file given in the
@@ -139,14 +134,18 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
 
   /**
    * PUBLIC: Set XTM version to use on export.
+   *
+   * @see #setVersion(XTMVersion).
+   * 
    * @since 4.0.0
    */
+  @Deprecated
   public void setVersion(final int version) {
     if (version == 1) {
-      setVersion(Version.XTM_1_0);
+      setVersion(XTMVersion.XTM_1_0);
     }
     else if (version == 2) {
-      setVersion(Version.XTM_2_0);
+      setVersion(XTMVersion.XTM_2_0);
     }
     else {
       throw new IllegalArgumentException("Unknown XTM version: " + version);
@@ -154,16 +153,16 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
   }
 
   /**
-   * EXPERIMENTAL: Set XTM version to use on export.
+   * PUBLIC: Set XTM version to use on export.
    * @since 5.1.0
    */
-  public void setVersion(final Version version) {
+  public void setVersion(final XTMVersion version) {
     xtm_version = version;
   }
 
   public void write(TopicMapIF topicmap) throws IOException {
     try {
-      if (xtm_version == Version.XTM_1_0) {
+      if (xtm_version == XTMVersion.XTM_1_0) {
         XTMTopicMapExporter exporter = new XTMTopicMapExporter();
         if (filter != null)
           exporter.setFilter(filter);
@@ -172,7 +171,7 @@ public class XTMTopicMapWriter implements TopicMapWriterIF {
         exporter.export(topicmap, out);
       } 
       else {
-        XTM2TopicMapExporter exporter = new XTM2TopicMapExporter(Version.XTM_2_1 == xtm_version);
+        XTM2TopicMapExporter exporter = new XTM2TopicMapExporter(XTMVersion.XTM_2_1 == xtm_version);
         if (filter != null)
           exporter.setFilter(filter);
         exporter.setExportItemIdentifiers(getExportSourceLocators());

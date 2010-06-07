@@ -35,8 +35,9 @@ public final class XTM20TopicMapWriter extends AbstractXTM2TopicMapWriter {
     super(new OutputStreamWriter(stream, encoding), encoding);
   }
 
-  protected final XTMTopicMapWriter.Version getVersion() {
-    return XTMTopicMapWriter.Version.XTM_2_0;
+  @Override
+  protected final XTMVersion getVersion() {
+    return XTMVersion.XTM_2_0;
   }
 
 }
