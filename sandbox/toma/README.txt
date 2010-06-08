@@ -10,13 +10,13 @@ open-source topic map engine Ontopia.
 
 Installation
 ------------
-No real installation needed, simply put the ``toma-1.0.0.jar`` into 
+No real installation needed, simply put the ``toma-x.y.z.jar`` into 
 your classpath. That's all. :)
 
 Documentation
 ------------
-An introduction, together with the specification and sample queries can be 
-found at the respective wiki page of the Ontopia project 
+An introduction, together with the specification and sample queries can
+be found at the respective wiki page of the Ontopia project 
 <http://code.google.com/p/ontopia/wiki/TomaImplementation>.
 
 
