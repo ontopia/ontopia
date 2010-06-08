@@ -29,7 +29,9 @@ select, input, textarea { font-size: 90%; font-family: Verdana, Geneva, Arial, s
 select, option { max-width: 500px; }
 
 /* header */
-#header { background-image: url('../ontopoly.images.ImageResource/headerbg.gif'); }
+#header { 
+  background-image: url('../ontopoly.images.ImageResource/headerbg.gif'); 
+}
 
 #header a:link { color: white; margin: 0px; padding: 0px; }
 #header a:visited { color: white; margin: 0px; padding: 0px; }

@@ -57,8 +57,7 @@ public abstract class UpgradeBase {
     this.qp = QueryUtils.getQueryProcessor(topicMap.getTopicMapIF());
   }
   
-  public void upgrade() {
-    
+  public void upgrade() {    
     // produce LTM fragment
     StringBuffer sb = new StringBuffer();
     sb.append("#PREFIX on  @\"http://psi.ontopia.net/ontology/\"\n");
@@ -88,7 +87,13 @@ public abstract class UpgradeBase {
   
   protected abstract void transform() throws InvalidQueryException;
 
-
+  /**
+   * Runs a tolog update statement to modify the topic map.
+   */
+  protected int doUpdate(String update) throws InvalidQueryException {
+    return qp.update(update, dc);
+  }
+  
   protected static TopicIF getTopic(TopicMapIF topicmap, LocatorIF base_on, String ref) {
     LocatorIF loc = base_on.resolveAbsolute(ref);
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(loc);

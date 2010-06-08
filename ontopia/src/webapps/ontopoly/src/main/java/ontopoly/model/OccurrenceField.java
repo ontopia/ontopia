@@ -20,17 +20,16 @@ import net.ontopia.utils.CollectionUtils;
  * Represents an occurrence type.
  */
 public class OccurrenceField extends FieldDefinition {
-
-	private OccurrenceType occurrenceType;
+  private OccurrenceType occurrenceType;
 
   public OccurrenceField(TopicIF topic, TopicMap tm) {
-		this(topic, tm, null);
+    this(topic, tm, null);
   }
 
   public OccurrenceField(TopicIF topic, TopicMap tm, OccurrenceType occurrenceType) {
-		super(topic, tm);
-		this.occurrenceType = occurrenceType;
-	}
+    super(topic, tm);
+    this.occurrenceType = occurrenceType;
+  }
 
   @Override
   public int getFieldType() {
@@ -74,9 +73,9 @@ public class OccurrenceField extends FieldDefinition {
       Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF occurrenceTypeIf = (TopicIF)CollectionUtils.getFirst(players);
       this.occurrenceType = (occurrenceTypeIf == null ? null : new OccurrenceType(occurrenceTypeIf, getTopicMap()));      
-		}
+    }
     return occurrenceType;
-	}
+  }
 
   /**
    * Returns the data type of the occurrence type.

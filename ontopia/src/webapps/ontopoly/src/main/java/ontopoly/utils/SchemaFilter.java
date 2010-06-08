@@ -1,6 +1,4 @@
 
-// $Id: SchemaFilter.java,v 1.5 2008/12/04 11:29:39 lars.garshol Exp $
-
 package ontopoly.utils;
 
 import java.util.Iterator;
@@ -49,7 +47,7 @@ public class SchemaFilter implements DeciderIF {
       LocatorIF psi = (LocatorIF) it.next();
 
       // There are some exceptions
-      if (PSI.ON_UNTYPED_NAME.equals(psi) ||
+      if (PSI.TMDM_TOPIC_NAME.equals(psi) ||
           PSI.ON_DESCRIPTION.equals(psi) ||
           PSI.ON_CREATOR.equals(psi) ||
           PSI.ON_VERSION.equals(psi) ||
@@ -58,8 +56,8 @@ public class SchemaFilter implements DeciderIF {
           PSI.ON_SUBCLASS.equals(psi))
         return true;
       
-      // If one PSI is an Ontopoly system PSI, then the topic should be filtered out
-      // unless if there is an exception
+      // If one PSI is an Ontopoly system PSI, then the topic should
+      // be filtered out unless there is an exception
       if (psi.getAddress().startsWith("http://psi.ontopia.net/ontology/"))
         include = false;
     }

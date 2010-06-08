@@ -39,13 +39,13 @@ public class NameType extends AbstractTypingTopic {
 
   /**
    * Returns true if name type is on:untyped.
-	 */
-	public boolean isUntypedName() {
-    return getTopicIF().getSubjectIdentifiers().contains(PSI.ON_UNTYPED_NAME);
-	}
+   */
+  public boolean isUntypedName() {
+    return getTopicIF().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME);
+  }
 
-	@Override
-	public Collection<NameField> getDeclaredByFields() {
+  @Override
+  public Collection<NameField> getDeclaredByFields() {
     String query = "select $FD from on:has-name-type(%TYPE% : on:name-type, $FD : on:name-field)?";
     Map<String,TopicIF> params = Collections.singletonMap("TYPE", getTopicIF());
 
@@ -53,10 +53,10 @@ public class NameType extends AbstractTypingTopic {
     return qm.queryForList(query,
         new RowMapperIF<NameField>() {
           public NameField mapRow(QueryResultIF result, int rowno) {
-						TopicIF fieldTopic = (TopicIF)result.getValue(0);
-						return new NameField(fieldTopic, getTopicMap(), new NameType(getTopicIF(), getTopicMap()));
-					}
-				}, params);
-	}
+            TopicIF fieldTopic = (TopicIF)result.getValue(0);
+            return new NameField(fieldTopic, getTopicMap(), new NameType(getTopicIF(), getTopicMap()));
+          }
+       }, params);
+  }
 
 }

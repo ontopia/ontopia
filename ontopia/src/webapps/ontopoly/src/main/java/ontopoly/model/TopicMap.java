@@ -41,19 +41,20 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * INTERNAL: Represents an Ontopoly topic map.
  */
 public class TopicMap {
-
   static final String ON = "http://psi.ontopia.net/ontology/";
   static final String XTM = "http://www.topicmaps.org/xtm/1.0/core.xtm#";
   static final String TEST = "http://psi.example.org/test/";
   static final String TECH = "http://www.techquila.com/psi/hierarchy/#";
   static final String DC = "http://purl.org/dc/elements/1.1/";
   static final String XSD = "http://www.w3.org/2001/XMLSchema#";
+  static final String TMDM = "http://psi.topicmaps.org/iso13250/";
 
   private static final String declarations = 
     "using xtm for i\"" + XTM + "\" "
     + "using on for i\"" + ON + "\" " 
     + "using test for i\"" + TEST + "\" "
     + "using tech for i\"" + TECH + "\" " 
+    + "using tmdm for i\"" + TMDM + "\" " 
     + "using dc for i\"" + DC + "\" ";
   
   private OntopolyRepository repository;
@@ -391,19 +392,19 @@ public class TopicMap {
 
   protected NameField getDefaultNameField() {
     TopicMap tm = this;
-    NameType nameType = new NameType(OntopolyModelUtils.getTopicIF(tm, PSI.ON_UNTYPED_NAME), tm);
+    NameType nameType = new NameType(OntopolyModelUtils.getTopicIF(tm, PSI.TMDM_TOPIC_NAME), tm);
     Collection nameFields = nameType.getDeclaredByFields();
     return (NameField)CollectionUtils.getFirstElement(nameFields);
   }
   
-	public IdentityField getIdentityField(IdentityType identityType) {
-		String query = "select $FD from on:has-identity-type(%type% : on:identity-type, $FD : on:identity-field) limit 1?";
-		Map<String,TopicIF> params = Collections.singletonMap("type", identityType.getTopicIF());
+  public IdentityField getIdentityField(IdentityType identityType) {
+    String query = "select $FD from on:has-identity-type(%type% : on:identity-type, $FD : on:identity-field) limit 1?";
+    Map<String,TopicIF> params = Collections.singletonMap("type", identityType.getTopicIF());
 
     QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
-		TopicIF fieldTopic = qm.queryForObject(query, params);
-		if (fieldTopic == null) 
-			throw new OntopolyModelRuntimeException("Could not find identity field for " + identityType);
+    TopicIF fieldTopic = qm.queryForObject(query, params);
+    if (fieldTopic == null) 
+      throw new OntopolyModelRuntimeException("Could not find identity field for " + identityType);
 
     return new IdentityField(fieldTopic, this, identityType);
   }

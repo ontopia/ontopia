@@ -1,6 +1,9 @@
 package ontopoly.conversion;
 
+import ontopoly.model.PSI;
 import ontopoly.model.TopicMap;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
 public class Upgrade_2_0 extends UpgradeBase {
@@ -28,13 +31,32 @@ public class Upgrade_2_0 extends UpgradeBase {
   @Override
   protected void transform() throws InvalidQueryException {
     // rename http://psi.ontopia.net/ontology/role-type to "Role type"
-    // http://psi.ontopia.net/ontology/rf-role-type_has-role-type should be part of Advanced view only
-    // http://psi.ontopia.net/ontology/rf-association-field_has-association-type should have cardinality 1:1 or 1:M
-    //   - same applies to fields for name type, identity type, and occurrence type
-    // http://psi.ontopia.net/ontology/rf-association-field_has-association-field should have cardinality 1:M
-    
+    doUpdate("update value($TN, \"Role type\") " +
+             "from topic-name(on:role-type, $TN)");
+
+    // FIXME
+    // http://psi.ontopia.net/ontology/rf-role-type_has-role-type
+    // should be part of Advanced view only
+
+    // FIXME
+    // http://psi.ontopia.net/ontology/rf-association-field_has-association-type
+    // should have cardinality 1:1 or 1:M
+    //   - same applies to fields for name type, identity type, and
+    //     occurrence type
+
+    // FIXME    
+    // http://psi.ontopia.net/ontology/rf-association-field_has-association-field
+    // should have cardinality 1:M
+
+    // FIXME (can't be bothered myself)
     // rename superclass to supertype and subclass to subtype
-    // rename subject identifier to PSI?
+
+    // change PSI of default name type from own to TMDM PSI
+    TopicMapIF tm = topicMap.getTopicMapIF();
+    TopicIF defnametype =
+      tm.getTopicBySubjectIdentifier(PSI.ON_DEPRECATED_UNTYPED_NAME);
+    defnametype.removeSubjectIdentifier(PSI.ON_DEPRECATED_UNTYPED_NAME);
+    defnametype.addSubjectIdentifier(PSI.TMDM_TOPIC_NAME);
   }
 
 }

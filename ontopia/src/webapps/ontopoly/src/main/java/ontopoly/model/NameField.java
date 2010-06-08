@@ -18,17 +18,16 @@ import net.ontopia.utils.CollectionUtils;
  * Represents a name type.
  */
 public class NameField extends FieldDefinition {
-
-	private NameType nameType;
+  private NameType nameType;
 
   public NameField(TopicIF topic, TopicMap tm) {
-		this(topic, tm, null);
+    this(topic, tm, null);
   }
 
   public NameField(TopicIF topic, TopicMap tm, NameType nameType) {
-		super(topic, tm);
-		this.nameType = nameType;
-	}
+    super(topic, tm);
+    this.nameType = nameType;
+  }
 
   @Override
   public int getFieldType() {
@@ -37,13 +36,15 @@ public class NameField extends FieldDefinition {
 
   @Override
   public String getFieldName() {
+    // FIXME: improve this!
     Collection names = getTopicIF().getTopicNames();
     Iterator it = names.iterator();
     while (it.hasNext()) {
       TopicNameIF name = (TopicNameIF) it.next();
       if (name.getType() == null && name.getScope().isEmpty())
         return name.getValue();
-    }		
+    }
+    
     NameType ntype = getNameType();
     return (ntype == null ? null : ntype.getName());
   }
@@ -72,9 +73,9 @@ public class NameField extends FieldDefinition {
       Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF nameTypeIf = (TopicIF)CollectionUtils.getFirst(players);
       this.nameType = (nameTypeIf == null ? null : new NameType(nameTypeIf, getTopicMap()));      
-		}
+    }
     return nameType;
-	}
+  }
 
   /**
    * Returns the names, which have this NameType object as type, associated with
@@ -88,7 +89,7 @@ public class NameField extends FieldDefinition {
     TopicIF topicIf = topic.getTopicIF();
     NameType ntype = getNameType();
     if (ntype == null) return Collections.EMPTY_SET;
-		TopicIF typeIf = ntype.getTopicIF();
+    TopicIF typeIf = ntype.getTopicIF();
 		
     Collection<TopicIF> scope = Collections.emptySet();
     return OntopolyModelUtils.findTopicNames(typeIf, topicIf); // , scope);
@@ -147,9 +148,9 @@ public class NameField extends FieldDefinition {
         .getValue() : (String) _value);
     NameType ntype = getNameType();
     if (ntype == null) return;
-		TopicIF typeIf = ntype.getTopicIF();
+    TopicIF typeIf = ntype.getTopicIF();
 
-		listener.onBeforeRemove(fieldInstance, value);
+    listener.onBeforeRemove(fieldInstance, value);
 		
     Collection<TopicIF> scope = Collections.emptySet();
     Collection names = OntopolyModelUtils.findTopicNames(typeIf, topicIf, value); // , scope);

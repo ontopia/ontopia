@@ -56,10 +56,10 @@ public class UpgradeUtils {
           new Upgrade_1_9(topicMap).upgrade();
         }
 
-//        if (version_number < 2.0f) {
-//          log.info("Upgrading topic map " + topicMap.getId() + " to version 2.0");
-//          new Upgrade_2_0(topicMap).upgrade();
-//        }
+       if (version_number < 2.0f) {
+         log.info("Upgrading topic map " + topicMap.getId() + " to version 2.0");
+         new Upgrade_2_0(topicMap).upgrade();
+       }
         
         // update version number
         version_occ.setValue(Float.toString(OntopolyApplication.CURRENT_VERSION_NUMBER));

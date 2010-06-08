@@ -5,12 +5,13 @@ import net.ontopia.infoset.impl.basic.URILocator;
 
 public class PSI {
 
-	public static final LocatorIF ON = URILocator.create(TopicMap.ON);
-	public static final LocatorIF XTM = URILocator.create(TopicMap.XTM);
-	public static final LocatorIF TEST = URILocator.create(TopicMap.TEST);
-	public static final LocatorIF TECH = URILocator.create(TopicMap.TECH);
-	public static final LocatorIF DC = URILocator.create(TopicMap.DC);
-	public static final LocatorIF XSD = URILocator.create(TopicMap.XSD);
+  public static final LocatorIF ON = URILocator.create(TopicMap.ON);
+  public static final LocatorIF XTM = URILocator.create(TopicMap.XTM);
+  public static final LocatorIF TEST = URILocator.create(TopicMap.TEST);
+  public static final LocatorIF TECH = URILocator.create(TopicMap.TECH);
+  public static final LocatorIF DC = URILocator.create(TopicMap.DC);
+  public static final LocatorIF XSD = URILocator.create(TopicMap.XSD);
+  public static final LocatorIF TMDM = URILocator.create(TopicMap.TMDM);
 
   public static final LocatorIF ON_ONTOLOGY_VERSION = PSI.ON.resolveAbsolute("ted-ontology-version");
 
@@ -27,7 +28,15 @@ public class PSI {
 
   public static final LocatorIF ON_ONTOLOGY_TYPE = PSI.ON.resolveAbsolute("ontology-type");
 
-  public static final LocatorIF ON_UNTYPED_NAME = PSI.ON.resolveAbsolute("untyped-name");
+  /**
+   * Until version 1.9 of the Ontopoly meta-schema we used our own PSI
+   * for the default name type, instead of the TMDM PSI. From version
+   * 2.0 that changed, and we are now using the TMDM PSI. This PSI
+   * should *never* occur in *any* post-1.9 topic map. The field
+   * remains here because the Upgrade_2_0 class uses it.
+   */
+  public static final LocatorIF ON_DEPRECATED_UNTYPED_NAME =
+    PSI.ON.resolveAbsolute("untyped-name");
   public static final LocatorIF ON_UNTYPED_TOPIC = PSI.ON.resolveAbsolute("untyped-topic");
 
   public static final LocatorIF ON_SUBJECT_LOCATOR = PSI.ON.resolveAbsolute("subject-locator");
@@ -77,5 +86,7 @@ public class PSI {
   public static final LocatorIF ON_SUPERCLASS_SUBCLASS = PSI.ON.resolveAbsolute("superclass-subclass");
   public static final LocatorIF ON_SUPERCLASS = PSI.ON.resolveAbsolute("superclass");
   public static final LocatorIF ON_SUBCLASS = PSI.ON.resolveAbsolute("subclass");
+  
+  public static final LocatorIF TMDM_TOPIC_NAME = PSI.TMDM.resolveAbsolute("topic-name");
 
 }

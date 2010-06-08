@@ -58,7 +58,7 @@ public class OntopolyApplication extends WebApplication {
     }
   };
 
-  public static final float CURRENT_VERSION_NUMBER = 1.9f;
+  public static final float CURRENT_VERSION_NUMBER = 2.0f;
   
   public OntopolyApplication() {
   }
