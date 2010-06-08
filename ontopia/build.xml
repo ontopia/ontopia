@@ -866,10 +866,8 @@
     <include name="net/ontopia/topicmaps/nav2/servlets/*.class" />
     <include name="net/ontopia/topicmaps/nav2/appservers/**/*.class" />
     <include name="net/ontopia/topicmaps/nav2/webapps/**/*.class" />
-    
     <exclude name="net/ontopia/topicmaps/nav2/webapps/ontopoly/**/*.class" />
-
-	<exclude name="net/ontopia/topicmaps/nav2/realm/*.class" />
+    <exclude name="net/ontopia/topicmaps/nav2/realm/*.class" />
     
     <!-- Using packages from old nav framework -->
     <include name="net/ontopia/topicmaps/nav/context/*.class" />
@@ -923,7 +921,7 @@
     <include name="net/ontopia/topicmaps/nav2/plugins/test/*.java" />
     <include name="net/ontopia/topicmaps/nav2/utils/test/*.java" />
     <include name="net/ontopia/topicmaps/nav2/portlets/pojos/test/*.java" />
-	<include name="net/ontopia/topicmaps/nav2/realm/test/*.java" />
+    <include name="net/ontopia/topicmaps/nav2/realm/test/*.java" />
   </patternset>
   
   <patternset id="classes.test.navigator">
@@ -933,6 +931,7 @@
     <include name="net/ontopia/topicmaps/nav2/plugins/test/*.class" />
     <include name="net/ontopia/topicmaps/nav2/utils/test/*.class" />
     <include name="net/ontopia/topicmaps/nav2/portlets/pojos/test/*.class" />
+    <include name="net/ontopia/topicmaps/nav2/realm/test/*.class" />
   </patternset>
   
   <!-- ====================================================================
@@ -1479,6 +1478,7 @@
     <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
     <copy file="${lib.path}/lucene-snowball-2.0.0.jar" tofile="${dist.path}/lib/lucene-snowball.jar" />
     <copy file="${lib.path}/tmapi-2.0.2.jar" tofile="${dist.path}/lib/tmapi.jar" />
+    <copy file="${lib.path}/tmapi-tests-2.0.2.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
     
     <copy todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes">
       <fileset dir="${dist.path}/lib">

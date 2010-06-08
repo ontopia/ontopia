@@ -405,7 +405,7 @@ if (action != null) {
       <tr valign="top">
       <td>
       <p>
-        The OKS maintains a full text index on disk for each in-memory topic map in
+        Ontopia maintains a full text index on disk for each in-memory topic map in
         the repository. Using this page, you can manage these indexes
         yourself.
       </p>
@@ -428,7 +428,7 @@ try {
       <td>
       <p>
         jdbcspy is a SQL profiler which can tell you how much time is spent on
-        each of the SQL queries run by the OKS. This is useful for analyzing
+        each of the SQL queries run by Ontopia. This is useful for analyzing
         performance problems with the RDBMS backend.
       </p>
       </td>

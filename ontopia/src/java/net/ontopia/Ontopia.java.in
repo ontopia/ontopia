@@ -169,7 +169,7 @@ public final class Ontopia {
     checkClass("antlr.Parser",                                 "antlr.jar");
     checkClass("com.hp.hpl.jena.graph.Node",                   "jena.jar");
     checkClass("com.ibm.icu.util.Calendar",                    "icu4j.jar");
-    checkClass("com.thaiopensource.relaxng.Schema",            "jing.jar");
+    checkClass("com.hp.hpl.jena.iri.IRIFactory",               "iri.jar");
   }
 
   /**
