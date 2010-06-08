@@ -133,7 +133,7 @@
 
     <!-- defaultCharacterEncoding: sets the default character encoding
      (example values are "utf-8", "iso-8859-1") for the response output
-     stream send to the client (browser). -->
+     stream to send to the client (browser). -->
     <property name="defaultCharacterEncoding" value="utf-8"/>
 
     <!-- defaultContentType: sets the default output HTTP content-type -->

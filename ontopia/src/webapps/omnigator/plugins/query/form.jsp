@@ -4,18 +4,17 @@
     net.ontopia.topicmaps.nav2.utils.FrameworkUtils,
     net.ontopia.topicmaps.query.utils.QueryUtils,
     java.util.Collection"
+    contentType="text/html; charset=utf-8"
 %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/tmvalue'   prefix='tm'        %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/framework' prefix='framework' %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic' %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/output'    prefix='output' %>
-
+<logic:context tmparam="tm" settm="topicmap">
 <%
   String tmid = request.getParameter("tm");
 %>
-
-<logic:context tmparam="tm" settm="topicmap">
 
 <template:insert template='/views/template_%view%.jsp'>
 <template:put name='title' body='true'>[Omnigator] Query</template:put>

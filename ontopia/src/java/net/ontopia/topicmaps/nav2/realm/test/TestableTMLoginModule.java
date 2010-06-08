@@ -12,7 +12,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * INTERNAL: Class extending TMLoginModule so that it can be properly
  * tested outside of a J2EE environment.
  */
-
 public class TestableTMLoginModule extends TMLoginModule {
   
   /**
