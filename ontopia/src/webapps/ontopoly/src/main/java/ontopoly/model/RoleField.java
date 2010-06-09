@@ -1,4 +1,3 @@
-// $Id: RoleField.java,v 1.13 2009/05/12 20:26:26 geir.gronmo Exp $
 
 package ontopoly.model;
 
@@ -32,17 +31,15 @@ import net.ontopia.utils.ObjectUtils;
  * assigned to a topic type as a field without a role type.
  */
 public class RoleField extends FieldDefinition {
-
-
   private AssociationField associationField;
   private RoleType roleType;
 
   public RoleField(TopicIF topic, TopicMap tm) {
-		this(topic, tm, null, null);
-	}
+    this(topic, tm, null, null);
+  }
 
   public RoleField(TopicIF topic, TopicMap tm, RoleType roleType, AssociationField associationField) {
-		super(topic, tm);
+    super(topic, tm);
 
     this.associationField = associationField;
     this.roleType = roleType;
@@ -55,13 +52,10 @@ public class RoleField extends FieldDefinition {
 
   @Override
   public String getFieldName() {
-    Collection names = getTopicIF().getTopicNames();
-    Iterator it = names.iterator();
-    while (it.hasNext()) {
-      TopicNameIF name = (TopicNameIF) it.next();
-      if (name.getType() == null && name.getScope().isEmpty())
-        return name.getValue();
-    }		
+    String name = getTopicMap().getTopicName(getTopicIF(), null);
+    if (name != null)
+      return name;
+    
     AssociationType atype = getAssociationType();
     RoleType rtype = getRoleType();
     return (atype == null ? "" : atype.getName()) + " (" + (rtype == null ? "" : rtype.getName()) + ")";

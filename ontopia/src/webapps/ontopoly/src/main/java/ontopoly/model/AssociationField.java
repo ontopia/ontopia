@@ -1,4 +1,3 @@
-// $Id: AssociationField.java,v 1.8 2009/04/30 09:53:42 geir.gronmo Exp $
 
 package ontopoly.model;
 
@@ -21,17 +20,16 @@ import net.ontopia.utils.ObjectUtils;
  * Represents an association field.
  */
 public class AssociationField extends Topic {
-
-	private AssociationType cachedAssociationType;
-	private List<RoleField> cachedFieldsForRoles;
+  private AssociationType cachedAssociationType;
+  private List<RoleField> cachedFieldsForRoles;
 
   public AssociationField(TopicIF topic, TopicMap tm) {
-		super(topic, tm);
+    super(topic, tm);
   }
 
   public AssociationField(TopicIF topic, TopicMap tm, AssociationType associationType) {
-		super(topic, tm);
-		this.cachedAssociationType = associationType;
+    super(topic, tm);
+    this.cachedAssociationType = associationType;
   }
 
   @Override
@@ -69,7 +67,7 @@ public class AssociationField extends Topic {
    * @return integer representing the number of allowed roles.
    */
   public int getArity() {
-		return getFieldsForRoles().size();
+    return getFieldsForRoles().size();
   }
 
   /**
@@ -78,8 +76,8 @@ public class AssociationField extends Topic {
    * @return List of RoleField objects
    */
   public List<RoleField> getFieldsForRoles() {
-		if (cachedFieldsForRoles != null) return cachedFieldsForRoles;
-
+    if (cachedFieldsForRoles != null) return cachedFieldsForRoles;
+                
     String query = "select $RF from "
 			+ "on:has-association-field(%AF% : on:association-field, $RF : on:role-field)?";
     Map<String,TopicIF> params = Collections.singletonMap("AF", getTopicIF());
@@ -106,25 +104,25 @@ public class AssociationField extends Topic {
   }
 
   @Override
-	public void remove(LifeCycleListener listener) {
-		// remove all associated role fields
-		Iterator iter = getFieldsForRoles().iterator();
-		while (iter.hasNext()) {
-			RoleField rf = (RoleField)iter.next();
-			rf.remove(listener);
-		}
-		// remove association type topic
-		listener.onBeforeDelete(this);
-		getTopicIF().remove();
-	}
-
-	/**
-	 * Gets the role fields that are assigned to this association field.
-	 * @return Collection of RoleField
-	 */
+  public void remove(LifeCycleListener listener) {
+    // remove all associated role fields
+    Iterator iter = getFieldsForRoles().iterator();
+    while (iter.hasNext()) {
+      RoleField rf = (RoleField)iter.next();
+      rf.remove(listener);
+    }
+    // remove association type topic
+    listener.onBeforeDelete(this);
+    getTopicIF().remove();
+  }
+  
+  /**
+   * Gets the role fields that are assigned to this association field.
+   * @return Collection of RoleField
+   */
   public Collection<RoleField> getDeclaredByFields() {
-		return getFieldsForRoles();
-	}
+    return getFieldsForRoles();
+  }
 
   static class RoleFieldComparator implements Comparator<RoleField> {
     private static final RoleFieldComparator INSTANCE = new RoleFieldComparator();

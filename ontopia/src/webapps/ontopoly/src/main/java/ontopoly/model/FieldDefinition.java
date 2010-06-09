@@ -1,4 +1,3 @@
-// $Id: FieldDefinition.java,v 1.9 2009/05/05 12:36:58 geir.gronmo Exp $
 
 package ontopoly.model;
 
@@ -20,18 +19,17 @@ import net.ontopia.utils.CollectionUtils;
  * type.
  */
 public abstract class FieldDefinition extends Topic {
-
   public static final int FIELD_TYPE_ROLE = 1;
   public static final int FIELD_TYPE_OCCURRENCE = 2;
   public static final int FIELD_TYPE_NAME = 4;
   public static final int FIELD_TYPE_IDENTITY = 8;
   public static final int FIELD_TYPE_QUERY = 16;
 
-	private Cardinality cachedCardinality;
+  private Cardinality cachedCardinality;
 
-	protected FieldDefinition(TopicIF topic, TopicMap tm) {
-		super(topic, tm);
-	}
+  protected FieldDefinition(TopicIF topic, TopicMap tm) {
+    super(topic, tm);
+  }
 
   /**
    * @return an int that identifies this fieldType

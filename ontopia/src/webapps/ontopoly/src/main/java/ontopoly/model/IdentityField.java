@@ -1,4 +1,3 @@
-// $Id: IdentityField.java,v 1.4 2009/05/06 14:19:11 geir.gronmo Exp $
 
 package ontopoly.model;
 
@@ -18,19 +17,18 @@ import net.ontopia.utils.CollectionUtils;
  * Represents both subject locator and subject identifier fields.
  */
 public class IdentityField extends FieldDefinition {
-
-	private IdentityType identityType;
+  private IdentityType identityType;
 
   /**
    * Creates a new IdentityField object.
    */
   public IdentityField(TopicIF topic, TopicMap tm) {
-		this(topic, tm, null);
+    this(topic, tm, null);
   }
 
   public IdentityField(TopicIF topic, TopicMap tm, IdentityType identityType) {
-		super(topic, tm);
-		this.identityType = identityType;
+    super(topic, tm);
+    this.identityType = identityType;
   }
 
   @Override
@@ -43,22 +41,14 @@ public class IdentityField extends FieldDefinition {
    */
   @Override
   public String getFieldName() {
-    Collection names = getTopicIF().getTopicNames();
-    Iterator it = names.iterator();
-    while (it.hasNext()) {
-      TopicNameIF name = (TopicNameIF) it.next();
-      if (name.getType() == null && name.getScope().isEmpty())
-        return name.getValue();
-    }
-    IdentityType itype = getIdentityType();
-    return (itype == null ? null : itype.getName());
+    return getTopicMap().getTopicName(getTopicIF(), getIdentityType());
   }
 
   @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof IdentityField))
       return false;
-		
+
     IdentityField other = (IdentityField)obj;
     return (getTopicIF().equals(other.getTopicIF()));
   }
@@ -78,9 +68,9 @@ public class IdentityField extends FieldDefinition {
       Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF identityTypeIf = (TopicIF)CollectionUtils.getFirst(players);
       this.identityType = (identityTypeIf == null ? null : new IdentityType(identityTypeIf, getTopicMap()));      
-		}
+    }
     return identityType;
-	}
+  }
 
   /**
    * True if this is the subject locator field type.
@@ -88,7 +78,7 @@ public class IdentityField extends FieldDefinition {
   public boolean isSubjectLocator() {
     IdentityType itype = getIdentityType();
     if (itype == null) return false;
-		TopicIF itypeIF = itype.getTopicIF();
+    TopicIF itypeIF = itype.getTopicIF();
     return itypeIF.getSubjectIdentifiers().contains(PSI.ON_SUBJECT_LOCATOR);
   }
 
@@ -98,7 +88,7 @@ public class IdentityField extends FieldDefinition {
   public boolean isSubjectIdentifier() {
     IdentityType itype = getIdentityType();
     if (itype == null) return false;
-		TopicIF itypeIF = itype.getTopicIF();
+    TopicIF itypeIF = itype.getTopicIF();
     return itypeIF.getSubjectIdentifiers().contains(PSI.ON_SUBJECT_IDENTIFIER);
   }
 
@@ -108,7 +98,7 @@ public class IdentityField extends FieldDefinition {
   public boolean isItemIdentifier() {
     IdentityType itype = getIdentityType();
     if (itype == null) return false;
-		TopicIF itypeIF = itype.getTopicIF();
+    TopicIF itypeIF = itype.getTopicIF();
     return itypeIF.getSubjectIdentifiers().contains(PSI.ON_ITEM_IDENTIFIER);
   }
 
@@ -143,17 +133,17 @@ public class IdentityField extends FieldDefinition {
   public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 
-											 URILocator.create((String) _value));
-		if (value != null) {
-			if (isSubjectLocator())
-				topicIf.addSubjectLocator(value);
-			else if (isItemIdentifier())
-				topicIf.addItemIdentifier(value);
-			else
-				topicIf.addSubjectIdentifier(value);
-		}
-		
-		listener.onAfterAdd(fieldInstance, value);
+                       URILocator.create((String) _value));
+    if (value != null) {
+      if (isSubjectLocator())
+        topicIf.addSubjectLocator(value);
+      else if (isItemIdentifier())
+        topicIf.addItemIdentifier(value);
+      else
+        topicIf.addSubjectIdentifier(value);
+    }
+    
+    listener.onAfterAdd(fieldInstance, value);
   }
 
   /**
@@ -168,17 +158,16 @@ public class IdentityField extends FieldDefinition {
   public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
     TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 
-											 URILocator.create((String) _value));
-		if (value != null) {
-
-		  listener.onBeforeRemove(fieldInstance, value);
+                       URILocator.create((String) _value));
+    if (value != null) {
+      listener.onBeforeRemove(fieldInstance, value);
 		  
-			if (isSubjectLocator())
-				topicIf.removeSubjectLocator(value);
-			else if (isItemIdentifier())
-				topicIf.removeItemIdentifier(value);
-			else
-				topicIf.removeSubjectIdentifier(value);
+      if (isSubjectLocator())
+        topicIf.removeSubjectLocator(value);
+      else if (isItemIdentifier())
+        topicIf.removeItemIdentifier(value);
+      else
+        topicIf.removeSubjectIdentifier(value);
     }
   }
 

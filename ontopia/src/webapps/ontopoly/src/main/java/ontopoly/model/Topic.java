@@ -25,7 +25,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * for isHidden, isReadOnly etc?
  */
 public class Topic {
-
   private TopicIF topicIF;
   private TopicMap tm;
 
@@ -79,7 +78,7 @@ public class Topic {
    */
   public String getName() {
     if (cachedName == null) 
-      cachedName = TopicStringifiers.toString(topicIF);
+      cachedName = tm.getTopicName(getTopicIF(), null);
     return cachedName;
   }
 

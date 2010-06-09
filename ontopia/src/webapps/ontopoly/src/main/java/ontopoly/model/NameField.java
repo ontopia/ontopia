@@ -36,17 +36,7 @@ public class NameField extends FieldDefinition {
 
   @Override
   public String getFieldName() {
-    // FIXME: improve this!
-    Collection names = getTopicIF().getTopicNames();
-    Iterator it = names.iterator();
-    while (it.hasNext()) {
-      TopicNameIF name = (TopicNameIF) it.next();
-      if (name.getType() == null && name.getScope().isEmpty())
-        return name.getValue();
-    }
-    
-    NameType ntype = getNameType();
-    return (ntype == null ? null : ntype.getName());
+    return getTopicMap().getTopicName(getTopicIF(), getNameType());
   }
 
   @Override

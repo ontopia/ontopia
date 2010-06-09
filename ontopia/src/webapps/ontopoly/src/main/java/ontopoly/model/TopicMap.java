@@ -18,10 +18,14 @@ import ontopoly.sysmodel.OntopolyRepository;
 import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.utils.OntopolyModelUtils;
 
+import net.ontopia.utils.StringifierIF;
+import net.ontopia.utils.CollectionUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -34,8 +38,6 @@ import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Represents an Ontopoly topic map.
@@ -47,7 +49,7 @@ public class TopicMap {
   static final String TECH = "http://www.techquila.com/psi/hierarchy/#";
   static final String DC = "http://purl.org/dc/elements/1.1/";
   static final String XSD = "http://www.w3.org/2001/XMLSchema#";
-  static final String TMDM = "http://psi.topicmaps.org/iso13250/";
+  static final String TMDM = "http://psi.topicmaps.org/iso13250/model/";
 
   private static final String declarations = 
     "using xtm for i\"" + XTM + "\" "
@@ -64,6 +66,8 @@ public class TopicMap {
   
   private String topicMapId;
   private QueryProcessorIF qp;
+
+  private TopicIF defnametype; // cached here to avoid constant lookups
 
   public TopicMap(TopicMapReference topicMapReference) {
     this.repository = topicMapReference.getRepository();
@@ -602,4 +606,21 @@ public class TopicMap {
     return results;
   }
 
+  /**
+   * Package-internal method to get the name of a topic. Introduced in
+   * Ontopia 5.1 for field definitions. Not used everywhere because I
+   * don't understand the code well enough to do that, and anyway
+   * things appear to work properly elsewhere. Should probably use this
+   * in Topic.getName(), though.
+   */
+  String getTopicName(TopicIF topic, AbstractTypingTopic fallback) {
+    if (defnametype == null)
+      defnametype = OntopolyModelUtils.getTopicIF(this, PSI.TMDM_TOPIC_NAME);
+
+    for (TopicNameIF name : topic.getTopicNames())
+      if (name.getType() == defnametype && name.getScope().isEmpty())
+        return name.getValue();
+
+    return (fallback == null ? null : fallback.getName());
+  }
 }

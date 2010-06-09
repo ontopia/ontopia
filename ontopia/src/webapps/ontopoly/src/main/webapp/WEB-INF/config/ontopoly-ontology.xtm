@@ -362,7 +362,6 @@
       <topicRef xlink:href="#id100"></topicRef>
     </instanceOf>
     <subjectIdentity>
-      <subjectIndicatorRef xlink:href="http://psi.ontopia.net/ontology/untyped-name"></subjectIndicatorRef>
       <subjectIndicatorRef xlink:href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
     </subjectIdentity>
     <baseName>
@@ -1683,7 +1682,7 @@
       <subjectIndicatorRef xlink:href="http://psi.ontopia.net/ontology/role-type"></subjectIndicatorRef>
     </subjectIdentity>
     <baseName>
-      <baseNameString>Association role type</baseNameString>
+      <baseNameString>Role type</baseNameString>
     </baseName>
     <occurrence>
       <instanceOf>
@@ -2908,7 +2907,7 @@
       <instanceOf>
         <topicRef xlink:href="#id71"></topicRef>
       </instanceOf>
-      <resourceData>1.9</resourceData>
+      <resourceData>2.0</resourceData>
     </occurrence>
   </topic>
   <topic id="id959">

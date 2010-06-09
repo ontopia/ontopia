@@ -38,15 +38,7 @@ public class OccurrenceField extends FieldDefinition {
 
   @Override
   public String getFieldName() {
-    Collection names = getTopicIF().getTopicNames();
-    Iterator it = names.iterator();
-    while (it.hasNext()) {
-      TopicNameIF name = (TopicNameIF) it.next();
-      if (name.getType() == null && name.getScope().isEmpty())
-        return name.getValue();
-    }		
-    OccurrenceType otype = getOccurrenceType();
-    return (otype == null ? null : otype.getName());
+    return getTopicMap().getTopicName(getTopicIF(), getOccurrenceType());
   }
 
   @Override
