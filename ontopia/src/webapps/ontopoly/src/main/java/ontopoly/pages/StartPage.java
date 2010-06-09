@@ -10,7 +10,7 @@ import java.util.Map;
 import ontopoly.OntopolyContext;
 import ontopoly.components.CreateNewTopicMapPanel;
 import ontopoly.components.FooterPanel;
-import ontopoly.components.HeaderPanel;
+import ontopoly.components.StartPageHeaderPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.models.HelpLinkResourceModel;
@@ -35,7 +35,7 @@ public class StartPage extends AbstractProtectedOntopolyPage {
   public StartPage(PageParameters parameters) throws IOException {
     super(parameters);
     
-    add(new HeaderPanel("header"));
+    add(new StartPageHeaderPanel("header"));
     add(new FooterPanel("footer"));
     
     // Adding part containing title and help link

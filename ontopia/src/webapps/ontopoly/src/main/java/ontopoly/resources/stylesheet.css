@@ -33,6 +33,10 @@ select, option { max-width: 500px; }
   background-image: url('../ontopoly.images.ImageResource/headerbg.gif'); 
 }
 
+#startPageHeaderFiller {
+  height: 60px;
+}
+
 #header a:link { color: white; margin: 0px; padding: 0px; }
 #header a:visited { color: white; margin: 0px; padding: 0px; }
 #header a:hover { color: white; text-decoration: underline; margin: 0px; padding: 0px; }
