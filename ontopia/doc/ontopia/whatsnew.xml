@@ -10,8 +10,8 @@
 <shortaffil>Ontopia</shortaffil>
 </affiliation>
 </author>
-<pubdate>$Date: 2008/08/19 12:21:07 $</pubdate>
-<releaseinfo>5.0 ($Revision: 1.144 $)</releaseinfo>
+<pubdate>2010-06-09</pubdate>
+<releaseinfo>5.1</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -20,6 +20,91 @@ This document describes what has changed in Ontopia between releases,
 both at a higher level, and in more detail.
 </para>
 </abstract>
+
+<!-- ======================================================================
+     5.1.0                                                              -->
+<section>
+<title>Ontopia 5.1.0 release notes</title>
+
+<para>This release introduces some major new functionality in Ontopia:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>The automated classification is now available through public
+    APIs and a command-line client. See the automatic classification
+    developer's guide in the documentation index for more details.</para>
+  </listitem>
+
+  <listitem>
+    <para>The <symbol>INSERT</symbol>, <symbol>UPDATE</symbol>,
+    <symbol>DELETE</symbol>, and <symbol>MERGE</symbol> statements
+    have been added to the tolog query language, allowing it to also
+    perform updates. See the section on updates in the tolog language
+    tutorial for more information.</para>
+  </listitem>
+
+  <listitem>
+    <para>Support for XTM 2.1 has been added, together with some new
+    classes to support it. Note that the
+    <classname>XTMVersion</classname> class has been introduced to
+    provide identifiers for the different versions.</para>
+  </listitem>
+
+  <listitem>
+    <para>Support for <ulink url="www.cerny-online.com/jtm/1.0/"
+    >JTM 1.0</ulink> import and export has been added.</para>
+  </listitem>
+
+  <listitem>
+    <para>The CTM importer has now been updated to the final CTM
+    specification.</para>
+  </listitem>
+
+  <listitem>
+    <para>The query plugin in Omnigator now supports pluggable query
+    language implementations, and also supports tolog updates.</para>
+  </listitem>
+</itemizedlist>
+
+<para>In addition, some API changes have been made:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>The core API now uses generics, making it much easier to use.</para>
+  </listitem>
+  <listitem>
+    <para><symbol>TopicNameIF.getType()</symbol> never returns null
+    any more, since
+    <ulink url="http://www.isotopicmaps.org/sam/sam-model/#d0e2429"
+           >the default name type</ulink> now is always represented by
+    a topic.
+    </para>
+  </listitem>
+  <listitem>
+    <para>Some new methods have been added to the
+    <classname>QueryWrapper</classname> class in the
+    <symbol>net.ontopia.topicmaps.query.utils</symbol> package.</para>
+  </listitem>
+  <listitem>
+    <para>The <symbol>makeKey(ReifiableIF r)</symbol> method has been
+    added to the <classname>KeyGenerator</classname> class in the
+    <symbol>net.ontopia.topicmaps.utils</symbol> package.</para>
+  </listitem>
+  <listitem>
+    <para><methodname>mergeInto</methodname> methods for all
+    <interfacename>TMObjectIF</interfacename>s have been added to
+    the <classname>MergeUtils</classname> class in the
+    <symbol>net.ontopia.topicmaps.utils</symbol> package.</para>
+  </listitem>
+  <listitem>
+    <para>The <methodname>getFastSortNameStringifier</methodname>
+    method has been added to the
+    <classname>TopicStringifiers</classname> class in the 
+    <symbol>net.ontopia.topicmaps.utils</symbol> package.</para>
+  </listitem>
+</itemizedlist>
+
+</section>
 
 <!-- ======================================================================
      5.0.2                                                              -->

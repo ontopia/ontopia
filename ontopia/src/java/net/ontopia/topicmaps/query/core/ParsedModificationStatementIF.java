@@ -7,7 +7,7 @@ import java.util.Map;
  * PUBLIC: Represents a parsed modification statement, such as DELETE,
  * INSERT, UPDATE, and QUERY.
  *
- * @since %NEXT%
+ * @since 5.1.0
  */
 public interface ParsedModificationStatementIF extends ParsedStatementIF {
 

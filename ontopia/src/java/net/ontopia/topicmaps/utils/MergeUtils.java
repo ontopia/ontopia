@@ -6,7 +6,6 @@ package net.ontopia.topicmaps.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,7 @@ import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.DeciderUtils;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaUnsupportedException;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
@@ -178,7 +178,7 @@ public class MergeUtils {
     }
 
     // copying roles
-    Set keys = new HashSet();
+    Set keys = new CompactHashSet();
     it = target.getRoles().iterator();
     while (it.hasNext())
       keys.add(KeyGenerator.makeAssociationKey(
@@ -275,7 +275,7 @@ public class MergeUtils {
    * names must be in the same topic map, but need not have the same
    * parent topic. It is assumed (but not verified) that the two
    * names are actually equal.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public static void mergeInto(TopicNameIF target, TopicNameIF source) {
     Iterator it = new ArrayList(source.getVariants()).iterator();
@@ -304,7 +304,7 @@ public class MergeUtils {
    * occurrence. The two occurrences must be in the same topic map, but
    * need not have the same parent topic. It is assumed (but not
    * verified) that the two occurrences are actually equal.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public static void mergeInto(OccurrenceIF target, OccurrenceIF source) {
     moveReifier(target, source);
@@ -317,7 +317,7 @@ public class MergeUtils {
    * association. The two associations must be in the same topic
    * map. If the two associations are not actually equal a
    * ConstraintViolationException is thrown.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public static void mergeInto(AssociationIF target, AssociationIF source) {
     moveReifier(target, source);
@@ -350,7 +350,7 @@ public class MergeUtils {
    * are merged, provided that they are equal; if they are not equal,
    * a ConstraintViolationException is thrown. It is assumed (but not
    * verified) that the two roles are actually equal.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public static void mergeInto(AssociationRoleIF target, AssociationRoleIF source) {
     if (target.getAssociation() != source.getAssociation()) {
@@ -377,7 +377,7 @@ public class MergeUtils {
    * two variants must be in the same topic map, but need not have the
    * same parent name. It is assumed (but not verified) that the two
    * variants are actually equal.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public static void mergeInto(VariantNameIF target, VariantNameIF source) {
     moveReifier(target, source);
@@ -390,7 +390,7 @@ public class MergeUtils {
    * objects must be in the same topic map, but need not have the same
    * parent. It is assumed (but not verified) that the two objects are
    * actually equal.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public static void mergeInto(ReifiableIF target, ReifiableIF source) {
     if (target instanceof TopicNameIF)
@@ -847,7 +847,7 @@ public class MergeUtils {
     // do the merge
     Set sources = (Set) mergemapRev.get(target);
     if (sources == null) {
-      sources = new HashSet();
+      sources = new CompactHashSet();
       mergemapRev.put(target, sources);
     }
     sources.add(source);
@@ -894,7 +894,7 @@ public class MergeUtils {
   }
 
   private static Set getAssociationKeySet(Collection associations) {
-    Set assocs = new HashSet();
+    Set assocs = new CompactHashSet();
     Iterator it = associations.iterator();
     while (it.hasNext()) {
       AssociationIF assoc = (AssociationIF) it.next();
@@ -982,7 +982,7 @@ public class MergeUtils {
     }
         
     // copying occurrences
-    HashSet keys = new HashSet();
+    HashSet keys = new CompactHashSet();
     it = target.getOccurrences().iterator();
     while (it.hasNext())
       keys.add(KeyGenerator.makeOccurrenceKey((OccurrenceIF) it.next()));

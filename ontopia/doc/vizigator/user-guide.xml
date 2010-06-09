@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1//EN" ""-->
-<!-- $Id: viz_userguide.xml,v 1.58 2008/06/13 12:06:19 geir.gronmo Exp $ -->
 <article> 
   <title>The Ontopia Vizigator</title> 
   <subtitle>User's Guide</subtitle>
@@ -17,8 +16,8 @@ other keystrokes affect search box; load config menu item; -->
       <affiliation><orgname>Ontopia</orgname> 
       </affiliation> 
     </author> 
-    <pubdate>$Date: 2008/06/13 12:06:19 $</pubdate> 
-    <releaseinfo>5.0 ($Revision: 1.58 $) </releaseinfo> 
+    <pubdate>2010-06-09</pubdate> 
+    <releaseinfo>5.1</releaseinfo> 
     <abstract> 
       <!--The documentation must be updated to describe the support
            for scope filtering of associations. The localization

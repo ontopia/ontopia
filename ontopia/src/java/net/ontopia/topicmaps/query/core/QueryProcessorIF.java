@@ -53,14 +53,14 @@ public interface QueryProcessorIF {
   /**
    * PUBLIC: Runs the update statement, returning the number of
    * modified objects.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public int update(String query) throws InvalidQueryException;
 
   /**
    * PUBLIC: Runs the update statement in the given declaration
    * context, returning the number of modified objects.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public int update(String query, DeclarationContextIF context)
     throws InvalidQueryException;
@@ -68,7 +68,7 @@ public interface QueryProcessorIF {
   /**
    * PUBLIC: Runs the update statement with the given parameters,
    * returning the number of modified objects.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public int update(String query, Map<String, ?> arguments)
     throws InvalidQueryException;
@@ -77,7 +77,7 @@ public interface QueryProcessorIF {
    * PUBLIC: Runs the update statement in the given declaration
    * context with the given parameters, returning the number of
    * modified objects.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public int update(String query, Map<String, ?> arguments,
                     DeclarationContextIF context)
@@ -102,7 +102,7 @@ public interface QueryProcessorIF {
   /**     
    * PUBLIC: Parses the update statement, returning an object
    * representing the result.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public ParsedModificationStatementIF parseUpdate(String statement)
     throws InvalidQueryException;
@@ -110,7 +110,7 @@ public interface QueryProcessorIF {
   /**     
    * PUBLIC: Parses the update statement in the given context,
    * returning an object representing the result.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public ParsedModificationStatementIF parseUpdate(String statement,
                                                    DeclarationContextIF context)

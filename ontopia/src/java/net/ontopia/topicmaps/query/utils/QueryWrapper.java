@@ -147,15 +147,17 @@ public class QueryWrapper {
   }
 
   /**
-   * EXPERIMENTAL: Write!
-   * @since %NEXT%
+   * EXPERIMENTAL: Returns a list of Map<String, Object> values for
+   * each row in the query, with the variable name as the key.
+   * @since 5.1.0
    */
   public List queryForMaps(String query) {
     return queryForMaps(query, null);
   }
   
   /**
-   * EXPERIMENTAL: Write!
+   * EXPERIMENTAL: Returns a list of Map<String, Object> values for
+   * each row in the query, with the variable name as the key.
    */
   public List queryForMaps(String query, Map params) {
     return queryForList(query, new MapMapper(false), params);

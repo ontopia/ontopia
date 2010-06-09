@@ -89,7 +89,7 @@ public class TopicStringifiers {
    * of topics, when they have one. If the topics have no sort name,
    * one of the topic names will be used instead. This stringifier is
    * the one used by tolog.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public static StringifierIF getFastSortNameStringifier(TopicMapIF tm) {
     return new FastSortNameStringifier(tm);

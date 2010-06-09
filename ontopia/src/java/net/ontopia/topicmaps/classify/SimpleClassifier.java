@@ -5,7 +5,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * PUBLIC: A simple top-level API for classifying content.
- * @since %NEXT%
+ * @since 5.1.0
  */
 public class SimpleClassifier {
 

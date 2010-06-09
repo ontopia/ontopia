@@ -125,7 +125,7 @@ public class KeyGenerator {
   /**
    * PUBLIC: Makes a key for any reifiable object, using the other
    * methods in this class.
-   * @since %NEXT%
+   * @since 5.1.0
    */
   public static String makeKey(ReifiableIF object) {
     if (object instanceof TopicNameIF)

@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * href="http://www.cerny-online.com/jtm/1.0/">JTM homepage</a> for a
  * specification of the JTM 1.0 exchange format for topic map fragments.
  * 
- * @since 5.1
+ * @since 5.1.0
  */
 public class JTMTopicMapWriter implements TopicMapWriterIF {
   static Logger log = LoggerFactory
@@ -134,8 +134,6 @@ public class JTMTopicMapWriter implements TopicMapWriterIF {
    * are output, as are the complete associations. Note that the
    * associations of topics in the topics collection are not output,
    * unless they are contained in the assocs collection.
-   *
-   * @since %NEXT%
    */
   public void write(Collection<TopicIF> topics,
                     Collection<AssociationIF> assocs) throws IOException {
