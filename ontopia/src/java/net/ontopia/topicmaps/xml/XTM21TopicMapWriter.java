@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
@@ -13,7 +11,8 @@ import java.io.Writer;
 
 /**
  * PUBLIC: A topic map writer that can write topic maps out into the
- * interchange syntax defined by XTM 2.1.
+ * interchange syntax defined by the 2010-03-02 draft of XTM 2.1,
+ * as published at http://www.itscj.ipsj.or.jp/sc34/open/1378.htm
  *
  * @since 5.1.0
  */
@@ -36,6 +35,13 @@ public final class XTM21TopicMapWriter extends AbstractXTM2TopicMapWriter {
     super(stream, encoding);
   }
 
+  /**
+   * PUBLIC: Creates a writer which writes to the given writer and
+   * claims that the file is in the given encoding. <b>Warning:</b>
+   * we do <em>not</em> recommend using this method, as there is
+   * no guarantee that the declared encoding and the real encoding
+   * will
+   */
   public XTM21TopicMapWriter(Writer writer, String encoding) throws IOException {
     super(writer, encoding);
   }

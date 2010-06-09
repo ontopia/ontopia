@@ -1,6 +1,4 @@
 
-// $Id: AbstractTopicMapContentHandler.java,v 1.25 2003/01/22 12:43:09 larsga Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.util.*;
@@ -19,11 +17,7 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: Abstract SAX2 content handler used for reading various
  * kinds of topic map documents.</p>
  */
-
-public abstract class AbstractTopicMapContentHandler extends DefaultHandler {
-
-  // protected boolean validating = true;
-  
+public abstract class AbstractTopicMapContentHandler extends DefaultHandler {  
   protected Collection propagated_themes;
 
   // The list of processed documents passed on to the current

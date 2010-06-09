@@ -1,6 +1,4 @@
 
-// $Id: XTMValidatingContentHandler.java,v 1.8 2008/08/19 12:08:45 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.StringReader;
@@ -24,28 +22,28 @@ import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
  * using Jing.</p>
  */
 public class XTMValidatingContentHandler implements ContentHandler {
-
   static final String EL_TOPICMAP = "topicMap";
 
   private ContentHandler child; // validated events are passed here
   private ContentHandler validator; // validating handler
   private Locator locator; // stored until we can pass on to validator
-  private int xtm_version; // which XTM version to validate against
+  private XTMVersion xtm_version; // which XTM version to validate against
   
   public XTMValidatingContentHandler(ContentHandler child) {
-    this(child, XTMSnifferContentHandler.VERSION_XTM10);
+    this(child, XTMVersion.XTM_1_0);
   }
 
-  public XTMValidatingContentHandler(ContentHandler child, int xtm_version) {
+  public XTMValidatingContentHandler(ContentHandler child, XTMVersion version) {
     this.child = child;
-    this.xtm_version = xtm_version;
+    this.xtm_version = version;
   }
   
   protected ContentHandler createValidator() {
     String rnc;
-    if (xtm_version == XTMSnifferContentHandler.VERSION_XTM10)
+    if (xtm_version == XTMVersion.XTM_1_0)
       rnc = DTD.getXTMRelaxNG();
-    else if (xtm_version == XTMSnifferContentHandler.VERSION_XTM20)
+    else if (xtm_version == XTMVersion.XTM_2_0 ||
+             xtm_version == XTMVersion.XTM_2_1)
       rnc = DTD.getXTM2RelaxNG();
     else
       throw new OntopiaRuntimeException("Unknown XTM version: " + xtm_version);

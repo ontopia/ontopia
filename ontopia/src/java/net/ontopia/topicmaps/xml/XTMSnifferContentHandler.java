@@ -1,6 +1,4 @@
 
-// $Id: XTMSnifferContentHandler.java,v 1.2 2008/05/29 19:26:18 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.util.Map;
@@ -25,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: This content handler is used to detect whether the XTM
- * event stream being read is an XTM 1.0 or 2.0 document. Once this is
+ * event stream being read is an XTM 1.0 or 2.x document. Once this is
  * clear, the handler configures the parser accordingly with the
  * correct handlers.
  */
@@ -45,10 +43,6 @@ public class XTMSnifferContentHandler extends DefaultHandler
   private int stack_depth; // used to avoid unbalanced stacks in XTM 1.0
   private Locator locator; // stored to be passed on to real ContentHandlers
   private static final Attributes EMPTY_ATTS = new AttributesImpl();
-
-  public static final int VERSION_UNKNOWN = 0;
-  public static final int VERSION_XTM10   = 1;
-  public static final int VERSION_XTM20   = 2;
 
   public XTMSnifferContentHandler(XTMTopicMapReader reader,
                                   TopicMapStoreFactoryIF store_factory,
@@ -109,7 +103,7 @@ public class XTMSnifferContentHandler extends DefaultHandler
       outer_handler.startElement(uri, name, qname, atts);
       
     } else if (uri == XTM2ContentHandler.NS_XTM2) {
-      // We are reading XTM 2.0. Update accordingly.
+      // We are reading XTM 2.x. Update accordingly.
       handler2 = new XTM2ContentHandler(store_factory,
                                         reader.getXMLReaderFactory(),
                                         base_address);
@@ -117,8 +111,8 @@ public class XTMSnifferContentHandler extends DefaultHandler
       outer_handler = handler2;
 
       if (reader.getValidation()) {
-        outer_handler = new XTMValidatingContentHandler(handler2, 
-                                                        VERSION_XTM20);
+        outer_handler = new XTMValidatingContentHandler(handler2,
+                                                        XTMVersion.XTM_2_0);
         parser.setContentHandler(outer_handler);
       }
 
@@ -212,12 +206,12 @@ public class XTMSnifferContentHandler extends DefaultHandler
       return Collections.EMPTY_SET;
   }
 
-  public int getXTMVersion() {
+  public XTMVersion getXTMVersion() {
     if (handler1 != null)
-      return VERSION_XTM10;
+      return XTMVersion.XTM_1_0;
     else if (handler2 != null)
-      return VERSION_XTM20;
+      return XTMVersion.XTM_2_0;
     else
-      return VERSION_UNKNOWN;
+      return null;
   }
 }

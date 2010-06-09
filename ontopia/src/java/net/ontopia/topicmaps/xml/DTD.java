@@ -7,7 +7,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: This class collects various Topic Map document type
- * definitions. These include the XTM 1.0document type definition.</p>
+ * definitions. These include the XTM 1.0 document type definition.</p>
  */
 public class DTD {
 

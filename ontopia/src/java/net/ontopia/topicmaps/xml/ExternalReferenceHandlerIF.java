@@ -1,4 +1,3 @@
-// $Id: ExternalReferenceHandlerIF.java,v 1.3 2002/05/29 13:38:46 hca Exp $
 
 package net.ontopia.topicmaps.xml;
 
@@ -8,7 +7,6 @@ import net.ontopia.infoset.core.LocatorIF;
  * PUBLIC: An interface that can be implemented by handlers that would
  * like to intercept external references in topic map documents.</p>
  */
-
 public interface ExternalReferenceHandlerIF {
 
   /**

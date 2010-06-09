@@ -246,9 +246,9 @@ public class XTMTopicMapReader extends AbstractXMLFormatReader
     // Process class-instance associations
     Iterator it = tms.iterator();
     while (it.hasNext()) {
-      if (handler.getXTMVersion() == XTMSnifferContentHandler.VERSION_XTM10)
+      if (handler.getXTMVersion() == XTMVersion.XTM_1_0)
         ClassInstanceUtils.resolveAssociations1((TopicMapIF) it.next());
-      else if (handler.getXTMVersion() == XTMSnifferContentHandler.VERSION_XTM20)
+      else if (handler.getXTMVersion() == XTMVersion.XTM_2_0)
         ClassInstanceUtils.resolveAssociations2((TopicMapIF) it.next());
       else
         throw new OntopiaRuntimeException("Unknown XTM version!");

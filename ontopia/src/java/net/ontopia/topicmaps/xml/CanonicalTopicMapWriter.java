@@ -21,6 +21,7 @@ import net.ontopia.xml.*;
  * <p><b>Note:</b> this is the format defined in <a
  * href="http://www.ontopia.net/topicmaps/materials/cxtm.html">an
  * Ontopia technical report</a>, not the upcoming standard format.
+ * For new code, please use the standard format.
  */
 public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 

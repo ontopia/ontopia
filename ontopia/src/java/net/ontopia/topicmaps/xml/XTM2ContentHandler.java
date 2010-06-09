@@ -1,6 +1,4 @@
 
-// $Id: XTM2ContentHandler.java,v 1.9 2008/06/13 08:36:30 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.util.Set;
@@ -22,6 +20,7 @@ import net.ontopia.xml.XMLReaderFactoryIF;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
@@ -30,12 +29,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * INTERNAL: Reads XTM 2.0 / 2.1.
+ * INTERNAL: Reads both XTM 2.0 and XTM 2.1.
  */
 public class XTM2ContentHandler extends DefaultHandler {
   static final String NS_XTM2 = "http://www.topicmaps.org/xtm/";
-  static final String XTM_NAMETYPE =
-    "http://psi.topicmaps.org/iso13250/model/topic-name";
   static final String XTM_URITYPE = "http://www.w3.org/2001/XMLSchema#anyURI";
   static final String XTM_STRINGTYPE = "http://www.w3.org/2001/XMLSchema#string";
   
@@ -68,12 +65,18 @@ public class XTM2ContentHandler extends DefaultHandler {
   private List<LocatorIF> stacked_itemids; // used for associations
   private List<RoleReification> delayedRoleReification; // see issue 116 below
   private boolean xtm21;  // Indicates if we are in XTM 2.1 oder 2.0 mode (needed handle the fragment identifier in <topicRef/> right)
-  private boolean seenReifier; // Indicates if the reifier attribute has been processed. 
-                               // Used to validate the XTM 2.1 topic map even if validation against the
-                               // RELAX-NG schema is disabled
-  private boolean seenIdentity; // Indicates if the topic has an identity
-                                // Used to ensure that XTM 2.1 topics have an iid, sid or slo even if
-                                // the validation against the RELAX-NG schema is disabled.
+
+  private boolean seenReifier; // Indicates if the reifier attribute
+                               // has been processed.  Used to
+                               // validate the XTM 2.1 topic map even
+                               // if validation against the RELAX-NG
+                               // schema is disabled
+  
+  private boolean seenIdentity; // Indicates if the topic has an
+                                // identity. Used to ensure that XTM
+                                // 2.1 topics have an iid, sid or slo
+                                // even if the validation against the
+                                // RELAX-NG schema is disabled.
 
   private static final int CONTEXT_TYPE        = 1;
   private static final int CONTEXT_SCOPE       = 2;
@@ -160,10 +163,9 @@ public class XTM2ContentHandler extends DefaultHandler {
       if (id != null) {
         seenIdentity = true;
         addItemIdentifier(topic, makeIDLocator(id));
-      }
-      else if (!xtm21) {
-        throw new InvalidTopicMapException("No id-attribute found.");
-      }
+      } else if (!xtm21)
+        throw new InvalidTopicMapException("No id attribute on <topic>.");
+
       context = CONTEXT_TOPIC;
 
       // <ITEMIDENTITY
@@ -286,12 +288,11 @@ public class XTM2ContentHandler extends DefaultHandler {
       
       // <REIFIER
     } else if (name == "reifier") {
-      if (!xtm21) {
+      if (!xtm21)
         throw new InvalidTopicMapException("The <reifier/> is illegal in XTM 2.0");
-      }
-      if (seenReifier) {
+      if (seenReifier)
         throw new InvalidTopicMapException("Having a reifier attribute and a reifier element is illegal in XTM 2.1");
-      }
+
       nextContext = context;
       context = CONTEXT_REIFIER;
     }
@@ -308,9 +309,8 @@ public class XTM2ContentHandler extends DefaultHandler {
       return;
 
     if (name == "topic") {
-      if (!seenIdentity) {
-        throw new InvalidTopicMapException("The topic has neither an id nor a subject identifier, item identifier, or subject locator");
-      }
+      if (!seenIdentity)
+        throw new InvalidTopicMapException("The topic has neither id, subject identifier, item identifier, nor subject locator");
     }
       // </VALUE
     else if (name == "value" || name == "resourceData")
@@ -469,7 +469,7 @@ public class XTM2ContentHandler extends DefaultHandler {
 
   private TopicIF getDefaultNameType() {
     if (nametype == null) {
-      LocatorIF psi = makeLocator(XTM_NAMETYPE);
+      LocatorIF psi = PSI.getSAMNameType();
       nametype = topicmap.getTopicBySubjectIdentifier(psi);
       if (nametype == null) {
         nametype = builder.makeTopic();

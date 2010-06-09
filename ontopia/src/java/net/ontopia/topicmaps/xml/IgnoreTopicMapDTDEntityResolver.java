@@ -1,6 +1,4 @@
 
-// $Id: IgnoreTopicMapDTDEntityResolver.java,v 1.9 2004/11/18 13:12:29 grove Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import net.ontopia.xml.*;

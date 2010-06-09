@@ -1,6 +1,4 @@
 
-//$Id: CanonicalXTM2WriterTestGenerator.java,v 1.4 2008/07/04 10:22:20 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml.test;
 
 import java.io.*;
@@ -77,7 +75,7 @@ public class CanonicalXTM2WriterTestGenerator implements TestCaseGeneratorIF {
 
       // Export to XTM 2.0
       XTMTopicMapWriter writer = new XTMTopicMapWriter(tmp);
-      writer.setVersion(XTMSnifferContentHandler.VERSION_XTM20);
+      writer.setVersion(XTMVersion.XTM_2_0);
       // Do not omit the item identifiers
       writer.setExportSourceLocators(true);
       writer.write(tm);

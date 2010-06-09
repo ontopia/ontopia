@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
+import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -26,7 +27,7 @@ import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
-import net.ontopia.xml.PrettyPrinter;
+import net.ontopia.topicmaps.utils.PSI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,19 +41,9 @@ import org.xml.sax.helpers.AttributeListImpl;
 public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   protected boolean export_itemids = false;
   protected AttributeListImpl atts;
-  protected static final AttributeListImpl EMPTY_ATTR_LIST = new AttributeListImpl();
+  protected static final AttributeListImpl EMPTY_ATTR_LIST =
+    new AttributeListImpl();
   private final boolean xtm21Mode;
-  private static final LocatorIF XTM2_NAMETYPE;
-
-  static {
-    LocatorIF tmp = null;
-    try {
-      tmp = new URILocator(XTM2ContentHandler.XTM_NAMETYPE);
-    } catch (java.net.MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
-    XTM2_NAMETYPE = tmp;
-  }
 
   public XTM2TopicMapExporter() {
     this(false);
@@ -61,7 +52,8 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   /**
    * EXPERIMENTAL: XTM 2.0 or XTM 2.1 output.
    *
-   * @param xtm21 {@code true} to enable XTM 2.1, otherwise XTM 2.0 will be written.
+   * @param xtm21 {@code true} to enable XTM 2.1, otherwise XTM 2.0
+   * will be written.
    */
   public XTM2TopicMapExporter(final boolean xtm21) {
     this.xtm21Mode = xtm21;
@@ -117,9 +109,9 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     final Collection<LocatorIF> slos = topic.getSubjectLocators();
 
     atts.clear();
-    if (!xtm21Mode || (iids.isEmpty() && sids.isEmpty() && slos.isEmpty())) {
+    if (!xtm21Mode || (iids.isEmpty() && sids.isEmpty() && slos.isEmpty()))
       atts.addAttribute("id", "CDATA", getElementId(topic));
-    }
+
     dh.startElement("topic", atts);
 
     write(iids, "itemIdentity", dh);
@@ -167,7 +159,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
     dh.endElement("name");
   }
 
-  private void write(VariantNameIF vn, DocumentHandler dh) throws SAXException{
+  private void write(VariantNameIF vn, DocumentHandler dh) throws SAXException {
     atts.clear();
     addReifier(atts, vn);
     dh.startElement("variant", atts);
@@ -341,7 +333,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
   }
 
   private boolean isDefaultNameType(TopicIF type) {
-    return type.getSubjectIdentifiers().contains(XTM2_NAMETYPE);
+    return type.getSubjectIdentifiers().contains(PSI.getSAMNameType());
   }
 
   private void addReifier(AttributeListImpl atts, ReifiableIF reified) {

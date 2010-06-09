@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;
@@ -47,7 +45,8 @@ abstract class AbstractXTM2TopicMapWriter extends XTMTopicMapWriter {
    * @param file The file object to which the topic map is to be written.
    * @param encoding The character encoding to write the topic map in.
    */
-  public AbstractXTM2TopicMapWriter(File file, String encoding) throws IOException {
+  public AbstractXTM2TopicMapWriter(File file, String encoding)
+    throws IOException {
     super(file, encoding);
     setVersion(getVersion());
   }
@@ -77,7 +76,8 @@ abstract class AbstractXTM2TopicMapWriter extends XTMTopicMapWriter {
    * Note that this <em>must</em> be set correctly, or the XML
    * document will not parse correctly.
    */
-  public AbstractXTM2TopicMapWriter(Writer writer, String encoding) throws IOException {
+  public AbstractXTM2TopicMapWriter(Writer writer, String encoding)
+    throws IOException {
     super(writer, encoding);
     setVersion(getVersion());
   }

@@ -1,4 +1,3 @@
-// $Id: IncludeTopicMapDTDEntityResolver.java,v 1.6 2008/01/09 10:07:35 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.xml;
 
@@ -19,7 +18,6 @@ import org.xml.sax.InputSource;
  *   "+//IDN ontopia.net//DTD Topic Map Interchange Format (Strict 1.0)//EN"
  * </pre>
  */
-
 public class IncludeTopicMapDTDEntityResolver extends ConfigurableEntityResolver {
 
   public IncludeTopicMapDTDEntityResolver() {
