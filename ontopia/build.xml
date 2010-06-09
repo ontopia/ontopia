@@ -867,7 +867,7 @@
     <include name="net/ontopia/topicmaps/nav2/appservers/**/*.class" />
     <include name="net/ontopia/topicmaps/nav2/webapps/**/*.class" />
     <exclude name="net/ontopia/topicmaps/nav2/webapps/ontopoly/**/*.class" />
-    <exclude name="net/ontopia/topicmaps/nav2/realm/*.class" />
+    <include name="net/ontopia/topicmaps/nav2/realm/*.class" />
     
     <!-- Using packages from old nav framework -->
     <include name="net/ontopia/topicmaps/nav/context/*.class" />

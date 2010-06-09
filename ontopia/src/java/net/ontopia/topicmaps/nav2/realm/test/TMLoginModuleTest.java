@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 import java.security.Principal;
@@ -84,7 +85,8 @@ public class TMLoginModuleTest extends AbstractTopicMapTestCase {
     doLoginTests(tokens, pnames, options);
   }
 
-  protected void doLoginTests(String[] tokens, String[] pnames, Map options) throws Exception {
+  protected void doLoginTests(String[] tokens, String[] pnames, Map options)
+    throws Exception {
     TestableTMLoginModule loginModule = new TestableTMLoginModule();    
     Subject subject = new Subject();    
     CallbackHandler callbackHandler = new CallbackHandlerImpl(tokens);
@@ -121,8 +123,6 @@ public class TMLoginModuleTest extends AbstractTopicMapTestCase {
     // the time being, totally two principals including the user
     // principal.
 
-    //! assertTrue("Subject does not have correct number of principals", 
-    //!            principals.size() == pnames.length);
     assertTrue("Subject does not have correct number of principals", 
 	       principals.size() == pnames.length);
 
@@ -137,7 +137,8 @@ public class TMLoginModuleTest extends AbstractTopicMapTestCase {
 	  break;
 	}
       }
-      if (!ok) fail("User did not have proper principals: " + java.util.Arrays.asList(pnames));	
+      if (!ok)
+        fail("User did not have proper principals: " + Arrays.asList(pnames));	
     }
   }
   
