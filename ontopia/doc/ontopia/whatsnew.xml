@@ -23,7 +23,7 @@ both at a higher level, and in more detail.
 
 <!-- ======================================================================
      5.1.0                                                              -->
-<section>
+<section id="sect-5.1.0">
 <title>Ontopia 5.1.0 release notes</title>
 
 <para>This release introduces some major new functionality in Ontopia:</para>

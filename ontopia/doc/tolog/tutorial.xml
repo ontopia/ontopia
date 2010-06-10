@@ -1628,7 +1628,7 @@ parsing and optimizing the query more than once.
 </section>
 </section>
 
-<section>
+<section id="sect-updates">
 <title>tolog updates</title>
 
 <para>

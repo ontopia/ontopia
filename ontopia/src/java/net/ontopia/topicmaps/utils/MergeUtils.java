@@ -982,7 +982,7 @@ public class MergeUtils {
     }
         
     // copying occurrences
-    HashSet keys = new CompactHashSet();
+    Set keys = new CompactHashSet();
     it = target.getOccurrences().iterator();
     while (it.hasNext())
       keys.add(KeyGenerator.makeOccurrenceKey((OccurrenceIF) it.next()));
