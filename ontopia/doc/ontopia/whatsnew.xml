@@ -81,6 +81,11 @@ both at a higher level, and in more detail.
     </para>
   </listitem>
   <listitem>
+    <para>The <symbol>coalesce</symbol> predicate has been added to
+    tolog (see
+    <ulink url="http://www.ontopia.net/doc/5.1.0/query/predicate-reference.html#p-coalesce">the predicate reference</ulink>).</para>
+  </listitem>
+  <listitem>
     <para>Some new methods have been added to the
     <classname>QueryWrapper</classname> class in the
     <symbol>net.ontopia.topicmaps.query.utils</symbol> package.</para>
@@ -102,8 +107,126 @@ both at a higher level, and in more detail.
     <classname>TopicStringifiers</classname> class in the 
     <symbol>net.ontopia.topicmaps.utils</symbol> package.</para>
   </listitem>
+  <listitem>
+    <para>The TMRAP <symbol>add-fragment</symbol> request now supports
+    CTM input.</para>
+  </listitem>
 </itemizedlist>
 
+<para>The following bugs are fixed in this release:</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=135"
+    >Issue 135</ulink>: Omnigator: NullPointerException in
+    getScopeDecider</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=264"
+    >Issue 264</ulink>: Query plugin in Omnigator doesn't handle non-latin-1
+    characters correctly</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=254"
+    >Issue 254</ulink>: tolog "reifies" predicate returns error on finding
+    refiers of a topic</para>
+  </listitem>  
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=244"
+    >Issue 244</ulink>: DB2TM schema disallows iid/slo prefixes, but they
+    actually work</para>
+  </listitem>  
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=238"
+    >Issue 238</ulink>: Exception on instance topic in Ontopoly</para>
+  </listitem>  
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=237"
+    >Issue 237</ulink>: Interning of locators caused out of memory error in
+    the engine even when there was more memory left</para>
+  </listitem>  
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=231"
+    >Issue 231</ulink>: TopicType not serializable exception in Ontopoly</para>
+  </listitem>  
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=228"
+    >Issue 228</ulink>: TMAPI TopicMap/TopicMapSystem.close() doesn't commit
+    current transaction</para>
+  </listitem>  
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=214"
+    >Issue 214</ulink>: TMAPI ScopedIndex throws NullPointerException</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=209"
+    >Issue 209</ulink>: TMAPI Variants allow empty scope</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=208"
+    >Issue 208</ulink>: Ontopoly should not clear field when cardinality is
+    0-1 or 1-1 and field has multiple values</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=193"
+    >Issue 193</ulink>: DB2TM synchronization strips topic type</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=184"
+    >Issue 184</ulink>: Cannot disassociate second topic type of an instance
+    in Ontopoly</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=176"
+    >Issue 176</ulink>: Omnigator: ClassNotFoundException when exporting to
+    RDF</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=132"
+    >Issue 132</ulink>: Copy assotiation type does not work correctly in
+    Ontopoly</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=121"
+    >Issue 121</ulink>: Ontopoly: field list updated incorrectly when
+    subtyping</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=99"
+    >Issue 99</ulink>: tolog should not count null values</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=93"
+    >Issue 93</ulink>: tolog reordering optimizer makes query much slower</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=238"
+    >Issue 238</ulink>: InvalidQueryException when viewing certain topics in
+    Ontopoly</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=216"
+    >Issue 216</ulink>: DB2TM makePSI function strips out chars 9 and z</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=208"
+    >Issue 208</ulink>: Problem with hierarchy-walker optimization in
+    tolog</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=207"
+    >Issue 207</ulink>: tolog topic and association predicates do not filter
+    correctly</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=143"
+    >Issue 143</ulink>: Bad syntax error reporting in LTM reader</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=111"
+    >Issue 111</ulink>: XTM 1.0 importer uses non-standard PSIs</para>
+  </listitem>
+</itemizedlist>
 </section>
 
 <!-- ======================================================================
