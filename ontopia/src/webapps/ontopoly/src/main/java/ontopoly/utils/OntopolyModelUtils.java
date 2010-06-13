@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import ontopoly.model.PSI;
 import ontopoly.model.QueryMapper;
 import ontopoly.model.TopicMap;
 
@@ -434,36 +435,33 @@ public class OntopolyModelUtils {
   public static OccurrenceIF makeOccurrence(TopicIF otype, TopicIF topicIF, String value, LocatorIF datatype, Collection<TopicIF> scope) {
     TopicMapBuilderIF builder = topicIF.getTopicMap().getBuilder();
     OccurrenceIF occ = builder.makeOccurrence(topicIF, otype, value, datatype);
-    Iterator iter = scope.iterator();
+    Iterator<TopicIF> iter = scope.iterator();
     while (iter.hasNext()) {
-      TopicIF scopingTopic = (TopicIF)iter.next();
+      TopicIF scopingTopic = iter.next();
       occ.addTheme(scopingTopic);
     }
     return occ;
   }
 
   public static List<TopicNameIF> findTopicNames(TopicIF nType, TopicIF topicIF) { 
-    // HACK: this method treats on:untyped-name and names with null types the same
-    boolean isUntypedName = (nType == null || nType.getSubjectIdentifiers().contains(URILocator.create("http://psi.ontopia.net/ontology/untyped-name")));
     List<TopicNameIF> result = new ArrayList<TopicNameIF>();
-    Iterator it = topicIF.getTopicNames().iterator();
+    Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
-      TopicNameIF nameIF = (TopicNameIF) it.next();
-      if ((ObjectUtils.equals(nameIF.getType(), nType) || (isUntypedName && nameIF.getType() == null)))
+      TopicNameIF nameIF = it.next();
+      if (ObjectUtils.equals(nameIF.getType(), nType) || 
+    		  (nType == null &&  nameIF.getType().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME)))
         result.add(nameIF);
     }
     return result;
   }
 
   public static List<TopicNameIF> findTopicNames(TopicIF nType, TopicIF topicIF, Collection<TopicIF> scope) { 
-    // HACK: this method treats on:untyped-name and names with null types the same
-    boolean isUntypedName = (nType == null || nType.getSubjectIdentifiers().contains(URILocator.create("http://psi.ontopia.net/ontology/untyped-name")));
     List<TopicNameIF> result = new ArrayList<TopicNameIF>();
-    Iterator it = topicIF.getTopicNames().iterator();
+    Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
-      TopicNameIF nameIF = (TopicNameIF) it.next();
+      TopicNameIF nameIF = it.next();
       if ((ObjectUtils.equals(nameIF.getType(), nType) || 
-          (isUntypedName && nameIF.getType() == null)) && 
+    		  (nType == null &&  nameIF.getType().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME))) && 
           CollectionUtils.equalsUnorderedSet(nameIF.getScope(), scope))
         result.add(nameIF);
     }
@@ -471,28 +469,26 @@ public class OntopolyModelUtils {
   }
 
   public static List<TopicNameIF> findTopicNames(TopicIF nType, TopicIF topicIF, String value) { 
-    // HACK: this method treats on:untyped-name and names with null types the same
-    boolean isUntypedName = (nType == null || nType.getSubjectIdentifiers().contains(URILocator.create("http://psi.ontopia.net/ontology/untyped-name")));
     List<TopicNameIF> result = new ArrayList<TopicNameIF>();
-    Iterator it = topicIF.getTopicNames().iterator();
+    Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
-      TopicNameIF nameIF = (TopicNameIF) it.next();
+      TopicNameIF nameIF = it.next();
       if (ObjectUtils.equals(nameIF.getValue(), value) && 
-          (ObjectUtils.equals(nameIF.getType(), nType)  || (isUntypedName && nameIF.getType() == null)))
+          (ObjectUtils.equals(nameIF.getType(), nType)  || 
+        		  (nType == null &&  nameIF.getType().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME))))
         result.add(nameIF);
     }
     return result;
   }
 
   public static List<TopicNameIF> findTopicNames(TopicIF nType, TopicIF topicIF, String value, Collection<TopicIF> scope) { 
-    // HACK: this method treats on:untyped-name and names with null types the same
-    boolean isUntypedName = (nType == null || nType.getSubjectIdentifiers().contains(URILocator.create("http://psi.ontopia.net/ontology/untyped-name")));
     List<TopicNameIF> result = new ArrayList<TopicNameIF>();
-    Iterator it = topicIF.getTopicNames().iterator();
+    Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
-      TopicNameIF nameIF = (TopicNameIF) it.next();
+      TopicNameIF nameIF = it.next();
       if (ObjectUtils.equals(nameIF.getValue(), value) && 
-          (ObjectUtils.equals(nameIF.getType(), nType)  || (isUntypedName && nameIF.getType() == null)) && 
+          (ObjectUtils.equals(nameIF.getType(), nType)  || 
+        		  (nType == null &&  nameIF.getType().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME))) && 
           CollectionUtils.equalsUnorderedSet(nameIF.getScope(), scope))
         result.add(nameIF);
     }
@@ -500,30 +496,21 @@ public class OntopolyModelUtils {
   }
 
   public static TopicNameIF makeTopicName(TopicIF ntype, TopicIF topicIF, String value, Collection<TopicIF> scope) {
-    System.out.println("O1: " + value);
-    // HACK: treating untyped-name as if it was had no type
-    if (ntype != null && 
-        ntype.getSubjectIdentifiers().contains(URILocator.create("http://psi.ontopia.net/ontology/untyped-name")))
-      ntype = null;
-
     TopicMapBuilderIF builder = topicIF.getTopicMap().getBuilder();
     TopicNameIF name = builder.makeTopicName(topicIF, ntype, value);
-    System.out.println("O2: " + name + " " + scope);
-    Iterator iter = scope.iterator();
+    Iterator<TopicIF> iter = scope.iterator();
     while (iter.hasNext()) {
-      TopicIF scopingTopic = (TopicIF)iter.next();
+      TopicIF scopingTopic = iter.next();
       name.addTheme(scopingTopic);
     }
-    System.out.println("O3: " + name.getScope());
-    System.out.println("vs2: " + topicIF + " "  + name + " " + scope);
     return name;
   }
 
   public static List<AssociationRoleIF> findRoles(TopicIF aType, TopicIF rType, TopicIF player) { 
     List<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
-    Iterator it = player.getRoles().iterator();
+    Iterator<AssociationRoleIF> it = player.getRoles().iterator();
     while (it.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      AssociationRoleIF role = it.next();
       AssociationIF association = role.getAssociation();
       if (ObjectUtils.equals(role.getType(), rType) && 
           ObjectUtils.equals(association.getType(), aType))
@@ -534,9 +521,9 @@ public class OntopolyModelUtils {
 
     public static List<AssociationRoleIF> findRoles(TopicIF aType, TopicIF rType, TopicIF player, Collection<TopicIF> scope) { 
       List<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
-      Iterator it = player.getRoles().iterator();
+      Iterator<AssociationRoleIF> it = player.getRoles().iterator();
       while (it.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF) it.next();
+        AssociationRoleIF role = it.next();
         AssociationIF association = role.getAssociation();
         if (ObjectUtils.equals(role.getType(), rType) && 
             ObjectUtils.equals(association.getType(), aType) && 
@@ -549,10 +536,10 @@ public class OntopolyModelUtils {
   public static void setName(TopicIF nType, TopicIF topic, String value, Collection<TopicIF> scope) {
     if (value != null && topic != null) {
       // update existing new name or create a new one
-      Collection names = OntopolyModelUtils.findTopicNames(null, topic, scope);
-      Iterator iter = names.iterator();
+      Collection<TopicNameIF> names = OntopolyModelUtils.findTopicNames(null, topic, scope);
+      Iterator<TopicNameIF> iter = names.iterator();
       if (iter.hasNext()) {
-        TopicNameIF bn = (TopicNameIF) iter.next();
+        TopicNameIF bn = iter.next();
         bn.setValue(value);
       } else {
         topic.getTopicMap().getBuilder().makeTopicName(topic, value);

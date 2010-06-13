@@ -121,18 +121,17 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
         TopicIF rtype = rfield.getRoleType().getTopicIF();
         if (atype != null && rtype != null) {
           Collection<TopicIF> scope = Collections.singleton(rtype);
-          List<TopicNameIF> names = OntopolyModelUtils.findTopicNames(null, atype, (String)value, scope);
-          if (names.isEmpty()) {
-            OntopolyModelUtils.makeTopicName(null, atype, (String)value, scope);
-          } else {
+          List<TopicNameIF> names = OntopolyModelUtils.findTopicNames(null, atype, scope);
+          if (!names.isEmpty()) {
             // remove all except the first one
-            Iterator iter = names.iterator();
+            Iterator<TopicNameIF> iter = names.iterator();
             iter.next();
             while (iter.hasNext()) {
-              TopicNameIF name = (TopicNameIF) iter.next();
+              TopicNameIF name = iter.next();
               name.remove();
             }
           }
+          OntopolyModelUtils.makeTopicName(null, atype, (String)value, scope);
         }
       }
     }
