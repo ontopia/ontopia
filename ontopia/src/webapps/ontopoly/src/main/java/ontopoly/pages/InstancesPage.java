@@ -85,7 +85,7 @@ public class InstancesPage extends OntopolyAbstractPage {
             protected Label newLabel(String id) {
               Topic topic = node.getTopic();
               final boolean isSystemTopic = topic.isSystemTopic();
-              return new Label(id, new Model<String>(topic.getName())) {
+              return new Label(id, new Model<String>(getLabel(topic))) {
                 @Override
                 protected void onComponentTag(final ComponentTag tag) {
                   if (isSystemTopic)

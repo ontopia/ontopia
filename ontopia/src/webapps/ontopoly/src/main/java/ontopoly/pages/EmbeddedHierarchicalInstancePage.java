@@ -155,7 +155,7 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
         return new LinkPanel(id) {
           @Override
           protected Label newLabel(String id) {
-            return new Label(id, new Model<String>(node.getTopic().getName())) {
+            return new Label(id, new Model<String>(getLabel(node.getTopic()))) {
               @Override
               protected void onComponentTag(final ComponentTag tag) {
                 if (isCurrentTopic)
