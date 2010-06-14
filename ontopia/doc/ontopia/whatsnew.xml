@@ -61,6 +61,12 @@ both at a higher level, and in more detail.
   </listitem>
 
   <listitem>
+    <para>Ontopoly can now be embedded in other applications using jQuery,
+    as shown in the <file>examples/embedded-jquery.jsp</file> example in
+    the Ontopoly distribution.</para>
+  </listitem>
+
+  <listitem>
     <para>The query plugin in Omnigator now supports pluggable query
     language implementations, and also supports tolog updates.</para>
   </listitem>
@@ -225,6 +231,11 @@ both at a higher level, and in more detail.
   <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=111"
     >Issue 111</ulink>: XTM 1.0 importer uses non-standard PSIs</para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=267"
+    >Issue 126</ulink>: Broader/narrower association type names in the
+    wrong direction in MyThesaurus.xtm</para>
   </listitem>
 </itemizedlist>
 </section>
