@@ -617,9 +617,20 @@ public class TopicMap {
     if (defnametype == null)
       defnametype = OntopolyModelUtils.getTopicIF(this, PSI.TMDM_TOPIC_NAME);
 
-    for (TopicNameIF name : topic.getTopicNames())
-      if (name.getType() == defnametype && name.getScope().isEmpty())
-        return name.getValue();
+    int score = -10;
+    TopicNameIF best = null;
+    for (TopicNameIF name : topic.getTopicNames()) {
+      int points = 0;
+      if (name.getType() == defnametype)
+	points += 10;
+      points -= name.getScope().size();
+      if (points > score) {
+	score = points;
+	best = name;
+      }
+    }
+    if (best != null)
+      return best.getValue();
 
     return (fallback == null ? null : fallback.getName());
   }
