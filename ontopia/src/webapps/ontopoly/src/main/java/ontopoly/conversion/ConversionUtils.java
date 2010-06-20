@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import ontopoly.OntopolyApplication;
+import ontopoly.model.PSI;
 import ontopoly.model.TopicMap;
 import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.sysmodel.TopicMapSource;
@@ -550,7 +551,7 @@ public class ConversionUtils {
       ted_sl = topicByPSI(psibase.resolveAbsolute("subject-locator"), tm);
       ted_ot = topicByPSI(psibase.resolveAbsolute("occurrence-type"), tm);
       ted_at = topicByPSI(psibase.resolveAbsolute("association-type"), tm);      
-      ted_untyped_name = topicByPSI(psibase.resolveAbsolute("untyped-name"), tm);
+      ted_untyped_name = topicByPSI(PSI.TMDM_TOPIC_NAME, tm);
     }
   
     public int compare(Object o1, Object o2) {
@@ -713,7 +714,7 @@ public class ConversionUtils {
   
   private static void registerDefaultNameField(TopicIF topic, TopicMapIF tm) throws MalformedURLException {
     // mandatory default name
-    registerNameField(topic, topicByPSI(psibase.resolveAbsolute("untyped-name"), tm), 
+    registerNameField(topic, topicByPSI(PSI.TMDM_TOPIC_NAME, tm), 
         topicByPSI(psibase.resolveAbsolute("cardinality-1-1"), tm), tm);
   }
 
