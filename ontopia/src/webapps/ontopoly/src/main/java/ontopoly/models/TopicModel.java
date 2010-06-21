@@ -1,6 +1,5 @@
 package ontopoly.models;
 
-
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;

@@ -17,11 +17,11 @@ public class TopicChoiceRenderer<T extends Topic> implements IChoiceRenderer<T> 
   }
   
   public Object getDisplayValue(Topic object) {
-    Topic topic = getTopic(object);
-    if (topic == null)
+    String name = object.getName();
+    if (name == null || name.equals(""))
       return "[No name]";
     else
-    return TopicStringifiers.toString(topic.getTopicIF());    
+      return name;
   }
 
   public String getIdValue(Topic object, int index) {
