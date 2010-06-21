@@ -237,6 +237,10 @@ both at a higher level, and in more detail.
     >Issue 267</ulink>: Broader/narrower association type names in the
     wrong direction in MyThesaurus.xtm</para>
   </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=252"
+    >Issue 252</ulink>: Add update-topic method to SOAP version of TMRAP</para>
+  </listitem>
 </itemizedlist>
 </section>
 
