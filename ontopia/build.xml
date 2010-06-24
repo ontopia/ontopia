@@ -76,7 +76,7 @@
     <property name="dist.version.minor" value="1" />
     <property name="dist.version.micro" value="0" />
 
-    <property name="dist.version.beta" value="b1" />
+    <property name="dist.version.beta" value="b3" />
     <!-- "b1" if beta 1, empty if not beta -->
 
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}${dist.version.beta}" />
@@ -1476,6 +1476,8 @@
     <copy file="${lib.path}/opencsv-1.8.jar" tofile="${dist.path}/lib/opencsv.jar" />
     <copy file="${lib.path}/velocity-1.3.jar" tofile="${dist.path}/lib/velocity.jar" />
     <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
+    <copy file="${lib.path}/tmapi-2.0.2.jar" tofile="${dist.path}/lib/tmapi.jar" />
+    <copy file="${lib.path}/tmapi-tests-2.0.2.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
     <copy file="${lib.path}/lucene-snowball-2.0.0.jar" tofile="${dist.path}/lib/lucene-snowball.jar" />
     <copy file="${lib.path}/poi-3.6.jar" tofile="${dist.path}/lib/poi.jar" />
     <copy file="${lib.path}/poi-ooxml-3.6.jar" tofile="${dist.path}/lib/poi-ooxml.jar" />
@@ -1484,8 +1486,10 @@
     <copy file="${lib.path}/poi-ooxml-schemas-3.6.jar" tofile="${dist.path}/lib/poi-ooxml-schemas.jar" />
     <copy file="${lib.path}/tagsoup-1.2.jar" tofile="${dist.path}/lib/tagsoup.jar" />
     <copy file="${lib.path}/pdfbox-1.1.0.jar" tofile="${dist.path}/lib/pdfbox.jar" />
-    <copy file="${lib.path}/tmapi-2.0.2.jar" tofile="${dist.path}/lib/tmapi.jar" />
-    <copy file="${lib.path}/tmapi-tests-2.0.2.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
+    <copy file="${lib.path}/fontbox-1.1.0.jar" tofile="${dist.path}/lib/fontbox.jar" />
+    <copy file="${lib.path}/jempbox-1.1.0.jar" tofile="${dist.path}/lib/jempbox.jar" />
+    <copy file="${lib.path}/dom4j-1.6.1.jar" tofile="${dist.path}/lib/dom4j.jar" />
+    <copy file="${lib.path}/xmlbeans-2.3.0.jar" tofile="${dist.path}/lib/xmlbeans.jar" />
     
     <copy todir="${dist.path}/apache-tomcat/common/lib" overwrite="yes">
       <fileset dir="${dist.path}/lib">
