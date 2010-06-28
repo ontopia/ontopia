@@ -76,7 +76,7 @@
     <property name="dist.version.minor" value="1" />
     <property name="dist.version.micro" value="0" />
 
-    <property name="dist.version.beta" value="b3" />
+    <property name="dist.version.beta" value="" />
     <!-- "b1" if beta 1, empty if not beta -->
 
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}${dist.version.beta}" />
@@ -1478,13 +1478,13 @@
     <copy file="${lib.path}/xercesImpl-2.7.1.jar" tofile="${dist.path}/lib/xerces.jar" />
     <copy file="${lib.path}/tmapi-2.0.2.jar" tofile="${dist.path}/lib/tmapi.jar" />
     <copy file="${lib.path}/tmapi-tests-2.0.2.jar" tofile="${dist.path}/lib/tmapi-tests.jar" />
+
     <copy file="${lib.path}/lucene-snowball-2.0.0.jar" tofile="${dist.path}/lib/lucene-snowball.jar" />
+    <copy file="${lib.path}/tagsoup-1.2.jar" tofile="${dist.path}/lib/tagsoup.jar" />
     <copy file="${lib.path}/poi-3.6.jar" tofile="${dist.path}/lib/poi.jar" />
     <copy file="${lib.path}/poi-ooxml-3.6.jar" tofile="${dist.path}/lib/poi-ooxml.jar" />
     <copy file="${lib.path}/poi-scratchpad-3.6.jar" tofile="${dist.path}/lib/poi-scratchpad.jar" />
     <copy file="${lib.path}/poi-ooxml-schemas-3.6.jar" tofile="${dist.path}/lib/poi-ooxml-schemas.jar" />
-    <copy file="${lib.path}/poi-ooxml-schemas-3.6.jar" tofile="${dist.path}/lib/poi-ooxml-schemas.jar" />
-    <copy file="${lib.path}/tagsoup-1.2.jar" tofile="${dist.path}/lib/tagsoup.jar" />
     <copy file="${lib.path}/pdfbox-1.1.0.jar" tofile="${dist.path}/lib/pdfbox.jar" />
     <copy file="${lib.path}/fontbox-1.1.0.jar" tofile="${dist.path}/lib/fontbox.jar" />
     <copy file="${lib.path}/jempbox-1.1.0.jar" tofile="${dist.path}/lib/jempbox.jar" />
@@ -1495,7 +1495,18 @@
       <fileset dir="${dist.path}/lib">
         <include name="*.jar" />
         <exclude name="ontopia-tests.jar" />
-        <exclude name="junit.jar" />
+        <!-- don't copy classify dependencies to tomcat -->
+        <exclude name="lucene-snowball.jar" />
+        <exclude name="tagsoup.jar" />
+        <exclude name="poi.jar" />
+        <exclude name="poi-scratchpad.jar" />
+        <exclude name="poi-ooxml.jar" />
+        <exclude name="poi-ooxml-schemas.jar" />
+        <exclude name="pdfbox.jar" />
+        <exclude name="fontbox.jar" />
+        <exclude name="jempbox.jar" />
+        <exclude name="dom4j.jar" />
+        <exclude name="xmlbeans.jar" />
       </fileset>
     </copy>
     <copy file="${lib.path}/jstl-1.1.2.jar" tofile="${dist.path}/apache-tomcat/common/lib/jstl.jar" />
@@ -2003,6 +2014,7 @@
     <delete quiet="true" dir="${dist.path}/apache-tomcat/server/webapps/manager" />
     <delete quiet="true" file="${dist.path}/apache-tomcat/conf/Catalina/localhost/manager.xml" />
     <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/webdav" />
+    <delete quiet="true" dir="${dist.path}/apache-tomcat/webapps/tomcat-docs" />
   </target>
   
   <target name="dist.navigator.test.collect">
