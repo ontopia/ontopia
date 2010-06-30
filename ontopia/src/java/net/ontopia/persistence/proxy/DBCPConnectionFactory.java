@@ -30,6 +30,10 @@ import org.slf4j.LoggerFactory;
 
 public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
+    public static final String EXHAUSED_BLOCK = "block";
+    public static final String EXHAUSED_GROW = "grow";
+    public static final String EXHAUSED_FAIL = "fail";
+
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(DBCPConnectionFactory.class.getName());
 
@@ -73,15 +77,34 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
     int utimeout = (_utimeout == null ? -1 : Integer.parseInt(_utimeout));
     pool.setMaxWait(utimeout); // -1 = never
     
-    // Set soft maximum - emergency objects (default: true)
+   // Set soft maximum - emergency objects (default: true)
     boolean softmax = PropertyUtils.isTrue(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.SoftMaximum", true);
     log.debug("Setting ConnectionPool.SoftMaximum '" + softmax + "'");
     if (softmax)
       pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_GROW);
     else
       pool.setWhenExhaustedAction(GenericObjectPool.WHEN_EXHAUSTED_BLOCK);
-    
-    // Statement pool
+
+    // allow the user to overwrite exhausted options
+    // warning: when set to fail, make sure Maximum and Minimum are set correctly
+    // warning: when set to block, make sure a propper usertimeout is set, or pool will block
+    //          forever
+    String _whenExhaustedAction = PropertyUtils.getProperty(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.WhenExhaustedAction", false);
+    if (EXHAUSED_BLOCK.equals(_whenExhaustedAction))
+      pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK);
+    if (EXHAUSED_GROW.equals(_whenExhaustedAction))
+      pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW);
+    if (EXHAUSED_FAIL.equals(_whenExhaustedAction))
+      pool.setWhenExhaustedAction(GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL);
+
+    if (pool.getWhenExhaustedAction() == GenericKeyedObjectPool.WHEN_EXHAUSTED_BLOCK)
+      log.debug("Pool is set to block on exhaused");
+    if (pool.getWhenExhaustedAction() == GenericKeyedObjectPool.WHEN_EXHAUSTED_GROW)
+      log.debug("Pool is set to grow on exhaused");
+    if (pool.getWhenExhaustedAction() == GenericKeyedObjectPool.WHEN_EXHAUSTED_FAIL)
+      log.debug("Pool is set to fail on exhaused");
+
+   // Statement pool
     GenericKeyedObjectPoolFactory stmpool = null;
     if (PropertyUtils.isTrue(properties, "net.ontopia.topicmaps.impl.rdbms.ConnectionPool.PoolStatements", true)) {
       log.debug("Using prepared statement pool: Yes");
