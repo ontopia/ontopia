@@ -89,7 +89,7 @@ both at a higher level, and in more detail.
   <listitem>
     <para>The <symbol>coalesce</symbol> predicate has been added to
     tolog (see
-    <ulink url="http://www.ontopia.net/doc/5.1.0/query/predicate-reference.html#p-coalesce">the predicate reference</ulink>).</para>
+    <ulink url="http://www.ontopia.net/doc/5.1.0/doc/query/predicate-reference.html#p-coalesce">the predicate reference</ulink>).</para>
   </listitem>
   <listitem>
     <para>Some new methods have been added to the
