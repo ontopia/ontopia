@@ -21,19 +21,20 @@ public class GlobalParseContext implements ParseContextIF {
   private LocatorIF base;
   private TopicMapIF topicmap;
   private TopicMapBuilderIF builder;
-  private Map prefixes;
+  private Map<String, LocatorIF> prefixes;
   private Map<String, Template> templates; // String = name + paramcount
-  private int counter;
-  private Set include_uris; // extra base URIs passed in from include masters
+  private Set<LocatorIF> include_uris; // extra base URIs passed in from 
+                                       // include masters
+  private int counter; // for anonymous topics
 
   public GlobalParseContext(TopicMapIF topicmap, LocatorIF base) {
     this.topicmap = topicmap;
     this.base = base;
     this.builder = topicmap.getBuilder();
-    this.prefixes = new HashMap();
+    this.prefixes = new HashMap<String, LocatorIF>();
     this.templates = new HashMap<String, Template>();
     this.counter = 0;
-    this.include_uris = new CompactHashSet();
+    this.include_uris = new CompactHashSet<LocatorIF>();
     try {
       prefixes.put("xsd", new URILocator("http://www.w3.org/2001/XMLSchema#"));
     } catch (MalformedURLException e) {
@@ -42,7 +43,7 @@ public class GlobalParseContext implements ParseContextIF {
   }
 
   public void addPrefix(String prefix, LocatorIF locator) {
-    LocatorIF boundto = (LocatorIF) prefixes.get(prefix);
+    LocatorIF boundto = prefixes.get(prefix);
     if (boundto != null && !boundto.equals(locator))
       throw new InvalidTopicMapException("Attempted to bind prefix " + prefix +
                                          " to " + locator.getAddress() + ", but "+
@@ -56,7 +57,7 @@ public class GlobalParseContext implements ParseContextIF {
     include_uris.add(uri);
   }
 
-  public Set getIncludeUris() {
+  public Set<LocatorIF> getIncludeUris() {
     return include_uris;
   }
   
@@ -65,7 +66,7 @@ public class GlobalParseContext implements ParseContextIF {
     String prefix = qname.substring(0, ix);
     String local = qname.substring(ix+1);
     
-    LocatorIF boundto = (LocatorIF) prefixes.get(prefix);
+    LocatorIF boundto = prefixes.get(prefix);
     if (boundto == null)
       throw new InvalidTopicMapException("Cannot resolve qname " + qname + ", " +
                                          "prefix not bound");

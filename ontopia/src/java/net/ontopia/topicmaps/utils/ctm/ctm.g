@@ -186,9 +186,8 @@ include :
       parser.setTopicMap(topicmap, context);
       parser.init();
       othercontext = parser.getContext();
-      Iterator it = context.getIncludeUris().iterator();
-      while (it.hasNext())
-        othercontext.addIncludeUri((LocatorIF) it.next());
+      for (LocatorIF uri : context.getIncludeUris())
+        othercontext.addIncludeUri(uri);
       othercontext.addIncludeUri(document);
       parser.topicmap();
       reader.close();

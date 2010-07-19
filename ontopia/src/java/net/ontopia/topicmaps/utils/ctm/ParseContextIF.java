@@ -15,7 +15,7 @@ public interface ParseContextIF {
 
   public void addIncludeUri(LocatorIF uri);
   
-  public Set getIncludeUris();
+  public Set<LocatorIF> getIncludeUris();
   
   public LocatorIF resolveQname(String qname);
 
