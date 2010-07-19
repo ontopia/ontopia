@@ -274,7 +274,7 @@ public class QueryMatches {
       // skip column if not in query matches
       int index = getVariableIndex(extra.getColumnName(i));
       if (index > -1)
-	spec[index] = i;
+        spec[index] = i;
     }
 
     int batch_size = 50; // number of rows
@@ -420,16 +420,20 @@ public class QueryMatches {
 
   // ===== QUERY MATCH TRANSLATION ===========================================
 
+  // FIXME: in method below int* and ext* are wrong way around
   /**
    * INTERNAL: Computes the translation specification array, which
    * gives the connection between this and the other match table.
    *
+   * @param intarguments Actual received parameters in rule invocation.
+   * @param extarguments Declared parameters in rule declaration.
    * @return an array of type int[][] that looks like [intspec,
    * extspec], where intspec is the specification for this match and
    * extspec is the specification for the other match.
    */
   public int[][] getTranslationSpec(Object[] intarguments,
-                                    QueryMatches extmatches, Object[] extarguments) 
+                                    QueryMatches extmatches,
+                                    Object[] extarguments) 
     throws InvalidQueryException {
 
     int width = intarguments.length;
@@ -475,16 +479,25 @@ public class QueryMatches {
   }
 
   /**
-   * INTERNAL: Merges this match table with another match table,
-   * producing a new set of matches.
+   * INTERNAL: Merges this match table (from inside a rule) with
+   * another match table (from the calling context), producing a new
+   * set of matches (corresponding to the result of the rule, as
+   * viewed from the outside).
+   * @param intspec Mapping from general column no (?) to column no in
+   *                this QM object.
+   * @param extspec Mapping from general column no (?) to column no in
+   *                extmatches.
+   * @param equalpairs See RulePredicate.getEqualPairs() for explanation.
+   *                   Numbers are argument numbers.
    */
-  public QueryMatches merge(int[] intspec,
-                            QueryMatches extmatches, int[] extspec) {
+  public QueryMatches merge(int[] intspec, QueryMatches extmatches, 
+                            int[] extspec, int[] equalpairs) {
 
     int intspec_length = intspec.length;
     int extspec_length = extspec.length;
     
-    // find out what columns to compare
+    // find out what columns to compare by creating intcols+extcols, which
+    // is really a list of pairs of columns to compare.
     int compcount = 0;
     for (int ix = 0; ix < intspec_length; ix++)
       if (data[0][intspec[ix]] != null &&
@@ -520,12 +533,19 @@ public class QueryMatches {
       
       externalrow:
       for (int extrow = 0; extrow <= extmatches.last; extrow++) {
-
+        // check that internal and external values match
         for (int col = 0; col < compcount; col++) {
           if (data[introw][intcols[col]] == null ||
               !data[introw][intcols[col]].equals(extmatches.data[extrow][extcols[col]]))
             continue externalrow;
         }
+
+        // check equal pairs
+        for (int ix = 0; ix+1 < equalpairs.length; ix += 2)
+          if (extmatches.data[extrow][extspec[equalpairs[ix]]] != null &&
+              !extmatches.data[extrow][extspec[equalpairs[ix]]].
+                equals(extmatches.data[extrow][extspec[equalpairs[ix+1]]]))
+            continue externalrow;
 
         // generate output match
         if (result.last+1 == result.size) 

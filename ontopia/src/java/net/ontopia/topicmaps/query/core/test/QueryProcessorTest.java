@@ -1709,4 +1709,15 @@ public class QueryProcessorTest extends AbstractQueryTest {
                 "select $TOPIC from " +
                 "type-of($TOPIC, father), $TOPIC = magnus?");
   }
+
+  public void testIssue277() throws InvalidQueryException, IOException {
+    load("issue-277.ltm");
+
+    findNothing("bn($B,$N) :- " +
+		"  broader-narrower($B : broader-term, $N : narrower-term). " +
+		
+		"bn1($B,$N) :- bn($B,$I), bn($I,$N). " +
+
+		"bn1($B,$B)?");
+  }
 }

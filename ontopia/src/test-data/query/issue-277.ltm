@@ -1,0 +1,33 @@
+#TOPICMAP ~tolog-test
+
+[tolog-test = "Topic map for testing tolog bug"]
+
+[broader-narrower = "broader/narrower"
+		  = "broader terms" / narrower-term
+		  = "narrower terms" / broader-term
+]
+
+[broader-term = "broader-term"]
+
+[narrower-term = "narrower-term"]
+
+[term = "term"]
+
+[living-thing : term = "living thing"]
+
+[animal : term = "animal"]
+
+broader-narrower(living-thing : broader-term, animal : narrower-term)
+
+[dog : term = "dog"]
+
+broader-narrower(animal : broader-term, dog : narrower-term)
+
+[plant : term = "plant"]
+
+broader-narrower(living-thing : broader-term, plant : narrower-term)
+
+[tree : term = "tree"]
+
+broader-narrower(plant : broader-term, tree : narrower-term)
+

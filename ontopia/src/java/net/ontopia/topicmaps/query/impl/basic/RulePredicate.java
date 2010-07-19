@@ -4,12 +4,13 @@
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.topicmaps.impl.utils.ArgumentValidator;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.impl.utils.QueryAnalyzer;
@@ -105,7 +106,8 @@ public class RulePredicate extends AbstractQueryProcessor
     Object[] params = rule.getParameters().toArray();
     
     // find connections between internal and external matches
-    int[][] translationSpec = extmatches.getTranslationSpec(extarguments, intmatches,
+    int[][] translationSpec = extmatches.getTranslationSpec(extarguments,
+                                                            intmatches,
                                                             params);
     int[] extspec = translationSpec[0];
     int[] intspec = translationSpec[1];
@@ -122,7 +124,6 @@ public class RulePredicate extends AbstractQueryProcessor
     intmatches.insertConstants();
     
     // run satisfy in the usual way
-    // FIXME: this throws the remove-duplicates() predicates out of whack
     Set bound = getBoundVariables(params, extarguments, extmatches);
     Set litvars = getLiteralVariables(params, extarguments);
     List theclauses = rule.getClauses();
@@ -139,7 +140,8 @@ public class RulePredicate extends AbstractQueryProcessor
     intmatches = satisfy(theclauses, intmatches);
     
     // merge external matches with internal matches
-    return extmatches.merge(extspec, intmatches, intspec);
+    return extmatches.merge(extspec, intmatches, intspec,
+                            getEqualPairs(extarguments));
   }
 
   /**
@@ -152,7 +154,7 @@ public class RulePredicate extends AbstractQueryProcessor
    */
   private static Set getBoundVariables(Object[] params, Object[] extarguments,
                                        QueryMatches extmatches) {
-    Set bound = new HashSet();
+    Set bound = new CompactHashSet();
     for (int ix = 0; ix < params.length; ix++) {
       int col = extmatches.getIndex(extarguments[ix]);
       if (extmatches.bound(col))
@@ -170,7 +172,7 @@ public class RulePredicate extends AbstractQueryProcessor
    * @param extarguments The parameters passed to this invocation
    */
   private static Set getLiteralVariables(Object[] params, Object[] extarguments) {
-    Set litvars = new HashSet();
+    Set litvars = new CompactHashSet();
     for (int ix = 0; ix < params.length; ix++)
       if (!(extarguments[ix] instanceof Variable))
         litvars.add(params[ix]);
@@ -262,5 +264,32 @@ public class RulePredicate extends AbstractQueryProcessor
       varmap.put(params.get(ix), arguments.get(ix));
     return varmap;
   }
-  
+
+  /**
+   * INTERNAL: Finds pairs of equal variables in the arguments
+   * received by the rule. Returns an array where items 2n and 2n+1
+   * (for all n) are references to internal columns that externally
+   * are bound to the same variable. That is, let's say a rule is
+   * invoked as rule($A, $B, $A, $C, $B), then the array returned will
+   * be (0, 2, 1, 4), which means that columns 0 and 2 must be equal,
+   * and columns 1 and 4 must be.
+   * @return array with indexes referring to argument number
+   */
+  private int[] getEqualPairs(Object[] extarguments) {
+    List<Integer> l = new ArrayList<Integer>();
+    for (int ix = 0; ix+1 < extarguments.length; ix++)
+      for (int i = ix+1; i < extarguments.length; i++)
+        if (extarguments[ix] instanceof Variable &&
+            extarguments[i] instanceof Variable &&
+            extarguments[ix].equals(extarguments[i])) {
+          l.add(new Integer(ix));
+          l.add(new Integer(i));
+        }
+
+    int[] pairs = new int[l.size()];
+    for (int ix = 0; ix < l.size(); ix++)
+      pairs[ix] = l.get(ix).intValue();
+    
+    return pairs;
+  }
 }
