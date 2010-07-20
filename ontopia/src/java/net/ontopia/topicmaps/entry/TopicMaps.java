@@ -6,11 +6,7 @@ package net.ontopia.topicmaps.entry;
 import java.util.*;
 
 import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.entry.*;
 import net.ontopia.utils.OntopiaRuntimeException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * PUBLIC: The primary access point to your topic maps. The topic map
@@ -24,7 +20,7 @@ public class TopicMaps {
 
   protected static final String DEFAULT_REPOSITORY = "classpath:tm-sources.xml";  
   
-  protected static final Map repositories = new HashMap();
+  protected static final Map<String, TopicMapRepositoryIF> repositories = new HashMap<String, TopicMapRepositoryIF>();
 
   /**
    * PUBLIC: Returns a new TopicMapStoreIF from the default
@@ -65,7 +61,7 @@ public class TopicMaps {
    */
   public static TopicMapRepositoryIF getRepository(String repositoryId) {
     synchronized (repositories) {
-      TopicMapRepositoryIF repository = (TopicMapRepositoryIF)repositories.get(repositoryId);
+      TopicMapRepositoryIF repository = repositories.get(repositoryId);
       if (repository == null) {
         if (repositoryId.startsWith("file:"))
           repository = XMLConfigSource.getRepository(repositoryId.substring("file:".length()));

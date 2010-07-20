@@ -5,7 +5,6 @@ package net.ontopia.topicmaps.entry;
 
 import java.io.*;
 import java.util.*;
-import net.ontopia.utils.*;
 import net.ontopia.topicmaps.core.*;
 
 /**
@@ -58,14 +57,14 @@ public class UserStoreRegistry {
   /**
    * INTERNAL: Delegates to StoreRegistry.getReferenceKeys(Object txnuser).
    */
-  public Collection getReferenceKeys() {
+  public Collection<String> getReferenceKeys() {
     return registry.getReferenceKeys(txnuser);
   }
 
   /**
    * INTERNAL: Delegates to StoreRegistry.getStores(Object txnuser).
    */
-  public Collection getStores() {
+  public Collection<TopicMapStoreIF> getStores() {
     return registry.getStores(txnuser);
   }
 

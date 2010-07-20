@@ -14,7 +14,6 @@ import net.ontopia.infoset.fulltext.impl.lucene.LuceneIndexer;
 import net.ontopia.infoset.fulltext.impl.lucene.LuceneSearcher;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;

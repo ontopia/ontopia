@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.ontopia.utils.CachedIF;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -39,15 +38,15 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(TopicMapSourceManager.class.getName());
 
-  protected Set sources = new CompactHashSet();
+  protected Set<TopicMapSourceIF> sources = new CompactHashSet<TopicMapSourceIF>();
 
-  protected Map smap = new HashMap();
+  protected Map<String, TopicMapSourceIF> smap = new HashMap<String, TopicMapSourceIF>();
 
   protected boolean refreshed = false;
 
-  protected Map keyrefs = new HashMap(); // key: ref
+  protected Map<String, TopicMapReferenceIF> keyrefs = new HashMap<String, TopicMapReferenceIF>(); // key: ref
 
-  protected Map refkeys = new HashMap(); // ref: key
+  protected Map<TopicMapReferenceIF, String> refkeys = new HashMap<TopicMapReferenceIF, String>(); // ref: key
 
   public TopicMapSourceManager() {
     super();
@@ -57,19 +56,19 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     addSource(source);
   }
 
-  public TopicMapSourceManager(Collection sources) {
-    Iterator iter = sources.iterator();
+  public TopicMapSourceManager(Collection<TopicMapSourceIF> sources) {
+    Iterator<TopicMapSourceIF> iter = sources.iterator();
     while (iter.hasNext())
-      addSource((TopicMapSourceIF) iter.next());
+      addSource(iter.next());
   }
 
-  public synchronized Collection getReferences() {
+  public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (!refreshed)
       refresh();
     return keyrefs.values();
   }
 
-  public synchronized Collection getReferenceKeys() {
+  public synchronized Collection<String> getReferenceKeys() {
     if (!refreshed)
       refresh();
     return keyrefs.keySet();
@@ -78,11 +77,11 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
   public synchronized TopicMapReferenceIF getReferenceByKey(String key) {
     if (!refreshed)
       refresh();
-    return (TopicMapReferenceIF) keyrefs.get(key);
+    return keyrefs.get(key);
   }
 
   public synchronized String getReferenceKey(TopicMapReferenceIF ref) {
-    return (String) refkeys.get(ref);
+    return refkeys.get(ref);
   }
 
   public TopicMapStoreIF createStore(String refkey, boolean readonly) {
@@ -97,10 +96,10 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
   }
 
   public synchronized TopicMapSourceIF getSourceById(String source_id) {
-    return (TopicMapSourceIF) smap.get(source_id);
+    return smap.get(source_id);
   }
 
-  public synchronized Collection getSources() {
+  public synchronized Collection<TopicMapSourceIF> getSources() {
     return Collections.unmodifiableCollection(sources);
   }
 
@@ -138,15 +137,15 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
     refkeys.clear();
 
     // Refresh sources and rebuild reference map
-    Iterator siter = sources.iterator();
+    Iterator<TopicMapSourceIF> siter = sources.iterator();
     while (siter.hasNext()) {
-      TopicMapSourceIF source = (TopicMapSourceIF) siter.next();
+      TopicMapSourceIF source = siter.next();
       try {
         // Refresh source
         source.refresh();
-        Iterator riter = source.getReferences().iterator();
+        Iterator<TopicMapReferenceIF> riter = source.getReferences().iterator();
         while (riter.hasNext()) {
-          TopicMapReferenceIF ref = (TopicMapReferenceIF) riter.next();
+          TopicMapReferenceIF ref = riter.next();
           // Create reference key and update reference map
           String refkey = createReferenceKey(ref);
           // ! System.out.println("KEY: " + refkey + " <= " + ref);
@@ -184,9 +183,9 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
   }
 
   public synchronized void close() {
-    Iterator iter = refkeys.keySet().iterator();
+    Iterator<TopicMapReferenceIF> iter = refkeys.keySet().iterator();
     while (iter.hasNext()) {
-      TopicMapReferenceIF ref = (TopicMapReferenceIF) iter.next();
+      TopicMapReferenceIF ref = iter.next();
       try {
         if (ref.isOpen())
           ref.close();
@@ -221,7 +220,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
    * 
    * @deprecated replaced by getReferenceKeys()
    */
-  public Collection getIds() {
+  public Collection<String> getIds() {
     return getReferenceKeys();
   }
 

@@ -12,7 +12,6 @@ import net.ontopia.topicmaps.core.StoreDeletedException;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.events.AbstractTopicMapListener;
 import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
-import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -96,7 +95,7 @@ public abstract class AbstractTopicMapReference
     // naive implementation that gets a store and clears it
     TopicMapStoreIF store = null;
     try {
-      store = (TopicMapStoreIF)createStore(false);
+      store = createStore(false);
       store.getTopicMap().clear();    
     } finally {
       if (store != null && store.isOpen()) store.close();
@@ -115,7 +114,7 @@ public abstract class AbstractTopicMapReference
   // TopicMapListenerIF implementation
   // ---------------------------------------------------------------------------
 
-  protected List listeners;
+  protected List<TopicMapListenerIF> listeners;
   protected TopicMapListenerIF[] topic_listeners;  
 
   protected TopicMapListenerIF[] getTopicListeners() {
@@ -132,7 +131,7 @@ public abstract class AbstractTopicMapReference
    */
   public synchronized void addTopicListener(TopicMapListenerIF listener) {
     if (topic_listeners == null)
-      listeners = new ArrayList(3);
+      listeners = new ArrayList<TopicMapListenerIF>(3);
     listeners.add(listener);
     makeListenerArray();
     // register self with listener

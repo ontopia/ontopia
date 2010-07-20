@@ -50,14 +50,14 @@ public interface TopicMapRepositoryIF {
   /**
    * PUBLIC: Returns a collection containing all references.
    */
-  public Collection getReferences();
+  public Collection<TopicMapReferenceIF> getReferences();
   // returns TopicMapReferenceIF objects; unmodifiable
   // no removeReference; do reference.deactivate or reference.delete instead
   
   /**
    * PUBLIC: Returns a collection containing the keys of all references.
    */
-  public Collection getReferenceKeys();
+  public Collection<String> getReferenceKeys();
 
   /**
    * PUBLIC: Refreshes all sources and recreates the reference map.
@@ -74,7 +74,7 @@ public interface TopicMapRepositoryIF {
    * PUBLIC: Returns an immutable collection containing the
    * TopicMapSourceIFs registered with the topic map repository.
    */
-  public Collection getSources();
+  public Collection<TopicMapSourceIF> getSources();
   // FIXME: Is the collection updated when the repository is updated?
   
   /**

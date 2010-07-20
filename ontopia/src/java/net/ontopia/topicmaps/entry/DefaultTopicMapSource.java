@@ -3,8 +3,9 @@
 
 package net.ontopia.topicmaps.entry;
 
-import java.util.*;
-import net.ontopia.utils.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * INTERNAL: A convenience class that that maintains an arbitrary
@@ -19,15 +20,15 @@ public class DefaultTopicMapSource implements TopicMapSourceIF {
   protected String title;
   protected boolean hidden;
 
-  protected Collection refs = new HashSet();
+  protected Collection<TopicMapReferenceIF> refs = new HashSet<TopicMapReferenceIF>();
 
   public DefaultTopicMapSource() {
   }
   
-  public DefaultTopicMapSource(Collection refs) {
-    Iterator iter = refs.iterator();
+  public DefaultTopicMapSource(Collection<TopicMapReferenceIF> refs) {
+    Iterator<TopicMapReferenceIF> iter = refs.iterator();
     while (iter.hasNext())
-      addReference((TopicMapReferenceIF)iter.next());
+      addReference(iter.next());
   }
   
   public DefaultTopicMapSource(TopicMapReferenceIF reference) {
@@ -50,7 +51,7 @@ public class DefaultTopicMapSource implements TopicMapSourceIF {
     this.title = title;
   }
   
-  public Collection getReferences() {
+  public Collection<TopicMapReferenceIF> getReferences() {
     return refs;
   }
 

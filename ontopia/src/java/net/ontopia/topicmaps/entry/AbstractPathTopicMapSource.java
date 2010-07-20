@@ -31,7 +31,7 @@ public abstract class AbstractPathTopicMapSource
   protected boolean duplicate_suppression;
   protected boolean hidden;
 
-  protected Map refmap;
+  protected Map<String, TopicMapReferenceIF> refmap;
 
   private FileFilter filter;
 
@@ -174,7 +174,7 @@ public abstract class AbstractPathTopicMapSource
     this.duplicate_suppression = duplicate_suppression;
   }
   
-  public synchronized Collection getReferences() {
+  public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (refmap == null) refresh();
     return refmap.values();
   }
@@ -200,8 +200,8 @@ public abstract class AbstractPathTopicMapSource
     refmap = refreshFromFilesystem();
   }
   
-  protected Map refreshFromFilesystem() {
-    Map newmap = new HashMap();
+  protected Map<String, TopicMapReferenceIF> refreshFromFilesystem() {
+    Map<String, TopicMapReferenceIF> newmap = new HashMap<String, TopicMapReferenceIF>();
     // Initialize filter
     File directory = new File(path);
     if (!directory.exists())
@@ -236,7 +236,7 @@ public abstract class AbstractPathTopicMapSource
   protected TopicMapReferenceIF createReference(URL url, String id, String title) {
     // Do not create new reference if reference is already open.
     if (refmap != null) {
-      TopicMapReferenceIF ref = (TopicMapReferenceIF) refmap.get(id);
+      TopicMapReferenceIF ref = refmap.get(id);
       if (ref != null && ref.isOpen()) {
         // Use existing reference
         return ref;

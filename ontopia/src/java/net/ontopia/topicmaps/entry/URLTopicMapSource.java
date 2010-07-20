@@ -3,10 +3,8 @@
 
 package net.ontopia.topicmaps.entry;
 
-import java.io.*;
 import java.net.*;
 import java.util.*;
-import org.xml.sax.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +40,7 @@ public class URLTopicMapSource implements TopicMapSourceIF {
   protected boolean validate;
   protected ExternalReferenceHandlerIF ref_handler;
   
-  protected Collection reflist;
+  protected Collection<TopicMapReferenceIF> reflist;
   
   public URLTopicMapSource() {
   }
@@ -204,7 +202,7 @@ public class URLTopicMapSource implements TopicMapSourceIF {
 
   // ----
   
-  public synchronized Collection getReferences() {
+  public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (reflist == null) refresh();
     return reflist;
   }
@@ -251,14 +249,14 @@ public class URLTopicMapSource implements TopicMapSourceIF {
       ref.setValidation(validate);
       if (ref_handler!=null)
         ref.setExternalReferenceHandler(ref_handler);
-      reflist = Collections.singleton(ref);
+      reflist = Collections.singleton((TopicMapReferenceIF)ref);
 
     } else if (syntax.equalsIgnoreCase("LTM")) {
       // Create LTM reference
       LTMTopicMapReference ref = new LTMTopicMapReference(url2, refid, title, base_address);
       ref.setDuplicateSuppression(duplicate_suppression);
       ref.setSource(this);
-      reflist = Collections.singleton(ref);
+      reflist = Collections.singleton((TopicMapReferenceIF)ref);
 
     } else if (syntax.equalsIgnoreCase("RDF/XML") ||
                syntax.equalsIgnoreCase("RDF") ||
@@ -272,7 +270,7 @@ public class URLTopicMapSource implements TopicMapSourceIF {
       if (!syntax.equalsIgnoreCase("RDF"))
         ref.setSyntax(syntax.toUpperCase());
       
-      reflist = Collections.singleton(ref);
+      reflist = Collections.singleton((TopicMapReferenceIF)ref);
     } else 
       throw new OntopiaRuntimeException("Topic maps syntax '" + syntax +
                                         "' not supported.");

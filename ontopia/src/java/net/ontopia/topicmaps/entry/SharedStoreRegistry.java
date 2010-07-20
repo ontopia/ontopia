@@ -24,7 +24,7 @@ public class SharedStoreRegistry {
   // Create default registry, which has registryName == null
   protected static final SharedStoreRegistry defaultRegistry = new SharedStoreRegistry();
   
-  protected static Map repositories = new HashMap();
+  protected static Map<String, TopicMapRepositoryIF> repositories = new HashMap<String, TopicMapRepositoryIF>();
   
   protected String sourceLocation;
   protected String resourceName;
@@ -71,7 +71,7 @@ public class SharedStoreRegistry {
     
     synchronized (repositories) {
       // look up repository in shared map
-      TopicMapRepositoryIF repository = (TopicMapRepositoryIF)repositories.get(registryName);
+      TopicMapRepositoryIF repository = repositories.get(registryName);
       
       // return repository if already initialized
       if (repository != null) 
@@ -116,7 +116,7 @@ public class SharedStoreRegistry {
         newRepository = XMLConfigSource.getRepositoryFromClassPath();
       
       // look up repository in shared map
-      TopicMapRepositoryIF repository = (TopicMapRepositoryIF)repositories.get(registryName);
+      TopicMapRepositoryIF repository = repositories.get(registryName);
       
       // close exising repository
       if (repository != null) {

@@ -47,7 +47,7 @@ public interface TopicMapSourceIF {
    * PUBLIC: Returns an unmodifiable collection of {@link
    * TopicMapReferenceIF}s found by the topic map source.
    */
-  public Collection getReferences();
+  public Collection<TopicMapReferenceIF> getReferences();
   // returns TopicMapReferenceIF objects; unmodifiable
   // return existing reference collection (or create)
 

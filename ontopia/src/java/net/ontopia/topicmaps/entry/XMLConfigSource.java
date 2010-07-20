@@ -7,7 +7,6 @@ import java.io.*;
 import java.beans.*;
 import java.lang.reflect.*;
 import java.net.URL;
-import java.net.MalformedURLException;
 import java.util.*;
 
 import org.xml.sax.*;
@@ -116,14 +115,14 @@ public class XMLConfigSource {
   /**
    * INTERNAL:
    */
-  public static TopicMapRepositoryIF getRepositoryFromClassPath(Map environ) {
+  public static TopicMapRepositoryIF getRepositoryFromClassPath(Map<String, String> environ) {
     return getRepositoryFromClassPath("tm-sources.xml", environ);    
   }
 
   /**
    * INTERNAL:
    */
-  public static TopicMapRepositoryIF getRepositoryFromClassPath(String resourceName, Map environ) {
+  public static TopicMapRepositoryIF getRepositoryFromClassPath(String resourceName, Map<String, String> environ) {
 
     // look up configuration via classpath
     ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -133,7 +132,7 @@ public class XMLConfigSource {
     
     // build configuration environment
     if (environ == null)
-      environ = new HashMap(1);
+      environ = new HashMap<String, String>(1);
     if (url.getProtocol().equals("file")) {
       String file = url.getFile();
       environ.put("CWD", file.substring(0, file.lastIndexOf('/')));
@@ -162,7 +161,7 @@ public class XMLConfigSource {
    * INTERNAL: Gets the topic map repository that is created by
    * reading the configuration file with the given environment.<p>
    */
-  public static TopicMapRepositoryIF getRepository(String config_file, Map environ) {
+  public static TopicMapRepositoryIF getRepository(String config_file, Map<String, String> environ) {
     return createRepository(readSources(config_file, environ));
   }
 
@@ -183,16 +182,16 @@ public class XMLConfigSource {
    *
    * @since 3.0
    */
-  public static TopicMapRepositoryIF getRepository(Reader config_file, Map environ) {
+  public static TopicMapRepositoryIF getRepository(Reader config_file, Map<String, String> environ) {
     return createRepository(readSources(new InputSource(config_file), environ));
   }
 
-  private static TopicMapSourceManager createRepository(Collection sources) {
+  private static TopicMapSourceManager createRepository(Collection<TopicMapSourceIF> sources) {
     // assign default source ids and titles
     int counter = 1;
-    Iterator iter = sources.iterator();
+    Iterator<TopicMapSourceIF> iter = sources.iterator();
     while (iter.hasNext()) {
-      TopicMapSourceIF source = (TopicMapSourceIF)iter.next();
+      TopicMapSourceIF source = iter.next();
       if (source.getId() == null && source.supportsCreate()) {
         String newId = source.getClass().getName() + "-" + (counter++);
         source.setId(newId);
@@ -207,16 +206,16 @@ public class XMLConfigSource {
    * INTERNAL: Returns a collection containing the topic map sources
    * created by reading the configuration file.
    */
-  public static List readSources(String config_file) {
-    return readSources(config_file, new HashMap(1));
+  public static List<TopicMapSourceIF> readSources(String config_file) {
+    return readSources(config_file, new HashMap<String, String>(1));
   }
 
   /**
    * INTERNAL: Returns a collection containing the topic map sources
    * created by reading the configuration file.
    */
-  public static List readSources(String config_file, Map environ) {
-    if (environ == null) environ = new HashMap(1);
+  public static List<TopicMapSourceIF> readSources(String config_file, Map<String, String> environ) {
+    if (environ == null) environ = new HashMap<String, String>(1);
     // add CWD entry
     if (!environ.containsKey("CWD")) {
       File file = new File(config_file);
@@ -234,7 +233,7 @@ public class XMLConfigSource {
   // internal helper method(s)
   // ------------------------------------------------------------
   
-  private static List readSources(InputSource inp_source, Map environ) {
+  private static List<TopicMapSourceIF> readSources(InputSource inp_source, Map<String, String> environ) {
     ConfigHandler handler = new ConfigHandler(environ);
     
     try {
@@ -257,17 +256,17 @@ public class XMLConfigSource {
   // ------------------------------------------------------------
   
   static class ConfigHandler extends DefaultHandler {
-    Map environ;
-    Map params = new HashMap();
-    List sources = new ArrayList();
+    Map<String, String> environ;
+    //Map params = new HashMap();
+    List<TopicMapSourceIF> sources = new ArrayList<TopicMapSourceIF>();
     
     TopicMapSourceIF source;
     
-    ConfigHandler(Map environ) {
+    ConfigHandler(Map<String, String> environ) {
       this.environ = environ;
     }
     
-    public void startElement (String uri, String name, String qName,
+    public void startElement(String uri, String name, String qName,
                               Attributes atts) throws SAXException {
       if (qName.equals("source")) {
         // Clear source member
@@ -288,10 +287,10 @@ public class XMLConfigSource {
       else if (qName.equals("param") && source != null) {
         String param_name = atts.getValue("name");
         String param_value = atts.getValue("value");
-        Iterator iter = environ.keySet().iterator();
+        Iterator<String> iter = environ.keySet().iterator();
         while (iter.hasNext()) {
-          String environ_key = (String)iter.next();
-          param_value = StringUtils.replace(param_value, "${" + environ_key + "}", (String)environ.get(environ_key));
+          String environ_key = iter.next();
+          param_value = StringUtils.replace(param_value, "${" + environ_key + "}", environ.get(environ_key));
         }
 
         try {
@@ -328,7 +327,7 @@ public class XMLConfigSource {
       }
     }
 
-    public void endElement (String uri, String name, String qName) throws SAXException {
+    public void endElement(String uri, String name, String qName) throws SAXException {
       if (qName.equals("source")) {     
         source = null;
       }

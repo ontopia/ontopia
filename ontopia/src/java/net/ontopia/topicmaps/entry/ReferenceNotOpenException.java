@@ -15,6 +15,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 
 public class ReferenceNotOpenException extends OntopiaRuntimeException {
+  private static final long serialVersionUID = 1L;
 
   public ReferenceNotOpenException() {
     super("Cannot access topic map reference after it has been closed.");

@@ -5,6 +5,7 @@ package net.ontopia.topicmaps.entry;
 
 import java.io.*;
 import java.util.*;
+import java.util.Map.Entry;
 import net.ontopia.utils.*;
 import net.ontopia.topicmaps.core.*;
 
@@ -25,7 +26,7 @@ import net.ontopia.topicmaps.core.*;
 public class StoreRegistry {
 
   protected TopicMapRepositoryIF repository;
-  protected Map txnusers = Collections.synchronizedMap(new HashMap());
+  protected Map<Object, Map<String, TopicMapStoreIF>> txnusers = Collections.synchronizedMap(new HashMap<Object, Map<String, TopicMapStoreIF>>());
 
   public StoreRegistry(TopicMapRepositoryIF repository) {
     this.repository = repository;
@@ -48,9 +49,9 @@ public class StoreRegistry {
   public TopicMapStoreIF getStore(Object txnuser, String refkey) {
     synchronized (txnuser) {
       if (txnusers.containsKey(txnuser)) {
-        Map stores = (Map)txnusers.get(txnuser);
+        Map<String, TopicMapStoreIF> stores = txnusers.get(txnuser);
         if (stores.containsKey(refkey))
-          return (TopicMapStoreIF)stores.get(refkey);
+          return stores.get(refkey);
       }
     }
     return null;
@@ -64,12 +65,12 @@ public class StoreRegistry {
   public synchronized String getReferenceKey(Object txnuser, TopicMapStoreIF store) {
     synchronized (txnuser) {
       if (txnusers.containsKey(txnuser)) {
-        Map stores = (Map)txnusers.get(txnuser);
-        Iterator iter = stores.entrySet().iterator();
+        Map<String, TopicMapStoreIF> stores = txnusers.get(txnuser);
+        Iterator<Entry<String, TopicMapStoreIF>> iter = stores.entrySet().iterator();
         while (iter.hasNext()) {
-          Map.Entry entry = (Map.Entry)iter.next();
+          Entry<String, TopicMapStoreIF> entry = iter.next();
           if (store.equals(entry.getValue()))
-            return (String)entry.getKey();
+            return entry.getKey();
         }
       }
     }
@@ -80,24 +81,24 @@ public class StoreRegistry {
    * INTERNAL: Returns a collection contains all reference keys for
    * the given transaction user.
    */
-  public synchronized Collection getReferenceKeys(Object txnuser) {
-    Map refmap = (Map)txnusers.get(txnuser);
+  public synchronized Collection<String> getReferenceKeys(Object txnuser) {
+    Map<String, TopicMapStoreIF> refmap = txnusers.get(txnuser);
     if (refmap != null)
       return refmap.keySet();
     else
-      return Collections.EMPTY_SET;
+      return Collections.emptySet();
   }
 
   /**
    * INTERNAL: Returns a collection contains all stores that is
    * registered with the given transaction user.
    */
-  public synchronized Collection getStores(Object txnuser) {
-    Map refmap = (Map)txnusers.get(txnuser);
+  public synchronized Collection<TopicMapStoreIF> getStores(Object txnuser) {
+    Map<String, TopicMapStoreIF> refmap = txnusers.get(txnuser);
     if (refmap != null)
       return refmap.values();
     else
-      return Collections.EMPTY_SET;
+      return Collections.emptySet();
   }
 
   /**
@@ -139,8 +140,8 @@ public class StoreRegistry {
 
   protected void putStore(Object txnuser, String refkey, TopicMapStoreIF store) {
     if (!txnusers.containsKey(txnuser))
-      txnusers.put(txnuser, new HashMap());
-    Map stores = (Map)txnusers.get(txnuser);
+      txnusers.put(txnuser, new HashMap<String, TopicMapStoreIF>());
+    Map<String, TopicMapStoreIF> stores = txnusers.get(txnuser);
     stores.put(refkey, store);
   }
 
@@ -161,7 +162,7 @@ public class StoreRegistry {
   }
 
   protected void removeStore(Object txnuser, String refkey) {
-    Map stores = (Map)txnusers.get(txnuser);
+    Map<String, TopicMapStoreIF> stores = txnusers.get(txnuser);
     stores.remove(refkey);
     if (stores.isEmpty())
       txnusers.remove(txnuser);

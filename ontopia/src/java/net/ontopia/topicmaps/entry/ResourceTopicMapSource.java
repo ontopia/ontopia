@@ -43,8 +43,7 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
   protected boolean validate;
   protected ExternalReferenceHandlerIF ref_handler;
 
-  @SuppressWarnings("unchecked")
-  protected Collection reflist;
+  protected Collection<TopicMapReferenceIF> reflist;
 
   /**
    * INTERNAL: Create a new empty {@link TopicMapSourceIF} instance.
@@ -223,8 +222,7 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
 
   // ----
 
-  @SuppressWarnings("unchecked")
-  public synchronized Collection getReferences() {
+  public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (reflist == null)
       refresh();
     return reflist;
@@ -289,7 +287,7 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
       ref.setValidation(validate);
       if (ref_handler != null)
         ref.setExternalReferenceHandler(ref_handler);
-      reflist = Collections.singleton(ref);
+      reflist = Collections.singleton((TopicMapReferenceIF)ref);
     }
       break;
 
@@ -299,7 +297,7 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
           base_address);
       ref.setDuplicateSuppression(duplicate_suppression);
       ref.setSource(this);
-      reflist = Collections.singleton(ref);
+      reflist = Collections.singleton((TopicMapReferenceIF)ref);
     }
       break;
 
@@ -314,7 +312,7 @@ public class ResourceTopicMapSource implements TopicMapSourceIF {
         ref.setSyntax(syntax);
       }
 
-      reflist = Collections.singleton(ref);
+      reflist = Collections.singleton((TopicMapReferenceIF)ref);
     }
       break;
 
