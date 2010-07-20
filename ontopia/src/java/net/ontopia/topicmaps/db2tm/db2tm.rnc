@@ -38,7 +38,8 @@ csv = element csv {
 }
 jdbc = element jdbc { 
   idatt?, 
-  attribute propfile { text }
+  attribute propfile { text }?,
+  attribute propstream { text }?
 }
 
 # -- relations
@@ -46,7 +47,7 @@ relation = element relation {
   attribute name { text },
   attribute columns { text }, 
   attribute primary-key { text }?, 
-  attribute synctype { "none" | "rescan" | "changelog" }?, 
+  attribute synctype { "none" | "rescan" | "changelog" }?,
   condition?,
   virtual-column*,
   (topic | association)+,

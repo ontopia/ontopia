@@ -4,6 +4,8 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,6 +25,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.persistence.proxy.*;
+import net.ontopia.utils.StreamUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +46,7 @@ public class JDBCDataSource implements DataSourceIF {
   protected String tableNamePattern;
 
   protected Connection conn;
+  private InputStream propstream;
 
   public JDBCDataSource(RelationMapping mapping) {
     this.mapping = mapping;
@@ -64,10 +68,23 @@ public class JDBCDataSource implements DataSourceIF {
       throw new DB2TMException("JDBC data source property file " + propfile + " does not exist.");
   }
 
+  void setPropertyStream(String _props) {
+    try {
+      this.propstream = StreamUtils.getInputStream(_props);
+      if (this.propstream == null) {
+        throw new DB2TMException("JDBC data source property file " + _props + " does not exist.");
+      }
+    } catch (IOException ioe) {
+      throw new DB2TMException("Could not open data source property file at " + _props + ": " + ioe.getMessage(), ioe);
+    }
+  }
+
   protected Connection getConnection() {
     if (conn == null) {
       try {
-        ConnectionFactoryIF cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(propfile), false);
+        ConnectionFactoryIF cf;
+        if (propstream != null) cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(propstream), false);
+        else cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(propfile), false);
         conn = cf.requestConnection();
       } catch (Throwable t) {
         throw new OntopiaRuntimeException(t);
