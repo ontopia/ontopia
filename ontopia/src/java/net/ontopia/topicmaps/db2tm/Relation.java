@@ -23,6 +23,8 @@ public class Relation {
   protected String[] pkey; // primary key
 
   protected String condition;
+
+  protected String commit = null;
   
   protected RelationMapping mapping;
   protected List entities = new ArrayList(2);
@@ -75,7 +77,14 @@ public class Relation {
   public void setCondition(String condition) {
     this.condition = condition;
   }
+
+  public void setCommitMode(String commit) {
+    this.commit = commit;
+  }
   
+  public String getCommitMode() {
+    return commit;
+  }
   // -----------------------------------------------------------------------------
   // Entities
   // -----------------------------------------------------------------------------

@@ -49,6 +49,7 @@ public class RelationMapping extends SAXTracker {
   protected XMLReader reader;
 
   protected String name;
+  protected String commitMode;
   protected File baseDirectory;
   protected Map datasources;
   protected Map relations;
@@ -58,6 +59,9 @@ public class RelationMapping extends SAXTracker {
     this.datasources = new HashMap();
     this.relations = new HashMap();
     this.iprefixes = new HashMap();
+
+    // default commit mode, never commit
+    this.commitMode = null;
 
     keepContentsOf("subject-locator");
     keepContentsOf("subject-identifier");
@@ -101,6 +105,10 @@ public class RelationMapping extends SAXTracker {
 
   public String getName() {
     return name;
+  }
+
+  public String getCommitMode() {
+    return commitMode;
   }
 
   public Collection getDataSources() {
@@ -243,6 +251,7 @@ public class RelationMapping extends SAXTracker {
         currel.setName(getValue(attrs, "name"));
         currel.setColumns(getValues(attrs, "columns", "column"));
         currel.setPrimaryKey(getValues(attrs, "primary-key"));
+        currel.setCommitMode(getValue(attrs, "commit-mode"));
         String synctype = getValue(attrs, "synctype");
         if (synctype == null)
           currel.setSynchronizationType(Relation.SYNCHRONIZATION_UNKNOWN);
@@ -410,6 +419,7 @@ public class RelationMapping extends SAXTracker {
       // Other
       else if (lname == "db2tm") {
         name = getValue(attrs, "name");
+        commitMode = getValue(attrs, "commit-mode");
       }
 
       // Sources
@@ -447,7 +457,10 @@ public class RelationMapping extends SAXTracker {
       else if (lname == "jdbc") {
         String id = getValue(attrs, "id");
         JDBCDataSource datasource = new JDBCDataSource(this);        
-        datasource.setPropertyFile(getValue(attrs, "propfile"));
+        
+        String pf = getValue(attrs, "propfile");
+        if (pf != null) datasource.setPropertyFile(pf);
+        else datasource.setPropertyStream(getValue(attrs, "propstream"));
         datasources.put(id, datasource);
       }
 
