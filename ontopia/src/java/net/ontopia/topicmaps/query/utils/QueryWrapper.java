@@ -1,6 +1,4 @@
 
-// $Id: QueryWrapper.java,v 1.10 2008/10/24 11:40:38 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.utils;
 
 import java.util.Map;
@@ -308,6 +306,30 @@ public class QueryWrapper {
       if (maxone && rowno == 1)
         throw new OntopiaRuntimeException("Query produced more than one row");
       return result.getValue(0);
+    }
+  }
+
+  /**
+   * EXPERIMENTAL: Runs an update statement, returning the number of
+   * changed rows. Makes no attempt to handle transactions, as this is
+   * a an application issue.
+   * @since %NEXT%
+   */
+  public int update(String query) {
+    return update(query, null);
+  }
+
+  /**
+   * EXPERIMENTAL: Runs an update statement, returning the number of
+   * changed rows. Makes no attempt to handle transactions, as this is
+   * a an application issue.
+   * @since %NEXT%
+   */
+  public int update(String query, Map params) {
+    try {
+      return processor.update(query, params, context);
+    } catch (InvalidQueryException e) {
+      throw new OntopiaRuntimeException(e);
     }
   }
 }
