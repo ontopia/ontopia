@@ -97,12 +97,8 @@ public class ForEachTag extends BodyTagSupport {
     ctxtMgr.pushScope();
 
     // do not proceed if no elements in collection at all
-    if (coll.isEmpty()) {
-      if (log.isInfoEnabled())
-        log.info("Cannot loop over empty collection in '" +
-                 (collVariableName != null ? collVariableName : "_default_") + "'");
+    if (coll.isEmpty())
       return SKIP_BODY;
-    }
 
     // WARN: This might be problematic when collection is of unknown size.
     this.items = coll.toArray();
