@@ -115,6 +115,8 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
         
         this.reference = ref;
       } else {
+        log.info("Could not create reference for single RDBMS source " +
+                 id + " because no topic map found");
         this.reference = null;
       }
       
