@@ -14,6 +14,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
 
 public class InsertTest extends AbstractQueryTest {
   
@@ -305,7 +306,23 @@ public class InsertTest extends AbstractQueryTest {
   public void testFromParsing2() throws InvalidQueryException {
     makeEmpty();
     update("insert topic - \"Topic from CTM\" .");
+  }
+
+  public void testQNameContext() throws InvalidQueryException, IOException {
+    load("subclasses.ltm");
+
+    int topics = topicmap.getTopics().size();
+
+    DeclarationContextIF ctxt = QueryUtils.parseDeclarations(topicmap, "using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\"");
+    update("insert xtm:test . ", ctxt);
+
+    assertTrue("wrong number of topics after insert",
+               topicmap.getTopics().size() == (topics + 1));
+
+    TopicIF test = topicmap.getTopicBySubjectIdentifier(new URILocator("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
+    assertTrue("no xtm:test after insert", test != null);
   }  
+  
 
 // positions reported by lexer.getStartOfToken() make no sense after
 // multiline comments. don't know why, and can't see any way to fix it.

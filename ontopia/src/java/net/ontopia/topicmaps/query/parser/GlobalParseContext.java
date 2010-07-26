@@ -152,5 +152,10 @@ public class GlobalParseContext implements ParseContextIF {
   
   public boolean isBuiltInPredicate(String name) {
     return factory.isBuiltInPredicate(name);
+  }
+
+
+  public void dump() {
+    System.out.println("===== GlobalParseContext " + this);
   }  
 }

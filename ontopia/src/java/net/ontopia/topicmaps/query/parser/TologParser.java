@@ -29,7 +29,6 @@ import antlr.TokenStreamRecognitionException;
  */
 public class TologParser {
   protected ParseContextIF context;
-  protected ParseContextIF localcontext; // needed for CTM part of INSERT
   protected TologOptions options;
   private static final Pattern insertP =
     Pattern.compile("(^|\\s+)insert\\s+", Pattern.CASE_INSENSITIVE);
@@ -106,7 +105,7 @@ public class TologParser {
       }
         
       InsertStatement stmt = (InsertStatement) parseStatement(new StringReader(query));
-      stmt.setCTMPart(ctm, localcontext);
+      stmt.setCTMPart(ctm, context);
       return stmt;
     } else
       return parseStatement(new StringReader(query));
@@ -119,8 +118,7 @@ public class TologParser {
     throws InvalidQueryException {
     try {
       RealTologParser parser = makeParser(queryReader);
-      localcontext = new LocalParseContext(context);
-      parser.setContext(localcontext);
+      parser.setContext(context);
       parser.updatestatement();
       return parser.getStatement();
     }

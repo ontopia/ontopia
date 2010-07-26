@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -34,7 +34,7 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
   private ParseContextIF subcontext;
   private Map<String, PrefixBinding> bindings;
   private Map predicates;
-  Set loading_modules = new HashSet();
+  Set loading_modules = new CompactHashSet();
 
   public LocalParseContext(ParseContextIF subcontext) {
     this.subcontext = subcontext;
@@ -238,6 +238,15 @@ public class LocalParseContext implements ParseContextIF, DeclarationContextIF {
       throw new AntlrWrapException(new BadObjectReferenceException("No object for " +
                                                              token));
     return value;
+  }
+
+  public void dump() {
+    System.out.println("===== LocalParseContext " + this);
+    for (String prefix : bindings.keySet()) {
+      PrefixBinding bind = bindings.get(prefix);
+      System.out.println(prefix + " : " + bind.uri);
+    }
+    subcontext.dump();
   }
   
   // --- Prefix binding

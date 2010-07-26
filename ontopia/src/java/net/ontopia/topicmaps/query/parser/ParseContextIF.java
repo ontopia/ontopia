@@ -93,4 +93,9 @@ public interface ParseContextIF {
    * #1082.
    */
   public boolean isBuiltInPredicate(String name);
+
+  /**
+   * INTERNAL: Used for debugging.
+   */
+  public void dump();
 }
