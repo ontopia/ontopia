@@ -33,10 +33,10 @@ repositories {
 
 dependencies {
     compile 'net.ontopia:ontopia-engine:5.1.0-SNAPSHOT'
-    compile 'org.slf4j:slf4j-api:1.5.11'
+    compile 'org.slf4j:slf4j-api:1.6.1'
     compile 'com.semagia.mio:mio-core:0.9.6-SNAPSHOT'
 
-    testCompile 'junit:junit:4.8'
+    testCompile 'junit:junit:4.8.1'
     testCompile 'com.semagia.mio:mio-core-tests:0.9.6-SNAPSHOT'
 }
 
