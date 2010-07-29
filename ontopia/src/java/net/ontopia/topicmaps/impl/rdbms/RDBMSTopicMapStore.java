@@ -67,6 +67,7 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
    * PUBLIC: Creates a new topic map store with the database property
    * file set. A new topic map is created in the repository with this
    * constructor at the time the topic map is accessed.
+   * @param propfile Path reference to a Java properties file.
    */
   public RDBMSTopicMapStore(String propfile) throws IOException {
     this(propfile, -1);
@@ -76,6 +77,8 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
    * PUBLIC: Creates a new topic map store with the database property
    * file set. The store references an existing topic map with the
    * specified id.
+   * @param propfile Path reference to a Java properties file.
+   * @param topicmap_id The ID of the topic map in the database.
    */
   public RDBMSTopicMapStore(String propfile, long topicmap_id) throws IOException {
     this.propfile = propfile;
