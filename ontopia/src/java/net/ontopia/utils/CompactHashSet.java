@@ -1,6 +1,4 @@
 
-// $Id: CompactHashSet.java,v 1.16 2006/11/09 08:29:02 larsga Exp $
-
 package net.ontopia.utils;
 
 // WARNING: If you do any changes to this class, make sure that you
@@ -41,12 +39,8 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
   /**
    * Constructs a new, empty set.
    */
-  @SuppressWarnings("unchecked")
   public CompactHashSet() {
-    objects = (E[]) new Object[INITIAL_SIZE];
-    elements = 0;
-    freecells = objects.length;
-    modCount = 0;
+    this(INITIAL_SIZE);
   }
 
   /**
