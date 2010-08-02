@@ -72,7 +72,7 @@ ParsedStatementIF stmt = null;
 String error = null;
 StringWriter tmp = new StringWriter();
 
-// get the topic maps
+// get the topic map
 TopicMapIF topicmap = navApp.getTopicMapById(tmid);
 
 try {
@@ -219,6 +219,16 @@ try {
   </pre>
 <% } %>
 
+
+<% 
+  // transactions
+  if (update) {
+    if (error == null) 
+      topicmap.getStore().commit();
+    else
+      topicmap.getStore().abort();
+  }
+%>
 
 </template:put>
 
