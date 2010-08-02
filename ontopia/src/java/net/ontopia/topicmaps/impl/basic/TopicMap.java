@@ -43,7 +43,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   
   protected transient SubjectIdentityCache sicache;
 
-	protected TopicIF reifier;
+  protected TopicIF reifier;
   protected UniqueSet<TopicIF> scope;
   protected Set<TopicIF> topics;
   protected Set<AssociationIF> assocs;
