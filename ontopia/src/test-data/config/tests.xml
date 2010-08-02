@@ -188,6 +188,7 @@
     <test>net.ontopia.utils.test.UpperCaseGrabberTest</test>
     <test>net.ontopia.utils.test.CachedIndexTest</test>
     <test>net.ontopia.utils.test.CompactHashSetTest</test>
+    <test>net.ontopia.utils.test.CompactHashMapTest</test>
     <test>net.ontopia.utils.test.CompactIdentityHashSetTest</test>
     <test>net.ontopia.utils.test.UniqueSetTest</test>
     <test>net.ontopia.utils.test.SetPoolTest</test>
