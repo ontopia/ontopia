@@ -98,13 +98,8 @@ public class CompactIdentityHashSet extends CompactHashSet {
       objects[index] = o;
 
       // rehash with same capacity
-      if (1 - (freecells / (double) objects.length) > LOAD_FACTOR) {
-        rehash(objects.length);
-        // rehash with increased capacity
-        if (1 - (freecells / (double) objects.length) > LOAD_FACTOR) {
-          rehash(objects.length*2 + 1);
-        }
-      }
+      if (1 - (freecells / (double) objects.length) > LOAD_FACTOR)
+        rehash();
       return true;
     } else // was there already 
       return false;

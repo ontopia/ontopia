@@ -135,13 +135,8 @@ public class SoftHashMapIndex<K, E> implements LookupIndexIF<K, E> {
 
       entries[index] = new SoftEntry(key, value, queue);
       // rehash with same capacity
-      if (1 - (freecells / (double) entries.length) > LOAD_FACTOR) {
-        rehash(entries.length);
-        // rehash with increased capacity
-        if (1 - (freecells / (double) entries.length) > LOAD_FACTOR) {
-          rehash(entries.length*2 + 1);
-        }
-      }
+      if (1 - (freecells / (double) entries.length) > LOAD_FACTOR)
+        rehash();
       return null;
     } else { // was there already 
       E oldvalue = entries[index].value;
@@ -217,6 +212,25 @@ public class SoftHashMapIndex<K, E> implements LookupIndexIF<K, E> {
     }
   }
 
+  /**
+   * INTERNAL: Figures out correct size for rehashed set, then does
+   * the rehash.
+   */
+  protected void rehash() {
+    // do we need to increase capacity, or are there so many
+    // deleted objects hanging around that rehashing to the same
+    // size is sufficient? if 5% (arbitrarily chosen number) of
+    // cells can be freed up by a rehash, we do it.
+    
+    int gargagecells = objects.length - (elements + freecells);
+    if (gargagecells / (double) objects.length > 0.05)
+      // rehash with same size
+      rehash(objects.length);
+    else
+      // rehash with increased capacity
+      rehash(objects.length*2 + 1);
+  }
+  
   private void rehash(int newCapacity) {
     int elements = 0; // counted up below
     int oldCapacity = entries.length;

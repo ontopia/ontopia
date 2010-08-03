@@ -32,6 +32,11 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
    */
   protected final static Object deletedObject = new Object();
   protected int elements;
+  /**
+   * This is the number of empty (null) cells. It's not necessarily
+   * the same as objects.length - elements, because some cells may
+   * contain deletedObject.
+   */
   protected int freecells;
   protected E[] objects;
   protected int modCount;
@@ -172,14 +177,9 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
 
       objects[index] = (E) o;
       
-      // rehash with same capacity
-      if (1 - (freecells / (double) objects.length) > LOAD_FACTOR) {
-        rehash(objects.length);
-        // rehash with increased capacity
-        if (1 - (freecells / (double) objects.length) > LOAD_FACTOR) {
-          rehash(objects.length*2 + 1);
-        }
-      }
+      // do we need to rehash?
+      if (1 - (freecells / (double) objects.length) > LOAD_FACTOR)
+        rehash();
       return true;
     } else // was there already 
       return false;
@@ -278,6 +278,25 @@ public class CompactHashSet<E> extends java.util.AbstractSet<E> {
     System.out.println();
     for (int ix = 0; ix < objects.length; ix++) 
       System.out.println("[" + ix + "]: " + objects[ix]);
+  }
+
+  /**
+   * INTERNAL: Figures out correct size for rehashed set, then does
+   * the rehash.
+   */
+  protected void rehash() {
+    // do we need to increase capacity, or are there so many
+    // deleted objects hanging around that rehashing to the same
+    // size is sufficient? if 5% (arbitrarily chosen number) of
+    // cells can be freed up by a rehash, we do it.
+    
+    int gargagecells = objects.length - (elements + freecells);
+    if (gargagecells / (double) objects.length > 0.05)
+      // rehash with same size
+      rehash(objects.length);
+    else
+      // rehash with increased capacity
+      rehash(objects.length*2 + 1);
   }
   
   /**
