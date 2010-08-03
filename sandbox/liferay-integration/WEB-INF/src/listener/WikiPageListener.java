@@ -25,16 +25,16 @@ public class WikiPageListener extends BaseModelListener<WikiPage>{
 
   public void onAfterCreate(WikiPage page) throws ModelListenerException {
     log.debug("### OnAfterCreate WikiPage ###");
-    OntopiaAdapter.instance.addWikiPage(page);
+    OntopiaAdapter.getInstance().addWikiPage(page);
   }
 
   public void onAfterRemove(WikiPage page) throws ModelListenerException {
     log.debug("### OnAfterRemove WikiPage ###");
-    OntopiaAdapter.instance.deleteWikiPage(page.getUuid());
+    OntopiaAdapter.getInstance().deleteWikiPage(page.getUuid());
   }
 
   public void onAfterUpdate(WikiPage page) throws ModelListenerException {
     log.debug("### OnAfterUpdate WikiPage ###");
-    OntopiaAdapter.instance.updateWikiPage(page);
+    OntopiaAdapter.getInstance().updateWikiPage(page);
   }
 }

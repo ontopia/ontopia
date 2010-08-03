@@ -6,7 +6,7 @@
     <property name="build"         value="${basedir}/build" />
     <property name="build.classes" value="${basedir}/build/classes" />
 
-    <property name="lib" value="/Users/larsga/Desktop/portal/liferay-portal-5.2.3/tomcat-5.5.27/common/lib/ext/" />
+    <property name="lib" value="/Users/larsga/Desktop/portal/liferay-portal-6.0.3/tomcat-6.0.26/lib/ext/" />
     
     <path id="project.classpath">
       <pathelement location="${lib}/portal-service.jar" />
@@ -19,7 +19,8 @@
   <target name="compile" depends="init">
     <echo>Compiling Ontopia/Liferay classes...</echo>
     <javac srcdir="." destdir="${build.classes}" 
-           classpathref="project.classpath" >
+           classpathref="project.classpath"
+           debug="true">
       <patternset>
         <include name="WEB-INF/src/**/*.java" />
       </patternset>

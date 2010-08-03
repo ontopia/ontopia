@@ -10,9 +10,10 @@ import org.slf4j.Logger;
 import tm.OntopiaAdapter;
 
 /**
- * This class is notified by liferay whenever changes in Group objects occur.
- * It passes these information on to the integration.
- * Groups in Liferay comprehend user groups and communities among others. Check group.is* methods for an idea what else there is.
+ * This class is notified by liferay whenever changes in Group objects
+ * occur.  It passes these information on to the integration. Groups
+ * in Liferay comprehend user groups and communities among others.
+ * Check group.is* methods for an idea what else there is.
  *
  * @author mfi
  */
@@ -23,17 +24,17 @@ public class GroupListener extends BaseModelListener<Group>{
 
   public void onAfterCreate(Group group) throws ModelListenerException {
     log.debug("### onAfterCreateGroup ###");
-    OntopiaAdapter.instance.addGroup(group);
+    OntopiaAdapter.getInstance().addGroup(group);
   }
 
   public void onAfterRemove(Group group) throws ModelListenerException {
     log.debug("### onAfterRemoveGroup ###");
-    OntopiaAdapter.instance.deleteGroup(group);
+    OntopiaAdapter.getInstance().deleteGroup(group);
   }
 
 
   public void onAfterUpdate(Group group) throws ModelListenerException {
     log.debug("### onAfterUpdateGroup ###");
-    OntopiaAdapter.instance.updateGroup(group); 
+    OntopiaAdapter.getInstance().updateGroup(group); 
   }
 }

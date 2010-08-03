@@ -22,16 +22,16 @@ public class UserListener extends BaseModelListener<User>{
   
   public void onAfterCreate(User user) throws ModelListenerException {
     log.debug("### User Created! ###");
-    OntopiaAdapter.instance.addUser(user);
+    OntopiaAdapter.getInstance().addUser(user);
   }
 
   public void onAfterRemove(User user) throws ModelListenerException {
    log.debug("### User Removed! ###");
-   OntopiaAdapter.instance.deleteUser(user.getUuid());
+   OntopiaAdapter.getInstance().deleteUser(user.getUuid());
   }
 
   public void onAfterUpdate(User user) throws ModelListenerException {
     log.debug("### User updated! ###");
-    OntopiaAdapter.instance.updateUser(user);
+    OntopiaAdapter.getInstance().updateUser(user);
   }
 }

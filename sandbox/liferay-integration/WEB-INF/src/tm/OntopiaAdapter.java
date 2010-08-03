@@ -1,15 +1,6 @@
 package tm;
 
-import com.liferay.portal.SystemException;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalStructure;
-import com.liferay.portlet.wiki.model.WikiNode;
-import com.liferay.portlet.wiki.model.WikiPage;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collection;
@@ -18,6 +9,15 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -32,8 +32,8 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.topicmaps.utils.TopicMapSynchronizer;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -41,27 +41,17 @@ import org.slf4j.Logger;
 import util.DateFormatter;
 
 /**
- * Provides control to alter a topicmap in ontopia according to changes in Liferay.
- * It is implemented as an "eager init" singleton. It shall be created along will all class objects and be removed once the runtime environment shuts down.
- * It also contains public static Strings to be used as PSI's for association types that may occur, these are mostly used inside the DeciderIF implementations.
- *
- * It makes heavy use of the tolog QueryProcessor:
- * @see QueryProcessorIF
- *
- * TODO: Make topicmap name configurable from the outside using i.e. properties
- * TODO: Find all \t and replace them with spaces
+ * The Liferay/Ontopia data integration, which builds a topic map
+ * reflecting the data in Liferay, allowing web content, wiki pages,
+ * and so on to be annotated in the topic map.
  */
-
 public class OntopiaAdapter implements OntopiaAdapterIF {
-
   private static Logger log = LoggerFactory.getLogger(OntopiaAdapter.class);
-  // This is an eager init singleton that is being created when the class objects are created
-  // It is being removed along with all other objects when the container is shutdown
-  public static OntopiaAdapterIF instance = new OntopiaAdapter();
 
   // this prefix is pretty much the same in all tolog queries
   private static final String PSI_PREFIX = "http://psi.ontopia.net/liferay/";
 
+  // these are referenced from other classes, but not in this one
   public static final String ASSOC_CREATED_BY_PSI = PSI_PREFIX + "created_by";
   public static final String ASSOC_USER_APPROVING_PSI = PSI_PREFIX + "approved_by";
   public static final String ASSOC_HAS_WORKFLOW_STATE_PSI = PSI_PREFIX + "has_workflow_state";
@@ -70,161 +60,308 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   public static final String ASSOC_PARENT_CHILD_PSI = PSI_PREFIX + "parent-child";
   public static final String ASSOC_IS_ABOUT_PSI = PSI_PREFIX + "is-about";
 
-  // type information for updates
-  private static final String WEBCONTENT_TYPE = "webcontent";
-  private static final String USER_TYPE = "user";
-  private static final String WIKIPAGE_TYPE = "wikipage";
-  private static final String WIKINODE_TYPE = "wikinode";
-  private static final String STRUCTURE_TYPE = "structure";
-  private static final String COMMUNITY_TYPE = "community";
-
-  // By what name the topicmap can be retrieved from ontopia
-  private String tmName;
+  // constants
   private static final String TOPICMAPNAMEKEY = "topicmapname";
-  private static final String PROPERTYFILEPATH ="../ontopia.properties";
+  private static final String PROPERTYFILENAME ="ontopia.properties";
 
-  // The topicmap that is being worked on
+  // static members
+  private static String tmName; // ID of the Liferay TM in the TM registry
+
+  // dynamic members
+  private TopicMapStoreIF store;
   private TopicMapIF topicmap;
+  private QueryWrapper queryWrapper;
   
   /**
-   * Only contstructor is private in order to avoid multiple instances of this class.
+   * The constructor is private, so that instances can only be
+   * produced via the getInstance() method. Note that the class is not
+   * a singleton.
    */
-  private OntopiaAdapter() {
-    super();
-    prepareTopicmap();
+  private OntopiaAdapter(boolean readonly) {
+    configure();
+    store = TopicMaps.createStore(tmName, readonly);
+    topicmap = store.getTopicMap();
+    queryWrapper = new QueryWrapper(topicmap);
+    queryWrapper.setDeclarations("using lr for i\"" + PSI_PREFIX + "\" ");
   }
 
+  /**
+   * A special constructor used to build temporary in-memory topic maps for
+   * the TMSync-based updates.
+   */
+  private OntopiaAdapter() {
+    store = new InMemoryTopicMapStore();
+    topicmap = store.getTopicMap();
+    queryWrapper = new QueryWrapper(topicmap);
+    queryWrapper.setDeclarations("using lr for i\"" + PSI_PREFIX + "\" ");
+  }
+  
+  private void configure() {
+    if (tmName != null)
+      return;
+    
+    Properties props = new Properties();
+    // read topicmapName from properties file
+    try {
+      ClassLoader cloader = OntopiaAdapter.class.getClassLoader();
+      InputStream istream = cloader.getResourceAsStream(PROPERTYFILENAME);
+      if (istream == null) 
+        throw new OntopiaRuntimeException("Couldn't load property file " +
+                                          PROPERTYFILENAME + " from classpath");
+      props.load(istream);
+    } catch (IOException e) {
+      log.warn("Couldn't load " + PROPERTYFILENAME, e);
+      throw new OntopiaRuntimeException("Couldn't load " + PROPERTYFILENAME, e);
+    }
 
+    tmName = (String) props.getProperty(TOPICMAPNAMEKEY);
+  }
+
+  /**
+   * Use this method to get modifiable instances of the adapter.
+   */
+  public static synchronized OntopiaAdapterIF getInstance() {
+    return getInstance(false);
+  }
+
+  /**
+   * Use this method to get modifiable or readonly instances of the
+   * adapter.  Used by the JSPs, since they only need readonly access.
+   */
+  public static synchronized OntopiaAdapterIF getInstance(boolean readonly) {
+    return new OntopiaAdapter(readonly);
+  }
+  
   // -----------------------------------
   // Implementing OntopiaAdapterIF
   // -----------------------------------
 
-
   public void addWebContent(JournalArticle content) {
-    addWebContent(content, topicmap);
     try {
-      // TODO: For the time being this cannot be used within the private method, because the update will fail due to the group association (no group in update tm)
-      setGroupContains(String.valueOf(content.getGroupId()), content.getUuid(), topicmap); 
+      addWebContent(WrapperFactory.wrap(content));
+      store.commit();
     } catch (Exception e) {
-      deleteByUuid(content.getUuid()); // do not allow liferay to create a webcontent w/o attaching it to a group. if group can't be found, throw exception and don't create webcontent. See addWikiNode()
-      throw new OntopiaRuntimeException(e); // when throwing exception, liferay does not save the webcontent the user has been working on - therefore no topic must be created.
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't add article", e);
+    } finally {
+      store.close();
     }
   }
 
   public void deleteWebContent(String uuid) {
-    deleteByUuid(uuid);
+    try {
+      deleteByUuid(uuid);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't delete article", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void updateWebContent(JournalArticle content) {
     try {
-      update(content, "webcontent");
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
+      update(WrapperFactory.wrap(content));
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't update article", e);
+    } finally {
+      store.close();
     }
   }
 
 
   public void addUser(User user) {
-    addUser(user, topicmap);
+    try {
+      addUser_(user);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't add user", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void deleteUser(String uuid) {
-    deleteByUuid(uuid);
+    try {
+      deleteByUuid(uuid);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't delete user", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void updateUser(User user) {
-    try{
-      update(user, USER_TYPE);
-    } catch (MalformedURLException e) {
-        throw new OntopiaRuntimeException(e);
+    try {
+      update(user);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't update user", e);
+    } finally {
+      store.close();
     }
   }
 
 
   public void addStructure(JournalStructure structure) {
-    addStructure(structure, topicmap); //TODO: Shall structures have information on their group as well?
+    try {
+      // TODO: Shall structures have information on their group as well?
+      addStructure_(structure); 
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't add structure", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void deleteStructure(String uuid) {
-    deleteByUuid(uuid);
+    try {
+      deleteByUuid(uuid);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't delete structure", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void updateStructure(JournalStructure structure) {
     try {
-      update(structure, STRUCTURE_TYPE);
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
+      update(structure);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't update structure", e);
+    } finally {
+      store.close();
     }
   }
   
 
   public void addWikiNode(WikiNode node) {
-    addWikiNode(node, topicmap);
-
     try {
-      // this cannot be used inside the private method because update() calls it
-      // setGroupContains fails inside an empty inMemo topicmap (like there is in update())
-      setGroupContains(String.valueOf(node.getGroupId()), node.getUuid(), topicmap);
-    } catch (OntopiaRuntimeException ore) {
-      deleteByUuid(node.getUuid()); // if there is no group, alert and don't create topic!
-      throw new OntopiaRuntimeException(ore);
+      addWikiNode_(node);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't add wiki node", e);
+    } finally {
+      store.close();
     }
   }
 
   public void deleteWikiNode(String uuid) {
-    deleteByUuid(uuid);
+    try {
+      deleteByUuid(uuid);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't delete wiki node", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void updateWikiNode(WikiNode wikinode) {
     try {
-      update(wikinode, WIKINODE_TYPE);
-    } catch (MalformedURLException ex) {
-      throw new OntopiaRuntimeException(ex);
+      update(wikinode);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't update wiki node", e);
+    } finally {
+      store.close();
     }
   }
 
 
   public void addWikiPage(WikiPage wikipage) {
-    addWikiPage(wikipage, topicmap);
+    try {
+      addWikiPage_(wikipage);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't add wiki page", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void deleteWikiPage(String uuid) {
-    deleteByUuid(uuid);
+    try {
+      deleteByUuid(uuid);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't delete wiki page", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void updateWikiPage(WikiPage wikipage) {
     try {
-      update(wikipage, WIKIPAGE_TYPE);
-    } catch (MalformedURLException ex) {
-      throw new OntopiaRuntimeException(ex);
+      update(wikipage);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't update wiki page", e);
+    } finally {
+      store.close();
     }
   }
 
 
   public void addGroup(Group group) {
-    if(group.isCommunity()) {
-      addCommunity(group, topicmap);
+    if (!group.isCommunity())
+      return;
+    
+    try {
+      // TODO: Handling of parent-groups?
+      addCommunity_(group);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't add group", e);
+    } finally {
+      store.close();
     }
-    // TODO: Handling of parent-groups?
   }
 
   public void deleteGroup(Group group) {
-    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
-        "delete $TOPIC from \n" +
-        "value($OCCURRENCE, \"" + group.getGroupId() + "\")," +
-        "type($OCCURRENCE, lr:groupid)," +
-        "occurrence($TOPIC, $OCCURRENCE)," +
-        "instance-of($TOPIC, lr:community)";
-    runQuery(query);
+    try {
+      deleteGroup_(group);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't delete group", e);
+    } finally {
+      store.close();
+    }
   }
 
   public void updateGroup(Group group) {
-    if(group.isCommunity()) {
-      try {
-        update(group, COMMUNITY_TYPE);
-      } catch (MalformedURLException ex) {
-        throw new OntopiaRuntimeException(ex);
-      }
+    if (!group.isCommunity())
+      return;
+    
+    try {
+      update(group);
+      store.commit();
+    } catch (Exception e) {
+      store.abort();
+      throw new OntopiaRuntimeException("Couldn't update group", e);
+    } finally {
+      store.close();
     }
   }
 
@@ -233,7 +370,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   // ----------------------------
 
   /**
-   * Is called by DeciderIF implementations to check if the PSI provided is the type of the Association provided
+   * Is called by DeciderIF implementations to check if the PSI
+   * provided is the type of the Association provided
    *
    * @param psi The PSI as a String
    * @param assoc The association to check (as AssociationIF)
@@ -241,16 +379,15 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    */
   public static boolean isInAssociation(String psi, AssociationIF assoc) {
     TopicIF type = assoc.getType();
-      try {
-        LocatorIF locator = new URILocator(psi);
-        Collection locators = type.getSubjectIdentifiers();
-        if(locators.contains(locator)) {
-          return true;
-        }
+    try {
+      LocatorIF locator = new URILocator(psi);
+      Collection locators = type.getSubjectIdentifiers();
+      if (locators.contains(locator))
+        return true;
 
-      } catch (MalformedURLException ex) {
-        throw new OntopiaRuntimeException(ex);
-      }
+    } catch (MalformedURLException ex) {
+      throw new OntopiaRuntimeException(ex);
+    }
     return false;
   }
 
@@ -266,12 +403,12 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    * @return A String representing the objectId of the topic in the tm
    */
   public String getObjectIdForUuid(String uuid) {
-    TopicIF topic = retrieveTopicByUuid(uuid, topicmap); // may raise exception if topic can not be found. That's ok.
-    if(topic != null) {
+    // May raise exception if topic can not be found. That's ok.
+    TopicIF topic = retrieveTopicByUuid(uuid); 
+    if (topic != null)
       return topic.getObjectId();
-    } else {
+    else
       return null;
-    }
   }
 
   /**
@@ -284,29 +421,24 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   }
 
   /**
-   * Returns the objectId of the *first* type of a topic which is identified by a uuid that it finds.
+   * Returns the objectId of the *first* type of a topic which is
+   * identified by a uuid that it finds.
    *
    * @param uuid The uuid of the topic in question
-   * @return A String containing the objectId for the type of the topic in question
+   * @return A String containing the objectId for the type of the
+   * topic in question
    */
   public String getTopicTypeIdForUuid(String uuid) {
-    TopicIF topic = retrieveTopicByUuid(uuid, topicmap);
-    if(topic != null) {
-      Collection collection = topic.getTypes();
-      if(!collection.isEmpty()) {
-        Iterator collIt = collection.iterator();
-        while(collIt.hasNext()) {
-          TopicIF type = (TopicIF) collIt.next(); //TODO: returns only the first type. What to do if there are more? Can there be more?!
-          return type.getObjectId();
-        }
-      }
-    }
+    TopicIF topic = retrieveTopicByUuid(uuid);
+    if (topic != null)
+      for (TopicIF type : topic.getTypes())
+        return type.getObjectId();
     return null;
   }
 
   /**
-   * Returns the objectId of the "conceptView" topic by trying to look up the PSI:
-   * http://psi.ontopia.net/liferay/conceptview
+   * Returns the objectId of the "conceptView" topic by trying to look
+   * up the PSI: http://psi.ontopia.net/liferay/conceptview
    * Will throw an exception if the PSI can not be found.
    *
    * @return The objectId of the "conceptView" topic
@@ -317,32 +449,32 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   }
 
   /**
-   * Returns the object id for the topic that represents the article that will be displayed, providing an articleId.
-   * The rule is: The topic, with the highest version AND which has an "approved" state, is returned
+   * Returns the object id for the topic that represents the article
+   * that will be displayed, providing an articleId.  The rule is: The
+   * topic, with the highest version AND which has an "approved"
+   * state, is returned.
    *
    * @param articleId the article id from liferay
-   * @return The object for the topic
+   * @return The object ID for the topic
    */
   public String getCurrentObjectIdForArticleId(String articleId) {
-    String query ="using lr for i\"http://psi.ontopia.net/liferay/\" \n" +
-            "select $id, $number from \n" +
-            "object-id($topic, $id), \n"+
-            "occurrence($topic , $aid), \n" +
-            "type($aid, lr:article_id), \n" +
-            "value($aid, \"" + articleId +"\"), \n" +
-            "lr:has_workflow_state( $topic :  lr:work , lr:workflow_approved : lr:state ), \n" +
-            "occurrence($topic, $version), \n" +
-            "type($version, lr:version), \n" +
-            "value($version, $number) \n" +
-            "order by $number desc?";
+    String query =
+      "select $id, $number from \n" +
+      "object-id($topic, $id), \n"+
+      "occurrence($topic , $aid), \n" +
+      "type($aid, lr:article_id), \n" +
+      "value($aid, \"" + articleId +"\"), \n" +
+      "lr:has_workflow_state($topic : lr:work, lr:workflow_approved : lr:state), \n" +
+      "occurrence($topic, $version), \n" +
+      "type($version, lr:version), \n" +
+      "value($version, $number) \n" +
+      "order by $number desc?";
 
-    String retval = getSingleStringFromQuery(query, topicmap);
-    if(retval != null) {
-      return retval;
-    } else {
-      log.error("Error! Query was: {}", query);
-      throw new OntopiaRuntimeException("No Article with articleId " + articleId  + " found!");
-    }
+    String id = queryWrapper.queryForString(query);
+    if (id == null)
+      throw new OntopiaRuntimeException("No article with articleId " +
+                                        articleId  + " found!");
+    return id;
   }
 
 
@@ -350,62 +482,40 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   // some non-public methods acting as helpers
   // ------------------------------------------
 
-  private void prepareTopicmap() {
-    Properties props = new Properties();
-    // read topicmapName from properties file
-    try {
-      props.load(new FileInputStream(PROPERTYFILEPATH));
-    } catch (IOException ex) {
-      log.error(ex.getMessage());
-      throw new OntopiaRuntimeException(ex);
-    }
-
-    tmName = (String) props.getProperty(TOPICMAPNAMEKEY);
-    
-    TopicMapStoreIF store = TopicMaps.createStore(tmName, false);
-    topicmap  = store.getTopicMap();
-  }
-
   /**
    * Creates an article and sets created_by and approved_by associations.
-   *
-   * @param content The <code>JournalArticle</code> from Liferay
-   * @param tm The topicmap to work on
    */
-  private void addWebContent(JournalArticle content, TopicMapIF tm) {
-    createWebContent(content, tm);
-    setWorkflowstate(content, tm);
+  private void addWebContent(JournalArticleWrapper content)
+    throws SystemException {
+    createWebContent(content);
+    setWorkflowstate(content);
 
-    try {
-      String creatorUuid = content.getUserUuid();
-      setCreator(content.getUuid(), creatorUuid, tm);
-    } catch (SystemException ex) {
-      // No idea what might trigger the SystemException
-      throw new OntopiaRuntimeException(ex);
-    }
+    String creatorUuid = content.getUserUuid();
+    setCreator(content.getUuid(), creatorUuid);
 
-    if(content.isApproved()) {
-      setUserApproving(content, tm);
-    }
+    if (content.isApproved())
+      setUserApproving(content);
+
+    setGroupContains(String.valueOf(content.getGroupId()), content.getUuid()); 
   }
 
 
   /**
-   * Assembles one rather big tolog query to create a topic for a <code>JournalArticle</code>
-   * 
-   * @param content The <code>JournalArticle</code> from Liferay
-   * @param tm The topicmap to work on
+   * Assembles one rather big tolog query to create a topic for a
+   * <code>JournalArticle</code>
    */
-  private void createWebContent(JournalArticle content, TopicMapIF tm) {
+  private void createWebContent(JournalArticleWrapper content)
+    throws SystemException {
     Map<String, String> valueMap = getWebContentMap(content);
     String classname;
-    if(content.getStructureId().equals("")) {
+    if (content.getStructureId().equals(""))
       classname = "lr:article";
-    } else {
+    else {
       classname = findStructureUrnByStructureId(content.getStructureId());
-      if(classname.equals(null)) {
-        throw new OntopiaRuntimeException("Structure with id + " + content.getStructureId() + " not found!");
-      }
+      if (classname == null)
+        throw new OntopiaRuntimeException("Structure with id + " +
+                                          content.getStructureId() +
+                                          " not found!");
     }
 
     String approvedDateString = "";
@@ -431,70 +541,74 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
 
     String urn = urnifyCtm(valueMap.get("uuid"));
 
-    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
-        "insert " + urn + " isa " + classname + "; \n" +
-        "- $title ;\n" +
-        "lr:create_date : $createDate; \n" +
-        approvedDateString +
-        reviewDateString +
-        expiryDateString +
-        "lr:modified_date : $modifyDate; \n" +
-        "lr:display_date : $displayDate; \n" +
-        "lr:version : $version; \n" +
-        "lr:article_id : $articleId . from \n" +
-        approvedMapString +
-        reviewMapString +
-        expiryMapString +
-        "$createDate = %createDate%, \n" +
-        "$modifyDate = %modifyDate%, \n" +
-        "$displayDate = %displayDate%, \n" +
-        "$version = %version%, \n" +
-        "$title = %title%, \n" +
-        "$articleId = %articleId%";
-    runQuery(query, tm, valueMap);
+    String query =
+      "insert " + urn + " isa " + classname + "; \n" +
+      "- $title ;\n" +
+      "lr:create_date : $createDate; \n" +
+      approvedDateString +
+      reviewDateString +
+      expiryDateString +
+      "lr:modified_date : $modifyDate; \n" +
+      "lr:display_date : $displayDate; \n" +
+      "lr:version : $version; \n" +
+      "lr:article_id : $articleId . from \n" +
+      approvedMapString +
+      reviewMapString +
+      expiryMapString +
+      "$createDate = %createDate%, \n" +
+      "$modifyDate = %modifyDate%, \n" +
+      "$displayDate = %displayDate%, \n" +
+      "$version = %version%, \n" +
+      "$title = %title%, \n" +
+      "$articleId = %articleId%";
+    queryWrapper.update(query, valueMap);
   }
 
   /**
-   * Adds a <code>JournalStructure</code> to the topicmap by assembling and running a tolog query.
-   * <code>JournalStructure</code>s are inserted as subclasses of whether "Liferay_WebContent" or another <code>JournalStructure</code>
-   * if the latter is set as parent structure inside die <code>JournalStructure</code> object.
+   * Adds a <code>JournalStructure</code> to the topicmap by
+   * assembling and running a tolog query.
+   * <code>JournalStructure</code>s are inserted as subclasses of
+   * whether "Liferay_WebContent" or another
+   * <code>JournalStructure</code> if the latter is set as parent
+   * structure inside die <code>JournalStructure</code> object.
    *
    * @param structure The <code>JournalStructure</code> from Liferay
-   * @param tm The topicmap to work on
    */
-  private void addStructure(JournalStructure structure, TopicMapIF tm) {
+  private void addStructure_(JournalStructure structure) {
     Map valueMap = getStructureMap(structure);
     String structureUrn = urnifyCtm(structure.getUuid());
-    String parentStructureUrn = findStructureUrnByStructureId(structure.getParentStructureId());
+    String parentStructureUrn =
+      findStructureUrnByStructureId(structure.getParentStructureId());
 
     String parent;
-    if(parentStructureUrn != null) {
+    if (parentStructureUrn != null) {
       log.debug("*** No parentstructure provided. Using webcontent instead ***");
       parent = PSI_PREFIX + "webcontent";
-    } else {
+    } else
       parent = parentStructureUrn;
-    }
 
     String query ="insert " + structureUrn + " ako " + parent + ";\n" +
-    		"- $id . from" +
-        "$id = %structureId%";
-    runQuery(query, tm, valueMap); // is it considered cheating to use the ID as a Name?
+      "  - $name; lr:id: $id . " +
+      "from" +
+      "  $id = %structureId%, " +
+      "  $name = %name%";
+    queryWrapper.update(query, valueMap);
   }
 
 
   /**
-   * Adds a <code>User</code> to the topicmap by assembling and running a tolog query
+   * Adds a <code>User</code> to the topicmap by assembling and
+   * running a tolog query.
    *
    * @param user The <code>User</code> object from Liferay
-   * @param tm The topicmap to work on
    */
-  private void addUser(User user, TopicMapIF tm) {
+  private void addUser_(User user) {
     Map valueMap = getUserMap(user);
 
-    String query = "insert " + urnifyCtm(user.getUuid()) +" isa " + PSI_PREFIX + "user;\n" +
-    		"- $username. from \n" +
+    String query = "insert " + urnifyCtm(user.getUuid()) +" isa lr:user;\n" +
+      "- $username. from \n" +
         "$username = %username%";
-    runQuery(query, tm, valueMap);
+    queryWrapper.update(query, valueMap);
   }
 
 
@@ -503,27 +617,23 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    * Also sets "created_by" association.
    *
    * @param wikinode The <code>WikiNode</code> from Liferay
-   * @param tm The topicmap to work on
    */
-  private void addWikiNode(WikiNode wikinode, TopicMapIF tm) {
-    createWikiNode(wikinode, tm);
+  private void addWikiNode_(WikiNode wikinode) throws SystemException {
+    createWikiNode(wikinode);
 
-    try {
-      setCreator(wikinode.getUuid(), wikinode.getUserUuid(), tm);
-    } catch (SystemException ex) {
-      throw new OntopiaRuntimeException(ex);
-    }
+    setCreator(wikinode.getUuid(), wikinode.getUserUuid());
 
+    setGroupContains(String.valueOf(wikinode.getGroupId()), wikinode.getUuid());
   }
 
 
   /**
-   * Adds a new <code>WikiNode</code> to the topicmap by assembling and running a tolog query.
+   * Adds a new <code>WikiNode</code> to the topicmap by assembling
+   * and running a tolog query.
    *
    * @param wikinode The <code>WikiNode</code> from Liferay
-   * @param tm The topicmap to work on
    */
-  private void createWikiNode(WikiNode wikinode, TopicMapIF tm) {
+  private void createWikiNode(WikiNode wikinode) {
     String nodeUrn = urnifyCtm(wikinode.getUuid());
 
     String lastPostDateString = "";
@@ -534,7 +644,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
     }
 
     Map valueMap = getWikiNodeMap(wikinode);
-    String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
+    String query = 
       "insert " + nodeUrn + " isa lr:wikinode; \n" +
       "- $name; \n" +
       "lr:create_date : $createDate; \n" +
@@ -546,70 +656,51 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
       "$modifiedDate = %modifiedDate%, \n" +
       lastPostDateMapString +
       "$nodeId = %nodeId%";
-    runQuery(query, tm, valueMap);
+    queryWrapper.update(query, valueMap);
   }
 
 
   /**
-   * Calls <code>createWikiPage</code> to create a topic for a wikipage and then sets all necessary associations if applicable.
+   * Calls <code>createWikiPage</code> to create a topic for a
+   * wikipage and then sets all necessary associations if applicable.
    * @param wikipage The wikipage containing the information
-   * @param tm The topicmap to work on
    */
-  private void addWikiPage(WikiPage wikipage, TopicMapIF tm) {
-    createWikiPage(wikipage, tm);
-    if(!wikipage.getParentPages().isEmpty()) {
-      for(WikiPage wpd : wikipage.getParentPages()) {
-        setParentChild(wpd.getUuid(), wikipage.getUuid(), tm);
-      }
-    }
-    // setting the parent-child assocs in both ways is needed when updating a single page.
-    if(!wikipage.getChildPages().isEmpty()) {
-      for(WikiPage wpd : wikipage.getChildPages()) {
-        setParentChild(wikipage.getUuid(), wpd.getUuid(), tm);
-      }
-    }
+  private void addWikiPage_(WikiPage wikipage) throws SystemException {
+    createWikiPage(wikipage);
+    for (WikiPage wpd : wikipage.getParentPages())
+        setParentChild(wpd.getUuid(), wikipage.getUuid());
 
-    try {
-      setCreator(wikipage.getUuid(), wikipage.getUserUuid(), tm);
-    } catch (SystemException ex) {
-      throw new OntopiaRuntimeException(ex);
-    }
+    // setting the parent-child assocs in both ways is needed when
+    // updating a single page.
+    for(WikiPage wpd : wikipage.getChildPages())
+      setParentChild(wikipage.getUuid(), wpd.getUuid());
 
-    try {
-      setContains(wikipage.getNode().getUuid(), wikipage.getUuid(), tm);
-    } catch (OntopiaRuntimeException ore){
-      /* if there is no group, alert and don't add page to tm, to avoid running out of sync.
-       * As of now there is imho no other way to do it. A rollback won't help because the transaction that actually creates the topic for the wikipage
-       * has been already processed and presumably can't be rolled back now.
-       */
-      deleteByUuid(wikipage.getUuid());
-      // This is not supposed to happen. Throwing Exception to alert the user.
-      throw new OntopiaRuntimeException(ore);
-    }
+    setCreator(wikipage.getUuid(), wikipage.getUserUuid());
+
+    setContains(wikipage.getNode().getUuid(), wikipage.getUuid());
   }
 
-/**
- * Creates a topic representing a WikiPage in liferay.
- *
- * @param wikipage The wikipage from liferay containing the information
- * @param tm The topicmap on which to work
- */
-  private void createWikiPage(WikiPage wikipage, TopicMapIF tm) {
+  /**
+   * Creates a topic representing a WikiPage in liferay.
+   *
+   * @param wikipage The wikipage from liferay containing the information
+   */
+  private void createWikiPage(WikiPage wikipage) {
     String pageUrn = urnifyCtm(wikipage.getUuid());
     Map valueMap = getWikiPageMap(wikipage);
-    String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
-             "insert " + pageUrn + " isa lr:wikipage; \n" +
-             "- $title; \n" +
-             "lr:wikipageid : $pageId; \n"+
-             "lr:create_date : $createDate; \n" +
-             "lr:modified_date : $modifyDate; \n" +
-             "lr:version : $version . from \n" +
-             "$title = %title%, \n" +
-             "$pageId = %pageId%, \n" +
-             "$createDate = %createDate%, \n" +
-             "$modifyDate = %modifyDate%, \n" +
-             "$version = %version%";
-    runQuery(query, tm, valueMap);
+    String query = 
+      "insert " + pageUrn + " isa lr:wikipage; \n" +
+      "- $title; \n" +
+      "lr:wikipageid : $pageId; \n"+
+      "lr:create_date : $createDate; \n" +
+      "lr:modified_date : $modifyDate; \n" +
+      "lr:version : $version . from \n" +
+      "$title = %title%, \n" +
+      "$pageId = %pageId%, \n" +
+      "$createDate = %createDate%, \n" +
+      "$modifyDate = %modifyDate%, \n" +
+      "$version = %version%";
+    queryWrapper.update(query, valueMap);
   }
 
 
@@ -617,84 +708,83 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    * Adds a community to the topicmap by assembling and running a tolog query
    *
    * @param group The <code>Group</code> object from Liferay
-   * @param tm The topicmap ob which to work
    */
-  private void addCommunity(Group group, TopicMapIF tm) {
+  private void addCommunity_(Group group) {
     Map valueMap = getGroupMap(group);
-    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
-             "insert ?group isa " + PSI_PREFIX + "community; \n" +
-             "- $name; \n" +
-             "lr:groupid : $groupId . from \n" +
-             "$name = %name%, \n" +
-             "$groupId = %groupId%";
-     runQuery(query, tm, valueMap);
+    String query =
+      "insert ?group isa lr:community; \n" +
+      "- $name; \n" +
+      "lr:groupid : $groupId . from \n" +
+      "$name = %name%, \n" +
+      "$groupId = %groupId%";
+    queryWrapper.update(query, valueMap);
   }
 
+  public void deleteGroup_(Group group) {
+    String query =
+      "delete $TOPIC from \n" +
+      "value($OCCURRENCE, \"" + group.getGroupId() + "\")," +
+      "type($OCCURRENCE, lr:groupid)," +
+      "occurrence($TOPIC, $OCCURRENCE)," +
+      "instance-of($TOPIC, lr:community)";
+    queryWrapper.update(query);
+  }
+  
 
   /**
    * This methods delets a topic that is identified by a uuid
    * @param uuid The UUID identifying the topic which is to be deleted
    */
   private void deleteByUuid(String uuid) {
-    log.debug("*** delete " + uuid + " ***");
-    String psi = urnify(uuid);
-    String query = "delete i\"" + psi +"\"";
-    runQuery(query);
+    queryWrapper.update("delete i\"" + urnify(uuid) +"\"");
   }
 
 
   /**
-   * Creates an "created_by" association between a topic playing the "work" role and a topic playing the "creator" role
+   * Creates an "created_by" association between a topic playing the
+   * "work" role and a topic playing the "creator" role
    *
-   * @param workUuid The UUID of the topic that shall be the player of the "work" role
-   * @param creatorUuid The UUID of the topic that shall be the player of the "creator" role
-   * @param tm The topicmap on which to work
+   * @param workUuid The UUID of the topic that shall be the player of
+   * the "work" role
+   * @param creatorUuid The UUID of the topic that shall be the player
+   * of the "creator" role
    */
-  private void setCreator(String workUuid, String creatorUuid, TopicMapIF tm) {
+  private void setCreator(String workUuid, String creatorUuid) {
     String workUrn = urnifyCtm(workUuid);
     String creatorUrn = urnifyCtm(creatorUuid);
     
-    String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
-        "insert lr:created_by( lr:creator : " + creatorUrn + " , lr:work : " + workUrn + " )";
-    runQuery(query, tm);
+    String query =
+      "insert lr:created_by( lr:creator : " + creatorUrn + " , lr:work : " + workUrn + " )";
+    queryWrapper.update(query);
   }
 
 
   /**
-   * Creates an "approved_by" association between a <code>JournalArticle></code> and a User using
-   * the approver's uuid as contained in the <code>JournalArticle</code> object.
-   *
-   * @param content The <code>JournalArticle</code> object that has been approved.
-   * @param tm The topicmap on which to work
+   * Creates an "approved_by" association between a
+   * <code>JournalArticle></code> and a User using the approver's uuid
+   * as contained in the <code>JournalArticle</code> object.
    */
-  private void setUserApproving(JournalArticle content, TopicMapIF tm) {
+  private void setUserApproving(JournalArticleWrapper content)
+    throws SystemException {
     String workUrn = urnifyCtm(content.getUuid());
     
-    String approverUrn;
-    try {
-      approverUrn = urnifyCtm(content.getApprovedByUserUuid());
-    } catch (SystemException ex) {
-      throw new OntopiaRuntimeException(ex);
-    }
-
-    String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
-    "insert lr:approved_by( lr:approver : " + approverUrn + " , lr:work : " + workUrn + " )";
-    runQuery(query,tm);
+    String approverUrn = urnifyCtm(content.getStatusByUserUuid());
+    String query = "insert lr:approved_by( lr:approver : " + approverUrn + " , lr:work : " + workUrn + " )";
+    queryWrapper.update(query);
   }
   
 
   /**
-   * Creates an "has_workflow_state" association between a <code>JournalArticle</code> and an instance of
-   * the "Workflow_state" class according to the workflow state in Liferay.
-   *
-   * @param content The <code>JournalArticle</code> object from Liferay
-   * @param tm The topicmap on which to work
+   * Creates an "has_workflow_state" association between a
+   * <code>JournalArticle</code> and an instance of the
+   * "Workflow_state" class according to the workflow state in
+   * Liferay.
    */
-  private void setWorkflowstate(JournalArticle content, TopicMapIF tm) {
+  private void setWorkflowstate(JournalArticleWrapper content) {
     String workplayerUrn = urnifyCtm(content.getUuid());
     String state;
     
-    if(content.isExpired()) {
+    if (content.isExpired()) {
       state = "workflow_expired";
     } else if(content.isApproved()) {
       state = "workflow_approved";
@@ -702,56 +792,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
       state ="workflow_new";
     }
     
-    String query = "using lr for i\"" + PSI_PREFIX + "\"\n" +
-        "insert lr:has_workflow_state( lr:state : lr:"+ state +" , lr:work : " + workplayerUrn + " )";
-    runQuery(query,tm);
-  }
-
-
-  /**
-   * Convenience method to call runQuery w/o having to provide a Map
-   *
-   * @param query The query to run
-   * @param tm The topicmap on which to work
-   */
-  private void runQuery(String query, TopicMapIF tm) {
-    HashMap map = new HashMap();
-    runQuery(query, tm, map);
-  }
-
-  /**
-   * Central method that runs all the tolog-update queries
-   *
-   * @param query The query to runb
-   * @param tm The topicmap to work on
-   * @param map A Map containing values for variable substitution (see tolog documentation)
-   */
-  private synchronized void runQuery(String query, TopicMapIF tm, Map map) {
-    QueryProcessorIF proc = QueryUtils.createQueryProcessor(tm);
-    TopicMapStoreIF store = tm.getStore();
-    store.open();
-    try {
-      int number = proc.update(query, map);
-      log.debug("*** Query processed successfully # {} ***", number);
-      store.commit();
-    } catch (Exception e) {
-        log.error("*** Error while processing query: ");
-        log.error(query);
-        //rollback the transaction
-        store.abort();
-        throw new OntopiaRuntimeException(e);
-    } finally {
-      store.close();
-    }
-  }
-
-  /**
-   * Convenience method only requiring a query. Defaulting the topicmap with the global topicmap.
-   *
-   * @param query The tolog query to run
-   */
-  private void runQuery(String query) {
-    runQuery(query, topicmap);
+    String query =
+      "insert lr:has_workflow_state( lr:state : lr:"+ state +" , lr:work : " + workplayerUrn + " )";
+    queryWrapper.update(query);
   }
 
   /**
@@ -768,7 +811,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    * Creates a ctm-compatible urn from a UUID
    *
    * @param uuid The UUID to use
-   * @return A String, containing the URN made from the UUID, inside '<' and '>' to make it processable by ctm.
+   * @return A String, containing the URN made from the UUID, inside
+   * '<' and '>' to make it processable by ctm.
    */
   private String urnifyCtm(String uuid) {
     // in ctm uuid's need to be put into < > in order to process them
@@ -776,132 +820,109 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   }
 
   /**
-   * Returns the URN of a <code>JournalStructure</code> by looking it up using its structure id
+   * Returns the URN of a <code>JournalStructure</code> by looking it
+   * up using its structure id
    *
    * @param structureId The structure's id
    * @return The Urn of the structure if lookup succeeded, null otherwise.
    */
   private String findStructureUrnByStructureId(String structureId) {
+    Map params = new HashMap();
+    params.put("id", structureId);
+    
     String query ="select $PSI from\n" +
-    		"subject-identifier($TOPIC, $PSI),\n" +
-    		"topic-name($TOPIC, $BASENAME),\n" +
-    		"value($BASENAME,\"" + structureId +"\")?"; // TODO: I think this passes for cheating using the oldName to store the structureId ... not sure.. ?
+      "subject-identifier($TOPIC, $PSI),\n" +
+      "lr:id($TOPIC, %id%)?";
 
-    String retval = getSingleStringFromQuery(query, topicmap);
-    return retval;
+    return queryWrapper.queryForString(query, params);
   }
-
-  /**
-   * Returns only the first result in the first row of a resultset produced by a tolog query
-   *
-   * TODO: May be not return a String but simply an Object.
-   * 
-   * @param query The query to produce the ResultSet
-   * @param tm The topicmap on which to work
-   * @return The value in the first cell of the first row inside the resultset, NULL if no results are returned by the query
-   */
-  private String getSingleStringFromQuery(String query, TopicMapIF tm) {
-    QueryResultIF result = executeQuery(query, tm);
-    while(result.next()){
-      Object[] results = new Object[result.getWidth()];
-      results = result.getValues(results);
-      Object retval = results[0];
-      return (String) retval ;
-    }
-    return null;
-  }
-
-  /**
-   * Runs a select query on the topicmap and returns the ResultSet
-   *
-   * @param query The query to run
-   * @param tm The topicmap to work on
-   * @return A ResultSet
-   */
-  private QueryResultIF executeQuery(String query, TopicMapIF tm) {
-    QueryProcessorIF proc = QueryUtils.createQueryProcessor(tm);
-    try {
-      QueryResultIF result = proc.execute(query);
-      return result;
-    } catch (InvalidQueryException e) {
-      log.error("*** Error executing query:  ***");
-      log.error(query);
-      throw new OntopiaRuntimeException(e);
-    }
-  }
-
 
   /**
    * Carries out updates for different types of objects using TmSync
    *
    * @param obj The updated object from Liferay
-   * @param type A String containing information on the type of this object. Will be used to cast obj to the correct type.
+   * @param topicmap The topic map to update
    */
-  private void update(Object obj, String type) throws MalformedURLException {
-    log.debug("*** update called  for {} ***", type);
-    TopicMapStoreIF sourceStore = new InMemoryTopicMapStore();
-    TopicMapIF sourceTm = sourceStore.getTopicMap(); // temporary topicmap f. sync
-
+  private void update(Object obj) 
+    throws MalformedURLException, SystemException {
     // the deciders are filters for features not to be updated
+    log.debug("*** update called  for {} ***", obj.getClass());
 
-    if(type.equalsIgnoreCase(WEBCONTENT_TYPE)) {
-        JournalArticle article = (JournalArticle) obj;
-        addWebContent(article,sourceTm); // I think I could simply call createWebContent() instead and leave the deciders be empty?
-        TopicIF source = retrieveTopicByUuid(article.getUuid(), sourceTm);
-        TopicMapSynchronizer.update(topicmap, source , new WebContentDecider(), new WebContentDecider());
-    } else if(type.equalsIgnoreCase(STRUCTURE_TYPE)) {
+    // making a temporary in-memory topicmap for sync inside adapter
+    OntopiaAdapter adapter = new OntopiaAdapter();
+
+    if (obj instanceof JournalArticleWrapper) {
+        JournalArticleWrapper article = (JournalArticleWrapper) obj;
+        adapter.addWebContent(article); 
+        TopicIF source = adapter.retrieveTopicByUuid(article.getUuid());
+        TopicMapSynchronizer.update(topicmap, source,
+                                    new WebContentDecider(),
+                                    new WebContentDecider());
+
+    } else if (obj instanceof JournalStructure) {
         JournalStructure structure = (JournalStructure) obj;
-        addStructure(structure,sourceTm);
-        TopicIF source = retrieveTopicByUuid(structure.getUuid(), sourceTm);
-        TopicMapSynchronizer.update(topicmap, source , new StructureDecider(), new StructureDecider());
-    } else if(type.equalsIgnoreCase(USER_TYPE)) {
+        adapter.addStructure_(structure);
+        TopicIF source = adapter.retrieveTopicByUuid(structure.getUuid());
+        TopicMapSynchronizer.update(topicmap, source,
+                                    new StructureDecider(),
+                                    new StructureDecider());
+
+    } else if (obj instanceof User) {
         User user = (User) obj;
-        addUser(user, sourceTm);
-        TopicIF source = retrieveTopicByUuid(user.getUuid(), sourceTm);
-        TopicMapSynchronizer.update(topicmap, source , new UserDecider(), new UserDecider());
-    } else if(type.equals(WIKINODE_TYPE)) {
+        adapter.addUser_(user);
+        TopicIF source = adapter.retrieveTopicByUuid(user.getUuid());
+        TopicMapSynchronizer.update(topicmap, source,
+                                    new UserDecider(), new UserDecider());
+        
+    } else if (obj instanceof WikiNode) {
         WikiNode node = (WikiNode) obj;
-        addWikiNode(node, sourceTm);
-        TopicIF source = retrieveTopicByUuid(node.getUuid(), sourceTm);
-        TopicMapSynchronizer.update(topicmap, source , new WikiNodeDecider(), new WikiNodeDecider());
-    } else if(type.equals(WIKIPAGE_TYPE)) {
+        adapter.addWikiNode_(node);
+        TopicIF source = adapter.retrieveTopicByUuid(node.getUuid());
+        TopicMapSynchronizer.update(topicmap, source,
+                                    new WikiNodeDecider(),
+                                    new WikiNodeDecider());
+        
+    } else if (obj instanceof WikiPage) {
         WikiPage page = (WikiPage) obj;
-        addWikiPage(page, sourceTm);
-        TopicIF source = retrieveTopicByUuid(page.getUuid(), sourceTm);
-        TopicMapSynchronizer.update(topicmap, source , new WikiPageDecider(), new WikiPageDecider());
-    } else if(type.equals(COMMUNITY_TYPE)) { // TODO: See if the update code should go into an extra method
-        Group group = (Group) obj;
-        String objectId = getObjectIdByGroupId(String.valueOf(group.getGroupId()), topicmap);
-        TopicIF topic = (TopicIF) topicmap.getObjectById(objectId);
-        if(topic != null) {
-          TopicNameIF oldName = (TopicNameIF) topic.getTopicNames().iterator().next();
-          Map<String, String> valueMap = new HashMap();
-          valueMap.put("name", group.getName());
+        adapter.addWikiPage(page);
+        TopicIF source = adapter.retrieveTopicByUuid(page.getUuid());
+        TopicMapSynchronizer.update(topicmap, source, new WikiPageDecider(),
+                                    new WikiPageDecider());
 
-          // This changes names only because as of now this is the only value that can be changed by users
-          String query = "update value($NAME, $name) from " +
-                  "topic-name($TOPIC, $NAME), \n" +
-                  "instance-of($TOPIC, lr:community)" +
-                  "value($NAME, \"" + oldName.getValue() + "\")," +
-                  "$name = %name%";
-
-          runQuery(query, topicmap, valueMap);
-        }
-      }
+    } else if (obj instanceof Group) {
+      // TODO: See if the update code should go into an extra method
+      Group group = (Group) obj;
+      String objectId = getObjectIdByGroupId("" + group.getGroupId());
+      TopicIF topic = (TopicIF) topicmap.getObjectById(objectId);
+      if (topic != null) {
+        TopicNameIF oldName = (TopicNameIF) topic.getTopicNames().iterator().next();
+        Map<String, Object> valueMap = new HashMap();
+        valueMap.put("name", group.getName());
+        valueMap.put("oldName", oldName);
+        
+        // This changes names only because as of now this is the only
+        // value that can be changed by users
+        String query = "update value($oldName, $name) from " +
+          "$oldName = %oldName%," +
+          "$name = %name%";
+        
+        queryWrapper.update(query, valueMap);
+      } else
+        throw new OntopiaRuntimeException("Object of unknown type: " + obj);
+    }
     log.debug("*** update ended! ***");
   }
 
-
   /**
-   * Returns a TopicIF implementation for a UUID
+   * Returns a TopicIF for a UUID
    *
    * @param uuid The UUID identifying the topic
-   * @param tm The topicmap on which to work
-   * @return A TopicIF implementation of the topic which is identified by the UUID
+   * @return A TopicIF implementation of the topic which is identified
+   * by the UUID
    */
-  private TopicIF retrieveTopicByUuid(String uuid, TopicMapIF tm) {
+  private TopicIF retrieveTopicByUuid(String uuid) {
     LocatorIF identifiablePsiLocator =  new GenericLocator("uri",urnify(uuid));
-    TopicIF source = tm.getTopicBySubjectIdentifier(identifiablePsiLocator);
+    TopicIF source = topicmap.getTopicBySubjectIdentifier(identifiablePsiLocator);
     return source;
   }
 
@@ -909,105 +930,103 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   /**
    * Creates a "parent-child" association between two topics
    *
-   * @param parentUuid The topic playing the "parent" role identified by this UUID
-   * @param childUuid The topic playing the "child" role identified by this UUID
-   * @param tm The topicmap to work on
+   * @param parentUuid The topic playing the "parent" role identified
+   * by this UUID
+   * @param childUuid The topic playing the "child" role identified by
+   * this UUID
    */
-  private void setParentChild(String parentUuid, String childUuid, TopicMapIF tm) {
+  private void setParentChild(String parentUuid, String childUuid) {
     String parentUrn = urnifyCtm(parentUuid);
     String childUrn = urnifyCtm(childUuid);
 
-    String query = "using lr for i\"" + PSI_PREFIX + "\" \n" +
-            "insert lr:parent-child( lr:parent : " + parentUrn + ", lr:child : " + childUrn +" )";
-    runQuery(query, tm);
+    String query = "insert lr:parent-child(lr:parent : " + parentUrn + ", lr:child : " + childUrn + ")";
+    queryWrapper.update(query);
   }
 
 
   /**
    * Creates a "contains" association between two topics
    *
-   * @param containerUuid The topic playing the role "container" identified by this UUID
-   * @param containeeUuid The topic playing the role "containee" identified by this UUID
-   * @param tm The topicmap to work on
+   * @param containerUuid The topic playing the role "container"
+   * identified by this UUID
+   * @param containeeUuid The topic playing the role "containee"
+   * identified by this UUID
    */
-  private void setContains(String containerUuid, String containeeUuid, TopicMapIF tm) {
+  private void setContains(String containerUuid, String containeeUuid) {
     String containeeUrn = urnifyCtm(containeeUuid);
     String containerUrn = urnifyCtm(containerUuid);
-    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
-            "insert lr:contains( lr:container : " + containerUrn + " , lr:containee : " + containeeUrn + " )";
-    runQuery(query, tm);
+    String query =
+      "insert lr:contains( lr:container : " + containerUrn + " , lr:containee : " + containeeUrn + " )";
+    queryWrapper.update(query);
   }
 
-
   /**
-   * Creates a "contains" association between two topics, one of which being the group.
+   * Creates a "contains" association between two topics, one of which
+   * being the group.
    * 
-   * @param groupId The topic playing the role "container" identified by this group id
+   * @param groupId The topic playing the role "container" identified
+   * by this group id
    * @param uuid The topic playing the role "containee" identified by this UUID
-   * @param tm The topicmap to work on
    */
-  private void setGroupContains(String groupId, String uuid, TopicMapIF tm) {
-    //TODO: Could expect a long value instead of string for groupId then be renamed to setContains()
-    String groupObjectId = getObjectIdByGroupId(groupId, tm);
-    TopicIF topic = (TopicIF) tm.getObjectById(groupObjectId);
-    Map<String, TopicIF> map = new HashMap();
-    map.put("topic", topic);
+  private void setGroupContains(String groupId, String uuid) {
+    //TODO: Could expect a long value instead of string for groupId
+    //then be renamed to setContains()
+    
+    String groupObjectId = getObjectIdByGroupId(groupId);
+    if (groupObjectId == null) {
+      // this means there is no topic for the group. it's tempting to create
+      // one automatically (would be nice for the default group, for example),
+      // but there appears to be no way to find the name of the group. so we
+      // stick with the hardcoded approach for now.
+      throw new OntopiaRuntimeException("No topic for group with id " +
+                                        groupId);
+    }
+    
+    TopicIF topic = (TopicIF) topicmap.getObjectById(groupObjectId);
+    Map<String, TopicIF> params = new HashMap();
+    params.put("topic", topic);
 
-    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
-            "insert lr:contains( lr:container : $topic  , lr:containee : " + urnifyCtm(uuid) + " ) from \n" +
-            "$topic = %topic%";
-    runQuery(query, tm, map);
+    String query =
+      "insert lr:contains( lr:container : $topic  , lr:containee : " + urnifyCtm(uuid) + " ) from \n" +
+      "$topic = %topic%";
+    queryWrapper.update(query, params);
   }
 
 
   /**
-   * Returns to object id of a <code>Group</code> which is identified by its group id.
+   * Returns to object id of a <code>Group</code> which is identified
+   * by its group id.
    *
    * @param groupId The group id of the group to look up
-   * @param tm The topicmap on which to worl
-   * @return A String containing the object id of the group, or null if no group with that id could be found.
+   * @return A String containing the object id of the group, or null
+   * if no group with that id could be found.
    */
-  private String getObjectIdByGroupId(String groupId, TopicMapIF tm) {
-    String query ="using lr for i\"" + PSI_PREFIX  + "\"\n" +
-            "select $ID from \n" +
-            "object-id($TOPIC,$ID)," +
-            "value($OCCURRENCE, \"" + groupId + "\")," +
-            "type($OCCURRENCE, lr:groupid)," +
-            "occurrence($TOPIC, $OCCURRENCE)," +
-            "instance-of($TOPIC, lr:community)?";
-    String retval = getSingleStringFromQuery(query, tm);
-    return retval;
-  }
-
-  /**
-   * Before this object gets removed it has to save the current topicmap name to the properties file.
-   * In the future the name might be set through the Liferay UI and hence can change at runtime.
-   */
-  public void finalize() {
-    // save properties to file before being removed
-    Properties props = new Properties();
-
-    props.setProperty(TOPICMAPNAMEKEY, tmName);
-    try {
-      props.store(new FileOutputStream(PROPERTYFILEPATH), null);
-    } catch (IOException ex) {
-      log.error(ex.getMessage());
-      throw new OntopiaRuntimeException(ex);
-    }
+  private String getObjectIdByGroupId(String groupId) {
+    String query =
+      "select $ID from \n" +
+      "object-id($TOPIC,$ID)," +
+      "value($OCCURRENCE, \"" + groupId + "\")," +
+      "type($OCCURRENCE, lr:groupid)," +
+      "occurrence($TOPIC, $OCCURRENCE)," +
+      "instance-of($TOPIC, lr:community)?";
+    return queryWrapper.queryForString(query);
   }
 
 
-  // -------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Maps methods follow
   //
-  // The Maps methods job is to fill a Map with values from the Liferay Objects.
-  // While about it, it also converts the values to other types if nessecary.
-  // Through doing this it is possible to pass the map to the tolog QueryProcessor
-  // and to substitute String in tolog queries with values from the map (using their keys).
-  // See the tolog documentation and the JavaDoc of the QueryProcessorIF for more details.
-  // --------------------------------------------------------------------------------------------
+  // The Maps methods job is to fill a Map with values from the
+  // Liferay Objects.  While about it, it also converts the values to
+  // other types if nessecary.  Through doing this it is possible to
+  // pass the map to the tolog QueryProcessor and to substitute String
+  // in tolog queries with values from the map (using their keys).
+  // See the tolog documentation and the JavaDoc of the
+  // QueryProcessorIF for more details.
+  // ---------------------------------------------------------------------------
 
-  private Map getWebContentMap(JournalArticle content) {
+  private Map getWebContentMap(JournalArticleWrapper content)
+    throws SystemException {
     Map<String, String> retval = new HashMap();
     retval.put("title", content.getTitle());
     retval.put("uuid", content.getUuid());
@@ -1020,21 +1039,11 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
     retval.put("version", String.valueOf(content.getVersion()));
     retval.put("userId", String.valueOf(content.getUserId()));
     retval.put("structureId", content.getStructureId());
-    retval.put("approvingUserId", String.valueOf(content.getApprovedByUserId()));
-    retval.put("approvingUserName", content.getApprovedByUserName());
-    retval.put("approvedDate", DateFormatter.format(content.getApprovedDate()));
-
-    try {
-      retval.put("approvingUserUuid", content.getApprovedByUserUuid());
-    } catch (SystemException ex) {
-      throw new OntopiaRuntimeException(ex);
-    }
-    
-    try {
-      retval.put("useruuid", content.getUserUuid());
-    } catch (SystemException ex) {
-      throw new OntopiaRuntimeException(ex);
-    }
+    retval.put("approvingUserId", String.valueOf(content.getStatusByUserId()));
+    retval.put("approvingUserName", content.getStatusByUserName());
+    retval.put("approvedDate", DateFormatter.format(content.getStatusDate()));
+    retval.put("approvingUserUuid", content.getStatusByUserUuid());
+    retval.put("useruuid", content.getUserUuid());
     return retval;
   }
 
@@ -1104,5 +1113,4 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
     }
     return retval;
   }
-
 }

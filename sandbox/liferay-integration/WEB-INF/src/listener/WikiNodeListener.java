@@ -11,15 +11,16 @@ import org.slf4j.Logger;
 import tm.OntopiaAdapter;
 
 /**
- * This class is notified by liferay whenever changes in WikiNode objects occur.
- * It passes these information on to the integration.
+ * This class is notified by liferay whenever changes in WikiNode
+ * objects occur.  It passes these information on to the integration.
  *
  * WikiNodes is a liferay term for a Wiki as such (containing WikiPages).
  * @see WikiPageListener
  * 
- * Whenever a user creates/updates/deletes a Wiki in liferay, this listener will be triggered.
- * This listener will also be triggered whenever a WikiPage inside a WikiNode has been updated, as the WikiNode
- * contains information about the last change to that wiki.
+ * Whenever a user creates/updates/deletes a Wiki in liferay, this
+ * listener will be triggered.  This listener will also be triggered
+ * whenever a WikiPage inside a WikiNode has been updated, as the
+ * WikiNode contains information about the last change to that wiki.
  *
  * @author mfi
  */
@@ -30,16 +31,16 @@ public class WikiNodeListener extends BaseModelListener<WikiNode>{
 
   public void onAfterCreate(WikiNode node) throws ModelListenerException {
     log.debug("### onAfterCreate WikiNode ###");
-    OntopiaAdapter.instance.addWikiNode(node);
+    OntopiaAdapter.getInstance().addWikiNode(node);
   }
 
   public void onAfterRemove(WikiNode node) throws ModelListenerException {
     log.debug("### onAfterRemove WikiNode ###");
-    OntopiaAdapter.instance.deleteWikiNode(node.getUuid());
+    OntopiaAdapter.getInstance().deleteWikiNode(node.getUuid());
   }
 
   public void onAfterUpdate(WikiNode node) throws ModelListenerException {
     log.debug("### onAfterUpdate WikiNode ###");
-    OntopiaAdapter.instance.updateWikiNode(node);
+    OntopiaAdapter.getInstance().updateWikiNode(node);
   }
 }
