@@ -242,6 +242,12 @@ both at a higher level, and in more detail.
     >Issue 252</ulink>: Add update-topic method to SOAP version of TMRAP</para>
   </listitem>
 </itemizedlist>
+
+<para>Note that a minor modification has been made to the Ontopia
+database schema on MySQL in order to fix a failing test. See <ulink
+url="http://code.google.com/p/ontopia/issues/detail?id=163" >issue
+163</ulink> for a description of the problem and how to upgrade older
+databases.</para>
 </section>
 
 <!-- ======================================================================
