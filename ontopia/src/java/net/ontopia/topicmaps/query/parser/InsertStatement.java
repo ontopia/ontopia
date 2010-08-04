@@ -206,11 +206,11 @@ public class InsertStatement extends ModificationStatement {
     }
   
     public ValueGeneratorIF getTopicByItemIdentifier(LocatorIF itemid) {
-      throw new UnsupportedOperationException();
+      return ctmctx.getTopicByItemIdentifier(itemid);
     }
 
     public ValueGeneratorIF getTopicBySubjectLocator(LocatorIF subjloc) {
-      throw new UnsupportedOperationException();
+      return ctmctx.getTopicBySubjectLocator(subjloc);
     }
 
     public ValueGeneratorIF getTopicBySubjectIdentifier(LocatorIF subjid) {
@@ -218,7 +218,7 @@ public class InsertStatement extends ModificationStatement {
     }
 
     public ValueGeneratorIF getTopicByQname(String qname) {
-      throw new UnsupportedOperationException();
+      return ctmctx.getTopicBySubjectIdentifier(resolveQname(qname));
     }
 
     public TopicIF makeTopicById(String id) {

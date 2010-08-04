@@ -107,6 +107,28 @@ public class InsertTest extends AbstractQueryTest {
                topicmap.getTopics().size() == 1);
   }
 
+  public void testEmptyInsert6() throws InvalidQueryException {
+    makeEmpty();
+    update("insert ^ http://example.com/test . ");
+
+    LocatorIF iid = URILocator.create("http://example.com/test");
+    TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(iid);
+    assertTrue("couldn't find inserted topic", topic != null);
+    assertTrue("wrong size of topic map after insert",
+               topicmap.getTopics().size() == 1);
+  }
+
+  public void testEmptyInsert7() throws InvalidQueryException {
+    makeEmpty();
+    update("insert ^ <file:/example/test#foo> . ");
+
+    LocatorIF iid = URILocator.create("file:/example/test#foo");
+    TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(iid);
+    assertTrue("couldn't find inserted topic", topic != null);
+    assertTrue("wrong size of topic map after insert",
+               topicmap.getTopics().size() == 1);
+  }
+  
   /// instance-of topic map
 
   public void testName() throws InvalidQueryException, IOException {
@@ -321,6 +343,36 @@ public class InsertTest extends AbstractQueryTest {
 
     TopicIF test = topicmap.getTopicBySubjectIdentifier(new URILocator("http://www.topicmaps.org/xtm/1.0/core.xtm#test"));
     assertTrue("no xtm:test after insert", test != null);
+  }  
+
+  public void testIidContext() throws InvalidQueryException, IOException {
+    makeEmpty();
+
+    DeclarationContextIF ctxt = QueryUtils.parseDeclarations(topicmap, "using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\"");
+
+    update("insert ^ http://example.com/test isa xtm:subject . ", ctxt);
+
+    LocatorIF iid = URILocator.create("http://example.com/test");
+    TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(iid);
+    assertTrue("couldn't find inserted topic", topic != null);
+    assertTrue("wrong size of topic map after insert",
+               topicmap.getTopics().size() == 2);
+  }  
+
+  public void testIidContext2() throws InvalidQueryException, IOException {
+    makeEmpty();
+
+    DeclarationContextIF ctxt = QueryUtils.parseDeclarations(topicmap, "using lr for i\"http://example.com/\"");
+
+    update(
+      "insert lr:contains( lr:container : ^ <file:/foo/bar#baz> , " +
+      "                    lr:containee : other )", ctxt);
+
+    LocatorIF iid = URILocator.create("file:/foo/bar#baz");
+    TopicIF topic = (TopicIF) topicmap.getObjectByItemIdentifier(iid);
+    assertTrue("couldn't find inserted topic", topic != null);
+    assertTrue("wrong size of topic map after insert",
+               topicmap.getTopics().size() == 5);
   }  
   
 
