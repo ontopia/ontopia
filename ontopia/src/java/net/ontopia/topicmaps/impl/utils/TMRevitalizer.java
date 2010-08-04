@@ -1,6 +1,4 @@
 
-// $Id: TMRevitalizer.java,v 1.8 2007/03/28 12:20:47 grove Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.io.Externalizable;
@@ -10,6 +8,7 @@ import java.io.ObjectInput;
 
 import java.util.*;
 import net.ontopia.topicmaps.core.*;
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 
@@ -115,7 +114,7 @@ public class TMRevitalizer implements TMRevitalizerIF {
   }
 
   private Set revitalize(Set c) {
-    Set result = new HashSet(c.size());
+    Set result = new CompactHashSet(c.size());
     Iterator iter = c.iterator();
     while (iter.hasNext()) {
       Object o = iter.next();
