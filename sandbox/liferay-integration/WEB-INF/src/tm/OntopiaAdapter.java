@@ -68,9 +68,9 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   private static String tmName; // ID of the Liferay TM in the TM registry
 
   // dynamic members
-  private TopicMapStoreIF store;
-  private TopicMapIF topicmap;
-  private QueryWrapper queryWrapper;
+  protected TopicMapStoreIF store;
+  protected TopicMapIF topicmap;
+  protected QueryWrapper queryWrapper;
   
   /**
    * The constructor is private, so that instances can only be
@@ -79,18 +79,20 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    */
   private OntopiaAdapter(boolean readonly) {
     configure();
-    store = TopicMaps.createStore(tmName, readonly);
-    topicmap = store.getTopicMap();
-    queryWrapper = new QueryWrapper(topicmap);
-    queryWrapper.setDeclarations("using lr for i\"" + PSI_PREFIX + "\" ");
+    setup(TopicMaps.createStore(tmName, readonly));
   }
 
   /**
-   * A special constructor used to build temporary in-memory topic maps for
-   * the TMSync-based updates.
+   * Needed by subclass FragmentOntopiaAdapter.
    */
-  private OntopiaAdapter() {
-    store = new InMemoryTopicMapStore();
+  protected OntopiaAdapter() {
+  }
+  
+  /**
+   * Sets up the adapter with a specific store.
+   */
+  protected void setup(TopicMapStoreIF store) {
+    this.store = store;
     topicmap = store.getTopicMap();
     queryWrapper = new QueryWrapper(topicmap);
     queryWrapper.setDeclarations("using lr for i\"" + PSI_PREFIX + "\" ");
@@ -485,7 +487,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   /**
    * Creates an article and sets created_by and approved_by associations.
    */
-  private void addWebContent(JournalArticleWrapper content)
+  protected void addWebContent(JournalArticleWrapper content)
     throws SystemException {
     createWebContent(content);
     setWorkflowstate(content);
@@ -574,7 +576,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    *
    * @param structure The <code>JournalStructure</code> from Liferay
    */
-  private void addStructure_(JournalStructure structure) {
+  protected void addStructure_(JournalStructure structure) {
     Map valueMap = getStructureMap(structure);
     String structureUrn = urnifyCtm(structure.getUuid());
     String parentStructureUrn =
@@ -602,7 +604,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    *
    * @param user The <code>User</code> object from Liferay
    */
-  private void addUser_(User user) {
+  protected void addUser_(User user) {
     Map valueMap = getUserMap(user);
 
     String query = "insert " + urnifyCtm(user.getUuid()) +" isa lr:user;\n" +
@@ -618,7 +620,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    *
    * @param wikinode The <code>WikiNode</code> from Liferay
    */
-  private void addWikiNode_(WikiNode wikinode) throws SystemException {
+  protected void addWikiNode_(WikiNode wikinode) throws SystemException {
     createWikiNode(wikinode);
 
     setCreator(wikinode.getUuid(), wikinode.getUserUuid());
@@ -849,7 +851,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
     log.debug("*** update called  for {} ***", obj.getClass());
 
     // making a temporary in-memory topicmap for sync inside adapter
-    OntopiaAdapter adapter = new OntopiaAdapter();
+    FragmentOntopiaAdapter adapter = new FragmentOntopiaAdapter(this);
 
     if (obj instanceof JournalArticleWrapper) {
         JournalArticleWrapper article = (JournalArticleWrapper) obj;
@@ -892,8 +894,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
     } else if (obj instanceof Group) {
       // TODO: See if the update code should go into an extra method
       Group group = (Group) obj;
-      String objectId = getObjectIdByGroupId("" + group.getGroupId());
-      TopicIF topic = (TopicIF) topicmap.getObjectById(objectId);
+      TopicIF topic = getTopicByGroupId("" + group.getGroupId());
       if (topic != null) {
         TopicNameIF oldName = (TopicNameIF) topic.getTopicNames().iterator().next();
         Map<String, Object> valueMap = new HashMap();
@@ -920,7 +921,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    * @return A TopicIF implementation of the topic which is identified
    * by the UUID
    */
-  private TopicIF retrieveTopicByUuid(String uuid) {
+  protected TopicIF retrieveTopicByUuid(String uuid) {
     LocatorIF identifiablePsiLocator =  new GenericLocator("uri",urnify(uuid));
     TopicIF source = topicmap.getTopicBySubjectIdentifier(identifiablePsiLocator);
     return source;
@@ -972,8 +973,8 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
     //TODO: Could expect a long value instead of string for groupId
     //then be renamed to setContains()
     
-    String groupObjectId = getObjectIdByGroupId(groupId);
-    if (groupObjectId == null) {
+    TopicIF group = getTopicByGroupId(groupId);
+    if (group == null) {
       // this means there is no topic for the group. it's tempting to create
       // one automatically (would be nice for the default group, for example),
       // but there appears to be no way to find the name of the group. so we
@@ -981,38 +982,51 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
       throw new OntopiaRuntimeException("No topic for group with id " +
                                         groupId);
     }
-    
-    TopicIF topic = (TopicIF) topicmap.getObjectById(groupObjectId);
-    Map<String, TopicIF> params = new HashMap();
-    params.put("topic", topic);
 
+    // the tricky thing is that 'group' at this point may contain a
+    // topic in the in-memory fragment we use for syncing, and not in
+    // the main topic map. therefore we need to get some sort of
+    // identifier for the topic that's independent of which of the two
+    // topic maps we're in.
+    String groupref = getCtmReference(group);
     String query =
-      "insert lr:contains( lr:container : $topic  , lr:containee : " + urnifyCtm(uuid) + " ) from \n" +
-      "$topic = %topic%";
-    queryWrapper.update(query, params);
+      "insert lr:contains( lr:container : " + groupref + " , " +
+      "                    lr:containee : " + urnifyCtm(uuid) + " )";
+    log.warn("groupref: '" + groupref + "'");
+    queryWrapper.update(query);
   }
 
 
   /**
-   * Returns to object id of a <code>Group</code> which is identified
-   * by its group id.
+   * Returns the topic for the <code>Group</code> with the given group
+   * id.
    *
    * @param groupId The group id of the group to look up
-   * @return A String containing the object id of the group, or null
-   * if no group with that id could be found.
+   * @return The topic for the group, or null if none were found.
    */
-  private String getObjectIdByGroupId(String groupId) {
+  protected TopicIF getTopicByGroupId(String groupId) {
     String query =
-      "select $ID from \n" +
-      "object-id($TOPIC,$ID)," +
+      "select $TOPIC from \n" +
       "value($OCCURRENCE, \"" + groupId + "\")," +
-      "type($OCCURRENCE, lr:groupid)," +
-      "occurrence($TOPIC, $OCCURRENCE)," +
-      "instance-of($TOPIC, lr:community)?";
-    return queryWrapper.queryForString(query);
+      "type($OCCURRENCE, i\"http://psi.ontopia.net/liferay/groupid\"), " +
+      "occurrence($TOPIC, $OCCURRENCE)?";
+    return queryWrapper.queryForTopic(query);
   }
 
-
+  /**
+   * Returns a reference to the topic in CTM syntax, ready for
+   * inclusion in any CTM file.
+   */
+  public static String getCtmReference(TopicIF topic) {
+    for (LocatorIF loc : topic.getSubjectIdentifiers())
+      return loc.getExternalForm();
+    for (LocatorIF loc : topic.getSubjectLocators())
+      return "= " + loc.getExternalForm();
+    for (LocatorIF loc : topic.getItemIdentifiers())
+      return "^ <" + loc.getExternalForm() + ">";
+    throw new OntopiaRuntimeException("No suitable identifier for " + topic);
+  }
+  
   // ---------------------------------------------------------------------------
   // Maps methods follow
   //

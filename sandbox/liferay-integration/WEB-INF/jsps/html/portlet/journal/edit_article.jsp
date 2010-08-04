@@ -373,7 +373,7 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 			String topicTypeId = "";
 			String topicMapId = "";
 			String viewId = "";
-			tm.OntopiaAdapter ont = tm.OntopiaAdapter.getInstance();
+			tm.OntopiaAdapterIF ont = tm.OntopiaAdapter.getInstance(true);
 			if(article == null)
 			  article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 			if(article != null) {

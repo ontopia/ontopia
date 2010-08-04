@@ -15,9 +15,7 @@ import org.slf4j.Logger;
  *
  * @author mfi
  */
-
-public class UserListener extends BaseModelListener<User>{
-
+public class UserListener extends BaseModelListener<User> {
   private static Logger log = LoggerFactory.getLogger(UserListener.class);
   
   public void onAfterCreate(User user) throws ModelListenerException {
