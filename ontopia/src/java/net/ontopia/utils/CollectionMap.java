@@ -1,4 +1,3 @@
-// $Id: CollectionMap.java,v 1.6 2002/05/29 13:38:46 hca Exp $
 
 package net.ontopia.utils;
 
@@ -28,12 +27,12 @@ public class CollectionMap extends HashMap {
     this.drop_empty = drop_empty;
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Collection index values
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   protected Collection createCollection() {
-    return new HashSet();
+    return new CompactHashSet();
   }
   
   public void add(Object key, Object value) {
@@ -73,30 +72,6 @@ public class CollectionMap extends HashMap {
     remove(old_key, value);
     add(new_key, value);
   }
-  
-  
-  // public void replace(Object key, Object old_value, Object new_value) {
-  // 
-  //   // Get collection value
-  //   Collection coll = (Collection)get(key);
-  //   
-  //   // Remove from collection
-  //   if (coll != null) {
-  //     // Remove value
-  //     coll.remove(old_value);
-  //     coll.add(new_value);
-  //   } else {
-  //     // Create new collection
-  //     coll = createCollection();
-  //     coll.add(new_value);
-  //     // Add new entry to index
-  //     put(key, coll);      
-  //   }
-  // 
-  // }
-
-  // public void replaceAll(Object key, Object old_value, Object new_value) {  
-  // }
   
 }
 
