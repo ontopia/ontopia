@@ -16,7 +16,7 @@ import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
-import net.ontopia.topicmaps.webed.impl.utils.TagUtils;
+import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 import net.ontopia.topicmaps.nav2.portlets.pojos.RelatedTopics;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.CompactHashSet;
@@ -240,7 +240,7 @@ public class RelatedTag extends TagSupport {
   private Set getUnionOfVariables(String config) {
     if (config == null) return null;
     try {
-      List values = TagUtils.evaluateParameterList(pageContext, config);
+      List values = FrameworkUtils.evaluateParameterList(pageContext, config);
       if (values.isEmpty()) return null;
       Set result = new CompactHashSet();
       for (int i=0; i < values.size(); i++) {

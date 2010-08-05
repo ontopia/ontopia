@@ -219,62 +219,6 @@ public final class TagUtils {
   }
   
   /**
-   * INTERNAL: Evaluates a string of space-separated variable names as a list
-   * of collections, and returns it.
-   */
-  public static List evaluateParameterList(PageContext pageContext,
-                                            String params)
-    throws JspTagException {
-    if (params != null && !params.equals(""))
-       return getMultipleValuesAsList(params, pageContext);
-    else
-      return Collections.EMPTY_LIST;
-  }
-  
-  /**
-   * INTERNAL: Returns the values retrieved from the given variable
-   * names or qnames in the order given.
-   *
-   * @param params - variable names or qnames, separated by whitespaces.
-   */
-  private static List getMultipleValuesAsList(String params, 
-                                              PageContext pageContext)
-    throws JspTagException {
-    log.debug("getMultipleValuesAsList");
-    // find parsecontext
-    NavigatorPageIF ctxt = (NavigatorPageIF)
-      pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY,
-                               PageContext.REQUEST_SCOPE);
-    ParseContextIF pctxt = (ParseContextIF) ctxt.getDeclarationContext();
-
-    // Replace sequences of special characters like \n and \t with single space.
-    // Needed since StringUtils.split() treats special characters as tokens.
-    String paramsNormalized = StringUtils.normalizeWhitespace(params.trim());
-    
-    // get the values
-    String[] names = StringUtils.split(paramsNormalized);
-    List varlist = new ArrayList(names.length);
-    for (int i = 0; i < names.length; i++) {
-      Collection values;
-      
-      if (names[i].indexOf(':') != -1) {
-        // it's a qname
-        try {
-          values = Collections.singleton(pctxt.getObject(new QName(names[i])));
-        } catch (AntlrWrapException e) {
-          throw new JspTagException(e.getException().getMessage() +
-                                    " (in action parameter list)");
-        }
-      } else
-        // it's a variable name
-        values = InteractionELSupport.extendedGetValue(names[i], pageContext);
-      
-      varlist.add(values);
-    }
-    return varlist;
-  } 
-
-  /**
    * INTERNAL: Creates the field name used by a particular action and
    * registers the data used by the action in the user session.
    */
@@ -297,7 +241,7 @@ public final class TagUtils {
                                     boolean run_if_no_changes)
     throws JspTagException {
 
-    List paramlist = evaluateParameterList(pageContext, params);
+    List paramlist = FrameworkUtils.evaluateParameterList(pageContext, params);
     return registerData(pageContext, action_name, group_name, paramlist, null,
                         value, false, run_if_no_changes);
   }
@@ -310,7 +254,7 @@ public final class TagUtils {
                                     String action_name, String group_name,
                                     String params, List sub_actions, Set value)
     throws JspTagException {
-    List paramlist = evaluateParameterList(pageContext, params);
+    List paramlist = FrameworkUtils.evaluateParameterList(pageContext, params);
     return registerData(pageContext, action_name, group_name, paramlist,
                         sub_actions, value);
   }
@@ -399,7 +343,7 @@ public final class TagUtils {
       throw new JspTagException("Unknown action '" + action_name + "' in group" +
                                 " '" + group_name + "', please check configuration.");
 
-    List paramlist = evaluateParameterList(pageContext, params);
+    List paramlist = FrameworkUtils.evaluateParameterList(pageContext, params);
     return new ActionData(action, TagUtils.serializeParameters(paramlist));
   }
 

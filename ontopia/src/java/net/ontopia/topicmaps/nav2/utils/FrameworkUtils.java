@@ -3,14 +3,26 @@
 
 package net.ontopia.topicmaps.nav2.utils;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.JspTagException;
 
+import net.ontopia.utils.StringUtils;
+import net.ontopia.topicmaps.query.parser.QName;
+import net.ontopia.topicmaps.query.parser.ParseContextIF;
+import net.ontopia.topicmaps.query.parser.AntlrWrapException;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
+import net.ontopia.topicmaps.nav2.core.NavigatorPageIF;
 import net.ontopia.topicmaps.nav2.impl.framework.User;
+import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
 import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 
 import org.slf4j.Logger;
@@ -119,6 +131,62 @@ public final class FrameworkUtils {
     pageContext.setAttribute(NavigatorApplicationIF.USER_KEY, user, PageContext.SESSION_SCOPE);
     log.info("MVS settings in user session has been reset.");
   }
+
+  /**
+   * INTERNAL: Evaluates a string of space-separated variable names as a list
+   * of collections, and returns it.
+   */
+  public static List evaluateParameterList(PageContext pageContext,
+                                            String params)
+    throws JspTagException {
+    if (params != null && !params.equals(""))
+       return getMultipleValuesAsList(params, pageContext);
+    else
+      return Collections.EMPTY_LIST;
+  }
+  
+  /**
+   * INTERNAL: Returns the values retrieved from the given variable
+   * names or qnames in the order given.
+   *
+   * @param params - variable names or qnames, separated by whitespaces.
+   */
+  private static List getMultipleValuesAsList(String params, 
+                                              PageContext pageContext)
+    throws JspTagException {
+    log.debug("getMultipleValuesAsList");
+    // find parsecontext
+    NavigatorPageIF ctxt = (NavigatorPageIF)
+      pageContext.getAttribute(NavigatorApplicationIF.CONTEXT_KEY,
+                               PageContext.REQUEST_SCOPE);
+    ParseContextIF pctxt = (ParseContextIF) ctxt.getDeclarationContext();
+
+    // Replace sequences of special characters like \n and \t with single space.
+    // Needed since StringUtils.split() treats special characters as tokens.
+    String paramsNormalized = StringUtils.normalizeWhitespace(params.trim());
+    
+    // get the values
+    String[] names = StringUtils.split(paramsNormalized);
+    List varlist = new ArrayList(names.length);
+    for (int i = 0; i < names.length; i++) {
+      Collection values;
+      
+      if (names[i].indexOf(':') != -1) {
+        // it's a qname
+        try {
+          values = Collections.singleton(pctxt.getObject(new QName(names[i])));
+        } catch (AntlrWrapException e) {
+          throw new JspTagException(e.getException().getMessage() +
+                                    " (in action parameter list)");
+        }
+      } else
+        // it's a variable name
+        values = InteractionELSupport.extendedGetValue(names[i], pageContext);
+      
+      varlist.add(values);
+    }
+    return varlist;
+  } 
 
   
   // ------------------------------------------------------------
