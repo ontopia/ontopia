@@ -7,21 +7,22 @@ import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 
+import net.ontopia.topicmaps.core.TopicMapIF;
+
 /**
  * This interface defines the featureset offered by the integration as of now.
  *
- * The add/delete/update methods are triggered by their according listeners.
+ * <p>The add/delete/update methods are triggered by their according listeners.
  * @see listener
  *
  * @author mfi
  */
-
-
 public interface OntopiaAdapterIF {
 
   /**
-   * Adds WebContent as provided by the object from liferay.
-   * Includes setting all applicable associations (<code>created_by</code>, <code>contains</code>, etc.)
+   * Adds WebContent as provided by the object from liferay.  Includes
+   * setting all applicable associations (<code>created_by</code>,
+   * <code>contains</code>, etc.)
    * 
    * @param content A Liferay <code>JournalArticle</code> object
    */
@@ -35,9 +36,10 @@ public interface OntopiaAdapterIF {
   public void deleteWebContent(String uuid);
 
   /**
-   * Updates the values of WebContent represented by the JournalArticle object.
-   * Updates also associations that originate from Liferay (Metainfo from the portal),
-   * but not associations that were user-made.
+   * Updates the values of WebContent represented by the
+   * JournalArticle object.  Updates also associations that originate
+   * from Liferay (Metainfo from the portal), but not associations
+   * that were user-made.
    *
    * @param content The updated <code>JournalArticle</code> object from Liferay
    */
@@ -173,17 +175,26 @@ public interface OntopiaAdapterIF {
   public String getObjectIdForUuid(String uuid);
 
   /**
-   * Checks what the Id of the current topicmap is, and returns the id as a String.
-   * Is being used to gather all necessayry information the build the iFrame url for the ontopoly integration.
+   * Checks what the Id of the current topicmap is, and returns the id
+   * as a String.  Is being used to gather all necessayry information
+   * the build the iFrame url for the ontopoly integration.
    *
    * @return A String representing the current topicmap id that is being used.
    */
   public String getTopicMapId();
 
   /**
-   * Returns the object id of the typing topic, that types another topic which is only identified by the given UUID.
-   * That sounds a lot more complicated than it is. Seeing the code might bring clarification.
-   * Is being used to gather all necessayry information the build the iFrame url for the ontopoly integration.
+   * Returns the topic map itself.
+   */
+  public TopicMapIF getTopicMap();
+  
+  /**
+   * Returns the object id of the typing topic, that types another
+   * topic which is only identified by the given UUID.  That sounds a
+   * lot more complicated than it is. Seeing the code might bring
+   * clarification.  Is being used to gather all necessayry
+   * information the build the iFrame url for the ontopoly
+   * integration.
    * 
    * @param uuid The UUID of the topic, which type's object Id is to be found out.
    * @return The object id of the type of the topic identified by the UUID.
@@ -191,18 +202,23 @@ public interface OntopiaAdapterIF {
   public String getTopicTypeIdForUuid(String uuid);
 
   /**
-   * Returns the object id of the topic representing the "conceptView".
-   * The concept view is used to show users a custom part of ontopoly to enable them to set custom associations (like "is-about").
-   * Is being used to gather all necessayry information the build the iFrame url for the ontopoly integration.
+   * Returns the object id of the topic representing the
+   * "conceptView".  The concept view is used to show users a custom
+   * part of ontopoly to enable them to set custom associations (like
+   * "is-about").  Is being used to gather all necessayry information
+   * the build the iFrame url for the ontopoly integration.
    * 
    * @return A String containing the object id of the topic representing the "conceptView".
    */
   public String getConceptViewId();
 
   /**
-   * Finds out the latest (that is highest versioned) AND approved article-topic in the topicmap using the article id provided.
-   * This might be of use when trying to show a user references to other articles. You would not want to point to an article
-   * the user won't be able to view, because it hasn't been approved yet, or is out of date.
+   * Finds out the latest (that is highest versioned) AND approved
+   * article-topic in the topicmap using the article id provided.
+   * This might be of use when trying to show a user references to
+   * other articles. You would not want to point to an article the
+   * user won't be able to view, because it hasn't been approved yet,
+   * or is out of date.
    * 
    * @param articleId The article id of an article in liferay
    * @return A String containing the object id of that topic, which is represents the latest approved version for this article id.

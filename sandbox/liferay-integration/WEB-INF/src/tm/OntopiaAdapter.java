@@ -423,6 +423,13 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
   }
 
   /**
+   * Returns the topic map itself.
+   */
+  public TopicMapIF getTopicMap() {
+    return topicmap;
+  }
+  
+  /**
    * Returns the objectId of the *first* type of a topic which is
    * identified by a uuid that it finds.
    *

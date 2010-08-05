@@ -1,7 +1,6 @@
 <%
-/**
-* View Jsp for TopicName Portlet. This page shows information on a given topic.
-*/
+// View Jsp for TopicName Portlet. This page shows information on a given topic.
+String tmid = tm.OntopiaAdapter.getInstance(false).getTopicMapId();
 %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
@@ -9,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
 <portlet:defineObjects />
-<tolog:context topicmap="liferay.ltm">
+<tolog:context topicmap="<%= tmid %>">
 <%
   String topicid = (String) request.getAttribute("topic");
   String query = "object-id($topic, \"" + topicid + "\")?";

@@ -1,8 +1,11 @@
 <%--
 
- This Page will display the tags for an article by using the "related topics" taglibs from ontopia
+ This Page will display the tags for an article by using the "related
+ topics" taglibs from ontopia
  
---%>
+--%><%
+ String tmid = tm.OntopiaAdapter.getInstance(false).getTopicMapId();
+%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -15,7 +18,7 @@
 <%@ page import = "net.ontopia.topicmaps.nav2.utils.ContextUtils" %>
 
 <portlet:defineObjects />
-<tolog:context topicmap="liferay.ltm">
+<tolog:context topicmap="<%= tmid %>">
   <!-- TODO: Take parameter and check whether white or blacklisting should be done (use appropriate tags then)-->
   <!-- topic is to contain a topic object, that has been passed from the portlets java code, assocTypes contains a set of association type -->
   <portal:related topic="topic" var="headings" excludeAssociations="assocTypes">
