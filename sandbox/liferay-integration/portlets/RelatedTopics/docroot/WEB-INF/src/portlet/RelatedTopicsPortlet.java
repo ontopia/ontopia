@@ -71,8 +71,9 @@ public class RelatedTopicsPortlet extends GenericPortlet {
   }
 
   /**
-   * Prepares values to pass to the <code>view.jsp</code> for displaying.
-   * Tries to obtain information on the topic (representing an article) it shall display.
+   * Prepares values to pass to the <code>view.jsp</code> for
+   * displaying.  Tries to obtain information on the topic
+   * (representing an article) it shall display.
    *
    * @param renderRequest The request to render the <code>view.jsp</code> page
    *
@@ -165,7 +166,7 @@ public class RelatedTopicsPortlet extends GenericPortlet {
    * @throws java.io.IOException Might be thrown by <code>actionRequest.getPreferences().store()</code>.
    * @throws javax.portlet.PortletException Might be thrown by any of the <code>actionRequest.getPreferences()</code> methods.
    */
-	public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
+  public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
 
     // read the users input
     String serializedAssocIds = actionRequest.getParameter("associd");
