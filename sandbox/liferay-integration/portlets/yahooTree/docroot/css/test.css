@@ -1,0 +1,13 @@
+
+/* not sure if this has any effect, but it's worth a try */
+table.yahoo-tree td {
+    vertical-align: top;
+    padding-right: 2em;
+    padding-bottom: 2em;
+    align: left;
+}
+
+div.toplevel {
+    font-weight: bold;
+    font-size: 140%;
+}
