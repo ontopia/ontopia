@@ -313,4 +313,8 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     return rtatcache.getRolesByType(player, rtype, atype);
   }
 
+  public String toString() {
+    return "[rdbms.Transaction, " + actual_id + ", " + readonly + "]";
+  }
+
 }

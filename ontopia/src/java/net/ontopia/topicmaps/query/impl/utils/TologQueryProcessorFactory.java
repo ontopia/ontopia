@@ -1,3 +1,4 @@
+
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.Map;
