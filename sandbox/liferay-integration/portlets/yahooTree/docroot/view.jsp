@@ -40,14 +40,16 @@
     int colno;
     for (colno = 0; colno < row.size(); colno++) {
       YahooTree.TreeNode node = row.get(colno);
+      String url = util.PortletUtils.makeLinkTo(node.getTopic());
 %>
     <td>
       <div class=toplevel
-          ><a href="..."><%= strify.toString(node.getTopic()) %></a></div>
+          ><a href="<%= url%>"><%= strify.toString(node.getTopic()) %></a></div>
 <%
       for (TopicIF child : node.getChildren()) {
+        url = util.PortletUtils.makeLinkTo(child);
 %>
-          <a href="..."><%= strify.toString(child) %></a></div>
+          <a href="<%= url %>"><%= strify.toString(child) %></a></div>
 <%
       }
     }

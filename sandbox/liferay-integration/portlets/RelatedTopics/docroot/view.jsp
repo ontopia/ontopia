@@ -17,6 +17,7 @@
 <%@ page import = "net.ontopia.topicmaps.core.TopicIF" %>
 <%@ page import = "net.ontopia.topicmaps.nav2.utils.ContextUtils" %>
 
+<%= renderRequest.getAttribute("javax.servlet.forward.query_string") %>
 <portlet:defineObjects />
 <tolog:context topicmap="<%= tmid %>">
   <!-- TODO: Take parameter and check whether white or blacklisting should be done (use appropriate tags then)-->
@@ -33,39 +34,7 @@
             <%
             // get the topic we want to display next as a TopicIF object
             TopicIF t =(TopicIF) pageContext.getAttribute("player");
-            String oid = t.getObjectId();
-            // every topic should have an url template set, so that we can see how to display it depending on its type
-            String query = "using lr for i\"http://psi.ontopia.net/liferay/\" select $value from value($occ, $value), occurrence($type, $occ), type($occ, lr:url-template), direct-instance-of(@" + oid + ", $type)?";
-
-            // the next two queries might be needed if we are looking at articles from webcontent
-            String queryForGroupId = "using lr for i\"http://psi.ontopia.net/liferay/\" select $value from value($occ, $value), type($occ, lr:groupid), occurrence($group, $occ), lr:contains( @"+oid+" : lr:containee , $group : lr:container )?";
-            String queryForArticleId = "using lr for i\"http://psi.ontopia.net/liferay/\" select $value from value($occ, $value), type($occ, lr:article_id), occurrence( @"+oid+", $occ)?";
-            %>
-            <!-- get url template -->
-            <tolog:set query="<%= query %>" var = "url"/>
-
-            <%
-            // url now contains the page we want to link, possibly containing placeholders for values we need to look up first!
-            String url = (String) ContextUtils.getSingleValue("url", pageContext);
-
-            if(url != null) {
-              // if this is an article (we can tell by the url template we have received previously), we need to lookup its groupid and article id in order to present it to the user
-              if(url.contains("${groupid}") && url.contains("${articleid}")) {%>
-                <tolog:set query="<%= queryForGroupId %>" var = "groupid"/>
-                <tolog:set query="<%= queryForArticleId %>" var = "articleid"/>
-                <%
-                // Then go and retrieve the appropriate values for the placeholders
-                String groupid =(String) ContextUtils.getSingleValue("groupid", pageContext);
-                String articleid = (String) ContextUtils.getSingleValue("articleid", pageContext);
-                // TODO: Easify using Ontopias StringTemplateUtil
-                url = url.replace("${groupid}", groupid);
-                url = url.replace("${articleid}", articleid);
-
-              } else if(url.contains("${topicid}")){
-                // a topic id shall be replaced. Doing so by presenting the oid of the "player"
-                url = url.replace("${topicid}", oid);
-              }
-            }
+            String url = util.PortletUtils.makeLinkTo(t);
             %>
             <!-- Display player's name plus a clickable link to another page -->
             <li><a href="<%= url %>"><tolog:out var="assoc.player"/></a></li>

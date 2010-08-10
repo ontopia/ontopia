@@ -1,14 +1,15 @@
 
 package portlet;
 
+import java.util.Map;
+import java.util.List;
+import javax.portlet.RenderRequest;
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-
-import java.util.List;
-import javax.portlet.RenderRequest;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -35,24 +36,9 @@ public class Configurator {
    * or null if none could be found
    */
   public String getTopicIdFromUrl(RenderRequest renderRequest) {
-    // FIXME: we need a utility method
-    // manualy parsing the topic id from the url which is in the
-    // addressline of the browser. Not the renderURL of this
-    // portlet.
-    String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
-    if(queryString != null && (queryString.lastIndexOf("topic=") != -1)) {
-      String result = queryString.substring(queryString.lastIndexOf("topic=")+"topic=".length()); // get to the topic id number
-      if(result.indexOf("&") != -1) { // there are more parameters
-        result = result.substring(0, result.indexOf("&")); // the next ampersand is the delimiter for the topic id
-        return result;
-      } else {
-        // no more parameters, that means that we are at the end of the url
-        return result;
-      }
-    } else {
-      // indexOf() returned -1. No topic information in the url available.
-      return null;
-    }
+    String queryString = (String) renderRequest.getAttribute("javax.servlet.forward.query_string");
+    Map<String, String> params = util.PortletUtils.parseQueryString(queryString);
+    return params.get("topic");
   }
 
   /**

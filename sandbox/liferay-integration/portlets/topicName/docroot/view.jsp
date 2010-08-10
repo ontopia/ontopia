@@ -17,13 +17,7 @@ String tmid = tm.OntopiaAdapter.getInstance(false).getTopicMapId();
 
   <tolog:choose>
     <tolog:when var="topic">
-      This is the page for the topic:
-      <h3><tolog:out var="topic"/></h3>
-
-      <tolog:if query="subject-identifier(%topic%, $psi)?">
-        Read more on:
-        <a href="<tolog:out var="psi"/>"><tolog:out var="psi"/></a>
-      </tolog:if>
+      <h2><tolog:out var="topic"/></h2>
     </tolog:when>
 
     <tolog:otherwise>
