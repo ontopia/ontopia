@@ -195,7 +195,9 @@ alter database topicmaps set read_committed_snapshot on;
       it is recommended to place it together with other configuration
       files. For Ontopia to find this file you have to point to it
       from the <filename>tm-sources.xml</filename> file. (See the
-      Navigator Congiguration guide for details.)</para>
+      Navigator Congiguration guide for details, but by default this
+      file is located in
+      <filename>apache-tomcat/common/classes</filename>.)</para>
 
       <para>The default properties file for use in applications can be
       designated by setting the
