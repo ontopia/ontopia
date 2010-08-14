@@ -38,7 +38,7 @@ import net.ontopia.topicmaps.utils.ltm.AntlrWrapException;
 
 /**
  * PUBLIC: This TopicMapReader can read topic maps from the ISO-standard
- * CTM syntax. It implements the 2008-05-15 draft.
+ * CTM syntax. It implements the 2010-03-31 draft.
  * @since 4.0.5
  */
 public class CTMTopicMapReader extends AbstractTopicMapReader {
