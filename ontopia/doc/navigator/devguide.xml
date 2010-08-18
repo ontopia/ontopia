@@ -1110,7 +1110,7 @@ accessed by name (and bean property) from the <symbol>var</symbol> attribute
 of the <symbol>tolog:out</symbol>, <symbol>tolog:oid</symbol>, and
 <symbol>tolog:id</symbol> tags. This makes it easy to use the
 Navigator Framework together with other tag libraries, such as the
-JSTL tag libaries, and it also makes it possible to use the Navigator
+JSTL tag libraries, and it also makes it possible to use the Navigator
 Framework with a Model-View-Controller (MVC) approach.
 </para>
 
