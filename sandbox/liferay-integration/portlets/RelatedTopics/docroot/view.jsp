@@ -4,7 +4,7 @@
  topics" taglibs from ontopia
  
 --%><%
- String tmid = tm.OntopiaAdapter.getInstance(false).getTopicMapId();
+ String tmid = tm.OntopiaAdapter.getInstance(true).getTopicMapId();
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -17,7 +17,6 @@
 <%@ page import = "net.ontopia.topicmaps.core.TopicIF" %>
 <%@ page import = "net.ontopia.topicmaps.nav2.utils.ContextUtils" %>
 
-<%= renderRequest.getAttribute("javax.servlet.forward.query_string") %>
 <portlet:defineObjects />
 <tolog:context topicmap="<%= tmid %>">
   <!-- TODO: Take parameter and check whether white or blacklisting should be done (use appropriate tags then)-->
@@ -34,7 +33,7 @@
             <%
             // get the topic we want to display next as a TopicIF object
             TopicIF t =(TopicIF) pageContext.getAttribute("player");
-            String url = util.PortletUtils.makeLinkTo(t);
+	    String url = util.PortletUtils.makeLinkTo(t);
             %>
             <!-- Display player's name plus a clickable link to another page -->
             <li><a href="<%= url %>"><tolog:out var="assoc.player"/></a></li>
