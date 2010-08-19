@@ -63,5 +63,9 @@ public class FragmentOntopiaAdapter extends OntopiaAdapter {
   protected TopicIF getTopicByGroupId(String groupId) {
     return base.getTopicByGroupId(groupId);
   }
+
+  protected String findStructureUrnByStructureId(String structureId) {
+    return base.findStructureUrnByStructureId(structureId);
+  }
   
 }

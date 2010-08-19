@@ -520,7 +520,7 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
     if (content.getStructureId().equals(""))
       classname = "lr:article";
     else {
-      classname = findStructureUrnByStructureId(content.getStructureId());
+      classname = "<" + findStructureUrnByStructureId(content.getStructureId()) + ">";
       if (classname == null)
         throw new OntopiaRuntimeException("Structure with id + " +
                                           content.getStructureId() +
@@ -590,14 +590,14 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
       findStructureUrnByStructureId(structure.getParentStructureId());
 
     String parent;
-    if (parentStructureUrn != null) {
-      log.debug("*** No parentstructure provided. Using webcontent instead ***");
+    if (parentStructureUrn == null)
       parent = PSI_PREFIX + "webcontent";
-    } else
-      parent = parentStructureUrn;
+    else
+      parent = "<" + parentStructureUrn + ">";
 
     String query ="insert " + structureUrn + " ako " + parent + ";\n" +
-      "  - $name; lr:id: $id . " +
+      "  isa http://psi.ontopia.net/ontology/topic-type ;\n" +
+      "  - $name; lr:structure-id: $id . " +
       "from" +
       "  $id = %structureId%, " +
       "  $name = %name%";
@@ -835,13 +835,13 @@ public class OntopiaAdapter implements OntopiaAdapterIF {
    * @param structureId The structure's id
    * @return The Urn of the structure if lookup succeeded, null otherwise.
    */
-  private String findStructureUrnByStructureId(String structureId) {
+  protected String findStructureUrnByStructureId(String structureId) {
     Map params = new HashMap();
     params.put("id", structureId);
     
     String query ="select $PSI from\n" +
       "subject-identifier($TOPIC, $PSI),\n" +
-      "lr:id($TOPIC, %id%)?";
+      "lr:structure-id($TOPIC, %id%)?";
 
     return queryWrapper.queryForString(query, params);
   }
