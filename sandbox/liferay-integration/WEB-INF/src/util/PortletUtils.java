@@ -3,6 +3,7 @@ package util;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Collections;
 import net.ontopia.utils.StringTemplateUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -40,7 +41,7 @@ public class PortletUtils {
     templateparams.put("topicid", topic.getObjectId());
     
     // is this Liferay web content? if so, we need two more parameters
-    if (1 == 2) {
+    if (w.isTrue("instance-of(%topic%, lr:webcontent)?", params)) {
       String gid = w.queryForString(
         "select $GID from " +                                    
         "lr:contains(%topic% : lr:containee, $GROUP : lr:container), " +
@@ -60,9 +61,9 @@ public class PortletUtils {
    * Parses the query string to extract the query parameters as a map.
    */
   public static Map<String, String> parseQueryString(String str) {
-    if (str.charAt(0) == '?')
-      throw new OntopiaRuntimeException("Idiots: '"+str+"'");
-
+    if (str == null)
+      return Collections.EMPTY_MAP;
+ 
     Map<String, String> params = new HashMap();
     int prevamp = -1;
     int preveq = -1;
