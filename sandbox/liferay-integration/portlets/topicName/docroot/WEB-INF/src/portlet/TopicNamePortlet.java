@@ -28,7 +28,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
  *
  * @author mfi
  */
-
 public class TopicNamePortlet extends GenericPortlet {
 
   public void init() throws PortletException {
@@ -44,8 +43,7 @@ public class TopicNamePortlet extends GenericPortlet {
 
     if (jspPage != null) {
       include(jspPage, renderRequest, renderResponse);
-    }
-    else {
+    } else {
       super.doDispatch(renderRequest, renderResponse);
     }
   }
@@ -54,8 +52,7 @@ public class TopicNamePortlet extends GenericPortlet {
 
     if (renderRequest.getPreferences() == null) {
       super.doEdit(renderRequest, renderResponse);
-    }
-    else {
+    } else {
       include(editJSP, renderRequest, renderResponse);
     }
   }
@@ -78,30 +75,31 @@ public class TopicNamePortlet extends GenericPortlet {
         if(topicId == null){
           // 4. Also not useful I think? Is there a use case where this would be of use?
           //topicId = config.findTopicIdFromNextWCD(renderRequest);
-          if(topicId == null){
-            throw new OntopiaRuntimeException("Unable to find Topic ID!");
-          }
         }
       }
     }
 
-    renderRequest.setAttribute("topic", topicId);
+    if (topicId != null)
+      renderRequest.setAttribute("topic", topicId);
         
     include(viewJSP, renderRequest, renderResponse);
   }
 
   public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
-    /* Here goes code for the handling of requests that are being made by using an actionURL. */
+    /* Here goes code for the handling of requests that are being made
+     * by using an actionURL. */
   }
-
-	protected void include(String path, RenderRequest renderRequest,RenderResponse renderResponse) throws IOException, PortletException {
+  
+  protected void include(String path,
+                         RenderRequest renderRequest,
+                         RenderResponse renderResponse)
+    throws IOException, PortletException {
 
     PortletRequestDispatcher portletRequestDispatcher = getPortletContext().getRequestDispatcher(path);
 
     if (portletRequestDispatcher == null) {
       _log.error(path + " is not a valid include");
-    }
-    else {
+    } else {
       portletRequestDispatcher.include(renderRequest, renderResponse);
     }
   }

@@ -8,11 +8,15 @@ String tmid = tm.OntopiaAdapter.getInstance(false).getTopicMapId();
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 
 <portlet:defineObjects />
-<tolog:context topicmap="<%= tmid %>">
+
 <%
   String topicid = (String) request.getAttribute("topic");
   String query = "object-id($topic, \"" + topicid + "\")?";
+
+  if (topicid != null) {
 %>
+
+<tolog:context topicmap="<%= tmid %>">
   <tolog:set var="topic" query="<%=query%>"/>
 
   <tolog:choose>
@@ -26,3 +30,9 @@ String tmid = tm.OntopiaAdapter.getInstance(false).getTopicMapId();
     </tolog:otherwise>
   </tolog:choose>
 </tolog:context>
+
+<%
+ } else {
+%><p class=error>No topic ID found.</p>
+
+<% } %>
