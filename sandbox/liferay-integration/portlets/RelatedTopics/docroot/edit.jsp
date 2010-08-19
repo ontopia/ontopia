@@ -3,12 +3,9 @@
     Created on : 12.02.2010, 11:08:21
     Author     : mfi
     
-    This page will offer a way to customize the behaviour of the
-    portlet. As of now only association type object ids can be
-    provided to tell the portlet which association NOT to follow. Also
-    a topic if may be hardwired to make the portlet use this in any
-    case.  The rest of the fields are not wired to the view.jsp yet!
-    This will become more flexible in the future.  
+    This page will offer a way to customize the behaviour of the portlet. As of now only association type object ids can be provided to tell
+    the portlet which association NOT to follow. Also a topic if may be hardwired to make the portlet use this in any case.
+    The rest of the fields are not wired to the view.jsp yet! This will become more flexible in the future.
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
