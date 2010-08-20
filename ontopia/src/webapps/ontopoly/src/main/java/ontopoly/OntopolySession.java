@@ -6,6 +6,7 @@ import ontopoly.pages.SignInPage;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Request;
+import org.apache.wicket.Response;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.Action;
@@ -23,17 +24,17 @@ public class OntopolySession extends WebSession {
   private boolean administrationEnabled = false;
   private User user;
   
-  protected OntopolySession(Request request, OntopolyAccessStrategy accessStrategy) {
+  protected OntopolySession(Request request, Response response, OntopolyApplication ontopolyApplication) {
     super(request);
 
-    this.accessStrategy = accessStrategy;
+    this.accessStrategy = ontopolyApplication.newAccessStrategy();
     
     // attempt to automatically login user
     if (accessStrategy.isEnabled()) {
       WebRequest wr = (WebRequest)request;
-      String username = this.accessStrategy.autoAuthenticate(wr.getHttpServletRequest());
-      if (username != null)
-        setUserAuthenticated(username, true);
+      User authenticatedUser = this.accessStrategy.autoAuthenticate(wr.getHttpServletRequest());
+      if (authenticatedUser != null)
+        setUser(user);
     }
     // set locale
 //    setLocale(new Locale("no"));
@@ -144,47 +145,12 @@ public class OntopolySession extends WebSession {
    */
   public boolean authenticate(String username, String password) {
     // TODO: actually authenticate user
-    boolean authenticated = accessStrategy.authenticate(username, password);
-    if (authenticated)
-      setUserAuthenticated(username, false);
-    return authenticated;
-  }
-  
-  /**
-   * Registers the user object in the session.
-   * @param username
-   */
-  protected void setUserAuthenticated(String username, boolean autoLogin) {
-    setUser(createUser(username, autoLogin));    
-  }
-  
-  /**
-   * Factory method for creating user objects.
-   * @param username
-   * @return
-   */
-  protected User createUser(String username, boolean autoLogin) {
-    return new DefaultUser(username, autoLogin);
-  }
-
-  protected static class DefaultUser extends User {
-    private String username;
-    private boolean autoLogin;
-    DefaultUser(String username, boolean autoLogin) {
-      this.username = username;
-      this.autoLogin = autoLogin;
-    }
-    @Override
-    public String getName() {
-      return username;
-    }
-    @Override
-    public String getFullname() {
-      return getName();
-    }
-    @Override
-    public boolean isAutoLogin() {
-      return autoLogin;
+    User authenticatedUser = accessStrategy.authenticate(username, password);
+    if (authenticatedUser != null) {
+      setUser(user);
+      return true;
+    } else {    
+      return false;
     }
   }
   

@@ -1,23 +1,36 @@
 package ontopoly;
 
-public abstract class User {
+public class User {
+
+  private String username;
+  private boolean autoLogin;
+    
+  public User(String username, boolean autoLogin) {
+    this.username = username;
+    this.autoLogin = autoLogin;
+  }
 
   /**
    * Returns the user name.
    * @return
    */
-  public abstract String getName();
-  
+  public String getName() {
+    return username;
+  }
+
   /**
    * Returns the full name of the user. Will fall back to the username if not exists. 
    * @return
    */
-  public abstract String getFullname();
+  public String getFullname() {
+    return getName();
+  }
 
   /**
    * Returns true if the user was automatically logged in.
    * @return
    */
-  public abstract boolean isAutoLogin();
-  
+  public boolean isAutoLogin() {
+    return autoLogin;
+  }  
 }

@@ -1,6 +1,5 @@
 package ontopoly;
 
-
 import net.ontopia.topicmaps.entry.TopicMaps;
 import ontopoly.model.TopicMap;
 import ontopoly.pages.AdminPage;
@@ -50,13 +49,6 @@ public class OntopolyApplication extends WebApplication {
   
   protected OntopolyRepository repository = new OntopolyRepository(TopicMaps.getRepository());
   protected LockManager lockManager = new LockManager();
-  
-  protected OntopolyAccessStrategy accessStrategy = new OntopolyAccessStrategy() {
-    @Override
-    public boolean isEnabled() {
-      return false;
-    }
-  };
 
   public static final float CURRENT_VERSION_NUMBER = 2.0f;
   
@@ -150,7 +142,17 @@ public class OntopolyApplication extends WebApplication {
   
   @Override
   public Session newSession(Request request, Response response) {
-    return new OntopolySession(request, accessStrategy);
+    return new OntopolySession(request, response, this);
+  }
+  
+  protected OntopolyAccessStrategy newAccessStrategy() {	  
+	  return new OntopolyAccessStrategy() {
+	    @Override
+	    public boolean isEnabled() {
+	      return false;
+	    }
+	  };
+
   }
   
   @Override
