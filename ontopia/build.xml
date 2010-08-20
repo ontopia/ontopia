@@ -73,10 +73,10 @@
     </tstamp>
 
     <property name="dist.version.major" value="5" />
-    <property name="dist.version.minor" value="1" />
+    <property name="dist.version.minor" value="2" />
     <property name="dist.version.micro" value="0" />
 
-    <property name="dist.version.beta" value="" />
+    <property name="dist.version.beta" value="b0" />
     <!-- "b1" if beta 1, empty if not beta -->
 
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}${dist.version.beta}" />
@@ -2429,9 +2429,9 @@
     <copy todir="${build.ontopoly}/WEB-INF/lib" overwrite="yes">
       <fileset dir="${lib.path}">
         <patternset>
-          <include name="wicket-1.4.8.jar" />
-          <include name="wicket-datetime-1.4.8.jar" />
-          <include name="wicket-extensions-1.4.8.jar" />
+          <include name="wicket-1.4.10.jar" />
+          <include name="wicket-datetime-1.4.10.jar" />
+          <include name="wicket-extensions-1.4.10.jar" />
           <include name="joda-time-1.6.jar" />
         </patternset>
       </fileset>

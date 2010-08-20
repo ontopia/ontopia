@@ -4,29 +4,29 @@
     <groupId>net.ontopia</groupId>
     <artifactId>ontopoly</artifactId>
     <packaging>war</packaging>
-    <version>5.1.0-SNAPSHOT</version>
+    <version>5.2.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>net.ontopia</groupId>
             <artifactId>ontopia-engine</artifactId>
-            <version>5.1.0-SNAPSHOT</version>
+            <version>5.2.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket</artifactId>
-            <version>1.4.8</version>
+            <version>1.4.10</version>
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-datetime</artifactId>
-            <version>1.4.8</version>
+            <version>1.4.10</version>
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-extensions</artifactId>
-            <version>1.4.8</version>
+            <version>1.4.10</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
