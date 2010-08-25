@@ -29,7 +29,6 @@
         <ul>
           <c:forEach items="${heading.children}" var="assoc">
             <c:set value="${assoc.player}" var="player"/>
-            <!-- Start collecting necessary information for the proper creation of a clickable link to more information on the player -->
             <%
             // get the topic we want to display next as a TopicIF object
             TopicIF t =(TopicIF) pageContext.getAttribute("player");
