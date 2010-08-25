@@ -125,7 +125,8 @@ public class OntopolySession extends WebSession {
   public static class OntopolyAuthorizationStrategy implements IAuthorizationStrategy, IUnauthorizedComponentInstantiationListener {
     public boolean isInstantiationAuthorized(Class componentClass) {
       if (AbstractProtectedOntopolyPage.class.isAssignableFrom(componentClass)) {
-        return ((OntopolySession)Session.get()).isAuthenticated(); 
+        boolean authenticated = ((OntopolySession)Session.get()).isAuthenticated(); 
+        return authenticated;
       } 
       return true;
     }
@@ -147,7 +148,7 @@ public class OntopolySession extends WebSession {
     // TODO: actually authenticate user
     User authenticatedUser = accessStrategy.authenticate(username, password);
     if (authenticatedUser != null) {
-      setUser(user);
+      setUser(authenticatedUser);
       return true;
     } else {    
       return false;
