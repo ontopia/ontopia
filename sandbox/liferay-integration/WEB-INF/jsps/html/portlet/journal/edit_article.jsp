@@ -365,8 +365,9 @@ String smallImageURL = BeanParamUtil.getString(article, request, "smallImageURL"
 				</td>
 			</tr>
                 <%-- START OF ONTOPIA PLUGIN CODE --%>
-		<tr><td>Ontopoly:</td>
-		<td> <%
+		<tr><td>
+		<b>Ontopoly:</b>
+		<%
 		  /* Ontopia Plugin Code */
 		  /* Note: Only works with tweaked catalina config. See Docs */
 			String topicId = "";
