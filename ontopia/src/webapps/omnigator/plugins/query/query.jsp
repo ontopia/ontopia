@@ -73,7 +73,7 @@ String error = null;
 StringWriter tmp = new StringWriter();
 
 // get the topic map
-TopicMapIF topicmap = navApp.getTopicMapById(tmid);
+TopicMapIF topicmap = navApp.getTopicMapById(tmid, !update);
 
 try {
   UserIF user = FrameworkUtils.getUser(pageContext);
