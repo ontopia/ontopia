@@ -44,15 +44,15 @@
 
     <p>
     <b>Note:</b> By default the Omnigator uses the in-memory topic map
-    backend of the OKS, which stores the entire topic map in memory.
+    backend of Ontopia, which stores the entire topic map in memory.
     This works well, but only until the topic maps reach a certain
-    size.  The Enterprise Edition of the OKS includes an RDBMS backend
+    size.  Ontopia includes an RDBMS backend
     which stores the topic maps in a database and only caches parts of
     the topic maps in memory. This backend can handle much larger
     topic maps, and the Omnigator (and other Navigator Framework
     applications) can be configured to use it instead. So if your
     topic map is too big for the Omnigator it need not be too big for
-    the OKS to handle.
+    Ontopia to handle.
     </p>
   </template:put>
 
