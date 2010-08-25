@@ -60,5 +60,4 @@
  long articleResourcePrimKey = article.getResourcePrimKey();
 
 %>
-<h3><%= article.getTitle() %></h3>
 <liferay-ui:journal-article articleResourcePrimKey="<%= articleResourcePrimKey %>" />
