@@ -4,11 +4,13 @@ import ontopoly.OntopolySession;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
+import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
@@ -26,6 +28,9 @@ public class SignInPage extends WebPage {
     public SignInForm(String id) { 
       super(id); 
       setDefaultModel(new CompoundPropertyModel<SignInForm>(this)); 
+      
+      add(new FeedbackPanel("feedback", new ContainerFeedbackMessageFilter(this)));
+      
       add(new TextField("username")); 
       add(new PasswordTextField("password"));   
     } 
