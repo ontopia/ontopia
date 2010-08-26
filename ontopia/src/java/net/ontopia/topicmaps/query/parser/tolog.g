@@ -277,7 +277,9 @@ ruleset:
   { // we need a query object. this is probably not the best way, though.
     statement = new TologQuery(); }
   (prefixdecl | importdecl)*
-  (rule)*;
+  (rule)*
+  { optimizeRules(); }
+  ;
 
 rule:  
   IDENT
