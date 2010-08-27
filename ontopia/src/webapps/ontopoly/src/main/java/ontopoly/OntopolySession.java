@@ -34,7 +34,7 @@ public class OntopolySession extends WebSession {
       WebRequest wr = (WebRequest)request;
       User authenticatedUser = this.accessStrategy.autoAuthenticate(wr.getHttpServletRequest());
       if (authenticatedUser != null)
-        setUser(user);
+        setUser(authenticatedUser);
     }
     // set locale
 //    setLocale(new Locale("no"));
