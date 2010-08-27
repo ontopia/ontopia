@@ -64,7 +64,7 @@ public class OntopolyApplication extends WebApplication {
   @Override
   protected void onDestroy() {    
     // called when wicket servlet shuts down
-    log.info("OKS: Shutting down Wicket.");
+    log.info("Ontopia: Shutting down Wicket.");
     super.onDestroy();
     repository = null; // FIXME: or close the repository if possible
   }
