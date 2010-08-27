@@ -25,23 +25,23 @@ import org.apache.wicket.model.ResourceModel;
 
 public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
   
-	public FieldInstanceOccurrencePanel(String id, final FieldInstanceModel fieldInstanceModel, 
-	    final boolean readonly) {
-		super(id, fieldInstanceModel);
+  public FieldInstanceOccurrencePanel(String id, final FieldInstanceModel fieldInstanceModel, 
+                                      final boolean readonly) {
+    super(id, fieldInstanceModel);
 
-		FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
-		FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
-		FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition(); 
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
+    FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition(); 
 
-		//! add(new Label("fieldLabel", new Model(fieldDefinition.getFieldName())));
+    //! add(new Label("fieldLabel", new Model(fieldDefinition.getFieldName())));
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(fieldDefinition)));
     
     // set up container
-		this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");
-		fieldValuesContainer.setOutputMarkupId(true);    
+    this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");
+    fieldValuesContainer.setOutputMarkupId(true);    
     add(fieldValuesContainer);
 
-		// add feedback panel
+    // add feedback panel
     this.feedbackPanel = new FeedbackPanel("feedback", new AbstractFieldInstancePanelFeedbackMessageFilter());
     feedbackPanel.setOutputMarkupId(true);
     fieldValuesContainer.add(feedbackPanel);
@@ -49,42 +49,42 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
     // add field values component(s)
     this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel, OccurrenceComparator.INSTANCE);
     
-		this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
+    this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
       @Override
       protected void onBeforeRender() {
         validateCardinality();        
         super.onBeforeRender();
       }
       @Override
-		  public void populateItem(final ListItem<FieldValueModel> item) {
+      public void populateItem(final ListItem<FieldValueModel> item) {
         final FieldValueModel fieldValueModel = item.getModelObject();
         FieldInstanceModel fieldInstanceModel = fieldValueModel.getFieldInstanceModel();
-		    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+        FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
 
         // TODO: make sure non-existing value field gets focus if last edit happened there
 
-		    WebMarkupContainer fieldValueButtons = new WebMarkupContainer("fieldValueButtons");
-		    fieldValueButtons.setOutputMarkupId(true);
-		    item.add(fieldValueButtons);
-		    
-		    // remove button
-		    FieldInstanceRemoveButton removeButton = 
-		      new FieldInstanceRemoveButton("remove", "remove-value.gif", fieldValueModel) { 
-            @Override
-            public boolean isVisible() {
-              Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
-              if (fieldValuesModel.size() == 1 && cardinality.isMinOne())
-                return false;
-              else
-                return !readonly && fieldValueModel.isExistingValue();
-            }
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-              super.onClick(target);
-              listView.removeAll();
-              updateDependentComponents(target);
-            }
-          };
+        WebMarkupContainer fieldValueButtons = new WebMarkupContainer("fieldValueButtons");
+        fieldValueButtons.setOutputMarkupId(true);
+        item.add(fieldValueButtons);
+
+        // remove button
+        FieldInstanceRemoveButton removeButton = 
+        new FieldInstanceRemoveButton("remove", "remove-value.gif", fieldValueModel) { 
+          @Override
+          public boolean isVisible() {
+            Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+            if (fieldValuesModel.size() == 1 && cardinality.isMinOne())
+              return false;
+            else
+              return !readonly && fieldValueModel.isExistingValue();
+          }
+          @Override
+          public void onClick(AjaxRequestTarget target) {
+            super.onClick(target);
+            listView.removeAll();
+            updateDependentComponents(target);
+          }
+        };
         fieldValueButtons.add(removeButton);  
         
         // we know what kind of field this is, so we can just cast to it directly
@@ -106,19 +106,19 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
           }
         } else {
           final FieldUpdatingBehaviour fuBehaviour = new FieldUpdatingBehaviour(true);
-  	      if (dataType.isDate()) {
-  	        FieldInstanceDateField occField = new FieldInstanceDateField("fieldValue", fieldValueModel);
-            occField.add(fuBehaviour);
-  	        item.add(occField);
-  	        
-  	      } else if (dataType.isDateTime()) {
-  	        FieldInstanceDateTimeField occField = new FieldInstanceDateTimeField("fieldValue", fieldValueModel);
+          if (dataType.isDate()) {
+            FieldInstanceDateField occField = new FieldInstanceDateField("fieldValue", fieldValueModel);
             occField.add(fuBehaviour);
             item.add(occField);
-  	  
-  	      } else if (dataType.isURI()) {
-  	        FieldInstanceURIField occField = new FieldInstanceURIField("fieldValue", fieldValueModel);
-  	        occField.setOutputMarkupId(true);
+
+          } else if (dataType.isDateTime()) {
+            FieldInstanceDateTimeField occField = new FieldInstanceDateTimeField("fieldValue", fieldValueModel);
+            occField.add(fuBehaviour);
+            item.add(occField);
+            
+          } else if (dataType.isURI()) {
+            FieldInstanceURIField occField = new FieldInstanceURIField("fieldValue", fieldValueModel);
+            occField.setOutputMarkupId(true);
             occField.getTextField().add(fuBehaviour);
             item.add(occField);
             
@@ -140,32 +140,32 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
               }              
             };
             item.add(occField);
-  	        
-  	      } else {
-  	        int height = of.getHeight(); 
-  	        if (height > 1) {
-  	          FieldInstanceTextArea occField = new FieldInstanceTextArea("fieldValue", fieldValueModel);
-  	          occField.setCols(of.getWidth());
-  	          occField.setRows(height);
-  	          occField.add(fuBehaviour);
-  	          item.add(occField);
-  	          
-  	        } else {
-  	          FieldInstanceTextField occField = new FieldInstanceTextField("fieldValue", fieldValueModel);
-  	          occField.setCols(of.getWidth());
+
+          } else {
+            int height = of.getHeight(); 
+            if (height > 1) {
+              FieldInstanceTextArea occField = new FieldInstanceTextArea("fieldValue", fieldValueModel);
+              occField.setCols(of.getWidth());
+              occField.setRows(height);
+              occField.add(fuBehaviour);
+              item.add(occField);
+
+            } else {
+              FieldInstanceTextField occField = new FieldInstanceTextField("fieldValue", fieldValueModel);
+              occField.setCols(of.getWidth());
               occField.add(fuBehaviour);
               item.add(occField);           
-  	        }
-  	      }
+            }
+          }
         }
         
         addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
-	    }
-		};
-	  listView.setReuseItems(true);
-	  fieldValuesContainer.add(listView);
-
-	  this.fieldInstanceButtons = new WebMarkupContainer("fieldInstanceButtons");
+      }
+    };
+    listView.setReuseItems(true);
+    fieldValuesContainer.add(listView);
+    
+    this.fieldInstanceButtons = new WebMarkupContainer("fieldInstanceButtons");
     fieldInstanceButtons.setOutputMarkupId(true);
     add(fieldInstanceButtons);
     
@@ -195,6 +195,6 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
     Cardinality cardinality = fieldAssignment.getCardinality();
     if (cardinality.isMaxOne())
       addButton.setVisible(false);
-	}
+  }
 
 }
