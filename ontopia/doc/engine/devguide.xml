@@ -1454,12 +1454,6 @@ The result of running it on the command-line is shown below:
 </para>
 
 <screen>[larsga@dhcp-98 tmp]$ java EventTest bkclean.xtm 
-
------------------------------------------------------------------
-Restricted license. For development use only. For an unrestricted
-evaluation or runtime license, contact sales@ontopia.net.
------------------------------------------------------------------
-
 Off we go
 Topic added: 3409
 Let's name this topic

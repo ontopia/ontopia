@@ -310,11 +310,6 @@ alter database topicmaps set read_committed_snapshot on;
         url="../webed/devguide.html">Web Editor Framework Developer's
         Guide</ulink></citetitle> for more information.</para>
       </warning>
-
-      <warning>
-        <para>Note that nodes in the cluster must use distinct license
-        keys.</para>
-      </warning>
       
       <variablelist>
        <varlistentry>
@@ -1199,7 +1194,6 @@ database property to <symbol>sqlserver</symbol>.</para>
 
       <screen format="linespecific">
 Ontopia RDBMS Backend Connector [version]
-License: [license info]
 Success: All required classes found.
 Running tests
 .........................................
