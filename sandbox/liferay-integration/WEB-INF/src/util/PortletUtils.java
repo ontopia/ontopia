@@ -47,7 +47,7 @@ public class PortletUtils {
         "lr:contains(%topic% : lr:containee, $GROUP : lr:container), " +
         "lr:groupid($GROUP, $GID)?", params);
 
-      String aid = w.queryForString("lr:article_id(%topic%, $AID)?");
+      String aid = w.queryForString("lr:article_id(%topic%, $AID)?", params);
 
       templateparams.put("groupid", gid);
       templateparams.put("articleid", gid);
