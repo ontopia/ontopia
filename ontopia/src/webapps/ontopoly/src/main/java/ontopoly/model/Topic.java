@@ -191,9 +191,10 @@ public class Topic {
   // INSTANCE
 
   /**
-   * Given the topic type, find the subtype that is the specific type of this topic. The 
-   * topic type given is usually a super type of the specific type. If null is returned
-   * then the topic type is not a super type of this topic.
+   * Given the topic type, find the subtype that is the specific type
+   * of this topic. The topic type given is usually a super type of
+   * the specific type. If null is returned then the topic type is not
+   * a super type of this topic.
    * @param topicType the super type of this topic
    * @return the most specific type of this type, or null if there is none.
    */

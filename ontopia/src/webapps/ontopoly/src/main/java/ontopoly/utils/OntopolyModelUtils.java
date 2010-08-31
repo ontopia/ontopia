@@ -82,6 +82,17 @@ public class OntopolyModelUtils {
     return null;
   }
 
+  public static boolean hasBinaryAssociation(TopicIF player1, TopicIF aType,
+                                             TopicIF rType1, TopicIF rType2) {
+    for (AssociationRoleIF role : player1.getRolesByType(aType, rType1)) {
+      AssociationIF assoc = role.getAssociation();
+      for (AssociationRoleIF role2 : assoc.getRoles())
+        if (role2 != role && role2.getType().equals(rType2))
+          return true;
+    }
+    return false;
+  }
+  
   public static Collection<TopicIF> findBinaryPlayers(
       TopicMap tm, TopicIF aType, TopicIF player1, TopicIF rType1, TopicIF rType2) {
     List<TopicIF> result = new ArrayList<TopicIF>();

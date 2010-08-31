@@ -1,4 +1,3 @@
-// $Id: FieldInstance.java,v 1.2 2009/02/13 11:48:36 geir.gronmo Exp $
 
 package ontopoly.model;
 
@@ -8,7 +7,6 @@ import java.util.Collection;
  * Represents a populated field attached to an instance topic.
  */
 public final class FieldInstance {
-
   private Topic instance;
   private FieldAssignment fieldAssignment;
 
@@ -51,12 +49,5 @@ public final class FieldInstance {
   public void removeValue(Object value, LifeCycleListener listener) {
     getFieldAssignment().getFieldDefinition().removeValue(this, value, listener);
   }
-
-//  /**
-//   * Removes all values.
-//   */
-//  public void clear() {
-//    throw new UnsupportedOperationException();
-//  }
 
 }

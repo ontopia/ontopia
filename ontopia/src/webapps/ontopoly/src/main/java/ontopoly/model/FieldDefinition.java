@@ -114,19 +114,19 @@ public abstract class FieldDefinition extends Topic {
    * Returns the cardinality of the field on this topic type.
    */
   public Cardinality getCardinality() {
-		if (cachedCardinality != null) return cachedCardinality;
+    if (cachedCardinality != null) return cachedCardinality;
 
     String query = 
-			"select $C from on:has-cardinality(%FD% : on:field-definition, $C : on:cardinality) limit 1?";
+      "select $C from on:has-cardinality(%FD% : on:field-definition, $C : on:cardinality) limit 1?";
 
     Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
 
     QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();    
     
     TopicIF card = qm.queryForObject(query, params);
-		Cardinality cardinality = (card == null ? Cardinality.getDefaultCardinality(this) : new Cardinality(card, getTopicMap()));
-		cachedCardinality = cardinality;
-		return cardinality;
+    Cardinality cardinality = (card == null ? Cardinality.getDefaultCardinality(this) : new Cardinality(card, getTopicMap()));
+    cachedCardinality = cardinality;
+    return cardinality;
   }
 
   /**
@@ -151,7 +151,7 @@ public abstract class FieldDefinition extends Topic {
     OntopolyModelUtils.makeBinaryAssociation(aType, player2,
         type2, player3, type3);
 
-		cachedCardinality = cardinality;
+    cachedCardinality = cardinality;
   }
 
   /**
@@ -177,8 +177,8 @@ public abstract class FieldDefinition extends Topic {
     if (!(obj instanceof FieldDefinition))
       return false;
 
-		FieldDefinition other = (FieldDefinition)obj;
-		return getTopicIF().equals(other.getTopicIF());
+    FieldDefinition other = (FieldDefinition)obj;
+    return getTopicIF().equals(other.getTopicIF());
   }
 
   public int hashCode() {

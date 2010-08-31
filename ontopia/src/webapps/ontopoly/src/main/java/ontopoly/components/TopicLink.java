@@ -21,7 +21,8 @@ public class TopicLink extends AbstractBookmarkablePageLink {
     setDefaultModel(topicModel); 
   }
   
-  public TopicLink(String id, IModel<? extends Topic> topicModel, FieldsViewModel fieldsViewModel) {
+  public TopicLink(String id, IModel<? extends Topic> topicModel,
+                   FieldsViewModel fieldsViewModel) {
     super(id);
     setDefaultModel(topicModel);
     this.fieldsViewModel = fieldsViewModel;
@@ -37,9 +38,6 @@ public class TopicLink extends AbstractBookmarkablePageLink {
   
   @Override
   public Class<? extends Page> getPageClass() {
-//    if (pageClassName != null)
-//      return super.getPageClass();
-    
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     return page.getPageClass(getTopic());
   }

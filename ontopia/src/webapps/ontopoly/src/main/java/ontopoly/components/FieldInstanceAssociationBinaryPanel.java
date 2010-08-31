@@ -176,7 +176,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
               getModel().detach(); // FIXME: better if we could just tweak model directly without detaching
               listView.removeAll();
               target.addComponent(fieldValuesContainer);
-            }		      
+            }
           });
           item.add(new DraggableBehavior(fieldDefinitionId));
         }
@@ -291,13 +291,13 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
       }
     };
-    listView.setReuseItems(true);	  
+    listView.setReuseItems(true);
     fieldValuesList.add(listView);
 
     // figure out which buttons to show
     this.fieldInstanceButtons = new WebMarkupContainer("fieldInstanceButtons");
     fieldInstanceButtons.setOutputMarkupId(true);
-    add(fieldInstanceButtons);	  
+    add(fieldInstanceButtons);
 
     if (readonlyField || !allowAdd) {
       // unused components

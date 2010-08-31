@@ -1,6 +1,5 @@
 package ontopoly.pages;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +15,7 @@ import ontopoly.components.LinkPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.components.TreePanel;
+import ontopoly.components.TopicListPanel;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
@@ -63,9 +63,9 @@ public class InstancesPage extends OntopolyAbstractPage {
     // Add list of instances
     TopicType topicType = topicTypeModel.getTopicType();
     
-    if(topicType.isLargeInstanceSet()) {
+    if (topicType.isLargeInstanceSet()) {
       form.add(new InstanceSearchPanel("contentPanel", topicTypeModel));
-    } else {
+    } else if (topicType.hasHierarchy()) {
       // create a tree
       final TreeModel treeModel = TreeModels.createInstancesTreeModel(topicTypeModel.getTopicType(), isAdministrationEnabled());
       IModel<TreeModel> treeModelModel = new AbstractReadOnlyModel<TreeModel>() {
@@ -107,6 +107,9 @@ public class InstancesPage extends OntopolyAbstractPage {
       };
       treePanel.setOutputMarkupId(true);
       form.add(treePanel);
+    } else {
+      // just make a list
+      form.add(new TopicListPanel("contentPanel", topicType.getInstances()));
     }
     
     // Function boxes

@@ -51,6 +51,21 @@ public class TopicType extends AbstractTypingTopic {
     return isTrueAssociation("has-large-instance-set", "topic-type");
   }
 
+  /**
+   * Tests whether this topic type has a hierarchy-forming association
+   * type attached to it.
+   */
+  public boolean hasHierarchy() {
+    // on:forms-hierarchy-for($TTYPE : on:topic-type, $ATYPE : on:association-type)
+    TopicMap tm = getTopicMap();
+    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "forms-hierarchy-for");
+    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "topic-type");
+    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-type");
+    TopicIF topicIF = getTopicIF();
+    return OntopolyModelUtils.hasBinaryAssociation(topicIF, aType, rType1,
+                                                   rType2);
+  }
+
   private boolean isTrueAssociation(String atype, String rtype) {
     TopicMap tm = getTopicMap();
     TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, atype);
@@ -517,8 +532,8 @@ public class TopicType extends AbstractTypingTopic {
    * 
    * @return A collection of Topic objects.
    */
-  public Collection<Topic> getInstances() {
-    String query = "instance-of($instance, %topic%)?";
+  public List<Topic> getInstances() {
+    String query = "instance-of($instance, %topic%) order by $instance?";
 
     Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 
