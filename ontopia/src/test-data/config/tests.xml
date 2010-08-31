@@ -359,12 +359,6 @@
     <test>net.ontopia.topicmaps.webed.utils.test.ActionUtilsTest</test>
     <test>net.ontopia.topicmaps.webed.utils.test.NamedLockManagerTest</test>
   </group>
-  
-  <!-- Webed Tests specific to the web apps -->
-  <group>
-    <name>net.ontopia.topicmaps.webed.webapps.test</name>
-    <test>net.ontopia.topicmaps.webed.webapps.omnieditor.test.ShowActionGroupParamRuleTest</test>
-  </group>
 
   <!-- Webed Action Library tests -->
   <group>

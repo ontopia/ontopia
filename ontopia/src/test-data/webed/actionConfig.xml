@@ -126,8 +126,6 @@
            fullname="net.ontopia.topicmaps.webed.webapps.omnieditor.ParamRuleChoose2Add"/>
     <class shortcut="editAssocRule"
            fullname="net.ontopia.topicmaps.webed.webapps.omnieditor.ParamRuleEditAssoc"/>
-    <class shortcut="showAG"
-           fullname="net.ontopia.topicmaps.webed.webapps.omnieditor.ShowActionGroupParamRule"/>
 
   </classMap>
 
@@ -196,11 +194,6 @@
     <forward name="defaultForwardTopic"
              path="topic_edit.jsp"
              frame="edit" />
-    <forward name="switchTopicTabForward"
-             path="topic_edit.jsp"
-             frame="edit"
-             paramRule="showAG">
-    </forward>
     <forward name="defaultForwardAssoc"
              path="assoc_edit.jsp"
              frame="edit" />
@@ -257,8 +250,6 @@
       <forwardDefault forward="defaultForwardTopic"/>
       <forwardRule action="chooseType"
                    forward="chooseTypeForward"/>
-      <forwardRule action="leaveTab"
-                   forward="switchTopicTabForward"/>
     </forwardRules>
 
   </actionGroup>
@@ -330,8 +321,6 @@
                    forward="chooseBasenameThemeForward"/>
       <forwardRule action="chooseVariantTheme"
                    forward="chooseVariantThemeForward"/>
-      <forwardRule action="leaveTab"
-                   forward="switchTopicTabForward"/>
     </forwardRules>
 
   </actionGroup>
@@ -393,8 +382,6 @@
                    forward="chooseOccurrenceTypeForward"/>
       <forwardRule action="chooseOccurrenceTheme"
                    forward="chooseOccurrenceThemeForward"/>
-      <forwardRule action="leaveTab"
-                   forward="switchTopicTabForward"/>
     </forwardRules>
 
   </actionGroup>
@@ -456,8 +443,6 @@
                    forward="chooseExtOccurrenceTypeForward"/>
       <forwardRule action="chooseExtOccurrenceTheme"
                    forward="chooseExtOccurrenceThemeForward"/>
-      <forwardRule action="leaveTab"
-                   forward="switchTopicTabForward"/>      
     </forwardRules>
 
   </actionGroup>
@@ -481,8 +466,6 @@
       <forwardDefault forward="defaultForwardTopic"/>
       <forwardRule action="createAssocWithPlayer"
                    forward="defaultForwardAssoc"/>
-      <forwardRule action="leaveTab"
-                   forward="switchTopicTabForward"/>      
     </forwardRules>
     
   </actionGroup>
