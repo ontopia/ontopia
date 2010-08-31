@@ -35,11 +35,6 @@ public class GlobalParseContext implements ParseContextIF {
     this.templates = new HashMap<String, Template>();
     this.counter = 0;
     this.include_uris = new CompactHashSet<LocatorIF>();
-    try {
-      prefixes.put("xsd", new URILocator("http://www.w3.org/2001/XMLSchema#"));
-    } catch (MalformedURLException e) {
-      throw new OntopiaRuntimeException(e);
-    }
   }
 
   public void addPrefix(String prefix, LocatorIF locator) {
