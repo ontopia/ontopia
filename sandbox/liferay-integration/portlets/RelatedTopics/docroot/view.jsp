@@ -18,6 +18,10 @@
 <%@ page import = "net.ontopia.topicmaps.nav2.utils.ContextUtils" %>
 
 <portlet:defineObjects />
+
+<c:choose>
+<c:when test="${topic != null}">
+
 <tolog:context topicmap="<%= tmid %>">
   <!-- TODO: Take parameter and check whether white or blacklisting should be done (use appropriate tags then)-->
   <!-- topic is to contain a topic object, that has been passed from the portlets java code, assocTypes contains a set of association type -->
@@ -42,3 +46,11 @@
     </ul>
   </portal:related>
 </tolog:context>
+
+</c:when>
+<c:otherwise>
+
+<p>No topic found!</p>
+
+</c:otherwise>
+</c:choose>

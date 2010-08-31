@@ -15,6 +15,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -24,9 +25,11 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
- * RelatedTopics will display the tags of an article. It will try to look up the topic for that article in the topic map and check
- * what concepts are associated with it. This class dispatches the incoming requests to the right JSPs and reads and writes some config
- * from and to the <code>PortletPreferences</code>.
+ * RelatedTopics will display the tags of an article. It will try to
+ * look up the topic for that article in the topic map and check what
+ * concepts are associated with it. This class dispatches the incoming
+ * requests to the right JSPs and reads and writes some config from
+ * and to the <code>PortletPreferences</code>.
  *
  * @author Matthias Fischer
  *
@@ -40,13 +43,14 @@ public class RelatedTopicsPortlet extends GenericPortlet {
     config = new Configurator();
   }
 
-  public void doDispatch(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+  public void doDispatch(RenderRequest renderRequest,
+                         RenderResponse renderResponse)
+    throws IOException, PortletException {
     String jspPage = renderRequest.getParameter("jspPage");
 
     if (jspPage != null) {
       include(jspPage, renderRequest, renderResponse);
-    }
-    else {
+    } else {
       super.doDispatch(renderRequest, renderResponse);
     }
   }
@@ -71,16 +75,15 @@ public class RelatedTopicsPortlet extends GenericPortlet {
   }
 
   /**
-   * Prepares values to pass to the <code>view.jsp</code> for
-   * displaying.  Tries to obtain information on the topic
-   * (representing an article) it shall display.
+   * Prepares values to pass to the <code>view.jsp</code> for displaying.
+   * Tries to obtain information on the topic (representing an article) it shall display.
    *
    * @param renderRequest The request to render the <code>view.jsp</code> page
    *
    * @throws java.io.IOException Thrown by <code>include(viewJSP, renderRequest, renderResponse);</code>
    * @throws javax.portlet.PortletException Thrown by <code>include(viewJSP, renderRequest, renderResponse);</code>
    */
-	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+  public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
     // trying logger here instead of stdout just to see how it works out
     _log.debug("ShowTagsPortlet.doView: Entering method.");
     String queryString = (String)renderRequest.getAttribute("javax.servlet.forward.query_string");
@@ -103,24 +106,24 @@ public class RelatedTopicsPortlet extends GenericPortlet {
           topicId = config.findTopicIdFromNextWCD(renderRequest);
           if(topicId == null){
             _log.debug("4 fail");
-            // too bad, but w/o a topic id this portlet does not know what to display.
-            // TODO: Maybe some default content should be displayed.
-            throw new OntopiaRuntimeException("Unable to find Topic ID!");
+            // We didn't find a topic, but we're not going to complain here.
+            // Instead the portlet can display a warning.
           }
         }
       }
     }
 
     TopicMapIF topicmap = config.getTopicmap();
-    TopicIF topic = (TopicIF) topicmap.getObjectById(topicId);
+    TopicIF topic = null;
+    if (topicId != null)
+      topic = (TopicIF) topicmap.getObjectById(topicId);
 
     Set assocs = new HashSet();
 
     // Transform oid's into TopicIF Objects
     String[] assocOids = renderRequest.getPreferences().getValues("associds", null);
-
     if(assocOids != null){
-      for(String s : assocOids){
+      for(String s : assocOids) {
         TopicIF associationType = (TopicIF) topicmap.getObjectById(s);
         assocs.add(associationType);
       }
@@ -132,10 +135,11 @@ public class RelatedTopicsPortlet extends GenericPortlet {
       renderRequest.setAttribute("filterquery", filterQuery);
     }
 
-    // has the user made a choice whether she wants the associations to be included or excluded?
+    // has the user made a choice whether she wants the associations
+    // to be included or excluded?
     String assocMode = renderRequest.getPreferences().getValue("assocmode", null);
-    if(assocMode != null){
-      if(assocMode.equalsIgnoreCase("include")){
+    if(assocMode != null) {
+      if(assocMode.equalsIgnoreCase("include")) {
         renderRequest.setAttribute("mode", "include");
       } else {
         renderRequest.setAttribute("mode", "exclude");
@@ -144,18 +148,23 @@ public class RelatedTopicsPortlet extends GenericPortlet {
       // if no choice has been made presume "exclude" as default
       renderRequest.setAttribute("mode", "exclude");
     }
-
+    
     // these two are needed in any case, although assocs may be an empty set
-    renderRequest.setAttribute("topic", topic);
+    if (topic != null)
+      renderRequest.setAttribute("topic", topic);
     renderRequest.setAttribute("assocTypes", assocs);
 
     // forwarding to the jsp
     include(viewJSP, renderRequest, renderResponse);
-	}
+  }
 
   /**
-   * Handles <code>ActionRequests</code> as produced by calling <code>PortletURL actionUrl = portletResponse.createActionURL();</code> in <code>edit.jsp</code>.
-   * In this portlet this method is only used for setting preferences through the portlet's <code>edit.jsp</code>.
+   * Handles <code>ActionRequests</code> as produced by calling
+   * <code>PortletURL actionUrl =
+   * portletResponse.createActionURL();</code> in
+   * <code>edit.jsp</code>.  In this portlet this method is only used
+   * for setting preferences through the portlet's
+   * <code>edit.jsp</code>.
    *
    * @see ActionRequest
    * @see ActionResponse
@@ -166,7 +175,9 @@ public class RelatedTopicsPortlet extends GenericPortlet {
    * @throws java.io.IOException Might be thrown by <code>actionRequest.getPreferences().store()</code>.
    * @throws javax.portlet.PortletException Might be thrown by any of the <code>actionRequest.getPreferences()</code> methods.
    */
-  public void processAction(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException, PortletException {
+  public void processAction(ActionRequest actionRequest,
+                            ActionResponse actionResponse)
+    throws IOException, PortletException {
 
     // read the users input
     String serializedAssocIds = actionRequest.getParameter("associd");
@@ -175,30 +186,27 @@ public class RelatedTopicsPortlet extends GenericPortlet {
     String filterQuery = actionRequest.getParameter("filterquery");
 
     // and set it to the PortletPreferences for this portlet
-    if(serializedAssocIds != null){
+    PortletPreferences prefs = actionRequest.getPreferences();
+    if (serializedAssocIds != null) {
       String[] assocIdArray = serializedAssocIds.split(",");
 
-      for(int count = 0; count < assocIdArray.length; count++){
+      for (int count = 0; count < assocIdArray.length; count++)
         assocIdArray[count] = assocIdArray[count].trim();
-      }
 
-      actionRequest.getPreferences().setValues("associds", assocIdArray);
+      prefs.setValues("associds", assocIdArray);
     }
 
-    if(topicId != null){
-      actionRequest.getPreferences().setValue("topicid", topicId);
-    }
+    if (topicId != null)
+      prefs.setValue("topicid", topicId);
 
-    if(assocMode != null){
-      actionRequest.getPreferences().setValue("assocmode", assocMode);
-    }
+    if (assocMode != null)
+      prefs.setValue("assocmode", assocMode);
 
-    if(filterQuery != null){
-      actionRequest.getPreferences().setValue("filterquery", filterQuery);
-    }
+    if (filterQuery != null)
+      prefs.setValue("filterquery", filterQuery);
 
     // persist changes
-    actionRequest.getPreferences().store();
+    prefs.store();
   }
 
   protected void include(String path, RenderRequest renderRequest,RenderResponse renderResponse) throws IOException, PortletException {
