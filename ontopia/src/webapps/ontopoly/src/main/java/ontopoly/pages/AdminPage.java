@@ -66,7 +66,8 @@ public class AdminPage extends OntopolyAbstractPage {
     
     // Second column of radio buttons
     List<String> syntaxCategories = 
-      Arrays.asList("ltm", "xtm1", "xtm2", "rdf"); // TODO: cxtm and tm/xml
+      Arrays.asList("ltm", "xtm1", "xtm2", "xtm21", "rdf");
+    // TODO: cxtm and tm/xml
     
     syntax = syntaxCategories.get(1);
     filename = topicMap.getId();
@@ -76,7 +77,7 @@ public class AdminPage extends OntopolyAbstractPage {
     RadioChoice syntaxRadioChoice = new RadioChoice<String>("syntax", new PropertyModel<String>(this, "syntax"), syntaxCategories, 
       new IChoiceRenderer<String>() {
         public Object getDisplayValue(String object) {
-          return new ResourceModel("AdminPage.export.syntax." + object).getObject(); // "export.syntax.ltm", "export.syntax.xtm1", "export.syntax.xtm2", "export.syntax.rdf"
+          return new ResourceModel("AdminPage.export.syntax." + object).getObject(); // "export.syntax.ltm", "export.syntax.xtm1", "export.syntax.xtm2", "export.syntax.rdf" ...
         }
         public String getIdValue(String object, int index) {
           return object;
