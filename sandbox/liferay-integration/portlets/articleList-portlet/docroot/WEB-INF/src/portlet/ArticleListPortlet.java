@@ -66,9 +66,10 @@ public class ArticleListPortlet extends GenericPortlet {
     Map<String, String> params = util.PortletUtils.parseQueryString(queryString);
 
     TopicMapIF topicmap = tm.OntopiaAdapter.getInstance(true).getTopicMap();
-    TopicIF topic = (TopicIF) topicmap.getObjectById(params.get("topic"));
-    
-    renderRequest.setAttribute("topic", topic);
+    if (params.containsKey("topic")) {
+      TopicIF topic = (TopicIF) topicmap.getObjectById(params.get("topic"));
+      renderRequest.setAttribute("topic", topic);
+    }
 
     // transfer preferences into request attributes
     PortletPreferences prefs = renderRequest.getPreferences();

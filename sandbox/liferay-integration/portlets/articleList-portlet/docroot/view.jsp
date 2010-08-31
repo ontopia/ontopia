@@ -28,6 +28,9 @@
 
 <portlet:defineObjects />
 
+<c:choose>
+<c:when test="${topic != null}">
+
 <tolog:context topicmap="<%= tmid %>">
 
 <%
@@ -55,3 +58,11 @@
 </tolog:foreach>
 
 </tolog:context>
+
+</c:when>
+<c:otherwise>
+
+<p>No topic found!</p>
+
+</c:otherwise>
+</c:choose>
