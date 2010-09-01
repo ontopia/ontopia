@@ -24,10 +24,9 @@ gradle.taskGraph.whenReady {taskGraph ->
 
 repositories {
     mavenCentral()
-    mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-repository'
-    mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-snapshot-repository'
+    mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-repository/'
+    mavenRepo urls: 'http://ontopia.googlecode.com/svn/maven-snapshot-repository/'
     mavenRepo urls: 'http://repository.jboss.org/maven2/'
-    mavenRepo urls: 'http://www.tmapi.org/maven-repository/'
     mavenRepo urls: 'http://repository.semagia.com/snapshots/'
 }
 
