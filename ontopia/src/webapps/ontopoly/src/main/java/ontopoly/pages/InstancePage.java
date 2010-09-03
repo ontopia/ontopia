@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.OntopolyAccessStrategy.Privilege;
 import ontopoly.OntopolySession;
 import ontopoly.components.AddOrRemoveTypeFunctionBoxPanel;
 import ontopoly.components.AssociationTransformFunctionBoxPanel;
@@ -93,7 +94,10 @@ public class InstancePage extends OntopolyAbstractPage {
       this.fieldsViewModel = new FieldsViewModel(FieldsView.getDefaultFieldsView(topic.getTopicMap()));
     
     // page is read-only if topic type is read-only
-    setReadOnlyPage(tt.isReadOnly() || ObjectUtils.equals(getRequest().getParameter("ro"), "true") || !((AbstractOntopolyPage)this).filterTopic(topic));
+    setReadOnlyPage(tt.isReadOnly() || 
+    		ObjectUtils.equals(getRequest().getParameter("ro"), "true") || 
+    		!((AbstractOntopolyPage)this).filterTopic(topic) ||
+    		((OntopolySession)Session.get()).getPrivilege(topic) == Privilege.READ_ONLY);
     
     // TODO: authorize access to topic
     if (!isReadOnlyPage()) {

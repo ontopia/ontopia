@@ -5,12 +5,13 @@ import java.io.Serializable;
 import javax.servlet.http.HttpServletRequest;
 
 import ontopoly.model.FieldInstance;
-import ontopoly.model.FieldsView;
 import ontopoly.model.Topic;
 
 
 public abstract class OntopolyAccessStrategy implements Serializable {
 
+  public enum Privilege { EDIT, READ_ONLY, NONE };
+	
   public boolean isEnabled() {
 	  return true;
   }
@@ -23,12 +24,12 @@ public abstract class OntopolyAccessStrategy implements Serializable {
     return new User(username, false);
   }
 
-  public boolean editable(User user, Topic topic) {
-    return true;
+  public Privilege getPrivilege(User user, Topic topic) {
+    return Privilege.EDIT;
   }
 
-  public boolean editable(User user, FieldInstance fieldInstance) {
-    return true;
+  public Privilege getPrivilege(User user, FieldInstance fieldInstance) {
+    return Privilege.EDIT;
   }
 
 }

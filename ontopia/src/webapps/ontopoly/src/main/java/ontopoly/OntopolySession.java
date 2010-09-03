@@ -1,5 +1,7 @@
 package ontopoly;
 
+import ontopoly.OntopolyAccessStrategy.Privilege;
+import ontopoly.model.FieldInstance;
 import ontopoly.model.Topic;
 import ontopoly.pages.AbstractProtectedOntopolyPage;
 import ontopoly.pages.SignInPage;
@@ -76,6 +78,14 @@ public class OntopolySession extends WebSession {
     this.user = user;
   }
 
+  public Privilege getPrivilege(Topic topic) {
+	  return accessStrategy.getPrivilege(getUser(), topic);
+  }
+
+  public Privilege getPrivilege(FieldInstance fieldInstance) {
+	  return accessStrategy.getPrivilege(getUser(), fieldInstance);
+  }
+  
   public LockManager.Lock lock(Topic topic, String lockerId) {
     // compose locker id and lock key
     String lockKey = getLockKey(topic);
@@ -145,7 +155,6 @@ public class OntopolySession extends WebSession {
    * @return true if the user was authenticated.
    */
   public boolean authenticate(String username, String password) {
-    // TODO: actually authenticate user
     User authenticatedUser = accessStrategy.authenticate(username, password);
     if (authenticatedUser != null) {
       setUser(authenticatedUser);
