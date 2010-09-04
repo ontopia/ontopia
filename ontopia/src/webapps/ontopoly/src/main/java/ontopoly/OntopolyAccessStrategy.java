@@ -32,4 +32,8 @@ public abstract class OntopolyAccessStrategy implements Serializable {
     return Privilege.EDIT;
   }
 
+  public String getSignInMessage() {
+	return "Please sign in.";
+  }
+
 }

@@ -164,4 +164,8 @@ public class OntopolySession extends WebSession {
     }
   }
   
+  public String getSignInMessage() {
+	  return accessStrategy.getSignInMessage();
+  }
+  
 }

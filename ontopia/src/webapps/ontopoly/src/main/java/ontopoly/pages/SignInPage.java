@@ -7,12 +7,12 @@ import ontopoly.components.StartPageHeaderPanel;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
@@ -25,6 +25,14 @@ public class SignInPage extends AbstractOntopolyPage {
 	add(new FooterPanel("footer"));
 
     add(new Label("title", new ResourceModel("page.title.signin")));
+
+    add(new Label("message", new AbstractReadOnlyModel<String>() {
+        @Override
+        public String getObject() {
+          OntopolySession session = (OntopolySession)Session.findOrCreate();
+          return session.getSignInMessage();
+        }
+      }));
     add(new SignInForm("form"));
   }
   
