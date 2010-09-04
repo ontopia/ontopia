@@ -26,7 +26,7 @@ public class SampleOntopolyApplication extends OntopolyApplication {
 			}
 			@Override
 			public Privilege getPrivilege(User user, Topic topic) {
-				if (topic.isOntologyTopic() || topic.isSystemTopic()) {
+				if (topic.isOntologyTopic() || topic.isSystemTopic() || topic.isFieldDefinition() || topic.isTopicMap()) {
 					return Privilege.READ_ONLY;
 				} else {
 					return Privilege.EDIT;

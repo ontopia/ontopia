@@ -14,6 +14,7 @@ import ontopoly.utils.TopicComparator;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.CopyUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
@@ -140,6 +141,30 @@ public class Topic {
   public boolean isRoleType() {
     TopicIF type = topicIF.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_ROLE_TYPE);
     return topicIF.getTypes().contains(type);
+  }
+
+  /**
+   * Tests whether this topic is a field definition or an association field.
+   * 
+   * @return true if this is a role type.
+   */
+  public boolean isFieldDefinition() {
+	TopicMapIF topicMap = topicIF.getTopicMap();
+	TopicIF associationField = topicMap.getTopicBySubjectIdentifier(PSI.ON_ASSOCIATION_FIELD);
+	TopicIF identityField = topicMap.getTopicBySubjectIdentifier(PSI.ON_IDENTITY_FIELD);
+	TopicIF nameField = topicMap.getTopicBySubjectIdentifier(PSI.ON_NAME_FIELD);
+	TopicIF occurrenceField = topicMap.getTopicBySubjectIdentifier(PSI.ON_OCCURRENCE_FIELD);
+	TopicIF roleField = topicMap.getTopicBySubjectIdentifier(PSI.ON_ROLE_FIELD);
+    for (TopicIF topicType : topicIF.getTypes()) {    	
+    	if (topicType.equals(associationField) ||
+        		topicType.equals(identityField) ||
+        		topicType.equals(nameField) ||
+        		topicType.equals(occurrenceField) ||
+        		topicType.equals(roleField)) {
+    		return true;
+    	}
+    }
+    return false;
   }
 
   /**

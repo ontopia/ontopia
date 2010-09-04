@@ -43,6 +43,8 @@ public class PSI {
   public static final LocatorIF ON_SUBJECT_IDENTIFIER = PSI.ON.resolveAbsolute("subject-identifier");
   public static final LocatorIF ON_ITEM_IDENTIFIER = PSI.ON.resolveAbsolute("item-identifier");
 
+  public static final LocatorIF ON_FIELD_DEFINITION = PSI.ON.resolveAbsolute("field-definition");
+
   public static final LocatorIF ON_ASSOCIATION_FIELD = PSI.ON.resolveAbsolute("association-field");
   public static final LocatorIF ON_IDENTITY_FIELD = PSI.ON.resolveAbsolute("identity-field");
   public static final LocatorIF ON_NAME_FIELD = PSI.ON.resolveAbsolute("name-field");
