@@ -1,6 +1,8 @@
 package ontopoly.pages;
 
 import ontopoly.OntopolySession;
+import ontopoly.components.FooterPanel;
+import ontopoly.components.StartPageHeaderPanel;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
@@ -14,9 +16,14 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
-public class SignInPage extends WebPage {
+public class SignInPage extends AbstractOntopolyPage {
   
   public SignInPage(PageParameters params) {
+	super(params);
+	    
+	add(new StartPageHeaderPanel("header"));
+	add(new FooterPanel("footer"));
+
     add(new Label("title", new ResourceModel("page.title.signin")));
     add(new SignInForm("form"));
   }
@@ -36,9 +43,7 @@ public class SignInPage extends WebPage {
     } 
     @Override 
     public final void onSubmit() { 
-//      System.out.println("U: " + username + " P: " + password);
       if (signIn(username, password)) { 
-//        System.out.println("A" + continueToOriginalDestination());
         if (!continueToOriginalDestination()) { 
           setResponsePage(getApplication().getHomePage()); 
         } 
