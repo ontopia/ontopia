@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.OntopolySession;
+import ontopoly.OntopolyAccessStrategy.Privilege;
 import ontopoly.components.ButtonFunctionBoxPanel;
 import ontopoly.components.DeleteTopicMapFunctionBoxPanel;
 import ontopoly.components.FunctionBoxesPanel;
@@ -23,6 +25,7 @@ import ontopoly.utils.OntopolyUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
@@ -71,8 +74,12 @@ public class DescriptionPage extends OntopolyAbstractPage {
     else
       this.fieldsViewModel = new FieldsViewModel(FieldsView.getDefaultFieldsView(topic.getTopicMap()));
          
-    setReadOnlyPage(ObjectUtils.equals(getRequest().getParameter("ro"), "true"));
-    
+    // page is read-only if topic type is read-only
+    setReadOnlyPage(tt.isReadOnly() || 
+    		ObjectUtils.equals(getRequest().getParameter("ro"), "true") || 
+    		!((AbstractOntopolyPage)this).filterTopic(topic) ||
+    		((OntopolySession)Session.get()).getPrivilege(topic) == Privilege.READ_ONLY);
+
     // Adding part containing title and help link
     createTitle();
 

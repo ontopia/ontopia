@@ -17,7 +17,7 @@
     </filter-class>
     <init-param>
       <param-name>applicationClassName</param-name> 
-      <param-value>ontopoly.OntopolyApplication</param-value> 
+      <param-value>ontopoly.SampleOntopolyApplication</param-value> 
     </init-param>
   </filter>
   <filter-mapping>
