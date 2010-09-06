@@ -97,6 +97,6 @@ public class TopicLink extends AbstractBookmarkablePageLink {
  
   @Override
   public void onDetach() {
-	  fieldsViewModel.detach();
+	  if (fieldsViewModel != null) fieldsViewModel.detach();
   }
 }
