@@ -94,5 +94,9 @@ public class TopicLink extends AbstractBookmarkablePageLink {
 //    AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
 //    return page.filterTopic(getTopic());
   }
-  
+ 
+  @Override
+  public void onDetach() {
+	  fieldsViewModel.detach();
+  }
 }

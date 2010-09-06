@@ -16,7 +16,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 public class TopicListPanel extends Panel {
   
-  public TopicListPanel(String id, List<Topic> topics) {
+  public TopicListPanel(String id, IModel<List<Topic>> topics) {
     super(id);
     add(new TopicListView("topicList", topics));
   }
@@ -24,7 +24,7 @@ public class TopicListPanel extends Panel {
   // --- TopicListView
 
   public static class TopicListView extends ListView {
-    public TopicListView(String id, List<Topic> list) {
+    public TopicListView(String id, IModel<List<Topic>> list) {
       super(id, list);
     }
     

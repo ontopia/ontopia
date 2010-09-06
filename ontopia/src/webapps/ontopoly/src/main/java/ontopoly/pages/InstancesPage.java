@@ -7,6 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
+import ontopoly.OntopolySession;
 import ontopoly.components.CreateInstanceFunctionBoxPanel;
 import ontopoly.components.FunctionBoxesPanel;
 import ontopoly.components.InstanceSearchPanel;
@@ -28,6 +29,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -109,7 +111,12 @@ public class InstancesPage extends OntopolyAbstractPage {
       form.add(treePanel);
     } else {
       // just make a list
-      form.add(new TopicListPanel("contentPanel", topicType.getInstances()));
+      form.add(new TopicListPanel("contentPanel", new AbstractReadOnlyModel<List<Topic>>() {
+          @Override
+          public List<Topic> getObject() {
+        	return topicTypeModel.getTopicType().getInstances();
+          }
+        }));
     }
     
     // Function boxes
