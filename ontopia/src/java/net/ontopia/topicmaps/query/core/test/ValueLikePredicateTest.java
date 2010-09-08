@@ -193,4 +193,18 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
                 "  occurrence($TOPIC, $OCC), " + 
                 "  value-like($OCC, \"topic1\")?");
   }
+
+  public void testIssue302() throws InvalidQueryException, IOException {
+    load("int-occs.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "TOPIC", getTopicById("topic1"));
+
+    verifyQuery(matches,
+                "select $TOPIC from " +
+                "  $query = \"topic1\", " +
+                "  type($OCC, description), " +
+                "  occurrence($TOPIC, $OCC), " + 
+                "  value-like($OCC, $query)?");
+  }
 }

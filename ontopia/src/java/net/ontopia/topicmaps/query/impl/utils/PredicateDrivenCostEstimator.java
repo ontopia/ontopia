@@ -20,7 +20,7 @@ public class PredicateDrivenCostEstimator extends CostEstimator {
   public static int WHOLE_TM_RESULT = 1000;
   public static int BIG_RESULT      = 100;
   public static int MEDIUM_RESULT   = 10;
-  public static int SMALL_RESULT    = 2;
+  public static int SMALL_RESULT    = 3;
   public static int SINGLE_RESULT   = 1;
   public static int FILTER_RESULT   = 0;
   public static int FAIL_RESULT     = -1;

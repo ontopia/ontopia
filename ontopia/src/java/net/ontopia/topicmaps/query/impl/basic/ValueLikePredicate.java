@@ -43,7 +43,13 @@ public class ValueLikePredicate implements BasicPredicateIF {
   }
   
   public int getCost(boolean[] boundparams) {
-    return PredicateDrivenCostEstimator.FILTER_RESULT;
+    if (!boundparams[1])
+      // cannot run predicate before we have the query
+      return PredicateDrivenCostEstimator.INFINITE_RESULT;
+    else
+      // this is not true, but we want to run the full-text as early as
+      // possible, to avoid running it many times. 
+      return PredicateDrivenCostEstimator.FILTER_RESULT;
   }
 
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
