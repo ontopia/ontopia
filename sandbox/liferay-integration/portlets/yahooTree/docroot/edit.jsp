@@ -38,7 +38,7 @@ String columns = prefs.getValue("columns", "");
 
 <tr><td>Child query:
     <td><textarea name=childquery cols="60">
-          <%= topquery %>
+          <%= childquery %>
         </textarea>
 
 <tr><td>Columns:
