@@ -228,7 +228,7 @@ public class TologQuery extends TologStatement {
         
       } else if (theClause instanceof NotClause) {
         NotClause clause = (NotClause) theClause;
-        buf.append("not(" + clause.getClauses() + ")");
+        buf.append("not(" + toString(clause.getClauses()) + ")");
         
       } else
         throw new OntopiaRuntimeException("Unknown clause type:" + theClause);
@@ -270,7 +270,7 @@ public class TologQuery extends TologStatement {
       Pair pair = (Pair) arg;
       valueToString(pair.getFirst(), buf);
       buf.append(" : ");
-      valueToString(pair.getSecond(), buf);
+      buf.append(topicToString((TopicIF) pair.getSecond()));
     } else
       buf.append(arg);
   }
