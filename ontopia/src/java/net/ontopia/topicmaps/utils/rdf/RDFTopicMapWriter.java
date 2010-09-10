@@ -62,50 +62,6 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
   }
 
   /**
-   * PUBLIC: Sets the filter that decides which topic map constructs
-   * are accepted and exported. Uses 'filter' to identify individual
-   * topic constructs as allowed or disallowed. TM constructs that
-   * depend on the disallowed topics are also disallowed.
-   *
-   * @param filter Places constraints on individual topicmap constructs.
-   */  
-  public void setFilter(DeciderIF filter) {
-    this.filter = new TMExporterDecider(filter);
-  }
-  
-  /**
-   * Filter a single object..
-   * @param unfiltered The object to filter.
-   * @return True if the object is accepted by the filter or the filter is null.
-   *         False otherwise.
-   */
-  private boolean filterOk(Object unfiltered) {
-    if (filter == null)
-      return true;
-    return filter.ok(unfiltered);
-  }
-
-  /**
-   * Filter a whole collection of objects.
-   * @param unfiltered The objects to filter.
-   * @return A new collection containing all objects accepted by the filter, or
-   *         if this.filter is null, returns the original collection.
-   */
-  private Collection filterCollection(Collection unfiltered) {
-    if (filter == null)
-      return unfiltered;
-    Collection retVal = new ArrayList();
-    Iterator unfilteredIt = unfiltered.iterator();
-    ;
-    while (unfilteredIt.hasNext()) {
-      Object current = unfilteredIt.next();
-      if (filter.ok(current))
-        retVal.add(current);
-    }
-    return retVal;
-  }
-
-  /**
    * PUBLIC: Creates a writer that writes the RDF representation to
    * the given OutputStream serialized to RDF/XML and using the UTF-8
    * character encoding.
@@ -165,6 +121,50 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
    */
   public boolean getPreserveReification() {
     return preserve_reification;
+  }
+
+  /**
+   * PUBLIC: Sets the filter that decides which topic map constructs
+   * are accepted and exported. Uses 'filter' to identify individual
+   * topic constructs as allowed or disallowed. TM constructs that
+   * depend on the disallowed topics are also disallowed.
+   *
+   * @param filter Places constraints on individual topicmap constructs.
+   */  
+  public void setFilter(DeciderIF filter) {
+    this.filter = new TMExporterDecider(filter);
+  }
+  
+  /**
+   * Filter a single object..
+   * @param unfiltered The object to filter.
+   * @return True if the object is accepted by the filter or the filter is null.
+   *         False otherwise.
+   */
+  private boolean filterOk(Object unfiltered) {
+    if (filter == null)
+      return true;
+    return filter.ok(unfiltered);
+  }
+
+  /**
+   * Filter a whole collection of objects.
+   * @param unfiltered The objects to filter.
+   * @return A new collection containing all objects accepted by the filter, or
+   *         if this.filter is null, returns the original collection.
+   */
+  private Collection filterCollection(Collection unfiltered) {
+    if (filter == null)
+      return unfiltered;
+    Collection retVal = new ArrayList();
+    Iterator unfilteredIt = unfiltered.iterator();
+    ;
+    while (unfilteredIt.hasNext()) {
+      Object current = unfilteredIt.next();
+      if (filter.ok(current))
+        retVal.add(current);
+    }
+    return retVal;
   }
   
   /// the actual writer
@@ -413,13 +413,13 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     if (locator == null && !topic.getSubjectIdentifiers().isEmpty())
       locator = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
     if (locator != null)
-      return new AResourceWrapper(locator.getAddress());
+      return new AResourceWrapper(locator.getExternalForm());
 
     return makeAnonymousNode(topic);
   }
 
   private AResource getResource(LocatorIF locator) {
-    return new AResourceWrapper(locator.getAddress());
+    return new AResourceWrapper(locator.getExternalForm());
   }
 
   private AResource getResource() {
