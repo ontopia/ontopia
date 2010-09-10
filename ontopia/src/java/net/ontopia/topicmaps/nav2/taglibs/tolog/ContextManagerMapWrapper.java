@@ -55,6 +55,15 @@ public class ContextManagerMapWrapper implements Map {
     return retVal;
   }
   
+  public int size() { 
+    // we shouldn't really implement this method, as we have no idea
+    // how many (if any) variables there are inside the context, but
+    // Liferay insists on calling this method, and so we can't crash.
+    // we "solve" it by returning zero, which makes Liferay shut up
+    // and go away.
+    return 0;
+  } 
+  
   // Interface methods that are not supported.
   
   public void clear() { 
@@ -101,10 +110,6 @@ public class ContextManagerMapWrapper implements Map {
     
     // Return the old mapped value of the key or null if it wasn't mapped.
     return retVal;
-  }
-  
-  public int size() { 
-    throw new UnsupportedOperationException();
   }
   
   public Collection values() { 

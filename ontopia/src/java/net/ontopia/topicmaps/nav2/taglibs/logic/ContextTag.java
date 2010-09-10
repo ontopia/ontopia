@@ -81,7 +81,7 @@ public class ContextTag extends TagSupport
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {
-    this.contextManager = new ContextManager();
+    this.contextManager = new ContextManager(pageContext);
     this.functions = new HashMap();
     this.queryResults = new HashMap();
 

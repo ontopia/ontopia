@@ -83,8 +83,7 @@ public abstract class BaseOutputProducingTag extends TagSupport {
   /**
    * Get the object to write out (either through a variable or query).
    */
-  public Object generateOutputObject()
-          throws JspTagException {
+  public Object generateOutputObject() throws JspTagException {
     if (query == null && variableName == null)
       throw new NavigatorRuntimeException(getName() + " : requires"
               + " either a 'query' - or a 'var' parameter, but got"

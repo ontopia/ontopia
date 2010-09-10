@@ -10,9 +10,12 @@ import java.util.Stack;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.servlet.jsp.PageContext;
+  
 import net.ontopia.topicmaps.nav2.core.ContextManagerIF;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
-  
+import net.ontopia.topicmaps.nav2.impl.framework.InteractionELSupport;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,10 +40,14 @@ public class ContextManager implements ContextManagerIF {
   /** Current scoped set of variables (equivalent to peeking on stack) */
   private Map values;
 
-  public ContextManager() {
+  /** Reference to page context so we can look things up there */
+  private PageContext pageContext;
+
+  public ContextManager(PageContext pageContext) {
     // initialize root scope
     scopes = new Stack();
     pushScope();
+    this.pageContext = pageContext;
   }
 
   // ------------------------------------------------------------------
@@ -84,8 +91,14 @@ public class ContextManager implements ContextManagerIF {
             return ancestorValues.get(name);
         } // for
       }
+
+      // we still haven't found anything. try pageContext
+      Object v = InteractionELSupport.getValue(name, pageContext);
+      if (v == null || v instanceof Collection)
+        return v;
+      else
+        return Collections.singleton(v);
     }
-    return null;
   }
   
   public void setValue(String name, Collection coll) {
