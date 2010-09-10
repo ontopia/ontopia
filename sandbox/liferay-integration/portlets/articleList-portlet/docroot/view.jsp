@@ -34,13 +34,7 @@
 <tolog:context topicmap="<%= tmid %>">
 
 <%
-  String query = 
-    "using lr for i\"http://psi.ontopia.net/liferay/\" " +
-    "lr:is-about(%topic% : lr:concept, $ART : lr:work), " +
-    "lr:article_id($ART, $ARTID), " +
-    "lr:contains($ART : lr:containee, $GRP : lr:container), " +
-    "lr:groupid($GRP, $GRPID)?";
-
+  String query = (String) request.getAttribute("query");
   String templateid = (String) request.getAttribute("templateid");
 %>
 <tolog:query name="thequery"><c:out value="${query}" escapeXml="false"/></tolog:query>

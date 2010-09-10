@@ -18,6 +18,8 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -92,6 +94,10 @@ public class ArticleListPortlet extends GenericPortlet {
     prefs.setValue("templateid", templateid);
 
     prefs.store();
+
+    // apparently we need to set these
+    actionResponse.setPortletMode(PortletMode.VIEW);
+    actionResponse.setWindowState(WindowState.NORMAL);    
   }
   
   protected void include(String path, RenderRequest renderRequest,RenderResponse renderResponse) throws IOException, PortletException {

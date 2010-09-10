@@ -29,9 +29,7 @@ String templateid = prefs.getValue("templateid", "");
 <form name="frm_edit" action="<%=actionUrl%>" method="post">
 <table>
 <tr><td>Query:
-    <td><textarea name=query cols="60">
-          <%= query %>
-        </textarea>
+    <td><textarea name=query cols="60"><%= query %></textarea>
 
 <tr><td>Template ID:
     <td><input name=templateid value="<%= templateid %>" size="10">
