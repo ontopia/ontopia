@@ -289,11 +289,13 @@ public class RelatedTopics {
         Heading heading = (Heading) typemap.get(key);
         if (heading == null) {
           heading = new Heading(ttype);
-          if (headingOrderQuery != null) heading.setSortKey(getSortKey(ttype, headingOrderQuery));
+          if (headingOrderQuery != null)
+            heading.setSortKey(getSortKey(ttype, headingOrderQuery));
           typemap.put(key, heading);
         }
         Association child = new Association(role, false);
-        if (childOrderQuery != null) child.setSortKey(getSortKey(child.getPlayer(), childOrderQuery));
+        if (childOrderQuery != null)
+          child.setSortKey(getSortKey(child.getPlayer(), childOrderQuery));
         heading.addChild(child);
       } else {
         // not a weak type
@@ -302,11 +304,13 @@ public class RelatedTopics {
         Heading heading = (Heading) typemap.get(key);
         if (heading == null) {
           heading = new Heading(assoc.getType(), role.getType());
-          if (headingOrderQuery != null) heading.setSortKey(getSortKey(assoc.getType(), headingOrderQuery));
+          if (headingOrderQuery != null)
+            heading.setSortKey(getSortKey(assoc.getType(), headingOrderQuery));
           typemap.put(key, heading);
         }
         Association child = new Association(role, true);
-        if (childOrderQuery != null) child.setSortKey(getSortKey(child.getPlayer(), childOrderQuery));
+        if (childOrderQuery != null)
+          child.setSortKey(getSortKey(child.getPlayer(), childOrderQuery));
         heading.addChild(child);
       }
     }
