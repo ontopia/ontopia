@@ -22,6 +22,11 @@ import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 %column
 
 %{
+  /**
+   * Used to count the no of multiline comments
+   */
+  private int commentCounter;
+  
   private StringBuffer string = new StringBuffer(); // used to gather strings
   
   private String docuri;
@@ -79,9 +84,7 @@ InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
 
 /* comments */
-Comment = {EndOfLineComment} | {MultilineComment}
-EndOfLineComment     = "#"[^(] {InputCharacter}* {LineTerminator}?
-MultilineComment     = "#(" ([^)]* [^#])*  ")#"
+Comment = "#"[^(] {InputCharacter}* {LineTerminator}?
 
 /* identifiers */
 QName = {Identifier} ":" ([0-9]+ {NamePart}* | {Identifier})
@@ -113,6 +116,7 @@ Date = "-"?{NonZero}*{Digit}{Digit}{Digit}{Digit}"-"{Digit}{Digit}"-"{Digit}{Dig
 DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
 
 %state STRING
+%xstate ML_COMMENT
 %%
 <YYINITIAL> {
   "1.0"            { return newToken(CTMParser.ONEOH); }
@@ -159,8 +163,15 @@ DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
   {IRI}            { return newToken(CTMParser.IRI); }
   {WrappedIRI}     { return newToken(CTMParser.WRAPPED_IRI,
                                      yytext().substring(1, yylength() - 1)); }
+  "#("             { commentCounter=1; yybegin(ML_COMMENT); }
   {Comment}        { /* ignore */ }
   {WhiteSpace}     { /* ignore */ }
+}
+
+<ML_COMMENT> {
+  "#("            { commentCounter++; }
+  ")#"            { commentCounter--; if (commentCounter==0) { yybegin(YYINITIAL); } }
+  [^]             { /* ignore */ }
 }
 
 <STRING> {
