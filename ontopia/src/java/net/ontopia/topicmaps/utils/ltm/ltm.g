@@ -166,16 +166,14 @@ options {
     * @ return the looked-up/created topic.
     */
   private TopicIF getTopicBySubjectIndicator(String subject) 
-          throws SemanticException {
-    LocatorIF locator;
-    
-    locator = makeURI(subject);
+    throws SemanticException {
+    LocatorIF locator = makeURI(subject);
   
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(locator);
     TMObjectIF obj = topicmap.getObjectByItemIdentifier(locator);
     if (topic != null && obj != null) {
       if (obj instanceof TopicIF && !obj.equals(topic))
-        MergeUtils.mergeInto(topic, (TopicIF)obj);
+        MergeUtils.mergeInto(topic, (TopicIF)obj);      
     }
     if (topic == null && obj != null)
       topic = (TopicIF)obj;
@@ -191,10 +189,8 @@ options {
     * @ return the looked-up/created topic.
     */
   private TopicIF getTopicBySubjectLocator(String subject) 
-          throws SemanticException {
-    LocatorIF locator;
-     
-    locator = makeURI(subject);
+    throws SemanticException {
+    LocatorIF locator = makeURI(subject);
   
     TopicIF topic = topicmap.getTopicBySubjectLocator(locator);
     if (topic == null) {
@@ -337,22 +333,24 @@ options {
     if (topic == other)
       return topic;
 
-    // other may be the sort or display topic, in which case we're
+    // get rid of object with lowest id
+    if (topic.getObjectId().compareTo(other.getObjectId()) > 0) 
+      return merge_(other, topic);
+    else
+      return merge_(topic, other);
+  }
+
+  private TopicIF merge_(TopicIF keeping, TopicIF losing) {
+    // losing may be the sort or display topic, in which case we're
     // about to screw up that topic. we check for this and update the
     // references.
-    if (other == sort)
-      sort = topic;
-    else if (other == display)
-      display = topic;
+    if (losing == sort)
+      sort = keeping;
+    else if (losing == display)
+      display = keeping;
 
-    // get rid of object with lowest id
-    if (topic.getObjectId().compareTo(other.getObjectId()) > 0) {
-      MergeUtils.mergeInto(other, topic); // topic is now lost...
-      return other;
-    } else {
-      MergeUtils.mergeInto(topic, other); // other is now lost...
-      return topic;
-    }
+    MergeUtils.mergeInto(keeping, losing);
+    return keeping;
   }
 
   private void mergeInLTM(LocatorIF extloc, List includedFrom)
