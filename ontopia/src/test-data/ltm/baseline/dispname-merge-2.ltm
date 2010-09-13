@@ -1,0 +1,61 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<baseName>
+<instanceOf href="#id3"></instanceOf>
+<baseNameString>Alert</baseNameString>
+<variant>
+<scope>
+<topicRef href="#id4"></topicRef>
+</scope>
+<variantName>
+<resourceData>Alert</resourceData>
+</variantName>
+</variant>
+<variant>
+<scope>
+<topicRef href="#id5"></topicRef>
+</scope>
+<variantName>
+<resourceData>Alert</resourceData>
+</variantName>
+</variant>
+</baseName>
+</topic>
+<topic id="id2">
+<baseName>
+<instanceOf href="#id3"></instanceOf>
+<baseNameString>Schematron location path</baseNameString>
+<variant>
+<scope>
+<topicRef href="#id4"></topicRef>
+</scope>
+<variantName>
+<resourceData>Location path</resourceData>
+</variantName>
+</variant>
+<variant>
+<scope>
+<topicRef href="#id5"></topicRef>
+</scope>
+<variantName>
+<resourceData>Schematron location path</resourceData>
+</variantName>
+</variant>
+</baseName>
+</topic>
+<topic id="id3">
+<subjectIdentity>
+<subjectIndicatorRef href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id4">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#display"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+<topic id="id5">
+<subjectIdentity>
+<subjectIndicatorRef href="http://www.topicmaps.org/xtm/1.0/core.xtm#sort"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

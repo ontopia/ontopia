@@ -1,0 +1,4 @@
+[Alert = "Alert"; "Alert"; "Alert"]
+[id2
+    @"http://www.topicmaps.org/xtm/1.0/core.xtm#display"]
+[schematron-locnpath = "Schematron location path"; "Schematron location path"; "Location path"]
