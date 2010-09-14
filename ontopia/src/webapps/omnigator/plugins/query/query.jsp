@@ -165,6 +165,13 @@ try {
   error = "<p>Error: " + e.getMessage() + "</p>";
   millis = 0;
 } finally {
+  // transactions
+  if (update) {
+    if (error == null) 
+      topicmap.getStore().commit();
+    else
+      topicmap.getStore().abort();
+  }
   navApp.returnTopicMap(topicmap);
 }
 %>
@@ -218,17 +225,6 @@ try {
   <%= trace %>
   </pre>
 <% } %>
-
-
-<% 
-  // transactions
-  if (update) {
-    if (error == null) 
-      topicmap.getStore().commit();
-    else
-      topicmap.getStore().abort();
-  }
-%>
 
 </template:put>
 
