@@ -2750,7 +2750,6 @@
   <target name="ivy.make-pom" depends="init">
     <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${basedir}/pom.xml">
      <mapping conf="build" scope="compile"/>
-     <mapping conf="build" scope="runtime"/>
     </ivy:makepom>  
   </target>
 
