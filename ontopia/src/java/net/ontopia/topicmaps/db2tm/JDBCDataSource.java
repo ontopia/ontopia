@@ -110,7 +110,8 @@ public class JDBCDataSource implements DataSourceIF {
     try {
       DatabaseMetaData dbm = c.getMetaData();
       ResultSet rs = dbm.getTables(catalog, schemaPattern, tableNamePattern,
-                                   new String[] { "TABLE", "VIEW" });
+                                   new String[] { "TABLE", "VIEW",
+                                                  "SYSTEM TABLE"});
       while (rs.next()) {
         String schema_name = rs.getString(2);
         String table_name = rs.getString(3);
