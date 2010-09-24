@@ -151,7 +151,7 @@
             desc="Reference to the topic map to which this topic name belongs."/>
     <column name="reifier_id" type="SerialRef" reftab="TM_TOPIC" refcol="id" null="yes"
             desc="Reference to the reifier topic."/>
-    <column name="type_id" type="SerialRef" reftab="TM_TOPIC" refcol="id" null="yes"
+    <column name="type_id" type="SerialRef" reftab="TM_TOPIC" refcol="id"
             desc="Reference to the topic name type."/>
     <column name="content" type="Text" null="yes"
             desc="The topic name string value."/>
