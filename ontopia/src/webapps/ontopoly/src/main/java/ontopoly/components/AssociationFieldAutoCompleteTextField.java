@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.Topic;
 import ontopoly.models.RoleFieldModel;
 import ontopoly.models.TopicModel;
 import ontopoly.utils.TopicComparator;
@@ -34,16 +34,16 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
     this.textField = new AutoCompleteTextField("autoComplete", model, (Class)null, new AbstractAutoCompleteRenderer() {
         @Override
         protected String getTextValue(Object o) {
-          return PREFIX + ((OntopolyTopicIF)o).getId();
+          return PREFIX + ((Topic)o).getId();
         }
         @Override
         protected void renderChoice(Object o, Response response, String criteria) {
-          response.write(((OntopolyTopicIF)o).getName());
+          response.write(((Topic)o).getName());
         }}, opts) {
 
       @Override
       protected Iterator getChoices(String input) {
-        List<OntopolyTopicIF> result = new ArrayList<OntopolyTopicIF>(valueFieldModel.getRoleField().searchAllowedPlayers(input));
+        List<Topic> result = new ArrayList<Topic>(valueFieldModel.getRoleField().searchAllowedPlayers(input));
         filterPlayers(result);
         Collections.sort(result, TopicComparator.INSTANCE);
         return result.iterator();
@@ -55,7 +55,7 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
         if (modelValue != null && modelValue.startsWith(PREFIX)) {
           String topicId = modelValue.substring(PREFIX.length());
           String topicMapId = valueFieldModel.getRoleField().getTopicMap().getId();
-          OntopolyTopicIF topic = new TopicModel(topicMapId, topicId).getTopic();
+          Topic topic = new TopicModel(topicMapId, topicId).getTopic();
           AssociationFieldAutoCompleteTextField.this.onTopicSelected(topic);
         }
       }
@@ -63,12 +63,12 @@ public abstract class AssociationFieldAutoCompleteTextField extends Panel {
     add(textField);
   }
 
-  protected abstract void filterPlayers(List<OntopolyTopicIF> players);
+  protected abstract void filterPlayers(List<Topic> players);
   
   protected AutoCompleteTextField getTextField() {
     return textField;
   }
 
-  protected abstract void onTopicSelected(OntopolyTopicIF topic);   
+  protected abstract void onTopicSelected(Topic topic);   
     
 }

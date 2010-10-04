@@ -11,10 +11,10 @@ import ontopoly.components.DeleteTopicMapFunctionBoxPanel;
 import ontopoly.components.FunctionBoxesPanel;
 import ontopoly.components.InstancePanel;
 import ontopoly.components.TitleHelpPanel;
-import ontopoly.model.FieldsViewIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.FieldsView;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapModel;
@@ -34,7 +34,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 public class DescriptionPage extends OntopolyAbstractPage {
-  private TopicModel<OntopolyTopicIF> topicModel;
+  private TopicModel<Topic> topicModel;
   private TopicTypeModel topicTypeModel;
   private FieldsViewModel fieldsViewModel;
 
@@ -50,15 +50,14 @@ public class DescriptionPage extends OntopolyAbstractPage {
     super(parameters);
  
     String topicMapId = parameters.getString("topicMapId");
-    OntopolyTopicMapIF topicMap = getTopicMap();
-    OntopolyTopicIF reifier = topicMap.getReifier();
+    TopicMap topicMap = getTopicMap();
+    Topic reifier = topicMap.getReifier();
 
-    this.topicModel = new TopicModel<OntopolyTopicIF>(reifier);
-    OntopolyTopicIF topic = topicModel.getTopic();
+    this.topicModel = new TopicModel<Topic>(reifier);
+    Topic topic = topicModel.getTopic();
     
-    // if "topicType" parameter is specified, pull out most specific
-    // direct type
-    TopicTypeIF tt = null;
+    // if "topicType" parameter is specified, pull out most specific direct type    
+    TopicType tt = null;
     String topicTypeId = parameters.getString("topicTypeId");
     if (topicTypeId != null)
       tt = topic.getMostSpecificTopicType(new TopicTypeModel(topicMapId, topicTypeId).getTopicType());
@@ -73,7 +72,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
     if (viewId != null)
       this.fieldsViewModel = new FieldsViewModel(topicMapId, viewId);
     else
-      this.fieldsViewModel = new FieldsViewModel(topic.getTopicMap().getDefaultFieldsView());
+      this.fieldsViewModel = new FieldsViewModel(FieldsView.getDefaultFieldsView(topic.getTopicMap()));
          
     // page is read-only if topic type is read-only
     setReadOnlyPage(tt.isReadOnly() || 
@@ -100,6 +99,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
   }
   
   private void createTitle() {
+
     // Adding part containing title and help link
     this.titlePartPanel = new TitleHelpPanel("titlePartPanel",
         new PropertyModel<String>(getTopicMapModel(), "name"),
@@ -125,11 +125,11 @@ public class DescriptionPage extends OntopolyAbstractPage {
   protected InstancePanel createInstancePanel(final String id) {
     return new InstancePanel(id, topicModel, topicTypeModel, fieldsViewModel, isReadOnlyPage(), isTraversablePage()) {
       @Override
-      protected void onLockLost(AjaxRequestTarget target, OntopolyTopicIF topic) {
+      protected void onLockLost(AjaxRequestTarget target, Topic topic) {
         setResponsePage(getPageClass(), getPageParameters());
       }      
       @Override
-      protected void onLockWon(AjaxRequestTarget target, OntopolyTopicIF topic) {
+      protected void onLockWon(AjaxRequestTarget target, Topic topic) {
         setResponsePage(getPageClass(), getPageParameters());
       }      
     };
@@ -153,7 +153,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
   private List<Component> createFunctionBoxesList(String id) {
     List<Component> list = new ArrayList<Component>();
     
-    OntopolyTopicMapIF topicMap = getTopicMap();
+    TopicMap topicMap = getTopicMap();
     if (topicMap.isDeleteable()) {
       list.add(new DeleteTopicMapFunctionBoxPanel(id) {
         @Override
@@ -161,7 +161,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
           return !isReadOnlyPage();
         }          
         @Override
-        public void onDeleteConfirmed(OntopolyTopicMapIF topicMap) {
+        public void onDeleteConfirmed(TopicMap topicMap) {
           setResponsePage(StartPage.class);                      
         }
         @Override
@@ -237,7 +237,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
   }
 
   @Override
-  public Class<? extends Page> getPageClass(OntopolyTopicIF topic) {
+  public Class<? extends Page> getPageClass(Topic topic) {
     return InstancePage.class;
   }
   

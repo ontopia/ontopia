@@ -3,10 +3,11 @@ package ontopoly.pojos;
 import java.io.Serializable;
 
 import ontopoly.OntopolyContext;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 
 public class TopicNode implements Serializable {
+  
   private String topicMapId;
   private String topicId;
   private String name;
@@ -17,7 +18,7 @@ public class TopicNode implements Serializable {
   public TopicNode() {
   }
 
-  public TopicNode(OntopolyTopicIF topic) {
+  public TopicNode(Topic topic) {
     if (topic == null)
       throw new NullPointerException("topic parameter cannot be null.");
     this.topicMapId = topic.getTopicMap().getId();
@@ -48,8 +49,8 @@ public class TopicNode implements Serializable {
       return getTopic().getName();
   }
   
-  public OntopolyTopicIF getTopic() {
-    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
+  public Topic getTopic() {
+    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     return tm.getTopicById(topicId);
   }
   

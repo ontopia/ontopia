@@ -3,8 +3,8 @@ package ontopoly.components;
 import java.util.Collection;
 import java.util.Iterator;
 
-import ontopoly.model.LifeCycleListenerIF;
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.LifeCycleListener;
+import ontopoly.model.Topic;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AbstractOntopolyPage;
 
@@ -17,8 +17,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.ResourceModel;
 
-public class ConfirmDeletePanel extends Panel {  
-  private TopicModel<OntopolyTopicIF> topicModel = new TopicModel<OntopolyTopicIF>(null);
+public class ConfirmDeletePanel extends Panel {
+  
+  private TopicModel<Topic> topicModel = new TopicModel<Topic>(null);
   
   public ConfirmDeletePanel(String id, final Component refreshComponent) {
     super(id);
@@ -26,14 +27,14 @@ public class ConfirmDeletePanel extends Panel {
     add(new Label("topic", new AbstractReadOnlyModel<String>() {
       @Override
       public String getObject() {
-        OntopolyTopicIF topic = topicModel.getTopic();
+        Topic topic = topicModel.getTopic();
         return topic == null ? null : topic.getName();
       }
     }));
     add(new Label("dependent", new AbstractReadOnlyModel<Integer>() {
       @Override
       public Integer getObject() {
-        OntopolyTopicIF topic = topicModel.getTopic();
+        Topic topic = topicModel.getTopic();
         int size = topic == null ? 0 : topic.getDependentObjects().size();
         return new Integer(size);
       }
@@ -64,29 +65,32 @@ public class ConfirmDeletePanel extends Panel {
     return topicModel.getTopic() != null; 
   }
   
-  protected void setTopic(OntopolyTopicIF topic) {
+  protected void setTopic(Topic topic) {
     this.topicModel.setObject(topic);
   }
   
-  protected LifeCycleListenerIF getListener() {
+  protected LifeCycleListener getListener() {
     return (AbstractOntopolyPage)getPage();    
   }
   
   protected void onDeleteTopic(AjaxRequestTarget target) {
     try {
-      OntopolyTopicIF topic = topicModel.getTopic();
+      Topic topic = topicModel.getTopic();
       if (topic != null) {
         Collection dependentObjects = topic.getDependentObjects();
-        LifeCycleListenerIF listener = getListener();
+//        System.out.println("RO: " + dependentObjects.size() + " " + dependentObjects);
+        LifeCycleListener listener = getListener();
         // remove dependent objects
         Iterator diter = dependentObjects.iterator();
         while (diter.hasNext()) {
-          OntopolyTopicIF dtopic = (OntopolyTopicIF)diter.next();
+          Topic dtopic = (Topic)diter.next();
           if (!dtopic.isSystemTopic()) {
+//            System.out.println("Removing: " + dtopic.getName());
             dtopic.remove(listener);
           }
         }
         // remove object
+//        System.out.println("Removing selected: " + topic.getName());
         topic.remove(listener);        
       }
     } finally {

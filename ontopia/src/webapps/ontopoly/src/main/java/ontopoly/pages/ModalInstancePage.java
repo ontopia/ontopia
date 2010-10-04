@@ -2,7 +2,7 @@ package ontopoly.pages;
 
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.components.InstancePanel;
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.Topic;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
@@ -16,13 +16,13 @@ import org.apache.wicket.markup.html.panel.Panel;
 public abstract class ModalInstancePage extends Panel {
   
   WebMarkupContainer popupContent;
-  TopicModel<OntopolyTopicIF> topicModel;
+  TopicModel<Topic> topicModel;
   TopicTypeModel topicTypeModel;
   FieldsViewModel fieldsViewModel;
   boolean isReadOnly;
   boolean traversable = false; // FIXME: hardcoded
   
-  public ModalInstancePage(String id, TopicModel<OntopolyTopicIF> topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
+  public ModalInstancePage(String id, TopicModel<Topic> topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
     super(id);
     this.topicModel = topicModel;
     this.topicTypeModel = topicTypeModel;
@@ -56,12 +56,12 @@ public abstract class ModalInstancePage extends Panel {
         return false; // Don't show buttons as there will already be a set of buttons visible.
       }
       @Override
-      protected void onLockLost(AjaxRequestTarget target, OntopolyTopicIF topic) {
+      protected void onLockLost(AjaxRequestTarget target, Topic topic) {
         popupContent.replace(createInstancePanel(id));
         target.addComponent(popupContent);        
       }      
       @Override
-      protected void onLockWon(AjaxRequestTarget target, OntopolyTopicIF topic) {
+      protected void onLockWon(AjaxRequestTarget target, Topic topic) {
         popupContent.replace(createInstancePanel(id));
         target.addComponent(popupContent);        
       }      

@@ -3,7 +3,7 @@ package ontopoly.utils;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicMap;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
@@ -22,8 +22,7 @@ public class ExportUtils {
   private ExportUtils() {
   }
   
-  public static void export(OntopolyTopicMapIF topicMap, String format,
-                            boolean includeSchema, OutputStreamWriter out) {
+  public static void export(TopicMap topicMap, String format, boolean includeSchema, OutputStreamWriter out) {
     TopicMapIF tm = topicMap.getTopicMapIF();
     try {
       String charset = "utf-8";

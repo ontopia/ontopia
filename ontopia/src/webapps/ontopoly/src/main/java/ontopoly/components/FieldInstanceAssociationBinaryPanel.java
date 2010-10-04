@@ -9,14 +9,14 @@ import ontopoly.LockManager;
 import ontopoly.OntopolySession;
 import ontopoly.jquery.DraggableBehavior;
 import ontopoly.jquery.DroppableBehavior;
-import ontopoly.model.CreateActionIF;
-import ontopoly.model.EditModeIF;
-import ontopoly.model.FieldAssignmentIF;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.InterfaceControlIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.CreateAction;
+import ontopoly.model.EditMode;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.InterfaceControl;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
@@ -47,7 +47,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
 
   protected final ConfirmDeletePanel confirmDeletePanel;
   protected final RoleFieldModel ofieldModel;
-  protected final TopicModel<OntopolyTopicIF> topicModel;
+  protected final TopicModel<Topic> topicModel;
   protected final RoleFieldModel roleFieldModel;
 
   public FieldInstanceAssociationBinaryPanel(String id, 
@@ -61,9 +61,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       final boolean readonlyField, final boolean embedded, final boolean traversable) {
     super(id, fieldInstanceModel);
 
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-    FieldAssignmentIF fieldAssignment = fieldInstance.getFieldAssignment();
-    RoleFieldIF roleField = (RoleFieldIF)fieldAssignment.getFieldDefinition(); 
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
+    RoleField roleField = (RoleField)fieldAssignment.getFieldDefinition(); 
     this.roleFieldModel = new RoleFieldModel(roleField);
 
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(roleField)));
@@ -88,18 +88,18 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
     confirmDeletePanel.setOutputMarkupId(true);
     fieldValuesContainer.add(confirmDeletePanel);
 
-    RoleFieldIF ofield = (RoleFieldIF)roleField.getFieldsForOtherRoles().iterator().next();
+    RoleField ofield = (RoleField)roleField.getFieldsForOtherRoles().iterator().next();
     this.ofieldModel = new RoleFieldModel(ofield);
-    this.topicModel = new TopicModel<OntopolyTopicIF>(fieldInstance.getInstance());
+    this.topicModel = new TopicModel<Topic>(fieldInstance.getInstance());
 
-    InterfaceControlIF interfaceControl = ofield.getInterfaceControl();
+    InterfaceControl interfaceControl = ofield.getInterfaceControl();
 
     WebMarkupContainer fieldValuesList = new WebMarkupContainer("fieldValuesList");
     fieldValuesContainer.add(fieldValuesList);
 
     final String fieldDefinitionId = roleField.getId();
 
-    EditModeIF editMode = roleField.getEditMode();
+    EditMode editMode = roleField.getEditMode();
 
     final boolean ownedvalues = editMode.isOwnedValues();
     final boolean allowAdd = !(ownedvalues || editMode.isNewValuesOnly() || editMode.isNoEdit());
@@ -113,9 +113,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       // HACK: retrieving values ourselves so that we can get them ordered
       this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel) {
         @Override
-        protected Collection getValues(FieldInstanceIF fieldInstance) {
-          OntopolyTopicIF instance = fieldInstance.getInstance();
-          RoleFieldIF roleField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();
+        protected Collection getValues(FieldInstance fieldInstance) {
+          Topic instance = fieldInstance.getInstance();
+          RoleField roleField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
           return roleField.getOrderedValues(instance, ofieldModel.getRoleField());
         }
       };
@@ -134,10 +134,10 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         FieldValueModel fieldValueModel = item.getModelObject();
 
         // get topic
-        OntopolyTopicIF oplayer = null;
+        Topic oplayer = null;
         if (fieldValueModel.isExistingValue()) {
-          RoleFieldIF.ValueIF valueIf = (RoleFieldIF.ValueIF)fieldValueModel.getObject();              
-          RoleFieldIF ofield = ofieldModel.getRoleField();
+          RoleField.ValueIF valueIf = (RoleField.ValueIF)fieldValueModel.getObject();              
+          RoleField ofield = ofieldModel.getRoleField();
           oplayer = valueIf.getPlayer(ofield, fieldInstanceModel.getFieldInstance().getInstance());
         }
         final String topicMapId = (oplayer == null ? null : oplayer.getTopicMap().getId());
@@ -166,12 +166,12 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
             protected void onDrop(Component component, AjaxRequestTarget target) {
               FieldValueModel fvm_dg = (FieldValueModel)component.getDefaultModelObject();
               FieldValueModel fvm_do = (FieldValueModel)getComponent().getDefaultModelObject();
-              RoleFieldIF.ValueIF rfv_dg = (RoleFieldIF.ValueIF)fvm_dg.getFieldValue();
-              RoleFieldIF.ValueIF rfv_do = (RoleFieldIF.ValueIF)fvm_do.getFieldValue();
+              RoleField.ValueIF rfv_dg = (RoleField.ValueIF)fvm_dg.getFieldValue();
+              RoleField.ValueIF rfv_do = (RoleField.ValueIF)fvm_do.getFieldValue();
 
-              OntopolyTopicIF topic = topicModel.getTopic();
-              RoleFieldIF rfield = roleFieldModel.getRoleField();
-              RoleFieldIF ofield = ofieldModel.getRoleField();
+              Topic topic = topicModel.getTopic();
+              RoleField rfield = roleFieldModel.getRoleField();
+              RoleField ofield = ofieldModel.getRoleField();
               rfield.moveAfter(topic, ofield, rfv_dg, rfv_do);
               getModel().detach(); // FIXME: better if we could just tweak model directly without detaching
               listView.removeAll();
@@ -199,8 +199,8 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
             if (visible) {               
               // filter by player
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-              RoleFieldIF.ValueIF value = (RoleFieldIF.ValueIF)fieldValueModel.getObject();
-              OntopolyTopicIF[] players = value.getPlayers();
+              RoleField.ValueIF value = (RoleField.ValueIF)fieldValueModel.getObject();
+              Topic[] players = value.getPlayers();
               for (int i=0; i < players.length; i++) {
                 if (!page.filterTopic(players[i])) return false;
               }
@@ -210,16 +210,16 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
           @Override
           public void onClick(AjaxRequestTarget target) {
             // FIXME: could reuse some of these variable from above
-            FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+            FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
             Object value = fieldValueModel.getObject();
 
-            OntopolyTopicIF currentTopic = fieldInstance.getInstance();
+            Topic currentTopic = fieldInstance.getInstance();
 
-            RoleFieldIF currentField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();          
-            RoleFieldIF selectedField = ofieldModel.getRoleField();
+            RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();          
+            RoleField selectedField = ofieldModel.getRoleField();
 
-            RoleFieldIF.ValueIF valueIf = (RoleFieldIF.ValueIF)value;                
-            OntopolyTopicIF selectedTopic = valueIf.getPlayer(selectedField, fieldInstance.getInstance());
+            RoleField.ValueIF valueIf = (RoleField.ValueIF)value;                
+            Topic selectedTopic = valueIf.getPlayer(selectedField, fieldInstance.getInstance());
 
             // check with page to see if add is allowed
             boolean changesMade = false;
@@ -276,12 +276,11 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         fieldValueButtons.add(lockButton);
 
         // binary
-        // ISSUE: should not really pass in readonly-parameter here as
-        // it is only relevant if page is readonly       
+        // ISSUE: should not really pass in readonly-parameter here as it is only relevant if page is readonly
         FieldInstanceAssociationBinaryField binaryField = new FieldInstanceAssociationBinaryField("fieldValue", ofieldModel, fieldValueModel, fieldsViewModel, readonly, embedded, traversable, allowAdd) {
           @Override
-          protected void performNewSelection(FieldValueModel fieldValueModel, RoleFieldIF selectedField, OntopolyTopicIF selectedTopic) {
-            RoleFieldIF.ValueIF value = FieldInstanceAssociationBinaryPanel.this.performNewSelection(selectedField, selectedTopic);
+          protected void performNewSelection(FieldValueModel fieldValueModel, RoleField selectedField, Topic selectedTopic) {
+            RoleField.ValueIF value = FieldInstanceAssociationBinaryPanel.this.performNewSelection(selectedField, selectedTopic);
             fieldValueModel.setExistingValue(value); 
           }          
         };
@@ -349,15 +348,15 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       findModal.setContent(new ModalFindPage(findModal.getContentId(), fieldInstanceModel, activeTab) {
         @Override
         protected void onSelectionConfirmed(AjaxRequestTarget target, Collection selected) {
-          FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-          RoleFieldIF currentField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();
-          RoleFieldIF selectedField = (RoleFieldIF)currentField.getFieldsForOtherRoles().iterator().next();
+          FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+          RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
+          RoleField selectedField = (RoleField)currentField.getFieldsForOtherRoles().iterator().next();
 
           // check with page to see if add is allowed
           if (ObjectUtils.different(currentField, selectedField)) {
 
-            OntopolyTopicIF currentTopic = fieldInstance.getInstance();
-            OntopolyTopicMapIF topicMap = currentTopic.getTopicMap();
+            Topic currentTopic = fieldInstance.getInstance();
+            TopicMap topicMap = currentTopic.getTopicMap();
 
             boolean changesMade = false;
             Iterator iter = selected.iterator();
@@ -365,7 +364,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
               String objectId = (String)iter.next();
 
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-              OntopolyTopicIF selectedTopic = topicMap.getTopicById(objectId);
+              Topic selectedTopic = topicMap.getTopicById(objectId);
 
               if (page.isAddAllowed(currentTopic, currentField, selectedTopic, selectedField)) {
                 performNewSelection(selectedField, selectedTopic);
@@ -407,7 +406,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       fieldInstanceButtons.add(new Label("create").setVisible(false));
     } else {
 
-      CreateActionIF ca = roleField.getCreateAction();
+      CreateAction ca = roleField.getCreateAction();
       int createAction;
       if (embedded || ca.isNone())
         createAction = FieldInstanceCreatePlayerPanel.CREATE_ACTION_NONE;
@@ -418,7 +417,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
 
       FieldInstanceCreatePlayerPanel createPanel = new FieldInstanceCreatePlayerPanel("create", fieldInstanceModel, fieldsViewModel, new RoleFieldModel(ofield), this, createAction) {
         @Override
-        protected void performNewSelection(RoleFieldModel ofieldModel, OntopolyTopicIF selectedTopic) {
+        protected void performNewSelection(RoleFieldModel ofieldModel, Topic selectedTopic) {
           FieldInstanceAssociationBinaryPanel.this.performNewSelection(ofieldModel.getRoleField(), selectedTopic);           
         }          
 
@@ -428,16 +427,15 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
     }
   }
 
-  protected RoleFieldIF.ValueIF performNewSelection(RoleFieldIF selectedField,
-                                                    OntopolyTopicIF selectedTopic) {
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-    RoleFieldIF currentField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();
-    OntopolyTopicIF currentTopic = fieldInstance.getInstance();
-    RoleFieldIF.ValueIF value = currentField.createValue(2);
+  protected RoleField.ValueIF performNewSelection(RoleField selectedField, Topic selectedTopic) {
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
+    Topic currentTopic = fieldInstance.getInstance();
+    RoleField.ValueIF value = RoleField.createValue(2);
     value.addPlayer(currentField, currentTopic);            
     value.addPlayer(selectedField, selectedTopic);
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-    fieldInstance.addValue(value, page.getListener());
+    fieldInstance.addValue(value, page.getListener()); // currentField.addValue(fieldInstance, value, page.getListener());
     return value;
   }
 

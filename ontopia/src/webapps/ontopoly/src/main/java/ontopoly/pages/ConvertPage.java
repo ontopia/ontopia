@@ -14,7 +14,7 @@ import ontopoly.components.AjaxOntopolyTextField;
 import ontopoly.components.AjaxRadioGroupPanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.conversion.ConversionUtils;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapModel;
 import ontopoly.models.TopicMapSourceModel;
@@ -48,7 +48,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     super(parameters);
 	  
     TopicMapModel topicMapModel = getTopicMapModel();
-    OntopolyTopicMapIF topicMap = topicMapModel.getTopicMap();
+    TopicMap topicMap = topicMapModel.getTopicMap();
     
     // redirect to topic types page if the topic map for some reason already contains the ontology
     if (topicMap.containsOntology()) {
@@ -137,7 +137,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     Button okButton = new Button("ok", new ResourceModel("button.ok")) {
       @Override
       public void onSubmit() {
-        OntopolyTopicMapIF topicMap = getTopicMapModel().getTopicMap();
+        TopicMap topicMap = getTopicMapModel().getTopicMap();
         String name = textField.getDefaultModelObjectAsString();
         
         if(properties.get("choice").equals(new ResourceModel("ConvertPage.create.copy").getObject())) {

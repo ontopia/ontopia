@@ -1,8 +1,8 @@
 package ontopoly.components;
 
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
@@ -27,22 +27,22 @@ public class FieldInstanceAssociationUnaryField extends Panel {
         super.onModelChanged();        
         
         FieldInstanceModel fieldInstanceModel = fieldValueModel.getFieldInstanceModel();
-        FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-        OntopolyTopicIF currentTopic = fieldInstance.getInstance();
+        FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+        Topic currentTopic = fieldInstance.getInstance();
         
-        RoleFieldIF currentField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();
+        RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
         Boolean state = (Boolean)getModelObject();
         
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
         if (state.booleanValue()) {
           if (page.isAddAllowed(currentTopic, currentField)) {
-            RoleFieldIF.ValueIF value = currentField.createValue(1);
+            RoleField.ValueIF value = RoleField.createValue(1);
             value.addPlayer(currentField, currentTopic);          
             fieldInstance.addValue(value, page.getListener());
           }
         } else {
           if (page.isRemoveAllowed(currentTopic, currentField)) {
-            RoleFieldIF.ValueIF value = currentField.createValue(1);
+            RoleField.ValueIF value = RoleField.createValue(1);
             value.addPlayer(currentField, currentTopic);          
             fieldInstance.removeValue(value, page.getListener());
           }

@@ -8,8 +8,8 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.components.AbstractFieldInstancePanel;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.models.FieldInstanceModel;
 
 import org.apache.wicket.Application;
@@ -40,8 +40,8 @@ public class IdentityValidator extends AbstractValidator<String> {
       return;
     }
 
-    OntopolyTopicIF topic = fieldInstanceModel.getFieldInstance().getInstance();
-    OntopolyTopicMapIF topicMap = topic.getTopicMap();
+    Topic topic = fieldInstanceModel.getFieldInstance().getInstance();
+    TopicMap topicMap = topic.getTopicMap();
     TopicMapIF topicMapIf = topicMap.getTopicMapIF();
     TopicIF topicIf = topic.getTopicIF();
   

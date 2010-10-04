@@ -17,12 +17,12 @@ import ontopoly.components.AjaxParentRadioChild;
 import ontopoly.components.CheckLabelPanel;
 import ontopoly.components.TopicDropDownChoice;
 import ontopoly.components.TreePanel;
-import ontopoly.model.FieldAssignmentIF;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
@@ -70,9 +70,9 @@ public abstract class ModalFindPage extends Panel {
 
   protected TreeModel emptyTreeModel = TreeModels.createEmptyTreeModel();
   
-  private IModel<List<TopicTypeIF>> playerTypesChoicesModel;
-  private TopicModel<TopicTypeIF> selectedTypeModel;
-  private IModel<List<OntopolyTopicIF>> results;
+  private IModel<List<TopicType>> playerTypesChoicesModel;
+  private TopicModel<TopicType> selectedTypeModel;
+  private IModel<List<Topic>> results;
   
   public ModalFindPage(String id, FieldInstanceModel fieldInstanceModel, int activeTab) {
     super(id);
@@ -82,9 +82,9 @@ public abstract class ModalFindPage extends Panel {
     popupContent.setOutputMarkupId(true);
     add(popupContent);
     
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-    FieldAssignmentIF fieldAssignment = fieldInstance.getFieldAssignment();
-    RoleFieldIF roleField = (RoleFieldIF)fieldAssignment.getFieldDefinition();        
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
+    RoleField roleField = (RoleField)fieldAssignment.getFieldDefinition();        
     popupContent.add(new Label("title", new Model<String>(roleField.getFieldName())));
   
     final WebMarkupContainer searchTab = createSearchTab();
@@ -132,7 +132,7 @@ public abstract class ModalFindPage extends Panel {
   }
   
   protected boolean isMaxOneCardinality() {
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
     return fieldInstance.getFieldAssignment().getFieldDefinition().getCardinality().isMaxOne();
   }
   
@@ -153,17 +153,17 @@ public abstract class ModalFindPage extends Panel {
     resultsContainer.setOutputMarkupId(true);
     searchTab.add(resultsContainer);
     
-    this.results = new LoadableDetachableModel<List<OntopolyTopicIF>>() {
+    this.results = new LoadableDetachableModel<List<Topic>>() {
       @Override
-      protected List<OntopolyTopicIF> load() {
+      protected List<Topic> load() {
         String searchTerm = (String)searchTermField.getModelObject();
         if (searchTerm == null) {
           return Collections.emptyList();
         } else {
           try {
-            FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-            RoleFieldIF associationField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();
-            RoleFieldIF otherField = (RoleFieldIF)associationField.getFieldsForOtherRoles().iterator().next();
+            FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+            RoleField associationField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
+            RoleField otherField = (RoleField)associationField.getFieldsForOtherRoles().iterator().next();
             return otherField.searchAllowedPlayers(searchTerm);
           } catch(Exception e) {
             errorInSearch = true;
@@ -209,9 +209,9 @@ public abstract class ModalFindPage extends Panel {
     Label message = new Label("message", new ResourceModel(errorInSearch ? "search.error" : "search.empty"));
     unsuccessfulSearchContainer.add(message);
     
-    ListView listView = new ListView<OntopolyTopicIF>("results", results) {
-      public void populateItem(ListItem<OntopolyTopicIF> item) {
-        OntopolyTopicIF hit = item.getModelObject();
+    ListView listView = new ListView<Topic>("results", results) {
+      public void populateItem(ListItem<Topic> item) {
+        Topic hit = item.getModelObject();
         if (maxOneCardinality) {
           Radio check = new Radio<String>("check", new Model<String>(hit.getId())) {
             @Override
@@ -232,7 +232,7 @@ public abstract class ModalFindPage extends Panel {
           item.add(check);
         }
         item.add(new Label("topic", new Model<String>(hit.getName())));
-        item.add(new Label("type", new Model<String>(((TopicTypeIF)hit.getTopicTypes().iterator().next()).getName())));
+        item.add(new Label("type", new Model<String>(((TopicType)hit.getTopicTypes().iterator().next()).getName())));
       }
     };
     checkGroup.add(listView);
@@ -279,32 +279,31 @@ public abstract class ModalFindPage extends Panel {
     final WebMarkupContainer browseTab = new WebMarkupContainer("browseTab");
     browseTab.setOutputMarkupId(true);
 
-    this.playerTypesChoicesModel = new LoadableDetachableModel<List<TopicTypeIF>>() {
+    this.playerTypesChoicesModel = new LoadableDetachableModel<List<TopicType>>() {
       @Override
-      protected List<TopicTypeIF> load() {
-        // TODO: should merge with PlayerTypesModel.java (extend to
-        // filter my large instance types)
-        FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-        RoleFieldIF associationField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();
+      protected List<TopicType> load() {
+        // TODO: should merge with PlayerTypesModel.java (extend to filter my large instance types)
+        FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+        RoleField associationField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
         // FIXME: this doesn't work for n+ary fields
-        RoleFieldIF otherField = (RoleFieldIF)associationField.getFieldsForOtherRoles().iterator().next();
-        OntopolyTopicMapIF tm = associationField.getTopicMap();
+        RoleField otherField = (RoleField)associationField.getFieldsForOtherRoles().iterator().next();
+        TopicMap tm = associationField.getTopicMap();
         // include all topic types except those with large instance sets
         Collection allowedValueTypes = otherField.getDeclaredPlayerTypes();
         Collection largeInstanceSets = tm.getTopicTypesWithLargeInstanceSets(); 
-        List<TopicTypeIF> topicTypes = new ArrayList<TopicTypeIF>(allowedValueTypes.size());
+        List<TopicType> topicTypes = new ArrayList<TopicType>(allowedValueTypes.size());
         Iterator iter = allowedValueTypes.iterator();
         while (iter.hasNext()) {
-          TopicTypeIF topicType = (TopicTypeIF) iter.next();
+          TopicType topicType = (TopicType)iter.next();
           if (!largeInstanceSets.contains(topicType))
             topicTypes.add(topicType);
         }
         return topicTypes; 
       }
     };
-    List<TopicTypeIF> playerTypes = playerTypesChoicesModel.getObject();
-    TopicTypeIF selectedType = playerTypes.size() == 1 ? playerTypes.get(0) : null;
-    this.selectedTypeModel = new TopicModel<TopicTypeIF>(selectedType, OntopolyTopicMapIF.TYPE_TOPIC_TYPE);
+    List<TopicType> playerTypes = playerTypesChoicesModel.getObject();
+    TopicType selectedType = playerTypes.size() == 1 ? playerTypes.get(0) : null;
+    this.selectedTypeModel = new TopicModel<TopicType>(selectedType, TopicModel.TYPE_TOPIC_TYPE);
     
     final WebMarkupContainer resultsContainer = new WebMarkupContainer("resultsContainer");
     resultsContainer.setOutputMarkupId(true);
@@ -335,7 +334,7 @@ public abstract class ModalFindPage extends Panel {
       protected Component populateNode(String id, TreeNode treeNode) {
         DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
         final TopicNode node = (TopicNode)mTreeNode.getUserObject();
-        OntopolyTopicIF selectedType = selectedTypeModel.getTopic();        
+        Topic selectedType = selectedTypeModel.getTopic();        
         final boolean selectable = node.getTopic().isInstanceOf(selectedType);
         
         // create link with label        
@@ -380,18 +379,17 @@ public abstract class ModalFindPage extends Panel {
     treePanel.setOutputMarkupId(true);
     checkGroup.add(treePanel);
     
-    // NOTE: need to readd model here because page, which we depend on
-    // in the construction of the tree model, is not available in
-    // TreePanel constructor
+    // NOTE: need to readd model here because page, which we depend on in the construction 
+    // of the tree model, is not available in TreePanel constructor
     if (this.selectedTypeModel != null)
       treePanel.setDefaultModel(getTreeModel(selectedType));
     
-    final TopicDropDownChoice<TopicTypeIF> playerTypesDropDown = new TopicDropDownChoice<TopicTypeIF>("playerTypes", this.selectedTypeModel, playerTypesChoicesModel);
+    final TopicDropDownChoice<TopicType> playerTypesDropDown = new TopicDropDownChoice<TopicType>("playerTypes", this.selectedTypeModel, playerTypesChoicesModel);
     
     playerTypesDropDown.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       protected void onUpdate(AjaxRequestTarget target) {
         // replace tree model
-        TopicTypeIF topicType = (TopicTypeIF)playerTypesDropDown.getDefaultModelObject();
+        TopicType topicType = (TopicType)playerTypesDropDown.getDefaultModelObject();
         treePanel.setDefaultModel(getTreeModel(topicType));
         target.addComponent(resultsContainer);
       }
@@ -442,12 +440,12 @@ public abstract class ModalFindPage extends Panel {
     return browseTab;
   }
   
-  protected IModel<TreeModel> getTreeModel(TopicTypeIF _topicType) {
+  protected IModel<TreeModel> getTreeModel(TopicType _topicType) {
     final TopicTypeModel topicTypeModel = new TopicTypeModel(_topicType);
     return new LoadableDetachableModel<TreeModel>() {
       @Override
       public TreeModel load() {
-        TopicTypeIF topicType = topicTypeModel.getTopicType();
+        TopicType topicType = topicTypeModel.getTopicType();
         if (topicType == null) {
           return emptyTreeModel;
         } else {

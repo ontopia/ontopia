@@ -6,10 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ontopoly.model.AssociationTypeIF;
-import ontopoly.model.RoleTypeIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.AssociationType;
+import ontopoly.model.RoleType;
+import ontopoly.model.Topic;
 import ontopoly.models.AssociationTypeModel;
 import ontopoly.models.ListModel;
 import ontopoly.models.RoleTypeModel;
@@ -29,15 +28,14 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.ResourceModel;
 
 public class AssociationTransformerPanel extends Panel {
+
   private String topicMapId;
   private AssociationTypeModel associationTypeModel;
   private ListModel<RoleTypeModel,String> roleTypesModel;
-  private IModel<List<RoleTypeIF>> declaredRoleTypesModel;
-  private List<TopicModel<RoleTypeIF>> selectedModels = new ArrayList<TopicModel<RoleTypeIF>>();
+  private IModel<List<RoleType>> declaredRoleTypesModel;
+  private List<TopicModel<RoleType>> selectedModels = new ArrayList<TopicModel<RoleType>>();
   
-  public AssociationTransformerPanel(String id,
-                                     AssociationTypeIF associationType,
-                                     List<RoleTypeIF> roleTypes) {
+  public AssociationTransformerPanel(String id, AssociationType associationType, List roleTypes) {
     super(id);
     this.associationTypeModel = new AssociationTypeModel(associationType);
     this.topicMapId = associationType.getTopicMap().getId();
@@ -47,7 +45,7 @@ public class AssociationTransformerPanel extends Panel {
     int size = roleTypes.size();
     List<String> objectIds = new ArrayList<String>(size);
     for (int i=0; i < size; i++) {
-      RoleTypeIF rtype = roleTypes.get(i);
+      RoleType rtype = (RoleType)roleTypes.get(i);
       objectIds.add(rtype.getId());
     }
     this.roleTypesModel = new ListModel<RoleTypeModel,String>(objectIds) {
@@ -57,22 +55,24 @@ public class AssociationTransformerPanel extends Panel {
       }      
     };
     
-    this.declaredRoleTypesModel = new LoadableDetachableModel<List<RoleTypeIF>>() {
+    this.declaredRoleTypesModel = new LoadableDetachableModel<List<RoleType>>() {
       @Override
-      public List<RoleTypeIF> load() {
+      public List<RoleType> load() {
         return associationTypeModel.getAssociationType().getDeclaredRoleTypes();
       }
     };
     
-    RepeatingView rview = new RepeatingView("roletype");
-    for (RoleTypeIF roleType : roleTypes) {
+    RepeatingView rview = new RepeatingView("roletype");    
+    Iterator riter = roleTypes.iterator();
+    while (riter.hasNext()) {
+      RoleType roleType = (RoleType)riter.next();
       WebMarkupContainer rcontainer = new WebMarkupContainer(rview.newChildId());
       rcontainer.add(new Label("oldvalue", roleType.getName()));
       
-      TopicModel<RoleTypeIF> selectedModel = new TopicModel<RoleTypeIF>(null, OntopolyTopicMapIF.TYPE_ROLE_TYPE);
+      TopicModel<RoleType> selectedModel = new TopicModel<RoleType>(null, TopicModel.TYPE_ROLE_TYPE);
       selectedModels.add(selectedModel);
 
-      TopicDropDownChoice choice = new TopicDropDownChoice<RoleTypeIF>("newvalue", selectedModel, declaredRoleTypesModel);
+      TopicDropDownChoice choice = new TopicDropDownChoice<RoleType>("newvalue", selectedModel, declaredRoleTypesModel);
       choice.add(new AjaxFormComponentUpdatingBehavior("onchange") {
         @Override
         protected void onUpdate(AjaxRequestTarget target) {
@@ -88,13 +88,15 @@ public class AssociationTransformerPanel extends Panel {
     transformButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
+//        System.out.println("Button clicked");
         boolean validCombination = true;
-        List<RoleTypeIF> declaredRoleTypes = declaredRoleTypesModel.getObject();
-        List<RoleTypeIF> unusedRoleTypes = new ArrayList<RoleTypeIF>(declaredRoleTypes); // make copy
+        List<RoleType> declaredRoleTypes = declaredRoleTypesModel.getObject();
+        List<RoleType> unusedRoleTypes = new ArrayList<RoleType>(declaredRoleTypes); // make copy
         int size = selectedModels.size();
         for (int i=0; i < size; i++) {
-          TopicModel<RoleTypeIF> model = selectedModels.get(i);
-          RoleTypeIF selected = (RoleTypeIF)model.getObject();
+          TopicModel<RoleType> model = selectedModels.get(i);
+          RoleType selected = (RoleType)model.getObject();
+//          System.out.println("S: " + selected);
           if (selected == null) { 
             validCombination = false;
             break;
@@ -104,13 +106,15 @@ public class AssociationTransformerPanel extends Panel {
         }
         if (validCombination && unusedRoleTypes.isEmpty()) {
           List<RoleTypeModel> roleTypesModels = roleTypesModel.getObject();
-          List<RoleTypeIF> roleTypesFrom = new ArrayList<RoleTypeIF>(size);
-          List<OntopolyTopicIF> roleTypesTo = new ArrayList<OntopolyTopicIF>(size);
+          List<RoleType> roleTypesFrom = new ArrayList<RoleType>(size);
+          List<Topic> roleTypesTo = new ArrayList<Topic>(size);
           for (int i=0; i < size; i++) {
             roleTypesFrom.add(roleTypesModels.get(i).getRoleType());
             roleTypesTo.add(selectedModels.get(i).getObject());
           }
-          AssociationTypeIF at = associationTypeModel.getAssociationType();
+//          System.out.println("FROM: " + roleTypesFrom);
+//          System.out.println("TO: " + roleTypesTo);
+          AssociationType at = associationTypeModel.getAssociationType();
           at.transformInstances(roleTypesFrom, roleTypesTo);
           
           // redirect to same page          

@@ -2,8 +2,8 @@ package ontopoly.components;
 
 import java.io.Serializable;
 
-import ontopoly.model.CardinalityIF;
-import ontopoly.model.FieldInstanceIF;
+import ontopoly.model.Cardinality;
+import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
 import ontopoly.models.FieldValuesModel;
@@ -21,6 +21,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
 public abstract class AbstractFieldInstancePanel extends Panel {
+
   protected FieldInstanceModel fieldInstanceModel;
   protected FieldValuesModel fieldValuesModel;
   protected WebMarkupContainer fieldValuesContainer;
@@ -28,22 +29,21 @@ public abstract class AbstractFieldInstancePanel extends Panel {
   protected ListView listView;
   protected FeedbackPanel feedbackPanel;
   
-  public AbstractFieldInstancePanel(String id, FieldInstanceModel fieldInstanceModel) {
-    super(id);
-    this.fieldInstanceModel = fieldInstanceModel;
-  }
+	public AbstractFieldInstancePanel(String id, FieldInstanceModel fieldInstanceModel) {
+		super(id);
+		this.fieldInstanceModel = fieldInstanceModel;
+	}
 
-  public FieldInstanceModel getFieldInstanceModel() {
-    return fieldInstanceModel;
-  }
+	public FieldInstanceModel getFieldInstanceModel() {
+	  return fieldInstanceModel;
+	}
 	
-  public FieldValuesModel getFieldValuesModel() {
-    return fieldValuesModel;
-  }
+	public FieldValuesModel getFieldValuesModel() {
+	  return fieldValuesModel;
+	}
 
   /**
-   * Update any dependent components as the value of the field
-   * instance panel has changed.
+   * Update any dependent components as the value of the field instance panel has changed.
    */  
   protected void updateDependentComponents(AjaxRequestTarget target) {
     target.addComponent(fieldValuesContainer);
@@ -62,7 +62,12 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     e.printStackTrace();
   }
 
-  protected void addNewFieldValueCssClass(WebMarkupContainer component, FieldValuesModel fieldValuesModel, FieldValueModel fieldValueModel) {   
+  protected void addNewFieldValueCssClass(WebMarkupContainer component, FieldValuesModel fieldValuesModel, FieldValueModel fieldValueModel) {
+    // add css class if field is new, there are no other exiting values, and the cardinality requires at least one value
+//    Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+//    if (!fieldValueModel.isExistingValue() && !fieldValuesModel.containsExisting() && cardinality.isMinOne()) 
+//      component.add(new SimpleAttributeModifier("class", "newFieldValue"));
+    
     // add css class if field value is new, and the display of it was user triggered.
     if (!fieldValueModel.isExistingValue() && fieldValuesModel.getShowExtraField() && fieldValuesModel.getShowExtraFieldUserTriggered()) 
       component.add(new SimpleAttributeModifier("class", "newFieldValue"));
@@ -95,7 +100,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
   }
 	
   protected void validateCardinality() {
-    CardinalityIF card = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+    Cardinality card = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
     int size = fieldValuesModel.getNumberOfValues();
     if (card.isMinOne() && size < 1)
       error(createErrorMessage(fieldInstanceModel, new ResourceModel("validators.CardinalityValidator.toofew")));
@@ -138,7 +143,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
   }
   
   protected static String createIdentifier(FieldInstanceModel fieldInstanceModel) {
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
     return fieldInstance.getInstance().getId() + ':' + fieldInstance.getFieldAssignment().getFieldDefinition().getId();
   }
   

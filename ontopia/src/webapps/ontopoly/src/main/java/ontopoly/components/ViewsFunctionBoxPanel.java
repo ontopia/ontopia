@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.model.FieldsViewIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.FieldsView;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
@@ -23,33 +23,31 @@ import org.apache.wicket.model.ResourceModel;
 
 public class ViewsFunctionBoxPanel extends Panel {
   
-  public ViewsFunctionBoxPanel(String id, TopicModel topicModel,
-                               TopicTypeModel topicTypeModel,
-                               FieldsViewModel fieldsViewModel) {
+  public ViewsFunctionBoxPanel(String id, TopicModel topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
     super(id);
     add(new Label("title", new ResourceModel("views.list.header")));
 
-    TopicTypeIF topicType = topicTypeModel.getTopicType();
+    TopicType topicType = topicTypeModel.getTopicType();
     
-    Collection<FieldsViewIF> views = topicType.getFieldViews(false, false);
+    Collection<FieldsView> views = topicType.getFieldViews(false, false);
     if (views.isEmpty())
       setVisible(false);
     
-    FieldsViewIF currentView = fieldsViewModel.getFieldsView();
-    FieldsViewIF defaultView = topicType.getTopicMap().getDefaultFieldsView();
+    FieldsView currentView = fieldsViewModel.getFieldsView();
+    FieldsView defaultView = FieldsView.getDefaultFieldsView(topicType.getTopicMap());
     if (currentView == null)
       currentView = defaultView;
     
     RepeatingView rv = new RepeatingView("rows");
     add(rv);
     
-    for (FieldsViewIF view : views) {
+    for (FieldsView view : views) {
       WebMarkupContainer parent =  new WebMarkupContainer(rv.newChildId());
       rv.add(parent);
       
-      OntopolyTopicIF topic = topicModel.getTopic();
-      OntopolyTopicMapIF tm = topic.getTopicMap();
-      TopicTypeIF tt = topicTypeModel.getTopicType();
+      Topic topic = topicModel.getTopic();
+      TopicMap tm = topic.getTopicMap();
+      TopicType tt = topicTypeModel.getTopicType();
       
       Map<String,String> pageParametersMap = new HashMap<String,String>();
       pageParametersMap.put("topicMapId", tm.getId());

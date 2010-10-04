@@ -7,46 +7,68 @@ import java.util.List;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
-import ontopoly.model.FieldDefinitionIF;
-import ontopoly.model.IdentityFieldIF;
-import ontopoly.model.NameFieldIF;
-import ontopoly.model.OccurrenceFieldIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.IdentityField;
+import ontopoly.model.NameField;
+import ontopoly.model.OccurrenceField;
+import ontopoly.model.RoleField;
+import ontopoly.model.TopicMap;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldDefinitionModel extends LoadableDetachableModel<FieldDefinitionIF> {
-  private String topicMapId; 
+public class FieldDefinitionModel extends LoadableDetachableModel<FieldDefinition> {
+
+  private String topicMapId;
+  
   private int fieldType;
   private String fieldId;
   
-  public FieldDefinitionModel(FieldDefinitionIF fieldDefinition) {
+  public FieldDefinitionModel(FieldDefinition fieldDefinition) {
     super(fieldDefinition);
     if (fieldDefinition == null)
       throw new NullPointerException("fieldDefinition parameter cannot be null.");
     
-    OntopolyTopicMapIF topicMap = fieldDefinition.getTopicMap();
+    TopicMap topicMap = fieldDefinition.getTopicMap();
     this.topicMapId = topicMap.getId();
     this.fieldType = fieldDefinition.getFieldType();     
     this.fieldId = fieldDefinition.getId();
   }
   
-  public FieldDefinitionIF getFieldDefinition() {
+  public FieldDefinition getFieldDefinition() {
     return getObject();
   }
 
   @Override
-  protected FieldDefinitionIF load() {
-    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
-    return tm.findFieldDefinition(fieldId, fieldType);
+  protected FieldDefinition load() {
+    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
+ 
+    TopicIF fieldTopic = tm.getTopicIFById(fieldId);
+      
+    FieldDefinition fieldDefinition;
+    switch (fieldType) {
+    case FieldDefinition.FIELD_TYPE_ROLE:
+      fieldDefinition = new RoleField(fieldTopic, tm);
+      break;
+    case FieldDefinition.FIELD_TYPE_OCCURRENCE:
+      fieldDefinition = new OccurrenceField(fieldTopic, tm);
+      break;
+    case FieldDefinition.FIELD_TYPE_NAME:
+      fieldDefinition = new NameField(fieldTopic, tm);
+      break;
+    case FieldDefinition.FIELD_TYPE_IDENTITY:
+      fieldDefinition = new IdentityField(fieldTopic, tm);
+      break;
+    default:
+      throw new RuntimeException("Unknown field type: " + fieldType);
+    }
+    return fieldDefinition;
   }
 
-  public static List<FieldDefinitionModel> wrapInFieldDefinitionModels(List<FieldDefinitionIF> fieldDefinitions) {
+  public static List<FieldDefinitionModel> wrapInFieldDefinitionModels(List<FieldDefinition> fieldDefinitions) {
     List<FieldDefinitionModel> result = new ArrayList<FieldDefinitionModel>(fieldDefinitions.size());
-    Iterator<FieldDefinitionIF> iter = fieldDefinitions.iterator();
+    Iterator<FieldDefinition> iter = fieldDefinitions.iterator();
     while (iter.hasNext()) {
-      FieldDefinitionIF fieldDefinition = iter.next();
+      FieldDefinition fieldDefinition = iter.next();
       result.add(new FieldDefinitionModel(fieldDefinition));
     }
     return result;

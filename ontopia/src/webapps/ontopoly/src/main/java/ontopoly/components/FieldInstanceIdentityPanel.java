@@ -1,11 +1,11 @@
 package ontopoly.components;
 
 import net.ontopia.infoset.core.LocatorIF;
-import ontopoly.model.CardinalityIF;
-import ontopoly.model.FieldAssignmentIF;
-import ontopoly.model.FieldDefinitionIF;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.IdentityFieldIF;
+import ontopoly.model.Cardinality;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.IdentityField;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
@@ -25,22 +25,23 @@ import org.apache.wicket.model.ResourceModel;
 
 public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
 
-  public FieldInstanceIdentityPanel(String id, final FieldInstanceModel fieldInstanceModel, 
-                                    final boolean readonly) {
-    super(id, fieldInstanceModel);
+	public FieldInstanceIdentityPanel(String id, final FieldInstanceModel fieldInstanceModel, 
+	    final boolean readonly) {
+		super(id, fieldInstanceModel);
 
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-    FieldAssignmentIF fieldAssignment = fieldInstance.getFieldAssignment();
-    FieldDefinitionIF fieldDefinition = fieldAssignment.getFieldDefinition(); 
+		FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+		FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
+		FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition(); 
     
+		//! add(new Label("fieldLabel", new Model(fieldDefinition.getFieldName())));
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(fieldDefinition)));
     
     // set up container
-    this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");
-    fieldValuesContainer.setOutputMarkupId(true);    
+		this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");
+		fieldValuesContainer.setOutputMarkupId(true);    
     add(fieldValuesContainer);
 
-    // add feedback panel
+		// add feedback panel
     this.feedbackPanel = new FeedbackPanel("feedback", new AbstractFieldInstancePanelFeedbackMessageFilter());
     feedbackPanel.setOutputMarkupId(true);
     fieldValuesContainer.add(feedbackPanel);
@@ -48,17 +49,16 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
     // add field values component(s)
     this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel, IdentityComparator.INSTANCE);
     
-    this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
+		this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
       @Override
       protected void onBeforeRender() {
         validateCardinality();        
         super.onBeforeRender();
       }
-      public void populateItem(final ListItem<FieldValueModel> item) {
-        final FieldValueModel fieldValueModel = item.getModelObject();
+		  public void populateItem(final ListItem<FieldValueModel> item) {
+		    final FieldValueModel fieldValueModel = item.getModelObject();
 
-        // TODO: make sure non-existing value field gets focus if last
-        // edit happened there
+        // TODO: make sure non-existing value field gets focus if last edit happened there
 
         WebMarkupContainer fieldValueButtons = new WebMarkupContainer("fieldValueButtons");
         fieldValueButtons.setOutputMarkupId(true);
@@ -75,7 +75,7 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
           }));
           identityField = null;
         } else {
-          IdentityFieldIF ifield = (IdentityFieldIF)fieldInstanceModel.getFieldInstance().getFieldAssignment().getFieldDefinition();
+          IdentityField ifield = (IdentityField)fieldInstanceModel.getFieldInstance().getFieldAssignment().getFieldDefinition();
 
           identityField = new FieldInstanceURIField("fieldValue", fieldValueModel) {
             @Override
@@ -84,11 +84,11 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
               // make sure that internal psis are always protected
               return !isProtectedIdentity(oldValue);
             }		      
-            };
-          identityField.setCols(ifield.getWidth()); // NOTE: width not yet supported
-          identityField.setOutputMarkupId(true);
+  		    };
+  		    identityField.setCols(ifield.getWidth()); // NOTE: width not yet supported
+  		    identityField.setOutputMarkupId(true);
           identityField.getTextField().add(new FieldUpdatingBehaviour(true));
-          item.add(identityField);
+  		    item.add(identityField);
         }
         
         // remove button
@@ -97,7 +97,7 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
           @Override
           public boolean isVisible() {
             if (identityField == null || ! identityField.isEnabled()) return false;
-            CardinalityIF cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+            Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
             if (fieldValuesModel.size() == 1 && cardinality.isMinOne())
               return false;
             else
@@ -113,10 +113,10 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
         fieldValueButtons.add(removeButton);  
 		    
         addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
-      }
-    };
-    listView.setReuseItems(true);	  
-    fieldValuesContainer.add(listView);
+	    }
+		};
+	  listView.setReuseItems(true);	  
+	  fieldValuesContainer.add(listView);
 
     this.fieldInstanceButtons = new WebMarkupContainer("fieldInstanceButtons");
     fieldInstanceButtons.setOutputMarkupId(true);
@@ -133,7 +133,7 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
       @Override
       public boolean isVisible() {
         if (readonly) return false;
-        CardinalityIF cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+        Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
         return !cardinality.isMaxOne() && fieldValuesModel.containsExisting();
       }      
       @Override public String getImage() {
@@ -145,7 +145,7 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
     };  
     fieldInstanceButtons.add(addButton);
     
-    CardinalityIF cardinality = fieldAssignment.getCardinality();
+    Cardinality cardinality = fieldAssignment.getCardinality();
     if (cardinality.isMaxOne())
       addButton.setVisible(false);
 	}

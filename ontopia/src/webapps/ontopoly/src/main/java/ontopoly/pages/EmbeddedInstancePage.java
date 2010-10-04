@@ -2,9 +2,9 @@ package ontopoly.pages;
 
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.components.InstancePanel;
-import ontopoly.model.FieldsViewIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.FieldsView;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
@@ -16,8 +16,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Form;
 
-public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage { 
-  protected TopicModel<OntopolyTopicIF> topicModel;
+public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
+  
+  protected TopicModel<Topic> topicModel;
   protected TopicTypeModel topicTypeModel;
   protected FieldsViewModel fieldsViewModel;
 
@@ -32,13 +33,13 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
     String topicMapId = parameters.getString("topicMapId");
     String topicId = parameters.getString("topicId");
 
-    this.topicModel = new TopicModel<OntopolyTopicIF>(topicMapId, topicId);
-    OntopolyTopicIF topic = topicModel.getTopic();
+    this.topicModel = new TopicModel<Topic>(topicMapId, topicId);
+    Topic topic = topicModel.getTopic();
     if (topic == null)
-      throw new NoSuchTopicException("No topic with id " + topicId + " found.");
+        throw new NoSuchTopicException("No topic with id " + topicId + " found.");
 
     // if "topicType" parameter is specified, pull out most specific direct type    
-    TopicTypeIF tt = null;
+    TopicType tt = null;
     String topicTypeId = parameters.getString("topicTypeId");
     if (topicTypeId != null)
       tt = topic.getMostSpecificTopicType(new TopicTypeModel(topicMapId, topicTypeId).getTopicType());
@@ -52,7 +53,7 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
     if (viewId != null)
       this.fieldsViewModel = new FieldsViewModel(topicMapId, viewId);
     else
-      this.fieldsViewModel = new FieldsViewModel(topic.getTopicMap().getDefaultFieldsView());
+      this.fieldsViewModel = new FieldsViewModel(FieldsView.getDefaultFieldsView(topic.getTopicMap()));
     
     // page is read-only if topic type is read-only
     
@@ -71,27 +72,27 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
   protected InstancePanel createInstancePanel(final String id) {
     return new InstancePanel(id, topicModel, topicTypeModel, fieldsViewModel, isReadOnlyPage(), isTraversable()) {
       @Override
-      protected void onLockLost(AjaxRequestTarget target, OntopolyTopicIF topic) {
+      protected void onLockLost(AjaxRequestTarget target, Topic topic) {
         instanceContainer.replace(createInstancePanel(id));
         target.addComponent(instanceContainer);        
       }      
       @Override
-      protected void onLockWon(AjaxRequestTarget target, OntopolyTopicIF topic) {
+      protected void onLockWon(AjaxRequestTarget target, Topic topic) {
         instanceContainer.replace(createInstancePanel(id));
         target.addComponent(instanceContainer);        
       }      
     };
   }
  
-  protected OntopolyTopicIF getTopic() {
+  protected Topic getTopic() {
     return topicModel.getTopic();
   }
   
-  protected TopicTypeIF getTopicType() {
+  protected TopicType getTopicType() {
     return topicTypeModel.getTopicType();
   }
   
-  protected FieldsViewIF getFieldsView() {
+  protected FieldsView getFieldsView() {
     return fieldsViewModel.getFieldsView();
   }
   
@@ -100,13 +101,13 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
   }
   
   @Override  
-  public PageParameters getPageParameters(OntopolyTopicIF topic) {
+  public PageParameters getPageParameters(Topic topic) {
     PageParameters params = new PageParameters();            
     params.put("topicMapId", topic.getTopicMap().getId());
     params.put("topicId", topic.getId());            
     //! params.put("topicTypeId", getTopicType().getId());
     
-    FieldsViewIF fieldsView = getFieldsView();
+    FieldsView fieldsView = getFieldsView();
     if (!fieldsView.isDefaultView())
       params.put("viewId", fieldsView.getId());
     

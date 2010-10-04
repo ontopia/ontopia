@@ -3,10 +3,10 @@ package ontopoly.components;
 import java.util.Collection;
 
 import ontopoly.images.ImageResource;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.PlayerTypesModel;
@@ -32,11 +32,13 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.ResourceModel;
 
 public abstract class FieldInstanceCreatePlayerPanel extends Panel {
+
   public static final int CREATE_ACTION_NONE = 1;
   public static final int CREATE_ACTION_POPUP = 2;
   public static final int CREATE_ACTION_NAVIGATE = 4;
   
-  protected AbstractFieldInstancePanel fieldInstancePanel; 
+  protected AbstractFieldInstancePanel fieldInstancePanel;
+  
   protected FieldInstanceModel fieldInstanceModel;
   protected FieldsViewModel fieldsViewModel;
   protected RoleFieldModel roleFieldModel;
@@ -54,7 +56,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     this.fieldInstancePanel = fieldInstancePanel;
     this.createAction = createAction;
     
-    RoleFieldIF associationField = roleFieldModel.getRoleField();
+    RoleField associationField = roleFieldModel.getRoleField();
     Collection allowedValueTypes = associationField.getAllowedPlayerTypes(_fieldInstanceModel.getFieldInstance().getInstance());
     if (allowedValueTypes.isEmpty()) {
       setVisible(false);
@@ -67,7 +69,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
       add(new Label("createMenu"));
       add(new Label("createModal"));
     } else if (allowedValueTypes.size() == 1) {
-      this.topicTypeModel = new TopicTypeModel((TopicTypeIF)allowedValueTypes.iterator().next());
+      this.topicTypeModel = new TopicTypeModel((TopicType)allowedValueTypes.iterator().next());
       OntopolyImageLink button = new OntopolyImageLink("button", "create.gif", new ResourceModel("icon.create.player")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
@@ -106,9 +108,9 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
       add(new ContextMenuPanel("createMenu", menuId) {
         @Override
         protected ListView createListView(final String menuId, final String menuItemId) {
-          return new ListView<TopicTypeIF>(menuId, new PlayerTypesModel(fieldInstanceModel, roleFieldModel)) {
+          return new ListView<TopicType>(menuId, new PlayerTypesModel(fieldInstanceModel, roleFieldModel)) {
             @Override
-            public void populateItem(final ListItem<TopicTypeIF> item) {
+            public void populateItem(final ListItem<TopicType> item) {
               AjaxLink createLink = new AjaxLink(menuItemId) {
                 @Override
                 public void onClick(AjaxRequestTarget target) {
@@ -125,9 +127,9 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     }
   }
   
-  protected void onClick(AjaxRequestTarget target, TopicTypeIF selectedTopicType) {
+  protected void onClick(AjaxRequestTarget target, TopicType selectedTopicType) {
     // create instance and redirect
-    OntopolyTopicIF instance = createInstance(selectedTopicType);
+    Topic instance = createInstance(selectedTopicType);
     if (instance == null) {
       hideInstancePage(target);
     } else if (createAction == CREATE_ACTION_POPUP) {
@@ -141,41 +143,50 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     }
   }
   
-  protected OntopolyTopicIF createInstance(TopicTypeIF topicType) {
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-    OntopolyTopicIF currentTopic = fieldInstance.getInstance();
-    RoleFieldIF currentField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();
-    OntopolyTopicIF createdTopic = null;
-    RoleFieldIF createField = roleFieldModel.getRoleField();
+  protected Topic createInstance(TopicType topicType) {
+
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    Topic currentTopic = fieldInstance.getInstance();
+    RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
+    Topic createdTopic = null;
+    RoleField createField = roleFieldModel.getRoleField();
 
     // check with page to see if create is allowed
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     if (page.isCreateAllowed(currentTopic, currentField, topicType, createField)) {
+    
       // create a new topic instance
       createdTopic = topicType.createInstance(null);
       
       performNewSelection(roleFieldModel, createdTopic);
+      
+//      // create association; selected player
+//      RoleField.ValueIF value = RoleField.createValue(2);
+//      value.addPlayer(createField, createdTopic);
+//      
+//      // create association; parent player
+//      value.addPlayer(currentField, currentTopic);
+//      
+//      // create association and return instance
+//      fieldInstance.addValue(value);
     }
     return createdTopic;
   }
   
-  protected abstract void performNewSelection(RoleFieldModel ofieldModel,
-                                              OntopolyTopicIF selectedTopic);
+  protected abstract void performNewSelection(RoleFieldModel ofieldModel, Topic selectedTopic);
 
     
-  protected void showInstancePage(AjaxRequestTarget target,
-                                  OntopolyTopicIF topic,
-                                  TopicTypeIF topicType, Component c) {
+  protected void showInstancePage(AjaxRequestTarget target, Topic topic, TopicType topicType, Component c) {
     // open modal window
     final ModalWindow createModal = new ModalWindow("createModal");
-    TopicModel<OntopolyTopicIF> topicModel = new TopicModel<OntopolyTopicIF>(topic);
+    TopicModel<Topic> topicModel = new TopicModel<Topic>(topic);
     TopicTypeModel topicTypeModel = new TopicTypeModel(topicType);
     createModal.setContent(new ModalInstancePage(createModal.getContentId(), topicModel, topicTypeModel, fieldsViewModel) {
       @Override
       protected void onCloseOk(AjaxRequestTarget target) {
-        // close modal and update parent
-        createModal.close(target);              
-        FieldInstanceCreatePlayerPanel.this.hideInstancePage(target);
+    	  // close modal and update parent
+          createModal.close(target);              
+          FieldInstanceCreatePlayerPanel.this.hideInstancePage(target);
       }
     });
     createModal.setTitle(new ResourceModel("ModalWindow.title.edit.new").getObject().toString() + topicType.getName() + "...");

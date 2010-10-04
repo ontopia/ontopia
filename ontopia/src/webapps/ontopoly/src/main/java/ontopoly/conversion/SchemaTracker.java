@@ -1,5 +1,7 @@
 package ontopoly.conversion;
 
+//$Id: SchemaTracker.java,v 1.1 2009/04/23 05:39:14 geir.gronmo Exp $
+
 import gnu.trove.TObjectIntHashMap;
 
 import java.util.Collection;
@@ -22,6 +24,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 */
 
 public class SchemaTracker {
+
   protected static final Collection NULL_COLLECTION = Collections.singleton(null);
   
   protected Map<TopicIF,TopicType> ttypes = new HashMap<TopicIF,TopicType>(); // ttype : { TopicType }

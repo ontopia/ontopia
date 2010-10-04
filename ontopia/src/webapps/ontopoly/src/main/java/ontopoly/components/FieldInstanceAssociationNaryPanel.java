@@ -4,10 +4,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.model.FieldAssignmentIF;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
@@ -28,34 +28,34 @@ import org.apache.wicket.model.ResourceModel;
 
 public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePanel {
   
-  public FieldInstanceAssociationNaryPanel(String id, 
-    final FieldInstanceModel fieldInstanceModel, final FieldsViewModel fieldsViewModel, 
-    final boolean readonly, final boolean traversable, final int arity) {
-    super(id, fieldInstanceModel);
+	public FieldInstanceAssociationNaryPanel(String id, 
+	    final FieldInstanceModel fieldInstanceModel, final FieldsViewModel fieldsViewModel, 
+	    final boolean readonly, final boolean traversable, final int arity) {
+		super(id, fieldInstanceModel);
 
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-    FieldAssignmentIF fieldAssignment = fieldInstance.getFieldAssignment();
-    RoleFieldIF roleField = (RoleFieldIF)fieldAssignment.getFieldDefinition(); 
+		FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+		FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
+		RoleField roleField = (RoleField)fieldAssignment.getFieldDefinition(); 
 
-    final RoleFieldModel roleFieldModel = new RoleFieldModel(roleField);
-    final List otherRoleFieldModels = RoleFieldModel.wrapInRoleFieldModels(roleField.getFieldsForOtherRoles());
+		final RoleFieldModel roleFieldModel = new RoleFieldModel(roleField);
+	  final List otherRoleFieldModels = RoleFieldModel.wrapInRoleFieldModels(roleField.getFieldsForOtherRoles());
     
     final boolean allowRemove = !roleField.getEditMode().isNoEdit();
 	  
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(roleField)));
     
     // set up container
-    this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");
-    fieldValuesContainer.setOutputMarkupId(true);    
+		this.fieldValuesContainer = new WebMarkupContainer("fieldValuesContainer");
+		fieldValuesContainer.setOutputMarkupId(true);    
     add(fieldValuesContainer);
 
-    // add feedback panel
+		// add feedback panel
     this.feedbackPanel = new FeedbackPanel("feedback", new AbstractFieldInstancePanelFeedbackMessageFilter());
     feedbackPanel.setOutputMarkupId(true);
     fieldValuesContainer.add(feedbackPanel);
 
     // add field values component(s)
-    Comparator<Object> comparator = new RoleFieldsValueComparator(new TopicModel<OntopolyTopicIF>(fieldInstance.getInstance()), otherRoleFieldModels);
+    Comparator<Object> comparator = new RoleFieldsValueComparator(new TopicModel<Topic>(fieldInstance.getInstance()), otherRoleFieldModels);
     this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel, comparator);
     
     this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
@@ -64,11 +64,10 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
         validateCardinality();        
         super.onBeforeRender();
       }
-      public void populateItem(final ListItem<FieldValueModel> item) {
-        FieldValueModel fieldValueModel = item.getModelObject();
+		  public void populateItem(final ListItem<FieldValueModel> item) {
+		    FieldValueModel fieldValueModel = item.getModelObject();
 
-        // TODO: make sure non-existing value field gets focus if last
-        // edit happened there
+        // TODO: make sure non-existing value field gets focus if last edit happened there
         
         final WebMarkupContainer fieldValueButtons = new WebMarkupContainer("fieldValueButtons");
         fieldValueButtons.setOutputMarkupId(true);
@@ -83,31 +82,38 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
                 
                 // filter by player
                 AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-                RoleFieldIF.ValueIF value = (RoleFieldIF.ValueIF)fieldValueModel.getObject();
-                OntopolyTopicIF[] players = value.getPlayers();
+                RoleField.ValueIF value = (RoleField.ValueIF)fieldValueModel.getObject();
+                Topic[] players = value.getPlayers();
                 for (int i=0; i < players.length; i++) {
                   if (!page.filterTopic(players[i])) return false;
                 }
+//                // show remove button on 1:1 field unless just one value left
+//                FieldInstance fi = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+//                Cardinality cardinality = fi.getFieldAssignment().getCardinality();
+//                if (cardinality.isMinOne() && cardinality.isMaxOne() && 
+//                    ((fieldValuesModel.size() == 1 && !fieldValuesModel.getShowExtraField()) ||
+//                      (fieldValuesModel.size() == 2 && fieldValuesModel.getShowExtraField())))
+//                  return false;                
               }
               return visible;
             }
             @Override
             public void onClick(AjaxRequestTarget target) {
-              FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+              FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
               Object value = fieldValueModel.getObject();
 
-              OntopolyTopicIF currentTopic = fieldInstance.getInstance();
-              RoleFieldIF currentField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();          
+              Topic currentTopic = fieldInstance.getInstance();
+              RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();          
 
-              RoleFieldIF.ValueIF valueIf = (RoleFieldIF.ValueIF)value;
-              RoleFieldIF[] fields = valueIf.getRoleFields();
+              RoleField.ValueIF valueIf = (RoleField.ValueIF)value;
+              RoleField[] fields = valueIf.getRoleFields();
               // check with page to see if add is allowed
               boolean removeAllowed = true;
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
               for (int i=0;  i < fields.length; i++) {
-                RoleFieldIF selectedField = fields[i];
+                RoleField selectedField = fields[i];
                 if (ObjectUtils.different(currentField, selectedField)) {
-                  OntopolyTopicIF selectedTopic = valueIf.getPlayer(selectedField, fieldInstance.getInstance());                
+                  Topic selectedTopic = valueIf.getPlayer(selectedField, fieldInstance.getInstance());                
                   if (!page.isRemoveAllowed(currentTopic, currentField, selectedTopic, selectedField)) {
                     removeAllowed = false;
                   }
@@ -129,18 +135,18 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
         item.add(naryField); 
         
         addNewFieldValueCssClass(item, fieldValuesModel, fieldValueModel);
-      }
-    };
-    listView.setReuseItems(true);	  
-    fieldValuesContainer.add(listView);
+	    }
+		};
+	  listView.setReuseItems(true);	  
+	  fieldValuesContainer.add(listView);
 
-    // figure out which buttons to show
+	  // figure out which buttons to show
     this.fieldInstanceButtons = new WebMarkupContainer("fieldInstanceButtons");
     fieldInstanceButtons.setOutputMarkupId(true);
     add(fieldInstanceButtons);	  
 
-    // "add" button
-    OntopolyImageLink addButton = new OntopolyImageLink("add", "add.gif") { 
+	  // "add" button
+	  OntopolyImageLink addButton = new OntopolyImageLink("add", "add.gif") { 
       @Override
       public void onClick(AjaxRequestTarget target) {
         boolean showExtraField = !fieldValuesModel.getShowExtraField();
@@ -151,6 +157,8 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
       @Override
       public boolean isVisible() {
         if (readonly) return false;
+//        Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+//        return !(cardinality.isMaxOne() && fieldValuesModel.getNumberOfValues() > 1);
         return fieldValuesModel.containsExisting();
       }
       @Override public String getImage() {
@@ -161,6 +169,6 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
       }
     };
     fieldInstanceButtons.add(addButton);    
-  }
+	}
  
 }

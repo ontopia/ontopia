@@ -1,23 +1,17 @@
 package ontopoly.components;
 
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-
-import ontopoly.model.PSI;
-import ontopoly.model.CardinalityIF;
-import ontopoly.model.DataTypeIF;
-import ontopoly.model.FieldAssignmentIF;
-import ontopoly.model.FieldDefinitionIF;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.OccurrenceFieldIF;
-import ontopoly.model.OccurrenceTypeIF;
+import ontopoly.model.Cardinality;
+import ontopoly.model.DataType;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.OccurrenceField;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
 import ontopoly.models.FieldValuesModel;
 import ontopoly.utils.OccurrenceComparator;
-import ontopoly.pages.ModalGeoPickerPage;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -28,8 +22,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.behavior.HeaderContributor;
 
 public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
   
@@ -37,10 +29,11 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
                                       final boolean readonly) {
     super(id, fieldInstanceModel);
 
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-    FieldAssignmentIF fieldAssignment = fieldInstance.getFieldAssignment();
-    FieldDefinitionIF fieldDefinition = fieldAssignment.getFieldDefinition(); 
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
+    FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition(); 
 
+    //! add(new Label("fieldLabel", new Model(fieldDefinition.getFieldName())));
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(fieldDefinition)));
     
     // set up container
@@ -66,10 +59,9 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       public void populateItem(final ListItem<FieldValueModel> item) {
         final FieldValueModel fieldValueModel = item.getModelObject();
         FieldInstanceModel fieldInstanceModel = fieldValueModel.getFieldInstanceModel();
-        FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
+        FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
 
-        // TODO: make sure non-existing value field gets focus if last
-        // edit happened there
+        // TODO: make sure non-existing value field gets focus if last edit happened there
 
         WebMarkupContainer fieldValueButtons = new WebMarkupContainer("fieldValueButtons");
         fieldValueButtons.setOutputMarkupId(true);
@@ -80,7 +72,7 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
         new FieldInstanceRemoveButton("remove", "remove-value.gif", fieldValueModel) { 
           @Override
           public boolean isVisible() {
-            CardinalityIF cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+            Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
             if (fieldValuesModel.size() == 1 && cardinality.isMinOne())
               return false;
             else
@@ -96,8 +88,8 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
         fieldValueButtons.add(removeButton);  
         
         // we know what kind of field this is, so we can just cast to it directly
-        OccurrenceFieldIF of = (OccurrenceFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();
-        DataTypeIF dataType = of.getDataType();
+        OccurrenceField of = (OccurrenceField)fieldInstance.getFieldAssignment().getFieldDefinition();
+        DataType dataType = of.getDataType();
 
         if (readonly) {
           if (dataType.isImage()) {
@@ -162,7 +154,7 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
               FieldInstanceTextField occField = new FieldInstanceTextField("fieldValue", fieldValueModel);
               occField.setCols(of.getWidth());
               occField.add(fuBehaviour);
-              item.add(occField);
+              item.add(occField);           
             }
           }
         }
@@ -188,7 +180,7 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       @Override
       public boolean isVisible() {
         if (readonly) return false;
-        CardinalityIF cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
+        Cardinality cardinality = fieldValuesModel.getFieldInstanceModel().getFieldInstance().getFieldAssignment().getCardinality();
         return !cardinality.isMaxOne() && fieldValuesModel.containsExisting();
       }      
       @Override public String getImage() {
@@ -199,56 +191,10 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       }
     };
     fieldInstanceButtons.add(addButton);
-
-    // FIXME: don't always add this
-    final ModalWindow geoPicker = new ModalWindow("geoPickerDialog");
-    fieldInstanceButtons.add(geoPicker);
-
-    geoPicker.setContent(new ModalGeoPickerPage(geoPicker, fieldInstance.getInstance()));
-    geoPicker.setTitle(new ResourceModel("ModalWindow.title.geopicker").getObject().toString());
-    geoPicker.setCookieName("geoPicker");
     
-    OccurrenceFieldIF of = (OccurrenceFieldIF)
-      fieldInstance.getFieldAssignment().getFieldDefinition();
-    OccurrenceTypeIF ot = of.getOccurrenceType();
-    boolean haspsi =
-      ot.getTopicIF().getSubjectIdentifiers().contains(PSI.ON_LATITUDE);
-    fieldInstanceButtons.add(new GeoPickerButton(!readonly && haspsi, geoPicker));
-    if (!readonly && haspsi)
-      add(HeaderContributor.forJavaScript("http://maps.google.com/maps?file=api&v=2&key=ABQIAAAA8oFUEfcfBwJ3xTqFdvtQYBTiLbSeZcM16NREF76zYX3tP45A2xT3OQ_r83vQeN_T2cQGbX4lyirUrQ"));
-    
-    CardinalityIF cardinality = fieldAssignment.getCardinality();
+    Cardinality cardinality = fieldAssignment.getCardinality();
     if (cardinality.isMaxOne())
       addButton.setVisible(false);
   }
-  
-  /**
-   * Button to open geo-picker popup.
-   */
-  class GeoPickerButton extends OntopolyImageLink {
-    private boolean visible;
-    private ModalWindow picker;
 
-    public GeoPickerButton(boolean visible, ModalWindow picker) {
-      super("geopicker", "geopicker.png");
-      this.visible = visible;
-      this.picker = picker;
-    }
-    
-    public void onClick(AjaxRequestTarget target) {
-      picker.show(target);
-    }
-
-    public boolean isVisible() {
-      return visible;
-    }
-
-    public String getImage() {
-      return "geopicker.png";
-    }
-
-    public IModel getTitleModel() {
-      return new ResourceModel("icon.geopicker");
-    }
-  }
 }

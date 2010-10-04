@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pages.SearchPage;
 import ontopoly.pages.StartPage;
@@ -61,7 +61,7 @@ public class TopicMapHeaderPanel extends HeaderPanel {
     AjaxFallbackLink saveLink = new AjaxFallbackLink("save") {
       @Override
       public void onClick(AjaxRequestTarget target) {
-        ((OntopolyTopicMapIF)topicMapModel.getObject()).save();
+        ((TopicMap)topicMapModel.getObject()).save();
       }
       @Override
       public boolean isVisible() {

@@ -15,8 +15,8 @@ import net.ontopia.utils.ObjectUtils;
 import ontopoly.components.LinkPanel;
 import ontopoly.components.TreePanel;
 import ontopoly.model.PSI;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.TopicModel;
 import ontopoly.pojos.TopicNode;
 import ontopoly.utils.OntopolyModelUtils;
@@ -37,7 +37,7 @@ import org.apache.wicket.model.Model;
 
 public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
   
-  private TopicModel<OntopolyTopicIF> hierarchyModel;
+  private TopicModel<Topic> hierarchyModel;
   
   public EmbeddedHierarchicalInstancePage(PageParameters parameters) {
     // expect there to be a topicId parameter
@@ -46,12 +46,12 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
     // find hierarchy topic
     String hierarchyId = parameters.getString("hierarchyId");
     if (hierarchyId == null)
-      this.hierarchyModel = new TopicModel<OntopolyTopicIF>(getHierarchyTopic(getTopic()));      
+      this.hierarchyModel = new TopicModel<Topic>(getHierarchyTopic(getTopic()));      
     else
-      this.hierarchyModel = new TopicModel<OntopolyTopicIF>(parameters.getString("topicMapId"), hierarchyId);
+      this.hierarchyModel = new TopicModel<Topic>(parameters.getString("topicMapId"), hierarchyId);
     
     // create a tree
-    TreePanel treePanel = createTreePanel("treePanel", createTreeModel(new TopicModel<OntopolyTopicIF>(getHierarchyTopic()), new TopicModel<OntopolyTopicIF>(getTopic())));
+    TreePanel treePanel = createTreePanel("treePanel", createTreeModel(new TopicModel<Topic>(getHierarchyTopic()), new TopicModel<Topic>(getTopic())));
     treePanel.setOutputMarkupId(true);
     add(treePanel); 
   }
@@ -61,11 +61,11 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
     return true;
   }
   
-  protected OntopolyTopicIF getHierarchyTopic() {
+  protected Topic getHierarchyTopic() {
     return hierarchyModel.getTopic();
   }
 
-  protected OntopolyTopicIF getHierarchyTopic(OntopolyTopicIF topic) {
+  protected Topic getHierarchyTopic(Topic topic) {
     // find hierarchy definition query for topic
     String query = getDefinitionQuery(topic);
     if (query != null) return topic;
@@ -73,24 +73,24 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
     // find hierarchy definition query for topic's topic types
     Iterator titer = topic.getTopicTypes().iterator();
     while (titer.hasNext()) {
-      TopicTypeIF topicType = (TopicTypeIF)titer.next();
+      TopicType topicType = (TopicType)titer.next();
       if (getDefinitionQuery(topicType) != null) 
         return topicType;
     }
     return null;
   }
 
-  protected String getDefinitionQuery(OntopolyTopicIF topic) {
+  protected String getDefinitionQuery(Topic topic) {
     TopicIF typeIf = OntopolyModelUtils.getTopicIF(topic.getTopicMap(), PSI.ON, "hierarchy-definition-query");
     if (typeIf == null) return null;
     OccurrenceIF occ = OntopolyModelUtils.findOccurrence(typeIf, topic.getTopicIF());
     return (occ == null ? null : occ.getValue());    
   }
   
-  protected IModel<TreeModel> createTreeModel(final TopicModel<OntopolyTopicIF> hierarchyTopicModel, final TopicModel<OntopolyTopicIF> currentNodeModel) {
+  protected IModel<TreeModel> createTreeModel(final TopicModel<Topic> hierarchyTopicModel, final TopicModel<Topic> currentNodeModel) {
     final TreeModel treeModel;
-    OntopolyTopicIF hierarchyTopic = hierarchyTopicModel.getTopic();
-    OntopolyTopicIF currentNode = currentNodeModel.getTopic();
+    Topic hierarchyTopic = hierarchyTopicModel.getTopic();
+    Topic currentNode = currentNodeModel.getTopic();
     
     // find hierarchy definition query for topic
     String query = (hierarchyTopic == null ? null : getDefinitionQuery(hierarchyTopic));
@@ -131,11 +131,11 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
           expandNode(tree, treeNode);
       }
 
-      protected DefaultMutableTreeNode findTopicNode(DefaultMutableTreeNode parent, OntopolyTopicIF topic) {
+      protected DefaultMutableTreeNode findTopicNode(DefaultMutableTreeNode parent, Topic topic) {
         Enumeration e = parent.children();
         while (e.hasMoreElements()) {
           DefaultMutableTreeNode child = (DefaultMutableTreeNode)e.nextElement();
-          OntopolyTopicIF nodeTopic = ((TopicNode)child.getUserObject()).getTopic();
+          Topic nodeTopic = ((TopicNode)child.getUserObject()).getTopic();
           if (ObjectUtils.equals(nodeTopic, topic))
             return child;
           DefaultMutableTreeNode found = findTopicNode(child, topic);
@@ -149,7 +149,7 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
       protected Component populateNode(String id, TreeNode treeNode) {
         DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
         final TopicNode node = (TopicNode)mTreeNode.getUserObject();
-        OntopolyTopicIF topic = node.getTopic();
+        Topic topic = node.getTopic();
         final boolean isCurrentTopic = ObjectUtils.equals(topic, getTopic());
         // create link with label
         return new LinkPanel(id) {
@@ -166,7 +166,7 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
           }
           @Override
           protected Link newLink(String id) {
-            OntopolyTopicIF topic = node.getTopic();
+            Topic topic = node.getTopic();
             return new BookmarkablePageLink<Page>(id, getPageClass(topic), getPageParameters(topic));
           }
         };
@@ -175,10 +175,10 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
   }
   
   @Override  
-  public PageParameters getPageParameters(OntopolyTopicIF topic) {
+  public PageParameters getPageParameters(Topic topic) {
     // add hierarchyId to parent parameters
     PageParameters params = super.getPageParameters(topic);            
-    OntopolyTopicIF hierarchyTopic = getHierarchyTopic();
+    Topic hierarchyTopic = getHierarchyTopic();
     if (hierarchyTopic != null)
       params.put("hierarchyId", hierarchyTopic.getId());
     return params;

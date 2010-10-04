@@ -192,9 +192,8 @@ public class Topic {
   }
 
   /**
-   * Tests whether this topic is an instance of an ontology type,
-   * i.e. an instance of topic type, name type, occurrence type,
-   * association type or role type.
+   * Tests whether this topic is an instance of an ontology type, i.e. an instance of topic type,
+   * name type, occurrence type, association type or role type.
    * 
    * @return true if this is an instance of an ontology type.
    */
@@ -293,6 +292,7 @@ public class Topic {
     List<FieldInstance> fieldInstances = new ArrayList<FieldInstance>(fieldAssignments.size());
 
     Iterator it = fieldAssignments.iterator();
+
     while (it.hasNext()) {
       FieldAssignment fa = (FieldAssignment) it.next();
       fieldInstances.add(new FieldInstance(this, fa));
@@ -303,8 +303,7 @@ public class Topic {
 
   /**
    * Removes the topic from the topic map.
-   * @param listener listener that gets call back from the deleting
-   * this topic, and any dependencies.
+   * @param listener listener that gets call back from the deleting this topic, and any dependencies.p
    */
   public void remove(LifeCycleListener listener) {
     if (listener != null) listener.onBeforeDelete(this);

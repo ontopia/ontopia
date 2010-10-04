@@ -3,7 +3,7 @@ package ontopoly.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.Topic;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AssociationTransformPage;
 
@@ -25,7 +25,7 @@ public class AssociationTransformFunctionBoxPanel extends Panel {
     addButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        OntopolyTopicIF instance = topicModel.getTopic();
+        Topic instance = topicModel.getTopic();
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", instance.getTopicMap().getId());
         pageParametersMap.put("topicId", instance.getId());

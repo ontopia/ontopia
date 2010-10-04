@@ -1,15 +1,19 @@
 package ontopoly.models;
 
+
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
-import ontopoly.model.NameTypeIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.NameType;
+import ontopoly.model.TopicMap;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class NameTypeModel extends LoadableDetachableModel {
+
   private static final long serialVersionUID = 732564717599079747L;
+
   private String topicMapId;
+
   private String topicId;
 
   public NameTypeModel(String topicMapId, String topicId) {
@@ -21,13 +25,14 @@ public class NameTypeModel extends LoadableDetachableModel {
     this.topicId = topicId;
   }
 
-  public NameTypeIF getNameType() {
-    return (NameTypeIF)getObject();    
+  public NameType getNameType() {
+    return (NameType)getObject();    
   }
   
   @Override
   protected Object load() {
-    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
-    return tm.findNameType(topicId);
+    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
+    TopicIF topicIf = tm.getTopicIFById(topicId);
+    return new NameType(topicIf, tm);
   }
 }

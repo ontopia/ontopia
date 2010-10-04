@@ -3,8 +3,8 @@ package ontopoly.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 
 import org.apache.wicket.Page;
@@ -38,8 +38,8 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
     button.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        OntopolyTopicMapIF topicMap = topicMapModel.getTopicMap();
-        OntopolyTopicIF instance = createInstance(topicMap, nameField.getDefaultModelObjectAsString());
+        TopicMap topicMap = topicMapModel.getTopicMap();
+        Topic instance = createInstance(topicMap, nameField.getDefaultModelObjectAsString());
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", instance.getId());
@@ -59,6 +59,6 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
     
   protected abstract Class<? extends Page> getInstancePageClass();
   
-  protected abstract OntopolyTopicIF createInstance(OntopolyTopicMapIF topicMap, String name);
+  protected abstract Topic createInstance(TopicMap topicMap, String name);
   
 }

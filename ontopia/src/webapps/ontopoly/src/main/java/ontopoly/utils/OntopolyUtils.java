@@ -5,9 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import ontopoly.model.PSI;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
+
 
 public class OntopolyUtils {
 
@@ -15,26 +16,28 @@ public class OntopolyUtils {
   }
   
   /**
-   * Returns the topic type that is the default topic type amongst the
-   * topic types of the topic.
+   * Returns the topic type that is the default topic type amongst the topic types of the topic.
+   * @param topic
+   * @param roleField
+   * @return
    */
-  public static TopicTypeIF getDefaultTopicType(OntopolyTopicIF topic) {
+  public static TopicType getDefaultTopicType(Topic topic) {
     List topicTypes = topic.getTopicTypes();
     int size = topicTypes.size();
     if (size == 1) 
-      return (TopicTypeIF)topicTypes.get(0);
+      return (TopicType)topicTypes.get(0);
     else if (size == 0) {
       // HACK: add untyped-topic to list of topic types if no other type exist
-      OntopolyTopicMapIF tm = topic.getTopicMap();
-      return tm.getDefaultTopicType();
+      TopicMap tm = topic.getTopicMap();
+      return new TopicType(OntopolyModelUtils.getTopicIF(tm, PSI.ON_UNTYPED_TOPIC), tm);
     }
 
-    TopicTypeIF ontologyType = null;
-    TopicTypeIF instanceType = null;
+    TopicType ontologyType = null;
+    TopicType instanceType = null;
     int ontologyTypeWeight = 0;
     // int instanceTypeWeight = 0;
     for (int i=0; i < size; i++) {
-      TopicTypeIF topicType = (TopicTypeIF)topicTypes.get(i);
+      TopicType topicType = (TopicType)topicTypes.get(i);
       if (topicType.isSystemTopic()) {
         Collection psis = topicType.getTopicIF().getSubjectIdentifiers();
         if (psis.contains(PSI.ON_TOPIC_TYPE)) {
@@ -90,36 +93,36 @@ public class OntopolyUtils {
       return instanceType;
   }
   
-  public static boolean filterTopicByAdministratorRole(OntopolyTopicIF topic) {
+  public static boolean filterTopicByAdministratorRole(Topic topic) {
     return true;
   }
 
-  public static boolean filterTopicByAnnotationRole(OntopolyTopicIF topic) {
+  public static boolean filterTopicByAnnotationRole(Topic topic) {
     return !topic.isPrivateSystemTopic() || topic.isOntologyType();
   }
   
-  public static boolean filterTopicByDefaultRole(OntopolyTopicIF topic) {
+  public static boolean filterTopicByDefaultRole(Topic topic) {
     return !topic.isPrivateSystemTopic();
   }
   
-  public static void filterTopicsByAdministratorRole(Collection<? extends OntopolyTopicIF> topics) {
+  public static void filterTopicsByAdministratorRole(Collection<? extends Topic> topics) {
     // none should be excluded
   }
      
-  public static void filterTopicsByAnnotationRole(Collection<? extends OntopolyTopicIF> topics) {
+  public static void filterTopicsByAnnotationRole(Collection<? extends Topic> topics) {
     // WARNING: collection must be mutable and iterator support .remove()
-    Iterator<? extends OntopolyTopicIF> iter = topics.iterator();
+    Iterator<? extends Topic> iter = topics.iterator();
     while (iter.hasNext()) {
       if (!filterTopicByAnnotationRole(iter.next()))
         iter.remove();
     }
   }
   
-  public static void filterTopicsByDefaultRole(Collection<? extends OntopolyTopicIF> topics) {
+  public static void filterTopicsByDefaultRole(Collection<? extends Topic> topics) {
     // WARNING: collection must be mutable and iterator support .remove()
     Iterator iter = topics.iterator();
     while (iter.hasNext()) {
-      OntopolyTopicIF topic = (OntopolyTopicIF)iter.next();
+      Topic topic = (Topic)iter.next();
       if (!filterTopicByDefaultRole(topic))
         iter.remove();
     }

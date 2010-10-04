@@ -3,11 +3,11 @@ package ontopoly.utils;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.Topic;
 
 import net.ontopia.utils.StringUtils;
 
-public class TopicComparator implements Comparator<OntopolyTopicIF>, Serializable {
+public class TopicComparator implements Comparator<Topic>, Serializable {
 
   public static final TopicComparator INSTANCE = new TopicComparator();
   
@@ -15,7 +15,7 @@ public class TopicComparator implements Comparator<OntopolyTopicIF>, Serializabl
     // don't call me
   }
   
-  public int compare(OntopolyTopicIF t1, OntopolyTopicIF t2) {
+  public int compare(Topic t1, Topic t2) {
     if (t1 == null && t2 == null) return 0;
     else if (t1 == null)
       return 1;

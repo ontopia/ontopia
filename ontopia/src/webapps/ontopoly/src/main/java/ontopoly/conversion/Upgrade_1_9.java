@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ontopoly.model.FieldAssignmentIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.TopicMap;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -26,7 +26,7 @@ import net.ontopia.utils.StringUtils;
 
 public class Upgrade_1_9 extends UpgradeBase {
   
-  Upgrade_1_9(OntopolyTopicMapIF topicmap) throws InvalidQueryException {
+  Upgrade_1_9(TopicMap topicmap) throws InvalidQueryException {
     super(topicmap);
   }
   

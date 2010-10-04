@@ -8,13 +8,13 @@ import java.util.List;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import ontopoly.OntopolySession;
-import ontopoly.model.FieldDefinitionIF;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.LifeCycleListenerIF;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.LifeCycleListener;
 import ontopoly.model.PSI;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.OntopolyUtils;
 
@@ -25,8 +25,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractOntopolyPage extends WebPage
-  implements LifeCycleListenerIF {
+public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleListener {
  
   protected static Logger log = LoggerFactory.getLogger(AbstractOntopolyPage.class);
   
@@ -70,51 +69,54 @@ public abstract class AbstractOntopolyPage extends WebPage
     this.isReadOnlyPage = isReadOnlyPage;
   }
 
-  public boolean isAddAllowed(OntopolyTopicIF parent, FieldDefinitionIF fdParent, OntopolyTopicIF child, FieldDefinitionIF fdChild) {
+  public boolean isAddAllowed(Topic parent, FieldDefinition fdParent, Topic child, FieldDefinition fdChild) {
+//    System.out.println("AA: " + parent + " " + child);
     return true;
   }
   
-  public boolean isAddAllowed(OntopolyTopicIF parent, FieldDefinitionIF fdParent) {
+  public boolean isAddAllowed(Topic parent, FieldDefinition fdParent) {
+//    System.out.println("AAu: " + parent);
     return true;
   }
   
-  public boolean isRemoveAllowed(OntopolyTopicIF parent, FieldDefinitionIF fdParent, OntopolyTopicIF child, FieldDefinitionIF fdChild) {
+  public boolean isRemoveAllowed(Topic parent, FieldDefinition fdParent, Topic child, FieldDefinition fdChild) {
+//    System.out.println("RA: " + parent + " " + child);
     return true;
   }
   
-  public boolean isRemoveAllowed(OntopolyTopicIF parent, FieldDefinitionIF fdParent) {
+  public boolean isRemoveAllowed(Topic parent, FieldDefinition fdParent) {
 //    System.out.println("RAu: " + parent);
     return true;
   }
   
-  public boolean isCreateAllowed(OntopolyTopicIF parent, FieldDefinitionIF fdParent, TopicTypeIF childType, FieldDefinitionIF fdChild) {
+  public boolean isCreateAllowed(Topic parent, FieldDefinition fdParent, TopicType childType, FieldDefinition fdChild) {
 //    System.out.println("CA: " + parent + " " + childType);
     return true;
   }
 
-  public LifeCycleListenerIF getListener() {
+  public LifeCycleListener getListener() {
     return this;
   }
   
   // LifeCycleListener implementation
   
-  public void onAfterCreate(OntopolyTopicIF topic, TopicTypeIF topicType) {    
+  public void onAfterCreate(Topic topic, TopicType topicType) {    
 //    System.out.println("oAC: " + topic + " " + topicType);
   }
 
-  public void onBeforeDelete(OntopolyTopicIF topic) {
+  public void onBeforeDelete(Topic topic) {
 //    System.out.println("oBD: " + topic);    
   }
 
-  public void onAfterAdd(FieldInstanceIF fieldInstance, Object value) {
+  public void onAfterAdd(FieldInstance fieldInstance, Object value) {
 //    System.out.println("oAA: " + fieldInstance + " " + value);
-    FieldDefinitionIF fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition(); 
+    FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition(); 
 
     // add name scoped by role type to association type
-    if (fieldDefinition.getFieldType() == FieldDefinitionIF.FIELD_TYPE_NAME) {
-      OntopolyTopicIF topic = fieldInstance.getInstance();
+    if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_NAME) {
+      Topic topic = fieldInstance.getInstance();
       if (topic.isInstanceOf(PSI.ON_ROLE_FIELD)) {
-        RoleFieldIF rfield = topic.getTopicMap().findRoleField(topic.getId());
+        RoleField rfield = new RoleField(topic.getTopicIF(), topic.getTopicMap());
         TopicIF atype = rfield.getAssociationField().getAssociationType().getTopicIF();
         TopicIF rtype = rfield.getRoleType().getTopicIF();
         if (atype != null && rtype != null) {
@@ -135,15 +137,15 @@ public abstract class AbstractOntopolyPage extends WebPage
     }
   }
 
-  public void onBeforeRemove(FieldInstanceIF fieldInstance, Object value) {    
+  public void onBeforeRemove(FieldInstance fieldInstance, Object value) {    
 //    System.out.println("oBR: " + fieldInstance + " " + value);
-    FieldDefinitionIF fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition(); 
+    FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition(); 
 
     // remove name scoped by role type from association type
-    if (fieldDefinition.getFieldType() == FieldDefinitionIF.FIELD_TYPE_NAME) {
-      OntopolyTopicIF topic = fieldInstance.getInstance();
+    if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_NAME) {
+      Topic topic = fieldInstance.getInstance();
       if (topic.isInstanceOf(PSI.ON_ROLE_FIELD)) {
-        RoleFieldIF rfield = topic.getTopicMap().findRoleField(topic.getId());
+        RoleField rfield = new RoleField(topic.getTopicIF(), topic.getTopicMap());
         TopicIF atype = rfield.getAssociationField().getAssociationType().getTopicIF();
         TopicIF rtype = rfield.getRoleType().getTopicIF();
         if (atype != null && rtype != null) {
@@ -166,7 +168,7 @@ public abstract class AbstractOntopolyPage extends WebPage
    * @param topic the topic to check rights for
    * @return true if access allowed
    */
-  public boolean filterTopic(OntopolyTopicIF topic) {
+  public boolean filterTopic(Topic topic) {
     if (isAdministrationEnabled())
       return OntopolyUtils.filterTopicByAdministratorRole(topic);
     else if (isAnnotationEnabled())
@@ -180,7 +182,7 @@ public abstract class AbstractOntopolyPage extends WebPage
    * not have access to will be removed from the collection.
    * @param topics the topics to check rights for
    */
-  public void filterTopics(Collection<? extends OntopolyTopicIF> topics) {
+  public void filterTopics(Collection<? extends Topic> topics) {
     if (isAdministrationEnabled())
       OntopolyUtils.filterTopicsByAdministratorRole(topics);
     else if (isAnnotationEnabled())
@@ -192,11 +194,13 @@ public abstract class AbstractOntopolyPage extends WebPage
   /**
    * Returns the display name of the given topic. This method is meant as 
    * an extension point for retrieval of topic names.
+   * @param topic
+   * @return
    */
-  public String getLabel(OntopolyTopicIF topic) {
-    String name;
-    if (topic instanceof FieldDefinitionIF)
-      name = ((FieldDefinitionIF)topic).getFieldName();
+  public String getLabel(Topic topic) {
+	String name;
+    if (topic instanceof FieldDefinition)
+      name = ((FieldDefinition)topic).getFieldName();
     else
       name = topic.getName();
     return name == null ? "[No name]" : name;
@@ -206,8 +210,10 @@ public abstract class AbstractOntopolyPage extends WebPage
    * Given the topic return the page class to use. This method is used 
    * in various places around the application to generate links to topics.
    * Subclasses may override it.
+   * @param topic
+   * @return
    */
-  public Class<? extends Page> getPageClass(OntopolyTopicIF topic) {
+  public Class<? extends Page> getPageClass(Topic topic) {
     return getClass();
   }
   
@@ -215,10 +221,11 @@ public abstract class AbstractOntopolyPage extends WebPage
    * Given the topic return the page parameters to use. This method is used 
    * in various places around the application to generate links to topics. 
    * Subclasses may override it.
+   * @param topic
+   * @return
    */
-  public PageParameters getPageParameters(OntopolyTopicIF topic) {
-    // WARNING: if you do a change here then you may also want to do
-    // so in EmbeddedInstancePage.
+  public PageParameters getPageParameters(Topic topic) {
+    // WARNING: if you do a change here then you may also want to do so in EmbeddedInstancePage.
     PageParameters params = new PageParameters();
     params.put("topicMapId", topic.getTopicMap().getId());
     params.put("topicId", topic.getId());

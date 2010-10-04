@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import ontopoly.model.QueryMapper;
+
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -28,7 +30,6 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.utils.ObjectUtils;
@@ -83,8 +84,16 @@ public class OntopolyRepository {
     }
 
     // now query to find Ontopoly TMs
-    QueryWrapper qw = new QueryWrapper(systemtm);
-    qw.setDeclarations("using ont for i\"http://psi.ontopia.net/ontology/\"");
+    String declarations = "using ont for i\"http://psi.ontopia.net/ontology/\"";
+    QueryProcessorIF processor = QueryUtils.getQueryProcessor(systemtm);
+    DeclarationContextIF context;
+    try {
+      context = QueryUtils.parseDeclarations(systemtm, declarations);
+    } catch (InvalidQueryException e) {
+      throw new OntopiaRuntimeException(e);
+    }
+    
+    QueryMapper<TopicMapReference> qm = new QueryMapper<TopicMapReference>(processor, context); 
     tms = qm.queryForList(
       "instance-of($T, ont:ted-topic-map), " +
       "ont:topic-map-id($T, $ID)?",

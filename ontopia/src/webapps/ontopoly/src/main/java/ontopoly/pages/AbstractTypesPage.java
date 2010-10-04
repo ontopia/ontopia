@@ -10,7 +10,7 @@ import javax.swing.tree.TreeNode;
 import ontopoly.components.LinkPanel;
 import ontopoly.components.MenuHelpPanel;
 import ontopoly.components.TreePanel;
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.Topic;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pojos.MenuItem;
@@ -135,7 +135,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
         return new LinkPanel(id) {
           @Override
           protected Label newLabel(String id) {
-            OntopolyTopicIF topic = node.getTopic();
+            Topic topic = node.getTopic();
             final boolean isSystemTopic = topic.isSystemTopic();
             return new Label(id, new Model<String>(getLabel(topic))) {
               @Override
@@ -148,7 +148,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
           }
           @Override
           protected Link newLink(String id) {
-            OntopolyTopicIF topic = node.getTopic();
+            Topic topic = node.getTopic();
             return new BookmarkablePageLink<Page>(id, getPageClass(topic), getPageParameters(topic));
           }
         };
@@ -159,12 +159,12 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
   }
 
   @Override
-  public Class<? extends Page> getPageClass(OntopolyTopicIF topic) {
+  public Class<? extends Page> getPageClass(Topic topic) {
     return InstancePage.class;
   }
   
   @Override
-  public PageParameters getPageParameters(OntopolyTopicIF topic) {
+  public PageParameters getPageParameters(Topic topic) {
     PageParameters params = new PageParameters();
     params.put("topicMapId", topic.getTopicMap().getId());
     params.put("topicId", topic.getId());

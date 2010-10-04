@@ -1,5 +1,6 @@
 package ontopoly.models;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,7 +8,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import ontopoly.model.FieldInstanceIF;
+
+import ontopoly.model.FieldInstance;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -74,7 +76,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
     return !values.isEmpty();
   }
   
-  protected Collection getValues(FieldInstanceIF fieldInstance) {
+  protected Collection getValues(FieldInstance fieldInstance) {
     return fieldInstance.getValues();
   }
   
@@ -95,7 +97,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   
   @Override
   protected List<FieldValueModel> load() {
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
     Collection values = getValues(fieldInstance);
     if (values.isEmpty()) {
       return Collections.emptyList();

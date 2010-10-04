@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicMap;
 
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -17,7 +17,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 public abstract class QueryTreeModel extends DefaultTreeModel {
   
-  public QueryTreeModel(OntopolyTopicMapIF topicMap, String query, Map<String, ?> params) {
+  public QueryTreeModel(TopicMap topicMap, String query, Map<String, ?> params) {
     super(new DefaultMutableTreeNode("<root>"));    
     
     QueryProcessorIF qp = topicMap.getQueryProcessor();

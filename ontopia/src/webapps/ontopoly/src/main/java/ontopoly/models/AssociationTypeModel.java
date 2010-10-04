@@ -3,21 +3,23 @@ package ontopoly.models;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
-import ontopoly.model.AssociationTypeIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.AssociationType;
+import ontopoly.model.TopicMap;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class AssociationTypeModel extends LoadableDetachableModel<AssociationTypeIF> {
+public class AssociationTypeModel extends LoadableDetachableModel<AssociationType> {
+
   private String topicMapId;
+
   private String topicId;
   
-  public AssociationTypeModel(AssociationTypeIF associationType) {
+  public AssociationTypeModel(AssociationType associationType) {
     super(associationType);
     if (associationType == null)
       throw new NullPointerException("associationType parameter cannot be null.");
        
-    OntopolyTopicMapIF topicMap = associationType.getTopicMap();
+    TopicMap topicMap = associationType.getTopicMap();
     this.topicMapId = topicMap.getId();    
     this.topicId = associationType.getId(); 
   }
@@ -31,13 +33,14 @@ public class AssociationTypeModel extends LoadableDetachableModel<AssociationTyp
     this.topicId = topicId;
   }
 
-  public AssociationTypeIF getAssociationType() {
-    return (AssociationTypeIF)getObject();
+  public AssociationType getAssociationType() {
+    return (AssociationType)getObject();
   }
   
   @Override
-  protected AssociationTypeIF load() {
-    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
-    return tm.findAssociationType(topicId);
+  protected AssociationType load() {
+    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
+    TopicIF topicIf = tm.getTopicIFById(topicId);
+    return new AssociationType(topicIf, tm);
   }
 }

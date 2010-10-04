@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ontopoly.OntopolySession;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
@@ -36,10 +36,10 @@ public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
     createButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        OntopolyTopicIF instance = topicModel.getTopic();
-        OntopolyTopicMapIF topicMap = instance.getTopicMap();
-        TopicTypeIF topicType = topicTypeModel.getTopicType();
-        OntopolyTopicIF newInstance = topicType.createInstance(null);
+        Topic instance = topicModel.getTopic();
+        TopicMap topicMap = instance.getTopicMap();
+        TopicType topicType = topicTypeModel.getTopicType();
+        Topic newInstance = topicType.createInstance(null);
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", newInstance.getId());
@@ -62,9 +62,9 @@ public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         // FIXME: perhaps we should not copy the names as this is somewhat confusing
-        OntopolyTopicIF instance = topicModel.getTopic();
-        OntopolyTopicMapIF topicMap = instance.getTopicMap();
-        OntopolyTopicIF newInstance = instance.copyCharacteristics();
+        Topic instance = topicModel.getTopic();
+        TopicMap topicMap = instance.getTopicMap();
+        Topic newInstance = instance.copyCharacteristics();
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", newInstance.getId());

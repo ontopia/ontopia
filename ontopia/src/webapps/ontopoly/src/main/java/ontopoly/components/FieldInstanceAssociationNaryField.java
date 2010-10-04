@@ -6,13 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ontopoly.model.EditModeIF;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.InterfaceControlIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.EditMode;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.InterfaceControl;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
 import ontopoly.models.FieldsViewModel;
@@ -33,6 +33,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
 public class FieldInstanceAssociationNaryField extends Panel {
+
   protected int arity;
   protected final FieldValueModel fieldValueModel;
   protected final Map<RoleFieldModel,TopicModel> selectedPlayers = new HashMap<RoleFieldModel,TopicModel>();
@@ -40,7 +41,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
   protected boolean needsUpdate;
   
   protected final RoleFieldModel currentFieldModel;
-  protected final TopicModel<OntopolyTopicIF> currentTopicModel;
+  protected final TopicModel<Topic> currentTopicModel;
 
   public FieldInstanceAssociationNaryField(String id, 
       FieldInstanceAssociationNaryPanel _parentPanel,
@@ -56,10 +57,10 @@ public class FieldInstanceAssociationNaryField extends Panel {
     
     // register current player
     this.currentFieldModel = roleFieldModel;
-    this.currentTopicModel = new TopicModel<OntopolyTopicIF>(fieldInstanceModel.getFieldInstance().getInstance());
+    this.currentTopicModel = new TopicModel<Topic>(fieldInstanceModel.getFieldInstance().getInstance());
     selectedPlayers.put(roleFieldModel, currentTopicModel);
 
-    RoleFieldIF.ValueIF fieldValue = (RoleFieldIF.ValueIF)fieldValueModel.getFieldValue();
+    RoleField.ValueIF fieldValue = (RoleField.ValueIF)fieldValueModel.getFieldValue();
 
     RepeatingView rv = new RepeatingView("roles");
     rv.setVisible(!readonly || fieldValueModel.isExistingValue());
@@ -68,7 +69,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
     Iterator oiter =  otherRoleFieldModels.iterator();
     while (oiter.hasNext()) {
       final RoleFieldModel ofieldModel = (RoleFieldModel)oiter.next();
-      RoleFieldIF ofield = ofieldModel.getRoleField();
+      RoleField ofield = ofieldModel.getRoleField();
 
       final WebMarkupContainer parent =  new WebMarkupContainer(rv.newChildId()) {
         @Override
@@ -83,19 +84,20 @@ public class FieldInstanceAssociationNaryField extends Panel {
       parent.setOutputMarkupId(true);
       rv.add(parent);
       parent.add(new Label("label", new Model<String>(ofield.getRoleType().getName())));
+      //! parent.add(new Label("label", new Model(ofield.getFieldName())));
       
       // register other player
-      OntopolyTopicIF topic = (fieldValue == null ? null : fieldValue.getPlayer(ofield, fieldInstanceModel.getFieldInstance().getInstance()));
-      final TopicModel<OntopolyTopicIF> topicModel = new TopicModel<OntopolyTopicIF>(topic);
+      Topic topic = (fieldValue == null ? null : fieldValue.getPlayer(ofield, fieldInstanceModel.getFieldInstance().getInstance()));
+      final TopicModel<Topic> topicModel = new TopicModel<Topic>(topic);
       // NOTE: should not use same model as selected model as the model would then be updated immediately
-      selectedPlayers.put(ofieldModel, new TopicModel<OntopolyTopicIF>(topic));
+      selectedPlayers.put(ofieldModel, new TopicModel<Topic>(topic));
 
       TopicLink playerLink = new TopicLink("player", topicModel);
       playerLink.setEnabled(traversable);
       playerLink.setVisible(topic != null);
       parent.add(playerLink);
       
-      EditModeIF editMode = ofield.getEditMode();
+      EditMode editMode = ofield.getEditMode();
       final boolean allowAdd = !editMode.isNewValuesOnly();
       final boolean allowCreate = !editMode.isExistingValuesOnly();
       
@@ -107,31 +109,31 @@ public class FieldInstanceAssociationNaryField extends Panel {
         
       } else {
 
-        InterfaceControlIF interfaceControl = ofield.getInterfaceControl();
+        InterfaceControl interfaceControl = ofield.getInterfaceControl();
         if (interfaceControl.isAutoComplete()) {
           final AssociationFieldAutoCompleteTextField autoCompleteField 
             = new AssociationFieldAutoCompleteTextField("select", new Model<String>(null), ofieldModel) {
             @Override
-            protected void filterPlayers(List<OntopolyTopicIF> players) {
+            protected void filterPlayers(List<Topic> players) {
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
               page.filterTopics(players);
             }            
             @Override
-            protected void onTopicSelected(OntopolyTopicIF topic) {
+            protected void onTopicSelected(Topic topic) {
               topicModel.setObject(topic);
               boolean changesMade = onNewSelection(ofieldModel, topic);
               // replace ourselves with a topic link
               if (changesMade)
-                parent.replace(new TopicLink("select", new TopicModel<OntopolyTopicIF>(topic)));
+                parent.replace(new TopicLink("select", new TopicModel<Topic>(topic)));
             }                
           };
           autoCompleteField.getTextField().add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-              if (needsUpdate)
-                FieldInstanceAssociationNaryField.this.onUpdate(target);
-              else 
-                target.addComponent(parent);
+                if (needsUpdate)
+                  FieldInstanceAssociationNaryField.this.onUpdate(target);
+                else 
+                  target.addComponent(parent);
             }
           });          
 
@@ -145,13 +147,13 @@ public class FieldInstanceAssociationNaryField extends Panel {
         } else if (interfaceControl.isDropDownList()) {
           PossiblePlayersModel choicesModel = new PossiblePlayersModel(fieldInstanceModel, ofieldModel) {
             @Override
-            protected void filterPlayers(Collection<OntopolyTopicIF> players) {
+            protected void filterPlayers(Collection<Topic> players) {
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
               page.filterTopics(players);
             }            
           };
           
-          TopicDropDownChoice<OntopolyTopicIF> choice = new TopicDropDownChoice<OntopolyTopicIF>("select", topicModel, choicesModel) {        
+          TopicDropDownChoice<Topic> choice = new TopicDropDownChoice<Topic>("select", topicModel, choicesModel) {        
             @Override
             protected void onModelChanged() {
               super.onModelChanged();            
@@ -195,8 +197,8 @@ public class FieldInstanceAssociationNaryField extends Panel {
             protected void onSelectionConfirmed(AjaxRequestTarget target, Collection selected) {
               if (!selected.isEmpty()) {
                 String topicId = (String)selected.iterator().next();
-                OntopolyTopicMapIF topicMap = fieldValueModel.getFieldInstanceModel().getFieldInstance().getInstance().getTopicMap();
-                OntopolyTopicIF topic = topicMap.getTopicById(topicId);
+                TopicMap topicMap = fieldValueModel.getFieldInstanceModel().getFieldInstance().getInstance().getTopicMap();
+                Topic topic = topicMap.getTopicById(topicId);
                 topicModel.setObject(topic);
                 onNewSelection(ofieldModel, topic);
                 if (needsUpdate)
@@ -242,11 +244,11 @@ public class FieldInstanceAssociationNaryField extends Panel {
         int createAction = FieldInstanceCreatePlayerPanel.CREATE_ACTION_POPUP;        
         FieldInstanceCreatePlayerPanel createPanel = new FieldInstanceCreatePlayerPanel("create", fieldInstanceModel, fieldsViewModel, ofieldModel, parentPanel, createAction) {
           @Override
-          protected OntopolyTopicIF createInstance(TopicTypeIF topicType) {
-            OntopolyTopicIF currentTopic = currentTopicModel.getTopic();
-            RoleFieldIF currentField = currentFieldModel.getRoleField();            
-            RoleFieldIF createField = ofieldModel.getRoleField();
-            OntopolyTopicIF createdTopic = null;
+          protected Topic createInstance(TopicType topicType) {
+            Topic currentTopic = currentTopicModel.getTopic();
+            RoleField currentField = currentFieldModel.getRoleField();            
+            RoleField createField = ofieldModel.getRoleField();
+            Topic createdTopic = null;
             
             // check with page to see if add is allowed
             AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
@@ -259,8 +261,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
             return createdTopic;
           }
           @Override
-          protected void performNewSelection(RoleFieldModel ofieldModel,
-                                             OntopolyTopicIF selectedTopic) {
+          protected void performNewSelection(RoleFieldModel ofieldModel, Topic selectedTopic) {
             FieldInstanceAssociationNaryField.this.performNewSelection(ofieldModel, selectedTopic);           
           }          
           @Override
@@ -277,11 +278,10 @@ public class FieldInstanceAssociationNaryField extends Panel {
     } 
   }
 
-  protected boolean onNewSelection(RoleFieldModel ofieldModel,
-                                   OntopolyTopicIF selectedTopic) {
-    OntopolyTopicIF currentTopic = currentTopicModel.getTopic();
-    RoleFieldIF currentField = currentFieldModel.getRoleField();            
-    RoleFieldIF selectedField = ofieldModel.getRoleField();
+  protected boolean onNewSelection(RoleFieldModel ofieldModel, Topic selectedTopic) {
+    Topic currentTopic = currentTopicModel.getTopic();
+    RoleField currentField = currentFieldModel.getRoleField();            
+    RoleField selectedField = ofieldModel.getRoleField();
     
     // check with page to see if add is allowed
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
@@ -293,30 +293,34 @@ public class FieldInstanceAssociationNaryField extends Panel {
     }
   }
   
-  protected void performNewSelection(RoleFieldModel ofieldModel,
-                                     OntopolyTopicIF selectedTopic) {
-    AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-    // check to see if old state was complete
-    if (selectedPlayers.size() == arity) {
-      // remove existing association if old state was complete
-      RoleFieldIF.ValueIF oldValue = createValue();
-      if (oldValue != null) {
-        FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
-        fieldInstance.removeValue(oldValue, page.getListener());
+  protected void performNewSelection(RoleFieldModel ofieldModel, Topic selectedTopic) {
+    try {
+      AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
+      // check to see if old state was complete
+      if (selectedPlayers.size() == arity) {
+        // remove existing association if old state was complete
+        RoleField.ValueIF oldValue = createValue();
+        if (oldValue != null) {
+          FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+          fieldInstance.removeValue(oldValue, page.getListener());
+        }
+      }    
+      // add new selection
+      selectedPlayers.put(ofieldModel, new TopicModel<Topic>(selectedTopic));
+      // check to see if new state was complete
+      if (selectedPlayers.size() == arity) {
+        // add new association as state is now complete
+        RoleField.ValueIF newValue = createValue();
+        if (newValue != null) {
+          FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+          fieldInstance.addValue(newValue, page.getListener());
+          fieldValueModel.setExistingValue(newValue);          
+          this.needsUpdate = true;
+        }
       }
-    }    
-    // add new selection
-    selectedPlayers.put(ofieldModel, new TopicModel<OntopolyTopicIF>(selectedTopic));
-    // check to see if new state was complete
-    if (selectedPlayers.size() == arity) {
-      // add new association as state is now complete
-      RoleFieldIF.ValueIF newValue = createValue();
-      if (newValue != null) {
-        FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
-        fieldInstance.addValue(newValue, page.getListener());
-        fieldValueModel.setExistingValue(newValue);          
-        this.needsUpdate = true;
-      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
     }
   }
   
@@ -334,20 +338,16 @@ public class FieldInstanceAssociationNaryField extends Panel {
     needsUpdate = false;    
   }
   
-  protected RoleFieldIF.ValueIF createValue() {
-    RoleFieldIF.ValueIF value = null;
+  protected RoleField.ValueIF createValue() {
+    RoleField.ValueIF value = RoleField.createValue(arity);
     Iterator iter = selectedPlayers.keySet().iterator();
     while (iter.hasNext()) {
       RoleFieldModel roleFieldModel = (RoleFieldModel)iter.next(); 
       TopicModel topicModel = (TopicModel)selectedPlayers.get(roleFieldModel);
-      RoleFieldIF roleField = roleFieldModel.getRoleField();
-      OntopolyTopicIF topic = topicModel.getTopic();
+      RoleField roleField = roleFieldModel.getRoleField();
+      Topic topic = topicModel.getTopic();
       // if topic is null then the value is not complete, so we return null
-      if (topic == null)
-        return null;
-      if (value == null)
-        // we need a RoleFieldIF to initialize it, so delaying until we have one
-        value = roleField.createValue(arity);
+      if (topic == null) return null;
       value.addPlayer(roleField, topic);
     }
     return value;

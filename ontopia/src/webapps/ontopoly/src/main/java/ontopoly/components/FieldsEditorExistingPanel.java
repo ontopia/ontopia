@@ -11,15 +11,15 @@ import java.util.TreeSet;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.jquery.DraggableBehavior;
 import ontopoly.jquery.DroppableBehavior;
-import ontopoly.model.AssociationFieldIF;
-import ontopoly.model.AssociationTypeIF;
-import ontopoly.model.CardinalityIF;
-import ontopoly.model.FieldAssignmentIF;
-import ontopoly.model.FieldDefinitionIF;
-import ontopoly.model.OccurrenceFieldIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.AssociationField;
+import ontopoly.model.AssociationType;
+import ontopoly.model.Cardinality;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.OccurrenceField;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldAssignmentModel;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.MutableLoadableDetachableModel;
@@ -40,13 +40,14 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.ResourceModel;
 
 public abstract class FieldsEditorExistingPanel extends Panel {
+
   private boolean readonly;
   
   public FieldsEditorExistingPanel(String id, final TopicTypeModel topicTypeModel, final FieldAssignmentModel fieldAssignmentModel, boolean readonly) {
     super(id);
     this.readonly = readonly;
     
-    FieldAssignmentIF fieldAssignment = fieldAssignmentModel.getFieldAssignment(); 
+    FieldAssignment fieldAssignment = fieldAssignmentModel.getFieldAssignment(); 
 
     WebMarkupContainer container = new WebMarkupContainer("field", fieldAssignmentModel);
     add(container);
@@ -55,16 +56,16 @@ public abstract class FieldsEditorExistingPanel extends Panel {
     icon.setVisible(!readonly);
     container.add(icon);
 
-    FieldDefinitionIF fieldDefinition = fieldAssignment.getFieldDefinition();
+    FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
     final FieldDefinitionModel fieldDefinitionModel = new FieldDefinitionModel(fieldDefinition);
     
     container.add(new FieldDefinitionLabel("fieldLabel", fieldDefinitionModel) {
       @Override
-      protected boolean isFieldDefinitionLinkEnabled(OntopolyTopicIF topic) {
+      protected boolean isFieldDefinitionLinkEnabled(Topic topic) {
         return true;
       }      
       @Override
-      protected boolean isOntologyTypeLinkEnabled(OntopolyTopicIF topic) {
+      protected boolean isOntologyTypeLinkEnabled(Topic topic) {
         return true;
       }      
     });
@@ -88,16 +89,16 @@ public abstract class FieldsEditorExistingPanel extends Panel {
         protected void onDrop(Component component, AjaxRequestTarget target) {
           FieldAssignmentModel fam_dg = (FieldAssignmentModel)component.getDefaultModel();
           FieldAssignmentModel fam_do = (FieldAssignmentModel)getComponent().getDefaultModel();
-          FieldAssignmentIF fa_dg = fam_dg.getFieldAssignment();
-          FieldAssignmentIF fa_do = fam_do.getFieldAssignment();
+          FieldAssignment fa_dg = fam_dg.getFieldAssignment();
+          FieldAssignment fa_do = fam_do.getFieldAssignment();
           fa_do.moveAfter(fa_dg);
           FieldsEditorExistingPanel.this.onMoveAfter(fam_dg, fam_do, target);
         }      
       });
     }
     
-    TopicTypeIF topicType = topicTypeModel.getTopicType();
-    TopicTypeIF declaredTopicType = fieldAssignmentModel.getFieldAssignment().getDeclaredTopicType();
+    TopicType topicType = topicTypeModel.getTopicType();
+    TopicType declaredTopicType = fieldAssignmentModel.getFieldAssignment().getDeclaredTopicType();
 
     if (ObjectUtils.equals(topicType, declaredTopicType)) {
       OntopolyImageLink button = new OntopolyImageLink("button", "remove-value.gif", new ResourceModel("icon.remove.field")) {
@@ -108,6 +109,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
         @Override
         public boolean isVisible() {
           return !FieldsEditorExistingPanel.this.readonly;
+          //! || (fieldDefinitionModel.getFieldDefinition().isSystemTopic() && ((OntopolySession)Session.get()).isAdministrationEnabled());
         }
       };
       container.add(button);
@@ -115,7 +117,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       OntopolyImageLink button = new OntopolyImageLink("button", "goto.gif", new ResourceModel("icon.goto.assigning-type")) {
         @Override
         public void onClick(AjaxRequestTarget target) {
-          TopicTypeIF declaredTopicType = fieldAssignmentModel.getFieldAssignment().getDeclaredTopicType();          
+          TopicType declaredTopicType = fieldAssignmentModel.getFieldAssignment().getDeclaredTopicType();          
           Map<String,String> pageParametersMap = new HashMap<String,String>(3);
           pageParametersMap.put("topicMapId", declaredTopicType.getTopicMap().getId());
           pageParametersMap.put("topicId", declaredTopicType.getId());
@@ -131,27 +133,27 @@ public abstract class FieldsEditorExistingPanel extends Panel {
 
   protected abstract void onRemove(FieldAssignmentModel fam, AjaxRequestTarget target);    
   
-  static Component getFieldType(String id, FieldDefinitionIF fieldDefinition) {
+  static Component getFieldType(String id, FieldDefinition fieldDefinition) {
     int fieldType = fieldDefinition.getFieldType();
 
-    if(fieldType == FieldDefinitionIF.FIELD_TYPE_ROLE) {
-      TopicTypeIF tt = null;
-      RoleFieldIF rf = (RoleFieldIF)fieldDefinition;
-      AssociationFieldIF afield = rf.getAssociationField();
+    if(fieldType == FieldDefinition.FIELD_TYPE_ROLE) {
+      TopicType tt = null;
+      RoleField rf = (RoleField)fieldDefinition;
+      AssociationField afield = rf.getAssociationField();
       List fields = afield.getFieldsForRoles();
       int numberOfRoles = fields.size();  
       String fieldTypeAsString = "";
       if (numberOfRoles == 1) { // unary
         return new Label(id, new ResourceModel("FieldsEditorExistingPanel.valuetype.unary"));
       } else if(numberOfRoles == 2) { // binary
-        AssociationTypeIF at = rf.getAssociationType();
+        AssociationType at = rf.getAssociationType();
         if (at.isSymmetric()) { // symmetric
           Collection allowedValueTypes = rf.getDeclaredPlayerTypes(); 
           if (allowedValueTypes.size() == 1) { // only one allowed player
             Iterator it = allowedValueTypes.iterator();         
             // It's only one element in the list
             while (it.hasNext()) {
-              tt = (TopicTypeIF)it.next();
+              tt = (TopicType)it.next();
               fieldTypeAsString = tt.getName();
             }
           } else { // more than one allowed player
@@ -160,14 +162,14 @@ public abstract class FieldsEditorExistingPanel extends Panel {
         } else { // binary
           Iterator it = fields.iterator();
           while (it.hasNext()) {
-            RoleFieldIF rf2 = (RoleFieldIF) it.next();
+            RoleField rf2 = (RoleField) it.next();
             if (!rf.equals(rf2)) { // the other association field
               Collection allowedValueTypes = rf2.getDeclaredPlayerTypes(); 
               if (allowedValueTypes.size() == 1) { // only one allowed player
                 Iterator it2 =  allowedValueTypes.iterator();         
                 // It's only one element in the list
                 while (it2.hasNext()) {
-                  tt = (TopicTypeIF)it2.next();
+                  tt = (TopicType)it2.next();
                   fieldTypeAsString = tt.getName();
                 }
               }
@@ -191,32 +193,32 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       
       return new OntopolyBookmarkablePageLink(id, InstancePage.class, params, fieldTypeAsString);        
     }
-    else if(fieldType == FieldDefinitionIF.FIELD_TYPE_IDENTITY) {
+    else if(fieldType == FieldDefinition.FIELD_TYPE_IDENTITY) {
       return new Label(id, new ResourceModel("FieldsEditorExistingPanel.valuetype.uri"));     
     }
-    else if(fieldType == FieldDefinitionIF.FIELD_TYPE_NAME) {
+    else if(fieldType == FieldDefinition.FIELD_TYPE_NAME) {
       return new Label(id, new ResourceModel("FieldsEditorExistingPanel.valuetype.name"));     
     } 
-    else if(fieldType == FieldDefinitionIF.FIELD_TYPE_OCCURRENCE) {
-      return new Label(id, ((OccurrenceFieldIF)fieldDefinition).getDataType().getName());     
+    else if(fieldType == FieldDefinition.FIELD_TYPE_OCCURRENCE) {
+      return new Label(id, ((OccurrenceField)fieldDefinition).getDataType().getName());     
     }
     else { // Invalid field type
       return new Label(id, "invalid"); // TODO replace with exception or something
     }
   }
-
-  private static String getAllowedPlayerNames(RoleFieldIF af) {
+  
+  private static String getAllowedPlayerNames(RoleField af) {
     Set<String> topicTypeNames = new TreeSet<String>();
     
-    AssociationTypeIF at = af.getAssociationType();
-    AssociationFieldIF afield = at.getTopicMap().getAssociationField(at);
+    AssociationType at = af.getAssociationType();
+    AssociationField afield = at.getTopicMap().getAssociationField(at);
     Iterator it = afield.getFieldsForRoles().iterator();
     while(it.hasNext()) {
-      RoleFieldIF af2 = (RoleFieldIF) it.next();
+      RoleField af2 = (RoleField) it.next();
       if(!af.equals(af2)) { // one of the other association fields
           Iterator it2 =  af2.getDeclaredPlayerTypes().iterator();         
           while(it2.hasNext()) {
-            topicTypeNames.add(((TopicTypeIF)it2.next()).getName());
+            topicTypeNames.add(((TopicType)it2.next()).getName());
           } 
       }      
     }
@@ -224,25 +226,25 @@ public abstract class FieldsEditorExistingPanel extends Panel {
   }
   
   private static Component getCardinality(String id, final FieldAssignmentModel fam) {    
-    LoadableDetachableModel<List<CardinalityIF>> cardinalityChoicesModel = new LoadableDetachableModel<List<CardinalityIF>>() {
+    LoadableDetachableModel<List<Cardinality>> cardinalityChoicesModel = new LoadableDetachableModel<List<Cardinality>>() {
       @Override
-      protected List<CardinalityIF> load() {
-        return fam.getFieldAssignment().getFieldDefinition().getTopicMap().getCardinalityTypes();
+      protected List<Cardinality> load() {
+        return Cardinality.getCardinalityTypes(fam.getFieldAssignment().getFieldDefinition().getTopicMap());
       }   
     };
-    final IModel<CardinalityIF> cardModel = new MutableLoadableDetachableModel<CardinalityIF>() {
+    final IModel<Cardinality> cardModel = new MutableLoadableDetachableModel<Cardinality>() {
       @Override
-      protected CardinalityIF load() {
+      protected Cardinality load() {
         return fam.getFieldAssignment().getCardinality();
       }
       @Override
-      public void setObject(CardinalityIF card) {
+      public void setObject(Cardinality card) {
         fam.getFieldAssignment().getFieldDefinition().setCardinality(card);
         super.setObject(card);
       }
     };
-    AjaxOntopolyDropDownChoice<CardinalityIF> choice = new AjaxOntopolyDropDownChoice<CardinalityIF>("cardinality", cardModel,
-        cardinalityChoicesModel, new TopicChoiceRenderer<CardinalityIF>());
+    AjaxOntopolyDropDownChoice<Cardinality> choice = new AjaxOntopolyDropDownChoice<Cardinality>("cardinality", cardModel,
+        cardinalityChoicesModel, new TopicChoiceRenderer<Cardinality>());
     return choice;
   }
 }

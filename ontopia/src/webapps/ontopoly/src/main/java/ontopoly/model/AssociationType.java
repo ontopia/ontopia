@@ -1,5 +1,6 @@
+// $Id: AssociationType.java,v 1.8 2009/05/12 20:26:26 geir.gronmo Exp $
 
-package ontopoly.model.ontopoly;
+package ontopoly.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,10 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ontopoly.model.PSI;
-import ontopoly.model.RoleTypeIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.AssociationTypeIF;
 import ontopoly.utils.OntopolyModelUtils;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -30,13 +27,12 @@ import net.ontopia.utils.ObjectUtils;
 /**
  * Represents an association type.
  */
-public class AssociationType extends AbstractTypingTopic
-  implements AssociationTypeIF {
+public class AssociationType extends AbstractTypingTopic {
 
   /**
    * Creates a new AssociationType object.
    */
-  public AssociationType(TopicIF currTopic, OntopolyTopicMapIF tm) {
+  public AssociationType(TopicIF currTopic, TopicMap tm) {
     super(currTopic, tm);
   }
 
@@ -49,7 +45,7 @@ public class AssociationType extends AbstractTypingTopic
     if (!(obj instanceof AssociationType))
       return false;
 
-    AssociationTypeIF other = (AssociationTypeIF) obj;
+    AssociationType other = (AssociationType) obj;
     return (getTopicIF().equals(other.getTopicIF()));
   }
 
@@ -57,7 +53,7 @@ public class AssociationType extends AbstractTypingTopic
    * Indicates whether the association type is symmetric.
    */
   public boolean isSymmetric() {
-    OntopolyTopicMapIF tm = getTopicMap();
+    TopicMap tm = getTopicMap();
     TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "is-symmetric");
     TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-type");
     TopicIF player = getTopicIF();
@@ -71,41 +67,41 @@ public class AssociationType extends AbstractTypingTopic
    */
   public boolean isHierarchical() {
     TopicIF hierarchicalRelationType = 
-      OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.TECH, "#hierarchical-relation-type");
+			OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.TECH, "#hierarchical-relation-type");
     return getTopicIF().getTypes().contains(hierarchicalRelationType);
   }
 
   @Override
-  public Collection<RoleFieldIF> getDeclaredByFields() {
+	public Collection<RoleField> getDeclaredByFields() {
     String query = "select $AF, $RF, $RT from "
-      + "on:has-association-type(%AT% : on:association-type, $AF : on:association-field), "
-      + "on:has-association-field($AF : on:association-field, $RF : on:role-field), "
-      + "on:has-role-type($RF : on:role-field, $RT : on:role-type)?";
+			+ "on:has-association-type(%AT% : on:association-type, $AF : on:association-field), "
+			+ "on:has-association-field($AF : on:association-field, $RF : on:role-field), "
+			+ "on:has-role-type($RF : on:role-field, $RT : on:role-type)?";
     Map<String,TopicIF> params = Collections.singletonMap("AT", getTopicIF());
 
-    QueryMapper<RoleFieldIF> qm = getTopicMap().newQueryMapper(RoleField.class);
+    QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
     return qm.queryForList(query,
-        new RowMapperIF<RoleFieldIF>() {
-          public RoleFieldIF mapRow(QueryResultIF result, int rowno) {
-            TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
-            TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
-            TopicIF roleType = (TopicIF)result.getValue(2);
-            return new RoleField(roleFieldTopic, getTopicMap(), new RoleType(roleType, getTopicMap()), new AssociationField(associationFieldTopic, getTopicMap()));
-          }
-                           }, params);
+        new RowMapperIF<RoleField>() {
+          public RoleField mapRow(QueryResultIF result, int rowno) {
+						TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
+						TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
+						TopicIF roleType = (TopicIF)result.getValue(2);
+						return new RoleField(roleFieldTopic, getTopicMap(), new RoleType(roleType, getTopicMap()), new AssociationField(associationFieldTopic, getTopicMap()));
+					}
+				}, params);
 	}
 
-  /**
-   * Returns all role types that have been declared for this association type.
-   * @return list of role types
-   */
-  public List<RoleTypeIF> getDeclaredRoleTypes() {
-    List<RoleTypeIF> result = new ArrayList<RoleTypeIF>();
+	/**
+	 * Returns all role types that have been declared for this association type.
+	 * @return list of role types
+	 */
+  public List<RoleType> getDeclaredRoleTypes() {
+    List<RoleType> result = new ArrayList<RoleType>();
     AssociationField associationField = null;
     Collection roleFields = this.getDeclaredByFields();
     Iterator iter = roleFields.iterator();
     while (iter.hasNext()) {
-      RoleFieldIF roleField = (RoleFieldIF)iter.next();
+      RoleField roleField = (RoleField)iter.next();
       if (associationField == null)
         associationField = roleField.getAssociationField();
       else if (!associationField.equals(roleField.getAssociationField()))
@@ -118,53 +114,51 @@ public class AssociationType extends AbstractTypingTopic
     return result;
   }
 
-  /**
-   * Returns a collection of lists that contain the role type
-   * combinations that have been used in actual associations. The
-   * RoleTypes are sorted by object id.
-   */
-  public Collection<List<RoleTypeIF>> getUsedRoleTypeCombinations() {
-    Collection<List<RoleTypeIF>> result = new HashSet<List<RoleTypeIF>>();
+	/**
+	 * Returns a collection of lists that contain the role type combinations that have been used in actual associations. The RoleTypes are sorted by object id.
+	 * 
+	 * @return Collection<List<RoleType>>
+	 */
+	public Collection<List<RoleType>> getUsedRoleTypeCombinations() {
+	  Collection<List<RoleType>> result = new HashSet<List<RoleType>>();
 	  
-    TopicIF associationType = getTopicIF();
-    ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)associationType.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
-    Iterator iter = cindex.getAssociations(associationType).iterator();
-    
-    List<RoleTypeIF> tuple = new ArrayList<RoleTypeIF>();
-    while (iter.hasNext()) {
-      AssociationIF assoc = (AssociationIF)iter.next();
-      Iterator riter = assoc.getRoles().iterator();
-      while (riter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)riter.next();
-        tuple.add(new RoleType(role.getType(), getTopicMap()));
-      }
-      Collections.sort(tuple, new Comparator<RoleTypeIF>() {
-          public int compare(RoleTypeIF o1, RoleTypeIF o2) {
-            return ObjectIdComparator.INSTANCE.compare(o1.getTopicIF(), o2.getTopicIF());
-          }
-        });
-      if (result.contains(tuple)) {
-        tuple.clear();
-      } else {
-        result.add(tuple);
-        tuple = new ArrayList<RoleTypeIF>();
-      }	     
-    }
-    return result;
-  }
+	  TopicIF associationType = getTopicIF();
+	  ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)associationType.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
+	  Iterator iter = cindex.getAssociations(associationType).iterator();
+
+	  List<RoleType> tuple = new ArrayList<RoleType>();
+	  while (iter.hasNext()) {
+	    AssociationIF assoc = (AssociationIF)iter.next();
+	    Iterator riter = assoc.getRoles().iterator();
+	    while (riter.hasNext()) {
+	      AssociationRoleIF role = (AssociationRoleIF)riter.next();
+	      tuple.add(new RoleType(role.getType(), getTopicMap()));
+	    }
+	    Collections.sort(tuple, new Comparator<RoleType>() {
+        public int compare(RoleType o1, RoleType o2) {
+          return ObjectIdComparator.INSTANCE.compare(o1.getTopicIF(), o2.getTopicIF());
+        }
+	      
+	    });
+	    if (result.contains(tuple)) {
+	      tuple.clear();
+	    } else {
+	      result.add(tuple);
+	      tuple = new ArrayList<RoleType>();
+	    }	     
+	  }
+	  return result;
+	}
   
-  /**
-   * Transforms associations from the role types of the given form to
-   * the new one as given.
-   * @param roleTypesFrom list of role types that should match
-   * existing associations
-   * @param roleTypesTo list of role types to which the associations
-   * should be changed
-   */
-  public void transformInstances(List roleTypesFrom, List roleTypesTo) {
-    int size = roleTypesFrom.size(); 
-    if (size != roleTypesTo.size())
-      throw new RuntimeException("Incompatible role type sets: sizes are different");
+	/**
+	 * Transforms associations from the role types of the given form to the new one as given.
+	 * @param roleTypesFrom list of role types that should match existing associations
+	 * @param roleTypesTo list of role types to which the associations should be changed
+	 */
+	public void transformInstances(List roleTypesFrom, List roleTypesTo) {
+	  int size = roleTypesFrom.size(); 
+	  if (size != roleTypesTo.size())
+	    throw new RuntimeException("Incompatible role type sets: sizes are different");
 	  
     TopicIF associationType = getTopicIF();
     ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)associationType.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
@@ -187,7 +181,7 @@ public class AssociationType extends AbstractTypingTopic
         TopicIF roleType = role.getType();
         for (int i=0; i < size; i++) {          
           if (roleMatches[i] == null) {
-            RoleTypeIF fromType = (RoleTypeIF)roleTypesFrom.get(i);
+            RoleType fromType = (RoleType)roleTypesFrom.get(i);
             if (fromType.getTopicIF().equals(roleType)) {
               matchIndex = i;
               roleMatches[i] = role;
@@ -202,8 +196,8 @@ public class AssociationType extends AbstractTypingTopic
       if (match) {
         for (int i=0; i < size; i++) {
           AssociationRoleIF role = (AssociationRoleIF)roleMatches[i];
-          RoleTypeIF fromType = (RoleTypeIF)roleTypesFrom.get(i);
-          RoleTypeIF toType = (RoleTypeIF)roleTypesTo.get(i);
+          RoleType fromType = (RoleType)roleTypesFrom.get(i);
+          RoleType toType = (RoleType)roleTypesTo.get(i);
           if (role.getType().equals(fromType.getTopicIF())) {
             if (!role.getType().equals(toType.getTopicIF())) role.setType(toType.getTopicIF());
           }
@@ -224,8 +218,8 @@ public class AssociationType extends AbstractTypingTopic
     }
 
     public int compare(Object o1, Object o2) {
-      RoleFieldIF rf1 = (RoleFieldIF) o1;
-      RoleFieldIF rf2 = (RoleFieldIF) o2;
+      RoleField rf1 = (RoleField) o1;
+      RoleField rf2 = (RoleField) o2;
 
       return ObjectUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }

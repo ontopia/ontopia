@@ -5,7 +5,7 @@ import java.util.Map;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import ontopoly.OntopolyContext;
 import ontopoly.components.OccurrenceWebResource;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicMap;
 
 import org.apache.wicket.IRequestTarget;
 import org.apache.wicket.request.RequestParameters;
@@ -26,7 +26,7 @@ public class OccurrenceImageRequestTargetUrlCodingStrategy extends
     Map params = requestParameters.getParameters();
     
     String topicMapId = ((String[])params.get("topicMapId"))[0];
-    OntopolyTopicMapIF topicMap = OntopolyContext.getTopicMap(topicMapId);
+    TopicMap topicMap = OntopolyContext.getTopicMap(topicMapId);
 
     String occurrenceId = ((String[])params.get("occurrenceId"))[0];    
     OccurrenceIF occ = (OccurrenceIF) topicMap.getTopicMapIF().getObjectById(occurrenceId);

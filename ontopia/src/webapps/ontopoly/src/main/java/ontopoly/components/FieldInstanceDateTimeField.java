@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.jquery.DatePickerBehavior;
-import ontopoly.model.FieldInstanceIF;
+import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.validators.DateFormatValidator;
@@ -71,7 +71,7 @@ public class FieldInstanceDateTimeField extends TextField<String> implements ITe
     String newValue = (String)getModelObject();
     if (ObjectUtils.equals(newValue, oldValue)) return;
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-    FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+    FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
     if (fieldValueModel.isExistingValue() && oldValue != null)
       fieldInstance.removeValue(oldValue, page.getListener());
     if (newValue != null && !newValue.equals("")) {

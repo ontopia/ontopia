@@ -3,25 +3,25 @@ package ontopoly.models;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class AssociationFieldValueModel extends LoadableDetachableModel<RoleFieldIF.ValueIF> {
+public class AssociationFieldValueModel extends LoadableDetachableModel<RoleField.ValueIF> {
 
   private String[][] afvinfo; // [topicMapId, associationTypeId, roleTypeId,
                               // playerId]
 
-  public AssociationFieldValueModel(RoleFieldIF.ValueIF afv) {
+  public AssociationFieldValueModel(RoleField.ValueIF afv) {
     super(afv);
     if (afv == null)
       throw new NullPointerException(
           "association field value  parameter cannot be null.");
 
-    RoleFieldIF[] rfields = afv.getRoleFields();    
-    OntopolyTopicIF[] players = afv.getPlayers();
+    RoleField[] rfields = afv.getRoleFields();    
+    Topic[] players = afv.getPlayers();
     afvinfo = new String[rfields.length][3];
     for (int i=0; i < rfields.length; i++) {
       if (rfields[i] == null) continue; // REALLY?
@@ -31,24 +31,20 @@ public class AssociationFieldValueModel extends LoadableDetachableModel<RoleFiel
     }
   }
 
-  public RoleFieldIF.ValueIF getAssociationFieldValue() {
-    return (RoleFieldIF.ValueIF) getObject();
+  public RoleField.ValueIF getAssociationFieldValue() {
+    return (RoleField.ValueIF) getObject();
   }
 
   @Override
-  protected RoleFieldIF.ValueIF load() {
-    RoleFieldIF.ValueIF value = null;
+  protected RoleField.ValueIF load() {
+    RoleField.ValueIF value = RoleField.createValue(afvinfo.length);
     for (int i = 0; i < afvinfo.length; i++) {
       // create field
-      OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(afvinfo[i][0]);
-      RoleFieldIF roleField = tm.findRoleField(afvinfo[i][1]);
-      OntopolyTopicIF player = tm.findTopic(afvinfo[i][2]);
-
-      if (value == null)
-        // using this to delay creation until we have a roleField
-        value = roleField.createValue(afvinfo.length);
-      
-      value.addPlayer(roleField, player);
+      TopicMap tm = OntopolyContext.getTopicMap(afvinfo[i][0]);
+      TopicIF fieldTopicIf = tm.getTopicIFById(afvinfo[i][1]);
+      // create player
+      TopicIF playerIf = tm.getTopicIFById(afvinfo[i][2]);
+      value.addPlayer(new RoleField(fieldTopicIf, tm), new Topic(playerIf, tm));
     }
     return value;
   }

@@ -9,7 +9,7 @@ import java.util.List;
 import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.components.AjaxOntopolyTextField;
 import ontopoly.components.TitleHelpPanel;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.utils.ExportUtils;
 
@@ -62,7 +62,7 @@ public class AdminPage extends OntopolyAbstractPage {
     });
     form.add(contentRadioChoice);
 
-    OntopolyTopicMapIF topicMap = getTopicMap();            
+    TopicMap topicMap = getTopicMap();            
     
     // Second column of radio buttons
     List<String> syntaxCategories = 

@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
 import ontopoly.models.RoleFieldModel;
 import ontopoly.models.TopicModel;
 
@@ -20,16 +20,16 @@ public class RoleFieldsValueComparator implements Comparator<Object>, Serializab
   }
   
   public int compare(Object o1, Object o2) {
-    RoleFieldIF.ValueIF rfv1 = (RoleFieldIF.ValueIF)o1;
-    RoleFieldIF.ValueIF rfv2 = (RoleFieldIF.ValueIF)o2;
+    RoleField.ValueIF rfv1 = (RoleField.ValueIF)o1;
+    RoleField.ValueIF rfv2 = (RoleField.ValueIF)o2;
     
     for (int i=0; i < roleFieldModels.size(); i++) {
       RoleFieldModel roleFieldModel = (RoleFieldModel)roleFieldModels.get(i);
-      RoleFieldIF roleField = roleFieldModel.getRoleField();
-      OntopolyTopicIF topic = topicModel.getTopic();
+      RoleField roleField = roleFieldModel.getRoleField();
+      Topic topic = topicModel.getTopic();
     
-      OntopolyTopicIF t1 = rfv1.getPlayer(roleField, topic);
-      OntopolyTopicIF t2 = rfv2.getPlayer(roleField, topic);
+      Topic t1 = rfv1.getPlayer(roleField, topic);
+      Topic t2 = rfv2.getPlayer(roleField, topic);
       int retval = TopicComparator.INSTANCE.compare(t1, t2);
       if (retval != 0) return retval;
     }

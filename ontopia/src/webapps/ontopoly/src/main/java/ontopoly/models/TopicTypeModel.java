@@ -1,18 +1,22 @@
 package ontopoly.models;
 
+
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class TopicTypeModel extends LoadableDetachableModel<TopicTypeIF> {
+public class TopicTypeModel extends LoadableDetachableModel<TopicType> {
+
   private static final long serialVersionUID = -8374148020034895666L;
+
   private String topicMapId;
+
   private String topicId;
 
-  public TopicTypeModel(TopicTypeIF topicType) {
+  public TopicTypeModel(TopicType topicType) {
     super(topicType);
     if (topicType != null) {
       this.topicMapId = topicType.getTopicMap().getId();
@@ -29,15 +33,15 @@ public class TopicTypeModel extends LoadableDetachableModel<TopicTypeIF> {
     this.topicId = topicId;
   }
 
-  public TopicTypeIF getTopicType() {
-    return (TopicTypeIF) getObject();
+  public TopicType getTopicType() {
+    return (TopicType)getObject();
   }
 
   @Override
-  protected TopicTypeIF load() {
-    if (topicMapId == null)
-      return null;
-    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
-    return tm.findTopicType(topicId);
+  protected TopicType load() {
+    if (topicMapId == null) return null;
+    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
+    TopicIF topicIf = tm.getTopicIFById(topicId);
+    return new TopicType(topicIf, tm);
   }
 }

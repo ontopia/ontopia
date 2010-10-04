@@ -3,11 +3,11 @@ package ontopoly.components;
 import java.util.Collection;
 import java.util.List;
 
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.InterfaceControlIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.InterfaceControl;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
 import ontopoly.models.FieldsViewModel;
@@ -32,19 +32,19 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
       final boolean readonly, boolean embedded, boolean traversable, boolean allowAdd) {
     super(id);
     FieldInstanceModel fieldInstanceModel = fieldValueModel.getFieldInstanceModel();
-    RoleFieldIF valueField = valueFieldModel.getRoleField();
+    RoleField valueField = valueFieldModel.getRoleField();
     
     if (fieldValueModel.isExistingValue()) {
-      RoleFieldIF.ValueIF value = (RoleFieldIF.ValueIF)fieldValueModel.getObject();            
-      OntopolyTopicIF oPlayer = value.getPlayer(valueField, fieldInstanceModel.getFieldInstance().getInstance());
+      RoleField.ValueIF value = (RoleField.ValueIF)fieldValueModel.getObject();            
+      Topic oPlayer = value.getPlayer(valueField, fieldInstanceModel.getFieldInstance().getInstance());
 
       if (embedded) {
-        TopicTypeIF defaultTopicType = OntopolyUtils.getDefaultTopicType(oPlayer);
-        List<FieldInstanceIF> fieldInstances = oPlayer.getFieldInstances(defaultTopicType, fieldsViewModel.getFieldsView());
+        TopicType defaultTopicType = OntopolyUtils.getDefaultTopicType(oPlayer);
+        List<FieldInstance> fieldInstances = oPlayer.getFieldInstances(defaultTopicType, fieldsViewModel.getFieldsView());
         // if no matching fields show link to topic instead
         if (fieldInstances.isEmpty()) {
           // player link
-          TopicLink playerLink = new TopicLink("player", new TopicModel<OntopolyTopicIF>(oPlayer), fieldsViewModel);
+          TopicLink playerLink = new TopicLink("player", new TopicModel<Topic>(oPlayer), fieldsViewModel);
           playerLink.setEnabled(traversable);
           add(playerLink);          
         } else {
@@ -56,33 +56,34 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
         }
       } else {
         // player link
-        TopicLink playerLink = new TopicLink("player", new TopicModel<OntopolyTopicIF>(oPlayer), fieldsViewModel);
+        TopicLink playerLink = new TopicLink("player", new TopicModel<Topic>(oPlayer), fieldsViewModel);
         playerLink.setEnabled(traversable);
         add(playerLink);
       }
       
     } else {
-      InterfaceControlIF interfaceControl = valueField.getInterfaceControl();
+
+      InterfaceControl interfaceControl = valueField.getInterfaceControl();
       
       if (readonly || interfaceControl.isSearchDialog() || interfaceControl.isBrowseDialog() || !allowAdd) {
         add(new Label("player").setVisible(false));
       
       } else if (interfaceControl.isDropDownList()) {
         // default is drop-down list
-        TopicModel<OntopolyTopicIF> selectedModel = new TopicModel<OntopolyTopicIF>(null);
+        TopicModel<Topic> selectedModel = new TopicModel<Topic>(null);
         PossiblePlayersModel choicesModel = new PossiblePlayersModel(fieldInstanceModel, valueFieldModel) {
           @Override
-          protected void filterPlayers(Collection<OntopolyTopicIF> players) {
+          protected void filterPlayers(Collection<Topic> players) {
             AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
             page.filterTopics(players);
           }            
         };
         
-        TopicDropDownChoice<OntopolyTopicIF> choice = new TopicDropDownChoice<OntopolyTopicIF>("player", selectedModel, choicesModel) {        
+        TopicDropDownChoice<Topic> choice = new TopicDropDownChoice<Topic>("player", selectedModel, choicesModel) {        
           @Override
           protected void onModelChanged() {
             super.onModelChanged();
-            FieldInstanceAssociationBinaryField.this.onNewSelection(fieldValueModel, (OntopolyTopicIF)getModelObject());
+            FieldInstanceAssociationBinaryField.this.onNewSelection(fieldValueModel, (Topic)getModelObject());
           }
         };        
         add(choice);
@@ -92,12 +93,12 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
         AssociationFieldAutoCompleteTextField autoCompleteField 
           = new AssociationFieldAutoCompleteTextField("player", new Model<String>(null), valueFieldModel) {
           @Override
-          protected void filterPlayers(List<OntopolyTopicIF> players) {
+          protected void filterPlayers(List<Topic> players) {
             AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
             page.filterTopics(players);
           }            
           @Override
-          protected void onTopicSelected(OntopolyTopicIF topic) {
+          protected void onTopicSelected(Topic topic) {
             FieldInstanceAssociationBinaryField.this.onNewSelection(fieldValueModel, topic);              
           }          
         };
@@ -111,14 +112,13 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
     }
   }
   
-  protected void onNewSelection(FieldValueModel fieldValueModel,
-                                OntopolyTopicIF selectedTopic) {
+  protected void onNewSelection(FieldValueModel fieldValueModel, Topic selectedTopic) {
     FieldInstanceModel fieldInstanceModel = fieldValueModel.getFieldInstanceModel();
-    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
-    OntopolyTopicIF currentTopic = fieldInstance.getInstance();
+    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
+    Topic currentTopic = fieldInstance.getInstance();
               
-    RoleFieldIF currentField = (RoleFieldIF)fieldInstance.getFieldAssignment().getFieldDefinition();          
-    RoleFieldIF selectedField = getOtherBinaryRoleField(currentField);
+    RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();          
+    RoleField selectedField = getOtherBinaryRoleField(currentField);
 
     // check with page to see if add is allowed
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
@@ -127,15 +127,13 @@ public abstract class FieldInstanceAssociationBinaryField extends Panel {
     }
   }
 
-  protected abstract void performNewSelection(FieldValueModel fieldValueModel,
-                                              RoleFieldIF selectedField,
-                                              OntopolyTopicIF selectedTopic);
+  protected abstract void performNewSelection(FieldValueModel fieldValueModel, RoleField selectedField, Topic selectedTopic);
   
-  protected RoleFieldIF getOtherBinaryRoleField(RoleFieldIF thisField) {
+  protected RoleField getOtherBinaryRoleField(RoleField thisField) {
     Collection otherRoleFields = thisField.getFieldsForOtherRoles();
     if (otherRoleFields.size() != 1)
       throw new RuntimeException("Binary association does not have two fields.");
-    RoleFieldIF otherField = (RoleFieldIF)otherRoleFields.iterator().next();
+    RoleField otherField = (RoleField)otherRoleFields.iterator().next();
     return otherField;
   }
   

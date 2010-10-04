@@ -2,7 +2,7 @@ package ontopoly.components;
 
 import java.util.List;
 
-import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.Topic;
 import ontopoly.pages.InstancePage;
 import ontopoly.models.TopicModel;
 
@@ -16,7 +16,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 public class TopicListPanel extends Panel {
   
-  public TopicListPanel(String id, IModel<List<OntopolyTopicIF>> topics) {
+  public TopicListPanel(String id, IModel<List<Topic>> topics) {
     super(id);
     add(new TopicListView("topicList", topics));
   }
@@ -24,14 +24,14 @@ public class TopicListPanel extends Panel {
   // --- TopicListView
 
   public static class TopicListView extends ListView {
-    public TopicListView(String id, IModel<List<OntopolyTopicIF>> list) {
+    public TopicListView(String id, IModel<List<Topic>> list) {
       super(id, list);
     }
     
     protected void populateItem(ListItem item) {
-      OntopolyTopicIF topic = (OntopolyTopicIF) item.getModelObject();
+      Topic topic = (Topic) item.getModelObject();
       // FIXME: upgrade to TopicLink
-      item.add(new TopicInstanceLink("topicLink", new TopicModel<OntopolyTopicIF>(topic)));
+      item.add(new TopicInstanceLink("topicLink", new TopicModel<Topic>(topic)));
       //item.add(new org.apache.wicket.markup.html.basic.Label("topicName", topic.getName()));
     }
   }
@@ -43,7 +43,7 @@ public class TopicListPanel extends Panel {
   // anonymous classes.
 
   public static class TopicInstanceLink extends TopicLink {
-    public TopicInstanceLink(String id, IModel<? extends OntopolyTopicIF> topicModel) {
+    public TopicInstanceLink(String id, IModel<? extends Topic> topicModel) {
       super(id, topicModel);
     }
 

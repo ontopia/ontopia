@@ -7,43 +7,46 @@ import java.util.List;
 
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
-import ontopoly.model.FieldAssignmentIF;
-import ontopoly.model.FieldDefinitionIF;
-import ontopoly.model.FieldInstanceIF;
-import ontopoly.model.IdentityFieldIF;
-import ontopoly.model.NameFieldIF;
-import ontopoly.model.OccurrenceFieldIF;
-import ontopoly.model.RoleFieldIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.IdentityField;
+import ontopoly.model.NameField;
+import ontopoly.model.OccurrenceField;
+import ontopoly.model.RoleField;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldInstanceModel extends LoadableDetachableModel<FieldInstanceIF> {
+public class FieldInstanceModel extends LoadableDetachableModel<FieldInstance> {
+
   private String topicMapId;
   private String topicId;
+
   private String topicTypeId;
-  private String declaredTopicTypeId; 
+  private String declaredTopicTypeId;
+  
   private int fieldType;
   private String fieldId;
 
-  public FieldInstanceModel(FieldInstanceIF fieldInstance) {
+  public FieldInstanceModel(FieldInstance fieldInstance) {
     super(fieldInstance);
     if (fieldInstance == null)
       throw new NullPointerException("fieldInstance parameter cannot be null.");
-    OntopolyTopicIF topic = fieldInstance.getInstance();
+    Topic topic = fieldInstance.getInstance();
     this.topicId = topic.getId();
-    OntopolyTopicMapIF topicMap = topic.getTopicMap();
+    TopicMap topicMap = topic.getTopicMap();
     this.topicMapId = topicMap.getId();
     
-    FieldAssignmentIF fieldAssignment = fieldInstance.getFieldAssignment();
-    TopicTypeIF topicType = fieldAssignment.getTopicType();
+    FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
+    TopicType topicType = fieldAssignment.getTopicType();
     this.topicTypeId = topicType.getId();
-    TopicTypeIF declaredTopicType = fieldAssignment.getDeclaredTopicType();
+    TopicType declaredTopicType = fieldAssignment.getDeclaredTopicType();
     this.declaredTopicTypeId = declaredTopicType.getId();
     
-    FieldDefinitionIF fieldDefinition = fieldAssignment.getFieldDefinition();
+    FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
     this.fieldType = fieldDefinition.getFieldType();
     this.fieldId = fieldDefinition.getId();
   }
@@ -52,31 +55,54 @@ public class FieldInstanceModel extends LoadableDetachableModel<FieldInstanceIF>
     return fieldType;
   }
   
-  public FieldInstanceIF getFieldInstance() {
-    return (FieldInstanceIF)getObject();
+  public FieldInstance getFieldInstance() {
+    return (FieldInstance)getObject();
   }
   
   @Override
-  protected FieldInstanceIF load() {
-    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
-    OntopolyTopicIF topic = tm.findTopic(topicId);
-    TopicTypeIF topicType = tm.findTopicType(topicTypeId);
-    TopicTypeIF declaredTopicType = tm.findTopicType(declaredTopicTypeId);
+  protected FieldInstance load() {
+    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
+    TopicIF topicIf = tm.getTopicIFById(topicId);
+    Topic topic = new Topic(topicIf, tm);
+
+    TopicIF topicTypeIf = tm.getTopicIFById(topicTypeId);
+    TopicType topicType = new TopicType(topicTypeIf, tm);
+
+    TopicIF declaredTopicTypeIf = tm.getTopicIFById(declaredTopicTypeId);
+    TopicType declaredTopicType = new TopicType(declaredTopicTypeIf, tm);
+    
+    TopicIF fieldTopic = tm.getTopicIFById(fieldId);
       
-    FieldDefinitionIF fieldDefinition = tm.findFieldDefinition(fieldId, fieldType);
-    FieldAssignmentIF fieldAssignment = topicType.getFieldAssignment(declaredTopicType, fieldDefinition);
+    FieldDefinition fieldDefinition;
+    switch (fieldType) {
+    case FieldDefinition.FIELD_TYPE_ROLE:
+      fieldDefinition = new RoleField(fieldTopic, tm);
+      break;
+    case FieldDefinition.FIELD_TYPE_OCCURRENCE:
+      fieldDefinition = new OccurrenceField(fieldTopic, tm);
+      break;
+    case FieldDefinition.FIELD_TYPE_NAME:
+      fieldDefinition = new NameField(fieldTopic, tm);
+      break;
+    case FieldDefinition.FIELD_TYPE_IDENTITY:
+      fieldDefinition = new IdentityField(fieldTopic, tm);
+      break;
+    default:
+      throw new RuntimeException("Unknown field type: " + fieldType);
+    }
+    FieldAssignment fieldAssignment = new FieldAssignment(topicType, declaredTopicType, fieldDefinition);
     return newFieldInstance(topic, fieldAssignment);
   }
   
-  protected FieldInstanceIF newFieldInstance(OntopolyTopicIF topic, FieldAssignmentIF fieldAssignment) {
-    return topic.getFieldInstance(fieldAssignment);
+  protected FieldInstance newFieldInstance(Topic topic, FieldAssignment fieldAssignment) {
+    return new FieldInstance(topic, fieldAssignment);    
   }
 
-  public static List<FieldInstanceModel> wrapInFieldInstanceModels(List<FieldInstanceIF> fieldInstances) {
+  public static List<FieldInstanceModel> wrapInFieldInstanceModels(List<FieldInstance> fieldInstances) {
     List<FieldInstanceModel> result = new ArrayList<FieldInstanceModel>(fieldInstances.size());
-    Iterator<FieldInstanceIF> iter = fieldInstances.iterator();
+    Iterator<FieldInstance> iter = fieldInstances.iterator();
     while (iter.hasNext()) {
-      FieldInstanceIF fieldInstance = iter.next();
+      FieldInstance fieldInstance = (FieldInstance)iter.next();
       result.add(new FieldInstanceModel(fieldInstance));
     }
     return result;

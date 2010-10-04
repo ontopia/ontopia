@@ -7,8 +7,8 @@ import javax.swing.tree.TreeModel;
 
 import ontopoly.components.CreateInstanceFunctionBoxPanel;
 import ontopoly.components.FunctionBoxesPanel;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.utils.TreeModels;
 
 import org.apache.wicket.Component;
@@ -63,7 +63,7 @@ public class NameTypesPage extends AbstractTypesPage {
             return new ResourceModel("name.types.create.text");
           }
           @Override
-          protected OntopolyTopicIF createInstance(OntopolyTopicMapIF topicMap, String name) {
+          protected Topic createInstance(TopicMap topicMap, String name) {
             return topicMap.createNameType(name);
           }          
         });

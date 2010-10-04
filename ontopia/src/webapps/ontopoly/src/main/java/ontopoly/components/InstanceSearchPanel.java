@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
 import ontopoly.pages.InstancesPage;
@@ -29,24 +29,26 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
 public class InstanceSearchPanel extends Panel {
+
   private boolean errorInSearch = false;
   
   public InstanceSearchPanel(String id, IModel model) {
     super(id, model);
     
     final TopicTypeModel topicTypeModel = (TopicTypeModel) model; 
-        
+    
+    
     final AjaxOntopolyTextField searchField = new AjaxOntopolyTextField("searchField", new Model<String>("")); 
     add(searchField);
     
-    final IModel<List<OntopolyTopicIF>> searchResultModel = new LoadableDetachableModel<List<OntopolyTopicIF>>() {
+    final IModel<List<Topic>> searchResultModel = new LoadableDetachableModel<List<Topic>>() {
       @Override
-      protected List<OntopolyTopicIF> load() {
+      protected List<Topic> load() {
         try {
           errorInSearch = false;
           return topicTypeModel.getTopicType().searchAll(searchField.getDefaultModelObjectAsString());
         }
-        catch (Exception e) {
+        catch(Exception e) {
           errorInSearch = true;
           return Collections.emptyList();
         }
@@ -84,11 +86,11 @@ public class InstanceSearchPanel extends Panel {
     Label message = new Label("message", new ResourceModel(errorInSearch ? "search.error" : "search.empty"));
     unsuccessfulSearchContainer.add(message);
     
-    ListView searchResult = new ListView<OntopolyTopicIF>("searchResult", searchResultModel) {
+    ListView searchResult = new ListView<Topic>("searchResult", searchResultModel) {
       @Override
-      protected void populateItem(ListItem<OntopolyTopicIF> item) {
-        OntopolyTopicIF topic = item.getModelObject();
-        OntopolyTopicMapIF topicMap = topic.getTopicMap();
+      protected void populateItem(ListItem<Topic> item) {
+        Topic topic = item.getModelObject();
+        TopicMap topicMap = topic.getTopicMap();
         
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
@@ -101,8 +103,7 @@ public class InstanceSearchPanel extends Panel {
         // link to type
         Iterator it = topic.getTopicIF().getTypes().iterator();
         if (it.hasNext()) {
-          TopicIF tmp = (TopicIF)it.next();
-          OntopolyTopicIF tt = topicMap.findTopic(tmp.getObjectId());
+          Topic tt = new Topic((TopicIF)it.next(), topicMap);
           if(!tt.isSystemTopic()) {
             pageParametersMap.put("topicId", tt.getId());            
             item.add(new OntopolyBookmarkablePageLink("topicType", InstancesPage.class, new PageParameters(pageParametersMap), tt.getName()));          

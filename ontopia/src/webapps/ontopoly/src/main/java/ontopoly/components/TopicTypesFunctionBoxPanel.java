@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.model.FieldsViewIF;
-import ontopoly.model.OntopolyTopicIF;
-import ontopoly.model.OntopolyTopicMapIF;
-import ontopoly.model.TopicTypeIF;
+import ontopoly.model.FieldsView;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
 import ontopoly.models.TopicTypeModel;
@@ -24,9 +24,7 @@ import org.apache.wicket.model.ResourceModel;
 
 public class TopicTypesFunctionBoxPanel extends Panel {
   
-  public TopicTypesFunctionBoxPanel(String id, TopicModel topicModel,
-                                    TopicTypeModel topicTypeModel,
-                                    FieldsViewModel fieldsViewModel) {
+  public TopicTypesFunctionBoxPanel(String id, TopicModel topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
     super(id);
     add(new Label("title", new ResourceModel("topictypes.list.header")));
 
@@ -34,22 +32,22 @@ public class TopicTypesFunctionBoxPanel extends Panel {
     if (types.isEmpty())
       setVisible(false);
     
-    TopicTypeIF currentTopicType = topicTypeModel.getTopicType();
-    FieldsViewIF currentView = fieldsViewModel.getFieldsView();
+    TopicType currentTopicType = topicTypeModel.getTopicType();
+    FieldsView currentView = fieldsViewModel.getFieldsView();
     
     RepeatingView rv = new RepeatingView("rows");
     add(rv);
     
     Iterator iter =  types.iterator();
     while (iter.hasNext()) {
-      TopicTypeIF topicType = (TopicTypeIF) iter.next();      
+      TopicType topicType = (TopicType)iter.next();      
       boolean isCurrentTopicType = ObjectUtils.equals(currentTopicType, topicType);
       
       WebMarkupContainer parent =  new WebMarkupContainer(rv.newChildId());
       rv.add(parent);
       
-      OntopolyTopicIF topic = topicModel.getTopic();
-      OntopolyTopicMapIF tm = topic.getTopicMap();
+      Topic topic = topicModel.getTopic();
+      TopicMap tm = topic.getTopicMap();
       
       Map<String,String> pageParametersMap = new HashMap<String,String>();
       pageParametersMap.put("topicMapId", tm.getId());

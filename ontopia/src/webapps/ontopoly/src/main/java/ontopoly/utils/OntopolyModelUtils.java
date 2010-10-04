@@ -11,7 +11,7 @@ import java.util.Map;
 
 import ontopoly.model.PSI;
 import ontopoly.model.QueryMapper;
-import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicMap;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -44,19 +44,19 @@ public class OntopolyModelUtils {
     }
   }
 
-  public static TopicIF getTopicIF(OntopolyTopicMapIF tm, LocatorIF base, String subjectIndicator) {
+  public static TopicIF getTopicIF(TopicMap tm, LocatorIF base, String subjectIndicator) {
     return getTopicIF(tm, base.resolveAbsolute(subjectIndicator), true);
   }
 
-  public static TopicIF getTopicIF(OntopolyTopicMapIF tm, LocatorIF subjectIdentifier) {
+  public static TopicIF getTopicIF(TopicMap tm, LocatorIF subjectIdentifier) {
     return getTopicIF(tm, subjectIdentifier, true);
   }
 
-  public static TopicIF getTopicIF(OntopolyTopicMapIF tm, LocatorIF base, String subjectIndicator, boolean mustExist) {
+  public static TopicIF getTopicIF(TopicMap tm, LocatorIF base, String subjectIndicator, boolean mustExist) {
     return getTopicIF(tm, base.resolveAbsolute(subjectIndicator), mustExist);
   }
 
-  public static TopicIF getTopicIF(OntopolyTopicMapIF tm, LocatorIF subjectIdentifier, boolean mustExist) {
+  public static TopicIF getTopicIF(TopicMap tm, LocatorIF subjectIdentifier, boolean mustExist) {
     TopicIF t = tm.getTopicMapIF().getTopicBySubjectIdentifier(subjectIdentifier);
     if (t == null && mustExist) 
       throw new RuntimeException("Topic not found by subject identifier: " + subjectIdentifier);
@@ -64,12 +64,12 @@ public class OntopolyModelUtils {
   }
 
   public static boolean isUnaryPlayer(
-      OntopolyTopicMapIF tm, TopicIF aType, TopicIF player, TopicIF rType) {
+      TopicMap tm, TopicIF aType, TopicIF player, TopicIF rType) {
     return findUnaryAssociation(tm, aType, player, rType) != null;
   }
 
   public static AssociationIF findUnaryAssociation(
-      OntopolyTopicMapIF tm, TopicIF aType, TopicIF player, TopicIF rType) {
+      TopicMap tm, TopicIF aType, TopicIF player, TopicIF rType) {
 
     Iterator iter = player.getRoles().iterator();
     while (iter.hasNext()) {
@@ -94,7 +94,7 @@ public class OntopolyModelUtils {
   }
   
   public static Collection<TopicIF> findBinaryPlayers(
-      OntopolyTopicMapIF tm, TopicIF aType, TopicIF player1, TopicIF rType1, TopicIF rType2) {
+      TopicMap tm, TopicIF aType, TopicIF player1, TopicIF rType1, TopicIF rType2) {
     List<TopicIF> result = new ArrayList<TopicIF>();
     Iterator iter = player1.getRoles().iterator();
     while (iter.hasNext()) {
@@ -116,7 +116,7 @@ public class OntopolyModelUtils {
     return result;
   }
 
-  public static Collection<TopicIF> findBinaryPlayers(OntopolyTopicMapIF tm, TopicIF aType, 
+  public static Collection<TopicIF> findBinaryPlayers(TopicMap tm, TopicIF aType, 
       TopicIF player1, TopicIF rType1, TopicIF rType2, TopicIF theme) {
     List<TopicIF> result = new ArrayList<TopicIF>();
     Iterator iter = player1.getRoles().iterator();
@@ -142,7 +142,7 @@ public class OntopolyModelUtils {
   }
 
   public static AssociationIF findBinaryAssociation(
-      OntopolyTopicMapIF tm, TopicIF aType, 
+      TopicMap tm, TopicIF aType, 
       TopicIF player1, TopicIF rType1, TopicIF player2, TopicIF rType2) {
     String query = "select $A from role-player($R1, %player1%), "
       + "type($R1, %rType1%), association-role($A, $R1) ,"
@@ -161,7 +161,7 @@ public class OntopolyModelUtils {
   }
 
   public static Collection<AssociationIF> findBinaryAssociations(
-      OntopolyTopicMapIF tm, TopicIF aType, 
+      TopicMap tm, TopicIF aType, 
       TopicIF player1, TopicIF rType1, TopicIF rType2) {
     String query = "select $A from role-player($R1, %player1%), "
       + "type($R1, %rType1%), association-role($A, $R1) ,"
@@ -179,8 +179,7 @@ public class OntopolyModelUtils {
   }
 
   public static Collection<TopicIF> findTernaryPlayers(
-      OntopolyTopicMapIF tm, TopicIF aType, TopicIF player1, TopicIF rType1,
-      TopicIF player2, TopicIF rType2, TopicIF rType3) {
+      TopicMap tm, TopicIF aType, TopicIF player1, TopicIF rType1, TopicIF player2, TopicIF rType2, TopicIF rType3) {
     AssociationRoleIF secondRole;
     AssociationRoleIF thirdRole;
     List<TopicIF> result = new ArrayList<TopicIF>();
@@ -212,7 +211,7 @@ public class OntopolyModelUtils {
   }
 
   public static AssociationIF findTernaryAssociation(
-      OntopolyTopicMapIF tm, TopicIF aType, TopicIF player1,
+      TopicMap tm, TopicIF aType, TopicIF player1,
       TopicIF rType1, TopicIF player2, TopicIF rType2, TopicIF player3,
       TopicIF rType3) {
     String query = "select $A from role-player($R1, %player1%), "

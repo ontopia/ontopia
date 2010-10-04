@@ -2,7 +2,7 @@ package ontopoly.components;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.model.FieldInstanceIF;
+import ontopoly.model.FieldInstance;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.resources.Resources;
@@ -53,7 +53,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
         String newValue = (String)getModelObject();
         if (ObjectUtils.equals(newValue, oldValue)) return;
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-        FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+        FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
         if (fieldValueModel.isExistingValue() && oldValue != null)
           fieldInstance.removeValue(oldValue, page.getListener());
         if (newValue != null && !newValue.equals("")) {
