@@ -30,7 +30,7 @@ public class CreateNewTopicMapPanel extends Panel {
   public CreateNewTopicMapPanel(String id, OntopolyRepository repository) {
     super(id);
      
-    List sources = repository.getSources();  
+    List<TopicMapSource> sources = repository.getSources();  
     NUMBER_OF_SOURCES = sources.size();
     
     IModel<List<TopicMapSource>> sourcesChoicesModel = new LoadableDetachableModel<List<TopicMapSource>>() {
@@ -53,7 +53,7 @@ public class CreateNewTopicMapPanel extends Panel {
     sourcesDropDownContainer.setOutputMarkupPlaceholderTag(true);
     add(sourcesDropDownContainer);
     
-    final AjaxOntopolyDropDownChoice sourcesDropDown = new AjaxOntopolyDropDownChoice<TopicMapSource>("sourcesDropDown", 
+    final AjaxOntopolyDropDownChoice<TopicMapSource> sourcesDropDown = new AjaxOntopolyDropDownChoice<TopicMapSource>("sourcesDropDown", 
         topicMapSourceModel, sourcesChoicesModel, new ChoiceRenderer<TopicMapSource>("title", "id"));
          
     sourcesDropDownContainer.add(sourcesDropDown);

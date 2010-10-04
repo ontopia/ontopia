@@ -24,9 +24,9 @@ public class FieldInstanceImageField extends Panel {
     this.fieldValueModel = _fieldValueModel;
     
     image = new Image("image");
-    image.add(new AttributeModifier("src", true, new AbstractReadOnlyModel() {
+    image.add(new AttributeModifier("src", true, new AbstractReadOnlyModel<String>() {
       @Override
-      public final Object getObject() {
+      public final String getObject() {
         TopicMap topicMap = fieldValueModel.getFieldInstanceModel().getFieldInstance().getInstance().getTopicMap();        
         Object o = fieldValueModel.getFieldValue();
         return getRequest().getRelativePathPrefixToContextRoot() + "occurrenceImages?topicMapId=" + topicMap.getId() + 

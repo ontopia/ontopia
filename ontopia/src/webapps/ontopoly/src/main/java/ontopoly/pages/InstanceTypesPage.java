@@ -68,7 +68,7 @@ public class InstanceTypesPage extends OntopolyAbstractPage {
             };
           }
           @Override
-          protected Link newLink(String id) {
+          protected Link<Page> newLink(String id) {
             Map<String,String> pageParametersMap = new HashMap<String,String>(2);            
             pageParametersMap.put("topicMapId", node.getTopicMapId());
             pageParametersMap.put("topicId", node.getTopicId());            

@@ -16,9 +16,9 @@ import org.apache.wicket.model.LoadableDetachableModel;
 
 public abstract class AvailableTopicTypesModel extends LoadableDetachableModel<List<TopicType>> {
 
-  private TopicModel topicModel;  
+  private TopicModel<Topic> topicModel;  
   
-  public AvailableTopicTypesModel(TopicModel topicModel) {
+  public AvailableTopicTypesModel(TopicModel<Topic> topicModel) {
     this.topicModel = topicModel;
   }
   
@@ -42,9 +42,9 @@ public abstract class AvailableTopicTypesModel extends LoadableDetachableModel<L
     if (!getShouldIncludeExistingTypes())
       types.removeAll(topic.getTopicTypes());
     List<TopicType> result = new ArrayList<TopicType>(types.size()); 
-    Iterator iter = types.iterator();
+    Iterator<TopicType> iter = types.iterator();
     while (iter.hasNext()) {
-      TopicType o = (TopicType)iter.next();
+      TopicType o = iter.next();
       if (filter(o))
         result.add(o);
     }

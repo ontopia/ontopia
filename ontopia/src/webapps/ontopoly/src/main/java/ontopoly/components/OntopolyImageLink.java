@@ -9,25 +9,25 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 
-public abstract class OntopolyImageLink extends AjaxFallbackLink {
+public abstract class OntopolyImageLink extends AjaxFallbackLink<Object> {
   
   protected String image;
-  protected IModel titleModel;
+  protected IModel<String> titleModel;
   
   public OntopolyImageLink(String id, String image) {
     this(id, image, null);
   }
   
-  public OntopolyImageLink(String id, String image, IModel titleModel) {
+  public OntopolyImageLink(String id, String image, IModel<String> titleModel) {
     super(id);
     this.image = image;
     this.titleModel = titleModel;
 
 //    this.setRenderBodyOnly(true);
     
-    add(new Image("image", new AbstractReadOnlyModel() {
+    add(new Image("image", new AbstractReadOnlyModel<ResourceReference>() {
       @Override
-      public Object getObject() {
+      public ResourceReference getObject() {
         return new ResourceReference(ImageResource.class, getImage());
       }      
     }));
@@ -35,9 +35,9 @@ public abstract class OntopolyImageLink extends AjaxFallbackLink {
 
   @Override
   protected void onComponentTag(ComponentTag tag) {
-    IModel titleModel = getTitleModel();
+    IModel<String> titleModel = getTitleModel();
     if (titleModel != null)
-      tag.put("title", titleModel.getObject().toString());
+      tag.put("title", titleModel.getObject());
     super.onComponentTag(tag);
   }
   
@@ -45,7 +45,7 @@ public abstract class OntopolyImageLink extends AjaxFallbackLink {
     return image;
   }
 
-  public IModel getTitleModel() {
+  public IModel<String> getTitleModel() {
     return titleModel;    
   }
 

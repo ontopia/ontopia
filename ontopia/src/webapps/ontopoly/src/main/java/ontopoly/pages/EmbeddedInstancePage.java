@@ -59,7 +59,7 @@ public class EmbeddedInstancePage extends AbstractProtectedOntopolyPage {
     
     setReadOnlyPage(tt.isReadOnly() || ObjectUtils.equals(getRequest().getParameter("ro"), "true") || !((AbstractOntopolyPage)this).filterTopic(topic));
 
-    Form form = new Form("form");
+    Form<Object> form = new Form<Object>("form");
     add(form);
 
     this.instanceContainer = new WebMarkupContainer("instanceContainer");

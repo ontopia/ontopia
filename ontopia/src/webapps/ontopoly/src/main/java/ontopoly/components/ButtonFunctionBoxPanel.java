@@ -16,11 +16,7 @@ import org.apache.wicket.model.IModel;
 public abstract class ButtonFunctionBoxPanel extends FunctionBoxPanel {
 
   public ButtonFunctionBoxPanel(String id) {
-    this(id, null);
-  }
-  
-  public ButtonFunctionBoxPanel(String id, IModel model) {
-    super(id, model);
+    super(id);
   }
 
   @Override
@@ -35,7 +31,7 @@ public abstract class ButtonFunctionBoxPanel extends FunctionBoxPanel {
 
   protected Component getButton(String id) {
 
-    AjaxLink button = new AjaxLink(id) {
+    AjaxLink<Object> button = new AjaxLink<Object>(id) {
 
       @Override
       protected void onComponentTag(ComponentTag tag) {
@@ -51,11 +47,11 @@ public abstract class ButtonFunctionBoxPanel extends FunctionBoxPanel {
       }
     };
 
-    List behaviors = getButtonBehaviors();
+    List<IBehavior> behaviors = getButtonBehaviors();
     if (behaviors != null) {
-      Iterator it = behaviors.iterator();
+      Iterator<IBehavior> it = behaviors.iterator();
       while (it.hasNext()) {
-        button.add((IBehavior) it.next());
+        button.add(it.next());
       }
     }
     return button;
@@ -63,11 +59,11 @@ public abstract class ButtonFunctionBoxPanel extends FunctionBoxPanel {
 
   protected abstract void onClick(AjaxRequestTarget target);
 
-  protected abstract IModel getText();
+  protected abstract IModel<String> getText();
 
-  protected abstract IModel getButtonLabel();
+  protected abstract IModel<String> getButtonLabel();
 
-  protected List getButtonBehaviors() {
+  protected List<IBehavior> getButtonBehaviors() {
     return null;
   }
 }

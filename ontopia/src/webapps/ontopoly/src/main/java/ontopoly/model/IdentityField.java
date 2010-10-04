@@ -2,16 +2,13 @@
 package ontopoly.model;
 
 import java.util.Collection;
-import java.util.Iterator;
-
-import ontopoly.utils.OntopolyModelUtils;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.utils.CollectionUtils;
+import ontopoly.utils.OntopolyModelUtils;
 
 /**
  * Represents both subject locator and subject identifier fields.
@@ -65,7 +62,7 @@ public class IdentityField extends FieldDefinition {
       TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "identity-field");
       TopicIF player1 = getTopicIF();
       TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "identity-type");
-      Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
+      Collection<TopicIF> players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF identityTypeIf = (TopicIF)CollectionUtils.getFirst(players);
       this.identityType = (identityTypeIf == null ? null : new IdentityType(identityTypeIf, getTopicMap()));      
     }
@@ -111,7 +108,7 @@ public class IdentityField extends FieldDefinition {
    * @return A collection of LocatorIF objects.
    */
   @Override
-  public Collection getValues(Topic topic) {
+  public Collection<? extends Object> getValues(Topic topic) {
     TopicIF topicIf = topic.getTopicIF();
     if (isSubjectLocator())
       return topicIf.getSubjectLocators();

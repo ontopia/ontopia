@@ -98,10 +98,10 @@ public class AssociationType extends AbstractTypingTopic {
   public List<RoleType> getDeclaredRoleTypes() {
     List<RoleType> result = new ArrayList<RoleType>();
     AssociationField associationField = null;
-    Collection roleFields = this.getDeclaredByFields();
-    Iterator iter = roleFields.iterator();
+    Collection<RoleField> roleFields = this.getDeclaredByFields();
+    Iterator<RoleField> iter = roleFields.iterator();
     while (iter.hasNext()) {
-      RoleField roleField = (RoleField)iter.next();
+      RoleField roleField = iter.next();
       if (associationField == null)
         associationField = roleField.getAssociationField();
       else if (!associationField.equals(roleField.getAssociationField()))
@@ -124,14 +124,14 @@ public class AssociationType extends AbstractTypingTopic {
 	  
 	  TopicIF associationType = getTopicIF();
 	  ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)associationType.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
-	  Iterator iter = cindex.getAssociations(associationType).iterator();
+	  Iterator<AssociationIF> iter = cindex.getAssociations(associationType).iterator();
 
 	  List<RoleType> tuple = new ArrayList<RoleType>();
 	  while (iter.hasNext()) {
 	    AssociationIF assoc = (AssociationIF)iter.next();
-	    Iterator riter = assoc.getRoles().iterator();
+	    Iterator<AssociationRoleIF> riter = assoc.getRoles().iterator();
 	    while (riter.hasNext()) {
-	      AssociationRoleIF role = (AssociationRoleIF)riter.next();
+	      AssociationRoleIF role = riter.next();
 	      tuple.add(new RoleType(role.getType(), getTopicMap()));
 	    }
 	    Collections.sort(tuple, new Comparator<RoleType>() {
@@ -155,28 +155,28 @@ public class AssociationType extends AbstractTypingTopic {
 	 * @param roleTypesFrom list of role types that should match existing associations
 	 * @param roleTypesTo list of role types to which the associations should be changed
 	 */
-	public void transformInstances(List roleTypesFrom, List roleTypesTo) {
+	public void transformInstances(List<RoleType> roleTypesFrom, List<RoleType> roleTypesTo) {
 	  int size = roleTypesFrom.size(); 
 	  if (size != roleTypesTo.size())
 	    throw new RuntimeException("Incompatible role type sets: sizes are different");
 	  
     TopicIF associationType = getTopicIF();
     ClassInstanceIndexIF cindex = (ClassInstanceIndexIF)associationType.getTopicMap().getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
-    Iterator iter = cindex.getAssociations(associationType).iterator();
+    Iterator<AssociationIF> iter = cindex.getAssociations(associationType).iterator();
     
     AssociationRoleIF[] roleMatches = new AssociationRoleIF[size];
     
     // for each association
     while (iter.hasNext()) {
       AssociationIF assoc = (AssociationIF)iter.next();
-      Collection roles = assoc.getRoles();
+      Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != roleTypesFrom.size()) continue;
       boolean match = true;
       Arrays.fill(roleMatches, null);
       
-      Iterator riter = roles.iterator();
+      Iterator<AssociationRoleIF> riter = roles.iterator();
       while (riter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)riter.next();
+        AssociationRoleIF role = riter.next();
         int matchIndex = -1;
         TopicIF roleType = role.getType();
         for (int i=0; i < size; i++) {          
@@ -206,7 +206,7 @@ public class AssociationType extends AbstractTypingTopic {
     }
   }
   
-  static class RoleFieldComparator implements Comparator {
+  static class RoleFieldComparator implements Comparator<RoleField> {
     private static final RoleFieldComparator INSTANCE = new RoleFieldComparator();
 
     private RoleFieldComparator() {
@@ -217,10 +217,7 @@ public class AssociationType extends AbstractTypingTopic {
       return INSTANCE;
     }
 
-    public int compare(Object o1, Object o2) {
-      RoleField rf1 = (RoleField) o1;
-      RoleField rf2 = (RoleField) o2;
-
+    public int compare(RoleField rf1, RoleField rf2) {
       return ObjectUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }
   }

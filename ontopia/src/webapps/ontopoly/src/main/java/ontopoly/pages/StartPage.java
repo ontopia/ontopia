@@ -10,8 +10,8 @@ import java.util.Map;
 import ontopoly.OntopolyContext;
 import ontopoly.components.CreateNewTopicMapPanel;
 import ontopoly.components.FooterPanel;
-import ontopoly.components.StartPageHeaderPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
+import ontopoly.components.StartPageHeaderPanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapReferenceModel;
@@ -23,7 +23,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
@@ -58,10 +57,10 @@ public class StartPage extends AbstractProtectedOntopolyPage {
         List<TopicMapReference> existingOntopolyTopicMaps = new ArrayList<TopicMapReference>();
         
         OntopolyRepository repository = OntopolyContext.getOntopolyRepository();
-        List ontTopicMaps = repository.getOntopolyTopicMaps();
-        Iterator it = ontTopicMaps.iterator();
+        List<TopicMapReference> ontTopicMaps = repository.getOntopolyTopicMaps();
+        Iterator<TopicMapReference> it = ontTopicMaps.iterator();
         while (it.hasNext()) {
-          TopicMapReference topicMapReference = (TopicMapReference) it.next();
+          TopicMapReference topicMapReference = it.next();
           if (topicMapReference.isPresent()) {
             existingOntopolyTopicMaps.add(topicMapReference);
           }
@@ -70,11 +69,11 @@ public class StartPage extends AbstractProtectedOntopolyPage {
       }      
     };
 
-    ListView eachTopicMap = new ListView<TopicMapReference>("eachOntopolyTopicMap", eachTopicMapModel) {
+    ListView<TopicMapReference> eachTopicMap = new ListView<TopicMapReference>("eachOntopolyTopicMap", eachTopicMapModel) {
       protected void populateItem(ListItem<TopicMapReference> item) {
         final TopicMapReference ref = item.getModelObject();
         PageParameters pageParameters = new PageParameters("topicMapId=" + ref.getId());
-        BookmarkablePageLink link = new OntopolyBookmarkablePageLink(
+        OntopolyBookmarkablePageLink link = new OntopolyBookmarkablePageLink(
             "ontTMLink", InstanceTypesPage.class, pageParameters, ref.getName());
         item.add(link);
       }
@@ -87,10 +86,10 @@ public class StartPage extends AbstractProtectedOntopolyPage {
         List<TopicMapReference> missingOntopolyTopicMaps = new ArrayList<TopicMapReference>();
         
         OntopolyRepository repository = OntopolyContext.getOntopolyRepository();
-        List ontTopicMaps = repository.getOntopolyTopicMaps();      
-        Iterator it = ontTopicMaps.iterator();
+        List<TopicMapReference> ontTopicMaps = repository.getOntopolyTopicMaps();      
+        Iterator<TopicMapReference> it = ontTopicMaps.iterator();
         while (it.hasNext()) {
-          TopicMapReference topicMapReference = (TopicMapReference) it.next();
+          TopicMapReference topicMapReference = it.next();
           if (!topicMapReference.isPresent()) {
             missingOntopolyTopicMaps.add(topicMapReference);
           }
@@ -102,7 +101,7 @@ public class StartPage extends AbstractProtectedOntopolyPage {
     final WebMarkupContainer missingTopicMapContainer = new WebMarkupContainer(
         "missingTopicMapContainer") {
       public boolean isVisible() {
-        if (((List)eachMissingTopicMapModel.getObject()).size() == 0) {
+        if (((List<TopicMapReference>)eachMissingTopicMapModel.getObject()).size() == 0) {
           return false;
         }
         return true;
@@ -118,10 +117,10 @@ public class StartPage extends AbstractProtectedOntopolyPage {
         item.add(new Label("missingOntTMTitle", ref.getName()));
         item.add(new Label("missingOntTMFilename", ref.getId()));
 
-        AjaxFallbackLink removeLink = new AjaxFallbackLink("missingOntTMDeleteLink") {
+        AjaxFallbackLink<Object> removeLink = new AjaxFallbackLink<Object>("missingOntTMDeleteLink") {
           public void onClick(AjaxRequestTarget target) {
             // delete the item representing the topicMapReference from the list eachMissingOntopolyTopicMap.
-            ((List)eachMissingTopicMapModel.getObject()).remove(topicMapReferenceModel.getTopicMapReference());
+            ((List<TopicMapReference>)eachMissingTopicMapModel.getObject()).remove(topicMapReferenceModel.getTopicMapReference());
             // delete the missing topic map from the system topic map.
             topicMapReferenceModel.getTopicMapReference().delete();
             if (target != null) {
@@ -145,13 +144,13 @@ public class StartPage extends AbstractProtectedOntopolyPage {
       }
     }; 
 
-    ListView eachTopicMap = new ListView<TopicMapReference>("eachNonOntopolyTopicMap", eachNonOntopolyTopicMapModel) {
+    ListView<TopicMapReference> eachTopicMap = new ListView<TopicMapReference>("eachNonOntopolyTopicMap", eachNonOntopolyTopicMapModel) {
       protected void populateItem(ListItem<TopicMapReference> item) {
         final TopicMapReference ref = item.getModelObject();
         Map<String,String> pageParameterMap = new HashMap<String,String>();
         pageParameterMap.put("topicMapId",ref.getId());
         
-        BookmarkablePageLink link = new OntopolyBookmarkablePageLink(
+        OntopolyBookmarkablePageLink link = new OntopolyBookmarkablePageLink(
             "nonOntTMLink", ConvertPage.class, new PageParameters(pageParameterMap), ref.getName());
         item.add(link);
       }

@@ -14,20 +14,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ontopoly.sysmodel.OntopolyRepository;
-import ontopoly.sysmodel.TopicMapReference;
-import ontopoly.utils.OntopolyModelUtils;
-
-import net.ontopia.utils.StringifierIF;
-import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
@@ -38,6 +31,11 @@ import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
+import net.ontopia.utils.CollectionUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import ontopoly.sysmodel.OntopolyRepository;
+import ontopoly.sysmodel.TopicMapReference;
+import ontopoly.utils.OntopolyModelUtils;
 
 /**
  * INTERNAL: Represents an Ontopoly topic map.
@@ -196,9 +194,9 @@ public class TopicMap {
     if (reifier == null) {
       // IMPORTANT: check old-style reification
       TopicMapIF tm = getTopicMapIF();
-      Iterator iter = tm.getItemIdentifiers().iterator();
+      Iterator<LocatorIF> iter = tm.getItemIdentifiers().iterator();
       while (iter.hasNext()) {
-        LocatorIF srcloc = (LocatorIF) iter.next();
+        LocatorIF srcloc = iter.next();
         TopicIF _reifier = tm.getTopicBySubjectIdentifier(srcloc);
         if (_reifier != null) {
           if (reifier != null)
@@ -241,7 +239,7 @@ public class TopicMap {
     
     TopicIF ontologyVersion = getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_ONTOLOGY_VERSION);
     Collection<TopicIF> scope = Collections.emptySet();    
-    Collection occs = OntopolyModelUtils.findOccurrences(ontologyVersion, reifier, scope);
+    Collection<OccurrenceIF> occs = OntopolyModelUtils.findOccurrences(ontologyVersion, reifier, scope);
     if (occs.isEmpty())
       return 0;
  
@@ -397,7 +395,7 @@ public class TopicMap {
   protected NameField getDefaultNameField() {
     TopicMap tm = this;
     NameType nameType = new NameType(OntopolyModelUtils.getTopicIF(tm, PSI.TMDM_TOPIC_NAME), tm);
-    Collection nameFields = nameType.getDeclaredByFields();
+    Collection<NameField> nameFields = nameType.getDeclaredByFields();
     return (NameField)CollectionUtils.getFirstElement(nameFields);
   }
   
@@ -473,14 +471,14 @@ public class TopicMap {
     return occurrenceType;
   }
 
-	public OccurrenceField getOccurrenceField(OccurrenceType occurrenceType) {
-		String query = "select $FD from on:has-occurrence-type(%type% : on:occurrence-type, $FD : on:occurrence-field) limit 1?";
-		Map<String,TopicIF> params = Collections.singletonMap("type", occurrenceType.getTopicIF());
+  public OccurrenceField getOccurrenceField(OccurrenceType occurrenceType) {
+	String query = "select $FD from on:has-occurrence-type(%type% : on:occurrence-type, $FD : on:occurrence-field) limit 1?";
+	Map<String,TopicIF> params = Collections.singletonMap("type", occurrenceType.getTopicIF());
 
-		QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
-		TopicIF fieldTopic = qm.queryForObject(query, params);
-		if (fieldTopic == null) 
-			throw new OntopolyModelRuntimeException("Could not find occurrence field for " + occurrenceType);
+	QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
+	TopicIF fieldTopic = qm.queryForObject(query, params);
+	if (fieldTopic == null) 
+		throw new OntopolyModelRuntimeException("Could not find occurrence field for " + occurrenceType);
 
     return new OccurrenceField(fieldTopic, this, occurrenceType);
   }
@@ -590,9 +588,9 @@ public class TopicMap {
     params.put("searchTerm", searchTerm);
 
     QueryMapper<Topic> qm = newQueryMapperNoWrap();
-    List rows = qm.queryForList(query, params);
+    List<Topic> rows = qm.queryForList(query, params);
 
-    Iterator it = rows.iterator();
+    Iterator<Topic> it = rows.iterator();
     List<Topic> results = new ArrayList<Topic>(rows.size());
     Collection<TopicIF> duplicateChecks = new HashSet<TopicIF>(rows.size());
     while (it.hasNext()) {

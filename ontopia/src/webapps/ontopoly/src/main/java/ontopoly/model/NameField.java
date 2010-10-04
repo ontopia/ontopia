@@ -6,13 +6,13 @@ package ontopoly.model;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-
-import ontopoly.utils.OntopolyModelUtils;
+import java.util.List;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.utils.CollectionUtils;
+import ontopoly.utils.OntopolyModelUtils;
 
 /**
  * Represents a name type.
@@ -60,7 +60,7 @@ public class NameField extends FieldDefinition {
       TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "name-field");
       TopicIF player1 = getTopicIF();
       TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "name-type");
-      Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
+      Collection<TopicIF> players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF nameTypeIf = (TopicIF)CollectionUtils.getFirst(players);
       this.nameType = (nameTypeIf == null ? null : new NameType(nameTypeIf, getTopicMap()));      
     }
@@ -75,13 +75,13 @@ public class NameField extends FieldDefinition {
    * @return a collection of TopicNameIFs.
    */
   @Override
-  public Collection getValues(Topic topic) {
+  public List<TopicNameIF> getValues(Topic topic) {
     TopicIF topicIf = topic.getTopicIF();
     NameType ntype = getNameType();
-    if (ntype == null) return Collections.EMPTY_SET;
+    if (ntype == null) return Collections.emptyList();
     TopicIF typeIf = ntype.getTopicIF();
 		
-    Collection<TopicIF> scope = Collections.emptySet();
+//    Collection<TopicIF> scope = Collections.emptySet();
     return OntopolyModelUtils.findTopicNames(typeIf, topicIf); // , scope);
   }
 
@@ -110,10 +110,10 @@ public class NameField extends FieldDefinition {
       OntopolyModelUtils.makeTopicName(typeIf, topicIf, value, scope);
     } else {
       // remove all except the first one
-      Iterator iter = names.iterator();
+      Iterator<TopicNameIF> iter = names.iterator();
       iter.next();
       while (iter.hasNext()) {
-        TopicNameIF name = (TopicNameIF) iter.next();
+        TopicNameIF name = iter.next();
         name.remove();
       }
     }
@@ -142,13 +142,13 @@ public class NameField extends FieldDefinition {
 
     listener.onBeforeRemove(fieldInstance, value);
 		
-    Collection<TopicIF> scope = Collections.emptySet();
-    Collection names = OntopolyModelUtils.findTopicNames(typeIf, topicIf, value); // , scope);
+//    Collection<TopicIF> scope = Collections.emptySet();
+    Collection<TopicNameIF> names = OntopolyModelUtils.findTopicNames(typeIf, topicIf, value); // , scope);
     if (!names.isEmpty()) {
       // remove all matching
-      Iterator iter = names.iterator();
+      Iterator<TopicNameIF> iter = names.iterator();
       while (iter.hasNext()) {
-        TopicNameIF name = (TopicNameIF) iter.next();
+        TopicNameIF name = iter.next();
         name.remove();
       }
     }

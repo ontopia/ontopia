@@ -44,7 +44,7 @@ public class AdminPage extends OntopolyAbstractPage {
     // Adding part containing title and help link
     createTitle();
     
-    final Form form = new Form("form");
+    final Form<Object> form = new Form<Object>("form");
     form.setOutputMarkupId(true);
     add(form);
 
@@ -53,7 +53,7 @@ public class AdminPage extends OntopolyAbstractPage {
         new ResourceModel("AdminPage.export.entire.topic.map").getObject().toString(), 
         new ResourceModel("AdminPage.export.topic.map.without.schema").getObject().toString());
     content = (String)contentCategories.get(0);
-    RadioChoice contentRadioChoice = new RadioChoice<String>("content", new PropertyModel<String>(this, "content"), contentCategories);
+    RadioChoice<String> contentRadioChoice = new RadioChoice<String>("content", new PropertyModel<String>(this, "content"), contentCategories);
     contentRadioChoice.add(new AjaxFormChoiceComponentUpdatingBehavior() {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
@@ -74,7 +74,7 @@ public class AdminPage extends OntopolyAbstractPage {
     
     final AjaxOntopolyTextField fileNameTextField = new AjaxOntopolyTextField("fileNameTextField", new PropertyModel<String>(this, "filename"));
       
-    RadioChoice syntaxRadioChoice = new RadioChoice<String>("syntax", new PropertyModel<String>(this, "syntax"), syntaxCategories, 
+    RadioChoice<String> syntaxRadioChoice = new RadioChoice<String>("syntax", new PropertyModel<String>(this, "syntax"), syntaxCategories, 
       new IChoiceRenderer<String>() {
         public Object getDisplayValue(String object) {
           return new ResourceModel("AdminPage.export.syntax." + object).getObject(); // "export.syntax.ltm", "export.syntax.xtm1", "export.syntax.xtm2", "export.syntax.rdf" ...
@@ -97,7 +97,7 @@ public class AdminPage extends OntopolyAbstractPage {
         new ResourceModel("AdminPage.export.download").getObject().toString(), 
         new ResourceModel("AdminPage.export.view").getObject().toString());
     action = actionCategories.get(0).toString();
-    RadioChoice actionRadioChoice = new RadioChoice<String>("action", new PropertyModel<String>(this, "action"), actionCategories);
+    RadioChoice<String> actionRadioChoice = new RadioChoice<String>("action", new PropertyModel<String>(this, "action"), actionCategories);
     form.add(actionRadioChoice);
     actionRadioChoice.add(new AjaxFormChoiceComponentUpdatingBehavior() {
       @Override
@@ -145,7 +145,7 @@ public class AdminPage extends OntopolyAbstractPage {
     };
     export.setCacheable(false);
     
-    ResourceLink resourceLink = new ResourceLink("export", export);
+    ResourceLink<Object> resourceLink = new ResourceLink<Object>("export", export);
     resourceLink.add(new SimpleAttributeModifier("value", new ResourceModel("AdminPage.export.button").getObject().toString()));
     form.add(resourceLink);
     

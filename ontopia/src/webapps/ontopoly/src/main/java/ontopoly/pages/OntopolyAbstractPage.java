@@ -42,9 +42,9 @@ public abstract class OntopolyAbstractPage extends AbstractProtectedOntopolyPage
     add(new TopicMapHeaderPanel("header", topicMapModel, getMainMenuItems(topicMapModel), getMainMenuIndex()));
     add(new FooterPanel("footer"));
     
-    add(new Label("title", new AbstractReadOnlyModel() {
+    add(new Label("title", new AbstractReadOnlyModel<String>() {
       @Override
-      public Object getObject() {
+      public String getObject() {
         return "[Ontopoly] " + getTopicMapModel().getTopicMap().getName();   
       }
     }));

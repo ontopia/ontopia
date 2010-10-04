@@ -75,7 +75,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     // Adding part containing title and help link
     createTitle();
     
-    final Form form = new Form("form");
+    final Form<Object> form = new Form<Object>("form");
     form.setOutputMarkupId(true);
     add(form);
     
@@ -88,7 +88,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     sourcesDropDownContainer.setOutputMarkupPlaceholderTag(true);
     form.add(sourcesDropDownContainer);
     
-    List sources = topicMap.getOntopolyRepository().getSources();  
+    List<TopicMapSource> sources = topicMap.getOntopolyRepository().getSources();  
     NUMBER_OF_SOURCES = sources.size();
     
     final List<String> contentCategories = Arrays.asList(
@@ -97,12 +97,12 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     properties.put("choice", contentCategories.get(1));
     
     String topicMapId = topicMap.getId();
-    if(NUMBER_OF_SOURCES > 0 && 
+    if (NUMBER_OF_SOURCES > 0 && 
         (topicMapId.endsWith("xtm") || 
          topicMap.getTopicMapIF().getStore().getImplementation() == TopicMapStoreIF.RDBMS_IMPLEMENTATION)) {          
       add(new Label("action", new ResourceModel("ConvertPage.information.action.copyorupdate")));
       
-      AjaxRadioGroupPanel ajaxRadioGroupPanel = new AjaxRadioGroupPanel("exchangeableComponent", form, contentCategories, new PropertyModel(getProperties(), "choice"));
+      AjaxRadioGroupPanel ajaxRadioGroupPanel = new AjaxRadioGroupPanel("exchangeableComponent", form, contentCategories, new PropertyModel<Object>(getProperties(), "choice"));
       ajaxRadioGroupPanel.addAjaxTarget(form);
       ajaxRadioGroupPanel.addAjaxTarget(sourcesDropDownContainer);
       form.add(ajaxRadioGroupPanel);
@@ -124,7 +124,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
       topicMapSourceModel = new TopicMapSourceModel((TopicMapSource)sources.get(0));
     }
       
-    final AjaxOntopolyDropDownChoice sourcesDropDown = 
+    final AjaxOntopolyDropDownChoice<TopicMapSource> sourcesDropDown = 
       new AjaxOntopolyDropDownChoice<TopicMapSource>("sourcesDropDown", 
         topicMapSourceModel, sourcesChoicesModel, new ChoiceRenderer<TopicMapSource>("title", "id"));
          

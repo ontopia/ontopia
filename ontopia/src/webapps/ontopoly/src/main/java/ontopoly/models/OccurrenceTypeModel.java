@@ -8,7 +8,7 @@ import ontopoly.model.TopicMap;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class OccurrenceTypeModel extends LoadableDetachableModel {
+public class OccurrenceTypeModel extends LoadableDetachableModel<OccurrenceType> {
 
   private static final long serialVersionUID = 8685431361043298701L;
 
@@ -24,13 +24,9 @@ public class OccurrenceTypeModel extends LoadableDetachableModel {
     this.topicMapId = topicMapId;
     this.topicId = topicId;
   }
-
-  public OccurrenceType getOccurrenceType() {
-    return (OccurrenceType)getObject();
-  }
   
   @Override
-  protected Object load() {
+  protected OccurrenceType load() {
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
     TopicIF topicIf = tm.getTopicIFById(topicId);
     return new OccurrenceType(topicIf, tm);

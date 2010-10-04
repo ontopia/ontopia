@@ -52,7 +52,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
     add(new MenuHelpPanel("titlePartPanel", getSubMenuItems(getTopicMapModel()), subMenuIndex,
         getNameModelForHelpLinkAddress(subMenuIndex)));
 
-    Form form = new Form("form");
+    Form<Object> form = new Form<Object>("form");
     add(form);
     form.setOutputMarkupId(true);
 
@@ -78,7 +78,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
 
   protected abstract int getSubMenuIndex();
 
-  public static IModel getNameModelForType(int type) {
+  public static IModel<String> getNameModelForType(int type) {
     if (type == TOPIC_TYPES_INDEX_IN_SUBMENU) {
       return new ResourceModel("topic.types");
     } else if (type == OCCURRENCE_TYPES_INDEX_IN_SUBMENU) {
@@ -147,7 +147,7 @@ public abstract class AbstractTypesPage extends OntopolyAbstractPage {
             };
           }
           @Override
-          protected Link newLink(String id) {
+          protected Link<Page> newLink(String id) {
             Topic topic = node.getTopic();
             return new BookmarkablePageLink<Page>(id, getPageClass(topic), getPageParameters(topic));
           }

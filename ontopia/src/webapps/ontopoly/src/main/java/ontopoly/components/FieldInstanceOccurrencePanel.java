@@ -95,9 +95,9 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
           if (dataType.isImage()) {
             item.add(new FieldInstanceImageField("fieldValue", fieldValueModel, readonly));
           } else {
-            item.add(new Label("fieldValue", new LoadableDetachableModel() {
+            item.add(new Label("fieldValue", new LoadableDetachableModel<String>() {
               @Override
-              protected Object load() {
+              protected String load() {
                 OccurrenceIF occ = (OccurrenceIF)fieldValueModel.getObject();
                 return (occ == null ? null : occ.getValue());              
               }
@@ -186,7 +186,7 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       @Override public String getImage() {
         return fieldValuesModel.getShowExtraField() ? "remove.gif" : "add.gif";
       }
-      @Override public IModel getTitleModel() {
+      @Override public IModel<String> getTitleModel() {
         return new ResourceModel(fieldValuesModel.getShowExtraField() ? "icon.remove.hide-field" : "icon.add.add-value");
       }
     };

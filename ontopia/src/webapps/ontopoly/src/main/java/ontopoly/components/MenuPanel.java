@@ -17,12 +17,12 @@ public class MenuPanel extends Panel {
   public MenuPanel(String id, List<MenuItem> menuItemList, final int selectedMenuItemIndex) {
     super(id);
 
-    ListView menuItems = new ListView<MenuItem>("menuItems", menuItemList) {
+    ListView<MenuItem> menuItems = new ListView<MenuItem>("menuItems", menuItemList) {
       int counter = 0;
 
       protected void populateItem(ListItem<MenuItem> item) {
         MenuItem menuItem = item.getModelObject();
-        BookmarkablePageLink link = new BookmarkablePageLink<Page>("menuItemLink",
+        BookmarkablePageLink<Page> link = new BookmarkablePageLink<Page>("menuItemLink",
             menuItem.getPageClass(), menuItem.getPageParameters());
         link.add(menuItem.getCaption());
         item.add(link);

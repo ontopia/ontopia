@@ -178,9 +178,9 @@ public class TopicType extends AbstractTypingTopic {
     // the supertypes has defined
     // this field, don't remove the field-order occurrence.
     boolean removeFieldOrder = true;
-    Iterator it = getFieldAssignments().iterator();
+    Iterator<FieldAssignment> it = getFieldAssignments().iterator();
     while (it.hasNext()) {
-      FieldAssignment fa = (FieldAssignment) it.next();
+      FieldAssignment fa = it.next();
       if (fa.getFieldDefinition().equals(fieldDefinition)) {
         removeFieldOrder = false;
         break;
@@ -304,10 +304,10 @@ public class TopicType extends AbstractTypingTopic {
     final TopicIF FIELD_ORDER = OntopolyModelUtils.getTopicIF(tt.getTopicMap(), PSI.ON, "field-order");
     TopicIF topicIF = tt.getTopicIF();
 
-    List fieldAssignments = tt.getFieldAssignments();
-    Iterator it = fieldAssignments.iterator();
+    List<FieldAssignment> fieldAssignments = tt.getFieldAssignments();
+    Iterator<FieldAssignment> it = fieldAssignments.iterator();
     while (it.hasNext()) {
-      FieldAssignment fa = (FieldAssignment) it.next();
+      FieldAssignment fa = it.next();
 
       FieldDefinition fieldDefinition = fa.getFieldDefinition();
       Collection<TopicIF> scope = Collections.singleton(fieldDefinition.getTopicIF());
@@ -349,9 +349,9 @@ public class TopicType extends AbstractTypingTopic {
         tt.getNextUnusedFieldOrder(), DataTypes.TYPE_STRING, scope);
 
     // Go through all of TopicType tt's subtypes depth-first.
-    Iterator it = tt.getDirectSubTypes().iterator();
+    Iterator<TopicType> it = tt.getDirectSubTypes().iterator();
     while (it.hasNext()) {
-      addFieldOrder((TopicType) it.next(), fieldDefinition);
+      addFieldOrder(it.next(), fieldDefinition);
     }
   }
 
@@ -386,9 +386,9 @@ public class TopicType extends AbstractTypingTopic {
       occurrenceIF.remove();
 
       // Go through all of TopicType tt's subtypes depth-first.
-      Iterator it = tt.getDirectSubTypes().iterator();
+      Iterator<TopicType> it = tt.getDirectSubTypes().iterator();
       while (it.hasNext()) {
-        removeFieldOrder((TopicType) it.next(), fieldDefinition);
+        removeFieldOrder(it.next(), fieldDefinition);
       }
     }
   }
@@ -493,7 +493,7 @@ public class TopicType extends AbstractTypingTopic {
   }
 
   static FieldDefinition findFieldDefinitionImpl(TopicMap tm, TopicIF fieldDefinitionTopic, TopicIF fieldDefinitionType) {
-    Collection identities = fieldDefinitionType.getSubjectIdentifiers();
+    Collection<LocatorIF> identities = fieldDefinitionType.getSubjectIdentifiers();
     if (identities.contains(PSI.ON_OCCURRENCE_FIELD))
       return new OccurrenceField(fieldDefinitionTopic, tm);
     else if (identities.contains(PSI.ON_ROLE_FIELD))
@@ -512,13 +512,13 @@ public class TopicType extends AbstractTypingTopic {
     int fieldOrder = 0;
 
     // find field-order occurrence
-    Collection fieldOrderOccurrences = OntopolyModelUtils.findOccurrences(
+    Collection<OccurrenceIF> fieldOrderOccurrences = OntopolyModelUtils.findOccurrences(
         OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "field-order"),
         getTopicIF(), DataTypes.TYPE_STRING);
 
-    Iterator it = fieldOrderOccurrences.iterator();
+    Iterator<OccurrenceIF> it = fieldOrderOccurrences.iterator();
     while (it.hasNext()) {
-      OccurrenceIF occurrenceIF = (OccurrenceIF) it.next();
+      OccurrenceIF occurrenceIF = it.next();
       int temp = Integer.parseInt(occurrenceIF.getValue());
       if (temp > fieldOrder)
         fieldOrder = temp;
@@ -548,7 +548,7 @@ public class TopicType extends AbstractTypingTopic {
     TopicMap tm = getTopicMap();
     
     // delegate to specific create method if known type
-    Collection subinds = getTopicIF().getSubjectIdentifiers();
+    Collection<LocatorIF> subinds = getTopicIF().getSubjectIdentifiers();
     if (subinds.contains(PSI.ON_TOPIC_TYPE))
       return tm.createTopicType(name);
     else if (subinds.contains(PSI.ON_ASSOCIATION_TYPE))

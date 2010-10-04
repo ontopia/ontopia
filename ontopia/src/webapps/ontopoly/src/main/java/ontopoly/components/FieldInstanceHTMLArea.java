@@ -27,7 +27,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
   protected String cols = "70";
   protected String rows = "20";
 
-  protected TextArea textArea;
+  protected TextArea<String> textArea;
   
   public FieldInstanceHTMLArea(String id, FieldValueModel _fieldValueModel) {
     super(id);
@@ -105,7 +105,7 @@ public class FieldInstanceHTMLArea extends Panel implements IHeaderContributor {
     response.renderJavascript(sb.toString(), "init");
   }
 
-  public TextArea getTextArea() {
+  public TextArea<String> getTextArea() {
     return textArea;    
   }
   

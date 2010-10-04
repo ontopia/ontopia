@@ -57,7 +57,7 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     this.createAction = createAction;
     
     RoleField associationField = roleFieldModel.getRoleField();
-    Collection allowedValueTypes = associationField.getAllowedPlayerTypes(_fieldInstanceModel.getFieldInstance().getInstance());
+    Collection<TopicType> allowedValueTypes = associationField.getAllowedPlayerTypes(_fieldInstanceModel.getFieldInstance().getInstance());
     if (allowedValueTypes.isEmpty()) {
       setVisible(false);
       OntopolyImageLink button = new OntopolyImageLink("button", "create.gif", new ResourceModel("icon.create.player")) {
@@ -82,11 +82,11 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
     } else  {
       final String menuId = id + "_" + associationField.getId() + "_" + 
         _fieldInstanceModel.getFieldInstance().getInstance().getId();
-      Link button = new Link("button") {
+      Link<Object> button = new Link<Object>("button") {
         { 
-          add(new Image("image", new AbstractReadOnlyModel() {
+          add(new Image("image", new AbstractReadOnlyModel<ResourceReference>() {
             @Override
-            public Object getObject() {
+            public ResourceReference getObject() {
               return new ResourceReference(ImageResource.class, "create.gif");
             }      
           }));
@@ -105,13 +105,13 @@ public abstract class FieldInstanceCreatePlayerPanel extends Panel {
       };
       add(button);
       
-      add(new ContextMenuPanel("createMenu", menuId) {
+      add(new ContextMenuPanel<TopicType>("createMenu", menuId) {
         @Override
-        protected ListView createListView(final String menuId, final String menuItemId) {
+        protected ListView<TopicType> createListView(final String menuId, final String menuItemId) {
           return new ListView<TopicType>(menuId, new PlayerTypesModel(fieldInstanceModel, roleFieldModel)) {
             @Override
             public void populateItem(final ListItem<TopicType> item) {
-              AjaxLink createLink = new AjaxLink(menuItemId) {
+              AjaxLink<Object> createLink = new AjaxLink<Object>(menuItemId) {
                 @Override
                 public void onClick(AjaxRequestTarget target) {
                   FieldInstanceCreatePlayerPanel.this.onClick(target, item.getModelObject());

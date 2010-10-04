@@ -94,7 +94,7 @@ public final class FieldAssignment {
    */
   public int getOrder(TopicType t) {
     String value;
-    Map queryResult;
+    Map<String,Object> queryResult;
     TopicIF tt = t.getTopicIF();
 
     String query = "field-order-value($tt, $f, $v) :- "
@@ -109,7 +109,7 @@ public final class FieldAssignment {
     params.put("tt", tt);
     params.put("f", fieldDefinition.getTopicIF());
 
-    QueryMapper<TopicIF> qm = tm.newQueryMapperNoWrap();
+    QueryMapper<Object> qm = tm.newQueryMapperNoWrap();
     
     while (true) {
       queryResult = qm.queryForMap(query, params);
@@ -134,12 +134,12 @@ public final class FieldAssignment {
     TopicIF themeIf = fd;
 
     Collection<TopicIF> scope = Collections.singleton(themeIf);
-    Collection occs = OntopolyModelUtils.findOccurrences(typeIf, topicIf, datatype, scope);
+    Collection<OccurrenceIF> occs = OntopolyModelUtils.findOccurrences(typeIf, topicIf, datatype, scope);
     if (!occs.isEmpty()) {
       if (!replace) return; // stop here if we're not replacing
-      Iterator iter = occs.iterator();
+      Iterator<OccurrenceIF> iter = occs.iterator();
       while (iter.hasNext()) {
-        OccurrenceIF occ = (OccurrenceIF) iter.next();
+        OccurrenceIF occ = iter.next();
         occ.remove();
       }
     }
@@ -155,7 +155,7 @@ public final class FieldAssignment {
     if (ObjectUtils.different(getTopicType(), other.getTopicType()))
       throw new RuntimeException("Cannot reorder fields that are assigned to different topic types.");
 
-    List fieldAssignments = getTopicType().getFieldAssignments();
+    List<FieldAssignment> fieldAssignments = getTopicType().getFieldAssignments();
     int length = fieldAssignments.size();
 
     // find next field assignment

@@ -71,9 +71,9 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
     if (query != null) return topic;
     
     // find hierarchy definition query for topic's topic types
-    Iterator titer = topic.getTopicTypes().iterator();
+    Iterator<TopicType> titer = topic.getTopicTypes().iterator();
     while (titer.hasNext()) {
-      TopicType topicType = (TopicType)titer.next();
+      TopicType topicType = titer.next();
       if (getDefinitionQuery(topicType) != null) 
         return topicType;
     }
@@ -132,6 +132,7 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
       }
 
       protected DefaultMutableTreeNode findTopicNode(DefaultMutableTreeNode parent, Topic topic) {
+        @SuppressWarnings("rawtypes")
         Enumeration e = parent.children();
         while (e.hasMoreElements()) {
           DefaultMutableTreeNode child = (DefaultMutableTreeNode)e.nextElement();
@@ -165,7 +166,7 @@ public class EmbeddedHierarchicalInstancePage extends EmbeddedInstancePage {
             };
           }
           @Override
-          protected Link newLink(String id) {
+          protected Link<Page> newLink(String id) {
             Topic topic = node.getTopic();
             return new BookmarkablePageLink<Page>(id, getPageClass(topic), getPageParameters(topic));
           }

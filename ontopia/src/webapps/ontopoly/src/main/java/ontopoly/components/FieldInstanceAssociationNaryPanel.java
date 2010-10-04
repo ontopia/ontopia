@@ -38,7 +38,7 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
 		RoleField roleField = (RoleField)fieldAssignment.getFieldDefinition(); 
 
 		final RoleFieldModel roleFieldModel = new RoleFieldModel(roleField);
-	  final List otherRoleFieldModels = RoleFieldModel.wrapInRoleFieldModels(roleField.getFieldsForOtherRoles());
+	  final List<RoleFieldModel> otherRoleFieldModels = RoleFieldModel.wrapInRoleFieldModels(roleField.getFieldsForOtherRoles());
     
     final boolean allowRemove = !roleField.getEditMode().isNoEdit();
 	  
@@ -164,7 +164,7 @@ public class FieldInstanceAssociationNaryPanel extends AbstractFieldInstancePane
       @Override public String getImage() {
         return fieldValuesModel.getShowExtraField() ? "remove.gif" : "add.gif";
       }
-      @Override public IModel getTitleModel() {
+      @Override public IModel<String> getTitleModel() {
         return new ResourceModel(fieldValuesModel.getShowExtraField() ? "icon.remove.hide-field" : "icon.add.add-value");
       }
     };

@@ -23,13 +23,13 @@ public class TopicListPanel extends Panel {
 
   // --- TopicListView
 
-  public static class TopicListView extends ListView {
+  public static class TopicListView extends ListView<Topic> {
     public TopicListView(String id, IModel<List<Topic>> list) {
       super(id, list);
     }
     
-    protected void populateItem(ListItem item) {
-      Topic topic = (Topic) item.getModelObject();
+    protected void populateItem(ListItem<Topic> item) {
+      Topic topic = item.getModelObject();
       // FIXME: upgrade to TopicLink
       item.add(new TopicInstanceLink("topicLink", new TopicModel<Topic>(topic)));
       //item.add(new org.apache.wicket.markup.html.basic.Label("topicName", topic.getName()));
@@ -42,8 +42,8 @@ public class TopicListPanel extends Panel {
   // particularly when, like me, you HATE the Java syntax for
   // anonymous classes.
 
-  public static class TopicInstanceLink extends TopicLink {
-    public TopicInstanceLink(String id, IModel<? extends Topic> topicModel) {
+  public static class TopicInstanceLink extends TopicLink<Topic> {
+    public TopicInstanceLink(String id, IModel<Topic> topicModel) {
       super(id, topicModel);
     }
 

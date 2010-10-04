@@ -77,20 +77,17 @@ public class ConfirmDeletePanel extends Panel {
     try {
       Topic topic = topicModel.getTopic();
       if (topic != null) {
-        Collection dependentObjects = topic.getDependentObjects();
-//        System.out.println("RO: " + dependentObjects.size() + " " + dependentObjects);
+        Collection<Topic> dependentObjects = topic.getDependentObjects();
         LifeCycleListener listener = getListener();
         // remove dependent objects
-        Iterator diter = dependentObjects.iterator();
+        Iterator<Topic> diter = dependentObjects.iterator();
         while (diter.hasNext()) {
-          Topic dtopic = (Topic)diter.next();
+          Topic dtopic = diter.next();
           if (!dtopic.isSystemTopic()) {
-//            System.out.println("Removing: " + dtopic.getName());
             dtopic.remove(listener);
           }
         }
         // remove object
-//        System.out.println("Removing selected: " + topic.getName());
         topic.remove(listener);        
       }
     } finally {

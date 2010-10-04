@@ -36,7 +36,7 @@ public class SignInPage extends AbstractOntopolyPage {
     add(new SignInForm("form"));
   }
   
-  private static class SignInForm extends StatelessForm {   
+  private static class SignInForm extends StatelessForm<Object> {   
     private String username; 
     private String password; 
     
@@ -46,7 +46,7 @@ public class SignInPage extends AbstractOntopolyPage {
       
       add(new FeedbackPanel("feedback", new ContainerFeedbackMessageFilter(this)));
       
-      add(new TextField("username")); 
+      add(new TextField<String>("username")); 
       add(new PasswordTextField("password"));   
     } 
     @Override 

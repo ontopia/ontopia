@@ -18,12 +18,12 @@ public abstract class VizigatorLinkFunctionBoxPanel extends CustomLinkFunctionBo
   }
   
   @Override
-  protected IModel getFirstResourceModel() {
+  protected IModel<String> getFirstResourceModel() {
     return new ResourceModel("vizigator.text1");
   }
 
   @Override
-  protected IModel getSecondResourceModel() {
+  protected IModel<String> getSecondResourceModel() {
     return new ResourceModel("vizigator.text2");    
   }
 

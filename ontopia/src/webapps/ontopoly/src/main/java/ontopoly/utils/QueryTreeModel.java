@@ -66,9 +66,9 @@ public abstract class QueryTreeModel extends DefaultTreeModel {
         qr.close();
       }
       // add rootless nodes to root
-      Iterator iter = nodes.values().iterator();
+      Iterator<DefaultMutableTreeNode> iter = nodes.values().iterator();
       while (iter.hasNext()) {
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode)iter.next();
+        DefaultMutableTreeNode node = iter.next();
         if (node.getParent() == null)
           root.add(node);
       }

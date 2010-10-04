@@ -18,7 +18,7 @@ import org.apache.wicket.markup.html.form.AbstractTextComponent.ITextFormatProvi
 import org.apache.wicket.model.Model;
 import org.apache.wicket.validation.IValidatable;
 
-public class FieldInstanceDateField extends TextField<String> implements ITextFormatProvider, IValidatable {
+public class FieldInstanceDateField extends TextField<String> implements ITextFormatProvider, IValidatable<String> {
 
   private FieldValueModel fieldValueModel;
   private String oldValue;

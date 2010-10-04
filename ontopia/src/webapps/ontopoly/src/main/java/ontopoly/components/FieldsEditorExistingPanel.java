@@ -140,7 +140,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       TopicType tt = null;
       RoleField rf = (RoleField)fieldDefinition;
       AssociationField afield = rf.getAssociationField();
-      List fields = afield.getFieldsForRoles();
+      List<RoleField> fields = afield.getFieldsForRoles();
       int numberOfRoles = fields.size();  
       String fieldTypeAsString = "";
       if (numberOfRoles == 1) { // unary
@@ -148,25 +148,25 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       } else if(numberOfRoles == 2) { // binary
         AssociationType at = rf.getAssociationType();
         if (at.isSymmetric()) { // symmetric
-          Collection allowedValueTypes = rf.getDeclaredPlayerTypes(); 
+          Collection<TopicType> allowedValueTypes = rf.getDeclaredPlayerTypes(); 
           if (allowedValueTypes.size() == 1) { // only one allowed player
-            Iterator it = allowedValueTypes.iterator();         
+            Iterator<TopicType> it = allowedValueTypes.iterator();         
             // It's only one element in the list
             while (it.hasNext()) {
-              tt = (TopicType)it.next();
+              tt = it.next();
               fieldTypeAsString = tt.getName();
             }
           } else { // more than one allowed player
             return new Label(id, new ResourceModel("FieldsEditorExistingPanel.valuetype.many")).add(new SimpleAttributeModifier("title", getAllowedPlayerNames(rf))).add(new SimpleAttributeModifier("class", "italic"));
           }   
         } else { // binary
-          Iterator it = fields.iterator();
+          Iterator<RoleField> it = fields.iterator();
           while (it.hasNext()) {
-            RoleField rf2 = (RoleField) it.next();
+            RoleField rf2 = it.next();
             if (!rf.equals(rf2)) { // the other association field
-              Collection allowedValueTypes = rf2.getDeclaredPlayerTypes(); 
+              Collection<TopicType> allowedValueTypes = rf2.getDeclaredPlayerTypes(); 
               if (allowedValueTypes.size() == 1) { // only one allowed player
-                Iterator it2 =  allowedValueTypes.iterator();         
+                Iterator<TopicType> it2 =  allowedValueTypes.iterator();         
                 // It's only one element in the list
                 while (it2.hasNext()) {
                   tt = (TopicType)it2.next();
@@ -212,11 +212,11 @@ public abstract class FieldsEditorExistingPanel extends Panel {
     
     AssociationType at = af.getAssociationType();
     AssociationField afield = at.getTopicMap().getAssociationField(at);
-    Iterator it = afield.getFieldsForRoles().iterator();
+    Iterator<RoleField> it = afield.getFieldsForRoles().iterator();
     while(it.hasNext()) {
       RoleField af2 = (RoleField) it.next();
       if(!af.equals(af2)) { // one of the other association fields
-          Iterator it2 =  af2.getDeclaredPlayerTypes().iterator();         
+          Iterator<TopicType> it2 =  af2.getDeclaredPlayerTypes().iterator();         
           while(it2.hasNext()) {
             topicTypeNames.add(((TopicType)it2.next()).getName());
           } 

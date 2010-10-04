@@ -43,7 +43,7 @@ public class DataType extends Topic {
     }
     
     // the code below can be removed at some time in the future
-    Collection subinds = getTopicIF().getSubjectIdentifiers();
+    Collection<LocatorIF> subinds = getTopicIF().getSubjectIdentifiers();
     if (subinds.contains(DataTypes.TYPE_DATE))
       return DataTypes.TYPE_DATE;
     else if (subinds.contains(DataTypes.TYPE_DATETIME))

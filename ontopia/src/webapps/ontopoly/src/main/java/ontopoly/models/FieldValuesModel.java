@@ -55,7 +55,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
    * @return the size of the model.
    */
   public int size() {
-    Collection values = (Collection)getObject();
+    List<FieldValueModel> values = getObject();
     return values.size();
   }
   
@@ -72,11 +72,11 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   }
   
   public boolean containsExisting() {
-    Collection values = (Collection)super.getObject();
+	List<FieldValueModel> values = getObject();
     return !values.isEmpty();
   }
   
-  protected Collection getValues(FieldInstance fieldInstance) {
+  protected Collection<? extends Object> getValues(FieldInstance fieldInstance) {
     return fieldInstance.getValues();
   }
   
@@ -98,12 +98,12 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   @Override
   protected List<FieldValueModel> load() {
     FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
-    Collection values = getValues(fieldInstance);
+    Collection<? extends Object> values = getValues(fieldInstance);
     if (values.isEmpty()) {
       return Collections.emptyList();
     } else {
       List<FieldValueModel> result = new ArrayList<FieldValueModel>(values.size());
-      Iterator iter = values.iterator();
+      Iterator<? extends Object> iter = values.iterator();
       while (iter.hasNext()) {
         Object value = iter.next();
         result.add(FieldValueModel.createModel(fieldInstanceModel,  value, true));

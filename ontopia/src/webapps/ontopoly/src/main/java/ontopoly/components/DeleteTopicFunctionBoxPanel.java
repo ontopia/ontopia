@@ -41,16 +41,13 @@ public abstract class DeleteTopicFunctionBoxPanel extends Panel {
 
         // remove dependent objects
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-        Collection dependentObjects = instance.getDependentObjects();
-//        System.out.println("RO: " + dependentObjects.size() + " " + dependentObjects);
-        Iterator diter = dependentObjects.iterator();
+        Collection<Topic> dependentObjects = instance.getDependentObjects();
+        Iterator<Topic> diter = dependentObjects.iterator();
         while (diter.hasNext()) {
-          Topic dtopic = (Topic)diter.next();
-//          System.out.println("Removing: " + dtopic.getName());
+          Topic dtopic = diter.next();
           dtopic.remove(page);
         }
         // remove topic
-//        System.out.println("Removing selected: " + instance.getName());
         instance.remove(page);
       }
       @Override
@@ -79,7 +76,7 @@ public abstract class DeleteTopicFunctionBoxPanel extends Panel {
     add(createButton);
   }
 
-  public abstract TopicModel getTopicModel();
+  public abstract TopicModel<Topic> getTopicModel();
   
   public abstract void onDeleteConfirmed(Topic topic);
   

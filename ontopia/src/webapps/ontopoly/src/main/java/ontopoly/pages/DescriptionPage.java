@@ -109,7 +109,7 @@ public class DescriptionPage extends OntopolyAbstractPage {
   }
   
   private void createFields() {
-    Form form = new Form("form");
+    Form<Object> form = new Form<Object>("form");
     add(form);
     
     // display fields
@@ -172,11 +172,11 @@ public class DescriptionPage extends OntopolyAbstractPage {
     }
     list.add(new ButtonFunctionBoxPanel(id) {
       @Override
-      protected IModel getText() {
+      protected IModel<String> getText() {
         return new ResourceModel(isShortcutsEnabled() ? "disable.shortcuts" : "enable.shortcuts");
       }
       @Override
-      protected IModel getButtonLabel() {
+      protected IModel<String> getButtonLabel() {
         return new ResourceModel(isShortcutsEnabled() ? "disable" : "enable");
       }
       @Override
@@ -192,11 +192,11 @@ public class DescriptionPage extends OntopolyAbstractPage {
     
     list.add(new ButtonFunctionBoxPanel(id) {
       @Override
-      protected IModel getText() {
+      protected IModel<String> getText() {
         return new ResourceModel(isAnnotationEnabled() ? "disable.ontology.annotation" : "enable.ontology.annotation");
       }
       @Override
-      protected IModel getButtonLabel() {
+      protected IModel<String> getButtonLabel() {
         return new ResourceModel(isAnnotationEnabled() ? "disable" : "enable");
       }
       @Override
@@ -212,11 +212,11 @@ public class DescriptionPage extends OntopolyAbstractPage {
     
     list.add(new ButtonFunctionBoxPanel(id) {
       @Override
-      protected IModel getText() {
+      protected IModel<String> getText() {
         return new ResourceModel(isAdministrationEnabled() ? "disable.administration.mode" : "enable.administration.mode");
       }
       @Override
-      protected IModel getButtonLabel() {
+      protected IModel<String> getButtonLabel() {
         return new ResourceModel(isAdministrationEnabled() ? "disable" : "enable");
       }
       @Override

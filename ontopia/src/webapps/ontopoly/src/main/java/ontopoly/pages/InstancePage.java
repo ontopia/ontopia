@@ -28,7 +28,6 @@ import ontopoly.components.TopicTypesFunctionBoxPanel;
 import ontopoly.components.ViewsFunctionBoxPanel;
 import ontopoly.components.VizigatorLinkFunctionBoxPanel;
 import ontopoly.model.FieldsView;
-import ontopoly.model.OntopolyModelRuntimeException;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
@@ -107,7 +106,7 @@ public class InstancePage extends OntopolyAbstractPage {
     this.isOntologyPage = (parameters.get("ontology") != null);
 
     // Add form
-    Form form = new Form("form");
+    Form<Object> form = new Form<Object>("form");
     add(form);
     form.setOutputMarkupId(true);
     
@@ -150,7 +149,7 @@ public class InstancePage extends OntopolyAbstractPage {
     return getTopicModel().getTopic();
   }
   
-  public TopicModel getTopicModel() {
+  public TopicModel<Topic> getTopicModel() {
     return topicModel;
   }
   
@@ -166,7 +165,7 @@ public class InstancePage extends OntopolyAbstractPage {
     return true; // NOTE: hardcoded
   }
   
-  private void createFields(Form form) {
+  private void createFields(Form<Object> form) {
     InstancePanel instancePanel = createInstancePanel("instancePanel");
     if (instancePanel.isReadOnly()) setReadOnlyPage(true); // page is readonly if instance panel is    
     form.add(instancePanel);
@@ -382,7 +381,7 @@ public class InstancePage extends OntopolyAbstractPage {
                   return !isReadOnlyPage();
                 }
                 @Override
-                public TopicModel getTopicModel() {
+                public TopicModel<Topic> getTopicModel() {
                   return InstancePage.this.getTopicModel();
                 }
                 @Override

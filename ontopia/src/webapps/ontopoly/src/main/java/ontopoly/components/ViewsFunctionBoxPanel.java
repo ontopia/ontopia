@@ -23,7 +23,7 @@ import org.apache.wicket.model.ResourceModel;
 
 public class ViewsFunctionBoxPanel extends Panel {
   
-  public ViewsFunctionBoxPanel(String id, TopicModel topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
+  public ViewsFunctionBoxPanel(String id, TopicModel<Topic> topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
     super(id);
     add(new Label("title", new ResourceModel("views.list.header")));
 
@@ -65,10 +65,6 @@ public class ViewsFunctionBoxPanel extends Panel {
       
       parent.add(link);
     }
-  }
-  
-  protected Class getInstancePageClass() {
-    return InstancePage.class;
   }
   
 }

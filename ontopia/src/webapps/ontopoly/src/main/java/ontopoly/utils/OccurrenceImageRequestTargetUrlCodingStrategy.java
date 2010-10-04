@@ -23,7 +23,7 @@ public class OccurrenceImageRequestTargetUrlCodingStrategy extends
   public IRequestTarget decode(RequestParameters requestParameters) {   
     //String name = requestParameters.getPath().substring(getMountPath().length()); 
 
-    Map params = requestParameters.getParameters();
+    Map<String,?> params = requestParameters.getParameters();
     
     String topicMapId = ((String[])params.get("topicMapId"))[0];
     TopicMap topicMap = OntopolyContext.getTopicMap(topicMapId);

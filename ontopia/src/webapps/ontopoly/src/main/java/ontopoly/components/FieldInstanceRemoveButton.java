@@ -31,7 +31,7 @@ public class FieldInstanceRemoveButton extends OntopolyImageLink {
   }
   
   @Override
-  public IModel getTitleModel() {
+  public IModel<String> getTitleModel() {
     return new ResourceModel("icon.remove.remove-value");
   }
   

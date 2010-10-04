@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.xml.XTMFragmentExporter;
 import ontopoly.components.FunctionBoxesPanel;
 import ontopoly.components.TitleHelpPanel;
+import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicModel;
@@ -22,7 +23,7 @@ import org.apache.wicket.model.PropertyModel;
 
 public class VizigatorPage extends OntopolyAbstractPage {
 
-  protected TopicModel topicModel;
+  protected TopicModel<Topic> topicModel;
   
   public VizigatorPage() {	  
   }
@@ -30,7 +31,7 @@ public class VizigatorPage extends OntopolyAbstractPage {
   public VizigatorPage(PageParameters parameters) {
     super(parameters);
   
-    this.topicModel = new TopicModel(parameters.getString("topicMapId"), parameters.getString("topicId"));
+    this.topicModel = new TopicModel<Topic>(parameters.getString("topicMapId"), parameters.getString("topicId"));
     
     // Adding part containing title and help link
     createTitle();
@@ -50,9 +51,9 @@ public class VizigatorPage extends OntopolyAbstractPage {
 
     String idtype = "source";
     String idvalue = null;
-    Iterator it = topic.getItemIdentifiers().iterator();
+    Iterator<LocatorIF> it = topic.getItemIdentifiers().iterator();
     if (it.hasNext())
-      idvalue = ((LocatorIF) it.next()).getExternalForm();
+      idvalue = it.next().getExternalForm();
 
     if (idvalue == null) {
       it = topic.getSubjectIdentifiers().iterator();

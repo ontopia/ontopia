@@ -23,11 +23,11 @@ import org.apache.wicket.model.ResourceModel;
 
 public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
   
-  public CreateOrCopyInstanceFunctionBoxPanel(String id, final TopicModel topicModel, final TopicTypeModel topicTypeModel) {
+  public CreateOrCopyInstanceFunctionBoxPanel(String id, final TopicModel<Topic> topicModel, final TopicTypeModel topicTypeModel) {
     super(id);
-    add(new Label("title", new AbstractReadOnlyModel() {
+    add(new Label("title", new AbstractReadOnlyModel<String>() {
       @Override
-      public Object getObject() {
+      public String getObject() {
         return new ResourceModel("create.new").getObject() + " " + topicTypeModel.getTopicType().getName();   
       }      
     }));
@@ -74,10 +74,6 @@ public class CreateOrCopyInstanceFunctionBoxPanel extends Panel {
       }          
     });
     add(copyButton);
-  }
-  
-  protected Class getInstancePageClass() {
-    return InstancePage.class;
   }
   
 }

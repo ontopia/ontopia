@@ -11,9 +11,9 @@ public abstract class CustomLinkFunctionBoxPanel extends LinkFunctionBoxPanel {
     super(id);
   }
 
-  protected abstract IModel getFirstResourceModel();
+  protected abstract IModel<String> getFirstResourceModel();
 
-  protected abstract IModel getSecondResourceModel();
+  protected abstract IModel<String> getSecondResourceModel();
   
   @Override
   protected Label getLabel(String id) {
@@ -22,9 +22,9 @@ public abstract class CustomLinkFunctionBoxPanel extends LinkFunctionBoxPanel {
       protected void onComponentTagBody(MarkupStream markupStream,
           ComponentTag openTag) {
         replaceComponentTagBody(markupStream, openTag, 
-              getFirstResourceModel().getObject().toString()
+              getFirstResourceModel().getObject()
             + "<span class='emphasis'>"
-            + getSecondResourceModel().getObject().toString()
+            + getSecondResourceModel().getObject()
             + "</span>");
       }
     };

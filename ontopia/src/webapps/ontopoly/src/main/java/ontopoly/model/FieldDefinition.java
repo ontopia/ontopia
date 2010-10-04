@@ -49,7 +49,7 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
     TopicIF player2 = view.getTopicIF();
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    Collection players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
+    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-readonly"));
   }
 
@@ -61,7 +61,7 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
     TopicIF player2 = view.getTopicIF();
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    Collection players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
+    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-hidden"));
   }
 
@@ -73,7 +73,7 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
     TopicIF player2 = view.getTopicIF();
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    Collection players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
+    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-not-traversable"));
   }
 
@@ -85,7 +85,7 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
     TopicIF player2 = view.getTopicIF();
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    Collection players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
+    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-embedded"));
   }
 
@@ -97,7 +97,7 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "parent-view");
     TopicIF player2 = view.getTopicIF();
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "child-view");
-    Collection players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
+    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     TopicIF viewIf = (TopicIF) CollectionUtils.getFirst(players);
     // ISSUE: should we use view given in parameter as default instead?
     if (viewIf == null) {
@@ -141,9 +141,9 @@ public abstract class FieldDefinition extends Topic {
     TopicIF player2 = getTopicIF();
     TopicIF player3 = cardinality.getTopicIF();
 
-    Collection associationIFs = OntopolyModelUtils.findBinaryAssociations(
+    Collection<AssociationIF> associationIFs = OntopolyModelUtils.findBinaryAssociations(
         tm, aType, player2, type2, type3);
-    Iterator it = associationIFs.iterator();
+    Iterator<AssociationIF> it = associationIFs.iterator();
 
     while (it.hasNext()) {
       ((AssociationIF) it.next()).remove();
@@ -167,7 +167,7 @@ public abstract class FieldDefinition extends Topic {
     return qm.queryForList(query, params);
   }
 
-  public abstract Collection getValues(Topic topic);
+  public abstract Collection<? extends Object> getValues(Topic topic);
 
   public abstract void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener);
 

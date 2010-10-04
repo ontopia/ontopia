@@ -83,9 +83,9 @@ public class TopicMapSource {
         TopicIF oldReifier = ontologyTopicMap.getReifier();
         TopicIF newReifier = null;
         if (oldReifier != null) {
-          Collection sameTopic = IdentityUtils.findSameTopic(tm, oldReifier);
+          Collection<TopicIF> sameTopic = IdentityUtils.findSameTopic(tm, oldReifier);
           if (!sameTopic.isEmpty())
-            newReifier = (TopicIF)sameTopic.iterator().next();
+            newReifier = sameTopic.iterator().next();
         }
         TopicIF reifier = tm.getReifier();
         if (reifier != null && newReifier != null && !reifier.equals(newReifier)) {

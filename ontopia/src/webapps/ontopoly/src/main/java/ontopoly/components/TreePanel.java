@@ -80,7 +80,7 @@ public abstract class TreePanel extends Panel {
     collapseBottom.setOutputMarkupId(true);
     menuBottom.add(collapseBottom);
 
-    expandTop.add(new AjaxFallbackLink("expandAllTop") {
+    expandTop.add(new AjaxFallbackLink<Object>("expandAllTop") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         tree.getTreeState().expandAll();
@@ -98,7 +98,7 @@ public abstract class TreePanel extends Panel {
       }
     });
 
-    collapseTop.add(new AjaxFallbackLink("collapseAllTop") {
+    collapseTop.add(new AjaxFallbackLink<Object>("collapseAllTop") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         tree.getTreeState().collapseAll();
@@ -116,7 +116,7 @@ public abstract class TreePanel extends Panel {
       }
     });
 
-    expandBottom.add(new AjaxFallbackLink("expandAllBottom") {
+    expandBottom.add(new AjaxFallbackLink<Object>("expandAllBottom") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         tree.getTreeState().expandAll();
@@ -135,7 +135,7 @@ public abstract class TreePanel extends Panel {
       }
     });
 
-    collapseBottom.add(new AjaxFallbackLink("collapseAllBottom") {
+    collapseBottom.add(new AjaxFallbackLink<Object>("collapseAllBottom") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         tree.getTreeState().collapseAll();

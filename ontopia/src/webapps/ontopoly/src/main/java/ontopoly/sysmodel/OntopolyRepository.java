@@ -71,9 +71,9 @@ public class OntopolyRepository {
   private void build() {
     // get all TMs in repository first
     final Map<String,TopicMapReferenceIF> byid = new HashMap<String,TopicMapReferenceIF>(); // so we can reference from rowmapper
-    Iterator it = repository.getReferences().iterator();
+    Iterator<TopicMapReferenceIF> it = repository.getReferences().iterator();
     while (it.hasNext()) {
-      TopicMapReferenceIF ref = (TopicMapReferenceIF) it.next();
+      TopicMapReferenceIF ref = it.next();
 
       // <UGLY>
       if (ObjectUtils.isTrue(ObjectUtils.getProperty(ref.getSource(), "hidden", null)))
@@ -119,9 +119,9 @@ public class OntopolyRepository {
 
     // get the sources as well
     sources = new ArrayList<TopicMapSource>();
-    it = repository.getSources().iterator();
-    while (it.hasNext()) {
-      TopicMapSourceIF src = (TopicMapSourceIF) it.next();
+    Iterator<TopicMapSourceIF> siter = repository.getSources().iterator();
+    while (siter.hasNext()) {
+      TopicMapSourceIF src = siter.next();
       if (src.supportsCreate())
         sources.add(new TopicMapSource(src, this));
     }
@@ -137,7 +137,7 @@ public class OntopolyRepository {
    * not.
    * @return a List of TopicMapReference objects
    */
-  public List getTopicMaps() {
+  public List<TopicMapReference> getTopicMaps() {
     return tms;
   }
   

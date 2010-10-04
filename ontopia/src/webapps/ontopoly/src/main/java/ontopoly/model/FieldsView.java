@@ -40,9 +40,9 @@ public class FieldsView extends Topic {
     
     // view is embedded is part of on:is-embedded-view(x : on:fields-view)
     TopicIF associationType = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON_IS_EMBEDDED_VIEW);    
-    Iterator iter = getTopicIF().getRoles().iterator();
+    Iterator<AssociationRoleIF> iter = getTopicIF().getRoles().iterator();
     while (iter.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF)iter.next();
+      AssociationRoleIF role = iter.next();
       AssociationIF assoc = role.getAssociation();
       if (ObjectUtils.equals(assoc.getType(), associationType)) {
         isEmbeddedView = 1;

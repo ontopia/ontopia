@@ -8,13 +8,13 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.IModel;
 
 public class OntopolyImage extends Image {
-  protected IModel titleModel;
+  protected IModel<String> titleModel;
   
   public OntopolyImage(String id, final String image) {
     this(id, image, null);
   }
   
-  public OntopolyImage(String id, final String image, IModel titleModel) {
+  public OntopolyImage(String id, final String image, IModel<String> titleModel) {
     super(id, new ResourceReference(ImageResource.class, image));
     this.titleModel = titleModel;
   }
@@ -23,7 +23,7 @@ public class OntopolyImage extends Image {
   protected void onComponentTag(ComponentTag tag) {
     if (titleModel != null) {
       if (titleModel.getObject() != null) {
-        tag.put("title", titleModel.getObject().toString());
+        tag.put("title", titleModel.getObject());
       }
     }
     super.onComponentTag(tag);

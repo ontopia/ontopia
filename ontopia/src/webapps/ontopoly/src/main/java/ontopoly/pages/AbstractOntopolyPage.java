@@ -152,7 +152,7 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
           Collection<TopicIF> scope = Collections.singleton(rtype);
           List<TopicNameIF> names = OntopolyModelUtils.findTopicNames(null, atype, (String)value, scope);
           if (!names.isEmpty()) {
-            Iterator iter = names.iterator();
+            Iterator<TopicNameIF> iter = names.iterator();
             while (iter.hasNext()) {
               TopicNameIF name = (TopicNameIF) iter.next();
               name.remove();

@@ -26,7 +26,7 @@ public class FieldInstancesPanel extends Panel {
     super(id);
     this.readonly = readonly;
     
-    ListView listView = new ListView<FieldInstanceModel>("fields", fieldInstanceModels) {
+    ListView<FieldInstanceModel> listView = new ListView<FieldInstanceModel>("fields", fieldInstanceModels) {
       public void populateItem(final ListItem<FieldInstanceModel> item) {
         FieldInstanceModel fieldInstanceModel = item.getModelObject();
         item.setRenderBodyOnly(true);

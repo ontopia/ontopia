@@ -42,9 +42,9 @@ public class SchemaFilter implements DeciderIF {
       include = false;
     
     // check subject identifiers first
-    Iterator it = topic.getSubjectIdentifiers().iterator();
+    Iterator<LocatorIF> it = topic.getSubjectIdentifiers().iterator();
     while (it.hasNext()) {
-      LocatorIF psi = (LocatorIF) it.next();
+      LocatorIF psi = it.next();
 
       // There are some exceptions
       if (PSI.TMDM_TOPIC_NAME.equals(psi) ||

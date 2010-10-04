@@ -26,7 +26,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
   protected FieldValuesModel fieldValuesModel;
   protected WebMarkupContainer fieldValuesContainer;
   protected WebMarkupContainer fieldInstanceButtons;  
-  protected ListView listView;
+  protected ListView<FieldValueModel> listView;
   protected FeedbackPanel feedbackPanel;
   
 	public AbstractFieldInstancePanel(String id, FieldInstanceModel fieldInstanceModel) {

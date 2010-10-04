@@ -53,7 +53,7 @@ public class AssociationField extends Topic {
       TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-field");
       TopicIF player1 = getTopicIF();
       TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-type");
-      Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
+      Collection<TopicIF> players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF associationType = (TopicIF)CollectionUtils.getFirst(players);
       this.cachedAssociationType = (associationType == null ? null : new AssociationType(associationType, getTopicMap()));      
 		}
@@ -106,9 +106,9 @@ public class AssociationField extends Topic {
   @Override
   public void remove(LifeCycleListener listener) {
     // remove all associated role fields
-    Iterator iter = getFieldsForRoles().iterator();
+    Iterator<RoleField> iter = getFieldsForRoles().iterator();
     while (iter.hasNext()) {
-      RoleField rf = (RoleField)iter.next();
+      RoleField rf = iter.next();
       rf.remove(listener);
     }
     // remove association type topic

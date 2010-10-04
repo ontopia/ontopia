@@ -17,7 +17,7 @@ import org.apache.wicket.model.PropertyModel;
 public class UserPanel extends Panel { 
   public UserPanel(String id, Class<? extends Page> logoutPageClass) { 
     super(id);
-    add(new Label("fullname", new PropertyModel(this, "session.user.fullname"))); 
+    add(new Label("fullname", new PropertyModel<Object>(this, "session.user.fullname"))); 
     PageParameters parameters = new PageParameters(); 
     parameters.add(SignOutPage.REDIRECTPAGE_PARAM, logoutPageClass.getName()); 
     add(new BookmarkablePageLink<Page>("signout", SignOutPage.class, parameters) { 
@@ -32,7 +32,7 @@ public class UserPanel extends Panel {
         return !session.isAutoLogin();
       }
     }); 
-    add(new Link("signin") { 
+    add(new Link<Object>("signin") { 
       @Override 
       public void onClick() { 
         throw new RestartResponseAtInterceptPageException(SignInPage.class); 

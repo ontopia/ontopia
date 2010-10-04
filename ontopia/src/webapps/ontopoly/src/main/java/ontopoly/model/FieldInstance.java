@@ -32,7 +32,7 @@ public final class FieldInstance {
   /**
    * Returns a collection of Objects.
    */
-  public Collection getValues() {
+  public Collection<? extends Object> getValues() {
     return getFieldAssignment().getFieldDefinition().getValues(getInstance());
   }
 

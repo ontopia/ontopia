@@ -8,7 +8,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 
-public abstract class ContextMenuPanel extends Panel implements IHeaderContributor {
+public abstract class ContextMenuPanel<T> extends Panel implements IHeaderContributor {
 
   private ResourceReference jsReference = new ResourceReference(ContextMenuPanel.class, "ContextMenuPanel.js");
   private ResourceReference cssReference = new ResourceReference(ContextMenuPanel.class, "ContextMenuPanel.css");
@@ -26,7 +26,7 @@ public abstract class ContextMenuPanel extends Panel implements IHeaderContribut
     container.add(createListView("menu", "menuitem"));
   }
 
-  protected abstract ListView createListView(String menuId, String menuItemId);
+  protected abstract ListView<T> createListView(String menuId, String menuItemId);
   
   public void renderHead(IHeaderResponse response) {
     // import script    

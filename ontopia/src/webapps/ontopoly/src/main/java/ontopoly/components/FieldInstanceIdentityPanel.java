@@ -66,9 +66,9 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
 
         final FieldInstanceURIField identityField;
         if (readonly) {
-          item.add(new Label("fieldValue", new LoadableDetachableModel() {
+          item.add(new Label("fieldValue", new LoadableDetachableModel<String>() {
             @Override
-            protected Object load() {
+            protected String load() {
               LocatorIF identity = (LocatorIF)fieldValueModel.getObject();
               return (identity == null ? null : identity.getAddress());      
             }           
@@ -139,7 +139,7 @@ public class FieldInstanceIdentityPanel extends AbstractFieldInstancePanel {
       @Override public String getImage() {
         return fieldValuesModel.getShowExtraField() ? "remove.gif" : "add.gif";
       }
-      @Override public IModel getTitleModel() {
+      @Override public IModel<String> getTitleModel() {
         return new ResourceModel(fieldValuesModel.getShowExtraField() ? "icon.remove.hide-field" : "icon.add.add-value");
       }      
     };  

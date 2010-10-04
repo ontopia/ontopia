@@ -24,11 +24,11 @@ import org.apache.wicket.model.ResourceModel;
 
 public class TopicTypesFunctionBoxPanel extends Panel {
   
-  public TopicTypesFunctionBoxPanel(String id, TopicModel topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
+  public TopicTypesFunctionBoxPanel(String id, TopicModel<Topic> topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel) {
     super(id);
     add(new Label("title", new ResourceModel("topictypes.list.header")));
 
-    List types = topicModel.getTopic().getTopicTypes();
+    List<TopicType> types = topicModel.getTopic().getTopicTypes();
     if (types.isEmpty())
       setVisible(false);
     
@@ -38,9 +38,9 @@ public class TopicTypesFunctionBoxPanel extends Panel {
     RepeatingView rv = new RepeatingView("rows");
     add(rv);
     
-    Iterator iter =  types.iterator();
+    Iterator<TopicType> iter =  types.iterator();
     while (iter.hasNext()) {
-      TopicType topicType = (TopicType)iter.next();      
+      TopicType topicType = iter.next();      
       boolean isCurrentTopicType = ObjectUtils.equals(currentTopicType, topicType);
       
       WebMarkupContainer parent =  new WebMarkupContainer(rv.newChildId());
@@ -64,10 +64,6 @@ public class TopicTypesFunctionBoxPanel extends Panel {
       
       parent.add(link);
     }
-  }
-  
-  protected Class getInstancePageClass() {
-    return InstancePage.class;
   }
   
 }

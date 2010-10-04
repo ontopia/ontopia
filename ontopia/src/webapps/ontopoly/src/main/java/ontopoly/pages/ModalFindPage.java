@@ -55,7 +55,7 @@ import org.apache.wicket.model.ResourceModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class ModalFindPage extends Panel {
+public abstract class ModalFindPage<T> extends Panel {
  
   public static final int ACTIVE_TAB_SEARCH = 1;
   public static final int ACTIVE_TAB_BROWSE = 2;
@@ -63,8 +63,8 @@ public abstract class ModalFindPage extends Panel {
   protected static Logger log = LoggerFactory.getLogger(ModalFindPage.class);
   protected FieldInstanceModel fieldInstanceModel;
 
-  AjaxLink searchTabLink;
-  AjaxLink browseTabLink;
+  AjaxLink<Object> searchTabLink;
+  AjaxLink<Object> browseTabLink;
   
   private boolean errorInSearch = false;
 
@@ -93,7 +93,7 @@ public abstract class ModalFindPage extends Panel {
     final WebMarkupContainer browseTab = createBrowseTab();
     popupContent.add(browseTab);
         
-    this.searchTabLink = new AjaxLink("searchTabLink") {
+    this.searchTabLink = new AjaxLink<Object>("searchTabLink") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         searchTab.setVisible(true);
@@ -105,7 +105,7 @@ public abstract class ModalFindPage extends Panel {
     };
     popupContent.add(searchTabLink);
     
-    this.browseTabLink = new AjaxLink("browseTabLink") {
+    this.browseTabLink = new AjaxLink<Object>("browseTabLink") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         searchTab.setVisible(false);
@@ -140,7 +140,7 @@ public abstract class ModalFindPage extends Panel {
     WebMarkupContainer searchTab = new WebMarkupContainer("searchTab");
     searchTab.setOutputMarkupId(true);
     
-    final TextField searchTermField = new TextField<String>("searchTerm", new Model<String>(null));
+    final TextField<String> searchTermField = new TextField<String>("searchTerm", new Model<String>(null));
     searchTermField.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
@@ -183,7 +183,7 @@ public abstract class ModalFindPage extends Panel {
     });
     searchTab.add(searchButton);
     
-    final FormComponent checkGroup;
+    final FormComponent<? extends Object> checkGroup;
     final boolean maxOneCardinality = isMaxOneCardinality();
     if (maxOneCardinality) {
       checkGroup = new RadioGroup<String>("checkGroup", new Model<String>());      
@@ -200,7 +200,7 @@ public abstract class ModalFindPage extends Panel {
 
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
       public boolean isVisible() {
-        return !searchTermField.getDefaultModelObjectAsString().equals("") && ((Collection)results.getObject()).isEmpty() ? true : false;      
+        return !searchTermField.getDefaultModelObjectAsString().equals("") && ((List<Topic>)results.getObject()).isEmpty() ? true : false;      
       }
     };
     unsuccessfulSearchContainer.setOutputMarkupPlaceholderTag(true);
@@ -209,11 +209,11 @@ public abstract class ModalFindPage extends Panel {
     Label message = new Label("message", new ResourceModel(errorInSearch ? "search.error" : "search.empty"));
     unsuccessfulSearchContainer.add(message);
     
-    ListView listView = new ListView<Topic>("results", results) {
+    ListView<Topic> listView = new ListView<Topic>("results", results) {
       public void populateItem(ListItem<Topic> item) {
         Topic hit = item.getModelObject();
         if (maxOneCardinality) {
-          Radio check = new Radio<String>("check", new Model<String>(hit.getId())) {
+          Radio<String> check = new Radio<String>("check", new Model<String>(hit.getId())) {
             @Override
             protected void onComponentTag(final ComponentTag tag) {
               tag.put("type", "radio");
@@ -248,7 +248,7 @@ public abstract class ModalFindPage extends Panel {
         else
           selected = (Collection)modelObject;
         
-        if (selected == null) selected = Collections.EMPTY_LIST;
+        if (selected == null) selected = Collections.emptyList();
         
         // add associations for selected topics
         onSelectionConfirmed(target, selected);
@@ -289,12 +289,12 @@ public abstract class ModalFindPage extends Panel {
         RoleField otherField = (RoleField)associationField.getFieldsForOtherRoles().iterator().next();
         TopicMap tm = associationField.getTopicMap();
         // include all topic types except those with large instance sets
-        Collection allowedValueTypes = otherField.getDeclaredPlayerTypes();
-        Collection largeInstanceSets = tm.getTopicTypesWithLargeInstanceSets(); 
+        Collection<TopicType> allowedValueTypes = otherField.getDeclaredPlayerTypes();
+        Collection<TopicType> largeInstanceSets = tm.getTopicTypesWithLargeInstanceSets(); 
         List<TopicType> topicTypes = new ArrayList<TopicType>(allowedValueTypes.size());
-        Iterator iter = allowedValueTypes.iterator();
+        Iterator<TopicType> iter = allowedValueTypes.iterator();
         while (iter.hasNext()) {
-          TopicType topicType = (TopicType)iter.next();
+          TopicType topicType = iter.next();
           if (!largeInstanceSets.contains(topicType))
             topicTypes.add(topicType);
         }
@@ -460,7 +460,7 @@ public abstract class ModalFindPage extends Panel {
     };
   }
 
-  protected abstract void onSelectionConfirmed(AjaxRequestTarget target, Collection selected);
+  protected abstract void onSelectionConfirmed(AjaxRequestTarget target, Collection<T> selected);
   
   protected abstract void onCloseOk(AjaxRequestTarget target);
 

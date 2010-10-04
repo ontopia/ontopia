@@ -10,15 +10,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ontopoly.utils.TopicComparator;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.CopyUtils;
-import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import ontopoly.utils.TopicComparator;
 
 /**
  * INTERNAL: Common superclass for all topics, like instances, association
@@ -173,7 +171,7 @@ public class Topic {
    * @return true if this is a system topic type.
    */
   public boolean isSystemTopic() {
-    Collection types = topicIF.getTypes();
+    Collection<TopicIF> types = topicIF.getTypes();
     TopicIF systemType = topicIF.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_SYSTEM_TOPIC);
     if (types.contains(systemType)) return true;
     TopicIF publicSystemType = topicIF.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_PUBLIC_SYSTEM_TOPIC);
@@ -246,15 +244,15 @@ public class Topic {
    */
   public List<TopicType> getTopicTypes() {
     TopicIF topicIF = getTopicIF();
-    Collection topicTypes = topicIF.getTypes();
+    Collection<TopicIF> topicTypes = topicIF.getTypes();
     int size = topicTypes.size();
     if (size == 0)
       return Collections.emptyList();
     List<TopicType> result = new ArrayList<TopicType>(size);
     TopicIF topicTypeTopic = topicIF.getTopicMap().getTopicBySubjectIdentifier(PSI.ON_TOPIC_TYPE);
-    Iterator iter = topicTypes.iterator();
+    Iterator<TopicIF> iter = topicTypes.iterator();
     while (iter.hasNext()) {
-      TopicIF topicType = (TopicIF)iter.next();
+      TopicIF topicType = iter.next();
       if (topicType.getTypes().contains(topicTypeTopic))
         result.add(new TopicType(topicType, getTopicMap()));
     }
@@ -288,13 +286,13 @@ public class Topic {
   }
 
   public List<FieldInstance> getFieldInstances(TopicType topicType, FieldsView fieldsView) {
-    List fieldAssignments = topicType.getFieldAssignments(fieldsView);
+    List<FieldAssignment> fieldAssignments = topicType.getFieldAssignments(fieldsView);
     List<FieldInstance> fieldInstances = new ArrayList<FieldInstance>(fieldAssignments.size());
 
-    Iterator it = fieldAssignments.iterator();
+    Iterator<FieldAssignment> it = fieldAssignments.iterator();
 
     while (it.hasNext()) {
-      FieldAssignment fa = (FieldAssignment) it.next();
+      FieldAssignment fa = it.next();
       fieldInstances.add(new FieldInstance(this, fa));
     }
 
@@ -325,26 +323,26 @@ public class Topic {
    */
   protected void findDependentObjects(Collection<Topic> alreadyKnownDependentObjects) {
     Collection<Topic> newPlayers = new HashSet<Topic>();
-    Iterator titer = getTopicTypes().iterator();
+    Iterator<TopicType> titer = getTopicTypes().iterator();
     while (titer.hasNext()) {
-      TopicType topicType = (TopicType)titer.next();
-      List fieldAssignments = topicType.getFieldAssignments();
-      Iterator fiter = fieldAssignments.iterator();
+      TopicType topicType = titer.next();
+      List<FieldAssignment> fieldAssignments = topicType.getFieldAssignments();
+      Iterator<FieldAssignment> fiter = fieldAssignments.iterator();
       while (fiter.hasNext()) {
-        FieldAssignment fieldAssignment = (FieldAssignment)fiter.next();
+        FieldAssignment fieldAssignment = fiter.next();
         FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
         if (fieldDefinition.getFieldType() != FieldDefinition.FIELD_TYPE_ROLE)
           continue;
         RoleField roleField = (RoleField)fieldDefinition;
         if (roleField.getEditMode().isOwnedValues()) {
           // field contains dependent objects
-          Collection otherFields = roleField.getFieldsForOtherRoles();
+          Collection<RoleField> otherFields = roleField.getFieldsForOtherRoles();
           if (otherFields.size() != 1) continue;
-          RoleField ofield = (RoleField)otherFields.iterator().next();
-          Collection values = roleField.getValues(this);
-          Iterator viter = values.iterator();
+          RoleField ofield = otherFields.iterator().next();
+          Collection<RoleField.ValueIF> values = roleField.getValues(this);
+          Iterator<RoleField.ValueIF> viter = values.iterator();
           while (viter.hasNext()) {
-            RoleField.ValueIF value = (RoleField.ValueIF)viter.next();
+            RoleField.ValueIF value = viter.next();
             Topic oplayer = value.getPlayer(ofield, this);
             // track newly found objects
             if (!alreadyKnownDependentObjects.contains(oplayer))
@@ -354,9 +352,9 @@ public class Topic {
       }
     }
     alreadyKnownDependentObjects.addAll(newPlayers);
-    Iterator niter = newPlayers.iterator();
+    Iterator<Topic> niter = newPlayers.iterator();
     while (niter.hasNext()) {
-      Topic nplayer = (Topic)niter.next();
+      Topic nplayer = niter.next();
       nplayer.findDependentObjects(alreadyKnownDependentObjects);
     }
   }

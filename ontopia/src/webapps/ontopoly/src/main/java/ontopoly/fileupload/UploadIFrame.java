@@ -57,7 +57,7 @@ public abstract class UploadIFrame extends WebPage {
     
   protected abstract String getOnUploadedCallback();
 
-  private class UploadForm extends Form {
+  private class UploadForm extends Form<Object> {
 
     public UploadForm(String id, final WebMarkupContainer container) {
       super(id);

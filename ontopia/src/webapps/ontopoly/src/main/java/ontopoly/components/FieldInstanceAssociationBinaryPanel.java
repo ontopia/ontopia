@@ -3,6 +3,7 @@ package ontopoly.components;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.LockManager;
@@ -113,7 +114,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       // HACK: retrieving values ourselves so that we can get them ordered
       this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel) {
         @Override
-        protected Collection getValues(FieldInstance fieldInstance) {
+        protected List<RoleField.ValueIF> getValues(FieldInstance fieldInstance) {
           Topic instance = fieldInstance.getInstance();
           RoleField roleField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
           return roleField.getOrderedValues(instance, ofieldModel.getRoleField());
@@ -326,7 +327,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
         @Override public String getImage() {
           return fieldValuesModel.getShowExtraField() ? "remove.gif" : "add.gif";
         }
-        @Override public IModel getTitleModel() {
+        @Override public IModel<String> getTitleModel() {
           return new ResourceModel(fieldValuesModel.getShowExtraField() ? "icon.remove.hide-field" : "icon.add.add-value");
         }
       };
@@ -345,9 +346,9 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
       int activeTab = (interfaceControl.isSearchDialog() ?
           ModalFindPage.ACTIVE_TAB_SEARCH : ModalFindPage.ACTIVE_TAB_BROWSE);
 
-      findModal.setContent(new ModalFindPage(findModal.getContentId(), fieldInstanceModel, activeTab) {
+      findModal.setContent(new ModalFindPage<String>(findModal.getContentId(), fieldInstanceModel, activeTab) {
         @Override
-        protected void onSelectionConfirmed(AjaxRequestTarget target, Collection selected) {
+        protected void onSelectionConfirmed(AjaxRequestTarget target, Collection<String> selected) {
           FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
           RoleField currentField = (RoleField)fieldInstance.getFieldAssignment().getFieldDefinition();
           RoleField selectedField = (RoleField)currentField.getFieldsForOtherRoles().iterator().next();
@@ -359,7 +360,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
             TopicMap topicMap = currentTopic.getTopicMap();
 
             boolean changesMade = false;
-            Iterator iter = selected.iterator();
+            Iterator<String> iter = selected.iterator();
             while (iter.hasNext()) {
               String objectId = (String)iter.next();
 

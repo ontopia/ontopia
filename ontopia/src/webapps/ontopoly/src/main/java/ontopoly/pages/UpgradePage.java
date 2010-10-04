@@ -45,7 +45,7 @@ public class UpgradePage extends NonOntopolyAbstractPage {
     // Adding part containing title and help link
     createTitle();
         
-    Form form = new Form("form");
+    Form<Object> form = new Form<Object>("form");
     add(form);
     
     Button okButton = new Button("okButton") {

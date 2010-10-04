@@ -189,9 +189,9 @@ public class TreeModels {
 //          sb.append(", not({direct-instance-of($P, on:system-topic) || direct-instance-of($C, on:system-topic)})");        
         sb.append("\norder by $P, $C?");
         
-        Iterator riter = existingRules.values().iterator();
+        Iterator<StringBuffer> riter = existingRules.values().iterator();
         while (riter.hasNext()) {
-          sb.insert(0, (StringBuffer)riter.next());
+          sb.insert(0, riter.next());
         }
         
         String hquery = sb.toString();
@@ -228,7 +228,7 @@ public class TreeModels {
     return new DefaultTreeModel(root);
   }
 
-  private static StringBuffer createHierarchyRuleFor(TopicIF topicType, String pVar, String cVar, String bVar, Map<TopicIF,StringBuffer> existingRules, Map hd_ctypes) {
+  private static StringBuffer createHierarchyRuleFor(TopicIF topicType, String pVar, String cVar, String bVar, Map<TopicIF,StringBuffer> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
     if (!existingRules.containsKey(topicType)) {
       StringBuffer sb = new StringBuffer();
       existingRules.put(topicType, sb);
@@ -236,7 +236,7 @@ public class TreeModels {
       sb.append("/* ").append(TopicStringifiers.toString(topicType)).append(" */\n");
       sb.append("hierarchy-for-").append(topicType.getObjectId()).append("($P, $C, $B) :- \n");
       sb.append("instance-of($B, @").append(topicType.getObjectId()).append("),\n");
-      Collection hds = (Collection)hd_ctypes.get(topicType);
+      Collection<HierarchyDefinition> hds = hd_ctypes.get(topicType);
       if (hds != null && !hds.isEmpty()) {
         sb.append(createStepPredicates(hds, existingRules, hd_ctypes));
       } else {
@@ -249,13 +249,13 @@ public class TreeModels {
     .append("($").append(pVar).append(", $").append(cVar).append(", $").append(bVar).append(")");
   }
 
-  private static StringBuffer createStepPredicates(Collection hds, Map<TopicIF,StringBuffer> existingRules, Map hd_ctypes) {
+  private static StringBuffer createStepPredicates(Collection<HierarchyDefinition> hds, Map<TopicIF,StringBuffer> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
     StringBuffer sb = new StringBuffer();
     // call parent rules
     sb.append("{ ");
-    Iterator hiter = hds.iterator();
+    Iterator<HierarchyDefinition> hiter = hds.iterator();
     while (hiter.hasNext()) {
-      HierarchyDefinition hd = (HierarchyDefinition)hiter.next();
+      HierarchyDefinition hd = hiter.next();
       sb.append("$B = $C, ");
       sb.append("{ ").append("@").append(hd.atype.getObjectId())
       .append("($C").append(" : @").append(hd.crtype.getObjectId())
@@ -270,13 +270,13 @@ public class TreeModels {
     return sb;
   }
   
-  private static StringBuffer createStepPredicates(HierarchyDefinition hd, String pVar, String cVar, String bVar, Map<TopicIF,StringBuffer> existingRules, Map hd_ctypes) {
+  private static StringBuffer createStepPredicates(HierarchyDefinition hd, String pVar, String cVar, String bVar, Map<TopicIF,StringBuffer> existingRules, Map<TopicIF,Set<HierarchyDefinition>> hd_ctypes) {
     StringBuffer sb = new StringBuffer();
     
     if (hd.ptypes.size() > 1) sb.append("{");
-    Iterator piter = hd.ptypes.iterator();
+    Iterator<TopicIF> piter = hd.ptypes.iterator();
     while (piter.hasNext()) {
-      TopicIF ptype = (TopicIF)piter.next();
+      TopicIF ptype = piter.next();
       sb.append(createHierarchyRuleFor(ptype, pVar, cVar, bVar, existingRules, hd_ctypes));
       if (piter.hasNext()) sb.append(" | \n");            
     }

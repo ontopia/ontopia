@@ -11,9 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ontopoly.utils.OntopolyModelUtils;
-import ontopoly.utils.Ordering;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -21,9 +18,10 @@ import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.utils.OntopolyModelUtils;
+import ontopoly.utils.Ordering;
 
 /**
  * Represents an association field, which is a combination of an association
@@ -117,7 +115,7 @@ public class RoleField extends FieldDefinition {
       TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-field");
       TopicIF player1 = getTopicIF();
       TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-type");
-      Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
+      Collection<TopicIF> players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF roleType = (TopicIF)CollectionUtils.getFirst(players);
       return (roleType == null ? null : new RoleType(roleType, getTopicMap()));      
 		}
@@ -238,10 +236,10 @@ public class RoleField extends FieldDefinition {
       return qm.queryForList(query, params);
     
     } else {
-      Collection topicTypes = getAllowedPlayerTypes(currentTopic);
-      Iterator iter = topicTypes.iterator();
+      Collection<TopicType> topicTypes = getAllowedPlayerTypes(currentTopic);
+      Iterator<TopicType> iter = topicTypes.iterator();
       while (iter.hasNext()) {
-        TopicType topicType = (TopicType)iter.next();
+        TopicType topicType = iter.next();
         result.addAll(topicType.getInstances());
       }
     }
@@ -272,12 +270,12 @@ public class RoleField extends FieldDefinition {
       QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();         
       Collection<TopicIF> rows = qm.queryForList(query, params);
   
-      Iterator it = rows.iterator();
+      Iterator<TopicIF> it = rows.iterator();
       List<Topic> results = new ArrayList<Topic>(rows.size());
       Collection<TopicIF> duplicateChecks = new HashSet<TopicIF>(rows.size());
   
       while (it.hasNext()) {
-        TopicIF topic = (TopicIF) it.next();
+        TopicIF topic = it.next();
         if (duplicateChecks.contains(topic))
           continue; // avoid duplicates
         results.add(new Topic(topic, getTopicMap()));
@@ -297,26 +295,26 @@ public class RoleField extends FieldDefinition {
    */
   @Override
   public List<ValueIF> getValues(Topic topic) { 
-    Collection roles = getRoles(topic);
+    Collection<AssociationRoleIF> roles = getRoles(topic);
     
     List<ValueIF> result = new ArrayList<ValueIF>(roles.size());
-    Iterator iter = roles.iterator();
+    Iterator<AssociationRoleIF> iter = roles.iterator();
     while (iter.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) iter.next();
-			ValueIF value = createValue(this, role);
-			if (value != null)
-				result.add(value);
+      AssociationRoleIF role = iter.next();
+      ValueIF value = createValue(this, role);
+      if (value != null)
+    	result.add(value);
     }
     return result;
   }
 
-  private Collection getRoles(Topic topic) {
+  private Collection<AssociationRoleIF> getRoles(Topic topic) {
     AssociationType atype = getAssociationType();
-    if (atype == null) return Collections.EMPTY_SET;
+    if (atype == null) return Collections.emptySet();
     TopicIF associationTypeIf = atype.getTopicIF();
 
     RoleType rtype = getRoleType();
-    if (rtype == null) return Collections.EMPTY_SET;
+    if (rtype == null) return Collections.emptySet();
     TopicIF roleTypeIf = rtype.getTopicIF();
 
     TopicIF playerIf = topic.getTopicIF();
@@ -325,7 +323,7 @@ public class RoleField extends FieldDefinition {
     return OntopolyModelUtils.findRoles(associationTypeIf, roleTypeIf, playerIf, scope);    
   }
   
-  public List getOrderedValues(Topic topic, RoleField ofield) { 
+  public List<ValueIF> getOrderedValues(Topic topic, RoleField ofield) { 
     List<ValueIF> values = getValues(topic);
     if (values.size() > 1) {
       Map<Topic,OccurrenceIF> topics_occs = getValuesWithOrdering(topic);
@@ -337,10 +335,10 @@ public class RoleField extends FieldDefinition {
   private static class MapValueComparator implements Comparator<ValueIF> {
     //! private static final String DEFAULT_ORDER_VALUE = "999999999";    
     private static final String DEFAULT_ORDER_VALUE = null; // sorts before "000000000"    
-    private Map entries;
+    private Map<Topic, OccurrenceIF> entries;
     private RoleField ofield;
     private Topic oplayer;
-    MapValueComparator(Map entries, RoleField ofield, Topic oplayer) {
+    MapValueComparator(Map<Topic,OccurrenceIF> entries, RoleField ofield, Topic oplayer) {
       this.entries = entries;
       this.ofield = ofield;
       this.oplayer = oplayer;
@@ -349,10 +347,10 @@ public class RoleField extends FieldDefinition {
       try {
         Topic p1 = v1.getPlayer(ofield, oplayer);
         Topic p2 = v2.getPlayer(ofield, oplayer);
-        OccurrenceIF oc1 = (OccurrenceIF)entries.get(p1);
-        OccurrenceIF oc2 = (OccurrenceIF)entries.get(p2);
-        Comparable c1 = (oc1 == null ? DEFAULT_ORDER_VALUE : oc1.getValue());
-        Comparable c2 = (oc2 == null ? DEFAULT_ORDER_VALUE : oc2.getValue());
+        OccurrenceIF oc1 = entries.get(p1);
+        OccurrenceIF oc2 = entries.get(p2);
+        Comparable<String> c1 = (oc1 == null ? DEFAULT_ORDER_VALUE : oc1.getValue());
+        Comparable<String> c2 = (oc2 == null ? DEFAULT_ORDER_VALUE : oc2.getValue());
         return ObjectUtils.compare(c1, c2);
       } catch (Exception e) {
         // should not fail when comparing. bergen kommune has had an issue where this happens. we thus ignore for now.
@@ -371,12 +369,12 @@ public class RoleField extends FieldDefinition {
     TopicIF fieldDefinitionIf = getTopicIF();
 
     Map<Topic,OccurrenceIF> topics_occs = new HashMap<Topic,OccurrenceIF>();
-    Iterator iter = OntopolyModelUtils.findOccurrences(typeIf, topicIf, datatype).iterator();
+    Iterator<OccurrenceIF> iter = OntopolyModelUtils.findOccurrences(typeIf, topicIf, datatype).iterator();
     while (iter.hasNext()) {
-      OccurrenceIF occ = (OccurrenceIF)iter.next();
-      Collection scope = occ.getScope();
+      OccurrenceIF occ = iter.next();
+      Collection<TopicIF> scope = occ.getScope();
       if (scope.size() == 2 && scope.contains(fieldDefinitionIf)) { // note: this is value ordering
-        Iterator siter = scope.iterator();
+        Iterator<TopicIF> siter = scope.iterator();
         while (siter.hasNext()) {
           TopicIF theme = (TopicIF)siter.next();
           if (!theme.equals(fieldDefinitionIf)) {
@@ -412,9 +410,9 @@ public class RoleField extends FieldDefinition {
     if (fieldInstance.getFieldAssignment().getCardinality().isMaxOne()) {      
       // remove all existing values
       ValueIF existingValue = null;
-      Collection roles = getRoles(fieldInstance.getInstance());
+      Collection<AssociationRoleIF> roles = getRoles(fieldInstance.getInstance());
       boolean replaceValues = roles.size() == 1;
-      Iterator iter = roles.iterator();
+      Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
         AssociationRoleIF role = (AssociationRoleIF)iter.next();
         ValueIF valueIf = createValue(this, role);
@@ -433,17 +431,17 @@ public class RoleField extends FieldDefinition {
         OntopolyModelUtils.makeAssociation(atypeIf, rtypes, players, scope);
       }
     } else {
-      Collection assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);
+      Collection<AssociationIF> assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);
       
       if (assocs.isEmpty()) {
         // create new
         OntopolyModelUtils.makeAssociation(atypeIf, rtypes, players, scope);
       } else {
         // remove all except the first one
-        Iterator iter = assocs.iterator();
+        Iterator<AssociationIF> iter = assocs.iterator();
         iter.next();
         while (iter.hasNext()) {
-          AssociationIF assoc = (AssociationIF) iter.next();
+          AssociationIF assoc = iter.next();
           assoc.remove();
         }
       }
@@ -481,13 +479,13 @@ public class RoleField extends FieldDefinition {
     listener.onBeforeRemove(fieldInstance, value);
     
     Collection<TopicIF> scope = Collections.emptySet();          
-    Collection assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);
+    Collection<AssociationIF> assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);
 
     if (!assocs.isEmpty()) {
       // remove all the matching
-      Iterator iter = assocs.iterator();
+      Iterator<AssociationIF> iter = assocs.iterator();
       while (iter.hasNext()) {
-        AssociationIF assoc = (AssociationIF) iter.next();
+        AssociationIF assoc = iter.next();
         assoc.remove();
       }
     }
@@ -502,14 +500,14 @@ public class RoleField extends FieldDefinition {
    * @return the ValueIF object that represent an instance topic on one side of an association. Will return null if role does not match role field definition.
    */
   private static ValueIF createValue(RoleField roleField, AssociationRoleIF role) {
-    Collection fields = roleField.getAssociationField().getFieldsForRoles();
+    Collection<RoleField> fields = roleField.getAssociationField().getFieldsForRoles();
     int fieldCount = fields.size();
 
     TopicMap topicMap = roleField.getTopicMap();
     AssociationIF assoc = role.getAssociation();
     
     // ignore roles where the arity does not match
-    Collection aroles = assoc.getRoles();
+    Collection<AssociationRoleIF> aroles = assoc.getRoles();
     if (fieldCount != aroles.size())
       return null;
       
@@ -521,9 +519,9 @@ public class RoleField extends FieldDefinition {
     matched.add(role);
 
 		int selfMatch = 0;
-    Iterator iter = fields.iterator();
+    Iterator<RoleField> iter = fields.iterator();
     while (iter.hasNext()) {
-      RoleField ofield = (RoleField) iter.next();
+      RoleField ofield = iter.next();
 			// only match your own field once
       if (ofield.equals(roleField)) {
 				if (++selfMatch == 1)
@@ -699,7 +697,7 @@ public class RoleField extends FieldDefinition {
     TopicIF p1topic = p1.getTopicIF();
     TopicIF p2topic = p2.getTopicIF();
 
-    Collection alltopics = getValues(instance, ofield);
+    Collection<Topic> alltopics = getValues(instance, ofield);
 
     Map<Topic,OccurrenceIF> topics_occs = getValuesWithOrdering(instance);
 
@@ -774,9 +772,9 @@ public class RoleField extends FieldDefinition {
     // assign ordering to all topics with no existing ordering
     alltopics.remove(p1);
     alltopics.remove(p2);
-    Iterator aiter = alltopics.iterator();
+    Iterator<Topic> aiter = alltopics.iterator();
     while (aiter.hasNext()) {
-      Topic atopic = (Topic)aiter.next();
+      Topic atopic = aiter.next();
       if (!topics_occs.containsKey(atopic)) {
         nextOrder += Ordering.ORDER_INCREMENTS;
         OccurrenceIF occ = builder.makeOccurrence(topicIf, typeIf, Ordering.orderToString(nextOrder), datatype);

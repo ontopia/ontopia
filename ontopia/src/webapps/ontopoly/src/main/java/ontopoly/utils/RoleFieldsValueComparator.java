@@ -11,20 +11,19 @@ import ontopoly.models.TopicModel;
 
 public class RoleFieldsValueComparator implements Comparator<Object>, Serializable {
 
-  private TopicModel topicModel;
-  private List roleFieldModels;
+  private TopicModel<Topic> topicModel;
+  private List<RoleFieldModel> roleFieldModels;
   
-  public RoleFieldsValueComparator(TopicModel topicModel, List roleFieldModels) {
+  public RoleFieldsValueComparator(TopicModel<Topic> topicModel, List<RoleFieldModel> roleFieldModels) {
     this.topicModel = topicModel;
     this.roleFieldModels = roleFieldModels;
   }
   
   public int compare(Object o1, Object o2) {
-    RoleField.ValueIF rfv1 = (RoleField.ValueIF)o1;
-    RoleField.ValueIF rfv2 = (RoleField.ValueIF)o2;
-    
+	RoleField.ValueIF rfv1 = (RoleField.ValueIF)o1;
+	RoleField.ValueIF rfv2 = (RoleField.ValueIF)o2;
     for (int i=0; i < roleFieldModels.size(); i++) {
-      RoleFieldModel roleFieldModel = (RoleFieldModel)roleFieldModels.get(i);
+      RoleFieldModel roleFieldModel = roleFieldModels.get(i);
       RoleField roleField = roleFieldModel.getRoleField();
       Topic topic = topicModel.getTopic();
     
