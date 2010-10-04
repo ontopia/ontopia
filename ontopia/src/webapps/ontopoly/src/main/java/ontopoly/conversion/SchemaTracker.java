@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -25,7 +26,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 
 public class SchemaTracker {
 
-  protected static final Collection NULL_COLLECTION = Collections.singleton(null);
+  protected static final Collection<TopicIF> NULL_COLLECTION = Collections.singleton(null);
   
   protected Map<TopicIF,TopicType> ttypes = new HashMap<TopicIF,TopicType>(); // ttype : { TopicType }
   protected Map<TopicIF,Map<TopicIF,Map<TopicIF,PlayerType>>> atypes = new HashMap<TopicIF,Map<TopicIF,Map<TopicIF,PlayerType>>>(); // atypes : { rtypes : { ptypes : PlayerType } }
@@ -71,49 +72,49 @@ public class SchemaTracker {
 //   protected TopicIF ptype;
   }
   
-  public void trackTopics(Collection topics) {
-   Iterator iter = topics.iterator();
+  public void trackTopics(Collection<TopicIF> topics) {
+   Iterator<TopicIF> iter = topics.iterator();
    while (iter.hasNext()) {
-     trackTopic((TopicIF)iter.next());
+     trackTopic(iter.next());
    }
   }
   
   public void trackTopic(TopicIF topic) {
   
    // topic types
-   Collection types = topic.getTypes();
+   Collection<TopicIF> types = topic.getTypes();
    if (types.isEmpty()) {
      types = NULL_COLLECTION;
      utypedt.add(topic);
    }
   
-   Iterator titer = types.iterator();
+   Iterator<TopicIF> titer = types.iterator();
    while (titer.hasNext()) {
-     TopicIF ttype = (TopicIF)titer.next();
+     TopicIF ttype = titer.next();
   
      TopicType ttinfo = createTopicType(ttype);
      ttinfo.count++;
   
      // subject locators
-     Collection sublocs = topic.getSubjectLocators();
+     Collection<LocatorIF> sublocs = topic.getSubjectLocators();
      ttinfo.subloc.registerCardinality(sublocs.size());
   
      // subject indicators
-     Collection subinds = topic.getSubjectIdentifiers();
+     Collection<LocatorIF> subinds = topic.getSubjectIdentifiers();
      ttinfo.subind.registerCardinality(subinds.size());
      
      // names
      TObjectIntHashMap<TopicIF> ncards = new TObjectIntHashMap<TopicIF>();      
-     Iterator niter = topic.getTopicNames().iterator();
+     Iterator<TopicNameIF> niter = topic.getTopicNames().iterator();
      while (niter.hasNext()) {
-       TopicNameIF tn = (TopicNameIF)niter.next();
+       TopicNameIF tn = niter.next();
        // translate name scopes into name types
        if (tn.getType() == null) {
-         Collection scope = tn.getScope();
+         Collection<TopicIF> scope = tn.getScope();
          if (scope.size() == 1) {
-           Iterator siter = scope.iterator();
+           Iterator<TopicIF> siter = scope.iterator();
            while (siter.hasNext()) {
-             TopicIF theme = (TopicIF)siter.next();
+             TopicIF theme = siter.next();
              Collection<TopicIF> nstypes = nscopes.get(theme);
              if (nstypes == null) {
                nstypes = new HashSet<TopicIF>();
@@ -133,18 +134,18 @@ public class SchemaTracker {
          ncards.put(ctype.type, 1);
      }
      // register cardinalities
-     Iterator ntiter = ttinfo.ntypes.values().iterator();
+     Iterator<CharType> ntiter = ttinfo.ntypes.values().iterator();
      while (ntiter.hasNext()) {
-       CharType ct = (CharType)ntiter.next();
+       CharType ct = ntiter.next();
        ct.registerCardinality(ncards.get(ct.type));
      }      
      
      // occurrences
      TObjectIntHashMap<TopicIF> oicards = new TObjectIntHashMap<TopicIF>();      
      TObjectIntHashMap<TopicIF> oecards = new TObjectIntHashMap<TopicIF>();      
-     Iterator oiter = topic.getOccurrences().iterator();
+     Iterator<OccurrenceIF> oiter = topic.getOccurrences().iterator();
      while (oiter.hasNext()) {
-       OccurrenceIF oc = (OccurrenceIF)oiter.next();
+       OccurrenceIF oc = oiter.next();
        // internal occurrences vs external occurrences
        if (oc.getLocator() == null) {
          CharType ctype = createCharType(ttinfo.oitypes, oc.getType());
@@ -165,37 +166,37 @@ public class SchemaTracker {
        }
      }
      // register cardinalities
-     Iterator oititer = ttinfo.oitypes.values().iterator();
+     Iterator<CharType> oititer = ttinfo.oitypes.values().iterator();
      while (oititer.hasNext()) {
-       CharType ct = (CharType)oititer.next();
+       CharType ct = oititer.next();
        ct.registerCardinality(oicards.get(ct.type));
      }      
-     Iterator oetiter = ttinfo.oetypes.values().iterator();
+     Iterator<CharType> oetiter = ttinfo.oetypes.values().iterator();
      while (oetiter.hasNext()) {
-       CharType ct = (CharType)oetiter.next();
+       CharType ct = oetiter.next();
        ct.registerCardinality(oecards.get(ct.type));
      }      
    }
   }
   
-  public void trackAssociations(Collection assocs) {
-   Iterator iter = assocs.iterator();
+  public void trackAssociations(Collection<AssociationIF> assocs) {
+   Iterator<AssociationIF> iter = assocs.iterator();
    while (iter.hasNext()) {
-     trackAssociation((AssociationIF)iter.next());
+     trackAssociation(iter.next());
    }
   }
   
   public void trackAssociation(AssociationIF assoc) {
    TopicIF atype = assoc.getType();
   
-   Collection roles = assoc.getRoles();
+   Collection<AssociationRoleIF> roles = assoc.getRoles();
   
    boolean symmetric = (roles.size() == 2);
    TopicIF prev_rtype = null;
    
-   Iterator riter = roles.iterator();
+   Iterator<AssociationRoleIF> riter = roles.iterator();
    while (riter.hasNext()) {
-     AssociationRoleIF role = (AssociationRoleIF)riter.next();
+     AssociationRoleIF role = riter.next();
      TopicIF rtype = role.getType();
      TopicIF player = role.getPlayer();
   
@@ -208,16 +209,16 @@ public class SchemaTracker {
      }        
      
      if (player != null) {        
-       Collection ptypes = player.getTypes();      
+       Collection<TopicIF> ptypes = player.getTypes();      
        if (ptypes.isEmpty()) {
          ptypes = NULL_COLLECTION;
          utypedp.add(player);
        }
        // TODO: mincard not really perfectly calculated
        int cardinality = getPlayerCardinality(atype, rtype, player);
-       Iterator piter = ptypes.iterator();
+       Iterator<TopicIF> piter = ptypes.iterator();
        while (piter.hasNext()) {
-         TopicIF ptype = (TopicIF)piter.next();
+         TopicIF ptype = piter.next();
          PlayerType pinfo = createPlayerType(atypes, atype, rtype, ptype);
          pinfo.registerCardinality(0); // mincard, see above
          pinfo.registerCardinality(cardinality);
@@ -231,9 +232,9 @@ public class SchemaTracker {
   
   protected int getPlayerCardinality(TopicIF atype, TopicIF rtype, TopicIF player) {
    int result = 0;
-   Iterator iter = player.getRoles().iterator();
+   Iterator<AssociationRoleIF> iter = player.getRoles().iterator();
    while (iter.hasNext()) {
-     AssociationRoleIF role = (AssociationRoleIF)iter.next();
+     AssociationRoleIF role = iter.next();
      TopicIF _rtype = role.getType();
      if (_rtype == null || !_rtype.equals(rtype)) continue;
   
@@ -285,11 +286,11 @@ public class SchemaTracker {
    return tt.subind.maxcard;
   }
   
-  public Collection getUntypedTopics() {
+  public Collection<TopicIF> getUntypedTopics() {
    return utypedt;
   }
   
-  public Collection getUntypedPlayers() {
+  public Collection<TopicIF> getUntypedPlayers() {
    return utypedp;
   }
   
@@ -359,53 +360,53 @@ public class SchemaTracker {
    return ct.maxcard;
   }
   
-  public Collection getAssociationTypes() {
+  public Collection<TopicIF> getAssociationTypes() {
    return atypes.keySet();
   }
   
-  public Collection getRoleTypes(TopicIF atype) {
-   Map rmap = (Map)atypes.get(atype);
+  public Collection<TopicIF> getRoleTypes(TopicIF atype) {
+   Map<TopicIF,Map<TopicIF,PlayerType>> rmap = atypes.get(atype);
    if (rmap == null)
-     return Collections.EMPTY_SET;
+     return Collections.emptySet();
    else
      return rmap.keySet();
   }
   
-  public Collection getPlayerTypes(TopicIF atype, TopicIF rtype) {
-   Map rmap = (Map)atypes.get(atype);
+  public Collection<TopicIF> getPlayerTypes(TopicIF atype, TopicIF rtype) {
+   Map<TopicIF,Map<TopicIF,PlayerType>> rmap = atypes.get(atype);
    if (rmap == null)
-     return  Collections.EMPTY_SET;
+     return  Collections.emptySet();
    
-   Map pmap = (HashMap)rmap.get(rtype);
+   Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
    if (pmap == null)
-     return Collections.EMPTY_SET;
+     return Collections.emptySet();
    else
      return pmap.keySet();
   }
   
   public int getPlayerTypeMinCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype) {
-   Map rmap = (Map)atypes.get(atype);
+   Map<TopicIF,Map<TopicIF,PlayerType>> rmap = atypes.get(atype);
    if (rmap == null) return 0;
    
-   Map pmap = (Map)rmap.get(rtype);
+   Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
    if (pmap == null) return 0;
   
-   PlayerType pt = (PlayerType)pmap.get(ptype);
+   PlayerType pt = pmap.get(ptype);
    return (pt == null ? 0 : pt.mincard);
   }
   
   public int getPlayerTypeMaxCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype) {
-   Map rmap = (Map)atypes.get(atype);
+   Map<TopicIF,Map<TopicIF,PlayerType>> rmap = atypes.get(atype);
    if (rmap == null) return 0;
    
-   Map pmap = (Map)rmap.get(rtype);
+   Map<TopicIF,PlayerType> pmap = rmap.get(rtype);
    if (pmap == null) return 0;
   
-   PlayerType pt = (PlayerType)pmap.get(ptype);
+   PlayerType pt = pmap.get(ptype);
    return (pt == null ? 0 : pt.maxcard);
   }
   
-  public Collection getOntologyTypes() {
+  public Collection<TopicIF> getOntologyTypes() {
    Collection<TopicIF> onto_types = new HashSet<TopicIF>();
   
    // topic types
@@ -414,46 +415,46 @@ public class SchemaTracker {
      TopicIF ttype = ttypes.next();
      onto_types.add(ttype);
      // name types
-     Iterator ntypes = getNameTypes(ttype).iterator();
+     Iterator<TopicIF> ntypes = getNameTypes(ttype).iterator();
      while (ntypes.hasNext()) {
-       TopicIF ntype = (TopicIF)ntypes.next();
+       TopicIF ntype = ntypes.next();
        onto_types.add(ntype);
      }
      // external occurrence types
-     Iterator oetypes = getExternalOccurrenceTypes(ttype).iterator();
+     Iterator<TopicIF> oetypes = getExternalOccurrenceTypes(ttype).iterator();
      while (oetypes.hasNext()) {
-       TopicIF oetype = (TopicIF)oetypes.next();
+       TopicIF oetype = oetypes.next();
        onto_types.add(oetype);
      }
      // internal occurrence types
-     Iterator oitypes = getInternalOccurrenceTypes(ttype).iterator();
+     Iterator<TopicIF> oitypes = getInternalOccurrenceTypes(ttype).iterator();
      while (oitypes.hasNext()) {
-       TopicIF oitype = (TopicIF)oitypes.next();
+       TopicIF oitype = oitypes.next();
        onto_types.add(oitype);
      }
    }      
   
    // association types
-   Iterator atypes = getAssociationTypes().iterator();
+   Iterator<TopicIF> atypes = getAssociationTypes().iterator();
    while (atypes.hasNext()) {
-     TopicIF atype = (TopicIF)atypes.next();
+     TopicIF atype = atypes.next();
      onto_types.add(atype);
      // role types
-     Iterator rtypes = getRoleTypes(atype).iterator();
+     Iterator<TopicIF> rtypes = getRoleTypes(atype).iterator();
      while (rtypes.hasNext()) {
-       TopicIF rtype = (TopicIF)rtypes.next();
+       TopicIF rtype = rtypes.next();
        onto_types.add(rtype);
      }
    }
    return onto_types;
   }
   
-  public Collection getSuspectNameScopes() {
+  public Collection<TopicIF> getSuspectNameScopes() {
    return nscopes.keySet();
   }
   
-  public Collection getNameScopeTopicTypes(TopicIF ntheme) {
-   return (Collection)nscopes.get(ntheme);
+  public Collection<TopicIF> getNameScopeTopicTypes(TopicIF ntheme) {
+   return nscopes.get(ntheme);
   }
   
   public boolean isSymmetricAssociationType(TopicIF atype) {

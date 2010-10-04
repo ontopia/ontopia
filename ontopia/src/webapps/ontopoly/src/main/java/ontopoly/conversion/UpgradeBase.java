@@ -331,9 +331,9 @@ public abstract class UpgradeBase {
   protected static String getSymbolicId(TopicIF rf) {
     String prefix = "http://psi.ontopia.net/ontology/";
     int beginIndex = prefix.length();
-    Iterator iter = rf.getSubjectIdentifiers().iterator();
+    Iterator<LocatorIF> iter = rf.getSubjectIdentifiers().iterator();
     while (iter.hasNext()) {
-      LocatorIF loc = (LocatorIF)iter.next();
+      LocatorIF loc = iter.next();
       String address = loc.getAddress();
       if (address.startsWith(prefix)) {
         return address.substring(beginIndex);
@@ -370,9 +370,9 @@ public abstract class UpgradeBase {
 
   protected static void renameTopics(TopicMapIF topicmap, String oldName, String newName) {
     NameIndexIF nix = (NameIndexIF)topicmap.getIndex(NameIndexIF.class.getName());
-    Iterator names = nix.getTopicNames(oldName).iterator();
+    Iterator<TopicNameIF> names = nix.getTopicNames(oldName).iterator();
     while (names.hasNext()) {
-      TopicNameIF tn = (TopicNameIF)names.next();
+      TopicNameIF tn = names.next();
       tn.setValue(newName);
     }
   }

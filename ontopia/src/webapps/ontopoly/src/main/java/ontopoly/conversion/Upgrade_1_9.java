@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ontopoly.model.FieldAssignment;
-import ontopoly.model.TopicMap;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
@@ -23,6 +20,8 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.TopicMap;
 
 public class Upgrade_1_9 extends UpgradeBase {
   
@@ -326,9 +325,9 @@ public class Upgrade_1_9 extends UpgradeBase {
     removeAssociations("on:has-field", new String[] { "on:topic-type", "on:field", "on:role-type" }, qp, dc);
     
     // loop over the fields so that we can execute other queries as we go
-    Iterator afiter = afields.iterator();
+    Iterator<TopicIF[]> afiter = afields.iterator();
     while (afiter.hasNext()) {
-      TopicIF[] fen = (TopicIF[])afiter.next();
+      TopicIF[] fen = afiter.next();
       
       TopicIF tt = fen[0];
       TopicIF at = fen[1];
@@ -581,9 +580,9 @@ public class Upgrade_1_9 extends UpgradeBase {
     }
       
     // loop over the fields so that we can execute other queries as we go
-    Iterator ofiter = ofields.iterator();
+    Iterator<TopicIF[]> ofiter = ofields.iterator();
     while (ofiter.hasNext()) {
-      TopicIF[] fen = (TopicIF[])ofiter.next();
+      TopicIF[] fen = ofiter.next();
       
       TopicIF tt = fen[0];
       TopicIF xt = fen[1];

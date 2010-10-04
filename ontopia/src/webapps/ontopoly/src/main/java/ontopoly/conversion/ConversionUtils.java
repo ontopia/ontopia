@@ -11,12 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ontopoly.OntopolyApplication;
-import ontopoly.model.PSI;
-import ontopoly.model.TopicMap;
-import ontopoly.sysmodel.TopicMapReference;
-import ontopoly.sysmodel.TopicMapSource;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.AssociationIF;
@@ -44,6 +38,11 @@ import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.URIUtils;
+import ontopoly.OntopolyApplication;
+import ontopoly.model.PSI;
+import ontopoly.model.TopicMap;
+import ontopoly.sysmodel.TopicMapReference;
+import ontopoly.sysmodel.TopicMapSource;
 
 public class ConversionUtils {
   
@@ -111,13 +110,17 @@ public class ConversionUtils {
       
       // convert topic map
       TopicMapIF tm = store.getTopicMap();
-      Collection reifier_subinds = new HashSet();
+      Collection<LocatorIF> reifier_subinds = new HashSet<LocatorIF>();
       
       LocatorIF versionTopicPSI = URIUtils.getURILocator("http://psi.ontopia.net/ontology/ted-ontology-version");
       if (newtopicmap) {
         // get hold of old reifier
         TopicIF oreifier = oldstore.getTopicMap().getReifier();
-        reifier_subinds = (oreifier == null ? Collections.EMPTY_LIST : oreifier.getSubjectIdentifiers());
+        if (oreifier == null) {
+          reifier_subinds = Collections.emptySet();
+        } else {
+          reifier_subinds = oreifier.getSubjectIdentifiers();
+        }
         // merge in old topic map
         try {
           MergeUtils.mergeInto(store.getTopicMap(), oldstore.getTopicMap());
@@ -151,9 +154,9 @@ public class ConversionUtils {
       // copy old reifier reify topic map if not already done
       TopicIF nreifier = tm.getReifier();
       TopicIF oreifier = null;
-      Iterator iiter = reifier_subinds.iterator();
+      Iterator<LocatorIF> iiter = reifier_subinds.iterator();
       while (iiter.hasNext()) {
-        LocatorIF reifier_subind = (LocatorIF)iiter.next();
+        LocatorIF reifier_subind = iiter.next();
         oreifier = tm.getTopicBySubjectIdentifier(reifier_subind);
         if (oreifier != null) break;
       }
@@ -288,30 +291,30 @@ public class ConversionUtils {
     }
       
     // aggregate all ontology types
-    Collection onto_types = tracker.getOntologyTypes();
+    Collection<TopicIF> onto_types = tracker.getOntologyTypes();
   
     // translate name scopes into name types
     ScopeIndexIF sindex = (ScopeIndexIF)tm.getIndex("net.ontopia.topicmaps.core.index.ScopeIndexIF");
     Collection<TopicIF> nstypes = new HashSet<TopicIF>();
-    Iterator nsiter = tracker.getSuspectNameScopes().iterator();
+    Iterator<TopicIF> nsiter = tracker.getSuspectNameScopes().iterator();
     while (nsiter.hasNext()) {
-      TopicIF ntheme = (TopicIF)nsiter.next();
+      TopicIF ntheme = nsiter.next();
       if (onto_types.contains(ntheme) || isTEDTopic(ntheme) || ntheme == reifier) continue;
       nstypes.add(ntheme);
       
       // translate name scope into name type
-      Iterator tniter = sindex.getTopicNames(ntheme).iterator();
+      Iterator<TopicNameIF> tniter = sindex.getTopicNames(ntheme).iterator();
       while (tniter.hasNext()) {
-        TopicNameIF tn = (TopicNameIF)tniter.next();
+        TopicNameIF tn = tniter.next();
         tn.setType(ntheme);
         tn.removeTheme(ntheme);
         // WARN: what if basename have other themes in its name scope?
       }
       
       // register name field on topic type
-      Iterator nstiter = tracker.getNameScopeTopicTypes(ntheme).iterator();
+      Iterator<TopicIF> nstiter = tracker.getNameScopeTopicTypes(ntheme).iterator();
       while (nstiter.hasNext()) {
-        TopicIF ttype = (TopicIF)nstiter.next();
+        TopicIF ttype = nstiter.next();
         if (ttype == null) continue; // HACK: don't know what to do here.
         TopicIF nfield = registerNameType(ntheme, tm);
         registerNameField(ttype, nfield, 
@@ -320,9 +323,9 @@ public class ConversionUtils {
     }
     
     // untyped topics
-    Iterator utyped = tracker.getUntypedTopics().iterator();
+    Iterator<TopicIF> utyped = tracker.getUntypedTopics().iterator();
     while (utyped.hasNext()) {
-      TopicIF untyped = (TopicIF)utyped.next();
+      TopicIF untyped = utyped.next();
       if (untyped == null ||
           onto_types.contains(untyped) ||
           isTEDTopic(untyped) ||
@@ -338,12 +341,12 @@ public class ConversionUtils {
     all_topic_types.addAll(supsub.keySet());
   
     // get topmost super types
-    Collection topmost_types = getTopMostTypes(all_topic_types, subsup);
+    Collection<TopicIF> topmost_types = getTopMostTypes(all_topic_types, subsup);
     
     // create schema
-    Iterator ttypes = all_topic_types.iterator();
+    Iterator<TopicIF> ttypes = all_topic_types.iterator();
     while (ttypes.hasNext()) {
-      TopicIF ttype = (TopicIF)ttypes.next();
+      TopicIF ttype = ttypes.next();
       if (ttype == null || isTEDTopic(ttype)) continue;
   
       // topic type      
@@ -374,10 +377,10 @@ public class ConversionUtils {
       }
       
       // name types
-      Collection n_decl_on_supertype = getNamesDeclaredOnSuperType(ttype, tracker, subsup);
-      Iterator ntypes = tracker.getNameTypes(ttype).iterator();
+      Collection<TopicIF> n_decl_on_supertype = getNamesDeclaredOnSuperType(ttype, tracker, subsup);
+      Iterator<TopicIF> ntypes = tracker.getNameTypes(ttype).iterator();
       while (ntypes.hasNext()) {
-        TopicIF ntype = (TopicIF)ntypes.next();
+        TopicIF ntype = ntypes.next();
         if (ntype == null || isTEDTopic(ntype) || n_decl_on_supertype.contains(ntype)) continue;        
         TopicIF cardinality = getCardinalityTopic(getBroadestNameTypeMinCardinality(ttype, ntype, tracker, supsub),
                                                   getBroadestNameTypeMaxCardinality(ttype, ntype, tracker, supsub), tm);
@@ -386,11 +389,11 @@ public class ConversionUtils {
       }      
   
       // external occurrence types
-      Collection oe_decl_on_supertype = getExternalOccurrencesDeclaredOnSuperType(ttype, tracker, subsup);
+      Collection<TopicIF> oe_decl_on_supertype = getExternalOccurrencesDeclaredOnSuperType(ttype, tracker, subsup);
       TopicIF datatype_uri = topicByPSI(xsdbase.resolveAbsolute("#anyURI"), tm);
-      Iterator oetypes = tracker.getExternalOccurrenceTypes(ttype).iterator();
+      Iterator<TopicIF> oetypes = tracker.getExternalOccurrenceTypes(ttype).iterator();
       while (oetypes.hasNext()) {
-        TopicIF oetype = (TopicIF)oetypes.next();
+        TopicIF oetype = oetypes.next();
         if (oetype == null || isTEDTopic(oetype) || oe_decl_on_supertype.contains(oetype)) continue;
         TopicIF cardinality = getCardinalityTopic(getBroadestExternalOccurrenceTypeMinCardinality(ttype, oetype, tracker, supsub),
                                                   getBroadestExternalOccurrenceTypeMaxCardinality(ttype, oetype, tracker, supsub), tm);
@@ -399,11 +402,11 @@ public class ConversionUtils {
       }      
       
       // internal occurrence types
-      Collection oi_decl_on_supertype = getInternalOccurrencesDeclaredOnSuperType(ttype, tracker, subsup);
+      Collection<TopicIF> oi_decl_on_supertype = getInternalOccurrencesDeclaredOnSuperType(ttype, tracker, subsup);
       TopicIF datatype_string = topicByPSI(xsdbase.resolveAbsolute("#string"), tm);
-      Iterator oitypes = tracker.getInternalOccurrenceTypes(ttype).iterator();
+      Iterator<TopicIF> oitypes = tracker.getInternalOccurrenceTypes(ttype).iterator();
       while (oitypes.hasNext()) {
-        TopicIF oitype = (TopicIF)oitypes.next();
+        TopicIF oitype = oitypes.next();
         if (oitype == null || isTEDTopic(oitype) || oi_decl_on_supertype.contains(oitype)) continue;
         TopicIF cardinality = getCardinalityTopic(getBroadestInternalOccurrenceTypeMinCardinality(ttype, oitype, tracker, supsub),
                                                   getBroadestInternalOccurrenceTypeMaxCardinality(ttype, oitype, tracker, supsub), tm);
@@ -417,9 +420,9 @@ public class ConversionUtils {
     excluded_atypes.add(topicByPSI(xtmbase.resolveAbsolute("#superclass-subclass"), tm));
     excluded_atypes.add(topicByPSI(teqbase.resolveAbsolute("#hierarchical-relation-type"), tm));
     
-    Iterator atypes = tracker.getAssociationTypes().iterator();
+    Iterator<TopicIF> atypes = tracker.getAssociationTypes().iterator();
     while (atypes.hasNext()) {
-      TopicIF atype = (TopicIF)atypes.next();
+      TopicIF atype = atypes.next();
       if (atype == null || isTEDTopic(atype) || excluded_atypes.contains(atype)) continue;
   
       // association type
@@ -431,20 +434,20 @@ public class ConversionUtils {
                         atype, psibase.resolveAbsolute("association-type"), tm);
       
       // role types
-      Iterator rtypes = tracker.getRoleTypes(atype).iterator();
+      Iterator<TopicIF> rtypes = tracker.getRoleTypes(atype).iterator();
       while (rtypes.hasNext()) {
-        TopicIF rtype = (TopicIF)rtypes.next();
+        TopicIF rtype = rtypes.next();
         if (rtype == null || isTEDTopic(rtype)) continue;
   
         // role type
         rtype = registerRoleType(rtype, tm);
   
         // count player type instances
-        Collection ptypes = tracker.getPlayerTypes(atype, rtype);
+        Collection<TopicIF> ptypes = tracker.getPlayerTypes(atype, rtype);
         int ptypes_count = 0;
-        Iterator ptiter = ptypes.iterator();
+        Iterator<TopicIF> ptiter = ptypes.iterator();
         while (ptiter.hasNext()) {
-          ptypes_count += tracker.getTopicTypeInstances((TopicIF)ptiter.next());
+          ptypes_count += tracker.getTopicTypeInstances(ptiter.next());
         }
   
         // use search-dialog if drop-down list too long (> 50 elements)
@@ -457,7 +460,7 @@ public class ConversionUtils {
         
         ptiter = ptypes.iterator();
         while (ptiter.hasNext()) {
-          TopicIF ptype = (TopicIF)ptiter.next();
+          TopicIF ptype = ptiter.next();
           if (ptype == null)
             ptype = getUntypedTopic(psibase, tm);
           else if (isTEDTopic(ptype))
@@ -521,9 +524,9 @@ public class ConversionUtils {
     // update/create field order values
     int fOrder = 1000;
     TopicIF prevTopic = null;
-    Iterator fiter = fields.iterator();
+    Iterator<Object[]> fiter = fields.iterator();
     while (fiter.hasNext()) {
-      Object[] f = (Object[])fiter.next();
+      Object[] f = fiter.next();
       TopicIF curTopic = (TopicIF)f[0];
       if (prevTopic != curTopic) {
         fOrder = 1000;
@@ -572,9 +575,9 @@ public class ConversionUtils {
         else if (ted_si.equals(f1[2]))
           fkey1 = 3;
         else {
-          Iterator fit = ((TopicIF)f1[2]).getTypes().iterator();
+          Iterator<TopicIF> fit = ((TopicIF)f1[2]).getTypes().iterator();
           while (fit.hasNext()) {
-            TopicIF ft1 = (TopicIF)fit.next();          
+            TopicIF ft1 = fit.next();          
             if (ted_nt.equals(ft1)) {
               if (ted_untyped_name.equals(f1[2]))
                 fkey1 = 0;
@@ -596,9 +599,9 @@ public class ConversionUtils {
         else if (ted_si.equals(f2[2]))
           fkey2 = 3;
         else {
-          Iterator fit = ((TopicIF)f2[2]).getTypes().iterator();
+          Iterator<TopicIF> fit = ((TopicIF)f2[2]).getTypes().iterator();
           while (fit.hasNext()) {
-            TopicIF ft2 = (TopicIF)fit.next();          
+            TopicIF ft2 = fit.next();          
           
             if (ted_nt.equals(ft2)) {
               if (ted_untyped_name.equals(f2[2]))
@@ -901,9 +904,9 @@ public class ConversionUtils {
   }
   
   private static boolean isTEDTopic(TopicIF topic) {
-    Iterator iter = topic.getSubjectIdentifiers().iterator();
+    Iterator<LocatorIF> iter = topic.getSubjectIdentifiers().iterator();
     while (iter.hasNext()) {
-      LocatorIF loc = (LocatorIF)iter.next();
+      LocatorIF loc = iter.next();
       String address = loc.getAddress();
       if (address.startsWith("http://psi.ontopia.net/ontology/") ||
           address.startsWith("http://www.techquila.com/psi/hierarchy/"))
@@ -955,9 +958,9 @@ public class ConversionUtils {
   protected static boolean isSubjectLocatorDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return false;
-    Iterator iter = supertypes.iterator();
+    Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
-      TopicIF supertype = (TopicIF)iter.next();
+      TopicIF supertype = iter.next();
       if (tracker.getSubjectLocatorMaxCardinality(supertype) > 0)
         return true;
 
@@ -970,9 +973,9 @@ public class ConversionUtils {
   protected static boolean isSubjectIndicatorDeclaredOnSuperType(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return false;
-    Iterator iter = supertypes.iterator();
+    Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
-      TopicIF supertype = (TopicIF)iter.next();
+      TopicIF supertype = iter.next();
       if (tracker.getSubjectIndicatorMaxCardinality(supertype) > 0)
         return true;
 
@@ -986,9 +989,9 @@ public class ConversionUtils {
     Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return Collections.emptySet();
     Collection<TopicIF> result = new HashSet<TopicIF>();
-    Iterator iter = supertypes.iterator();
+    Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
-      TopicIF supertype = (TopicIF)iter.next();
+      TopicIF supertype = iter.next();
       result.addAll(tracker.getNameTypes(supertype));
       result.addAll(getNamesDeclaredOnSuperType(supertype, tracker, subsup));
     }
@@ -999,9 +1002,9 @@ public class ConversionUtils {
     Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return Collections.emptySet();
     Collection<TopicIF> result = new HashSet<TopicIF>();
-    Iterator iter = supertypes.iterator();
+    Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
-      TopicIF supertype = (TopicIF)iter.next();
+      TopicIF supertype = iter.next();
       result.addAll(tracker.getInternalOccurrenceTypes(supertype));
       result.addAll(getInternalOccurrencesDeclaredOnSuperType(supertype, tracker, subsup));
     }
@@ -1012,19 +1015,19 @@ public class ConversionUtils {
     Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return Collections.emptySet();
     Collection<TopicIF> result = new HashSet<TopicIF>();
-    Iterator iter = supertypes.iterator();
+    Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
-      TopicIF supertype = (TopicIF)iter.next();
+      TopicIF supertype = iter.next();
       result.addAll(tracker.getExternalOccurrenceTypes(supertype));
       result.addAll(getExternalOccurrencesDeclaredOnSuperType(supertype, tracker, subsup));
     }
     return result;
   }
 
-  protected static boolean isRoleDeclaredOnSuperType(TopicIF ttype, Collection ptypes, Map<TopicIF,Collection<TopicIF>> subsup) {
+  protected static boolean isRoleDeclaredOnSuperType(TopicIF ttype, Collection<TopicIF> ptypes, Map<TopicIF,Collection<TopicIF>> subsup) {
     Collection<TopicIF> supertypes = subsup.get(ttype);
     if (supertypes == null) return false;
-    Iterator iter = supertypes.iterator();
+    Iterator<TopicIF> iter = supertypes.iterator();
     while (iter.hasNext()) {
       TopicIF supertype = (TopicIF)iter.next();
       if (ptypes.contains(supertype)) return true;
@@ -1035,13 +1038,13 @@ public class ConversionUtils {
     return false;
   }
 
-  protected static int getBroadestSubjectLocatorMinCardinality(TopicIF ttype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestSubjectLocatorMinCardinality(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getSubjectLocatorMinCardinality(ttype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestSubjectLocatorMinCardinality(subtype, tracker, supsub);
       if (card < cardinality)
         cardinality = card;
@@ -1049,13 +1052,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestSubjectLocatorMaxCardinality(TopicIF ttype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestSubjectLocatorMaxCardinality(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getSubjectLocatorMaxCardinality(ttype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestSubjectLocatorMaxCardinality(subtype, tracker, supsub);
       if (card < cardinality)
         cardinality = card;
@@ -1063,13 +1066,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestSubjectIndicatorMinCardinality(TopicIF ttype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestSubjectIndicatorMinCardinality(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getSubjectIndicatorMinCardinality(ttype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestSubjectIndicatorMinCardinality(subtype, tracker, supsub);
       if (card < cardinality)
         cardinality = card;
@@ -1077,13 +1080,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestSubjectIndicatorMaxCardinality(TopicIF ttype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestSubjectIndicatorMaxCardinality(TopicIF ttype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getSubjectIndicatorMaxCardinality(ttype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestSubjectIndicatorMaxCardinality(subtype, tracker, supsub);
       if (card < cardinality)
         cardinality = card;
@@ -1091,13 +1094,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestNameTypeMinCardinality(TopicIF ttype, TopicIF ntype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestNameTypeMinCardinality(TopicIF ttype, TopicIF ntype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getNameTypeMinCardinality(ttype, ntype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestNameTypeMinCardinality(subtype, ntype, tracker, supsub);
       if (card > cardinality)
         cardinality = card;
@@ -1105,13 +1108,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestNameTypeMaxCardinality(TopicIF ttype, TopicIF ntype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestNameTypeMaxCardinality(TopicIF ttype, TopicIF ntype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getNameTypeMaxCardinality(ttype, ntype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestNameTypeMaxCardinality(subtype, ntype, tracker, supsub);
       if (card > cardinality)
         cardinality = card;
@@ -1119,13 +1122,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestExternalOccurrenceTypeMinCardinality(TopicIF ttype, TopicIF oetype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestExternalOccurrenceTypeMinCardinality(TopicIF ttype, TopicIF oetype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getExternalOccurrenceTypeMinCardinality(ttype, oetype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestExternalOccurrenceTypeMinCardinality(subtype, oetype, tracker, supsub);
       if (card < cardinality)
         cardinality = card;
@@ -1133,13 +1136,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestExternalOccurrenceTypeMaxCardinality(TopicIF ttype, TopicIF oetype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestExternalOccurrenceTypeMaxCardinality(TopicIF ttype, TopicIF oetype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getExternalOccurrenceTypeMaxCardinality(ttype, oetype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestExternalOccurrenceTypeMaxCardinality(subtype, oetype, tracker, supsub);
       if (card > cardinality)
         cardinality = card;
@@ -1147,13 +1150,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestInternalOccurrenceTypeMinCardinality(TopicIF ttype, TopicIF oitype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestInternalOccurrenceTypeMinCardinality(TopicIF ttype, TopicIF oitype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getInternalOccurrenceTypeMinCardinality(ttype, oitype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestInternalOccurrenceTypeMinCardinality(subtype, oitype, tracker, supsub);
       if (card < cardinality)
         cardinality = card;
@@ -1161,13 +1164,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestInternalOccurrenceTypeMaxCardinality(TopicIF ttype, TopicIF oitype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ttype);
+  protected static int getBroadestInternalOccurrenceTypeMaxCardinality(TopicIF ttype, TopicIF oitype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ttype);
     int cardinality = tracker.getInternalOccurrenceTypeMaxCardinality(ttype, oitype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestInternalOccurrenceTypeMaxCardinality(subtype, oitype, tracker, supsub);
       if (card > cardinality)
         cardinality = card;
@@ -1175,13 +1178,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestPlayerTypeMinCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ptype);
+  protected static int getBroadestPlayerTypeMinCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ptype);
     int cardinality = tracker.getPlayerTypeMinCardinality(atype, rtype, ptype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestPlayerTypeMinCardinality(atype, rtype, subtype, tracker, supsub);
       if (card < cardinality)
         cardinality = card;
@@ -1189,13 +1192,13 @@ public class ConversionUtils {
     return cardinality;
   }
 
-  protected static int getBroadestPlayerTypeMaxCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype, SchemaTracker tracker, Map supsub) {
-    Collection subtypes = (Collection)supsub.get(ptype);
+  protected static int getBroadestPlayerTypeMaxCardinality(TopicIF atype, TopicIF rtype, TopicIF ptype, SchemaTracker tracker, Map<TopicIF,Collection<TopicIF>> supsub) {
+    Collection<TopicIF> subtypes = supsub.get(ptype);
     int cardinality = tracker.getPlayerTypeMaxCardinality(atype, rtype, ptype);
     if (subtypes == null) return cardinality;
-    Iterator iter = subtypes.iterator();
+    Iterator<TopicIF> iter = subtypes.iterator();
     while (iter.hasNext()) {
-      TopicIF subtype = (TopicIF)iter.next();      
+      TopicIF subtype = iter.next();      
       int card = getBroadestPlayerTypeMaxCardinality(atype, rtype, subtype, tracker, supsub);
       if (card > cardinality)
         cardinality = card;
@@ -1223,9 +1226,9 @@ public class ConversionUtils {
       // because there's only one source which supports create. so we
       // have to find it.
       
-      Iterator it = rep.getSources().iterator();
+      Iterator<TopicMapSourceIF> it = rep.getSources().iterator();
       while (it.hasNext()) {
-        TopicMapSourceIF candidate = (TopicMapSourceIF) it.next();
+        TopicMapSourceIF candidate = it.next();
         if (candidate.supportsCreate()) {
           source = candidate;
           break;
@@ -1242,17 +1245,17 @@ public class ConversionUtils {
 
   public static OccurrenceIF getOccurrenceOfType(TopicIF topic,
       TopicIF occType) {
-    Collection result = getOccurrencesOfType(topic, occType);
+    Collection<OccurrenceIF> result = getOccurrencesOfType(topic, occType);
     if (result.isEmpty())
       return null;
-    return (OccurrenceIF) result.iterator().next();
+    return result.iterator().next();
   }
 
   public static Collection<OccurrenceIF> getOccurrencesOfType(TopicIF topic,
       TopicIF occType) {
     List<OccurrenceIF> result = new ArrayList<OccurrenceIF>();
-    for (Iterator iter = topic.getOccurrences().iterator(); iter.hasNext();) {
-      OccurrenceIF occurrence = (OccurrenceIF) iter.next();
+    for (Iterator<OccurrenceIF> iter = topic.getOccurrences().iterator(); iter.hasNext();) {
+      OccurrenceIF occurrence = iter.next();
       TopicIF otype = occurrence.getType();
       if (otype != null && otype .equals(occType))
         result.add(occurrence);
