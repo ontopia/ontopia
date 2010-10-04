@@ -45,7 +45,7 @@ public class IdentityUtils {
    *
    * @since 4.0
    */
-  public static Collection findSameTopic(TopicMapIF topicmap, TopicIF topic) {
+  public static Collection<TopicIF> findSameTopic(TopicMapIF topicmap, TopicIF topic) {
     Set result = new HashSet();
     // item identifiers
     Iterator srclocs = topic.getItemIdentifiers().iterator();
