@@ -3,11 +3,11 @@ package ontopoly.components;
 import java.util.List;
 
 import net.ontopia.utils.OntopiaRuntimeException;
-import ontopoly.model.FieldAssignment;
-import ontopoly.model.FieldDefinition;
-import ontopoly.model.FieldInstance;
-import ontopoly.model.FieldsView;
-import ontopoly.model.RoleField;
+import ontopoly.model.FieldAssignmentIF;
+import ontopoly.model.FieldDefinitionIF;
+import ontopoly.model.FieldInstanceIF;
+import ontopoly.model.FieldsViewIF;
+import ontopoly.model.RoleFieldIF;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldsViewModel;
 
@@ -40,12 +40,13 @@ public class FieldInstancesPanel extends Panel {
   }
   
   protected Component createFieldInstanceComponent(FieldInstanceModel fieldInstanceModel, FieldsViewModel fieldsViewModel, boolean _traversable) {
-    FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
-    FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
-    FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
-    if (fieldsViewModel == null) throw new RuntimeException("Fields view not specified.");
+    FieldInstanceIF fieldInstance = fieldInstanceModel.getFieldInstance();
+    FieldAssignmentIF fieldAssignment = fieldInstance.getFieldAssignment();
+    FieldDefinitionIF fieldDefinition = fieldAssignment.getFieldDefinition();
+    if (fieldsViewModel == null)
+      throw new RuntimeException("Fields view not specified.");
     
-    FieldsView fieldsView = fieldsViewModel.getFieldsView();
+    FieldsViewIF fieldsView = fieldsViewModel.getFieldsView();
     
     // change from parent view to child view, if specified
     //FieldsView valueView = ofieldModel.getRoleField().getValueView(fieldsViewModel.getFieldsView());
@@ -58,8 +59,8 @@ public class FieldInstancesPanel extends Panel {
     
     // add field to panel
     switch (fieldDefinition.getFieldType()) {
-    case FieldDefinition.FIELD_TYPE_ROLE: {
-      RoleField roleField = (RoleField)fieldDefinition;
+    case FieldDefinitionIF.FIELD_TYPE_ROLE: {
+      RoleFieldIF roleField = (RoleFieldIF)fieldDefinition;
       int arity = roleField.getAssociationField().getArity();
       // unary
       if (arity == 1) {
@@ -80,13 +81,13 @@ public class FieldInstancesPanel extends Panel {
         return new FieldInstanceAssociationNaryPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable, arity).setOutputMarkupId(true);        
       }
     }
-    case FieldDefinition.FIELD_TYPE_IDENTITY: {
+    case FieldDefinitionIF.FIELD_TYPE_IDENTITY: {
       return new FieldInstanceIdentityPanel("field", fieldInstanceModel, rofield);
     }
-    case FieldDefinition.FIELD_TYPE_NAME: {
+    case FieldDefinitionIF.FIELD_TYPE_NAME: {
       return new FieldInstanceNamePanel("field", fieldInstanceModel, rofield);
     }
-    case FieldDefinition.FIELD_TYPE_OCCURRENCE: {
+    case FieldDefinitionIF.FIELD_TYPE_OCCURRENCE: {
       return new FieldInstanceOccurrencePanel("field", fieldInstanceModel, rofield);
     }
     default:

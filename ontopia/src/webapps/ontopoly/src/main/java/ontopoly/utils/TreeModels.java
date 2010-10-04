@@ -21,8 +21,8 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.model.PSI;
-import ontopoly.model.TopicMap;
-import ontopoly.model.TopicType;
+import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicTypeIF;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pojos.TopicNode;
 
@@ -32,7 +32,7 @@ public class TreeModels {
     return new DefaultTreeModel(new DefaultMutableTreeNode("<root>"));
   }
   
-  public static TreeModel createTopicTypesTreeModel(TopicMap tm, boolean isAnnotationEnabled, boolean isAdminEnabled) {
+  public static TreeModel createTopicTypesTreeModel(OntopolyTopicMapIF tm, boolean isAnnotationEnabled, boolean isAdminEnabled) {
     StringBuffer sb = new StringBuffer(); 
     sb.append("using on for i\"http://psi.ontopia.net/ontology/\" ");
     sb.append("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" ");
@@ -60,23 +60,23 @@ public class TreeModels {
     };
   }
 
-  public static TreeModel createOccurrenceTypesTreeModel(TopicMap tm, boolean isAdminEnabled) {
+  public static TreeModel createOccurrenceTypesTreeModel(OntopolyTopicMapIF tm, boolean isAdminEnabled) {
     return createTypesTreeModel(tm, "on:occurrence-type", isAdminEnabled);
   }
 
-  public static TreeModel createAssociationTypesTreeModel(TopicMap tm, boolean isAdminEnabled) {
+  public static TreeModel createAssociationTypesTreeModel(OntopolyTopicMapIF tm, boolean isAdminEnabled) {
     return createTypesTreeModel(tm, "on:association-type", isAdminEnabled);
   }
 
-  public static TreeModel createRoleTypesTreeModel(TopicMap tm, boolean isAdminEnabled) {
+  public static TreeModel createRoleTypesTreeModel(OntopolyTopicMapIF tm, boolean isAdminEnabled) {
     return createTypesTreeModel(tm, "on:role-type", isAdminEnabled);
   }
 
-  public static TreeModel createNameTypesTreeModel(TopicMap tm, boolean isAdminEnabled) {
+  public static TreeModel createNameTypesTreeModel(OntopolyTopicMapIF tm, boolean isAdminEnabled) {
     return createTypesTreeModel(tm, "on:name-type", isAdminEnabled);
   }
   
-  protected static TreeModel createTypesTreeModel(TopicMap tm, String typePSI, boolean isAdminEnabled) {
+  protected static TreeModel createTypesTreeModel(OntopolyTopicMapIF tm, String typePSI, boolean isAdminEnabled) {
     StringBuffer sb = new StringBuffer(); 
     sb.append("using on for i\"http://psi.ontopia.net/ontology/\" ");
     sb.append("using xtm for i\"http://www.topicmaps.org/xtm/1.0/core.xtm#\" ");
@@ -101,7 +101,6 @@ public class TreeModels {
   }
   
   private static class HierarchyDefinition {
-
     TopicIF atype;
     TopicIF prtype;
     TopicIF crtype;
@@ -125,10 +124,10 @@ public class TreeModels {
     
   }
   
-  public static TreeModel createInstancesTreeModel(TopicType topicType, final boolean isAdminEnabled) {
+  public static TreeModel createInstancesTreeModel(TopicTypeIF topicType, final boolean isAdminEnabled) {
     DefaultMutableTreeNode root = new DefaultMutableTreeNode("<root>");    
     if (topicType != null) {
-      TopicMap topicMap = topicType.getTopicMap();
+      OntopolyTopicMapIF topicMap = topicType.getTopicMap();
       QueryProcessorIF qp = topicMap.getQueryProcessor();
       DeclarationContextIF dc = topicMap.getDeclarationContext();
     
@@ -185,8 +184,6 @@ public class TreeModels {
         StringBuffer sb = new StringBuffer();      
         sb.append("select $P, $C from\n");
         sb.append(createHierarchyRuleFor(topicTypeIf, "P", "C", "B", existingRules, hd_ctypes));
-//        if (!isAdminEnabled)
-//          sb.append(", not({direct-instance-of($P, on:system-topic) || direct-instance-of($C, on:system-topic)})");        
         sb.append("\norder by $P, $C?");
         
         Iterator riter = existingRules.values().iterator();
@@ -284,7 +281,7 @@ public class TreeModels {
     return sb;    
   }
   
-  public static TreeModel createInstancesTreeModel2(TopicType topicType, boolean isAdminEnabled) {
+  public static TreeModel createInstancesTreeModel2(TopicTypeIF topicType, boolean isAdminEnabled) {
     if (topicType == null)
       return new DefaultTreeModel(new DefaultMutableTreeNode("<root>"));      
 
@@ -317,8 +314,6 @@ public class TreeModels {
       "order by $P, $C?";
     Map<String,TopicIF> params = Collections.singletonMap("topicType", tt);
     
-//    System.out.println("TT: " + tt);
-//    System.out.println("HQ: " + query);
     final String topicMapId = topicType.getTopicMap().getId();
 
     return new QueryTreeModel(topicType.getTopicMap(), query, params) {
@@ -329,7 +324,7 @@ public class TreeModels {
     };
   }
   
-  public static TreeModel createQueryTreeModel(TopicMap topicMap, String query, Map<String,?> params) {
+  public static TreeModel createQueryTreeModel(OntopolyTopicMapIF topicMap, String query, Map<String,?> params) {
 
     final String topicMapId = topicMap.getId();
     

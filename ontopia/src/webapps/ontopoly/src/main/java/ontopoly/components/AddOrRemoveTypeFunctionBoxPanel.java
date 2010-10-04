@@ -4,8 +4,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import ontopoly.model.Topic;
-import ontopoly.model.TopicType;
+import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicTypeIF;
 import ontopoly.models.AvailableTopicTypesModel;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AbstractOntopolyPage;
@@ -21,7 +22,7 @@ import org.apache.wicket.model.ResourceModel;
 
 public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
 
-  protected final TopicModel<TopicType> selectedModel = new TopicModel<TopicType>(null, TopicModel.TYPE_TOPIC_TYPE);
+  protected final TopicModel<TopicTypeIF> selectedModel = new TopicModel<TopicTypeIF>(null, OntopolyTopicMapIF.TYPE_TOPIC_TYPE);
   
   public AddOrRemoveTypeFunctionBoxPanel(String id, final TopicModel topicModel) {
     super(id);
@@ -33,12 +34,12 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
         return true;
       }
       @Override
-      protected boolean filter(Topic o) {
+      protected boolean filter(OntopolyTopicIF o) {
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
         return page.filterTopic(o);
       }                              
     };
-    TopicDropDownChoice<TopicType> choice = new TopicDropDownChoice<TopicType>("typesList", selectedModel, choicesModel);
+    TopicDropDownChoice<TopicTypeIF> choice = new TopicDropDownChoice<TopicTypeIF>("typesList", selectedModel, choicesModel);
     choice.add(new AjaxFormComponentUpdatingBehavior("onchange") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
@@ -50,9 +51,9 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
     addButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        TopicType topicType = (TopicType)selectedModel.getObject();
+        TopicTypeIF topicType = (TopicTypeIF)selectedModel.getObject();
         if (topicType == null) return;
-        Topic instance = topicModel.getTopic();
+        OntopolyTopicIF instance = topicModel.getTopic();
         instance.addTopicType(topicType);
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", instance.getTopicMap().getId());
@@ -66,9 +67,9 @@ public class AddOrRemoveTypeFunctionBoxPanel extends Panel {
     removeButton.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        TopicType topicType = (TopicType)selectedModel.getObject();
+        TopicTypeIF topicType = (TopicTypeIF)selectedModel.getObject();
         if (topicType == null) return;
-        Topic instance = topicModel.getTopic();
+        OntopolyTopicIF instance = topicModel.getTopic();
         Collection topicTypes = instance.getTopicTypes();
         if (!(topicTypes.size() == 1 && topicTypes.contains(topicType)))
           // only remove topic type if it won't end up without a type at all

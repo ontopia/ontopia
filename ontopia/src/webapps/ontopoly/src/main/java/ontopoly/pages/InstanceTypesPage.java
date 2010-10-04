@@ -10,7 +10,7 @@ import javax.swing.tree.TreeNode;
 import ontopoly.components.LinkPanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.components.TreePanel;
-import ontopoly.model.Topic;
+import ontopoly.model.OntopolyTopicIF;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.pojos.TopicNode;
 import ontopoly.utils.TreeModels;
@@ -56,7 +56,7 @@ public class InstanceTypesPage extends OntopolyAbstractPage {
         return new LinkPanel(id) {
           @Override
           protected Label newLabel(String id) {
-            Topic topic = node.getTopic();
+            OntopolyTopicIF topic = node.getTopic();
             final boolean isSystemTopic = topic.isSystemTopic();
             return new Label(id, new Model<String>(getLabel(topic))) {
               @Override

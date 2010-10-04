@@ -1,14 +1,14 @@
 package ontopoly.conversion;
 
 import ontopoly.model.PSI;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 
 public class Upgrade_2_0 extends UpgradeBase {
   
-  Upgrade_2_0(TopicMap topicmap) throws InvalidQueryException {
+  Upgrade_2_0(OntopolyTopicMapIF topicmap) throws InvalidQueryException {
     super(topicmap);
   }
   

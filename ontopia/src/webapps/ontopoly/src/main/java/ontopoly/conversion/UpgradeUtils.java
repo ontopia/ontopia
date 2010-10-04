@@ -1,7 +1,7 @@
 package ontopoly.conversion;
 
 import ontopoly.OntopolyApplication;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ public class UpgradeUtils {
   
   private static Object lock = new Object();
   
-  static void upgradeTopicMap(TopicMap topicMap) {
+  static void upgradeTopicMap(OntopolyTopicMapIF topicMap) {
     TopicMapIF topicmap = topicMap.getTopicMapIF();
     
     synchronized (lock) {     

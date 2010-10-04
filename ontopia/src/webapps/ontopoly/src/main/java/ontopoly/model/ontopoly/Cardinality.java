@@ -1,21 +1,22 @@
-// $Id: Cardinality.java,v 1.1 2008/10/23 05:18:36 geir.gronmo Exp $
 
-package ontopoly.model;
+package ontopoly.model.ontopoly;
 
 import java.util.List;
 
+import ontopoly.model.CardinalityIF;
+import ontopoly.model.OntopolyTopicMapIF;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * Represents a cardinality that can be assigned to a field.
  */
-public class Cardinality extends Topic {
+public class Cardinality extends Topic implements CardinalityIF {
 
   /**
    * Creates a new Cardinality object.
    */
-  public Cardinality(TopicIF topic, TopicMap tm) {
+  public Cardinality(TopicIF topic, OntopolyTopicMapIF tm) {
     super(topic, tm);
   }
   
@@ -23,7 +24,7 @@ public class Cardinality extends Topic {
     if (!(obj instanceof Cardinality))
       return false;
 
-    Cardinality cardinality = (Cardinality) obj;
+    CardinalityIF cardinality = (CardinalityIF) obj;
     return (getTopicIF().equals(cardinality.getTopicIF()));
   }
 
@@ -62,27 +63,27 @@ public class Cardinality extends Topic {
   /**
    * Returns the default cardinality (zero or more)
    */
-  public static Cardinality getDefaultCardinality(FieldDefinition fieldDefinition) {
-    TopicMap tm = fieldDefinition.getTopicMap();
+  public static CardinalityIF getDefaultCardinality(FieldDefinitionIF fieldDefinition) {
+    OntopolyTopicMapIF tm = fieldDefinition.getTopicMap();
     LocatorIF cardPSI = PSI.ON_CARDINALITY_0_M; 
     switch (fieldDefinition.getFieldType()) {
-      case FieldDefinition.FIELD_TYPE_IDENTITY: {
-        IdentityField identityField = (IdentityField)fieldDefinition;
+      case FieldDefinitionIF.FIELD_TYPE_IDENTITY: {
+        IdentityFieldIF identityField = (IdentityFieldIF)fieldDefinition;
         if (identityField.isSubjectLocator())
           cardPSI = PSI.ON_CARDINALITY_1_1;
         else
           cardPSI = PSI.ON_CARDINALITY_0_M;
         break;
       }
-      case FieldDefinition.FIELD_TYPE_NAME: {
+      case FieldDefinitionIF.FIELD_TYPE_NAME: {
         cardPSI = PSI.ON_CARDINALITY_1_1;
         break;
       }
-      case FieldDefinition.FIELD_TYPE_OCCURRENCE: {
+      case FieldDefinitionIF.FIELD_TYPE_OCCURRENCE: {
         cardPSI = PSI.ON_CARDINALITY_0_1;
         break;
       }
-      case FieldDefinition.FIELD_TYPE_ROLE: {
+      case FieldDefinitionIF.FIELD_TYPE_ROLE: {
         cardPSI = PSI.ON_CARDINALITY_0_M;
         break;
       }
@@ -96,10 +97,10 @@ public class Cardinality extends Topic {
    * @return A list containing Cardinality objects of all available
    *         cardinalities.
    */
-  public static List<Cardinality> getCardinalityTypes(TopicMap tm) {
+  public static List<CardinalityIF> getCardinalityTypes(OntopolyTopicMapIF tm) {
     String query = "instance-of($d, on:cardinality)?";
 
-    QueryMapper<Cardinality> qm = tm.newQueryMapper(Cardinality.class);
+    QueryMapper<CardinalityIF> qm = tm.newQueryMapper(Cardinality.class);
     return qm.queryForList(query);
   }
 

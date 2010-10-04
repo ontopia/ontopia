@@ -1,19 +1,15 @@
 package ontopoly.models;
 
-
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class TMObjectModel extends LoadableDetachableModel<TMObjectIF> {
-
   private static final long serialVersionUID = -8374148020034895666L;
-
   private String topicMapId;
-
   private String objectId;
 
   public TMObjectModel(String topicMapId, TMObjectIF object) {
@@ -40,7 +36,7 @@ public class TMObjectModel extends LoadableDetachableModel<TMObjectIF> {
   @Override
   protected TMObjectIF load() {
     if (topicMapId == null) return null;
-    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
+    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
     // FIXME: should probably complain if object not found
     return (TMObjectIF) tm.getTopicMapIF().getObjectById(objectId);
   }

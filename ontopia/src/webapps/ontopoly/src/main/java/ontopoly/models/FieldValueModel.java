@@ -1,20 +1,19 @@
 package ontopoly.models;
 
-
 import net.ontopia.topicmaps.core.TMObjectIF;
 
-import ontopoly.model.RoleField;
+import ontopoly.model.RoleFieldIF;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class FieldValueModel extends LoadableDetachableModel<Object> {
-
   private FieldInstanceModel fieldInstanceModel;
   private Object value;
   private boolean isExistingValue;
   
-  private FieldValueModel(FieldInstanceModel fieldInstanceModel, Object value, boolean isExistingValue) {
+  private FieldValueModel(FieldInstanceModel fieldInstanceModel, Object value,
+                          boolean isExistingValue) {
     super(value);
     if (fieldInstanceModel == null)
       throw new NullPointerException("fieldInstanceModel parameter cannot be null.");
@@ -26,8 +25,8 @@ public class FieldValueModel extends LoadableDetachableModel<Object> {
   
   private void setValueInternal(Object value) {
     // turn non-serializable objects into model objects
-    if (value instanceof RoleField.ValueIF)
-      this.value = new AssociationFieldValueModel((RoleField.ValueIF)value);
+    if (value instanceof RoleFieldIF.ValueIF)
+      this.value = new AssociationFieldValueModel((RoleFieldIF.ValueIF)value);
     else if (value instanceof TMObjectIF)
       this.value = new TMObjectModel(fieldInstanceModel.getFieldInstance().getInstance().getTopicMap().getId(), (TMObjectIF)value);
     else

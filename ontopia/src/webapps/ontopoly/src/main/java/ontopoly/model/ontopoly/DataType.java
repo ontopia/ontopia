@@ -1,11 +1,11 @@
 
-// $Id: DataType.java,v 1.3 2008/11/07 13:36:49 geir.gronmo Exp $
-
-package ontopoly.model;
+package ontopoly.model.ontopoly;
 
 import java.util.Collection;
 import java.util.List;
 
+import ontopoly.model.DataTypeIF;
+import ontopoly.model.OntopolyTopicMapIF;
 import ontopoly.utils.OntopolyModelUtils;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -16,9 +16,9 @@ import net.ontopia.topicmaps.core.TopicIF;
 /**
  * Represents a datatype which can be assigned to an occurrence type.
  */
-public class DataType extends Topic {
+public class DataType extends Topic implements DataTypeIF {
 
-  public DataType(TopicIF topic, TopicMap tm) {
+  public DataType(TopicIF topic, OntopolyTopicMapIF tm) {
     super(topic, tm);
   }
 

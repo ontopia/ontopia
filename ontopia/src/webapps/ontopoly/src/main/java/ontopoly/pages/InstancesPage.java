@@ -17,9 +17,9 @@ import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.components.TreePanel;
 import ontopoly.components.TopicListPanel;
-import ontopoly.model.Topic;
-import ontopoly.model.TopicMap;
-import ontopoly.model.TopicType;
+import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicTypeIF;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pojos.TopicNode;
@@ -50,7 +50,7 @@ public class InstancesPage extends OntopolyAbstractPage {
   }
   
   public InstancesPage(PageParameters parameters) {
-	super(parameters);
+    super(parameters);
 	
     this.topicTypeModel = new TopicTypeModel(parameters.getString("topicMapId"), parameters.getString("topicId"));
     
@@ -63,7 +63,7 @@ public class InstancesPage extends OntopolyAbstractPage {
     form.setOutputMarkupId(true);
 
     // Add list of instances
-    TopicType topicType = topicTypeModel.getTopicType();
+    TopicTypeIF topicType = topicTypeModel.getTopicType();
     
     if (topicType.isLargeInstanceSet()) {
       form.add(new InstanceSearchPanel("contentPanel", topicTypeModel));
@@ -85,7 +85,7 @@ public class InstancesPage extends OntopolyAbstractPage {
           return new LinkPanel(id) {
             @Override
             protected Label newLabel(String id) {
-              Topic topic = node.getTopic();
+              OntopolyTopicIF topic = node.getTopic();
               final boolean isSystemTopic = topic.isSystemTopic();
               return new Label(id, new Model<String>(getLabel(topic))) {
                 @Override
@@ -111,10 +111,10 @@ public class InstancesPage extends OntopolyAbstractPage {
       form.add(treePanel);
     } else {
       // just make a list
-      form.add(new TopicListPanel("contentPanel", new AbstractReadOnlyModel<List<Topic>>() {
+      form.add(new TopicListPanel("contentPanel", new AbstractReadOnlyModel<List<OntopolyTopicIF>>() {
           @Override
-          public List<Topic> getObject() {
-        	return topicTypeModel.getTopicType().getInstances();
+          public List<OntopolyTopicIF> getObject() {
+            return topicTypeModel.getTopicType().getInstances();
           }
         }));
     }
@@ -138,12 +138,11 @@ public class InstancesPage extends OntopolyAbstractPage {
   }
 
   private void createFunctionBoxes(MarkupContainer parent, String id) {
-
     parent.add(new FunctionBoxesPanel(id) {
       @Override
       protected List<Component> getFunctionBoxesList(String id) {
         List<Component> list = new ArrayList<Component>();
-        TopicType topicType = topicTypeModel.getTopicType();
+        TopicTypeIF topicType = topicTypeModel.getTopicType();
         if (!topicType.isAbstract() && !topicType.isReadOnly()) {
           list.add(new CreateInstanceFunctionBoxPanel(id, getTopicMapModel()) {
             @Override
@@ -155,8 +154,8 @@ public class InstancesPage extends OntopolyAbstractPage {
               return new ResourceModel("instances.create.text");
             }
             @Override
-            protected Topic createInstance(TopicMap topicMap, String name) {
-              TopicType topicType = topicTypeModel.getTopicType();
+            protected OntopolyTopicIF createInstance(OntopolyTopicMapIF topicMap, String name) {
+              TopicTypeIF topicType = topicTypeModel.getTopicType();
               return topicType.createInstance(name);
             }
             
@@ -173,8 +172,8 @@ public class InstancesPage extends OntopolyAbstractPage {
           }
           @Override
           protected Component getLink(String id) {
-            TopicMap tm = getTopicMapModel().getTopicMap();
-            TopicType tt = topicTypeModel.getTopicType();
+            OntopolyTopicMapIF tm = getTopicMapModel().getTopicMap();
+            TopicTypeIF tt = topicTypeModel.getTopicType();
             PageParameters params = new PageParameters();
             params.put("topicMapId", tm.getId());
             params.put("topicId", tt.getId());

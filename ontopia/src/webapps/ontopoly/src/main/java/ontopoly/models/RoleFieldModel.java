@@ -1,6 +1,5 @@
 package ontopoly.models;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -9,17 +8,16 @@ import java.util.List;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
-import ontopoly.model.RoleField;
-import ontopoly.model.TopicMap;
+import ontopoly.model.RoleFieldIF;
+import ontopoly.model.OntopolyTopicMapIF;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class RoleFieldModel extends LoadableDetachableModel<RoleField> {
-  
+public class RoleFieldModel extends LoadableDetachableModel<RoleFieldIF> { 
   private String topicMapId;
   private String fieldId;
   
-  public RoleFieldModel(RoleField roleField) {
+  public RoleFieldModel(RoleFieldIF roleField) {
     super(roleField);
     if (roleField == null)
       throw new NullPointerException("roleField parameter cannot be null.");
@@ -36,22 +34,21 @@ public class RoleFieldModel extends LoadableDetachableModel<RoleField> {
     this.fieldId = fieldId;
   }
 
-  public RoleField getRoleField() {
-    return (RoleField)getObject();
+  public RoleFieldIF getRoleField() {
+    return (RoleFieldIF)getObject();
   }
   
   @Override
-  protected RoleField load() {
-    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
-    TopicIF fieldTopic = tm.getTopicIFById(fieldId);
-    return new RoleField(fieldTopic, tm);    
+  protected RoleFieldIF load() {
+    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
+    return tm.findRoleField(fieldId);
   }
 
-  public static List<RoleFieldModel> wrapInRoleFieldModels(Collection<RoleField> roleFields) {
+  public static List<RoleFieldModel> wrapInRoleFieldModels(Collection<RoleFieldIF> roleFields) {
     List<RoleFieldModel> result = new ArrayList<RoleFieldModel>(roleFields.size());
     Iterator iter = roleFields.iterator();
     while (iter.hasNext()) {
-      RoleField roleField = (RoleField)iter.next();
+      RoleFieldIF roleField = (RoleFieldIF) iter.next();
       result.add(new RoleFieldModel(roleField));
     }
     return result;

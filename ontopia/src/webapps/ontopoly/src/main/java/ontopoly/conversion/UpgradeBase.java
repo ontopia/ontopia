@@ -7,8 +7,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
-import ontopoly.model.QueryMapper;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
@@ -27,6 +26,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.query.utils.QueryWrapper;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -42,13 +42,13 @@ public abstract class UpgradeBase {
   static final LocatorIF base_xtm = URILocator.create("http://www.topicmaps.org/xtm/1.0/core.xtm");
   static final LocatorIF base_xsd = URILocator.create("http://www.w3.org/2001/XMLSchema#"); 
 
-  protected TopicMap topicMap;
+  protected OntopolyTopicMapIF topicMap;
   protected TopicMapIF topicmap;
   
   protected DeclarationContextIF dc;
   protected QueryProcessorIF qp;
   
-  UpgradeBase(TopicMap topicMap) throws InvalidQueryException {
+  UpgradeBase(OntopolyTopicMapIF topicMap) throws InvalidQueryException {
     this.topicMap = topicMap;
     this.topicmap = topicMap.getTopicMapIF();
     this.dc = QueryUtils.parseDeclarations(topicMap.getTopicMapIF(), 
@@ -94,7 +94,8 @@ public abstract class UpgradeBase {
     return qp.update(update, dc);
   }
   
-  protected static TopicIF getTopic(TopicMapIF topicmap, LocatorIF base_on, String ref) {
+  protected static TopicIF getTopic(TopicMapIF topicmap, LocatorIF base_on,
+                                    String ref) {
     LocatorIF loc = base_on.resolveAbsolute(ref);
     TopicIF topic = topicmap.getTopicBySubjectIdentifier(loc);
     if (topic == null) 
@@ -104,7 +105,9 @@ public abstract class UpgradeBase {
   }
 
   protected static void translateAssociations(String atype1, String[] rtypes1,
-      String atype2, String[] rtypes2, TopicMapIF tm, LocatorIF base_on, QueryProcessorIF qp, DeclarationContextIF dc) throws InvalidQueryException {
+      String atype2, String[] rtypes2, TopicMapIF tm, LocatorIF base_on,
+      QueryProcessorIF qp, DeclarationContextIF dc)
+    throws InvalidQueryException {
     StringBuffer sb = new StringBuffer();
     sb.append("select $A");
     for (int i=0; i < rtypes1.length; i++) {
@@ -420,7 +423,7 @@ public abstract class UpgradeBase {
     builder.makeAssociationRole(fieldInView, getTopic(topicmap, base_on, "fields-view"), fieldsView);
   }
 
-  protected static TopicIF defineOccurrenceField(TopicMap topicMap,
+  protected static TopicIF defineOccurrenceField(OntopolyTopicMapIF topicMap,
       LocatorIF base_on, String otypeId, String datatype, String cardinality) {
     TopicMapIF topicmap = topicMap.getTopicMapIF();
     TopicIF otype = getTopic(topicmap, base_on, otypeId);
@@ -429,7 +432,7 @@ public abstract class UpgradeBase {
     return defineOccurrenceField(topicMap, base_on, otype, dt, card);  
   }
   
-  protected static TopicIF defineOccurrenceField(TopicMap topicMap,
+  protected static TopicIF defineOccurrenceField(OntopolyTopicMapIF topicMap,
       LocatorIF base_on, TopicIF otype, TopicIF datatype, TopicIF cardinality) {
     
     TopicMapIF topicmap = topicMap.getTopicMapIF();
@@ -465,7 +468,7 @@ public abstract class UpgradeBase {
    return oField;
   }
 
-  protected static OccurrenceIF addOccurrence(TopicMap topicMap, LocatorIF base_on, TopicIF topic, String otype, String datatype, String value) {
+  protected static OccurrenceIF addOccurrence(OntopolyTopicMapIF topicMap, LocatorIF base_on, TopicIF topic, String otype, String datatype, String value) {
     TopicMapIF topicmap = topicMap.getTopicMapIF();    
     TopicMapBuilderIF builder = topicmap.getBuilder();
     LocatorIF dt;

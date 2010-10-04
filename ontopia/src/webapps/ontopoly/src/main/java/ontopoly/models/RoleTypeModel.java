@@ -1,27 +1,23 @@
 package ontopoly.models;
 
-
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
-import ontopoly.model.RoleType;
-import ontopoly.model.TopicMap;
+import ontopoly.model.RoleTypeIF;
+import ontopoly.model.OntopolyTopicMapIF;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class RoleTypeModel extends LoadableDetachableModel<RoleType> {
-
+public class RoleTypeModel extends LoadableDetachableModel<RoleTypeIF> {
   private static final long serialVersionUID = -4066710557389722040L;
-
   private String topicMapId;
-
   private String topicId;
   
-  public RoleTypeModel(RoleType roleType) {
+  public RoleTypeModel(RoleTypeIF roleType) {
     super(roleType);
     if (roleType == null)
       throw new NullPointerException("roleType parameter cannot be null.");
        
-    TopicMap topicMap = roleType.getTopicMap();
+    OntopolyTopicMapIF topicMap = roleType.getTopicMap();
     this.topicMapId = topicMap.getId();    
     this.topicId = roleType.getId(); 
   }
@@ -35,15 +31,14 @@ public class RoleTypeModel extends LoadableDetachableModel<RoleType> {
     this.topicId = topicId;
   }
 
-  public RoleType getRoleType() {
-    return (RoleType)getObject();
+  public RoleTypeIF getRoleType() {
+    return (RoleTypeIF)getObject();
   }
   
   @Override
-  protected RoleType load() {
-    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
-    TopicIF topicIf = tm.getTopicIFById(topicId);
-    return new RoleType(topicIf, tm);
+  protected RoleTypeIF load() {
+    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
+    return tm.findRoleType(topicId);
   }
   
 }

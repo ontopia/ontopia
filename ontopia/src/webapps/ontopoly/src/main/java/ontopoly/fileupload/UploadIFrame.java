@@ -8,8 +8,8 @@ import java.io.StringWriter;
 
 import net.ontopia.net.Base64;
 import net.ontopia.utils.StreamUtils;
-import ontopoly.model.FieldInstance;
-import ontopoly.model.LifeCycleListener;
+import ontopoly.model.FieldInstanceIF;
+import ontopoly.model.LifeCycleListenerIF;
 import ontopoly.models.FieldValueModel;
 
 import org.apache.wicket.markup.ComponentTag;
@@ -22,8 +22,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 
-public abstract class UploadIFrame extends WebPage {
-    
+public abstract class UploadIFrame extends WebPage {    
   private boolean uploaded = false;
   private FileUploadField uploadField;
   private FieldValueModel fieldValueModel;
@@ -70,7 +69,7 @@ public abstract class UploadIFrame extends WebPage {
       if (upload != null) {
         try {
           Reader input = new InputStreamReader(new Base64.InputStream(upload.getInputStream(), Base64.ENCODE), "utf-8");
-          FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+          FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
           StringWriter swriter = new StringWriter();
           StreamUtils.transfer(input, swriter);
           String value = swriter.toString();
@@ -78,13 +77,12 @@ public abstract class UploadIFrame extends WebPage {
           fieldValueModel.setExistingValue(value);
           uploaded = true;
         } catch (IOException exception) {
-            exception.printStackTrace();
+          exception.printStackTrace();
         }
       }
-    }
-      
+    }      
   }
 
-  protected abstract LifeCycleListener getLifeCycleListener();
+  protected abstract LifeCycleListenerIF getLifeCycleListener();
   
 }

@@ -1,7 +1,7 @@
 package ontopoly.components;
 
-import ontopoly.model.FieldDefinition;
-import ontopoly.model.Topic;
+import ontopoly.model.FieldDefinitionIF;
+import ontopoly.model.OntopolyTopicIF;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.TopicTypeModel;
 
@@ -12,17 +12,18 @@ import org.apache.wicket.model.ResourceModel;
 
 public abstract class FieldsEditorAddPanel extends Panel {
 
-  public FieldsEditorAddPanel(String id, final TopicTypeModel topicTypeModel, final FieldDefinitionModel fieldDefinitionModel) {
+  public FieldsEditorAddPanel(String id, final TopicTypeModel topicTypeModel,
+                              final FieldDefinitionModel fieldDefinitionModel) {
     super(id);
     
-    FieldDefinition fieldDefinition = fieldDefinitionModel.getFieldDefinition(); 
+    FieldDefinitionIF fieldDefinition = fieldDefinitionModel.getFieldDefinition(); 
 
     WebMarkupContainer container = new WebMarkupContainer("field", fieldDefinitionModel);
     add(container);
 
     container.add(new FieldDefinitionLabel("fieldLabel", fieldDefinitionModel) {
       @Override
-      protected boolean isOntologyTypeLinkEnabled(Topic topic) {
+      protected boolean isOntologyTypeLinkEnabled(OntopolyTopicIF topic) {
         return true;
       }      
     });
@@ -39,6 +40,8 @@ public abstract class FieldsEditorAddPanel extends Panel {
      
   }
 
-  protected abstract void onAddField(TopicTypeModel topicTypeModel, FieldDefinitionModel fdm, AjaxRequestTarget target);            
+  protected abstract void onAddField(TopicTypeModel topicTypeModel,
+                                     FieldDefinitionModel fdm,
+                                     AjaxRequestTarget target);            
 
 }

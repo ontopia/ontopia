@@ -1,19 +1,15 @@
 package ontopoly.models;
 
-
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
-import ontopoly.model.OccurrenceType;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OccurrenceTypeIF;
+import ontopoly.model.OntopolyTopicMapIF;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class OccurrenceTypeModel extends LoadableDetachableModel {
-
   private static final long serialVersionUID = 8685431361043298701L;
-
   private String topicMapId;
-
   private String topicId;
 
   public OccurrenceTypeModel(String topicMapId, String topicId) {
@@ -25,14 +21,13 @@ public class OccurrenceTypeModel extends LoadableDetachableModel {
     this.topicId = topicId;
   }
 
-  public OccurrenceType getOccurrenceType() {
-    return (OccurrenceType)getObject();
+  public OccurrenceTypeIF getOccurrenceType() {
+    return (OccurrenceTypeIF)getObject();
   }
   
   @Override
   protected Object load() {
-    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
-    TopicIF topicIf = tm.getTopicIFById(topicId);
-    return new OccurrenceType(topicIf, tm);
+    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
+    return tm.findOccurrenceType(topicId);
   }
 }

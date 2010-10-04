@@ -3,8 +3,8 @@ package ontopoly.components;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.model.FieldDefinition;
-import ontopoly.model.FieldInstance;
+import ontopoly.model.FieldDefinitionIF;
+import ontopoly.model.FieldInstanceIF;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.validators.ExternalValidation;
@@ -21,7 +21,6 @@ import org.apache.wicket.model.Model;
 
 
 public class FieldInstanceURIField extends Panel {
-
   protected FieldValueModel fieldValueModel;
   protected String oldValue;
   protected TextField<String> textField;
@@ -66,7 +65,7 @@ public class FieldInstanceURIField extends Panel {
         String newValue = (String)getModelObject();
         if (ObjectUtils.equals(newValue, oldValue)) return;
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-        FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+        FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
         if (fieldValueModel.isExistingValue() && oldValue != null)
           fieldInstance.removeValue(oldValue, page.getListener());
         if (newValue != null && !newValue.equals("")) {
@@ -77,7 +76,7 @@ public class FieldInstanceURIField extends Panel {
       }
       
     };
-    if (fieldValueModel.getFieldInstanceModel().getFieldType() == FieldDefinition.FIELD_TYPE_IDENTITY) {
+    if (fieldValueModel.getFieldInstanceModel().getFieldType() == FieldDefinitionIF.FIELD_TYPE_IDENTITY) {
         textField.add(new IdentityValidator(this, fieldValueModel.getFieldInstanceModel()));
     } else { 
         textField.add(new URIValidator(this, fieldValueModel.getFieldInstanceModel()));

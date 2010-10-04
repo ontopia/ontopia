@@ -1,4 +1,3 @@
-// $Id: FieldAssignment.java,v 1.3 2009/04/30 09:53:42 geir.gronmo Exp $
 
 package ontopoly.model;
 
@@ -31,7 +30,7 @@ public final class FieldAssignment {
 
   private TopicMap tm;
 
-	private int cachedOrder = Integer.MAX_VALUE;
+  private int cachedOrder = Integer.MAX_VALUE;
 
   /**
    * Creates a new field assignment object.
@@ -44,13 +43,13 @@ public final class FieldAssignment {
   }
 
   public FieldAssignment(TopicType topicType, TopicType declaredTopicType, FieldDefinition fieldDefinition, int cachedOrder) {
-		this(topicType, declaredTopicType, fieldDefinition);
-		this.cachedOrder = (cachedOrder == Integer.MAX_VALUE ? cachedOrder - 1 : cachedOrder);
-	}
+    this(topicType, declaredTopicType, fieldDefinition);
+    this.cachedOrder = (cachedOrder == Integer.MAX_VALUE ? cachedOrder - 1 : cachedOrder);
+  }
 
-	void refresh() {
-		this.cachedOrder = Integer.MAX_VALUE;
-	}
+  void refresh() {
+    this.cachedOrder = Integer.MAX_VALUE;
+  }
 
   /**
    * Returns the topic type.
@@ -81,11 +80,11 @@ public final class FieldAssignment {
    * Returns the ordering key of the field on this topic type.
    */
   public int getOrder() {
-		if (cachedOrder < Integer.MAX_VALUE) return cachedOrder;
+    if (cachedOrder < Integer.MAX_VALUE) return cachedOrder;
 
-		int order = getOrder(topicType);
-		this.cachedOrder = (order == Integer.MAX_VALUE ? order - 1 : order);
-		return cachedOrder;
+    int order = getOrder(topicType);
+    this.cachedOrder = (order == Integer.MAX_VALUE ? order - 1 : order);
+    return cachedOrder;
   }
 
   /**
@@ -147,7 +146,8 @@ public final class FieldAssignment {
   }
 
   /**
-   * Change field order so that this field is ordered directly after the other field.
+   * Change field order so that this field is ordered directly after
+   * the other field.
    * @param other the field to order after.
    */
   public void moveAfter(FieldAssignment other) {
@@ -211,7 +211,7 @@ public final class FieldAssignment {
 
     FieldAssignment fa = (FieldAssignment) obj;
     return (topicType.getTopicIF().equals(fa.topicType.getTopicIF()) &&
-			fieldDefinition.getTopicIF().equals(fa.getFieldDefinition().getTopicIF()));
+            fieldDefinition.getTopicIF().equals(fa.getFieldDefinition().getTopicIF()));
   }
 
   public int hashCode() {

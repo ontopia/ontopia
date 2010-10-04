@@ -3,19 +3,19 @@ package ontopoly.models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import ontopoly.model.Topic;
-import ontopoly.model.TopicMap;
-import ontopoly.model.TopicType;
+import net.ontopia.utils.CompactHashSet;
+
+import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicTypeIF;
 import ontopoly.utils.TopicComparator;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public abstract class AvailableTopicTypesModel extends LoadableDetachableModel<List<TopicType>> {
-
+public abstract class AvailableTopicTypesModel extends LoadableDetachableModel<List<TopicTypeIF>> {
   private TopicModel topicModel;  
   
   public AvailableTopicTypesModel(TopicModel topicModel) {
@@ -31,20 +31,20 @@ public abstract class AvailableTopicTypesModel extends LoadableDetachableModel<L
   }
   
   @Override
-  protected List<TopicType> load() {
+  protected List<TopicTypeIF> load() {
     // FIXME: use sorted set instead?
-    Collection<TopicType> types = new HashSet<TopicType>();
-    Topic topic = topicModel.getTopic();
-    TopicMap topicMap = topic.getTopicMap();
+    Collection<TopicTypeIF> types = new CompactHashSet<TopicTypeIF>();
+    OntopolyTopicIF topic = topicModel.getTopic();
+    OntopolyTopicMapIF topicMap = topic.getTopicMap();
     types.addAll(topicMap.getTopicTypes());
     if (!getShouldIncludeSelf()) 
       types.remove(topic); // remove topic itself as it cannot be an instance of itself
     if (!getShouldIncludeExistingTypes())
       types.removeAll(topic.getTopicTypes());
-    List<TopicType> result = new ArrayList<TopicType>(types.size()); 
+    List<TopicTypeIF> result = new ArrayList<TopicTypeIF>(types.size()); 
     Iterator iter = types.iterator();
     while (iter.hasNext()) {
-      TopicType o = (TopicType)iter.next();
+      TopicTypeIF o = (TopicTypeIF)iter.next();
       if (filter(o))
         result.add(o);
     }
@@ -52,6 +52,6 @@ public abstract class AvailableTopicTypesModel extends LoadableDetachableModel<L
     return result;
   }
   
-  protected abstract boolean filter(Topic o);
+  protected abstract boolean filter(OntopolyTopicIF o);
   
 }

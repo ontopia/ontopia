@@ -1,7 +1,7 @@
 package ontopoly.components;
 
 import ontopoly.OntopolyContext;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pages.ModalConfirmPage;
 import ontopoly.sysmodel.TopicMapReference;
@@ -34,7 +34,7 @@ public abstract class DeleteTopicMapFunctionBoxPanel extends Panel {
         // close modal
         deleteModal.close(target);
         // notify listeners
-        TopicMap topicMap = getTopicMapModel().getTopicMap();
+        OntopolyTopicMapIF topicMap = getTopicMapModel().getTopicMap();
         onDeleteConfirmed(topicMap);        
         // delete topic map
         TopicMapReference topicMapReferenceInSystemTopic =
@@ -69,6 +69,6 @@ public abstract class DeleteTopicMapFunctionBoxPanel extends Panel {
 
   public abstract TopicMapModel getTopicMapModel();
   
-  public abstract void onDeleteConfirmed(TopicMap topic);
+  public abstract void onDeleteConfirmed(OntopolyTopicMapIF topic);
   
 }

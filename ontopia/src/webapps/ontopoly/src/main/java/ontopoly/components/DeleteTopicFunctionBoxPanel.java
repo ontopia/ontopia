@@ -3,7 +3,7 @@ package ontopoly.components;
 import java.util.Collection;
 import java.util.Iterator;
 
-import ontopoly.model.Topic;
+import ontopoly.model.OntopolyTopicIF;
 import ontopoly.models.TopicModel;
 import ontopoly.pages.AbstractOntopolyPage;
 import ontopoly.pages.ModalConfirmPage;
@@ -36,7 +36,7 @@ public abstract class DeleteTopicFunctionBoxPanel extends Panel {
         // close modal
         deleteModal.close(target);
         // notify listeners
-        Topic instance = (Topic)getTopicModel().getObject();
+        OntopolyTopicIF instance = (OntopolyTopicIF)getTopicModel().getObject();
         onDeleteConfirmed(instance);
 
         // remove dependent objects
@@ -45,7 +45,7 @@ public abstract class DeleteTopicFunctionBoxPanel extends Panel {
 //        System.out.println("RO: " + dependentObjects.size() + " " + dependentObjects);
         Iterator diter = dependentObjects.iterator();
         while (diter.hasNext()) {
-          Topic dtopic = (Topic)diter.next();
+          OntopolyTopicIF dtopic = (OntopolyTopicIF) diter.next();
 //          System.out.println("Removing: " + dtopic.getName());
           dtopic.remove(page);
         }
@@ -81,6 +81,6 @@ public abstract class DeleteTopicFunctionBoxPanel extends Panel {
 
   public abstract TopicModel getTopicModel();
   
-  public abstract void onDeleteConfirmed(Topic topic);
+  public abstract void onDeleteConfirmed(OntopolyTopicIF topic);
   
 }

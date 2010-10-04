@@ -13,7 +13,7 @@ import java.util.Map;
 
 import ontopoly.OntopolyApplication;
 import ontopoly.model.PSI;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.sysmodel.TopicMapSource;
 
@@ -66,14 +66,15 @@ public class ConversionUtils {
     }
   }
   
-  public static String upgradeExisting(TopicMap topicMap) {
+  public static String upgradeExisting(OntopolyTopicMapIF topicMap) {
     UpgradeUtils.upgradeTopicMap(topicMap);
     TopicMapReference ref = topicMap.getOntopolyRepository().getReference(topicMap.getId());
     makeOntopolyTopicMap(ref, topicMap.getName());
     return ref.getId();
   }
   
-  public static String convertExisting(TopicMap topicMap, String tmname) {
+  public static String convertExisting(OntopolyTopicMapIF topicMap,
+                                       String tmname) {
     TopicMapRepositoryIF repository = topicMap.getOntopolyRepository().getTopicMapRepository();
     String refId = inferAndCreateSchema(null, topicMap, tmname, repository);
     TopicMapReference ref = topicMap.getOntopolyRepository().getReference(refId);
@@ -81,24 +82,27 @@ public class ConversionUtils {
     return refId;
   }
   
-  public static String convertNew(TopicMap oldTopicMap, String tmname, TopicMapSource tmsource) {
+  public static String convertNew(OntopolyTopicMapIF oldTopicMap, String tmname,
+                                  TopicMapSource tmsource) {
     TopicMapRepositoryIF repository = oldTopicMap.getOntopolyRepository().getTopicMapRepository();
     
     TopicMapReference newReference = tmsource.createTopicMap(tmname);
-    TopicMap newTopicMap = new TopicMap(newReference);
+    OntopolyTopicMapIF newTopicMap = new TopicMap(newReference); // FIXME
     
     String  refId = inferAndCreateSchema(oldTopicMap, newTopicMap, tmname, repository);
     return refId;    
   }
   
-  private static String inferAndCreateSchema(TopicMap oldTopicMap, TopicMap newTopicMap, String tmname, TopicMapRepositoryIF repository) {
+  private static String inferAndCreateSchema(OntopolyTopicMapIF oldTopicMap,
+                                             OntopolyTopicMapIF newTopicMap,
+                                             String tmname,
+                                             TopicMapRepositoryIF repository) {
 
     boolean newtopicmap = (oldTopicMap != null);
     
     // create new topic map 
     TopicMapStoreIF store = newTopicMap.getTopicMapIF().getStore(); 
-    try {
-    
+    try {    
       TopicMapStoreIF oldstore = null;
       LocatorIF oldbaseloc = null;
       if (newtopicmap) {
@@ -180,7 +184,6 @@ public class ConversionUtils {
           TopicNameIF tn = (TopicNameIF)nrnames[i];
           tn.remove();
         }
-        // String tmname = oldTopicMap.getName();1
         tmbuilder.makeTopicName(nreifier, tmname);
       }
       // Check ontology version:

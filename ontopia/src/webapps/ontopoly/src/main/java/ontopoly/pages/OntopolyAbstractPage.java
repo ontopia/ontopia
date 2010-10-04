@@ -6,7 +6,7 @@ import java.util.List;
 import ontopoly.components.FooterPanel;
 import ontopoly.components.MenuPanel;
 import ontopoly.components.TopicMapHeaderPanel;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pojos.MenuItem;
 
@@ -57,7 +57,7 @@ public abstract class OntopolyAbstractPage extends AbstractProtectedOntopolyPage
     return topicMapModel;    
   }
   
-  protected TopicMap getTopicMap() {
+  protected OntopolyTopicMapIF getTopicMap() {
     return topicMapModel.getTopicMap();
   }
   

@@ -16,9 +16,9 @@ import ontopoly.components.LinkFunctionBoxPanel;
 import ontopoly.components.LockPanel;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
-import ontopoly.model.AssociationType;
-import ontopoly.model.RoleType;
-import ontopoly.model.Topic;
+import ontopoly.model.AssociationTypeIF;
+import ontopoly.model.RoleTypeIF;
+import ontopoly.model.OntopolyTopicIF;
 import ontopoly.models.AssociationTypeModel;
 import ontopoly.models.HelpLinkResourceModel;
 
@@ -50,14 +50,14 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
     // Add lock panel
     LockPanel lockPanel = new LockPanel("lockPanel", associationTypeModel, isReadOnlyPage()) {
       @Override
-      protected void onLockLost(AjaxRequestTarget target, Topic topic) {
+      protected void onLockLost(AjaxRequestTarget target, OntopolyTopicIF topic) {
         PageParameters pageParameters = new PageParameters();
         pageParameters.put("topicMapId", topic.getTopicMap().getId());
         pageParameters.put("topicId", topic.getId());
         setResponsePage(AssociationTransformPage.class, pageParameters);
       }
       @Override
-      protected void onLockWon(AjaxRequestTarget target, Topic topic) {        
+      protected void onLockWon(AjaxRequestTarget target, OntopolyTopicIF topic) {        
         PageParameters pageParameters = new PageParameters();
         pageParameters.put("topicMapId", topic.getTopicMap().getId());
         pageParameters.put("topicId", topic.getId());
@@ -90,15 +90,15 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
   private void createPanel() {
     Form form = new Form("form");
     add(form);
-    AssociationType associationType = getAssociationType();
+    AssociationTypeIF associationType = getAssociationType();
 
     // get used role type combinations
     Collection roleCombos = associationType.getUsedRoleTypeCombinations();
 
     // then remove the combination that is valid according to declaration
-    List<RoleType> declaredRoleTypes = associationType.getDeclaredRoleTypes();
-    Collections.sort(declaredRoleTypes, new Comparator<RoleType>() {
-      public int compare(RoleType rt1, RoleType rt2) {
+    List<RoleTypeIF> declaredRoleTypes = associationType.getDeclaredRoleTypes();
+    Collections.sort(declaredRoleTypes, new Comparator<RoleTypeIF>() {
+      public int compare(RoleTypeIF rt1, RoleTypeIF rt2) {
         return ObjectIdComparator.INSTANCE.compare(rt1.getTopicIF(), rt2.getTopicIF());
       }      
     });
@@ -125,7 +125,7 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
     button.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        Topic t = getAssociationType();
+        OntopolyTopicIF t = getAssociationType();
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", t.getTopicMap().getId());
         pageParametersMap.put("topicId", t.getId());
@@ -151,7 +151,7 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
           }
           @Override
           protected Component getLink(String id) {
-            Topic t = getAssociationType();
+            OntopolyTopicIF t = getAssociationType();
             Map<String,String> pageParametersMap = new HashMap<String,String>();
             pageParametersMap.put("topicMapId", getTopicMap().getId());
             pageParametersMap.put("topicId", t.getId());
@@ -169,7 +169,7 @@ public class AssociationTransformPage extends OntopolyAbstractPage {
     return ONTOLOGY_INDEX_IN_MAINMENU; 
   }
 
-  public AssociationType getAssociationType() {
+  public AssociationTypeIF getAssociationType() {
     return getAssociationTypeModel().getAssociationType();
   }
   

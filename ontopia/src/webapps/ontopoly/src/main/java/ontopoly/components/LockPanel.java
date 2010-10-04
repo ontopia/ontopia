@@ -5,7 +5,7 @@ import java.util.Date;
 import ontopoly.LockManager;
 import ontopoly.OntopolyContext;
 import ontopoly.OntopolySession;
-import ontopoly.model.Topic;
+import ontopoly.model.OntopolyTopicIF;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AbstractAjaxTimerBehavior;
@@ -26,7 +26,7 @@ public abstract class LockPanel extends Panel {
   protected String lockedAt;
   protected String lockKey;
   
-  public LockPanel(String id, IModel<? extends Topic> topicModel, boolean shouldAcquireLock) {
+  public LockPanel(String id, IModel<? extends OntopolyTopicIF> topicModel, boolean shouldAcquireLock) {
     super(id, topicModel);
     
     // acquire lock unless read-only page
@@ -53,14 +53,12 @@ public abstract class LockPanel extends Panel {
       @Override
       protected void onTimer(AjaxRequestTarget target) {
         boolean hadlock = !lockedByOther;
-        //! System.out.println("Attempting to " + (hadlock ? "re" : "") + "acquire lock on " + (AbstractTopic)getModelObject());
         boolean gotlock = acquireLock();
-        //! System.out.println("Got lock: " + hadlock + " " + gotlock);
         if ((hadlock && !gotlock)) {
           stop();
-          onLockLost(target, (Topic)getDefaultModelObject());
+          onLockLost(target, (OntopolyTopicIF)getDefaultModelObject());
         } else if (!hadlock && gotlock) {
-          onLockWon(target, (Topic)getDefaultModelObject());
+          onLockWon(target, (OntopolyTopicIF)getDefaultModelObject());
         }
       }
     };
@@ -69,7 +67,7 @@ public abstract class LockPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         LockManager lockManager = OntopolyContext.getLockManager();
-        Topic topic = (Topic)getDefaultModelObject();
+        OntopolyTopicIF topic = (OntopolyTopicIF)getDefaultModelObject();
         lockManager.forcedUnlock(lockKey);
         timerBehavior.stop();
         onLockWon(target, topic);
@@ -94,16 +92,14 @@ public abstract class LockPanel extends Panel {
     // create lock id and lock key
     OntopolySession session = (OntopolySession)Session.get();
     String lockerId = session.getLockerId(getRequest());
-    LockManager.Lock lock = session.lock((Topic)getDefaultModelObject(), lockerId);
+    LockManager.Lock lock = session.lock((OntopolyTopicIF)getDefaultModelObject(), lockerId);
     this.lockedBy = lock.getLockedBy();
     this.lockedAt = new Date(lock.getLockTime()).toString();
     this.lockKey = lock.getLockKey();
     if (!lock.ownedBy(lockerId)) {
       this.lockedByOther = true;
-      //! System.out.println("Got lock: false: " + lock);
       return false;
     } else {
-      //! System.out.println("Got lock: true" + lock);
       return true;
     }
   }
@@ -114,16 +110,12 @@ public abstract class LockPanel extends Panel {
   
   /**
    * Called when the lock on the topic was lost.
-   * @param target
-   * @param topic
    */
-  protected abstract void onLockLost(AjaxRequestTarget target, Topic topic);
+  protected abstract void onLockLost(AjaxRequestTarget target, OntopolyTopicIF topic);
   
   /**
    * Called when the lock on the topic was won.
-   * @param target
-   * @param topic
    */
-  protected abstract void onLockWon(AjaxRequestTarget target, Topic topic);
+  protected abstract void onLockWon(AjaxRequestTarget target, OntopolyTopicIF topic);
   
 }

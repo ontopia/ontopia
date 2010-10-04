@@ -27,11 +27,11 @@ import ontopoly.components.TopicDropDownChoice;
 import ontopoly.components.TopicTypesFunctionBoxPanel;
 import ontopoly.components.ViewsFunctionBoxPanel;
 import ontopoly.components.VizigatorLinkFunctionBoxPanel;
-import ontopoly.model.FieldsView;
+import ontopoly.model.FieldsViewIF;
 import ontopoly.model.OntopolyModelRuntimeException;
-import ontopoly.model.Topic;
-import ontopoly.model.TopicMap;
-import ontopoly.model.TopicType;
+import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.OntopolyTopicMapIF;
+import ontopoly.model.TopicTypeIF;
 import ontopoly.models.AvailableTopicTypesModel;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.HelpLinkResourceModel;
@@ -54,8 +54,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 
 public class InstancePage extends OntopolyAbstractPage {
-
-  private TopicModel<Topic> topicModel;
+  private TopicModel<OntopolyTopicIF> topicModel;
   private TopicTypeModel topicTypeModel;
   private FieldsViewModel fieldsViewModel;
   
@@ -70,13 +69,13 @@ public class InstancePage extends OntopolyAbstractPage {
     String topicMapId = parameters.getString("topicMapId");
     String topicId = parameters.getString("topicId");
     
-    this.topicModel = new TopicModel<Topic>(topicMapId, topicId);
-    Topic topic = topicModel.getTopic();
+    this.topicModel = new TopicModel<OntopolyTopicIF>(topicMapId, topicId);
+    OntopolyTopicIF topic = topicModel.getTopic();
     if (topic == null)
-        throw new NoSuchTopicException("No topic with id " + topicId + " found.");
+      throw new NoSuchTopicException("No topic with id " + topicId + " found.");
     
     // if "topicType" parameter is specified, pull out most specific direct type    
-    TopicType tt = null;
+    TopicTypeIF tt = null;
     String topicTypeId = parameters.getString("topicTypeId");
     if (topicTypeId != null)
       tt = topic.getMostSpecificTopicType(new TopicTypeModel(topicMapId, topicTypeId).getTopicType());
@@ -91,7 +90,7 @@ public class InstancePage extends OntopolyAbstractPage {
     if (viewId != null)
       this.fieldsViewModel = new FieldsViewModel(topicMapId, viewId);
     else
-      this.fieldsViewModel = new FieldsViewModel(FieldsView.getDefaultFieldsView(topic.getTopicMap()));
+      this.fieldsViewModel = new FieldsViewModel(topic.getTopicMap().getDefaultFieldsView());
     
     // page is read-only if topic type is read-only
     setReadOnlyPage(tt.isReadOnly() || 
@@ -146,7 +145,7 @@ public class InstancePage extends OntopolyAbstractPage {
     return isOntologyPage ? ONTOLOGY_INDEX_IN_MAINMENU : INSTANCES_PAGE_INDEX_IN_MAINMENU; 
   }
 
-  public Topic getTopic() {
+  public OntopolyTopicIF getTopic() {
     return getTopicModel().getTopic();
   }
   
@@ -172,10 +171,10 @@ public class InstancePage extends OntopolyAbstractPage {
     form.add(instancePanel);
 
     // if topic is a topic type then display fields editor
-    Topic topic = getTopicModel().getTopic();
-    FieldsView fieldsView = getFieldsViewModel().getFieldsView();
+    OntopolyTopicIF topic = getTopicModel().getTopic();
+    FieldsViewIF fieldsView = getFieldsViewModel().getFieldsView();
     if (fieldsView.isDefaultView() && topic.isTopicType() && isOntologyPage)
-      form.add(new FieldsEditor("fieldsEditor", new TopicTypeModel(new TopicType(topic.getTopicIF(), topic.getTopicMap())), isReadOnlyPage()));
+      form.add(new FieldsEditor("fieldsEditor", new TopicTypeModel(topic.getTopicMap().findTopicType(topic.getId())), isReadOnlyPage()));
     else
       form.add(new Label("fieldsEditor").setVisible(false));    
   }
@@ -183,66 +182,65 @@ public class InstancePage extends OntopolyAbstractPage {
   protected InstancePanel createInstancePanel(final String id) {
     return new InstancePanel(id, topicModel, topicTypeModel, fieldsViewModel, isReadOnlyPage(), isTraversablePage()) {
       @Override
-      protected void onLockLost(AjaxRequestTarget target, Topic topic) {
+      protected void onLockLost(AjaxRequestTarget target, OntopolyTopicIF topic) {
         setResponsePage(getPageClass(), getPageParameters());
       }      
       @Override
-      protected void onLockWon(AjaxRequestTarget target, Topic topic) {
+      protected void onLockWon(AjaxRequestTarget target, OntopolyTopicIF topic) {
         setResponsePage(getPageClass(), getPageParameters());
       }      
     };
   }
 
   private void createFunctionBoxes(MarkupContainer parent, String id) {
-
     parent.add(new FunctionBoxesPanel(id) {
 
-      @Override
-      protected List<Component> getFunctionBoxesList(String id) {
-        List<Component> list = new ArrayList<Component>();
+    @Override
+    protected List<Component> getFunctionBoxesList(String id) {
+      List<Component> list = new ArrayList<Component>();
 
-        if (getTopicTypeModel().getTopicType() != null) {
-          list.add(new TopicTypesFunctionBoxPanel(id, getTopicModel(), getTopicTypeModel(), getFieldsViewModel()));
-          list.add(new ViewsFunctionBoxPanel(id, getTopicModel(), getTopicTypeModel(), getFieldsViewModel()));
+      if (getTopicTypeModel().getTopicType() != null) {
+        list.add(new TopicTypesFunctionBoxPanel(id, getTopicModel(), getTopicTypeModel(), getFieldsViewModel()));
+        list.add(new ViewsFunctionBoxPanel(id, getTopicModel(), getTopicTypeModel(), getFieldsViewModel()));
 
-          Topic topic = getTopicModel().getTopic();
-          if (topic.isTopicType()) {
-            list.add(new LinkFunctionBoxPanel(id) {
-              @Override
-              protected Component getLabel(String id) {
-                return new Label(id, new ResourceModel("view.instances.of.this.type"));
-              }
-              @Override
-              protected Component getLink(String id) {
-                TopicMap tm = getTopicMapModel().getTopicMap();
-                Topic tt = getTopicModel().getTopic();
-                Map<String,String> pageParametersMap = new HashMap<String,String>();
-                pageParametersMap.put("topicMapId", tm.getId());
-                pageParametersMap.put("topicId", tt.getId());
-                return new OntopolyBookmarkablePageLink(id, InstancesPage.class, new PageParameters(pageParametersMap), tt.getName());
-              }
-            });
-          }
+        OntopolyTopicIF topic = getTopicModel().getTopic();
+        if (topic.isTopicType()) {
           list.add(new LinkFunctionBoxPanel(id) {
             @Override
             protected Component getLabel(String id) {
-              return new Label(id, new ResourceModel("view.instances.of.same.type"));
+              return new Label(id, new ResourceModel("view.instances.of.this.type"));
             }
             @Override
             protected Component getLink(String id) {
-              TopicMap tm = getTopicMapModel().getTopicMap();
-              TopicType tt = getTopicTypeModel().getTopicType();
+              OntopolyTopicMapIF tm = getTopicMapModel().getTopicMap();
+              OntopolyTopicIF tt = getTopicModel().getTopic();
               Map<String,String> pageParametersMap = new HashMap<String,String>();
               pageParametersMap.put("topicMapId", tm.getId());
               pageParametersMap.put("topicId", tt.getId());
               return new OntopolyBookmarkablePageLink(id, InstancesPage.class, new PageParameters(pageParametersMap), tt.getName());
+            }
+            });
+        }
+        list.add(new LinkFunctionBoxPanel(id) {
+          @Override
+          protected Component getLabel(String id) {
+            return new Label(id, new ResourceModel("view.instances.of.same.type"));
+          }
+          @Override
+          protected Component getLink(String id) {
+            OntopolyTopicMapIF tm = getTopicMapModel().getTopicMap();
+            TopicTypeIF tt = getTopicTypeModel().getTopicType();
+            Map<String,String> pageParametersMap = new HashMap<String,String>();
+            pageParametersMap.put("topicMapId", tm.getId());
+            pageParametersMap.put("topicId", tt.getId());
+            return new OntopolyBookmarkablePageLink(id, InstancesPage.class, new PageParameters(pageParametersMap), tt.getName());
             }
           });
 
           list.add(new LinkFunctionBoxPanel(id) {
             @Override
             public boolean isVisible() {
-                return true;
+              return true;
             }
             @Override
             protected Component getLabel(String id) {
@@ -250,8 +248,8 @@ public class InstancePage extends OntopolyAbstractPage {
             }
             @Override
             protected Component getLink(String id) {
-              TopicMap tm = getTopicMapModel().getTopicMap();
-              TopicType tt = getTopicTypeModel().getTopicType();
+              OntopolyTopicMapIF tm = getTopicMapModel().getTopicMap();
+              TopicTypeIF tt = getTopicTypeModel().getTopicType();
               Map<String,String> pageParametersMap = new HashMap<String,String>();
               pageParametersMap.put("topicMapId", tm.getId());
               pageParametersMap.put("topicId", tt.getId());
@@ -269,7 +267,7 @@ public class InstancePage extends OntopolyAbstractPage {
 
             // add box for creating new instances of this topic
             if (topicModel.getTopic().isTopicType()) {
-              TopicType topicType = new TopicType(topicModel.getTopic().getTopicIF(), getTopicMapModel().getTopicMap());
+              TopicTypeIF topicType = getTopicMapModel().getTopicMap().findTopicType(topicModel.getTopic().getId());
               if (!topicType.isAbstract() && !topicType.isReadOnly()) {
                 list.add(new CreateInstanceFunctionBoxPanel(id, getTopicMapModel()) {
                   @Override
@@ -281,8 +279,8 @@ public class InstancePage extends OntopolyAbstractPage {
                     return new ResourceModel("instances.create.text");
                   }
                   @Override
-                  protected Topic createInstance(TopicMap topicMap, String name) {
-                    TopicType topicType = new TopicType(topicModel.getTopic().getTopicIF(), getTopicMapModel().getTopicMap());
+                  protected OntopolyTopicIF createInstance(OntopolyTopicMapIF topicMap, String name) {
+                    TopicTypeIF topicType = getTopicMapModel().getTopicMap().findTopicType(topicModel.getTopic().getId());
                     return topicType.createInstance(name);
                   }
                   @Override
@@ -309,28 +307,30 @@ public class InstancePage extends OntopolyAbstractPage {
               @Override
               protected List<List<Component>> getFunctionBoxComponentList(String id) {
                 Label label = new Label(id, new ResourceModel("change.type.instance"));
-                TopicModel<TopicType> selectedModel = new TopicModel<TopicType>(null, TopicModel.TYPE_TOPIC_TYPE);
+                TopicModel<TopicTypeIF> selectedModel = new TopicModel<TopicTypeIF>(null, OntopolyTopicMapIF.TYPE_TOPIC_TYPE);
                 final boolean isOntologyType = topicModel.getTopic().isOntologyTopic();
                 AvailableTopicTypesModel choicesModel = new AvailableTopicTypesModel(topicModel) {
                   @Override
-                  protected boolean filter(Topic o) {
+                  protected boolean filter(OntopolyTopicIF o) {
                     // if current topic is an ontology topic then include ontology types
                     if (isOntologyType && o.isOntologyType()) return true;
                     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
                     return page.filterTopic(o);
                   }                              
                 };
-                TopicDropDownChoice<TopicType> choice = new TopicDropDownChoice<TopicType>(id, selectedModel, choicesModel) {        
+                TopicDropDownChoice<TopicTypeIF> choice = new TopicDropDownChoice<TopicTypeIF>(id, selectedModel, choicesModel) {        
                   @Override
                   protected void onModelChanged() {
                     super.onModelChanged();
-                    TopicType selectedTopicType = (TopicType)getModelObject();
-                    Topic topic = topicModel.getTopic();  
+                    TopicTypeIF selectedTopicType = (TopicTypeIF)getModelObject();
+                    OntopolyTopicIF topic = topicModel.getTopic();  
                     
-                    TopicType currentTopicType = getTopicTypeModel().getTopicType();
+                    TopicTypeIF currentTopicType = getTopicTypeModel().getTopicType();
                     if (topic.getTopicTypes().contains(currentTopicType)) {
-                      // Only replace current topic type if it still is an existing type of the current topic. 
-                      // This can actually happen if the user uses the back button in the browser.
+                      // Only replace current topic type if it still
+                      // is an existing type of the current topic.
+                      // This can actually happen if the user uses the
+                      // back button in the browser.
                       topic.addTopicType(selectedTopicType);
                       topic.removeTopicType(currentTopicType);
                     }
@@ -386,10 +386,10 @@ public class InstancePage extends OntopolyAbstractPage {
                   return InstancePage.this.getTopicModel();
                 }
                 @Override
-                public void onDeleteConfirmed(Topic _topic) {
-                  Topic topic = (Topic)_topic;
-                  TopicMap topicMap = topic.getTopicMap();
-                  TopicType topicType = getTopicTypeModel().getTopicType();
+                public void onDeleteConfirmed(OntopolyTopicIF _topic) {
+                  OntopolyTopicIF topic = _topic;
+                  OntopolyTopicMapIF topicMap = topic.getTopicMap();
+                  TopicTypeIF topicType = getTopicTypeModel().getTopicType();
                   Map<String,String> pageParametersMap = new HashMap<String,String>();
                   pageParametersMap.put("topicMapId", topicMap.getId());
                   pageParametersMap.put("topicId", topicType.getId());
@@ -407,7 +407,7 @@ public class InstancePage extends OntopolyAbstractPage {
           }
           @Override
           protected String getTopicId() {
-            Topic tt = getTopicModel().getTopic();
+            OntopolyTopicIF tt = getTopicModel().getTopic();
             return tt.getId();
           }          
         });
@@ -419,7 +419,7 @@ public class InstancePage extends OntopolyAbstractPage {
           }
           @Override
           protected String getTopicId() {
-            Topic tt = getTopicModel().getTopic();
+            OntopolyTopicIF tt = getTopicModel().getTopic();
             return tt.getId();
           }          
         });

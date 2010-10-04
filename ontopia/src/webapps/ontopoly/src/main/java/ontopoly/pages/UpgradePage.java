@@ -3,7 +3,7 @@ package ontopoly.pages;
 import ontopoly.OntopolyApplication;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.conversion.ConversionUtils;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.sysmodel.TopicMapReference;
 
@@ -24,7 +24,7 @@ public class UpgradePage extends NonOntopolyAbstractPage {
     super(parameters);
 
     // redirect to topic types page if the topic map for some reason already has the current ontology version
-    TopicMap topicMap = topicMapModel.getTopicMap();
+    OntopolyTopicMapIF topicMap = topicMapModel.getTopicMap();
     float ontologyVersion = topicMap.getOntologyVersion();  
     if (ontologyVersion == OntopolyApplication.CURRENT_VERSION_NUMBER) {
       // register topic map in system topic map
@@ -51,7 +51,7 @@ public class UpgradePage extends NonOntopolyAbstractPage {
     Button okButton = new Button("okButton") {
       @Override
       public void onSubmit() {
-        TopicMap topicMap = getTopicMapModel().getTopicMap();
+        OntopolyTopicMapIF topicMap = getTopicMapModel().getTopicMap();
         ConversionUtils.upgradeExisting(topicMap);
         PageParameters pageParameters = new PageParameters();
         pageParameters.put("topicMapId", topicMap.getId());

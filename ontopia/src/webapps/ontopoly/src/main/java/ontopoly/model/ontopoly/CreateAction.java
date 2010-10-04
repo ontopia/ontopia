@@ -1,18 +1,20 @@
-// $Id: CreateAction.java,v 1.1 2008/10/23 05:18:36 geir.gronmo Exp $
 
-package ontopoly.model;
+package ontopoly.model.ontopoly;
 
+import ontopoly.model.PSI;
+import ontopoly.model.CreateActionIF;
+import ontopoly.model.OntopolyTopicMapIF;
 import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * Represents the edit mode of a field.
  */
-public class CreateAction extends Topic {
+public class CreateAction extends Topic implements CreateActionIF {
 
   /**
    * Creates a new CreateAction object.
    */
-  public CreateAction(TopicIF topic, TopicMap tm) {
+  public CreateAction(TopicIF topic, OntopolyTopicMapIF tm) {
     super(topic, tm);
   }
   
@@ -39,7 +41,7 @@ public class CreateAction extends Topic {
   /**
    * Returns the default createa action (popup)
    */
-  public static CreateAction getDefaultCreateAction(TopicMap tm) {
+  public static CreateActionIF getDefaultCreateAction(OntopolyTopicMapIF tm) {
     return new CreateAction(tm.getTopicMapIF().getTopicBySubjectIdentifier(PSI.ON_CREATE_ACTION_POPUP), tm);
   }
 

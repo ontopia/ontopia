@@ -10,8 +10,8 @@ import java.util.Map;
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.TitleHelpPanel;
-import ontopoly.model.Topic;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.OntopolyTopicMapIF;
 import ontopoly.models.HelpLinkResourceModel;
 
 import org.apache.wicket.PageParameters;
@@ -56,12 +56,12 @@ public class SearchPage extends OntopolyAbstractPage {
     add(form);
     form.add(searchField);
         
-    final IModel<List<Topic>> searchResultModel = new LoadableDetachableModel<List<Topic>>() {
+    final IModel<List<OntopolyTopicIF>> searchResultModel = new LoadableDetachableModel<List<OntopolyTopicIF>>() {
       @Override
-      protected List<Topic> load() {
+      protected List<OntopolyTopicIF> load() {
         try {
           errorInSearch = false;
-          List<Topic> result = getTopicMap().searchAll(searchField.getDefaultModelObjectAsString());
+          List<OntopolyTopicIF> result = getTopicMap().searchAll(searchField.getDefaultModelObjectAsString());
           AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
           page.filterTopics(result);
           return result;
@@ -94,12 +94,12 @@ public class SearchPage extends OntopolyAbstractPage {
     Label message = new Label("message", new ResourceModel(errorInSearch ? "search.error" : "search.empty"));
     unsuccessfulSearchContainer.add(message);
   
-    ListView searchResult = new ListView<Topic>("searchResult", searchResultModel) {
+    ListView searchResult = new ListView<OntopolyTopicIF>("searchResult", searchResultModel) {
 
       @Override
       protected void populateItem(ListItem item) {
-        Topic topic = (Topic)item.getModelObject();
-        TopicMap topicMap = topic.getTopicMap();
+        OntopolyTopicIF topic = (OntopolyTopicIF)item.getModelObject();
+        OntopolyTopicMapIF topicMap = topic.getTopicMap();
                 
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
@@ -111,7 +111,8 @@ public class SearchPage extends OntopolyAbstractPage {
         // link to type
         Iterator it = topic.getTopicIF().getTypes().iterator();
         if (it.hasNext()) {
-          Topic tt = new Topic((TopicIF)it.next(), topicMap);
+          TopicIF tmp = (TopicIF)it.next();
+          OntopolyTopicIF tt = topicMap.findTopic(tmp.getObjectId());
           if(!tt.isSystemTopic()) {
             pageParametersMap.put("topicId", tt.getId());            
             item.add(new OntopolyBookmarkablePageLink("topicType", InstancesPage.class, new PageParameters(pageParametersMap), tt.getName()));          

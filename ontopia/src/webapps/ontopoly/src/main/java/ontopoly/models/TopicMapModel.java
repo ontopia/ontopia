@@ -1,18 +1,17 @@
 package ontopoly.models;
 
-
 import ontopoly.OntopolyContext;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class TopicMapModel extends LoadableDetachableModel<TopicMap> {
+public class TopicMapModel extends LoadableDetachableModel<OntopolyTopicMapIF> {
 
   private static final long serialVersionUID = -6589204980069242599L;
 
   private String topicMapId;
 
-  public TopicMapModel(TopicMap topicMap) {
+  public TopicMapModel(OntopolyTopicMapIF topicMap) {
     super(topicMap);
     if (topicMap != null) {
       this.topicMapId = topicMap.getId();
@@ -29,12 +28,12 @@ public class TopicMapModel extends LoadableDetachableModel<TopicMap> {
     return topicMapId;
   }
   
-  public TopicMap getTopicMap() {
-    return (TopicMap)getObject();
+  public OntopolyTopicMapIF getTopicMap() {
+    return (OntopolyTopicMapIF) getObject();
   }
 
   @Override
-  protected TopicMap load() {
+  protected OntopolyTopicMapIF load() {
     // retrive topicMap from ontopoly model
     return OntopolyContext.getTopicMap(topicMapId);
   }

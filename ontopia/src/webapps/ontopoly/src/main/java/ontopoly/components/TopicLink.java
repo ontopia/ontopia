@@ -1,7 +1,7 @@
 package ontopoly.components;
 
-import ontopoly.model.FieldsView;
-import ontopoly.model.Topic;
+import ontopoly.model.FieldsViewIF;
+import ontopoly.model.OntopolyTopicIF;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.pages.AbstractOntopolyPage;
 
@@ -13,15 +13,14 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 
 public class TopicLink extends AbstractBookmarkablePageLink {
-
   protected FieldsViewModel fieldsViewModel;
   
-  public TopicLink(String id, IModel<? extends Topic> topicModel) {
+  public TopicLink(String id, IModel<? extends OntopolyTopicIF> topicModel) {
     super(id);
     setDefaultModel(topicModel); 
   }
   
-  public TopicLink(String id, IModel<? extends Topic> topicModel,
+  public TopicLink(String id, IModel<? extends OntopolyTopicIF> topicModel,
                    FieldsViewModel fieldsViewModel) {
     super(id);
     setDefaultModel(topicModel);
@@ -30,7 +29,6 @@ public class TopicLink extends AbstractBookmarkablePageLink {
 
   /**
    * Return true if the label text should be escaped.
-   * @return
    */
   public boolean getEscapeLabel() {
     return true;
@@ -42,8 +40,8 @@ public class TopicLink extends AbstractBookmarkablePageLink {
     return page.getPageClass(getTopic());
   }
   
-  public Topic getTopic() {
-    return (Topic)getDefaultModelObject();    
+  public OntopolyTopicIF getTopic() {
+    return (OntopolyTopicIF) getDefaultModelObject();    
   }
   
   @Override
@@ -51,7 +49,7 @@ public class TopicLink extends AbstractBookmarkablePageLink {
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     PageParameters params = page.getPageParameters(getTopic());
     if (fieldsViewModel != null) {
-      FieldsView fieldsView = fieldsViewModel.getFieldsView();
+      FieldsViewIF fieldsView = fieldsViewModel.getFieldsView();
       if (fieldsView != null && !fieldsView.isDefaultView())
       params.put("viewId", fieldsView.getId());
     }
@@ -89,15 +87,15 @@ public class TopicLink extends AbstractBookmarkablePageLink {
   
   @Override
   public boolean isEnabled() {
-    // TODO: need to decide whether link should be disabled or check should be done after click
+    // TODO: need to decide whether link should be disabled or check
+    // should be done after click
     return getTopic() != null && super.isEnabled();
-//    AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-//    return page.filterTopic(getTopic());
   }
  
   @Override
   public void onDetach() {
-	  super.onDetach();
-	  if (fieldsViewModel != null) fieldsViewModel.detach();
+    super.onDetach();
+    if (fieldsViewModel != null)
+      fieldsViewModel.detach();
   }
 }

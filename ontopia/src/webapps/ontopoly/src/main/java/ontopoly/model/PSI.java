@@ -4,14 +4,21 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 
 public class PSI {
-
-  public static final LocatorIF ON = URILocator.create(TopicMap.ON);
-  public static final LocatorIF XTM = URILocator.create(TopicMap.XTM);
-  public static final LocatorIF TEST = URILocator.create(TopicMap.TEST);
-  public static final LocatorIF TECH = URILocator.create(TopicMap.TECH);
-  public static final LocatorIF DC = URILocator.create(TopicMap.DC);
-  public static final LocatorIF XSD = URILocator.create(TopicMap.XSD);
-  public static final LocatorIF TMDM = URILocator.create(TopicMap.TMDM);
+  public static final String S_ON = "http://psi.ontopia.net/ontology/";
+  public static final String S_XTM = "http://www.topicmaps.org/xtm/1.0/core.xtm#";
+  public static final String S_TEST = "http://psi.example.org/test/";
+  public static final String S_TECH = "http://www.techquila.com/psi/hierarchy/#";
+  public static final String S_DC = "http://purl.org/dc/elements/1.1/";
+  public static final String S_XSD = "http://www.w3.org/2001/XMLSchema#";
+  public static final String S_TMDM = "http://psi.topicmaps.org/iso13250/model/";
+  
+  public static final LocatorIF ON = URILocator.create(S_ON);
+  public static final LocatorIF XTM = URILocator.create(S_XTM);
+  public static final LocatorIF TEST = URILocator.create(S_TEST);
+  public static final LocatorIF TECH = URILocator.create(S_TECH);
+  public static final LocatorIF DC = URILocator.create(S_DC);
+  public static final LocatorIF XSD = URILocator.create(S_XSD);
+  public static final LocatorIF TMDM = URILocator.create(S_TMDM);
 
   public static final LocatorIF ON_ONTOLOGY_VERSION = PSI.ON.resolveAbsolute("ted-ontology-version");
 
@@ -91,4 +98,6 @@ public class PSI {
   
   public static final LocatorIF TMDM_TOPIC_NAME = PSI.TMDM.resolveAbsolute("topic-name");
 
+  public static final LocatorIF ON_LONGITUDE = PSI.ON.resolveAbsolute("longitude");
+  public static final LocatorIF ON_LATITUDE = PSI.ON.resolveAbsolute("latitude");
 }

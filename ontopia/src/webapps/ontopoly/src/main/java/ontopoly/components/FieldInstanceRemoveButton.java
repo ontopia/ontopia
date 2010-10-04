@@ -1,6 +1,6 @@
 package ontopoly.components;
 
-import ontopoly.model.FieldInstance;
+import ontopoly.model.FieldInstanceIF;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
 
@@ -25,7 +25,7 @@ public class FieldInstanceRemoveButton extends OntopolyImageLink {
   @Override
   public void onClick(AjaxRequestTarget target) {
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-    FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+    FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
     Object value = fieldValueModel.getObject();
     fieldInstance.removeValue(value, page.getListener());        
   }

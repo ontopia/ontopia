@@ -4,11 +4,11 @@ import org.apache.wicket.PageParameters;
 
 public class AbstractProtectedOntopolyPage extends AbstractOntopolyPage {
 
-	public AbstractProtectedOntopolyPage() {		
-	}
+  public AbstractProtectedOntopolyPage() {		
+  }
 	
-	public AbstractProtectedOntopolyPage(PageParameters params) {
-		super(params);
-	}
+  public AbstractProtectedOntopolyPage(PageParameters params) {
+    super(params);
+  }
 	
 }

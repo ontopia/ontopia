@@ -3,7 +3,7 @@ package ontopoly.components;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.model.FieldInstance;
+import ontopoly.model.FieldInstanceIF;
 import ontopoly.model.OntopolyModelRuntimeException;
 import ontopoly.models.FieldValueModel;
 import ontopoly.pages.AbstractOntopolyPage;
@@ -64,7 +64,7 @@ public class FieldInstanceTextArea extends TextArea<String> {
       String newValue = (String)getModelObject();
       if (ObjectUtils.equals(newValue, oldValue)) return;
       AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
-      FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
+      FieldInstanceIF fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();
       if (fieldValueModel.isExistingValue() && oldValue != null)
         fieldInstance.removeValue(oldValue, page.getListener());
       if (newValue != null && !newValue.equals("")) {

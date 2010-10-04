@@ -1,20 +1,17 @@
 package ontopoly.models;
 
-
 import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.OntopolyContext;
-import ontopoly.model.FieldsView;
-import ontopoly.model.TopicMap;
+import ontopoly.model.FieldsViewIF;
+import ontopoly.model.OntopolyTopicMapIF;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
-public class FieldsViewModel extends LoadableDetachableModel<FieldsView> {
-
+public class FieldsViewModel extends LoadableDetachableModel<FieldsViewIF> {
   private String topicMapId;
-
   private String topicId;
 
-  public FieldsViewModel(FieldsView fieldsView) {
+  public FieldsViewModel(FieldsViewIF fieldsView) {
     super(fieldsView);
     if (fieldsView == null)
       throw new RuntimeException("fieldsView cannot be null.");
@@ -33,15 +30,14 @@ public class FieldsViewModel extends LoadableDetachableModel<FieldsView> {
     this.topicId = topicId;
   }
 
-  public FieldsView getFieldsView() {
-    return (FieldsView)getObject();
+  public FieldsViewIF getFieldsView() {
+    return (FieldsViewIF)getObject();
   }
   
   @Override
-  protected FieldsView load() {
+  protected FieldsViewIF load() {
     if (topicMapId == null) return null;
-    TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
-    TopicIF topicIf = tm.getTopicIFById(topicId);
-    return new FieldsView(topicIf, tm);
+    OntopolyTopicMapIF tm = OntopolyContext.getTopicMap(topicMapId);
+    return tm.findFieldsView(topicId);
   }
 }

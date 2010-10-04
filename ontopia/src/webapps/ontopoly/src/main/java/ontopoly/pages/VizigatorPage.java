@@ -10,7 +10,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.xml.XTMFragmentExporter;
 import ontopoly.components.FunctionBoxesPanel;
 import ontopoly.components.TitleHelpPanel;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicModel;
 
@@ -71,7 +71,7 @@ public class VizigatorPage extends OntopolyAbstractPage {
     }
 
     if (idvalue == null) {
-      TopicMap topicMap = this.getTopicMapModel().getTopicMap();
+      OntopolyTopicMapIF topicMap = this.getTopicMapModel().getTopicMap();
       idvalue = XTMFragmentExporter.makeVirtualReference(topic, topicMap.getId());
       idtype = "source";
     }

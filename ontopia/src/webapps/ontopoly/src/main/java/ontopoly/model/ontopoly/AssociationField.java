@@ -1,5 +1,5 @@
 
-package ontopoly.model;
+package ontopoly.model.ontopoly;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -8,6 +8,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import ontopoly.model.RoleFieldIF;
+import ontopoly.model.AssociationTypeIF;
+import ontopoly.model.AssociationFieldIF;
+import ontopoly.model.LifeCycleListenerIF;
 import ontopoly.utils.OntopolyModelUtils;
 
 import net.ontopia.topicmaps.core.TopicIF;
@@ -19,15 +23,16 @@ import net.ontopia.utils.ObjectUtils;
 /**
  * Represents an association field.
  */
-public class AssociationField extends Topic {
-  private AssociationType cachedAssociationType;
-  private List<RoleField> cachedFieldsForRoles;
+public class AssociationField extends Topic implements AssociationFieldIF {
+  private AssociationTypeIF cachedAssociationType;
+  private List<RoleFieldIF> cachedFieldsForRoles;
 
-  public AssociationField(TopicIF topic, TopicMap tm) {
+  public AssociationField(TopicIF topic, OntopolyTopicMapIF tm) {
     super(topic, tm);
   }
 
-  public AssociationField(TopicIF topic, TopicMap tm, AssociationType associationType) {
+  public AssociationField(TopicIF topic, OntopolyTopicMapIF tm,
+                          AssociationTypeIF associationType) {
     super(topic, tm);
     this.cachedAssociationType = associationType;
   }
@@ -37,7 +42,7 @@ public class AssociationField extends Topic {
     if (!(obj instanceof AssociationField))
       return false;
 		
-    AssociationField other = (AssociationField)obj;
+    AssociationFieldIF other = (AssociationFieldIF)obj;
     return (getTopicIF().equals(other.getTopicIF()));
   }
 
@@ -46,9 +51,9 @@ public class AssociationField extends Topic {
    * 
    * @return the association type.
    */
-  public AssociationType getAssociationType() {
+  public AssociationTypeIF getAssociationType() {
     if (cachedAssociationType == null) {
-      TopicMap tm = getTopicMap();
+      OntopolyTopicMapIF tm = getTopicMap();
       TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-association-type");
       TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-field");
       TopicIF player1 = getTopicIF();
@@ -56,7 +61,7 @@ public class AssociationField extends Topic {
       Collection players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
       TopicIF associationType = (TopicIF)CollectionUtils.getFirst(players);
       this.cachedAssociationType = (associationType == null ? null : new AssociationType(associationType, getTopicMap()));      
-		}
+    }
     return cachedAssociationType;
   }
 
@@ -72,43 +77,42 @@ public class AssociationField extends Topic {
 
   /**
    * Returns the fields for the roles in this association type.
-   * 
-   * @return List of RoleField objects
    */
-  public List<RoleField> getFieldsForRoles() {
-    if (cachedFieldsForRoles != null) return cachedFieldsForRoles;
+  public List<RoleFieldIF> getFieldsForRoles() {
+    if (cachedFieldsForRoles != null)
+      return cachedFieldsForRoles;
                 
     String query = "select $RF from "
-			+ "on:has-association-field(%AF% : on:association-field, $RF : on:role-field)?";
+      + "on:has-association-field(%AF% : on:association-field, $RF : on:role-field)?";
     Map<String,TopicIF> params = Collections.singletonMap("AF", getTopicIF());
 
-    QueryMapper<RoleField> qm = getTopicMap().newQueryMapper(RoleField.class);
+    QueryMapper<RoleFieldIF> qm = getTopicMap().newQueryMapper(RoleFieldIF.class);
     
-    List<RoleField> roleFields = qm.queryForList(query,
+    List<RoleFieldIF> roleFields = qm.queryForList(query,
         new RowMapperIF<RoleField>() {
-          public RoleField mapRow(QueryResultIF result, int rowno) {
-						TopicIF roleFieldTopic = (TopicIF)result.getValue(0);
-						return new RoleField(roleFieldTopic, getTopicMap());
-					}
-				}, params);
+          public RoleFieldIF mapRow(QueryResultIF result, int rowno) {
+            TopicIF roleFieldTopic = (TopicIF)result.getValue(0);
+            return new RoleField(roleFieldTopic, getTopicMap());
+          }
+                                                   }, params);
 
-		if (roleFields.size() == 1 && getAssociationType().isSymmetric()) {
-			// if association is symmetric we have to add the other field manually
-			RoleField rfield = (RoleField)roleFields.get(0);
-			roleFields.add(rfield);
-		} else {
-			Collections.sort(roleFields, RoleFieldComparator.getInstance());
-		}
-		this.cachedFieldsForRoles = roleFields;
+    if (roleFields.size() == 1 && getAssociationType().isSymmetric()) {
+      // if association is symmetric we have to add the other field manually
+      RoleFieldIF rfield = (RoleFieldIF)roleFields.get(0);
+      roleFields.add(rfield);
+    } else {
+      Collections.sort(roleFields, RoleFieldComparator.getInstance());
+    }
+    this.cachedFieldsForRoles = roleFields;
     return roleFields;
   }
 
   @Override
-  public void remove(LifeCycleListener listener) {
+  public void remove(LifeCycleListenerIF listener) {
     // remove all associated role fields
     Iterator iter = getFieldsForRoles().iterator();
     while (iter.hasNext()) {
-      RoleField rf = (RoleField)iter.next();
+      RoleFieldIF rf = (RoleFieldIF)iter.next();
       rf.remove(listener);
     }
     // remove association type topic
@@ -118,13 +122,12 @@ public class AssociationField extends Topic {
   
   /**
    * Gets the role fields that are assigned to this association field.
-   * @return Collection of RoleField
    */
-  public Collection<RoleField> getDeclaredByFields() {
+  public Collection<RoleFieldIF> getDeclaredByFields() {
     return getFieldsForRoles();
   }
 
-  static class RoleFieldComparator implements Comparator<RoleField> {
+  static class RoleFieldComparator implements Comparator<RoleFieldIF> {
     private static final RoleFieldComparator INSTANCE = new RoleFieldComparator();
 
     private RoleFieldComparator() {
@@ -135,7 +138,7 @@ public class AssociationField extends Topic {
       return INSTANCE;
     }
 
-    public int compare(RoleField rf1, RoleField rf2) {
+    public int compare(RoleFieldIF rf1, RoleFieldIF rf2) {
       return ObjectUtils.compare(rf1.getFieldName(), rf2.getFieldName());
     }
   }

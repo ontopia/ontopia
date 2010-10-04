@@ -2,21 +2,21 @@ package ontopoly.utils;
 
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 
-import ontopoly.model.Topic;
+import ontopoly.model.OntopolyTopicIF;
 
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 
-public class TopicChoiceRenderer<T extends Topic> implements IChoiceRenderer<T> {
+public class TopicChoiceRenderer<T extends OntopolyTopicIF> implements IChoiceRenderer<T> {
 
   public static final TopicChoiceRenderer INSTANCE = new TopicChoiceRenderer();
   
-  protected Topic getTopic(Object object) {
+  protected OntopolyTopicIF getTopic(Object object) {
     // model objects are supported
-    return (Topic)(object instanceof IModel ? ((IModel)object).getObject() : object);    
+    return (OntopolyTopicIF)(object instanceof IModel ? ((IModel)object).getObject() : object);    
   }
   
-  public Object getDisplayValue(Topic object) {
+  public Object getDisplayValue(OntopolyTopicIF object) {
     String name = object.getName();
     if (name == null || name.equals(""))
       return "[No name]";
@@ -24,8 +24,8 @@ public class TopicChoiceRenderer<T extends Topic> implements IChoiceRenderer<T> 
       return name;
   }
 
-  public String getIdValue(Topic object, int index) {
-    Topic topic = getTopic(object);
+  public String getIdValue(OntopolyTopicIF object, int index) {
+    OntopolyTopicIF topic = getTopic(object);
     return topic.getId();
   }
 

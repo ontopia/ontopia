@@ -2,7 +2,7 @@ package ontopoly.components;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import ontopoly.fileupload.UploadPanel;
-import ontopoly.model.TopicMap;
+import ontopoly.model.OntopolyTopicMapIF;
 import ontopoly.models.FieldValueModel;
 
 import org.apache.wicket.AttributeModifier;
@@ -14,12 +14,12 @@ import org.apache.wicket.model.AbstractReadOnlyModel;
 
 
 public class FieldInstanceImageField extends Panel {
-
   protected FieldValueModel fieldValueModel;
   protected Component image;
   protected Component upload;
   
-  public FieldInstanceImageField(String id, FieldValueModel _fieldValueModel, boolean readonly) {
+  public FieldInstanceImageField(String id, FieldValueModel _fieldValueModel,
+                                 boolean readonly) {
     super(id);
     this.fieldValueModel = _fieldValueModel;
     
@@ -27,7 +27,7 @@ public class FieldInstanceImageField extends Panel {
     image.add(new AttributeModifier("src", true, new AbstractReadOnlyModel() {
       @Override
       public final Object getObject() {
-        TopicMap topicMap = fieldValueModel.getFieldInstanceModel().getFieldInstance().getInstance().getTopicMap();        
+        OntopolyTopicMapIF topicMap = fieldValueModel.getFieldInstanceModel().getFieldInstance().getInstance().getTopicMap();        
         Object o = fieldValueModel.getFieldValue();
         return getRequest().getRelativePathPrefixToContextRoot() + "occurrenceImages?topicMapId=" + topicMap.getId() + 
         "&occurrenceId=" + ((o instanceof OccurrenceIF ? ((OccurrenceIF)o).getObjectId(): "unknown"));

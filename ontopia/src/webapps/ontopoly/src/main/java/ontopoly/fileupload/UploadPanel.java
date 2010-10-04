@@ -2,7 +2,7 @@
 package ontopoly.fileupload;
 
 import ontopoly.components.FieldInstanceImageField;
-import ontopoly.model.LifeCycleListener;
+import ontopoly.model.LifeCycleListenerIF;
 import ontopoly.pages.AbstractOntopolyPage;
 
 import org.apache.wicket.Page;
@@ -51,7 +51,7 @@ public class UploadPanel extends Panel {
                 protected String getOnUploadedCallback() {
                   return "onUpload_" + UploadPanel.this.getMarkupId();
                 }
-                protected LifeCycleListener getLifeCycleListener() {
+                protected LifeCycleListenerIF getLifeCycleListener() {
                   return (AbstractOntopolyPage)UploadPanel.this.getPage();
                 }
               };

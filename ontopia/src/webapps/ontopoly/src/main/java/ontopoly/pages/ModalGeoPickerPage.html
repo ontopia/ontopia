@@ -1,0 +1,100 @@
+<wicket:panel>
+  <div class="popupHeader"><span>&nbsp;</span></div>
+  <div class="popupBorder">
+  <div wicket:id="popupContent" class="popupContent">
+    <div class="popupTitle">
+      <h1 wicket:id="title" class="title"></h1>
+    </div>
+
+    <p><input name=query id=query size=40> <input type=button value="Search"
+                                    onclick="tryitout();"></p>
+
+    <div id="map" style="width: 600px; height: 400px"></div>
+
+    <div id="status" style="margin-top: 12pt">
+      <!-- wicket:id="setPosition" -->
+      <input id=set type=button value="Set position"
+             style="margin-left: 1em" onclick="shoot();">
+    </div>
+
+    <div>
+      <input wicket:id="latitude" id="latitude"></input>
+      <input wicket:id="longitude" id="longitude"></input>
+    </div>
+
+    <script type="text/javascript">
+    // creating the map
+    var map = new GMap2(document.getElementById('map'));
+    map.addControl(new GLargeMapControl());
+    map.addControl(new GScaleControl());
+    map.setCenter(new GLatLng(59.92, 10.74), 13);
+
+    // to remember
+    var prevmarker = null;
+
+    // click to see where you are
+    GEvent.addListener(map, 'click', function(overlay, point) { 
+      if (point) {
+        pickpoint(point);
+      }
+    });
+
+    // setting the setter
+    function pickpoint(point) {
+      if (prevmarker != null)
+        map.removeOverlay(prevmarker);
+
+      var marker = new GMarker(point);
+      map.addOverlay(marker);
+      prevmarker = marker;
+      map.setCenter(point, 13);
+
+      var msg = "Position: " + point;
+      var node = document.getElementById("status");
+      var button = document.getElementById("set");
+      var textnode = node.childNodes[0];
+      textnode.data = msg;
+
+      document.getElementById("latitude").value = point.x;
+      document.getElementById("longitude").value = point.y;
+    }
+
+    // let's try some geocoding, shall we?
+    function tryitout() {
+      var geocoder = new GClientGeocoder();
+      var address = document.getElementById("query").value;
+      geocoder.getLatLng(
+        address,
+    	function(point) {
+	  if (!point) {
+            alert(address + " not found");
+      	  } else {
+	    pickpoint(point);
+      	  }
+    	}
+  	);
+
+      return false;
+    }
+
+    // finish up
+    function shoot() {
+      alert("SHOOTING");
+      var lat = document.getElementById("latitude").value;
+      var lng = document.getElementById("longitude").value;
+
+      wicketAjaxGet(ajaxurl + "lat=" + lat + "&long=" + long, "DUMMY",
+      function() {
+        alert("SUCCESS!");
+      }, function() {
+        alert("FAILURE!");
+      });
+      return false;
+    }
+    </script>
+    
+    <br/>
+    
+  </div>  
+  </div>  
+</wicket:panel>

@@ -2,9 +2,9 @@ package ontopoly.components;
 
 import java.util.List;
 
-import ontopoly.model.FieldsView;
-import ontopoly.model.Topic;
-import ontopoly.model.TopicType;
+import ontopoly.model.FieldsViewIF;
+import ontopoly.model.OntopolyTopicIF;
+import ontopoly.model.TopicTypeIF;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldsViewModel;
 import ontopoly.models.TopicModel;
@@ -18,14 +18,13 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.ResourceModel;
 
 public abstract class InstancePanel extends Panel {
-
   private TopicModel topicModel;
   private TopicTypeModel topicTypeModel;
   private FieldsViewModel fieldsViewModel;
   
   private boolean isReadOnly;
   
-  public InstancePanel(String id, TopicModel<Topic> topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel, boolean _isReadOnly, boolean traversable) {
+  public InstancePanel(String id, TopicModel<OntopolyTopicIF> topicModel, TopicTypeModel topicTypeModel, FieldsViewModel fieldsViewModel, boolean _isReadOnly, boolean traversable) {
     super(id);
     this.topicModel = topicModel;
     this.topicTypeModel = topicTypeModel;
@@ -38,11 +37,11 @@ public abstract class InstancePanel extends Panel {
     } else {
       LockPanel lockPanel = new LockPanel("lockPanel", topicModel, isReadOnly) {
         @Override
-        protected void onLockLost(AjaxRequestTarget target, Topic topic) {
+        protected void onLockLost(AjaxRequestTarget target, OntopolyTopicIF topic) {
           InstancePanel.this.onLockLost(target, topic);
         }
         @Override
-        protected void onLockWon(AjaxRequestTarget target, Topic topic) {        
+        protected void onLockWon(AjaxRequestTarget target, OntopolyTopicIF topic) {        
           InstancePanel.this.onLockWon(target, topic);
         }
       };
@@ -68,21 +67,21 @@ public abstract class InstancePanel extends Panel {
     return getPage().getPageParameters().getString("buttons") != null;
   }
   
-  protected abstract void onLockLost(AjaxRequestTarget target, Topic topic);
+  protected abstract void onLockLost(AjaxRequestTarget target, OntopolyTopicIF topic);
   
-  protected abstract void onLockWon(AjaxRequestTarget target, Topic topic);
+  protected abstract void onLockWon(AjaxRequestTarget target, OntopolyTopicIF topic);
   
   public boolean isReadOnly() {
     return isReadOnly;
   }
   
   private void createFields(boolean isReadOnly, boolean traversable) {
-    Topic topic = topicModel.getTopic();    
-    TopicType type = topicTypeModel.getTopicType();
-    TopicType specificType = topic.getMostSpecificTopicType(type);
+    OntopolyTopicIF topic = topicModel.getTopic();    
+    TopicTypeIF type = topicTypeModel.getTopicType();
+    TopicTypeIF specificType = topic.getMostSpecificTopicType(type);
     if (specificType == null)
       specificType = type;
-    FieldsView fieldsView = fieldsViewModel.getFieldsView();
+    FieldsViewIF fieldsView = fieldsViewModel.getFieldsView();
     
     List<FieldInstanceModel> fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(topic.getFieldInstances(specificType, fieldsView));
     FieldInstancesPanel fieldInstancesPanel = new FieldInstancesPanel("fieldsPanel", fieldInstanceModels, fieldsViewModel, isReadOnly, traversable);
