@@ -6,6 +6,7 @@ import ontopoly.model.Topic;
 import ontopoly.pages.InstancePage;
 import ontopoly.models.TopicModel;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -47,7 +48,8 @@ public class TopicListPanel extends Panel {
       super(id, topicModel);
     }
 
-    public Class getPageClass() {
+    @Override
+    public Class<? extends Page> getPageClass() {
       return InstancePage.class;
     }
   }

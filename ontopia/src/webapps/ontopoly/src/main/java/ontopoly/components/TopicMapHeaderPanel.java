@@ -31,11 +31,11 @@ public class TopicMapHeaderPanel extends HeaderPanel {
 
     add(new MenuPanel("tabMenu", tabMenuItem, selectedTab));
 
-    add(new Label("topicMap", new PropertyModel(topicMapModel, "name")));
+    add(new Label("topicMap", new PropertyModel<Object>(topicMapModel, "name")));
 
-    final TextField searchField = new TextField<String>("searchField", new Model<String>(""));
+    final TextField<String> searchField = new TextField<String>("searchField", new Model<String>(""));
     
-    Form form = new Form("searchForm") {
+    Form<Object> form = new Form<Object>("searchForm") {
       @Override
       protected void onSubmit() {
         Map<String,String> pageParametersMap = new HashMap<String,String>();
@@ -48,7 +48,7 @@ public class TopicMapHeaderPanel extends HeaderPanel {
     add(form);
     form.add(searchField);
     
-    AjaxFallbackLink openLink = new AjaxFallbackLink("open") {
+    AjaxFallbackLink<Object> openLink = new AjaxFallbackLink<Object>("open") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         setResponsePage(StartPage.class);
@@ -58,7 +58,7 @@ public class TopicMapHeaderPanel extends HeaderPanel {
     openLink.add(new Label("label", new ResourceModel("open")));
     form.add(openLink);
     
-    AjaxFallbackLink saveLink = new AjaxFallbackLink("save") {
+    AjaxFallbackLink<Object> saveLink = new AjaxFallbackLink<Object>("save") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         ((TopicMap)topicMapModel.getObject()).save();

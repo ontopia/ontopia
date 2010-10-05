@@ -19,7 +19,7 @@ import org.apache.wicket.model.ResourceModel;
 
 public abstract class InstancePanel extends Panel {
 
-  private TopicModel topicModel;
+  private TopicModel<Topic> topicModel;
   private TopicTypeModel topicTypeModel;
   private FieldsViewModel fieldsViewModel;
   

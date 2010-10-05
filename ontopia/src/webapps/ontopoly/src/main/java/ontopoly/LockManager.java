@@ -76,10 +76,10 @@ public class LockManager implements Serializable {
 
   public void expireLocksForOwner(String lockerId) {
     synchronized (locks) {
-      Iterator iter = locks.keySet().iterator();
+      Iterator<String> iter = locks.keySet().iterator();
       while (iter.hasNext()) {
-        String lockKey = (String)iter.next();
-        Lock lock = (Lock)locks.get(lockKey);
+        String lockKey = iter.next();
+        Lock lock = locks.get(lockKey);
         if (lock.ownedBy(lockerId))
           iter.remove();
       }
@@ -89,10 +89,10 @@ public class LockManager implements Serializable {
   private void pruneLocks(long expiryTime) {
     // don't prune locks if there are few of them
     if (locks.size() < 200) {
-      Iterator iter = locks.keySet().iterator();
+      Iterator<String> iter = locks.keySet().iterator();
       while (iter.hasNext()) {
-        String lockKey = (String)iter.next();
-        Lock lock = (Lock)locks.get(lockKey);
+        String lockKey = iter.next();
+        Lock lock = locks.get(lockKey);
         if (lock.expired(expiryTime, getLockTimeSpan()))
           iter.remove();
       }

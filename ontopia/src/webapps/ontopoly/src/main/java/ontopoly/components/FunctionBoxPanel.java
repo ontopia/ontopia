@@ -14,7 +14,7 @@ public abstract class FunctionBoxPanel extends Panel {
     this(id, null);
   }
   
-  public FunctionBoxPanel(String id, IModel model) {
+  public FunctionBoxPanel(String id, IModel<Object> model) {
     super(id, model);
     ListView<List<Component>> nestedComponentList = new ListView<List<Component>>("outerList",
         getFunctionBoxComponentList("content")) {
