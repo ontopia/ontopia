@@ -8,6 +8,8 @@
 	  net.ontopia.topicmaps.core.*"
 %><%
 
+  // TODO: should support if-modified-since
+
   String tmid = request.getParameter("topicmap");
   String prefix = StartUpServlet.getEndpointURL() + tmid;
 

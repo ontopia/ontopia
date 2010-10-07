@@ -2,6 +2,7 @@
 package net.ontopia.topicmaps.utils.sdshare;
 
 import java.util.Set;
+import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.TimeZone;
@@ -18,11 +19,11 @@ import net.ontopia.utils.CompactHashSet;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 
 /**
  * PUBLIC: An SDshare client which can poll an SDshare fragment feed
@@ -143,9 +144,10 @@ public class ConsumerClient {
     return handler.getFeed();
   }
 
-  private void applyFragment(LocatorIF prefix, Fragment fragment,
-                             TopicMapIF topicmap) {
-
+  private void applyFragment(LocatorIF oprefix, Fragment fragment,
+                             TopicMapIF topicmap) throws IOException {
+    String prefix = oprefix.getAddress();
+    
     // FIXME: before issue #3680 is cleared up, we don't know how to
     // interpret multiple SIs on a single fragment. for now we will
     // just assume that all entries have only a single SI.
@@ -195,7 +197,7 @@ public class ConsumerClient {
         // the source has this name. we need to make sure the local
         // copy has the item identifier.
         addItemIdentifier(lname, prefix);
-        fname.remove(key); // we've seen this one, so cross it off
+        names.remove(key); // we've seen this one, so cross it off
       }
     }
 
