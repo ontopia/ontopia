@@ -77,4 +77,8 @@ public class StartUpServlet extends HttpServlet {
   public static String getEndpointURL() {
     return properties.getProperty("endpoint");
   }
+
+  public static String getTitle() {
+    return properties.getProperty("title");
+  }
 }
