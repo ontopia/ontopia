@@ -39,9 +39,9 @@ public class DefaultXMLReaderFactory implements XMLReaderFactoryIF {
       
       if (factoryname != null) {
         if (factoryname.startsWith("weblogic."))
-          // In case of WebLogic we want to enforce using the Crimson parser (see
-          // bug #590). WebLogic overrides the sax driver property, so
-          // there is no way to override it.
+          // In case of WebLogic we want to enforce using the Crimson
+          // parser (see bug #590). WebLogic overrides the sax driver
+          // property, so there is no way to override it.
           return new SaxXMLReaderFactory("org.apache.crimson.parser.XMLReaderImpl").createXMLReader();
         else
           return new SaxXMLReaderFactory(factoryname).createXMLReader();

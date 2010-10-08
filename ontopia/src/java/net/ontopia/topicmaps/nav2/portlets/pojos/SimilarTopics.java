@@ -27,6 +27,10 @@ public class SimilarTopics {
   // set a limit for how many similar topics to include
   // association control as in RelatedTopics
   // type control as in RelatedTopics
+
+  // should we by default limit to the same type, and allow overriding?
+  //   what about subtypes?
+  //   should typing also count as similarity?
   
   // --- Produce model
 

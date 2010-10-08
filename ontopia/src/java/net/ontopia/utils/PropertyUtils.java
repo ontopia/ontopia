@@ -57,7 +57,8 @@ public class PropertyUtils {
   }
   
   /**
-   * INTERNAL: Same as isTrue(Map, String, boolean) with the default set to false;
+   * INTERNAL: Same as isTrue(Map, String, boolean) with the default
+   * set to false;
    */
   public static boolean isTrue(Map properties, String name) {
     return isTrue(properties, name, false);
@@ -67,7 +68,7 @@ public class PropertyUtils {
     return isTrue(property_value, false);
   }
   
-  public static boolean isTrue(String property_value, boolean default_value) {    
+  public static boolean isTrue(String property_value, boolean default_value) {
     if (property_value == null)
       return default_value;
     else

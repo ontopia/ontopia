@@ -804,7 +804,6 @@ public class QueryOptimizer {
    * association-role($A, $R2),
    * $R1 /= $R2,
    * role-player($R2, $OTHER),
-   * 
    * type($R1, required-type)?
    * </pre>
    *
