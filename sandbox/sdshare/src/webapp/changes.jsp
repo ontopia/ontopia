@@ -33,7 +33,9 @@
                  "application/x-tm+xml; version=1.0",
                  "alternate");
 
-    // FIXME: but what if the topic has been deleted? then what?
+    // FIXME: if the topic has been deleted we can't look it up, and need
+    // identifiers to be stored in ChangedTopic instead, so that we can
+    // output TopicSI anyway.
 
     TopicIF topic = (TopicIF) tm.getObjectById(change.getObjectId());
     Collection<LocatorIF> psis = topic.getSubjectIdentifiers();
