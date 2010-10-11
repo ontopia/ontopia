@@ -10,8 +10,8 @@
 <shortaffil>Ontopia</shortaffil>
 </affiliation>
 </author>
-<pubdate>2010-06-09</pubdate>
-<releaseinfo>5.1</releaseinfo>
+<pubdate>2010-10-11</pubdate>
+<releaseinfo>5.1.1</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -20,6 +20,67 @@ This document describes what has changed in Ontopia between releases,
 both at a higher level, and in more detail.
 </para>
 </abstract>
+
+<!-- ======================================================================
+     5.1.1                                                              -->
+<section id="sect-5.1.1">
+<title>Ontopia 5.1.1 release notes</title>
+
+<para>The main new feature in this release is the support for
+geotagging in Ontopoly. Briefly, if the longitude and latitude
+occurrences are added to a topic type, all topics of that type will
+get a button to open a geotagging window. In this window a position on
+a map can be chosen, and this position will be written into the
+occurrences.</para>
+
+<para>Further, pluggable support for authorization and authentication
+was added to Ontopoly, as described
+<ulink url="http://code.google.com/p/ontopia/wiki/OntopolyHowTo">in the
+wiki</ulink>.</para>
+
+<para>Beyond that this release features mainly the following bug
+fixes:</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=105"
+      >Issue 105: Instance list in Ontopoly no longer displayed as
+    tree when there is no tree</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=259"
+      >Issue 259: XTM 2.1 export is now available in Ontopoly</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=277"
+      >Issue 277: Fix to handling of equal parameters to rules</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=283"
+      >Issue 283: RDBMS schema no longer allows NULLs</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=287"
+      >Issue 287: tolog updates in Omnigator had no effect on RDBMS</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=292"
+      >Issue 292: Topic selection in hierarchy didn't work in Ontopoly</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=294"
+      >Issue 294: tolog did not optimize rule sets</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=302"
+      >Issue 302: Cost estimator in value-like predicate caused errors</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=305"
+      >Issue 305: Merging away sort and display topics in LTM caused errors</ulink></para>
+  </listitem>
+</itemizedlist>
+</section>
 
 <!-- ======================================================================
      5.1.0                                                              -->

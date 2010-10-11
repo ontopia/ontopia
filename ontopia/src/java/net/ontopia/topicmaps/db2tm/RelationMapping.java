@@ -188,7 +188,8 @@ public class RelationMapping extends SAXTracker {
     }
   }
   
-  public static RelationMapping read(InputStream istream, File basedir) throws IOException {
+  public static RelationMapping read(InputStream istream, File basedir)
+    throws IOException {
     // Create new parser object
     XMLReader parser;
     try {
@@ -457,10 +458,7 @@ public class RelationMapping extends SAXTracker {
       else if (lname == "jdbc") {
         String id = getValue(attrs, "id");
         JDBCDataSource datasource = new JDBCDataSource(this);        
-        
-        String pf = getValue(attrs, "propfile");
-        if (pf != null) datasource.setPropertyFile(pf);
-        else datasource.setPropertyStream(getValue(attrs, "propstream"));
+        datasource.setPropertyFile(getValue(attrs, "propfile"));
         datasources.put(id, datasource);
       }
 

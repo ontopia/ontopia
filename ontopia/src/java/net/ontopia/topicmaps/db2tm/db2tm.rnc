@@ -39,8 +39,7 @@ csv = element csv {
 }
 jdbc = element jdbc {
   idatt?,
-  attribute propfile { text }?,
-  attribute propstream { text }?
+  attribute propfile { text }
 }
 
 # -- relations

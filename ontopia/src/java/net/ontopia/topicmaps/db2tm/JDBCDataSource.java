@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Properties;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,11 +21,11 @@ import java.sql.ResultSetMetaData;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
-import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.persistence.proxy.*;
-import net.ontopia.utils.StreamUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,14 +39,13 @@ public class JDBCDataSource implements DataSourceIF {
   static Logger log = LoggerFactory.getLogger(JDBCDataSource.class.getName());
 
   protected RelationMapping mapping;
-  protected File propfile;
+  protected String propfile;
 
   protected String catalog;
   protected String schemaPattern;
   protected String tableNamePattern;
 
   protected Connection conn;
-  private InputStream propstream;
 
   public JDBCDataSource(RelationMapping mapping) {
     this.mapping = mapping;
@@ -57,34 +56,15 @@ public class JDBCDataSource implements DataSourceIF {
     this.conn = conn;
   }
 
-  void setPropertyFile(String _propfile) {
-    File baseDirectory = mapping.getBaseDirectory();
-    File propfile = new File(_propfile);
-    if (baseDirectory != null && !propfile.isAbsolute())
-      this.propfile = new File(baseDirectory, _propfile);
-    else
-      this.propfile = propfile;
-    if (!this.propfile.exists())
-      throw new DB2TMException("JDBC data source property file " + propfile + " does not exist.");
-  }
-
-  void setPropertyStream(String _props) {
-    try {
-      this.propstream = StreamUtils.getInputStream(_props);
-      if (this.propstream == null) {
-        throw new DB2TMException("JDBC data source property file " + _props + " does not exist.");
-      }
-    } catch (IOException ioe) {
-      throw new DB2TMException("Could not open data source property file at " + _props + ": " + ioe.getMessage(), ioe);
-    }
+  void setPropertyFile(String propfile) {
+    this.propfile = propfile;
   }
 
   protected Connection getConnection() {
     if (conn == null) {
       try {
-        ConnectionFactoryIF cf;
-        if (propstream != null) cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(propstream), false);
-        else cf = new DefaultConnectionFactory(PropertyUtils.loadProperties(propfile), false);
+        ConnectionFactoryIF cf = 
+          new DefaultConnectionFactory(loadProperties(), false);
         conn = cf.requestConnection();
       } catch (Throwable t) {
         throw new OntopiaRuntimeException(t);
@@ -191,6 +171,19 @@ public class JDBCDataSource implements DataSourceIF {
   
   public String toString() {
     return "JDBCDataSource[propfile=" + propfile + "]";
+  }
+
+  private Properties loadProperties() throws IOException {
+    File basedir = mapping.getBaseDirectory();
+    InputStream is = StreamUtils.getInputStream(basedir, propfile);
+    if (is == null)
+      throw new DB2TMException("Couldn't find properties file '" + propfile +
+                               "'");
+    
+    Properties props = new Properties();
+    props.load(is);
+    is.close();
+    return props;
   }
 
   private class TupleReader implements TupleReaderIF {

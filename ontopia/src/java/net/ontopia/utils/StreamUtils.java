@@ -1,6 +1,4 @@
 
-// $Id: StreamUtils.java,v 1.18 2008/05/29 10:55:00 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import java.io.*;
@@ -153,15 +151,26 @@ public class StreamUtils {
   }
 
   /**
-   * INTERNAL: Returns an input stream for the given url. Supports
-   * file: and classpath:. If no schema given then file system will be
-   * checked before classpath. Exception will be thrown if resource is
-   * not found when schema is given. If no schema was given null is
-   * returned.
+   * INTERNAL: Same as getInputStream(null, name);
    *
    * @since 3.4.3
    */
   public static InputStream getInputStream(String name) throws IOException {
+    return getInputStream(null, name);
+  }
+
+  /**
+   * INTERNAL: Returns an input stream for the given url. Supports
+   * file: and classpath:. If no scheme given then file system will be
+   * checked before classpath. Exception will be thrown if resource is
+   * not found when scheme is given. If no scheme was given null is
+   * returned. File references will be interpreted relative to basedir.
+   * If basedir is null, it will be ignored.
+   *
+   * @since 5.1.1
+   */
+  public static InputStream getInputStream(File basedir, String name)
+    throws IOException {
     InputStream istream;
     if (name.startsWith("classpath:")) {
       ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -171,14 +180,14 @@ public class StreamUtils {
         throw new IOException("Resource '" + resourceName + "' not found through class loader.");
       log.debug("File loaded through class loader: " + name);
     } else if (name.startsWith("file:")) {
-      File f =  new File(name.substring("file:".length()));
+      File f = makeFile(basedir, name.substring("file:".length()));
       if (f.exists()) {
         log.debug("File loaded from file system: " + name);
         istream = new FileInputStream(f);
       } else
         throw new IOException("File '" + f + "' not found.");
     } else {
-      File f = new File(name);
+      File f = makeFile(basedir, name);
       if (f.exists()) {
         log.debug("File loaded from file system: " + name);
         istream = new FileInputStream(f);
@@ -192,6 +201,13 @@ public class StreamUtils {
     return istream;
   }
 
+  private static File makeFile(File basedir, String name) {
+    if (basedir == null)
+      return new File(name);
+    else
+      return new File(basedir, name);
+  }
+  
   /**
    * INTERNAL: Returns an input stream for the given url. Supports
    * file: and classpath:. If no schema given then file system will be

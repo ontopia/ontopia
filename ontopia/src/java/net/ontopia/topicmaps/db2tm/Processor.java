@@ -1,6 +1,4 @@
 
-// $Id: Processor.java,v 1.84 2009/01/23 13:13:34 lars.garshol Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.*;
@@ -193,6 +191,11 @@ public class Processor {
         }
       }
     } catch (Exception e) {
+      // unwrap so we can find the real exception
+      if (e instanceof OntopiaRuntimeException &&
+          e.getCause() instanceof Exception)
+        e = (Exception) e.getCause();
+      
       if (e instanceof DB2TMException)
         // don't wrap if it's already a DB2TMException, because this causes
         // the cmd-line tool to hide the real error

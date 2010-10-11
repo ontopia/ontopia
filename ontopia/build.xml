@@ -73,10 +73,10 @@
     </tstamp>
 
     <property name="dist.version.major" value="5" />
-    <property name="dist.version.minor" value="2" />
-    <property name="dist.version.micro" value="0" />
+    <property name="dist.version.minor" value="1" />
+    <property name="dist.version.micro" value="1" />
 
-    <property name="dist.version.beta" value="b0" />
+    <property name="dist.version.beta" value="b1" />
     <!-- "b1" if beta 1, empty if not beta -->
 
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}${dist.version.beta}" />
@@ -2395,17 +2395,6 @@
     <mkdir dir="${build.ontopoly}/doc" />
     <mkdir dir="${build.ontopoly}/WEB-INF/lib"/>
     
-    <!-- documentation -->
-    <antcall inheritRefs="true" target="makehtml">
-      <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
-    </antcall>
-    <copy file="${doc.path}/ontopoly/user-guide.xml.html" tofile="${build.ontopoly}/doc/user-guide.html" />
-    <copy file="${doc.path}/ontopia/logo.gif" todir="${build.ontopoly}/doc" />
-    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${build.ontopoly}/doc" />
-    <copy todir="${build.ontopoly}/doc/images/">
-      <fileset dir="${doc.path}/ontopoly/images" />
-    </copy>
-    
     <copy todir="${build.ontopoly}" overwrite="yes">
       <fileset dir="${webapps.path}/ontopoly/src/main/webapp" />
     </copy>
@@ -2435,6 +2424,17 @@
           <include name="joda-time-1.6.jar" />
         </patternset>
       </fileset>
+    </copy>
+
+    <!-- documentation -->
+    <antcall inheritRefs="true" target="makehtml">
+      <param name="file" value="${doc.path}/ontopoly/user-guide.xml" />
+    </antcall>
+    <copy file="${doc.path}/ontopoly/user-guide.xml.html" tofile="${build.ontopoly}/doc/user-guide.html" />
+    <copy file="${doc.path}/ontopia/logo.gif" todir="${build.ontopoly}/doc" />
+    <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${build.ontopoly}/doc" />
+    <copy todir="${build.ontopoly}/doc/images/">
+      <fileset dir="${doc.path}/ontopoly/images" />
     </copy>
   </target>
   

@@ -622,7 +622,8 @@ attributes accepted by this element are listed in the table below.
     to connect to the database. This property file uses the same set
     of properties as the Ontopia RDBMS backend does (except that it
     doesn't make use of all the properties that tune the backend cache
-    etc). The path is relative to the location of the XML file.</entry>
+    etc). The path is relative to the location of the XML file. (If no
+    file is found, DB2TM tries to load it from the classpath.)</entry>
     <entry>Yes</entry>
   </row>
 </tbody>
