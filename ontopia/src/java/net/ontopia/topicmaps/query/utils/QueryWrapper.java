@@ -312,8 +312,8 @@ public class QueryWrapper {
   /**
    * EXPERIMENTAL: Runs an update statement, returning the number of
    * changed rows. Makes no attempt to handle transactions, as this is
-   * a an application issue.
-   * @since %NEXT%
+   * an application issue.
+   * @since 5.1.1
    */
   public int update(String query) {
     return update(query, null);
@@ -322,8 +322,8 @@ public class QueryWrapper {
   /**
    * EXPERIMENTAL: Runs an update statement, returning the number of
    * changed rows. Makes no attempt to handle transactions, as this is
-   * a an application issue.
-   * @since %NEXT%
+   * an application issue.
+   * @since 5.1.1
    */
   public int update(String query, Map params) {
     try {
