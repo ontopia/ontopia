@@ -1,17 +1,23 @@
 package ontopoly.components;
 
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+
+import ontopoly.model.PSI;
 import ontopoly.model.Cardinality;
 import ontopoly.model.DataType;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.OccurrenceField;
+import ontopoly.model.OccurrenceType;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
 import ontopoly.models.FieldValuesModel;
 import ontopoly.utils.OccurrenceComparator;
+import ontopoly.pages.ModalGeoPickerPage;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -22,6 +28,8 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.behavior.HeaderContributor;
 
 public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
   
@@ -33,7 +41,6 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
     FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
     FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition(); 
 
-    //! add(new Label("fieldLabel", new Model(fieldDefinition.getFieldName())));
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(fieldDefinition)));
     
     // set up container
@@ -61,7 +68,8 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
         FieldInstanceModel fieldInstanceModel = fieldValueModel.getFieldInstanceModel();
         FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
 
-        // TODO: make sure non-existing value field gets focus if last edit happened there
+        // TODO: make sure non-existing value field gets focus if last
+        // edit happened there
 
         WebMarkupContainer fieldValueButtons = new WebMarkupContainer("fieldValueButtons");
         fieldValueButtons.setOutputMarkupId(true);
@@ -154,7 +162,7 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
               FieldInstanceTextField occField = new FieldInstanceTextField("fieldValue", fieldValueModel);
               occField.setCols(of.getWidth());
               occField.add(fuBehaviour);
-              item.add(occField);           
+              item.add(occField);
             }
           }
         }
@@ -191,10 +199,55 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       }
     };
     fieldInstanceButtons.add(addButton);
+
+    final ModalWindow geoPicker = new ModalWindow("geoPickerDialog");
+    fieldInstanceButtons.add(geoPicker);
+
+    geoPicker.setContent(new ModalGeoPickerPage(geoPicker, fieldInstance.getInstance()));
+    geoPicker.setTitle(new ResourceModel("ModalWindow.title.geopicker").getObject().toString());
+    geoPicker.setCookieName("geoPicker");
+    
+    OccurrenceField of = (OccurrenceField)
+      fieldInstance.getFieldAssignment().getFieldDefinition();
+    OccurrenceType ot = of.getOccurrenceType();
+    boolean haspsi =
+      ot.getTopicIF().getSubjectIdentifiers().contains(PSI.ON_LATITUDE);
+    fieldInstanceButtons.add(new GeoPickerButton(!readonly && haspsi, geoPicker));
+    if (!readonly && haspsi)
+      add(HeaderContributor.forJavaScript("http://maps.google.com/maps/api/js?sensor=false"));
     
     Cardinality cardinality = fieldAssignment.getCardinality();
     if (cardinality.isMaxOne())
       addButton.setVisible(false);
   }
+  
+  /**
+   * Button to open geo-picker popup.
+   */
+  class GeoPickerButton extends OntopolyImageLink {
+    private boolean visible;
+    private ModalWindow picker;
 
+    public GeoPickerButton(boolean visible, ModalWindow picker) {
+      super("geopicker", "geopicker.png");
+      this.visible = visible;
+      this.picker = picker;
+    }
+    
+    public void onClick(AjaxRequestTarget target) {
+      picker.show(target);
+    }
+
+    public boolean isVisible() {
+      return visible;
+    }
+
+    public String getImage() {
+      return "geopicker.png";
+    }
+
+    public IModel getTitleModel() {
+      return new ResourceModel("icon.geopicker");
+    }
+  }
 }

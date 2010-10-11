@@ -147,20 +147,20 @@ public class Topic {
    * @return true if this is a role type.
    */
   public boolean isFieldDefinition() {
-	TopicMapIF topicMap = topicIF.getTopicMap();
-	TopicIF associationField = topicMap.getTopicBySubjectIdentifier(PSI.ON_ASSOCIATION_FIELD);
-	TopicIF identityField = topicMap.getTopicBySubjectIdentifier(PSI.ON_IDENTITY_FIELD);
-	TopicIF nameField = topicMap.getTopicBySubjectIdentifier(PSI.ON_NAME_FIELD);
-	TopicIF occurrenceField = topicMap.getTopicBySubjectIdentifier(PSI.ON_OCCURRENCE_FIELD);
-	TopicIF roleField = topicMap.getTopicBySubjectIdentifier(PSI.ON_ROLE_FIELD);
+    TopicMapIF topicMap = topicIF.getTopicMap();
+    TopicIF associationField = topicMap.getTopicBySubjectIdentifier(PSI.ON_ASSOCIATION_FIELD);
+    TopicIF identityField = topicMap.getTopicBySubjectIdentifier(PSI.ON_IDENTITY_FIELD);
+    TopicIF nameField = topicMap.getTopicBySubjectIdentifier(PSI.ON_NAME_FIELD);
+    TopicIF occurrenceField = topicMap.getTopicBySubjectIdentifier(PSI.ON_OCCURRENCE_FIELD);
+    TopicIF roleField = topicMap.getTopicBySubjectIdentifier(PSI.ON_ROLE_FIELD);
     for (TopicIF topicType : topicIF.getTypes()) {    	
-    	if (topicType.equals(associationField) ||
-        		topicType.equals(identityField) ||
-        		topicType.equals(nameField) ||
-        		topicType.equals(occurrenceField) ||
-        		topicType.equals(roleField)) {
-    		return true;
-    	}
+      if (topicType.equals(associationField) ||
+          topicType.equals(identityField) ||
+          topicType.equals(nameField) ||
+          topicType.equals(occurrenceField) ||
+          topicType.equals(roleField)) {
+        return true;
+      }
     }
     return false;
   }

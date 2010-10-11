@@ -91,4 +91,6 @@ public class PSI {
   
   public static final LocatorIF TMDM_TOPIC_NAME = PSI.TMDM.resolveAbsolute("topic-name");
 
+  public static final LocatorIF ON_LONGITUDE = PSI.ON.resolveAbsolute("longitude");
+  public static final LocatorIF ON_LATITUDE = PSI.ON.resolveAbsolute("latitude");
 }

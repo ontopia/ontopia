@@ -167,6 +167,18 @@ public abstract class FieldDefinition extends Topic {
     return qm.queryForList(query, params);
   }
 
+  /**
+   * Returns the field's occurrence type. If the field is not an
+   * occurrence field it returns null.
+   */
+  public OccurrenceType getOccurrenceType() {
+    String query =
+      "on:has-occurrence-type(%OF% : on:occurrence-field, $OT : on:occurrence-type)?";
+    Map<String,TopicIF> params = Collections.singletonMap("OF", getTopicIF());
+    QueryMapper<OccurrenceType> qm = getTopicMap().newQueryMapper(OccurrenceType.class);
+    return qm.queryForObject(query, params);
+  }
+
   public abstract Collection<? extends Object> getValues(Topic topic);
 
   public abstract void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener);

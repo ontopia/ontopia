@@ -1,0 +1,110 @@
+<wicket:panel>
+  <div class="popupHeader"><span>&nbsp;</span></div>
+  <div class="popupBorder" onmouseover="checkResize()">
+  <div wicket:id="popupContent" class="popupContent">
+    <div class="popupTitle">
+      <h1 wicket:id="title" class="title"></h1>
+    </div>
+
+    <p><input name=query id=query size=40> <input type=button value="Search"
+                                    onclick="dogeocoding();"></p>
+
+    <div id="map" style="width: 100%; height: 400px"></div>
+
+    <div id="status" style="margin-top: 12pt">
+      <input id=set type=button value="Set position"
+             style="margin-left: 1em" onclick="sendToServer();">
+    </div>
+
+    <div style="display: none">
+      <input id="latitude"></input>
+      <input id="longitude"></input>
+    </div>
+
+    <script type="text/javascript" wicket:id="ajaxurl">
+      /* ajaxurl variable will be set here */
+      /* together with latitude and longitude */
+    </script>
+
+    <script type="text/javascript">
+    var map = null;
+      
+    // creating the map
+    function initialize() {
+      var options = {
+        zoom: 8,
+        center: new google.maps.LatLng(latitude, longitude),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById("map"), options);
+
+      // click to see where you are
+      google.maps.event.addListener(map, 'click', function(event) {
+        pickpoint(event.latLng);
+      });
+    }
+    
+    // to remember
+    var prevmarker = null;
+
+    // setting the setter
+    function pickpoint(point) {
+      if (prevmarker != null)
+        prevmarker.setMap(null);
+
+      var marker = new google.maps.Marker({ position: point });
+      marker.setMap(map);
+      prevmarker = marker;
+      map.setCenter(point);
+
+      var msg = "Position: " + point;
+      var node = document.getElementById("status");
+      var button = document.getElementById("set");
+      var textnode = node.childNodes[0];
+      textnode.data = msg;
+
+      document.getElementById("latitude").value = point.lat();
+      document.getElementById("longitude").value = point.lng();
+    }
+
+    // let's try some geocoding, shall we?
+    function dogeocoding() {
+      var geocoder = new google.maps.Geocoder();
+      var theaddress = document.getElementById("query").value;
+      geocoder.geocode({address: theaddress},
+    	function(results) {
+	  if (!results) {
+            alert(theaddress + " not found");
+      	  } else {
+	    pickpoint(results[0].geometry.location);
+      	  }
+    	}
+  	);
+
+      return false;
+    }
+
+    // finish up
+    function sendToServer() {
+      var lat = document.getElementById("latitude").value;
+      var lng = document.getElementById("longitude").value;
+
+      wicketAjaxGet(ajaxurl + "&lat=" + lat + "&long=" + lng, 
+      function() {
+        // don't need to do anything
+      }, function() {
+        alert("The AJAX server call was a failure. Unfortunately, we " +
+              "don't know how to get a useful error message. Please " +
+              "consult the server logs.");
+      });
+      return false;
+    }
+
+    initialize(); // apparently calling it here works fine
+    </script>
+    
+    <br/>
+    
+  </div>  
+  </div>  
+</wicket:panel>

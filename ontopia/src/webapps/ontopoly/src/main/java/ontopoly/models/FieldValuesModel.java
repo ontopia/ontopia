@@ -1,6 +1,5 @@
 package ontopoly.models;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,10 +7,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.wicket.model.LoadableDetachableModel;
 
 import ontopoly.model.FieldInstance;
-
-import org.apache.wicket.model.LoadableDetachableModel;
 
 public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueModel>> implements Comparator<FieldValueModel> {
 
@@ -72,7 +70,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   }
   
   public boolean containsExisting() {
-	List<FieldValueModel> values = getObject();
+    List<FieldValueModel> values = getObject();
     return !values.isEmpty();
   }
   

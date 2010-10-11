@@ -17,8 +17,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 
 public class FieldInstancesPanel extends Panel {
-
   protected boolean readonly;
+  private ListView<FieldInstanceModel> listView;
   
   public FieldInstancesPanel(String id, 
       List<FieldInstanceModel> fieldInstanceModels, final FieldsViewModel fieldsViewModel,
@@ -26,7 +26,7 @@ public class FieldInstancesPanel extends Panel {
     super(id);
     this.readonly = readonly;
     
-    ListView<FieldInstanceModel> listView = new ListView<FieldInstanceModel>("fields", fieldInstanceModels) {
+    listView = new ListView<FieldInstanceModel>("fields", fieldInstanceModels) {
       public void populateItem(final ListItem<FieldInstanceModel> item) {
         FieldInstanceModel fieldInstanceModel = item.getModelObject();
         item.setRenderBodyOnly(true);
@@ -37,6 +37,10 @@ public class FieldInstancesPanel extends Panel {
     };
     listView.setReuseItems(true);
     add(listView);    
+  }
+
+  public ListView<FieldInstanceModel> getFieldList() {
+    return listView;
   }
   
   protected Component createFieldInstanceComponent(FieldInstanceModel fieldInstanceModel, FieldsViewModel fieldsViewModel, boolean _traversable) {

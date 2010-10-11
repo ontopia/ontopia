@@ -29,21 +29,22 @@ public abstract class AbstractFieldInstancePanel extends Panel {
   protected ListView<FieldValueModel> listView;
   protected FeedbackPanel feedbackPanel;
   
-	public AbstractFieldInstancePanel(String id, FieldInstanceModel fieldInstanceModel) {
-		super(id);
-		this.fieldInstanceModel = fieldInstanceModel;
-	}
+  public AbstractFieldInstancePanel(String id, FieldInstanceModel fieldInstanceModel) {
+    super(id);
+    this.fieldInstanceModel = fieldInstanceModel;
+  }
 
-	public FieldInstanceModel getFieldInstanceModel() {
-	  return fieldInstanceModel;
-	}
+  public FieldInstanceModel getFieldInstanceModel() {
+    return fieldInstanceModel;
+  }
 	
-	public FieldValuesModel getFieldValuesModel() {
-	  return fieldValuesModel;
-	}
+  public FieldValuesModel getFieldValuesModel() {
+    return fieldValuesModel;
+  }
 
   /**
-   * Update any dependent components as the value of the field instance panel has changed.
+   * Update any dependent components as the value of the field
+   * instance panel has changed.
    */  
   protected void updateDependentComponents(AjaxRequestTarget target) {
     target.addComponent(fieldValuesContainer);

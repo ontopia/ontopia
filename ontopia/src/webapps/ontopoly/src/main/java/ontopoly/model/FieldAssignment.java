@@ -1,4 +1,3 @@
-// $Id: FieldAssignment.java,v 1.3 2009/04/30 09:53:42 geir.gronmo Exp $
 
 package ontopoly.model;
 
@@ -24,19 +23,19 @@ import net.ontopia.utils.ObjectUtils;
  * holds the cardinality and order in the list of fields.
  */
 public final class FieldAssignment {
-
   private FieldDefinition fieldDefinition;
   private TopicType topicType;
   private TopicType declaredTopicType;
 
   private TopicMap tm;
 
-	private int cachedOrder = Integer.MAX_VALUE;
+  private int cachedOrder = Integer.MAX_VALUE;
 
   /**
    * Creates a new field assignment object.
    */
-  public FieldAssignment(TopicType topicType, TopicType declaredTopicType, FieldDefinition fieldDefinition) {
+  public FieldAssignment(TopicType topicType, TopicType declaredTopicType,
+                         FieldDefinition fieldDefinition) {
     this.fieldDefinition = fieldDefinition;
     this.topicType = topicType;
     this.declaredTopicType = declaredTopicType;
@@ -44,13 +43,13 @@ public final class FieldAssignment {
   }
 
   public FieldAssignment(TopicType topicType, TopicType declaredTopicType, FieldDefinition fieldDefinition, int cachedOrder) {
-		this(topicType, declaredTopicType, fieldDefinition);
-		this.cachedOrder = (cachedOrder == Integer.MAX_VALUE ? cachedOrder - 1 : cachedOrder);
-	}
+    this(topicType, declaredTopicType, fieldDefinition);
+    this.cachedOrder = (cachedOrder == Integer.MAX_VALUE ? cachedOrder - 1 : cachedOrder);
+  }
 
-	void refresh() {
-		this.cachedOrder = Integer.MAX_VALUE;
-	}
+  void refresh() {
+    this.cachedOrder = Integer.MAX_VALUE;
+  }
 
   /**
    * Returns the topic type.
@@ -81,11 +80,11 @@ public final class FieldAssignment {
    * Returns the ordering key of the field on this topic type.
    */
   public int getOrder() {
-		if (cachedOrder < Integer.MAX_VALUE) return cachedOrder;
+    if (cachedOrder < Integer.MAX_VALUE) return cachedOrder;
 
-		int order = getOrder(topicType);
-		this.cachedOrder = (order == Integer.MAX_VALUE ? order - 1 : order);
-		return cachedOrder;
+    int order = getOrder(topicType);
+    this.cachedOrder = (order == Integer.MAX_VALUE ? order - 1 : order);
+    return cachedOrder;
   }
 
   /**
