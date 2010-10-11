@@ -27,14 +27,14 @@
 
 <ul>
 #if( $theDir == "doc/" )
-  <li><a href="doc/ontopoly/userguide.html">The Ontopoly Topic Maps Editor, User's Guide</a></li>
-  <li><a href="doc/omnigator/userguide.html">The Ontopia Omnigator, User's Guide</a></li>
- <li><a href="doc/vizigator/userguide.html">The
-  Ontopia Vizigator, User's Guide</a></li>
-#else
   <li><a href="apache-tomcat/webapps/ontopoly/doc/user-guide.html">The Ontopoly Topic Maps Editor, User's Guide</a></li>
   <li><a href="apache-tomcat/webapps/omnigator/docs/navigator/userguide.html">The Ontopia Omnigator, User's Guide</a></li>
  <li><a href="apache-tomcat/webapps/omnigator/docs/vizigator/userguide.html">The
+  Ontopia Vizigator, User's Guide</a></li>
+#else
+ <li><a href="doc/ontopoly/userguide.html">The Ontopoly Topic Maps Editor, User's Guide</a></li>
+ <li><a href="doc/omnigator/userguide.html">The Ontopia Omnigator, User's Guide</a></li>
+ <li><a href="doc/vizigator/userguide.html">The
   Ontopia Vizigator, User's Guide</a></li>
 #end
 </ul>
