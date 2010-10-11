@@ -45,7 +45,7 @@ public class ModalGeoPickerPage extends Panel {
   TopicModel<Topic> thetopic;
   AbstractDefaultAjaxBehavior behave;
   Label ajaxurllabel;
-  StringModel ajaxurlmodel;
+  Model<String> ajaxurlmodel;
 
   FieldInstanceOccurrencePanel latpan;
   FieldInstanceOccurrencePanel lngpan;
@@ -74,7 +74,7 @@ public class ModalGeoPickerPage extends Panel {
     // using a label to provide the callback URI to the JavaScript code
     // in the page. unfortunately, we don't know the URI here, so we set
     // things up, then insert it later.
-    ajaxurlmodel = new StringModel("// and the url is ...");
+    ajaxurlmodel = new Model<String>("// and the url is ...");
     ajaxurllabel = new Label("ajaxurl", ajaxurlmodel);
     ajaxurllabel.setEscapeModelStrings(false);
     popupContent.add(ajaxurllabel);
@@ -201,30 +201,5 @@ public class ModalGeoPickerPage extends Panel {
     protected void respond(final AjaxRequestTarget target) {
       parent.onSetPosition(target);
     }
-  }
-
-  // --- Dynamic string model
-
-  // jesus. the hoops one has to jump through to get the simplest shit to
-  // work. (this exists only so we can change the value of the label...)
-
-  public static class StringModel implements IModel<String> {
-    private static String thestring;
-
-    public StringModel(String initial) {
-      thestring = initial;
-    }
-    
-    public String getObject() {
-      return thestring;
-    }
-
-    public void setObject(String newstring) {
-      thestring = newstring;
-    }
-
-    public void detach() {
-    }
-  }
-  
+  } 
 }
