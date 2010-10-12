@@ -83,7 +83,7 @@ public class OntopolyModelUtils {
 
   public static boolean hasBinaryAssociation(TopicIF player1, TopicIF aType,
                                              TopicIF rType1, TopicIF rType2) {
-    for (AssociationRoleIF role : player1.getRolesByType(aType, rType1)) {
+    for (AssociationRoleIF role : player1.getRolesByType(rType1, aType)) {
       AssociationIF assoc = role.getAssociation();
       for (AssociationRoleIF role2 : assoc.getRoles())
         if (role2 != role && role2.getType().equals(rType2))

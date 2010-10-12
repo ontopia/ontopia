@@ -48,8 +48,8 @@ public class InstancesPage extends OntopolyAbstractPage {
   }
   
   public InstancesPage(PageParameters parameters) {
-	super(parameters);
-	
+    super(parameters);
+    
     this.topicTypeModel = new TopicTypeModel(parameters.getString("topicMapId"), parameters.getString("topicId"));
     
     // Adding part containing title and help link
@@ -62,7 +62,7 @@ public class InstancesPage extends OntopolyAbstractPage {
 
     // Add list of instances
     TopicType topicType = topicTypeModel.getTopicType();
-    
+
     if (topicType.isLargeInstanceSet()) {
       form.add(new InstanceSearchPanel("contentPanel", topicTypeModel));
     } else if (topicType.hasHierarchy()) {
@@ -112,7 +112,7 @@ public class InstancesPage extends OntopolyAbstractPage {
       form.add(new TopicListPanel("contentPanel", new AbstractReadOnlyModel<List<Topic>>() {
           @Override
           public List<Topic> getObject() {
-        	return topicTypeModel.getTopicType().getInstances();
+            return topicTypeModel.getTopicType().getInstances();
           }
         }));
     }

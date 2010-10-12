@@ -167,7 +167,8 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of AssociationRoleIF objects.
    * @since 2.2
    */
-  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype, TopicIF assoc_type);
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype,
+                                                      TopicIF assoc_type);
 
   /**
    * EXPERIMENTAL: Merges the characteristics of one topic into

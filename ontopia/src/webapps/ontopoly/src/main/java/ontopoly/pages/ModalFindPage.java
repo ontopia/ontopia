@@ -379,8 +379,9 @@ public abstract class ModalFindPage<T> extends Panel {
     treePanel.setOutputMarkupId(true);
     checkGroup.add(treePanel);
     
-    // NOTE: need to readd model here because page, which we depend on in the construction 
-    // of the tree model, is not available in TreePanel constructor
+    // NOTE: need to readd model here because page, which we depend on
+    // in the construction of the tree model, is not available in
+    // TreePanel constructor
     if (this.selectedTypeModel != null)
       treePanel.setDefaultModel(getTreeModel(selectedType));
     

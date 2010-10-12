@@ -82,7 +82,7 @@ public class TopicMap {
   }
 
   public TopicMap(OntopolyRepository repository, TopicMapIF topicMapIF,
-      String topicMapId) {
+                  String topicMapId) {
     this.repository = repository;
     this.topicMapIF = topicMapIF;
     this.topicMapId = topicMapId;
