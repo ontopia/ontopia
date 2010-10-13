@@ -58,7 +58,7 @@ public class CopyUtils {
   public static OccurrenceIF copyOccurrence(TopicIF target, OccurrenceIF source) {
     TopicMapBuilderIF builder = target.getTopicMap().getBuilder();
     OccurrenceIF o = builder.makeOccurrence(target, source.getType(), ""); // HACK: needs improvement
-		CopyUtils.copyOccurrenceData(o, source);
+    CopyUtils.copyOccurrenceData(o, source);
     copyScope(o, source);
     return o;
   }
@@ -71,19 +71,19 @@ public class CopyUtils {
    */
   public static void copyOccurrenceData(OccurrenceIF target, OccurrenceIF source) {
     if (source.getLength() > DataTypes.SIZE_THRESHOLD) {
-			Reader r = source.getReader();
-			try {
-				target.setReader(r, source.getLength(), source.getDataType());
-			} catch (Exception e) {
-				try {
-					r.close();
-				} catch (Exception e2) {
-				}
-				throw new OntopiaRuntimeException(e);
-			}
+      Reader r = source.getReader();
+      try {
+        target.setReader(r, source.getLength(), source.getDataType());
+      } catch (Exception e) {
+        try {
+          r.close();
+        } catch (Exception e2) {
+        }
+        throw new OntopiaRuntimeException(e);
+      }
     } else {
       target.setValue(source.getValue(), source.getDataType());
-		}
+    }
   }
 
   // --- base names
