@@ -6,6 +6,7 @@
     <property name="build.root" value="${basedir}/build" />
     <property name="build.classes" value="${build.root}/classes" />
     <property name="build.jars" value="${build.root}/jars" />
+    <property name="build.wars" value="${build.root}/wars" />
   </target>
 
   <!-- Patterns -->
@@ -27,13 +28,31 @@
   </target>
 
   <!-- Make .jar file -->
-  <target name="jar" depends="init">
+  <target name="jar" depends="compile">
     <echo>Creating sdshare jar file...</echo>
     <mkdir dir="${build.jars}"/>
-    <delete file="${build.jars}/tmphoto.jar" />
+    <delete file="${build.jars}/sdshare.jar" />
     <jar basedir="${build.classes}" jarfile="${build.jars}/sdshare.jar">
       <patternset refid="classes"/>
     </jar>
+  </target>
+
+  <!-- Make .war file -->
+  <target name="war" depends="init">
+    <echo>Creating sdshare webapp .war file...</echo>
+    <property name="build.sdshare" value="${build.wars}/sdshare" />
+    <mkdir dir="${build.wars}"/>
+    <mkdir dir="${build.sdshare}/"/>
+
+    <copy todir="${build.sdshare}">
+      <fileset dir="${basedir}/src/webapp"/>
+    </copy>
+    
+    <delete file="${build.wars}/sdshare.war"/>
+    <war destfile="${build.wars}/sdshare.war"
+         webxml="${build.sdshare}/WEB-INF/web.xml">
+      <fileset dir="${build.sdshare}"/>
+    </war>
   </target>
   
 </project>

@@ -4,7 +4,9 @@ package net.ontopia.topicmaps.utils.sdshare;
 import java.util.Set;
 import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.TimeZone;
 import java.io.IOException;
 import java.text.ParseException;
@@ -15,6 +17,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.infoset.core.LocatorIF;
@@ -38,13 +41,17 @@ public class ConsumerClient {
   private String feedurl;
   private static SimpleDateFormat format =
     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-
+  
   static {
     format.setTimeZone(TimeZone.getTimeZone("Z"));    
   }
 
+  // constants
+  private static final String NS_ATOM = "http://www.w3.org/2005/Atom";
+  private static final String NS_SD = "http://www.egovpt.org/sdshare";
+
   /**
-   * PUBLIC: Creates the client, but does nothing more.
+   * PUBLIC: Creates the client, but does nothing more. 
    */
   public ConsumerClient(TopicMapReferenceIF ref, String feedurl) {
     this.ref = ref;
@@ -82,7 +89,7 @@ public class ConsumerClient {
    */
   public void sync() throws IOException, SAXException {
     // (1) check the fragments feed
-    FragmentFeed feed = getFeed();
+    FragmentFeed feed = getFragmentFeed();
     if (feed.getFragments().isEmpty())
       return; // nothing to do
 
@@ -133,16 +140,42 @@ public class ConsumerClient {
     checkInterval = interval;
   }
 
-  // --- Actual implementation
+  /**
+   * PUBLIC: Reads a collection feed and returns an object representing
+   * (the interesting part of) the contents of the feed.
+   */
+  public static CollectionFeed readCollectionFeed(String uri)
+    throws IOException, SAXException {
+    CollectionFeedReader handler = new CollectionFeedReader(uri);
+    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+    parser.setContentHandler(handler);
+    parser.parse(uri);
+    return handler.getCollectionFeed();
+  }
 
-  public FragmentFeed getFeed() throws IOException, SAXException {
+  /**
+   * PUBLIC: Reads a snapshot feed and returns a list of the snapshot
+   * URIs. The order of the list is the same as in the feed.
+   */
+  public static List<LocatorIF> readSnapshotFeed(String uri)
+    throws IOException, SAXException {
+    SnapshotFeedReader handler = new SnapshotFeedReader(uri);
+    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+    parser.setContentHandler(handler);
+    parser.parse(uri);
+    return handler.getList();
+  }
+
+  public FragmentFeed getFragmentFeed() throws IOException, SAXException {
     // TODO: we should support if-modified-since
     FragmentFeedReader handler = new FragmentFeedReader(feedurl, lastChange);
     XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
     parser.setContentHandler(handler);
     parser.parse(feedurl);
-    return handler.getFeed();
+    return handler.getFragmentFeed();
   }
+  
+  // --- Actual implementation
 
   private void applyFragment(LocatorIF oprefix, Fragment fragment,
                              TopicMapIF topicmap) throws IOException {
@@ -167,6 +200,8 @@ public class ConsumerClient {
     TopicIF ftopic = tmfragment.getTopicBySubjectIdentifier(si);
     TopicIF ltopic = topicmap.getTopicBySubjectIdentifier(si);
 
+    // FIXME: but what if the topic was deleted?
+
     // (a) check if we need to create the topic
     if (ltopic == null && ftopic != null)
       // the topic exists in the source, but not in the target, therefore
@@ -176,43 +211,70 @@ public class ConsumerClient {
     // (b) copy across all identifiers
     MergeUtils.copyIdentifiers(ltopic, ftopic);
 
-    // (c) sync the types
+    // (c) merge all topics in the fragment into the target. this is
+    // necessary so that all types, scoping topics, and associated
+    // topics are actually present in the target when we update the
+    // topic characteristics. (however, we can't merge in the current
+    // topic, as the procedure for that one is a bit more complex.)
+    for (TopicIF oftopic : tmfragment.getTopics())
+      if (oftopic != ftopic)
+        MergeUtils.mergeInto(topicmap, oftopic);
+
+    // (d) sync the types
     // FIXME: how the hell do we do this?
 
-    // (d) sync the names
-    Map<String,TopicNameIF> names = null; // fragment keymap
-    // check all local names against the fragment
-    for (TopicNameIF lname : ltopic.getTopicNames()) {
-      String key = KeyGenerator.makeTopicNameKey(lname);
-      TopicNameIF fname = names.get(key);
+    // (e) sync the names
+    Map<String, ? extends ReifiableIF> keymap = makeKeyMap(ftopic.getTopicNames(), topicmap);
+    syncCollection(ftopic, ltopic, keymap, ltopic.getTopicNames(), prefix);
 
-      if (fname == null) {
-        // the source doesn't have this name. however, if it still has
-        // item identifiers (other than ours), we can keep it. we do
-        // need to remove any iids starting with the prefix, though.
-        pruneItemIdentifiers(lname, prefix);
-        if (lname.getItemIdentifiers().isEmpty())
-          lname.remove();
-      } else {
-        // the source has this name. we need to make sure the local
-        // copy has the item identifier.
-        addItemIdentifier(lname, prefix);
-        names.remove(key); // we've seen this one, so cross it off
-      }
-    }
-
-    // copy remaining names in the fragment across to the local topic
-    for (TopicNameIF fname : names.values()) {
-      // merge fname into ltopic (translating topics etc)
-      // add suitable item identifier
-    }
-
-    // (e) sync the occurrences
-
-    // (f) sync the associations
+    // (f) sync the occurrences
+    keymap = makeKeyMap(ftopic.getOccurrences(), topicmap);
+    syncCollection(ftopic, ltopic, keymap, ltopic.getOccurrences(), prefix);
+    
+    // (g) sync the associations
 
     // (3) update lastChange
     lastChange = fragment.getUpdated();
+  }
+
+  private Map<String, ? extends ReifiableIF>
+  makeKeyMap(Collection<? extends ReifiableIF> objects, TopicMapIF othertm) {
+    Map<String, ReifiableIF> keymap = new HashMap();
+    for (ReifiableIF object : objects)
+      keymap.put(KeyGenerator.makeKey(object, othertm), object);
+    return keymap;
+  }
+
+  private void syncCollection(TopicIF ftopic, TopicIF ltopic,
+                              Map<String,? extends ReifiableIF> keymap,
+                              Collection<? extends ReifiableIF> lobjects,
+                              String prefix) {
+    // check all local objects against the fragment
+    for (ReifiableIF lobject : lobjects) {
+      String key = KeyGenerator.makeKey(lobject);
+      ReifiableIF fobject = keymap.get(key);
+
+      if (fobject == null) {
+        // the source doesn't have this object. however, if it still has
+        // item identifiers (other than ours), we can keep it. we do
+        // need to remove any iids starting with the prefix, though.
+        pruneItemIdentifiers(lobject, prefix);
+        if (lobject.getItemIdentifiers().isEmpty())
+          lobject.remove();
+      } else {
+        // the source has this object. we need to make sure the local
+        // copy has the item identifier.
+        addItemIdentifier(lobject, prefix);
+        keymap.remove(key); // we've seen this one, so cross it off
+      }
+    }
+
+    // copy the objects in the source which are not in the local copy
+    // across to the local copy, adding item identifiers
+    for (ReifiableIF fobject : keymap.values()) {
+      ReifiableIF lobject = MergeUtils.mergeInto(ltopic, fobject);
+      addItemIdentifier(lobject, prefix);
+    }
   }
 
   private void pruneItemIdentifiers(TMObjectIF object, String prefix) {
@@ -221,12 +283,25 @@ public class ConsumerClient {
         object.removeItemIdentifier(iid);
   }
 
+  // FIXME: this doesn't really add; it just ensures that the object has
+  // one. ie: method is idempotent.
   private void addItemIdentifier(TMObjectIF object, String prefix) {
     for (LocatorIF iid : object.getItemIdentifiers())
       if (iid.getAddress().startsWith(prefix))
         return; // it already has one; we're done
 
-    // FIXME: it doesn't have one, so add it
+    // it doesn't really matter what the iid is, so long as it is
+    // unique and starts with the right prefix. we therefore take what
+    // we assume is the shortest path to the goal.
+    TopicMapIF topicmap = object.getTopicMap();
+    LocatorIF base = topicmap.getStore().getBaseAddress();
+    String objectid = object.getObjectId();
+    LocatorIF iid = base.resolveAbsolute("#sd" + objectid);
+    while (topicmap.getObjectByItemIdentifier(iid) != null)
+      iid = base.resolveAbsolute("#sd" + objectid + '-' +
+                                 StringUtils.makeRandomId(5));
+
+    object.addItemIdentifier(iid);
   }
   
   // --- Fragment feed ContentHandler
@@ -248,10 +323,6 @@ public class ConsumerClient {
     private long updated;       // content of last <updated> in <entry>
     private Set<LocatorIF> sis; // current <TopicSI>s
 
-    // constants
-    private static final String NS_ATOM = "http://www.w3.org/2005/Atom";
-    private static final String NS_SD = "http://www.egovpt.org/sdshare";
-
     public FragmentFeedReader(String feedurl, long lastChange) {
       this.feedurl = URILocator.create(feedurl);
       this.lastChange = lastChange;
@@ -260,7 +331,7 @@ public class ConsumerClient {
       this.sis = new CompactHashSet();
     }
 
-    public FragmentFeed getFeed() {
+    public FragmentFeed getFragmentFeed() {
       return feed;
     }
 
@@ -412,6 +483,110 @@ public class ConsumerClient {
 
     public long getUpdated() {
       return updated;
+    }
+  }
+
+  /**
+   * INTERNAL: SAX 2.0 ContentHandler to interpret Atom collection feeds.
+   */
+  private static class CollectionFeedReader extends DefaultHandler {
+    private LocatorIF feedurl;
+    private CollectionFeed feed;
+
+    public CollectionFeedReader(String feedurl) {
+      this.feedurl = URILocator.create(feedurl);
+      this.feed = new CollectionFeed();
+    }
+
+    public CollectionFeed getCollectionFeed() {
+      return feed;
+    }
+
+    public void startElement(String uri, String name, String qname,
+                             Attributes atts) {
+      if (uri.equals(NS_ATOM) && name.equals("link")) {
+        String href = atts.getValue("href");
+        if (href == null)
+          throw new RuntimeException("No href attribute on <link>");
+
+        String rel = atts.getValue("rel");
+        if (rel == null)
+          return;
+        
+        LocatorIF theuri = feedurl.resolveAbsolute(href);
+        if (rel.equals("http://www.egovpt.org/sdshare/fragmentsfeed"))
+          feed.setFragmentFeed(theuri);
+        else if (rel.equals("http://www.egovpt.org/sdshare/snapshotsfeed"))
+          feed.setSnapshotFeed(theuri);
+      }
+    }
+  }
+  
+  /**
+   * INTERNAL: Represents a collection feed. Just a data carrier.
+   */
+  public static class CollectionFeed {
+    private LocatorIF fragmentfeed;
+    private LocatorIF snapshotfeed;
+
+    public CollectionFeed() {
+    }
+
+    public LocatorIF getFragmentFeed() {
+      return fragmentfeed;
+    }
+
+    public void setFragmentFeed(LocatorIF uri) {
+      fragmentfeed = uri;
+    }
+    
+    public LocatorIF getSnapshotFeed() {
+      return snapshotfeed;
+    }
+
+    public void setSnapshotFeed(LocatorIF uri) {
+      snapshotfeed = uri;
+    }
+  }
+
+  /**
+   * INTERNAL: SAX 2.0 ContentHandler to interpret Atom snapshot feeds.
+   */
+  private static class SnapshotFeedReader extends DefaultHandler {
+    private LocatorIF feedurl;
+    private List<LocatorIF> snapshots;
+    private boolean inEntry;    // are we inside an entry element?
+
+    public SnapshotFeedReader(String feedurl) {
+      this.feedurl = URILocator.create(feedurl);
+      this.snapshots = new ArrayList<LocatorIF>();
+    }
+
+    public List<LocatorIF> getList() {
+      return snapshots;
+    }
+
+    public void startElement(String uri, String name, String qname,
+                             Attributes atts) {
+      if (uri.equals(NS_ATOM) && name.equals("entry"))
+        inEntry = true; // other book-keeping done in endElement()
+        
+      else if (uri.equals(NS_ATOM) && name.equals("link") && inEntry) {
+        String rel = atts.getValue("rel");
+        if (rel == null || !rel.equals("alternate"))
+          return; // then we don't know what this is
+        
+        String href = atts.getValue("href");
+        if (href == null)
+          throw new RuntimeException("No href attribute on <link>");
+
+        snapshots.add(feedurl.resolveAbsolute(href));
+      }
+    }
+
+    public void endElement(String uri, String name, String qname) {
+      if (uri.equals(NS_ATOM) && name.equals("entry"))
+        inEntry = false;
     }
   }
 }
