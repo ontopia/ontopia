@@ -1,17 +1,15 @@
 
-// $Id: QueryOptimizer.java,v 1.46 2008/07/28 11:46:22 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -261,12 +259,12 @@ public class QueryOptimizer {
                              String rulename, CostEstimator estimator) {
     List clauses = new ArrayList(qclauses);
     List newOrder = new ArrayList();
-    Set context = new HashSet(boundvars);
+    Set context = new CompactHashSet(boundvars);
     while (clauses.size() > 0) {
       int lowest = Integer.MAX_VALUE;
       int best = 0;
 
-      //System.out.println("--------------------------------------------------");
+      //System.out.println("-------------------------------------------------");
       
       // find current best clause
       for (int ix = 0; ix < clauses.size(); ix++) {
@@ -314,8 +312,8 @@ public class QueryOptimizer {
     Iterator it = alts.iterator();
     while (it.hasNext()) {
       List clauses = (List) it.next();
-      List newclauses = reorder(clauses, new HashSet(boundvars),
-                                new HashSet(literalvars), rulename,
+      List newclauses = reorder(clauses, new CompactHashSet(boundvars),
+                                new CompactHashSet(literalvars), rulename,
                                 estimator);
       alts.set(ix++, newclauses);
     }
@@ -328,8 +326,8 @@ public class QueryOptimizer {
   private static void reorder(NotClause clause, Set boundvars, Set literalvars,
                               String rulename, CostEstimator estimator) {
     List newclauses = reorder(clause.getClauses(),
-                              new HashSet(boundvars),
-                              new HashSet(literalvars),
+                              new CompactHashSet(boundvars),
+                              new CompactHashSet(literalvars),
                               rulename,
                               estimator);
     clause.setClauseList(newclauses);
@@ -959,7 +957,7 @@ public class QueryOptimizer {
   }
 
   private static boolean isBoundAt(List clauses, Variable var, PredicateClause pclause) {
-    return isBoundAt(clauses, var, pclause, new HashSet());
+    return isBoundAt(clauses, var, pclause, new CompactHashSet());
   }
 
   private static boolean isBoundAt(List clauses, Variable var,
@@ -1269,7 +1267,7 @@ public class QueryOptimizer {
     }
     
     public List getArguments() {
-      Collection items = new HashSet(arguments);
+      Collection items = new CompactHashSet(arguments);
 
       List clauses = ((PumpPredicate) predicate).subclauses;
       for (int ix = 0; ix < clauses.size(); ix++) {

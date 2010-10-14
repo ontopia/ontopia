@@ -1,6 +1,4 @@
 
-// $Id: PredicateDrivenCostEstimator.java,v 1.4 2007/10/30 12:55:37 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.Set;
@@ -82,6 +80,12 @@ public class PredicateDrivenCostEstimator extends CostEstimator {
     List alternatives = or.getAlternatives();
     for (int ix = 0; ix < alternatives.size(); ix++) {
       List alternative = (List) alternatives.get(ix);
+
+      // here we reorder the clauses in this alternative so that the
+      // first clause becomes representative of this OR branch.
+      alternative = QueryOptimizer.reorder(alternative, context, literalvars,
+                                           rulename, this);
+      
       AbstractClause clause = (AbstractClause) alternative.get(0);
       int cost = computeCost(context, clause, literalvars, rulename);
       worstcost = Math.max(cost, worstcost);
