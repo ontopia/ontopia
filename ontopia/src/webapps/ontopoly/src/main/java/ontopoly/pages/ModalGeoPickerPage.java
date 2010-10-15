@@ -65,9 +65,6 @@ public class ModalGeoPickerPage extends Panel {
                                                           thetopic.getName() +
                                                           "'")));
 
-    Button set = new Button("setPosition");
-    popupContent.add(set);
-
     behave = new ReceiveRequest(this);
     this.add(behave);
 
