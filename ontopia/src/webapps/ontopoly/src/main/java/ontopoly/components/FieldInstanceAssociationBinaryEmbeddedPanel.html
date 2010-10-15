@@ -2,8 +2,8 @@
 <tr class="fieldRow"> 
   <td class="fieldEmbeddedLabel" colspan="2"><span wicket:id="fieldLabel"/>:</td>
   <td class="fieldEmbeddedInstanceButtons" wicket:id="fieldInstanceButtons">
-    <a href="#" wicket:id="add"></a>
-    <a href="#" wicket:id="find"></a>
+    <a href="#" wicket:id="add"><img wicket:id="image" /></a>
+    <a href="#" wicket:id="find"><img wicket:id="image" /></a>
     <span wicket:id="create"/>
     <span wicket:id="findModal" class="popupWindow"/>
   </td>
@@ -16,7 +16,10 @@
     <tr class="fieldValue" wicket:id="fieldValues">
       <td class="fieldValueIcon" wicket:id="fieldIconContainer"><img wicket:id="fieldIcon"/></td> 
       <td class="fieldValueContent" wicket:id="fieldValue"></td> 
-      <td class="fieldValueButtons" wicket:id="fieldValueButtons"><a wicket:id="lock"><img wicket:id="image" /></a><a href="#" wicket:id="goto"><img wicket:id="image" /></a><br/><a href="#" wicket:id="remove"><img wicket:id="image" /></a></td>
+      <td class="fieldValueButtons" wicket:id="fieldValueButtons">
+        <a wicket:id="lock"><img wicket:id="image" /></a>
+        <a href="#" wicket:id="goto"><img wicket:id="image" /></a><br/>
+        <a href="#" wicket:id="remove"><img wicket:id="image" /></a></td>
     </tr>
     </table>
   </td>
