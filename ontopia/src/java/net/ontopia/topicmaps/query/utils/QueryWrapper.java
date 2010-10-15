@@ -41,6 +41,10 @@ public class QueryWrapper {
     return context;
   }
 
+  public void setDeclarationContext(DeclarationContextIF context) {
+    this.context = context;
+  }
+  
   /**
    * EXPERIMENTAL: Sets the parsing context for the query processor.
    * Each call to this method overwrites the results from previous
