@@ -96,6 +96,7 @@
     <template:put name='content' body='true'>
       <form method="post" action="plugins.jsp">
       <input type="hidden" name="apply" value="apply" />
+      <input type="hidden" name="tm" value="<%= request.getParameter("tm") %>" />
       <table>
       <tr>
         <th align='left'>Title</th>
