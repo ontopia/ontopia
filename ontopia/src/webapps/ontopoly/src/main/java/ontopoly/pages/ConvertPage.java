@@ -138,7 +138,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
       @Override
       public void onSubmit() {
         TopicMap topicMap = getTopicMapModel().getTopicMap();
-        String name = textField.getDefaultModelObjectAsString();
+        String name = textField.getModel().getObject();
         
         if(properties.get("choice").equals(new ResourceModel("ConvertPage.create.copy").getObject())) {
           

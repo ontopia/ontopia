@@ -139,7 +139,7 @@ public class AdminPage extends OntopolyAbstractPage {
       protected void setHeaders(WebResponse response) {
         super.setHeaders(response);
         if(action.equals(new ResourceModel("AdminPage.export.download").getObject().toString())) {
-          response.setAttachmentHeader(fileNameTextField.getDefaultModelObjectAsString());
+            response.setAttachmentHeader(fileNameTextField.getModel().getObject());
         }
       }
     };

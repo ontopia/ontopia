@@ -45,7 +45,7 @@ public class InstanceSearchPanel extends Panel {
       protected List<Topic> load() {
         try {
           errorInSearch = false;
-          return topicTypeModel.getTopicType().searchAll(searchField.getDefaultModelObjectAsString());
+          return topicTypeModel.getTopicType().searchAll(searchField.getModel().getObject());
         }
         catch(Exception e) {
           errorInSearch = true;
@@ -64,7 +64,7 @@ public class InstanceSearchPanel extends Panel {
     
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
       public boolean isVisible() {
-        return !searchField.getDefaultModelObjectAsString().equals("") && searchResultModel.getObject().isEmpty() ? true : false;      
+        return !searchField.getModel().getObject().equals("") && searchResultModel.getObject().isEmpty() ? true : false;      
       }
     };
     unsuccessfulSearchContainer.setOutputMarkupPlaceholderTag(true);

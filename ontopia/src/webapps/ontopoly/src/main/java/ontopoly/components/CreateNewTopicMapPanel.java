@@ -67,10 +67,10 @@ public class CreateNewTopicMapPanel extends Panel {
     button.add(new AjaxFormComponentUpdatingBehavior("onclick") {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
-        String name = nameField.getDefaultModelObjectAsString();
+        String name = nameField.getModel().getObject();
         if(!name.equals("")) {
           TopicMapSource topicMapSource = (TopicMapSource) sourcesDropDown.getModelObject();
-          TopicMapReference topicMapReference = topicMapSource.createTopicMap((nameField.getDefaultModelObjectAsString()));       
+          TopicMapReference topicMapReference = topicMapSource.createTopicMap((name));
           
           Map<String,String> pageParametersMap = new HashMap<String,String>();
           pageParametersMap.put("topicMapId", topicMapReference.getId());

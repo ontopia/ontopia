@@ -39,7 +39,7 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
       @Override
       protected void onUpdate(AjaxRequestTarget target) {
         TopicMap topicMap = topicMapModel.getTopicMap();
-        Topic instance = createInstance(topicMap, nameField.getDefaultModelObjectAsString());
+        Topic instance = createInstance(topicMap, nameField.getModel().getObject());
         Map<String,String> pageParametersMap = new HashMap<String,String>();
         pageParametersMap.put("topicMapId", topicMap.getId());
         pageParametersMap.put("topicId", instance.getId());

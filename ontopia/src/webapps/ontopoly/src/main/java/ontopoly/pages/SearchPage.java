@@ -47,7 +47,7 @@ public class SearchPage extends OntopolyAbstractPage {
       protected void onSubmit() {
           Map<String,String> pageParametersMap = new HashMap<String,String>();
           pageParametersMap.put("topicMapId", getTopicMap().getId());
-          pageParametersMap.put("searchTerm", searchField.getDefaultModelObjectAsString());
+          pageParametersMap.put("searchTerm", searchField.getModel().getObject());
           setResponsePage(SearchPage.class, new PageParameters(pageParametersMap));
           setRedirect(false);
       }
@@ -60,7 +60,7 @@ public class SearchPage extends OntopolyAbstractPage {
       protected List<Topic> load() {
         try {
           errorInSearch = false;
-          List<Topic> result = getTopicMap().searchAll(searchField.getDefaultModelObjectAsString());
+          List<Topic> result = getTopicMap().searchAll(searchField.getModel().getObject());
           AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
           page.filterTopics(result);
           return result;
@@ -82,7 +82,7 @@ public class SearchPage extends OntopolyAbstractPage {
     
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
       public boolean isVisible() {
-        return !searchField.getDefaultModelObjectAsString().equals("") && ((List<Topic>)searchResultModel.getObject()).isEmpty() ? true : false;      
+          return !searchField.getModel().getObject().equals("") && ((List<Topic>)searchResultModel.getObject()).isEmpty() ? true : false;      
       }
     };
     unsuccessfulSearchContainer.setOutputMarkupPlaceholderTag(true);
