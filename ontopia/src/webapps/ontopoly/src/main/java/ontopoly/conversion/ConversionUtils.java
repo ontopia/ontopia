@@ -39,9 +39,10 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.URIUtils;
 import ontopoly.OntopolyApplication;
+import ontopoly.OntopolyContext;
 import ontopoly.model.PSI;
 import ontopoly.model.TopicMap;
-import ontopoly.sysmodel.TopicMapReference;
+import ontopoly.sysmodel.OntopolyRepository;
 import ontopoly.sysmodel.TopicMapSource;
 
 public class ConversionUtils {
@@ -58,33 +59,26 @@ public class ConversionUtils {
     teqbase = URILocator.create("http://www.techquila.com/psi/hierarchy/");
   }
   
-  public static void makeOntopolyTopicMap(TopicMapReference ref, String name) {
-    if (!ref.isOntopolyTopicMap()) {
-      ref.makeOntopolyTopicMap();
-      ref.setName(name);
-    }
-  }
-  
   public static String upgradeExisting(TopicMap topicMap) {
     UpgradeUtils.upgradeTopicMap(topicMap);
-    TopicMapReference ref = topicMap.getOntopolyRepository().getReference(topicMap.getId());
-    makeOntopolyTopicMap(ref, topicMap.getName());
-    return ref.getId();
+    String referenceId = topicMap.getId();
+    OntopolyContext.getOntopolyRepository().registerOntopolyTopicMap(referenceId, topicMap.getName());
+    return referenceId;
   }
   
   public static String convertExisting(TopicMap topicMap, String tmname) {
-    TopicMapRepositoryIF repository = topicMap.getOntopolyRepository().getTopicMapRepository();
-    String refId = inferAndCreateSchema(null, topicMap, tmname, repository);
-    TopicMapReference ref = topicMap.getOntopolyRepository().getReference(refId);
-    makeOntopolyTopicMap(ref, topicMap.getName());
-    return refId;
+    OntopolyRepository ontopolyRepository = OntopolyContext.getOntopolyRepository();
+    TopicMapRepositoryIF repository = ontopolyRepository.getTopicMapRepository();
+    String referenceId = inferAndCreateSchema(null, topicMap, tmname, repository);
+    OntopolyContext.getOntopolyRepository().registerOntopolyTopicMap(referenceId, topicMap.getName());
+    return referenceId;
   }
   
   public static String convertNew(TopicMap oldTopicMap, String tmname, TopicMapSource tmsource) {
-    TopicMapRepositoryIF repository = oldTopicMap.getOntopolyRepository().getTopicMapRepository();
+    TopicMapRepositoryIF repository = OntopolyContext.getOntopolyRepository().getTopicMapRepository();
     
-    TopicMapReference newReference = tmsource.createTopicMap(tmname);
-    TopicMap newTopicMap = new TopicMap(newReference);
+    String referenceId = OntopolyContext.getOntopolyRepository().createOntopolyTopicMap(tmsource.getId(), tmname);
+    TopicMap newTopicMap = new TopicMap(referenceId);
     
     String  refId = inferAndCreateSchema(oldTopicMap, newTopicMap, tmname, repository);
     return refId;    
@@ -129,9 +123,9 @@ public class ConversionUtils {
         }
       } else {
         // import TED ontology
-        TopicMapReferenceIF ontologyTopicMapReference = repository.getReferenceByKey(TopicMapSource.ONTOLOGY_TOPIC_MAP_ID);
+        TopicMapReferenceIF ontologyTopicMapReference = repository.getReferenceByKey(OntopolyRepository.ONTOLOGY_TOPIC_MAP_ID);
         if (ontologyTopicMapReference == null)
-          throw new OntopiaRuntimeException("Could not find ontology topic map '" + TopicMapSource.ONTOLOGY_TOPIC_MAP_ID + "'");
+          throw new OntopiaRuntimeException("Could not find ontology topic map '" + OntopolyRepository.ONTOLOGY_TOPIC_MAP_ID + "'");
         TopicMapStoreIF ontologyTopicMapStore = ontologyTopicMapReference.createStore(true);
         try {
           MergeUtils.mergeInto(tm, ontologyTopicMapStore.getTopicMap());

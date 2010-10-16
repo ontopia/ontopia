@@ -22,6 +22,10 @@ public class QueryMapper<T> {
       return wrapValue(queryResult.getValue(0));
     }
   };
+
+  public QueryMapper(QueryProcessorIF processor) {
+    this(processor, null);
+  }
   
   public QueryMapper(QueryProcessorIF processor, DeclarationContextIF context) {
     this.processor = processor;

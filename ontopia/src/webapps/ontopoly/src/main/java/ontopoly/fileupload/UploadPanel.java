@@ -28,6 +28,7 @@ public class UploadPanel extends Panel {
       final OnUploadedBehavior onUploadBehavior = new OnUploadedBehavior();
       add(onUploadBehavior);
       add(new WebComponent("onUploaded") {
+        @Override
         protected void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
           // calling it through setTimeout we ensure that the callback is called
           // in the proper execution context, that is the parent frame
@@ -39,6 +40,7 @@ public class UploadPanel extends Panel {
       });        
     }
     
+    @Override
     protected void onBeforeRender() {
         super.onBeforeRender();
         
@@ -81,9 +83,7 @@ public class UploadPanel extends Panel {
       }
       
       protected void respond(AjaxRequestTarget target) {
-        //uploadIFrame.setVisible(false);
         parentField.callOnUpdate(target);
-        //target.addComponent(UploadPanel.this);
       }
     };
 

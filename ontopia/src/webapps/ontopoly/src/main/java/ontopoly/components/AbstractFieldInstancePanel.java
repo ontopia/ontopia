@@ -113,8 +113,8 @@ public abstract class AbstractFieldInstancePanel extends Panel {
 
     public boolean accept(FeedbackMessage message) {
       Serializable value = message.getMessage();
-      if (value instanceof AbstractFieldInstanceMessage) {
-        return matchesThisField((AbstractFieldInstanceMessage)value);
+      if (value instanceof AbstractFieldInstanceMessage<?>) {
+        return matchesThisField((AbstractFieldInstanceMessage<?>)value);
       }
       return false;
     }
@@ -139,7 +139,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
     }    
   }
   
-  protected boolean matchesThisField(AbstractFieldInstanceMessage fim) {
+  protected boolean matchesThisField(AbstractFieldInstanceMessage<?> fim) {
     return createIdentifier(fieldInstanceModel).equals(fim.getIdentifier());
   }
   

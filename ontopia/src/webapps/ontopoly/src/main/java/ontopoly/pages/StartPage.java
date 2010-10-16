@@ -14,7 +14,6 @@ import ontopoly.components.OntopolyBookmarkablePageLink;
 import ontopoly.components.StartPageHeaderPanel;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.models.HelpLinkResourceModel;
-import ontopoly.models.TopicMapReferenceModel;
 import ontopoly.sysmodel.OntopolyRepository;
 import ontopoly.sysmodel.TopicMapReference;
 
@@ -100,8 +99,9 @@ public class StartPage extends AbstractProtectedOntopolyPage {
 
     final WebMarkupContainer missingTopicMapContainer = new WebMarkupContainer(
         "missingTopicMapContainer") {
+      @Override
       public boolean isVisible() {
-        if (((List<TopicMapReference>)eachMissingTopicMapModel.getObject()).size() == 0) {
+        if (eachMissingTopicMapModel.getObject().isEmpty()) {
           return false;
         }
         return true;
@@ -112,17 +112,16 @@ public class StartPage extends AbstractProtectedOntopolyPage {
 
     eachTopicMap = new ListView<TopicMapReference>("eachMissingOntopolyTopicMap", eachMissingTopicMapModel) {
       protected void populateItem(ListItem<TopicMapReference> item) {
-        TopicMapReference ref = item.getModelObject();
-        final TopicMapReferenceModel topicMapReferenceModel = new TopicMapReferenceModel(ref);
+        final TopicMapReference ref = item.getModelObject();
         item.add(new Label("missingOntTMTitle", ref.getName()));
         item.add(new Label("missingOntTMFilename", ref.getId()));
 
         AjaxFallbackLink<Object> removeLink = new AjaxFallbackLink<Object>("missingOntTMDeleteLink") {
           public void onClick(AjaxRequestTarget target) {
             // delete the item representing the topicMapReference from the list eachMissingOntopolyTopicMap.
-            ((List<TopicMapReference>)eachMissingTopicMapModel.getObject()).remove(topicMapReferenceModel.getTopicMapReference());
+            ((List<TopicMapReference>)eachMissingTopicMapModel.getObject()).remove(ref);
             // delete the missing topic map from the system topic map.
-            topicMapReferenceModel.getTopicMapReference().delete();
+            OntopolyContext.getOntopolyRepository().unregisterOntopolyTopicMap(ref.getId());
             if (target != null) {
               target.addComponent(missingTopicMapContainer);
             }
@@ -160,7 +159,7 @@ public class StartPage extends AbstractProtectedOntopolyPage {
   
   private void addCreateNewTopicMapSection() {  
     // TODO Implement functionality to handle "" or null values from textfield.
-    add(new CreateNewTopicMapPanel("createNewTopicMapPanel", OntopolyContext.getOntopolyRepository()));
+    add(new CreateNewTopicMapPanel("createNewTopicMapPanel"));
   }
 
   private void createTitle() {

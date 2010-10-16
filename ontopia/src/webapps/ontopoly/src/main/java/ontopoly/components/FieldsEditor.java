@@ -42,7 +42,6 @@ public class FieldsEditor extends Panel {
   
   ListView<FieldAssignmentModel> listView;
   MutableLoadableDetachableModel<List<FieldAssignmentModel>> fieldAssignmentModels;
-  WebMarkupContainer addFieldsContainer;
   
   public FieldsEditor(String id, TopicTypeModel _topicTypeModel, final boolean readonly) {
     super(id);
@@ -151,14 +150,17 @@ public class FieldsEditor extends Panel {
       }      
     });
 
-    this.addFieldsContainer = new WebMarkupContainer("addFieldsContainer");
-    addFieldsContainer.setOutputMarkupId(true);    
-    add(this.addFieldsContainer);        
-
-    // add empty listview
     List<FieldDefinitionModel> fields = Collections.emptyList();
-    ListView<FieldDefinitionModel> afListView = createListView(fields);
-    addFieldsContainer.add(afListView);
+    add(createListView(fields));  
+    
+//    this.addFieldsContainer = new WebMarkupContainer("addFieldsContainer");
+//    addFieldsContainer.setOutputMarkupId(true);    
+//    add(this.addFieldsContainer);        
+//
+//    // add empty listview
+//    List<FieldDefinitionModel> fields = Collections.emptyList();
+//    ListView<FieldDefinitionModel> afListView = createListView("addFields", fields);
+//    addFieldsContainer.add(afListView);
   }
 
   private void filterFieldDefinitions(List<? extends FieldDefinition> result) {
@@ -177,7 +179,7 @@ public class FieldsEditor extends Panel {
       public void populateItem(final ListItem<FieldDefinitionModel> item) {
         
         FieldDefinitionModel fieldDefinitionModel = item.getModelObject();
-        item.setRenderBodyOnly(true);
+        //item.setRenderBodyOnly(true);
 
         Component component = new FieldsEditorAddPanel("field", topicTypeModel, fieldDefinitionModel) {
           @Override
@@ -187,12 +189,13 @@ public class FieldsEditor extends Panel {
 
             // remove field definition from available list
             fieldDefinitionModels.remove(fieldDefinitionModel);
-            ListView pListView = ((ListView)item.getParent()); 
+            @SuppressWarnings("rawtypes")
+            ListView pListView = (ListView)item.getParent(); 
             pListView.removeAll();
             onUpdate(target);
           }
         };
-        component.setRenderBodyOnly(true);
+        //component.setRenderBodyOnly(true);
         item.add(component);
       }
     };
@@ -215,7 +218,7 @@ public class FieldsEditor extends Panel {
       afListView = createListView(fields);
       selectedTypeLinkId = null;
     }
-    addFieldsContainer.replace(afListView);    
+    replace(afListView);    
   }
   
   private List<FieldDefinitionModel> filterAndWrapInFieldDefinitions(List<? extends FieldDefinition> fieldDefinitions) {

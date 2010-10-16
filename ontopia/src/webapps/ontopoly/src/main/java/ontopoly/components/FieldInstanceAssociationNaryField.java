@@ -166,6 +166,7 @@ public class FieldInstanceAssociationNaryField extends Panel {
             protected void onUpdate(AjaxRequestTarget target) {
               FieldInstanceAssociationNaryField.this.onUpdate(target);
             }     
+            @Override
             protected void onError(AjaxRequestTarget target, RuntimeException e) {
               FieldInstanceAssociationNaryField.this.onError(target, e);
             }
@@ -319,7 +320,6 @@ public class FieldInstanceAssociationNaryField extends Panel {
         }
       }
     } catch (Exception e) {
-      e.printStackTrace();
       throw new RuntimeException(e);
     }
   }

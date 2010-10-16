@@ -1,4 +1,4 @@
-package ontopoly.components;
+package ontopoly.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

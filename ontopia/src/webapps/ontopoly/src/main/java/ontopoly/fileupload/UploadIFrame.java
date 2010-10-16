@@ -41,6 +41,7 @@ public abstract class UploadIFrame extends WebPage {
     container.add(new UploadForm("form", container));
     // add onUploaded method
     container.add(new WebComponent("onUploaded") {
+      @Override
       protected void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
         if (uploaded) {
           replaceComponentTagBody(markupStream, openTag,
@@ -65,6 +66,7 @@ public abstract class UploadIFrame extends WebPage {
       add(uploadField);
     }
     
+    @Override
     public void onSubmit() {
       FileUpload upload = uploadField.getFileUpload();         
       if (upload != null) {
@@ -77,8 +79,8 @@ public abstract class UploadIFrame extends WebPage {
           fieldInstance.addValue(value, getLifeCycleListener());
           fieldValueModel.setExistingValue(value);
           uploaded = true;
-        } catch (IOException exception) {
-            exception.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
         }
       }
     }

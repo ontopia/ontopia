@@ -1,13 +1,16 @@
 package ontopoly.components;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.ontopia.topicmaps.entry.TopicMapSourceIF;
+import net.ontopia.utils.DeciderIF;
 
 import ontopoly.OntopolyContext;
 import ontopoly.models.TopicMapSourceModel;
 import ontopoly.pages.TopicTypesPage;
-import ontopoly.sysmodel.OntopolyRepository;
 import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.sysmodel.TopicMapSource;
 
@@ -25,29 +28,31 @@ import org.apache.wicket.model.ResourceModel;
 
 public class CreateNewTopicMapPanel extends Panel {
   
-  private final int NUMBER_OF_SOURCES;
+  private int numberOfSources;
   
-  public CreateNewTopicMapPanel(String id, OntopolyRepository repository) {
+  public CreateNewTopicMapPanel(String id) {
     super(id);
-     
-    List<TopicMapSource> sources = repository.getSources();  
-    NUMBER_OF_SOURCES = sources.size();
     
     IModel<List<TopicMapSource>> sourcesChoicesModel = new LoadableDetachableModel<List<TopicMapSource>>() {
       @Override
       protected List<TopicMapSource> load() {
-        return OntopolyContext.getOntopolyRepository().getSources(); 
+        List<TopicMapSource> result = OntopolyContext.getOntopolyRepository().getEditableSources();
+        numberOfSources = result.size();
+        return result;
       }
     };
     
+    List<TopicMapSource> sources = sourcesChoicesModel.getObject();
+
     TopicMapSourceModel topicMapSourceModel = null;
-    if(NUMBER_OF_SOURCES > 0) {
+    if (numberOfSources > 0) {
       topicMapSourceModel = new TopicMapSourceModel((TopicMapSource)sources.get(0));
     }
     
     WebMarkupContainer sourcesDropDownContainer = new WebMarkupContainer("sourcesDropDownContainer") {
+      @Override
       public boolean isVisible() {
-        return NUMBER_OF_SOURCES > 1 ? true : false;
+        return numberOfSources > 1 ? true : false;
       }
     };
     sourcesDropDownContainer.setOutputMarkupPlaceholderTag(true);
@@ -70,10 +75,10 @@ public class CreateNewTopicMapPanel extends Panel {
         String name = nameField.getModel().getObject();
         if(!name.equals("")) {
           TopicMapSource topicMapSource = (TopicMapSource) sourcesDropDown.getModelObject();
-          TopicMapReference topicMapReference = topicMapSource.createTopicMap((name));
+          String referenceId = OntopolyContext.getOntopolyRepository().createOntopolyTopicMap(topicMapSource.getId(), name);
           
           Map<String,String> pageParametersMap = new HashMap<String,String>();
-          pageParametersMap.put("topicMapId", topicMapReference.getId());
+          pageParametersMap.put("topicMapId", referenceId);
           setResponsePage(TopicTypesPage.class, new PageParameters(pageParametersMap));
         }
       }          
@@ -81,8 +86,9 @@ public class CreateNewTopicMapPanel extends Panel {
     add(button);
   }
   
+  @Override
   public boolean isVisible() {
-    return NUMBER_OF_SOURCES > 0 ? true : false;
+    return numberOfSources > 0 ? true : false;
   }
 }
 

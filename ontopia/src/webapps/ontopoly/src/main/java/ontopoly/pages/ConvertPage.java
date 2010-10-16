@@ -60,8 +60,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
         setRedirect(true);
       } else {
         // make the topic map an ontopoly topic map
-        TopicMapReference ref = topicMap.getOntopolyRepository().getReference(topicMap.getId());
-        ConversionUtils.makeOntopolyTopicMap(ref, topicMap.getName());
+        OntopolyContext.getOntopolyRepository().registerOntopolyTopicMap(topicMap.getId(), topicMap.getName());
         // redirect
         PageParameters pageParameters = new PageParameters();
         pageParameters.put("topicMapId", topicMap.getId());
@@ -80,6 +79,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     add(form);
     
     final WebMarkupContainer sourcesDropDownContainer = new WebMarkupContainer("sourcesDropDownContainer") {
+      @Override
       public boolean isVisible() {
         return (NUMBER_OF_SOURCES > 1 && properties.get("choice")
             .equals(new ResourceModel("ConvertPage.create.copy").getObject())) ? true : false;
@@ -88,7 +88,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     sourcesDropDownContainer.setOutputMarkupPlaceholderTag(true);
     form.add(sourcesDropDownContainer);
     
-    List<TopicMapSource> sources = topicMap.getOntopolyRepository().getSources();  
+    List<TopicMapSource> sources = OntopolyContext.getOntopolyRepository().getEditableSources();
     NUMBER_OF_SOURCES = sources.size();
     
     final List<String> contentCategories = Arrays.asList(
@@ -115,7 +115,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
     IModel<List<TopicMapSource>> sourcesChoicesModel = new LoadableDetachableModel<List<TopicMapSource>>() {
       @Override
       protected List<TopicMapSource> load() {
-        return OntopolyContext.getOntopolyRepository().getSources(); 
+        return OntopolyContext.getOntopolyRepository().getEditableSources();
       }
     };
     
@@ -142,7 +142,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
         
         if(properties.get("choice").equals(new ResourceModel("ConvertPage.create.copy").getObject())) {
           
-            TopicMapSource topicMapSource = (TopicMapSource) sourcesDropDown.getModelObject();
+            TopicMapSource topicMapSource = sourcesDropDown.getModelObject();
             String newTopicMapId = ConversionUtils.convertNew(topicMap, name, topicMapSource);
             PageParameters pageParameters = new PageParameters("topicMapId="
                 + newTopicMapId);

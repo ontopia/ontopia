@@ -1,10 +1,6 @@
 package ontopoly.components;
 
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
-
-import ontopoly.model.PSI;
 import ontopoly.model.Cardinality;
 import ontopoly.model.DataType;
 import ontopoly.model.FieldAssignment;
@@ -12,14 +8,18 @@ import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.OccurrenceField;
 import ontopoly.model.OccurrenceType;
+import ontopoly.model.PSI;
 import ontopoly.models.FieldDefinitionModel;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldValueModel;
 import ontopoly.models.FieldValuesModel;
-import ontopoly.utils.OccurrenceComparator;
 import ontopoly.pages.ModalGeoPickerPage;
+import ontopoly.utils.OccurrenceComparator;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.behavior.HeaderContributor;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.JavascriptPackageResource;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -28,8 +28,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.behavior.HeaderContributor;
 
 public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
   
@@ -214,7 +212,7 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       ot.getTopicIF().getSubjectIdentifiers().contains(PSI.ON_LATITUDE);
     fieldInstanceButtons.add(new GeoPickerButton(!readonly && haspsi, geoPicker));
     if (!readonly && haspsi)
-      add(HeaderContributor.forJavaScript("http://maps.google.com/maps/api/js?sensor=false"));
+      add(JavascriptPackageResource.getHeaderContribution("http://maps.google.com/maps/api/js?sensor=false"));
     
     Cardinality cardinality = fieldAssignment.getCardinality();
     if (cardinality.isMaxOne())
@@ -233,20 +231,24 @@ public class FieldInstanceOccurrencePanel extends AbstractFieldInstancePanel {
       this.visible = visible;
       this.picker = picker;
     }
-    
+
+    @Override    
     public void onClick(AjaxRequestTarget target) {
       picker.show(target);
     }
 
+    @Override
     public boolean isVisible() {
       return visible;
     }
 
+    @Override
     public String getImage() {
       return "geopicker.png";
     }
 
-    public IModel getTitleModel() {
+    @Override
+    public IModel<String> getTitleModel() {
       return new ResourceModel("icon.geopicker");
     }
   }

@@ -1,11 +1,11 @@
 package ontopoly.pages;
 
 import ontopoly.OntopolyApplication;
+import ontopoly.OntopolyContext;
 import ontopoly.components.TitleHelpPanel;
 import ontopoly.conversion.ConversionUtils;
 import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
-import ontopoly.sysmodel.TopicMapReference;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.basic.Label;
@@ -28,8 +28,7 @@ public class UpgradePage extends NonOntopolyAbstractPage {
     float ontologyVersion = topicMap.getOntologyVersion();  
     if (ontologyVersion == OntopolyApplication.CURRENT_VERSION_NUMBER) {
       // register topic map in system topic map
-      TopicMapReference ref = topicMap.getOntopolyRepository().getReference(topicMap.getId());
-      ConversionUtils.makeOntopolyTopicMap(ref, topicMap.getName());
+      OntopolyContext.getOntopolyRepository().registerOntopolyTopicMap(topicMap.getId(), topicMap.getName());
       // redirect
       PageParameters pageParameters = new PageParameters();
       pageParameters.put("topicMapId", topicMap.getId());

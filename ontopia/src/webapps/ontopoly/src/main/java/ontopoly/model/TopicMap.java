@@ -33,7 +33,7 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import ontopoly.sysmodel.OntopolyRepository;
+import ontopoly.OntopolyContext;
 import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.utils.OntopolyModelUtils;
 
@@ -56,8 +56,6 @@ public class TopicMap {
     + "using tech for i\"" + TECH + "\" " 
     + "using tmdm for i\"" + TMDM + "\" " 
     + "using dc for i\"" + DC + "\" ";
-  
-  private OntopolyRepository repository;
 
   private TopicMapIF topicMapIF;
   private DeclarationContextIF dc;
@@ -67,11 +65,10 @@ public class TopicMap {
 
   private TopicIF defnametype; // cached here to avoid constant lookups
 
-  public TopicMap(TopicMapReference topicMapReference) {
-    this.repository = topicMapReference.getRepository();
-    this.topicMapId = topicMapReference.getId();
+  public TopicMap(String topicMapId) {
+    this.topicMapId = topicMapId;
     try {
-      this.topicMapIF = repository.getTopicMapRepository().getReferenceByKey(
+      this.topicMapIF = OntopolyContext.getOntopolyRepository().getTopicMapRepository().getReferenceByKey(
           topicMapId).createStore(false).getTopicMap();
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
@@ -81,9 +78,7 @@ public class TopicMap {
     initQueryContext();
   }
 
-  public TopicMap(OntopolyRepository repository, TopicMapIF topicMapIF,
-                  String topicMapId) {
-    this.repository = repository;
+  public TopicMap(TopicMapIF topicMapIF, String topicMapId) {
     this.topicMapIF = topicMapIF;
     this.topicMapId = topicMapId;
 
@@ -161,10 +156,6 @@ public class TopicMap {
         return type.getConstructor(TopicIF.class, TopicMap.class); 
       }
     };
-  }
-
-  public OntopolyRepository getOntopolyRepository() {
-    return repository;
   }
 
   public TopicIF getTopicIFById(String id) {

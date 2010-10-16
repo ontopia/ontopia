@@ -1,6 +1,5 @@
 package ontopoly.models;
 
-import ontopoly.OntopolyContext;
 import ontopoly.sysmodel.TopicMapSource;
 
 public class TopicMapSourceModel extends MutableLoadableDetachableModel<TopicMapSource> {
@@ -34,6 +33,6 @@ public class TopicMapSourceModel extends MutableLoadableDetachableModel<TopicMap
   @Override
   protected TopicMapSource load() {
     // retrieve topicMapSource from ontopoly repository
-    return OntopolyContext.getOntopolyRepository().getSource(topicMapSourceId);
+    return new TopicMapSource(topicMapSourceId);
   }
 }

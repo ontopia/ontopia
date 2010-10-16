@@ -37,12 +37,9 @@ public class OntopolyRequestCycle extends WebRequestCycle {
   //! private static final Logger log = LoggerFactory.getLogger(OntopolyRequestCycle.class);
   
   private static ThreadLocal<Map<String,TopicMap>> topicmaps = new ThreadLocal<Map<String,TopicMap>>();
-
-  private OntopolyRepository repository;
   
-  public OntopolyRequestCycle(OntopolyRepository repository, WebApplication application, Request request, Response response) {
+  public OntopolyRequestCycle(OntopolyApplication application, Request request, Response response) {
     super(application, (WebRequest)request, response);
-    this.repository = repository;
   }
   
   @Override
@@ -159,11 +156,11 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         tms = new HashMap<String,TopicMap>();
         topicmaps.set(tms);
       }
-      
-      TopicMapRepositoryIF rep = repository.getTopicMapRepository();
+
+      TopicMapRepositoryIF rep = OntopolyContext.getOntopolyRepository().getTopicMapRepository();
       TopicMapStoreIF store = createStore(topicMapId, false, rep);
-      //! log.info("OKS: +" + topicMapId);
-      tm = new TopicMap(repository, store.getTopicMap(), topicMapId);
+
+      tm = new TopicMap(store.getTopicMap(), topicMapId);
       tms.put(topicMapId, tm);
     }    
     // check if topic map contains ontopoly ontology
@@ -179,7 +176,6 @@ public class OntopolyRequestCycle extends WebRequestCycle {
           PageParameters pageParameters = new PageParameters();
           pageParameters.put("topicMapId", topicMapId);
           throw new RestartResponseException(ConvertPage.class, pageParameters);        
-  //        performingConvert = true;
         }
         // if it is an old ontopoly topic map then do an upgrade
         if (!performingConvert) {
@@ -193,7 +189,6 @@ public class OntopolyRequestCycle extends WebRequestCycle {
             // FIXME: should create separate page for warning about future topic maps
             PageParameters pageParameters = new PageParameters();
             pageParameters.put("message", "topicmap-is-created-by-a-newer-ontopoly");
-//            throw new RestartResponseException(StartPage.class, pageParameters);                   
             setResponsePage(StartPage.class, pageParameters);
             setRedirect(true);
           }

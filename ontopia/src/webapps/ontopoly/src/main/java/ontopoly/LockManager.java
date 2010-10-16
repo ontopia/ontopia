@@ -101,7 +101,7 @@ public class LockManager implements Serializable {
     nextPrune = System.currentTimeMillis() + lockTimespan;
   }
   
-  public static class Lock {
+  public static class Lock implements Serializable {
 
     private String lockedBy;
     private String lockKey;

@@ -70,7 +70,9 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       }      
     });
 
-    container.add(getFieldType("valueType", fieldAssignmentModel.getFieldAssignment().getFieldDefinition()));
+    Component fieldType = getFieldType("valueType", fieldAssignmentModel.getFieldAssignment().getFieldDefinition());
+    fieldType.setRenderBodyOnly(true);
+    container.add(fieldType);
     
     Component cardinalityComponent = getCardinality("cardinality", fieldAssignmentModel);
     cardinalityComponent.setEnabled(!readonly);
@@ -243,7 +245,7 @@ public abstract class FieldsEditorExistingPanel extends Panel {
         super.setObject(card);
       }
     };
-    AjaxOntopolyDropDownChoice<Cardinality> choice = new AjaxOntopolyDropDownChoice<Cardinality>("cardinality", cardModel,
+    AjaxOntopolyDropDownChoice<Cardinality> choice = new AjaxOntopolyDropDownChoice<Cardinality>(id, cardModel,
         cardinalityChoicesModel, new TopicChoiceRenderer<Cardinality>());
     return choice;
   }

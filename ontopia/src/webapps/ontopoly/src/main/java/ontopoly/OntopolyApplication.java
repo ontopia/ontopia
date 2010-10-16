@@ -47,7 +47,7 @@ public class OntopolyApplication extends WebApplication {
 
   private static final Logger log = LoggerFactory.getLogger(OntopolyApplication.class);
   
-  protected OntopolyRepository repository = new OntopolyRepository(TopicMaps.getRepository());
+  protected OntopolyRepository repository;
   protected LockManager lockManager = new LockManager();
 
   public static final float CURRENT_VERSION_NUMBER = 2.0f;
@@ -71,7 +71,7 @@ public class OntopolyApplication extends WebApplication {
 
   @Override
   public RequestCycle newRequestCycle(Request request, Response response) {
-    return new OntopolyRequestCycle(repository, this, request, response);
+    return new OntopolyRequestCycle(this, request, response);
   }
   
   @Override
@@ -84,7 +84,9 @@ public class OntopolyApplication extends WebApplication {
     };
   }
 
-  public OntopolyRepository getOntopolyRepository() {
+  public synchronized OntopolyRepository getOntopolyRepository() {
+    if (repository == null)
+      repository = new OntopolyRepository(TopicMaps.getRepository(), "ontopoly-system.ltm");
     return repository;
   }
   

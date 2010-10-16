@@ -4,7 +4,6 @@ import java.util.Map;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import ontopoly.OntopolyContext;
-import ontopoly.components.OccurrenceWebResource;
 import ontopoly.model.TopicMap;
 
 import org.apache.wicket.IRequestTarget;

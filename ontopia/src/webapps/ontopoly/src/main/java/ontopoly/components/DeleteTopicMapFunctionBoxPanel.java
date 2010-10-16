@@ -4,7 +4,6 @@ import ontopoly.OntopolyContext;
 import ontopoly.model.TopicMap;
 import ontopoly.models.TopicMapModel;
 import ontopoly.pages.ModalConfirmPage;
-import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.utils.WicketHacks;
 
 import org.apache.wicket.Component;
@@ -37,9 +36,7 @@ public abstract class DeleteTopicMapFunctionBoxPanel extends Panel {
         TopicMap topicMap = getTopicMapModel().getTopicMap();
         onDeleteConfirmed(topicMap);        
         // delete topic map
-        TopicMapReference topicMapReferenceInSystemTopic =
-          OntopolyContext.getOntopolyRepository().getReference(topicMap.getId());
-        topicMapReferenceInSystemTopic.delete();
+        OntopolyContext.getOntopolyRepository().deleteTopicMap(topicMap.getId());
       }
       @Override
       protected Component getTitleComponent(String id) {

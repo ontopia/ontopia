@@ -13,6 +13,9 @@ public class PSI {
   public static final LocatorIF XSD = URILocator.create(TopicMap.XSD);
   public static final LocatorIF TMDM = URILocator.create(TopicMap.TMDM);
 
+  public static final LocatorIF ON_TED_TOPIC_MAP = PSI.ON.resolveAbsolute("ted-topic-map");
+  public static final LocatorIF ON_TOPIC_MAP_ID = PSI.ON.resolveAbsolute("topic-map-id");
+
   public static final LocatorIF ON_ONTOLOGY_VERSION = PSI.ON.resolveAbsolute("ted-ontology-version");
 
   public static final LocatorIF ON_SYSTEM_TOPIC = PSI.ON.resolveAbsolute("system-topic");
