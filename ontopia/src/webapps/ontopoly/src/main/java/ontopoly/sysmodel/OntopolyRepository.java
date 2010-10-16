@@ -179,7 +179,7 @@ public class OntopolyRepository {
       } finally {
         ontologyTopicMapStore.close();
       }
-      // save topic map with TED ontology
+      // save topic map with ontology
       if (ref instanceof XTMTopicMapReference)
         ((XTMTopicMapReference) ref).save();
 

@@ -31,8 +31,6 @@ import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.protocol.http.WebRequestCycle;
 
 public class OntopolyRequestCycle extends WebRequestCycle {
-
-  //! private static final Logger log = LoggerFactory.getLogger(OntopolyRequestCycle.class);
   
   private static ThreadLocal<Map<String,TopicMap>> topicmaps = new ThreadLocal<Map<String,TopicMap>>();
   
@@ -42,13 +40,11 @@ public class OntopolyRequestCycle extends WebRequestCycle {
   
   @Override
   protected void onBeginRequest() {
-    //! log.info("OKS: onBeginRequest: " + this);
     super.onBeginRequest();    
   }
 
   @Override
   protected void onEndRequest() {
-    //! log.info("OKS: onEndRequest: " + this);
     super.onEndRequest();
     Map<String,TopicMap> tms = topicmaps.get();
     if (tms != null && !tms.isEmpty()) {
@@ -59,7 +55,6 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         TopicMapStoreIF store = tm.getStore();
         try {
           store.commit();
-          //! log.info("OKS: c" + topicmap.getId());
         } catch (Exception ex) {
           // FIXME: log exception
         } finally {
@@ -83,7 +78,6 @@ public class OntopolyRequestCycle extends WebRequestCycle {
   @Override
   public Page onRuntimeException(Page page, RuntimeException e) {
     
-    //! log.info("OKS: onRuntimeException: " + this);
     Map<String,TopicMap> tms = topicmaps.get();
     if (tms != null && !tms.isEmpty()) {
       Iterator<TopicMap> iter = tms.values().iterator();
@@ -93,7 +87,6 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         TopicMapStoreIF store = tm.getStore();
         try {
           store.abort();
-          //! log.info("OKS: a" + topicmap.getId());
         } catch (Exception ex) {
           // FIXME: log exception
         } finally {
@@ -167,7 +160,6 @@ public class OntopolyRequestCycle extends WebRequestCycle {
       boolean performingUpgrade = ObjectUtils.equals(ConvertPage.class, pageClass);
       boolean performingConvert = ObjectUtils.equals(UpgradePage.class, pageClass);
   
-      //! boolean performingConvert = ;
       if (!performingUpgrade && !performingConvert) {
         if (!tm.containsOntology()) {
           // not an ontopoly topic map, so we'll have to redirect to the convert/upgrade page
