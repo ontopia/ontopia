@@ -18,7 +18,6 @@ import ontopoly.model.TopicMap;
 import ontopoly.models.HelpLinkResourceModel;
 import ontopoly.models.TopicMapModel;
 import ontopoly.models.TopicMapSourceModel;
-import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.sysmodel.TopicMapSource;
 
 import org.apache.wicket.PageParameters;

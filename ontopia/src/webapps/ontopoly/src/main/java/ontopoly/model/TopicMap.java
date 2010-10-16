@@ -34,7 +34,6 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.OntopolyContext;
-import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**

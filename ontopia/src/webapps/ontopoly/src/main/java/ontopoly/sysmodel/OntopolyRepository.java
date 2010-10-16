@@ -13,9 +13,6 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-
-import ontopoly.model.QueryMapper;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -25,8 +22,6 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMapSourceIF;
-import net.ontopia.topicmaps.query.core.DeclarationContextIF;
-import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.IdentityUtils;
@@ -37,6 +32,7 @@ import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 import ontopoly.model.PSI;
+import ontopoly.model.QueryMapper;
 import ontopoly.utils.OntopolyModelUtils;
   
 /**
@@ -54,19 +50,19 @@ public class OntopolyRepository {
       };
 
   private TopicMapRepositoryIF repository;
-  private String repositoryId;
+  private String systemTopicMapId;
   private transient TopicMapIF _systemtm;
 
-  public OntopolyRepository(TopicMapRepositoryIF repository, String repositoryId) {
+  public OntopolyRepository(TopicMapRepositoryIF repository, String systemTopicMapId) {
     this.repository = repository;
-    this.repositoryId = repositoryId;
+    this.systemTopicMapId = systemTopicMapId;
   }
 
   private TopicMapIF getSystemTopicMap() {
     // open system topic map
-    TopicMapReferenceIF topicMapReferenceIF = repository.getReferenceByKey(repositoryId);
+    TopicMapReferenceIF topicMapReferenceIF = getTopicMapRepository().getReferenceByKey(systemTopicMapId);
     if (topicMapReferenceIF == null)
-      throw new OntopiaRuntimeException("Cannot find topic map with id '" + repositoryId);
+      throw new OntopiaRuntimeException("Cannot find topic map with id '" + systemTopicMapId);
 
     try {
       this._systemtm = topicMapReferenceIF.createStore(false).getTopicMap();
@@ -111,9 +107,9 @@ public class OntopolyRepository {
    * @return a List of TopicMapReference objects
    */
   public List<TopicMapReference> getNonOntopolyTopicMaps() {
-    Set<String> registeredTopicMaps = new HashSet(getRegisteredTopicMaps());
+    Set<String> registeredTopicMaps = new HashSet<String>(getRegisteredTopicMaps());
     List<TopicMapReference> result = new ArrayList<TopicMapReference>();
-    for (TopicMapReferenceIF ref : repository.getReferences()) {
+    for (TopicMapReferenceIF ref : getTopicMapRepository().getReferences()) {
         if (!registeredTopicMaps.contains(ref.getId())) {
             result.add(new TopicMapReference(ref));
         }
@@ -200,12 +196,13 @@ public class OntopolyRepository {
     registerOntopolyTopicMap(ref.getId(), name);
 
     // notify repository and wrap up
-    repository.refresh();
+    getTopicMapRepository().refresh();
 
     return ref.getId();
   }
 
    public void deleteTopicMap(String referenceId) {
+    TopicMapRepositoryIF repository = getTopicMapRepository();
     TopicMapReferenceIF reference = repository.getReferenceByKey(referenceId);
 
     // remove from topic map repository

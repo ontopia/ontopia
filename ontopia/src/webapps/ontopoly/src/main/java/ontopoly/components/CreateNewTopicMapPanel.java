@@ -1,17 +1,12 @@
 package ontopoly.components;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.ontopia.topicmaps.entry.TopicMapSourceIF;
-import net.ontopia.utils.DeciderIF;
 
 import ontopoly.OntopolyContext;
 import ontopoly.models.TopicMapSourceModel;
 import ontopoly.pages.TopicTypesPage;
-import ontopoly.sysmodel.TopicMapReference;
 import ontopoly.sysmodel.TopicMapSource;
 
 import org.apache.wicket.PageParameters;

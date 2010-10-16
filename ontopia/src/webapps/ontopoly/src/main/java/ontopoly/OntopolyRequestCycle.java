@@ -19,7 +19,6 @@ import ontopoly.pages.InternalErrorPageWithException;
 import ontopoly.pages.PageExpiredErrorPage;
 import ontopoly.pages.StartPage;
 import ontopoly.pages.UpgradePage;
-import ontopoly.sysmodel.OntopolyRepository;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.PageParameters;
@@ -28,7 +27,6 @@ import org.apache.wicket.Response;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.PageExpiredException;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.protocol.http.WebRequestCycle;
 

@@ -1,44 +1,35 @@
 package ontopoly.pages;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 import java.util.Collection;
-
-import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
-import org.apache.wicket.RequestCycle;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.list.ListItem;
+import java.util.Iterator;
 
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import ontopoly.components.FieldInstanceOccurrencePanel;
+import ontopoly.components.FieldInstancesPanel;
+import ontopoly.model.FieldAssignment;
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.FieldInstance;
+import ontopoly.model.OccurrenceType;
 import ontopoly.model.PSI;
 import ontopoly.model.Topic;
-import ontopoly.model.OccurrenceType;
-import ontopoly.model.FieldInstance;
-import ontopoly.model.FieldDefinition;
-import ontopoly.model.FieldAssignment;
-import ontopoly.models.TopicModel;
 import ontopoly.models.FieldInstanceModel;
-import ontopoly.models.FieldValueModel;
-import ontopoly.models.FieldValuesModel;
-import ontopoly.components.FieldInstancesPanel;
-import ontopoly.components.FieldInstanceTextField;
-import ontopoly.components.FieldInstanceOccurrencePanel;
+import ontopoly.models.TopicModel;
+
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.RequestCycle;
+import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
   
 public class ModalGeoPickerPage extends Panel {
   ModalWindow dialog;
