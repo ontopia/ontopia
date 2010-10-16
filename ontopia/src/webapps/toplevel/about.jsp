@@ -19,7 +19,7 @@
             width="550" height="86"><br></td>
           <td align="right" valign="top">
             <div id="oksmenu">
-              <a href="/">Home</a>&nbsp;|&nbsp;<a href="/manage/manage.jsp">Manage</a>&nbsp;|&nbsp;<a href="http://www.ontopia.net/">Website</a>&nbsp;|&nbsp;<a href="http://www.ontopia.net/support/supportform.html">Support</a>&nbsp;|&nbsp;<a href="about.jsp">About</a>
+              <a href="/">Home</a>&nbsp;|&nbsp;<a href="/manage/manage.jsp">Manage</a>&nbsp;|&nbsp;<a href="http://www.ontopia.net/">Website</a>&nbsp;|&nbsp;<a href="http://groups.google.com/group/ontopia" title="Mailing list">Support</a>&nbsp;|&nbsp;<a href="about.jsp">About</a>
             </div>
           </td>
         </tr>
@@ -87,14 +87,12 @@ browsing and editing applications.</li>
 <li>Powerful semantic query engine permits structured search, simplified
 application development and excellent performance.</li>
 <li>Persistent and scalable storage of topic maps in relational
-databases, including Oracle™ and PostgreSQL.</li>
+databases, including Oracle, MySQL and PostgreSQL.</li>
 <li>Full internationalization, support for all character encodings.</li>
 <li>Automated test suite for quick and easy testing of the engine in new
 environments.</li>
-<li>Platform: Written in pure Java; runs on any platform that has JDK
-1.5 (or higher) environment.</li>
-<li>Operating Systems: Windows (98, 2000 and XP), Linux (RedHat, SuSE
-and Debian) and SunSolaris.</li>
+<li>Platform: Written in pure Java; runs on any platform that has Java 1.5 (or higher).</li>
+<li>Operating Systems: Windows, Mac OSX, Linux and Solaris.</li>
 </ul>
 
     </div>
