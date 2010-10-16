@@ -21,7 +21,6 @@ import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.AssociationBuilder;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.model.PSI;
 import ontopoly.model.QueryMapper;
 import ontopoly.model.TopicMap;
 
@@ -458,8 +457,7 @@ public class OntopolyModelUtils {
     Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
       TopicNameIF nameIF = it.next();
-      if (ObjectUtils.equals(nameIF.getType(), nType) || 
-    		  (nType == null &&  nameIF.getType().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME)))
+      if (ObjectUtils.equals(nameIF.getType(), nType))
         result.add(nameIF);
     }
     return result;
@@ -470,8 +468,7 @@ public class OntopolyModelUtils {
     Iterator<TopicNameIF> it = topicIF.getTopicNames().iterator();
     while (it.hasNext()) {
       TopicNameIF nameIF = it.next();
-      if ((ObjectUtils.equals(nameIF.getType(), nType) || 
-    		  (nType == null &&  nameIF.getType().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME))) && 
+      if (ObjectUtils.equals(nameIF.getType(), nType) && 
           CollectionUtils.equalsUnorderedSet(nameIF.getScope(), scope))
         result.add(nameIF);
     }
@@ -484,8 +481,7 @@ public class OntopolyModelUtils {
     while (it.hasNext()) {
       TopicNameIF nameIF = it.next();
       if (ObjectUtils.equals(nameIF.getValue(), value) && 
-          (ObjectUtils.equals(nameIF.getType(), nType)  || 
-        		  (nType == null &&  nameIF.getType().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME))))
+          ObjectUtils.equals(nameIF.getType(), nType))
         result.add(nameIF);
     }
     return result;
@@ -497,8 +493,7 @@ public class OntopolyModelUtils {
     while (it.hasNext()) {
       TopicNameIF nameIF = it.next();
       if (ObjectUtils.equals(nameIF.getValue(), value) && 
-          (ObjectUtils.equals(nameIF.getType(), nType)  || 
-        		  (nType == null &&  nameIF.getType().getSubjectIdentifiers().contains(PSI.TMDM_TOPIC_NAME))) && 
+          ObjectUtils.equals(nameIF.getType(), nType) && 
           CollectionUtils.equalsUnorderedSet(nameIF.getScope(), scope))
         result.add(nameIF);
     }
