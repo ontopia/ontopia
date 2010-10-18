@@ -134,7 +134,7 @@ browse your topic maps. It supports all aspects of the Topic Maps
 standard and has a host of powerful features, such as the ability to
 
 <u><a href="/omnigator/plugins/merge/select.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">merge</a></u> topic maps on the fly;
-<u><a href="/omnigator/plugins/tolog/form.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">search</a></u> in ways that make Google boggle;
+<u><a href="/omnigator/plugins/query/form.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">search</a></u> in ways that make Google boggle;
 <u><a href="/omnigator/plugins/export/config.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">export</a></u> to a range of syntaxes;
 <!--generate reports of the topic map's "vital statistics";-->
 <u><a href="/omnigator/plugins/customise/user.jsp?tm=ItalianOpera.ltm&redirect=%2Fomnigator%2Fmodels%2Ftopicmap_complete.jsp%3Ftm%3DItalianOpera.ltm">customize</a></u> different views;
