@@ -114,7 +114,7 @@ public class XTM2TopicMapExporter extends AbstractTopicMapExporter {
 
     dh.startElement("topic", atts);
 
-    write(iids, "itemIdentity", dh);
+    writeItemIdentities(topic, dh); // this method has export_itemids test
     write(sids, "subjectIdentifier", dh);
     write(slos, "subjectLocator", dh);
 

@@ -16,6 +16,7 @@ import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 
 // extending XTMExporterTest in order to reuse some of the helper code
 public class XTM2ExporterTest extends AbstractXMLTestCase {
@@ -82,6 +83,27 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     parseFile(handler);
     handler.check();
   }
+
+  public void testExportItemIdentifiers() throws IOException, SAXException {
+    prepareTopicMap();
+    TopicIF topic = builder.makeTopic();
+    LocatorIF iid = tmbase.resolveAbsolute("#id4314");
+    topic.addItemIdentifier(iid);
+
+    // export to file (not using export() because we need to control settings)
+    XTMTopicMapWriter writer = new XTMTopicMapWriter(tmfile);
+    writer.setVersion(version);
+    writer.setAddIds(true);
+    writer.setExportSourceLocators(false);
+    writer.write(topicmap);
+
+    // reread file with SAX
+    SearchAttributeValue handler =
+      new SearchAttributeValue("itemIdentity", "href", iid.getAddress(),
+                               SearchAttributeValue.FORBIDDEN, false);
+    parseFile(handler);
+    handler.check();
+  }
   
   // --- Internal helper methods
   
@@ -101,20 +123,28 @@ public class XTM2ExporterTest extends AbstractXMLTestCase {
     private String attribute;
     private String value;
     private int allowed;
+    private boolean elementRequired;
     private boolean foundElement;
     private boolean foundAttribute;
     private boolean foundValue;
 
     public SearchAttributeValue(String element, String attribute, String value,
-                                 int allowed) {
+                                int allowed) {
+      this(element, attribute, value, allowed, true);
+    }
+    
+    public SearchAttributeValue(String element, String attribute, String value,
+                                int allowed, boolean elementRequired) {
       this.element = element;
       this.attribute = attribute;
       this.value = value;
       this.allowed = allowed;
+      this.elementRequired = elementRequired;
     }
 
     public void check() {
-      assertTrue("element " + element + " not found", foundElement);
+      if (elementRequired)
+        assertTrue("element " + element + " not found", foundElement);
       if (allowed == REQUIRED)
         assertTrue("attribute " + attribute + " not found", foundAttribute);
 
