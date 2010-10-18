@@ -8,7 +8,7 @@
 <author>
 <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
-<pubdate>2010-06-09</pubdate>
+<pubdate>2010-10-18</pubdate>
 <releaseinfo>5.1</releaseinfo>
 
 <abstract>
@@ -1592,6 +1592,17 @@ simplified somewhat, in order to make it more clear.
 </table>
 ]]></literallayout>
 </example>
+
+<para>Note that in order to avoid resource leaks it is necessary to
+close all result sets when using the RDBMS backend.</para>
+
+<para>An easier interface for running queries in Ontopia is provided
+by the <classname>QueryWrapper</classname> class in the
+<symbol>net.ontopia.topicmaps.query.utils</symbol> package. This
+provides methods for running a query and getting a single topic or
+string, or a list of objects, and also has methods for converting a
+query result into a list of custom objects and so on. This class
+automatically takes care of closing result sets.</para>
 </section>
 
 
