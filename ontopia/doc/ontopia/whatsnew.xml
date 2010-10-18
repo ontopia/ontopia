@@ -10,7 +10,7 @@
 <shortaffil>Ontopia</shortaffil>
 </affiliation>
 </author>
-<pubdate>2010-10-11</pubdate>
+<pubdate>2010-10-18</pubdate>
 <releaseinfo>5.1.1</releaseinfo>
 </articleinfo>
 
@@ -43,9 +43,18 @@ fixes:</para>
 
 <itemizedlist>
   <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=48"
+      >Issue 48: Ontopoly repository out of sync with the underlying topic
+    map repository</ulink></para>
+  </listitem>
+  <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=105"
       >Issue 105: Instance list in Ontopoly no longer displayed as
     tree when there is no tree</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=240"
+      >Issue 240: Problem with character " (quotation mark) in Ontopoly</ulink></para>
   </listitem>
   <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=259"
