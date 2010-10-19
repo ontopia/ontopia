@@ -152,7 +152,7 @@ produces a graphic visualization of your topic map. The Vizigator is
 accessed via the <u><a
 href="/omnigator/plugins/viz/viz.jsp?tm=ItalianOpera.ltm&id=puccini&redirect=%2Fomnigator%2Fmodels%2Ftopic_complete.jsp%3Ftm%3DItalianOpera.ltm%26id%3Dpuccini">Vizigate</a></u>
 plug-in on any Topic Page. In addition, support for RDF has been
-improved through the addition of the <u><a href="http://localhost:8080/omnigator/plugins/rdf2tm/configure.jsp?tm=KanzakisConcerts.rdf">RDF2TM</a></u> plug-in
+improved through the addition of the <u><a href="/omnigator/plugins/rdf2tm/configure.jsp?tm=KanzakisConcerts.rdf">RDF2TM</a></u> plug-in
 which allows you to configure your mappings.</p>
 
 <p><b>Documentation</b><br/>
