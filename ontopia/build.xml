@@ -2076,6 +2076,8 @@
     <copy file="${doc.path}/stylesheets/whitepapers.css" todir="${dist.path}/doc/tmrap" />
     
     <unzip src="${src.path}/webapps/tmrap/tmrap.zip" dest="${dist.path}/apache-tomcat/webapps/" />
+    <delete file="${dist.path}/apache-tomcat/webapps/tmrap/WEB-INF/lib/antlr-LICENSE.txt" />
+    <delete file="${dist.path}/apache-tomcat/webapps/tmrap/WEB-INF/lib/antlr-2.7.7.jar" />
     
   </target>
   
