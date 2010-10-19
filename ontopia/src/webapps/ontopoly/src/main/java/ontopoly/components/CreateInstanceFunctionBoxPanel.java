@@ -46,6 +46,7 @@ public abstract class CreateInstanceFunctionBoxPanel extends Panel {
         if (instance.isOntologyTopic())
           pageParametersMap.put("ontology", "true");
         setResponsePage(getInstancePageClass(), new PageParameters(pageParametersMap));
+        setRedirect(true);
       }          
     });
     add(button);

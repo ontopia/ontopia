@@ -1,7 +1,7 @@
 <wicket:panel>
 <table>
 	<tr><td><span wicket:id="title"/></td></tr>
-	<tr><td><input wicket:id="content" type="text" size="30"/></td></tr>
+	<tr><td><input wicket:id="content" type="text" size="30" onkeydown="if (event.keyCode == 13 || event.keycode == 3) { return false; }"/></td></tr>
 	<tr><td><input wicket:id="button" type="button"/></td></tr>
 </table>
 </wicket:panel>
