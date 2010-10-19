@@ -192,11 +192,11 @@ public class OntopolyRepository {
         store.close();
     }
 
-    // make ontopoly topic map
-    registerOntopolyTopicMap(ref.getId(), name);
-
     // notify repository and wrap up
     getTopicMapRepository().refresh();
+
+    // make ontopoly topic map
+    registerOntopolyTopicMap(ref.getId(), name);
 
     return ref.getId();
   }
