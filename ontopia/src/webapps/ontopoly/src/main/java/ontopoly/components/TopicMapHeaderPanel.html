@@ -11,9 +11,9 @@
   <p><wicket:message key="editing" />&nbsp;<span wicket:id="topicMap"></span></p>
   <div>
 		<form wicket:id="searchForm">
-	    <span id="tmfuncopen"><a wicket:id="open" href="#"><span wicket:id="label"/></a></span>
-			<span id="tmfuncsave"><a wicket:id="save" href="#" title="Save topic map to disk file."><span wicket:id="label"/></a></span>			
-			<input wicket:id="searchField" type="text" size="8" value=""/>
+	    <span wicket:id="openContainer" class="tmfuncopen"><a wicket:id="open" href="#"><span wicket:id="label"/></a></span>
+			<span wicket:id="saveContainer" class="tmfuncsave"><a wicket:id="save" href="#" title="Save topic map to disk file."><span wicket:id="label"/></a></span>			
+			<input wicket:id="searchField" type="text" size="15" value=""/>
 		  <input wicket:id="searchButton" type="submit" name="Find" value="Find"/>
     </form>	
   </div> 

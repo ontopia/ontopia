@@ -14,6 +14,7 @@ import ontopoly.pojos.MenuItem;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -48,6 +49,7 @@ public class TopicMapHeaderPanel extends HeaderPanel {
     add(form);
     form.add(searchField);
     
+    WebMarkupContainer openContainer = new WebMarkupContainer("openContainer");
     AjaxFallbackLink<Object> openLink = new AjaxFallbackLink<Object>("open") {
       @Override
       public void onClick(AjaxRequestTarget target) {
@@ -56,20 +58,24 @@ public class TopicMapHeaderPanel extends HeaderPanel {
       }      
     };
     openLink.add(new Label("label", new ResourceModel("open")));
-    form.add(openLink);
+    openContainer.add(openLink);
+    form.add(openContainer);
     
+    WebMarkupContainer saveContainer = new WebMarkupContainer("saveContainer") {
+        @Override
+        public boolean isVisible() {
+          return (topicMapModel.getTopicMap().getTopicMapIF().getStore().getImplementation() == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION);
+        }
+    };
     AjaxFallbackLink<Object> saveLink = new AjaxFallbackLink<Object>("save") {
       @Override
       public void onClick(AjaxRequestTarget target) {
         ((TopicMap)topicMapModel.getObject()).save();
       }
-      @Override
-      public boolean isVisible() {
-        return (topicMapModel.getTopicMap().getTopicMapIF().getStore().getImplementation() == TopicMapStoreIF.IN_MEMORY_IMPLEMENTATION);
-      }
     };
     saveLink.add(new Label("label", new ResourceModel("save")));    
-    form.add(saveLink);    
+    saveContainer.add(saveLink);
+    form.add(saveContainer);    
     
     form.add(new Button("searchButton", new ResourceModel("button.find")));
   }

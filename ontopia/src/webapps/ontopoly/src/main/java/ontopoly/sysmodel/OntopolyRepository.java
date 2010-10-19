@@ -219,8 +219,8 @@ public class OntopolyRepository {
    * repository, but does not actually change the topic map itself.
    */
   public void registerOntopolyTopicMap(String referenceId, String name) {
-    if (getTopicMapRepository().getReferenceByKey(referenceId) != null)
-      throw new OntopiaRuntimeException("Can't upgrade non-existent topic maps");
+    if (getTopicMapRepository().getReferenceByKey(referenceId) == null)
+      throw new OntopiaRuntimeException("Can't upgrade non-existent topic map: '" + referenceId + "'");
 
     // create topic for topic map
     TopicMapIF systemtm = getSystemTopicMap();

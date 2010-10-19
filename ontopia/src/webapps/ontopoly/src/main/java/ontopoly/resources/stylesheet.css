@@ -69,11 +69,11 @@ ul .feedbackPanelERROR { list-style-type: none; margin-left: -20px; padding-bott
 li .feedbackPanelERROR { color: red; font-weight: bold; }
 
 /* editing panel */
-#editingPanel{ float: right; vertical-align: top; white-space: nowrap; font-size: 93%; border: solid 1px black; margin: 5px 5px 0 0; text-align: left; width: 280px; }
+#editingPanel{ float: right; vertical-align: top; white-space: nowrap; font-size: 93%; border: solid 1px black; margin: 5px 5px 0 0; text-align: left; }
 #editingPanel p { background-image: url('../ontopoly.images.ImageResource/contentbg.gif'); border-bottom: solid 1px black; margin: 0; padding: 1px; }
 #editingPanel div { text-align: center; margin: 1px; padding: 2px; }
-#editingPanel #tmfuncopen { background: url('../ontopoly.images.ImageResource/tmopen.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
-#editingPanel #tmfuncsave { background: url('../ontopoly.images.ImageResource/tmsave.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
+.tmfuncopen { background: url('../ontopoly.images.ImageResource/tmopen.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
+.tmfuncsave { background: url('../ontopoly.images.ImageResource/tmsave.gif') no-repeat left top; padding: 4px 10px 4px 21px; }
 
 /* footer */
 #footerleft, #footerright { background: black; color: white; padding: 8px 0; font-size: 130%; }
