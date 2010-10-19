@@ -61,6 +61,10 @@ fixes:</para>
       >Issue 259: XTM 2.1 export is now available in Ontopoly</ulink></para>
   </listitem>
   <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=275"
+      >Issue 275: LTM add-fragment support in TMRAP was broken</ulink></para>
+  </listitem>
+  <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=277"
       >Issue 277: Fix to handling of equal parameters to rules</ulink></para>
   </listitem>
@@ -87,6 +91,10 @@ fixes:</para>
   <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=305"
       >Issue 305: Merging away sort and display topics in LTM caused errors</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=318"
+      >Issue 318: Save icon visible with RDBMS backend</ulink></para>
   </listitem>
 </itemizedlist>
 </section>
