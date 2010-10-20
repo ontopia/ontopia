@@ -18,12 +18,13 @@
 
   AtomWriter atom = new AtomWriter(out);
   atom.startFeed("Snapshots feed for " + ref.getTitle(),
-                 tracker.getLastChanged(),
+                 System.currentTimeMillis(),
                  prefix + "/snapshots");
+  atom.addServerPrefix(prefix);
 
   atom.startEntry("Snapshot of " + ref.getTitle(),
                   prefix + "/snapshot/" + tracker.getLastChanged(),
-                  tracker.getLastChanged());
+                  System.currentTimeMillis());
   atom.addLink("snapshot.jsp?topicmap=" + tmid,
                "application/x-tm+xml; version=1.0",
                "alternate");

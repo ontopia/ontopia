@@ -346,7 +346,7 @@ public class ConsumerClient {
     protected boolean keep;       // whether to keep text content
     protected StringBuilder buf;  // accumulating buffer
     protected boolean inEntry;
-    protected long updated;       // content of last <updated> in <entry>
+    protected long updated;       // content of last <updated>
 
     public AbstractFeedReader(String feedurl) {
       this.feedurl = URILocator.create(feedurl);
@@ -358,7 +358,7 @@ public class ConsumerClient {
       if (uri.equals(NS_ATOM) && name.equals("entry"))
         inEntry = true; // other book-keeping done in endElement()
         
-      else if (uri.equals(NS_ATOM) && name.equals("updated") && inEntry)
+      else if (uri.equals(NS_ATOM) && name.equals("updated"))
         keep = true;
     }
 
@@ -372,7 +372,7 @@ public class ConsumerClient {
         inEntry = false;
         updated = -1;
 
-      } else if (uri.equals(NS_ATOM) && name.equals("updated") && inEntry) {
+      } else if (uri.equals(NS_ATOM) && name.equals("updated")) {
         try {
           updated = format.parse(buf.toString()).getTime();
         } catch (ParseException e) {
@@ -455,25 +455,24 @@ public class ConsumerClient {
           throw new RuntimeException("Fragment entry had no TopicSIs");
         
         // check if this is a new fragment, or if we saw it before
-        System.out.println("lastChange: " + lastChange);
-        System.out.println("updated: " + updated);
-        if (updated < lastChange)
-          return; // we've done this one already, so ignore it
-        
-        // create new fragment
-        LocatorIF fraguri = feedurl.resolveAbsolute(fraglink);
-        feed.addFragment(new Fragment(fraguri, mimetype, sis, updated));
-        
+        if (updated >= lastChange) {
+          System.out.println("New fragment, updated: " + updated);
+          
+          // create new fragment
+          LocatorIF fraguri = feedurl.resolveAbsolute(fraglink);
+          feed.addFragment(new Fragment(fraguri, mimetype, sis, updated));      
+        } else
+          System.out.println("Found old fragment, updated: " + updated);
+
+        System.out.println("sis: " + sis);
+
         // reset tracking fields
         mimetype = null;
         fraglink = null;
-        sis = new CompactHashSet();
+        sis = new CompactHashSet();        
       }
 
-      if (keep) {
-        buf.setLength(0); // empty, but reuse buffer
-        keep = false;
-      }
+      super.endElement(uri, name, qname);
     }
 
     private boolean isOKMimeType(String mimetype) {
@@ -631,7 +630,7 @@ public class ConsumerClient {
                              Attributes atts) {
       super.startElement(uri, name, qname, atts);
       
-      if ((uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix")))
+      if (uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix"))
         keep = true;
       
       else if (uri.equals(NS_ATOM) && name.equals("entry"))
@@ -658,6 +657,9 @@ public class ConsumerClient {
         feed.setPrefix(URILocator.create(buf.toString()));
 
       super.endElement(uri, name, qname);
+
+      if (uri.equals(NS_ATOM) && name.equals("updated") && inEntry)
+        current.setUpdated(updated);
     }
   }
 
