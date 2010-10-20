@@ -11,17 +11,18 @@
   // TODO: should support if-modified-since
 
   String tmid = request.getParameter("topicmap");
-  String prefix = StartUpServlet.getEndpointURL() + tmid;
+  //String prefix = StartUpServlet.getEndpointURL() + tmid;
 
   TopicMapTracker tracker = StartUpServlet.topicmaps.get(tmid);
   TopicMapReferenceIF ref = tracker.getReference();
+  TopicMapStoreIF store = ref.createStore(true);
+  TopicMapIF tm = store.getTopicMap();  
+  String prefix = store.getBaseAddress().getExternalForm();
+
   AtomWriter atom = new AtomWriter(out);
   atom.startFeed("Fragments feed for " + ref.getTitle(),
                  System.currentTimeMillis(),
                  prefix + "/fragments");
-
-  TopicMapStoreIF store = ref.createStore(true);
-  TopicMapIF tm = store.getTopicMap();  
 
   atom.addServerPrefix(prefix);
 
@@ -39,8 +40,8 @@
 
     TopicIF topic = (TopicIF) tm.getObjectById(change.getObjectId());
     Collection<LocatorIF> psis = topic.getSubjectIdentifiers();
-    for (LocatorIF psi : psis)
-      atom.addTopicSI(psi);
+    if (!psis.isEmpty())
+      atom.addTopicSI(psis.iterator().next());
 
     atom.endEntry();
   }

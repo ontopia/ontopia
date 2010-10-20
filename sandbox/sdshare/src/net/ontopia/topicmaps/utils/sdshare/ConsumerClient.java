@@ -90,6 +90,7 @@ public class ConsumerClient {
   public void sync() throws IOException, SAXException {
     // (1) check the fragments feed
     FragmentFeed feed = getFragmentFeed();
+    System.out.println("FOUND " + feed.getFragments().size() + " fragments");
     if (feed.getFragments().isEmpty())
       return; // nothing to do
 
@@ -100,8 +101,10 @@ public class ConsumerClient {
       store = ref.createStore(false);
       
       // (3) loop over fragments, applying each
-      for (Fragment frag : feed.getFragments())
+      for (Fragment frag : feed.getFragments()) {
+        System.out.println("Applying fragment " + frag);
         applyFragment(feed.getPrefix(), frag, store.getTopicMap());
+      }
       
       // (4) commit
       store.commit();
@@ -140,6 +143,34 @@ public class ConsumerClient {
     checkInterval = interval;
   }
 
+  public FragmentFeed getFragmentFeed() throws IOException, SAXException {
+    // TODO: we should support if-modified-since
+    FragmentFeedReader handler = new FragmentFeedReader(feedurl, lastChange);
+    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+    parser.setContentHandler(handler);
+    parser.parse(feedurl);
+    return handler.getFragmentFeed();
+  }
+
+  /**
+   * PUBLIC: Returns the modification time of the last change
+   * processed by the client. Corresponds with the &lt;updated>
+   * entries on snapshots and fragments.
+   */
+  public long getLastUpdate() {
+    return lastChange;
+  }
+
+  /**
+   * PUBLIC: Informs the client that the underlying topic map is up to
+   * date as of the given time. Useful for when modification times
+   * have been found by other means (for example persisted from
+   * earlier invocations).
+   */
+  public void setLastUpdate(long timestamp) {
+    this.lastChange = timestamp;
+  }
+
   /**
    * PUBLIC: Reads a collection feed and returns an object representing
    * (the interesting part of) the contents of the feed.
@@ -154,25 +185,16 @@ public class ConsumerClient {
   }
 
   /**
-   * PUBLIC: Reads a snapshot feed and returns a list of the snapshot
-   * URIs. The order of the list is the same as in the feed.
+   * PUBLIC: Reads a snapshot feed and returns a list of the
+   * snapshots.  The order of the list is the same as in the feed.
    */
-  public static List<LocatorIF> readSnapshotFeed(String uri)
+  public static SnapshotFeed readSnapshotFeed(String uri)
     throws IOException, SAXException {
     SnapshotFeedReader handler = new SnapshotFeedReader(uri);
     XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
     parser.setContentHandler(handler);
     parser.parse(uri);
-    return handler.getList();
-  }
-
-  public FragmentFeed getFragmentFeed() throws IOException, SAXException {
-    // TODO: we should support if-modified-since
-    FragmentFeedReader handler = new FragmentFeedReader(feedurl, lastChange);
-    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
-    parser.setContentHandler(handler);
-    parser.parse(feedurl);
-    return handler.getFragmentFeed();
+    return handler.getFeed();
   }
   
   // --- Actual implementation
@@ -189,17 +211,24 @@ public class ConsumerClient {
       throw new RuntimeException("Fragment " + fragment.getFragmentURI() +
                                  " had wrong number of TopicSIs: " +
                                  fragment.getTopicSIs().size());
+
+    System.out.println("TopicSI: " + fragment.getTopicSIs());
     
     // (1) get the fragment
     // FIXME: for now we only support XTM
     XTMTopicMapReader reader = new XTMTopicMapReader(fragment.getFragmentURI());
+    reader.setFollowTopicRefs(false);
     TopicMapIF tmfragment = reader.read();
+    System.out.println("Fragment size: " + tmfragment.getTopics().size());
     
     // (2) apply it
     LocatorIF si = fragment.getTopicSIs().iterator().next();
     TopicIF ftopic = tmfragment.getTopicBySubjectIdentifier(si);
     TopicIF ltopic = topicmap.getTopicBySubjectIdentifier(si);
 
+    System.out.println("ftopic: " + ftopic);
+    System.out.println("ltopic: " + ltopic);
+    
     // FIXME: but what if the topic was deleted?
 
     // (a) check if we need to create the topic
@@ -217,8 +246,11 @@ public class ConsumerClient {
     // topic characteristics. (however, we can't merge in the current
     // topic, as the procedure for that one is a bit more complex.)
     for (TopicIF oftopic : tmfragment.getTopics())
-      if (oftopic != ftopic)
+      if (oftopic != ftopic) {
+        System.out.println("merging in: " + oftopic);
+        System.out.println("  to: " + KeyGenerator.findTopic(topicmap, oftopic));
         MergeUtils.mergeInto(topicmap, oftopic);
+      }
 
     // (d) sync the types
     // FIXME: how the hell do we do this?
@@ -303,31 +335,76 @@ public class ConsumerClient {
 
     object.addItemIdentifier(iid);
   }
+
+  // --- Abstract ContentHandler
+  // can track element contents, and does track the "updated" element
+
+  private abstract static class AbstractFeedReader extends DefaultHandler {
+    protected LocatorIF feedurl;
+
+    // tracking
+    protected boolean keep;       // whether to keep text content
+    protected StringBuilder buf;  // accumulating buffer
+    protected boolean inEntry;
+    protected long updated;       // content of last <updated> in <entry>
+
+    public AbstractFeedReader(String feedurl) {
+      this.feedurl = URILocator.create(feedurl);
+      this.buf = new StringBuilder();
+    }
+
+    public void startElement(String uri, String name, String qname,
+                             Attributes atts) {
+      if (uri.equals(NS_ATOM) && name.equals("entry"))
+        inEntry = true; // other book-keeping done in endElement()
+        
+      else if (uri.equals(NS_ATOM) && name.equals("updated") && inEntry)
+        keep = true;
+    }
+
+    public void characters(char[] ch, int start, int length) {
+      if (keep)
+        buf.append(ch, start, length);
+    }
+
+    public void endElement(String uri, String name, String qname) {
+      if (uri.equals(NS_ATOM) && name.equals("entry")) {
+        inEntry = false;
+        updated = -1;
+
+      } else if (uri.equals(NS_ATOM) && name.equals("updated") && inEntry) {
+        try {
+          updated = format.parse(buf.toString()).getTime();
+        } catch (ParseException e) {
+          throw new RuntimeException(e);
+        }
+      }
+
+      if (keep) {
+        buf.setLength(0); // empty, but reuse buffer
+        keep = false;
+      }
+    }
+  }
   
   // --- Fragment feed ContentHandler
 
   /**
    * INTERNAL: SAX 2.0 ContentHandler to interpret Atom fragment feeds.
    */
-  private static class FragmentFeedReader extends DefaultHandler {
-    private LocatorIF feedurl;
+  private static class FragmentFeedReader extends AbstractFeedReader {
     private FragmentFeed feed;
     private long lastChange;
 
     // tracking
-    private boolean keep;       // whether to keep text content
-    private StringBuilder buf;  // accumulating buffer
-    private boolean inEntry;    // are we inside an entry element?
     private String mimetype;    // mimetype of last fragment link
     private String fraglink;    // href of last fragment link
-    private long updated;       // content of last <updated> in <entry>
     private Set<LocatorIF> sis; // current <TopicSI>s
 
     public FragmentFeedReader(String feedurl, long lastChange) {
-      this.feedurl = URILocator.create(feedurl);
+      super(feedurl);
       this.lastChange = lastChange;
       this.feed = new FragmentFeed();
-      this.buf = new StringBuilder();
       this.sis = new CompactHashSet();
     }
 
@@ -337,13 +414,12 @@ public class ConsumerClient {
 
     public void startElement(String uri, String name, String qname,
                              Attributes atts) {
+      super.startElement(uri, name, qname, atts);
+      
       if ((uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix")) ||
           (uri.equals(NS_SD) && name.equals("TopicSI")))
         keep = true;
       
-      else if (uri.equals(NS_ATOM) && name.equals("entry"))
-        inEntry = true; // other book-keeping done in endElement()
-        
       else if (uri.equals(NS_ATOM) && name.equals("link") && inEntry) {
         String rel = atts.getValue("rel");
         if (rel == null || !rel.equals("alternate"))
@@ -359,17 +435,10 @@ public class ConsumerClient {
 
         mimetype = type;
         fraglink = href;
-
-      } else if (uri.equals(NS_ATOM) && name.equals("updated") && inEntry)
-        keep = true;
+      }
     }
 
-    public void characters(char[] ch, int start, int length) {
-      if (keep)
-        buf.append(ch, start, length);
-    }
-
-    public void endElement(String uri, String name, String qname) {
+    public void endElement(String uri, String name, String qname) {     
       if (uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix"))
         feed.setPrefix(URILocator.create(buf.toString()));
 
@@ -386,6 +455,8 @@ public class ConsumerClient {
           throw new RuntimeException("Fragment entry had no TopicSIs");
         
         // check if this is a new fragment, or if we saw it before
+        System.out.println("lastChange: " + lastChange);
+        System.out.println("updated: " + updated);
         if (updated < lastChange)
           return; // we've done this one already, so ignore it
         
@@ -396,16 +467,7 @@ public class ConsumerClient {
         // reset tracking fields
         mimetype = null;
         fraglink = null;
-        updated = -1;
-        inEntry = false;
         sis = new CompactHashSet();
-
-      } else if (uri.equals(NS_ATOM) && name.equals("updated") && inEntry) {
-        try {
-          updated = format.parse(buf.toString()).getTime();
-        } catch (ParseException e) {
-          throw new RuntimeException(e);
-        }
       }
 
       if (keep) {
@@ -523,7 +585,7 @@ public class ConsumerClient {
   }
   
   /**
-   * INTERNAL: Represents a collection feed. Just a data carrier.
+   * PUBLIC: Represents a collection feed. Just a data carrier.
    */
   public static class CollectionFeed {
     private LocatorIF fragmentfeed;
@@ -552,24 +614,28 @@ public class ConsumerClient {
   /**
    * INTERNAL: SAX 2.0 ContentHandler to interpret Atom snapshot feeds.
    */
-  private static class SnapshotFeedReader extends DefaultHandler {
-    private LocatorIF feedurl;
-    private List<LocatorIF> snapshots;
-    private boolean inEntry;    // are we inside an entry element?
+  private static class SnapshotFeedReader extends AbstractFeedReader {
+    private SnapshotFeed feed;
+    private Snapshot current; // INV: null outside of <entry> elements
 
     public SnapshotFeedReader(String feedurl) {
-      this.feedurl = URILocator.create(feedurl);
-      this.snapshots = new ArrayList<LocatorIF>();
+      super(feedurl);
+      this.feed = new SnapshotFeed();
     }
 
-    public List<LocatorIF> getList() {
-      return snapshots;
+    public SnapshotFeed getFeed() {
+      return feed;
     }
 
     public void startElement(String uri, String name, String qname,
                              Attributes atts) {
-      if (uri.equals(NS_ATOM) && name.equals("entry"))
-        inEntry = true; // other book-keeping done in endElement()
+      super.startElement(uri, name, qname, atts);
+      
+      if ((uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix")))
+        keep = true;
+      
+      else if (uri.equals(NS_ATOM) && name.equals("entry"))
+        current = new Snapshot(); // other book-keeping done in endElement()
         
       else if (uri.equals(NS_ATOM) && name.equals("link") && inEntry) {
         String rel = atts.getValue("rel");
@@ -580,13 +646,71 @@ public class ConsumerClient {
         if (href == null)
           throw new RuntimeException("No href attribute on <link>");
 
-        snapshots.add(feedurl.resolveAbsolute(href));
+        current.setFeedURI(feedurl.resolveAbsolute(href));
       }
     }
 
     public void endElement(String uri, String name, String qname) {
-      if (uri.equals(NS_ATOM) && name.equals("entry"))
-        inEntry = false;
+      if (uri.equals(NS_ATOM) && name.equals("entry")) {
+        feed.addSnapshot(current);
+        current = null;
+      } else if (uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix"))
+        feed.setPrefix(URILocator.create(buf.toString()));
+
+      super.endElement(uri, name, qname);
+    }
+  }
+
+  /**
+   * PUBLIC: Simple data-carrier class for snapshot feeds.
+   */
+  public static class SnapshotFeed {
+    private List<Snapshot> snapshots;
+    private LocatorIF prefix;
+
+    public SnapshotFeed() {
+      this.snapshots = new ArrayList<Snapshot>();
+    }
+    
+    public List<Snapshot> getSnapshots() {
+      return snapshots;
+    }
+
+    public void addSnapshot(Snapshot snapshot) {
+      snapshots.add(snapshot);
+    }
+
+    public LocatorIF getPrefix() {
+      return prefix;
+    }
+
+    public void setPrefix(LocatorIF prefix) {
+      this.prefix = prefix;
+    }
+  }
+
+  /**
+   * PUBLIC: Simple data-carrier class representing an entry in a
+   * snapshot feed.
+   */
+  public static class Snapshot {
+    private LocatorIF uri;
+    private long timestamp;
+
+    public LocatorIF getFeedURI() {
+      return uri;
+    }
+
+    public void setFeedURI(LocatorIF uri) {
+      this.uri = uri;
+    }
+
+    public long getUpdated() {
+      return timestamp;
+    }
+
+    public void setUpdated(long timestamp) {
+      this.timestamp = timestamp;
     }
   }
 }
