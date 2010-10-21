@@ -21,7 +21,7 @@
                "http://www.egovpt.org/sdshare/fragmentsfeed");
   atom.addLink("changes.jsp?topicmap=" + ref.getId(),
                "application/atom+xml",
-               "rel");
+               "alternate");
   atom.endEntry();
 
   // SNAPSHOTS
@@ -33,7 +33,7 @@
                "http://www.egovpt.org/sdshare/snapshotsfeed");
   atom.addLink("snapshots.jsp?topicmap=" + ref.getId(),
                "application/atom+xml",
-               "rel");
+               "alternate");
   atom.endEntry();
 
   atom.endFeed();

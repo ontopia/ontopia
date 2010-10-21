@@ -18,6 +18,9 @@
     atom.addLink("collection.jsp?topicmap=" + ref.getId(),
                  "application/atom+xml",
                  "http://www.egovpt.org/sdshare/collectionfeed");
+    atom.addLink("collection.jsp?topicmap=" + ref.getId(),
+                 "application/atom+xml",
+                 "alternate");
     atom.endEntry();
   }
 

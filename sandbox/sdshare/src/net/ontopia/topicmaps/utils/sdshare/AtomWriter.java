@@ -44,8 +44,10 @@ public class AtomWriter {
     
     atts.clear();
     out.startElement("author", atts);
+    out.startElement("name", atts);
     content = "Ontopia SDshare server";
     out.characters(content.toCharArray(), 0, content.length());
+    out.endElement("name");
     out.endElement("author");
 
     atts.clear();
