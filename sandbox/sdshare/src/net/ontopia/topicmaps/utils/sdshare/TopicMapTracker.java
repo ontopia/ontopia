@@ -43,8 +43,12 @@ public class TopicMapTracker implements TopicMapListenerIF {
       return changes.get(changes.size() - 1).getTimestamp();
   }
   
-  private synchronized void modified(TMObjectIF snapshot) {
-    ChangedTopic o = new ChangedTopic(snapshot.getObjectId());
+  private synchronized void modified(TMObjectIF snapshot, boolean deleted) {
+    ChangedTopic o;
+    if (deleted)
+      o = new DeletedTopic(snapshot);
+    else
+      o = new ChangedTopic(snapshot.getObjectId());
 
     int pos = changes.lastIndexOf(o);
     if (pos == -1)
@@ -60,14 +64,14 @@ public class TopicMapTracker implements TopicMapListenerIF {
   // --- TopicMapListenerIF implementation
 
   public void objectAdded(TMObjectIF snapshot) {
-    modified(snapshot);
+    modified(snapshot, false);
   }
 
   public void objectModified(TMObjectIF snapshot) {
-    modified(snapshot);
+    modified(snapshot, false);
   }
 
   public void objectRemoved(TMObjectIF snapshot) {
-    modified(snapshot);
+    modified(snapshot, true);
   }
 }

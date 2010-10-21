@@ -34,12 +34,15 @@
                  "application/x-tm+xml; version=1.0",
                  "alternate");
 
-    // FIXME: if the topic has been deleted we can't look it up, and need
-    // identifiers to be stored in ChangedTopic instead, so that we can
-    // output TopicSI anyway.
+    Collection<LocatorIF> psis;
+    if (change.isDeleted()) {
+      DeletedTopic delete = (DeletedTopic) change;
+      psis = delete.getSubjectIdentifiers();
+    } else {
+      TopicIF topic = (TopicIF) tm.getObjectById(change.getObjectId());
+      psis = topic.getSubjectIdentifiers();
+    }
 
-    TopicIF topic = (TopicIF) tm.getObjectById(change.getObjectId());
-    Collection<LocatorIF> psis = topic.getSubjectIdentifiers();
     if (!psis.isEmpty())
       atom.addTopicSI(psis.iterator().next());
 

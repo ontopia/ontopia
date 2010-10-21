@@ -228,8 +228,6 @@ public class ConsumerClient {
 
     System.out.println("ftopic: " + ftopic);
     System.out.println("ltopic: " + ltopic);
-    
-    // FIXME: but what if the topic was deleted?
 
     // (a) check if we need to create the topic
     if (ltopic == null && ftopic != null)
@@ -264,6 +262,12 @@ public class ConsumerClient {
     syncCollection(ftopic, ltopic, keymap, ltopic.getOccurrences(), prefix);
     
     // (g) sync the associations
+
+    // (h) is the topic deleted
+    if (ltopic.getTopicNames().isEmpty() &&
+        ltopic.getOccurrences().isEmpty() &&
+        ltopic.getRoles().isEmpty())
+      ltopic.remove(); // empty topic, therefore remove
 
     // (3) update lastChange
     lastChange = fragment.getUpdated();

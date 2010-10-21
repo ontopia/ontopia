@@ -21,6 +21,10 @@ public class ChangedTopic {
     return timestamp;
   }
 
+  public boolean isDeleted() {
+    return false;
+  }
+
   public int hashCode() {
     return objid.hashCode();
   }
