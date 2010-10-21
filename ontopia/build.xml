@@ -2750,10 +2750,16 @@
        ==================================================================== -->
 
   <target name="ivy.make-pom" depends="init">
-    <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${basedir}/pom.xml">
-     <mapping conf="build" scope="compile"/>
-     <mapping conf="build, runtime" scope="provided"/>
+    <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${basedir}/pom.tmp">
+      <mapping conf="build" scope="compile"/>
+      <mapping conf="build, runtime" scope="provided"/>
     </ivy:makepom>
+    <move file="${basedir}/pom.tmp" tofile="${basedir}/pom.xml">
+      <filterchain>
+        <tailfilter lines="-1" skip="2"/>
+        <concatfilter append="${basedir}/3rdparty.xml"/>
+      </filterchain>
+    </move>
   </target>
 
   <target name="ivy.deploy-local" depends="init">
