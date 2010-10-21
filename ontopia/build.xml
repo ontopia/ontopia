@@ -2752,7 +2752,8 @@
   <target name="ivy.make-pom" depends="init">
     <ivy:makepom ivyfile="${basedir}/ivy.xml" pomfile="${basedir}/pom.xml">
      <mapping conf="build" scope="compile"/>
-    </ivy:makepom>  
+     <mapping conf="build, runtime" scope="provided"/>
+    </ivy:makepom>
   </target>
 
   <target name="ivy.deploy-local" depends="init">
