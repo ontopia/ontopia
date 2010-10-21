@@ -1,6 +1,6 @@
 <%@ page 
   language="java" 
-  contentType="text/plain; charset=utf-8"
+  contentType="application/atom+xml; charset=utf-8"
   import="java.util.Collection,
           net.ontopia.infoset.core.LocatorIF,
           net.ontopia.topicmaps.utils.sdshare.*,
