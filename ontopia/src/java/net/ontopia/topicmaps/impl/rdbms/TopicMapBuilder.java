@@ -61,10 +61,11 @@ public class TopicMapBuilder implements TopicMapBuilderIF, Serializable {
     if (value == null) throw new NullPointerException("Topic name value must not be null.");
     CrossTopicMapException.check(topic, this.tm);
 		
+    TopicIF bntype = getDefaultNameType();
     TopicNameIF name = new TopicName(txn);
     ((Topic)topic).addTopicName(name);
     name.setValue(value);
-    name.setType(getDefaultNameType());
+    name.setType(bntype);
     return name;
   }
 
