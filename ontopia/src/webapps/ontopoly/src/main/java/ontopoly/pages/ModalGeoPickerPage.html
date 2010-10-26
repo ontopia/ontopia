@@ -73,7 +73,7 @@
       var theaddress = document.getElementById("query").value;
       geocoder.geocode({address: theaddress},
     	function(results) {
-	  if (!results) {
+	  if (results.length == 0) {
             alert(theaddress + " not found");
       	  } else {
 	    pickpoint(results[0].geometry.location);
