@@ -110,7 +110,7 @@ public final class FrameworkUtils {
     user = setDefaultMVS(navConf, user);
     // set user object to session scope
     pageContext.setAttribute(NavigatorApplicationIF.USER_KEY, user, scope);
-    log.debug("New user object ('" + user.getId() + "') created and bound it in scope ( " + scope + ").");
+    log.debug("New user object ('" + user.getId() + "') created and bound in scope ( " + scope + ").");
     return user;
   }
 
