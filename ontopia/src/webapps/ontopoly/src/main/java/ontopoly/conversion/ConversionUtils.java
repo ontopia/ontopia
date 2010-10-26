@@ -77,11 +77,18 @@ public class ConversionUtils {
   public static String convertNew(TopicMap oldTopicMap, String tmname, TopicMapSource tmsource) {
     TopicMapRepositoryIF repository = OntopolyContext.getOntopolyRepository().getTopicMapRepository();
     
-    String referenceId = OntopolyContext.getOntopolyRepository().createOntopolyTopicMap(tmsource.getId(), tmname);
-    TopicMap newTopicMap = new TopicMap(referenceId);
-    
-    String  refId = inferAndCreateSchema(oldTopicMap, newTopicMap, tmname, repository);
-    return refId;    
+    try {
+        String referenceId = OntopolyContext.getOntopolyRepository().createOntopolyTopicMap(tmsource.getId(), tmname);
+        TopicMapIF topicMapIF = OntopolyContext.getOntopolyRepository().getTopicMapRepository()
+            .getReferenceByKey(referenceId).createStore(false).getTopicMap();
+        
+        TopicMap newTopicMap = new TopicMap(topicMapIF, referenceId);
+
+        return inferAndCreateSchema(oldTopicMap, newTopicMap, tmname, repository);
+      
+    } catch (Exception e) {
+      throw new OntopiaRuntimeException(e);
+    }
   }
   
   private static String inferAndCreateSchema(TopicMap oldTopicMap, TopicMap newTopicMap, String tmname, TopicMapRepositoryIF repository) {

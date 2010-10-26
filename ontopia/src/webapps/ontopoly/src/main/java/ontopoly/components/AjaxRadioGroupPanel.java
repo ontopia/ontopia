@@ -25,7 +25,7 @@ public class AjaxRadioGroupPanel extends Panel {
   private List<Component> ajaxTargets = new ArrayList<Component>();
   
   @SuppressWarnings("unchecked")
-  public AjaxRadioGroupPanel(String id, final Form form, List choices, IModel model) {
+  public AjaxRadioGroupPanel(String id, final Form<?> form, List choices, IModel model) {
     super(id);
     final RadioGroup rg = new RadioGroup("radiochoicegroup", model);  
     rg.setRenderBodyOnly(false);  

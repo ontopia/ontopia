@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 import ontopoly.jquery.DraggableBehavior;
 import ontopoly.jquery.DroppableBehavior;
 import ontopoly.model.AssociationField;
@@ -136,9 +137,9 @@ public abstract class FieldsEditorExistingPanel extends Panel {
   protected abstract void onRemove(FieldAssignmentModel fam, AjaxRequestTarget target);    
   
   static Component getFieldType(String id, FieldDefinition fieldDefinition) {
-    int fieldType = fieldDefinition.getFieldType();
 
-    if(fieldType == FieldDefinition.FIELD_TYPE_ROLE) {
+    switch (fieldDefinition.getFieldType()) {
+    case FieldDefinition.FIELD_TYPE_ROLE: {
       TopicType tt = null;
       RoleField rf = (RoleField)fieldDefinition;
       AssociationField afield = rf.getAssociationField();
@@ -195,17 +196,17 @@ public abstract class FieldsEditorExistingPanel extends Panel {
       
       return new OntopolyBookmarkablePageLink(id, InstancePage.class, params, fieldTypeAsString);        
     }
-    else if(fieldType == FieldDefinition.FIELD_TYPE_IDENTITY) {
+    case FieldDefinition.FIELD_TYPE_IDENTITY: {
       return new Label(id, new ResourceModel("FieldsEditorExistingPanel.valuetype.uri"));     
     }
-    else if(fieldType == FieldDefinition.FIELD_TYPE_NAME) {
+    case FieldDefinition.FIELD_TYPE_NAME: {
       return new Label(id, new ResourceModel("FieldsEditorExistingPanel.valuetype.name"));     
     } 
-    else if(fieldType == FieldDefinition.FIELD_TYPE_OCCURRENCE) {
+    case FieldDefinition.FIELD_TYPE_OCCURRENCE: {
       return new Label(id, ((OccurrenceField)fieldDefinition).getDataType().getName());     
     }
-    else { // Invalid field type
-      return new Label(id, "invalid"); // TODO replace with exception or something
+    default:
+      throw new OntopiaRuntimeException("Unknown field definition: " + fieldDefinition.getFieldType());
     }
   }
   

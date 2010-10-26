@@ -23,7 +23,6 @@ public class FieldInstanceAssociationUnaryPanel extends AbstractFieldInstancePan
 		FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
 		RoleField fieldDefinition = (RoleField)fieldAssignment.getFieldDefinition(); 
 		
-    //! add(new Label("fieldLabel", new Model(fieldDefinition.getFieldName())));
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(fieldDefinition)));
     
     // set up container

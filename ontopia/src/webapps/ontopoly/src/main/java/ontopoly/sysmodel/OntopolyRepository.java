@@ -22,6 +22,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMapSourceIF;
+import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.IdentityUtils;
@@ -48,28 +49,29 @@ public class OntopolyRepository {
           return r1.getName().compareTo(r2.getName());
         }
       };
+  
+  private transient TopicMapRepositoryIF repository;
 
-  private TopicMapRepositoryIF repository;
-  private String systemTopicMapId;
-  private transient TopicMapIF _systemtm;
-
-  public OntopolyRepository(TopicMapRepositoryIF repository, String systemTopicMapId) {
-    this.repository = repository;
-    this.systemTopicMapId = systemTopicMapId;
+  public OntopolyRepository() {
+     this.repository = createTopicMapRepository();
   }
 
+  protected String getSystemTopicMapId() {
+    return "ontopoly-system.ltm";
+  }
+  
   private TopicMapIF getSystemTopicMap() {
     // open system topic map
+    String systemTopicMapId = getSystemTopicMapId();
     TopicMapReferenceIF topicMapReferenceIF = getTopicMapRepository().getReferenceByKey(systemTopicMapId);
     if (topicMapReferenceIF == null)
       throw new OntopiaRuntimeException("Cannot find topic map with id '" + systemTopicMapId);
 
     try {
-      this._systemtm = topicMapReferenceIF.createStore(false).getTopicMap();
+      return topicMapReferenceIF.createStore(false).getTopicMap();
     } catch(IOException e) {
       throw new OntopiaRuntimeException(e);
     }
-    return _systemtm;
   }
 
   private List<String> getRegisteredTopicMaps() {
@@ -82,6 +84,10 @@ public class OntopolyRepository {
       "ont:topic-map-id($T, $ID)?");
   }
 
+  protected TopicMapRepositoryIF createTopicMapRepository() {
+      return TopicMaps.getRepository();
+  }
+  
   public TopicMapRepositoryIF getTopicMapRepository() {
     return repository;
   }
@@ -231,12 +237,13 @@ public class OntopolyRepository {
     builder.makeOccurrence(tmtopic, idtype, referenceId);
     builder.makeTopicName(tmtopic, name);
 
-    saveSystemTopicMap();
+    saveSystemTopicMap(systemtm);
   }
 
   public void unregisterOntopolyTopicMap(String referenceId) {
 
-    QueryProcessorIF processor = QueryUtils.getQueryProcessor(getSystemTopicMap());
+    TopicMapIF systemtm = getSystemTopicMap();
+    QueryProcessorIF processor = QueryUtils.getQueryProcessor(systemtm);
     QueryMapper<TopicIF> qm = new QueryMapper<TopicIF>(processor);
     List<TopicIF> topics = qm.queryForList(
       "using ont for i\"http://psi.ontopia.net/ontology/\" " +
@@ -246,23 +253,21 @@ public class OntopolyRepository {
       topic.remove();
     }
 
-    saveSystemTopicMap();
+    saveSystemTopicMap(systemtm);
   }
 
   /**
    * INTERNAL: Saves the system topic map to disk.
    */
-  private void saveSystemTopicMap() {
-    if (_systemtm != null) {
-      try {
-        LocatorIF base = _systemtm.getStore().getBaseAddress();
-        File file = URIUtils.getURIFile(base);
-        FileOutputStream stream = new FileOutputStream(file);
-        new LTMTopicMapWriter(stream).write(_systemtm);
-        stream.close();
-      } catch (IOException e) {
-        throw new OntopiaRuntimeException(e);
-      }
+  private void saveSystemTopicMap(TopicMapIF systemtm) {
+    try {
+      LocatorIF base = systemtm.getStore().getBaseAddress();
+      File file = URIUtils.getURIFile(base);
+      FileOutputStream stream = new FileOutputStream(file);
+      new LTMTopicMapWriter(stream).write(systemtm);
+      stream.close();
+    } catch (IOException e) {
+      throw new OntopiaRuntimeException(e);
     }
   }
     

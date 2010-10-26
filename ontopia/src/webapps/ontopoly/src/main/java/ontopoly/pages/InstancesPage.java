@@ -64,7 +64,7 @@ public class InstancesPage extends OntopolyAbstractPage {
     TopicType topicType = topicTypeModel.getTopicType();
 
     if (topicType.isLargeInstanceSet()) {
-      form.add(new InstanceSearchPanel("contentPanel", topicTypeModel));
+      form.add(new InstanceSearchPanel("instancesPanel", topicTypeModel));
     } else if (topicType.hasHierarchy()) {
       // create a tree
       final TreeModel treeModel = TreeModels.createInstancesTreeModel(topicTypeModel.getTopicType(), isAdministrationEnabled());
@@ -74,7 +74,7 @@ public class InstancesPage extends OntopolyAbstractPage {
           return treeModel;
         }        
       };
-      Panel treePanel = new TreePanel("contentPanel", treeModelModel) {
+      Panel treePanel = new TreePanel("instancesPanel", treeModelModel) {
         @Override
         protected Component populateNode(String id, TreeNode treeNode) {
           DefaultMutableTreeNode mTreeNode = (DefaultMutableTreeNode)treeNode; 
@@ -109,7 +109,7 @@ public class InstancesPage extends OntopolyAbstractPage {
       form.add(treePanel);
     } else {
       // just make a list
-      form.add(new TopicListPanel("contentPanel", new AbstractReadOnlyModel<List<Topic>>() {
+      form.add(new TopicListPanel("instancesPanel", new AbstractReadOnlyModel<List<Topic>>() {
           @Override
           public List<Topic> getObject() {
             return topicTypeModel.getTopicType().getInstances();

@@ -18,7 +18,6 @@ import ontopoly.OntopolyContext;
 public class TopicMapSource implements Serializable {
 
   private String sourceId;
-  private transient TopicMapSourceIF _source;
 
   protected TopicMapSource() {
   }
@@ -34,20 +33,18 @@ public class TopicMapSource implements Serializable {
    * INTERNAL: Returns the ID of the source.
    */
   public String getId() {
-    return getTopicMapSource().getId();
+    return getSource().getId();
   }
 
   /**
    * INTERNAL: Returns the display title of the source.
    */
   public String getTitle() {
-    return getTopicMapSource().getTitle();
+    return getSource().getTitle();
   }
 
-  private synchronized TopicMapSourceIF getTopicMapSource() {
-    if (_source == null)
-      _source = OntopolyContext.getOntopolyRepository().getTopicMapRepository().getSourceById(sourceId);
-    return _source;
+  protected TopicMapSourceIF getSource() {
+    return OntopolyContext.getOntopolyRepository().getTopicMapRepository().getSourceById(sourceId);
   }
 
 }

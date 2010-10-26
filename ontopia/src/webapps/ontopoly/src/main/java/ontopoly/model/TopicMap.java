@@ -33,7 +33,6 @@ import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import ontopoly.OntopolyContext;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**
@@ -63,19 +62,6 @@ public class TopicMap {
   private QueryProcessorIF qp;
 
   private TopicIF defnametype; // cached here to avoid constant lookups
-
-  public TopicMap(String topicMapId) {
-    this.topicMapId = topicMapId;
-    try {
-      this.topicMapIF = OntopolyContext.getOntopolyRepository().getTopicMapRepository().getReferenceByKey(
-          topicMapId).createStore(false).getTopicMap();
-    } catch (Exception e) {
-      throw new OntopiaRuntimeException(e);
-    }
-
-    // initialize query context
-    initQueryContext();
-  }
 
   public TopicMap(TopicMapIF topicMapIF, String topicMapId) {
     this.topicMapIF = topicMapIF;
@@ -426,14 +412,14 @@ public class TopicMap {
     return nameType;
   }
 
-	public NameField getNameField(NameType nameType) {
-		String query = "select $FD from on:has-name-type(%type% : on:name-type, $FD : on:name-field) limit 1?";
-		Map<String,TopicIF> params = Collections.singletonMap("type", nameType.getTopicIF());
+  public NameField getNameField(NameType nameType) {
+    String query = "select $FD from on:has-name-type(%type% : on:name-type, $FD : on:name-field) limit 1?";
+    Map<String,TopicIF> params = Collections.singletonMap("type", nameType.getTopicIF());
 
     QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
     TopicIF fieldTopic = qm.queryForObject(query, params);
-		if (fieldTopic == null) 
-			throw new OntopolyModelRuntimeException("Could not find name field for " + nameType);
+    if (fieldTopic == null) 
+      throw new OntopolyModelRuntimeException("Could not find name field for " + nameType);
 
     return new NameField(fieldTopic, this, nameType);
   }
@@ -462,13 +448,13 @@ public class TopicMap {
   }
 
   public OccurrenceField getOccurrenceField(OccurrenceType occurrenceType) {
-	String query = "select $FD from on:has-occurrence-type(%type% : on:occurrence-type, $FD : on:occurrence-field) limit 1?";
-	Map<String,TopicIF> params = Collections.singletonMap("type", occurrenceType.getTopicIF());
+    String query = "select $FD from on:has-occurrence-type(%type% : on:occurrence-type, $FD : on:occurrence-field) limit 1?";
+    Map<String,TopicIF> params = Collections.singletonMap("type", occurrenceType.getTopicIF());
 
-	QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
-	TopicIF fieldTopic = qm.queryForObject(query, params);
-	if (fieldTopic == null) 
-		throw new OntopolyModelRuntimeException("Could not find occurrence field for " + occurrenceType);
+    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
+    TopicIF fieldTopic = qm.queryForObject(query, params);
+    if (fieldTopic == null) 
+      throw new OntopolyModelRuntimeException("Could not find occurrence field for " + occurrenceType);
 
     return new OccurrenceField(fieldTopic, this, occurrenceType);
   }
@@ -520,12 +506,12 @@ public class TopicMap {
 
   public AssociationField getAssociationField(AssociationType atype) {
 
-		String query = "select $AF from "
-			+ "on:has-association-type(%atype% : on:association-type, $AF : on:association-field) limit 1?";
-		Map<String,TopicIF> params = Collections.singletonMap("atype", atype.getTopicIF());
-		
+    String query = "select $AF from "
+      + "on:has-association-type(%atype% : on:association-type, $AF : on:association-field) limit 1?";
+    Map<String,TopicIF> params = Collections.singletonMap("atype", atype.getTopicIF());
+
     QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
-    TopicIF fieldTopic = qm.queryForObject(query, params);		
+    TopicIF fieldTopic = qm.queryForObject(query, params);
     if (fieldTopic == null) 
       throw new OntopolyModelRuntimeException("Could not find association field for " + atype);
     
@@ -610,11 +596,11 @@ public class TopicMap {
     for (TopicNameIF name : topic.getTopicNames()) {
       int points = 0;
       if (name.getType() == defnametype)
-	points += 10;
+        points += 10;
       points -= name.getScope().size();
       if (points > score) {
-	score = points;
-	best = name;
+      score = points;
+      best = name;
       }
     }
     if (best != null)

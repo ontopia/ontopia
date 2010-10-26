@@ -1,6 +1,5 @@
 package ontopoly;
 
-import net.ontopia.topicmaps.entry.TopicMaps;
 import ontopoly.model.TopicMap;
 import ontopoly.pages.AdminPage;
 import ontopoly.pages.AssociationTransformPage;
@@ -86,7 +85,7 @@ public class OntopolyApplication extends WebApplication {
 
   public synchronized OntopolyRepository getOntopolyRepository() {
     if (repository == null)
-      repository = new OntopolyRepository(TopicMaps.getRepository(), "ontopoly-system.ltm");
+      repository = new OntopolyRepository();
     return repository;
   }
   

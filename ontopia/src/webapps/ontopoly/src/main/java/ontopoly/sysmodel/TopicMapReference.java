@@ -14,8 +14,7 @@ import ontopoly.OntopolyContext;
  */
 public class TopicMapReference implements Serializable {
 
-  private String referenceId;
-  private transient TopicMapReferenceIF _reference;
+  protected String referenceId;
 
   protected TopicMapReference() {
   }
@@ -34,13 +33,10 @@ public class TopicMapReference implements Serializable {
    */
   TopicMapReference(TopicMapReferenceIF reference) {
     this.referenceId = reference.getId();
-    this._reference = reference;
   }
 
-  private synchronized TopicMapReferenceIF getTopicMapReference() {
-    if (_reference == null)
-      _reference = OntopolyContext.getOntopolyRepository().getTopicMapRepository().getReferenceByKey(referenceId);
-    return _reference;
+  protected TopicMapReferenceIF getReference() {
+    return OntopolyContext.getOntopolyRepository().getTopicMapRepository().getReferenceByKey(referenceId);
   }
 
   /**
@@ -55,7 +51,7 @@ public class TopicMapReference implements Serializable {
    * topic maps this will be the same as the ID.
    */
   public String getName() {
-    TopicMapReferenceIF reference = getTopicMapReference();
+    TopicMapReferenceIF reference = getReference();
     return reference == null ? referenceId : reference.getTitle();
   }
 
@@ -63,7 +59,7 @@ public class TopicMapReference implements Serializable {
    * INTERNAL: Tests if the topic map is actually in the repository.
    */
   public boolean isPresent() {
-    return getTopicMapReference() != null;
+    return getReference() != null;
   }
 
   @Override

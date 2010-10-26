@@ -56,13 +56,11 @@ public class FieldDefinitionLabel extends Panel {
   }
 
   protected boolean isFieldDefinitionLinkEnabled(Topic topic) {
-//    return false;
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     return page.isShortcutsEnabled();    
   }
 
   protected boolean isOntologyTypeLinkEnabled(Topic topic) {
-//    return false;
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     return page.isShortcutsEnabled();
   }

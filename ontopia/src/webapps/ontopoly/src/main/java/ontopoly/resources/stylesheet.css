@@ -11,6 +11,11 @@ a:link { text-decoration: none; }
 a:visited { color: blue; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
+/*
+.fieldLabel a { color: black }
+.fieldEmbeddedLabel a { color: black }
+*/
+
 h1 { color: #cc0000; margin: 0px; padding-bottom: 5px; font-size: 180%; }
 
 ul, p, form { margin: 0; }
@@ -122,6 +127,9 @@ li .feedbackPanelERROR { color: red; font-weight: bold; }
 #functionBoxes #functionBoxesList { width: 100%; margin-top: 5px }
 #functionBoxes #functionBoxesList .functionBox { width: 100%; margin: 0; padding: 0; background-color: rgb(230,230,230);}
 #functionBoxes select, option  { max-width: 230px; }
+
+/* lists */
+.instancesPanel { float: left; margin-top: 10px; }
 
 /* trees */
 div.ontopoly-tree div.wicket-tree { border: none; overflow: auto;  width: auto; white-space: normal; margin: 2px; }
