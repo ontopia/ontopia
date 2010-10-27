@@ -84,7 +84,8 @@ TopicMapRepositoryIF rep = NavigatorUtils.getTopicMapRepository(pageContext);
 TopicMapReferenceIF ref = rep.getReferenceByKey(tm);
 if (ref instanceof AbstractOntopolyURLReference) {
   AbstractOntopolyURLReference oref = (AbstractOntopolyURLReference) ref;
-  path = oref.getIndexDirectory() + File.separator + tm;
+  if (oref.getIndexDirectory() != null)
+    path = oref.getIndexDirectory() + File.separator + tm;
 }
                       
                      if (context != null) {
