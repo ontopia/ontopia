@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.URIUtils;
 import ontopoly.model.PSI;
@@ -46,7 +47,7 @@ public class OntopolyRepository {
 
   private static final Comparator<TopicMapReference> REFERENCE_COMPARATOR = new Comparator<TopicMapReference>() {
         public int compare(TopicMapReference r1, TopicMapReference r2) {
-          return r1.getName().compareTo(r2.getName());
+          return ObjectUtils.compareIgnoreCase(r1.getName(), r2.getName());
         }
       };
   
@@ -120,6 +121,7 @@ public class OntopolyRepository {
             result.add(new TopicMapReference(ref));
         }
     }
+    Collections.sort(result, REFERENCE_COMPARATOR);
     return result;
   }
 
