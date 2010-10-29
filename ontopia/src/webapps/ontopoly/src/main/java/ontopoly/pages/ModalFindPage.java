@@ -200,7 +200,12 @@ public abstract class ModalFindPage<T> extends Panel {
 
     final WebMarkupContainer unsuccessfulSearchContainer = new WebMarkupContainer("unsuccessfulSearchContainer") {
       public boolean isVisible() {
-          return !searchTermField.getModel().getObject().equals("") && ((List<Topic>)results.getObject()).isEmpty() ? true : false;      
+        IModel<String> model = searchTermField.getModel();
+        if (model == null)
+          return false;
+        return !(model.getObject() == null ||
+                 model.getObject().equals("")) &&
+          ((List<Topic>)results.getObject()).isEmpty();
       }
     };
     unsuccessfulSearchContainer.setOutputMarkupPlaceholderTag(true);
