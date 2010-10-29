@@ -20,6 +20,24 @@ This document describes what has changed in Ontopia between releases,
 both at a higher level, and in more detail.
 </para>
 </abstract>
+<!-- ======================================================================
+     5.1.2                                                              -->
+<section id="sect-5.1.2">
+<title>Ontopia 5.1.2 release notes</title>
+
+<para>This is a minor bugfix release that fixes two issues.</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=322"
+      >issue 322: Ontopoly: list of "other topic maps" in random order</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=323"
+      >Issue 323: Ontopoly: association search popup broken</ulink></para>
+  </listitem>
+</itemizedlist>
+</section>
 
 <!-- ======================================================================
      5.1.1                                                              -->
