@@ -25,12 +25,12 @@ both at a higher level, and in more detail.
 <section id="sect-5.1.2">
 <title>Ontopia 5.1.2 release notes</title>
 
-<para>This is a minor bugfix release that fixes two issues.</para>
+<para>This is a minor bugfix release that fixes two issues in Ontopoly.</para>
 
 <itemizedlist>
   <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=322"
-      >issue 322: Ontopoly: list of "other topic maps" in random order</ulink></para>
+      >Issue 322: Ontopoly: list of "other topic maps" in random order</ulink></para>
   </listitem>
   <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=323"
