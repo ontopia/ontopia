@@ -46,11 +46,11 @@ public class OntopolyRepository {
   public static final String ONTOLOGY_TOPIC_MAP_ID = "ontopoly-ontology.xtm";
 
   private static final Comparator<TopicMapReference> REFERENCE_COMPARATOR = new Comparator<TopicMapReference>() {
-        public int compare(TopicMapReference r1, TopicMapReference r2) {
-          return ObjectUtils.compareIgnoreCase(r1.getName(), r2.getName());
-        }
-      };
-  
+    public int compare(TopicMapReference r1, TopicMapReference r2) {
+        return ObjectUtils.compareIgnoreCase(r1.getName(), r2.getName());
+    }
+  };
+
   private transient TopicMapRepositoryIF repository;
 
   public OntopolyRepository() {

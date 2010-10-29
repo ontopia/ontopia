@@ -14,10 +14,10 @@ public class SampleOntopolyApplication extends OntopolyApplication {
 
 	@Override
 	protected OntopolyAccessStrategy newAccessStrategy() {
-		// NOTE: let users in if their password is the same as the username
 		return new OntopolyAccessStrategy() {
 			@Override
 			public User authenticate(String username, String password) {
+		    // let users in if their password is the same as the username
 				if (username != null && password != null && username.equals(password)) {
 				    return new User(username, false);
 				} else {
@@ -26,6 +26,7 @@ public class SampleOntopolyApplication extends OntopolyApplication {
 			}
 			@Override
 			public Privilege getPrivilege(User user, Topic topic) {
+			  // protect the ontology
 				if (topic.isOntologyTopic() || topic.isSystemTopic() || topic.isFieldDefinition() || topic.isTopicMap()) {
 					return Privilege.READ_ONLY;
 				} else {
