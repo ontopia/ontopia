@@ -11,7 +11,7 @@
 </affiliation>
 </author>
 <pubdate>2010-10-18</pubdate>
-<releaseinfo>5.1.1</releaseinfo>
+<releaseinfo>5.1.2</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -28,6 +28,10 @@ both at a higher level, and in more detail.
 <para>This is a minor bugfix release that fixes two issues in Ontopoly.</para>
 
 <itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=320"
+      >Issue 320: Geotagging in Ontopoly: failed searches give no response</ulink></para>
+  </listitem>
   <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=322"
       >Issue 322: Ontopoly: list of "other topic maps" in random order</ulink></para>
