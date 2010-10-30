@@ -254,7 +254,10 @@ public class SQLTypes {
         } else if (value instanceof OnDemandValue) {
           OnDemandValue odv = (OnDemandValue)value;
           ContentInputStream blob = (ContentInputStream)odv.getValue();
-          stmt.setBinaryStream(index, blob, (int)blob.getLength());
+          if (blob != null) 
+            stmt.setBinaryStream(index, blob, (int)blob.getLength());
+          else
+            stmt.setNull(index, sql_type);
           odv.releaseValue();
         }
         break;
@@ -266,7 +269,10 @@ public class SQLTypes {
         } else if (value instanceof OnDemandValue) {
           OnDemandValue odv = (OnDemandValue)value;
           ContentReader clob = (ContentReader)odv.getValue();
-          stmt.setCharacterStream(index, clob, (int)clob.getLength());
+          if (clob != null)
+            stmt.setCharacterStream(index, clob, (int)clob.getLength());
+          else
+            stmt.setNull(index, sql_type);
           odv.releaseValue();
         } else {
           throw new OntopiaRuntimeException("Unsupported CLOB value: " + value);
