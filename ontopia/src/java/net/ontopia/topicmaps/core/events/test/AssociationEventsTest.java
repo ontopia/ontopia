@@ -33,8 +33,6 @@ public class AssociationEventsTest extends AbstractTopicMapTest {
   public void setUp() {
     // get a new topic map object from the factory.
     try {
-      factory = new net.ontopia.topicmaps.impl.basic.test.CoreTestGenerator().getFactory();
-      //factory = new net.ontopia.topicmaps.impl.rdbms.test.CoreTestGenerator().getFactory();
       topicmapRef = factory.makeTopicMapReference();
       listener = new EventListener();
       TopicMapEvents.addTopicListener(topicmapRef, listener);
