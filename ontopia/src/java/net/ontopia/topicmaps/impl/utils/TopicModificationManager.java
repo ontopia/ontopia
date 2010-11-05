@@ -218,19 +218,29 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF role = (AssociationRoleIF)object;
       AssociationIF assoc = role.getAssociation();
-      if (assoc != null) {
-        Iterator iter = assoc.getRoles().iterator();
-        while (iter.hasNext()) {
-          AssociationRoleIF orole = (AssociationRoleIF)iter.next();
-          TopicIF topic = orole.getPlayer();
-          if (topic != null)
-            topicModified(topic);          
-        }
+
+      if (event.equals("AssociationRoleIF.setPlayer")) {                 
+        if (old_value != null)
+          topicModified((TopicIF)old_value);
+        if (new_value != null)
+          topicModified((TopicIF)new_value);
       } else {
         TopicIF topic = role.getPlayer();
         if (topic != null)
           topicModified(topic);
-      }        
+      }
+
+      if (assoc != null) {
+        Iterator iter = assoc.getRoles().iterator();
+        while (iter.hasNext()) {
+          AssociationRoleIF orole = (AssociationRoleIF)iter.next();
+          if (!orole.equals(role)) {
+            TopicIF otopic = orole.getPlayer();
+            if (otopic != null)
+              topicModified(otopic);
+          }
+        }
+      }
     }
   }
 

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap xmlns="http://www.topicmaps.org/xtm/" version="2.1">
+  <topic>
+    <subjectIdentifier href="http://psi.topicmaps.org/iso13250/model/topic-name"></subjectIdentifier>
+  </topic>
+  <topic>
+    <subjectIdentifier href="http://psi.chludwig.de/playground#JohnDoe"></subjectIdentifier>
+    <instanceOf>
+      <subjectIdentifierRef href="http://psi.chludwig.de/playground#Person"></subjectIdentifierRef>
+    </instanceOf>
+    <name>
+      <value>John Doe</value>
+    </name>
+  </topic>
+  <topic>
+    <subjectIdentifier href="http://psi.chludwig.de/playground#university"></subjectIdentifier>
+    <name>
+      <value>University</value>
+    </name>
+  </topic>
+  <topic>
+    <subjectIdentifier href="http://psi.chludwig.de/playground#UniversityOfSomewhere"></subjectIdentifier>
+    <instanceOf>
+      <subjectIdentifierRef href="http://psi.chludwig.de/playground#university"></subjectIdentifierRef>
+    </instanceOf>
+    <name>
+      <value>University of Somewhere</value>
+    </name>
+  </topic>
+  <topic>
+    <subjectIdentifier href="http://psi.chludwig.de/playground#Person"></subjectIdentifier>
+    <name>
+      <value>Person</value>
+    </name>
+  </topic>
+  <topic>
+    <subjectIdentifier href="http://psi.chludwig.de/playground#Alumnus"></subjectIdentifier>
+    <name>
+      <value>alumnus</value>
+    </name>
+  </topic>
+  <topic>
+    <subjectIdentifier href="http://psi.chludwig.de/playground#graduatedFrom"></subjectIdentifier>
+    <name>
+      <value>graduated from</value>
+    </name>
+  </topic>
+  <topic>
+    <subjectIdentifier href="http://psi.chludwig.de/playground#AlmaMater"></subjectIdentifier>
+    <name>
+      <value>alma mater</value>
+    </name>
+  </topic>
+</topicMap>
