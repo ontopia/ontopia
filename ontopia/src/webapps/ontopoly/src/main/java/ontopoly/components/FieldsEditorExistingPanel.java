@@ -38,6 +38,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
 public abstract class FieldsEditorExistingPanel extends Panel {
@@ -205,6 +206,9 @@ public abstract class FieldsEditorExistingPanel extends Panel {
     case FieldDefinition.FIELD_TYPE_OCCURRENCE: {
       return new Label(id, ((OccurrenceField)fieldDefinition).getDataType().getName());     
     }
+    case FieldDefinition.FIELD_TYPE_QUERY: {
+      return new Label(id, new Model<String>("Query"));     
+    } 
     default:
       throw new OntopiaRuntimeException("Unknown field definition: " + fieldDefinition.getFieldType());
     }

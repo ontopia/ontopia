@@ -183,6 +183,7 @@ td.fieldEmbeddedInstanceButtons {
   display: block;
   float: left;
 }
+.fieldsEditor .delimiter { background: url('../ontopoly.images.ImageResource/delimiter.gif') no-repeat left center; padding: 0 0 0 6px; }
 
 .fieldsEditorHeader {
   border-spacing:5px 3px;

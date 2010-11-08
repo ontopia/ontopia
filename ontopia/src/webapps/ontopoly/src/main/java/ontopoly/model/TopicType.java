@@ -222,6 +222,20 @@ public class TopicType extends AbstractTypingTopic {
     return nameType;
   }
 
+  public QueryField createQueryField() {
+    TopicMap tm = getTopicMap();
+    TopicMapBuilderIF builder = tm.getTopicMapIF().getBuilder();
+
+    // create name field
+    TopicIF queryFieldType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "query-field");
+    TopicIF queryFieldTopic = builder.makeTopic(queryFieldType);
+
+    // add field
+    QueryField queryField = new QueryField(queryFieldTopic, tm);
+    addField(queryField);
+    return queryField;
+  }
+
   public OccurrenceType createOccurrenceType() {
     TopicMap tm = getTopicMap();
     TopicMapBuilderIF builder = tm.getTopicMapIF().getBuilder();
@@ -502,6 +516,8 @@ public class TopicType extends AbstractTypingTopic {
       return new NameField(fieldDefinitionTopic, tm);
     else if (identities.contains(PSI.ON_IDENTITY_FIELD))
       return new IdentityField(fieldDefinitionTopic, tm);
+    else if (identities.contains(PSI.ON_QUERY_FIELD))
+      return new QueryField(fieldDefinitionTopic, tm);
     else
       throw new OntopolyModelRuntimeException(
           "This topic's subjectIndicator address didn't match any FieldDefinition implementations: "

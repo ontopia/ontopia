@@ -11,7 +11,7 @@ import net.ontopia.utils.CollectionUtils;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**
- * Represents both subject locator and subject identifier fields.
+ * Represents an identify field.
  */
 public class IdentityField extends FieldDefinition {
   private IdentityType identityType;

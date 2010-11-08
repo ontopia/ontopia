@@ -12,10 +12,12 @@ import net.ontopia.utils.ObjectUtils;
 import ontopoly.model.AssociationType;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
+import ontopoly.model.IdentityField;
 import ontopoly.model.NameField;
 import ontopoly.model.NameType;
 import ontopoly.model.OccurrenceField;
 import ontopoly.model.OccurrenceType;
+import ontopoly.model.QueryField;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicType;
@@ -37,6 +39,8 @@ import org.apache.wicket.model.ResourceModel;
 
 public class FieldsEditor extends Panel {
 
+  protected static final boolean ISSUE_329_ENABLED = false;
+  
   TopicTypeModel topicTypeModel;
   boolean readonly;
   
@@ -145,22 +149,38 @@ public class FieldsEditor extends Panel {
     actionsContainer.add(new FieldDefinitionTypeLink("identities") {
       @Override
       protected List<? extends FieldDefinition> getFieldDefinitions() {
-        // FIXME: shouldn't these be filtered also?
-        return topicTypeModel.getTopicType().getTopicMap().getIdentityFields();               
+        List<IdentityField> fields = topicTypeModel.getTopicType().getTopicMap().getIdentityFields();
+        filterFieldDefinitions(fields);
+        return fields;             
       }      
+    });
+    actionsContainer.add(new FieldDefinitionTypeLink("queries") {
+      @Override
+      protected List<? extends FieldDefinition> getFieldDefinitions() {
+        List<QueryField> fields = topicTypeModel.getTopicType().getTopicMap().getQueryFields();
+        filterFieldDefinitions(fields);
+        return fields;
+      }
+      @Override
+      public boolean isVisible() {
+        return ISSUE_329_ENABLED;
+      }
+    });
+    actionsContainer.add(new OntopolyImageLink("create-query-field", "create.gif", new ResourceModel("create.new.query.field")) {
+      @Override
+      public void onClick(AjaxRequestTarget target) {
+        TopicType topicType = topicTypeModel.getTopicType();
+        QueryField queryField = topicType.createQueryField();
+        redirectToTopic(queryField);
+      }
+      @Override
+      public boolean isVisible() {
+        return ISSUE_329_ENABLED;
+      }
     });
 
     List<FieldDefinitionModel> fields = Collections.emptyList();
     add(createListView(fields));  
-    
-//    this.addFieldsContainer = new WebMarkupContainer("addFieldsContainer");
-//    addFieldsContainer.setOutputMarkupId(true);    
-//    add(this.addFieldsContainer);        
-//
-//    // add empty listview
-//    List<FieldDefinitionModel> fields = Collections.emptyList();
-//    ListView<FieldDefinitionModel> afListView = createListView("addFields", fields);
-//    addFieldsContainer.add(afListView);
   }
 
   private void filterFieldDefinitions(List<? extends FieldDefinition> result) {

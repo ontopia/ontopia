@@ -333,6 +333,13 @@ public class TopicMap {
     return qm.queryForList(query);
   }
 
+  public List<QueryField> getQueryFields() {
+    String query = "select $field from instance-of($field, on:query-field) order by $field?";
+
+    QueryMapper<QueryField> qm = newQueryMapper(QueryField.class);
+    return qm.queryForList(query);
+  }
+
   public boolean isSaveable() {
     TopicMapReferenceIF ref = getTopicMapIF().getStore().getReference();
     return (ref instanceof XTMTopicMapReference);

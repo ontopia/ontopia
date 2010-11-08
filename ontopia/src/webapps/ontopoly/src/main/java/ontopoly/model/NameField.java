@@ -15,7 +15,7 @@ import net.ontopia.utils.CollectionUtils;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**
- * Represents a name type.
+ * Represents a name field.
  */
 public class NameField extends FieldDefinition {
   private NameType nameType;

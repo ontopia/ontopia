@@ -53,6 +53,7 @@ public class PSI {
   public static final LocatorIF ON_NAME_FIELD = PSI.ON.resolveAbsolute("name-field");
   public static final LocatorIF ON_OCCURRENCE_FIELD = PSI.ON.resolveAbsolute("occurrence-field");
   public static final LocatorIF ON_ROLE_FIELD = PSI.ON.resolveAbsolute("role-field");
+  public static final LocatorIF ON_QUERY_FIELD = PSI.ON.resolveAbsolute("query-field");
 
   public static final LocatorIF ON_INTERFACE_CONTROL_DROP_DOWN_LIST = PSI.ON.resolveAbsolute("drop-down-list");
   public static final LocatorIF ON_INTERFACE_CONTROL_SEARCH_DIALOG = PSI.ON.resolveAbsolute("search-dialog");

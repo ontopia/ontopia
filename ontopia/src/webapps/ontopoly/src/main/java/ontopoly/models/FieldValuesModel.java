@@ -17,6 +17,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   private Comparator<Object> comparator;
   private boolean showExtraField;
   private boolean showExtraFieldUserTriggered;
+  private boolean autoExtraField = true;
   
   public FieldValuesModel(FieldInstanceModel fieldInstanceModel) {
     this(fieldInstanceModel, null);
@@ -27,6 +28,14 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
       throw new NullPointerException("fieldInstanceModel parameter cannot be null.");
     this.fieldInstanceModel = fieldInstanceModel;
     this.comparator = comparator;
+  }
+  
+  public boolean getAutoExtraField() {
+    return autoExtraField;
+  }
+  
+  public void setAutoExtraField(boolean autoExtraField) {
+    this.autoExtraField = autoExtraField;
   }
   
   public FieldInstanceModel getFieldInstanceModel() {
@@ -81,7 +90,7 @@ public class FieldValuesModel extends LoadableDetachableModel<List<FieldValueMod
   @Override
   public List<FieldValueModel> getObject() {
     List<FieldValueModel> values = super.getObject();
-    if (values.isEmpty())
+    if (values.isEmpty() && autoExtraField)
       setShowExtraField(true, false);
     if (getShowExtraField()) {
       List<FieldValueModel> result = new ArrayList<FieldValueModel>(values);

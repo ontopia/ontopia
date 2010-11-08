@@ -16,7 +16,7 @@ import net.ontopia.utils.CollectionUtils;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**
- * Represents an occurrence type.
+ * Represents an occurrence field.
  */
 public class OccurrenceField extends FieldDefinition {
   private OccurrenceType occurrenceType;

@@ -5,6 +5,7 @@ import ontopoly.model.FieldDefinition;
 import ontopoly.model.IdentityField;
 import ontopoly.model.NameField;
 import ontopoly.model.OccurrenceField;
+import ontopoly.model.QueryField;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.models.FieldDefinitionModel;
@@ -75,6 +76,8 @@ public class FieldDefinitionLabel extends Panel {
       return ((OccurrenceField)fieldDefinition).getOccurrenceType();
     case FieldDefinition.FIELD_TYPE_ROLE:
       return ((RoleField)fieldDefinition).getAssociationField().getAssociationType();
+    case FieldDefinition.FIELD_TYPE_QUERY:
+      return (QueryField)fieldDefinition;
     default:
       throw new RuntimeException("Unknown field definition type: " + fieldDefinition);
     }

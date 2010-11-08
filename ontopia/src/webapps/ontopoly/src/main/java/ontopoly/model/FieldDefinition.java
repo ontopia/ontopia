@@ -41,7 +41,7 @@ public abstract class FieldDefinition extends Topic {
    */
   public abstract String getFieldName();
 
-  public boolean isReadOnly(FieldsView view) {
+  private Collection<TopicIF> getViewModes(FieldsView view) {
     TopicMap tm = getTopicMap();
     TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "use-view-mode");
     TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
@@ -49,44 +49,27 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
     TopicIF player2 = view.getTopicIF();
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
-    return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-readonly"));
+    return OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
+  }
+  
+  public boolean isReadOnly(FieldsView view) {
+    Collection<TopicIF> viewModes = getViewModes(view);
+    return viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-readonly"));
   }
 
   public boolean isHidden(FieldsView view) {
-    TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "use-view-mode");
-    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-    TopicIF player1 = getTopicIF();
-    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
-    TopicIF player2 = view.getTopicIF();
-    TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
-    return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-hidden"));
+    Collection<TopicIF> viewModes = getViewModes(view);
+    return viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-hidden"));
   }
 
-  public boolean isNotTraversable(FieldsView view) {
-    TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "use-view-mode");
-    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-    TopicIF player1 = getTopicIF();
-    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
-    TopicIF player2 = view.getTopicIF();
-    TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
-    return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-not-traversable"));
+  public boolean isTraversable(FieldsView view) {
+    Collection<TopicIF> viewModes = getViewModes(view);
+    return !viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-not-traversable"));
   }
 
   public boolean isEmbedded(FieldsView view) {
-    TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "use-view-mode");
-    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-    TopicIF player1 = getTopicIF();
-    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
-    TopicIF player2 = view.getTopicIF();
-    TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
-    return players.contains(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode-embedded"));
+    Collection<TopicIF> viewModes = getViewModes(view);
+    return viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-embedded"));
   }
 
   public FieldsView getValueView(FieldsView view) {

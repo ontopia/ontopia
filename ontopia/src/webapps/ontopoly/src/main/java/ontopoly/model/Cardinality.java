@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * Represents a cardinality that can be assigned to a field.
@@ -86,6 +87,12 @@ public class Cardinality extends Topic {
         cardPSI = PSI.ON_CARDINALITY_0_M;
         break;
       }
+      case FieldDefinition.FIELD_TYPE_QUERY: {
+        cardPSI = PSI.ON_CARDINALITY_0_M;
+        break;
+      }
+      default:
+        throw new OntopiaRuntimeException("Unknown field definition: " + fieldDefinition.getFieldType());
     }
     return new Cardinality(tm.getTopicMapIF().getTopicBySubjectIdentifier(cardPSI), tm);
   }

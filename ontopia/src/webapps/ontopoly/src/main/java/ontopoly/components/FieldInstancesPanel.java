@@ -71,7 +71,7 @@ public class FieldInstancesPanel extends Panel {
       }
       // binary
       else if (arity == 2) {
-        final boolean traversable = (_traversable ? !fieldDefinition.isNotTraversable(fieldsView) : false);
+        final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
 
         if (embedded)
           return new FieldInstanceAssociationBinaryEmbeddedPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable).setOutputMarkupId(true);
@@ -80,7 +80,7 @@ public class FieldInstancesPanel extends Panel {
       } 
       // n-ary
       else {
-        final boolean traversable = (_traversable ? !fieldDefinition.isNotTraversable(fieldsView) : false);
+        final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
         return new FieldInstanceAssociationNaryPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable, arity).setOutputMarkupId(true);        
       }
     }
@@ -92,6 +92,13 @@ public class FieldInstancesPanel extends Panel {
     }
     case FieldDefinition.FIELD_TYPE_OCCURRENCE: {
       return new FieldInstanceOccurrencePanel("field", fieldInstanceModel, rofield);
+    }
+    case FieldDefinition.FIELD_TYPE_QUERY: {
+      final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
+      if (embedded)
+        return new FieldInstanceQueryEmbeddedPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable);
+      else
+        return new FieldInstanceQueryPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable);
     }
     default:
       throw new OntopiaRuntimeException("Unknown field definition: " + fieldDefinition.getFieldType());

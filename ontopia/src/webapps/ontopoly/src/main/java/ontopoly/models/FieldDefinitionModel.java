@@ -11,6 +11,7 @@ import ontopoly.model.FieldDefinition;
 import ontopoly.model.IdentityField;
 import ontopoly.model.NameField;
 import ontopoly.model.OccurrenceField;
+import ontopoly.model.QueryField;
 import ontopoly.model.RoleField;
 import ontopoly.model.TopicMap;
 
@@ -44,24 +45,24 @@ public class FieldDefinitionModel extends LoadableDetachableModel<FieldDefinitio
  
     TopicIF fieldTopic = tm.getTopicIFById(fieldId);
       
-    FieldDefinition fieldDefinition;
+    return getFieldDefinition(fieldTopic, fieldType, tm);
+  }
+
+  static FieldDefinition getFieldDefinition(TopicIF fieldTopic, int fieldType, TopicMap tm) {
     switch (fieldType) {
     case FieldDefinition.FIELD_TYPE_ROLE:
-      fieldDefinition = new RoleField(fieldTopic, tm);
-      break;
+      return new RoleField(fieldTopic, tm);
     case FieldDefinition.FIELD_TYPE_OCCURRENCE:
-      fieldDefinition = new OccurrenceField(fieldTopic, tm);
-      break;
+      return new OccurrenceField(fieldTopic, tm);
     case FieldDefinition.FIELD_TYPE_NAME:
-      fieldDefinition = new NameField(fieldTopic, tm);
-      break;
+      return new NameField(fieldTopic, tm);
     case FieldDefinition.FIELD_TYPE_IDENTITY:
-      fieldDefinition = new IdentityField(fieldTopic, tm);
-      break;
+      return new IdentityField(fieldTopic, tm);
+    case FieldDefinition.FIELD_TYPE_QUERY:
+      return new QueryField(fieldTopic, tm);
     default:
       throw new RuntimeException("Unknown field type: " + fieldType);
-    }
-    return fieldDefinition;
+    }    
   }
 
   public static List<FieldDefinitionModel> wrapInFieldDefinitionModels(List<FieldDefinition> fieldDefinitions) {
