@@ -10,6 +10,8 @@ import java.util.Map;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**
@@ -48,7 +50,7 @@ public class QueryField extends FieldDefinition {
    * @return a collection of objects.
    */
   @Override
-  public List<Topic> getValues(Topic topic) {
+  public List<Object> getValues(Topic topic) {
 
     String query = getValuesQuery();
     if (query != null) {
@@ -56,8 +58,17 @@ public class QueryField extends FieldDefinition {
       params.put("field", getTopicIF());
       params.put("topic", topic.getTopicIF());
 
-      QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
-      return qm.queryForList(query, params);
+      QueryMapper<Object> qm = getTopicMap().newQueryMapperNoWrap();
+      return qm.queryForList(query, new RowMapperIF<Object>() {
+        public Object mapRow(QueryResultIF queryResult, int rowno) {
+          Object value = queryResult.getValue(0);
+          if (value instanceof TopicIF) {
+            return new Topic((TopicIF)value, getTopicMap());
+          } else {
+            return value;
+          }
+        }
+      }, params);
 
     } else {
       return Collections.emptyList();

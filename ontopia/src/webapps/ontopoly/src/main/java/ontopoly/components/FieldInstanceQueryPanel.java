@@ -21,9 +21,11 @@ import org.apache.wicket.PageParameters;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 
 public class FieldInstanceQueryPanel extends AbstractFieldInstancePanel {
@@ -65,57 +67,70 @@ public class FieldInstanceQueryPanel extends AbstractFieldInstancePanel {
       public void populateItem(final ListItem<FieldValueModel> item) {
         final FieldValueModel fieldValueModel = item.getModelObject();
 
-        // TODO: make sure non-existing value field gets focus if last edit happened there        
-        Object value = fieldValueModel.getObject();
-  //        TopicIF topic = (TopicIF)value;
-  //        Topic oPlayer = new Topic(topic, fieldValueModel.getFieldInstanceModel().getFieldInstance().getInstance().getTopicMap());
-        Topic oPlayer = (Topic)value;
-        final String topicMapId = (oPlayer == null ? null : oPlayer.getTopicMap().getId());
-        final String topicId = (oPlayer == null ? null : oPlayer.getId());
-
         final WebMarkupContainer fieldValueButtons = new WebMarkupContainer("fieldValueButtons");
         fieldValueButtons.setOutputMarkupId(true);
         item.add(fieldValueButtons);
 
-        // acquire lock for embedded topic
-        final boolean isLockedByOther;
-        if (embedded && fieldValueModel.isExistingValue()) {
-          OntopolySession session = (OntopolySession)Session.get();
-          String lockerId = session.getLockerId(getRequest());
-          LockManager.Lock lock = session.lock(oPlayer, lockerId);
-          isLockedByOther = !lock.ownedBy(lockerId);
-        } else {
-          isLockedByOther = false;
-        }
-        final boolean _readonly = readonly || isLockedByOther;
+        Object value = fieldValueModel.getObject();
         
-        if (embedded) {
-          TopicType defaultTopicType = OntopolyUtils.getDefaultTopicType(oPlayer);
-          List<FieldInstance> fieldInstances = oPlayer.getFieldInstances(defaultTopicType, fieldsViewModel.getFieldsView());
-          // if no matching fields show link to topic instead
-          if (fieldInstances.isEmpty()) {
+        final boolean isTopicValue;
+        final String topicMapId;
+        final String topicId;
+        final boolean isLockedByOther;
+        
+        if (value instanceof Topic) {
+          isTopicValue = true;
+          Topic oPlayer = (Topic)value;
+          
+          topicMapId = (oPlayer == null ? null : oPlayer.getTopicMap().getId());
+          topicId = (oPlayer == null ? null : oPlayer.getId());
+  
+          // acquire lock for embedded topic
+          if (embedded && fieldValueModel.isExistingValue()) {
+            OntopolySession session = (OntopolySession)Session.get();
+            String lockerId = session.getLockerId(getRequest());
+            LockManager.Lock lock = session.lock(oPlayer, lockerId);
+            isLockedByOther = !lock.ownedBy(lockerId);
+          } else {
+            isLockedByOther = false;
+          }
+          final boolean _readonly = readonly || isLockedByOther;
+          
+          if (embedded) {
+            TopicType defaultTopicType = OntopolyUtils.getDefaultTopicType(oPlayer);
+            List<FieldInstance> fieldInstances = oPlayer.getFieldInstances(defaultTopicType, fieldsViewModel.getFieldsView());
+            // if no matching fields show link to topic instead
+            if (fieldInstances.isEmpty()) {
+              // player link
+              TopicLink<Topic> playerLink = new TopicLink<Topic>("fieldValue", new TopicModel<Topic>(oPlayer), fieldsViewModel);
+              playerLink.setEnabled(traversable);
+              item.add(playerLink);          
+            } else {
+              // embedded topic
+              List<FieldInstanceModel> fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(fieldInstances);
+              FieldInstancesPanel fip = new FieldInstancesPanel("fieldValue", fieldInstanceModels, fieldsViewModel, _readonly, traversable);
+              fip.setRenderBodyOnly(true);
+              item.add(fip);
+            }
+          } else {
             // player link
             TopicLink<Topic> playerLink = new TopicLink<Topic>("fieldValue", new TopicModel<Topic>(oPlayer), fieldsViewModel);
             playerLink.setEnabled(traversable);
-            item.add(playerLink);          
-          } else {
-            // embedded topic
-            List<FieldInstanceModel> fieldInstanceModels = FieldInstanceModel.wrapInFieldInstanceModels(fieldInstances);
-            FieldInstancesPanel fip = new FieldInstancesPanel("fieldValue", fieldInstanceModels, fieldsViewModel, _readonly, traversable);
-            fip.setRenderBodyOnly(true);
-            item.add(fip);
+            item.add(playerLink);
           }
         } else {
-          // player link
-          TopicLink<Topic> playerLink = new TopicLink<Topic>("fieldValue", new TopicModel<Topic>(oPlayer), fieldsViewModel);
-          playerLink.setEnabled(traversable);
-          item.add(playerLink);
+          isTopicValue = true;
+          topicMapId = null;
+          topicId = null;
+          isLockedByOther = false;
+          item.add(new Label("fieldValue", new Model<String>(value == null ? null : value.toString())));
         }
-
+        
         // embedded goto button
         OntopolyImageLink gotoButton = new OntopolyImageLink("goto", "goto.gif", new ResourceModel("icon.goto.topic")) {
           @Override
           public boolean isVisible() {
+            if (!isTopicValue) return false;
             FieldValueModel fieldValueModel = item.getModelObject();
             return embedded && fieldValueModel.isExistingValue();  
           }
