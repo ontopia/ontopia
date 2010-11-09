@@ -92,5 +92,5 @@ public abstract class AbstractTopicMapTransaction implements TopicMapTransaction
     // nested transactions are not supported by default
     throw new OntopiaUnsupportedException("Nested transactions not supported.");
   }
-  
+
 }

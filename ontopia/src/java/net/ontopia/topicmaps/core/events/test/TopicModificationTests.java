@@ -333,6 +333,16 @@ public class TopicModificationTests extends AbstractTopicMapTest {
     beforeTest();
     xr.remove();
     afterTest();
+
+    // AssociationIF.addRole
+    beforeTest();
+    xr = builder.makeAssociationRole(as, builder.makeTopic(), builder.makeTopic());
+    afterTest();
+
+    // AssociationIF.remove
+    beforeTest();
+    xr.getAssociation().remove();
+    afterTest();
     
   }
 

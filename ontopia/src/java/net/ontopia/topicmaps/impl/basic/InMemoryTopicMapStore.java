@@ -8,6 +8,7 @@ import net.ontopia.topicmaps.core.StoreNotOpenException;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
+import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -78,6 +79,15 @@ public class InMemoryTopicMapStore extends AbstractTopicMapStore {
 
   public String getProperty(String propertyName) {
     return null; // TODO: add property support
+  }
+
+  // ---------------------------------------------------------------------------
+  // EventManagerIF: for testing purposes only
+  // ---------------------------------------------------------------------------
+
+  @Override
+  public EventManagerIF getEventManager() {    
+    return (EventManagerIF)getTopicMap();
   }
   
 }

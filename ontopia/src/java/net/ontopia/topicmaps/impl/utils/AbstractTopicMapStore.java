@@ -128,4 +128,6 @@ public abstract class AbstractTopicMapStore implements TopicMapStoreIF {
     this.topic_listeners = listeners;
   }
 
+  public abstract EventManagerIF getEventManager();
+
 }

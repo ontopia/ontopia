@@ -220,7 +220,6 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
         Topic player = (Topic) role.getPlayer();
         if (player != null)
           player.removeRole(role);      
-        //! role.setPlayer(null);
       }
     }
     // Unset topic map property
@@ -230,7 +229,6 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   }
 
   public void remove() {
-		//! DeletionUtils.removeDependencies(this);
     getStore().delete(true);
   }
 

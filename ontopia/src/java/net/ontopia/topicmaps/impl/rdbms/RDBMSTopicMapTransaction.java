@@ -308,7 +308,6 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
   // Role type and association type cache
   // ---------------------------------------------------------------------------
 
-
   public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return rtatcache.getRolesByType(player, rtype, atype);
   }

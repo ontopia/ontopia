@@ -6,6 +6,7 @@ package net.ontopia.topicmaps.impl.basic;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.basic.index.IndexManager;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapTransaction;
+import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.impl.utils.ObjectTreeManager;
 import net.ontopia.topicmaps.impl.utils.TopicModificationManager;

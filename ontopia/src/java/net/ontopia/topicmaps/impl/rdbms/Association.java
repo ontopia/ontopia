@@ -157,8 +157,11 @@ public class Association extends TMObject implements AssociationIF {
 
     // Removing role from player's list of roles
     Topic player = (Topic) assoc_role.getPlayer();
-    if (player != null && getTopicMap() != null)
+    if (player != null && getTopicMap() != null) {
+      // Notify listeners
+      ((AssociationRole)assoc_role).fireEvent("AssociationRoleIF.setPlayer", player, null);
       player.removeRole(assoc_role);
+    }
   }
 
   public void remove() {

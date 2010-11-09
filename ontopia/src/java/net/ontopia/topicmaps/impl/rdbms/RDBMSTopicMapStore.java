@@ -27,6 +27,7 @@ import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.entry.TopicMapSourceIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapTransaction;
+import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -595,6 +596,15 @@ public class RDBMSTopicMapStore extends AbstractTopicMapStore {
 
   public String getQueryString(String name) {
     return getStorage().getQueryString(name);
+  }
+
+  // ---------------------------------------------------------------------------
+  // EventManagerIF: for testing purposes only
+  // ---------------------------------------------------------------------------
+
+  @Override
+  public EventManagerIF getEventManager() {
+    return (EventManagerIF)transaction;
   }
   
 }

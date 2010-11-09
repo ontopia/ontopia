@@ -12,6 +12,7 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.CollectionFactoryIF;
 
@@ -33,6 +34,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
   protected OccurrenceHandler oh;
   protected AssociationRoleHandler rh;
   protected AssociationHandler ah;
+  protected TopicMapHandler mh;
   
   public TopicModificationManager(EventManagerIF emanager, CollectionFactoryIF cfactory) {
     // Setup 
@@ -88,6 +90,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
     this.rh = new AssociationRoleHandler();
     handlers.put("AssociationRoleIF.setPlayer", rh);
     handlers.put("AssociationRoleIF.setType", rh);
+
+    this.mh = new TopicMapHandler();
+    handlers.put("TopicMapIF.removeAssociation", mh);
 
     TMObjectHandler xh = new TMObjectHandler();
     handlers.put("TMObjectIF.addItemIdentifier", xh);
@@ -261,6 +266,24 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
   }
 
   /**
+   * EventHandler: TopicMap.*
+   */
+  class TopicMapHandler extends EventHandler {
+    public void processEvent(Object object, String event, Object new_value, Object old_value) {
+      if (event.equals("TopicMapIF.removeAssociation")) {
+        AssociationIF assoc = (AssociationIF)old_value;
+        Iterator iter = assoc.getRoles().iterator();
+        while (iter.hasNext()) {
+          AssociationRoleIF role = (AssociationRoleIF)iter.next();
+          TopicIF topic = role.getPlayer();
+          if (topic != null)
+            topicModified(topic);          
+        }
+      }
+    }
+  }
+
+  /**
    * EventHandler: TMObjectIF.*
    */
   class TMObjectHandler extends EventHandler {
@@ -278,6 +301,8 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
         manager.ah.processEvent(object, event, new_value, old_value);
       else if (object instanceof TopicIF)
         manager.th.processEvent(object, event, new_value, old_value);
+      else if (object instanceof TopicMapIF)
+        manager.mh.processEvent(object, event, new_value, old_value);
     }
   }
     
