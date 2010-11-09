@@ -78,7 +78,7 @@ public abstract class AbstractFieldInstancePanel extends Panel {
   protected void onDetach() {
     super.onDetach();
     fieldInstanceModel.detach();
-    fieldValuesModel.detach();
+    if (fieldValuesModel != null) fieldValuesModel.detach();
   }
 
   protected class FieldUpdatingBehaviour extends AjaxFormComponentUpdatingBehavior {

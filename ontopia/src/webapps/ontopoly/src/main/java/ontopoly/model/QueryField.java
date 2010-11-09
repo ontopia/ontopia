@@ -3,7 +3,6 @@
 
 package ontopoly.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -59,23 +58,17 @@ public class QueryField extends FieldDefinition {
       params.put("field", getTopicIF());
       params.put("topic", topic.getTopicIF());
 
-      try {
-        QueryMapper<Object> qm = getTopicMap().newQueryMapperNoWrap();
-        return qm.queryForList(query, new RowMapperIF<Object>() {
-          public Object mapRow(QueryResultIF queryResult, int rowno) {
-            Object value = queryResult.getValue(0);
-            if (value instanceof TopicIF) {
-              return new Topic((TopicIF)value, getTopicMap());
-            } else {
-              return value;
-            }
+      QueryMapper<Object> qm = getTopicMap().newQueryMapperNoWrap();
+      return qm.queryForList(query, new RowMapperIF<Object>() {
+        public Object mapRow(QueryResultIF queryResult, int rowno) {
+          Object value = queryResult.getValue(0);
+          if (value instanceof TopicIF) {
+            return new Topic((TopicIF)value, getTopicMap());
+          } else {
+            return value;
           }
-        }, params);
-      } catch (Exception e) {
-        List<Object> result = new ArrayList<Object>(1);
-        result.add("Error occurred: " + e.getMessage());
-        return result;
-      }
+        }
+      }, params);
     } else {
       return Collections.emptyList();
     }

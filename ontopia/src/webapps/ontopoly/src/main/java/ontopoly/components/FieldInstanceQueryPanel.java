@@ -63,6 +63,9 @@ public class FieldInstanceQueryPanel extends AbstractFieldInstancePanel {
     this.fieldValuesModel = new FieldValuesModel(fieldInstanceModel); // NOTE: no comparator
     fieldValuesModel.setAutoExtraField(false);
     
+    // preload values to trigger query syntax errors
+    fieldValuesModel.getObject();
+    
     this.listView = new ListView<FieldValueModel>("fieldValues", fieldValuesModel) {
       public void populateItem(final ListItem<FieldValueModel> item) {
         final FieldValueModel fieldValueModel = item.getModelObject();

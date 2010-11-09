@@ -15,8 +15,13 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FieldInstancesPanel extends Panel {
+
+  protected static Logger log = LoggerFactory.getLogger(FieldInstancesPanel.class);
+
   protected boolean readonly;
   private ListView<FieldInstanceModel> listView;
   
@@ -30,7 +35,13 @@ public class FieldInstancesPanel extends Panel {
       public void populateItem(final ListItem<FieldInstanceModel> item) {
         FieldInstanceModel fieldInstanceModel = item.getModelObject();
         item.setRenderBodyOnly(true);
-        Component component = createFieldInstanceComponent(fieldInstanceModel, fieldsViewModel, traversable);
+        Component component;
+        try {
+          component = createFieldInstanceComponent("field", fieldInstanceModel, fieldsViewModel, traversable);
+        } catch (Exception e) {
+          log.error("Error occurred while creating field instance component", e);
+          component = new FieldInstanceErrorPanel("field", fieldInstanceModel, e);
+        }
         component.setRenderBodyOnly(true);
         item.add(component);
       }
@@ -43,7 +54,7 @@ public class FieldInstancesPanel extends Panel {
     return listView;
   }
   
-  protected Component createFieldInstanceComponent(FieldInstanceModel fieldInstanceModel, FieldsViewModel fieldsViewModel, boolean _traversable) {
+  protected Component createFieldInstanceComponent(String id, FieldInstanceModel fieldInstanceModel, FieldsViewModel fieldsViewModel, boolean _traversable) {
     FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
     FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
     FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
@@ -67,38 +78,38 @@ public class FieldInstancesPanel extends Panel {
       int arity = roleField.getAssociationField().getArity();
       // unary
       if (arity == 1) {
-        return new FieldInstanceAssociationUnaryPanel("field", fieldInstanceModel, rofield).setOutputMarkupId(true);        
+        return new FieldInstanceAssociationUnaryPanel(id, fieldInstanceModel, rofield).setOutputMarkupId(true);        
       }
       // binary
       else if (arity == 2) {
         final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
 
         if (embedded)
-          return new FieldInstanceAssociationBinaryEmbeddedPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable).setOutputMarkupId(true);
+          return new FieldInstanceAssociationBinaryEmbeddedPanel(id, fieldInstanceModel, fieldsViewModel, rofield, traversable).setOutputMarkupId(true);
         else
-          return new FieldInstanceAssociationBinaryPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable).setOutputMarkupId(true);
+          return new FieldInstanceAssociationBinaryPanel(id, fieldInstanceModel, fieldsViewModel, rofield, traversable).setOutputMarkupId(true);
       } 
       // n-ary
       else {
         final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
-        return new FieldInstanceAssociationNaryPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable, arity).setOutputMarkupId(true);        
+        return new FieldInstanceAssociationNaryPanel(id, fieldInstanceModel, fieldsViewModel, rofield, traversable, arity).setOutputMarkupId(true);        
       }
     }
     case FieldDefinition.FIELD_TYPE_IDENTITY: {
-      return new FieldInstanceIdentityPanel("field", fieldInstanceModel, rofield);
+      return new FieldInstanceIdentityPanel(id, fieldInstanceModel, rofield);
     }
     case FieldDefinition.FIELD_TYPE_NAME: {
-      return new FieldInstanceNamePanel("field", fieldInstanceModel, rofield);
+      return new FieldInstanceNamePanel(id, fieldInstanceModel, rofield);
     }
     case FieldDefinition.FIELD_TYPE_OCCURRENCE: {
-      return new FieldInstanceOccurrencePanel("field", fieldInstanceModel, rofield);
+      return new FieldInstanceOccurrencePanel(id, fieldInstanceModel, rofield);
     }
     case FieldDefinition.FIELD_TYPE_QUERY: {
       final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
       if (embedded)
-        return new FieldInstanceQueryEmbeddedPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable);
+        return new FieldInstanceQueryEmbeddedPanel(id, fieldInstanceModel, fieldsViewModel, rofield, traversable);
       else
-        return new FieldInstanceQueryPanel("field", fieldInstanceModel, fieldsViewModel, rofield, traversable);
+        return new FieldInstanceQueryPanel(id, fieldInstanceModel, fieldsViewModel, rofield, traversable);
     }
     default:
       throw new OntopiaRuntimeException("Unknown field definition: " + fieldDefinition.getFieldType());
