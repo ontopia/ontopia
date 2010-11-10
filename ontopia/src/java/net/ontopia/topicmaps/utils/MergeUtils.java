@@ -1,6 +1,4 @@
 
-// $Id: MergeUtils.java,v 1.89 2009/02/27 11:59:09 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.ArrayList;
@@ -60,7 +58,6 @@ public class MergeUtils {
     return false;
   }
 
-
   /**
    * PUBLIC: Merges the characteristics of one topic into another
    * topic.  The source topic stripped of characteristics, all of
@@ -76,7 +73,6 @@ public class MergeUtils {
    * do they cannot represent the same subject. If this exception is
    * thrown both topics remain untouched.
    */
-
   public static void mergeInto(TopicIF target, TopicIF source)
     throws ConstraintViolationException {
 
@@ -406,6 +402,84 @@ public class MergeUtils {
     else
       throw new UnsupportedOperationException("Cannot merge objects of this type: "
                                               + target);
+  }
+
+  /**
+   * PUBLIC: Merges the source object into a target topic in another
+   * topic map. Makes no attempt to verify that the source topic
+   * represents the same subject as the target topic.
+   * @since %NEXT%
+   */
+  public static ReifiableIF mergeInto(TopicIF target, ReifiableIF source) {
+    if (source instanceof TopicNameIF)
+      return mergeInto(target, (TopicNameIF) source);
+    else if (source instanceof OccurrenceIF)
+      return mergeInto(target, (OccurrenceIF) source);
+    else if (source instanceof AssociationIF)
+      return mergeInto(target.getTopicMap(), (AssociationIF) source);
+    else
+      throw new UnsupportedOperationException("Cannot merge objects of this type: "
+                                              + source);
+  }
+
+  /**
+   * PUBLIC: Merges the source topic name into the target topic in
+   * another topic map. Makes no attempt to verify that the source
+   * topic represents the same subject as the target topic.
+   * @return The new topic name in the target topic map.
+   * @since %NEXT%
+   */
+  public static TopicNameIF mergeInto(TopicIF target, TopicNameIF source) {
+    TopicMapIF tm = target.getTopicMap();
+    TopicMapBuilderIF builder = tm.getBuilder();
+    TopicIF type = findTopic(tm, source.getType());
+    TopicNameIF newtn = builder.makeTopicName(target, type, source.getValue());
+    for (TopicIF theme : source.getScope())
+      newtn.addTheme(findTopic(tm, theme));
+    return newtn;
+  }
+
+  /**
+   * PUBLIC: Merges the source occurrence into the target topic in
+   * another topic map. Makes no attempt to verify that the source
+   * topic represents the same subject as the target topic.
+   * @return The new occurrence in the target topic map.
+   * @since %NEXT%
+   */
+  public static OccurrenceIF mergeInto(TopicIF target, OccurrenceIF source) {
+    TopicMapIF tm = target.getTopicMap();
+    TopicMapBuilderIF builder = tm.getBuilder();
+    TopicIF type = findTopic(tm, source.getType());
+    OccurrenceIF newocc = builder.makeOccurrence(target, type,
+                                                 source.getValue(),
+                                                 source.getDataType());
+    for (TopicIF theme : source.getScope())
+      newocc.addTheme(findTopic(tm, theme));
+    return newocc;
+  }
+
+  /**
+   * PUBLIC: Merges the source association into the target topic
+   * map. Makes no attempt to verify that the source association is
+   * not already present.
+   * @return The new association in the target topic map.
+   * @since %NEXT%
+   */
+  public static AssociationIF mergeInto(TopicMapIF topicmap,
+                                       AssociationIF source) {
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF type = findTopic(topicmap, source.getType());
+    AssociationIF newa = builder.makeAssociation(type);
+    for (TopicIF theme : source.getScope())
+      newa.addTheme(findTopic(topicmap, theme));
+
+    for (AssociationRoleIF role : source.getRoles()) {
+      type = findTopic(topicmap, role.getType());
+      TopicIF player = findTopic(topicmap, role.getPlayer());
+      builder.makeAssociationRole(newa, type, player);
+    }
+    
+    return newa;
   }
   
   /**
@@ -1046,6 +1120,37 @@ public class MergeUtils {
     }
   }
 
+  /**
+   * PUBLIC: Find a topic in the other topic map which would merge
+   * with the given topic if that were to be added to the same topic
+   * map. Even if there are more topics which would merge only one is
+   * returned.
+   * @param othertm The topic map to find the corresponding topic in.
+   * @param topic A topic in a topic map other than othertm to look up
+   *              in othertm.
+   * @return The corresponding topic.
+   * @since %NEXT%
+   */
+  public static TopicIF findTopic(TopicMapIF othertm, TopicIF topic) {
+    TopicIF other;
+    for (LocatorIF si : topic.getSubjectIdentifiers()) {
+      other = othertm.getTopicBySubjectIdentifier(si);
+      if (other != null)
+        return other;
+    }
+    for (LocatorIF sl : topic.getSubjectLocators()) {
+      other = othertm.getTopicBySubjectLocator(sl);
+      if (other != null)
+        return other;
+    }
+    for (LocatorIF ii : topic.getItemIdentifiers()) {
+      other = (TopicIF) othertm.getObjectByItemIdentifier(ii);
+      if (other != null)
+        return other;
+    }
+    return null;
+  }
+  
   // --- equals methods
 
   // assumes obj1 and obj2 belong to same TM

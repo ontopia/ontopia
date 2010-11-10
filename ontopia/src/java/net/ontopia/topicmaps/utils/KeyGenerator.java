@@ -26,7 +26,18 @@ public class KeyGenerator {
   public static String makeOccurrenceKey(OccurrenceIF occ) {
     return makeScopeKey(occ) + "$" + makeTypedKey(occ) + makeDataKey(occ);
   }
-    
+
+  /**
+   * PUBLIC: Makes a key for an occurrence, as it would look in
+   * another topic map.   
+   *
+   * @since %NEXT%
+   * @return string containing key
+   */ 
+  public static String makeOccurrenceKey(OccurrenceIF occ, TopicMapIF othertm) {
+    return makeScopeKey(occ, othertm) + "$" + makeTypedKey(occ, othertm) +
+           makeDataKey(occ);
+  }
 
   /**
    * PUBLIC: Makes a key for a topic name. The key is made up of 
@@ -37,6 +48,18 @@ public class KeyGenerator {
   public static String makeTopicNameKey(TopicNameIF bn) {
     return makeScopeKey(bn) + "$" + makeTypedKey(bn) + "$$" + bn.getValue();
   }
+
+  /**
+   * PUBLIC: Makes a key for a topic name, as it would look in another
+   * topic map.
+   *
+   * @since %NEXT%
+   * @return string containing key
+   */ 
+  public static String makeTopicNameKey(TopicNameIF bn, TopicMapIF othertm) {
+    return makeScopeKey(bn, othertm) + "$" + makeTypedKey(bn, othertm) + "$$" +
+           bn.getValue();
+  }
   
   /**
    * PUBLIC: Makes a key for a variant name. The key is made up of 
@@ -46,7 +69,7 @@ public class KeyGenerator {
    * @return string containing key
    */ 
   public static String makeVariantKey(VariantNameIF vn) {
-		return makeScopeKey(vn) + makeDataKey(vn);
+    return makeScopeKey(vn) + makeDataKey(vn);
   }
     
   /**
@@ -73,7 +96,7 @@ public class KeyGenerator {
     sb.append(StringUtils.join(rolekeys, "$"));
     return sb.toString();
   }
-    
+
   /**
    * PUBLIC: Makes a key for an association, but does not include
    * the player of the given role. The key is made up from the type
@@ -109,7 +132,33 @@ public class KeyGenerator {
     sb.append(StringUtils.join(rolekeys, "$"));
     return sb.toString();
   }
-  
+
+  /**
+   * PUBLIC: Makes a key for an association, as it would look in another
+   * topic map.
+   * @since %NEXT%
+   */
+  public static String makeAssociationKey(AssociationIF assoc,
+                                          TopicMapIF othertm) {
+    StringBuffer sb = new StringBuffer();
+
+    // asssociation type key fragment
+    sb.append(makeTypedKey(assoc, othertm));
+    sb.append("$");
+    sb.append(makeScopeKey(assoc, othertm));
+    sb.append("$");
+    
+    Collection<AssociationRoleIF> roles = new ArrayList(assoc.getRoles());
+    String[] rolekeys = new String[roles.size()];
+    int i = 0;
+    for (AssociationRoleIF role : roles)
+      rolekeys[i++] = makeAssociationRoleKey(role, othertm);
+    
+    Arrays.sort(rolekeys);
+    sb.append(StringUtils.join(rolekeys, "$"));
+    return sb.toString();
+  }
+    
   /**
    * PUBLIC: Makes a key for an association role. The key is made up
    * of the role and the player.
@@ -118,10 +167,20 @@ public class KeyGenerator {
    * @return The key.
    */
   public static String makeAssociationRoleKey(AssociationRoleIF role) {
-    return makeTypedKey(role) + ":" +
-      (role.getPlayer() != null ? role.getPlayer().getObjectId() : "");
+    return makeTypedKey(role) + ":" + role.getPlayer().getObjectId();
   }
 
+  /**
+   * PUBLIC: Makes a key for an association role, as it would look in
+   * another topic map.
+   * @since %NEXT%
+   */
+  public static String makeAssociationRoleKey(AssociationRoleIF role,
+                                              TopicMapIF othertm) {
+    TopicIF otherplayer = MergeUtils.findTopic(othertm, role.getPlayer());
+    return makeTypedKey(role, othertm) + ":" + otherplayer.getObjectId();
+  }
+  
   /**
    * PUBLIC: Makes a key for any reifiable object, using the other
    * methods in this class.
@@ -142,32 +201,62 @@ public class KeyGenerator {
       throw new OntopiaRuntimeException("Cannot make key for: " + object);
   }
 
+  /**
+   * PUBLIC: Makes a key for any reifiable object as it would look
+   * like were the object in another topic map. Useful for checking if
+   * a given object exists in another topic map.
+   *
+   * @param object The object to make a key for.
+   * @param topicmap The topic map in which to interpret the key.
+   *
+   * @since %NEXT%
+   */
+  public static String makeKey(ReifiableIF object, TopicMapIF topicmap) {
+    if (object instanceof TopicNameIF)
+      return makeTopicNameKey((TopicNameIF) object, topicmap);
+    else if (object instanceof OccurrenceIF)
+      return makeOccurrenceKey((OccurrenceIF) object, topicmap);
+    else if (object instanceof AssociationIF)
+      return makeAssociationKey((AssociationIF) object, topicmap);
+    else if (object instanceof AssociationRoleIF)
+      return makeAssociationRoleKey((AssociationRoleIF) object, topicmap);
+    else
+      throw new OntopiaRuntimeException("Cannot make key for: " + object);
+  }
+  
   // --- Helper methods
 
-  protected static String makeTypedKey(TypedIF typed) {
-    if (typed.getType() == null)
-      return "";
-    else
-      return typed.getType().getObjectId();
-  }
-
+  // used by TopicMapSynchronizer
   protected static String makeTopicKey(TopicIF topic) {
     if (topic == null)
       return "";
     else
       return topic.getObjectId();
   }  
+  
+  protected static String makeTypedKey(TypedIF typed) {
+    return typed.getType().getObjectId();
+  }
+
+  protected static String makeTypedKey(TypedIF typed, TopicMapIF othertm) {
+    TopicIF othertype = MergeUtils.findTopic(othertm, typed.getType());
+    return othertype.getObjectId();
+  }
     
   protected static String makeScopeKey(ScopedIF scoped) {
     return makeScopeKey(scoped.getScope());
   }
 
-  protected static String makeScopeKey(Collection scope) {
-    Iterator it = scope.iterator();
+  protected static String makeScopeKey(ScopedIF scoped, TopicMapIF othertm) {
+    return makeScopeKey(scoped.getScope(), othertm);
+  }
+  
+  protected static String makeScopeKey(Collection<TopicIF> scope) {
+    Iterator<TopicIF> it = scope.iterator();
     String[] ids = new String[scope.size()];
     int ix = 0;
     while (it.hasNext()) {
-      TopicIF theme = (TopicIF) it.next();
+      TopicIF theme = it.next();
       ids[ix++] = theme.getObjectId();
     }
 
@@ -175,12 +264,29 @@ public class KeyGenerator {
     return StringUtils.join(ids, " ");
   }
 
+  protected static String makeScopeKey(Collection<TopicIF> scope,
+                                       TopicMapIF othertm) {
+    Iterator<TopicIF> it = scope.iterator();
+    String[] ids = new String[scope.size()];
+    int ix = 0;
+    while (it.hasNext()) {
+      TopicIF theme = it.next();
+      TopicIF othertheme = MergeUtils.findTopic(othertm, theme);
+      if (othertheme == null)
+        throw new OntopiaRuntimeException("No topic corresponding to: " +
+                                          theme);
+      ids[ix++] = othertheme.getObjectId();
+    }
+
+    Arrays.sort(ids);
+    return StringUtils.join(ids, " ");
+  }
+  
   protected static String makeDataKey(OccurrenceIF occ) {
     return "$$" + occ.getValue() + "$" + occ.getDataType();
   }
 
   protected static String makeDataKey(VariantNameIF variant) {
-		return "$$" + variant.getValue() + "$" + variant.getDataType();
+    return "$$" + variant.getValue() + "$" + variant.getDataType();
   }
-  
 }
