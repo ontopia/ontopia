@@ -128,7 +128,7 @@ public class AssociationType extends AbstractTypingTopic {
 
 	  List<RoleType> tuple = new ArrayList<RoleType>();
 	  while (iter.hasNext()) {
-	    AssociationIF assoc = (AssociationIF)iter.next();
+	    AssociationIF assoc = iter.next();
 	    Iterator<AssociationRoleIF> riter = assoc.getRoles().iterator();
 	    while (riter.hasNext()) {
 	      AssociationRoleIF role = riter.next();
@@ -138,7 +138,6 @@ public class AssociationType extends AbstractTypingTopic {
         public int compare(RoleType o1, RoleType o2) {
           return ObjectIdComparator.INSTANCE.compare(o1.getTopicIF(), o2.getTopicIF());
         }
-	      
 	    });
 	    if (result.contains(tuple)) {
 	      tuple.clear();
@@ -168,7 +167,7 @@ public class AssociationType extends AbstractTypingTopic {
     
     // for each association
     while (iter.hasNext()) {
-      AssociationIF assoc = (AssociationIF)iter.next();
+      AssociationIF assoc = iter.next();
       Collection<AssociationRoleIF> roles = assoc.getRoles();
       if (roles.size() != roleTypesFrom.size()) continue;
       boolean match = true;
@@ -181,7 +180,7 @@ public class AssociationType extends AbstractTypingTopic {
         TopicIF roleType = role.getType();
         for (int i=0; i < size; i++) {          
           if (roleMatches[i] == null) {
-            RoleType fromType = (RoleType)roleTypesFrom.get(i);
+            RoleType fromType = roleTypesFrom.get(i);
             if (fromType.getTopicIF().equals(roleType)) {
               matchIndex = i;
               roleMatches[i] = role;
@@ -196,8 +195,8 @@ public class AssociationType extends AbstractTypingTopic {
       if (match) {
         for (int i=0; i < size; i++) {
           AssociationRoleIF role = (AssociationRoleIF)roleMatches[i];
-          RoleType fromType = (RoleType)roleTypesFrom.get(i);
-          RoleType toType = (RoleType)roleTypesTo.get(i);
+          RoleType fromType = roleTypesFrom.get(i);
+          RoleType toType = roleTypesTo.get(i);
           if (role.getType().equals(fromType.getTopicIF())) {
             if (!role.getType().equals(toType.getTopicIF())) role.setType(toType.getTopicIF());
           }

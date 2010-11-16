@@ -226,7 +226,7 @@ public class RoleField extends FieldDefinition {
     Collection<Topic> result = new HashSet<Topic>();
     String query = getAllowedPlayersQuery();
     if (query != null) {
-      Map<String,TopicIF> params = new HashMap<String,TopicIF>();
+      Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
       params.put("field", getTopicIF());
       params.put("topic", currentTopic.getTopicIF());
 

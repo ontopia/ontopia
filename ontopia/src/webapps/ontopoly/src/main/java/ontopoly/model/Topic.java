@@ -13,6 +13,8 @@ import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.CopyUtils;
 import net.ontopia.topicmaps.utils.TypeHierarchyUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -297,6 +299,39 @@ public class Topic {
     }
 
     return fieldInstances;
+  }
+
+  public List<FieldsView> getFieldViews(TopicType topicType, FieldsView fieldsView) {
+    // TODO: make it possible to override this query
+    String query = 
+      "subclasses-of($SUP, $SUB) :- { " +
+      "  xtm:superclass-subclass($SUP : xtm:superclass, $SUB : xtm:subclass) | " +
+      "  xtm:superclass-subclass($SUP : xtm:superclass, $MID : xtm:subclass), subclasses-of($MID, $SUB) " +
+      "}. " +
+      "select $FIELDSVIEW from " +
+      "{ $TT = %tt% | subclasses-of($TT, %tt%) }, " +
+      "on:has-field($TT : on:field-owner, $FD : on:field-definition), " +
+      "{ on:field-in-view($FD : on:field-definition, $FV : on:fields-view)" +
+      ", not(on:is-hidden-view($FV : on:fields-view))" +
+      ", not(on:is-embedded-view($FV : on:fields-view))" +
+      " || $FV = on:default-fields-view}, coalesce($FIELDSVIEW, $FV, on:default-fields-view) order by $FIELDSVIEW?";
+                                                        
+    Map<String,TopicIF> params = new HashMap<String,TopicIF>(3);
+    params.put("topic", getTopicIF());
+    params.put("tt", topicType.getTopicIF());
+    params.put("view", fieldsView.getTopicIF());
+    
+    QueryMapper<FieldsView> qm = getTopicMap().newQueryMapperNoWrap();
+    return qm.queryForList(query,
+        new RowMapperIF<FieldsView>() {
+          public FieldsView mapRow(QueryResultIF result, int rowno) {
+            TopicIF viewTopic = (TopicIF)result.getValue(0);
+            if (viewTopic == null)
+              return FieldsView.getDefaultFieldsView(getTopicMap());
+            else
+              return new FieldsView(viewTopic, getTopicMap());
+          }
+        }, params);
   }
 
   /**

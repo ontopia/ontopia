@@ -25,9 +25,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
-import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.xml.XTMTopicMapReference;
@@ -238,10 +236,7 @@ public class TopicMap {
    * Returns a list of the topic types that is not a system topic type.
    */
   public List<TopicType> getTopicTypes() {
-    String query = "select $type from "
-      + "instance-of($type, on:topic-type)"
-      //! + ", not (instance-of($type, on:ontology-type)), $type /= on:ontology-type"
-      + " order by $type?";
+    String query = "select $type from instance-of($type, on:topic-type) order by $type?";
 
     QueryMapper<TopicType> qm = newQueryMapper(TopicType.class);    
     return qm.queryForList(query);
@@ -257,15 +252,14 @@ public class TopicMap {
     return qm.queryForList(query);
   }
 
-  public List<OccurrenceType> getOccurrenceTypes() {
-    String query = "select $type from "
-      + "instance-of($type, on:occurrence-type)"
-      //! + ", not (instance-of($type, on:system-topic))"
-      + " order by $type?";
-
-    QueryMapper<OccurrenceType> qm = newQueryMapper(OccurrenceType.class);
-    return qm.queryForList(query);
-  }
+//  public List<OccurrenceType> getOccurrenceTypes() {
+//    String query = "select $type from "
+//      + "instance-of($type, on:occurrence-type)"
+//      + " order by $type?";
+//
+//    QueryMapper<OccurrenceType> qm = newQueryMapper(OccurrenceType.class);
+//    return qm.queryForList(query);
+//  }
 
   public List<OccurrenceField> getOccurrenceFields() {
     String query = "select $field from direct-instance-of($field, on:occurrence-field) order by $field?";
@@ -274,29 +268,28 @@ public class TopicMap {
     return qm.queryForList(query);
   }
 
-  public List<AssociationType> getAssociationTypes() {
-    String query = "select $type from "
-      + "instance-of($type, on:association-type)"
-      //! + ", not(instance-of($type, on:system-topic))" 
-      + " order by $type?";
+//  public List<AssociationType> getAssociationTypes() {
+//    String query = "select $type from "
+//      + "instance-of($type, on:association-type)"
+//      + " order by $type?";
+//
+//    QueryMapper<AssociationType> qm = newQueryMapper(AssociationType.class);
+//    return qm.queryForList(query);
+//  }
 
-    QueryMapper<AssociationType> qm = newQueryMapper(AssociationType.class);
-    return qm.queryForList(query);
-  }
-
-  public List<RoleType> getRoleTypes(boolean includeSystemTopics) {
-    String query = "";
-    if (includeSystemTopics)
-      query = "select $type from direct-instance-of($type, on:role-type) order by $type?";
-    else
-      query = "select $type from "
-        + "direct-instance-of($type, on:role-type)"
-        + ", not(instance-of($type, on:system-topic))"
-        + " order by $type?";
-
-    QueryMapper<RoleType> qm = newQueryMapper(RoleType.class);
-    return qm.queryForList(query);
-  }
+//  public List<RoleType> getRoleTypes(boolean includeSystemTopics) {
+//    String query = "";
+//    if (includeSystemTopics)
+//      query = "select $type from direct-instance-of($type, on:role-type) order by $type?";
+//    else
+//      query = "select $type from "
+//        + "direct-instance-of($type, on:role-type)"
+//        + ", not(instance-of($type, on:system-topic))"
+//        + " order by $type?";
+//
+//    QueryMapper<RoleType> qm = newQueryMapper(RoleType.class);
+//    return qm.queryForList(query);
+//  }
 
   public List<RoleField> getRoleFields() {
     String query = "select $field from direct-instance-of($field, on:role-field) order by $field?";
@@ -305,12 +298,12 @@ public class TopicMap {
     return qm.queryForList(query);
   }
 
-  public List<NameType> getNameTypes() {
-    String query = "select $type from direct-instance-of($type, on:name-type) order by $type?";
-
-    QueryMapper<NameType> qm = newQueryMapper(NameType.class);
-    return qm.queryForList(query);
-  }
+//  public List<NameType> getNameTypes() {
+//    String query = "select $type from direct-instance-of($type, on:name-type) order by $type?";
+//
+//    QueryMapper<NameType> qm = newQueryMapper(NameType.class);
+//    return qm.queryForList(query);
+//  }
 
   public List<NameField> getNameFields() {
     String query = "select $field from direct-instance-of($field, on:name-field) order by $field?";
@@ -319,12 +312,12 @@ public class TopicMap {
     return qm.queryForList(query);
   }
 
-  public List<IdentityType> getIdentityTypes() {
-    String query = "select $type from instance-of($type, on:identity-type) order by $type?";
-
-    QueryMapper<IdentityType> qm = newQueryMapper(IdentityType.class);
-    return qm.queryForList(query);
-  }
+//  public List<IdentityType> getIdentityTypes() {
+//    String query = "select $type from instance-of($type, on:identity-type) order by $type?";
+//
+//    QueryMapper<IdentityType> qm = newQueryMapper(IdentityType.class);
+//    return qm.queryForList(query);
+//  }
 
   public List<IdentityField> getIdentityFields() {
     String query = "select $field from instance-of($field, on:identity-field) order by $field?";
@@ -382,17 +375,17 @@ public class TopicMap {
     return (NameField)CollectionUtils.getFirstElement(nameFields);
   }
   
-  public IdentityField getIdentityField(IdentityType identityType) {
-    String query = "select $FD from on:has-identity-type(%type% : on:identity-type, $FD : on:identity-field) limit 1?";
-    Map<String,TopicIF> params = Collections.singletonMap("type", identityType.getTopicIF());
-
-    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
-    TopicIF fieldTopic = qm.queryForObject(query, params);
-    if (fieldTopic == null) 
-      throw new OntopolyModelRuntimeException("Could not find identity field for " + identityType);
-
-    return new IdentityField(fieldTopic, this, identityType);
-  }
+//  public IdentityField getIdentityField(IdentityType identityType) {
+//    String query = "select $FD from on:has-identity-type(%type% : on:identity-type, $FD : on:identity-field) limit 1?";
+//    Map<String,TopicIF> params = Collections.singletonMap("type", identityType.getTopicIF());
+//
+//    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
+//    TopicIF fieldTopic = qm.queryForObject(query, params);
+//    if (fieldTopic == null) 
+//      throw new OntopolyModelRuntimeException("Could not find identity field for " + identityType);
+//
+//    return new IdentityField(fieldTopic, this, identityType);
+//  }
 
   public NameType createNameType(String name) {
     TopicMap tm = this;
@@ -414,22 +407,20 @@ public class TopicMap {
         nameTypeTopic, NAME_TYPE,
         nameFieldTopic, NAME_FIELD);
 
-    // TODO: add default cardinality
-
     return nameType;
   }
 
-  public NameField getNameField(NameType nameType) {
-    String query = "select $FD from on:has-name-type(%type% : on:name-type, $FD : on:name-field) limit 1?";
-    Map<String,TopicIF> params = Collections.singletonMap("type", nameType.getTopicIF());
-
-    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
-    TopicIF fieldTopic = qm.queryForObject(query, params);
-    if (fieldTopic == null) 
-      throw new OntopolyModelRuntimeException("Could not find name field for " + nameType);
-
-    return new NameField(fieldTopic, this, nameType);
-  }
+//  public NameField getNameField(NameType nameType) {
+//    String query = "select $FD from on:has-name-type(%type% : on:name-type, $FD : on:name-field) limit 1?";
+//    Map<String,TopicIF> params = Collections.singletonMap("type", nameType.getTopicIF());
+//
+//    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
+//    TopicIF fieldTopic = qm.queryForObject(query, params);
+//    if (fieldTopic == null) 
+//      throw new OntopolyModelRuntimeException("Could not find name field for " + nameType);
+//
+//    return new NameField(fieldTopic, this, nameType);
+//  }
 
   public OccurrenceType createOccurrenceType(String name) {
     TopicMap tm = this;
@@ -454,17 +445,17 @@ public class TopicMap {
     return occurrenceType;
   }
 
-  public OccurrenceField getOccurrenceField(OccurrenceType occurrenceType) {
-    String query = "select $FD from on:has-occurrence-type(%type% : on:occurrence-type, $FD : on:occurrence-field) limit 1?";
-    Map<String,TopicIF> params = Collections.singletonMap("type", occurrenceType.getTopicIF());
-
-    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
-    TopicIF fieldTopic = qm.queryForObject(query, params);
-    if (fieldTopic == null) 
-      throw new OntopolyModelRuntimeException("Could not find occurrence field for " + occurrenceType);
-
-    return new OccurrenceField(fieldTopic, this, occurrenceType);
-  }
+//  public OccurrenceField getOccurrenceField(OccurrenceType occurrenceType) {
+//    String query = "select $FD from on:has-occurrence-type(%type% : on:occurrence-type, $FD : on:occurrence-field) limit 1?";
+//    Map<String,TopicIF> params = Collections.singletonMap("type", occurrenceType.getTopicIF());
+//
+//    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
+//    TopicIF fieldTopic = qm.queryForObject(query, params);
+//    if (fieldTopic == null) 
+//      throw new OntopolyModelRuntimeException("Could not find occurrence field for " + occurrenceType);
+//
+//    return new OccurrenceField(fieldTopic, this, occurrenceType);
+//  }
 
   public AssociationType createAssociationType(String name) {
     TopicMap tm = this;
@@ -506,55 +497,53 @@ public class TopicMap {
                                              roleFieldTopic2, ROLE_FIELD,
                                              associationFieldTopic, ASSOCIATION_FIELD);
 
-    // TODO: add default cardinality
-
     return associationType;
   }
 
-  public AssociationField getAssociationField(AssociationType atype) {
-
-    String query = "select $AF from "
-      + "on:has-association-type(%atype% : on:association-type, $AF : on:association-field) limit 1?";
-    Map<String,TopicIF> params = Collections.singletonMap("atype", atype.getTopicIF());
-
-    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
-    TopicIF fieldTopic = qm.queryForObject(query, params);
-    if (fieldTopic == null) 
-      throw new OntopolyModelRuntimeException("Could not find association field for " + atype);
-    
-    return new AssociationField(fieldTopic, this, atype);
-  }
+//  public AssociationField getAssociationField(AssociationType atype) {
+//
+//    String query = "select $AF from "
+//      + "on:has-association-type(%atype% : on:association-type, $AF : on:association-field) limit 1?";
+//    Map<String,TopicIF> params = Collections.singletonMap("atype", atype.getTopicIF());
+//
+//    QueryMapper<TopicIF> qm = newQueryMapperNoWrap();
+//    TopicIF fieldTopic = qm.queryForObject(query, params);
+//    if (fieldTopic == null) 
+//      throw new OntopolyModelRuntimeException("Could not find association field for " + atype);
+//    
+//    return new AssociationField(fieldTopic, this, atype);
+//  }
 
   public RoleType createRoleType(String name) {
     TopicIF type = OntopolyModelUtils.getTopicIF(this, PSI.ON, "role-type");
     return new RoleType(createNamedTopic(name, type), this);
   }
 
-  public RoleField getRoleField(final AssociationType atype, final RoleType rtype) {
-
-    String query = "select $AF, $RF from "
-      + "on:has-association-type(%atype% : on:association-type, $AF : on:association-field), " 
-      + "on:has-association-field($AF : on:association-field, $RF : on:role-field), " 
-      + "on:has-role-type($RF : on:role-field, %rtype% : on:role-type) limit 1?";
-    Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
-    params.put("atype", atype.getTopicIF());
-    params.put("rtype", rtype.getTopicIF());
-    
-    QueryMapper<RoleField> qm = newQueryMapperNoWrap();
-    RoleField roleField = qm.queryForObject(query,
-        new RowMapperIF<RoleField>() {
-          public RoleField mapRow(QueryResultIF result, int rowno) {
-            TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
-            TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
-            return new RoleField(roleFieldTopic, TopicMap.this, rtype, new AssociationField(associationFieldTopic, TopicMap.this, atype));
-          }
-        }, params);
-
-    if (roleField == null) 
-      throw new OntopolyModelRuntimeException("Could not find field for " + atype + " and " + rtype);
-
-    return roleField;
-  }
+//  public RoleField getRoleField(final AssociationType atype, final RoleType rtype) {
+//
+//    String query = "select $AF, $RF from "
+//      + "on:has-association-type(%atype% : on:association-type, $AF : on:association-field), " 
+//      + "on:has-association-field($AF : on:association-field, $RF : on:role-field), " 
+//      + "on:has-role-type($RF : on:role-field, %rtype% : on:role-type) limit 1?";
+//    Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
+//    params.put("atype", atype.getTopicIF());
+//    params.put("rtype", rtype.getTopicIF());
+//    
+//    QueryMapper<RoleField> qm = newQueryMapperNoWrap();
+//    RoleField roleField = qm.queryForObject(query,
+//        new RowMapperIF<RoleField>() {
+//          public RoleField mapRow(QueryResultIF result, int rowno) {
+//            TopicIF associationFieldTopic = (TopicIF)result.getValue(0);
+//            TopicIF roleFieldTopic = (TopicIF)result.getValue(1);
+//            return new RoleField(roleFieldTopic, TopicMap.this, rtype, new AssociationField(associationFieldTopic, TopicMap.this, atype));
+//          }
+//        }, params);
+//
+//    if (roleField == null) 
+//      throw new OntopolyModelRuntimeException("Could not find field for " + atype + " and " + rtype);
+//
+//    return roleField;
+//  }
 
   /**
    * Returns the topics that matches the given search term. Only topics of

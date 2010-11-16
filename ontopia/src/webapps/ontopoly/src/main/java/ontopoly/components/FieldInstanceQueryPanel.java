@@ -43,7 +43,6 @@ public class FieldInstanceQueryPanel extends AbstractFieldInstancePanel {
     FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
     FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition(); 
 
-    //! add(new Label("fieldLabel", new Model(fieldDefinition.getFieldName())));
     add(new FieldDefinitionLabel("fieldLabel", new FieldDefinitionModel(fieldDefinition)));
 
     // set up container

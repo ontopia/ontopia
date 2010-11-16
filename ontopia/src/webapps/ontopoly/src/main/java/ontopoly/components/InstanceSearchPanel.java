@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.ontopia.topicmaps.core.TopicIF;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
+import ontopoly.model.TopicType;
 import ontopoly.models.TopicTypeModel;
 import ontopoly.pages.InstancePage;
 import ontopoly.pages.InstancesPage;
@@ -100,9 +100,9 @@ public class InstanceSearchPanel extends Panel {
         item.add(new OntopolyBookmarkablePageLink("topic", InstancePage.class, new PageParameters(pageParametersMap), topic.getName()));
         
         // link to type
-        Iterator<TopicIF> it = topic.getTopicIF().getTypes().iterator();
+        Iterator<TopicType> it = topic.getTopicTypes().iterator();
         if (it.hasNext()) {
-          Topic tt = new Topic(it.next(), topicMap);
+          TopicType tt = it.next();
           if(!tt.isSystemTopic()) {
             pageParametersMap.put("topicId", tt.getId());            
             item.add(new OntopolyBookmarkablePageLink("topicType", InstancesPage.class, new PageParameters(pageParametersMap), tt.getName()));          

@@ -97,4 +97,5 @@ public class PSI {
 
   public static final LocatorIF ON_LONGITUDE = PSI.ON.resolveAbsolute("longitude");
   public static final LocatorIF ON_LATITUDE = PSI.ON.resolveAbsolute("latitude");
+  
 }

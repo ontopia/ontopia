@@ -214,15 +214,14 @@ public abstract class FieldsEditorExistingPanel extends Panel {
     }
   }
   
-  private static String getAllowedPlayerNames(RoleField af) {
+  private static String getAllowedPlayerNames(RoleField rf) {
     Set<String> topicTypeNames = new TreeSet<String>();
     
-    AssociationType at = af.getAssociationType();
-    AssociationField afield = at.getTopicMap().getAssociationField(at);
+    AssociationField afield = rf.getAssociationField();
     Iterator<RoleField> it = afield.getFieldsForRoles().iterator();
     while(it.hasNext()) {
       RoleField af2 = (RoleField) it.next();
-      if(!af.equals(af2)) { // one of the other association fields
+      if(!rf.equals(af2)) { // one of the other association fields
           Iterator<TopicType> it2 =  af2.getDeclaredPlayerTypes().iterator();         
           while(it2.hasNext()) {
             topicTypeNames.add(((TopicType)it2.next()).getName());

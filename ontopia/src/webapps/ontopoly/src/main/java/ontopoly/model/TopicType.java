@@ -407,35 +407,6 @@ public class TopicType extends AbstractTypingTopic {
     }
   }
 
-  public List<FieldsView> getFieldViews(boolean includeHiddenViews, boolean includeEmbeddedViews) {
-    String query = 
-      "subclasses-of($SUP, $SUB) :- { " +
-      "  xtm:superclass-subclass($SUP : xtm:superclass, $SUB : xtm:subclass) | " +
-      "  xtm:superclass-subclass($SUP : xtm:superclass, $MID : xtm:subclass), subclasses-of($MID, $SUB) " +
-      "}. " +
-      "select $FIELDSVIEW from " +
-      "{ $TT = %tt% | subclasses-of($TT, %tt%) }, " +
-      "on:has-field($TT : on:field-owner, $FD : on:field-definition), " +
-      "{ on:field-in-view($FD : on:field-definition, $FV : on:fields-view)" +
-      (includeHiddenViews ? "" : ", not(on:is-hidden-view($FV : on:fields-view))") +
-      (includeEmbeddedViews ? "" : ", not(on:is-embedded-view($FV : on:fields-view))") +
-      " || $FV = on:default-fields-view}, coalesce($FIELDSVIEW, $FV, on:default-fields-view) order by $FIELDSVIEW?";
-                                                        
-    Map<String,TopicIF> params = Collections.singletonMap("tt", getTopicIF());
-    
-    QueryMapper<FieldsView> qm = getTopicMap().newQueryMapperNoWrap();
-    return qm.queryForList(query,
-        new RowMapperIF<FieldsView>() {
-          public FieldsView mapRow(QueryResultIF result, int rowno) {
-            TopicIF viewTopic = (TopicIF)result.getValue(0);
-            if (viewTopic == null)
-              return FieldsView.getDefaultFieldsView(getTopicMap());
-            else
-              return new FieldsView(viewTopic, getTopicMap());
-          }
-        }, params);
-  }
-
   /**
    * Returns the FieldAssignments for this topic type. These are sorted by the
    * field order field on the field types. In addition, fields are inherited

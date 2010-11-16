@@ -27,9 +27,12 @@ public class ViewsFunctionBoxPanel extends Panel {
     super(id);
     add(new Label("title", new ResourceModel("views.list.header")));
 
+    Topic topic = topicModel.getTopic();
+    TopicMap tm = topic.getTopicMap();
     TopicType topicType = topicTypeModel.getTopicType();
+    FieldsView fieldsView = fieldsViewModel.getFieldsView();
     
-    Collection<FieldsView> views = topicType.getFieldViews(false, false);
+    Collection<FieldsView> views = topic.getFieldViews(topicType, fieldsView);
     if (views.isEmpty())
       setVisible(false);
     
@@ -45,14 +48,11 @@ public class ViewsFunctionBoxPanel extends Panel {
       WebMarkupContainer parent =  new WebMarkupContainer(rv.newChildId());
       rv.add(parent);
       
-      Topic topic = topicModel.getTopic();
-      TopicMap tm = topic.getTopicMap();
-      TopicType tt = topicTypeModel.getTopicType();
       
       Map<String,String> pageParametersMap = new HashMap<String,String>();
       pageParametersMap.put("topicMapId", tm.getId());
       pageParametersMap.put("topicId", topic.getId());
-      pageParametersMap.put("topicTypeId", tt.getId());
+      pageParametersMap.put("topicTypeId", topicType.getId());
       if (ObjectUtils.different(view, defaultView))
         pageParametersMap.put("viewId", view.getId());
       if (topic.isOntologyTopic())
