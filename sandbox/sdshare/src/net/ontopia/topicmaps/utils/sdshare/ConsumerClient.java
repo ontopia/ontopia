@@ -235,6 +235,12 @@ public class ConsumerClient {
       // we create it
       ltopic = topicmap.getBuilder().makeTopic();
 
+    // there might not be a fragment topic, which indicates that it's been
+    // deleted. in this case we make a blank dummy that will cause everything
+    // to be deleted, and the local topic to be deleted at the end.
+    if (ftopic == null)
+      ftopic = tmfragment.getBuilder().makeTopic();
+
     // (b) copy across all identifiers
     MergeUtils.copyIdentifiers(ltopic, ftopic);
 
@@ -244,11 +250,8 @@ public class ConsumerClient {
     // topic characteristics. (however, we can't merge in the current
     // topic, as the procedure for that one is a bit more complex.)
     for (TopicIF oftopic : tmfragment.getTopics())
-      if (oftopic != ftopic) {
-        System.out.println("merging in: " + oftopic);
-        System.out.println("  to: " + KeyGenerator.findTopic(topicmap, oftopic));
+      if (oftopic != ftopic)
         MergeUtils.mergeInto(topicmap, oftopic);
-      }
 
     // (d) sync the types
     // FIXME: how the hell do we do this?
@@ -262,6 +265,8 @@ public class ConsumerClient {
     syncCollection(ftopic, ltopic, keymap, ltopic.getOccurrences(), prefix);
     
     // (g) sync the associations
+    keymap = makeKeyMap(getAssociations(ftopic), topicmap);
+    syncCollection(ftopic, ltopic, keymap, getAssociations(ltopic), prefix);
 
     // (h) is the topic deleted
     if (ltopic.getTopicNames().isEmpty() &&
@@ -286,6 +291,7 @@ public class ConsumerClient {
                               Collection<? extends ReifiableIF> lobjects,
                               String prefix) {
     // check all local objects against the fragment
+    lobjects = new ArrayList<ReifiableIF>(lobjects); // avoid concmodexc
     for (ReifiableIF lobject : lobjects) {
       String key = KeyGenerator.makeKey(lobject);
       ReifiableIF fobject = keymap.get(key);
@@ -338,6 +344,13 @@ public class ConsumerClient {
                                  StringUtils.makeRandomId(5));
 
     object.addItemIdentifier(iid);
+  }
+
+  private Collection<ReifiableIF> getAssociations(TopicIF topic) {
+    Collection<ReifiableIF> assocs = new ArrayList<ReifiableIF>();
+    for (AssociationRoleIF role : topic.getRoles())
+      assocs.add(role.getAssociation());
+    return assocs;
   }
 
   // --- Abstract ContentHandler
@@ -467,8 +480,6 @@ public class ConsumerClient {
           feed.addFragment(new Fragment(fraguri, mimetype, sis, updated));      
         } else
           System.out.println("Found old fragment, updated: " + updated);
-
-        System.out.println("sis: " + sis);
 
         // reset tracking fields
         mimetype = null;
