@@ -1,6 +1,6 @@
 <%@ page 
   language="java" 
-  contentType="text/plain; charset=utf-8"
+  contentType="application/x-tm+xml; charset=utf-8"
   import="net.ontopia.topicmaps.utils.sdshare.*,
           net.ontopia.topicmaps.entry.*,
 	  net.ontopia.topicmaps.core.*,
