@@ -56,7 +56,10 @@ public class StartUpServlet extends HttpServlet {
     TopicMapRepositoryIF rep = TopicMaps.getRepository();
     for (String tmid : tmids) {
       TopicMapReferenceIF ref = rep.getReferenceByKey(tmid);
-      // FIXME: complain and skip if not there
+      if (ref == null) {
+        log.error("No topic map reference for ID: '" + tmid + "'");
+        continue;
+      }
       TopicMapTracker tracker = new TopicMapTracker(ref);
       TopicMapEvents.addTopicListener(ref, tracker);
       topicmaps.put(tmid, tracker);
@@ -71,6 +74,8 @@ public class StartUpServlet extends HttpServlet {
       tmids = "";
     }
     String[] ids = StringUtils.split(tmids, ",");
+    for (int ix = 0; ix < ids.length; ix++)
+      ids[ix] = ids[ix].trim();
     return Arrays.<String>asList(ids);
   }
 
