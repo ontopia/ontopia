@@ -29,9 +29,13 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.protocol.http.PageExpiredException;
 import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.protocol.http.WebRequestCycle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OntopolyRequestCycle extends WebRequestCycle {
-  
+
+  private static final Logger log = LoggerFactory.getLogger(OntopolyRequestCycle.class);
+
   private static ThreadLocal<Map<String,TopicMap>> topicmaps = new ThreadLocal<Map<String,TopicMap>>();
   
   public OntopolyRequestCycle(OntopolyApplication application, Request request, Response response) {
@@ -56,7 +60,7 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         try {
           store.commit();
         } catch (Exception ex) {
-          // FIXME: log exception
+          log.error("Problems occured while committing transaction", ex);
         } finally {
           store.close();
         }
@@ -88,7 +92,7 @@ public class OntopolyRequestCycle extends WebRequestCycle {
         try {
           store.abort();
         } catch (Exception ex) {
-          // FIXME: log exception
+          log.error("Problems occured while aborting transaction", ex);
         } finally {
           store.close();
         }
@@ -188,10 +192,10 @@ public class OntopolyRequestCycle extends WebRequestCycle {
     return tm;
   }
 
-  private TopicMapStoreIF createStore(String topicmapId, boolean readOnly, TopicMapRepositoryIF repository) {
-    TopicMapReferenceIF ref = repository.getReferenceByKey(topicmapId);
+  private TopicMapStoreIF createStore(String topicMapId, boolean readOnly, TopicMapRepositoryIF repository) {
+    TopicMapReferenceIF ref = repository.getReferenceByKey(topicMapId);
     if (ref == null)
-      throw new OntopiaRuntimeException("Topic map '" + topicmapId +
+      throw new OntopiaRuntimeException("Topic map '" + topicMapId +
                                         "' not found in ontopoly repository.");
     try {
       return ref.createStore(readOnly);

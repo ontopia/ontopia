@@ -9,6 +9,7 @@ import java.util.Map;
 
 import ontopoly.utils.OntopolyModelUtils;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.CollectionUtils;
@@ -178,6 +179,52 @@ public abstract class FieldDefinition extends Topic {
 
   public int hashCode() {
     return getTopicIF().hashCode();
+  }
+
+  private static int getFieldType(TopicIF fieldTopic) {
+    for (TopicIF topicType : fieldTopic.getTypes()) {
+      Collection<LocatorIF> psis = topicType.getSubjectIdentifiers();
+      if (psis.contains(PSI.ON_NAME_FIELD))
+        return FieldDefinition.FIELD_TYPE_NAME;
+      else if (psis.contains(PSI.ON_IDENTITY_FIELD))
+        return FieldDefinition.FIELD_TYPE_IDENTITY;
+      else if (psis.contains(PSI.ON_OCCURRENCE_FIELD))
+        return FieldDefinition.FIELD_TYPE_OCCURRENCE;
+      else if (psis.contains(PSI.ON_ROLE_FIELD))
+        return FieldDefinition.FIELD_TYPE_ROLE;
+      else if (psis.contains(PSI.ON_QUERY_FIELD))
+        return FieldDefinition.FIELD_TYPE_QUERY;
+    }
+    throw new RuntimeException("Not a field definition: " + fieldTopic);
+  }
+  
+  public static FieldDefinition getFieldDefinition(String fieldId, TopicMap tm) {
+    TopicIF fieldTopic = tm.getTopicIFById(fieldId);
+    int fieldType = getFieldType(fieldTopic);
+    return getFieldDefinition(fieldId, fieldType, tm);
+  }
+
+  public static FieldDefinition getFieldDefinition(String fieldId, int fieldType, TopicMap tm) {    
+    TopicIF fieldTopic = tm.getTopicIFById(fieldId);
+    return getFieldDefinition(fieldTopic, fieldType, tm);
+  }
+  
+  private static FieldDefinition getFieldDefinition(TopicIF fieldTopic, int fieldType, TopicMap tm) {    
+    
+    switch (fieldType) {
+    case FieldDefinition.FIELD_TYPE_ROLE:
+      return new RoleField(fieldTopic, tm);
+    case FieldDefinition.FIELD_TYPE_OCCURRENCE:
+      return new OccurrenceField(fieldTopic, tm);
+    case FieldDefinition.FIELD_TYPE_NAME:
+      return new NameField(fieldTopic, tm);
+    case FieldDefinition.FIELD_TYPE_IDENTITY:
+      return new IdentityField(fieldTopic, tm);
+    case FieldDefinition.FIELD_TYPE_QUERY:
+      return new QueryField(fieldTopic, tm);
+    default:
+      throw new RuntimeException("Unknown field type: " + fieldType);
+    }    
   }
 
 }

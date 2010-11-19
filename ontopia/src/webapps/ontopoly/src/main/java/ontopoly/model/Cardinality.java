@@ -28,36 +28,48 @@ public class Cardinality extends Topic {
     return (getTopicIF().equals(cardinality.getTopicIF()));
   }
 
+  public boolean isZeroOrOne() {
+    return getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_0_1);
+  }
+
+  public boolean isExactlyOne() {
+    return getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_1_1);
+  }
+
+  public boolean isZeroOrMore() {
+    return getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_0_M);
+  }
+
+  public boolean isOneOrMore() {
+    return getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_1_M);
+  }
+  
   /**
    * True if cardinality is 0..1 or 1..1.
    */
   public boolean isMaxOne() {
-    return (getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_0_1) || 
-            getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_1_1));
+    return isZeroOrOne() || isExactlyOne();
   }
-
-  /**
-   * True if cardinality is 0..* or 1..*.
-   */
-  public boolean isMaxInfinite() {
-    return (getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_0_M) || 
-            getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_1_M));
-  }
-
-  /**
-   * True if cardinality is 0..* or 0..1.
-   */
-  public boolean isMinZero() {
-    return (getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_0_M) || 
-            getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_0_1));
-  }
+//
+//  /**
+//   * True if cardinality is 0..* or 1..*.
+//   */
+//  public boolean isMaxInfinite() {
+//    return isZeroOrMore() || isOneOrMore();
+//  }
+//
+//  /**
+//   * True if cardinality is 0..* or 0..1.
+//   */
+//  public boolean isMinZero() {
+//    return isZeroOrMore() || isZeroOrOne();
+//  }
 
   /**
    * True if cardinality is 1..* or 1..1.
    */
   public boolean isMinOne() {
-    return (getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_1_M) || 
-            getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_1_1));
+    return isOneOrMore() || isExactlyOne();
   }
 
   /**

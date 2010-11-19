@@ -4,15 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.OntopolyContext;
 import ontopoly.model.FieldDefinition;
-import ontopoly.model.IdentityField;
-import ontopoly.model.NameField;
-import ontopoly.model.OccurrenceField;
-import ontopoly.model.QueryField;
-import ontopoly.model.RoleField;
 import ontopoly.model.TopicMap;
 
 import org.apache.wicket.model.LoadableDetachableModel;
@@ -42,27 +36,8 @@ public class FieldDefinitionModel extends LoadableDetachableModel<FieldDefinitio
   @Override
   protected FieldDefinition load() {
     TopicMap tm = OntopolyContext.getTopicMap(topicMapId);
- 
-    TopicIF fieldTopic = tm.getTopicIFById(fieldId);
       
-    return getFieldDefinition(fieldTopic, fieldType, tm);
-  }
-
-  static FieldDefinition getFieldDefinition(TopicIF fieldTopic, int fieldType, TopicMap tm) {
-    switch (fieldType) {
-    case FieldDefinition.FIELD_TYPE_ROLE:
-      return new RoleField(fieldTopic, tm);
-    case FieldDefinition.FIELD_TYPE_OCCURRENCE:
-      return new OccurrenceField(fieldTopic, tm);
-    case FieldDefinition.FIELD_TYPE_NAME:
-      return new NameField(fieldTopic, tm);
-    case FieldDefinition.FIELD_TYPE_IDENTITY:
-      return new IdentityField(fieldTopic, tm);
-    case FieldDefinition.FIELD_TYPE_QUERY:
-      return new QueryField(fieldTopic, tm);
-    default:
-      throw new RuntimeException("Unknown field type: " + fieldType);
-    }    
+    return FieldDefinition.getFieldDefinition(fieldId, fieldType, tm);
   }
 
   public static List<FieldDefinitionModel> wrapInFieldDefinitionModels(List<FieldDefinition> fieldDefinitions) {

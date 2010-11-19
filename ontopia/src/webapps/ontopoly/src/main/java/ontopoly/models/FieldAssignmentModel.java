@@ -57,10 +57,8 @@ public class FieldAssignmentModel extends LoadableDetachableModel<FieldAssignmen
 
     TopicIF declaredTopicTypeIf = tm.getTopicIFById(declaredTopicTypeId);
     TopicType declaredTopicType = new TopicType(declaredTopicTypeIf, tm);
-    
-    TopicIF fieldTopic = tm.getTopicIFById(fieldId);
       
-    FieldDefinition fieldDefinition = FieldDefinitionModel.getFieldDefinition(fieldTopic, fieldType, tm);
+    FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(fieldId, fieldType, tm);
     return new FieldAssignment(topicType, declaredTopicType, fieldDefinition);
   }
   
