@@ -12,6 +12,7 @@
   <!-- Patterns -->
   <patternset id="sources">
     <include name="src/net/ontopia/topicmaps/utils/sdshare/*.java" />
+    <include name="src/net/ontopia/topicmaps/utils/sdshare/test/*.java" />
   </patternset>
 
   <patternset id="classes">

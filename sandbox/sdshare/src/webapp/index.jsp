@@ -17,10 +17,10 @@
                     System.currentTimeMillis());
     atom.addLink("collection.jsp?topicmap=" + ref.getId(),
                  "application/atom+xml",
-                 "http://www.egovpt.org/sdshare/collectionfeed");
+		 "alternate");
     atom.addLink("collection.jsp?topicmap=" + ref.getId(),
                  "application/atom+xml",
-                 "alternate");
+                 "http://www.egovpt.org/sdshare/collectionfeed");
     atom.endEntry();
   }
 

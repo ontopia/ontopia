@@ -87,6 +87,10 @@ public class AtomWriter {
   public void addLink(String href) {
     addLink(href, null, null);
   }
+
+  public void addLink(String href, String type) {
+    addLink(href, type, null);
+  }
   
   public void addLink(String href, String type, String rel) {
     atts.clear();
