@@ -1,0 +1,12 @@
+<!--
+ This is an XML file because the configuration structure got too complicated
+ for a simple properties file.
+-->
+<config>  
+  <property name="check-interval">30</property> <!-- in seconds -->
+
+  <topicmap id="sdshare-test.xtm">
+    <source>http://localhost:8080/sdshare/collection.jsp?topicmap=beer.xtm</source>
+    <source>http://localhost:8080/sdshare/collection.jsp?topicmap=beerstyles.xtm</source>
+  </topicmap>
+</config>

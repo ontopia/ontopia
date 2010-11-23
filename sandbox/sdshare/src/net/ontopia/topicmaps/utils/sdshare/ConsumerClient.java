@@ -17,6 +17,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.xml.DefaultXMLReaderFactory;
@@ -41,6 +44,7 @@ public class ConsumerClient {
   private String feedurl;
   private static SimpleDateFormat format =
     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+  static Logger log = LoggerFactory.getLogger(ConsumerClient.class.getName());
   
   static {
     format.setTimeZone(TimeZone.getTimeZone("Z"));    
@@ -56,6 +60,15 @@ public class ConsumerClient {
   public ConsumerClient(TopicMapReferenceIF ref, String feedurl) {
     this.ref = ref;
     this.feedurl = feedurl;
+    this.checkInterval = 5000; // 5 seconds (FIXME: set properly)
+  }
+
+  public boolean isTimeToCheck() {
+    return System.currentTimeMillis() > lastCheck + checkInterval;
+  }
+
+  public String getFeedURL() {
+    return feedurl;
   }
   
   /**
@@ -89,8 +102,9 @@ public class ConsumerClient {
    */
   public void sync() throws IOException, SAXException {
     // (1) check the fragments feed
+    lastCheck = System.currentTimeMillis();
     FragmentFeed feed = getFragmentFeed();
-    System.out.println("FOUND " + feed.getFragments().size() + " fragments");
+    log.info("FOUND " + feed.getFragments().size() + " fragments");
     if (feed.getFragments().isEmpty())
       return; // nothing to do
 
@@ -102,7 +116,7 @@ public class ConsumerClient {
       
       // (3) loop over fragments, applying each
       for (Fragment frag : feed.getFragments()) {
-        System.out.println("Applying fragment " + frag);
+        log.info("Applying fragment " + frag);
         applyFragment(feed.getPrefix(), frag, store.getTopicMap());
       }
       
@@ -212,22 +226,25 @@ public class ConsumerClient {
                                  " had wrong number of TopicSIs: " +
                                  fragment.getTopicSIs().size());
 
-    System.out.println("TopicSI: " + fragment.getTopicSIs());
+    log.info("TopicSI: " + fragment.getTopicSIs());
     
     // (1) get the fragment
     // FIXME: for now we only support XTM
     XTMTopicMapReader reader = new XTMTopicMapReader(fragment.getFragmentURI());
     reader.setFollowTopicRefs(false);
     TopicMapIF tmfragment = reader.read();
-    System.out.println("Fragment size: " + tmfragment.getTopics().size());
+    log.info("Fragment size: " + tmfragment.getTopics().size());
     
     // (2) apply it
     LocatorIF si = fragment.getTopicSIs().iterator().next();
     TopicIF ftopic = tmfragment.getTopicBySubjectIdentifier(si);
-    TopicIF ltopic = topicmap.getTopicBySubjectIdentifier(si);
+    //TopicIF ltopic = topicmap.getTopicBySubjectIdentifier(si);
+    TopicIF ltopic = MergeUtils.findTopic(topicmap, ftopic);
 
-    System.out.println("ftopic: " + ftopic);
-    System.out.println("ltopic: " + ltopic);
+    log.info("ftopic: " + ftopic);
+    for (LocatorIF iid : ftopic.getItemIdentifiers())
+      log.info("ftopic.iid: " + iid);
+    log.info("ltopic: " + ltopic);
 
     // (a) check if we need to create the topic
     if (ltopic == null && ftopic != null)
@@ -472,14 +489,15 @@ public class ConsumerClient {
           throw new RuntimeException("Fragment entry had no TopicSIs");
         
         // check if this is a new fragment, or if we saw it before
-        if (updated >= lastChange) {
-          System.out.println("New fragment, updated: " + updated);
+        if (updated > lastChange) {
+          log.info("New fragment, updated: " + updated + ", last change: " +
+                   lastChange);
           
           // create new fragment
           LocatorIF fraguri = feedurl.resolveAbsolute(fraglink);
           feed.addFragment(new Fragment(fraguri, mimetype, sis, updated));      
         } else
-          System.out.println("Found old fragment, updated: " + updated);
+          log.info("Found old fragment, updated: " + updated);
 
         // reset tracking fields
         mimetype = null;
