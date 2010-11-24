@@ -1083,7 +1083,8 @@ public class QueryOptimizer {
         dynocc.getPredicate();
       
       // second predicate must be a comparison predicate
-      if (!(clauses.get(1) instanceof PredicateClause))
+      if (clauses.size() < 2 ||
+          !(clauses.get(1) instanceof PredicateClause))
         return;
       PredicateClause compar = (PredicateClause) clauses.get(1);
       PredicateIF comparpred = compar.getPredicate();

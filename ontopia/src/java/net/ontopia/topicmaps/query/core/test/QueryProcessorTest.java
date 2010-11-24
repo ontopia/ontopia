@@ -1721,4 +1721,18 @@ public class QueryProcessorTest extends AbstractQueryTest {
 
 		"bn1($B,$B)?");
   }
+
+  public void testPrevNextOptimizerNPE()
+    throws InvalidQueryException, IOException {
+    load("int-occs.ltm");
+
+    List matches = new ArrayList();
+    addMatch(matches, "TOPIC", getTopicById("topic1"),
+                      "DESC", "topic1");
+    
+    verifyQuery(matches,
+                "description($TOPIC, $DESC)" +
+                "order by $DESC asc limit 1?");
+  }  
+  
 }
