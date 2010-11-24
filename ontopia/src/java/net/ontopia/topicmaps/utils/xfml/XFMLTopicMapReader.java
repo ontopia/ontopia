@@ -70,7 +70,7 @@ public class XFMLTopicMapReader extends AbstractXMLFormatReader implements Topic
       if (!file.exists())
         throw new FileNotFoundException(file.toString());
       
-      this.base_address = new URILocator(file.toURL());
+      this.base_address = new URILocator(URIUtils.toURL(file));
       this.source = new InputSource(base_address.getExternalForm());
     }
     catch (java.net.MalformedURLException e) {

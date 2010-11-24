@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import org.xml.sax.*;
 import org.xml.sax.helpers.LocatorImpl;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.AbstractXMLFormatReader;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import net.ontopia.xml.ConfigurableEntityResolver;
@@ -39,8 +40,8 @@ public class OSLSchemaReader extends AbstractXMLFormatReader
    */
   public OSLSchemaReader(File file) {
     try {
-      source = new InputSource(file.toURL().toExternalForm());
-      base_address = new URILocator(file.toURL().toExternalForm());
+      source = new InputSource(URIUtils.toURL(file).toExternalForm());
+      base_address = new URILocator(URIUtils.toURL(file).toExternalForm());
     }
     catch (MalformedURLException e) {
       throw new OntopiaRuntimeException("INTERNAL ERROR: " + e);

@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
@@ -120,7 +121,7 @@ public abstract class AbstractOntopolyTopicMapSource
     File file = new File(path, id);
     URL url;
     try {
-      url = file.toURL();
+      url = URIUtils.toURL(file);
     } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
     }

@@ -15,6 +15,7 @@ import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.xml.SAXTracker;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.schema.core.*;
 import net.ontopia.topicmaps.schema.impl.osl.*;
@@ -48,7 +49,7 @@ public class SchemaTestGenerator implements TestCaseGeneratorIF {
       TestCaseContentHandler handler = new TestCaseContentHandler(base);
       parser.setContentHandler(handler);
       parser.setErrorHandler(new Slf4jSaxErrorHandler(log));
-      parser.parse(config.toURL().toString());
+      parser.parse(URIUtils.toURL(config).toString());
       return handler.getTests();
     } catch (SAXException e) {
       throw new OntopiaRuntimeException(e);

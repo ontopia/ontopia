@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 import net.ontopia.test.*;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,7 @@ public class TaglibFrameworkTestCaseGenerator implements TestCaseGeneratorIF {
     String source = base + testfilename;
     TestCaseContentHandler handler = new TestCaseContentHandler();
     handler.register(parser);
-    parser.parse(new File(source).toURL().toString());
+    parser.parse(URIUtils.toURL(new File(source)).toString());
     return handler.getTests();
   }
 

@@ -11,6 +11,7 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 
 public class ParsedQueryTest
   extends net.ontopia.topicmaps.query.core.test.ParsedQueryTest {
@@ -26,7 +27,7 @@ public class ParsedQueryTest
 
     RDBMSTopicMapStore store = new RDBMSTopicMapStore();
     topicmap = store.getTopicMap();    
-    base = new URILocator(file.toURL());
+    base = new URILocator(URIUtils.toURL(file));
     
     TopicMapImporterIF importer = ImportExportUtils.getImporter(file.toString());
     importer.importInto(topicmap);

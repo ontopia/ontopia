@@ -10,6 +10,7 @@ import java.io.InputStream;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorConfigurationContentHandler;
 
@@ -38,7 +39,7 @@ public class NavigatorConfigFactory {
   
   public static NavigatorConfigurationIF getConfiguration(File specfile)
     throws SAXException, IOException {
-    return getConfiguration(new InputSource(specfile.toURL().toExternalForm()));
+    return getConfiguration(new InputSource(URIUtils.toURL(specfile).toExternalForm()));
   }
   
   private static NavigatorConfigurationIF getConfiguration(InputSource src)

@@ -54,7 +54,7 @@ public class TranslateSourceLocators {
     TopicMapIF tm = store.getTopicMap();
 
     LocatorIF newbase = store.getBaseAddress();
-    String oldbase = newbase.resolveAbsolute(new File(tmfile).toURL().toString()).getAddress();
+    String oldbase = newbase.resolveAbsolute(URIUtils.toURL(new File(tmfile)).toString()).getAddress();
     int oldlen = oldbase.length();
     
     Iterator it = tm.getTopics().iterator();

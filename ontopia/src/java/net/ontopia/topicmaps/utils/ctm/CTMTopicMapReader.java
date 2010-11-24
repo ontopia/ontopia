@@ -23,6 +23,7 @@ import antlr.TokenStreamIOException;
 import org.xml.sax.InputSource;
 
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -84,7 +85,7 @@ public class CTMTopicMapReader extends AbstractTopicMapReader {
       if (!file.exists())
         throw new FileNotFoundException(file.toString());
       
-      this.base_address = new URILocator(file.toURL());
+      this.base_address = new URILocator(URIUtils.toURL(file));
       this.source = new InputSource(base_address.getExternalForm());
     }
     catch (java.net.MalformedURLException e) {

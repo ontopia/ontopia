@@ -15,6 +15,7 @@ import java.util.Set;
 import java.net.MalformedURLException;
 
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -79,7 +80,7 @@ public class AbstractQueryTest extends AbstractTopicMapTestCase {
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     topicmap = store.getTopicMap();
     builder = store.getTopicMap().getBuilder();
-    base = new URILocator(file.toURL());
+    base = new URILocator(URIUtils.toURL(file));
     
     TopicMapImporterIF importer = ImportExportUtils.getImporter(file.toString());
     if (importer instanceof XTMTopicMapReader)

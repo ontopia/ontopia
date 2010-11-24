@@ -11,6 +11,7 @@ import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.xml.*;
 import net.ontopia.topicmaps.test.AbstractTopicMapTestCase;
+import net.ontopia.utils.URIUtils;
 
 public abstract class AbstractXMLTestCase extends AbstractTopicMapTestCase {
   protected TopicMapBuilderIF builder;
@@ -31,7 +32,7 @@ public abstract class AbstractXMLTestCase extends AbstractTopicMapTestCase {
 
   protected void prepareTopicMap() throws IOException {
     tmfile = new File(resolveFileName("canonical" + File.separator + "out", "tmid.xtm"));
-    tmbase = new URILocator(tmfile.toURL());
+    tmbase = new URILocator(URIUtils.toURL(tmfile));
     sourceLoc = tmbase.resolveAbsolute("#id");
     
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();

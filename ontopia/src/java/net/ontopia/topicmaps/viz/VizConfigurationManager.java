@@ -21,6 +21,7 @@ import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Abstract configuration manager class.
@@ -63,7 +64,7 @@ public abstract class VizConfigurationManager {
    * URL given in the parameter.
    */
   public VizConfigurationManager(File tmfile) throws IOException {
-    this(tmfile.toURL().toExternalForm());
+      this(URIUtils.toURL(tmfile).toExternalForm());
   }
 
   /**

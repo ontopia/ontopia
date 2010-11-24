@@ -17,6 +17,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
+import net.ontopia.utils.URIUtils;
 
 // TODO:
 //  - move tests that are really tests of specific predicates out
@@ -1168,7 +1169,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     addMatch(matches, "GCC", getTopicById("lmg"));
     addMatch(matches, "GCC", getTopicById("silje"));
     
-    String url = new File(resolveFileName("query", "grandchild.tl")).toURL().toString();
+    String url = URIUtils.toURL(new File(resolveFileName("query", "grandchild.tl"))).toString();
 
     verifyQuery(matches,
                 "import \"" + url + "\" as fam " +

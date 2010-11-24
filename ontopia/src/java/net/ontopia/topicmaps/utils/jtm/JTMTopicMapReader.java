@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import org.xml.sax.InputSource;
 
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -72,7 +73,7 @@ public class JTMTopicMapReader extends AbstractTopicMapReader {
       if (!file.exists())
         throw new FileNotFoundException(file.toString());
 
-      this.base_address = new URILocator(file.toURL());
+      this.base_address = new URILocator(URIUtils.toURL(file));
       this.source = new InputSource(base_address.getExternalForm());
     } catch (java.net.MalformedURLException e) {
       throw new OntopiaRuntimeException("Internal error. File " + file

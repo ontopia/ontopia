@@ -13,6 +13,7 @@ import net.ontopia.topicmaps.query.core.test.AbstractQueryTest;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 
 public class RDBMSTestUtils {
   
@@ -24,7 +25,7 @@ public class RDBMSTestUtils {
     RDBMSTopicMapStore store = new RDBMSTopicMapStore();
     test.topicmap = store.getTopicMap();    
     test.builder = store.getTopicMap().getBuilder();
-    test.base = new URILocator(file.toURL());
+    test.base = new URILocator(URIUtils.toURL(file));
     store.setBaseAddress(test.base);
     
     TopicMapImporterIF importer = ImportExportUtils.getImporter(file.toString());

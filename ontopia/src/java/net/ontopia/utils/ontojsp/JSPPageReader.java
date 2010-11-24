@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
 
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class JSPPageReader {
   public JSPTreeNodeIF read()
     throws IOException, SAXException {
 
-    String filename = source.toURL().toString();
+    String filename = URIUtils.toURL(source).toString();
     JSPContentHandler handler = new JSPContentHandler();
     XMLReader parser = createXMLReader();
     handler.register(parser);

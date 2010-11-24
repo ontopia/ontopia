@@ -9,6 +9,7 @@ import net.ontopia.topicmaps.test.AbstractTopicMapTestCase;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Tests that verify that LocatorIF lookups work correctly
@@ -24,7 +25,7 @@ public class ObjectLookupTests extends AbstractTopicMapTestCase {
   public void testLookups() throws IOException {
     
     File file = new File(resolveFileName("various", "topicmap-object-lookup.xtm"));
-    URILocator base = new URILocator(file.toURL());
+    URILocator base = new URILocator(URIUtils.toURL(file));
 
     // Load topic map, commit and close
     RDBMSTopicMapStore store = new RDBMSTopicMapStore();

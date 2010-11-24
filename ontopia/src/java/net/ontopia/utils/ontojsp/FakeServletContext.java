@@ -22,6 +22,7 @@ import javax.servlet.ServletException;
 
 import net.ontopia.utils.NullObject;
 import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.URIUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,7 +140,7 @@ public class FakeServletContext implements ServletContext {
 
   public URL getResource(String path) throws MalformedURLException {
     File respath = new File(rootpath, path);
-    return respath.toURL();
+    return URIUtils.toURL(respath);
   }
 
   public Set getResourcePaths(String path) {

@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.net.MalformedURLException;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.infoset.core.LocatorIF;
@@ -198,7 +199,7 @@ public class RDFTopicMapReader implements TopicMapReaderIF, TopicMapImporterIF {
 
   private static String file2Locator(File file) {
     try {
-      return file.toURL().toExternalForm(); // FIXME: isn't right!
+      return URIUtils.toURL(file).toExternalForm(); // FIXME: isn't right!
     } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
     }

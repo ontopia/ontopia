@@ -230,14 +230,14 @@ public class StreamUtils {
       File f =  new File(name.substring("file:".length()));
       if (f.exists()) {
         log.debug("File loaded from file system: " + name);
-        url = f.toURL();
+        url = URIUtils.toURL(f);
       } else
         throw new IOException("File '" + f + "' not found.");
     } else {
       File f = new File(name);
       if (f.exists()) {
         log.debug("File loaded from file system: " + name);
-        url = f.toURL();
+        url = URIUtils.toURL(f);
       } else {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         url = cl.getResource(name);

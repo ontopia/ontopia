@@ -16,6 +16,7 @@ import net.ontopia.topicmaps.utils.ltm.*;
 import net.ontopia.topicmaps.utils.rdf.*;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
+import net.ontopia.utils.URIUtils;
 
 public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceTest {
 
@@ -68,7 +69,7 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     String title = "XTMTM";
     File file = new File(getTestDirectory() + File.separator + "various" + File.separator + id);
 
-    XTMTopicMapReference ref = new XTMTopicMapReference(file.toURL(), id, title);
+    XTMTopicMapReference ref = new XTMTopicMapReference(URIUtils.toURL(file), id, title);
 
     // test validation
     assertTrue("Validation default is not true", ref.getValidation());   
@@ -96,7 +97,7 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     String title = "LTMTM";
     File file = new File(getTestDirectory() + File.separator + "various" + File.separator + id);
 
-    LTMTopicMapReference ref = new LTMTopicMapReference(file.toURL(), id, title);
+    LTMTopicMapReference ref = new LTMTopicMapReference(URIUtils.toURL(file), id, title);
 
     // run abstract url topic map reference tests
     doAbstractURLTopicMapReferenceTests(ref);
@@ -109,7 +110,7 @@ public class AbstractURLTopicMapReferenceTest extends AbstractTopicMapReferenceT
     String title = "RDFTM";
     File file = new File(getTestDirectory() + File.separator + "rdf" + File.separator + "in" + File.separator + id);
 
-    RDFTopicMapReference ref = new RDFTopicMapReference(file.toURL(), id, title);
+    RDFTopicMapReference ref = new RDFTopicMapReference(URIUtils.toURL(file), id, title);
     
     // test mapping file
     String mf = ref.getMappingFile();

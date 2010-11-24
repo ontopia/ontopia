@@ -14,6 +14,7 @@ import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Abstract class implementing TopicMapSourceIF; locates
@@ -221,7 +222,7 @@ public abstract class AbstractPathTopicMapSource
       try {
         String filename = files[i].getName();
         String id = filename;
-        URL url = files[i].toURL();
+        URL url = URIUtils.toURL(files[i]);
         TopicMapReferenceIF ref = createReference(url, id, filename);
         if (ref != null)
           newmap.put(id, ref);

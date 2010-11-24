@@ -12,6 +12,7 @@ import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 
 public class QueryProcessorTest
   extends net.ontopia.topicmaps.query.core.test.QueryProcessorTest {
@@ -26,7 +27,7 @@ public class QueryProcessorTest
     RDBMSTopicMapStore store = new RDBMSTopicMapStore();
     topicmap = store.getTopicMap();    
     builder = store.getTopicMap().getBuilder();
-    base = new URILocator(file.toURL());
+    base = new URILocator(URIUtils.toURL(file));
     
     TopicMapImporterIF importer = ImportExportUtils.getImporter(file.toString());
     if (importer instanceof XTMTopicMapReader)

@@ -9,6 +9,7 @@ import java.util.*;
 import junit.framework.*;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.*;
 import net.ontopia.topicmaps.xml.*;
@@ -23,7 +24,7 @@ public class PackageTest extends net.ontopia.topicmaps.impl.basic.test.TopicMapP
     if (tm == null) {
       try {
         TopicMapReaderIF reader =
-          new XTMTopicMapReader(new java.io.File(getTestDirectory() + File.separator + "various" + File.separator + "package-test.xtm").toURL().toString());
+          new XTMTopicMapReader(URIUtils.toURL(new java.io.File(getTestDirectory() + File.separator + "various" + File.separator + "package-test.xtm")).toString());
         tm = reader.read();
         // base = (LocatorIF) tm.getItemIdentifiers().iterator().next();
         base = tm.getStore().getBaseAddress();

@@ -13,6 +13,7 @@ import net.ontopia.topicmaps.xml.*;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.URIUtils;
 
 public abstract class AbstractCanonicalTests implements TestCaseGeneratorIF {
   
@@ -121,7 +122,7 @@ public abstract class AbstractCanonicalTests implements TestCaseGeneratorIF {
 
   public static String file2URL(String filename) {
     try {
-      return new File(filename).toURL().toExternalForm();
+      return URIUtils.toURL(new File(filename)).toExternalForm();
     } catch (java.net.MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
     }

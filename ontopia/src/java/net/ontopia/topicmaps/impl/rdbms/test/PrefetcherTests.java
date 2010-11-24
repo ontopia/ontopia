@@ -59,7 +59,7 @@ public class PrefetcherTests extends AbstractTopicMapTestCase {
 
     // import sample topic map
     TopicMapStoreIF store = new RDBMSTopicMapStore(); // don't use storage
-    TopicMapImporterIF importer = ImportExportUtils.getImporter(new File(filename).toURL().toString());
+    TopicMapImporterIF importer = ImportExportUtils.getImporter(URIUtils.toURL(new File(filename)).toString());
     importer.importInto(store.getTopicMap());
 
     long topicmap_id = Long.parseLong(store.getTopicMap().getObjectId().substring(1)); 

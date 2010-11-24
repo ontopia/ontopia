@@ -5,7 +5,10 @@ package net.ontopia.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.BitSet;
+import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 
@@ -21,7 +24,7 @@ public class URIUtils {
    */
   public static URILocator getFileURI(File file) {
     try {
-      return new URILocator(file.toURL().toExternalForm());
+      return new URILocator(toURL(file).toExternalForm());
     }
     catch (java.net.MalformedURLException e) {
       throw new OntopiaRuntimeException("Malformed URI for File: '" + file + "'", e);
@@ -35,7 +38,7 @@ public class URIUtils {
    */
   public static String getFileURIString(File file) {
     try {
-      return file.toURL().toExternalForm();
+      return toURL(file).toExternalForm();
     }
     catch (java.net.MalformedURLException e) {
       throw new OntopiaRuntimeException("Impossible error", e);
@@ -161,5 +164,42 @@ public class URIUtils {
       throw new OntopiaRuntimeException("Malformed URI:" + uri, e);
     }    
   }
-  
+
+  private static final BitSet UNRESERVED = new BitSet(256);
+  static {
+    try {
+      byte[] bytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.!~*'():/".getBytes("US-ASCII");
+      for (int i = 0; i < bytes.length ; i++) {
+          UNRESERVED.set(bytes[i]);
+      }
+    } catch (UnsupportedEncodingException e) {
+    }
+  }
+
+  /**
+   * INTERNAL: Use this method instead of File.toURL() to get URLs for files.
+   */
+  public static URL toURL(File file) throws MalformedURLException {
+    URL url = file.toURL();
+    try {
+      byte[] bytes = url.toString().getBytes( "US-ASCII" );
+      StringBuffer buf = new StringBuffer( bytes.length );
+      for ( int i = 0; i < bytes.length; i++ ) {
+        byte b = bytes[i];
+        if (UNRESERVED.get(b)) {
+          buf.append((char)b);
+        } else {
+          buf.append('%' );
+          buf.append(Character.forDigit( b >>> 4 & 0xf, 16 ));
+          buf.append(Character.forDigit( b & 0xf, 16 ));
+        }
+      }
+      return new URL( buf.toString() );
+    } catch (UnsupportedEncodingException e) {
+      // should not happen as US-ASCII must be present
+      throw new RuntimeException(e);
+    }
+  }
+
+
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import net.ontopia.utils.URIUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 
 import org.xml.sax.Attributes;
@@ -48,7 +49,7 @@ public class XMLCollectionReader {
     throws SAXException, IOException {
     XMLReader reader = new DefaultXMLReaderFactory().createXMLReader();
     reader.setContentHandler(new TestCollectionHandler(testGroups));
-    reader.parse(new java.io.File(collectionFile).toURL().toString());
+    reader.parse(URIUtils.toURL(new java.io.File(collectionFile)).toString());
   }
 
   // --- Test group class

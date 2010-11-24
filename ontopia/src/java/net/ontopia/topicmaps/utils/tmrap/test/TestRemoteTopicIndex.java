@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import org.xml.sax.InputSource;
 
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.topicmaps.utils.tmrap.RAPServlet;
 import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
 import net.ontopia.topicmaps.utils.tmrap.TopicPage;
@@ -34,7 +35,7 @@ public class TestRemoteTopicIndex extends TestTMRAPOperation {
     // Init
     verifyDirectory(getBaseDir(), "out");    
     String outfile = getOutDir() + "get-topic-page_remote.xtm";
-    String outurl = new File(outfile).toURL().toString();
+    String outurl = URIUtils.toURL(new File(outfile)).toString();
     
     // Write get-topic-page result to a file
     Writer out = new FileWriter(outfile);

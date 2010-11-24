@@ -33,6 +33,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.test.AbstractCanonicalTestCase;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.URIUtils;
 import net.ontopia.utils.ontojsp.FakeServletConfig;
 import net.ontopia.utils.ontojsp.FakeServletContext;
 import net.ontopia.utils.ontojsp.FakeServletRequest;
@@ -57,7 +58,7 @@ public class TMRAPTestGenerator implements TestCaseGeneratorIF {
       XMLReader parser = new ConfiguredXMLReaderFactory().createXMLReader();
       TMRAPTestCaseContentHandler handler = new TMRAPTestCaseContentHandler();
       handler.register(parser);
-      parser.parse(new File(source).toURL().toString());
+      parser.parse(URIUtils.toURL(new File(source)).toString());
       testDescriptors = handler.getTestDescriptors();
     } catch (SAXException e) {
       throw new OntopiaRuntimeException(e);
