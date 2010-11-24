@@ -7,6 +7,13 @@
 	  net.ontopia.topicmaps.entry.*"
 %><%
   ClientManager manager = (ClientManager) getServletContext().getAttribute("client-manager");
+  if (manager == null) {
+    NavigatorApplicationIF navApp = NavigatorUtils.getNavigatorApplication(pageContext);
+    TopicMapRepositoryIF repository = navApp.getTopicMapRepository();
+    ClientConfig cconfig = new ClientConfig(repository);
+    manager = new ClientManager(cconfig, repository);
+    getServletContext().setAttribute("client-manager", manager);
+  }
 
   if (request.getParameter("start") != null) {
     manager.startThread();

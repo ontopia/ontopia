@@ -1,6 +1,7 @@
 
 package net.ontopia.topicmaps.utils.sdshare;
 
+import java.net.URL;
 import java.util.Set;
 import java.util.Map;
 import java.util.List;
@@ -230,20 +231,27 @@ public class ConsumerClient {
     
     // (1) get the fragment
     // FIXME: for now we only support XTM
-    XTMTopicMapReader reader = new XTMTopicMapReader(fragment.getFragmentURI());
+    String url = fragment.getFragmentURI().getExternalForm();
+    LocatorIF base = fragment.getParent().getPrefix();
+    XTMTopicMapReader reader = new XTMTopicMapReader(new URL(url).openConnection().getInputStream(), base);
     reader.setFollowTopicRefs(false);
     TopicMapIF tmfragment = reader.read();
-    log.info("Fragment size: " + tmfragment.getTopics().size());
+    log.info("Prefix: '" + prefix + "'");
     
     // (2) apply it
     LocatorIF si = fragment.getTopicSIs().iterator().next();
     TopicIF ftopic = tmfragment.getTopicBySubjectIdentifier(si);
-    //TopicIF ltopic = topicmap.getTopicBySubjectIdentifier(si);
-    TopicIF ltopic = MergeUtils.findTopic(topicmap, ftopic);
+    TopicIF ltopic;
+    if (ftopic != null)
+      ltopic = MergeUtils.findTopic(topicmap, ftopic);
+    else
+      ltopic = topicmap.getTopicBySubjectIdentifier(si);
 
     log.info("ftopic: " + ftopic);
-    for (LocatorIF iid : ftopic.getItemIdentifiers())
-      log.info("ftopic.iid: " + iid);
+    if (ftopic != null) {
+      for (LocatorIF iid : ftopic.getItemIdentifiers())
+        log.info("ftopic.iid: " + iid);
+    }
     log.info("ltopic: " + ltopic);
 
     // (a) check if we need to create the topic
@@ -259,7 +267,7 @@ public class ConsumerClient {
       ftopic = tmfragment.getBuilder().makeTopic();
 
     // (b) copy across all identifiers
-    MergeUtils.copyIdentifiers(ltopic, ftopic);
+    ltopic = MergeUtils.copyIdentifiers(ltopic, ftopic);
 
     // (c) merge all topics in the fragment into the target. this is
     // necessary so that all types, scoping topics, and associated
@@ -307,23 +315,29 @@ public class ConsumerClient {
                               Map<String,? extends ReifiableIF> keymap,
                               Collection<? extends ReifiableIF> lobjects,
                               String prefix) {
+    log.info("-----");
     // check all local objects against the fragment
     lobjects = new ArrayList<ReifiableIF>(lobjects); // avoid concmodexc
     for (ReifiableIF lobject : lobjects) {
       String key = KeyGenerator.makeKey(lobject);
       ReifiableIF fobject = keymap.get(key);
 
+      log.info("lobject: " + lobject);
+      log.info("fobject: " + fobject);
+
       if (fobject == null) {
         // the source doesn't have this object. however, if it still has
         // item identifiers (other than ours), we can keep it. we do
         // need to remove any iids starting with the prefix, though.
         pruneItemIdentifiers(lobject, prefix);
+        log.info("lobject.iids1: " + lobject.getItemIdentifiers());
         if (lobject.getItemIdentifiers().isEmpty())
           lobject.remove();
       } else {
         // the source has this object. we need to make sure the local
         // copy has the item identifier.
         addItemIdentifier(lobject, prefix);
+        log.info("lobject.iids2: " + lobject.getItemIdentifiers());
         keymap.remove(key); // we've seen this one, so cross it off
       }
     }
@@ -332,6 +346,7 @@ public class ConsumerClient {
     // across to the local copy, adding item identifiers
     for (ReifiableIF fobject : keymap.values()) {
       ReifiableIF lobject = MergeUtils.mergeInto(ltopic, fobject);
+      log.info("remaining: " + lobject);
       addItemIdentifier(lobject, prefix);
     }
   }
@@ -353,7 +368,7 @@ public class ConsumerClient {
     // unique and starts with the right prefix. we therefore take what
     // we assume is the shortest path to the goal.
     TopicMapIF topicmap = object.getTopicMap();
-    LocatorIF base = topicmap.getStore().getBaseAddress();
+    LocatorIF base = URILocator.create(prefix);
     String objectid = object.getObjectId();
     LocatorIF iid = base.resolveAbsolute("#sd" + objectid);
     while (topicmap.getObjectByItemIdentifier(iid) != null)
@@ -538,6 +553,7 @@ public class ConsumerClient {
 
     public void addFragment(Fragment fragment) {
       fragments.add(fragment);
+      fragment.setParent(this);
     }
 
     public List<Fragment> getFragments() {
@@ -554,6 +570,7 @@ public class ConsumerClient {
     private LocatorIF fragmenturi;
     private String mimetype;
     private long updated;
+    private FragmentFeed parent;
 
     public Fragment(LocatorIF fragmenturi, String mimetype,
                     Set<LocatorIF> topicSIs, long updated) {
@@ -577,6 +594,14 @@ public class ConsumerClient {
 
     public long getUpdated() {
       return updated;
+    }
+
+    public void setParent(FragmentFeed parent) {
+      this.parent = parent;
+    }
+
+    public FragmentFeed getParent() {
+      return parent;
     }
   }
 

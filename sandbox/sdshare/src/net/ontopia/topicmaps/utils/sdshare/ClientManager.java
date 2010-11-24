@@ -45,7 +45,7 @@ public class ClientManager {
   }
 
   public boolean isStopped() {
-    return (thread == null) || (thread != null && thread.isStopped());
+    return (thread == null) || (thread != null && !thread.isRunning());
   }
   
   public void startThread() {
