@@ -25,6 +25,8 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
  * contents available for the web application.
  */
 public class ClientConfig {
+  // this is the global default, which is used for any sources which don't
+  // declare a specific check interval
   private int checkInterval;
   private Collection<TopicMap> topicmaps;
   static Logger log = LoggerFactory.getLogger(ClientConfig.class.getName());
@@ -88,13 +90,16 @@ public class ClientConfig {
 
   public class SyncSource {
     private String url; // URL of collection feed
-    ConsumerClient.CollectionFeed feed;
-    ConsumerClient client; // created on demand
-    TopicMapReferenceIF reference;
+    private ConsumerClient.CollectionFeed feed;
+    private ConsumerClient client; // created on demand
+    private TopicMapReferenceIF reference;
+    private int checkInterval; // in seconds!
 
-    public SyncSource(String url, TopicMapReferenceIF reference) {
+    public SyncSource(String url, TopicMapReferenceIF reference,
+                      int checkInterval) {
       this.url = url;
       this.reference = reference;
+      this.checkInterval = checkInterval;
     }
     
     public String getURL() { // of collection feed
@@ -117,6 +122,7 @@ public class ClientConfig {
         }
         client = new ConsumerClient(reference,
                                     feed.getFragmentFeed().getAddress());
+        client.setCheckInterval(checkInterval * 1000);
       }
       return client;
     }
@@ -131,6 +137,7 @@ public class ClientConfig {
   class ConfigReader extends DefaultHandler {
     private TopicMap topicmap; // current <topicmap>
     private String property;   // name of current property
+    private String check;      // stored until end tag
     private StringBuilder buf; // used to collect code
     private boolean keep;      // keep character data?
     private TopicMapRepositoryIF repository;
@@ -155,8 +162,10 @@ public class ClientConfig {
         topicmap = new TopicMap(id);
         topicmaps.add(topicmap);
         
-      } else if (qname.equals("source"))
+      } else if (qname.equals("source")) {
         keep = true;
+        check = atts.getValue("check-interval");
+      }
     }
 
     public void characters (char[] ch, int start, int length) {
@@ -166,13 +175,9 @@ public class ClientConfig {
     
     public void endElement(String ns, String localname, String qname) {
       if (qname.equals("property")) {
-        if (property.equals("check-interval")) {
-          try {
-            checkInterval = Integer.parseInt(buf.toString());
-          } catch (NumberFormatException e) {
-            log.error("Couldn't parse checkInterval: '" + buf.toString() + "'");
-          }
-        } else
+        if (property.equals("check-interval"))
+          checkInterval = parse(buf.toString());
+        else
           log.warn("Unknown property: '" + property + "'");
 
         property = null;
@@ -180,10 +185,25 @@ public class ClientConfig {
         buf.setLength(0);
 
       } else if (qname.equals("source")) {
-        SyncSource src = new SyncSource(buf.toString(), reference);
+        int interval;
+        if (check == null)
+          interval = checkInterval;
+        else
+          interval = parse(check);
+        
+        SyncSource src = new SyncSource(buf.toString(), reference, interval);
         topicmap.addSource(src);
         keep = false;
         buf.setLength(0);
+      }
+    }
+
+    private int parse(String num) {
+      try {
+        return Integer.parseInt(num.trim());
+      } catch (NumberFormatException e) {
+        log.error("Couldn't parse check-interval: '" + num + "'");
+        return 5; // just some random, non-destructive number
       }
     }
   }
