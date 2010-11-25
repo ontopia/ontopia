@@ -13,6 +13,7 @@ import java.util.Map;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.xml.SAXTracker;
@@ -39,7 +40,7 @@ public class DatabaseProjectReader {
    * INTERNAL: Reads the database schema definition from the specified file.
    */
   public static Project loadProject(String filename) throws Exception {
-    return loadProject(new FileInputStream(filename));
+    return loadProject(StreamUtils.getInputStream(filename));
   }
   public static Project loadProject(InputStream istream) throws Exception {
     return loadProject(new InputSource(istream));

@@ -73,8 +73,8 @@
     </tstamp>
 
     <property name="dist.version.major" value="5" />
-    <property name="dist.version.minor" value="1" />
-    <property name="dist.version.micro" value="3" />
+    <property name="dist.version.minor" value="2" />
+    <property name="dist.version.micro" value="0" />
 
     <property name="dist.version.beta" value="b0" />
     <!-- "b1" if beta 1, empty if not beta -->
@@ -386,7 +386,7 @@
   
   <target name="generate-rdbms-schema">
     <java classname="net.ontopia.persistence.rdbms.DDLWriter" fork="true" classpathref="project.classpath">
-      <arg value="${src.path}/dist/rdbms/rdbms-schema.xml" />
+      <arg value="${src.path}/java/net/ontopia/topicmaps/impl/rdbms/config/schema.xml" />
       <arg value="${database}" />
       <arg value="${platforms}" />
       <arg value="${dist.path}/rdbms/setup/${id}.create.sql" />
@@ -1315,6 +1315,7 @@
     <echo>Copying rdbms resources...</echo>
     <copy file="${java.path}/net/ontopia/topicmaps/impl/rdbms/config/mapping.xml" tofile="${build.classes}/net/ontopia/topicmaps/impl/rdbms/config/mapping.xml" overwrite="yes" />
     <copy file="${java.path}/net/ontopia/topicmaps/impl/rdbms/config/queries.xml" tofile="${build.classes}/net/ontopia/topicmaps/impl/rdbms/config/queries.xml" overwrite="yes" />
+    <copy file="${java.path}/net/ontopia/topicmaps/impl/rdbms/config/schema.xml" tofile="${build.classes}/net/ontopia/topicmaps/impl/rdbms/config/schema.xml" overwrite="yes" />
     
     <echo>Copying vizigator resources ... </echo>
     <copy file="${java.path}/net/ontopia/topicmaps/viz/logo.gif" tofile="${build.classes}/net/ontopia/topicmaps/viz/logo.gif" />
@@ -2158,7 +2159,7 @@
     <antcall inheritRefs="true" target="generate-rdbms-schema">
       <param name="id" value="h2" />
       <param name="database" value="generic" />
-      <param name="platforms" value="generic" />
+      <param name="platforms" value="h2,generic" />
     </antcall>
     
     <!-- Collect documentation -->
@@ -2395,27 +2396,32 @@
     <property name="build.ontopoly" value="${dist.path}/apache-tomcat/webapps/ontopoly" />
     <delete dir="${build.ontopoly}" />
     <mkdir dir="${build.ontopoly}/doc" />
+    <mkdir dir="${build.ontopoly}/WEB-INF/classes"/>
     <mkdir dir="${build.ontopoly}/WEB-INF/lib"/>
     
     <copy todir="${build.ontopoly}" overwrite="yes">
-      <fileset dir="${webapps.path}/ontopoly/src/main/webapp" />
+      <fileset dir="${webapps.path}/ontopoly/ontopoly-webapp-base/src/main/webapp">
+        <patternset>
+          <exclude name="WEB-INF/topicmaps/**/*" />
+        </patternset>
+      </fileset>
     </copy>
+
+    <javac srcdir="${webapps.path}/ontopoly/ontopoly-editor/src/main/java" 
+           destdir="${build.ontopoly}/WEB-INF/classes" 
+           optimize="${optimize}" deprecation="${deprecation}" 
+           debug="${debug}" debuglevel="${debuglevel}" 
+           classpathref="project.classpath"
+           includeantruntime="false">
+      <include name="**/*.java" />
+    </javac>
     <copy todir="${build.ontopoly}/WEB-INF/classes" overwrite="yes">
-      <fileset dir="${webapps.path}/ontopoly/src/main/java">
+      <fileset dir="${webapps.path}/ontopoly/ontopoly-editor/src/main/java">
         <patternset>
           <exclude name="**/*.java" />
         </patternset>
       </fileset>
     </copy>
-    <javac srcdir="${webapps.path}/ontopoly/src/main/java" destdir="${build.ontopoly}/WEB-INF/classes" 
-            optimize="${optimize}" deprecation="${deprecation}" 
-            debug="${debug}" debuglevel="${debuglevel}" 
-            classpathref="project.classpath"
-            includeantruntime="false">
-      <include name="**/*.java" />
-    </javac>
-    <jar basedir="${build.ontopoly}/WEB-INF/classes" jarfile="${build.ontopoly}/WEB-INF/lib/ontopoly.jar" />
-    <delete dir="${build.ontopoly}/WEB-INF/classes" />
     
     <copy todir="${build.ontopoly}/WEB-INF/lib" overwrite="yes">
       <fileset dir="${lib.path}">
@@ -2438,14 +2444,6 @@
     <copy todir="${build.ontopoly}/doc/images/">
       <fileset dir="${doc.path}/ontopoly/images" />
     </copy>
-  </target>
-  
-  <target name="build.ontopoly" depends="init">
-    <property name="build.ontopoly" value="${build.tmp}/ontopoly" />
-    <antcall inheritRefs="true" target="dist.ontopia.webapp.ontopoly"/>
-    <war destfile="${dist.path}/apache-tomcat/webapps/ontopoly.war" webxml="${build.ontopoly}/WEB-INF/web.xml">
-      <fileset dir="${build.ontopoly}"/>
-    </war>
   </target>
   
   <target name="dist.ontopia.webapp.toplevel">
@@ -2743,6 +2741,19 @@
         <include name="doc/**/*" />
       </zipfileset>
     </zip>    
+  </target>
+
+  <target name="doc.ontopia2" depends="init">
+    <echo>Collecting documentation...</echo>
+
+    <zip destFile="${build.dists}/ontopia-docs-${dist.version}.zip" duplicate="preserve">
+      <zipfileset dir="${dist.path}">
+        <include name="index.html" />
+        <include name="doc/**/*" />
+        <include name="apache-tomcat/webapps/ontopoly/doc/**/*" />
+      </zipfileset>
+    </zip>    
+
   </target>
   
   <!-- ======================================================================

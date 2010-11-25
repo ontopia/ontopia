@@ -1,5 +1,7 @@
 package ontopoly;
 
+import java.io.Serializable;
+
 import ontopoly.model.TopicMap;
 import ontopoly.pages.AdminPage;
 import ontopoly.pages.AssociationTransformPage;
@@ -42,7 +44,7 @@ import org.apache.wicket.settings.IExceptionSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OntopolyApplication extends WebApplication {
+public class OntopolyApplication extends WebApplication implements Serializable {
 
   private static final Logger log = LoggerFactory.getLogger(OntopolyApplication.class);
   
@@ -57,13 +59,12 @@ public class OntopolyApplication extends WebApplication {
   @Override
   public Class<? extends Page> getHomePage() {
     return StartPage.class;
-    //return SignInPage.class;
   }
 
   @Override
   protected void onDestroy() {    
     // called when wicket servlet shuts down
-    log.info("Ontopia: Shutting down Wicket.");
+    log.info("Ontopoly: Shutting down Wicket.");
     super.onDestroy();
     repository = null; // FIXME: or close the repository if possible
   }

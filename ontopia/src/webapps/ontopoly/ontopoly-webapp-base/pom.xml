@@ -1,0 +1,39 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>net.ontopia</groupId>
+    <artifactId>ontopoly</artifactId>
+    <version>5.2.0-SNAPSHOT</version>
+  </parent>
+
+  <name>Ontopoly Web Application (base)</name>
+  <groupId>net.ontopia</groupId>
+  <artifactId>ontopoly-webapp-base</artifactId>
+  <packaging>war</packaging>
+  <version>5.2.0-SNAPSHOT</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>net.ontopia</groupId>
+      <artifactId>ontopoly-editor</artifactId>
+      <version>5.2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>net.ontopia</groupId>
+      <artifactId>ontopoly-rest</artifactId>
+      <version>5.2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>net.ontopia</groupId>
+      <artifactId>ontopia-engine</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>

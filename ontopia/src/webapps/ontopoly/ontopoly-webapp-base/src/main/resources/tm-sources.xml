@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<repository>
+  <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../topicmaps"/>
+    <param name="suffix" value=".xtm"/>
+    <param name="duplicateSuppression" value="false"/>
+    <param name="validation" value="true"/>
+    <param name="title" value="XTM topic maps"/>
+    <param name="id" value="xtm"/>
+    <param name="supportsCreate" value="true"/>
+    <param name="supportsDelete" value="true"/>
+    <param name="maintainFulltextIndexes" value="true"/>
+    <param name="indexDirectory" value="/tmp/"/>
+  </source>
+  <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../config"/>
+    <param name="hidden" value="false"/>
+    <param name="suffix" value=".xtm"/>
+    <param name="duplicateSuppression" value="true"/>
+  </source>
+  <source class="net.ontopia.topicmaps.utils.ltm.LTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../config"/>
+    <param name="hidden" value="true"/>
+    <param name="suffix" value=".ltm"/>
+    <param name="duplicateSuppression" value="true"/>
+  </source>
+  <!--source class="net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource">
+    <param name="propertyFile" value="db.postgresql.props"/>
+    <param name="id" value="postgresql"/>
+    <param name="title" value="PostgreSQL database"/>
+    <param name="supportsCreate" value="true"/>
+    <param name="supportsDelete" value="true"/>
+  </source-->
+  <!--source class="net.ontopia.topicmaps.impl.rdbms.RDBMSSingleTopicMapSource">
+    <param name="propertyFile" value="db.postgresql.props"/>
+    <param name="topicMapId" value="M1"/>
+    <param name="referenceId" value="mytopicmap"/>
+    <param name="title" value="My Topic Map"/>
+  </source-->
+  <!-- ${CWD} -->
+</repository>

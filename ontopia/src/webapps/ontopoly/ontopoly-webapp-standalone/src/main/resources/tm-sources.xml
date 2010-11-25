@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<repository>
+  <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../topicmaps"/>
+    <param name="suffix" value=".xtm"/>
+    <param name="duplicateSuppression" value="false"/>
+    <param name="validation" value="true"/>
+    <param name="title" value="XTM topic maps"/>
+    <param name="id" value="xtm"/>
+    <param name="supportsCreate" value="true"/>
+    <param name="supportsDelete" value="true"/>
+    <param name="maintainFulltextIndexes" value="true"/>
+    <param name="indexDirectory" value="/tmp/"/>
+  </source>
+  <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../config"/>
+    <param name="hidden" value="false"/>
+    <param name="suffix" value=".xtm"/>
+    <param name="duplicateSuppression" value="true"/>
+  </source>
+  <source class="net.ontopia.topicmaps.utils.ltm.LTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../config"/>
+    <param name="hidden" value="true"/>
+    <param name="suffix" value=".ltm"/>
+    <param name="duplicateSuppression" value="true"/>
+  </source>
+  <source class="net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource">
+    <param name="propertyFile" value="db.h2.props"/>
+    <param name="id" value="h2"/>
+    <param name="title" value="H2 database"/>
+    <param name="supportsCreate" value="true"/>
+    <param name="supportsDelete" value="true"/>
+  </source>
+</repository>

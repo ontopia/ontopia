@@ -258,10 +258,10 @@ public class FieldsEditor extends Panel {
       if (!existingFieldDefinitions.contains(fieldDefinition))
         result.add(new FieldDefinitionModel(fieldDefinition));
     }
-    Collections.sort(result, new Comparator<Object>() {
-      public int compare(Object o1, Object o2) {
-        FieldDefinition fd1 = ((FieldDefinitionModel)o1).getFieldDefinition();
-        FieldDefinition fd2 = ((FieldDefinitionModel)o2).getFieldDefinition();
+    Collections.sort(result, new Comparator<FieldDefinitionModel>() {
+      public int compare(FieldDefinitionModel o1, FieldDefinitionModel o2) {
+        FieldDefinition fd1 = o1.getFieldDefinition();
+        FieldDefinition fd2 = o2.getFieldDefinition();
         return ObjectUtils.compare(fd1.getFieldName(), fd2.getFieldName());
       }      
     });

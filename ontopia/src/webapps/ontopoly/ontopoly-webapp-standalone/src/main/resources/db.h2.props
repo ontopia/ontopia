@@ -1,0 +1,8 @@
+net.ontopia.topicmaps.impl.rdbms.Database=h2
+net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbc:h2:ontopoly;DB_CLOSE_ON_EXIT=FALSE
+net.ontopia.topicmaps.impl.rdbms.DriverClass=org.h2.Driver
+
+net.ontopia.topicmaps.impl.rdbms.UserName=ontopoly
+net.ontopia.topicmaps.impl.rdbms.Password=ontopoly
+
+net.ontopia.topicmaps.impl.rdbms.ConnectionPool=false
