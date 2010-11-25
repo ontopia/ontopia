@@ -63,16 +63,28 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
   public void testRemovedTopic() {
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF jill = getTopicById("jill");
+    TopicIF ontopia = getTopicById("ontopia");
     String oid = jill.getObjectId();
-
+    jill.remove(); // this causes two changes, not one (because of assoc)
+    
     List<ChangedTopic> changes = tracker.getChangeFeed();
-    assertEquals("only made one change, but more changes in feed",
-                 1, changes.size());
-    ChangedTopic change = changes.get(0);
-    assertTrue("wrong object ID on recorded change",
-               change.getObjectId().equals(oid));
-    assertTrue("change not recorded as object deletion",
-               change instanceof DeletedTopic);
+    assertEquals("only changed two topics, but more changes in feed",
+                 2, changes.size());
+    ChangedTopic jillchange = changes.get(0);
+    ChangedTopic ontopiachange = changes.get(1);
+    if (!jillchange.getObjectId().equals(oid)) {
+      jillchange = changes.get(1);
+      ontopiachange = changes.get(0);
+    }
+    
+    assertTrue("wrong object ID on recorded change to jill",
+               jillchange.getObjectId().equals(oid));
+    assertTrue("jill change not recorded as object deletion",
+               jillchange instanceof DeletedTopic);
+    assertTrue("wrong object ID on recorded change to ontopia",
+               ontopiachange.getObjectId().equals(ontopia.getObjectId()));
+    assertTrue("ontopia change recorded as object deletion",
+               !(ontopiachange instanceof DeletedTopic));
   }
 
   public void testTwoChanges() {
