@@ -4,7 +4,9 @@ package net.ontopia.topicmaps.utils.sdshare.test;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.core.events.TopicMapEvents;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -30,6 +32,7 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
       new StoreFactoryReference("jill.xtm", "jill.xtm", factory);
     tracker = new TopicMapTracker(ref);
     TopicMapEvents.addTopicListener(ref, tracker);
+    ref.createStore(false); // turn on events (grrr)
   }
 
   private TopicMapIF read(String file) throws IOException {
@@ -46,11 +49,8 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
   }
 
   public void testAddedTopic() {
-    // TopicMapBuilderIF builder = topicmap.getBuilder();
-    // TopicIF topic = builder.makeTopic();
-    // builder.makeTopicName(topic, "foo");
-    TopicIF topic = topicmap.getTopics().iterator().next();
-    topic.remove();
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF topic = builder.makeTopic();
 
     List<ChangedTopic> changes = tracker.getChangeFeed();
     assertEquals("only made one change, but more changes in feed",
@@ -58,6 +58,166 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
     ChangedTopic change = changes.get(0);
     assertTrue("wrong object ID on recorded change",
                change.getObjectId().equals(topic.getObjectId()));
+  }
+
+  public void testRemovedTopic() {
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF jill = getTopicById("jill");
+    String oid = jill.getObjectId();
+
+    List<ChangedTopic> changes = tracker.getChangeFeed();
+    assertEquals("only made one change, but more changes in feed",
+                 1, changes.size());
+    ChangedTopic change = changes.get(0);
+    assertTrue("wrong object ID on recorded change",
+               change.getObjectId().equals(oid));
+    assertTrue("change not recorded as object deletion",
+               change instanceof DeletedTopic);
+  }
+
+  public void testTwoChanges() {
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF topic = builder.makeTopic();
+    TopicIF jill = getTopicById("jill");
+    builder.makeTopicName(jill, "Another name");
+
+    List<ChangedTopic> changes = tracker.getChangeFeed();
+    assertEquals("made two changes, but more changes in feed",
+                 2, changes.size());
+
+    ChangedTopic change = changes.get(0);
+    assertTrue("wrong object ID on first recorded change",
+               change.getObjectId().equals(topic.getObjectId()));
+
+    change = changes.get(1);
+    assertTrue("wrong object ID on second recorded change",
+               change.getObjectId().equals(jill.getObjectId()));
+  }
+
+  public void testDuplicateChanges() {
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF topic = builder.makeTopic();
+    TopicIF jill = getTopicById("jill");
+    TopicNameIF tn = builder.makeTopicName(jill, "Another name");
+
+    List<ChangedTopic> changes = tracker.getChangeFeed();
+    assertEquals("made two changes, but more changes in feed",
+                 2, changes.size());
+
+    ChangedTopic change = changes.get(0);
+    assertTrue("wrong object ID on first recorded change",
+               change.getObjectId().equals(topic.getObjectId()));
+
+    change = changes.get(1);
+    assertTrue("wrong object ID on second recorded change",
+               change.getObjectId().equals(jill.getObjectId()));
+
+    // making another change
+    tn.remove();
+    assertEquals("changed two topics, but more changes in feed",
+                 2, changes.size());
+    change = changes.get(0);
+    assertEquals("wrong object ID on first recorded change",
+                 change.getObjectId(), topic.getObjectId());
+    change = changes.get(1);
+    assertEquals("wrong object ID on second recorded change",
+                 change.getObjectId(), jill.getObjectId());
+  }
+
+  public void testDuplicateChanges2() {
+    // different order from previous test
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF jill = getTopicById("jill");
+    TopicNameIF tn = builder.makeTopicName(jill, "Another name");
+    TopicIF topic = builder.makeTopic();
+
+    List<ChangedTopic> changes = tracker.getChangeFeed();
+    assertEquals("made two changes, but more changes in feed",
+                 2, changes.size());
+
+    ChangedTopic change = changes.get(0);
+    assertTrue("wrong object ID on first recorded change",
+               change.getObjectId().equals(jill.getObjectId()));
+
+    change = changes.get(1);
+    assertTrue("wrong object ID on second recorded change",
+               change.getObjectId().equals(topic.getObjectId()));
+
+    // making another change
+    tn.remove();
+    assertEquals("changed two topics, but more changes in feed",
+                 2, changes.size());
+    change = changes.get(0);
+    assertEquals("wrong object ID on first recorded change",
+                 change.getObjectId(), topic.getObjectId());
+    change = changes.get(1);
+    assertEquals("wrong object ID on second recorded change",
+                 change.getObjectId(), jill.getObjectId());
+  }
+
+  public void testChangeAllTopics() {
+    List<String> changed = new ArrayList<String>();
+    for (TopicIF topic : topicmap.getTopics()) {
+      if (topic.getTopicNames().isEmpty())
+        continue;
+      changed.add(topic.getObjectId());
+      TopicNameIF tn = topic.getTopicNames().iterator().next();
+      tn.setValue(topic.getObjectId());
+    }
+
+    List<ChangedTopic> changes = tracker.getChangeFeed();
+    assertEquals("wrong number of changes listed",
+                 changed.size(), changes.size());
+
+    int ix = 0;
+    for (ChangedTopic change : changes)
+      assertEquals("change " + ix + " is wrong",
+                   change.getObjectId(), changed.get(ix++));
+
+  }
+
+  public void testFirstChangeThenDelete() {
+    // testing because this requires a ChangedTopic to be replaced by
+    // a DeletedTopic
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF jill = getTopicById("jill");
+    TopicNameIF tn = builder.makeTopicName(jill, "Another name");
+
+    // verify normal change
+    List<ChangedTopic> changes = tracker.getChangeFeed();
+    assertEquals("made one change, but more changes in feed",
+                 1, changes.size());
+    assertEquals("wrong topic recorded as changed",
+                 jill.getObjectId(), changes.get(0).getObjectId());
+
+    // now delete the topic
+    jill.remove();
+    // note: this also modified "#ontopia", since they share an association
+
+    // verify that new change is a DeletedTopic
+    changes = tracker.getChangeFeed();
+    assertEquals("change two topics, but more changes in feed.",
+                 2, changes.size());
+
+    // it's not predictable which order the two topics will be recorded in,
+    // so we simply search for jill
+    for (ChangedTopic change : changes) {
+      if (jill.getObjectId().equals(change.getObjectId())) {
+        assertTrue("deletion not recorded as such",
+                   change instanceof DeletedTopic);
+        return; // we're finished testing
+      }
+    }
+
+    // if we got here it means we didn't find jill at all
+    fail("change for 'jill' topic not found");
+  }
+  
+  // ===== UTILITIES
+
+  private TopicIF getTopicById(String id) {
+    LocatorIF ii = topicmap.getStore().getBaseAddress().resolveAbsolute('#' + id);
+    return (TopicIF) topicmap.getObjectByItemIdentifier(ii);
   }
   
 }
