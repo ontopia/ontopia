@@ -2,6 +2,7 @@
 
 package ontopoly.model;
 
+import java.util.Collection;
 import java.util.List;
 
 import net.ontopia.infoset.core.LocatorIF;
@@ -28,6 +29,21 @@ public class Cardinality extends Topic {
     return (getTopicIF().equals(cardinality.getTopicIF()));
   }
 
+  public LocatorIF getLocator() {
+    Collection<LocatorIF> subjectIdentifiers = getTopicIF().getSubjectIdentifiers();
+    if (subjectIdentifiers.contains(PSI.ON_CARDINALITY_0_1)) {
+      return PSI.ON_CARDINALITY_0_1;
+    } else if (subjectIdentifiers.contains(PSI.ON_CARDINALITY_1_1)) {
+      return PSI.ON_CARDINALITY_1_1;
+    } else if (subjectIdentifiers.contains(PSI.ON_CARDINALITY_0_M)) {
+      return PSI.ON_CARDINALITY_0_M;
+    } else if (subjectIdentifiers.contains(PSI.ON_CARDINALITY_1_M)) {
+      return PSI.ON_CARDINALITY_1_M;
+    } else {
+      return null;
+    }
+  }
+  
   public boolean isZeroOrOne() {
     return getTopicIF().getSubjectIdentifiers().contains(PSI.ON_CARDINALITY_0_1);
   }

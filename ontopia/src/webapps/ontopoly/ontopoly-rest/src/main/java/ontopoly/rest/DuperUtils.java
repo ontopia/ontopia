@@ -10,11 +10,16 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import ontopoly.model.Cardinality;
+import ontopoly.model.DataType;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.FieldsView;
+import ontopoly.model.IdentityField;
 import ontopoly.model.InterfaceControl;
+import ontopoly.model.NameField;
+import ontopoly.model.OccurrenceField;
+import ontopoly.model.QueryField;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicType;
@@ -65,21 +70,52 @@ public class DuperUtils {
       FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
       FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
       int fieldType = fieldDefinition.getFieldType();
-      
+
       field.put("id", fieldDefinition.getId());
       field.put("name", fieldDefinition.getFieldName());
 
-//      TopicType fieldTopicType = OntopolyUtils.getDefaultTopicType(fieldDefinition);
-//      FieldsView fieldFieldsView = FieldsView.getDefaultFieldsView(fieldDefinition.getTopicMap());      
-//      field.put("config", Utils.createFieldConfigMap(fieldDefinition, fieldTopicType, fieldFieldsView));
+      //      TopicType fieldTopicType = OntopolyUtils.getDefaultTopicType(fieldDefinition);
+      //      FieldsView fieldFieldsView = FieldsView.getDefaultFieldsView(fieldDefinition.getTopicMap());      
+      //      field.put("config", Utils.createFieldConfigMap(fieldDefinition, fieldTopicType, fieldFieldsView));
 
       List<Link> fieldLinks = new ArrayList<Link>();
-      //fieldLinks.add(new Link("self", "http://examples.org/topics/" + fieldDefinition.getId()));    
-      if (fieldType == FieldDefinition.FIELD_TYPE_ROLE && ((RoleField)fieldDefinition).getInterfaceControl().isDropDownList()) { 
-        fieldLinks.add(new Link("list", "http://examples.org/topics/" + topic.getId() + "/" + fieldDefinition.getId() + "/list"));
-      }
-      field.put("links", fieldLinks);
 
+      Cardinality cardinality = fieldDefinition.getCardinality();
+      field.put("cardinality", cardinality.getLocator().getExternalForm());
+      
+      //fieldLinks.add(new Link("self", "http://examples.org/topics/" + fieldDefinition.getId()));    
+      if (fieldType == FieldDefinition.FIELD_TYPE_ROLE) {
+        RoleField roleField = (RoleField)fieldDefinition; 
+        field.put("type", "role");
+
+        InterfaceControl interfaceControl = roleField.getInterfaceControl();
+        field.put("interfaceControl", interfaceControl.getLocator().getExternalForm());
+        if (interfaceControl.isDropDownList()) { 
+          fieldLinks.add(new Link("list", "http://examples.org/topics/" + topic.getId() + "/" + fieldDefinition.getId() + "/list"));
+        }
+        field.put("links", fieldLinks);
+      } else if (fieldType == FieldDefinition.FIELD_TYPE_OCCURRENCE) {
+        OccurrenceField occurrenceField = (OccurrenceField)fieldDefinition;
+        field.put("type", "occurrence");
+        DataType dataType = occurrenceField.getDataType();
+        LocatorIF locator = dataType.getLocator();
+        field.put("datatype", locator.getExternalForm());
+        field.put("height", occurrenceField.getHeight());
+        field.put("width", occurrenceField.getWidth());
+      } else if (fieldType == FieldDefinition.FIELD_TYPE_NAME) {
+        NameField nameField = (NameField)fieldDefinition;
+        field.put("type", "name");
+        field.put("links", fieldLinks);
+      } else if (fieldType == FieldDefinition.FIELD_TYPE_IDENTITY) {
+        IdentityField identityField = (IdentityField)fieldDefinition;
+        field.put("type", "identity");
+        field.put("links", fieldLinks);
+      } else if (fieldType == FieldDefinition.FIELD_TYPE_QUERY) {
+        QueryField queryField = (QueryField)fieldDefinition;
+        field.put("type", "query");
+        field.put("links", fieldLinks);
+      }
+      
       Collection<? extends Object> fieldValues = fieldInstance.getValues();
       List<Object> values = new ArrayList<Object>(fieldValues.size());
       if (fieldType == FieldDefinition.FIELD_TYPE_ROLE && 

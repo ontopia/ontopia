@@ -2,10 +2,12 @@
 
 package ontopoly.model;
 
+import java.util.Collection;
 import java.util.List;
 
 import ontopoly.utils.OntopolyModelUtils;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 
 /**
@@ -26,6 +28,21 @@ public class InterfaceControl extends Topic {
 
     InterfaceControl other = (InterfaceControl) obj;
     return (getTopicIF().equals(other.getTopicIF()));
+  }
+
+  public LocatorIF getLocator() {
+    Collection<LocatorIF> subjectIdentifiers = getTopicIF().getSubjectIdentifiers();
+    if (subjectIdentifiers.contains(PSI.ON_INTERFACE_CONTROL_AUTO_COMPLETE)) {
+      return PSI.ON_INTERFACE_CONTROL_AUTO_COMPLETE;
+    } else if (subjectIdentifiers.contains(PSI.ON_INTERFACE_CONTROL_BROWSE_DIALOG)) {
+      return PSI.ON_INTERFACE_CONTROL_BROWSE_DIALOG;
+    } else if (subjectIdentifiers.contains(PSI.ON_INTERFACE_CONTROL_DROP_DOWN_LIST)) {
+      return PSI.ON_INTERFACE_CONTROL_DROP_DOWN_LIST;
+    } else if (subjectIdentifiers.contains(PSI.ON_INTERFACE_CONTROL_SEARCH_DIALOG)) {
+      return PSI.ON_INTERFACE_CONTROL_SEARCH_DIALOG;
+    } else {
+      return null;
+    }
   }
 
   /**
