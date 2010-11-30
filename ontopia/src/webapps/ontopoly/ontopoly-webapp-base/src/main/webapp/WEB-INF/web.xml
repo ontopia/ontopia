@@ -24,6 +24,20 @@
     <filter-name>WicketFilter</filter-name>
     <url-pattern>/*</url-pattern> 
   </filter-mapping>
+  <servlet>
+      <servlet-name>Jersey Web Application</servlet-name>
+      <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+      <init-param>
+          <param-name>com.sun.jersey.config.property.packages</param-name>
+          <param-value>ontopoly</param-value>
+      </init-param>
+  </servlet>
+
+  <servlet-mapping>
+      <servlet-name>Jersey Web Application</servlet-name>
+      <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
   <!-- the settings below are to be used on OC4J because of various problems with the application server -->
   <!--servlet>
     <servlet-name>WicketServlet</servlet-name>

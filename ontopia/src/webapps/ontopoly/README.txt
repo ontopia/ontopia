@@ -10,7 +10,7 @@ To get started do the following:
      maven repository: 
 
     cd ontopia/trunk/ontopia
-    ant dist.jar.ontopia ivy.deploy-local
+    ant dist.jar.ontopia ivy.install-local-snapshot
 
   3. Build the ontopoly artifacts:
 

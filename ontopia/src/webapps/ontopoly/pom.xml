@@ -107,6 +107,7 @@
       <id>agrep01-snapshots</id>
       <name>agrep01-snapshots</name>
       <url>http://agrep01:8080/artifactory/libs-snapshots-local</url>
+      <uniqueVersion>false</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
 
@@ -118,6 +119,10 @@
     <repository>
       <id>Ontopia-snapshot</id>
       <url>http://ontopia.googlecode.com/svn/maven-snapshot-repository</url>
+    </repository>
+    <repository>
+      <id>java.net</id>
+      <url>http://download.java.net/maven/2</url>
     </repository>
     <!--repository>
       <id>libs.releases</id>
