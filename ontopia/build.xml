@@ -2773,7 +2773,7 @@
     </move>
   </target>
 
-  <target name="ivy.deploy-local" depends="init">
+  <target name="ivy.install-snapshot-local" depends="init">
     <exec executable="mvn">
       <arg value="install:install-file" />
       <arg value="-DgroupId=net.ontopia" />
@@ -2783,6 +2783,25 @@
       <arg value="-Dfile=${basedir}/build/jars/ontopia.jar" />
       <arg value="-DpomFile=${basedir}/pom.xml" />
       <arg value="-DcreateChecksum=true" />
+    </exec>
+  </target>
+
+  <!-- ant ivy.deploy-snapshot-local -DrepositoryId=agrep01-snapshots -Durl=http://agrep01:8080/artifactory/libs-snapshots-local -->
+  <target name="ivy.deploy-snapshot-local" depends="init">
+    <property name="repositoryId" value="remote-server" />
+    <property name="url" value="file:${basedir}/../maven-snapshot-repository" />
+    <exec executable="mvn">
+      <arg value="deploy:deploy-file" />
+      <arg value="-DgroupId=net.ontopia" />
+      <arg value="-DartifactId=ontopia-engine" />
+      <arg value="-Dversion=${dist.version.major}.${dist.version.minor}.${dist.version.micro}-SNAPSHOT" />
+      <arg value="-DuniqueVersion=false" />
+      <arg value="-Dpackaging=jar" />
+      <arg value="-Dfile=${basedir}/build/jars/ontopia.jar" />
+      <arg value="-DpomFile=${basedir}/pom.xml" />
+      <arg value="-DcreateChecksum=true" />
+      <arg value="-DrepositoryId=${repositoryId}" />
+      <arg value="-Durl=${url}" />
     </exec>
   </target>
 
