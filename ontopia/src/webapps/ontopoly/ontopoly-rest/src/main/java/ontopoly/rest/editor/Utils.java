@@ -1,4 +1,4 @@
-package ontopoly.rest;
+package ontopoly.rest.editor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +25,7 @@ import ontopoly.model.Topic;
 import ontopoly.model.TopicType;
 import ontopoly.utils.OntopolyUtils;
 
-public class DuperUtils {
+public class Utils {
 
   public static class Link {
     private String rel;
@@ -58,8 +58,8 @@ public class DuperUtils {
 
     List<Link> topicLinks = new ArrayList<Link>();
     topicLinks.add(new Link("self", "http://examples.org/topics/" + topic.getId()));    
-    // TODO: if removeable
     topicLinks.add(new Link("remove", "http://examples.org/topics/" + topic.getId() + "/remove"));
+    topicLinks.add(new Link("batch-update", "http://examples.org/topics/" + topic.getId() + "/batch-update"));
     result.put("links", topicLinks);
 
     List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
@@ -74,10 +74,6 @@ public class DuperUtils {
       field.put("id", fieldDefinition.getId());
       field.put("name", fieldDefinition.getFieldName());
 
-      //      TopicType fieldTopicType = OntopolyUtils.getDefaultTopicType(fieldDefinition);
-      //      FieldsView fieldFieldsView = FieldsView.getDefaultFieldsView(fieldDefinition.getTopicMap());      
-      //      field.put("config", Utils.createFieldConfigMap(fieldDefinition, fieldTopicType, fieldFieldsView));
-
       List<Link> fieldLinks = new ArrayList<Link>();
 
       Cardinality cardinality = fieldDefinition.getCardinality();
@@ -87,13 +83,20 @@ public class DuperUtils {
       if (fieldType == FieldDefinition.FIELD_TYPE_ROLE) {
         RoleField roleField = (RoleField)fieldDefinition; 
         field.put("type", "role");
+        field.put("arity", roleField.getAssociationField().getArity());
+        
+        int arity = roleField.getAssociationField().getArity();
+        if (arity == 2) {
+          for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
 
-        InterfaceControl interfaceControl = roleField.getInterfaceControl();
-        field.put("interfaceControl", interfaceControl.getLocator().getExternalForm());
-        if (interfaceControl.isDropDownList()) { 
-          fieldLinks.add(new Link("list", "http://examples.org/topics/" + topic.getId() + "/" + fieldDefinition.getId() + "/list"));
+            InterfaceControl interfaceControl = otherRoleField.getInterfaceControl();
+            field.put("interfaceControl", interfaceControl.getLocator().getExternalForm());
+            if (interfaceControl.isDropDownList()) { 
+              fieldLinks.add(new Link("list", "http://examples.org/topics/" + topic.getId() + "/" + fieldDefinition.getId() + "/list"));
+            }
+            field.put("links", fieldLinks);
+          }
         }
-        field.put("links", fieldLinks);
       } else if (fieldType == FieldDefinition.FIELD_TYPE_OCCURRENCE) {
         OccurrenceField occurrenceField = (OccurrenceField)fieldDefinition;
         field.put("type", "occurrence");
@@ -168,62 +171,27 @@ public class DuperUtils {
       throw new RuntimeException("Unknown field definition type: " + fieldDefinition);
     }
   }
-
-  protected static Object getExistingTopicValue(Topic parentTopic, FieldDefinition fieldDefinition, Topic value) {
+  
+  public static Object getExistingTopicValues(Topic parentTopic, FieldDefinition fieldDefinition, Collection<Topic> values) {
+    List<Object> result = new ArrayList<Object>(values.size());
+    for (Topic value : values) {
+      result.add(getExistingTopicValue(parentTopic, fieldDefinition, value));
+    }
+    return result;
+  }
+  
+  public static Object getExistingTopicValue(Topic parentTopic, FieldDefinition fieldDefinition, Topic value) {
     Map<String, Object> result = new LinkedHashMap<String,Object>();
     result.put("id", value.getId());
     result.put("name", value.getName());
 
-    List<Link> links = new ArrayList<Link>();
-    links.add(new Link("edit", "http://examples.org/topics/" + value.getId()));    
-    //links.add(new Link("add", "http://examples.org/topics/" + value.getId() + "/" + fieldDefinition.getId() + "/add/" + value.getId()));
-    links.add(new Link("remove", "http://examples.org/topics/" + value.getId() + "/" + fieldDefinition.getId() + "/remove/" + value.getId()));
-    result.put("links", links);
+//    List<Link> links = new ArrayList<Link>();
+//    links.add(new Link("edit", "http://examples.org/topics/" + value.getId()));    
+//    //links.add(new Link("add", "http://examples.org/topics/" + value.getId() + "/" + fieldDefinition.getId() + "/add/" + value.getId()));
+//    links.add(new Link("remove", "http://examples.org/topics/" + value.getId() + "/" + fieldDefinition.getId() + "/remove/" + value.getId()));
+//    result.put("links", links);
 
     return result;
-  }
-
-  public static FieldConfig createdFieldConfig(FieldDefinition fieldDefinition, FieldsView fieldsView) {
-    FieldConfig field = new FieldConfig(fieldDefinition.getId(), fieldDefinition.getName());
-
-    Cardinality cardinality = fieldDefinition.getCardinality();
-    if (cardinality.isZeroOrOne())
-      field.setCardinality("0:1");
-    else if (cardinality.isExactlyOne())
-      field.setCardinality("1:1");
-    else if (cardinality.isZeroOrMore())
-      field.setCardinality("0:M");
-    else if (cardinality.isOneOrMore())
-      field.setCardinality("1:M");
-
-    switch (fieldDefinition.getFieldType()) {
-    case FieldDefinition.FIELD_TYPE_NAME: 
-      field.setType("name");
-      break;
-    case FieldDefinition.FIELD_TYPE_IDENTITY: 
-      field.setType("identity");
-      break;
-    case FieldDefinition.FIELD_TYPE_OCCURRENCE: 
-      field.setType("occurrence");
-      break;
-    case FieldDefinition.FIELD_TYPE_ROLE: 
-      field.setType("role");
-      if (fieldDefinition.isEmbedded(fieldsView)) {
-        FieldsView embeddedView = fieldDefinition.getValueView(fieldsView);
-        field.setEmbeddedView(embeddedView.getId());
-      }
-      RoleField roleField = (RoleField)fieldDefinition;
-      InterfaceControl interfaceControl = roleField.getInterfaceControl();
-      field.setInterfaceControl(interfaceControl.getName());
-      break;
-    case FieldDefinition.FIELD_TYPE_QUERY: 
-      field.setType("query");
-      break;
-    default:
-      throw new RuntimeException("Unknown field definition type: " + fieldDefinition);
-    };
-
-    return field;
   }
 
 }

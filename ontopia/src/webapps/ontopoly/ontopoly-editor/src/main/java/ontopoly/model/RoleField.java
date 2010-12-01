@@ -782,4 +782,16 @@ public class RoleField extends FieldDefinition {
     }
   }
 
+  public Collection<RoleField> getOtherRoleFields() {
+    AssociationField associationField = getAssociationField();
+    List<RoleField> roleFields = associationField.getFieldsForRoles();
+    List<RoleField> result = new ArrayList<RoleField>(roleFields.size());
+    for (RoleField roleField : roleFields) {
+      if (!roleField.equals(this)) {
+        result.add(roleField);
+      }
+    }
+    return result;
+  }
+
 }

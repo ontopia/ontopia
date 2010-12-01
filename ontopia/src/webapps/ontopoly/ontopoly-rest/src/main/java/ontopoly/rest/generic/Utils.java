@@ -1,4 +1,4 @@
-package ontopoly.rest;
+package ontopoly.rest.generic;
 
 import java.util.ArrayList;
 import java.util.Collection;
