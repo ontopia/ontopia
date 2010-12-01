@@ -34,4 +34,8 @@ public class ChangedTopic {
       return ((ChangedTopic) o).getObjectId().equals(objid);
     return false;
   }
+
+  public String toString() {
+    return "[ChangedTopic " + objid + " at " + timestamp + "]";
+  }
 }

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.*;
@@ -72,6 +73,7 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
                  2, changes.size());
     ChangedTopic jillchange = changes.get(0);
     ChangedTopic ontopiachange = changes.get(1);
+    // since order is unpredictable, must allow for both possibilities
     if (!jillchange.getObjectId().equals(oid)) {
       jillchange = changes.get(1);
       ontopiachange = changes.get(0);
@@ -188,6 +190,42 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
 
   }
 
+  public void testChangeAllTopicsDuplicate() {
+    // first we change all topics in the topic map
+    List<String> changed = new ArrayList<String>();
+    for (TopicIF topic : topicmap.getTopics()) {
+      if (topic.getTopicNames().isEmpty())
+        continue;
+      changed.add(topic.getObjectId());
+      TopicNameIF tn = topic.getTopicNames().iterator().next();
+      tn.setValue(topic.getObjectId());
+    }
+
+    // then we make a list of the topics in random order
+    changed.clear();
+    List<TopicIF> topics = new ArrayList(topicmap.getTopics());
+    Collections.shuffle(topics);
+
+    // then we change the topics in that order
+    for (TopicIF topic : topics) {
+      if (topic.getTopicNames().isEmpty())
+        continue;
+      changed.add(topic.getObjectId());
+      TopicNameIF tn = topic.getTopicNames().iterator().next();
+      tn.setValue(topic.getObjectId() + "_");
+    }
+
+    // ok, now we can check
+    List<ChangedTopic> changes = tracker.getChangeFeed();
+    assertEquals("wrong number of changes listed",
+                 changed.size(), changes.size());
+
+    int ix = 0;
+    for (ChangedTopic change : changes)
+      assertEquals("change " + ix + " is wrong",
+                   change.getObjectId(), changed.get(ix++));
+  }
+  
   public void testFirstChangeThenDelete() {
     // testing because this requires a ChangedTopic to be replaced by
     // a DeletedTopic

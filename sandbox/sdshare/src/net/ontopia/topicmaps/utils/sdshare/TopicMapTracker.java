@@ -1,24 +1,14 @@
 
 package net.ontopia.topicmaps.utils.sdshare;
 
+import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 import java.util.ArrayList;
   
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-
-// TESTING: could we build some tests specifically for the tracker?
-// I suppose we could.
-
-// FIXME: cost of duplicate suppression is O(n) per event, so O(n^2)
-// for n events
-// POSSIBLE SOLUTION:
-// add a hashmap from object id to ChangedTopic. use this to find the
-// modification time, then do a binary search to find the actual
-// object in the sorted list. this should be O(log n) (or O(sqrt(n))),
-// and thus at least potentially fast enough. however, leery of doing
-// this without at least *some* automated tests.
 
 // FIXME: list of changes grows without bound
 // FIXME: list of changes is not persistent
@@ -30,10 +20,12 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 public class TopicMapTracker implements TopicMapListenerIF {
   private TopicMapReferenceIF ref;
   private List<ChangedTopic> changes;
+  private Map<String, ChangedTopic> idmap;
 
   public TopicMapTracker(TopicMapReferenceIF ref) {
     this.ref = ref;
     this.changes = new ArrayList();
+    this.idmap = new HashMap();
   }
 
   public String getTopicMapId() {
@@ -55,14 +47,9 @@ public class TopicMapTracker implements TopicMapListenerIF {
       return changes.get(changes.size() - 1).getTimestamp();
   }
   
-  private synchronized void modified(TMObjectIF snapshot, boolean deleted) {
-    ChangedTopic o;
-    if (deleted)
-      o = new DeletedTopic(snapshot);
-    else
-      o = new ChangedTopic(snapshot.getObjectId());
-
-    int pos = changes.lastIndexOf(o);
+  private synchronized void modified(ChangedTopic o) {
+    int pos = findDuplicate(o);
+    //System.out.println("Change to: " + o.getObjectId() + " at " + pos);
     if (pos == -1)
       changes.add(o);
     else if (pos == (changes.size() - 1))
@@ -72,19 +59,109 @@ public class TopicMapTracker implements TopicMapListenerIF {
       changes.remove(pos);
       changes.add(o);
     }
+
+    idmap.put(o.getObjectId(), o);
+  }
+
+  private int findDuplicate(ChangedTopic o) {
+    //return changes.lastIndexOf(o);
+
+    // we find the duplicate by looking up the previous change in the idmap
+    // and finding its timestamp. we then use the timestamp to do a binary
+    // search of the list of changes to locate it there.
+
+    // a different approach might be to store the list index in each change
+    // so that we can find it directly. this requires more memory, however,
+    // and means we have to reindex when discarding changes. leaving it as
+    // a possibility for later.
+    
+    ChangedTopic original = idmap.get(o.getObjectId());
+    if (original == null)
+      return -1; // it's not in the list
+    return binarySearch(original);
+  }
+
+  private int binarySearch(ChangedTopic o) {
+    //System.out.println("===== Seeking " + o);
+    long key = o.getTimestamp();
+    int low = 0;
+    int high = changes.size() - 1;
+    int pos = (low + high) / 2;
+
+    // very often, the topic changed is the same as the previous, because
+    // of how the event system works. therefore we cheat by checking the
+    // last position first.
+    if (changes.get(high).equals(o)) {
+      //System.out.println("It was the last one");
+      return high;
+    }
+
+    // ok, it wasn't there, so we really do need to search
+    //System.out.println("[" + low + " ... " + pos + " ... " + high + "]");
+
+    ChangedTopic other = changes.get(pos);
+    long time = other.getTimestamp();
+    while (time != key && low < high) {
+      //System.out.println("failed: "  + other);
+      
+      int oldpos = pos;
+      if (key < time) { // we need to go towards the start
+        high = pos - 1; // must be before this one
+        pos = (low + pos) / 2;
+      } else { // we need to go further back
+        low = pos + 1; // must be further out
+        pos = (high + pos) / 2;        
+      }
+      if (pos == oldpos)
+        pos++; // don't stay in same pos, go higher
+
+      other = changes.get(pos);
+      time = other.getTimestamp();      
+      //System.out.println("[" + low + " ... " + pos + " ... " + high + "]");
+    }
+
+    //System.out.println("pos " + pos + " holds "  + other);
+    
+    // we've now either given up, or found an entry with the same time.
+    // however, there can be many entries with the same time, so we need
+    // to scan both up and down to find it.    
+    int origpos = pos;
+
+    // other is already set correctly from loop above
+    while (!other.equals(o) && other.getTimestamp() == key && pos > low) {
+      pos--;
+      other = changes.get(pos);
+      //System.out.println("pos " + pos + " holds " + other);
+    }
+    if (other.equals(o)) {
+      //System.out.println("FOUND at " + pos);
+      return pos;
+    }
+    pos = origpos + 1;
+    other = changes.get(pos);
+    while (!other.equals(o) && other.getTimestamp() == key && pos < high) {
+      //System.out.println("pos " + pos + " holds " + other);
+      pos++;
+      other = changes.get(pos);
+    }
+    //System.out.println("FINAL: pos " + pos + " holds "  + other);
+    if (changes.get(pos).equals(o))
+      return pos;
+    return -1; // it's not here
   }
   
   // --- TopicMapListenerIF implementation
 
   public void objectAdded(TMObjectIF snapshot) {
-    modified(snapshot, false);
+    modified(new ChangedTopic(snapshot.getObjectId()));
   }
 
   public void objectModified(TMObjectIF snapshot) {
-    modified(snapshot, false);
+    modified(new ChangedTopic(snapshot.getObjectId()));
   }
 
   public void objectRemoved(TMObjectIF snapshot) {
-    modified(snapshot, true);
+    modified(new DeletedTopic(snapshot));
   }
+  
 }
