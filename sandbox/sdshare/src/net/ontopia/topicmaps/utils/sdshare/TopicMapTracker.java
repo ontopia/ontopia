@@ -10,8 +10,11 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 
-// FIXME: list of changes grows without bound
 // FIXME: list of changes is not persistent
+// one way to solve this is by a dribble list which is loaded and
+// processed in the normal way on startup. however, this could cause
+// delays at startup if the list is long. might be worth trying,
+// though. must also rewrite the dribble file on startup.
 
 /**
  * INTERNAL: Event listener class which maintains a list of changed
@@ -21,11 +24,22 @@ public class TopicMapTracker implements TopicMapListenerIF {
   private TopicMapReferenceIF ref;
   private List<ChangedTopic> changes;
   private Map<String, ChangedTopic> idmap;
+  private long lastExpired; // how long (in ms) since we last expired changes
+  /**
+   * Number of milliseconds changes stay in changes list before they
+   * expire.
+   */
+  private long expirytime;
 
   public TopicMapTracker(TopicMapReferenceIF ref) {
+    this(ref, StartUpServlet.DEFAULT_EXPIRY_TIME);
+  }
+  
+  public TopicMapTracker(TopicMapReferenceIF ref, long expirytime) {
     this.ref = ref;
     this.changes = new ArrayList();
     this.idmap = new HashMap();
+    this.expirytime = expirytime;
   }
 
   public String getTopicMapId() {
@@ -37,6 +51,7 @@ public class TopicMapTracker implements TopicMapListenerIF {
   }
   
   public List<ChangedTopic> getChangeFeed() {
+    expireOldChanges();
     return changes;
   }
 
@@ -46,8 +61,18 @@ public class TopicMapTracker implements TopicMapListenerIF {
     else
       return changes.get(changes.size() - 1).getTimestamp();
   }
+
+  // needed for test
+  public void setExpiryTime(long expirytime) {
+    this.expirytime = expirytime;
+  }
   
   private synchronized void modified(ChangedTopic o) {
+    try {
+      expireOldChanges();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     int pos = findDuplicate(o);
     //System.out.println("Change to: " + o.getObjectId() + " at " + pos);
     if (pos == -1)
@@ -148,6 +173,39 @@ public class TopicMapTracker implements TopicMapListenerIF {
     if (changes.get(pos).equals(o))
       return pos;
     return -1; // it's not here
+  }
+
+  private synchronized void expireOldChanges() {
+    // is it time to expire yet?
+    //System.out.println("time since last expiry: " + (System.currentTimeMillis() - lastExpired));
+    if (System.currentTimeMillis() - lastExpired < Math.min(100, expirytime))
+      return;
+    
+    // find the position of the first change to keep
+    long expireolderthan = System.currentTimeMillis() - expirytime;
+    //System.out.println("expiring changes older than " + expireolderthan);
+    int keepfrom;
+    for (keepfrom = 0;
+         keepfrom < changes.size() &&
+           changes.get(keepfrom).getTimestamp() < expireolderthan;
+         keepfrom++)
+      ;
+    //System.out.println("keeping everything from position " + keepfrom +
+    //                   " to " + changes.size() + "; " +
+    //                   ((keepfrom < changes.size()) ? changes.get(keepfrom) : null));
+
+    // can we efficiently remove a subrange of the array? no, we can't.
+    // List doesn't have a method for it. ArrayList does, but it's protected.
+    // therefore we do it brute-force, and hope this is efficient enough.
+    if (keepfrom > 0) {
+      if (keepfrom == changes.size())
+        changes.clear(); // throw away everything
+      else
+        changes = new ArrayList(changes.subList(keepfrom, changes.size()));
+    }
+    
+    // update timestamp
+    lastExpired = System.currentTimeMillis();
   }
   
   // --- TopicMapListenerIF implementation

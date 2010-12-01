@@ -262,6 +262,58 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
     // if we got here it means we didn't find jill at all
     fail("change for 'jill' topic not found");
   }
+
+  public void testChangeExpiry() {
+    // setting a fairly long expiry time so that changes don't magically
+    // disappear while we are working
+    tracker.setExpiryTime(10);
+
+    // change all topics
+    testChangeAllTopics();
+
+    // wait 100 ms
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) {
+    }
+
+    // change a topic, and observe that all old changes are gone
+    testAddedTopic();
+  }
+
+  public void testChangeExpiry2() {
+    // setting a fairly long expiry time so that changes don't magically
+    // disappear while we are working
+    tracker.setExpiryTime(10);
+
+    // change two topics
+    testTwoChanges();
+
+    // wait 6 ms
+    try {
+      Thread.sleep(6);
+    } catch (InterruptedException e) {
+    }
+
+    // create a new topic
+    TopicMapBuilderIF builder = topicmap.getBuilder();
+    TopicIF topic = builder.makeTopic();
+
+    // wait another 6 ms
+    try {
+      Thread.sleep(6);
+    } catch (InterruptedException e) {
+    }
+
+    // now only the new topic should be visible
+    List<ChangedTopic> changes = tracker.getChangeFeed();
+    assertEquals("only made one change, but more changes in feed",
+                 1, changes.size());
+    ChangedTopic change = changes.get(0);
+    assertTrue("wrong object ID on recorded change",
+               change.getObjectId().equals(topic.getObjectId()));
+  }
+
   
   // ===== UTILITIES
 

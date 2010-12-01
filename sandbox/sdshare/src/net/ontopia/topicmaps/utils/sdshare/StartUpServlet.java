@@ -33,6 +33,7 @@ public class StartUpServlet extends HttpServlet {
   public static Map<String, TopicMapTracker> topicmaps;
   private static Properties properties;
   static Logger log = LoggerFactory.getLogger(StartUpServlet.class.getName());
+  protected static final long DEFAULT_EXPIRY_TIME = 86400000; // 24h
   
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
@@ -60,7 +61,7 @@ public class StartUpServlet extends HttpServlet {
         log.error("No topic map reference for ID: '" + tmid + "'");
         continue;
       }
-      TopicMapTracker tracker = new TopicMapTracker(ref);
+      TopicMapTracker tracker = new TopicMapTracker(ref, getExpiryTime());
       TopicMapEvents.addTopicListener(ref, tracker);
       topicmaps.put(tmid, tracker);
     }
@@ -85,5 +86,17 @@ public class StartUpServlet extends HttpServlet {
 
   public static String getTitle() {
     return properties.getProperty("title");
+  }
+
+  public static long getExpiryTime() {
+    String time = properties.getProperty("expiry");
+    if (time == null)
+      return DEFAULT_EXPIRY_TIME;
+    try {
+      return Long.parseLong(time.trim());
+    } catch (NumberFormatException e) {
+      log.error("expiry property set to unparseable number '" + time + "'");
+      return DEFAULT_EXPIRY_TIME;
+    }
   }
 }
