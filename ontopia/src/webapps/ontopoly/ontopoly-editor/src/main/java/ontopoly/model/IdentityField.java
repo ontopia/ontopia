@@ -42,6 +42,11 @@ public class IdentityField extends FieldDefinition {
   }
 
   @Override
+  public LocatorIF getLocator() {
+    return PSI.ON_IDENTITY_FIELD;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof IdentityField))
       return false;

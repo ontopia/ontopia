@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -37,6 +38,11 @@ public class NameField extends FieldDefinition {
   @Override
   public String getFieldName() {
     return getTopicMap().getTopicName(getTopicIF(), getNameType());
+  }
+
+  @Override
+  public LocatorIF getLocator() {
+    return PSI.ON_NAME_FIELD;
   }
 
   @Override

@@ -6,11 +6,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
+
+import org.codehaus.jettison.json.JSONObject;
 
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
@@ -29,20 +35,21 @@ public class TopicResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("topic/{topicMapId}:{topicId}")
-  public Map<String,Object> getTopic(@PathParam("topicMapId") final String topicMapId, 
-                              @PathParam("topicId") final String topicId) throws Exception {
+  public Map<String,Object> getTopic(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId) throws Exception {
     
     TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
     
     try {
       TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      System.out.println("TM4: " + topicMap + " " + topicId);
+      System.out.println("TM4: " + topicMap + " " + topicId + " " + uriInfo.getAbsolutePath() + " " + uriInfo.getPath() + " " + uriInfo.getBaseUri());
       Topic topic = topicMap.getTopicById(topicId);
       TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
       FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
 
-      return Utils.createFieldConfigMap(topic, topicType, fieldsView);
+      return Utils.createTopicInfo(uriInfo, topic, topicType, fieldsView);
       
     } catch (Exception e) {
       store.abort();
@@ -54,17 +61,60 @@ public class TopicResource {
   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("topic/{topicMapId}:{topicId}:{fieldId}/list")
-  public Map<String,Object> getList(@PathParam("topicMapId") final String topicMapId, 
-                              @PathParam("topicId") final String topicId,
-                              @PathParam("fieldId") final String fieldId) throws Exception {
+  @Path("topic/{topicMapId}:{topicId}:{viewId}")
+  public Map<String,Object> getTopicInView(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId,
+      @PathParam("viewId") final String viewId) throws Exception {
     
     TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
     
     try {
       TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      System.out.println("TM4: " + topicMap + " " + topicId);
+      System.out.println("TM4: " + topicMap + " " + topicId + " " + uriInfo.getAbsolutePath() + " " + uriInfo.getPath() + " " + uriInfo.getBaseUri());
+      Topic topic = topicMap.getTopicById(topicId);
+
+      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      
+      Topic viewTopic = topicMap.getTopicById(viewId);
+      FieldsView fieldsView = new FieldsView(viewTopic);
+
+      return Utils.createTopicInfo(uriInfo, topic, topicType, fieldsView);
+      
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
+  
+  @PUT
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("topic/{topicMapId}:{topicId}")
+  public Map<String,Object> updateTopic(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId, JSONObject jsonObject) throws Exception {
+    System.out.println("IN: " + jsonObject);
+    Map<String,Object> result = new LinkedHashMap<String,Object>();
+    return result;
+  }
+  
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("topic/{topicMapId}:{topicId}:{fieldId}/list")
+  public Map<String,Object> getList(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId,
+      @PathParam("fieldId") final String fieldId) throws Exception {
+    
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
       Topic topic = topicMap.getTopicById(topicId);
       TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
       FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
@@ -85,7 +135,7 @@ public class TopicResource {
               result.put("values", Collections.emptyList());
             } else if (arity == 2) {
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                result.put("values", Utils.getExistingTopicValues(topic, otherRoleField, otherRoleField.getAllowedPlayers(topic)));
+                result.put("values", Utils.getExistingTopicValues(uriInfo, topic, otherRoleField, otherRoleField.getAllowedPlayers(topic)));
                 break;
               }
             } else if (arity > 2) {
@@ -93,7 +143,8 @@ public class TopicResource {
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
                 Map<String,Object> roleData = new LinkedHashMap<String,Object>();
                 roleData.put("id", otherRoleField.getId());
-                roleData.put("values", Utils.getExistingTopicValues(topic, otherRoleField, otherRoleField.getAllowedPlayers(topic)));
+                roleData.put("name", otherRoleField.getFieldName());
+                roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, otherRoleField, otherRoleField.getAllowedPlayers(topic)));
                 roles.add(roleData);
               }
               result.put("values", roles);

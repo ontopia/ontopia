@@ -1,15 +1,11 @@
 package ontopoly.models;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-
 
 import ontopoly.model.FieldInstance;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
-import ontopoly.utils.TopicComparator;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -28,9 +24,8 @@ public abstract class PossiblePlayersModel extends LoadableDetachableModel<List<
   protected List<Topic> load() {
     FieldInstance fieldInstance = fieldInstanceModel.getFieldInstance();
     RoleField roleField = roleFieldModel.getRoleField();    
-    List<Topic> result = new ArrayList<Topic>(roleField.getAllowedPlayers(fieldInstance.getInstance()));
+    List<Topic> result = roleField.getAllowedPlayers(fieldInstance.getInstance());
     filterPlayers(result);
-    Collections.sort(result, TopicComparator.INSTANCE);
     return result;
   }
 

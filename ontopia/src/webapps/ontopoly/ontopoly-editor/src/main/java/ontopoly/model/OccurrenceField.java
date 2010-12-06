@@ -41,6 +41,11 @@ public class OccurrenceField extends FieldDefinition {
   }
 
   @Override
+  public LocatorIF getLocator() {
+    return PSI.ON_OCCURRENCE_FIELD;
+  }
+
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof OccurrenceField))
       return false;

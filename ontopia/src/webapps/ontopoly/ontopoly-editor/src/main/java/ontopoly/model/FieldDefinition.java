@@ -53,6 +53,8 @@ public abstract class FieldDefinition extends Topic {
     return OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
   }
   
+  public abstract LocatorIF getLocator();
+  
   public boolean isReadOnly(FieldsView view) {
     Collection<TopicIF> viewModes = getViewModes(view);
     return viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-readonly"));

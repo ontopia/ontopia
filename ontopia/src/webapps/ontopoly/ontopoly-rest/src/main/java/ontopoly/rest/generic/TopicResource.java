@@ -14,7 +14,7 @@ import ontopoly.model.FieldsView;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
-import ontopoly.rest.editor.Utils;
+import ontopoly.rest.generic.Utils;
 import ontopoly.utils.OntopolyUtils;
 
 @Path("/topics/{topicMapId}:{topicId}")

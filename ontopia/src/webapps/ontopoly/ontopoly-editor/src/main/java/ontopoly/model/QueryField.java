@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
@@ -32,6 +33,11 @@ public class QueryField extends FieldDefinition {
   @Override
   public String getFieldName() {
     return getTopicMap().getTopicName(getTopicIF(), null);
+  }
+
+  @Override
+  public LocatorIF getLocator() {
+    return PSI.ON_QUERY_FIELD;
   }
 
   @Override

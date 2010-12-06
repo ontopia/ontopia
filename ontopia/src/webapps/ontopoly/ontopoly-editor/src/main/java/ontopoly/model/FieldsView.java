@@ -19,6 +19,10 @@ public class FieldsView extends Topic {
 
   private int isEmbeddedView = -1;
   
+  public FieldsView(Topic topic) {
+    super(topic.getTopicIF(), topic.getTopicMap());
+  }
+  
   public FieldsView(TopicIF topic, TopicMap tm) {
     super(topic, tm);
   }

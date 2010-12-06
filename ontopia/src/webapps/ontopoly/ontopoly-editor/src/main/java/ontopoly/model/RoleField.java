@@ -22,6 +22,7 @@ import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.Ordering;
+import ontopoly.utils.TopicComparator;
 
 /**
  * Represents a role field.
@@ -55,6 +56,11 @@ public class RoleField extends FieldDefinition {
     AssociationType atype = getAssociationType();
     RoleType rtype = getRoleType();
     return (atype == null ? "" : atype.getName()) + " (" + (rtype == null ? "" : rtype.getName()) + ")";
+  }
+
+  @Override
+  public LocatorIF getLocator() {
+    return PSI.ON_ROLE_FIELD;
   }
 
   public boolean equals(Object obj) {
@@ -221,9 +227,9 @@ public class RoleField extends FieldDefinition {
     return (occ == null ? null : occ.getValue());
   }
 
-  public Collection<Topic> getAllowedPlayers(Topic currentTopic) {
+  public List<Topic> getAllowedPlayers(Topic currentTopic) {
 
-    Collection<Topic> result = new HashSet<Topic>();
+    Collection<Topic> players = new HashSet<Topic>();
     String query = getAllowedPlayersQuery();
     if (query != null) {
       Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
@@ -238,9 +244,11 @@ public class RoleField extends FieldDefinition {
       Iterator<TopicType> iter = topicTypes.iterator();
       while (iter.hasNext()) {
         TopicType topicType = iter.next();
-        result.addAll(topicType.getInstances());
+        players.addAll(topicType.getInstances());
       }
     }
+    List<Topic> result = new ArrayList<Topic>(players);
+    Collections.sort(result, TopicComparator.INSTANCE);
     return result;
   }
 
