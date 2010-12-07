@@ -2,17 +2,13 @@
 package ontopoly.model;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import ontopoly.utils.OntopolyModelUtils;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.CollectionUtils;
+import ontopoly.utils.OntopolyModelUtils;
 
 /**
  * Represents a field type, which may be a name type, an occurrence type, an
@@ -100,19 +96,12 @@ public abstract class FieldDefinition extends Topic {
    * Returns the cardinality of the field on this topic type.
    */
   public Cardinality getCardinality() {
-    if (cachedCardinality != null) return cachedCardinality;
-
-    String query = 
-      "select $C from on:has-cardinality(%FD% : on:field-definition, $C : on:cardinality) limit 1?";
-
-    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
-
-    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();    
-    
-    TopicIF card = qm.queryForObject(query, params);
-    Cardinality cardinality = (card == null ? Cardinality.getDefaultCardinality(this) : new Cardinality(card, getTopicMap()));
-    cachedCardinality = cardinality;
-    return cardinality;
+    if (cachedCardinality == null) {
+      TopicIF cardinalityIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+          PSI.ON_HAS_CARDINALITY, getTopicIF(), PSI.ON_FIELD_DEFINITION, PSI.ON_CARDINALITY);
+      this.cachedCardinality = (cardinalityIf == null ? Cardinality.getDefaultCardinality(this) : new Cardinality(cardinalityIf, getTopicMap()));
+    }
+    return cachedCardinality;
   }
 
   /**
@@ -140,30 +129,18 @@ public abstract class FieldDefinition extends Topic {
     cachedCardinality = cardinality;
   }
 
-  /**
-   * Returns the topic types to which this field is assigned.
-   * 
-   * @return a list of TopicType objects
-   */
-  public List<TopicType> getUsedBy() {
-    String query = "select $type from on:has-field($type : on:field-owner, %FD% : on:field-definition)?";
-    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
-
-    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
-    return qm.queryForList(query, params);
-  }
-
-  /**
-   * Returns the field's occurrence type. If the field is not an
-   * occurrence field it returns null.
-   */
-  public OccurrenceType getOccurrenceType() {
-    String query =
-      "on:has-occurrence-type(%OF% : on:occurrence-field, $OT : on:occurrence-type)?";
-    Map<String,TopicIF> params = Collections.singletonMap("OF", getTopicIF());
-    QueryMapper<OccurrenceType> qm = getTopicMap().newQueryMapper(OccurrenceType.class);
-    return qm.queryForObject(query, params);
-  }
+//  /**
+//   * Returns the topic types to which this field is assigned.
+//   * 
+//   * @return a list of TopicType objects
+//   */
+//  public List<TopicType> getUsedBy() {
+//    String query = "select $type from on:has-field($type : on:field-owner, %FD% : on:field-definition)?";
+//    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
+//
+//    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
+//    return qm.queryForList(query, params);
+//  }
 
   public abstract Collection<? extends Object> getValues(Topic topic);
 

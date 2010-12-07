@@ -12,7 +12,6 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.utils.CollectionUtils;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**
@@ -61,13 +60,8 @@ public class NameField extends FieldDefinition {
    */
   public NameType getNameType() {
     if (nameType == null) {
-      TopicMap tm = getTopicMap();
-      TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-name-type");
-      TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "name-field");
-      TopicIF player1 = getTopicIF();
-      TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "name-type");
-      Collection<TopicIF> players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
-      TopicIF nameTypeIf = (TopicIF)CollectionUtils.getFirst(players);
+      TopicIF nameTypeIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+          PSI.ON_HAS_NAME_TYPE, getTopicIF(), PSI.ON_NAME_FIELD, PSI.ON_NAME_TYPE);
       this.nameType = (nameTypeIf == null ? null : new NameType(nameTypeIf, getTopicMap()));      
     }
     return nameType;
@@ -124,7 +118,7 @@ public class NameField extends FieldDefinition {
       }
     }
     
-    listener.onAfterAdd(fieldInstance, value);
+    if (listener != null) listener.onAfterAdd(fieldInstance, value);
   }
 
   /**
@@ -146,7 +140,7 @@ public class NameField extends FieldDefinition {
     if (ntype == null) return;
     TopicIF typeIf = ntype.getTopicIF();
 
-    listener.onBeforeRemove(fieldInstance, value);
+    if (listener != null) listener.onBeforeRemove(fieldInstance, value);
 		
 //    Collection<TopicIF> scope = Collections.emptySet();
     Collection<TopicNameIF> names = OntopolyModelUtils.findTopicNames(typeIf, topicIf, value); // , scope);

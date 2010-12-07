@@ -156,7 +156,7 @@ public class TopicMap {
 
   public Topic getTopicById(String id) {
     TopicIF topic = getTopicIFById(id);
-    return new Topic(topic, this);
+    return topic == null ? null : new Topic(topic, this);
   }
 
   public Topic getReifier() {

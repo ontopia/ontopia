@@ -97,5 +97,29 @@ public class PSI {
 
   public static final LocatorIF ON_LONGITUDE = PSI.ON.resolveAbsolute("longitude");
   public static final LocatorIF ON_LATITUDE = PSI.ON.resolveAbsolute("latitude");
-  
+
+  public static final LocatorIF ON_HEIGHT = PSI.ON.resolveAbsolute("height");
+  public static final LocatorIF ON_WIDTH = PSI.ON.resolveAbsolute("width");
+
+  public static final LocatorIF ON_HAS_OCCURRENCE_TYPE = PSI.ON.resolveAbsolute("has-occurrence-type");
+  public static final LocatorIF ON_HAS_ASSOCIATION_TYPE = PSI.ON.resolveAbsolute("has-association-type");
+  public static final LocatorIF ON_HAS_NAME_TYPE = PSI.ON.resolveAbsolute("has-name-type");
+  public static final LocatorIF ON_HAS_IDENTITY_TYPE = PSI.ON.resolveAbsolute("has-identity-type");
+  public static final LocatorIF ON_HAS_ROLE_TYPE = PSI.ON.resolveAbsolute("has-role-type");
+
+  public static final LocatorIF ON_HAS_ASSOCIATION_FIELD = PSI.ON.resolveAbsolute("has-association-field");
+
+  public static final LocatorIF ON_HAS_DATATYPE = PSI.ON.resolveAbsolute("has-datatype");
+  public static final LocatorIF ON_HAS_CARDINALITY = PSI.ON.resolveAbsolute("has-cardinality");
+
+  public static final LocatorIF ON_USE_EDIT_MODE = PSI.ON.resolveAbsolute("use-edit-mode");
+  public static final LocatorIF ON_USE_CREATE_ACTION = PSI.ON.resolveAbsolute("use-create-action");
+  public static final LocatorIF ON_USE_INTERFACE_CONTROL = PSI.ON.resolveAbsolute("use-interface-control");
+
+  public static final LocatorIF ON_DATATYPE = PSI.ON.resolveAbsolute("datatype");
+  public static final LocatorIF ON_CARDINALITY = PSI.ON.resolveAbsolute("cardinality");
+  public static final LocatorIF ON_EDIT_MODE = PSI.ON.resolveAbsolute("edit-mode");
+  public static final LocatorIF ON_CREATE_ACTION = PSI.ON.resolveAbsolute("create-action");
+  public static final LocatorIF ON_INTERFACE_CONTROL = PSI.ON.resolveAbsolute("interface-control");
+
 }

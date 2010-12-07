@@ -31,14 +31,14 @@ import ontopoly.utils.OntopolyUtils;
 
 @Path("/editor")
 public class TopicResource {
-  
+
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("topic/{topicMapId}:{topicId}")
+  @Path("topic/{topicMapId}/{topicId}")
   public Map<String,Object> getTopic(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId) throws Exception {
-    
+  
     TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
     
     try {
@@ -61,7 +61,7 @@ public class TopicResource {
   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("topic/{topicMapId}:{topicId}:{viewId}")
+  @Path("topic/{topicMapId}/{topicId}/{viewId}")
   public Map<String,Object> getTopicInView(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId,
@@ -72,7 +72,7 @@ public class TopicResource {
     try {
       TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      System.out.println("TM4: " + topicMap + " " + topicId + " " + uriInfo.getAbsolutePath() + " " + uriInfo.getPath() + " " + uriInfo.getBaseUri());
+      System.out.println("TM5: " + topicMap + " " + topicId + " " + uriInfo.getAbsolutePath() + " " + uriInfo.getPath() + " " + uriInfo.getBaseUri());
       Topic topic = topicMap.getTopicById(topicId);
 
       TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
@@ -90,22 +90,73 @@ public class TopicResource {
     }
   }
   
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("topic-info/{topicMapId}/{topicId}")
+  public Map<String,Object> getTopicInfo(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId) throws Exception {
+    
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+      Topic topic = topicMap.getTopicById(topicId);
+
+      System.out.println("TT: " + topic + " "  + topicId);
+      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      
+      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
+
+      Map<String,Object> result = new LinkedHashMap<String,Object>();
+
+      result.put("id", topic.getId());
+      result.put("views", Utils.getViews(uriInfo, topic, topicType, fieldsView));
+      return result;
+      
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
+  
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  @Path("topic/{topicMapId}:{topicId}")
+  @Path("topic/{topicMapId}/{topicId}/{viewId}")
   public Map<String,Object> updateTopic(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
-      @PathParam("topicId") final String topicId, JSONObject jsonObject) throws Exception {
-    System.out.println("IN: " + jsonObject);
-    Map<String,Object> result = new LinkedHashMap<String,Object>();
-    return result;
+      @PathParam("topicId") final String topicId, 
+      @PathParam("viewId") final String viewId, JSONObject jsonObject) throws Exception {
+    System.out.println("IN2: " + jsonObject);
+    
+    
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Topic topic = topicMap.getTopicById(topicId);
+      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
+
+      return Utils.updateTopic(uriInfo, topic, topicType, fieldsView, jsonObject);
+
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+ 
   }
   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("topic/{topicMapId}:{topicId}:{fieldId}/list")
-  public Map<String,Object> getList(@Context UriInfo uriInfo, 
+  @Path("available-field-values/{topicMapId}/{topicId}/{fieldId}")
+  public Map<String,Object> getAvailableFieldValues(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId,
       @PathParam("fieldId") final String fieldId) throws Exception {

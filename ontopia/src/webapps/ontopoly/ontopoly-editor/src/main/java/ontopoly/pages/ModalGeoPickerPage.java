@@ -13,12 +13,14 @@ import ontopoly.components.FieldInstancesPanel;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
+import ontopoly.model.OccurrenceField;
 import ontopoly.model.OccurrenceType;
 import ontopoly.model.PSI;
 import ontopoly.model.Topic;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.TopicModel;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
@@ -123,21 +125,23 @@ public class ModalGeoPickerPage extends Panel {
 
     FieldInstancesPanel parent = (FieldInstancesPanel) container;
     ListView<FieldInstanceModel> listView = parent.getFieldList();
-    Iterator<ListItem<FieldInstanceModel>> itfim = (Iterator<ListItem<FieldInstanceModel>>) listView.iterator();
+    Iterator<? extends ListItem<FieldInstanceModel>> itfim = listView.iterator();
     while (itfim.hasNext()) {
       ListItem<FieldInstanceModel> li = itfim.next();
       FieldInstance fi = li.getModelObject().getFieldInstance();
       FieldAssignment fa = fi.getFieldAssignment();
       FieldDefinition fd = fa.getFieldDefinition();
-      OccurrenceType ot = fd.getOccurrenceType();
-
+      if (fd.getFieldType() != FieldDefinition.FIELD_TYPE_OCCURRENCE)
+        continue;
+      OccurrenceField of = (OccurrenceField)fd;
+      OccurrenceType ot = of.getOccurrenceType();
       if (ot == null)
         continue;
       Collection<LocatorIF> psis = ot.getTopicIF().getSubjectIdentifiers();
 
       if (psis.contains(PSI.ON_LATITUDE) ||
           psis.contains(PSI.ON_LONGITUDE)) {
-        Iterator it = li.iterator();
+        Iterator<? extends Component> it = li.iterator();
         while (it.hasNext()) {
           Object component = it.next();
           if (component instanceof FieldInstanceOccurrencePanel) {

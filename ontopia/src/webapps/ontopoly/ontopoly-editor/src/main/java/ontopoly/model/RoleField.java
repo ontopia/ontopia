@@ -18,7 +18,6 @@ import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.Ordering;
@@ -79,22 +78,16 @@ public class RoleField extends FieldDefinition {
     return OntopolyModelUtils.isUnaryPlayer(tm, aType, player, rType);
   }
 
-  public EditMode getEditMode() {
-    String query = "on:use-edit-mode(%FD% : on:field-definition, $EM : on:edit-mode)?";
-    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
-
-    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();
-    TopicIF editMode = qm.queryForObject(query, params);
-    return (editMode == null ? EditMode.getDefaultEditMode(getTopicMap()) : new EditMode(editMode, getTopicMap()));
+  public EditMode getEditMode() {    
+    TopicIF editModeIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+        PSI.ON_USE_EDIT_MODE, getTopicIF(), PSI.ON_FIELD_DEFINITION, PSI.ON_EDIT_MODE);
+    return (editModeIf == null ? EditMode.getDefaultEditMode(getTopicMap()) : new EditMode(editModeIf, getTopicMap()));
   }
 
   public CreateAction getCreateAction() {
-    String query = "on:use-create-action(%FD% : on:field-definition, $CA : on:create-action)?";
-    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
-
-    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();
-    TopicIF createAction = qm.queryForObject(query, params);
-    return (createAction == null ? CreateAction.getDefaultCreateAction(getTopicMap()) : new CreateAction(createAction, getTopicMap()));
+    TopicIF createActionIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+        PSI.ON_USE_CREATE_ACTION, getTopicIF(), PSI.ON_FIELD_DEFINITION, PSI.ON_CREATE_ACTION);
+    return (createActionIf == null ? CreateAction.getDefaultCreateAction(getTopicMap()) : new CreateAction(createActionIf, getTopicMap()));
   }
 
   /**
@@ -114,27 +107,18 @@ public class RoleField extends FieldDefinition {
    */
   public RoleType getRoleType() {
     if (roleType == null) {
-      TopicMap tm = getTopicMap();
-      TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-role-type");
-      TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-field");
-      TopicIF player1 = getTopicIF();
-      TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "role-type");
-      Collection<TopicIF> players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
-      TopicIF roleType = (TopicIF)CollectionUtils.getFirst(players);
-      return (roleType == null ? null : new RoleType(roleType, getTopicMap()));      
+      TopicIF roleTypeIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+          PSI.ON_HAS_ROLE_TYPE, getTopicIF(), PSI.ON_ROLE_FIELD, PSI.ON_ROLE_TYPE);
+      this.roleType = (roleTypeIf == null ? null : new RoleType(roleTypeIf, getTopicMap()));      
     }
     return roleType;
   }
 
   public AssociationField getAssociationField() {
     if (associationField == null) {
-      String query = "select $AF from on:has-association-field(%RF% : on:role-field, $AF : on:association-field)?";
-      Map<String,TopicIF> params = Collections.singletonMap("RF", getTopicIF());
-
-      QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();	    
-      TopicIF afield = qm.queryForObject(query, params);
-
-      this.associationField = new AssociationField(afield, getTopicMap());
+      TopicIF associationFieldIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+          PSI.ON_HAS_ASSOCIATION_FIELD, getTopicIF(), PSI.ON_ROLE_FIELD, PSI.ON_ASSOCIATION_FIELD);
+      this.associationField = (associationFieldIf == null ? null : new AssociationField(associationFieldIf, getTopicMap()));
     }
     return associationField;
   }
@@ -159,14 +143,9 @@ public class RoleField extends FieldDefinition {
    * @return the interface control assigned to this association field. 
    */
   public InterfaceControl getInterfaceControl() {
-    String query = "on:use-interface-control(%FD% : on:field-definition, $IC : on:interface-control)?";
-
-    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
-
-    QueryMapper<TopicIF> qm = getTopicMap().newQueryMapperNoWrap();         
-    TopicIF interfaceControl = qm.queryForObject(query, params);
-
-    return interfaceControl == null ? InterfaceControl.getDefaultInterfaceControl(getTopicMap()) : new InterfaceControl(interfaceControl, getTopicMap());
+    TopicIF interfaceControlIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+        PSI.ON_USE_INTERFACE_CONTROL, getTopicIF(), PSI.ON_FIELD_DEFINITION, PSI.ON_INTERFACE_CONTROL);
+    return interfaceControlIf == null ? InterfaceControl.getDefaultInterfaceControl(getTopicMap()) : new InterfaceControl(interfaceControlIf, getTopicMap());
   }
 
   /**
@@ -452,7 +431,7 @@ public class RoleField extends FieldDefinition {
         }
       }
     }
-    listener.onAfterAdd(fieldInstance, value);
+    if (listener != null) listener.onAfterAdd(fieldInstance, value);
   }
 
   //  protected void clear(FieldInstance fieldInstance, LifeCycleListener listener) {
@@ -482,7 +461,7 @@ public class RoleField extends FieldDefinition {
     TopicIF[] rtypes = getRoleTypes(value);
     TopicIF[] players = getPlayers(value);
 
-    listener.onBeforeRemove(fieldInstance, value);
+    if (listener != null) listener.onBeforeRemove(fieldInstance, value);
 
     Collection<TopicIF> scope = Collections.emptySet();          
     Collection<AssociationIF> assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);

@@ -21,6 +21,7 @@ import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.AssociationBuilder;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.model.PSI;
 import ontopoly.model.QueryMapper;
 import ontopoly.model.TopicMap;
 
@@ -85,10 +86,36 @@ public class OntopolyModelUtils {
     for (AssociationRoleIF role : player1.getRolesByType(rType1, aType)) {
       AssociationIF assoc = role.getAssociation();
       for (AssociationRoleIF role2 : assoc.getRoles())
-        if (role2 != role && role2.getType().equals(rType2))
+        if (ObjectUtils.different(role2, role) && role2.getType().equals(rType2))
           return true;
     }
     return false;
+  }
+
+  public static TopicIF findBinaryPlayer(TopicMap tm, LocatorIF atypeId,
+      TopicIF player1, LocatorIF rtype1Id, LocatorIF rtype2Id) {
+    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, atypeId);
+    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, rtype1Id);
+    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, rtype2Id);
+    
+    Iterator<AssociationRoleIF> iter = player1.getRoles().iterator();
+    while (iter.hasNext()) {
+      AssociationRoleIF role1 = iter.next();
+      AssociationIF assoc = role1.getAssociation();
+      Collection<AssociationRoleIF> roles = assoc.getRoles();
+      if (roles.size() != 2) continue;
+      if (ObjectUtils.equals(role1.getType(), rType1) &&
+          ObjectUtils.equals(assoc.getType(), aType)) {
+        Iterator<AssociationRoleIF> riter = roles.iterator();
+        while (riter.hasNext()) {
+          AssociationRoleIF role2 = riter.next();
+          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2)) {
+            return role2.getPlayer();
+          }
+        }
+      }
+    }
+    return null;
   }
   
   public static Collection<TopicIF> findBinaryPlayers(
@@ -105,7 +132,7 @@ public class OntopolyModelUtils {
         Iterator<AssociationRoleIF> riter = roles.iterator();
         while (riter.hasNext()) {
           AssociationRoleIF role2 = riter.next();
-          if (ObjectUtils.different(role1, role2)) {
+          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2)) {
             result.add(role2.getPlayer());
           }
         }
@@ -130,7 +157,7 @@ public class OntopolyModelUtils {
         Iterator<AssociationRoleIF> riter = roles.iterator();
         while (riter.hasNext()) {
           AssociationRoleIF role2 = riter.next();
-          if (ObjectUtils.different(role1, role2)) {
+          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2)) {
             result.add(role2.getPlayer());
           }
         }

@@ -138,8 +138,13 @@ public class ConvertPage extends NonOntopolyAbstractPage {
       public void onSubmit() {
         TopicMap topicMap = getTopicMapModel().getTopicMap();
         String name = textField.getModel().getObject();
-        
-        if(properties.get("choice").equals(new ResourceModel("ConvertPage.create.copy").getObject())) {
+        if (name == null) {
+          name = topicMap.getId();
+          if (name == null) {
+            name = "noname";
+          }
+        }
+        if (properties.get("choice").equals(new ResourceModel("ConvertPage.create.copy").getObject())) {
           
             TopicMapSource topicMapSource = sourcesDropDown.getModelObject();
             String newTopicMapId = ConversionUtils.convertNew(topicMap, name, topicMapSource);
@@ -147,7 +152,7 @@ public class ConvertPage extends NonOntopolyAbstractPage {
                 + newTopicMapId);
             setResponsePage(TopicTypesPage.class, pageParameters);
           
-        } else {
+        } else {          
           ConversionUtils.convertExisting(topicMap, name);
           PageParameters pageParameters = new PageParameters("topicMapId="
               + topicMap.getId());

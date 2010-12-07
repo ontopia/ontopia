@@ -7,7 +7,6 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.utils.CollectionUtils;
 import ontopoly.utils.OntopolyModelUtils;
 
 /**
@@ -62,13 +61,8 @@ public class IdentityField extends FieldDefinition {
    */
   public IdentityType getIdentityType() {
     if (identityType == null) {
-      TopicMap tm = getTopicMap();
-      TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-identity-type");
-      TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "identity-field");
-      TopicIF player1 = getTopicIF();
-      TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "identity-type");
-      Collection<TopicIF> players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
-      TopicIF identityTypeIf = (TopicIF)CollectionUtils.getFirst(players);
+      TopicIF identityTypeIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+          PSI.ON_HAS_IDENTITY_TYPE, getTopicIF(), PSI.ON_IDENTITY_FIELD, PSI.ON_IDENTITY_TYPE);
       this.identityType = (identityTypeIf == null ? null : new IdentityType(identityTypeIf, getTopicMap()));      
     }
     return identityType;
@@ -145,7 +139,7 @@ public class IdentityField extends FieldDefinition {
         topicIf.addSubjectIdentifier(value);
     }
     
-    listener.onAfterAdd(fieldInstance, value);
+    if (listener != null) listener.onAfterAdd(fieldInstance, value);
   }
 
   /**
@@ -162,7 +156,7 @@ public class IdentityField extends FieldDefinition {
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 
                        URILocator.create((String) _value));
     if (value != null) {
-      listener.onBeforeRemove(fieldInstance, value);
+      if (listener != null) listener.onBeforeRemove(fieldInstance, value);
 		  
       if (isSubjectLocator())
         topicIf.removeSubjectLocator(value);

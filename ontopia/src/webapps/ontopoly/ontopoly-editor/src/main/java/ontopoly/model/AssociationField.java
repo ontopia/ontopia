@@ -8,13 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import ontopoly.utils.OntopolyModelUtils;
-
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.utils.RowMapperIF;
-import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
+import ontopoly.utils.OntopolyModelUtils;
 
 /**
  * Represents an association field.
@@ -48,14 +46,9 @@ public class AssociationField extends Topic {
    */
   public AssociationType getAssociationType() {
     if (cachedAssociationType == null) {
-      TopicMap tm = getTopicMap();
-      TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-association-type");
-      TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-field");
-      TopicIF player1 = getTopicIF();
-      TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-type");
-      Collection<TopicIF> players = OntopolyModelUtils.findBinaryPlayers(tm, aType, player1, rType1, rType2);
-      TopicIF associationType = (TopicIF)CollectionUtils.getFirst(players);
-      this.cachedAssociationType = (associationType == null ? null : new AssociationType(associationType, getTopicMap()));      
+      TopicIF associationTypeIf = OntopolyModelUtils.findBinaryPlayer(getTopicMap(), 
+          PSI.ON_HAS_ASSOCIATION_TYPE, getTopicIF(), PSI.ON_ASSOCIATION_FIELD, PSI.ON_ASSOCIATION_TYPE);
+      this.cachedAssociationType = (associationTypeIf == null ? null : new AssociationType(associationTypeIf, getTopicMap()));      
 		}
     return cachedAssociationType;
   }
@@ -112,7 +105,7 @@ public class AssociationField extends Topic {
       rf.remove(listener);
     }
     // remove association type topic
-    listener.onBeforeDelete(this);
+    if (listener != null) listener.onBeforeDelete(this);
     getTopicIF().remove();
   }
   
