@@ -39,19 +39,23 @@ public abstract class RegexValidator extends AbstractValidator<String> {
     }
   }
 
-  private void reportError(String resourceKey, final String value, final String regex) {    
-    String message = Application.get().getResourceSettings().getLocalizer().getString(resourceKey, (Component)null, 
-        new Model<Serializable>(new Serializable() {
-          @SuppressWarnings("unused")
-          public String getValue() {
-            return value;
-          }
-          @SuppressWarnings("unused")
-          public String getRegex() {
-            return regex;
-          }
-        }));
-    component.error(AbstractFieldInstancePanel.createErrorMessage(fieldInstanceModel, new Model<String>(message)));    
+  private void reportError(String resourceKey, final String value, final String regex) {
+    try {
+      String message = Application.get().getResourceSettings().getLocalizer().getString(resourceKey, (Component)null, 
+          new Model<Serializable>(new Serializable() {
+            @SuppressWarnings("unused")
+            public String getValue() {
+              return value;
+            }
+            @SuppressWarnings("unused")
+            public String getRegex() {
+              return regex;
+            }
+          }));
+      component.error(AbstractFieldInstancePanel.createErrorMessage(fieldInstanceModel, new Model<String>(message)));    
+    } catch (Exception e) {
+      component.error(AbstractFieldInstancePanel.createErrorMessage(fieldInstanceModel, new Model<String>("Regexp validation error (value='" + value+ "', regex='" + regex + "')")));    
+    }
   }
 
   protected abstract String getRegex();

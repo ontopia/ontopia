@@ -2,6 +2,9 @@
 
 package ontopoly.model;
 
+import java.util.Collection;
+
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 
 /**
@@ -22,6 +25,23 @@ public class EditMode extends Topic {
 
     EditMode cardinality = (EditMode) obj;
     return (getTopicIF().equals(cardinality.getTopicIF()));
+  }
+
+  public LocatorIF getLocator() {
+    Collection<LocatorIF> subjectIdentifiers = getTopicIF().getSubjectIdentifiers();
+    if (subjectIdentifiers.contains(PSI.ON_EDIT_MODE_EXISTING_VALUES_ONLY)) {
+      return PSI.ON_EDIT_MODE_EXISTING_VALUES_ONLY;
+    } else if (subjectIdentifiers.contains(PSI.ON_EDIT_MODE_NEW_VALUES_ONLY)) {
+      return PSI.ON_EDIT_MODE_NEW_VALUES_ONLY;
+    } else if (subjectIdentifiers.contains(PSI.ON_EDIT_MODE_NO_EDIT)) {
+      return PSI.ON_EDIT_MODE_NO_EDIT;
+    } else if (subjectIdentifiers.contains(PSI.ON_EDIT_MODE_NORMAL)) {
+      return PSI.ON_EDIT_MODE_NORMAL;
+    } else if (subjectIdentifiers.contains(PSI.ON_EDIT_MODE_OWNED_VALUES)) {
+      return PSI.ON_EDIT_MODE_OWNED_VALUES;
+    } else {
+      return null;
+    }
   }
 
   public boolean isExistingValuesOnly() {
