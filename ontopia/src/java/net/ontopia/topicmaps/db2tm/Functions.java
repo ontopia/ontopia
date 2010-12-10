@@ -4,6 +4,7 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import net.ontopia.utils.ObjectUtils;
@@ -148,8 +149,16 @@ public class Functions {
       Date dateobj = inf.parse(date);
       return outf.format(dateobj);
     } catch (ParseException e) {
-      throw new DB2TMInputException("Couldn't parse date", e);
+      throw new DB2TMInputException("Couldn't parse date: " + date, e);
     }
+  }
+
+  /**
+   * INTERNAL: Replace all occurrences of a regex in a string with a new value.
+   */
+  public static String stringReplaceAll(String str, String regex, String toValue) {
+    if (str == null) return null;
+    return str.replaceAll(regex, toValue);
   }
 
   /**
