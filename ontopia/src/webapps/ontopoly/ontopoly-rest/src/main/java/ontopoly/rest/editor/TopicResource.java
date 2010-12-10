@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -132,7 +133,6 @@ public class TopicResource {
       @PathParam("viewId") final String viewId, JSONObject jsonObject) throws Exception {
     System.out.println("IN2: " + jsonObject);
     
-    
     TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
     
     try {
@@ -140,7 +140,9 @@ public class TopicResource {
 
       Topic topic = topicMap.getTopicById(topicId);
       TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
-      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
+            
+      Topic viewTopic = topicMap.getTopicById(viewId);
+      FieldsView fieldsView = new FieldsView(viewTopic);
 
       return Utils.updateTopic(uriInfo, topic, topicType, fieldsView, jsonObject);
 
@@ -150,15 +152,80 @@ public class TopicResource {
     } finally {
       store.close();      
     }
- 
+  }
+  
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("add-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
+  public Map<String,Object> addFieldValues(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId, 
+      @PathParam("viewId") final String viewId,
+      @PathParam("fieldId") final String fieldId, JSONObject jsonObject) throws Exception {
+    System.out.println("IN3_: " + topicMapId + " " + topicId + " " + viewId +  " " + fieldId);
+    System.out.println("IN3: " + jsonObject);
+    
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Topic topic = topicMap.getTopicById(topicId);
+      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      
+      Topic viewTopic = topicMap.getTopicById(viewId);
+      FieldsView fieldsView = new FieldsView(viewTopic);
+
+      return Utils.addFieldValues(uriInfo, topic, topicType, fieldsView, fieldId, jsonObject);
+      
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    } 
+  }
+  
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("remove-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
+  public Map<String,Object> removeFieldValues(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId, 
+      @PathParam("viewId") final String viewId,
+      @PathParam("fieldId") final String fieldId, JSONObject jsonObject) throws Exception {
+    System.out.println("IN4: " + jsonObject);
+    
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Topic topic = topicMap.getTopicById(topicId);
+      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      
+      Topic viewTopic = topicMap.getTopicById(viewId);
+      FieldsView fieldsView = new FieldsView(viewTopic);
+
+      return Utils.removeFieldValues(uriInfo, topic, topicType, fieldsView, fieldId, jsonObject);
+      
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    } 
   }
   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("available-field-values/{topicMapId}/{topicId}/{fieldId}")
+  @Path("available-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
   public Map<String,Object> getAvailableFieldValues(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
-      @PathParam("topicId") final String topicId,
+      @PathParam("topicId") final String topicId, 
+      @PathParam("viewId") final String viewId,
       @PathParam("fieldId") final String fieldId) throws Exception {
     
     TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
@@ -168,7 +235,9 @@ public class TopicResource {
 
       Topic topic = topicMap.getTopicById(topicId);
       TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
-      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
+      
+      Topic viewTopic = topicMap.getTopicById(viewId);
+      FieldsView fieldsView = new FieldsView(viewTopic);
 
       List<FieldInstance> fieldInstances = topic.getFieldInstances(topicType, fieldsView);
       for (FieldInstance fieldInstance: fieldInstances) {
@@ -181,21 +250,23 @@ public class TopicResource {
             result.put("id", fieldDefinition.getId());
             result.put("arity", arity);
 
-            System.out.println("A: " + arity);
+            System.out.println("Ax: " + arity);
             if (arity < 2) {
               result.put("values", Collections.emptyList());
             } else if (arity == 2) {
+              FieldsView childView = fieldDefinition.getValueView(fieldsView);
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                result.put("values", Utils.getExistingTopicValues(uriInfo, topic, otherRoleField, otherRoleField.getAllowedPlayers(topic)));
+                result.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView));
                 break;
               }
             } else if (arity > 2) {
+              FieldsView childView = fieldDefinition.getValueView(fieldsView);              
               List<Map<String,Object>> roles = new ArrayList<Map<String,Object>>();
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
                 Map<String,Object> roleData = new LinkedHashMap<String,Object>();
                 roleData.put("id", otherRoleField.getId());
                 roleData.put("name", otherRoleField.getFieldName());
-                roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, otherRoleField, otherRoleField.getAllowedPlayers(topic)));
+                roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView));
                 roles.add(roleData);
               }
               result.put("values", roles);
