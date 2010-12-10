@@ -83,10 +83,10 @@ public abstract class FieldDefinition extends Topic {
     TopicIF viewIf = (TopicIF) CollectionUtils.getFirst(players);
     // ISSUE: should we use view given in parameter as default instead?
     if (viewIf == null) {
-      if (view.isEmbeddedView())
+//      if (view.isEmbeddedView())
         return FieldsView.getDefaultFieldsView(tm);
-      else
-        return view;
+//      else
+//        return view;
     } else {
       return new FieldsView(viewIf, tm);
     }
