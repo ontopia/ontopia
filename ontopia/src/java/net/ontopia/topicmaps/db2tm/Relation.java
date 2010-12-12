@@ -1,6 +1,4 @@
 
-// $Id: Relation.java,v 1.21 2007/01/31 09:34:20 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * defintions.
  */
 public class Relation {
-
   protected String name; // relation name
   protected String[] columns; // all columns
   protected String[] pkey; // primary key
@@ -85,9 +82,10 @@ public class Relation {
   public String getCommitMode() {
     return commit;
   }
-  // -----------------------------------------------------------------------------
+  
+  // ---------------------------------------------------------------------------
   // Entities
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public List getEntities() {
     return entities;
@@ -105,9 +103,9 @@ public class Relation {
     return (Entity)entities.get(0);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Columns
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   public String[] getColumns() {
     return columns;
@@ -139,9 +137,9 @@ public class Relation {
     this.virtualColumns.put(name, vcol);
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Synchronization
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   public int getSynchronizationType() {
     return synctype;
@@ -182,13 +180,14 @@ public class Relation {
     return "Relation(" + getName() + ")";
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Compiling
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   void compile() {
     Iterator iter = entities.iterator();
-    while (iter.hasNext()) ((Entity)iter.next()).compile();
+    while (iter.hasNext())
+      ((Entity)iter.next()).compile();
   }
 
 }
