@@ -208,25 +208,18 @@ public class RoleField extends FieldDefinition {
 
   public List<Topic> getAllowedPlayers(Topic currentTopic) {
 
-    Collection<Topic> players = new HashSet<Topic>();
     String query = getAllowedPlayersQuery();
-    if (query != null) {
-      Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
-      params.put("field", getTopicIF());
-      params.put("topic", currentTopic.getTopicIF());
+    if (query == null) {
+      query = "select $instance from " +
+        "on:has-field(%field% : on:field-definition, $ttype : on:field-owner), " +
+        "instance-of($instance, $ttype) order by $instance?";
+    } 
+    Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
+    params.put("field", getTopicIF());
+    params.put("topic", currentTopic.getTopicIF());
 
-      QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
-      return qm.queryForList(query, params);
-
-    } else {
-      Collection<TopicType> topicTypes = getAllowedPlayerTypes(currentTopic);
-      Iterator<TopicType> iter = topicTypes.iterator();
-      while (iter.hasNext()) {
-        TopicType topicType = iter.next();
-        players.addAll(topicType.getInstances());
-      }
-    }
-    List<Topic> result = new ArrayList<Topic>(players);
+    QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
+    List<Topic> result = qm.queryForList(query, params);
     Collections.sort(result, TopicComparator.INSTANCE);
     return result;
   }
