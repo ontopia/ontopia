@@ -39,7 +39,7 @@ import org.apache.wicket.model.ResourceModel;
 
 public class FieldsEditor extends Panel {
 
-  protected static final boolean ISSUE_329_ENABLED = false;
+  protected static final boolean ISSUE_329_ENABLED = true;
   
   TopicTypeModel topicTypeModel;
   boolean readonly;

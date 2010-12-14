@@ -18,6 +18,7 @@ import ontopoly.model.InterfaceControl;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicType;
+import ontopoly.model.ViewModes;
 import ontopoly.utils.OntopolyUtils;
 
 public class Utils {
@@ -60,11 +61,12 @@ public class Utils {
       RoleField.ValueIF value = (RoleField.ValueIF)fieldValue;
       int arity = value.getArity(); 
       if (arity == 2) {
+        FieldsView valueView = fieldDefinition.getValueView(fieldsView);
+        ViewModes viewModes = fieldDefinition.getViewModes(valueView);
         for (RoleField rf : value.getRoleFields()) {
           if (!rf.equals(roleField)) {
             Topic valueTopic = value.getPlayer(rf, topic);
-            FieldsView valueView = fieldDefinition.getValueView(fieldsView);
-            if (fieldDefinition.isEmbedded(valueView)) {
+            if (viewModes.isEmbedded()) {
               TopicType valueType = OntopolyUtils.getDefaultTopicType(valueTopic);
               return createFieldConfigMap(valueTopic, valueType, valueView);
             } else {
@@ -133,9 +135,10 @@ public class Utils {
       break;
     case FieldDefinition.FIELD_TYPE_ROLE: 
       field.setType("role");
-      if (fieldDefinition.isEmbedded(fieldsView)) {
-        FieldsView embeddedView = fieldDefinition.getValueView(fieldsView);
-        field.setEmbeddedView(embeddedView.getId());
+      FieldsView childView = fieldDefinition.getValueView(fieldsView);
+      ViewModes viewModes = fieldDefinition.getViewModes(childView);
+      if (viewModes.isEmbedded()) {
+        field.setEmbeddedView(childView.getId());
       }
       RoleField roleField = (RoleField)fieldDefinition;
       InterfaceControl interfaceControl = roleField.getInterfaceControl();

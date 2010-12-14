@@ -16,6 +16,7 @@ import ontopoly.utils.OntopolyModelUtils;
  * type.
  */
 public abstract class FieldDefinition extends Topic {
+  
   public static final int FIELD_TYPE_ROLE = 1;
   public static final int FIELD_TYPE_OCCURRENCE = 2;
   public static final int FIELD_TYPE_NAME = 4;
@@ -37,38 +38,11 @@ public abstract class FieldDefinition extends Topic {
    * Returns the name of this field definition.
    */
   public abstract String getFieldName();
-
-  private Collection<TopicIF> getViewModes(FieldsView view) {
-    TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "use-view-mode");
-    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-    TopicIF player1 = getTopicIF();
-    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "fields-view");
-    TopicIF player2 = view.getTopicIF();
-    TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "view-mode");
-    return OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
-  }
   
   public abstract LocatorIF getLocator();
-  
-  public boolean isReadOnly(FieldsView view) {
-    Collection<TopicIF> viewModes = getViewModes(view);
-    return viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-readonly"));
-  }
 
-  public boolean isHidden(FieldsView view) {
-    Collection<TopicIF> viewModes = getViewModes(view);
-    return viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-hidden"));
-  }
-
-  public boolean isTraversable(FieldsView view) {
-    Collection<TopicIF> viewModes = getViewModes(view);
-    return !viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-not-traversable"));
-  }
-
-  public boolean isEmbedded(FieldsView view) {
-    Collection<TopicIF> viewModes = getViewModes(view);
-    return viewModes.contains(OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "view-mode-embedded"));
+  public ViewModes getViewModes(FieldsView view) {
+    return new ViewModes(this, view);
   }
 
   public FieldsView getValueView(FieldsView view) {
@@ -81,12 +55,8 @@ public abstract class FieldDefinition extends Topic {
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "child-view");
     Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     TopicIF viewIf = (TopicIF) CollectionUtils.getFirst(players);
-    // ISSUE: should we use view given in parameter as default instead?
     if (viewIf == null) {
-//      if (view.isEmbeddedView())
-        return FieldsView.getDefaultFieldsView(tm);
-//      else
-//        return view;
+      return FieldsView.getDefaultFieldsView(tm);
     } else {
       return new FieldsView(viewIf, tm);
     }

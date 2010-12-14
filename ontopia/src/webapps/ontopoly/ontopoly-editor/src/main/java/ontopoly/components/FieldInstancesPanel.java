@@ -8,6 +8,7 @@ import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.FieldsView;
 import ontopoly.model.RoleField;
+import ontopoly.model.ViewModes;
 import ontopoly.models.FieldInstanceModel;
 import ontopoly.models.FieldsViewModel;
 
@@ -68,8 +69,9 @@ public class FieldInstancesPanel extends Panel {
     fieldsViewModel = new FieldsViewModel(fieldsView);
     
     // given the current view see if it is readonly and/or embedded
-    final boolean rofield = (readonly  || fieldDefinition.isReadOnly(fieldsView));
-    final boolean embedded = fieldDefinition.isEmbedded(fieldsView);
+    ViewModes viewModes = fieldDefinition.getViewModes(fieldsView);
+    final boolean rofield = (readonly  || viewModes.isReadOnly());
+    final boolean embedded = viewModes.isEmbedded();
     
     // add field to panel
     switch (fieldDefinition.getFieldType()) {
@@ -82,7 +84,7 @@ public class FieldInstancesPanel extends Panel {
       }
       // binary
       else if (arity == 2) {
-        final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
+        final boolean traversable = (_traversable ? viewModes.isTraversable() : false);
 
         if (embedded)
           return new FieldInstanceAssociationBinaryEmbeddedPanel(id, fieldInstanceModel, fieldsViewModel, rofield, traversable).setOutputMarkupId(true);
@@ -91,7 +93,7 @@ public class FieldInstancesPanel extends Panel {
       } 
       // n-ary
       else {
-        final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
+        final boolean traversable = (_traversable ? viewModes.isTraversable() : false);
         return new FieldInstanceAssociationNaryPanel(id, fieldInstanceModel, fieldsViewModel, rofield, traversable, arity).setOutputMarkupId(true);        
       }
     }
@@ -105,7 +107,7 @@ public class FieldInstancesPanel extends Panel {
       return new FieldInstanceOccurrencePanel(id, fieldInstanceModel, rofield);
     }
     case FieldDefinition.FIELD_TYPE_QUERY: {
-      final boolean traversable = (_traversable ? fieldDefinition.isTraversable(fieldsView) : false);
+      final boolean traversable = (_traversable ? viewModes.isTraversable() : false);
       if (embedded)
         return new FieldInstanceQueryEmbeddedPanel(id, fieldInstanceModel, fieldsViewModel, rofield, traversable);
       else

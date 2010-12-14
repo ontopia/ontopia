@@ -78,6 +78,11 @@ public class PSI {
   public static final LocatorIF ON_EDIT_MODE_NORMAL = PSI.ON.resolveAbsolute("edit-mode-normal");
   public static final LocatorIF ON_EDIT_MODE_NO_EDIT = PSI.ON.resolveAbsolute("edit-mode-no-edit");
 
+  public static final LocatorIF ON_VIEW_MODE_READ_ONLY = PSI.ON.resolveAbsolute("view-mode-readonly");
+  public static final LocatorIF ON_VIEW_MODE_HIDDEN = PSI.ON.resolveAbsolute("view-mode-hidden");
+  public static final LocatorIF ON_VIEW_MODE_NOT_TRAVERSABLE = PSI.ON.resolveAbsolute("view-mode-not-traversable");
+  public static final LocatorIF ON_VIEW_MODE_EMBEDDED = PSI.ON.resolveAbsolute("view-mode-embedded");
+
   public static final LocatorIF ON_CREATE_ACTION_NONE = PSI.ON.resolveAbsolute("create-action-none");
   public static final LocatorIF ON_CREATE_ACTION_POPUP = PSI.ON.resolveAbsolute("create-action-popup");
   public static final LocatorIF ON_CREATE_ACTION_NAVIGATE = PSI.ON.resolveAbsolute("create-action-navigate");

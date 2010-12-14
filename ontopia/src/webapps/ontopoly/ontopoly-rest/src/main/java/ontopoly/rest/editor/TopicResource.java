@@ -28,6 +28,7 @@ import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
+import ontopoly.model.ViewModes;
 import ontopoly.utils.OntopolyUtils;
 
 @Path("/editor")
@@ -246,6 +247,7 @@ public class TopicResource {
           if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
             RoleField roleField = (RoleField)fieldDefinition;
             int arity = roleField.getAssociationField().getArity();
+            
             Map<String,Object> result = new LinkedHashMap<String,Object>();
             result.put("id", fieldDefinition.getId());
             result.put("arity", arity);
@@ -255,18 +257,20 @@ public class TopicResource {
               result.put("values", Collections.emptyList());
             } else if (arity == 2) {
               FieldsView childView = fieldDefinition.getValueView(fieldsView);
+              ViewModes viewModes = fieldDefinition.getViewModes(childView);
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                result.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView));
+                result.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes));
                 break;
               }
             } else if (arity > 2) {
-              FieldsView childView = fieldDefinition.getValueView(fieldsView);              
+              FieldsView childView = fieldDefinition.getValueView(fieldsView);
+              ViewModes viewModes = fieldDefinition.getViewModes(childView);
               List<Map<String,Object>> roles = new ArrayList<Map<String,Object>>();
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
                 Map<String,Object> roleData = new LinkedHashMap<String,Object>();
                 roleData.put("id", otherRoleField.getId());
                 roleData.put("name", otherRoleField.getFieldName());
-                roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView));
+                roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes));
                 roles.add(roleData);
               }
               result.put("values", roles);

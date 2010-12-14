@@ -47,12 +47,12 @@ public class OntopolyModelUtils {
     return getTopicIF(tm, base.resolveAbsolute(subjectIndicator), true);
   }
 
-  public static TopicIF getTopicIF(TopicMap tm, LocatorIF subjectIdentifier) {
-    return getTopicIF(tm, subjectIdentifier, true);
-  }
-
   public static TopicIF getTopicIF(TopicMap tm, LocatorIF base, String subjectIndicator, boolean mustExist) {
     return getTopicIF(tm, base.resolveAbsolute(subjectIndicator), mustExist);
+  }
+
+  public static TopicIF getTopicIF(TopicMap tm, LocatorIF subjectIdentifier) {
+    return getTopicIF(tm, subjectIdentifier, true);
   }
 
   public static TopicIF getTopicIF(TopicMap tm, LocatorIF subjectIdentifier, boolean mustExist) {
