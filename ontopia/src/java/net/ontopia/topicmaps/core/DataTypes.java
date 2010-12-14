@@ -67,6 +67,11 @@ public class DataTypes {
   public static final LocatorIF TYPE_DATETIME = URILocator.create("http://www.w3.org/2001/XMLSchema#dateTime");
 
   /**
+   * PUBLIC: xsd:boolean datatype.
+   */  
+  public static final LocatorIF TYPE_BOOLEAN = URILocator.create("http://www.w3.org/2001/XMLSchema#boolean");
+
+  /**
    * PUBLIC: xsd:base64Binary datatype.
    */  
   public static final LocatorIF TYPE_BINARY = URILocator.create("http://www.w3.org/2001/XMLSchema#base64Binary");
