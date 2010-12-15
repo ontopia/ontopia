@@ -207,6 +207,7 @@ public class Utils {
       if (viewModes.isReadOnly()) {
         field.put("readOnly", Boolean.TRUE);
       }
+      field.put("links", Collections.EMPTY_LIST);
     } else if (fieldType == FieldDefinition.FIELD_TYPE_NAME) {
       //        NameField nameField = (NameField)fieldDefinition;
       field.put("type", fieldDefinition.getLocator().getExternalForm());
@@ -214,7 +215,7 @@ public class Utils {
       if (viewModes.isReadOnly()) {
         field.put("readOnly", Boolean.TRUE);
       }
-//      field.put("links", fieldLinks);
+      field.put("links", Collections.EMPTY_LIST);
     } else if (fieldType == FieldDefinition.FIELD_TYPE_IDENTITY) {
       //        IdentityField identityField = (IdentityField)fieldDefinition;
       field.put("type", fieldDefinition.getLocator().getExternalForm());
@@ -222,14 +223,16 @@ public class Utils {
       if (viewModes.isReadOnly()) {
         field.put("readOnly", Boolean.TRUE);
       }
-//      field.put("links", fieldLinks);
+      field.put("links", Collections.EMPTY_LIST);
     } else if (fieldType == FieldDefinition.FIELD_TYPE_QUERY) {
       //        QueryField queryField = (QueryField)fieldDefinition;
       field.put("type", fieldDefinition.getLocator().getExternalForm());
       if (viewModes.isReadOnly()) {
         field.put("readOnly", Boolean.TRUE);
       }
-//      field.put("links", fieldLinks);
+      field.put("links", Collections.EMPTY_LIST);
+    } else {
+      throw new RuntimeException("Unknown field type: " + fieldDefinition);
     }
 
     field.put("values", getValues(uriInfo, topic, topicType, parentView, childView, viewModes, fieldDefinition, fieldValues));
