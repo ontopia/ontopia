@@ -75,12 +75,17 @@ public class Utils {
     return uriInfo.getBaseUri() + "editor/topic/" + topic.getTopicMap().getId() + "/" + topic.getId() + "/" + fieldsView.getId();
   }
 
+  protected static String getCreateLinkFor(UriInfo uriInfo, TopicType topicType, FieldsView fieldsView) {
+    return uriInfo.getBaseUri() + "editor/topic/" + topicType.getTopicMap().getId() + "/" + topicType.getId() + "/" + fieldsView.getId();
+  }
+
   public static Map<String,Object> createTopicInfo(UriInfo uriInfo, Topic topic, TopicType topicType, FieldsView fieldsView) {
     Map<String,Object> result = new LinkedHashMap<String,Object>();
 
     result.put("id", topic.getId());
     result.put("name", topic.getName());
     result.put("type", topicType.getName());
+    result.put("typeId", topicType.getId());
     result.put("view", fieldsView.getId());
 
     List<Link> topicLinks = new ArrayList<Link>();
@@ -92,24 +97,57 @@ public class Utils {
     List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
 
     for (FieldInstance fieldInstance : topic.getFieldInstances(topicType, fieldsView)) {
-      Map<String, Object> field = createFieldInfo(uriInfo, topic, topicType, fieldsView, fieldInstance);
-      fields.add(field);
+      fields.add(createFieldInfo(uriInfo, topic, topicType, fieldsView, fieldInstance));
     }
     result.put("fields", fields);
-
     result.put("views", getViews(uriInfo, topic, topicType, fieldsView));
+    return result;
+  }
 
-    System.out.println("M " + result);
+  public static Map<String,Object> createNewTopicInfo(UriInfo uriInfo, TopicType topicType, FieldsView fieldsView) {
+    Map<String,Object> result = new LinkedHashMap<String,Object>();
+
+    result.put("id", ":new");
+    result.put("type", topicType.getName());
+    result.put("typeId", topicType.getId());
+    result.put("view", fieldsView.getId());
+
+    List<Link> topicLinks = new ArrayList<Link>();
+    topicLinks.add(new Link("create", getCreateLinkFor(uriInfo, topicType, fieldsView)));    
+    //    topicLinks.add(new Link("remove", "http://examples.org/topics/" + topic.getId() + "/remove"));
+    //    topicLinks.add(new Link("batch-update", "http://examples.org/topics/" + topic.getId() + "/batch-update"));
+    result.put("links", topicLinks);
+
+    List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
+
+    Topic topic = null;
+    for (FieldAssignment fieldAssignment : topicType.getFieldAssignments(fieldsView)) {
+      FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
+      fields.add(createFieldInfo(uriInfo, topic, topicType, fieldsView, fieldDefinition, Collections.emptyList()));
+    }
+    result.put("fields", fields);
+//    result.put("views", getViews(uriInfo, topic, topicType, fieldsView));
     return result;
   }
 
   private static Map<String, Object> createFieldInfo(UriInfo uriInfo,
       Topic topic, TopicType topicType, FieldsView parentView,
       FieldInstance fieldInstance) {
-    Map<String,Object> field = new LinkedHashMap<String,Object>();
 
     FieldAssignment fieldAssignment = fieldInstance.getFieldAssignment();
     FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
+    
+    Collection<? extends Object> fieldValues = fieldInstance.getValues();
+    
+    return createFieldInfo(uriInfo, topic, topicType, parentView, fieldDefinition, fieldValues);
+  }
+  
+  private static Map<String, Object> createFieldInfo(UriInfo uriInfo,
+      Topic topic, TopicType topicType, FieldsView parentView,
+      FieldDefinition fieldDefinition, Collection<? extends Object> fieldValues) {
+
+    Map<String,Object> field = new LinkedHashMap<String,Object>();
+
     int fieldType = fieldDefinition.getFieldType();
 
     FieldsView childView = fieldDefinition.getValueView(parentView);
@@ -121,7 +159,6 @@ public class Utils {
     Cardinality cardinality = fieldDefinition.getCardinality();
     field.put("cardinality", cardinality.getLocator().getExternalForm());
 
-    //fieldLinks.add(new Link("self", "http://examples.org/topics/" + fieldDefinition.getId()));    
     if (fieldType == FieldDefinition.FIELD_TYPE_ROLE) {
       RoleField roleField = (RoleField)fieldDefinition; 
       field.put("type", fieldDefinition.getLocator().getExternalForm());
@@ -130,19 +167,26 @@ public class Utils {
       int arity = roleField.getAssociationField().getArity();
       if (arity == 2) {
         EditMode editMode = roleField.getEditMode();
-        if (viewModes.isReadOnly() || editMode.isNoEdit()) {
+        boolean allowEdit = !viewModes.isReadOnly() && !editMode.isNoEdit();
+        boolean allowAddRemove = allowEdit && !editMode.isNewValuesOnly();
+        boolean allowCreate = allowEdit && !editMode.isExistingValuesOnly();
+        if (!allowEdit) {
           field.put("readOnly", Boolean.TRUE);
         }
+        
         for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
           List<Link> fieldLinks = new ArrayList<Link>();
 
           InterfaceControl interfaceControl = otherRoleField.getInterfaceControl();
           field.put("interfaceControl", interfaceControl.getLocator().getExternalForm());          
           if (interfaceControl.isDropDownList()) {
-            TopicMap topicMap = topic.getTopicMap();
-            if (!viewModes.isReadOnly()) {
-              fieldLinks.add(new Link("list", uriInfo.getBaseUri() + "editor/available-field-values/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
+            TopicMap topicMap = fieldDefinition.getTopicMap();
+            if (allowCreate) {
+              fieldLinks.add(new Link("create-value", uriInfo.getBaseUri() + "editor/available-field-types/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
+            }
+            if (allowAddRemove) {
               // ISSUE: should add-values and remove-values be links on list result instead?
+              fieldLinks.add(new Link("list", uriInfo.getBaseUri() + "editor/available-field-values/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
               fieldLinks.add(new Link("add-values", uriInfo.getBaseUri() + "editor/add-field-values/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
               fieldLinks.add(new Link("remove-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
             }
@@ -188,7 +232,6 @@ public class Utils {
 //      field.put("links", fieldLinks);
     }
 
-    Collection<? extends Object> fieldValues = fieldInstance.getValues();
     field.put("values", getValues(uriInfo, topic, topicType, parentView, childView, viewModes, fieldDefinition, fieldValues));
     return field;
   }
@@ -271,7 +314,7 @@ public class Utils {
               TopicType valueType = OntopolyUtils.getDefaultTopicType(valueTopic);
               return createTopicInfo(uriInfo, valueTopic, valueType, childView);
             } else {
-              return getExistingTopicValue(uriInfo, topic, fieldDefinition, valueTopic, rf, childView, viewModes);
+              return getExistingTopicValue(uriInfo, topic, fieldDefinition, valueTopic, rf, childView, viewModes.isTraversable(), viewModes.isReadOnly());
             }
           }
         }
@@ -286,7 +329,7 @@ public class Utils {
               TopicType valueType = OntopolyUtils.getDefaultTopicType(valueTopic);
               roleValue.put("value", createTopicInfo(uriInfo, valueTopic, valueType, childView));
             } else {
-              roleValue.put("value", getExistingTopicValue(uriInfo, topic, fieldDefinition, valueTopic, rf, childView, viewModes));
+              roleValue.put("value", getExistingTopicValue(uriInfo, topic, fieldDefinition, valueTopic, rf, childView, viewModes.isTraversable(), viewModes.isReadOnly()));
             }
             result.add(roleValue);
           }
@@ -296,7 +339,7 @@ public class Utils {
       return null;
     case FieldDefinition.FIELD_TYPE_QUERY: 
       if (fieldValue instanceof Topic) {
-        return getExistingTopicValue(uriInfo, topic, fieldDefinition, (Topic)fieldValue, null, childView, viewModes);
+        return getExistingTopicValue(uriInfo, topic, fieldDefinition, (Topic)fieldValue, null, childView, viewModes.isTraversable(), viewModes.isReadOnly());
       } else {
         return fieldValue;
       }
@@ -325,29 +368,58 @@ public class Utils {
 
   public static Object getExistingTopicValues(UriInfo uriInfo, 
       Topic parentTopic, FieldDefinition parentFieldDefinition, 
-      Collection<Topic> values, FieldDefinition childFieldDefinition, FieldsView parentView, FieldsView childView, ViewModes viewModes) {
+      Collection<? extends Topic> values, FieldDefinition childFieldDefinition, FieldsView parentView, FieldsView childView, boolean traversable, boolean readOnly) {
+    
     List<Object> result = new ArrayList<Object>(values.size());
     for (Topic value : values) {
-      result.add(getExistingTopicValue(uriInfo, parentTopic, parentFieldDefinition, value, childFieldDefinition, childView, viewModes));
+      result.add(getExistingTopicValue(uriInfo, parentTopic, parentFieldDefinition, value, childFieldDefinition, childView, traversable, readOnly));
     }
     return result;
   }
 
   public static Object getExistingTopicValue(UriInfo uriInfo, 
       Topic parentTopic, FieldDefinition parentFieldDefinition, 
-      Topic value, FieldDefinition childFieldDefinition, FieldsView childView, ViewModes viewModes) {
+      Topic value, FieldDefinition childFieldDefinition, FieldsView childView, boolean traversable, boolean readOnly) {
+    
     Map<String, Object> result = new LinkedHashMap<String,Object>();
     result.put("id", value.getId());
     result.put("name", value.getName());
 
     //    System.out.println("V: " + value + " P:" + parentView + " C:" + childView);
     List<Link> links = new ArrayList<Link>();
-    if (viewModes.isTraversable()) {
+    if (traversable) {
       links.add(new Link("link", getSelfLinkFor(uriInfo, value, childView)));
     }
-    if (!viewModes.isReadOnly()) {
+    if (!readOnly) {
       links.add(new Link("remove", uriInfo.getBaseUri() + "remove-field-value/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + value.getId()));
     }
+    result.put("links", links);
+
+    return result;
+  }
+
+  public static Object getCreatePlayerTypes(UriInfo uriInfo, 
+      Topic parentTopic, FieldDefinition parentFieldDefinition, 
+      Collection<TopicType> playerTypes, FieldDefinition childFieldDefinition, FieldsView parentView, FieldsView childView, ViewModes viewModes) {
+    
+    List<Object> result = new ArrayList<Object>(playerTypes.size());
+    for (TopicType playerType : playerTypes) {
+      result.add(getCreatePlayerType(uriInfo, parentTopic, parentFieldDefinition, playerType, childFieldDefinition, childView, viewModes));
+    }
+    return result;
+  }
+
+  public static Object getCreatePlayerType(UriInfo uriInfo, 
+      Topic parentTopic, FieldDefinition parentFieldDefinition, 
+      TopicType playerType, FieldDefinition childFieldDefinition, FieldsView childView, ViewModes viewModes) {
+    
+    Map<String, Object> result = new LinkedHashMap<String,Object>();
+    result.put("id", playerType.getId());
+    result.put("name", playerType.getName());
+
+    //    System.out.println("V: " + value + " P:" + parentView + " C:" + childView);
+    List<Link> links = new ArrayList<Link>();
+    links.add(new Link("create", uriInfo.getBaseUri() + "create-field-value/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + playerType.getId()));
     result.put("links", links);
 
     return result;

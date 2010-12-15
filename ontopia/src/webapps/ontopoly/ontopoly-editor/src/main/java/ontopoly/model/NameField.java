@@ -158,7 +158,7 @@ public class NameField extends FieldDefinition {
    * Returns the assigned height of the name text field.
    */
   public int getHeight() {
-    TopicIF oType = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "height");
+    TopicIF oType = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON_HEIGHT);
     OccurrenceIF occ = OntopolyModelUtils.findOccurrence(oType, getTopicIF());
     return (occ == null ? 1 : Integer.parseInt(occ.getValue()));
   }
@@ -167,7 +167,7 @@ public class NameField extends FieldDefinition {
    * Returns the assigned width of the name text field.
    */
   public int getWidth() {
-    TopicIF oType = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "width");
+    TopicIF oType = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON_WIDTH);
     OccurrenceIF occ = OntopolyModelUtils.findOccurrence(oType, getTopicIF());
     return (occ == null ? 50 : Integer.parseInt(occ.getValue()));
   }

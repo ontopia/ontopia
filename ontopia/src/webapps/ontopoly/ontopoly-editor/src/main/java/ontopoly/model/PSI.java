@@ -13,6 +13,8 @@ public class PSI {
   public static final LocatorIF XSD = URILocator.create(TopicMap.XSD);
   public static final LocatorIF TMDM = URILocator.create(TopicMap.TMDM);
 
+  public static final LocatorIF TECH_HIERARCHICAL_RELATION_TYPE = PSI.TECH.resolveAbsolute("#hierarchical-relation-type");
+
   public static final LocatorIF ON_TED_TOPIC_MAP = PSI.ON.resolveAbsolute("ted-topic-map");
   public static final LocatorIF ON_TOPIC_MAP_ID = PSI.ON.resolveAbsolute("topic-map-id");
 
@@ -68,6 +70,7 @@ public class PSI {
   public static final LocatorIF ON_DATATYPE_HTML = PSI.ON.resolveAbsolute("datatype-html");
   public static final LocatorIF ON_DATATYPE_IMAGE = PSI.ON.resolveAbsolute("datatype-image");
 
+  public static final LocatorIF ON_FIELD_ORDER = PSI.ON.resolveAbsolute("field-order");
   public static final LocatorIF ON_FIELD_VALUE_ORDER = PSI.ON.resolveAbsolute("field-value-order");
 
   public static final LocatorIF ON_DEFAULT_FIELDS_VIEW = PSI.ON.resolveAbsolute("default-fields-view");
@@ -90,6 +93,10 @@ public class PSI {
   public static final LocatorIF ON_FIELDS_VIEW = PSI.ON.resolveAbsolute("fields-view");
   public static final LocatorIF ON_IS_EMBEDDED_VIEW = PSI.ON.resolveAbsolute("is-embedded-view");
 
+  public static final LocatorIF ON_IS_READONLY_TYPE = PSI.ON.resolveAbsolute("is-readonly-type");
+  public static final LocatorIF ON_IS_HIDDEN_TYPE = PSI.ON.resolveAbsolute("is-hidden-type");
+  public static final LocatorIF ON_IS_SYMMETRIC = PSI.ON.resolveAbsolute("is-symmetric");
+
   public static final LocatorIF ON_DESCRIPTION = PSI.ON.resolveAbsolute("description");
   public static final LocatorIF ON_CREATOR = PSI.ON.resolveAbsolute("creator");
   public static final LocatorIF ON_VERSION = PSI.ON.resolveAbsolute("version");
@@ -106,6 +113,9 @@ public class PSI {
   public static final LocatorIF ON_HEIGHT = PSI.ON.resolveAbsolute("height");
   public static final LocatorIF ON_WIDTH = PSI.ON.resolveAbsolute("width");
 
+  public static final LocatorIF ON_HAS_FIELD = PSI.ON.resolveAbsolute("has-field");
+  public static final LocatorIF ON_FIELD_OWNER = PSI.ON.resolveAbsolute("field-owner");
+
   public static final LocatorIF ON_HAS_OCCURRENCE_TYPE = PSI.ON.resolveAbsolute("has-occurrence-type");
   public static final LocatorIF ON_HAS_ASSOCIATION_TYPE = PSI.ON.resolveAbsolute("has-association-type");
   public static final LocatorIF ON_HAS_NAME_TYPE = PSI.ON.resolveAbsolute("has-name-type");
@@ -121,10 +131,19 @@ public class PSI {
   public static final LocatorIF ON_USE_CREATE_ACTION = PSI.ON.resolveAbsolute("use-create-action");
   public static final LocatorIF ON_USE_INTERFACE_CONTROL = PSI.ON.resolveAbsolute("use-interface-control");
 
+  public static final LocatorIF ON_DATATYPE_LOCATOR = PSI.ON.resolveAbsolute("datatype-locator");
+
   public static final LocatorIF ON_DATATYPE = PSI.ON.resolveAbsolute("datatype");
   public static final LocatorIF ON_CARDINALITY = PSI.ON.resolveAbsolute("cardinality");
   public static final LocatorIF ON_EDIT_MODE = PSI.ON.resolveAbsolute("edit-mode");
   public static final LocatorIF ON_CREATE_ACTION = PSI.ON.resolveAbsolute("create-action");
   public static final LocatorIF ON_INTERFACE_CONTROL = PSI.ON.resolveAbsolute("interface-control");
+
+  public static final LocatorIF ON_USE_VALUE_VIEW = PSI.ON.resolveAbsolute("use-value-view");
+  public static final LocatorIF ON_PARENT_VIEW = PSI.ON.resolveAbsolute("parent-view");
+  public static final LocatorIF ON_CHILD_VIEW = PSI.ON.resolveAbsolute("child-view");
+
+  public static final LocatorIF ON_TOLOG_DECLARATIONS = PSI.ON.resolveAbsolute("tolog-declarations");
+  public static final LocatorIF ON_VALUES_QUERY = PSI.ON.resolveAbsolute("values-query");
 
 }

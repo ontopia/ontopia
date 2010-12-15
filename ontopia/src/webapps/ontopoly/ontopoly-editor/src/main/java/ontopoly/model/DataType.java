@@ -35,7 +35,7 @@ public class DataType extends Topic {
    */
   public LocatorIF getLocator() {
     TopicIF topicIf = getTopicIF();   
-    TopicIF typeIf = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "datatype-locator", false);
+    TopicIF typeIf = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON_DATATYPE_LOCATOR, false);
     if (typeIf != null) {
       OccurrenceIF occ = OntopolyModelUtils.findOccurrence(typeIf, topicIf);
       LocatorIF loc = (occ == null ? null : occ.getLocator());

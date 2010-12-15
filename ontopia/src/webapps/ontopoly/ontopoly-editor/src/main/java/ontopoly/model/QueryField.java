@@ -82,7 +82,7 @@ public class QueryField extends FieldDefinition {
 
   private String getValuesQuery() {
     TopicIF topicIf = getTopicIF();   
-    TopicIF typeIf = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON, "values-query");
+    TopicIF typeIf = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON_VALUES_QUERY);
     OccurrenceIF occ = OntopolyModelUtils.findOccurrence(typeIf, topicIf);
     return (occ == null ? null : occ.getValue());
   }

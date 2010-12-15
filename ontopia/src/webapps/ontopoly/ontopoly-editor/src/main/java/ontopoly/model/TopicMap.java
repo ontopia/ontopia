@@ -76,7 +76,7 @@ public class TopicMap {
       this.dc = QueryUtils.parseDeclarations(topicMapIF, declarations);
 
       // load custom declarations
-      TopicIF typeIf = OntopolyModelUtils.getTopicIF(this, PSI.ON, "tolog-declarations", false);
+      TopicIF typeIf = OntopolyModelUtils.getTopicIF(this, PSI.ON_TOLOG_DECLARATIONS, false);
       if (typeIf != null) {
         TopicIF topicIf = getTopicMapIF().getReifier();
         if (topicIf != null) {

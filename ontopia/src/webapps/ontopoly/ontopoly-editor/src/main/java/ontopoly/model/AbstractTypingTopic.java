@@ -39,8 +39,8 @@ public abstract class AbstractTypingTopic extends Topic {
    */
   public boolean isReadOnly() {
     TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "is-readonly-type");
-    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "ontology-type");
+    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON_IS_READONLY_TYPE);
+    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON_ONTOLOGY_TYPE);
     TopicIF player = getTopicIF();
     return OntopolyModelUtils.isUnaryPlayer(tm, aType, player, rType);
   }
@@ -52,8 +52,8 @@ public abstract class AbstractTypingTopic extends Topic {
    */
   public boolean isHidden() {
     TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "is-hidden-type");
-    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "ontology-type");
+    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON_IS_HIDDEN_TYPE);
+    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON_ONTOLOGY_TYPE);
     TopicIF player = getTopicIF();
     return OntopolyModelUtils.isUnaryPlayer(tm, aType, player, rType);
   }

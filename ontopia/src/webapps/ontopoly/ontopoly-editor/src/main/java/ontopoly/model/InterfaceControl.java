@@ -3,12 +3,10 @@
 package ontopoly.model;
 
 import java.util.Collection;
-import java.util.List;
-
-import ontopoly.utils.OntopolyModelUtils;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import ontopoly.utils.OntopolyModelUtils;
 
 /**
  * Represents a datatype which can be assigned to an association field.
@@ -86,14 +84,14 @@ public class InterfaceControl extends Topic {
   }
 
   public static InterfaceControl getDefaultInterfaceControl(TopicMap tm) {
-    return new InterfaceControl(OntopolyModelUtils.getTopicIF(tm, PSI.ON, "drop-down-list"), tm);
+    return new InterfaceControl(OntopolyModelUtils.getTopicIF(tm, PSI.ON_INTERFACE_CONTROL_DROP_DOWN_LIST), tm);
   }
 
-  public static List<InterfaceControl> getInterfaceControlTypes(TopicMap tm) {
-    String query = "instance-of($d, on:interface-control)?";
-
-    QueryMapper<InterfaceControl> qm = tm.newQueryMapper(InterfaceControl.class);    
-    return qm.queryForList(query);
-  }
+//  public static List<InterfaceControl> getInterfaceControlTypes(TopicMap tm) {
+//    String query = "instance-of($d, on:interface-control)?";
+//
+//    QueryMapper<InterfaceControl> qm = tm.newQueryMapper(InterfaceControl.class);    
+//    return qm.queryForList(query);
+//  }
 
 }

@@ -21,7 +21,6 @@ import net.ontopia.topicmaps.query.utils.RowMapperIF;
 import net.ontopia.topicmaps.utils.AssociationBuilder;
 import net.ontopia.utils.CollectionUtils;
 import net.ontopia.utils.ObjectUtils;
-import ontopoly.model.PSI;
 import ontopoly.model.QueryMapper;
 import ontopoly.model.TopicMap;
 
@@ -37,18 +36,14 @@ public class OntopolyModelUtils {
   private static class RowMapperOneColumn<T> implements RowMapperIF<T> {
     public static final RowMapperIF<Object> INSTANCE = new RowMapperOneColumn<Object>();
     @SuppressWarnings("unchecked")
-	public T mapRow(QueryResultIF queryResult, int rowno) {
-      // hardcoded to return the value in the first column
+    public T mapRow(QueryResultIF queryResult, int rowno) {
+      // return the value in the first column
       return (T)queryResult.getValue(0);
     }
   }
 
   public static TopicIF getTopicIF(TopicMap tm, LocatorIF base, String subjectIndicator) {
     return getTopicIF(tm, base.resolveAbsolute(subjectIndicator), true);
-  }
-
-  public static TopicIF getTopicIF(TopicMap tm, LocatorIF base, String subjectIndicator, boolean mustExist) {
-    return getTopicIF(tm, base.resolveAbsolute(subjectIndicator), mustExist);
   }
 
   public static TopicIF getTopicIF(TopicMap tm, LocatorIF subjectIdentifier) {
@@ -82,7 +77,7 @@ public class OntopolyModelUtils {
   }
 
   public static boolean hasBinaryAssociation(TopicIF player1, TopicIF aType,
-                                             TopicIF rType1, TopicIF rType2) {
+      TopicIF rType1, TopicIF rType2) {
     for (AssociationRoleIF role : player1.getRolesByType(rType1, aType)) {
       AssociationIF assoc = role.getAssociation();
       for (AssociationRoleIF role2 : assoc.getRoles())
@@ -97,7 +92,7 @@ public class OntopolyModelUtils {
     TopicIF aType = OntopolyModelUtils.getTopicIF(tm, atypeId);
     TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, rtype1Id);
     TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, rtype2Id);
-    
+
     Iterator<AssociationRoleIF> iter = player1.getRoles().iterator();
     while (iter.hasNext()) {
       AssociationRoleIF role1 = iter.next();
@@ -117,7 +112,7 @@ public class OntopolyModelUtils {
     }
     return null;
   }
-  
+
   public static Collection<TopicIF> findBinaryPlayers(
       TopicMap tm, TopicIF aType, TopicIF player1, TopicIF rType1, TopicIF rType2) {
     List<TopicIF> result = new ArrayList<TopicIF>();
@@ -169,20 +164,25 @@ public class OntopolyModelUtils {
   public static AssociationIF findBinaryAssociation(
       TopicMap tm, TopicIF aType, 
       TopicIF player1, TopicIF rType1, TopicIF player2, TopicIF rType2) {
-    String query = "select $A from role-player($R1, %player1%), "
-      + "type($R1, %rType1%), association-role($A, $R1) ,"
-      + "type($A, %aType%), association-role($A, $R2) ,"
-      + "role-player($R2, %player2%), type($R2, %rType2%)?";
 
-    Map<String,TopicIF> params = new HashMap<String,TopicIF>();
-    params.put("player1", player1);
-    params.put("rType1", rType1);
-    params.put("aType", aType);
-    params.put("player2", player2);
-    params.put("rType2", rType2);
-
-    QueryMapper<AssociationIF> qm = tm.newQueryMapperNoWrap();    
-    return removeDuplicateAssociations(qm.queryForList(query, params));
+    Iterator<AssociationRoleIF> iter = player1.getRoles().iterator();
+    while (iter.hasNext()) {
+      AssociationRoleIF role1 = iter.next();
+      AssociationIF assoc = role1.getAssociation();
+      Collection<AssociationRoleIF> roles = assoc.getRoles();
+      if (roles.size() != 2) continue;
+      if (ObjectUtils.equals(role1.getType(), rType1) &&
+          ObjectUtils.equals(assoc.getType(), aType)) {
+        Iterator<AssociationRoleIF> riter = roles.iterator();
+        while (riter.hasNext()) {
+          AssociationRoleIF role2 = riter.next();
+          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2)) {
+            return assoc;
+          }
+        }
+      }
+    }
+    return null;
   }
 
   public static Collection<AssociationIF> findBinaryAssociations(
@@ -551,19 +551,19 @@ public class OntopolyModelUtils {
     return result;
   }
 
-    public static List<AssociationRoleIF> findRoles(TopicIF aType, TopicIF rType, TopicIF player, Collection<TopicIF> scope) { 
-      List<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
-      Iterator<AssociationRoleIF> it = player.getRoles().iterator();
-      while (it.hasNext()) {
-        AssociationRoleIF role = it.next();
-        AssociationIF association = role.getAssociation();
-        if (ObjectUtils.equals(role.getType(), rType) && 
-            ObjectUtils.equals(association.getType(), aType) && 
-            CollectionUtils.equalsUnorderedSet(association.getScope(), scope))
+  public static List<AssociationRoleIF> findRoles(TopicIF aType, TopicIF rType, TopicIF player, Collection<TopicIF> scope) { 
+    List<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
+    Iterator<AssociationRoleIF> it = player.getRoles().iterator();
+    while (it.hasNext()) {
+      AssociationRoleIF role = it.next();
+      AssociationIF association = role.getAssociation();
+      if (ObjectUtils.equals(role.getType(), rType) && 
+          ObjectUtils.equals(association.getType(), aType) && 
+          CollectionUtils.equalsUnorderedSet(association.getScope(), scope))
         result.add(role);
-      }
-      return result;
     }
+    return result;
+  }
 
   public static void setName(TopicIF nType, TopicIF topic, String value, Collection<TopicIF> scope) {
     if (value != null && topic != null) {

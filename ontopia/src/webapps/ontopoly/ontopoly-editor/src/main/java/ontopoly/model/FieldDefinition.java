@@ -47,12 +47,12 @@ public abstract class FieldDefinition extends Topic {
 
   public FieldsView getValueView(FieldsView view) {
     TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "use-value-view");
-    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
+    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON_USE_VALUE_VIEW);
+    TopicIF rType1 = OntopolyModelUtils.getTopicIF(tm, PSI.ON_FIELD_DEFINITION);
     TopicIF player1 = getTopicIF();
-    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "parent-view");
+    TopicIF rType2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON_PARENT_VIEW);
     TopicIF player2 = view.getTopicIF();
-    TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "child-view");
+    TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON_CHILD_VIEW);
     Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
     TopicIF viewIf = (TopicIF) CollectionUtils.getFirst(players);
     if (viewIf == null) {
@@ -80,9 +80,9 @@ public abstract class FieldDefinition extends Topic {
   public void setCardinality(Cardinality cardinality) {
     // NOTE: used by FieldsEditor
     TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "has-cardinality");
-    TopicIF type2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "field-definition");
-    TopicIF type3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "cardinality");
+    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON_HAS_CARDINALITY);
+    TopicIF type2 = OntopolyModelUtils.getTopicIF(tm, PSI.ON_FIELD_DEFINITION);
+    TopicIF type3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON_CARDINALITY);
     TopicIF player2 = getTopicIF();
     TopicIF player3 = cardinality.getTopicIF();
 
@@ -98,19 +98,6 @@ public abstract class FieldDefinition extends Topic {
 
     cachedCardinality = cardinality;
   }
-
-//  /**
-//   * Returns the topic types to which this field is assigned.
-//   * 
-//   * @return a list of TopicType objects
-//   */
-//  public List<TopicType> getUsedBy() {
-//    String query = "select $type from on:has-field($type : on:field-owner, %FD% : on:field-definition)?";
-//    Map<String,TopicIF> params = Collections.singletonMap("FD", getTopicIF());
-//
-//    QueryMapper<TopicType> qm = getTopicMap().newQueryMapper(TopicType.class);
-//    return qm.queryForList(query, params);
-//  }
 
   public abstract Collection<? extends Object> getValues(Topic topic);
 

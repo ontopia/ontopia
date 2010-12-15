@@ -21,6 +21,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
+import ontopoly.model.EditMode;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.FieldsView;
@@ -240,8 +241,7 @@ public class TopicResource {
       Topic viewTopic = topicMap.getTopicById(viewId);
       FieldsView fieldsView = new FieldsView(viewTopic);
 
-      List<FieldInstance> fieldInstances = topic.getFieldInstances(topicType, fieldsView);
-      for (FieldInstance fieldInstance: fieldInstances) {
+      for (FieldInstance fieldInstance : topic.getFieldInstances(topicType, fieldsView)) {
         FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition();
         if (fieldDefinition.getId().equals(fieldId)) {
           if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
@@ -252,14 +252,14 @@ public class TopicResource {
             result.put("id", fieldDefinition.getId());
             result.put("arity", arity);
 
-            System.out.println("Ax: " + arity);
             if (arity < 2) {
               result.put("values", Collections.emptyList());
             } else if (arity == 2) {
               FieldsView childView = fieldDefinition.getValueView(fieldsView);
               ViewModes viewModes = fieldDefinition.getViewModes(childView);
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                result.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes));
+                boolean readOnly = true;
+                result.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes.isTraversable(), readOnly));
                 break;
               }
             } else if (arity > 2) {
@@ -270,7 +270,80 @@ public class TopicResource {
                 Map<String,Object> roleData = new LinkedHashMap<String,Object>();
                 roleData.put("id", otherRoleField.getId());
                 roleData.put("name", otherRoleField.getFieldName());
-                roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes));
+                boolean readOnly = true;
+                roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes.isTraversable(), readOnly));
+                roles.add(roleData);
+              }
+              result.put("values", roles);
+              System.out.println("X: " + result);
+            }
+            return result;
+          }
+        }
+      }
+      throw new RuntimeException("Illegal field reference.");
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
+  
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("available-field-types/{topicMapId}/{topicId}/{viewId}/{fieldId}")
+  public Map<String,Object> getAvailableFieldTypes(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId, 
+      @PathParam("viewId") final String viewId,
+      @PathParam("fieldId") final String fieldId) throws Exception {
+    
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Topic topic = topicMap.getTopicById(topicId);
+      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      
+      Topic viewTopic = topicMap.getTopicById(viewId);
+      FieldsView fieldsView = new FieldsView(viewTopic);
+
+      for (FieldInstance fieldInstance : topic.getFieldInstances(topicType, fieldsView)) {
+        FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition();
+        if (fieldDefinition.getId().equals(fieldId)) {
+          if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
+            RoleField roleField = (RoleField)fieldDefinition;
+            int arity = roleField.getAssociationField().getArity();
+            
+            Map<String,Object> result = new LinkedHashMap<String,Object>();
+            result.put("id", fieldDefinition.getId());
+            result.put("arity", arity);
+
+            if (arity < 2) {
+              result.put("values", Collections.emptyList());
+            } else if (arity == 2) {
+              FieldsView childView = fieldDefinition.getValueView(fieldsView);
+              EditMode editMode = roleField.getEditMode();
+              ViewModes viewModes = fieldDefinition.getViewModes(childView);
+              boolean allowCreate = !editMode.isNoEdit() && !editMode.isExistingValuesOnly() && !viewModes.isReadOnly();
+              System.out.println("AC: " + allowCreate);
+              for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
+                result.put("values", allowCreate ? Utils.getCreatePlayerTypes(uriInfo, topic, roleField, otherRoleField.getAllowedPlayerTypes(topic), otherRoleField, fieldsView, childView, viewModes) : Collections.emptySet());
+                break;
+              }
+            } else if (arity > 2) {
+              FieldsView childView = fieldDefinition.getValueView(fieldsView);
+              ViewModes viewModes = fieldDefinition.getViewModes(childView);
+              List<Map<String,Object>> roles = new ArrayList<Map<String,Object>>();
+              for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
+                EditMode editMode = otherRoleField.getEditMode();
+                boolean allowCreate = !editMode.isNoEdit() && !editMode.isExistingValuesOnly() && !viewModes.isReadOnly();
+                Map<String,Object> roleData = new LinkedHashMap<String,Object>();
+                roleData.put("id", otherRoleField.getId());
+                roleData.put("name", otherRoleField.getFieldName());
+                roleData.put("values", allowCreate ? Utils.getCreatePlayerTypes(uriInfo, topic, roleField, otherRoleField.getAllowedPlayerTypes(topic), otherRoleField, fieldsView, childView, viewModes) : Collections.emptySet());
                 roles.add(roleData);
               }
               result.put("values", roles);

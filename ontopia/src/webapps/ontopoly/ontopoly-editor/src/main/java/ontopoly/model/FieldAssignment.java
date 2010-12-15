@@ -129,7 +129,7 @@ public final class FieldAssignment {
     LocatorIF datatype = DataTypes.TYPE_STRING;
 
     TopicIF topicIf = tt;
-    TopicIF typeIf = OntopolyModelUtils.getTopicIF(topicmap, PSI.ON, "field-order");
+    TopicIF typeIf = OntopolyModelUtils.getTopicIF(topicmap, PSI.ON_FIELD_ORDER);
     TopicIF themeIf = fd;
 
     Collection<TopicIF> scope = Collections.singleton(themeIf);

@@ -22,7 +22,6 @@ public class Upgrade_2_1 extends UpgradeBase {
     sb.append("[on:field-set : on:topic-type on:system-topic @\"http://psi.ontopia.net/ontology/field-set\" = \"Field set\"]\n");
     sb.append("[on:topic-type : on:field-set]\n");
     
-    
     // FIXME: add xsd:boolean?
     
   }

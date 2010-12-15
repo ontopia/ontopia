@@ -54,8 +54,8 @@ public class AssociationType extends AbstractTypingTopic {
    */
   public boolean isSymmetric() {
     TopicMap tm = getTopicMap();
-    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "is-symmetric");
-    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON, "association-type");
+    TopicIF aType = OntopolyModelUtils.getTopicIF(tm, PSI.ON_IS_SYMMETRIC);
+    TopicIF rType = OntopolyModelUtils.getTopicIF(tm, PSI.ON_ASSOCIATION_TYPE);
     TopicIF player = getTopicIF();
     return OntopolyModelUtils.isUnaryPlayer(tm, aType, player, rType);
   }
@@ -67,7 +67,7 @@ public class AssociationType extends AbstractTypingTopic {
    */
   public boolean isHierarchical() {
     TopicIF hierarchicalRelationType = 
-			OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.TECH, "#hierarchical-relation-type");
+			OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.TECH_HIERARCHICAL_RELATION_TYPE);
     return getTopicIF().getTypes().contains(hierarchicalRelationType);
   }
 
