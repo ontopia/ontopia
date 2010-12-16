@@ -37,12 +37,48 @@ import org.codehaus.jettison.json.JSONObject;
 @Path("/editor")
 public class TopicResource {
 
+  // TODO: add more endpoints: 
+  //
+  // 1: / - information about server and link to /available-topicmaps
+  // 2: /available-topicmaps - lists available topic maps
+  // 3: /create-instance/{topicMapId}
+  
   private TopicListener topicListener;
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @Path("topicmap-info/{topicMapId}")
+  public Map<String,Object> getTopicMapInfo(
+      @Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId) throws Exception {
+
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Map<String,Object> result = new LinkedHashMap<String,Object>();
+
+      result.put("id", topicMap.getId());
+      result.put("name", topicMap.getName());
+      
+      List<Link> links = new ArrayList<Link>();
+      links.add(new Link("available-types", uriInfo.getBaseUri() + "editor/available-types/" + topicMap.getId()));
+      result.put("links", links);      
+      return result;
+
+
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("topic/{topicMapId}/{topicId}")
-  public Map<String,Object> getTopic(
+  public Map<String,Object> getTopicInDefaultView(
       @Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId) throws Exception {

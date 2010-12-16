@@ -403,7 +403,8 @@ public class Utils {
       links.add(new Link("link", getSelfLinkFor(uriInfo, value, childView)));
     }
     if (!readOnly) {
-      links.add(new Link("remove", uriInfo.getBaseUri() + "remove-field-value/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + value.getId()));
+      String topicMapId = parentTopic.getTopicMap().getId();
+      links.add(new Link("remove", uriInfo.getBaseUri() + "editor/remove-field-value/" + topicMapId + "/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + value.getId()));
     }
     result.put("links", links);
 
@@ -431,7 +432,8 @@ public class Utils {
 
     //    System.out.println("V: " + value + " P:" + parentView + " C:" + childView);
     List<Link> links = new ArrayList<Link>();
-    links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "field-create-instance/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + playerType.getId()));
+    String topicMapId = parentTopic.getTopicMap().getId();
+    links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "editor/field-create-instance/" + topicMapId + "/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + playerType.getId()));
     result.put("links", links);
 
     return result;
