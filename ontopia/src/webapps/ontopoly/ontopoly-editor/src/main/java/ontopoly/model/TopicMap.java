@@ -245,6 +245,18 @@ public class TopicMap {
   /**
    * Returns a list of the topic types that is not a system topic type.
    */
+  public List<TopicType> getRootTopicTypes() {
+    String query = "select $type from instance-of($type, on:topic-type), " 
+      + "not(xtm:superclass-subclass($type : xtm:subclass, $SUP : xtm:superclass)) "
+      + "order by $type?";
+
+    QueryMapper<TopicType> qm = newQueryMapper(TopicType.class);    
+    return qm.queryForList(query);
+  }
+
+  /**
+   * Returns a list of the topic types that is not a system topic type.
+   */
   public List<TopicType> getTopicTypesWithLargeInstanceSets() {
     String query = "select $type from on:has-large-instance-set($type : on:topic-type)?";
 

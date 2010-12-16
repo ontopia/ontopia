@@ -206,6 +206,10 @@ public class RoleField extends FieldDefinition {
     return (occ == null ? null : occ.getValue());
   }
 
+  public List<Topic> getAllowedPlayers() {
+    return getAllowedPlayers(null);
+  }
+  
   public List<Topic> getAllowedPlayers(Topic currentTopic) {
 
     String query = getAllowedPlayersQuery();
@@ -216,8 +220,10 @@ public class RoleField extends FieldDefinition {
     } 
     Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);
     params.put("field", getTopicIF());
-    params.put("topic", currentTopic.getTopicIF());
-
+    if (currentTopic != null) {
+      params.put("topic", currentTopic.getTopicIF());
+    }
+    
     QueryMapper<Topic> qm = getTopicMap().newQueryMapper(Topic.class);
     List<Topic> result = qm.queryForList(query, params);
     Collections.sort(result, TopicComparator.INSTANCE);

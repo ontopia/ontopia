@@ -21,6 +21,7 @@ import javax.ws.rs.core.UriInfo;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import ontopoly.model.EditMode;
+import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldInstance;
 import ontopoly.model.FieldsView;
@@ -48,11 +49,12 @@ public class TopicResource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("")
-  public Map<String,Object> getInfo(@Context UriInfo uriInfo) throws Exception {
+  public Map<String,Object> getRootInfo(@Context UriInfo uriInfo) throws Exception {
 
     Map<String,Object> result = new LinkedHashMap<String,Object>();
 
     result.put("id", uriInfo.getBaseUri() + "editor");
+    result.put("version", 0);
     result.put("name", "Ontopoly Editor REST API");
 
     List<Link> links = new ArrayList<Link>();
@@ -100,11 +102,39 @@ public class TopicResource {
       result.put("name", topicMap.getName());
 
       List<Link> links = new ArrayList<Link>();
-      links.add(new Link("available-types", uriInfo.getBaseUri() + "editor/available-types/" + topicMap.getId()));
+      links.add(new Link("available-types-tree", uriInfo.getBaseUri() + "editor/available-types-tree/" + topicMap.getId()));
+      links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + topicMap.getId()));
       links.add(new Link("topic", uriInfo.getBaseUri() + "editor/topic/" + topicMap.getId() + "/{topicId}"));
       result.put("links", links);      
       return result;
 
+
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("create-instance/{topicMapId}/{topicTypeId}")
+  public Map<String,Object> createInstance(
+      @Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicTypeId") final String topicTypeId) throws Exception {
+
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Topic topicType_ = topicMap.getTopicById(topicTypeId);
+      TopicType topicType = new TopicType(topicType_.getTopicIF(), topicMap);
+
+      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
+
+      return Utils.createNewTopicInfo(uriInfo, topicType, fieldsView);
 
     } catch (Exception e) {
       store.abort();
@@ -219,8 +249,16 @@ public class TopicResource {
     try {
       TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      Topic topic = topicMap.getTopicById(topicId);
-      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      Topic topic;
+      TopicType topicType;
+      if (topicId.startsWith("_")) {
+        Topic topicType_ = topicMap.getTopicById(topicId.substring(1));
+        topicType = new TopicType(topicType_.getTopicIF(), topicMap);
+        topic  = topicType.createInstance(null);
+      } else {
+        topic = topicMap.getTopicById(topicId);
+        topicType = OntopolyUtils.getDefaultTopicType(topic);
+      }
 
       Topic viewTopic = topicMap.getTopicById(viewId);
       FieldsView fieldsView = new FieldsView(viewTopic);
@@ -331,49 +369,36 @@ public class TopicResource {
     try {
       TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      Topic topic = topicMap.getTopicById(topicId);
-      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      Topic topic;
+      TopicType topicType;
+      if (topicId.startsWith("_")) {
+        Topic topicType_ = topicMap.getTopicById(topicId.substring(1));
+        topicType = new TopicType(topicType_.getTopicIF(), topicMap);
+        topic  = null;
+      } else {
+        topic = topicMap.getTopicById(topicId);
+        topicType = OntopolyUtils.getDefaultTopicType(topic);
+      }
 
       Topic viewTopic = topicMap.getTopicById(viewId);
       FieldsView fieldsView = new FieldsView(viewTopic);
 
-      for (FieldInstance fieldInstance : topic.getFieldInstances(topicType, fieldsView)) {
-        FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition();
-        if (fieldDefinition.getId().equals(fieldId)) {
-          if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
-            RoleField roleField = (RoleField)fieldDefinition;
-            int arity = roleField.getAssociationField().getArity();
-
-            Map<String,Object> result = new LinkedHashMap<String,Object>();
-            result.put("id", fieldDefinition.getId());
-            result.put("arity", arity);
-
-            if (arity < 2) {
-              result.put("values", Collections.emptyList());
-            } else if (arity == 2) {
-              FieldsView childView = fieldDefinition.getValueView(fieldsView);
-              ViewModes viewModes = fieldDefinition.getViewModes(childView);
-              for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                boolean readOnly = true;
-                result.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes.isTraversable(), readOnly));
-                break;
-              }
-            } else if (arity > 2) {
-              FieldsView childView = fieldDefinition.getValueView(fieldsView);
-              ViewModes viewModes = fieldDefinition.getViewModes(childView);
-              List<Map<String,Object>> roles = new ArrayList<Map<String,Object>>();
-              for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                Map<String,Object> roleData = new LinkedHashMap<String,Object>();
-                roleData.put("id", otherRoleField.getId());
-                roleData.put("name", otherRoleField.getFieldName());
-                boolean readOnly = true;
-                roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes.isTraversable(), readOnly));
-                roles.add(roleData);
-              }
-              result.put("values", roles);
-              System.out.println("X: " + result);
-            }
-            return result;
+      if (topic != null) {
+        for (FieldInstance fieldInstance : topic.getFieldInstances(topicType, fieldsView)) {
+          FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition();
+          if (fieldDefinition.getId().equals(fieldId) &&
+              fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
+  
+            return createFieldInfoAllowed(uriInfo, topic, fieldsView, fieldDefinition);
+          }
+        }
+      } else {
+        for (FieldAssignment fieldAssigment : topicType.getFieldAssignments(fieldsView)) {
+          FieldDefinition fieldDefinition = fieldAssigment.getFieldDefinition();
+          if (fieldDefinition.getId().equals(fieldId) &&
+              fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
+  
+            return createFieldInfoAllowed(uriInfo, topic, fieldsView, fieldDefinition);
           }
         }
       }
@@ -384,6 +409,43 @@ public class TopicResource {
     } finally {
       store.close();      
     }
+  }
+
+  private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo,
+      Topic topic, FieldsView fieldsView, FieldDefinition fieldDefinition) {
+    RoleField roleField = (RoleField)fieldDefinition;
+    int arity = roleField.getAssociationField().getArity();
+
+    Map<String,Object> result = new LinkedHashMap<String,Object>();
+    result.put("id", fieldDefinition.getId());
+    result.put("arity", arity);
+
+    if (arity < 2) {
+      result.put("values", Collections.emptyList());
+    } else if (arity == 2) {
+      FieldsView childView = fieldDefinition.getValueView(fieldsView);
+      ViewModes viewModes = fieldDefinition.getViewModes(childView);
+      for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
+        boolean readOnly = true;
+        result.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes.isTraversable(), readOnly));
+        break;
+      }
+    } else if (arity > 2) {
+      FieldsView childView = fieldDefinition.getValueView(fieldsView);
+      ViewModes viewModes = fieldDefinition.getViewModes(childView);
+      List<Map<String,Object>> roles = new ArrayList<Map<String,Object>>();
+      for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
+        Map<String,Object> roleData = new LinkedHashMap<String,Object>();
+        roleData.put("id", otherRoleField.getId());
+        roleData.put("name", otherRoleField.getFieldName());
+        boolean readOnly = true;
+        roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes.isTraversable(), readOnly));
+        roles.add(roleData);
+      }
+      result.put("values", roles);
+      System.out.println("X: " + result);
+    }
+    return result;
   }
 
   @GET
@@ -460,8 +522,8 @@ public class TopicResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("available-types/{topicMapId}")
-  public Map<String,Object> getAvailableTypes(@Context UriInfo uriInfo, 
+  @Path("available-types-tree-lazy/{topicMapId}")
+  public Map<String,Object> getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
 
     TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
@@ -470,26 +532,57 @@ public class TopicResource {
       TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
       Map<String,Object> result = new LinkedHashMap<String,Object>();
-      //      result.put("id", topicMap.getId());
+      result.put("types", TypeUtils.getAvailableTypesTreeLazy(uriInfo, topicMap.getRootTopicTypes()));      
+      return result;
 
-      List<Map<String,Object>> types = new ArrayList<Map<String,Object>>(); 
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
 
-      for (TopicType topicType : topicMap.getTopicTypes()) {
-        if (!topicType.isSystemTopic()) {
-          Map<String,Object> type = new LinkedHashMap<String,Object>();
-          type.put("id", topicType.getId());
-          type.put("name", topicType.getName());
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("available-types-tree-lazy/{topicMapId}/{topicId}")
+  public Map<String,Object> getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId) throws Exception {
 
-          List<Link> links = new ArrayList<Link>();
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
 
-          if (!topicType.isAbstract()) {
-            links.add(new Link("create-instance", uriInfo.getBaseUri() + "editor/create-instance/" + topicType.getId()));
-          }
-          type.put("links", links);      
-          types.add(type);
-        }
-      }
-      result.put("types", types);      
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Topic topicType_ = topicMap.getTopicById(topicId);
+      TopicType topicType = new TopicType(topicType_.getTopicIF(), topicMap);
+
+      Map<String,Object> result = new LinkedHashMap<String,Object>();
+      result.put("types", TypeUtils.getAvailableTypesTreeLazy(uriInfo, topicType.getDirectSubOrdinateTypes()));      
+      return result;
+
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("available-types-tree/{topicMapId}")
+  public Map<String,Object> getAvailableTypesTree(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId) throws Exception {
+
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Map<String,Object> result = new LinkedHashMap<String,Object>();
+      result.put("types", TypeUtils.getAvailableTypesTree(uriInfo, topicMap.getRootTopicTypes()));      
       return result;
 
     } catch (Exception e) {

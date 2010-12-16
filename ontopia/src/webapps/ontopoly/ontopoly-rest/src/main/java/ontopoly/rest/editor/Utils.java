@@ -75,7 +75,7 @@ public class Utils {
   }
 
   protected static String getCreateLinkFor(UriInfo uriInfo, TopicType topicType, FieldsView fieldsView) {
-    return uriInfo.getBaseUri() + "editor/topic/" + topicType.getTopicMap().getId() + "/" + topicType.getId() + "/" + fieldsView.getId();
+    return uriInfo.getBaseUri() + "editor/topic/" + topicType.getTopicMap().getId() + "/_" + topicType.getId() + "/" + fieldsView.getId();
   }
 
   public static Map<String,Object> createTopicInfo(UriInfo uriInfo, Topic topic, TopicType topicType, FieldsView fieldsView) {
@@ -109,10 +109,12 @@ public class Utils {
 
   public static Map<String,Object> createNewTopicInfo(UriInfo uriInfo, TopicType topicType, FieldsView fieldsView) {
     Map<String,Object> result = new LinkedHashMap<String,Object>();
+    
+    Map<String,Object> typeInfo = new LinkedHashMap<String,Object>();    
+    typeInfo.put("id", topicType.getId());
+    typeInfo.put("name", topicType.getName());
+    result.put("type", typeInfo);
 
-    result.put("id", ":new");
-    result.put("type", topicType.getName());
-    result.put("typeId", topicType.getId());
     result.put("view", fieldsView.getId());
 
     List<Link> topicLinks = new ArrayList<Link>();
@@ -129,6 +131,7 @@ public class Utils {
       fields.add(createFieldInfo(uriInfo, topic, topicType, fieldsView, fieldDefinition, Collections.emptyList()));
     }
     result.put("fields", fields);
+    result.put("views", Collections.singleton(getView(uriInfo, null, fieldsView)));
 //    result.put("views", getViews(uriInfo, topic, topicType, fieldsView));
     return result;
   }
@@ -149,8 +152,10 @@ public class Utils {
       Topic topic, TopicType topicType, FieldsView parentView,
       FieldDefinition fieldDefinition, Collection<? extends Object> fieldValues) {
 
+    boolean isNewTopic = topic == null;
+    
     String topicMapId = fieldDefinition.getTopicMap().getId();
-    String topicId = topic.getId();
+    String topicId = isNewTopic ? "_" + topicType.getId() : topic.getId();
     String parentViewId = parentView.getId();
     String fieldDefinitionId = fieldDefinition.getId();
     
@@ -190,14 +195,16 @@ public class Utils {
           InterfaceControl interfaceControl = otherRoleField.getInterfaceControl();
           field.put("interfaceControl", interfaceControl.getLocator().getExternalForm());          
           if (interfaceControl.isDropDownList()) {
-            if (allowCreate) {
+            if (allowCreate && !isNewTopic) {
               fieldLinks.add(new Link("available-field-types", uriInfo.getBaseUri() + "editor/available-field-types/" + fieldReference));
             }
             if (allowAddRemove) {
               // ISSUE: should add-values and remove-values be links on list result instead?
               fieldLinks.add(new Link("available-field-values", uriInfo.getBaseUri() + "editor/available-field-values/" + fieldReference));
-              fieldLinks.add(new Link("add-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
-              fieldLinks.add(new Link("remove-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
+              if (!isNewTopic) {
+                fieldLinks.add(new Link("add-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
+                fieldLinks.add(new Link("remove-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
+              }
             }
           }
           field.put("links", fieldLinks);
@@ -252,20 +259,26 @@ public class Utils {
       Topic topic, TopicType topicType, FieldsView fieldsView) {
 
     List<FieldsView> fieldViews = topic.getFieldViews(topicType, fieldsView);
-    System.out.println("VIEWS " + fieldViews);
 
     List<Map<String,Object>> views = new ArrayList<Map<String,Object>>(fieldViews.size()); 
     for (FieldsView _fieldsView : fieldViews) {
-      Map<String,Object> view = new LinkedHashMap<String,Object>();
-      view.put("id", _fieldsView.getId());
-      view.put("name", _fieldsView.getName());
-
-      List<Link> links = new ArrayList<Link>();
-      links.add(new Link("edit-in-view", getSelfLinkFor(uriInfo, topic, _fieldsView)));    
-      view.put("links", links);
-      views.add(view);
+      views.add( getView(uriInfo, topic, _fieldsView));
     }
     return views;
+  }
+
+  public static Map<String, Object> getView(UriInfo uriInfo, Topic topic,
+      FieldsView _fieldsView) {
+    Map<String,Object> view = new LinkedHashMap<String,Object>();
+    view.put("id", _fieldsView.getId());
+    view.put("name", _fieldsView.getName());
+
+    List<Link> links = new ArrayList<Link>();
+    if (topic != null) {
+      links.add(new Link("edit-in-view", getSelfLinkFor(uriInfo, topic, _fieldsView)));
+    }
+    view.put("links", links);
+    return view;
   }
 
   protected static List<Object> getValues(UriInfo uriInfo, Topic topic, TopicType topicType, FieldsView parentView, FieldsView childView, ViewModes viewModes, FieldDefinition fieldDefinition, Collection<? extends Object> fieldValues) {
@@ -662,6 +675,7 @@ public class Utils {
     System.out.println("R1: " + roleField + " " + topic);
     if (arity == 2) {
       JSONObject valueObject = values.getJSONObject(vindex);
+      System.out.println("VO: " + valueObject + " " + roleField.getId());
       String id = valueObject.getString("id");
       Topic player = topic.getTopicMap().getTopicById(id);
       System.out.println("R2: " + roleField.getOtherRoleFields().iterator().next() + " " + player);

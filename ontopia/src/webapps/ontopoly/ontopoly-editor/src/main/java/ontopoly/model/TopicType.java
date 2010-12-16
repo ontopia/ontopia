@@ -76,6 +76,10 @@ public class TopicType extends AbstractTypingTopic {
     return (assoc != null);
   }
 
+  public Collection<TopicType> getDirectSubOrdinateTypes() {
+    return getDirectSubTypes();
+  }
+  
   /**
    * Gets the direct subtypes of this type.
    * 
