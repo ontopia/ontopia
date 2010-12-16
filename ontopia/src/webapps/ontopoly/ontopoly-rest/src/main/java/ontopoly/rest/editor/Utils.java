@@ -31,7 +31,6 @@ import ontopoly.model.OccurrenceField;
 import ontopoly.model.RoleField;
 import ontopoly.model.RoleField.ValueIF;
 import ontopoly.model.Topic;
-import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
 import ontopoly.model.ViewModes;
 import ontopoly.utils.OntopolyUtils;
@@ -84,8 +83,12 @@ public class Utils {
 
     result.put("id", topic.getId());
     result.put("name", topic.getName());
-    result.put("type", topicType.getName());
-    result.put("typeId", topicType.getId());
+    
+    Map<String,Object> typeInfo = new LinkedHashMap<String,Object>();    
+    typeInfo.put("id", topicType.getId());
+    typeInfo.put("name", topicType.getName());
+    result.put("type", typeInfo);
+
     result.put("view", fieldsView.getId());
 
     List<Link> topicLinks = new ArrayList<Link>();
@@ -146,6 +149,13 @@ public class Utils {
       Topic topic, TopicType topicType, FieldsView parentView,
       FieldDefinition fieldDefinition, Collection<? extends Object> fieldValues) {
 
+    String topicMapId = fieldDefinition.getTopicMap().getId();
+    String topicId = topic.getId();
+    String parentViewId = parentView.getId();
+    String fieldDefinitionId = fieldDefinition.getId();
+    
+    String fieldReference = topicMapId + "/" + topicId + "/" + parentViewId + "/" + fieldDefinitionId;
+    
     Map<String,Object> field = new LinkedHashMap<String,Object>();
 
     int fieldType = fieldDefinition.getFieldType();
@@ -180,15 +190,14 @@ public class Utils {
           InterfaceControl interfaceControl = otherRoleField.getInterfaceControl();
           field.put("interfaceControl", interfaceControl.getLocator().getExternalForm());          
           if (interfaceControl.isDropDownList()) {
-            TopicMap topicMap = fieldDefinition.getTopicMap();
             if (allowCreate) {
-              fieldLinks.add(new Link("create-value", uriInfo.getBaseUri() + "editor/available-field-types/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
+              fieldLinks.add(new Link("available-field-types", uriInfo.getBaseUri() + "editor/available-field-types/" + fieldReference));
             }
             if (allowAddRemove) {
               // ISSUE: should add-values and remove-values be links on list result instead?
-              fieldLinks.add(new Link("list", uriInfo.getBaseUri() + "editor/available-field-values/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
-              fieldLinks.add(new Link("add-values", uriInfo.getBaseUri() + "editor/add-field-values/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
-              fieldLinks.add(new Link("remove-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + topicMap.getId() + "/" + topic.getId() + "/" + parentView.getId() + "/" + fieldDefinition.getId()));
+              fieldLinks.add(new Link("available-field-values", uriInfo.getBaseUri() + "editor/available-field-values/" + fieldReference));
+              fieldLinks.add(new Link("add-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
+              fieldLinks.add(new Link("remove-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
             }
           }
           field.put("links", fieldLinks);
@@ -422,7 +431,7 @@ public class Utils {
 
     //    System.out.println("V: " + value + " P:" + parentView + " C:" + childView);
     List<Link> links = new ArrayList<Link>();
-    links.add(new Link("create", uriInfo.getBaseUri() + "create-field-value/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + playerType.getId()));
+    links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "field-create-instance/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + playerType.getId()));
     result.put("links", links);
 
     return result;

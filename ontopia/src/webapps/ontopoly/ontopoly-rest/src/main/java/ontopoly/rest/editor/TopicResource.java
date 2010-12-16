@@ -29,6 +29,7 @@ import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
 import ontopoly.model.ViewModes;
+import ontopoly.rest.editor.Utils.Link;
 import ontopoly.utils.OntopolyUtils;
 
 import org.codehaus.jettison.json.JSONObject;
@@ -374,6 +375,48 @@ public class TopicResource {
         }
       }
       throw new RuntimeException("Illegal field reference.");
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("available-types/{topicMapId}")
+  public Map<String,Object> getAvailableTypes(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId) throws Exception {
+
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Map<String,Object> result = new LinkedHashMap<String,Object>();
+//      result.put("id", topicMap.getId());
+
+      List<Map<String,Object>> types = new ArrayList<Map<String,Object>>(); 
+
+      for (TopicType topicType : topicMap.getTopicTypes()) {
+        if (!topicType.isSystemTopic()) {
+          Map<String,Object> type = new LinkedHashMap<String,Object>();
+          type.put("id", topicType.getId());
+          type.put("name", topicType.getName());
+          
+          List<Link> links = new ArrayList<Link>();
+  
+          if (!topicType.isAbstract()) {
+            links.add(new Link("create-instance", uriInfo.getBaseUri() + "editor/create-instance/" + topicType.getId()));
+          }
+          type.put("links", links);      
+          types.add(type);
+        }
+      }
+      result.put("types", types);      
+      return result;
+      
     } catch (Exception e) {
       store.abort();
       throw e;
