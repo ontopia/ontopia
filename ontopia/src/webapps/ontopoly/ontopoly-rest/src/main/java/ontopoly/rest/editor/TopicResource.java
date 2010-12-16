@@ -42,8 +42,46 @@ public class TopicResource {
   // 1: / - information about server and link to /available-topicmaps
   // 2: /available-topicmaps - lists available topic maps
   // 3: /create-instance/{topicMapId}
-  
+
   private TopicListener topicListener;
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("")
+  public Map<String,Object> getInfo(@Context UriInfo uriInfo) throws Exception {
+
+    Map<String,Object> result = new LinkedHashMap<String,Object>();
+
+    result.put("id", uriInfo.getBaseUri() + "editor");
+    result.put("name", "Ontopoly Editor REST API");
+
+    List<Link> links = new ArrayList<Link>();
+    links.add(new Link("available-topicmaps", uriInfo.getBaseUri() + "editor/available-topicmaps"));
+    result.put("links", links);      
+    return result;
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("available-topicmaps")
+  public Map<String,Object> getTopicMaps(@Context UriInfo uriInfo) throws Exception {
+
+    Map<String,Object> result = new LinkedHashMap<String,Object>();
+
+    result.put("id", "topicmaps");
+    result.put("name", "Ontopoly Editor REST API");
+
+    List<Map<String,Object>> topicmaps = new ArrayList<Map<String,Object>>();
+    Map<String,Object> topicmap = new LinkedHashMap<String,Object>();
+    topicmap.put("id", "litteraturklubben.xtm");
+    topicmap.put("name", "Litteraturklubben");
+    List<Link> links = new ArrayList<Link>();
+    links.add(new Link("edit", uriInfo.getBaseUri() + "editor/topicmap-info/litteraturklubben.xtm"));
+    topicmap.put("links", links);    
+    topicmaps.add(topicmap);
+    result.put("topicmaps", topicmaps);      
+    return result;
+  }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -60,9 +98,10 @@ public class TopicResource {
 
       result.put("id", topicMap.getId());
       result.put("name", topicMap.getName());
-      
+
       List<Link> links = new ArrayList<Link>();
       links.add(new Link("available-types", uriInfo.getBaseUri() + "editor/available-types/" + topicMap.getId()));
+      links.add(new Link("topic", uriInfo.getBaseUri() + "editor/topic/" + topicMap.getId() + "/{topicId}"));
       result.put("links", links);      
       return result;
 
@@ -431,7 +470,7 @@ public class TopicResource {
       TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
       Map<String,Object> result = new LinkedHashMap<String,Object>();
-//      result.put("id", topicMap.getId());
+      //      result.put("id", topicMap.getId());
 
       List<Map<String,Object>> types = new ArrayList<Map<String,Object>>(); 
 
@@ -440,9 +479,9 @@ public class TopicResource {
           Map<String,Object> type = new LinkedHashMap<String,Object>();
           type.put("id", topicType.getId());
           type.put("name", topicType.getName());
-          
+
           List<Link> links = new ArrayList<Link>();
-  
+
           if (!topicType.isAbstract()) {
             links.add(new Link("create-instance", uriInfo.getBaseUri() + "editor/create-instance/" + topicType.getId()));
           }
@@ -452,7 +491,7 @@ public class TopicResource {
       }
       result.put("types", types);      
       return result;
-      
+
     } catch (Exception e) {
       store.abort();
       throw e;
