@@ -86,7 +86,7 @@ public class TopicType extends AbstractTypingTopic {
    * @return A Collection of TopicType objects.
    */
   public Collection<TopicType> getDirectSubTypes() {
-    String query = "xtm:superclass-subclass($SUB : xtm:subclass, %topic% : xtm:superclass)?";
+    String query = "select $SUB from xtm:superclass-subclass($SUB : xtm:subclass, %topic% : xtm:superclass) order by $SUB?";
 
     Map<String,TopicIF> params = Collections.singletonMap("topic", getTopicIF());
 

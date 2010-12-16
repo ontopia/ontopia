@@ -32,7 +32,6 @@ public class PlayerTypesModel extends LoadableDetachableModel<List<TopicType>> {
       TopicType topicType = iter.next();        
       result.add(topicType);
     }
-    Collections.sort(result, TopicComparator.INSTANCE);
     return result;
   }
 }

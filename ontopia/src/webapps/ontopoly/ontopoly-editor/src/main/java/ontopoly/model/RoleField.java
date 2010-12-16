@@ -173,7 +173,8 @@ public class RoleField extends FieldDefinition {
       query += "select $avtype from "
         + "on:has-field(%field% : on:field-definition, $ttype : on:field-owner), "
         + "{ $avtype = $ttype | subclasses-of($ttype, $avtype) }, "
-        + "not(on:is-abstract($avtype : on:topic-type))?";
+        + "not(on:is-abstract($avtype : on:topic-type)) "
+        + "order by $avtype?";
     }
 
     Map<String,TopicIF> params = new HashMap<String,TopicIF>(2);

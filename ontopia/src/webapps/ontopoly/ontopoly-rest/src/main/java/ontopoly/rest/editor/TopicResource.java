@@ -146,6 +146,35 @@ public class TopicResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @Path("create-field-instance/{topicMapId}/{parentTopicId}/{parentFieldId}/{playerTypeId}")
+  public Map<String,Object> createInstance(
+      @Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId,
+      @PathParam("parentTopicId") final String parentTopicId,
+      @PathParam("parentFieldId") final String parentFieldId, 
+      @PathParam("playerTypeId") final String playerTypeId) throws Exception {
+
+    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    try {
+      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+
+      Topic playerType_ = topicMap.getTopicById(playerTypeId);
+      TopicType playerType = new TopicType(playerType_.getTopicIF(), topicMap);
+
+      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
+
+      return Utils.createNewTopicInfo(uriInfo, playerType, fieldsView, parentTopicId, parentFieldId);
+
+    } catch (Exception e) {
+      store.abort();
+      throw e;
+    } finally {
+      store.close();      
+    }
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("topic/{topicMapId}/{topicId}")
   public Map<String,Object> getTopicInDefaultView(
       @Context UriInfo uriInfo, 
@@ -388,7 +417,7 @@ public class TopicResource {
           FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition();
           if (fieldDefinition.getId().equals(fieldId) &&
               fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
-  
+
             return createFieldInfoAllowed(uriInfo, topic, fieldsView, fieldDefinition);
           }
         }
@@ -397,7 +426,7 @@ public class TopicResource {
           FieldDefinition fieldDefinition = fieldAssigment.getFieldDefinition();
           if (fieldDefinition.getId().equals(fieldId) &&
               fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
-  
+
             return createFieldInfoAllowed(uriInfo, topic, fieldsView, fieldDefinition);
           }
         }
@@ -418,7 +447,7 @@ public class TopicResource {
 
     Map<String,Object> result = new LinkedHashMap<String,Object>();
     result.put("id", fieldDefinition.getId());
-    result.put("arity", arity);
+    result.put("name", fieldDefinition.getFieldName());
 
     if (arity < 2) {
       result.put("values", Collections.emptyList());
@@ -475,39 +504,22 @@ public class TopicResource {
             RoleField roleField = (RoleField)fieldDefinition;
             int arity = roleField.getAssociationField().getArity();
 
-            Map<String,Object> result = new LinkedHashMap<String,Object>();
-            result.put("id", fieldDefinition.getId());
-            result.put("arity", arity);
+            if (arity == 2) {
 
-            if (arity < 2) {
-              result.put("values", Collections.emptyList());
-            } else if (arity == 2) {
               FieldsView childView = fieldDefinition.getValueView(fieldsView);
               EditMode editMode = roleField.getEditMode();
               ViewModes viewModes = fieldDefinition.getViewModes(childView);
               boolean allowCreate = !editMode.isNoEdit() && !editMode.isExistingValuesOnly() && !viewModes.isReadOnly();
-              System.out.println("AC: " + allowCreate);
+
+              Map<String,Object> result = new LinkedHashMap<String,Object>();
+              result.put("id", fieldDefinition.getId());
+              result.put("name", fieldDefinition.getFieldName());
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                result.put("values", allowCreate ? Utils.getCreatePlayerTypes(uriInfo, topic, roleField, otherRoleField.getAllowedPlayerTypes(topic), otherRoleField, fieldsView, childView, viewModes) : Collections.emptySet());
+                result.put("types", allowCreate ? Utils.getCreateFieldInstance(uriInfo, topic, roleField, otherRoleField.getAllowedPlayerTypes(topic), otherRoleField, fieldsView, childView, viewModes) : Collections.emptySet());
                 break;
               }
-            } else if (arity > 2) {
-              FieldsView childView = fieldDefinition.getValueView(fieldsView);
-              ViewModes viewModes = fieldDefinition.getViewModes(childView);
-              List<Map<String,Object>> roles = new ArrayList<Map<String,Object>>();
-              for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                EditMode editMode = otherRoleField.getEditMode();
-                boolean allowCreate = !editMode.isNoEdit() && !editMode.isExistingValuesOnly() && !viewModes.isReadOnly();
-                Map<String,Object> roleData = new LinkedHashMap<String,Object>();
-                roleData.put("id", otherRoleField.getId());
-                roleData.put("name", otherRoleField.getFieldName());
-                roleData.put("values", allowCreate ? Utils.getCreatePlayerTypes(uriInfo, topic, roleField, otherRoleField.getAllowedPlayerTypes(topic), otherRoleField, fieldsView, childView, viewModes) : Collections.emptySet());
-                roles.add(roleData);
-              }
-              result.put("values", roles);
-              System.out.println("X: " + result);
+              return result;
             }
-            return result;
           }
         }
       }

@@ -106,9 +106,20 @@ public class Utils {
     result.put("views", getViews(uriInfo, topic, topicType, fieldsView));
     return result;
   }
-
+  
   public static Map<String,Object> createNewTopicInfo(UriInfo uriInfo, TopicType topicType, FieldsView fieldsView) {
+    return createNewTopicInfo(uriInfo, topicType, fieldsView, null, null);
+  }
+  
+  public static Map<String,Object> createNewTopicInfo(UriInfo uriInfo, TopicType topicType, FieldsView fieldsView, String parentId, String parentFieldId) {
     Map<String,Object> result = new LinkedHashMap<String,Object>();
+
+    if (parentId != null) {
+      Map<String,Object> origin = new LinkedHashMap<String,Object>();    
+      origin.put("topicId", parentId);
+      origin.put("fieldId", parentFieldId);
+      result.put("origin", origin);
+    }
     
     Map<String,Object> typeInfo = new LinkedHashMap<String,Object>();    
     typeInfo.put("id", topicType.getId());
@@ -119,8 +130,6 @@ public class Utils {
 
     List<Link> topicLinks = new ArrayList<Link>();
     topicLinks.add(new Link("create", getCreateLinkFor(uriInfo, topicType, fieldsView)));    
-    //    topicLinks.add(new Link("remove", "http://examples.org/topics/" + topic.getId() + "/remove"));
-    //    topicLinks.add(new Link("batch-update", "http://examples.org/topics/" + topic.getId() + "/batch-update"));
     result.put("links", topicLinks);
 
     List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
@@ -132,7 +141,6 @@ public class Utils {
     }
     result.put("fields", fields);
     result.put("views", Collections.singleton(getView(uriInfo, null, fieldsView)));
-//    result.put("views", getViews(uriInfo, topic, topicType, fieldsView));
     return result;
   }
 
@@ -424,18 +432,18 @@ public class Utils {
     return result;
   }
 
-  public static Object getCreatePlayerTypes(UriInfo uriInfo, 
+  public static Object getCreateFieldInstance(UriInfo uriInfo, 
       Topic parentTopic, FieldDefinition parentFieldDefinition, 
       Collection<TopicType> playerTypes, FieldDefinition childFieldDefinition, FieldsView parentView, FieldsView childView, ViewModes viewModes) {
     
     List<Object> result = new ArrayList<Object>(playerTypes.size());
     for (TopicType playerType : playerTypes) {
-      result.add(getCreatePlayerType(uriInfo, parentTopic, parentFieldDefinition, playerType, childFieldDefinition, childView, viewModes));
+      result.add(getCreateFieldInstance(uriInfo, parentTopic, parentFieldDefinition, playerType, childFieldDefinition, childView, viewModes));
     }
     return result;
   }
 
-  public static Object getCreatePlayerType(UriInfo uriInfo, 
+  public static Object getCreateFieldInstance(UriInfo uriInfo, 
       Topic parentTopic, FieldDefinition parentFieldDefinition, 
       TopicType playerType, FieldDefinition childFieldDefinition, FieldsView childView, ViewModes viewModes) {
     
@@ -446,7 +454,7 @@ public class Utils {
     //    System.out.println("V: " + value + " P:" + parentView + " C:" + childView);
     List<Link> links = new ArrayList<Link>();
     String topicMapId = parentTopic.getTopicMap().getId();
-    links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "editor/field-create-instance/" + topicMapId + "/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + playerType.getId()));
+    links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "editor/create-field-instance/" + topicMapId + "/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + playerType.getId()));
     result.put("links", links);
 
     return result;
