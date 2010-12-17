@@ -1,6 +1,7 @@
 package ontopoly.rest.editor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -104,7 +105,7 @@ public class TopicResource {
       List<Link> links = new ArrayList<Link>();
       links.add(new Link("available-types-tree", uriInfo.getBaseUri() + "editor/available-types-tree/" + topicMap.getId()));
       links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + topicMap.getId()));
-      links.add(new Link("topic", uriInfo.getBaseUri() + "editor/topic/" + topicMap.getId() + "/{topicId}"));
+      links.add(new Link("edit-topic-by-id", uriInfo.getBaseUri() + "editor/topic/" + topicMap.getId() + "/{topicId}"));
       result.put("links", links);      
       return result;
 
@@ -134,7 +135,7 @@ public class TopicResource {
 
       FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
 
-      return Utils.createNewTopicInfo(uriInfo, topicType, fieldsView);
+      return Utils.getNewTopicInfo(uriInfo, topicType, fieldsView);
 
     } catch (Exception e) {
       store.abort();
@@ -163,7 +164,7 @@ public class TopicResource {
 
       FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
 
-      return Utils.createNewTopicInfo(uriInfo, playerType, fieldsView, parentTopicId, parentFieldId);
+      return Utils.getNewTopicInfo(uriInfo, playerType, fieldsView, parentTopicId, parentFieldId);
 
     } catch (Exception e) {
       store.abort();
@@ -190,7 +191,7 @@ public class TopicResource {
       TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
       FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
 
-      return Utils.createTopicInfo(uriInfo, topic, topicType, fieldsView);
+      return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
 
     } catch (Exception e) {
       store.abort();
@@ -221,7 +222,7 @@ public class TopicResource {
       Topic viewTopic = topicMap.getTopicById(viewId);
       FieldsView fieldsView = new FieldsView(viewTopic);
 
-      return Utils.createTopicInfo(uriInfo, topic, topicType, fieldsView);
+      return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
 
     } catch (Exception e) {
       store.abort();
@@ -418,7 +419,7 @@ public class TopicResource {
           if (fieldDefinition.getId().equals(fieldId) &&
               fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
 
-            return createFieldInfoAllowed(uriInfo, topic, fieldsView, fieldDefinition);
+            return createFieldInfoAllowed(uriInfo, topic, topicType, fieldsView, fieldDefinition);
           }
         }
       } else {
@@ -427,7 +428,7 @@ public class TopicResource {
           if (fieldDefinition.getId().equals(fieldId) &&
               fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
 
-            return createFieldInfoAllowed(uriInfo, topic, fieldsView, fieldDefinition);
+            return createFieldInfoAllowed(uriInfo, topic, topicType, fieldsView, fieldDefinition);
           }
         }
       }
@@ -441,7 +442,7 @@ public class TopicResource {
   }
 
   private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo,
-      Topic topic, FieldsView fieldsView, FieldDefinition fieldDefinition) {
+      Topic topic, TopicType topicType, FieldsView fieldsView, FieldDefinition fieldDefinition) {
     RoleField roleField = (RoleField)fieldDefinition;
     int arity = roleField.getAssociationField().getArity();
 
@@ -455,8 +456,14 @@ public class TopicResource {
       FieldsView childView = fieldDefinition.getValueView(fieldsView);
       ViewModes viewModes = fieldDefinition.getViewModes(childView);
       for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-        boolean readOnly = true;
-        result.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes.isTraversable(), readOnly));
+        
+        boolean addable = true;
+        List<Topic> allowedPlayers = otherRoleField.getAllowedPlayers(topic);
+        List<Object> values = new ArrayList<Object>(allowedPlayers.size());
+        for (Topic value : allowedPlayers) {
+          values.add(Utils.getAllowedTopicFieldValue(uriInfo, topic, topicType, roleField, value , otherRoleField, childView, viewModes.isTraversable(), addable));
+        }
+        result.put("values", values);
         break;
       }
     } else if (arity > 2) {
@@ -467,8 +474,15 @@ public class TopicResource {
         Map<String,Object> roleData = new LinkedHashMap<String,Object>();
         roleData.put("id", otherRoleField.getId());
         roleData.put("name", otherRoleField.getFieldName());
+
         boolean readOnly = true;
-        roleData.put("values", Utils.getExistingTopicValues(uriInfo, topic, roleField, otherRoleField.getAllowedPlayers(topic), otherRoleField, fieldsView, childView, viewModes.isTraversable(), readOnly));
+        List<Topic> allowedPlayers = otherRoleField.getAllowedPlayers(topic);
+        List<Object> values = new ArrayList<Object>(allowedPlayers.size());
+        for (Topic value : allowedPlayers) {
+          values.add(Utils.getAllowedTopicFieldValue(uriInfo, topic, topicType, roleField, value , otherRoleField, childView, viewModes.isTraversable(), readOnly));
+        }
+        roleData.put("values", values);
+        
         roles.add(roleData);
       }
       result.put("values", roles);
@@ -515,7 +529,17 @@ public class TopicResource {
               result.put("id", fieldDefinition.getId());
               result.put("name", fieldDefinition.getFieldName());
               for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                result.put("types", allowCreate ? Utils.getCreateFieldInstance(uriInfo, topic, roleField, otherRoleField.getAllowedPlayerTypes(topic), otherRoleField, fieldsView, childView, viewModes) : Collections.emptySet());
+                
+                if (allowCreate) {
+                  Collection<TopicType> allowedPlayerTypes = otherRoleField.getAllowedPlayerTypes(topic);
+                  List<Object> types = new ArrayList<Object>(allowedPlayerTypes.size());
+                  for (TopicType playerType : allowedPlayerTypes) {
+                    types.add(Utils.getCreateFieldInstance(uriInfo, topic, roleField, playerType, otherRoleField, childView, viewModes));
+                  }
+                  result.put("types", types);
+                } else {
+                  result.put("types", Collections.EMPTY_LIST);
+                }
                 break;
               }
               return result;

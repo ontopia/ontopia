@@ -23,7 +23,7 @@ public class TypeUtils {
 
         List<Link> links = new ArrayList<Link>();
         if (!topicType.isAbstract()) {
-          links.add(new Link("create-instance", uriInfo.getBaseUri() + "editor/create-instance/" + topicType.getTopicMap().getId() + "/" + topicType.getId()));
+          links.add(new Link("create-instance", Utils.getCreateInstanceLinkFor(uriInfo, topicType)));
         }
         if (!topicType.getDirectSubOrdinateTypes().isEmpty()) {
           links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + topicType.getTopicMap().getId() + "/" + topicType.getId()));
@@ -46,7 +46,7 @@ public class TypeUtils {
 
         List<Link> links = new ArrayList<Link>();
         if (!topicType.isAbstract()) {
-          links.add(new Link("create-instance", uriInfo.getBaseUri() + "editor/create-instance/" + topicType.getTopicMap().getId() + "/" + topicType.getId()));
+          links.add(new Link("create-instance", Utils.getCreateInstanceLinkFor(uriInfo, topicType)));
         }
         type.put("links", links);
         
