@@ -1,6 +1,4 @@
 
-// $Id: RDFTopicMapWriter.java,v 1.14 2008/06/13 08:36:29 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.io.Writer;
@@ -158,7 +156,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
       return unfiltered;
     Collection retVal = new ArrayList();
     Iterator unfilteredIt = unfiltered.iterator();
-    ;
+
     while (unfilteredIt.hasNext()) {
       Object current = unfilteredIt.next();
       if (filter.ok(current))
@@ -171,68 +169,15 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
   
   public void write(TopicMapIF topicmap) {
     // http://www.ilrt.bris.ac.uk/discovery/chatlogs/rdfig/2003-12-17#T12-14-33
-    AResource namedef = new AResourceWrapper(NS_RDFS + "label");
-    AResource type = new AResourceWrapper(NS_RDF + "type");
-    AResource trueres = new AResourceWrapper(NS_TM + "true");
-    AResource sameas = new AResourceWrapper(NS_OWL + "sameAs");
     setup(topicmap);
-    
-    TopicIF namePropertyType = getTopic(topicmap, "name-property");
-    TopicIF preferredRoleType = getTopic(topicmap, "preferred-role");
-    
+        
     // topics
     Collection topics = topicmap.getTopics();
     topics = filterCollection(topics);
     Iterator it = topics.iterator();
     while (it.hasNext()) {
       TopicIF topic = (TopicIF) it.next();
-      AResource subject = getResource(topic);
-
-      // subject indicators
-      Iterator it2 = topic.getSubjectIdentifiers().iterator();
-      while (it2.hasNext()) {
-        AResource other = getResource((LocatorIF) it2.next());
-        if (!other.equals(subject))
-          handler.statement(subject, sameas, other);
-      }
-      
-      // types
-      Collection types = topic.getTypes();
-      types = filterCollection(types);
-      it2 = types.iterator();
-      AResource topictype = null;
-      while (it2.hasNext()) {
-        topictype = getResource((TopicIF) it2.next());
-        handler.statement(subject, type, topictype);
-      }
-
-      // base names
-      Collection baseNames = topic.getTopicNames();
-      baseNames = filterCollection(baseNames);
-      it2 = baseNames.iterator();
-      while (it2.hasNext()) {
-        TopicNameIF bn = (TopicNameIF) it2.next();
-        AResource namepred = (AResource) namepreds.get(topictype);
-        if (namepred == null)
-          namepred = namedef;
-        statement(subject, namepred, getLiteral(bn.getValue()), bn);
-      }
-
-      // occurrences
-      Collection occurrences = topic.getOccurrences();
-      occurrences = filterCollection(occurrences);
-      it2 = occurrences.iterator();
-      while (it2.hasNext()) {
-        OccurrenceIF occ = (OccurrenceIF) it2.next();
-
-        if (ObjectUtils.equals(occ.getDataType(), DataTypes.TYPE_URI))
-          statement(subject, getResource(occ.getType()),
-                    getResource(occ.getLocator()), occ);
-        else
-          statement(subject, getResource(occ.getType()),
-                    getLiteral(occ.getValue()), occ);
-        // else don't make a statement, since there is no value (bug #1797)
-      }
+      write(topic);
     }
 
     // associations
@@ -241,74 +186,135 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     it = associations.iterator();
     while (it.hasNext()) {
       AssociationIF assoc = (AssociationIF) it.next();
-
-      if (assoc.getRoles().size() == 1) {
-        // unary
-        AResource pred = getResource(assoc.getType());
-        AssociationRoleIF role = (AssociationRoleIF)
-          assoc.getRoles().iterator().next();
-        statement(getResource(role.getPlayer()), pred, trueres, assoc);
-
-      } else if (assoc.getRoles().size() == 2) {
-        // binary
-        TopicIF assoctype = assoc.getType();
-        if (assoctype != null &&
-            (assoctype.equals(namePropertyType) ||
-             assoctype.equals(preferredRoleType)))
-          continue; // don't export mapping
-        TopicIF preferred = (TopicIF) preferred_roles.get(assoctype);
-        TopicIF subject = null;
-        TopicIF object = null;
-
-        Iterator it2 = assoc.getRoles().iterator();
-        AssociationRoleIF role = (AssociationRoleIF) it2.next();
-        if (preferred == null || preferred.equals(role.getType())) {
-          subject = role.getPlayer();
-          if (preferred == null)
-            preferred_roles.put(assoctype, role.getType());
-        } else
-          object = role.getPlayer();
-
-        role = (AssociationRoleIF) it2.next();
-        if (preferred != null && preferred.equals(role.getType()) &&
-            subject == null) {
-          subject = role.getPlayer();
-          if (preferred == null)
-            preferred_roles.put(assoctype, role.getType());
-        } else
-          object = role.getPlayer();
-
-        if (subject != null && assoctype != null && object != null)
-          statement(getResource(subject),
-                    getResource(assoctype),
-                    getResource(object),
-                    assoc);
-      } else {
-        // lotsary
-
-        AResource subject;
-        TopicIF reifier = assoc.getReifier();
-        if (reifier == null || !filterOk(reifier))
-          subject = getResource();
-        else
-          subject = getResource(reifier);
-        
-        handler.statement(subject, type, getResource(assoc.getType()));
-        assertScope(subject, assoc.getScope());
-
-        Iterator it2 = assoc.getRoles().iterator();
-        while (it2.hasNext()) {
-          AssociationRoleIF role = (AssociationRoleIF) it2.next();
-          handler.statement(subject,
-                            getResource(role.getType()),
-                            getResource(role.getPlayer()));
-        }
-      }
+      write(assoc);
     }
 
     // finishing up
     if (model != null && writer != null)
       model.write(writer);
+  }
+
+  protected void write(TopicIF topic) {
+    AResource namedef = new AResourceWrapper(NS_RDFS + "label");
+    AResource type = new AResourceWrapper(NS_RDF + "type");
+    AResource sameas = new AResourceWrapper(NS_OWL + "sameAs");
+    AResource subject = getResource(topic);
+
+    // subject indicators
+    Iterator it2 = topic.getSubjectIdentifiers().iterator();
+    while (it2.hasNext()) {
+      AResource other = getResource((LocatorIF) it2.next());
+      if (!other.equals(subject))
+        handler.statement(subject, sameas, other);
+    }
+      
+    // types
+    Collection types = topic.getTypes();
+    types = filterCollection(types);
+    it2 = types.iterator();
+    AResource topictype = null;
+    while (it2.hasNext()) {
+      topictype = getResource((TopicIF) it2.next());
+      handler.statement(subject, type, topictype);
+    }
+
+    // base names
+    Collection baseNames = topic.getTopicNames();
+    baseNames = filterCollection(baseNames);
+    it2 = baseNames.iterator();
+    while (it2.hasNext()) {
+      TopicNameIF bn = (TopicNameIF) it2.next();
+      AResource namepred = (AResource) namepreds.get(topictype);
+      if (namepred == null)
+        namepred = namedef;
+      statement(subject, namepred, getLiteral(bn.getValue()), bn);
+    }
+
+    // occurrences
+    Collection occurrences = topic.getOccurrences();
+    occurrences = filterCollection(occurrences);
+    it2 = occurrences.iterator();
+    while (it2.hasNext()) {
+      OccurrenceIF occ = (OccurrenceIF) it2.next();
+      
+      if (ObjectUtils.equals(occ.getDataType(), DataTypes.TYPE_URI))
+        statement(subject, getResource(occ.getType()),
+                  getResource(occ.getLocator()), occ);
+      else
+        statement(subject, getResource(occ.getType()),
+                  getLiteral(occ.getValue()), occ);
+      // else don't make a statement, since there is no value (bug #1797)
+    }
+  }
+
+  protected void write(AssociationIF assoc) {    
+    if (assoc.getRoles().size() == 1) {
+      // unary
+      AResource trueres = new AResourceWrapper(NS_TM + "true");
+      AResource pred = getResource(assoc.getType());
+      AssociationRoleIF role = (AssociationRoleIF)
+        assoc.getRoles().iterator().next();
+      statement(getResource(role.getPlayer()), pred, trueres, assoc);
+      
+    } else if (assoc.getRoles().size() == 2) {
+      // binary
+      TopicMapIF topicmap = assoc.getTopicMap();
+      TopicIF preferredRoleType = getTopic(topicmap, "preferred-role");
+      TopicIF namePropertyType = getTopic(topicmap, "name-property");
+      TopicIF assoctype = assoc.getType();
+      if (assoctype != null &&
+          (assoctype.equals(namePropertyType) ||
+           assoctype.equals(preferredRoleType)))
+        return; // don't export mapping
+      TopicIF preferred = (TopicIF) preferred_roles.get(assoctype);
+      TopicIF subject = null;
+      TopicIF object = null;
+      
+      Iterator it2 = assoc.getRoles().iterator();
+      AssociationRoleIF role = (AssociationRoleIF) it2.next();
+      if (preferred == null || preferred.equals(role.getType())) {
+        subject = role.getPlayer();
+        if (preferred == null)
+          preferred_roles.put(assoctype, role.getType());
+      } else
+        object = role.getPlayer();
+      
+      role = (AssociationRoleIF) it2.next();
+      if (preferred != null && preferred.equals(role.getType()) &&
+          subject == null) {
+        subject = role.getPlayer();
+        if (preferred == null)
+          preferred_roles.put(assoctype, role.getType());
+      } else
+        object = role.getPlayer();
+
+      if (subject != null && assoctype != null && object != null)
+        statement(getResource(subject),
+                  getResource(assoctype),
+                  getResource(object),
+                  assoc);
+    } else {
+      // lotsary
+      
+      AResource type = new AResourceWrapper(NS_RDF + "type");
+      AResource subject;
+      TopicIF reifier = assoc.getReifier();
+      if (reifier == null || !filterOk(reifier))
+        subject = getResource();
+      else
+        subject = getResource(reifier);
+      
+      handler.statement(subject, type, getResource(assoc.getType()));
+      assertScope(subject, assoc.getScope());
+      
+      Iterator it2 = assoc.getRoles().iterator();
+      while (it2.hasNext()) {
+        AssociationRoleIF role = (AssociationRoleIF) it2.next();
+        handler.statement(subject,
+                          getResource(role.getType()),
+                          getResource(role.getPlayer()));
+      }
+    }
   }
 
   // --- Actual RDF generation
@@ -319,13 +325,13 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     AResource statement = null;
     
     if (preserve_reification) {
-			if (tmconstruct instanceof ReifiableIF) {
-				TopicIF reifier = ((ReifiableIF)tmconstruct).getReifier();
-				if (reifier != null && filterOk(reifier)) {
-					statement = getResource(reifier);
-					assertReified(statement, subj, pred, obj);
-				}
-			}
+      if (tmconstruct instanceof ReifiableIF) {
+        TopicIF reifier = ((ReifiableIF)tmconstruct).getReifier();
+        if (reifier != null && filterOk(reifier)) {
+          statement = getResource(reifier);
+          assertReified(statement, subj, pred, obj);
+        }
+      }
     }
 
     if (preserve_scope) {
