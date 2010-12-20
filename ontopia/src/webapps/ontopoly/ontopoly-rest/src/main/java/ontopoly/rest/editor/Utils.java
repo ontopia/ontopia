@@ -236,16 +236,26 @@ public class Utils {
       field.put("width", occurrenceField.getWidth());
       if (viewModes.isReadOnly()) {
         field.put("readOnly", Boolean.TRUE);
+        field.put("links", Collections.EMPTY_LIST);
+      } else {
+        List<Link> fieldLinks = new ArrayList<Link>();
+        fieldLinks.add(new Link("add-field-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
+        fieldLinks.add(new Link("remove-field-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
+        field.put("links", fieldLinks);
       }
-      field.put("links", Collections.EMPTY_LIST);
     } else if (fieldType == FieldDefinition.FIELD_TYPE_NAME) {
       //        NameField nameField = (NameField)fieldDefinition;
       field.put("type", fieldDefinition.getLocator().getExternalForm());
       field.put("datatype", PSI.XSD_STRING);
       if (viewModes.isReadOnly()) {
         field.put("readOnly", Boolean.TRUE);
+        field.put("links", Collections.EMPTY_LIST);
+      } else {
+        List<Link> fieldLinks = new ArrayList<Link>();
+        fieldLinks.add(new Link("add-field-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
+        fieldLinks.add(new Link("remove-field-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
+        field.put("links", fieldLinks);
       }
-      field.put("links", Collections.EMPTY_LIST);
     } else if (fieldType == FieldDefinition.FIELD_TYPE_IDENTITY) {
       //        IdentityField identityField = (IdentityField)fieldDefinition;
       field.put("type", fieldDefinition.getLocator().getExternalForm());
@@ -253,8 +263,13 @@ public class Utils {
       field.put("validation", "uri");
       if (viewModes.isReadOnly()) {
         field.put("readOnly", Boolean.TRUE);
+        field.put("links", Collections.EMPTY_LIST);
+      } else {
+        List<Link> fieldLinks = new ArrayList<Link>();
+        fieldLinks.add(new Link("add-field-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
+        fieldLinks.add(new Link("remove-field-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
+        field.put("links", fieldLinks);
       }
-      field.put("links", Collections.EMPTY_LIST);
     } else if (fieldType == FieldDefinition.FIELD_TYPE_QUERY) {
       //        QueryField queryField = (QueryField)fieldDefinition;
       field.put("type", fieldDefinition.getLocator().getExternalForm());
@@ -337,11 +352,11 @@ public class Utils {
   protected static Object getValue(UriInfo uriInfo, Topic topic, TopicType topicType, FieldDefinition fieldDefinition, FieldsView childView, ViewModes viewModes, Object fieldValue) {
     switch (fieldDefinition.getFieldType()) {
     case FieldDefinition.FIELD_TYPE_NAME:
-      return getNameValue((TopicNameIF)fieldValue);
+      return getNameValue((TopicNameIF)fieldValue, viewModes);
     case FieldDefinition.FIELD_TYPE_IDENTITY: 
-      return getIdentityValue((LocatorIF)fieldValue);
+      return getIdentityValue((LocatorIF)fieldValue, viewModes);
     case FieldDefinition.FIELD_TYPE_OCCURRENCE:
-      return getOccurrenceValue((OccurrenceIF)fieldValue);
+      return getOccurrenceValue((OccurrenceIF)fieldValue, viewModes);
     case FieldDefinition.FIELD_TYPE_ROLE:
       RoleField roleField = (RoleField)fieldDefinition;
       RoleField.ValueIF value = (RoleField.ValueIF)fieldValue;
@@ -354,8 +369,7 @@ public class Utils {
               TopicType valueType = OntopolyUtils.getDefaultTopicType(valueTopic);
               return getTopicInfo(uriInfo, valueTopic, valueType, childView);
             } else {
-              boolean removable = !viewModes.isReadOnly();
-              return getExistingTopicFieldValue(uriInfo, topic, fieldDefinition, valueTopic, rf, childView, viewModes.isTraversable(), removable);
+              return getExistingTopicFieldValue(uriInfo, topic, fieldDefinition, valueTopic, rf, childView, viewModes);
             }
           }
         }
@@ -370,8 +384,7 @@ public class Utils {
               TopicType valueType = OntopolyUtils.getDefaultTopicType(valueTopic);
               roleValue.put("value", getTopicInfo(uriInfo, valueTopic, valueType, childView));
             } else {
-              boolean removable = !viewModes.isReadOnly();
-              roleValue.put("value", getExistingTopicFieldValue(uriInfo, topic, fieldDefinition, valueTopic, rf, childView, viewModes.isTraversable(), removable));
+              roleValue.put("value", getExistingTopicFieldValue(uriInfo, topic, fieldDefinition, valueTopic, rf, childView, viewModes));
             }
             result.add(roleValue);
           }
@@ -381,7 +394,7 @@ public class Utils {
       return null;
     case FieldDefinition.FIELD_TYPE_QUERY: 
       if (fieldValue instanceof Topic) {
-        return getExistingTopicFieldValue(uriInfo, topic, fieldDefinition, (Topic)fieldValue, null, childView, viewModes.isTraversable(), viewModes.isReadOnly());
+        return getExistingTopicFieldValue(uriInfo, topic, fieldDefinition, (Topic)fieldValue, null, childView, viewModes);
       } else {
         return fieldValue;
       }
@@ -390,39 +403,51 @@ public class Utils {
     }
   }
 
-  public static Map<String,Object> getNameValue(TopicNameIF topicName) {
+  public static Map<String,Object> getNameValue(TopicNameIF topicName, ViewModes viewModes) {
     Map<String,Object> result = new LinkedHashMap<String, Object>();
     result.put("value", topicName.getValue());
+    boolean removable = !viewModes.isReadOnly();
+    if (removable) {
+      result.put("removable", Boolean.TRUE);
+    }
     return result;
   }
 
-  public static Map<String,Object> getIdentityValue(LocatorIF identity) {
+  public static Map<String,Object> getIdentityValue(LocatorIF identity, ViewModes viewModes) {
     Map<String,Object> result = new LinkedHashMap<String, Object>();
     result.put("value", identity.getExternalForm());
+    boolean removable = !viewModes.isReadOnly();
+    if (removable) {
+      result.put("removable", Boolean.TRUE);
+    }
     return result;
   }
 
-  public static Map<String,Object> getOccurrenceValue(OccurrenceIF occurrence) {
+  public static Map<String,Object> getOccurrenceValue(OccurrenceIF occurrence, ViewModes viewModes) {
     Map<String,Object> result = new LinkedHashMap<String, Object>();
     result.put("value", occurrence.getValue());
+    boolean removable = !viewModes.isReadOnly();
+    if (removable) {
+      result.put("removable", Boolean.TRUE);
+    }
     return result;
   }
 
   public static Object getExistingTopicFieldValue(UriInfo uriInfo, 
       Topic parentTopic, FieldDefinition parentFieldDefinition, 
-      Topic value, FieldDefinition childFieldDefinition, FieldsView childView, boolean traversable, boolean removable) {
+      Topic value, FieldDefinition childFieldDefinition, FieldsView childView, ViewModes viewModes) {
     
     Map<String, Object> result = new LinkedHashMap<String,Object>();
     result.put("id", value.getId());
     result.put("name", value.getName());
 
-    List<Link> links = new ArrayList<Link>();
-    if (traversable) {
-      links.add(new Link("edit", getEditLinkFor(uriInfo, value, childView)));
+    if (!viewModes.isReadOnly()) {
+      result.put("removable", Boolean.TRUE);
     }
-    if (removable) {
-      String topicMapId = parentTopic.getTopicMap().getId();
-      links.add(new Link("remove-field-value", uriInfo.getBaseUri() + "editor/remove-field-value/" + topicMapId + "/" + parentTopic.getId() + "/" + parentFieldDefinition.getId() + "/" + value.getId()));
+
+    List<Link> links = new ArrayList<Link>();
+    if (viewModes.isTraversable()) {
+      links.add(new Link("edit", getEditLinkFor(uriInfo, value, childView)));
     }
     result.put("links", links);
 
