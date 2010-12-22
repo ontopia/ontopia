@@ -23,7 +23,13 @@ import org.slf4j.LoggerFactory;
 /**
  * PUBLIC: Exports partial topic maps using an approach inspired
  * by the XTM Fragment Interchange 0.1 specification, but different.
+ *
+ * <p>Note that the TopicMapFragmentWriterIF implementation is not
+ * this class, but XTMTopicMapFragmentWriter.
+ *
  * <p><b>WARNING:</b> This class is not thread-safe.
+ *
+ * @see XTMTopicMapFragmentWriter
  */
 public class XTMFragmentExporter extends XTMTopicMapExporter {
   

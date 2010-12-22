@@ -65,9 +65,20 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
    * character encoding.
    */
   public RDFTopicMapWriter(OutputStream stream) throws IOException {
-    this(new OutputStreamWriter(stream, "utf-8"));
+    this(stream, "utf-8");
   }
 
+  /**
+   * PUBLIC: Creates a writer that writes the RDF representation to
+   * the given OutputStream serialized to RDF/XML and using the given
+   * character encoding.
+   * @since %NEXT%
+   */
+  public RDFTopicMapWriter(OutputStream stream, String encoding) 
+    throws IOException {
+    this(new OutputStreamWriter(stream, "utf-8"));
+  }
+  
   /**
    * PUBLIC: Creates a writer that writes the RDF representation to
    * the given OutputStream serialized to RDF/XML.
@@ -379,7 +390,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
 
   // --- Internal methods
 
-  private void setup(TopicMapIF topicmap) {
+  protected void setup(TopicMapIF topicmap) {
     QueryProcessorIF proc = QueryUtils.getQueryProcessor(topicmap);
     
     try {
