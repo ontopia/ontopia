@@ -38,9 +38,9 @@
     </jar>
   </target>
 
-  <!-- Make .war file -->
-  <target name="war" depends="init">
-    <echo>Creating sdshare webapp .war file...</echo>
+  <!-- Make server .war file -->
+  <target name="server.war" depends="init">
+    <echo>Creating sdshare server webapp .war file...</echo>
     <property name="build.sdshare" value="${build.wars}/sdshare" />
     <mkdir dir="${build.wars}"/>
     <mkdir dir="${build.sdshare}/"/>
@@ -51,6 +51,24 @@
     
     <delete file="${build.wars}/sdshare.war"/>
     <war destfile="${build.wars}/sdshare.war"
+         webxml="${build.sdshare}/WEB-INF/web.xml">
+      <fileset dir="${build.sdshare}"/>
+    </war>
+  </target>
+
+  <!-- Make client .war file -->
+  <target name="client.war" depends="init">
+    <echo>Creating sdshare client webapp .war file...</echo>
+    <property name="build.sdshare" value="${build.wars}/sdshare-client" />
+    <mkdir dir="${build.wars}"/>
+    <mkdir dir="${build.sdshare}/"/>
+
+    <copy todir="${build.sdshare}">
+      <fileset dir="${basedir}/src/client-webapp"/>
+    </copy>
+    
+    <delete file="${build.wars}/sdshare-client.war"/>
+    <war destfile="${build.wars}/sdshare-client.war"
          webxml="${build.sdshare}/WEB-INF/web.xml">
       <fileset dir="${build.sdshare}"/>
     </war>

@@ -5,10 +5,18 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.io.Writer;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
   
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // FIXME: list of changes is not persistent
 // one way to solve this is by a dribble list which is loaded and
@@ -30,7 +38,14 @@ public class TopicMapTracker implements TopicMapListenerIF {
    * expire.
    */
   private long expirytime;
+  /**
+   * This is the file we use to persist change information.
+   */
+  private String dribblefile;
+  private Writer dribbler;
 
+  static Logger log = LoggerFactory.getLogger(TopicMapTracker.class.getName());
+  
   public TopicMapTracker(TopicMapReferenceIF ref) {
     this(ref, StartUpServlet.DEFAULT_EXPIRY_TIME);
   }
@@ -66,13 +81,16 @@ public class TopicMapTracker implements TopicMapListenerIF {
   public void setExpiryTime(long expirytime) {
     this.expirytime = expirytime;
   }
+
+  // note: don't try to call this after listeners have been registered.
+  // if you do invariants may be violated, causing confusion.
+  public void setDribbleFile(String dribblefile) throws IOException {
+    this.dribblefile = dribblefile;
+    loadDribbleFile(); // dribbler is set up in here
+  }
   
   private synchronized void modified(ChangedTopic o) {
-    try {
-      expireOldChanges();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    expireOldChanges();
     int pos = findDuplicate(o);
     //System.out.println("Change to: " + o.getObjectId() + " at " + pos);
     if (pos == -1)
@@ -86,6 +104,23 @@ public class TopicMapTracker implements TopicMapListenerIF {
     }
 
     idmap.put(o.getObjectId(), o);
+
+    if (dribbler != null) {
+      try {
+        // FIXME: we may not need to write *every* duplicate change to
+        // the file. may save some time to skip fast dupes of same ID.
+        dribbler.write(o.getSerialization() + "\n");
+        // FIXME: flushing all the time makes loading metadata.xtm take
+        // 12 secs instead of 9 secs. so there is a considerable cost here.
+        // must consider whether this can be improved, and whether it needs
+        // to be.
+        dribbler.flush(); 
+      } catch (IOException e) {
+        log.error("Couldn't write to dribble file", e);
+        // FIXME: attempt to clean up file handle, then close it if this
+        // is not possible.
+      }
+    }
   }
 
   private int findDuplicate(ChangedTopic o) {
@@ -206,6 +241,35 @@ public class TopicMapTracker implements TopicMapListenerIF {
     
     // update timestamp
     lastExpired = System.currentTimeMillis();
+  }
+
+  private void loadDribbleFile() throws IOException {
+    // file format: line-based. two types of record.
+    // C objectid timestamp\n
+    // D objectid timestamp ("s," <sid>)* ("l," <slo>)* ("i," <iid>)+\n
+
+    // (1) get ready
+    long expireolderthan = System.currentTimeMillis() - expirytime;
+    
+    // (2) read in old changes, while discarding old ones and duplicates
+    BufferedReader reader = new BufferedReader(new FileReader(dribblefile));
+    String line = reader.readLine();
+    while (line != null) {
+      int pos = line.indexOf(" ", 2);
+      String objid = line.substring(2, pos);
+      long timestamp = Long.parseLong(line.substring(pos + 1, line.length()));
+
+      //System.out.println("Changed '" + objid + "' at " + timestamp);
+
+      if (timestamp > expireolderthan)
+        modified(new ChangedTopic(objid, timestamp));
+      
+      line = reader.readLine();
+    }
+    reader.close();
+    
+    // (3) write out clean dribble file
+    //dribbler = new FileWriter(dribblefile); // *don't* append
   }
   
   // --- TopicMapListenerIF implementation

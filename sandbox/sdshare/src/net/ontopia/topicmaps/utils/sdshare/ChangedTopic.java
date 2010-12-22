@@ -13,6 +13,12 @@ public class ChangedTopic {
     this.timestamp = System.currentTimeMillis();
   }
 
+  // used for deserialization
+  public ChangedTopic(String objid, long timestamp) {
+    this.objid = objid;
+    this.timestamp = timestamp;
+  }
+  
   public String getObjectId() {
     return objid;
   }
@@ -37,5 +43,10 @@ public class ChangedTopic {
 
   public String toString() {
     return "[ChangedTopic " + objid + " at " + timestamp + "]";
+  }
+
+  // for dribble file
+  public String getSerialization() {
+    return "C " + objid + " " + timestamp;
   }
 }

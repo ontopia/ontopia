@@ -11,13 +11,22 @@
   // TODO: should support if-modified-since
 
   String tmid = request.getParameter("topicmap");
-  //String prefix = StartUpServlet.getEndpointURL() + tmid;
 
   TopicMapTracker tracker = StartUpServlet.topicmaps.get(tmid);
+  if (tracker == null) {
+    // means either there's no such TM, or we are not supposed to produce
+    // a feed for it.
+    response.setStatus(404);
+    response.setHeader("Content-type", "text/plain");
+    out.write("No such topic map: '" + tmid + "'.");
+    return;
+  }
+
   TopicMapReferenceIF ref = tracker.getReference();
   TopicMapStoreIF store = ref.createStore(true);
   TopicMapIF tm = store.getTopicMap();  
   String prefix = store.getBaseAddress().getExternalForm();
+  SyntaxIF[] syntaxes = StartUpServlet.getSyntaxes();
 
   AtomWriter atom = new AtomWriter(out);
   atom.startFeed("Fragments feed for " + ref.getTitle(),
@@ -30,9 +39,11 @@
     atom.startEntry("Topic with object ID " + change.getObjectId(),
                     prefix + "/" + change.getObjectId() + "/" + change.getTimestamp(),
 		    change.getTimestamp());
-    atom.addLink("fragment.jsp?topicmap=" + tmid + "&topic=" + change.getObjectId(),
-                 "application/x-tm+xml; version=1.0",
-                 "alternate");
+
+    for (int ix = 0; ix < syntaxes.length; ix++)
+      atom.addLink("fragment.jsp?topicmap=" + tmid + "&topic=" + change.getObjectId() + "&syntax=" + syntaxes[ix].getId(),
+                   syntaxes[ix].getMIMEType(),
+                   "alternate");
 
     Collection<LocatorIF> psis;
     if (change.isDeleted()) {
