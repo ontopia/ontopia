@@ -1,6 +1,4 @@
 
-// $Id: SameStoreFactory.java,v 1.8 2006/07/18 12:57:06 larsga Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import net.ontopia.topicmaps.core.*;
@@ -10,7 +8,6 @@ import net.ontopia.topicmaps.core.*;
  * via its constructor. This class is useful when the intention is
  * that the same store object is always to be used.</p>
  */
-
 public class SameStoreFactory implements TopicMapStoreFactoryIF {
 
   protected TopicMapStoreIF store;
@@ -21,17 +18,16 @@ public class SameStoreFactory implements TopicMapStoreFactoryIF {
    *
    * @param store the given topicMapStoreFactoryIF
    */ 
-  
   public SameStoreFactory(TopicMapStoreIF store) {
     this.store = store;
   }
 
   /**
-   * PUBLIC: Returns a topicmap store, which is the store given to the constructor.
+   * PUBLIC: Returns a topicmap store, which is the store given to the
+   * constructor.
    *
    * @return The store received through the object's constructor.
    */
-
   public TopicMapStoreIF createStore() {
     return store;
   }    
