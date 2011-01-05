@@ -5,12 +5,17 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.io.Writer;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
-  
+import java.io.FileNotFoundException;
+
+import net.ontopia.utils.StringUtils;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
@@ -18,11 +23,10 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// FIXME: list of changes is not persistent
-// one way to solve this is by a dribble list which is loaded and
-// processed in the normal way on startup. however, this could cause
-// delays at startup if the list is long. might be worth trying,
-// though. must also rewrite the dribble file on startup.
+// FIXME: list of changes is unnecessarily big
+// it might be better to use a binary format for the dribble file.
+// that way it gets smaller, and we don't have to parse it when
+// loading.
 
 /**
  * INTERNAL: Event listener class which maintains a list of changed
@@ -124,8 +128,6 @@ public class TopicMapTracker implements TopicMapListenerIF {
   }
 
   private int findDuplicate(ChangedTopic o) {
-    //return changes.lastIndexOf(o);
-
     // we find the duplicate by looking up the previous change in the idmap
     // and finding its timestamp. we then use the timestamp to do a binary
     // search of the list of changes to locate it there.
@@ -252,24 +254,59 @@ public class TopicMapTracker implements TopicMapListenerIF {
     long expireolderthan = System.currentTimeMillis() - expirytime;
     
     // (2) read in old changes, while discarding old ones and duplicates
-    BufferedReader reader = new BufferedReader(new FileReader(dribblefile));
-    String line = reader.readLine();
-    while (line != null) {
-      int pos = line.indexOf(" ", 2);
-      String objid = line.substring(2, pos);
-      long timestamp = Long.parseLong(line.substring(pos + 1, line.length()));
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(dribblefile));
+      String line = reader.readLine();
+      while (line != null) {
+        boolean changed = line.charAt(0) == 'C';
+        int pos = line.indexOf(" ", 2);
+        String objid = line.substring(2, pos);
+        long timestamp;
 
-      //System.out.println("Changed '" + objid + "' at " + timestamp);
+        ChangedTopic change;
+        
+        if (changed) {
+          timestamp = Long.parseLong(line.substring(pos + 1));
+          //System.out.println("Changed '" + objid + "' at " + timestamp);
+          change = new ChangedTopic(objid, timestamp);
+        } else {
+          int pos2 = line.indexOf(" ", pos + 1);
+          timestamp = Long.parseLong(line.substring(pos + 1, pos2));
+          String[] ids = StringUtils.split(line.substring(pos2 + 1));
 
-      if (timestamp > expireolderthan)
-        modified(new ChangedTopic(objid, timestamp));
+          Collection<LocatorIF> sids = new ArrayList<LocatorIF>();
+          Collection<LocatorIF> iids = new ArrayList<LocatorIF>();
+          Collection<LocatorIF> slos = new ArrayList<LocatorIF>();
+          for (int ix = 0; ix < ids.length; ix++) {
+            LocatorIF loc = URILocator.create(ids[ix].substring(1));
+            if (ids[ix].charAt(0) == 's')
+              sids.add(loc);
+            else if (ids[ix].charAt(0) == 'l')
+              slos.add(loc);
+            else if (ids[ix].charAt(0) == 'i')
+              iids.add(loc);
+            else
+              throw new RuntimeException("Unknown identifier type in '" +
+                                         ids[ix] + "'");
+          }
+
+          change = new DeletedTopic(objid, timestamp, sids, slos, iids);
+        }
+        
+        if (timestamp > expireolderthan)
+          modified(change);
       
-      line = reader.readLine();
+        line = reader.readLine();
+      }
+      reader.close();
+    } catch (FileNotFoundException e) {
+      // we assume this means that the file hasn't been created yet, so
+      // we just warn, create the file, and carry on
+      log.warn("No dribble file found at '" + dribblefile + "', creating one");
     }
-    reader.close();
     
     // (3) write out clean dribble file
-    //dribbler = new FileWriter(dribblefile); // *don't* append
+    dribbler = new FileWriter(dribblefile); // *don't* append
   }
   
   // --- TopicMapListenerIF implementation

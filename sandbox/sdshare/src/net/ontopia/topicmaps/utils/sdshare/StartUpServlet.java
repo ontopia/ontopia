@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -67,6 +68,13 @@ public class StartUpServlet extends HttpServlet {
         continue;
       }
       TopicMapTracker tracker = new TopicMapTracker(ref, getExpiryTime());
+      File file = new File(System.getProperty("java.io.tmpdir"),
+                           tmid + ".dribble");
+      try {
+        tracker.setDribbleFile(file.getAbsolutePath());
+      } catch (IOException e) {
+        log.error("Cannot set up dribble file", e);
+      }
       TopicMapEvents.addTopicListener(ref, tracker);
       topicmaps.put(tmid, tracker);
       log.debug("Registered topic map '" + tmid + "'");

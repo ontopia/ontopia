@@ -27,7 +27,17 @@ public class DeletedTopic extends ChangedTopic {
     this.sis = copyOf(topic.getSubjectIdentifiers());
     this.sls = copyOf(topic.getSubjectLocators());
     this.iis = copyOf(topic.getItemIdentifiers());
-  }  
+  }
+
+  public DeletedTopic(String objid, long timestamp,
+                      Collection<LocatorIF> sis,
+                      Collection<LocatorIF> sls,
+                      Collection<LocatorIF> iis) {
+    super(objid, timestamp);
+    this.sis = sis;
+    this.sls = sls;
+    this.iis = iis;
+  }
 
   public boolean isDeleted() {
     return true;
@@ -51,5 +61,16 @@ public class DeletedTopic extends ChangedTopic {
 
     return new ArrayList<LocatorIF>(ids);
   }
-  
+
+  // for dribble file
+  public String getSerialization() {
+    StringBuilder buf = new StringBuilder("D " + objid + " " + timestamp);
+    for (LocatorIF loc : sis)
+      buf.append(" s" + loc.getExternalForm());
+    for (LocatorIF loc : sls)
+      buf.append(" l" + loc.getExternalForm());
+    for (LocatorIF loc : iis)
+      buf.append(" i" + loc.getExternalForm());
+    return buf.toString();
+  }
 }

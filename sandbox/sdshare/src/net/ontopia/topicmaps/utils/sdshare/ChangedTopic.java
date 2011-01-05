@@ -5,8 +5,8 @@ package net.ontopia.topicmaps.utils.sdshare;
  * INTERNAL: Represents a change to a single topic.
  */
 public class ChangedTopic {
-  private String objid;
-  private long timestamp; // millisecs since standard Java epoch
+  protected String objid;
+  protected long timestamp; // millisecs since standard Java epoch
 
   public ChangedTopic(String objid) {
     this.objid = objid;
