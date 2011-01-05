@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.utils.test;
 
 import java.net.MalformedURLException;
