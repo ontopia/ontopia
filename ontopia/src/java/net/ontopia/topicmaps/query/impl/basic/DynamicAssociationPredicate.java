@@ -51,9 +51,9 @@ public class DynamicAssociationPredicate extends AbstractDynamicPredicate {
     if (open == 0)
       return PredicateDrivenCostEstimator.FILTER_RESULT;
     else if (closed > 0)
-      return PredicateDrivenCostEstimator.MEDIUM_RESULT + open;
+      return PredicateDrivenCostEstimator.MEDIUM_RESULT - closed;
     else
-      return PredicateDrivenCostEstimator.BIG_RESULT + open;
+      return PredicateDrivenCostEstimator.BIG_RESULT - closed;
   }
 
   public QueryMatches satisfy(QueryMatches matches, Object[] arguments)
