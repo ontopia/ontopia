@@ -1,12 +1,25 @@
 
-// $Id: DebugUtils.java,v 1.3 2008/05/14 14:09:37 lars.garshol Exp $
-
 package net.ontopia.utils;
 
 /**
  * INTERNAL: Useful debugging methods.
  */
 public class DebugUtils {
+
+  public static String decodeString(String str) {
+    StringBuilder buf = new StringBuilder(str.length() * 5);
+    buf.append(str + " [");
+
+    for (int ix = 0; ix < str.length(); ix++) {
+      if (ix > 0)
+        buf.append(", ");
+      buf.append((int) str.charAt(ix));
+    }
+    
+    buf.append("]");
+
+    return buf.toString();
+  }
 
   public static String toString(Object[] array) {
     if (array == null)
