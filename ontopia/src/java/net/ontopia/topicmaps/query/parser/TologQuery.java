@@ -1,17 +1,15 @@
 
-// $Id: TologQuery.java,v 1.27 2008/06/13 08:17:54 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -30,11 +28,11 @@ public class TologQuery extends TologStatement {
   protected Map vartypemap; // variable -> Object[] containing possible types
   protected Map ptypemap;   // parameter -> Object[] containing possible types
 
-  protected List variables; // select * from variables
-  protected Set countVariables;
-  protected Set allVariables;
+  protected List<Variable> variables; // select * from variables
+  protected Set<Variable> countVariables;
+  protected Set<Variable> allVariables;
   protected List orderBy;
-  protected Set orderDescending;
+  protected Set<String> orderDescending;
   protected int limit;
   protected int offset;
 
@@ -43,9 +41,9 @@ public class TologQuery extends TologStatement {
   public TologQuery() {
     clauses = new ArrayList();
     orderBy = new ArrayList();
-    countVariables = new HashSet();
+    countVariables = new CompactHashSet<Variable>();
     variables = new ArrayList();
-    orderDescending = new HashSet();
+    orderDescending = new CompactHashSet<String>();
     limit = -1;
     offset = -1;
   }
@@ -201,7 +199,7 @@ public class TologQuery extends TologStatement {
   public static String toString(List clauses) {
     StringBuffer buf = new StringBuffer();
 
-    Set rules = new HashSet();
+    Set rules = new CompactHashSet();
     for (int ix = 0; ix < clauses.size(); ix++) {
       if (ix > 0) buf.append(", ");
 
@@ -332,12 +330,12 @@ public class TologQuery extends TologStatement {
   
   public void close() throws InvalidQueryException {
     // compute the variables we calculate
-    allVariables = new HashSet();
+    allVariables = new CompactHashSet<Variable>();
     for (int ix = 0; ix < clauses.size(); ix++) {
       AbstractClause clause = (AbstractClause) clauses.get(ix);
       Iterator it = clause.getAllVariables().iterator();
       while (it.hasNext())
-        allVariables.add(it.next());
+        allVariables.add((Variable) it.next());
     }
 
     // verify that SELECT variables actually exist
