@@ -1,6 +1,4 @@
 
-// $Id: DefaultTopicMapReference.java,v 1.14 2007/08/30 09:44:01 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
