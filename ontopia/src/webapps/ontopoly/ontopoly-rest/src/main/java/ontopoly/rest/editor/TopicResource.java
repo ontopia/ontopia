@@ -2,7 +2,6 @@ package ontopoly.rest.editor;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,20 +18,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.entry.TopicMaps;
-import ontopoly.model.EditMode;
-import ontopoly.model.FieldAssignment;
-import ontopoly.model.FieldDefinition;
-import ontopoly.model.FieldInstance;
-import ontopoly.model.FieldsView;
-import ontopoly.model.RoleField;
-import ontopoly.model.Topic;
-import ontopoly.model.TopicMap;
-import ontopoly.model.TopicType;
-import ontopoly.model.ViewModes;
 import ontopoly.rest.editor.Utils.Link;
-import ontopoly.utils.OntopolyUtils;
+import ontopoly.rest.editor.spi.PrestoDataProvider;
+import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoSchemaProvider;
+import ontopoly.rest.editor.spi.PrestoSession;
+import ontopoly.rest.editor.spi.PrestoTopic;
+import ontopoly.rest.editor.spi.PrestoType;
+import ontopoly.rest.editor.spi.PrestoView;
+import ontopoly.rest.editor.spi.impl.ontopoly.OntopolyProvider;
 
 import org.codehaus.jettison.json.JSONObject;
 
@@ -75,12 +69,15 @@ public class TopicResource {
     result.put("name", "Ontopoly Editor REST API");
 
     List<Map<String,Object>> topicmaps = new ArrayList<Map<String,Object>>();
+    
     Map<String,Object> topicmap = new LinkedHashMap<String,Object>();
     topicmap.put("id", "litteraturklubben.xtm");
     topicmap.put("name", "Litteraturklubben");
+
     List<Link> links = new ArrayList<Link>();
     links.add(new Link("edit", uriInfo.getBaseUri() + "editor/topicmap-info/litteraturklubben.xtm"));
     topicmap.put("links", links);    
+    
     topicmaps.add(topicmap);
     result.put("topicmaps", topicmaps);      
     return result;
@@ -93,28 +90,26 @@ public class TopicResource {
       @Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
-
       Map<String,Object> result = new LinkedHashMap<String,Object>();
 
-      result.put("id", topicMap.getId());
-      result.put("name", topicMap.getName());
+      result.put("id", session.getDatabaseId());
+      result.put("name", session.getDatabaseName());
 
       List<Link> links = new ArrayList<Link>();
-      links.add(new Link("available-types-tree", uriInfo.getBaseUri() + "editor/available-types-tree/" + topicMap.getId()));
-      links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + topicMap.getId()));
-      links.add(new Link("edit-topic-by-id", uriInfo.getBaseUri() + "editor/topic/" + topicMap.getId() + "/{topicId}"));
+      links.add(new Link("available-types-tree", uriInfo.getBaseUri() + "editor/available-types-tree/" + session.getDatabaseId()));
+      links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + session.getDatabaseId()));
+      links.add(new Link("edit-topic-by-id", uriInfo.getBaseUri() + "editor/topic/" + session.getDatabaseId() + "/{topicId}"));
       result.put("links", links);      
       return result;
 
 
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
@@ -126,22 +121,21 @@ public class TopicResource {
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicTypeId") final String topicTypeId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      Topic topicType_ = topicMap.getTopicById(topicTypeId);
-      TopicType topicType = new TopicType(topicType_.getTopicIF(), topicMap);
-
-      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
+      PrestoType topicType = schemaProvider.getTypeById(topicTypeId);
+      PrestoView fieldsView = schemaProvider.getDefaultView();
 
       return Utils.getNewTopicInfo(uriInfo, topicType, fieldsView);
 
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
@@ -155,22 +149,21 @@ public class TopicResource {
       @PathParam("parentFieldId") final String parentFieldId, 
       @PathParam("playerTypeId") final String playerTypeId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      Topic playerType_ = topicMap.getTopicById(playerTypeId);
-      TopicType playerType = new TopicType(playerType_.getTopicIF(), topicMap);
+      PrestoType topicType = schemaProvider.getTypeById(playerTypeId);
+      PrestoView fieldsView = schemaProvider.getDefaultView();
 
-      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
-
-      return Utils.getNewTopicInfo(uriInfo, playerType, fieldsView, parentTopicId, parentFieldId);
+      return Utils.getNewTopicInfo(uriInfo, topicType, fieldsView, parentTopicId, parentFieldId);
 
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
@@ -182,22 +175,23 @@ public class TopicResource {
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    PrestoDataProvider dataProvider = session.getDataProvider();
+    
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      System.out.println("TM4: " + topicMap + " " + topicId + " " + uriInfo.getAbsolutePath() + " " + uriInfo.getPath() + " " + uriInfo.getBaseUri());
-      Topic topic = topicMap.getTopicById(topicId);
-      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
-      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
-
+      PrestoTopic topic = dataProvider.getTopicById(topicId);
+      PrestoType topicType = topic.getType();
+      PrestoView fieldsView = schemaProvider.getDefaultView();
+      
       return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
 
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
@@ -209,60 +203,56 @@ public class TopicResource {
       @PathParam("topicId") final String topicId,
       @PathParam("viewId") final String viewId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    PrestoDataProvider dataProvider = session.getDataProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      System.out.println("TM5: " + topicMap + " " + topicId + " " + uriInfo.getAbsolutePath() + " " + uriInfo.getPath() + " " + uriInfo.getBaseUri());
-      Topic topic = topicMap.getTopicById(topicId);
-
-      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
-
-      Topic viewTopic = topicMap.getTopicById(viewId);
-      FieldsView fieldsView = new FieldsView(viewTopic);
+      PrestoTopic topic = dataProvider.getTopicById(topicId);
+      PrestoType topicType = topic.getType();
+      PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
       return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
 
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  @Path("topic-info/{topicMapId}/{topicId}")
-  public Map<String,Object> getTopicInfo(@Context UriInfo uriInfo, 
-      @PathParam("topicMapId") final String topicMapId, 
-      @PathParam("topicId") final String topicId) throws Exception {
-
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
-
-    try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
-      Topic topic = topicMap.getTopicById(topicId);
-
-      System.out.println("TT: " + topic + " "  + topicId);
-      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
-
-      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
-
-      Map<String,Object> result = new LinkedHashMap<String,Object>();
-
-      result.put("id", topic.getId());
-      result.put("views", Utils.getViews(uriInfo, topic, topicType, fieldsView));
-      return result;
-
-    } catch (Exception e) {
-      store.abort();
-      throw e;
-    } finally {
-      store.close();      
-    }
-  }
+//  @GET
+//  @Produces(MediaType.APPLICATION_JSON)
+//  @Path("topic-info/{topicMapId}/{topicId}")
+//  public Map<String,Object> getTopicInfo(@Context UriInfo uriInfo, 
+//      @PathParam("topicMapId") final String topicMapId, 
+//      @PathParam("topicId") final String topicId) throws Exception {
+//
+//    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+//
+//    try {
+//      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+//      Topic topic = topicMap.getTopicById(topicId);
+//
+//      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+//
+//      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
+//
+//      Map<String,Object> result = new LinkedHashMap<String,Object>();
+//
+//      result.put("id", topic.getId());
+//      result.put("views", Utils.getViews(uriInfo, topic, topicType, fieldsView));
+//      return result;
+//
+//    } catch (Exception e) {
+//      store.abort();
+//      throw e;
+//    } finally {
+//      store.close();      
+//    }
+//  }
 
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
@@ -272,39 +262,37 @@ public class TopicResource {
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId, JSONObject jsonObject) throws Exception {
-    System.out.println("IN2: " + jsonObject);
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    PrestoDataProvider dataProvider = session.getDataProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      Topic topic;
-      TopicType topicType;
+      PrestoTopic topic = null;
+      PrestoType topicType;
       if (topicId.startsWith("_")) {
-        Topic topicType_ = topicMap.getTopicById(topicId.substring(1));
-        topicType = new TopicType(topicType_.getTopicIF(), topicMap);
-        topic  = topicType.createInstance(null);
+        topicType = schemaProvider.getTypeById(topicId.substring(1));
       } else {
-        topic = topicMap.getTopicById(topicId);
-        topicType = OntopolyUtils.getDefaultTopicType(topic);
+        topic = dataProvider.getTopicById(topicId);
+        topicType = topic.getType();
       }
 
-      Topic viewTopic = topicMap.getTopicById(viewId);
-      FieldsView fieldsView = new FieldsView(viewTopic);
+      PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
-      Map<String, Object> result = Utils.updateTopic(uriInfo, topic, topicType, fieldsView, jsonObject);
-      String id = topic.getId();
-
-      store.commit();
+      Map<String, Object> result = Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, jsonObject);
+//      String id = topic.getId(); // FIXME: gives NPE if new topic
+      String id = (String)result.get("id");
+      
+      session.commit();
       topicListener.onTopicUpdated(id);
 
       return result;
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();
+      session.close();
     }
   }
 
@@ -317,33 +305,32 @@ public class TopicResource {
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId,
       @PathParam("fieldId") final String fieldId, JSONObject jsonObject) throws Exception {
-    System.out.println("IN3_: " + topicMapId + " " + topicId + " " + viewId +  " " + fieldId);
-    System.out.println("IN3: " + jsonObject);
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    PrestoDataProvider dataProvider = session.getDataProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      Topic topic = topicMap.getTopicById(topicId);
-      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      PrestoTopic topic = dataProvider.getTopicById(topicId);
+      PrestoType topicType = topic.getType();
+      PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
-      Topic viewTopic = topicMap.getTopicById(viewId);
-      FieldsView fieldsView = new FieldsView(viewTopic);
+      PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
 
-      Map<String, Object> result = Utils.addFieldValues(uriInfo, topic, topicType, fieldsView, fieldId, jsonObject);
+      Map<String, Object> result = Utils.addFieldValues(uriInfo, session, topic, field, jsonObject);
 
       String id = topic.getId();
 
-      store.commit();
+      session.commit();
       topicListener.onTopicUpdated(id);
 
       return result;
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     } 
   }
 
@@ -356,32 +343,32 @@ public class TopicResource {
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId,
       @PathParam("fieldId") final String fieldId, JSONObject jsonObject) throws Exception {
-    System.out.println("IN4: " + jsonObject);
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    PrestoDataProvider dataProvider = session.getDataProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      Topic topic = topicMap.getTopicById(topicId);
-      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      PrestoTopic topic = dataProvider.getTopicById(topicId);
+      PrestoType topicType = topic.getType();
+      PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
-      Topic viewTopic = topicMap.getTopicById(viewId);
-      FieldsView fieldsView = new FieldsView(viewTopic);
+      PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
 
-      Map<String, Object> result =  Utils.removeFieldValues(uriInfo, topic, topicType, fieldsView, fieldId, jsonObject);
+      Map<String, Object> result =  Utils.removeFieldValues(uriInfo, session, topic, field, jsonObject);
 
       String id = topic.getId();
 
-      store.commit();
+      session.commit();
       topicListener.onTopicUpdated(id);
 
       return result;
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     } 
   }
 
@@ -394,100 +381,55 @@ public class TopicResource {
       @PathParam("viewId") final String viewId,
       @PathParam("fieldId") final String fieldId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    PrestoDataProvider dataProvider = session.getDataProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
-      Topic topic;
-      TopicType topicType;
+      PrestoTopic topic;
+      PrestoType topicType;
       if (topicId.startsWith("_")) {
-        Topic topicType_ = topicMap.getTopicById(topicId.substring(1));
-        topicType = new TopicType(topicType_.getTopicIF(), topicMap);
+        topicType = schemaProvider.getTypeById(topicId.substring(1));
         topic  = null;
       } else {
-        topic = topicMap.getTopicById(topicId);
-        topicType = OntopolyUtils.getDefaultTopicType(topic);
+        topic = dataProvider.getTopicById(topicId);
+        topicType = topic.getType();
       }
 
-      Topic viewTopic = topicMap.getTopicById(viewId);
-      FieldsView fieldsView = new FieldsView(viewTopic);
+      PrestoView fieldsView = schemaProvider.getViewById(viewId);
+      
+      PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
+      
+      return createFieldInfoAllowed(uriInfo, field);
 
-      if (topic != null) {
-        for (FieldInstance fieldInstance : topic.getFieldInstances(topicType, fieldsView)) {
-          FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition();
-          if (fieldDefinition.getId().equals(fieldId) &&
-              fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
-
-            return createFieldInfoAllowed(uriInfo, topic, topicType, fieldsView, fieldDefinition);
-          }
-        }
-      } else {
-        for (FieldAssignment fieldAssigment : topicType.getFieldAssignments(fieldsView)) {
-          FieldDefinition fieldDefinition = fieldAssigment.getFieldDefinition();
-          if (fieldDefinition.getId().equals(fieldId) &&
-              fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
-
-            return createFieldInfoAllowed(uriInfo, topic, topicType, fieldsView, fieldDefinition);
-          }
-        }
-      }
-      throw new RuntimeException("Illegal field reference.");
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
-  private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo,
-      Topic topic, TopicType topicType, FieldsView fieldsView, FieldDefinition fieldDefinition) {
-    RoleField roleField = (RoleField)fieldDefinition;
-    int arity = roleField.getAssociationField().getArity();
+  private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo, PrestoField field) {
 
     Map<String,Object> result = new LinkedHashMap<String,Object>();
-    result.put("id", fieldDefinition.getId());
-    result.put("name", fieldDefinition.getFieldName());
+    result.put("id", field.getId());
+    result.put("name", field.getName());
 
-    if (arity < 2) {
-      result.put("values", Collections.emptyList());
-    } else if (arity == 2) {
-      FieldsView childView = fieldDefinition.getValueView(fieldsView);
-      ViewModes viewModes = fieldDefinition.getViewModes(childView);
-      for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-        
-        boolean addable = true;
-        List<Topic> allowedPlayers = otherRoleField.getAllowedPlayers(topic);
-        List<Object> values = new ArrayList<Object>(allowedPlayers.size());
-        for (Topic value : allowedPlayers) {
-          values.add(Utils.getAllowedTopicFieldValue(uriInfo, topic, topicType, roleField, value , otherRoleField, childView, viewModes.isTraversable(), addable));
-        }
-        result.put("values", values);
-        break;
+    Collection<PrestoTopic> availableFieldValues = field.getAvailableFieldValues();
+    List<Object> values = new ArrayList<Object>(availableFieldValues.size());
+    if (!availableFieldValues.isEmpty()) {
+      
+      PrestoView valueView = field.getValueView();
+      boolean traversable = field.isTraversable();
+      
+      for (PrestoTopic value : availableFieldValues) {
+        values.add(Utils.getAllowedTopicFieldValue(uriInfo, value, valueView, traversable));
       }
-    } else if (arity > 2) {
-      FieldsView childView = fieldDefinition.getValueView(fieldsView);
-      ViewModes viewModes = fieldDefinition.getViewModes(childView);
-      List<Map<String,Object>> roles = new ArrayList<Map<String,Object>>();
-      for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-        Map<String,Object> roleData = new LinkedHashMap<String,Object>();
-        roleData.put("id", otherRoleField.getId());
-        roleData.put("name", otherRoleField.getFieldName());
+    } 
+    result.put("values", values);
 
-        boolean readOnly = true;
-        List<Topic> allowedPlayers = otherRoleField.getAllowedPlayers(topic);
-        List<Object> values = new ArrayList<Object>(allowedPlayers.size());
-        for (Topic value : allowedPlayers) {
-          values.add(Utils.getAllowedTopicFieldValue(uriInfo, topic, topicType, roleField, value , otherRoleField, childView, viewModes.isTraversable(), readOnly));
-        }
-        roleData.put("values", values);
-        
-        roles.add(roleData);
-      }
-      result.put("values", roles);
-      System.out.println("X: " + result);
-    }
     return result;
   }
 
@@ -500,59 +442,36 @@ public class TopicResource {
       @PathParam("viewId") final String viewId,
       @PathParam("fieldId") final String fieldId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    PrestoDataProvider dataProvider = session.getDataProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
+      
+      PrestoTopic topic = dataProvider.getTopicById(topicId);
+      PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
-      Topic topic = topicMap.getTopicById(topicId);
-      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
+      PrestoField field = schemaProvider.getFieldById(fieldId, topic.getType(), fieldsView);
+      
+      Map<String,Object> result = new LinkedHashMap<String,Object>();
+      result.put("id", field.getId());
+      result.put("name", field.getName());
+      
+      Collection<PrestoType> availableFieldTypes = field.getAvailableFieldTypes();
 
-      Topic viewTopic = topicMap.getTopicById(viewId);
-      FieldsView fieldsView = new FieldsView(viewTopic);
-
-      for (FieldInstance fieldInstance : topic.getFieldInstances(topicType, fieldsView)) {
-        FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition();
-        if (fieldDefinition.getId().equals(fieldId)) {
-          if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
-            RoleField roleField = (RoleField)fieldDefinition;
-            int arity = roleField.getAssociationField().getArity();
-
-            if (arity == 2) {
-
-              FieldsView childView = fieldDefinition.getValueView(fieldsView);
-              EditMode editMode = roleField.getEditMode();
-              ViewModes viewModes = fieldDefinition.getViewModes(childView);
-              boolean allowCreate = !editMode.isNoEdit() && !editMode.isExistingValuesOnly() && !viewModes.isReadOnly();
-
-              Map<String,Object> result = new LinkedHashMap<String,Object>();
-              result.put("id", fieldDefinition.getId());
-              result.put("name", fieldDefinition.getFieldName());
-              for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-                
-                if (allowCreate) {
-                  Collection<TopicType> allowedPlayerTypes = otherRoleField.getAllowedPlayerTypes(topic);
-                  List<Object> types = new ArrayList<Object>(allowedPlayerTypes.size());
-                  for (TopicType playerType : allowedPlayerTypes) {
-                    types.add(Utils.getCreateFieldInstance(uriInfo, topic, roleField, playerType, otherRoleField, childView, viewModes));
-                  }
-                  result.put("types", types);
-                } else {
-                  result.put("types", Collections.EMPTY_LIST);
-                }
-                break;
-              }
-              return result;
-            }
-          }
-        }
+      List<Object> types = new ArrayList<Object>(availableFieldTypes.size());
+      for (PrestoType playerType : availableFieldTypes) {
+        types.add(Utils.getCreateFieldInstance(uriInfo, topic, field, playerType));
       }
-      throw new RuntimeException("Illegal field reference.");
+
+      result.put("types", types);
+      return result;
+      
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
@@ -562,47 +481,45 @@ public class TopicResource {
   public Map<String,Object> getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
       Map<String,Object> result = new LinkedHashMap<String,Object>();
-      result.put("types", TypeUtils.getAvailableTypesTreeLazy(uriInfo, topicMap.getRootTopicTypes()));      
+      result.put("types", TypeUtils.getAvailableTypesTreeLazy(uriInfo, schemaProvider.getRootTypes()));      
       return result;
 
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  @Path("available-types-tree-lazy/{topicMapId}/{topicId}")
+  @Path("available-types-tree-lazy/{topicMapId}/{typeId}")
   public Map<String,Object> getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
-      @PathParam("topicId") final String topicId) throws Exception {
+      @PathParam("typeId") final String typeId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
-
-      Topic topicType_ = topicMap.getTopicById(topicId);
-      TopicType topicType = new TopicType(topicType_.getTopicIF(), topicMap);
+      PrestoType type = schemaProvider.getTypeById(typeId);
 
       Map<String,Object> result = new LinkedHashMap<String,Object>();
-      result.put("types", TypeUtils.getAvailableTypesTreeLazy(uriInfo, topicType.getDirectSubOrdinateTypes()));      
+      result.put("types", TypeUtils.getAvailableTypesTreeLazy(uriInfo, type.getDirectSubTypes()));      
       return result;
 
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
@@ -612,25 +529,30 @@ public class TopicResource {
   public Map<String,Object> getAvailableTypesTree(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
 
-    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
 
     try {
-      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
 
       Map<String,Object> result = new LinkedHashMap<String,Object>();
-      result.put("types", TypeUtils.getAvailableTypesTree(uriInfo, topicMap.getRootTopicTypes()));      
+      result.put("types", TypeUtils.getAvailableTypesTree(uriInfo, schemaProvider.getRootTypes()));      
       return result;
 
     } catch (Exception e) {
-      store.abort();
+      session.abort();
       throw e;
     } finally {
-      store.close();      
+      session.close();      
     }
   }
 
+  protected PrestoSession createSession(String topicMapId) {
+    return new OntopolyProvider().createSession(topicMapId);
+  }
+  
   @Context
   public void setServletContext(ServletContext servletContext) {
+    // set up topic listener
     String listenerClassName = servletContext.getInitParameter("ontopoly-rest.listener");
     if (listenerClassName != null) {
       try {

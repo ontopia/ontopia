@@ -8,54 +8,50 @@ import java.util.Map;
 
 import javax.ws.rs.core.UriInfo;
 
-import ontopoly.model.TopicType;
 import ontopoly.rest.editor.Utils.Link;
+import ontopoly.rest.editor.spi.PrestoType;
 
 public class TypeUtils {
 
-  static List<Map<String, Object>> getAvailableTypesTreeLazy(UriInfo uriInfo, Collection<TopicType> topicTypes) {
+  static List<Map<String, Object>> getAvailableTypesTreeLazy(UriInfo uriInfo, Collection<PrestoType> types) {
     List<Map<String,Object>> result = new ArrayList<Map<String,Object>>(); 
-    for (TopicType topicType : topicTypes) {
-      if (!topicType.isSystemTopic()) {
-        Map<String,Object> type = new LinkedHashMap<String,Object>();
-        type.put("id", topicType.getId());
-        type.put("name", topicType.getName());
+    for (PrestoType type : types) {
+      Map<String,Object> typeMap = new LinkedHashMap<String,Object>();
+      typeMap.put("id", type.getId());
+      typeMap.put("name", type.getName());
 
-        List<Link> links = new ArrayList<Link>();
-        if (!topicType.isAbstract()) {
-          links.add(new Link("create-instance", Utils.getCreateInstanceLinkFor(uriInfo, topicType)));
-        }
-        if (!topicType.getDirectSubOrdinateTypes().isEmpty()) {
-          links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + topicType.getTopicMap().getId() + "/" + topicType.getId()));
-        }
-        type.put("links", links);      
-        
-        result.add(type);
+      List<Link> links = new ArrayList<Link>();
+      if (!type.isAbstract()) {
+        links.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
       }
+      if (!type.getDirectSubTypes().isEmpty()) {
+        links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + type.getDatabaseId() + "/" + type.getId()));
+      }
+      typeMap.put("links", links);      
+
+      result.add(typeMap);
     }
     return result;
   }
 
-  static List<Map<String, Object>> getAvailableTypesTree(UriInfo uriInfo, Collection<TopicType> topicTypes) {
+  static List<Map<String, Object>> getAvailableTypesTree(UriInfo uriInfo, Collection<PrestoType> types) {
     List<Map<String,Object>> result = new ArrayList<Map<String,Object>>(); 
-    for (TopicType topicType : topicTypes) {
-      if (!topicType.isSystemTopic()) {
-        Map<String,Object> type = new LinkedHashMap<String,Object>();
-        type.put("id", topicType.getId());
-        type.put("name", topicType.getName());
+    for (PrestoType type : types) {
+      Map<String,Object> typeMap = new LinkedHashMap<String,Object>();
+      typeMap.put("id", type.getId());
+      typeMap.put("name", type.getName());
 
-        List<Link> links = new ArrayList<Link>();
-        if (!topicType.isAbstract()) {
-          links.add(new Link("create-instance", Utils.getCreateInstanceLinkFor(uriInfo, topicType)));
-        }
-        type.put("links", links);
-        
-        List<Map<String, Object>> types = getAvailableTypesTree(uriInfo, topicType.getDirectSubOrdinateTypes());
-        if (!types.isEmpty()) {
-          type.put("types", types);
-        }
-        result.add(type);
+      List<Link> links = new ArrayList<Link>();
+      if (!type.isAbstract()) {
+        links.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
       }
+      typeMap.put("links", links);
+
+      List<Map<String, Object>> typesList = getAvailableTypesTree(uriInfo, type.getDirectSubTypes());
+      if (!typesList.isEmpty()) {
+        typeMap.put("types", typesList);
+      }
+      result.add(typeMap);
     }
     return result;
   }
