@@ -1,6 +1,5 @@
 package ontopoly.rest.editor.spi;
 
-import java.util.Collection;
 
 
 public interface PrestoDataProvider {
@@ -12,8 +11,6 @@ public interface PrestoDataProvider {
   public PrestoChangeSet updateTopic(PrestoTopic topic);
  
   public boolean removeTopic(PrestoTopic topic);
-  
-  public Collection<Object> getValues(PrestoTopic topic, PrestoField field);
   
   public void close();
   

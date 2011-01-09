@@ -96,8 +96,8 @@ public class NameField extends FieldDefinition {
    *            value which is going to be added to the topic.
    */
   @Override
-  public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
-    TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
+  public void addValue(Topic topic, Object _value, LifeCycleListener listener) {
+    TopicIF topicIf = topic.getTopicIF();
     String value = (String) _value;
     NameType ntype = getNameType();
     if (ntype == null) return;
@@ -118,7 +118,7 @@ public class NameField extends FieldDefinition {
       }
     }
     
-    if (listener != null) listener.onAfterAdd(fieldInstance, value);
+    if (listener != null) listener.onAfterAdd(topic, this, value);
   }
 
   /**
@@ -132,15 +132,15 @@ public class NameField extends FieldDefinition {
    *            value which is going to be removed from the topic.
    */
   @Override
-  public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
-    TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
+  public void removeValue(Topic topic, Object _value, LifeCycleListener listener) {
+    TopicIF topicIf = topic.getTopicIF();
     String value = (_value instanceof TopicNameIF ? ((TopicNameIF) _value)
         .getValue() : (String) _value);
     NameType ntype = getNameType();
     if (ntype == null) return;
     TopicIF typeIf = ntype.getTopicIF();
 
-    if (listener != null) listener.onBeforeRemove(fieldInstance, value);
+    if (listener != null) listener.onBeforeRemove(topic, this, value);
 		
 //    Collection<TopicIF> scope = Collections.emptySet();
     Collection<TopicNameIF> names = OntopolyModelUtils.findTopicNames(typeIf, topicIf, value); // , scope);

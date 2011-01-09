@@ -32,7 +32,7 @@ public class ViewsFunctionBoxPanel extends Panel {
     TopicType topicType = topicTypeModel.getTopicType();
     FieldsView fieldsView = fieldsViewModel.getFieldsView();
     
-    Collection<FieldsView> views = topic.getFieldViews(topicType, fieldsView);
+    Collection<FieldsView> views = topicType.getFieldViews(fieldsView);
     if (views.isEmpty())
       setVisible(false);
     

@@ -34,8 +34,7 @@ public final class FieldAssignment {
   /**
    * Creates a new field assignment object.
    */
-  public FieldAssignment(TopicType topicType, TopicType declaredTopicType,
-                         FieldDefinition fieldDefinition) {
+  public FieldAssignment(TopicType topicType, TopicType declaredTopicType, FieldDefinition fieldDefinition) {
     this.fieldDefinition = fieldDefinition;
     this.topicType = topicType;
     this.declaredTopicType = declaredTopicType;

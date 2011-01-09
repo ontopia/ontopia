@@ -125,6 +125,7 @@ public class OntopolyField implements PrestoField {
   }
 
   public Collection<PrestoTopic> getAvailableFieldValues() {
+    // TODO: decide whether to get values from schema provider or data provider
     if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
       RoleField roleField = (RoleField)fieldDefinition;
       int arity = roleField.getAssociationField().getArity();

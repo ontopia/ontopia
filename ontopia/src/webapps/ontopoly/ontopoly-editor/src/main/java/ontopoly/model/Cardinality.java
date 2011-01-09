@@ -138,4 +138,12 @@ public class Cardinality extends Topic {
     return qm.queryForList(query);
   }
 
+  public int getMinCardinality() {
+    return isMinOne() ? 1 : 0;
+  }
+
+  public int getMaxCardinality() {
+    return isMaxOne() ? 1 : 0;
+  }
+
 }

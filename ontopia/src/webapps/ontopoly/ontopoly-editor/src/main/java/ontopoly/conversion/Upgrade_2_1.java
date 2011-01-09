@@ -21,7 +21,10 @@ public class Upgrade_2_1 extends UpgradeBase {
     // Mark on:topic-type as being on:field-set
     sb.append("[on:field-set : on:topic-type on:system-topic @\"http://psi.ontopia.net/ontology/field-set\" = \"Field set\"]\n");
     sb.append("[on:topic-type : on:field-set]\n");
-    
+
+    // Validation type
+    sb.append("[on:validation-type : on:occurrence-type on:system-topic @\"http://psi.ontopia.net/ontology/validation-type\" = \"Validation type\"]\n");
+
     // FIXME: add xsd:boolean?
     
   }

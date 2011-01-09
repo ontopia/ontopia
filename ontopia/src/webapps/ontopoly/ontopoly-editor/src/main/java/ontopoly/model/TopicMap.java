@@ -159,6 +159,11 @@ public class TopicMap {
     return topic == null ? null : new Topic(topic, this);
   }
 
+  public TopicType getTopicTypeById(String id) {
+    TopicIF topic = getTopicIFById(id);
+    return topic == null ? null : new TopicType(topic, this);
+  }
+
   public Topic getReifier() {
     return new Topic(makeReifier(), this);
   }

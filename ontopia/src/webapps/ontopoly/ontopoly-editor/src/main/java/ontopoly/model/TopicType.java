@@ -75,10 +75,6 @@ public class TopicType extends AbstractTypingTopic {
     AssociationIF assoc = OntopolyModelUtils.findUnaryAssociation(tm, aType, topicIF, rType);
     return (assoc != null);
   }
-
-  public Collection<TopicType> getDirectSubOrdinateTypes() {
-    return getDirectSubTypes();
-  }
   
   /**
    * Gets the direct subtypes of this type.
@@ -600,6 +596,39 @@ public class TopicType extends AbstractTypingTopic {
   @Override
   public Collection<? extends FieldDefinition> getDeclaredByFields() {
     return Collections.emptyList();
+  }
+  
+  public List<FieldsView> getFieldViews(FieldsView fieldsView) {
+    // TODO: make it possible to override this query
+    String query = 
+      "subclasses-of($SUP, $SUB) :- { " +
+      "  xtm:superclass-subclass($SUP : xtm:superclass, $SUB : xtm:subclass) | " +
+      "  xtm:superclass-subclass($SUP : xtm:superclass, $MID : xtm:subclass), subclasses-of($MID, $SUB) " +
+      "}. " +
+      "select $FIELDSVIEW from " +
+      "{ $TT = %tt% | subclasses-of($TT, %tt%) }, " +
+      "on:has-field($TT : on:field-owner, $FD : on:field-definition), " +
+      "{ on:field-in-view($FD : on:field-definition, $FV : on:fields-view)" +
+      ", not(on:is-hidden-view($FV : on:fields-view))" +
+      ", not(on:is-embedded-view($FV : on:fields-view))" +
+      " || $FV = on:default-fields-view}, coalesce($FIELDSVIEW, $FV, on:default-fields-view) order by $FIELDSVIEW?";
+                                                        
+    Map<String,TopicIF> params = new HashMap<String,TopicIF>(3);
+//    params.put("topic", getTopicIF());
+    params.put("tt", getTopicIF());
+    params.put("view", fieldsView.getTopicIF());
+    
+    QueryMapper<FieldsView> qm = getTopicMap().newQueryMapperNoWrap();
+    return qm.queryForList(query,
+        new RowMapperIF<FieldsView>() {
+          public FieldsView mapRow(QueryResultIF result, int rowno) {
+            TopicIF viewTopic = (TopicIF)result.getValue(0);
+            if (viewTopic == null)
+              return FieldsView.getDefaultFieldsView(getTopicMap());
+            else
+              return new FieldsView(viewTopic, getTopicMap());
+          }
+        }, params);
   }
 
 }

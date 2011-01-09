@@ -126,8 +126,8 @@ public class IdentityField extends FieldDefinition {
    *            value which is going to be added to the topic.
    */
   @Override
-  public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
-    TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
+  public void addValue(Topic topic, Object _value, LifeCycleListener listener) {
+    TopicIF topicIf = topic.getTopicIF();
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 
                        URILocator.create((String) _value));
     if (value != null) {
@@ -139,7 +139,7 @@ public class IdentityField extends FieldDefinition {
         topicIf.addSubjectIdentifier(value);
     }
     
-    if (listener != null) listener.onAfterAdd(fieldInstance, value);
+    if (listener != null) listener.onAfterAdd(topic, this, value);
   }
 
   /**
@@ -151,12 +151,12 @@ public class IdentityField extends FieldDefinition {
    *            value which is going to be removed from the topic.
    */
   @Override
-  public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
-    TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
+  public void removeValue(Topic topic, Object _value, LifeCycleListener listener) {
+    TopicIF topicIf = topic.getTopicIF();
     LocatorIF value = (_value instanceof LocatorIF ? (LocatorIF) _value : 
                        URILocator.create((String) _value));
     if (value != null) {
-      if (listener != null) listener.onBeforeRemove(fieldInstance, value);
+      if (listener != null) listener.onBeforeRemove(topic, this, value);
 		  
       if (isSubjectLocator())
         topicIf.removeSubjectLocator(value);

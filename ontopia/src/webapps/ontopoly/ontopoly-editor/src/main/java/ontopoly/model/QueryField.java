@@ -91,7 +91,7 @@ public class QueryField extends FieldDefinition {
    * Not supported.
    */
   @Override
-  public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
+  public void addValue(Topic topic, Object _value, LifeCycleListener listener) {
     throw new UnsupportedOperationException();
   }
 
@@ -99,7 +99,7 @@ public class QueryField extends FieldDefinition {
    * Not supported.
    */
   @Override
-  public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
+  public void removeValue(Topic topic, Object _value, LifeCycleListener listener) {
     throw new UnsupportedOperationException();
   }
 

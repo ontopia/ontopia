@@ -109,8 +109,8 @@ public class OccurrenceField extends FieldDefinition {
   }
 
   @Override
-  public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
-    TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
+  public void addValue(Topic topic, Object _value, LifeCycleListener listener) {
+    TopicIF topicIf = topic.getTopicIF();
     String value = (String) _value;
     LocatorIF datatype = getDataType().getLocator();
     OccurrenceType otype = getOccurrenceType();
@@ -135,12 +135,12 @@ public class OccurrenceField extends FieldDefinition {
       }
     }
     
-    if (listener != null) listener.onAfterAdd(fieldInstance, value);
+    if (listener != null) listener.onAfterAdd(topic, this, value);
   }
 
   @Override
-  public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
-    TopicIF topicIf = fieldInstance.getInstance().getTopicIF();
+  public void removeValue(Topic topic, Object _value, LifeCycleListener listener) {
+    TopicIF topicIf = topic.getTopicIF();
     String value = (_value instanceof OccurrenceIF ? ((OccurrenceIF) _value)
         .getValue() : (String) _value);
 //    LocatorIF datatype = getDataType().getLocator();
@@ -148,7 +148,7 @@ public class OccurrenceField extends FieldDefinition {
     if (otype == null) return;
 		TopicIF typeIf = otype.getTopicIF();
 
-		if (listener != null) listener.onBeforeRemove(fieldInstance, value);
+		if (listener != null) listener.onBeforeRemove(topic, this, value);
 		
     // HACK: we're ignoring the datatype when looking up existing ones
     // Collection occs = OntopolyModelUtils.findOccurrences(typeIf,

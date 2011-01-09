@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+
+import ontopoly.model.FieldDefinition;
+import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicType;
 import ontopoly.rest.editor.spi.PrestoField;
@@ -63,7 +69,53 @@ public class OntopolyTopic implements PrestoTopic {
   }
   
   public Collection<Object> getValues(PrestoField field) {
-    return session.getDataProvider().getValues(this, field);
+    FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(field.getId(), session.getTopicMap());
+    
+    Collection<? extends Object> fieldValues = fieldDefinition.getValues(topic);
+    List<Object> result = new ArrayList<Object>(fieldValues.size());
+    if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE && 
+        ((RoleField)fieldDefinition).getAssociationField().getArity() == 1) {
+      result.add(!fieldValues.isEmpty());
+    } else {
+      for (Object value : fieldValues) {
+        result.add(normalizeValue(topic, fieldDefinition, value));
+      }
+    }
+    return result;
+  }
+
+  private  Object normalizeValue(Topic topic, FieldDefinition fieldDefinition, Object fieldValue) {
+    switch (fieldDefinition.getFieldType()) {
+    case FieldDefinition.FIELD_TYPE_NAME:
+      return ((TopicNameIF)fieldValue).getValue();
+    case FieldDefinition.FIELD_TYPE_IDENTITY: 
+      return ((LocatorIF)fieldValue).getExternalForm();
+    case FieldDefinition.FIELD_TYPE_OCCURRENCE:
+      return ((OccurrenceIF)fieldValue).getValue();
+    case FieldDefinition.FIELD_TYPE_ROLE:
+      RoleField roleField = (RoleField)fieldDefinition;
+      RoleField.ValueIF value = (RoleField.ValueIF)fieldValue;
+      int arity = value.getArity(); 
+      if (arity == 2) {
+        for (RoleField rf : value.getRoleFields()) {
+          if (!rf.equals(roleField)) {
+            Topic valueTopic = value.getPlayer(rf, topic);
+            return new OntopolyTopic(session, valueTopic);
+          }
+        }
+        return null;
+      } else {
+        throw new RuntimeException("N-ary role fields not supported.");
+      }
+    case FieldDefinition.FIELD_TYPE_QUERY: 
+      if (fieldValue instanceof Topic) {        
+        return new OntopolyTopic(session, (Topic)fieldValue);
+      } else {
+        return fieldValue;
+      }
+    default:
+      throw new RuntimeException("Unknown field type: " + fieldDefinition);
+    }
   }
 
 }

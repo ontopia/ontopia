@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.CollectionUtils;
 import ontopoly.utils.OntopolyModelUtils;
@@ -99,11 +100,20 @@ public abstract class FieldDefinition extends Topic {
     cachedCardinality = cardinality;
   }
 
+  /**
+   * Returns the validation type.
+   */
+  public String getValidationType() {
+    TopicIF oType = OntopolyModelUtils.getTopicIF(getTopicMap(), PSI.ON_VALIDATION_TYPE);
+    OccurrenceIF occ = OntopolyModelUtils.findOccurrence(oType, getTopicIF());
+    return occ == null ? null : occ.getValue();
+  }
+
   public abstract Collection<? extends Object> getValues(Topic topic);
 
-  public abstract void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener);
+  public abstract void addValue(Topic topic, Object _value, LifeCycleListener listener);
 
-  public abstract void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener);
+  public abstract void removeValue(Topic topic, Object _value, LifeCycleListener listener);
   
   public boolean equals(Object obj) {
     if (!(obj instanceof FieldDefinition))
@@ -136,12 +146,16 @@ public abstract class FieldDefinition extends Topic {
   
   public static FieldDefinition getFieldDefinition(String fieldId, TopicMap tm) {
     TopicIF fieldTopic = tm.getTopicIFById(fieldId);
+    if (fieldTopic == null) 
+      throw new RuntimeException("Could not find field with id '" + fieldId + "'");
     int fieldType = getFieldType(fieldTopic);
     return getFieldDefinition(fieldId, fieldType, tm);
   }
 
   public static FieldDefinition getFieldDefinition(String fieldId, int fieldType, TopicMap tm) {    
     TopicIF fieldTopic = tm.getTopicIFById(fieldId);
+    if (fieldTopic == null) 
+      throw new RuntimeException("Could not find field with id '" + fieldId + "'");
     return getFieldDefinition(fieldTopic, fieldType, tm);
   }
   

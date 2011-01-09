@@ -40,14 +40,14 @@ public final class FieldInstance {
    * Add a new FieldValue object.
    */
   public void addValue(Object value, LifeCycleListener listener) {
-    getFieldAssignment().getFieldDefinition().addValue(this, value, listener);
+    getFieldAssignment().getFieldDefinition().addValue(getInstance(), value, listener);
   }
 
   /**
    * Removes the value.
    */
   public void removeValue(Object value, LifeCycleListener listener) {
-    getFieldAssignment().getFieldDefinition().removeValue(this, value, listener);
+    getFieldAssignment().getFieldDefinition().removeValue(getInstance(), value, listener);
   }
 
 }

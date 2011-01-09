@@ -108,13 +108,10 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
 //    System.out.println("oBD: " + topic);    
   }
 
-  public void onAfterAdd(FieldInstance fieldInstance, Object value) {
+  public void onAfterAdd(Topic topic, FieldDefinition fieldDefinition, Object value) {
 //    System.out.println("oAA: " + fieldInstance + " " + value);
-    FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition(); 
-
     // add name scoped by role type to association type
     if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_NAME) {
-      Topic topic = fieldInstance.getInstance();
       if (topic.isInstanceOf(PSI.ON_ROLE_FIELD)) {
         RoleField rfield = new RoleField(topic.getTopicIF(), topic.getTopicMap());
         TopicIF atype = rfield.getAssociationField().getAssociationType().getTopicIF();
@@ -137,13 +134,11 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
     }
   }
 
-  public void onBeforeRemove(FieldInstance fieldInstance, Object value) {    
+  public void onBeforeRemove(Topic topic, FieldDefinition fieldDefinition, Object value) {    
 //    System.out.println("oBR: " + fieldInstance + " " + value);
-    FieldDefinition fieldDefinition = fieldInstance.getFieldAssignment().getFieldDefinition(); 
 
     // remove name scoped by role type from association type
     if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_NAME) {
-      Topic topic = fieldInstance.getInstance();
       if (topic.isInstanceOf(PSI.ON_ROLE_FIELD)) {
         RoleField rfield = new RoleField(topic.getTopicIF(), topic.getTopicMap());
         TopicIF atype = rfield.getAssociationField().getAssociationType().getTopicIF();

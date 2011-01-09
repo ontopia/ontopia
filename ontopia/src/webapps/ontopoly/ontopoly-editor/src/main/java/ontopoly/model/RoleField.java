@@ -381,7 +381,7 @@ public class RoleField extends FieldDefinition {
    * side of the association the instance topic (topic) takes part in.
    */
   @Override
-  public void addValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
+  public void addValue(Topic topic, Object _value, LifeCycleListener listener) {
     ValueIF value = (ValueIF) _value;
 
     AssociationType atype = getAssociationType();
@@ -392,10 +392,10 @@ public class RoleField extends FieldDefinition {
     Collection<TopicIF> scope = Collections.emptySet();      
 
     // if cardinality is 0:1 or 1:1 then clear existing values
-    if (fieldInstance.getFieldAssignment().getCardinality().isMaxOne()) {      
+    if (getCardinality().isMaxOne()) {      
       // remove all existing values
       ValueIF existingValue = null;
-      Collection<AssociationRoleIF> roles = getRoles(fieldInstance.getInstance());
+      Collection<AssociationRoleIF> roles = getRoles(topic);
       boolean replaceValues = roles.size() == 1;
       Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
@@ -407,7 +407,7 @@ public class RoleField extends FieldDefinition {
           existingValue = valueIf;
         } else if (replaceValues) {
           // issue-204: only replace values if there is just a single value 
-          removeValue(fieldInstance, valueIf, listener);
+          removeValue(topic, valueIf, listener);
         }
       }
 
@@ -431,7 +431,7 @@ public class RoleField extends FieldDefinition {
         }
       }
     }
-    if (listener != null) listener.onAfterAdd(fieldInstance, value);
+    if (listener != null) listener.onAfterAdd(topic, this, value);
   }
 
   //  protected void clear(FieldInstance fieldInstance, LifeCycleListener listener) {
@@ -452,7 +452,7 @@ public class RoleField extends FieldDefinition {
    * side of the association the instance topic (topic) takes part in.
    */  
   @Override
-  public void removeValue(FieldInstance fieldInstance, Object _value, LifeCycleListener listener) {
+  public void removeValue(Topic topic, Object _value, LifeCycleListener listener) {
     ValueIF value = (ValueIF) _value;
 
     AssociationType atype = getAssociationType();
@@ -461,7 +461,7 @@ public class RoleField extends FieldDefinition {
     TopicIF[] rtypes = getRoleTypes(value);
     TopicIF[] players = getPlayers(value);
 
-    if (listener != null) listener.onBeforeRemove(fieldInstance, value);
+    if (listener != null) listener.onBeforeRemove(topic, this, value);
 
     Collection<TopicIF> scope = Collections.emptySet();          
     Collection<AssociationIF> assocs = OntopolyModelUtils.findAssociations(atypeIf, rtypes, players, scope);

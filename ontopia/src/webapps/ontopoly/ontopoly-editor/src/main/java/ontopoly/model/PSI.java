@@ -146,4 +146,6 @@ public class PSI {
   public static final LocatorIF ON_TOLOG_DECLARATIONS = PSI.ON.resolveAbsolute("tolog-declarations");
   public static final LocatorIF ON_VALUES_QUERY = PSI.ON.resolveAbsolute("values-query");
 
+  public static final LocatorIF ON_VALIDATION_TYPE = PSI.ON.resolveAbsolute("validation-type");
+
 }

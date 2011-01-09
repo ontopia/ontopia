@@ -380,7 +380,7 @@ public class Utils {
           changeSet.save();
         }
       }
-      return getFieldInfo(uriInfo, topic, field, dataProvider.getValues(topic, field));
+      return getFieldInfo(uriInfo, topic, field, topic.getValues(field));
     } catch (JSONException e) {
       throw new RuntimeException(e);
     }
