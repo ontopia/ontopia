@@ -72,6 +72,20 @@ public class OntopolyField implements PrestoField {
   public String getName() {
     return fieldDefinition.getFieldName();
   }
+  
+  public boolean isNameField() {
+    return fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_NAME;
+  }
+
+  public String getInverseFieldId() {
+    if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
+      RoleField roleField = (RoleField)fieldDefinition;
+      for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
+        return otherRoleField.getId();
+      }
+    }
+    return null;
+  }
 
   public PrestoType getType() {
     return type;

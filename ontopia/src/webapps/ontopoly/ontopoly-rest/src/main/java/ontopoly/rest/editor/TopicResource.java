@@ -284,7 +284,7 @@ public class TopicResource {
       Map<String, Object> result = Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, jsonObject);
 //      String id = topic.getId(); // FIXME: gives NPE if new topic
       String id = (String)result.get("id");
-      
+      System.out.println("ID: " + id + " " + result);
       session.commit();
       topicListener.onTopicUpdated(id);
 

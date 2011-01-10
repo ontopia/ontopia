@@ -22,6 +22,18 @@ public class CouchTopic implements PrestoTopic {
     this.dataProvider = dataProvider;
     this.data = data;    
   }
+  
+  public boolean equals(Object o) {
+    if (o instanceof CouchTopic) {
+      CouchTopic other = (CouchTopic)o;
+      return other.getId().equals(getId());
+    }
+    return false;
+  }
+  
+  public int hashCode() {
+    return getId().hashCode();
+  }
 
   public static CouchTopic existing(CouchDataProvider dataProvider, ObjectNode doc) {
     return new CouchTopic(dataProvider, doc);
@@ -55,11 +67,18 @@ public class CouchTopic implements PrestoTopic {
   }
 
   public Collection<Object> getValues(PrestoField field) {
+    boolean isReferenceField = field.isReferenceField();
     List<Object> values = new ArrayList<Object>();
     JsonNode fieldNode = data.get(field.getId());
     if (fieldNode != null) {
       for (JsonNode value : fieldNode) {
-        values.add(value.toString());
+        String value_ = value.getTextValue();
+        if (isReferenceField) {
+          PrestoTopic valueTopic = dataProvider.getTopicById(value_);
+          values.add(valueTopic);
+        } else {
+          values.add(value_);          
+        }
       }
     }
     return values;

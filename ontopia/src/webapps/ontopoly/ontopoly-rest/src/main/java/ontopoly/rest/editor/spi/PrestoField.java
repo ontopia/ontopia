@@ -11,9 +11,13 @@ public interface PrestoField {
 
   public String getName();
   
+  public boolean isNameField();
+
   public boolean isPrimitiveField();
   
   public boolean isReferenceField();
+
+  public String getInverseFieldId();
   
   public PrestoType getType();
   

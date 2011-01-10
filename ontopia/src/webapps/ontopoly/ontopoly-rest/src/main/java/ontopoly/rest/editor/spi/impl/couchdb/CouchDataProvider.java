@@ -50,10 +50,10 @@ public class CouchDataProvider implements PrestoDataProvider {
     return mapper;
   }
   
-  public PrestoTopic getTopicById(String id) {
-    ObjectNode doc = db.get(ObjectNode.class, id);
+  public PrestoTopic getTopicById(String topicId) {
+    ObjectNode doc = db.get(ObjectNode.class, topicId);
     if (doc == null) {
-      throw new RuntimeException("Unknown topic: " + id);
+      throw new RuntimeException("Unknown topic: " + topicId);
     }
     return CouchTopic.existing(this, doc);
   }
@@ -66,8 +66,7 @@ public class CouchDataProvider implements PrestoDataProvider {
       .viewName("by-type").includeDocs(true).key(type.getId());
       ViewResult viewResult = db.queryView(query);
       for (Row row : viewResult.getRows()) {
-        ObjectNode doc = (ObjectNode)row.getDocAsNode();
-        
+        ObjectNode doc = (ObjectNode)row.getDocAsNode();        
         result.add(CouchTopic.existing(this, doc));
       }
     }    
@@ -83,6 +82,7 @@ public class CouchDataProvider implements PrestoDataProvider {
   }
 
   public boolean removeTopic(PrestoTopic topic) {
+    // TODO: Remove inverse references
     CouchTopic couchTopic = (CouchTopic)topic;
     db.delete(couchTopic.getData());
     return true;
