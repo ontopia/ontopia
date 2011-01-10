@@ -7,7 +7,7 @@ public interface PrestoField {
 
   public String getId();
 
-  public String getDatabaseId();
+  public PrestoSchemaProvider getSchemaProvider();
 
   public String getName();
   
@@ -43,8 +43,8 @@ public interface PrestoField {
 
   public String getDataType();
 
-  public Collection<PrestoType> getAvailableFieldTypes();
+  public Collection<PrestoType> getAvailableFieldCreateTypes();
 
-  public Collection<PrestoTopic> getAvailableFieldValues();
+  public Collection<PrestoType> getAvailableFieldValueTypes();
   
 }

@@ -9,6 +9,7 @@ import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldsView;
 import ontopoly.model.TopicType;
 import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoSchemaProvider;
 import ontopoly.rest.editor.spi.PrestoType;
 import ontopoly.rest.editor.spi.PrestoView;
 
@@ -30,8 +31,8 @@ public class OntopolyType implements PrestoType {
     return topicType.getId();
   }
 
-  public String getDatabaseId() {
-    return topicType.getTopicMap().getId();
+  public PrestoSchemaProvider getSchemaProvider() {
+    return session.getSchemaProvider();
   }
 
   public String getName() {

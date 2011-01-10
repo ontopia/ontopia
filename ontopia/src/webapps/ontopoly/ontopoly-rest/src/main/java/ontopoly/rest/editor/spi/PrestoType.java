@@ -7,10 +7,10 @@ import java.util.List;
 public interface PrestoType {
 
   public String getId();
-
-  public String getDatabaseId();
   
   public String getName();
+
+  public PrestoSchemaProvider getSchemaProvider();
 
   public boolean isAbstract();
 

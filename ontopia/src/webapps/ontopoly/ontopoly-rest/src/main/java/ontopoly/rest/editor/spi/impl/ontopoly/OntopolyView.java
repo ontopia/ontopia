@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import ontopoly.model.FieldsView;
+import ontopoly.rest.editor.spi.PrestoSchemaProvider;
 import ontopoly.rest.editor.spi.PrestoView;
 
 public class OntopolyView implements PrestoView {
@@ -25,8 +26,8 @@ public class OntopolyView implements PrestoView {
     return fieldsView.getId();
   }
 
-  public String getDatabaseId() {
-    return session.getDatabaseId();
+  public PrestoSchemaProvider getSchemaProvider() {
+    return session.getSchemaProvider();
   }
   
   public String getName() {

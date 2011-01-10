@@ -26,7 +26,8 @@ import ontopoly.rest.editor.spi.PrestoSession;
 import ontopoly.rest.editor.spi.PrestoTopic;
 import ontopoly.rest.editor.spi.PrestoType;
 import ontopoly.rest.editor.spi.PrestoView;
-import ontopoly.rest.editor.spi.impl.ontopoly.OntopolyProvider;
+import ontopoly.rest.editor.spi.impl.couchdb.CouchDataProvider;
+import ontopoly.rest.editor.spi.impl.ontopoly.OntopolySession;
 
 import org.codehaus.jettison.json.JSONObject;
 
@@ -182,7 +183,7 @@ public class TopicResource {
     try {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
-      PrestoType topicType = topic.getType();
+      PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = schemaProvider.getDefaultView();
       
       return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
@@ -210,7 +211,7 @@ public class TopicResource {
     try {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
-      PrestoType topicType = topic.getType();
+      PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
       return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
@@ -275,7 +276,7 @@ public class TopicResource {
         topicType = schemaProvider.getTypeById(topicId.substring(1));
       } else {
         topic = dataProvider.getTopicById(topicId);
-        topicType = topic.getType();
+        topicType = schemaProvider.getTypeById(topic.getTypeId());
       }
 
       PrestoView fieldsView = schemaProvider.getViewById(viewId);
@@ -313,7 +314,7 @@ public class TopicResource {
     try {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
-      PrestoType topicType = topic.getType();
+      PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
       PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
@@ -351,7 +352,7 @@ public class TopicResource {
     try {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
-      PrestoType topicType = topic.getType();
+      PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
       PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
@@ -394,14 +395,15 @@ public class TopicResource {
         topic  = null;
       } else {
         topic = dataProvider.getTopicById(topicId);
-        topicType = topic.getType();
+        topicType = schemaProvider.getTypeById(topic.getTypeId());
       }
 
       PrestoView fieldsView = schemaProvider.getViewById(viewId);
       
       PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
       
-      return createFieldInfoAllowed(uriInfo, field);
+      Collection<PrestoTopic> availableFieldValues = dataProvider.getAvailableFieldValues(field);
+      return createFieldInfoAllowed(uriInfo, field, availableFieldValues);
 
     } catch (Exception e) {
       session.abort();
@@ -411,13 +413,12 @@ public class TopicResource {
     }
   }
 
-  private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo, PrestoField field) {
+  private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo, PrestoField field, Collection<PrestoTopic> availableFieldValues) {
 
     Map<String,Object> result = new LinkedHashMap<String,Object>();
     result.put("id", field.getId());
     result.put("name", field.getName());
 
-    Collection<PrestoTopic> availableFieldValues = field.getAvailableFieldValues();
     List<Object> values = new ArrayList<Object>(availableFieldValues.size());
     if (!availableFieldValues.isEmpty()) {
       
@@ -449,18 +450,19 @@ public class TopicResource {
     try {
       
       PrestoTopic topic = dataProvider.getTopicById(topicId);
+      PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
-      PrestoField field = schemaProvider.getFieldById(fieldId, topic.getType(), fieldsView);
+      PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
       
       Map<String,Object> result = new LinkedHashMap<String,Object>();
       result.put("id", field.getId());
       result.put("name", field.getName());
       
-      Collection<PrestoType> availableFieldTypes = field.getAvailableFieldTypes();
+      Collection<PrestoType> availableFieldCreateTypes = field.getAvailableFieldCreateTypes();
 
-      List<Object> types = new ArrayList<Object>(availableFieldTypes.size());
-      for (PrestoType playerType : availableFieldTypes) {
+      List<Object> types = new ArrayList<Object>(availableFieldCreateTypes.size());
+      for (PrestoType playerType : availableFieldCreateTypes) {
         types.add(Utils.getCreateFieldInstance(uriInfo, topic, field, playerType));
       }
 
@@ -547,7 +549,8 @@ public class TopicResource {
   }
 
   protected PrestoSession createSession(String topicMapId) {
-    return new OntopolyProvider().createSession(topicMapId);
+    CouchDataProvider dataProvider = new CouchDataProvider("localhost", 5984, "presto");
+    return new OntopolySession(topicMapId, dataProvider);
   }
   
   @Context

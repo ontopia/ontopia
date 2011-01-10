@@ -7,14 +7,13 @@ import java.util.List;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
-
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicType;
+import ontopoly.rest.editor.spi.PrestoDataProvider;
 import ontopoly.rest.editor.spi.PrestoField;
 import ontopoly.rest.editor.spi.PrestoTopic;
-import ontopoly.rest.editor.spi.PrestoType;
 import ontopoly.utils.OntopolyUtils;
 
 public class OntopolyTopic implements PrestoTopic {
@@ -47,17 +46,17 @@ public class OntopolyTopic implements PrestoTopic {
     return topic.getId();
   }
 
-  public String getDatabaseId() {
-    return topic.getTopicMap().getId();
+  public PrestoDataProvider getDataProvider() {
+    return session.getDataProvider();
   }
 
   public String getName() {
     return topic.getName();
   }
   
-  public PrestoType getType() {
+  public String getTypeId() {
     TopicType defaultTopicType = OntopolyUtils.getDefaultTopicType(topic);
-    return session.getSchemaProvider().getTypeById(defaultTopicType.getId());
+    return defaultTopicType.getId();
   }
 
   static Collection<PrestoTopic> wrap(OntopolySession session, Collection<Topic> topics) {

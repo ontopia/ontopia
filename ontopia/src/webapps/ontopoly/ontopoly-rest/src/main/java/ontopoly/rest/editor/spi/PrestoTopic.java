@@ -6,11 +6,11 @@ public interface PrestoTopic {
 
   public String getId();
 
-  public String getDatabaseId();
+  public PrestoDataProvider getDataProvider();
 
   public String getName();
 
-  public PrestoType getType();
+  public String getTypeId();
   
   public Collection<Object> getValues(PrestoField field);
 

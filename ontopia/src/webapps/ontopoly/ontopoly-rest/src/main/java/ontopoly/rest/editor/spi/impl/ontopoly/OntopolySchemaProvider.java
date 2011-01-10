@@ -25,6 +25,10 @@ public class OntopolySchemaProvider implements PrestoSchemaProvider {
   protected TopicMap getTopicMap() {
     return session.getTopicMap();
   }
+
+  public String getDatabaseId() {
+    return session.getDatabaseId();
+  }
   
   public Collection<PrestoType> getRootTypes() {
     List<TopicType> rootTopicTypes = getTopicMap().getRootTopicTypes();

@@ -13,7 +13,7 @@ import ontopoly.model.OccurrenceField;
 import ontopoly.model.RoleField;
 import ontopoly.model.ViewModes;
 import ontopoly.rest.editor.spi.PrestoField;
-import ontopoly.rest.editor.spi.PrestoTopic;
+import ontopoly.rest.editor.spi.PrestoSchemaProvider;
 import ontopoly.rest.editor.spi.PrestoType;
 import ontopoly.rest.editor.spi.PrestoView;
 
@@ -23,7 +23,7 @@ public class OntopolyField implements PrestoField {
   private final FieldDefinition fieldDefinition;
   private final PrestoType type;
   private final PrestoView view;
-  
+
   // computed values
   private PrestoView valueView;
   private EditMode editMode;
@@ -65,8 +65,8 @@ public class OntopolyField implements PrestoField {
     return fieldDefinition.getId();
   }
 
-  public String getDatabaseId() {
-    return session.getDatabaseId();
+  public PrestoSchemaProvider getSchemaProvider() {
+    return session.getSchemaProvider();
   }
 
   public String getName() {
@@ -99,7 +99,7 @@ public class OntopolyField implements PrestoField {
     return viewModes.isTraversable();
   }
 
-  public Collection<PrestoType> getAvailableFieldTypes() {
+  public Collection<PrestoType> getAvailableFieldCreateTypes() {
     if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
       RoleField roleField = (RoleField)fieldDefinition;
       int arity = roleField.getAssociationField().getArity();
@@ -124,29 +124,15 @@ public class OntopolyField implements PrestoField {
     return Collections.emptyList();
   }
 
-  public Collection<PrestoTopic> getAvailableFieldValues() {
-    // TODO: decide whether to get values from schema provider or data provider
+  public Collection<PrestoType> getAvailableFieldValueTypes() {
     if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
       RoleField roleField = (RoleField)fieldDefinition;
       int arity = roleField.getAssociationField().getArity();
 
       if (arity == 2) {
 
-        FieldsView fieldsView = OntopolyView.getWrapped(view);
-        FieldsView childView = fieldDefinition.getValueView(fieldsView);    
-
-        EditMode editMode = roleField.getEditMode();
-        ViewModes viewModes = fieldDefinition.getViewModes(childView);
-
-        boolean allowAdd = !editMode.isNoEdit() && !editMode.isNewValuesOnly() && !viewModes.isReadOnly();
-
         for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-
-          if (allowAdd) {
-            return OntopolyTopic.wrap(session, otherRoleField.getAllowedPlayers(null));
-          } else {
-            return Collections.emptyList();          
-          }
+          return OntopolyType.wrap(session, otherRoleField.getAllowedPlayerTypes(null));
         }
       }
     }

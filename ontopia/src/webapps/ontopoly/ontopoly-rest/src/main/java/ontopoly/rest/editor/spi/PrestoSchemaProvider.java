@@ -4,6 +4,8 @@ import java.util.Collection;
 
 public interface PrestoSchemaProvider {
 
+  public String getDatabaseId();
+  
   public PrestoType getTypeById(String typeId);
 
   public PrestoView getViewById(String viewId);

@@ -25,7 +25,7 @@ public class TypeUtils {
         links.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
       }
       if (!type.getDirectSubTypes().isEmpty()) {
-        links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + type.getDatabaseId() + "/" + type.getId()));
+        links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + type.getSchemaProvider().getDatabaseId() + "/" + type.getId()));
       }
       typeMap.put("links", links);      
 

@@ -22,11 +22,11 @@ import ontopoly.utils.TopicIdComparator;
 public class OntopolyChangeSet implements PrestoChangeSet {
 
   private final OntopolySession session;
-  private final List<AbstractChange> changes = new ArrayList<AbstractChange>();
   
   private PrestoTopic topic;
   private final PrestoType type;
   
+  private final List<Change> changes = new ArrayList<Change>();
   private boolean saved;
   
   OntopolyChangeSet(OntopolySession session, PrestoType type) {
@@ -45,26 +45,21 @@ public class OntopolyChangeSet implements PrestoChangeSet {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
-    changes.add(new SetValues(field, values));
+    changes.add(new Change(Change.ChangeType.SET, field, values));
   }
 
   public void addValues(PrestoField field, Collection<Object> values) {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
-    changes.add(new AddValues(field, values));
+    changes.add(new Change(Change.ChangeType.ADD, field, values));
   }
 
   public void removeValues(PrestoField field, Collection<Object> values) {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
-    changes.add(new RemoveValues(field, values));
-  }
-
-  public PrestoTopic createInstance(PrestoType type) {
-    TopicType topicType = session.getTopicMap().getTopicTypeById(type.getId());
-    return new OntopolyTopic(session, topicType.createInstance(null));
+    changes.add(new Change(Change.ChangeType.REMOVE, field, values));
   }
 
   public PrestoTopic save() {
@@ -72,20 +67,22 @@ public class OntopolyChangeSet implements PrestoChangeSet {
     
     if (topic == null) {
       if (type != null) {
-        topic = createInstance(type);
+        TopicType topicType = session.getTopicMap().getTopicTypeById(type.getId());
+        topic = new OntopolyTopic(session, topicType.createInstance(null));
       } else {
         throw new RuntimeException("No topic and no type. I'm sorry, Dave. I'm afraid I can't do that.");
       }
     }
     
     Topic topic_ = OntopolyTopic.getWrapped(topic);
-    for (AbstractChange change : changes) {
+    for (Change change : changes) {
       
       String fieldId = change.getField().getId();
       FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(fieldId, session.getTopicMap());
       
       Collection<Object> values = change.getValues();
-      if (change instanceof SetValues) {
+      switch(change.getType()) {
+      case SET:
         
         Collection<Object> existingValues = new HashSet<Object>(topic.getValues(change.getField()));          
         Collection<Object> removableValues = new HashSet<Object>(existingValues);          
@@ -104,48 +101,46 @@ public class OntopolyChangeSet implements PrestoChangeSet {
         if (!addableValues.isEmpty()) {
           addValues(topic_, fieldDefinition, addableValues);
         }
-
-      } else if (change instanceof AddValues) {
+        break;
+      case ADD:
         if (!values.isEmpty()) {
           addValues(topic_, fieldDefinition, values);
         }
-      } else if (change instanceof RemoveValues) {
+        break;
+      case REMOVE:
         if (!values.isEmpty()) {
           removeValues(topic_, fieldDefinition, values);
         }
-      }
+        break;
+      };
     }
     return topic;
   }
   
-  private static abstract class AbstractChange {
+  private static class Change {
+    
+    static enum ChangeType { SET, ADD, REMOVE };
+    
+    private ChangeType type;
     private final PrestoField field;
     private final Collection<Object> values;
-    AbstractChange(PrestoField field, Collection<Object> values) {
+    
+    Change(ChangeType type, PrestoField field, Collection<Object> values) {
+      this.type = type;
       this.field = field;
       this.values = values;      
     }
+    
+    public ChangeType getType() {
+      return type;
+    }
+    
     public PrestoField getField() {
       return field;
     }
     public Collection<Object> getValues() {
       return values;
     }
-  }
-  private static class SetValues extends AbstractChange {
-    SetValues(PrestoField field, Collection<Object> values) {
-      super(field, values);
-    }    
-  }
-  private static class AddValues extends AbstractChange {
-    AddValues(PrestoField field, Collection<Object> values) {
-      super(field, values);
-    }    
-  }
-  private static class RemoveValues extends AbstractChange {
-    RemoveValues(PrestoField field, Collection<Object> values) {
-      super(field, values);
-    }    
   }
 
   private void addValues(Topic topic, FieldDefinition fieldDefinition, Collection<Object> values) {

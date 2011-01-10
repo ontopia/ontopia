@@ -134,7 +134,7 @@ public class Utils {
 
     boolean isNewTopic = topic == null;
 
-    String databaseId = field.getDatabaseId();
+    String databaseId = field.getSchemaProvider().getDatabaseId();
     String topicId = isNewTopic ? "_" + topicType.getId() : topic.getId();
     String parentViewId = parentView.getId();
     String fieldId = field.getId();
@@ -286,7 +286,7 @@ public class Utils {
     if (fieldValue instanceof PrestoTopic) {
       PrestoTopic valueTopic = (PrestoTopic)fieldValue;
       if (field.isEmbedded()) {
-        PrestoType valueType = valueTopic.getType();
+        PrestoType valueType = field.getSchemaProvider().getTypeById(valueTopic.getTypeId());
         return getTopicInfo(uriInfo, valueTopic, valueType, field.getValueView());
       } else {
         return getExistingTopicFieldValue(uriInfo, field, valueTopic);
@@ -345,7 +345,7 @@ public class Utils {
     result.put("name", type.getName());
 
     List<Link> links = new ArrayList<Link>();
-    links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "editor/create-field-instance/" + topic.getDatabaseId() + "/" + topic.getId() + "/" + field.getId() + "/" + type.getId()));
+    links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "editor/create-field-instance/" + field.getSchemaProvider().getDatabaseId() + "/" + topic.getId() + "/" + field.getId() + "/" + type.getId()));
     result.put("links", links);
 
     return result;
