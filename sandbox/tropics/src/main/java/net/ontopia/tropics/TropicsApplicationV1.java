@@ -15,6 +15,9 @@ import org.restlet.routing.Router;
 
 public class TropicsApplicationV1 extends Application {
   private final TopicMapRepositoryIF tmRepository;
+  
+  // Create a router Restlet that routes each call.
+  private final Router router = new Router(getContext());;
 
   public TropicsApplicationV1(TopicMapRepositoryIF tmRepository) {
     this.tmRepository = tmRepository;
@@ -25,9 +28,6 @@ public class TropicsApplicationV1 extends Application {
    */
   @Override
   public synchronized Restlet createInboundRoot() {
-    // Create a router Restlet that routes each call.
-    Router router = new Router(getContext());
-
     // Define test routes
     router.attach("/trace", Tracer.class);
 
@@ -52,5 +52,9 @@ public class TropicsApplicationV1 extends Application {
 
   public TopicMapRepositoryIF getTopicMapRepository() {
     return tmRepository;
+  }
+  
+  public Router getRouter() {
+    return router;
   }
 }

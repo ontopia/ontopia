@@ -17,7 +17,8 @@ public class TropicsServer {
 
   /* RESTLET */
   private final Component component;
-
+  private final TropicsApplicationV1 tropicsApplicationV1;
+  
   /**
    * @param args
    * @throws Exception
@@ -58,14 +59,15 @@ public class TropicsServer {
     component.getServers().add(Protocol.HTTP, port);
 
     // Attach the sample application.
-    component.getDefaultHost().attach("/api/v1",
-        new TropicsApplicationV1(tmRepository));
+    TropicsApplicationV1 tropicsApplicationV1 = new TropicsApplicationV1(tmRepository);
+    component.getDefaultHost().attach("/api/v1", tropicsApplicationV1);
 
-    return new TropicsServer(component);
+    return new TropicsServer(component, tropicsApplicationV1);
   }
 
-  private TropicsServer(Component component) {
+  private TropicsServer(Component component, TropicsApplicationV1 tropicsApplicationV1) {
     this.component = component;
+    this.tropicsApplicationV1 = tropicsApplicationV1;
   }
 
   public void start() throws Exception {
@@ -74,5 +76,9 @@ public class TropicsServer {
 
   public void stop() throws Exception {
     component.stop();
+  }
+  
+  public void addRoute(String route, Class<?> resource) {
+    tropicsApplicationV1.getRouter().attach(route, resource);
   }
 }

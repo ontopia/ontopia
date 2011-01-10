@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<project name="tropics" default="jar" basedir=".">
+<project name="tropics" default="dist" basedir=".">
   
 	<description>
       Build file for Tropics project. This project 
