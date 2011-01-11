@@ -89,6 +89,11 @@ public class TopicMapTracker implements TopicMapListenerIF {
   // note: don't try to call this after listeners have been registered.
   // if you do invariants may be violated, causing confusion.
   public void setDribbleFile(String dribblefile) throws IOException {
+    // FIXME: should we disable this for in-memory topic maps? it won't
+    // work, so I guess we might as well. however, that's tricky, because
+    // all we have is a reference (which we don't necessarily want to load).
+    // it's tricky to judge whether it's an in-memory or RDBMS TM just from
+    // the reference. maybe we should use a configuration option instead?
     this.dribblefile = dribblefile;
     loadDribbleFile(); // dribbler is set up in here
   }
@@ -307,6 +312,9 @@ public class TopicMapTracker implements TopicMapListenerIF {
     
     // (3) write out clean dribble file
     dribbler = new FileWriter(dribblefile); // *don't* append
+    for (ChangedTopic ch : changes)
+      dribbler.write(ch.getSerialization() + "\n");
+    dribbler.flush(); // commit to disk
   }
   
   // --- TopicMapListenerIF implementation

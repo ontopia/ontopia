@@ -1,7 +1,7 @@
 <%@ page 
   language="java" 
   contentType="text/html; charset=utf-8"
-  import="net.ontopia.topicmaps.utils.sdshare.*,
+  import="net.ontopia.topicmaps.utils.sdshare.client.*,
           net.ontopia.topicmaps.nav2.core.*,
           net.ontopia.topicmaps.nav2.utils.*,
 	  net.ontopia.topicmaps.entry.*"
@@ -9,10 +9,8 @@
   ClientManager manager = (ClientManager) getServletContext().getAttribute("client-manager");
 
   if (manager == null) {
-    NavigatorApplicationIF navApp = NavigatorUtils.getNavigatorApplication(pageContext);
-    TopicMapRepositoryIF repository = navApp.getTopicMapRepository();
-    ClientConfig cconfig = new ClientConfig(repository);
-    manager = new ClientManager(cconfig, repository);
+    ClientConfig cconfig = ClientConfig.readConfig();
+    manager = new ClientManager(cconfig);
     getServletContext().setAttribute("client-manager", manager);
   }
 %>
@@ -33,17 +31,16 @@
 <p><input type=submit name=snapshots value="Download snapshots"></p>
 </form>
 
-<p>Configured to synchronize into these topic maps every
+<p>Configured to synchronize into these topic maps:</p>
+
 <%
   ClientConfig cconfig = manager.getConfig();
 %>
-<%= cconfig.getCheckInterval() %> seconds:</p>
-
 <ul>
-  <% for (ClientConfig.TopicMap tm : cconfig.getTopicMaps()) { %>
-    <li><%= tm.getId() %>
+  <% for (SyncEndpoint endpoint : cconfig.getEndpoints()) { %>
+    <li><%= endpoint.getHandle() %>
     <ul>
-    <% for (ClientConfig.SyncSource ss : tm.getSources()) { %>
+    <% for (SyncSource ss : endpoint.getSources()) { %>
       <li><%= ss.getURL() %>
     <% } %>
     </ul>

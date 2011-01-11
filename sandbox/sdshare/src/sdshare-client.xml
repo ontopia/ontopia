@@ -2,12 +2,22 @@
  This is an XML file because the configuration structure got too complicated
  for a simple properties file.
 -->
-<config>  
+<config>
+  <property name="backend">net.ontopia.topicmaps.utils.sdshare.client.OntopiaBackend</property>
   <property name="check-interval">300</property> <!-- in seconds -->
 
-  <topicmap id="sdshare-test.xtm">
+  <!-- for ontopia backend -->
+  <endpoint handle="sdshare-test.xtm">
     <source check-interval="5">http://localhost:8080/sdshare/collection.jsp?topicmap=beer.xtm</source>
     <source check-interval="30">http://localhost:8080/sdshare/collection.jsp?topicmap=beerstyles.xtm</source>
     <source>http://localhost:8080/sdshare/collection.jsp?topicmap=jill.xtm</source>
-  </topicmap>
+  </endpoint>
+
+  <!-- for sparql backend -->
+  <!--endpoint handle="http://some.server/sparql/query">
+    <source check-interval="5">http://localhost:8080/sdshare/collection.jsp?topicmap=beer.xtm</source>
+    <source check-interval="30">http://localhost:8080/sdshare/collection.jsp?topicmap=beerstyles.xtm</source>
+    <source>http://localhost:8080/sdshare/collection.jsp?topicmap=jill.xtm</source>
+  </endpoint-->
+
 </config>

@@ -1,17 +1,12 @@
 <%@ page 
   language="java" 
   contentType="text/html; charset=utf-8"
-  import="net.ontopia.topicmaps.utils.sdshare.*,
-          net.ontopia.topicmaps.nav2.core.*,
-          net.ontopia.topicmaps.nav2.utils.*,
-	  net.ontopia.topicmaps.entry.*"
+  import="net.ontopia.topicmaps.utils.sdshare.client.*"
 %><%
   ClientManager manager = (ClientManager) getServletContext().getAttribute("client-manager");
   if (manager == null) {
-    NavigatorApplicationIF navApp = NavigatorUtils.getNavigatorApplication(pageContext);
-    TopicMapRepositoryIF repository = navApp.getTopicMapRepository();
-    ClientConfig cconfig = new ClientConfig(repository);
-    manager = new ClientManager(cconfig, repository);
+    ClientConfig cconfig = ClientConfig.readConfig();
+    manager = new ClientManager(cconfig);
     getServletContext().setAttribute("client-manager", manager);
   }
 
