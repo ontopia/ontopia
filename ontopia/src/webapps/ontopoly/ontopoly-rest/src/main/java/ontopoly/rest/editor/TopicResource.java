@@ -170,6 +170,33 @@ public class TopicResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @Path("topic-data/{topicMapId}/{topicId}")
+  public Map<String,Object> getTopicData(
+      @Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId) throws Exception {
+
+    PrestoSession session = createSession(topicMapId);
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+    PrestoDataProvider dataProvider = session.getDataProvider();
+    
+    try {
+
+      PrestoTopic topic = dataProvider.getTopicById(topicId);
+      PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
+      
+      return Utils.getTopicData(uriInfo, topic, topicType);
+
+    } catch (Exception e) {
+      session.abort();
+      throw e;
+    } finally {
+      session.close();      
+    }
+  }
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("topic/{topicMapId}/{topicId}")
   public Map<String,Object> getTopicInDefaultView(
       @Context UriInfo uriInfo, 
@@ -282,11 +309,9 @@ public class TopicResource {
       PrestoView fieldsView = schemaProvider.getViewById(viewId);
 
       Map<String, Object> result = Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, jsonObject);
-//      String id = topic.getId(); // FIXME: gives NPE if new topic
       String id = (String)result.get("id");
-      System.out.println("ID: " + id + " " + result);
       session.commit();
-      topicListener.onTopicUpdated(id);
+      onTopicUpdated(id);
 
       return result;
     } catch (Exception e) {
@@ -324,7 +349,7 @@ public class TopicResource {
       String id = topic.getId();
 
       session.commit();
-      topicListener.onTopicUpdated(id);
+      onTopicUpdated(id);
 
       return result;
     } catch (Exception e) {
@@ -362,7 +387,7 @@ public class TopicResource {
       String id = topic.getId();
 
       session.commit();
-      topicListener.onTopicUpdated(id);
+      onTopicUpdated(id);
 
       return result;
     } catch (Exception e) {
@@ -548,9 +573,21 @@ public class TopicResource {
     }
   }
 
+  protected void onTopicUpdated(String topicId) {
+    topicListener.onTopicUpdated(topicId);
+  }
+  
   protected PrestoSession createSession(String topicMapId) {
+//    // schema and data stored in ontopia
+//    OntopolySession session = new OntopolySession(topicMapId);
+//    session.setStableIdPrefix("sek:");
+//    return session;
+
+    // schema stored in ontopia and data stored in couchdb
     CouchDataProvider dataProvider = new CouchDataProvider("localhost", 5984, "presto");
-    return new OntopolySession(topicMapId, dataProvider);
+    OntopolySession session = new OntopolySession(topicMapId, dataProvider);
+    session.setStableIdPrefix("sek:");
+    return session;
   }
   
   @Context

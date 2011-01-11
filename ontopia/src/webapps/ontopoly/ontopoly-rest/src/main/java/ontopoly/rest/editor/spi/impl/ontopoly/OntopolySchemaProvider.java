@@ -44,6 +44,9 @@ public class OntopolySchemaProvider implements PrestoSchemaProvider {
   public PrestoType getTypeById(String typeId) {
     TopicMap topicMap = getTopicMap();
     Topic topicType_ = topicMap.getTopicById(typeId);
+    if (topicType_ == null && session.getStableIdPrefix() != null) {
+      topicType_ = topicMap.getTopicById(session.getStableIdPrefix() + typeId);
+    }
     if (topicType_ == null) {
       throw new RuntimeException("Unknown type: " + typeId);
     }
@@ -54,6 +57,9 @@ public class OntopolySchemaProvider implements PrestoSchemaProvider {
   public PrestoView getViewById(String viewId) {
     TopicMap topicMap = getTopicMap();
     Topic fieldsView_ = topicMap.getTopicById(viewId);
+    if (fieldsView_ == null && session.getStableIdPrefix() != null) {
+      fieldsView_ = topicMap.getTopicById(session.getStableIdPrefix() + viewId);
+    }
     if (fieldsView_ == null) {
       throw new RuntimeException("Unknown view: " + viewId);
     }
@@ -62,7 +68,7 @@ public class OntopolySchemaProvider implements PrestoSchemaProvider {
   }
 
   public PrestoField getFieldById(String fieldId, PrestoType type, PrestoView view) {
-    return new OntopolyField(session, FieldDefinition.getFieldDefinition(fieldId, getTopicMap()), type, view);
+    return new OntopolyField(session, FieldDefinition.getFieldDefinition(session.getTopicById(fieldId), getTopicMap()), type, view);
   }
 
   public PrestoView getDefaultView() {

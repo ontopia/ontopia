@@ -159,6 +159,11 @@ public abstract class FieldDefinition extends Topic {
     return getFieldDefinition(fieldTopic, fieldType, tm);
   }
   
+  public static FieldDefinition getFieldDefinition(TopicIF fieldTopic, TopicMap tm) {
+    int fieldType = getFieldType(fieldTopic);
+    return getFieldDefinition(fieldTopic, fieldType, tm);
+  }
+  
   private static FieldDefinition getFieldDefinition(TopicIF fieldTopic, int fieldType, TopicMap tm) {    
     
     switch (fieldType) {

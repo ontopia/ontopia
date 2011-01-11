@@ -16,6 +16,8 @@ public interface PrestoType {
 
   public Collection<PrestoType> getDirectSubTypes();
 
+  public List<PrestoField> getFields();
+
   public List<PrestoField> getFields(PrestoView fieldsView);
 
   public Collection<PrestoView> getViews(PrestoView fieldsView);

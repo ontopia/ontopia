@@ -32,7 +32,7 @@ public class OntopolyDataProvider implements PrestoDataProvider {
   }
 
   public Collection<PrestoTopic> getAvailableFieldValues(PrestoField field) {
-    FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(field.getId(), session.getTopicMap());
+    FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(session.getTopicById(field.getId()), session.getTopicMap());
     
     if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
       RoleField roleField = (RoleField)fieldDefinition;

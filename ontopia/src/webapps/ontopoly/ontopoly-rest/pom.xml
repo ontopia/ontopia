@@ -27,20 +27,14 @@
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-json</artifactId>
     </dependency>
-
-            <dependency>
-              <groupId>org.ektorp</groupId>
-              <artifactId>org.ektorp</artifactId>
-            </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <!--artifactId>slf4j-log4j12</artifactId-->
-            <artifactId>slf4j-jdk14</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>org.ektorp</groupId>
+      <artifactId>org.ektorp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

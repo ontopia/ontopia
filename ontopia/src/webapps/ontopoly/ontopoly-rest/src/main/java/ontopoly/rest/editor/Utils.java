@@ -50,6 +50,35 @@ public class Utils {
     }
 
   }
+  
+  public static Map<String,Object> getTopicData(UriInfo uriInfo, PrestoTopic topic, PrestoType type) {
+    Map<String,Object> result = new LinkedHashMap<String,Object>();
+
+    result.put("_id", topic.getId());
+    result.put(":name", topic.getName());
+    result.put(":type", type.getId());
+
+    for (PrestoField field : type.getFields()) {
+      List<Object> values = getValueData(uriInfo, field, topic.getValues(field));
+      if (!values.isEmpty()) {
+        result.put(field.getId(), values);
+      }
+    }
+    return result;
+  }
+
+  protected static List<Object> getValueData(UriInfo uriInfo, PrestoField field, Collection<? extends Object> fieldValues) {
+    List<Object> result = new ArrayList<Object>(fieldValues.size());
+    for (Object fieldValue : fieldValues) {
+      if (fieldValue instanceof PrestoTopic) {
+        PrestoTopic valueTopic = (PrestoTopic)fieldValue;
+        result.add(valueTopic.getId());
+      } else {
+        result.add(fieldValue);
+      }
+    }
+    return result;
+  }
 
   public static Map<String,Object> getTopicInfo(UriInfo uriInfo, PrestoTopic topic, PrestoType type, PrestoView view) {
     Map<String,Object> result = new LinkedHashMap<String,Object>();
@@ -79,7 +108,7 @@ public class Utils {
     List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
 
     for (PrestoField field : type.getFields(view)) {
-      fields.add(getFieldInfo(uriInfo, topic, field));
+      fields.add(getFieldInfo(uriInfo, topic, field, topic.getValues(field)));
     }
     result.put("fields", fields);
     result.put("views", getViews(uriInfo, topic, type, view));
@@ -120,10 +149,6 @@ public class Utils {
     result.put("fields", fields);
     result.put("views", Collections.singleton(getView(uriInfo, null, fieldsView)));
     return result;
-  }
-
-  private static Map<String, Object> getFieldInfo(UriInfo uriInfo, PrestoTopic topic, PrestoField field) {
-    return getFieldInfo(uriInfo, topic, field, topic.getValues(field));
   }
 
   private static Map<String, Object> getFieldInfo(UriInfo uriInfo,

@@ -28,7 +28,7 @@ public class OntopolyType implements PrestoType {
   }
 
   public String getId() {
-    return topicType.getId();
+    return session.getStableId(topicType);
   }
 
   public PrestoSchemaProvider getSchemaProvider() {
@@ -54,6 +54,18 @@ public class OntopolyType implements PrestoType {
     }
     return result;
   }
+
+  public List<PrestoField> getFields() {
+    PrestoView view = null;
+    FieldsView fieldsView = null;
+    List<FieldAssignment> fieldAssignments = topicType.getFieldAssignments(fieldsView);
+    List<PrestoField> result = new ArrayList<PrestoField>(fieldAssignments.size());
+    for (FieldAssignment fieldAssignment : fieldAssignments) {
+      FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
+      result.add(new OntopolyField(session, fieldDefinition, this, view));
+    }
+    return result;
+  }
   
   public List<PrestoField> getFields(PrestoView view) {
     FieldsView fieldsView = OntopolyView.getWrapped(view);
@@ -65,7 +77,7 @@ public class OntopolyType implements PrestoType {
     }
     return result;
   }
-
+  
   public Collection<PrestoView> getViews(PrestoView view) {
     FieldsView fieldsView = OntopolyView.getWrapped(view);
     

@@ -43,7 +43,7 @@ public class OntopolyTopic implements PrestoTopic {
   }
 
   public String getId() {
-    return topic.getId();
+    return session.getStableId(topic);
   }
 
   public PrestoDataProvider getDataProvider() {
@@ -56,7 +56,7 @@ public class OntopolyTopic implements PrestoTopic {
   
   public String getTypeId() {
     TopicType defaultTopicType = OntopolyUtils.getDefaultTopicType(topic);
-    return defaultTopicType.getId();
+    return session.getStableId(defaultTopicType);
   }
 
   static Collection<PrestoTopic> wrap(OntopolySession session, Collection<Topic> topics) {
@@ -68,7 +68,7 @@ public class OntopolyTopic implements PrestoTopic {
   }
   
   public Collection<Object> getValues(PrestoField field) {
-    FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(field.getId(), session.getTopicMap());
+    FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(session.getTopicById(field.getId()), session.getTopicMap());
     
     Collection<? extends Object> fieldValues = fieldDefinition.getValues(topic);
     List<Object> result = new ArrayList<Object>(fieldValues.size());

@@ -185,59 +185,65 @@ public class CouchChangeSet implements PrestoChangeSet {
   }
 
   private void setValue(ObjectNode data, PrestoField field, Collection<Object> values) {
-    ArrayNode arrayNode = dataProvider.getObjectMapper().createArrayNode();
-    for (Object value : values) {
-      if (value instanceof CouchTopic) {
-        CouchTopic valueTopic = (CouchTopic)value;
-        arrayNode.add(valueTopic.getId());
-      } else {
-        arrayNode.add((String)value);
-      }
-    }
-    data.put(field.getId(), arrayNode);
-  }
-
-  private void addValue(ObjectNode data, PrestoField field, Collection<Object> values) {
-    JsonNode jsonNode = data.get(field.getId());
-    if (jsonNode == null) {
-      jsonNode = dataProvider.getObjectMapper().createArrayNode();
-    }
-
-    ArrayNode arrayNode = (ArrayNode)jsonNode;
-    for (Object value : values) {
-      if (value instanceof CouchTopic) {
-        CouchTopic valueTopic = (CouchTopic)value;
-        arrayNode.add(valueTopic.getId());
-      } else {
-        arrayNode.add((String)value);
-      }
-    }
-    System.out.println("A: " + arrayNode);
-    data.put(field.getId(), arrayNode);
-  }
-
-  private void removeValue(ObjectNode data, PrestoField field, Collection<Object> values) {
-    JsonNode jsonNode = data.get(field.getId());
-    System.out.println("R: " + field.getId() + " " + values);
-    if (jsonNode.isArray()) {
-      ArrayNode arrayNode = (ArrayNode)jsonNode;
-      Collection<String> existing = new HashSet<String>(arrayNode.size());
-      for (JsonNode item : arrayNode) {
-        existing.add(item.getValueAsText());
-      }
+    if (!values.isEmpty()) {
+      ArrayNode arrayNode = dataProvider.getObjectMapper().createArrayNode();
       for (Object value : values) {
         if (value instanceof CouchTopic) {
           CouchTopic valueTopic = (CouchTopic)value;
-          existing.remove(valueTopic.getId());
+          arrayNode.add(valueTopic.getId());
         } else {
-          existing.remove((String)value);
+          arrayNode.add((String)value);
         }
       }
-      arrayNode = dataProvider.getObjectMapper().createArrayNode();
-      for (String value : existing) {
-        arrayNode.add(value);
-      }
       data.put(field.getId(), arrayNode);
+    }
+  }
+
+  private void addValue(ObjectNode data, PrestoField field, Collection<Object> values) {
+    if (!values.isEmpty()) {
+      JsonNode jsonNode = data.get(field.getId());
+      if (jsonNode == null) {
+        jsonNode = dataProvider.getObjectMapper().createArrayNode();
+      }
+  
+      ArrayNode arrayNode = (ArrayNode)jsonNode;
+      for (Object value : values) {
+        if (value instanceof CouchTopic) {
+          CouchTopic valueTopic = (CouchTopic)value;
+          arrayNode.add(valueTopic.getId());
+        } else {
+          arrayNode.add((String)value);
+        }
+      }
+      System.out.println("A: " + arrayNode);
+      data.put(field.getId(), arrayNode);
+    }
+  }
+
+  private void removeValue(ObjectNode data, PrestoField field, Collection<Object> values) {
+    if (!values.isEmpty()) {
+      JsonNode jsonNode = data.get(field.getId());
+      System.out.println("R: " + field.getId() + " " + values);
+      if (jsonNode.isArray()) {
+        ArrayNode arrayNode = (ArrayNode)jsonNode;
+        Collection<String> existing = new HashSet<String>(arrayNode.size());
+        for (JsonNode item : arrayNode) {
+          existing.add(item.getValueAsText());
+        }
+        for (Object value : values) {
+          if (value instanceof CouchTopic) {
+            CouchTopic valueTopic = (CouchTopic)value;
+            existing.remove(valueTopic.getId());
+          } else {
+            existing.remove((String)value);
+          }
+        }
+        arrayNode = dataProvider.getObjectMapper().createArrayNode();
+        for (String value : existing) {
+          arrayNode.add(value);
+        }
+        data.put(field.getId(), arrayNode);
+      }
     }
   }
 

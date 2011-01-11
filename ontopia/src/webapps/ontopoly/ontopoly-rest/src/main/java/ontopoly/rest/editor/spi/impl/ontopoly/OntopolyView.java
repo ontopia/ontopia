@@ -23,7 +23,7 @@ public class OntopolyView implements PrestoView {
   }
 
   public String getId() {
-    return fieldsView.getId();
+    return session.getStableId(fieldsView);
   }
 
   public PrestoSchemaProvider getSchemaProvider() {

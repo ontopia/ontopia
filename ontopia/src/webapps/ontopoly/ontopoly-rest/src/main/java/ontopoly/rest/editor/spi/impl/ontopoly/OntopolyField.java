@@ -62,7 +62,7 @@ public class OntopolyField implements PrestoField {
   }
 
   public String getId() {
-    return fieldDefinition.getId();
+    return session.getStableId(fieldDefinition);
   }
 
   public PrestoSchemaProvider getSchemaProvider() {
@@ -81,7 +81,7 @@ public class OntopolyField implements PrestoField {
     if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {
       RoleField roleField = (RoleField)fieldDefinition;
       for (RoleField otherRoleField : roleField.getOtherRoleFields()) {
-        return otherRoleField.getId();
+        return session.getStableId(otherRoleField);
       }
     }
     return null;

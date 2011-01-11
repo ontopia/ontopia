@@ -77,8 +77,7 @@ public class OntopolyChangeSet implements PrestoChangeSet {
     Topic topic_ = OntopolyTopic.getWrapped(topic);
     for (Change change : changes) {
       
-      String fieldId = change.getField().getId();
-      FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(fieldId, session.getTopicMap());
+      FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(session.getTopicById(change.getField().getId()), session.getTopicMap());
       
       Collection<Object> values = change.getValues();
       switch(change.getType()) {
@@ -214,14 +213,6 @@ public class OntopolyChangeSet implements PrestoChangeSet {
 
     public int getArity() {
       return roleFields.length;
-    }
-
-    public RoleField getRoleFieldById(String id) {
-      for (int i=0;i < roleFields.length; i++) {
-        if (roleFields[i].getId().equals(id))
-          return roleFields[i];
-      }
-      return null;
     }
 
     public RoleField[] getRoleFields() {

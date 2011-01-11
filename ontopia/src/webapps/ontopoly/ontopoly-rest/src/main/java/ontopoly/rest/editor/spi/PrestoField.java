@@ -2,7 +2,6 @@ package ontopoly.rest.editor.spi;
 
 import java.util.Collection;
 
-
 public interface PrestoField {
 
   public String getId();
@@ -16,20 +15,20 @@ public interface PrestoField {
   public boolean isPrimitiveField();
   
   public boolean isReferenceField();
-
-  public String getInverseFieldId();
   
   public PrestoType getType();
   
   public PrestoView getView();
   
   public PrestoView getValueView();
+
+  public String getFieldType();
   
   public int getMinCardinality();
 
   public int getMaxCardinality();
 
-  public String getInterfaceControl();
+  public String getDataType();
   
   public String getValidationType();
 
@@ -39,13 +38,15 @@ public interface PrestoField {
 
   public boolean isReadOnly();
 
+  // reference fields
+
   public boolean isNewValuesOnly();
 
   public boolean isExistingValuesOnly();
+  
+  public String getInverseFieldId();
 
-  public String getFieldType();
-
-  public String getDataType();
+  public String getInterfaceControl();
 
   public Collection<PrestoType> getAvailableFieldCreateTypes();
 

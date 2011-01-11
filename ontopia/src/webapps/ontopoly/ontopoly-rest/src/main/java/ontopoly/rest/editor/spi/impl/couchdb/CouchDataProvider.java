@@ -2,6 +2,8 @@ package ontopoly.rest.editor.spi.impl.couchdb;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ontopoly.rest.editor.spi.PrestoChangeSet;
@@ -14,6 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
+import org.ektorp.DocumentNotFoundException;
 import org.ektorp.ViewQuery;
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
@@ -64,13 +67,30 @@ public class CouchDataProvider implements PrestoDataProvider {
       ViewQuery query = new ViewQuery()
       .designDocId("_design/schema")
       .viewName("by-type").includeDocs(true).key(type.getId());
-      ViewResult viewResult = db.queryView(query);
-      for (Row row : viewResult.getRows()) {
-        ObjectNode doc = (ObjectNode)row.getDocAsNode();        
-        result.add(CouchTopic.existing(this, doc));
+      try {
+          ViewResult viewResult = db.queryView(query);
+          for (Row row : viewResult.getRows()) {
+            ObjectNode doc = (ObjectNode)row.getDocAsNode();        
+            result.add(CouchTopic.existing(this, doc));
+          }
+      } catch (DocumentNotFoundException e) {          
       }
-    }    
+    }
+    Collections.sort(result, new Comparator<PrestoTopic>() {
+      public int compare(PrestoTopic o1, PrestoTopic o2) {
+        return compareComparables(o1.getName(), o2.getName());
+      }
+    });
     return result;
+  }
+
+  protected int compareComparables(String o1, String o2) {
+    if (o1 == null)
+      return (o2 == null ? 0 : -1);
+    else if (o2 == null)
+      return 1;
+    else
+      return o1.compareTo(o2);
   }
 
   public PrestoChangeSet createTopic(PrestoType type) {
