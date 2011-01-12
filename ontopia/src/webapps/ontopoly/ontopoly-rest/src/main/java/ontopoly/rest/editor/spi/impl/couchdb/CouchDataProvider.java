@@ -40,9 +40,9 @@ public class CouchDataProvider implements PrestoDataProvider {
     .build();
 
     dbInstance = new StdCouchDbInstance(httpClient);
-    db = new StdCouchDbConnector(databaseName, dbInstance);
 
-    db.createDatabaseIfNotExists();  
+    db = new StdCouchDbConnector(databaseName, dbInstance);
+    db.createDatabaseIfNotExists();
   }
   
   CouchDbConnector getCouchConnector() {
