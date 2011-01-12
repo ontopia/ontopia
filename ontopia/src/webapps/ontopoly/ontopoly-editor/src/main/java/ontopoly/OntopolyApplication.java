@@ -76,14 +76,22 @@ public class OntopolyApplication extends WebApplication implements Serializable 
   
   @Override
   protected IRequestCycleProcessor newRequestCycleProcessor() {
-    return new WebRequestCycleProcessor() {
-      @Override
-      protected IRequestCodingStrategy newRequestCodingStrategy() {
-        return new AbsoluteUrlRequestCodingStrategy(new WebRequestCodingStrategy());
-      }
-    };
+    if (getUseAbsoluteUrlRequestCodingStrategy()) {
+      return new WebRequestCycleProcessor() {
+        @Override
+        protected IRequestCodingStrategy newRequestCodingStrategy() {
+          return new AbsoluteUrlRequestCodingStrategy(new WebRequestCodingStrategy());
+        }
+      };
+    } else {
+      return super.newRequestCycleProcessor();
+    }
   }
 
+  protected boolean getUseAbsoluteUrlRequestCodingStrategy() {
+    return false;
+  }
+  
   public synchronized OntopolyRepository getOntopolyRepository() {
     if (repository == null)
       repository = new OntopolyRepository();
