@@ -192,6 +192,7 @@ public class Processor {
       }
     } catch (Exception e) {
       // unwrap so we can find the real exception
+      String msg = e.getMessage();
       if (e instanceof OntopiaRuntimeException &&
           e.getCause() instanceof Exception)
         e = (Exception) e.getCause();
@@ -201,7 +202,7 @@ public class Processor {
         // the cmd-line tool to hide the real error
         throw (DB2TMException) e; 
       else
-        throw new DB2TMException("Error occurred in addRelations call.", e);
+        throw new DB2TMException(msg == null ? "Error occurred in addRelations call." : msg, e);
     } finally {
       ctx.close();
     }

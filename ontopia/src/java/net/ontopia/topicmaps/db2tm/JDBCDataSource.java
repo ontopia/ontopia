@@ -228,7 +228,9 @@ public class JDBCDataSource implements DataSourceIF {
         for (int i=0; i < coltypes.length; i++) {
           coltypes[i] = md.getColumnType(i+1);
         }
-        
+
+      } catch (SQLException e) {
+        throw new OntopiaRuntimeException("Error in query: " + sql, e);
       } catch (Throwable t) {
         throw new OntopiaRuntimeException(t);
       }
