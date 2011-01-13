@@ -8,25 +8,18 @@ import java.util.Set;
  */
 public class Fragment {
   private Set<String> topicSIs;
-  private String fragmenturi;
-  private String mimetype;
+  private Set<AtomLink> links;
   private long updated;
   private FragmentFeed parent;
 
-  public Fragment(String fragmenturi, String mimetype,
-                  Set<String> topicSIs, long updated) {
-    this.fragmenturi = fragmenturi;
-    this.mimetype = mimetype;
+  public Fragment(Set<AtomLink> links, Set<String> topicSIs, long updated) {
+    this.links = links;
     this.topicSIs = topicSIs;
     this.updated = updated;
   }
 
-  public String getFragmentURI() {
-    return fragmenturi;
-  }
-
-  public String getMIMEType() {
-    return mimetype;
+  public Set<AtomLink> getLinks() {
+    return links;
   }
 
   public Set<String> getTopicSIs() {
@@ -37,11 +30,11 @@ public class Fragment {
     return updated;
   }
 
-  public void setParent(FragmentFeed parent) {
+  public void setFeed(FragmentFeed parent) {
     this.parent = parent;
   }
   
-  public FragmentFeed getParent() {
+  public FragmentFeed getFeed() {
     return parent;
   }
 }

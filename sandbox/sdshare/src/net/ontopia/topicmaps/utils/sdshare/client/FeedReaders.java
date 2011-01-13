@@ -145,15 +145,15 @@ public class FeedReaders {
     private long lastChange;
 
     // SAX tracking
-    private String mimetype;    // mimetype of last fragment link
-    private String fraglink;    // href of last fragment link
-    private Set<String> sis; // current <TopicSI>s
+    private Set<AtomLink> links; // links in current entry
+    private Set<String> sis;     // current <TopicSI>s
 
     public FragmentFeedReader(String feedurl, long lastChange) {
       super(feedurl);
       this.lastChange = lastChange;
       this.feed = new FragmentFeed();
       this.sis = new CompactHashSet();
+      this.links = new CompactHashSet();
     }
 
     public FragmentFeed getFragmentFeed() {
@@ -174,15 +174,16 @@ public class FeedReaders {
           return; // then we don't know what this is
         
         String type = atts.getValue("type");
-        if (!isOKMimeType(type))
-          return; // we can't load this, so we're passing on it
-        
         String href = atts.getValue("href");
         if (href == null)
           throw new RuntimeException("No href attribute on <link>");
+        LocatorIF fraguri = feedurl.resolveAbsolute(href);
 
-        mimetype = type;
-        fraglink = href;
+        MIMEType mimetype = null;
+        if (type != null)
+          mimetype = new MIMEType(type);
+
+        links.add(new AtomLink(mimetype, fraguri.getExternalForm()));
       }
     }
 
@@ -195,7 +196,7 @@ public class FeedReaders {
       
       else if (uri.equals(NS_ATOM) && name.equals("entry")) {
         // verify that we've got everything
-        if (mimetype == null || fraglink == null)
+        if (links.size() > 1)
           throw new RuntimeException("Fragment entry had no suitable links");
         if (updated == -1)
           throw new RuntimeException("Fragment entry had no updated field");
@@ -208,24 +209,16 @@ public class FeedReaders {
                    lastChange);
           
           // create new fragment
-          LocatorIF fraguri = feedurl.resolveAbsolute(fraglink);
-          feed.addFragment(new Fragment(fraguri.getExternalForm(),
-                                        mimetype, sis, updated));      
+          feed.addFragment(new Fragment(links, sis, updated));      
         } else
           log.info("Found old fragment, updated: " + updated);
 
         // reset tracking fields
-        mimetype = null;
-        fraglink = null;
+        links = new CompactHashSet();
         sis = new CompactHashSet();        
       }
 
       super.endElement(uri, name, qname);
-    }
-
-    private boolean isOKMimeType(String mimetype) {
-      // FIXME: implement!
-      return true;
     }
   }
 
@@ -300,7 +293,7 @@ public class FeedReaders {
         if (href == null)
           throw new RuntimeException("No href attribute on <link>");
 
-        current.setFeedURI(feedurl.resolveAbsolute(href).getExternalForm());
+        current.setSnapshotURI(feedurl.resolveAbsolute(href).getExternalForm());
       }
     }
 

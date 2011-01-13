@@ -12,12 +12,12 @@ public class Snapshot {
   public Snapshot(SnapshotFeed feed) {
     this.feed = feed;
   }
-  
-  public String getFeedURI() {
+
+  public String getSnapshotURI() {
     return uri;
   }
 
-  public void setFeedURI(String uri) {
+  public void setSnapshotURI(String uri) {
     this.uri = uri;
   }
 

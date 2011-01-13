@@ -26,15 +26,13 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
 
-public class OntopiaBackend implements ClientBackendIF {
+public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
   static Logger log = LoggerFactory.getLogger(OntopiaBackend.class.getName());
-
-  // FIXME: need to be able to get a reference here somehow.
   
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot) {
     TopicMapStoreIF store = null;
     try {
-      String url = snapshot.getFeedURI();
+      String url = snapshot.getSnapshotURI();
       LocatorIF base = URILocator.create(snapshot.getFeed().getPrefix());
       
       XTMTopicMapReader reader = new XTMTopicMapReader(new URL(url).openConnection().getInputStream(), base);
@@ -64,7 +62,7 @@ public class OntopiaBackend implements ClientBackendIF {
       // (3) applying the fragment
       log.info("Applying fragment " + fragment);
       try {
-        applyFragment(fragment.getParent().getPrefix(),
+        applyFragment(fragment.getFeed().getPrefix(),
                       fragment,
                       store.getTopicMap());
       } catch (Exception e) {
@@ -82,18 +80,37 @@ public class OntopiaBackend implements ClientBackendIF {
 
   // ===== INTERNAL IMPLEMENTATION CODE
 
+  public int getLinkScore(AtomLink link) {
+    MIMEType mimetype = link.getMIMEType();
+    if (!mimetype.getType().equals("application/x-tm+xml"))
+      return 0; // we support only XTM at the moment
+
+    if (mimetype.getVersion() == null)
+      return 1; // don't know what version, so use only if necessary
+    else if (mimetype.getVersion().equals("1.0"))
+      return 2; // doesn't support name types, so not preferred
+    else if (mimetype.getVersion().equals("2.0"))
+      return 99; // has everything, so this is fine
+    else if (mimetype.getVersion().equals("2.1"))
+      return 100; // best support for fragments, so prefer this
+    else
+      return 0; // unknown version, so we don't dare to use it
+  }
+  
   private TopicMapStoreIF getStore(String id) {
     return TopicMaps.createStore(id, false);
   }
   
   private void applyFragment(String prefix, Fragment fragment,
                              TopicMapIF topicmap) throws IOException {    
+    String url = findPreferredLink(fragment.getLinks()).getUri();
+
     // FIXME: before issue #3680 is cleared up, we don't know how to
     // interpret multiple SIs on a single fragment. for now we will
     // just assume that all entries have only a single SI.
     // http://projects.topicmapslab.de/issues/3680
     if (fragment.getTopicSIs().size() != 1)
-      throw new RuntimeException("Fragment " + fragment.getFragmentURI() +
+      throw new RuntimeException("Fragment " + url +
                                  " had wrong number of TopicSIs: " +
                                  fragment.getTopicSIs().size());
 
@@ -101,8 +118,7 @@ public class OntopiaBackend implements ClientBackendIF {
     
     // (1) get the fragment
     // FIXME: for now we only support XTM
-    String url = fragment.getFragmentURI();
-    LocatorIF base = URILocator.create(fragment.getParent().getPrefix());
+    LocatorIF base = URILocator.create(fragment.getFeed().getPrefix());
     XTMTopicMapReader reader = new XTMTopicMapReader(new URL(url).openConnection().getInputStream(), base);
     reader.setFollowTopicRefs(false);
     TopicMapIF tmfragment = reader.read();

@@ -25,7 +25,7 @@ public class FragmentFeed {
 
   public void addFragment(Fragment fragment) {
     fragments.add(fragment);
-    fragment.setParent(this);
+    fragment.setFeed(this);
   }
 
   public List<Fragment> getFragments() {
