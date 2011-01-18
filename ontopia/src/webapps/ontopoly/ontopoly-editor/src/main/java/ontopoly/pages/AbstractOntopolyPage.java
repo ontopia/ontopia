@@ -9,12 +9,12 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import ontopoly.OntopolySession;
 import ontopoly.model.FieldDefinition;
-import ontopoly.model.FieldInstance;
 import ontopoly.model.LifeCycleListener;
 import ontopoly.model.PSI;
 import ontopoly.model.RoleField;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicType;
+import ontopoly.resources.Resources;
 import ontopoly.utils.OntopolyModelUtils;
 import ontopoly.utils.OntopolyUtils;
 
@@ -38,11 +38,11 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
     super(params);
     
     // add header contributor for stylesheet
-    add(CSSPackageResource.getHeaderContribution(getStylesheet()));
+    add(CSSPackageResource.getHeaderContribution(Resources.class, getStylesheet()));
   }
 
   protected String getStylesheet() {
-    return "resources/ontopoly.resources.Resources/stylesheet.css";
+    return "stylesheet.css";
   }
   
   public OntopolySession getOntopolySession() { 
