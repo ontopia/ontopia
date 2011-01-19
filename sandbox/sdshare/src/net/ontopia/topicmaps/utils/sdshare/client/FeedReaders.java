@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.net.MalformedURLException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -15,9 +16,11 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.ontopia.utils.URIUtils;
+import net.ontopia.utils.CompactHashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.utils.CompactHashSet;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 
 /**
@@ -38,14 +41,16 @@ public class FeedReaders {
   private static final String NS_ATOM = "http://www.w3.org/2005/Atom";
   private static final String NS_SD = "http://www.egovpt.org/sdshare";
 
-  public static FragmentFeed readFragmentFeed(String uri)
+  public static FragmentFeed readFragmentFeed(String filename_or_url)
     throws IOException, SAXException {
-    return readFragmentFeed(uri, 0);
+    return readFragmentFeed(filename_or_url, 0);
   }
 
-  public static FragmentFeed readFragmentFeed(String uri, long lastChange)
+  public static FragmentFeed readFragmentFeed(String filename_or_url,
+                                              long lastChange)
     throws IOException, SAXException {
     // TODO: we should support if-modified-since
+    String uri = URIUtils.getURI(filename_or_url).getExternalForm();
     FragmentFeedReader handler = new FragmentFeedReader(uri, lastChange);
     parseWithHandler(uri, handler);
     return handler.getFragmentFeed();
@@ -55,8 +60,9 @@ public class FeedReaders {
    * PUBLIC: Reads a collection feed and returns an object representing
    * (the interesting part of) the contents of the feed.
    */
-  public static CollectionFeed readCollectionFeed(String uri)
+  public static CollectionFeed readCollectionFeed(String filename_or_url)
     throws IOException, SAXException {
+    String uri = URIUtils.getURI(filename_or_url).getExternalForm();
     CollectionFeedReader handler = new CollectionFeedReader(uri);
     parseWithHandler(uri, handler);
     return handler.getCollectionFeed();
@@ -66,8 +72,9 @@ public class FeedReaders {
    * PUBLIC: Reads a snapshot feed and returns a list of the
    * snapshots. The order of the list is the same as in the feed.
    */
-  public static SnapshotFeed readSnapshotFeed(String uri)
+  public static SnapshotFeed readSnapshotFeed(String filename_or_url)
     throws IOException, SAXException {
+    String uri = URIUtils.getURI(filename_or_url).getExternalForm();
     SnapshotFeedReader handler = new SnapshotFeedReader(uri);
     parseWithHandler(uri, handler);
     return handler.getFeed();
@@ -93,7 +100,11 @@ public class FeedReaders {
     protected long updated;       // content of last <updated>
 
     public AbstractFeedReader(String feedurl) {
-      this.feedurl = URILocator.create(feedurl);
+      try {
+        this.feedurl = new URILocator(feedurl);
+      } catch (MalformedURLException e) {
+        throw new OntopiaRuntimeException(e);
+      }
       this.buf = new StringBuilder();
     }
 
@@ -162,6 +173,25 @@ public class FeedReaders {
 
     public void startElement(String uri, String name, String qname,
                              Attributes atts) {
+      try {
+        startElement_(uri, name, qname, atts);
+      } catch (Exception e) {
+        e.printStackTrace();
+        throw new OntopiaRuntimeException(e);
+      }
+    }
+
+    public void endElement(String uri, String name, String qname) {
+      try {
+        endElement_(uri, name, qname);
+      } catch (Exception e) {
+        e.printStackTrace();
+        throw new OntopiaRuntimeException(e);
+      }
+    }
+    
+    public void startElement_(String uri, String name, String qname,
+                             Attributes atts) {
       super.startElement(uri, name, qname, atts);
       
       if ((uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix")) ||
@@ -187,7 +217,7 @@ public class FeedReaders {
       }
     }
 
-    public void endElement(String uri, String name, String qname) {     
+    public void endElement_(String uri, String name, String qname) {     
       if (uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix"))
         feed.setPrefix(buf.toString());
 
@@ -196,7 +226,7 @@ public class FeedReaders {
       
       else if (uri.equals(NS_ATOM) && name.equals("entry")) {
         // verify that we've got everything
-        if (links.size() > 1)
+        if (links.size() < 1)
           throw new RuntimeException("Fragment entry had no suitable links");
         if (updated == -1)
           throw new RuntimeException("Fragment entry had no updated field");

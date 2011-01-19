@@ -45,6 +45,7 @@ public class ClientManager {
 
   public void stopThread() {
     thread.stopThread();
+    thread = new SyncThread(config.getBackend(), config.getEndpoints());
   }
 
   public void loadSnapshots() throws IOException, SAXException {

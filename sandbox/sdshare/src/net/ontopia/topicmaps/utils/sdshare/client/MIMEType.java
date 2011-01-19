@@ -19,8 +19,9 @@ public class MIMEType {
    * INTERNAL: Parses the MIME type string representation.
    */
   public MIMEType(String mimetype) {
-    // int slash = mimetype.indexOf('/');
-    // maintype = mimetype.substring(0, slash);
+    int slash = mimetype.indexOf('/');
+    maintype = mimetype.substring(0, slash);
+    subtype = mimetype.substring(slash + 1);
   }
 
   public String getMainType() {

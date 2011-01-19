@@ -3,10 +3,14 @@ package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * INTERNAL: Shared utility code between backend implementations.
  */
 public abstract class AbstractBackend {
+  static Logger log = LoggerFactory.getLogger(AbstractBackend.class.getName());
 
   /**
    * Picks the preferred link in a set of AtomLink objects. Uses
@@ -18,6 +22,8 @@ public abstract class AbstractBackend {
     AtomLink preferred = null;
     for (AtomLink link : links) {
       int score = getLinkScore(link);
+      log.warn("Link " + link.getUri() + " score: " + score + ", MIME: " +
+               link.getMIMEType());
       if (score > highest) {
         highest = score;
         preferred = link;
