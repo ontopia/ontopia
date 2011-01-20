@@ -112,8 +112,9 @@ class SyncThread extends Thread {
     for (SyncEndpoint endpoint : endpoints) {
       log.info("Checking " + endpoint.getHandle());
       for (SyncSource source : endpoint.getSources()) {
-        // verify that it's time to check this source now
-        if (!source.isTimeToCheck())
+        // verify that it's time to check this source now, and that the source
+        // hasn't failed.
+        if (!source.isTimeToCheck() || source.isBlockedByError())
           return;
 
         // it was time, so we download the feed and go through the
@@ -123,19 +124,23 @@ class SyncThread extends Thread {
         if (feed.getFragments().isEmpty())
           continue; // nothing to do
 
-        for (Fragment fragment : feed.getFragments()) {
-          backend.applyFragment(endpoint, fragment);
-          // we assume that unless we see an exception, the fragment is
-          // successfully applied. conversely, if we get here we assume
-          // the fragment succeeded.
-          source.setLastChange(fragment.getUpdated());
-          
-          // FIXME: not catching exceptions yet, because we don't know
-          // what to do with them. just as well to simply break off and
-          // stop, probably, but not sure how to do that yet. for now
-          // we just leave this dangling.
+        try {
+          for (Fragment fragment : feed.getFragments()) {
+            backend.applyFragment(endpoint, fragment);
+            // we assume that unless we see an exception, the fragment is
+            // successfully applied. conversely, if we get here we assume
+            // the fragment succeeded.
+            source.setLastChange(fragment.getUpdated());
+          }
+        } catch (Exception e) {
+          // we log the error, and note it on the source. that stops further
+          // updates from the source, until we are told that we can continue.
+          log.warn("Source " + source.getURL() + " failed", e);
+          source.setError(e.getMessage());
         }
-        
+
+        // this notes the time of the last update time for this source,
+        // even if it failed.
         source.updated();
       }
     }

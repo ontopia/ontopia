@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
  * synchronize from.
  */
 public class SyncSource {
+  private String error; // error message; if null there is no error
   private String url; // URL of collection feed
   private CollectionFeed feed;
   private int checkInterval; // in seconds!
@@ -77,5 +78,17 @@ public class SyncSource {
    */
   public boolean isTimeToCheck() {
     return System.currentTimeMillis() >= lastCheck + (checkInterval * 1000);
+  }
+
+  public boolean isBlockedByError() {
+    return error != null;
+  }
+
+  public String getError() {
+    return error;
+  }
+
+  public void setError(String error) {
+    this.error = error;
   }
 }

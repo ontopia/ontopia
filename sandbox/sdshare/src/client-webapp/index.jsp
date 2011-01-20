@@ -42,6 +42,12 @@
     <ul>
     <% for (SyncSource ss : endpoint.getSources()) { %>
       <li><%= ss.getURL() %>
+      <%
+        if (ss.isBlockedByError()) {
+      %>
+        <br><span style="color: red"><b><%= ss.getError() %></b></span>
+      <% } %>
+      </li>
     <% } %>
     </ul>
   <% } %>
