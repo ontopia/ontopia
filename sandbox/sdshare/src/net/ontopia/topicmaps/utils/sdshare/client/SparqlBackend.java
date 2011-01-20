@@ -19,13 +19,6 @@ import net.ontopia.utils.OntopiaRuntimeException;
  */
 public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
   static Logger log = LoggerFactory.getLogger(SparqlBackend.class.getName());
-
-  // FIXME: need to be able to pick preferred syntax somehow.
-  // alternatives are either an isMIMETypeOK method or a rankMIMEType
-  // method. the more work we can move out of the backend, the better.
-
-  // FIXME: also, how to represent syntaxes? MIME type strings have
-  // a syntax, so perhaps they should be parsed by the client?
   
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot) {
     String graph = snapshot.getFeed().getPrefix();
@@ -49,12 +42,17 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     String subject = fragment.getTopicSIs().iterator().next();
     
     // first, remove all statements about the current topic
+    // doUpdate(endpoint.getHandle(),
+    //          "delete from <" + graph + "> " +
+    //          "  { <" + subject + "> ?p ?v } " +
+    //          "where " +
+    //          "  { <" + subject + "> ?p ?v }");
     doUpdate(endpoint.getHandle(),
-             "delete from <" + graph + "> " +
-             "  { <" + subject + "> ?p ?v } " +
+             "with <" + graph + "> " +
+             "delete { <" + subject + "> ?p ?v } " +
              "where " +
              "  { <" + subject + "> ?p ?v }");
-
+    
     // second, load new fragment into graph
     doUpdate(endpoint.getHandle(),
              "load <" + uri + "> into <" + graph + ">");
@@ -71,7 +69,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     return 0;
   }
 
-  private void doUpdate(String endpoint, String statement) {    
+  public static void doUpdate(String endpoint, String statement) {    
     try {
       doUpdate_(endpoint, statement);
     } catch (IOException e) {
@@ -79,7 +77,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     }
   }
   
-  private void doUpdate_(String endpoint, String statement) throws IOException {
+  public static void doUpdate_(String endpoint, String statement) throws IOException {
     log.warn("doUpdate: " + statement);
 
     // WARN: it doesn't look like the spec actually describes the update
@@ -87,16 +85,16 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     // based on a kind of reverse-engineering of the protocol by guesswork.
 
     URL url = new URL(endpoint);
-    statement = URLEncoder.encode(statement);
+    statement = statement.replace(' ', '+');
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     conn.setRequestProperty("content-type",
-                            "application/x-www-form-urlencoded; charset=utf-8");
+                            "application/x-www-form-urlencoded");
 
     // this part turns the request into a POST request (argh)
     conn.setDoOutput(true); // means we intend to push data into connection
     OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream(), "utf-8");
     wr.write("update=" + statement);
-    wr.flush();
+    wr.close();
 
     log.warn("doUpdate response code: " + conn.getResponseCode());
 

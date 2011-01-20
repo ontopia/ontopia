@@ -1,14 +1,22 @@
 
 package net.ontopia.topicmaps.utils.sdshare.client;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Collection;
 import java.net.URL;
+import java.io.File;
 import java.io.IOException;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import org.xml.sax.SAXException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.ontopia.utils.StringUtils;
+  
 /**
  * INTERNAL: The thread that actually performs the sync operations.
  * Note that loadSnapshots() and sync() can be called both from run()
@@ -18,6 +26,7 @@ import org.slf4j.LoggerFactory;
 class SyncThread extends Thread {
   private boolean stopped;
   private boolean running;
+  private boolean loaded;
   private ClientBackendIF backend;
   private Collection<SyncEndpoint> endpoints;
   static Logger log = LoggerFactory.getLogger(SyncThread.class.getName());
@@ -26,6 +35,7 @@ class SyncThread extends Thread {
                     Collection<SyncEndpoint> endpoints) {
     this.backend = backend;
     this.endpoints = endpoints;
+    this.loaded = false; // we load only when starting
   }
   
   public String getStatus() {
@@ -54,7 +64,10 @@ class SyncThread extends Thread {
   public void run() {
     stopped = false;
     running = true;
-    
+
+    if (!loaded)
+      load();
+      
     while (!stopped) {
       try {
         sync();
@@ -62,7 +75,10 @@ class SyncThread extends Thread {
         // FIXME: we log the error and carry on, but it's not clear that
         // this really is a good idea. we should have a better handling of
         // this. for example, we might want to stop sources which have
-        // errors and carry on with everything else.
+        // errors and carry on with everything else. there might even
+        // be some operation in the UI for clearing sources which are
+        // blocked on errors. the UI should also display the error so
+        // that we can carry on.
         log.error("Exception while syncing", e); 
       }
       
@@ -105,7 +121,7 @@ class SyncThread extends Thread {
         FragmentFeed feed = FeedReaders.readFragmentFeed(source.getFragmentFeedURL(), source.getLastChange());
         log.info("FOUND " + feed.getFragments().size() + " fragments");
         if (feed.getFragments().isEmpty())
-          return; // nothing to do
+          continue; // nothing to do
 
         for (Fragment fragment : feed.getFragments()) {
           backend.applyFragment(endpoint, fragment);
@@ -122,6 +138,65 @@ class SyncThread extends Thread {
         
         source.updated();
       }
+    }
+    save();
+  }
+
+  /**
+   * Saves information about the current state of the client so that
+   * we can carry on from where we stopped after the server is
+   * restarted.
+   */ 
+  private void save() throws IOException {
+    // line-based text format. each line is:
+    //   endpoint-handle source-url lastchange
+    File f = new File(System.getProperty("java.io.tmpdir"),
+                      "sdshare-client-state.txt");
+    log.info("Saving state to " + f);
+    FileWriter out = new FileWriter(f);
+
+    for (SyncEndpoint endpoint : endpoints)
+      for (SyncSource source : endpoint.getSources())
+        out.write(endpoint.getHandle() + " " +
+                  source.getURL() + " " +
+                  source.getLastChange() + "\n");
+    
+    out.close();
+  }
+
+  /**
+   * Loads the state of the various sources from the save file.
+   */
+  private void load() {
+    // to make it easier to match state lines to actual sources we
+    // build a map first
+    Map<String, SyncSource> map = new HashMap();
+    for (SyncEndpoint endpoint : endpoints)
+      for (SyncSource source : endpoint.getSources())
+        map.put(endpoint.getHandle() + " " + source.getURL(), source);
+
+    // ok, now we can load the file
+    try {
+      File f = new File(System.getProperty("java.io.tmpdir"),
+                        "sdshare-client-state.txt");
+      BufferedReader in = new BufferedReader(new FileReader(f));
+      String line = in.readLine();
+      while (line != null) {
+        String[] row = StringUtils.split(line.trim());
+
+        SyncSource source = map.get(row[0] + " " + row[1]);
+        if (source != null) {
+          long last = Long.parseLong(row[2]);
+          source.setLastChange(last);
+        }
+        line = in.readLine();
+      }
+      in.close();
+    } catch (IOException e) {
+      log.warn("Couldn't load state of sources", e);
+      // we carry on anyway, assuming that we don't need the state info.
+      // the usual cause of this warning is that we don't have any state
+      // yet.
     }
   }
 }

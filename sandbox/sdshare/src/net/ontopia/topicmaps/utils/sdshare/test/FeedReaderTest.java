@@ -65,16 +65,19 @@ public class FeedReaderTest extends AbstractTopicMapTestCase {
       xtmlink = tmp;
     }
 
+    MIMEType xtm = xtmlink.getMIMEType();
     assertEquals("wrong MIME type",
                  rdflink.getMIMEType().toString(),
                  "application/rdf+xml");
-    assertEquals("wrong MIME type",
-                 xtmlink.getMIMEType().toString(),
+    assertEquals("wrong MIME type", xtm.toString(),
                  "application/x-tm+xml; version=1.0");
     assertTrue("wrong link: " + xtmlink.getUri(),
                xtmlink.getUri().endsWith("&syntax=xtm"));
     assertTrue("wrong link: " + rdflink.getUri(),
                rdflink.getUri().endsWith("&syntax=rdf"));
+
+    assertEquals("wrong MIME main type", xtm.getMainType(), "application");
+    assertEquals("wrong MIME subtype", xtm.getSubType(), "x-tm+xml");
+    assertEquals("wrong MIME version", xtm.getVersion(), "1.0");
   }
-  
 }

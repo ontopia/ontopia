@@ -21,7 +21,17 @@ public class MIMEType {
   public MIMEType(String mimetype) {
     int slash = mimetype.indexOf('/');
     maintype = mimetype.substring(0, slash);
-    subtype = mimetype.substring(slash + 1);
+
+    int semicolon = mimetype.indexOf(';');
+    if (semicolon == -1)
+      subtype = mimetype.substring(slash + 1);
+    else {
+      subtype = mimetype.substring(slash + 1, semicolon);
+
+      String lastpart = mimetype.substring(semicolon);
+      if (lastpart.startsWith("; version="))
+        version = mimetype.substring(semicolon + "; version=".length());
+    }
   }
 
   public String getMainType() {

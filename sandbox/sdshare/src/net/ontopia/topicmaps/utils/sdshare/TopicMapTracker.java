@@ -19,6 +19,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,11 +90,11 @@ public class TopicMapTracker implements TopicMapListenerIF {
   // note: don't try to call this after listeners have been registered.
   // if you do invariants may be violated, causing confusion.
   public void setDribbleFile(String dribblefile) throws IOException {
-    // FIXME: should we disable this for in-memory topic maps? it won't
-    // work, so I guess we might as well. however, that's tricky, because
-    // all we have is a reference (which we don't necessarily want to load).
-    // it's tricky to judge whether it's an in-memory or RDBMS TM just from
-    // the reference. maybe we should use a configuration option instead?
+    if (!(ref instanceof RDBMSTopicMapReference)) {
+      log.info("Topic map is not an RDBMS topic map. Not making dribble file " +
+               dribblefile);
+      return;
+    }
     this.dribblefile = dribblefile;
     loadDribbleFile(); // dribbler is set up in here
   }
