@@ -29,7 +29,6 @@
 </p>
 
 <p><input type=submit name=snapshots value="Download snapshots"></p>
-</form>
 
 <p>Configured to synchronize into these topic maps:</p>
 
@@ -37,7 +36,8 @@
   ClientConfig cconfig = manager.getConfig();
 %>
 <ul>
-  <% for (SyncEndpoint endpoint : cconfig.getEndpoints()) { %>
+  <% int ix = 0;
+     for (SyncEndpoint endpoint : cconfig.getEndpoints()) { %>
     <li><%= endpoint.getHandle() %>
     <ul>
     <% for (SyncSource ss : endpoint.getSources()) { %>
@@ -45,10 +45,16 @@
       <%
         if (ss.isBlockedByError()) {
       %>
-        <br><span style="color: red"><b><%= ss.getError() %></b></span>
+        <br><span style="color: red"><b><%= ss.getError() %></b></span> <br>
+        <input type=submit name=clear<%= ix %> value="Clear">
+        <input type=hidden name=id<%= ix++ %> 
+          value="<%= endpoint.getHandle() %> <%= ss.getURL() %>">
       <% } %>
       </li>
     <% } %>
     </ul>
   <% } %>
 </ul>
+
+<input type=hidden name=number value="<%= ix %>">
+</form>

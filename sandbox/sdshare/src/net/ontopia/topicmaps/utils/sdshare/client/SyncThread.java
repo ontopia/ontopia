@@ -29,6 +29,7 @@ class SyncThread extends Thread {
   private boolean loaded;
   private ClientBackendIF backend;
   private Collection<SyncEndpoint> endpoints;
+  private Map<String, SyncSource> map;
   static Logger log = LoggerFactory.getLogger(SyncThread.class.getName());
 
   public SyncThread(ClientBackendIF backend,
@@ -36,6 +37,12 @@ class SyncThread extends Thread {
     this.backend = backend;
     this.endpoints = endpoints;
     this.loaded = false; // we load only when starting
+
+    // build a map of the sources for lookup purposes
+    this.map = new HashMap();
+    for (SyncEndpoint endpoint : endpoints)
+      for (SyncSource source : endpoint.getSources())
+        map.put(endpoint.getHandle() + " " + source.getURL(), source);
   }
   
   public String getStatus() {
@@ -91,6 +98,10 @@ class SyncThread extends Thread {
     
     running = false;
     stopped = false;
+  }
+
+  public SyncSource getSource(String key) {
+    return map.get(key);
   }
 
   // --- THE ACTUAL OPERATIONS
@@ -173,14 +184,6 @@ class SyncThread extends Thread {
    * Loads the state of the various sources from the save file.
    */
   private void load() {
-    // to make it easier to match state lines to actual sources we
-    // build a map first
-    Map<String, SyncSource> map = new HashMap();
-    for (SyncEndpoint endpoint : endpoints)
-      for (SyncSource source : endpoint.getSources())
-        map.put(endpoint.getHandle() + " " + source.getURL(), source);
-
-    // ok, now we can load the file
     try {
       File f = new File(System.getProperty("java.io.tmpdir"),
                         "sdshare-client-state.txt");
@@ -189,7 +192,7 @@ class SyncThread extends Thread {
       while (line != null) {
         String[] row = StringUtils.split(line.trim());
 
-        SyncSource source = map.get(row[0] + " " + row[1]);
+        SyncSource source = getSource(row[0] + " " + row[1]);
         if (source != null) {
           long last = Long.parseLong(row[2]);
           source.setLastChange(last);

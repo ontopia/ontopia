@@ -20,5 +20,15 @@
     manager.sync();
   }
 
+  int no = Integer.parseInt(request.getParameter("number"));
+  for (int ix = 0; ix < no; ix++) {
+    if (request.getParameter("clear" + ix) == null)
+      continue;
+
+    String key = request.getParameter("id" + ix);
+    SyncSource source = manager.getSource(key);
+    source.clearError();
+  }
+
   response.sendRedirect("/sdshare-client/");
 %>

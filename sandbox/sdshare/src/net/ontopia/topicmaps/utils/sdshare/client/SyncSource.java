@@ -91,4 +91,8 @@ public class SyncSource {
   public void setError(String error) {
     this.error = error;
   }
+
+  public void clearError() {
+    this.error = null;
+  }
 }
