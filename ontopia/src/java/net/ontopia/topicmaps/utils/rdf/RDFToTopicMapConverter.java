@@ -83,6 +83,10 @@ public class RDFToTopicMapConverter {
    *                   is taken from the input data.
    * @param mappingsyntax the syntax of the mapping. Values are "RDF/XML", "N3",
    *                   and "N-TRIPLE". Defaults to "RDF/XML" if null.
+   * @param topicmap The topic map to add the converted data to.
+   * @param lenient When false, errors are thrown if the RDF data cannot be
+   *        correctly mapped (for example, a statement type is mapped to a
+   *        topic name, but has a URI value).
    */
   public static void convert(String infileurl, String syntax,
                              String mappingurl, String mappingsyntax,
@@ -627,16 +631,8 @@ public class RDFToTopicMapConverter {
       TopicIF other = topicmap.getTopicBySubjectLocator(loc);
       if (other != null && other != topic)
         MergeUtils.mergeInto(other, topic);
-      else {
-        if (!topic.getSubjectLocators().isEmpty()) {
-          String msg = "Topic " + topic + " already has a subject locator";
-          logger.warn(msg);
-          if (!lenient)
-            throw new RDFMappingException(msg);
-        }
-
+      else
         topic.addSubjectLocator(loc);
-      }
     }
   }
 

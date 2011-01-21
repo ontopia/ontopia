@@ -1,0 +1,9 @@
+<topicMap xmlns="http://www.topicmaps.org/cxtm/1.0/">
+<topic id="id1">
+<subjectIdentity>
+<resourceRef href="mailto:larsga@garshol.priv.no"></resourceRef>
+<resourceRef href="mailto:larsga@ontopia.net"></resourceRef>
+<subjectIndicatorRef href="bogus:larsga"></subjectIndicatorRef>
+</subjectIdentity>
+</topic>
+</topicMap>

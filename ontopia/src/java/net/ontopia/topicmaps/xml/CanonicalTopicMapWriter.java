@@ -160,13 +160,13 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
         
     // subjectIdentity
-    if (topic.getSubjectLocators().size() >0 || 
+    if (topic.getSubjectLocators().size() > 0 || 
         topic.getSubjectIdentifiers().size() > 0) {
       dh.startElement("subjectIdentity", empty);
 
       it = orderedIterator(topic.getSubjectLocators(),
                            new StringifierComparator(new LocatorStringifier()));
-      if (it.hasNext()) // NOTE: exporting only one
+      while (it.hasNext())
         writeResourceRef((LocatorIF)it.next(), dh);
 
       it = orderedIterator(topic.getSubjectIdentifiers(),
