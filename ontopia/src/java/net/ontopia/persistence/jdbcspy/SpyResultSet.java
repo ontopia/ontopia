@@ -739,4 +739,206 @@ public class SpyResultSet implements ResultSet {
     rs.updateClob(columnName, x);
   }
 
+  // J2EE 1.6 specifics - comment out remainder of methods if you have to use java 1.5
+
+  public RowId getRowId(int i) throws SQLException {
+    return rs.getRowId(i);
+  }
+
+  public RowId getRowId(String s) throws SQLException {
+    return rs.getRowId(s);
+  }
+
+  public void updateRowId(int i, RowId rowId) throws SQLException {
+    rs.updateRowId(i, rowId);
+  }
+
+  public void updateRowId(String s, RowId rowId) throws SQLException {
+    rs.updateRowId(s, rowId);
+  }
+
+  public int getHoldability() throws SQLException {
+    return rs.getHoldability();
+  }
+
+  public boolean isClosed() throws SQLException {
+    return rs.isClosed();
+  }
+
+  public void updateNString(int i, String s) throws SQLException {
+    rs.updateNString(i, s);
+  }
+
+  public void updateNString(String s, String s1) throws SQLException {
+    rs.updateNString(s, s1);
+  }
+
+  public void updateNClob(int i, NClob nClob) throws SQLException {
+    rs.updateNClob(i, nClob);
+  }
+
+  public void updateNClob(String s, NClob nClob) throws SQLException {
+    rs.updateNClob(s, nClob);
+  }
+
+  public NClob getNClob(int i) throws SQLException {
+    return rs.getNClob(i);
+  }
+
+  public NClob getNClob(String s) throws SQLException {
+    return rs.getNClob(s);
+  }
+
+  public SQLXML getSQLXML(int i) throws SQLException {
+    return rs.getSQLXML(i);
+  }
+
+  public SQLXML getSQLXML(String s) throws SQLException {
+    return rs.getSQLXML(s);
+  }
+
+  public void updateSQLXML(int i, SQLXML sqlxml) throws SQLException {
+    rs.updateSQLXML(i, sqlxml);
+  }
+
+  public void updateSQLXML(String s, SQLXML sqlxml) throws SQLException {
+    rs.updateSQLXML(s, sqlxml);
+  }
+
+  public String getNString(int i) throws SQLException {
+    return rs.getNString(i);
+  }
+
+  public String getNString(String s) throws SQLException {
+    return rs.getNString(s);
+  }
+
+  public Reader getNCharacterStream(int i) throws SQLException {
+    return rs.getNCharacterStream(i);
+  }
+
+  public Reader getNCharacterStream(String s) throws SQLException {
+    return rs.getNCharacterStream(s);
+  }
+
+  public void updateNCharacterStream(int i, Reader reader, long l) throws SQLException {
+    rs.updateNCharacterStream(i, reader, l);
+  }
+
+  public void updateNCharacterStream(String s, Reader reader, long l) throws SQLException {
+    rs.updateNCharacterStream(s, reader, l);
+  }
+
+  public void updateAsciiStream(int i, InputStream inputStream, long l) throws SQLException {
+    rs.updateAsciiStream(i, inputStream, l);
+  }
+
+  public void updateBinaryStream(int i, InputStream inputStream, long l) throws SQLException {
+    rs.updateBinaryStream(i, inputStream, l);
+  }
+
+  public void updateCharacterStream(int i, Reader reader, long l) throws SQLException {
+    rs.updateCharacterStream(i, reader, l);
+  }
+
+  public void updateAsciiStream(String s, InputStream inputStream, long l) throws SQLException {
+    rs.updateAsciiStream(s, inputStream, l);
+  }
+
+  public void updateBinaryStream(String s, InputStream inputStream, long l) throws SQLException {
+    rs.updateBinaryStream(s, inputStream, l);
+  }
+
+  public void updateCharacterStream(String s, Reader reader, long l) throws SQLException {
+    rs.updateCharacterStream(s, reader, l);
+  }
+
+  public void updateBlob(int i, InputStream inputStream, long l) throws SQLException {
+    rs.updateBlob(i, inputStream, l);
+  }
+
+  public void updateBlob(String s, InputStream inputStream, long l) throws SQLException {
+    rs.updateBlob(s, inputStream, l);
+  }
+
+  public void updateClob(int i, Reader reader, long l) throws SQLException {
+    rs.updateClob(i, reader, l);
+  }
+
+  public void updateClob(String s, Reader reader, long l) throws SQLException {
+    rs.updateClob(s, reader, l);
+  }
+
+  public void updateNClob(int i, Reader reader, long l) throws SQLException {
+    rs.updateNClob(i, reader, l);
+  }
+
+  public void updateNClob(String s, Reader reader, long l) throws SQLException {
+    rs.updateNClob(s, reader, l);
+  }
+
+  public void updateNCharacterStream(int i, Reader reader) throws SQLException {
+    rs.updateNCharacterStream(i, reader);
+  }
+
+  public void updateNCharacterStream(String s, Reader reader) throws SQLException {
+    rs.updateNCharacterStream(s, reader);
+  }
+
+  public void updateAsciiStream(int i, InputStream inputStream) throws SQLException {
+    rs.updateAsciiStream(i, inputStream);
+  }
+
+  public void updateBinaryStream(int i, InputStream inputStream) throws SQLException {
+    rs.updateBinaryStream(i, inputStream);
+  }
+
+  public void updateCharacterStream(int i, Reader reader) throws SQLException {
+    rs.updateCharacterStream(i, reader);
+  }
+
+  public void updateAsciiStream(String s, InputStream inputStream) throws SQLException {
+    rs.updateAsciiStream(s, inputStream);
+  }
+
+  public void updateBinaryStream(String s, InputStream inputStream) throws SQLException {
+    rs.updateBinaryStream(s, inputStream);
+  }
+
+  public void updateCharacterStream(String s, Reader reader) throws SQLException {
+    rs.updateCharacterStream(s, reader);
+  }
+
+  public void updateBlob(int i, InputStream inputStream) throws SQLException {
+    rs.updateBlob(i, inputStream);
+  }
+
+  public void updateBlob(String s, InputStream inputStream) throws SQLException {
+    rs.updateBlob(s, inputStream);
+  }
+
+  public void updateClob(int i, Reader reader) throws SQLException {
+    rs.updateClob(i, reader);
+  }
+
+  public void updateClob(String s, Reader reader) throws SQLException {
+    rs.updateClob(s, reader);
+  }
+
+  public void updateNClob(int i, Reader reader) throws SQLException {
+    rs.updateNClob(i, reader);
+  }
+
+  public void updateNClob(String s, Reader reader) throws SQLException {
+    rs.updateNClob(s, reader);
+  }
+
+  public <T> T unwrap(Class<T> tClass) throws SQLException {
+    return rs.unwrap(tClass);
+  }
+
+  public boolean isWrapperFor(Class<?> aClass) throws SQLException {
+    return rs.isWrapperFor(aClass);
+  }
+
 }

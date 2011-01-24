@@ -147,6 +147,7 @@
             optimize="${optimize}" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
             classpathref="project.classpath"
+            source="1.5" target="1.5"
             includeantruntime="false">
       <patternset>
         <include name="net/ontopia/ant/TestTask.java" />
@@ -610,7 +611,7 @@
     <javac srcdir="${java.path}" destdir="${build.classes}" 
             optimize="${optimize}" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
-            classpathref="project.classpath.nolog4j" source="1.5"
+            classpathref="project.classpath.nolog4j" source="1.5" target="1.5"
             includeantruntime="false">
       <patternset refid="sources.viz" />
     </javac>
@@ -619,6 +620,7 @@
             optimize="${optimize}" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
             classpathref="project.classpath.nolog4j"
+            source="1.5" target="1.5"
             includeantruntime="false">
       <patternset refid="sources.viz" />
     </javac>
@@ -1026,13 +1028,6 @@
        Ontopia distributions
        ==================================================================== -->
   
-  <target name="check-jvm">
-    <property name="jvm.version" value="1.5" />
-    <java classname="net.ontopia.products.CheckJVMVersion" failonerror="true" classpathref="project.classpath">
-      <arg value="${jvm.version}" />
-    </java>
-  </target>
-  
   <target name="dist.ontopia.echo">
     <echo>Building ${dist.title}...</echo>
     <echo> - version is '${dist.version}'</echo>
@@ -1042,7 +1037,7 @@
   
   <!-- - - - Ontopia distribution  - - - - - - - - - - - - - - - - - - - - -->
   
-  <target name="dist.ontopia" depends="init,check-jvm" description="builds the full ontopia distribution">
+  <target name="dist.ontopia" depends="init" description="builds the full ontopia distribution">
     
     <antcall inheritRefs="true" target="dist.ontopia.echo" />
     
@@ -1202,7 +1197,7 @@
     <copy file="${doc.path}/ontopia/logo.gif" todir="${build.javadoc}/ontopia-dev" />
   </target>
   
-  <target name="dist.jar.ontopia.body" depends="check-jvm,prepare.product.class,clean.classes,compile.ontopia,compile.ontopia.test,jar.ontopia.test,jar.ontopia" description="builds the ontopia.jar file">
+  <target name="dist.jar.ontopia.body" depends="prepare.product.class,clean.classes,compile.ontopia,compile.ontopia.test,jar.ontopia.test,jar.ontopia" description="builds the ontopia.jar file">
   </target>
   
   <target name="dist.jar.ontopia" depends="init,dist.jar.ontopia.body" description="builds the ontopia.jar file">
@@ -1282,7 +1277,7 @@
             deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
             includeantruntime="false" 
-            classpathref="project.classpath" source="1.5">
+            classpathref="project.classpath" source="1.5" target="1.5">
       <patternset refid="sources.ontopia.core" />
     </javac>
     <javac srcdir="${java.path}" 
@@ -1291,7 +1286,7 @@
             deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
             includeantruntime="false" 
-            classpathref="project.classpath" source="1.5">
+            classpathref="project.classpath" source="1.5" target="1.5">
       <patternset refid="sources.ontopia.aux" />
     </javac>
     <echo>Copying RelaxNG schemas</echo>
@@ -1358,14 +1353,14 @@
     <javac srcdir="${java.path}" destdir="${build.classes}" 
             optimize="false" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
-            classpathref="project.classpath" source="1.5"
+            classpathref="project.classpath" source="1.5" target="1.5"
             includeantruntime="false">
       <patternset refid="sources.test.ontopia.core" />
     </javac>
     <javac srcdir="${java.path}" destdir="${build.classes}" 
             optimize="false" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
-            classpathref="project.classpath" source="1.5"
+            classpathref="project.classpath" source="1.5" target="1.5"
             includeantruntime="false">
       <patternset refid="sources.test.ontopia.aux" />
     </javac>
@@ -1600,6 +1595,7 @@
             optimize="${optimize}" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
             classpathref="project.classpath"
+            source="1.5" target="1.5"
             includeantruntime="false">
       <patternset>
         <include name="*.java" />
@@ -2113,6 +2109,7 @@
             optimize="${optimize}" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
             classpathref="project.classpath"
+            source="1.5" target="1.5"
             includeantruntime="false">
       <patternset>
         <include name="*.java" />
@@ -2215,7 +2212,7 @@
             optimize="${optimize}" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
             includeantruntime="false" 
-            classpathref="project.classpath" source="1.5">
+            classpathref="project.classpath" source="1.5" target="1.5">
       <patternset refid="sources.product" />
     </javac>
     <java classname="net.ontopia.product.CreateProductClass" fork="true" classpathref="project.classpath">
@@ -2412,6 +2409,7 @@
            optimize="${optimize}" deprecation="${deprecation}" 
            debug="${debug}" debuglevel="${debuglevel}" 
            classpathref="project.classpath"
+           source="1.5" target="1.5"
            includeantruntime="false">
       <include name="**/*.java" />
     </javac>
@@ -2475,7 +2473,7 @@
     <echo>Compiling dummy logger classes...</echo>
     <javac srcdir="${java.path}" destdir="${build.classes}" 
             optimize="${optimize}" deprecation="${deprecation}" 
-            debug="${debug}" debuglevel="${debuglevel}" source="1.5"
+            debug="${debug}" debuglevel="${debuglevel}" source="1.5" target="1.5"
             includeantruntime="false">
       <patternset refid="sources.dummyLoggers" />
     </javac>
@@ -2499,7 +2497,7 @@
     <javac srcdir="${java.path}" destdir="${build.classes}" 
             optimize="${optimize}" deprecation="${deprecation}" 
             debug="${debug}" debuglevel="${debuglevel}" 
-            classpathref="project.classpath" source="1.5"
+            classpathref="project.classpath" source="1.5" target="1.5"
             includeantruntime="false">
       <patternset refid="sources.topicmaprealm" />
     </javac>

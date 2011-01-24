@@ -5,6 +5,7 @@ package net.ontopia.persistence.jdbcspy;
 
 import java.sql.*;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * INTERNAL: 
@@ -212,6 +213,60 @@ public class SpyConnection implements Connection {
   public PreparedStatement prepareStatement(String sql, String[] columnNames)
     throws SQLException {
     return new SpyPreparedStatement(this, stats, sql, conn.prepareStatement(sql, columnNames));
+  }
+
+  // J2EE 1.6 specifics - comment out remainder of methods if you have to use java 1.5
+
+  public Clob createClob() throws SQLException {
+    return conn.createClob();
+  }
+
+  public Blob createBlob() throws SQLException {
+    return conn.createBlob();
+  }
+
+  public NClob createNClob() throws SQLException {
+    return conn.createNClob();
+  }
+
+  public SQLXML createSQLXML() throws SQLException {
+    return conn.createSQLXML();
+  }
+
+  public boolean isValid(int i) throws SQLException {
+    return conn.isValid(i);
+  }
+
+  public void setClientInfo(String s, String s1) throws SQLClientInfoException {
+    conn.setClientInfo(s, s1);
+  }
+
+  public void setClientInfo(Properties properties) throws SQLClientInfoException {
+    conn.setClientInfo(properties);
+  }
+
+  public String getClientInfo(String s) throws SQLException {
+    return conn.getClientInfo(s);
+  }
+
+  public Properties getClientInfo() throws SQLException {
+    return conn.getClientInfo();
+  }
+
+  public Array createArrayOf(String s, Object[] objects) throws SQLException {
+    return conn.createArrayOf(s, objects);
+  }
+
+  public Struct createStruct(String s, Object[] objects) throws SQLException {
+    return conn.createStruct(s, objects);
+  }
+
+  public <T> T unwrap(Class<T> tClass) throws SQLException {
+    return conn.unwrap(tClass);
+  }
+
+  public boolean isWrapperFor(Class<?> aClass) throws SQLException {
+    return conn.isWrapperFor(aClass);
   }
 
 }

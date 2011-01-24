@@ -232,4 +232,78 @@ public class SpyPreparedStatement extends SpyStatement implements PreparedStatem
     pstm.setURL(parameterIndex, x);
   }
 
+  // J2EE 1.6 specifics - comment out remainder of methods if you have to use java 1.5
+
+  public void setAsciiStream(int i, InputStream inputStream, long l) throws SQLException {
+    pstm.setAsciiStream(i, inputStream, l);
+  }
+
+  public void setBinaryStream(int i, InputStream inputStream, long l) throws SQLException {
+    pstm.setBinaryStream(i, inputStream, l);
+  }
+
+  public void setCharacterStream(int i, Reader reader, long l) throws SQLException {
+    pstm.setCharacterStream(i, reader, l);
+  }
+
+  public void setAsciiStream(int i, InputStream inputStream) throws SQLException {
+    pstm.setAsciiStream(i, inputStream);
+  }
+
+  public void setBinaryStream(int i, InputStream inputStream) throws SQLException {
+    pstm.setBinaryStream(i, inputStream);
+  }
+
+  public void setCharacterStream(int i, Reader reader) throws SQLException {
+    pstm.setCharacterStream(i, reader);
+  }
+
+  public void setNCharacterStream(int i, Reader reader) throws SQLException {
+    pstm.setNCharacterStream(i, reader);
+  }
+
+  public void setClob(int i, Reader reader) throws SQLException {
+    pstm.setClob(i, reader);
+  }
+
+  public void setBlob(int i, InputStream inputStream) throws SQLException {
+    pstm.setBlob(i, inputStream);
+  }
+
+  public void setNClob(int i, Reader reader) throws SQLException {
+    pstm.setNClob(i, reader);
+  }
+
+  public void setRowId(int i, RowId rowId) throws SQLException {
+    pstm.setRowId(i, rowId);
+  }
+
+  public void setNString(int i, String s) throws SQLException {
+    pstm.setNString(i, s);
+  }
+
+  public void setNCharacterStream(int i, Reader reader, long l) throws SQLException {
+    pstm.setNCharacterStream(i, reader, l);
+  }
+
+  public void setNClob(int i, NClob nClob) throws SQLException {
+    pstm.setNClob(i, nClob);
+  }
+
+  public void setClob(int i, Reader reader, long l) throws SQLException {
+    pstm.setClob(i, reader, l);
+  }
+
+  public void setBlob(int i, InputStream inputStream, long l) throws SQLException {
+    pstm.setBlob(i, inputStream, l);
+  }
+
+  public void setNClob(int i, Reader reader, long l) throws SQLException {
+    pstm.setNClob(i, reader, l);
+  }
+
+  public void setSQLXML(int i, SQLXML sqlxml) throws SQLException {
+    pstm.setSQLXML(i, sqlxml);
+  }
+
 }
