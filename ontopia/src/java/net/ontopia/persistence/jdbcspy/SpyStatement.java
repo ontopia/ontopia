@@ -241,4 +241,30 @@ public class SpyStatement implements Statement {
     return r;
   }
 
+  // J2EE 1.6 specifics - comment out remainder of methods if you have to use java 1.5
+
+  public Object getObject(String s, Map<String, Class<?>> stringClassMap) throws SQLException {
+    return null;
+  }
+
+  public boolean isClosed() throws SQLException {
+    return stm.isClosed();
+  }
+
+  public void setPoolable(boolean b) throws SQLException {
+    stm.setPoolable(b);
+  }
+
+  public boolean isPoolable() throws SQLException {
+    return stm.isPoolable();
+  }
+
+  public <T> T unwrap(Class<T> tClass) throws SQLException {
+    return stm.unwrap(tClass);
+  }
+
+  public boolean isWrapperFor(Class<?> aClass) throws SQLException {
+    return stm.isWrapperFor(aClass);
+  }
+
 }
