@@ -2,6 +2,7 @@
   language="java" 
   contentType="application/atom+xml; charset=utf-8"
   import="java.util.Collection,
+          java.net.InetAddress,
           net.ontopia.infoset.core.LocatorIF,
           net.ontopia.topicmaps.utils.sdshare.*,
           net.ontopia.topicmaps.entry.TopicMapReferenceIF,
@@ -25,7 +26,13 @@
   TopicMapReferenceIF ref = tracker.getReference();
   TopicMapStoreIF store = ref.createStore(true);
   TopicMapIF tm = store.getTopicMap();  
-  String prefix = store.getBaseAddress().getExternalForm();
+  LocatorIF base = store.getBaseAddress();
+  String prefix;
+  if (base != null)
+    prefix = base.getExternalForm();
+  else
+    prefix = StartUpServlet.getTopicMapURL(tmid);
+
   SyntaxIF[] syntaxes = StartUpServlet.getSyntaxes();
 
   AtomWriter atom = new AtomWriter(out);

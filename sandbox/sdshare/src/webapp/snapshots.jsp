@@ -9,12 +9,15 @@
 %><%
 
   String tmid = request.getParameter("topicmap");
-  //String prefix = StartUpServlet.getEndpointURL() + tmid;
-
   TopicMapTracker tracker = StartUpServlet.topicmaps.get(tmid);
   TopicMapReferenceIF ref = tracker.getReference();
   TopicMapStoreIF store = ref.createStore(true);
-  String prefix = store.getBaseAddress().getExternalForm();
+  LocatorIF base = store.getBaseAddress();
+  String prefix;
+  if (base != null)
+    prefix = base.getExternalForm();
+  else
+    prefix = StartUpServlet.getTopicMapURL(tmid);
 
   AtomWriter atom = new AtomWriter(out);
   atom.startFeed("Snapshots feed for " + ref.getTitle(),

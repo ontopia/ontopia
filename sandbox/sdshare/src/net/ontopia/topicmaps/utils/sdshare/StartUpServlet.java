@@ -11,6 +11,7 @@ import java.util.Properties;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -94,8 +95,25 @@ public class StartUpServlet extends HttpServlet {
     return Arrays.<String>asList(ids);
   }
 
+  // FIXME: should we remove this in favour of something based on hostname?
   public static String getEndpointURL() {
     return properties.getProperty("endpoint");
+  }
+
+  private static String HOSTNAME;
+  public static String getTopicMapURL(String tmid) {
+    return "http://" + getHostName() + "/sdshare/" + tmid;
+  }
+
+  private static String getHostName() {
+    if (HOSTNAME == null) {
+      try {
+        HOSTNAME = InetAddress.getLocalHost().getHostName();
+      } catch (java.net.UnknownHostException e) {
+        HOSTNAME = "localhost";
+      }
+    }
+    return HOSTNAME;
   }
 
   public static String getTitle() {

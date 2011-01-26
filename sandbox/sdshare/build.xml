@@ -43,36 +43,34 @@
   <!-- Make server .war file -->
   <target name="server.war" depends="init">
     <echo>Creating sdshare server webapp .war file...</echo>
-    <property name="build.sdshare" value="${build.wars}/sdshare" />
     <mkdir dir="${build.wars}"/>
-    <mkdir dir="${build.sdshare}/"/>
+    <mkdir dir="${build.wars}/sdshare/"/>
 
-    <copy todir="${build.sdshare}">
+    <copy todir="${build.wars}/sdshare" overwrite="yes">
       <fileset dir="${basedir}/src/webapp"/>
     </copy>
     
     <delete file="${build.wars}/sdshare.war"/>
     <war destfile="${build.wars}/sdshare.war"
-         webxml="${build.sdshare}/WEB-INF/web.xml">
-      <fileset dir="${build.sdshare}"/>
+         webxml="${build.wars}/sdshare/WEB-INF/web.xml">
+      <fileset dir="${build.wars}/sdshare/"/>
     </war>
   </target>
 
   <!-- Make client .war file -->
   <target name="client.war" depends="init">
     <echo>Creating sdshare client webapp .war file...</echo>
-    <property name="build.sdshare" value="${build.wars}/sdshare-client" />
     <mkdir dir="${build.wars}"/>
-    <mkdir dir="${build.sdshare}/"/>
+    <mkdir dir="${build.wars}/sdshare-client/"/>
 
-    <copy todir="${build.sdshare}">
+    <copy todir="${build.wars}/sdshare-client" overwrite="yes">
       <fileset dir="${basedir}/src/client-webapp"/>
     </copy>
     
     <delete file="${build.wars}/sdshare-client.war"/>
     <war destfile="${build.wars}/sdshare-client.war"
-         webxml="${build.sdshare}/WEB-INF/web.xml">
-      <fileset dir="${build.sdshare}"/>
+         webxml="${build.wars}/sdshare-client/WEB-INF/web.xml">
+      <fileset dir="${build.wars}/sdshare-client"/>
     </war>
   </target>
   
