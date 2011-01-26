@@ -1,0 +1,8 @@
+<plugins>
+<plugin id="db2tm" groups="topic,topicmap">
+  <title>DB2TM</title>
+  <descr>Run DB2TM</descr>
+  <activated>yes</activated>
+  <uri>plugins/db2tm/db2tm.jsp</uri>
+</plugin>
+</plugins>
