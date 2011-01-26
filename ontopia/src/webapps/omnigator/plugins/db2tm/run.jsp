@@ -14,7 +14,7 @@
   // the user pressed sync, so go ahead
 
   //  (1) get a reference to the mapping file
-  String cfgfile = getServletContext().getRealPath("/omnigator/plugins/db2tm/db2tm.xml");
+  String cfgfile = getServletContext().getRealPath("/plugins/db2tm/db2tm.xml");
   
   //  (2) get the topic map
   TopicMapRepositoryIF rep = ContextUtils.getRepository(pageContext.getServletContext());
