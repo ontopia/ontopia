@@ -121,7 +121,7 @@ class SyncThread extends Thread {
 
   public void sync() throws IOException, SAXException {
     for (SyncEndpoint endpoint : endpoints) {
-      log.info("Checking " + endpoint.getHandle());
+      log.debug("Checking " + endpoint.getHandle());
       for (SyncSource source : endpoint.getSources()) {
         // verify that it's time to check this source now, and that the source
         // hasn't failed.
