@@ -62,20 +62,7 @@ public class RDFIntroSpector {
 
   private static void parseRDFXML(GrabMappingsHandler handler, String infileurl)
     throws IOException {
-    ARP parser = new ARP();
-    parser.getHandlers().setStatementHandler(handler);
-
-    URLConnection conn = new URL(infileurl).openConnection();
-    String encoding = conn.getContentEncoding();
-    try {
-      if (encoding == null)
-        parser.load(conn.getInputStream(), infileurl);
-      else
-        parser.load(new InputStreamReader(conn.getInputStream(), encoding),
-                    infileurl);
-    } catch (org.xml.sax.SAXException e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    RDFUtils.parseRDFXML(infileurl, handler);
   }
 
   private static void parseN3(GrabMappingsHandler handler, String infileurl) {

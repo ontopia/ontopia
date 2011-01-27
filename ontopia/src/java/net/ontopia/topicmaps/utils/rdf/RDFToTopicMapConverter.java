@@ -202,28 +202,10 @@ public class RDFToTopicMapConverter {
   private void doConversion(String url, String syntax)
     throws JenaException, IOException {
 
-    if (mappings != null && (syntax == null || syntax.equals("RDF/XML"))) {
-      ARP parser = new ARP();
-      parser.getHandlers().setStatementHandler(new ToTMStatementHandler());
+    if (mappings != null && (syntax == null || syntax.equals("RDF/XML")))
+      RDFUtils.parseRDFXML(url, new ToTMStatementHandler());
 
-      URLConnection conn = new URL(url).openConnection();
-      String encoding = conn.getContentEncoding();
-      InputStream in = null;
-      try {
-        in = conn.getInputStream();
-        if (encoding == null)
-          parser.load(in, url);
-        else
-          parser.load(new InputStreamReader(in, encoding), url);
-        in.close();
-      } catch (org.xml.sax.SAXException e) {
-        throw new OntopiaRuntimeException(e);
-      } finally {
-        if (in != null)
-          in.close();
-      }
-
-    } else {
+    else {
       Model model = ModelFactory.createDefaultModel();
       model.read(url, syntax);
 
