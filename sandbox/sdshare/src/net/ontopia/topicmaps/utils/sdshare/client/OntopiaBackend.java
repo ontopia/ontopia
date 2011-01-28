@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,8 +104,11 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
   }
   
   private void applyFragment(String prefix, Fragment fragment,
-                             TopicMapIF topicmap) throws IOException {    
-    String url = findPreferredLink(fragment.getLinks()).getUri();
+                             TopicMapIF topicmap) throws IOException {
+    AtomLink link = findPreferredLink(fragment.getLinks());    
+    String url = null;
+    if (link != null)
+      url = link.getUri();
 
     // FIXME: before issue #3680 is cleared up, we don't know how to
     // interpret multiple SIs on a single fragment. for now we will
@@ -119,7 +124,8 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     // (1) get the fragment
     // FIXME: for now we only support XTM
     LocatorIF base = URILocator.create(fragment.getFeed().getPrefix());
-    XTMTopicMapReader reader = new XTMTopicMapReader(new URL(url).openConnection().getInputStream(), base);
+    InputStream stream = getStream(fragment, url);
+    XTMTopicMapReader reader = new XTMTopicMapReader(stream, base);
     reader.setFollowTopicRefs(false);
     TopicMapIF tmfragment = reader.read();
     log.info("Prefix: '" + prefix + "'");
@@ -267,5 +273,15 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
       assocs.add(role.getAssociation());
     return assocs;
   }  
-  
+
+  private InputStream getStream(Fragment fragment, String url)
+    throws IOException {
+    if (url != null)
+      return new URL(url).openConnection().getInputStream();
+    else if (fragment.getContent() != null)
+      return new ByteArrayInputStream(fragment.getContent().getBytes("utf-8"));
+    else
+      throw new OntopiaRuntimeException("Fragment contained neither " +
+                                        "acceptable links nor content");
+  }
 }

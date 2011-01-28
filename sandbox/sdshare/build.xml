@@ -13,12 +13,14 @@
   <patternset id="sources">
     <include name="src/net/ontopia/topicmaps/utils/sdshare/*.java" />
     <include name="src/net/ontopia/topicmaps/utils/sdshare/client/*.java" />
+    <include name="src/net/ontopia/topicmaps/utils/sdshare/push/*.java" />
     <include name="src/net/ontopia/topicmaps/utils/sdshare/test/*.java" />
   </patternset>
 
   <patternset id="classes">
     <include name="net/ontopia/topicmaps/utils/sdshare/*.class" />
     <include name="net/ontopia/topicmaps/utils/sdshare/client/*.class" />
+    <include name="net/ontopia/topicmaps/utils/sdshare/push/*.class" />
   </patternset>
 
   <!-- Compile -->  

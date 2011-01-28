@@ -1,7 +1,9 @@
 
 package net.ontopia.topicmaps.utils.sdshare.client;
 
+import java.io.Reader;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Set;
 import java.util.TimeZone;
 import java.text.ParseException;
@@ -9,13 +11,16 @@ import java.text.SimpleDateFormat;
 import java.net.MalformedURLException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.AttributeList;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.helpers.DefaultHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.utils.URIUtils;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -80,6 +85,21 @@ public class FeedReaders {
     return handler.getFeed();
   }
 
+  /**
+   * PUBLIC: Reads a post feed and returns a FragmentFeed object, with
+   * the fragments inlined.
+   */
+  public static FragmentFeed readPostFeed(Reader in)
+    throws IOException, SAXException {
+    PostFeedReader handler = new PostFeedReader();
+    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+    // turning this on so we get the 'xmlns*' attributes
+    parser.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+    parser.setContentHandler(handler);
+    parser.parse(new InputSource(in));
+    return handler.getFragmentFeed();
+  }
+  
   private static void parseWithHandler(String uri, ContentHandler handler)
     throws IOException, SAXException {
     XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
@@ -101,7 +121,8 @@ public class FeedReaders {
 
     public AbstractFeedReader(String feedurl) {
       try {
-        this.feedurl = new URILocator(feedurl);
+        if (feedurl != null) // it's null for post feeds
+          this.feedurl = new URILocator(feedurl);
       } catch (MalformedURLException e) {
         throw new OntopiaRuntimeException(e);
       }
@@ -152,12 +173,14 @@ public class FeedReaders {
    * INTERNAL: SAX 2.0 ContentHandler to interpret Atom fragment feeds.
    */
   private static class FragmentFeedReader extends AbstractFeedReader {
-    private FragmentFeed feed;
-    private long lastChange;
+    protected FragmentFeed feed;
+    protected long lastChange;
 
     // SAX tracking
-    private Set<AtomLink> links; // links in current entry
-    private Set<String> sis;     // current <TopicSI>s
+    protected Set<AtomLink> links; // links in current entry
+    protected Set<String> sis;     // current <TopicSI>s
+    // content is set by a subclass, never by FragmentFeedReader itself
+    protected String content;      // contents of <content>
 
     public FragmentFeedReader(String feedurl, long lastChange) {
       super(feedurl);
@@ -207,7 +230,11 @@ public class FeedReaders {
         String href = atts.getValue("href");
         if (href == null)
           throw new RuntimeException("No href attribute on <link>");
-        LocatorIF fraguri = feedurl.resolveAbsolute(href);
+        LocatorIF fraguri;
+        if (feedurl == null)
+          fraguri = URILocator.create(href); // must be absolute
+        else
+          fraguri = feedurl.resolveAbsolute(href);
 
         MIMEType mimetype = null;
         if (type != null)
@@ -226,8 +253,9 @@ public class FeedReaders {
       
       else if (uri.equals(NS_ATOM) && name.equals("entry")) {
         // verify that we've got everything
-        if (links.size() < 1)
-          throw new RuntimeException("Fragment entry had no suitable links");
+        if (links.size() < 1 && content == null)
+          throw new RuntimeException("Fragment entry had no suitable links " +
+                                     "and no content");
         if (updated == -1)
           throw new RuntimeException("Fragment entry had no updated field");
         if (sis.isEmpty())
@@ -239,7 +267,7 @@ public class FeedReaders {
                    lastChange);
           
           // create new fragment
-          feed.addFragment(new Fragment(links, sis, updated));      
+          feed.addFragment(new Fragment(links, sis, updated, content));
         } else
           log.info("Found old fragment, updated: " + updated);
 
@@ -338,6 +366,103 @@ public class FeedReaders {
 
       if (uri.equals(NS_ATOM) && name.equals("updated") && inEntry)
         current.setUpdated(updated);
+    }
+  }
+
+  /**
+   * INTERNAL: SAX 2.0 ContentHandler to interpret Atom post feeds.
+   */
+  private static class PostFeedReader extends FragmentFeedReader {
+    private PrettyPrinter pp; // if set means we're inside <content>
+    private StringWriter tmp;
+
+    public PostFeedReader() {
+      super(null, 0);
+    }
+    
+    public void startElement(String uri, String name, String qname,
+                             Attributes atts) {
+      if (pp != null)
+        pp.startElement(qname, new AttributesAdapter(atts));
+      
+      else if (uri.equals(NS_ATOM) && name.equals("content")) {
+        // FIXME: we should look at the MIME type...
+        tmp = new StringWriter();
+        pp = new PrettyPrinter(tmp, null);
+      } else
+        
+        super.startElement(uri, name, qname, atts);
+    }
+
+    public void characters(char[] ch, int start, int length) {
+      if (pp != null)
+        pp.characters(ch, start, length);
+      else
+        super.characters(ch, start, length);
+    }
+
+    public void endElement(String uri, String name, String qname) {
+      if (uri.equals(NS_ATOM) && name.equals("content")) {
+        // the fragment hasn't been created yet, so what do we do?
+        content = tmp.toString(); // ready to be stored in Fragment
+        pp = null;
+      } else if (pp != null)
+        pp.endElement(qname);
+      else
+        super.endElement(uri, name, qname);
+    }
+  }
+
+  // --- AttributesAdapter
+
+  /**
+   * Wraps an Attributes object to adapt it to the AttributeList interface.
+   */
+  private static class AttributesAdapter implements AttributeList {
+    private Attributes atts;
+
+    public AttributesAdapter(Attributes atts) {
+      this.atts = atts;
+    }
+
+    public int getLength() {
+      return atts.getLength();
+    }
+
+    public void addAttribute(String name, String type, String value) {
+      throw new UnsupportedOperationException();
+    }
+
+    public void clear() {
+      throw new UnsupportedOperationException();
+    }
+
+    public String getName(int i) {
+      return atts.getQName(i);
+    }
+
+    public String getType(int i) {
+      throw new UnsupportedOperationException();
+    }
+
+    public String getType(String name) {
+      throw new UnsupportedOperationException();
+    }
+
+    public String getValue(int i) {
+      return atts.getValue(i);
+    }
+
+    public String getValue(String name) {
+      return atts.getValue(name);
+    }
+
+    public void removeAttribute(String name) {
+      throw new UnsupportedOperationException();
+    }
+
+    public void removeAttribute(int i) {
+      throw new UnsupportedOperationException();
     }
   }
 }

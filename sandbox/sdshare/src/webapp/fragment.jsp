@@ -10,7 +10,17 @@
 
   String tmid = request.getParameter("topicmap");
   String objid = request.getParameter("topic");
+  if (objid == null) {
+    out.write("'topic' parameter must be specified!");
+    response.setStatus(400);
+    return;
+  }
   String synid = request.getParameter("syntax");
+  if (synid == null) {
+    out.write("'syntax' parameter must be specified!");
+    response.setStatus(400);
+    return;
+  }
 
   TopicMapTracker tracker = StartUpServlet.topicmaps.get(tmid);
   TopicMapReferenceIF ref = tracker.getReference();
