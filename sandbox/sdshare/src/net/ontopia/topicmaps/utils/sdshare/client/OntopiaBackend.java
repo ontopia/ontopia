@@ -54,7 +54,7 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     }
   }
 
-  public void applyFragment(SyncEndpoint endpoint, Fragment fragment) {
+  public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
     boolean committed = false;
     TopicMapStoreIF store = null;
     try {
@@ -62,12 +62,14 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
       store = getStore(endpoint.getHandle());
       
       // (3) applying the fragment
-      log.info("Applying fragment " + fragment);
       try {
-        applyFragment(fragment.getFeed().getPrefix(),
-                      fragment,
-                      store.getTopicMap());
-      } catch (Exception e) {
+        String prefix = fragments.get(0).getFeed().getPrefix();
+        TopicMapIF topicmap = store.getTopicMap();
+        for (Fragment fragment : fragments) {
+          log.info("Applying fragment " + fragment);
+          applyFragment(prefix, fragment, topicmap);
+        }
+      } catch (Throwable e) {
         store.abort();
         throw new OntopiaRuntimeException(e);
       }

@@ -2,6 +2,7 @@
 package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import java.io.Writer;
 import java.io.IOException;
@@ -45,7 +46,12 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
              "load <" + uri + "> into <" + graph + ">");
   }
 
-  public void applyFragment(SyncEndpoint endpoint, Fragment fragment) {
+  public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
+    for (Fragment fragment : fragments)
+      applyFragment(endpoint, fragment);
+  }
+
+  private void applyFragment(SyncEndpoint endpoint, Fragment fragment) {
     String graph = fragment.getFeed().getPrefix();
     String uri = findPreferredLink(fragment.getLinks()).getUri();
 

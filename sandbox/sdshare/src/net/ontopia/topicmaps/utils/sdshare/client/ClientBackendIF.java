@@ -1,6 +1,8 @@
 
 package net.ontopia.topicmaps.utils.sdshare.client;
 
+import java.util.List;
+
 /**
  * PUBLIC: The interface to be implemented by SDshare client backends,
  * representing the operations necessary to actually receive SDshare
@@ -14,8 +16,9 @@ public interface ClientBackendIF {
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot);
 
   /**
-   * PUBLIC: Applies the given fragment to the given endpoint.
+   * PUBLIC: Applies the given fragments to the given endpoint. As far
+   * as possible this should be done atomically, as a single transaction.
    */
-  public void applyFragment(SyncEndpoint endpoint, Fragment fragment);
+  public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments);
   
 }

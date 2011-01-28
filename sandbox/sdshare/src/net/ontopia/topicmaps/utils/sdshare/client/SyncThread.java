@@ -78,15 +78,10 @@ class SyncThread extends Thread {
     while (!stopped) {
       try {
         sync();
-      } catch (Exception e) {
-        // FIXME: we log the error and carry on, but it's not clear that
-        // this really is a good idea. we should have a better handling of
-        // this. for example, we might want to stop sources which have
-        // errors and carry on with everything else. there might even
-        // be some operation in the UI for clearing sources which are
-        // blocked on errors. the UI should also display the error so
-        // that we can carry on.
-        log.error("Exception while syncing", e); 
+      } catch (IOException e) {
+        // this should only be IOExceptions from saving state, and so logging
+        // and carrying on should be fine
+        log.warn("Exception while syncing", e);
       }
       
       try {
@@ -119,7 +114,7 @@ class SyncThread extends Thread {
     }
   }
 
-  public void sync() throws IOException, SAXException {
+  public void sync() throws IOException {
     for (SyncEndpoint endpoint : endpoints) {
       log.debug("Checking " + endpoint.getHandle());
       for (SyncSource source : endpoint.getSources()) {
@@ -130,20 +125,16 @@ class SyncThread extends Thread {
 
         // it was time, so we download the feed and go through the
         // actual fragments
-        FragmentFeed feed = FeedReaders.readFragmentFeed(source.getFragmentFeedURL(), source.getLastChange());
-        log.info("FOUND " + feed.getFragments().size() + " fragments");
-        if (feed.getFragments().isEmpty())
-          continue; // nothing to do
-
         try {
-          for (Fragment fragment : feed.getFragments()) {
-            backend.applyFragment(endpoint, fragment);
-            // we assume that unless we see an exception, the fragment is
-            // successfully applied. conversely, if we get here we assume
-            // the fragment succeeded.
+          FragmentFeed feed = FeedReaders.readFragmentFeed(source.getFragmentFeedURL(), source.getLastChange());
+          log.info("FOUND " + feed.getFragments().size() + " fragments");
+          if (feed.getFragments().isEmpty())
+            continue; // nothing to do
+
+          backend.applyFragments(endpoint, feed.getFragments());
+          for (Fragment fragment : feed.getFragments())
             source.setLastChange(fragment.getUpdated());
-          }
-        } catch (Exception e) {
+        } catch (Throwable e) {
           // we log the error, and note it on the source. that stops further
           // updates from the source, until we are told that we can continue.
           log.warn("Source " + source.getURL() + " failed", e);
@@ -154,7 +145,7 @@ class SyncThread extends Thread {
         // even if it failed.
         source.updated();
       }
-    }
+    }    
     save();
   }
 

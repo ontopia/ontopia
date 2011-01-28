@@ -26,12 +26,6 @@ import net.ontopia.topicmaps.utils.sdshare.client.ClientBackendIF;
 public class ReceivePushServlet extends HttpServlet {
   private ClientBackendIF backend;  
 
-  // FIXME: do we need transaction control methods in the backends?
-  // this means making them stateful, involving issues with TM
-  // identification and thread-safety. basically, it means all calls
-  // have to be to same backend. would require a rethink of the whole
-  // backend concept.
-
   public ReceivePushServlet() {
     this.backend = new OntopiaBackend();
   }
@@ -54,9 +48,6 @@ public class ReceivePushServlet extends HttpServlet {
     SyncEndpoint endpoint = new SyncEndpoint(handle);
     
     // (2) run through the feed, and apply each fragment into the backend
-    // FIXME: start transaction
-    for (Fragment frag : feed.getFragments())
-      backend.applyFragment(endpoint, frag);
-    // FIXME: end transaction
+    backend.applyFragments(endpoint, feed.getFragments());
   }
 }
