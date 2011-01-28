@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Set;
@@ -16,6 +17,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.jtm.JTMTopicMapReader;
+import net.ontopia.topicmaps.xml.XTM2TopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 
 public class TMTestUtils {
@@ -33,6 +35,8 @@ public class TMTestUtils {
   public static final String CTHULHU_TOPIC_URI       = TOPICS_URI + "cthulhu";
   public static final String NYARLATHOTEP_TOPIC_URI  = TOPICS_URI + "nyarlathotep";
   public static final String PUCCINI_TOPIC_URI       = TOPICS_URI + "puccini";
+  public static final String WELSH_TOPIC_URI         = TOPICS_URI + "welsh";
+  public static final String WAALS_TOPIC_URI         = TOPICS_URI + "waals";
   
   public static final String LOVECRAFT_TM   = "/topicmaps/lovecraft";
   public static final String OPERA_TM       = "/topicmaps/ItalianOpera";
@@ -54,6 +58,18 @@ public class TMTestUtils {
     if (tm == null) fail("topic map is (null)");
     
     return tm;
+  }
+  
+  public static String writeToXTM(TopicMapIF tm) {
+    StringWriter sw =  new StringWriter();
+    try {
+      XTM2TopicMapWriter tmWriter = new XTM2TopicMapWriter(sw, "UTF-8");
+      tmWriter.write(tm);
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
+    }   
+    return sw.toString();
   }
 
   public static TopicMapIF readFromJTM(String response, String base_address) {

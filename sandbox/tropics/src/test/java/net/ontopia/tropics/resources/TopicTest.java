@@ -5,11 +5,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -92,4 +95,44 @@ public class TopicTest extends BasicTropicsTest {
     assertNull(tm.getObjectByItemIdentifier(new URILocator("http://localhost:8182/api/v1/topics/indiana_jones")));
   }
 
+  @SuppressWarnings("serial")
+  @Test
+  public void testUpdateWelshLanguageTopic() throws IOException {
+    Map<String, String> params = new HashMap<String, String>() {{
+      put("tms-include", TMTestUtils.OPERA_TM);      
+    }};
+        
+    ClientResource client = new ClientResource(URIUtils.buildURI(TMTestUtils.WELSH_TOPIC_URI, params));
+    
+    String response = get(client);
+
+    TopicMapIF tm = TMTestUtils.readFromXTM(response, TMTestUtils.TOPICS_URI);
+    TopicIF topic = (TopicIF) tm.getObjectByItemIdentifier(URILocator.create(URIUtils.buildURI(TMTestUtils.WELSH_TOPIC_URI, null)));
+    
+    List<TopicNameIF> names = new ArrayList<TopicNameIF>(topic.getTopicNames());
+    assertEquals(5, names.size());
+    String newName = "Waals";
+    for (TopicNameIF name : names) {
+      if (name.getScope().size() == 0) {        
+        name.setValue(newName);
+      }
+    } 
+    
+    String content = TMTestUtils.writeToXTM(tm);
+    put(client, content);
+
+    response = get(client);
+    tm = TMTestUtils.readFromXTM(response, TMTestUtils.TOPICS_URI);
+    
+    topic = (TopicIF) tm.getObjectByItemIdentifier(URILocator.create(URIUtils.buildURI(TMTestUtils.WELSH_TOPIC_URI, null)));    
+    assertNotNull(topic);
+    
+    names = new ArrayList<TopicNameIF>(topic.getTopicNames());
+    assertEquals(5, names.size());
+    for (TopicNameIF name : names) {
+      if (name.getScope().size() == 0) {        
+        assertEquals(newName, name.getValue());
+      }
+    } 
+  }
 }

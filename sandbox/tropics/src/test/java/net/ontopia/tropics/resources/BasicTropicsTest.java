@@ -54,4 +54,16 @@ public class BasicTropicsTest {
     return response;
   }  
   
+  protected void put(ClientResource clientResource, String content) {
+    clientResource.setNext(client);
+    
+    clientResource.put(content);
+    if (!clientResource.getStatus().isSuccess()) {
+      fail("PUT for <" + clientResource.getReference() + "> was unsuccessful. (" + clientResource.getStatus().getCode() + ", " + clientResource.getStatus().getDescription() + ")");
+    }
+     
+    if (!clientResource.getResponseEntity().isAvailable()) {
+      fail("Resource for <" + clientResource.getReference() + "> was unavailable.");
+    }    
+  }
 }

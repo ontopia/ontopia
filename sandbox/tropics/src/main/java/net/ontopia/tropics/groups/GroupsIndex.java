@@ -72,7 +72,10 @@ public class GroupsIndex {
   }
 
   public void updated(String topicMapId) {
-    for (String groupId : rIndex.get(topicMapId)) {
+    Set<String> groupIds = rIndex.get(topicMapId);
+    if ((groupIds == null) || (groupIds.size() == 0)) return;
+        
+    for (String groupId : groupIds) {
       tmCache.remove(groupId);
     }
   }
