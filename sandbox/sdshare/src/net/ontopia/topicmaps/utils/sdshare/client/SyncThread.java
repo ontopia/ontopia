@@ -42,7 +42,7 @@ class SyncThread extends Thread {
     this.map = new HashMap();
     for (SyncEndpoint endpoint : endpoints)
       for (SyncSource source : endpoint.getSources())
-        map.put(endpoint.getHandle() + " " + source.getURL(), source);
+        map.put(endpoint.getHandle() + " " + source.getHandle(), source);
   }
   
   public String getStatus() {
@@ -105,9 +105,8 @@ class SyncThread extends Thread {
     for (SyncEndpoint endpoint : endpoints) {
       log.info("Getting snapshots for " + endpoint.getHandle());
       for (SyncSource source : endpoint.getSources()) {
-        String feedurl = source.getSnapshotFeedURL();
-        log.info("Loading from " + feedurl);
-        SnapshotFeed feed = FeedReaders.readSnapshotFeed(feedurl);
+        log.info("Loading from " + source.getHandle());        
+        SnapshotFeed feed = source.getSnapshotFeed();
         Snapshot snapshot = feed.getSnapshots().get(0);
         backend.loadSnapshot(endpoint, snapshot);
       }
@@ -126,7 +125,7 @@ class SyncThread extends Thread {
         // it was time, so we download the feed and go through the
         // actual fragments
         try {
-          FragmentFeed feed = FeedReaders.readFragmentFeed(source.getFragmentFeedURL(), source.getLastChange());
+          FragmentFeed feed = source.getFragmentFeed();
           log.info("FOUND " + feed.getFragments().size() + " fragments");
           if (feed.getFragments().isEmpty())
             continue; // nothing to do
@@ -137,7 +136,7 @@ class SyncThread extends Thread {
         } catch (Throwable e) {
           // we log the error, and note it on the source. that stops further
           // updates from the source, until we are told that we can continue.
-          log.warn("Source " + source.getURL() + " failed", e);
+          log.warn("Source " + source.getHandle() + " failed", e);
           source.setError(e.getMessage());
         }
 
@@ -156,7 +155,7 @@ class SyncThread extends Thread {
    */ 
   private void save() throws IOException {
     // line-based text format. each line is:
-    //   endpoint-handle source-url lastchange
+    //   endpoint-handle source-handle lastchange
     File f = new File(System.getProperty("java.io.tmpdir"),
                       "sdshare-client-state.txt");
     log.info("Saving state to " + f);
@@ -165,7 +164,7 @@ class SyncThread extends Thread {
     for (SyncEndpoint endpoint : endpoints)
       for (SyncSource source : endpoint.getSources())
         out.write(endpoint.getHandle() + " " +
-                  source.getURL() + " " +
+                  source.getHandle() + " " +
                   source.getLastChange() + "\n");
     
     out.close();

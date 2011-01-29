@@ -54,7 +54,7 @@ public class ClientConfig {
     
     // locate config file as resource
     String filename = "sdshare-client.xml";
-    ClassLoader cloader = ConfigReader.class.getClassLoader();
+    ClassLoader cloader = ClientConfig.class.getClassLoader();
     if (cloader == null)
       throw new OntopiaRuntimeException("Cannot find class loader.");
     InputStream istream = cloader.getResourceAsStream(filename);

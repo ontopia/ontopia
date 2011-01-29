@@ -6,12 +6,12 @@ import org.xml.sax.SAXException;
 
 /**
  * PUBLIC: Represents information about an SDshare source to
- * synchronize from.
+ * synchronize from. Handles error blocking, time to next check, and
+ * other housekeeping, and leaves the real work to the frontend.
  */
 public class SyncSource {
+  private ClientFrontendIF frontend;
   private String error; // error message; if null there is no error
-  private String url; // URL of collection feed
-  private CollectionFeed feed;
   private int checkInterval; // in seconds!
   /**
    * The time (on this machine) of the last time we checked this source.
@@ -24,27 +24,21 @@ public class SyncSource {
    */
   private long lastChange;
   
-  public SyncSource(String url, int checkInterval) {
-    this.url = url;
+  public SyncSource(String handle, int checkInterval) {
+    this.frontend = new AtomFrontend(handle);
     this.checkInterval = checkInterval;
   }
   
-  public String getURL() { // of collection feed
-    return url;
+  public String getHandle() { // of source collection
+    return frontend.getHandle();
   }
 
-  public String getSnapshotFeedURL() throws IOException, SAXException {
-    return getFeed().getSnapshotFeed();
+  public SnapshotFeed getSnapshotFeed() throws IOException, SAXException {
+    return frontend.getSnapshotFeed();
   }
 
-  public String getFragmentFeedURL() throws IOException, SAXException {
-    return getFeed().getFragmentFeed();
-  }
-
-  private CollectionFeed getFeed() throws IOException, SAXException {
-    if (feed == null)
-      feed = FeedReaders.readCollectionFeed(url);
-    return feed;
+  public FragmentFeed getFragmentFeed() throws IOException, SAXException {
+    return frontend.getFragmentFeed(lastChange);
   }
 
   /**

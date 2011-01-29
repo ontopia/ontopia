@@ -41,14 +41,14 @@
     <li><%= endpoint.getHandle() %>
     <ul>
     <% for (SyncSource ss : endpoint.getSources()) { %>
-      <li><%= ss.getURL() %>
+      <li><%= ss.getHandle() %>
       <%
         if (ss.isBlockedByError()) {
       %>
         <br><span style="color: red"><b><%= ss.getError() %></b></span> <br>
         <input type=submit name=clear<%= ix %> value="Clear">
         <input type=hidden name=id<%= ix++ %> 
-          value="<%= endpoint.getHandle() %> <%= ss.getURL() %>">
+          value="<%= endpoint.getHandle() %> <%= ss.getHandle() %>">
       <% } %>
       </li>
     <% } %>
