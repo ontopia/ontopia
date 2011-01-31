@@ -1,6 +1,7 @@
 <topicMap>
 <topic number="1">
-<itemIdentifiers><locator>#topic1</locator>
+<itemIdentifiers>
+<locator>#topic1</locator>
 </itemIdentifiers>
 <occurrence number="1">
 <value>Internal string</value>
@@ -9,7 +10,8 @@
 </occurrence>
 </topic>
 <topic number="2">
-<itemIdentifiers><locator>#type1</locator>
+<itemIdentifiers>
+<locator>#type1</locator>
 </itemIdentifiers>
 </topic>
 </topicMap>

@@ -1,16 +1,20 @@
 <topicMap>
-<itemIdentifiers><locator>#xtm-language</locator>
+<itemIdentifiers>
+<locator>#xtm-language</locator>
 </itemIdentifiers>
 <topic number="1">
-<itemIdentifiers><locator>#scope1</locator>
+<itemIdentifiers>
+<locator>#scope1</locator>
 </itemIdentifiers>
 </topic>
 <topic number="2">
-<itemIdentifiers><locator>#scope2</locator>
+<itemIdentifiers>
+<locator>#scope2</locator>
 </itemIdentifiers>
 </topic>
 <topic number="3">
-<itemIdentifiers><locator>#topic1</locator>
+<itemIdentifiers>
+<locator>#topic1</locator>
 </itemIdentifiers>
 <occurrence number="1">
 <value>Internal String</value>
@@ -30,7 +34,8 @@
 </occurrence>
 </topic>
 <topic number="4">
-<itemIdentifiers><locator>#topic2</locator>
+<itemIdentifiers>
+<locator>#topic2</locator>
 </itemIdentifiers>
 <occurrence number="1">
 <value>Internal String</value>
@@ -50,11 +55,13 @@
 </occurrence>
 </topic>
 <topic number="5">
-<itemIdentifiers><locator>#type1</locator>
+<itemIdentifiers>
+<locator>#type1</locator>
 </itemIdentifiers>
 </topic>
 <topic number="6">
-<itemIdentifiers><locator>#type2</locator>
+<itemIdentifiers>
+<locator>#type2</locator>
 </itemIdentifiers>
 </topic>
 </topicMap>

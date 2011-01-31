@@ -1,10 +1,7 @@
 <topicMap reifier="1">
-<itemIdentifiers><locator>#--reified--tmreifier</locator>
-</itemIdentifiers>
-<topic number="1" reified="topicMap">
-<subjectIdentifiers><locator>#--reified--tmreifier</locator>
-</subjectIdentifiers>
-<itemIdentifiers><locator>#tmreifier</locator>
+<topic number="1">
+<itemIdentifiers>
+<locator>#tmreifier</locator>
 </itemIdentifiers>
 </topic>
 </topicMap>

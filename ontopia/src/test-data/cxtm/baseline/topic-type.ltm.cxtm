@@ -1,22 +1,29 @@
 <topicMap>
 <topic number="1">
-<itemIdentifiers><locator>#topic1</locator>
+<itemIdentifiers>
+<locator>#topic1</locator>
 </itemIdentifiers>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
 </topic>
 <topic number="2">
-<itemIdentifiers><locator>#type1</locator>
+<itemIdentifiers>
+<locator>#type1</locator>
 </itemIdentifiers>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
 </topic>
 <topic number="3">
-<subjectIdentifiers><locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
 </subjectIdentifiers>
 </topic>
 <topic number="4">
-<subjectIdentifiers><locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
 </subjectIdentifiers>
 </topic>
 <topic number="5">
-<subjectIdentifiers><locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
 </subjectIdentifiers>
 </topic>
 <association number="1">

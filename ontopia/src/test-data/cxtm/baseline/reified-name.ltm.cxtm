@@ -1,22 +1,21 @@
 <topicMap>
 <topic number="1">
-<itemIdentifiers><locator>#topic1</locator>
+<itemIdentifiers>
+<locator>#name1</locator>
 </itemIdentifiers>
-<topicName number="1" reifier="2">
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#topic1</locator>
+</itemIdentifiers>
+<name number="1" reifier="1">
 <value>Name 1</value>
 <type topicref="3"></type>
-<itemIdentifiers><locator>#--reified--name1</locator>
-</itemIdentifiers>
-</topicName>
-</topic>
-<topic number="2" reified="topic.1.name.1">
-<subjectIdentifiers><locator>#--reified--name1</locator>
-</subjectIdentifiers>
-<itemIdentifiers><locator>#name1</locator>
-</itemIdentifiers>
+</name>
 </topic>
 <topic number="3">
-<subjectIdentifiers><locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
 </subjectIdentifiers>
 </topic>
 </topicMap>

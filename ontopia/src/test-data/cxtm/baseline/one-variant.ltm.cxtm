@@ -1,12 +1,14 @@
 <topicMap>
 <topic number="1">
-<itemIdentifiers><locator>#no</locator>
+<itemIdentifiers>
+<locator>#no</locator>
 </itemIdentifiers>
 </topic>
 <topic number="2">
-<itemIdentifiers><locator>#topic1</locator>
+<itemIdentifiers>
+<locator>#topic1</locator>
 </itemIdentifiers>
-<topicName number="1">
+<name number="1">
 <value>Topic1</value>
 <type topicref="3"></type>
 <variant number="1">
@@ -16,10 +18,11 @@
 <scopingTopic topicref="1"></scopingTopic>
 </scope>
 </variant>
-</topicName>
+</name>
 </topic>
 <topic number="3">
-<subjectIdentifiers><locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
 </subjectIdentifiers>
 </topic>
 </topicMap>

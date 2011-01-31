@@ -1,17 +1,21 @@
 <topicMap>
-<itemIdentifiers><locator>#xtm-language</locator>
+<itemIdentifiers>
+<locator>#xtm-language</locator>
 </itemIdentifiers>
 <topic number="1">
-<itemIdentifiers><locator>#assoctype1</locator>
+<itemIdentifiers>
+<locator>#assoctype1</locator>
 </itemIdentifiers>
 </topic>
 <topic number="2">
-<itemIdentifiers><locator>#player1</locator>
+<itemIdentifiers>
+<locator>#player1</locator>
 </itemIdentifiers>
 <rolePlayed ref="association.1.role.1"></rolePlayed>
 </topic>
 <topic number="3">
-<itemIdentifiers><locator>#roletype1</locator>
+<itemIdentifiers>
+<locator>#roletype1</locator>
 </itemIdentifiers>
 </topic>
 <association number="1">

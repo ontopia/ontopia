@@ -1,8 +1,10 @@
 <topicMap>
-<itemIdentifiers><locator>#xtm-language</locator>
+<itemIdentifiers>
+<locator>#xtm-language</locator>
 </itemIdentifiers>
 <topic number="1">
-<itemIdentifiers><locator>#foo</locator>
+<itemIdentifiers>
+<locator>#foo</locator>
 </itemIdentifiers>
 <occurrence number="1">
 <value>Occurrence contents.</value>
@@ -11,7 +13,8 @@
 </occurrence>
 </topic>
 <topic number="2">
-<itemIdentifiers><locator>#occtype1</locator>
+<itemIdentifiers>
+<locator>#occtype1</locator>
 </itemIdentifiers>
 </topic>
 </topicMap>
