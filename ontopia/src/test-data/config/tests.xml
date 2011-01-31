@@ -255,6 +255,7 @@
     <test>net.ontopia.topicmaps.xml.test.CanonicalXTM2WriterTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.CanonicalXTM21WriterTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.CanonicalXTMWriterTest</test>
+    <test>net.ontopia.topicmaps.xml.test.CanonicalXTMWriterTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.XTM2WriterFilterTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.XTMWriterFilterTestGenerator</test>
     <test>net.ontopia.topicmaps.xml.test.XTM2ExporterTest</test>
