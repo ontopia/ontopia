@@ -1,6 +1,5 @@
 package ontopoly.rest.editor.spi;
 
-import java.util.Collection;
 
 public interface PrestoField {
 
@@ -15,12 +14,6 @@ public interface PrestoField {
   public boolean isPrimitiveField();
   
   public boolean isReferenceField();
-  
-  public PrestoType getType();
-  
-  public PrestoView getView();
-  
-  public PrestoView getValueView();
 
   public String getFieldType();
   
@@ -47,9 +40,5 @@ public interface PrestoField {
   public String getInverseFieldId();
 
   public String getInterfaceControl();
-
-  public Collection<PrestoType> getAvailableFieldCreateTypes();
-
-  public Collection<PrestoType> getAvailableFieldValueTypes();
   
 }

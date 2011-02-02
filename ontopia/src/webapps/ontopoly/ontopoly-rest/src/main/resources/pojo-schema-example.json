@@ -1,0 +1,66 @@
+{ "id": "example",
+  "name": "Example schema",
+
+  "fields": {
+
+    "name" : {
+      "name" : "Name",
+      "datatype": "string",
+      "nameField": true,
+      "minCardinality" : 1,
+      "maxCardinality" : 1
+    },
+
+    "isbn13" : {
+      "name" : "ISBN13",
+      "datatype": "number",
+      "validationType": "isbn13",
+      "minCardinality" : 1,
+      "maxCardinality" : 1
+    },
+
+    "publishedby" : {
+      "name" : "Publisher",
+      "datatype": "reference",
+      "valueTypes": ["publisher"],
+      "inverseField" : "publisherof",
+      "minCardinality" : 1,
+      "maxCardinality" : 1
+    }
+
+  },
+
+  "types": {
+
+    "product" : { 
+      "name" : "Product",
+      "abstract" : true
+    },
+
+    "book" : { 
+      "name" : "Book",
+      "extends" : "product",
+      "views": [
+        { "id" : "info",
+          "name": "Info",
+          "fields" : [
+            "name",
+            "isbn13",
+            "publishedby"
+          ]
+        }
+      ]
+    },
+    "publisher" : {
+      "name" : "Publisher",
+      "views": [
+        { "id" : "info",
+          "name" : "Info",
+          "fields" : [
+            "name"
+          ]
+        }
+      ]
+    }
+  }
+}

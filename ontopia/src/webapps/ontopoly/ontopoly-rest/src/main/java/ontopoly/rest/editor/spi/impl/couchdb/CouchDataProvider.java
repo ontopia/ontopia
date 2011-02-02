@@ -8,7 +8,7 @@ import java.util.List;
 
 import ontopoly.rest.editor.spi.PrestoChangeSet;
 import ontopoly.rest.editor.spi.PrestoDataProvider;
-import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoTopic;
 import ontopoly.rest.editor.spi.PrestoType;
 
@@ -61,11 +61,11 @@ public class CouchDataProvider implements PrestoDataProvider {
     return CouchTopic.existing(this, doc);
   }
 
-  public Collection<PrestoTopic> getAvailableFieldValues(PrestoField field) {
+  public Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field) {
     List<PrestoTopic> result = new ArrayList<PrestoTopic>();
     for (PrestoType type : field.getAvailableFieldValueTypes()) {
       ViewQuery query = new ViewQuery()
-      .designDocId("_design/schema")
+      .designDocId("_design/presto")
       .viewName("by-type").includeDocs(true).key(type.getId());
       try {
           ViewResult viewResult = db.queryView(query);

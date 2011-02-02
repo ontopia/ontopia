@@ -11,7 +11,7 @@ import ontopoly.model.Topic;
 import ontopoly.model.ViewModes;
 import ontopoly.rest.editor.spi.PrestoChangeSet;
 import ontopoly.rest.editor.spi.PrestoDataProvider;
-import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoTopic;
 import ontopoly.rest.editor.spi.PrestoType;
 
@@ -31,7 +31,7 @@ public class OntopolyDataProvider implements PrestoDataProvider {
     return new OntopolyTopic(session, topic);
   }
 
-  public Collection<PrestoTopic> getAvailableFieldValues(PrestoField field) {
+  public Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field) {
     FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(session.getTopicById(field.getId()), session.getTopicMap());
     
     if (fieldDefinition.getFieldType() == FieldDefinition.FIELD_TYPE_ROLE) {

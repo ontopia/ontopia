@@ -12,12 +12,12 @@ import ontopoly.model.InterfaceControl;
 import ontopoly.model.OccurrenceField;
 import ontopoly.model.RoleField;
 import ontopoly.model.ViewModes;
-import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoSchemaProvider;
 import ontopoly.rest.editor.spi.PrestoType;
 import ontopoly.rest.editor.spi.PrestoView;
 
-public class OntopolyField implements PrestoField {
+public class OntopolyField implements PrestoFieldUsage {
 
   private final OntopolySession session;
   private final FieldDefinition fieldDefinition;

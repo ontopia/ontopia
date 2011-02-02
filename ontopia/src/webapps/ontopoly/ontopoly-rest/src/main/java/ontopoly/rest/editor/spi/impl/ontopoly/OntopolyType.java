@@ -7,8 +7,11 @@ import java.util.List;
 import ontopoly.model.FieldAssignment;
 import ontopoly.model.FieldDefinition;
 import ontopoly.model.FieldsView;
+import ontopoly.model.Topic;
+import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
 import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoSchemaProvider;
 import ontopoly.rest.editor.spi.PrestoType;
 import ontopoly.rest.editor.spi.PrestoView;
@@ -67,15 +70,36 @@ public class OntopolyType implements PrestoType {
     return result;
   }
   
-  public List<PrestoField> getFields(PrestoView view) {
+  public List<PrestoFieldUsage> getFields(PrestoView view) {
     FieldsView fieldsView = OntopolyView.getWrapped(view);
     List<FieldAssignment> fieldAssignments = topicType.getFieldAssignments(fieldsView);
-    List<PrestoField> result = new ArrayList<PrestoField>(fieldAssignments.size());
+    List<PrestoFieldUsage> result = new ArrayList<PrestoFieldUsage>(fieldAssignments.size());
     for (FieldAssignment fieldAssignment : fieldAssignments) {
       FieldDefinition fieldDefinition = fieldAssignment.getFieldDefinition();
       result.add(new OntopolyField(session, fieldDefinition, this, view));
     }
     return result;
+  }
+
+  public PrestoFieldUsage getFieldById(String fieldId, PrestoView view) {
+    return new OntopolyField(session, FieldDefinition.getFieldDefinition(session.getTopicById(fieldId), session.getTopicMap()), this, view);
+  }
+
+  public PrestoView getDefaultView() {
+    return new OntopolyView(session, FieldsView.getDefaultFieldsView(session.getTopicMap()));
+  }
+
+  public PrestoView getViewById(String viewId) {
+    TopicMap topicMap = session.getTopicMap();
+    Topic fieldsView_ = topicMap.getTopicById(viewId);
+    if (fieldsView_ == null && session.getStableIdPrefix() != null) {
+      fieldsView_ = topicMap.getTopicById(session.getStableIdPrefix() + viewId);
+    }
+    if (fieldsView_ == null) {
+      throw new RuntimeException("Unknown view: " + viewId);
+    }
+    FieldsView fieldsView = new FieldsView(fieldsView_.getTopicIF(), topicMap);
+    return new OntopolyView(session, fieldsView);
   }
   
   public Collection<PrestoView> getViews(PrestoView view) {

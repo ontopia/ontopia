@@ -7,6 +7,7 @@ import java.util.List;
 
 import ontopoly.rest.editor.spi.PrestoChangeSet;
 import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoTopic;
 import ontopoly.rest.editor.spi.PrestoType;
 
@@ -40,21 +41,21 @@ public class CouchChangeSet implements PrestoChangeSet {
     this.type = type;
   }
 
-  public void setValues(PrestoField field, Collection<Object> values) {
+  public void setValues(PrestoFieldUsage field, Collection<Object> values) {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
     changes.add(new Change(Change.ChangeType.SET, field, values));
   }
 
-  public void addValues(PrestoField field, Collection<Object> values) {
+  public void addValues(PrestoFieldUsage field, Collection<Object> values) {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
     changes.add(new Change(Change.ChangeType.ADD, field, values));
   }
 
-  public void removeValues(PrestoField field, Collection<Object> values) {
+  public void removeValues(PrestoFieldUsage field, Collection<Object> values) {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
@@ -82,7 +83,7 @@ public class CouchChangeSet implements PrestoChangeSet {
     List<Change> inverseChanges = new ArrayList<Change>();
     
     for (Change change : changes) {
-      PrestoField field = change.getField();
+      PrestoFieldUsage field = change.getField();
       Collection<Object> values = change.getValues();
       switch(change.getType()) {
       case SET: {
@@ -137,7 +138,7 @@ public class CouchChangeSet implements PrestoChangeSet {
 
     // update inverse fields
     for (Change change : inverseChanges) {
-      PrestoField field = change.getField();
+      PrestoFieldUsage field = change.getField();
       Collection<Object> values = change.getValues();
       System.out.println("Ch: " + field.getId() + " " + change.getType() + " " +  values);
       switch(change.getType()) {
@@ -149,7 +150,8 @@ public class CouchChangeSet implements PrestoChangeSet {
         if (inverseFieldId != null) {
           for (Object value : values) {
             CouchTopic valueTopic = (CouchTopic)value;
-            PrestoField inverseField = field.getSchemaProvider().getFieldById(inverseFieldId, field.getSchemaProvider().getTypeById(valueTopic.getTypeId()), field.getValueView());
+            PrestoType type = field.getSchemaProvider().getTypeById(valueTopic.getTypeId());
+            PrestoFieldUsage inverseField = type.getFieldById(inverseFieldId, field.getValueView());
             System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
             ObjectNode valueData = valueTopic.getData(); 
             addValue(valueData, inverseField, Collections.singleton(topic));
@@ -166,7 +168,8 @@ public class CouchChangeSet implements PrestoChangeSet {
           if (inverseFieldId != null) {
             for (Object value : values) {
               CouchTopic valueTopic = (CouchTopic)value;
-              PrestoField inverseField = field.getSchemaProvider().getFieldById(inverseFieldId, field.getSchemaProvider().getTypeById(valueTopic.getTypeId()), field.getValueView());
+              PrestoType type = field.getSchemaProvider().getTypeById(valueTopic.getTypeId());
+              PrestoFieldUsage inverseField = type.getFieldById(inverseFieldId, field.getValueView());
               System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
               ObjectNode valueData = valueTopic.getData(); 
               removeValue(valueData, inverseField, Collections.singleton(topic));
@@ -252,10 +255,10 @@ public class CouchChangeSet implements PrestoChangeSet {
     static enum ChangeType { SET, ADD, REMOVE };
 
     private ChangeType type;
-    private final PrestoField field;
+    private final PrestoFieldUsage field;
     private final Collection<Object> values;
 
-    Change(ChangeType type, PrestoField field, Collection<Object> values) {
+    Change(ChangeType type, PrestoFieldUsage field, Collection<Object> values) {
       this.type = type;
       this.field = field;
       this.values = values;      
@@ -265,7 +268,7 @@ public class CouchChangeSet implements PrestoChangeSet {
       return type;
     }
 
-    public PrestoField getField() {
+    public PrestoFieldUsage getField() {
       return field;
     }
     public Collection<Object> getValues() {

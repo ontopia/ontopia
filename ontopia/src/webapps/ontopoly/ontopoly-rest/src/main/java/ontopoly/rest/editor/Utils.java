@@ -16,6 +16,7 @@ import net.ontopia.utils.ObjectUtils;
 import ontopoly.rest.editor.spi.PrestoChangeSet;
 import ontopoly.rest.editor.spi.PrestoDataProvider;
 import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoSession;
 import ontopoly.rest.editor.spi.PrestoTopic;
 import ontopoly.rest.editor.spi.PrestoType;
@@ -107,7 +108,7 @@ public class Utils {
 
     List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
 
-    for (PrestoField field : type.getFields(view)) {
+    for (PrestoFieldUsage field : type.getFields(view)) {
       fields.add(getFieldInfo(uriInfo, topic, field, topic.getValues(field)));
     }
     result.put("fields", fields);
@@ -143,7 +144,7 @@ public class Utils {
     List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
 
     PrestoTopic topic = null;
-    for (PrestoField field : topicType.getFields(fieldsView)) {
+    for (PrestoFieldUsage field : topicType.getFields(fieldsView)) {
       fields.add(getFieldInfo(uriInfo, topic, field, Collections.emptyList()));
     }
     result.put("fields", fields);
@@ -152,7 +153,7 @@ public class Utils {
   }
 
   private static Map<String, Object> getFieldInfo(UriInfo uriInfo,
-      PrestoTopic topic, PrestoField field, Collection<? extends Object> fieldValues) {
+      PrestoTopic topic, PrestoFieldUsage field, Collection<? extends Object> fieldValues) {
 
     PrestoType topicType = field.getType();
     PrestoView parentView = field.getView();
@@ -274,7 +275,7 @@ public class Utils {
     return view;
   }
 
-  protected static List<Object> getValues(UriInfo uriInfo, PrestoField field, Collection<? extends Object> fieldValues) {
+  protected static List<Object> getValues(UriInfo uriInfo, PrestoFieldUsage field, Collection<? extends Object> fieldValues) {
     List<Object> result = new ArrayList<Object>(fieldValues.size());
     for (Object value : fieldValues) {
       result.add(getValue(uriInfo, field, value));
@@ -307,7 +308,7 @@ public class Utils {
     return result;
   }
 
-  protected static Map<String,Object> getValue(UriInfo uriInfo, PrestoField field, Object fieldValue) {
+  protected static Map<String,Object> getValue(UriInfo uriInfo, PrestoFieldUsage field, Object fieldValue) {
     if (fieldValue instanceof PrestoTopic) {
       PrestoTopic valueTopic = (PrestoTopic)fieldValue;
       if (field.isEmbedded()) {
@@ -328,7 +329,7 @@ public class Utils {
   }
 
   public static Map<String,Object> getExistingTopicFieldValue(UriInfo uriInfo,
-      PrestoField field, PrestoTopic value) {
+      PrestoFieldUsage field, PrestoTopic value) {
 
     Map<String, Object> result = new LinkedHashMap<String,Object>();
     result.put("id", value.getId());
@@ -363,7 +364,7 @@ public class Utils {
     return result;
   }
 
-  public static Object getCreateFieldInstance(UriInfo uriInfo, PrestoTopic topic, PrestoField field, PrestoType type) {
+  public static Object getCreateFieldInstance(UriInfo uriInfo, PrestoTopic topic, PrestoFieldUsage field, PrestoType type) {
 
     Map<String, Object> result = new LinkedHashMap<String,Object>();
     result.put("id", type.getId());
@@ -376,7 +377,7 @@ public class Utils {
     return result;
   }
 
-  public static Map<String, Object> addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoField field, JSONObject fieldObject) {
+  public static Map<String, Object> addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
     try {
       
       PrestoDataProvider dataProvider = session.getDataProvider();
@@ -411,7 +412,7 @@ public class Utils {
     }
   }
 
-  public static Map<String, Object>  removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoField field, JSONObject fieldObject) {
+  public static Map<String, Object>  removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
     try {
 
       PrestoDataProvider dataProvider = session.getDataProvider();
@@ -458,7 +459,7 @@ public class Utils {
       changeSet = dataProvider.updateTopic(topic);
     }
 
-    Map<String, PrestoField> fields = getFieldInstanceMap(topic, topicType, fieldsView);
+    Map<String, PrestoFieldUsage> fields = getFieldInstanceMap(topic, topicType, fieldsView);
 
     try {
       JSONArray fieldsArray = data.getJSONArray("fields");
@@ -468,7 +469,7 @@ public class Utils {
         JSONObject fieldObject = fieldsArray.getJSONObject(fc);
         String fieldId = fieldObject.getString("id");
 
-        PrestoField field = fields.get(fieldId);
+        PrestoFieldUsage field = fields.get(fieldId);
 
         boolean isReferenceField = field.isReferenceField();
 
@@ -499,10 +500,10 @@ public class Utils {
     return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
   }
 
-  private static Map<String, PrestoField> getFieldInstanceMap(PrestoTopic topic,
+  private static Map<String, PrestoFieldUsage> getFieldInstanceMap(PrestoTopic topic,
       PrestoType topicType, PrestoView fieldsView) {
-    Map<String, PrestoField> fields = new HashMap<String, PrestoField>();
-    for (PrestoField field : topicType.getFields(fieldsView)) {
+    Map<String, PrestoFieldUsage> fields = new HashMap<String, PrestoFieldUsage>();
+    for (PrestoFieldUsage field : topicType.getFields(fieldsView)) {
       fields.put(field.getId(), field);
     }
     return fields;

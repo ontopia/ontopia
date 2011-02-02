@@ -8,7 +8,7 @@ public interface PrestoDataProvider {
   
   public PrestoTopic getTopicById(String id);
 
-  public Collection<PrestoTopic> getAvailableFieldValues(PrestoField field);
+  public Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field);
 
   public PrestoChangeSet createTopic(PrestoType type);
 

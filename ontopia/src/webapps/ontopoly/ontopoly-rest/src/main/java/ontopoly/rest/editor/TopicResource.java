@@ -20,14 +20,15 @@ import javax.ws.rs.core.UriInfo;
 
 import ontopoly.rest.editor.Utils.Link;
 import ontopoly.rest.editor.spi.PrestoDataProvider;
-import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoSchemaProvider;
 import ontopoly.rest.editor.spi.PrestoSession;
 import ontopoly.rest.editor.spi.PrestoTopic;
 import ontopoly.rest.editor.spi.PrestoType;
 import ontopoly.rest.editor.spi.PrestoView;
 import ontopoly.rest.editor.spi.impl.couchdb.CouchDataProvider;
-import ontopoly.rest.editor.spi.impl.ontopoly.OntopolySession;
+import ontopoly.rest.editor.spi.impl.pojo.PojoSchemaProvider;
+import ontopoly.rest.editor.spi.impl.pojo.PojoSession;
 
 import org.codehaus.jettison.json.JSONObject;
 
@@ -128,7 +129,7 @@ public class TopicResource {
     try {
 
       PrestoType topicType = schemaProvider.getTypeById(topicTypeId);
-      PrestoView fieldsView = schemaProvider.getDefaultView();
+      PrestoView fieldsView = topicType.getDefaultView();
 
       return Utils.getNewTopicInfo(uriInfo, topicType, fieldsView);
 
@@ -156,7 +157,7 @@ public class TopicResource {
     try {
 
       PrestoType topicType = schemaProvider.getTypeById(playerTypeId);
-      PrestoView fieldsView = schemaProvider.getDefaultView();
+      PrestoView fieldsView = topicType.getDefaultView();
 
       return Utils.getNewTopicInfo(uriInfo, topicType, fieldsView, parentTopicId, parentFieldId);
 
@@ -211,7 +212,7 @@ public class TopicResource {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
-      PrestoView fieldsView = schemaProvider.getDefaultView();
+      PrestoView fieldsView = topicType.getDefaultView();
       
       return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
 
@@ -239,7 +240,7 @@ public class TopicResource {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
-      PrestoView fieldsView = schemaProvider.getViewById(viewId);
+      PrestoView fieldsView = topicType.getViewById(viewId);
 
       return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
 
@@ -306,7 +307,7 @@ public class TopicResource {
         topicType = schemaProvider.getTypeById(topic.getTypeId());
       }
 
-      PrestoView fieldsView = schemaProvider.getViewById(viewId);
+      PrestoView fieldsView = topicType.getViewById(viewId);
 
       Map<String, Object> result = Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, jsonObject);
       String id = (String)result.get("id");
@@ -340,9 +341,9 @@ public class TopicResource {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
-      PrestoView fieldsView = schemaProvider.getViewById(viewId);
+      PrestoView fieldsView = topicType.getViewById(viewId);
 
-      PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
+      PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
 
       Map<String, Object> result = Utils.addFieldValues(uriInfo, session, topic, field, jsonObject);
 
@@ -378,9 +379,9 @@ public class TopicResource {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
-      PrestoView fieldsView = schemaProvider.getViewById(viewId);
+      PrestoView fieldsView = topicType.getViewById(viewId);
 
-      PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
+      PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
 
       Map<String, Object> result =  Utils.removeFieldValues(uriInfo, session, topic, field, jsonObject);
 
@@ -423,9 +424,9 @@ public class TopicResource {
         topicType = schemaProvider.getTypeById(topic.getTypeId());
       }
 
-      PrestoView fieldsView = schemaProvider.getViewById(viewId);
+      PrestoView fieldsView = topicType.getViewById(viewId);
       
-      PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
+      PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
       
       Collection<PrestoTopic> availableFieldValues = dataProvider.getAvailableFieldValues(field);
       return createFieldInfoAllowed(uriInfo, field, availableFieldValues);
@@ -438,7 +439,7 @@ public class TopicResource {
     }
   }
 
-  private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo, PrestoField field, Collection<PrestoTopic> availableFieldValues) {
+  private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo, PrestoFieldUsage field, Collection<PrestoTopic> availableFieldValues) {
 
     Map<String,Object> result = new LinkedHashMap<String,Object>();
     result.put("id", field.getId());
@@ -476,9 +477,9 @@ public class TopicResource {
       
       PrestoTopic topic = dataProvider.getTopicById(topicId);
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
-      PrestoView fieldsView = schemaProvider.getViewById(viewId);
+      PrestoView fieldsView = topicType.getViewById(viewId);
 
-      PrestoField field = schemaProvider.getFieldById(fieldId, topicType, fieldsView);
+      PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
       
       Map<String,Object> result = new LinkedHashMap<String,Object>();
       result.put("id", field.getId());
@@ -585,8 +586,12 @@ public class TopicResource {
 
     // schema stored in ontopia and data stored in couchdb
     CouchDataProvider dataProvider = new CouchDataProvider("localhost", 5984, "presto");
-    OntopolySession session = new OntopolySession(topicMapId, dataProvider);
-    session.setStableIdPrefix("sek:");
+
+    PojoSchemaProvider schemaProvider = PojoSchemaProvider.getSchemaProvider(topicMapId, topicMapId + ".presto.json");
+    PojoSession session = new PojoSession(topicMapId, topicMapId, schemaProvider, dataProvider);
+    
+//    OntopolySession session = new OntopolySession(topicMapId, dataProvider);
+//    session.setStableIdPrefix("sek:");
     return session;
   }
   

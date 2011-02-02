@@ -15,6 +15,7 @@ import ontopoly.model.RoleField.ValueIF;
 import ontopoly.model.Topic;
 import ontopoly.rest.editor.spi.PrestoChangeSet;
 import ontopoly.rest.editor.spi.PrestoField;
+import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoTopic;
 import ontopoly.rest.editor.spi.PrestoType;
 import ontopoly.utils.TopicIdComparator;
@@ -41,21 +42,21 @@ public class OntopolyChangeSet implements PrestoChangeSet {
     this.type = null;
   }
   
-  public void setValues(PrestoField field, Collection<Object> values) {
+  public void setValues(PrestoFieldUsage field, Collection<Object> values) {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
     changes.add(new Change(Change.ChangeType.SET, field, values));
   }
 
-  public void addValues(PrestoField field, Collection<Object> values) {
+  public void addValues(PrestoFieldUsage field, Collection<Object> values) {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
     changes.add(new Change(Change.ChangeType.ADD, field, values));
   }
 
-  public void removeValues(PrestoField field, Collection<Object> values) {
+  public void removeValues(PrestoFieldUsage field, Collection<Object> values) {
     if (saved) {
       throw new RuntimeException("Can only save a changeset once.");
     }
@@ -121,10 +122,10 @@ public class OntopolyChangeSet implements PrestoChangeSet {
     static enum ChangeType { SET, ADD, REMOVE };
     
     private ChangeType type;
-    private final PrestoField field;
+    private final PrestoFieldUsage field;
     private final Collection<Object> values;
     
-    Change(ChangeType type, PrestoField field, Collection<Object> values) {
+    Change(ChangeType type, PrestoFieldUsage field, Collection<Object> values) {
       this.type = type;
       this.field = field;
       this.values = values;      
@@ -134,7 +135,7 @@ public class OntopolyChangeSet implements PrestoChangeSet {
       return type;
     }
     
-    public PrestoField getField() {
+    public PrestoFieldUsage getField() {
       return field;
     }
     public Collection<Object> getValues() {
