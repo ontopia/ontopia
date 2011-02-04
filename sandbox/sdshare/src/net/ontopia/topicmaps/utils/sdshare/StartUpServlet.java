@@ -24,10 +24,6 @@ import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicMapFragmentWriterIF;
-import net.ontopia.topicmaps.core.events.TopicMapEvents;
-import net.ontopia.topicmaps.entry.TopicMaps;
-import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapFragmentWriter;
 import net.ontopia.topicmaps.utils.rdf.RDFFragmentExporter;
 
@@ -37,7 +33,6 @@ import net.ontopia.topicmaps.utils.rdf.RDFFragmentExporter;
  * SDshare implementation is notified of any changes.
  */
 public class StartUpServlet extends HttpServlet {
-  public static Map<String, TopicMapTracker> topicmaps;
   private static Properties properties;
   static Logger log = LoggerFactory.getLogger(StartUpServlet.class.getName());
   protected static final long DEFAULT_EXPIRY_TIME = 86400000; // 24h
@@ -58,27 +53,16 @@ public class StartUpServlet extends HttpServlet {
       throw new ServletException(e);
     }
     List<String> tmids = getTopicMapIds();
+    TrackerManager.setExpiryTime(getExpiryTime());
 
-    // (2) register event listeners
-    topicmaps = new HashMap<String, TopicMapTracker>();
-    TopicMapRepositoryIF rep = TopicMaps.getRepository();
+    // (2) register event listeners    
     for (String tmid : tmids) {
-      TopicMapReferenceIF ref = rep.getReferenceByKey(tmid);
-      if (ref == null) {
-        log.error("No topic map reference for ID: '" + tmid + "'");
-        continue;
-      }
-      TopicMapTracker tracker = new TopicMapTracker(ref, getExpiryTime());
-      File file = new File(System.getProperty("java.io.tmpdir"),
-                           tmid + ".dribble");
       try {
-        tracker.setDribbleFile(file.getAbsolutePath());
-      } catch (IOException e) {
-        log.error("Cannot set up dribble file", e);
-      }
-      TopicMapEvents.addTopicListener(ref, tracker);
-      topicmaps.put(tmid, tracker);
-      log.debug("Registered topic map '" + tmid + "'");
+        TrackerManager.registerTracker(tmid);
+      } catch (OntopiaRuntimeException e) {
+        // FIXME: use more specific exception?
+        // means there was no such TM. we ignore the exception and carry on
+      }      
     }
     log.debug("SDshare setup servlet initialized");
   }

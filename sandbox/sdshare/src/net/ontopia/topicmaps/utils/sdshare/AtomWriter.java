@@ -103,11 +103,21 @@ public class AtomWriter {
     out.endElement("link");    
   }
 
+  public void addContent(String content) {
+    atts.clear();
+    out.startElement("content", atts);
+    out.characters(content.toCharArray(), 0, content.length());
+    out.endElement("content");    
+  }
+
   public void addTopicSI(LocatorIF si) {
+    addTopicSI(si.getExternalForm());
+  }
+
+  public void addTopicSI(String si) {
     atts.clear();
     out.startElement("sdshare:TopicSI", atts);
-    String content = si.getExternalForm();
-    out.characters(content.toCharArray(), 0, content.length());
+    out.characters(si.toCharArray(), 0, si.length());
     out.endElement("sdshare:TopicSI");    
   }
   

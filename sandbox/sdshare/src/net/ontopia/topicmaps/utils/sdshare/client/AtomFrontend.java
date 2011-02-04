@@ -4,6 +4,10 @@ package net.ontopia.topicmaps.utils.sdshare.client;
 import java.io.IOException;
 import org.xml.sax.SAXException;
 
+/**
+ * INTERNAL: Frontend which gets snapshots and changes by reading
+ * SDshare Atom feeds.
+ */
 public class AtomFrontend implements ClientFrontendIF {
   private String handle; // handle (URL|id) of source collection
   private CollectionFeed feed;

@@ -27,7 +27,7 @@ public class ReceivePushServlet extends HttpServlet {
   private ClientBackendIF backend;  
 
   public ReceivePushServlet() {
-    this.backend = new OntopiaBackend();
+    this.backend = new OntopiaBackend(); // FIXME: don't hard-wire
   }
   
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)

@@ -24,7 +24,7 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// FIXME: list of changes is unnecessarily big
+// FIXME: dribble file is unnecessarily big (in bytes)
 // it might be better to use a binary format for the dribble file.
 // that way it gets smaller, and we don't have to parse it when
 // loading.
@@ -102,7 +102,6 @@ public class TopicMapTracker implements TopicMapListenerIF {
   private synchronized void modified(ChangedTopic o) {
     expireOldChanges();
     int pos = findDuplicate(o);
-    //System.out.println("Change to: " + o.getObjectId() + " at " + pos);
     if (pos == -1)
       changes.add(o);
     else if (pos == (changes.size() - 1))
@@ -150,7 +149,6 @@ public class TopicMapTracker implements TopicMapListenerIF {
   }
 
   private int binarySearch(ChangedTopic o) {
-    //System.out.println("===== Seeking " + o);
     long key = o.getTimestamp();
     int low = 0;
     int high = changes.size() - 1;
@@ -159,19 +157,14 @@ public class TopicMapTracker implements TopicMapListenerIF {
     // very often, the topic changed is the same as the previous, because
     // of how the event system works. therefore we cheat by checking the
     // last position first.
-    if (changes.get(high).equals(o)) {
-      //System.out.println("It was the last one");
+    if (changes.get(high).equals(o))
       return high;
-    }
 
     // ok, it wasn't there, so we really do need to search
-    //System.out.println("[" + low + " ... " + pos + " ... " + high + "]");
 
     ChangedTopic other = changes.get(pos);
     long time = other.getTimestamp();
     while (time != key && low < high) {
-      //System.out.println("failed: "  + other);
-      
       int oldpos = pos;
       if (key < time) { // we need to go towards the start
         high = pos - 1; // must be before this one
@@ -185,11 +178,8 @@ public class TopicMapTracker implements TopicMapListenerIF {
 
       other = changes.get(pos);
       time = other.getTimestamp();      
-      //System.out.println("[" + low + " ... " + pos + " ... " + high + "]");
     }
 
-    //System.out.println("pos " + pos + " holds "  + other);
-    
     // we've now either given up, or found an entry with the same time.
     // however, there can be many entries with the same time, so we need
     // to scan both up and down to find it.    
@@ -199,20 +189,16 @@ public class TopicMapTracker implements TopicMapListenerIF {
     while (!other.equals(o) && other.getTimestamp() == key && pos > low) {
       pos--;
       other = changes.get(pos);
-      //System.out.println("pos " + pos + " holds " + other);
     }
-    if (other.equals(o)) {
-      //System.out.println("FOUND at " + pos);
+    if (other.equals(o))
       return pos;
-    }
+
     pos = origpos + 1;
     other = changes.get(pos);
     while (!other.equals(o) && other.getTimestamp() == key && pos < high) {
-      //System.out.println("pos " + pos + " holds " + other);
       pos++;
       other = changes.get(pos);
     }
-    //System.out.println("FINAL: pos " + pos + " holds "  + other);
     if (changes.get(pos).equals(o))
       return pos;
     return -1; // it's not here
@@ -220,22 +206,17 @@ public class TopicMapTracker implements TopicMapListenerIF {
 
   private synchronized void expireOldChanges() {
     // is it time to expire yet?
-    //System.out.println("time since last expiry: " + (System.currentTimeMillis() - lastExpired));
     if (System.currentTimeMillis() - lastExpired < Math.min(100, expirytime))
       return;
     
     // find the position of the first change to keep
     long expireolderthan = System.currentTimeMillis() - expirytime;
-    //System.out.println("expiring changes older than " + expireolderthan);
     int keepfrom;
     for (keepfrom = 0;
          keepfrom < changes.size() &&
            changes.get(keepfrom).getTimestamp() < expireolderthan;
          keepfrom++)
       ;
-    //System.out.println("keeping everything from position " + keepfrom +
-    //                   " to " + changes.size() + "; " +
-    //                   ((keepfrom < changes.size()) ? changes.get(keepfrom) : null));
 
     // can we efficiently remove a subrange of the array? no, we can't.
     // List doesn't have a method for it. ArrayList does, but it's protected.
@@ -273,7 +254,6 @@ public class TopicMapTracker implements TopicMapListenerIF {
         
         if (changed) {
           timestamp = Long.parseLong(line.substring(pos + 1));
-          //System.out.println("Changed '" + objid + "' at " + timestamp);
           change = new ChangedTopic(objid, timestamp);
         } else {
           int pos2 = line.indexOf(" ", pos + 1);
