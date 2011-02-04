@@ -1,6 +1,4 @@
 
-// $Id: PrettyPrinter.java,v 1.25 2007/09/06 08:59:41 geir.gronmo Exp $
-
 package net.ontopia.xml;
 
 import java.util.Stack;
@@ -45,7 +43,8 @@ public class PrettyPrinter implements DocumentHandler {
 
   /**
    * Creates a PrettyPrinter that writes to the given Writer.
-   * @param encoding The encoding to report in the XML declaration.
+   * @param encoding The encoding to report in the XML declaration. If null,
+   * no XML declaration will be output.
    */
   public PrettyPrinter(Writer writer, String encoding) {
     this.writer = writer;
@@ -55,7 +54,7 @@ public class PrettyPrinter implements DocumentHandler {
   }  
 
   /**
-   * provide a command-line entry point for usage of PrettyPrinter.
+   * Main method to allow PrettyPrinter to be used from the command-line.
    */
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
@@ -79,9 +78,7 @@ public class PrettyPrinter implements DocumentHandler {
 
     // beautify
     parser.parse(inSource);
-    
   }
-
   
   // --------------------------------------------------------------------------
   // Document events
