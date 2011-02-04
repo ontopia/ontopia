@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Iterator;
+import java.util.Collections;
 import org.xml.sax.SAXException;
 import org.xml.sax.DocumentHandler;
 
@@ -14,7 +15,8 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapFragmentWriterIF;
 
 /**
- * PUBLIC: A fragment writer for XTM. // FIXME: what versions?
+ * PUBLIC: A fragment writer for XTM 1.0.
+ * @since %NEXT%
  */
 public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
   private Writer out;
@@ -28,6 +30,12 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
     this.exporter = new XTMFragmentExporter();
   }
 
+  public XTMTopicMapFragmentWriter(Writer out) throws IOException {
+    this.out = out;
+    this.dh = new PrettyPrinter(this.out, null);
+    this.exporter = new XTMFragmentExporter();
+  }
+  
   /**
    * PUBLIC: Starts the fragment.
    */
@@ -65,6 +73,13 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
     }
   }
 
+  /**
+   * PUBLIC: Exports the given topic.
+   */
+  public void exportTopic(TopicIF topic) throws IOException {
+    exportTopics(Collections.singleton(topic).iterator());
+  }
+  
   /**
    * PUBLIC: Ends the fragment.
    */

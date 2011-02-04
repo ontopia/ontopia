@@ -31,6 +31,11 @@ public interface TopicMapFragmentWriterIF {
   public void exportTopics(Iterator<TopicIF> it) throws IOException;
 
   /**
+   * PUBLIC: Exports the given topic.
+   */
+  public void exportTopic(TopicIF topic) throws IOException;
+  
+  /**
    * PUBLIC: Ends the fragment.
    */
   public void endTopicMap() throws IOException;

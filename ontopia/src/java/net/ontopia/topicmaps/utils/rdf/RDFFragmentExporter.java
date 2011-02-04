@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Iterator;
+import java.util.Collections;
 import org.xml.sax.SAXException;
 import org.xml.sax.DocumentHandler;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -70,6 +71,13 @@ public class RDFFragmentExporter implements TopicMapFragmentWriterIF {
     }
   }
 
+  /**
+   * PUBLIC: Exports the given topic.
+   */
+  public void exportTopic(TopicIF topic) throws IOException {
+    exportTopics(Collections.singleton(topic).iterator());
+  }
+  
   /**
    * PUBLIC: Ends the fragment.
    */
