@@ -154,7 +154,8 @@ public class ObjectUtils {
   }
 
   /**
-   * INTERNAL: Create new instance of given class. Class must have a default constructor.
+   * INTERNAL: Create new instance of given class. Class must have a
+   * default constructor.
    */
   public static Object newInstance(String className) {    
     try {
