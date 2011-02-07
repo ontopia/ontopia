@@ -392,7 +392,10 @@ literal :
   INTEGER  {  literal = basic_literal;
              basic_literal.setLiteral(LT(0).getText());
              basic_literal.setDatatype(PSI.getXSDInteger()); } |
-  DECIMAL  { literal = basic_literal;
+  (ONEOH | DECIMAL)
+  // we need ONEOH because it shadows the DECIMAL lexical rule
+  // http://code.google.com/p/ontopia/issues/detail?id=356
+           { literal = basic_literal;
              basic_literal.setLiteral(LT(0).getText());
              basic_literal.setDatatype(PSI.getXSDDecimal()); } |
   DATE     { literal = basic_literal;
