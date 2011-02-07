@@ -202,6 +202,15 @@ public class PrettyPrinter implements DocumentHandler {
   public void setDropControlCharacters(boolean dropControlChars) {
     this.dropControlChars = dropControlChars;
   }
+
+  /**
+   * INTERNAL: Add given text unmodified and unescaped to the output.
+   * <b>BEWARE:</b> This makes it possible (even easy) to produce
+   * output that is not well-formed.
+   */
+  public void addUnescaped(String content) {
+    write(writer, content);
+  }
   
   // --------------------------------------------------------------------------
   // Helper methods
