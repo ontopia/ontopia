@@ -2,7 +2,9 @@
 package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import org.xml.sax.SAXException;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * PUBLIC: Represents information about an SDshare source to
@@ -24,8 +26,8 @@ public class SyncSource {
    */
   private long lastChange;
   
-  public SyncSource(String handle, int checkInterval) {
-    this.frontend = new AtomFrontend(handle);
+  public SyncSource(String handle, int checkInterval, String frontend) {
+    this.frontend = instantiate(handle, frontend);
     this.checkInterval = checkInterval;
   }
   
@@ -88,5 +90,17 @@ public class SyncSource {
 
   public void clearError() {
     this.error = null;
+  }
+
+  private ClientFrontendIF instantiate(String handle, String klass) {
+    try {
+      Class theklass = Class.forName(klass);
+      Class[] paramdefs = new Class[] { java.lang.String.class };
+      Constructor construct = theklass.getConstructor(paramdefs);
+      Object[] params = new Object[] { handle };
+      return (ClientFrontendIF) construct.newInstance(params);
+    } catch (Exception e) {
+      throw new OntopiaRuntimeException(e);
+    }
   }
 }

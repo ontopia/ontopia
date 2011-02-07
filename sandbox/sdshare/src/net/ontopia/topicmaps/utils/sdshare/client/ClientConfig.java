@@ -95,6 +95,7 @@ public class ClientConfig {
     private SyncEndpoint endpoint; // current <endpoint>
     private String property;       // name of current property
     private String check;          // stored until end tag
+    private String frontend;       // stored until end tag
     private StringBuilder buf;     // used to collect code
     private boolean keep;          // keep character data?
 
@@ -117,6 +118,7 @@ public class ClientConfig {
       } else if (qname.equals("source")) {
         keep = true;
         check = atts.getValue("check-interval");
+        frontend = atts.getValue("frontend");
       }
     }
 
@@ -145,7 +147,7 @@ public class ClientConfig {
         else
           interval = parse(check);
         
-        SyncSource src = new SyncSource(buf.toString(), interval);
+        SyncSource src = new SyncSource(buf.toString(), interval, frontend);
         endpoint.addSource(src);
         keep = false;
         buf.setLength(0);

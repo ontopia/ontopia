@@ -50,6 +50,7 @@ public class OntopiaFrontend implements ClientFrontendIF {
     TopicMapRepositoryIF rep = TopicMaps.getRepository();
     TopicMapReferenceIF ref = rep.getReferenceByKey(handle);
     TopicMapIF topicmap = ref.createStore(true).getTopicMap();
+    feed.setPrefix(topicmap.getStore().getBaseAddress().getExternalForm());
     
     for (ChangedTopic topic : tracker.getChangeFeed()) {
       if (topic.getTimestamp() < lastChange)

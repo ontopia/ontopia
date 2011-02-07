@@ -106,7 +106,7 @@ public class AtomWriter {
   public void addContent(String content) {
     atts.clear();
     out.startElement("content", atts);
-    out.characters(content.toCharArray(), 0, content.length());
+    out.addUnescaped(content);
     out.endElement("content");    
   }
 

@@ -405,6 +405,7 @@ public class FeedReaders {
       if (uri.equals(NS_ATOM) && name.equals("content")) {
         // the fragment hasn't been created yet, so what do we do?
         content = tmp.toString(); // ready to be stored in Fragment
+        log.info("content: '" + content + "'");
         pp = null;
       } else if (pp != null)
         pp.endElement(qname);

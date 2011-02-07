@@ -42,15 +42,22 @@ public class PushBackend implements ClientBackendIF {
 
   private void applyFragments_(SyncEndpoint endpoint, List<Fragment> fragments)
     throws IOException {
-    // FIXME: so what is the id of our feed? does it matter? do we need it?
-    String id = null;
+    FragmentFeed thefeed = null;
+    String id = "http://example.org"; // fallback
+    if (!fragments.isEmpty())
+      thefeed = fragments.get(0).getFeed();
+
+    if (thefeed != null)
+      id = thefeed.getPrefix() + "/fragments";
 
     // (1) build the feed
     StringWriter out = new StringWriter();
     AtomWriter writer = new AtomWriter(out);
     writer.startFeed("Ontopia SDshare push client feed",
                      System.currentTimeMillis(), id);
-
+    if (thefeed != null)
+      writer.addServerPrefix(thefeed.getPrefix());
+    
     for (Fragment fragment : fragments) {
       writer.startEntry("Push fragment", "Some id", fragment.getUpdated());
       writer.addContent(fragment.getContent());
@@ -60,7 +67,9 @@ public class PushBackend implements ClientBackendIF {
     }
     
     writer.endFeed();
-    String feed = writer.toString();
+    String feed = out.toString();
+
+    log.warn("Feed: '" + feed + "'");
 
     // (2) POST the feed to the endpoint
     byte rawdata[] = feed.getBytes("utf-8");
@@ -68,7 +77,7 @@ public class PushBackend implements ClientBackendIF {
     HttpClient httpclient = new DefaultHttpClient();
     HttpPost httppost = new HttpPost(endpoint.getHandle());
     ByteArrayEntity reqbody = new ByteArrayEntity(rawdata);
-    reqbody.setContentType("application/atom+xml");
+    reqbody.setContentType("application/atom+xml; charset=utf-8");
     httppost.setEntity(reqbody);
 
     // (3) retrieving the response
@@ -79,6 +88,10 @@ public class PushBackend implements ClientBackendIF {
     log.warn("Server response: " + response.getStatusLine());
 
     String msg = StreamUtils.read(new InputStreamReader(resEntity.getContent()));
-    log.warn("Body: " + msg);    
+    log.warn("Body: " + msg);
+
+    if (response.getStatusLine().getStatusCode() != 200)
+      throw new OntopiaRuntimeException("Error sending SDshare push: " +
+                                        response.getStatusLine());
   }
 }
