@@ -13,7 +13,7 @@
 
   String tmid = request.getParameter("topicmap");
 
-  TopicMapTracker tracker = StartUpServlet.topicmaps.get(tmid);
+  TopicMapTracker tracker = TrackerManager.getTracker(tmid);
   if (tracker == null) {
     // means either there's no such TM, or we are not supposed to produce
     // a feed for it.

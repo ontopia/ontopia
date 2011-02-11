@@ -55,6 +55,9 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
   }
 
   public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
+    if (fragments.isEmpty())
+      return; // avoids IndexOutOfBoundsException later
+    
     boolean committed = false;
     TopicMapStoreIF store = null;
     try {
@@ -100,8 +103,9 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     else
       return 0; // unknown version, so we don't dare to use it
   }
-  
-  private TopicMapStoreIF getStore(String id) {
+
+  // overriden by test code to sneak in test TM
+  protected TopicMapStoreIF getStore(String id) {
     return TopicMaps.createStore(id, false);
   }
   

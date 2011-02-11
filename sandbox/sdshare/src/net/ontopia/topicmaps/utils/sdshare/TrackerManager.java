@@ -36,6 +36,10 @@ public class TrackerManager {
     expiry_time = new_expiry_time;
   }
 
+  public static TopicMapTracker getTracker(String tmid) {
+    return topicmaps.get(tmid);
+  }
+
   public static TopicMapTracker registerTracker(String tmid) {
     if (topicmaps.containsKey(tmid))
       return topicmaps.get(tmid);
