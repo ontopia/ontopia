@@ -51,7 +51,7 @@ public class Utils {
     }
 
   }
-  
+
   public static Map<String,Object> getTopicData(UriInfo uriInfo, PrestoTopic topic, PrestoType type) {
     Map<String,Object> result = new LinkedHashMap<String,Object>();
 
@@ -90,9 +90,10 @@ public class Utils {
     Map<String,Object> typeInfo = new LinkedHashMap<String,Object>();    
     typeInfo.put("id", type.getId());
     typeInfo.put("name", type.getName());
+    typeInfo.put("readOnly", type.isReadOnly());
 
     List<Link> typeLinks = new ArrayList<Link>();
-    if (!type.isAbstract()) {
+    if (!type.isAbstract() && !type.isReadOnly()) {
       typeLinks.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
     }
     typeInfo.put("links", typeLinks);
@@ -187,8 +188,13 @@ public class Utils {
       fieldInfo.put("validation", validationType);
     }
 
+    String interfaceControl = field.getInterfaceControl();
+    if (interfaceControl != null) {
+      fieldInfo.put("interfaceControl", interfaceControl);          
+    }
+
     if (field.isPrimitiveField()) {
-      fieldInfo.put("type", field.getFieldType());
+      // fieldInfo.put("type", field.getFieldType());
       String dataType = field.getDataType();
       if (dataType != null) {
         fieldInfo.put("datatype", dataType);
@@ -206,8 +212,8 @@ public class Utils {
       }
 
     } else if (field.isReferenceField()) {
-      fieldInfo.put("type", field.getFieldType());
-      //      fieldInfo.put("arity", field.getArity());
+      // fieldInfo.put("type", field.getFieldType());
+      fieldInfo.put("datatype", "reference");
 
       boolean allowEdit = !field.isReadOnly();
       boolean allowAddRemove = allowEdit && !field.isNewValuesOnly();
@@ -216,29 +222,24 @@ public class Utils {
         fieldInfo.put("readOnly", Boolean.TRUE);
       }
 
-      List<Link> fieldLinks = new ArrayList<Link>();
-
-      String interfaceControl = field.getInterfaceControl();
-      fieldInfo.put("interfaceControl", interfaceControl);          
-
-      if (interfaceControl != null) {
-        if (allowCreate && !isNewTopic) {
-          fieldLinks.add(new Link("available-field-types", uriInfo.getBaseUri() + "editor/available-field-types/" + fieldReference));
-        }
-        if (allowAddRemove) {
-          // ISSUE: should add-values and remove-values be links on list result instead?
-          fieldLinks.add(new Link("available-field-values", uriInfo.getBaseUri() + "editor/available-field-values/" + fieldReference));
-          if (!isNewTopic) {
-            fieldLinks.add(new Link("add-field-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
-            fieldLinks.add(new Link("remove-field-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
-          }
-        }
-        fieldInfo.put("links", fieldLinks);
+      List<Link> fieldLinks = new ArrayList<Link>();      
+      if (allowCreate && !isNewTopic) {
+        fieldLinks.add(new Link("available-field-types", uriInfo.getBaseUri() + "editor/available-field-types/" + fieldReference));
       }
+      if (allowAddRemove) {
+        // ISSUE: should add-values and remove-values be links on list result instead?
+        fieldLinks.add(new Link("available-field-values", uriInfo.getBaseUri() + "editor/available-field-values/" + fieldReference));
+        if (!isNewTopic) {
+          fieldLinks.add(new Link("add-field-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
+          fieldLinks.add(new Link("remove-field-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
+        }
+      }
+      fieldInfo.put("links", fieldLinks);
 
     } else {
       // used by query fields, which can have both primitive and reference values
-      fieldInfo.put("type", field.getFieldType());
+      // fieldInfo.put("type", field.getFieldType());
+      fieldInfo.put("datatype", "query");
       if (field.isReadOnly()) {
         fieldInfo.put("readOnly", Boolean.TRUE);
       }
@@ -379,11 +380,11 @@ public class Utils {
 
   public static Map<String, Object> addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
     try {
-      
+
       PrestoDataProvider dataProvider = session.getDataProvider();
-      
+
       if  (field != null) {
-        
+
         JSONArray values = fieldObject.getJSONArray("values");
         int valuesCount = values.length();
         if (valuesCount > 0) {
@@ -437,7 +438,7 @@ public class Utils {
               removeableValues.add(getPrimitiveValue(values, vc));
             }
           }
-          changeSet.addValues(field, removeableValues);
+          changeSet.removeValues(field, removeableValues);
           changeSet.save();
         }
       }

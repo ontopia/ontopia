@@ -15,6 +15,11 @@ public class PojoView implements PrestoView {
     }
 
     @Override
+    public String toString() {
+        return "PojoView[" + getId() + "|" + getName() + "]";
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other instanceof PojoView) {
             PojoView o = (PojoView)other;

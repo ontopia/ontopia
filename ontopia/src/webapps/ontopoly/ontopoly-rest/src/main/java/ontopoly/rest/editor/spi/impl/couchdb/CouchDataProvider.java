@@ -30,10 +30,14 @@ public class CouchDataProvider implements PrestoDataProvider {
   private HttpClient httpClient;
   private CouchDbInstance dbInstance;
   private CouchDbConnector db;
-  
-  private final ObjectMapper mapper = new ObjectMapper();
 
-  public CouchDataProvider(String host, int port, String databaseName) {
+  private final ObjectMapper mapper = new ObjectMapper();
+  private final String designDocId;
+
+  public CouchDataProvider(String host, int port, String databaseName, String designDocId) {
+
+    this.designDocId = designDocId;
+
     httpClient = new StdHttpClient.Builder()
     .host(host)
     .port(port)
@@ -44,19 +48,47 @@ public class CouchDataProvider implements PrestoDataProvider {
     db = new StdCouchDbConnector(databaseName, dbInstance);
     db.createDatabaseIfNotExists();
   }
-  
+
   CouchDbConnector getCouchConnector() {
     return db;
   }
-  
+
   ObjectMapper getObjectMapper() {
     return mapper;
   }
-  
+
   public PrestoTopic getTopicById(String topicId) {
-    ObjectNode doc = db.get(ObjectNode.class, topicId);
+    System.out.println("ID: " + topicId);
+    // look up by document id
+    ObjectNode doc = null;
+    try {
+      doc = db.get(ObjectNode.class, topicId);
+    } catch (DocumentNotFoundException e) {      
+    }
     if (doc == null) {
-      throw new RuntimeException("Unknown topic: " + topicId);
+      // look up in view
+      int ix = topicId.indexOf(':');
+      if (ix >= 0) {
+        String viewId = topicId.substring(0, ix);
+        String key = topicId; // topicId.substring(ix+1);
+        System.out.println("VIEWx: " + viewId + " " + key);
+        ViewQuery query = new ViewQuery()
+        .designDocId(designDocId)
+        .viewName(viewId).key(key).limit(1);
+        try {
+          ViewResult viewResult = db.queryView(query);
+          for (Row row : viewResult.getRows()) {
+            doc = (ObjectNode)row.getValueAsNode();
+            break;
+          }
+        } catch (DocumentNotFoundException e) {          
+        }
+
+      }
+      if (doc == null) {
+        throw new RuntimeException("Unknown topic: " + topicId);
+      }
+      System.out.println("D: " + doc);
     }
     return CouchTopic.existing(this, doc);
   }
@@ -65,14 +97,14 @@ public class CouchDataProvider implements PrestoDataProvider {
     List<PrestoTopic> result = new ArrayList<PrestoTopic>();
     for (PrestoType type : field.getAvailableFieldValueTypes()) {
       ViewQuery query = new ViewQuery()
-      .designDocId("_design/presto")
+      .designDocId(designDocId)
       .viewName("by-type").includeDocs(true).key(type.getId());
       try {
-          ViewResult viewResult = db.queryView(query);
-          for (Row row : viewResult.getRows()) {
-            ObjectNode doc = (ObjectNode)row.getDocAsNode();        
-            result.add(CouchTopic.existing(this, doc));
-          }
+        ViewResult viewResult = db.queryView(query);
+        for (Row row : viewResult.getRows()) {
+          ObjectNode doc = (ObjectNode)row.getDocAsNode();        
+          result.add(CouchTopic.existing(this, doc));
+        }
       } catch (DocumentNotFoundException e) {          
       }
     }

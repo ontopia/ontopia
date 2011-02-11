@@ -66,8 +66,7 @@ public class PojoFieldUsage implements PrestoFieldUsage {
     }
 
     public PrestoView getValueView() {
-        // return field.getValueView();
-        return getView();
+        return field.getValueView();
     }
 
     public String getFieldType() {

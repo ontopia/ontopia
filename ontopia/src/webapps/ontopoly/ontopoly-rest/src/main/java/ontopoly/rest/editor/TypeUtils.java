@@ -16,6 +16,9 @@ public class TypeUtils {
   static List<Map<String, Object>> getAvailableTypesTreeLazy(UriInfo uriInfo, Collection<PrestoType> types) {
     List<Map<String,Object>> result = new ArrayList<Map<String,Object>>(); 
     for (PrestoType type : types) {
+      if (type.isReadOnly()) {
+        continue;
+      }
       Map<String,Object> typeMap = new LinkedHashMap<String,Object>();
       typeMap.put("id", type.getId());
       typeMap.put("name", type.getName());
@@ -37,6 +40,9 @@ public class TypeUtils {
   static List<Map<String, Object>> getAvailableTypesTree(UriInfo uriInfo, Collection<PrestoType> types) {
     List<Map<String,Object>> result = new ArrayList<Map<String,Object>>(); 
     for (PrestoType type : types) {
+      if (type.isReadOnly()) {
+        continue;
+      }
       Map<String,Object> typeMap = new LinkedHashMap<String,Object>();
       typeMap.put("id", type.getId());
       typeMap.put("name", type.getName());

@@ -23,7 +23,7 @@ public class PojoField implements PrestoField {
     private String dataType;
     private String validationType;
     private boolean isEmbedded;
-    private boolean isTraversable;
+    private boolean isTraversable = true;
     private boolean isReadOnly;
     private boolean isNewValuesOnly;
     private boolean isExistingValuesOnly;

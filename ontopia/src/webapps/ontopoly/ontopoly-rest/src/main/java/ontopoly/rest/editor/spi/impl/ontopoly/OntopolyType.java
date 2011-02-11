@@ -46,6 +46,10 @@ public class OntopolyType implements PrestoType {
     return topicType.isAbstract();
   }
 
+  public boolean isReadOnly() {
+    return topicType.isReadOnly();
+  }
+
   public Collection<PrestoType> getDirectSubTypes() {
     return wrap(session, topicType.getDirectSubTypes());
   }
@@ -79,6 +83,10 @@ public class OntopolyType implements PrestoType {
       result.add(new OntopolyField(session, fieldDefinition, this, view));
     }
     return result;
+  }
+
+  public PrestoField getFieldById(String fieldId) {
+    return new OntopolyField(session, FieldDefinition.getFieldDefinition(session.getTopicById(fieldId), session.getTopicMap()), this, null);
   }
 
   public PrestoFieldUsage getFieldById(String fieldId, PrestoView view) {

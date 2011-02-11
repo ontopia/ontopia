@@ -585,7 +585,7 @@ public class TopicResource {
 //    return session;
 
     // schema stored in ontopia and data stored in couchdb
-    CouchDataProvider dataProvider = new CouchDataProvider("localhost", 5984, "presto");
+    CouchDataProvider dataProvider = new CouchDataProvider("localhost", 5984, "presto", "_design/presto");
 
     PojoSchemaProvider schemaProvider = PojoSchemaProvider.getSchemaProvider(topicMapId, topicMapId + ".presto.json");
     PojoSession session = new PojoSession(topicMapId, topicMapId, schemaProvider, dataProvider);

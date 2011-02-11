@@ -14,6 +14,10 @@ public interface PrestoType {
 
   public boolean isAbstract();
 
+  public boolean isReadOnly();
+
+  // TODO: public boolean delete();
+  
   // TODO: getSuperType();
   
   public Collection<PrestoType> getDirectSubTypes();
@@ -21,6 +25,8 @@ public interface PrestoType {
   public List<PrestoField> getFields();
 
   public List<PrestoFieldUsage> getFields(PrestoView fieldsView);
+
+  public PrestoField getFieldById(String fieldId);
 
   public PrestoFieldUsage getFieldById(String fieldId, PrestoView view);
   

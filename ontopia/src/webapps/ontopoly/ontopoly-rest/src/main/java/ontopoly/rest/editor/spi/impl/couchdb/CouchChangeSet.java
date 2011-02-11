@@ -151,7 +151,7 @@ public class CouchChangeSet implements PrestoChangeSet {
           for (Object value : values) {
             CouchTopic valueTopic = (CouchTopic)value;
             PrestoType type = field.getSchemaProvider().getTypeById(valueTopic.getTypeId());
-            PrestoFieldUsage inverseField = type.getFieldById(inverseFieldId, field.getValueView());
+            PrestoField inverseField = type.getFieldById(inverseFieldId);
             System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
             ObjectNode valueData = valueTopic.getData(); 
             addValue(valueData, inverseField, Collections.singleton(topic));
@@ -169,7 +169,7 @@ public class CouchChangeSet implements PrestoChangeSet {
             for (Object value : values) {
               CouchTopic valueTopic = (CouchTopic)value;
               PrestoType type = field.getSchemaProvider().getTypeById(valueTopic.getTypeId());
-              PrestoFieldUsage inverseField = type.getFieldById(inverseFieldId, field.getValueView());
+              PrestoField inverseField = type.getFieldById(inverseFieldId);
               System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
               ObjectNode valueData = valueTopic.getData(); 
               removeValue(valueData, inverseField, Collections.singleton(topic));
@@ -204,20 +204,26 @@ public class CouchChangeSet implements PrestoChangeSet {
 
   private void addValue(ObjectNode data, PrestoField field, Collection<Object> values) {
     if (!values.isEmpty()) {
+      Collection<String> result = new HashSet<String>();
       JsonNode jsonNode = data.get(field.getId());
-      if (jsonNode == null) {
-        jsonNode = dataProvider.getObjectMapper().createArrayNode();
+      if (jsonNode != null && jsonNode.isArray()) {
+          for (JsonNode existing : jsonNode) {
+              result.add(existing.getTextValue());
+          }
       }
-  
-      ArrayNode arrayNode = (ArrayNode)jsonNode;
       for (Object value : values) {
         if (value instanceof CouchTopic) {
-          CouchTopic valueTopic = (CouchTopic)value;
-          arrayNode.add(valueTopic.getId());
+          CouchTopic valueTopic = (CouchTopic)value;          
+          result.add(valueTopic.getId());
         } else {
-          arrayNode.add((String)value);
+          result.add((String)value);
         }
       }
+      ArrayNode arrayNode = dataProvider.getObjectMapper().createArrayNode();
+      for (String value : result) {
+          arrayNode.add(value);
+      }
+      
       System.out.println("A: " + arrayNode);
       data.put(field.getId(), arrayNode);
     }
@@ -227,10 +233,9 @@ public class CouchChangeSet implements PrestoChangeSet {
     if (!values.isEmpty()) {
       JsonNode jsonNode = data.get(field.getId());
       System.out.println("R: " + field.getId() + " " + values);
-      if (jsonNode.isArray()) {
-        ArrayNode arrayNode = (ArrayNode)jsonNode;
-        Collection<String> existing = new HashSet<String>(arrayNode.size());
-        for (JsonNode item : arrayNode) {
+      if (jsonNode != null && jsonNode.isArray()) {
+        Collection<String> existing = new HashSet<String>(jsonNode.size());
+        for (JsonNode item : jsonNode) {
           existing.add(item.getValueAsText());
         }
         for (Object value : values) {
@@ -241,7 +246,7 @@ public class CouchChangeSet implements PrestoChangeSet {
             existing.remove((String)value);
           }
         }
-        arrayNode = dataProvider.getObjectMapper().createArrayNode();
+        ArrayNode arrayNode  = dataProvider.getObjectMapper().createArrayNode();
         for (String value : existing) {
           arrayNode.add(value);
         }
