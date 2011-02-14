@@ -41,7 +41,7 @@ installation guide.</p>
 
 <ul>
 <li><a href="doc/current/">The product documentation</a>
-<li><a href="doc/current/install.html">The install guide</a>
+<li><a href="doc/current/doc/install.html">The install guide</a>
 <li><a href="http://groups.google.com/group/ontopia">Join the mailing list</a>
 </ul>
 
