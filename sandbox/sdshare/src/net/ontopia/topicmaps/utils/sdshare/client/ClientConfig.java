@@ -29,12 +29,14 @@ public class ClientConfig {
   private int checkInterval; // FIXME: move to ConfigHandler??
   private Collection<SyncEndpoint> endpoints;
   private ClientBackendIF backend;
+  private boolean start_button;
   static Logger log = LoggerFactory.getLogger(ClientConfig.class.getName());
 
   // --- external interface
   
   public ClientConfig() {
     this.endpoints = new ArrayList<SyncEndpoint>();
+    this.start_button = true;
   }
 
   public Collection<SyncEndpoint> getEndpoints() {
@@ -47,6 +49,10 @@ public class ClientConfig {
 
   public ClientBackendIF getBackend() {
     return backend;
+  }
+
+  public boolean getStartButton() {
+    return start_button;
   }
 
   public static ClientConfig readConfig() {
@@ -86,6 +92,10 @@ public class ClientConfig {
 
   private void setBackend(String classname) {
     this.backend = (ClientBackendIF) ObjectUtils.newInstance(classname);
+  }
+
+  private void setStartButton(boolean start_button) {
+    this.start_button = start_button;
   }
   
   // --- SAX ContentHandler
@@ -133,6 +143,8 @@ public class ClientConfig {
           config.setCheckInterval(parse(buf.toString()));
         else if (property.equals("backend"))
           config.setBackend(buf.toString());
+        else if (property.equals("start-button"))
+          config.setStartButton(buf.toString().trim().equalsIgnoreCase("true"));
         else
           log.warn("Unknown property: '" + property + "'");
 

@@ -53,7 +53,7 @@ public class ClientManager {
   }
   
   public void sync() throws IOException, SAXException {
-    thread.sync();
+    thread.sync(true);
   }
 
   public SyncSource getSource(String key) {

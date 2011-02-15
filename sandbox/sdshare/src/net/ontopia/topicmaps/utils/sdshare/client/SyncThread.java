@@ -77,7 +77,7 @@ class SyncThread extends Thread {
       
     while (!stopped) {
       try {
-        sync();
+        sync(false);
       } catch (IOException e) {
         // this should only be IOExceptions from saving state, and so logging
         // and carrying on should be fine
@@ -113,26 +113,33 @@ class SyncThread extends Thread {
     }
   }
 
-  public void sync() throws IOException {
+  /**
+   * Syncs all sources into their endpoints if it is time to check and
+   * they are not blocked by errors.
+   * @param force If true we ignore whether it's time to check yet.
+   */
+  public void sync(boolean force) throws IOException {
     for (SyncEndpoint endpoint : endpoints) {
       log.debug("Checking " + endpoint.getHandle());
       for (SyncSource source : endpoint.getSources()) {
         // verify that it's time to check this source now, and that the source
         // hasn't failed.
-        if (!source.isTimeToCheck() || source.isBlockedByError())
-          return;
+        if (source.isBlockedByError())
+          continue;
+        if (!source.isTimeToCheck() && !force)
+          continue;
 
         // it was time, so we download the feed and go through the
         // actual fragments
         try {
           FragmentFeed feed = source.getFragmentFeed();
           log.info("FOUND " + feed.getFragments().size() + " fragments");
-          if (feed.getFragments().isEmpty())
-            continue; // nothing to do
 
-          backend.applyFragments(endpoint, feed.getFragments());
-          for (Fragment fragment : feed.getFragments())
-            source.setLastChange(fragment.getUpdated());
+          if (!feed.getFragments().isEmpty()) {
+            backend.applyFragments(endpoint, feed.getFragments());
+            for (Fragment fragment : feed.getFragments())
+              source.setLastChange(fragment.getUpdated());
+          }
         } catch (Throwable e) {
           // we log the error, and note it on the source. that stops further
           // updates from the source, until we are told that we can continue.

@@ -44,6 +44,14 @@ public class SyncSource {
   }
 
   /**
+   * Returns the time we last checked for changes, as given by
+   * System.currentTimeMillis.
+   */
+  public long getLastCheck() {
+    return lastCheck;
+  }
+  
+  /**
    * Returns the timestamp of the last change processed from this
    * source, as given in the Atom feed.
    */
