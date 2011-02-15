@@ -2,6 +2,7 @@
 package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.InputStreamReader;
@@ -27,6 +28,7 @@ import net.ontopia.topicmaps.utils.sdshare.client.Fragment;
  */
 public class PushBackend implements ClientBackendIF {
   static Logger log = LoggerFactory.getLogger(PushBackend.class.getName());
+  private static final int SEGMENT_SIZE = 50;
   
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot) {
     throw new UnsupportedOperationException(); // not supported yet
@@ -34,13 +36,24 @@ public class PushBackend implements ClientBackendIF {
 
   public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
     try {
-      applyFragments_(endpoint, fragments);
+      // first of all, we break the list into a list of smaller list
+      // segments, in order to avoid pushing a feed that's too big.
+      List<List<Fragment>> segments = new ArrayList();
+      int ix = 1;
+      for (; ix * SEGMENT_SIZE < fragments.size(); ix++)
+        segments.add(fragments.subList((ix - 1) * SEGMENT_SIZE,
+                                       ix * SEGMENT_SIZE));
+      segments.add(fragments.subList((ix - 1) * SEGMENT_SIZE, fragments.size()));
+      
+      // then we loop over the segments, applying each one in turn
+      for (List<Fragment> segment : segments)
+        applyFragments_(endpoint, segment);
     } catch (IOException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
 
-  private void applyFragments_(SyncEndpoint endpoint, List<Fragment> fragments)
+  protected void applyFragments_(SyncEndpoint endpoint, List<Fragment> fragments)
     throws IOException {
     FragmentFeed thefeed = null;
     String id = "http://example.org"; // fallback
@@ -61,6 +74,9 @@ public class PushBackend implements ClientBackendIF {
     for (Fragment fragment : fragments) {
       writer.startEntry("Push fragment", "Some id", fragment.getUpdated());
       writer.addContent(fragment.getContent());
+      if (fragment.getTopicSIs().isEmpty())
+        throw new RuntimeException("Tried making fragment for topic with no " +
+                                   "subject identifiers!");
       for (String si : fragment.getTopicSIs())
         writer.addTopicSI(si);
       writer.endEntry();
@@ -68,8 +84,6 @@ public class PushBackend implements ClientBackendIF {
     
     writer.endFeed();
     String feed = out.toString();
-
-    log.warn("Feed: '" + feed + "'");
 
     // (2) POST the feed to the endpoint
     byte rawdata[] = feed.getBytes("utf-8");
@@ -84,11 +98,6 @@ public class PushBackend implements ClientBackendIF {
 
     HttpResponse response = httpclient.execute(httppost);
     HttpEntity resEntity = response.getEntity();
-
-    log.warn("Server response: " + response.getStatusLine());
-
-    String msg = StreamUtils.read(new InputStreamReader(resEntity.getContent()));
-    log.warn("Body: " + msg);
 
     if (response.getStatusLine().getStatusCode() != 200)
       throw new OntopiaRuntimeException("Error sending SDshare push: " +

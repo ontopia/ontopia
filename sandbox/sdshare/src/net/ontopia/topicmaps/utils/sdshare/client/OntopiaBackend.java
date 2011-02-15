@@ -68,10 +68,8 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
       try {
         String prefix = fragments.get(0).getFeed().getPrefix();
         TopicMapIF topicmap = store.getTopicMap();
-        for (Fragment fragment : fragments) {
-          log.info("Applying fragment " + fragment);
+        for (Fragment fragment : fragments)
           applyFragment(prefix, fragment, topicmap);
-        }
       } catch (Throwable e) {
         store.abort();
         throw new OntopiaRuntimeException(e);
@@ -116,16 +114,9 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     if (link != null)
       url = link.getUri();
 
-    // FIXME: before issue #3680 is cleared up, we don't know how to
-    // interpret multiple SIs on a single fragment. for now we will
-    // just assume that all entries have only a single SI.
-    // http://projects.topicmapslab.de/issues/3680
-    if (fragment.getTopicSIs().size() != 1)
-      throw new RuntimeException("Fragment " + url +
-                                 " had wrong number of TopicSIs: " +
+    if (fragment.getTopicSIs().isEmpty())
+      throw new RuntimeException("Fragment " + url + " had no TopicSIs: " +
                                  fragment.getTopicSIs().size());
-
-    log.info("TopicSI: " + fragment.getTopicSIs());
     
     // (1) get the fragment
     // FIXME: for now we only support XTM
@@ -134,23 +125,14 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     XTMTopicMapReader reader = new XTMTopicMapReader(stream, base);
     reader.setFollowTopicRefs(false);
     TopicMapIF tmfragment = reader.read();
-    log.info("Prefix: '" + prefix + "'");
     
     // (2) apply it
-    LocatorIF si = URILocator.create(fragment.getTopicSIs().iterator().next());
-    TopicIF ftopic = tmfragment.getTopicBySubjectIdentifier(si);
+    TopicIF ftopic = getTopic(tmfragment, fragment.getTopicSIs());
     TopicIF ltopic;
     if (ftopic != null)
       ltopic = MergeUtils.findTopic(topicmap, ftopic);
     else
-      ltopic = topicmap.getTopicBySubjectIdentifier(si);
-
-    log.info("ftopic: " + ftopic);
-    if (ftopic != null) {
-      for (LocatorIF iid : ftopic.getItemIdentifiers())
-        log.info("ftopic.iid: " + iid);
-    }
-    log.info("ltopic: " + ltopic);
+      ltopic = getTopic(topicmap, fragment.getTopicSIs());
 
     // (a) check if we need to create the topic
     if (ltopic == null && ftopic != null)
@@ -210,29 +192,23 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
                               Map<String,? extends ReifiableIF> keymap,
                               Collection<? extends ReifiableIF> lobjects,
                               String prefix) {
-    log.info("-----");
     // check all local objects against the fragment
     lobjects = new ArrayList<ReifiableIF>(lobjects); // avoid concmodexc
     for (ReifiableIF lobject : lobjects) {
       String key = KeyGenerator.makeKey(lobject);
       ReifiableIF fobject = keymap.get(key);
 
-      log.info("lobject: " + lobject);
-      log.info("fobject: " + fobject);
-
       if (fobject == null) {
         // the source doesn't have this object. however, if it still has
         // item identifiers (other than ours), we can keep it. we do
         // need to remove any iids starting with the prefix, though.
         pruneItemIdentifiers(lobject, prefix);
-        log.info("lobject.iids1: " + lobject.getItemIdentifiers());
         if (lobject.getItemIdentifiers().isEmpty())
           lobject.remove();
       } else {
         // the source has this object. we need to make sure the local
         // copy has the item identifier.
         addItemIdentifier(lobject, prefix);
-        log.info("lobject.iids2: " + lobject.getItemIdentifiers());
         keymap.remove(key); // we've seen this one, so cross it off
       }
     }
@@ -241,7 +217,6 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     // across to the local copy, adding item identifiers
     for (ReifiableIF fobject : keymap.values()) {
       ReifiableIF lobject = MergeUtils.mergeInto(ltopic, fobject);
-      log.info("remaining: " + lobject);
       addItemIdentifier(lobject, prefix);
     }
   }
@@ -289,5 +264,18 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     else
       throw new OntopiaRuntimeException("Fragment contained neither " +
                                         "acceptable links nor content");
+  }
+
+  private TopicIF getTopic(TopicMapIF topicmap, Collection<String> sis) {
+    TopicIF topic = null;
+    for (String si : sis) {
+      LocatorIF psi = URILocator.create(si);
+      TopicIF t = topicmap.getTopicBySubjectIdentifier(psi);
+      if (topic == null)
+        topic = t;
+      else if (t != null && t != topic)
+        MergeUtils.mergeInto(topic, t); // merging the topics first
+    }
+    return topic;
   }
 }

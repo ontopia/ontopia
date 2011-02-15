@@ -30,6 +30,7 @@
 
 <style>th { text-align: left; }
 td, th { padding-right: 6pt }</style>
+<title>Ontopia SDshare client</title>
 
 <h1>SDshare client</h1>
 

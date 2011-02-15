@@ -1,5 +1,7 @@
 <project name="ontopia" default="jar" basedir=".">
 
+  <!--taskdef classpath="cobertura.jar" resource="tasks.properties"/-->
+
   <!-- Initialize properties -->
   <target name="init">
     <property name="build.compiler" value="modern" />
@@ -75,5 +77,19 @@
       <fileset dir="${build.wars}/sdshare-client"/>
     </war>
   </target>
+
+  <!-- Set up Cobertura instrumentation -->
+  <!--target name="instrument" depends="init">
+    <cobertura-instrument todir="build/instrumented-classes">
+      <fileset dir="build/classes">
+        <include name="**/*.class"/>
+        <exclude name="**/test/*.class"/>
+      </fileset>
+    </cobertura-instrument>  
+  </target>
+
+  <target name="coverage">
+    <cobertura-report srcdir="src" destdir="report"/>
+  </target-->
   
 </project>
