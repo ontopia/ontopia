@@ -29,9 +29,25 @@ public class MIMEType {
       subtype = mimetype.substring(slash + 1, semicolon);
 
       String lastpart = mimetype.substring(semicolon);
-      if (lastpart.startsWith("; version="))
-        version = mimetype.substring(semicolon + "; version=".length());
+      int ix = eatWS(1, lastpart);
+      if (ix >= lastpart.length() ||
+          !lastpart.substring(ix, ix + 7).equals("version"))
+        return;
+
+      ix = eatWS(ix + 7, lastpart);
+      if (ix >= lastpart.length() ||
+          lastpart.charAt(ix) != '=')
+        return;
+      
+      ix = eatWS(ix + 1, lastpart);
+      version = lastpart.substring(ix).trim();
     }
+  }
+  
+  private int eatWS(int ix, String str) {
+    while (ix < str.length() && str.charAt(ix) == ' ')
+      ix++;
+    return ix;
   }
 
   public String getMainType() {

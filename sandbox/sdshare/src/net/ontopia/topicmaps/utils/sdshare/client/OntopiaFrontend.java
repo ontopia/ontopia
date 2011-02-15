@@ -44,7 +44,6 @@ public class OntopiaFrontend implements ClientFrontendIF {
   public FragmentFeed getFragmentFeed(long lastChange)
     throws IOException, SAXException {
     FragmentFeed feed = new FragmentFeed();
-    // FIXME: what's the prefix?
     // FIXME: presumably we need a title and all that jazz, too?
 
     TopicMapRepositoryIF rep = TopicMaps.getRepository();
