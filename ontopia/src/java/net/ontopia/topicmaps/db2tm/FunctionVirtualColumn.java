@@ -1,11 +1,10 @@
 
-// $Id: FunctionVirtualColumn.java,v 1.4 2006/10/30 08:47:56 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.reflect.*;
+import net.ontopia.utils.DebugUtils;
 
 /**
  * INTERNAL: Virtual column that used a hash table to map from old
@@ -13,7 +12,6 @@ import java.lang.reflect.*;
  * entry exists.
  */
 public class FunctionVirtualColumn implements ValueIF {
-
   protected Relation relation;
   protected String colname;
   protected String fullMethodName;
@@ -21,7 +19,7 @@ public class FunctionVirtualColumn implements ValueIF {
   
   protected List params = new ArrayList();
 
-  FunctionVirtualColumn(Relation relation, String colname, String fullMethodName) {
+  public FunctionVirtualColumn(Relation relation, String colname, String fullMethodName) {
     this.relation = relation;
     this.colname = colname;
     this.fullMethodName = fullMethodName;
@@ -85,7 +83,14 @@ public class FunctionVirtualColumn implements ValueIF {
     try {
       return (String)method.invoke(null, args);
     } catch (Exception e) {
-      throw new DB2TMInputException("Error occurred when invoking function column '" + colname + "'", e);
+      String[] dispargs = new String[args.length];
+      for (int i=0; i < args.length; i++) {
+        String val = "" + args[i];
+        if (val.length() > 100)
+          val = val.substring(0, 100) + "...";
+        dispargs[i] = val;
+      }
+      throw new DB2TMInputException("Error occurred when invoking function column '" + colname + "' on " + DebugUtils.toString(dispargs), e);
     }
   }
 

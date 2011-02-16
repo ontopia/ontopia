@@ -613,6 +613,7 @@
     <test>net.ontopia.topicmaps.db2tm.test.DB2TMTestGenerator</test>
     <test>net.ontopia.topicmaps.db2tm.test.RelationMappingTestCase</test>
     <test>net.ontopia.topicmaps.db2tm.test.FunctionsTestCase</test>
+    <test>net.ontopia.topicmaps.db2tm.test.FunctionVirtualColumnTest</test>
   </group>
 
   <group>
@@ -631,6 +632,15 @@
     <test>net.ontopia.topicmaps.classify.test.FormatModuleTests</test>
   </group>
 
+  <group>
+    <name>sdshare</name>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.TopicMapTrackerTest</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.FeedReaderTest</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.PushTestGenerator</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.PushBackendTest</test>
+    <test>net.ontopia.topicmaps.utils.sdshare.test.MIMETypeTest</test>
+  </group>
+  
   <group>
     <name>ontopoly</name>
     <!--test>net.ontopia.topicmaps.nav2.webapps.ontopoly.model.test.TestAbstractFieldType</test>
