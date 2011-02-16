@@ -1195,8 +1195,8 @@ public class QueryProcessorTest extends AbstractQueryTest {
   public void testImportModuleBang() throws InvalidQueryException, IOException {
     makeEmpty();
 
-    getParseError("import \"empty.tl\" as fam " +
-                  "instance-of($A, $B)?");
+    findNothing("import \"empty.tl\" as fam " +
+                "instance-of($A, $B)?");
   }
 
   /// ordering tests
