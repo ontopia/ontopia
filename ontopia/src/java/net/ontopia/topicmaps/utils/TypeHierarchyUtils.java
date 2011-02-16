@@ -233,7 +233,7 @@ public class TypeHierarchyUtils {
    * supertypes of the given object
    * @since 1.1
    */
-    public Collection getSupertypes(TopicIF typed, boolean excludeTypes) {
+  public Collection getSupertypes(TopicIF typed, boolean excludeTypes) {
     Set ret = new HashSet();
     Iterator it = typed.getTypes().iterator();
     while (it.hasNext()) {
