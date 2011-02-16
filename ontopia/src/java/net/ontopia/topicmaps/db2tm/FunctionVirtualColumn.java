@@ -7,9 +7,8 @@ import java.lang.reflect.*;
 import net.ontopia.utils.DebugUtils;
 
 /**
- * INTERNAL: Virtual column that used a hash table to map from old
- * value to new value. A default value can also be specified when no
- * entry exists.
+ * INTERNAL: Virtual column that uses a function to map from old value
+ * to new value.
  */
 public class FunctionVirtualColumn implements ValueIF {
   protected Relation relation;
