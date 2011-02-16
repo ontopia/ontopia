@@ -10,7 +10,7 @@ import java.io.IOException;
  * to include. Generally, the fragments will include all identifiers,
  * types, names, occurrences, and associations of the topics.
  *
- * @since %NEXT%
+ * @since 5.1.3
  */
 public interface TopicMapFragmentWriterIF {
 

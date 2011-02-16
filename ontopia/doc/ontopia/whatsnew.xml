@@ -20,6 +20,77 @@ This document describes what has changed in Ontopia between releases,
 both at a higher level, and in more detail.
 </para>
 </abstract>
+
+<!-- ======================================================================
+     5.1.3                                                              -->
+<section id="sect-5.1.3">
+<title>Ontopia 5.1.3 release notes</title>
+
+<para>This is a minor bugfix release that mostly fixes bugs, but also
+adds some fairly minor new functionality.</para>
+
+<para>The following changes have been made:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>The <interfacename>TopicMapFragmentWriterIF</interfacename> interface
+    has been added, providing a common interface to fragment exporters.</para>
+  </listitem>
+  <listitem>
+    <para>An RDF/XML fragment exporter has been added.</para>
+  </listitem>
+  <listitem>
+    <para>Major performance improvement in the retrieval of possible
+    role players in Ontopoly.</para>
+  </listitem>
+  <listitem>
+    <para>The reordering of dynamic association predicates in tolog
+    has been improved.</para>
+  </listitem>
+  <listitem>
+    <para>An Omnigator plugin for running DB2TM synchronization has
+    been added.</para>
+  </listitem>
+  <listitem>
+    <para>Error reporting when DB2TM functions fail has been improved.</para>
+  </listitem>
+  <listitem>
+    <para>Several new utility methods have been added to the
+    <classname>KeyGenerator</classname> and
+    <classname>MergeUtils</classname> classes.</para>
+  </listitem>
+</itemizedlist>
+
+<para>The following bugs have been fixed:</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=316"
+      >Issue 316: No events for new role players</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=313"
+      >Issue 313: No events when associations are deleted</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=334"
+      >Issue 334: Incorrect encoding of characters in URIs</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=343"
+      >Issue 343: Multiple conformance errors in CTM parser</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=344"
+      >Issue 344: CXTM conformance tests were disabled</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=356"
+      >Issue 356: The literal "1.0" not allowed in CTM</ulink></para>
+  </listitem>
+</itemizedlist>
+</section>
+
 <!-- ======================================================================
      5.1.2                                                              -->
 <section id="sect-5.1.2">

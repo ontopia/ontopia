@@ -1,6 +1,4 @@
 
-// $Id: KeyGenerator.java,v 1.22 2008/06/13 12:31:32 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.*;
@@ -31,7 +29,7 @@ public class KeyGenerator {
    * PUBLIC: Makes a key for an occurrence, as it would look in
    * another topic map.   
    *
-   * @since %NEXT%
+   * @since 5.1.3
    * @return string containing key
    */ 
   public static String makeOccurrenceKey(OccurrenceIF occ, TopicMapIF othertm) {
@@ -53,7 +51,7 @@ public class KeyGenerator {
    * PUBLIC: Makes a key for a topic name, as it would look in another
    * topic map.
    *
-   * @since %NEXT%
+   * @since 5.1.3
    * @return string containing key
    */ 
   public static String makeTopicNameKey(TopicNameIF bn, TopicMapIF othertm) {
@@ -136,7 +134,7 @@ public class KeyGenerator {
   /**
    * PUBLIC: Makes a key for an association, as it would look in another
    * topic map.
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public static String makeAssociationKey(AssociationIF assoc,
                                           TopicMapIF othertm) {
@@ -173,7 +171,7 @@ public class KeyGenerator {
   /**
    * PUBLIC: Makes a key for an association role, as it would look in
    * another topic map.
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public static String makeAssociationRoleKey(AssociationRoleIF role,
                                               TopicMapIF othertm) {
@@ -209,7 +207,7 @@ public class KeyGenerator {
    * @param object The object to make a key for.
    * @param topicmap The topic map in which to interpret the key.
    *
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public static String makeKey(ReifiableIF object, TopicMapIF topicmap) {
     if (object instanceof TopicNameIF)

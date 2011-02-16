@@ -16,7 +16,7 @@ import net.ontopia.topicmaps.core.TopicMapFragmentWriterIF;
 
 /**
  * PUBLIC: A fragment writer for XTM 1.0.
- * @since %NEXT%
+ * @since 5.1.3
  */
 public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
   private Writer out;

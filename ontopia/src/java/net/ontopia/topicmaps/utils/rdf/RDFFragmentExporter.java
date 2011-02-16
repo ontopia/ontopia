@@ -21,7 +21,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
  * is restricted in the sense that all topics must come from the same
  * topic map.
  *
- * @since %NEXT%
+ * @since 5.1.3
  */
 public class RDFFragmentExporter implements TopicMapFragmentWriterIF {
   private Model model;

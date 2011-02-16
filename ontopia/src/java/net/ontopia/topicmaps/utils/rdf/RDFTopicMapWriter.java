@@ -72,7 +72,7 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
    * PUBLIC: Creates a writer that writes the RDF representation to
    * the given OutputStream serialized to RDF/XML and using the given
    * character encoding.
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public RDFTopicMapWriter(OutputStream stream, String encoding) 
     throws IOException {

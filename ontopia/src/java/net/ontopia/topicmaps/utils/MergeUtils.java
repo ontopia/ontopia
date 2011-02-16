@@ -408,7 +408,7 @@ public class MergeUtils {
    * PUBLIC: Merges the source object into a target topic in another
    * topic map. Makes no attempt to verify that the source topic
    * represents the same subject as the target topic.
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public static ReifiableIF mergeInto(TopicIF target, ReifiableIF source) {
     if (source instanceof TopicNameIF)
@@ -427,7 +427,7 @@ public class MergeUtils {
    * another topic map. Makes no attempt to verify that the source
    * topic represents the same subject as the target topic.
    * @return The new topic name in the target topic map.
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public static TopicNameIF mergeInto(TopicIF target, TopicNameIF source) {
     TopicMapIF tm = target.getTopicMap();
@@ -444,7 +444,7 @@ public class MergeUtils {
    * another topic map. Makes no attempt to verify that the source
    * topic represents the same subject as the target topic.
    * @return The new occurrence in the target topic map.
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public static OccurrenceIF mergeInto(TopicIF target, OccurrenceIF source) {
     TopicMapIF tm = target.getTopicMap();
@@ -463,7 +463,7 @@ public class MergeUtils {
    * map. Makes no attempt to verify that the source association is
    * not already present.
    * @return The new association in the target topic map.
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public static AssociationIF mergeInto(TopicMapIF topicmap,
                                        AssociationIF source) {
@@ -1129,7 +1129,7 @@ public class MergeUtils {
    * @param topic A topic in a topic map other than othertm to look up
    *              in othertm.
    * @return The corresponding topic.
-   * @since %NEXT%
+   * @since 5.1.3
    */
   public static TopicIF findTopic(TopicMapIF othertm, TopicIF topic) {
     TopicIF other;
