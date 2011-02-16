@@ -188,4 +188,19 @@ public class Functions {
     log.debug("Produced PSI suffix: '" + str + "'");
     return str;
   }
+
+  /**
+   * INTERNAL: Returns the string minus all spaces. Differs from
+   * trim() in that internal spaces are also removed.
+   */
+  public static String stripSpaces(String str) {
+    char[] buf = new char[str.length()];
+    int pos = 0;
+    for (int ix = 0; ix < buf.length; ix++) {
+      char ch = str.charAt(ix);
+      if (ch != ' ')
+        buf[pos++] = ch;
+    }
+    return new String(buf, 0, pos);
+  }
 }

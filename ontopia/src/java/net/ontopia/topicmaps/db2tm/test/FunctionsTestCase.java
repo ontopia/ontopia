@@ -19,9 +19,19 @@ public class FunctionsTestCase extends AbstractOntopiaTestCase {
   }
 
   public void testTrim() {
+    assertEquals("trimEmpty", Functions.trim(""), "");
+    assertEquals("trimOnlySpaces", Functions.trim("   "), "");
     assertEquals("trimBoth", Functions.trim("  Geir Ove "), "Geir Ove");
     assertEquals("trimRight", Functions.trim("Geir Ove  "), "Geir Ove");
     assertEquals("trimLeft", Functions.trim("  Geir Ove"), "Geir Ove");
+  }
+
+  public void testStripSpaces() {
+    assertEquals("stripEmpty", Functions.stripSpaces(""), "");
+    assertEquals("stripOnlySpaces", Functions.stripSpaces("   "), "");
+    assertEquals("stripBoth", Functions.stripSpaces("  Geir Ove "), "GeirOve");
+    assertEquals("stripRight", Functions.stripSpaces("Geir Ove  "), "GeirOve");
+    assertEquals("stripLeft", Functions.stripSpaces("  Geir Ove"), "GeirOve");
   }
 
   public void testSubstring() {
