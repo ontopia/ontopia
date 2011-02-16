@@ -4,16 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import ontopoly.model.FieldDefinition;
-import ontopoly.model.FieldsView;
 import ontopoly.model.Topic;
 import ontopoly.model.TopicMap;
 import ontopoly.model.TopicType;
-import ontopoly.rest.editor.spi.PrestoField;
-import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoSchemaProvider;
 import ontopoly.rest.editor.spi.PrestoType;
-import ontopoly.rest.editor.spi.PrestoView;
 
 public class OntopolySchemaProvider implements PrestoSchemaProvider {
 

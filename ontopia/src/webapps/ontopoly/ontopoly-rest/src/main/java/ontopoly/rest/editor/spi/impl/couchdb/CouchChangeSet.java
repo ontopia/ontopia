@@ -2,6 +2,7 @@ package ontopoly.rest.editor.spi.impl.couchdb;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -15,8 +16,6 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.ektorp.CouchDbConnector;
-
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class CouchChangeSet implements PrestoChangeSet {
 
@@ -154,7 +153,7 @@ public class CouchChangeSet implements PrestoChangeSet {
             PrestoField inverseField = type.getFieldById(inverseFieldId);
             System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
             ObjectNode valueData = valueTopic.getData(); 
-            addValue(valueData, inverseField, Collections.singleton(topic));
+            addValue(valueData, inverseField, Collections.singleton((Object)topic));
             System.out.println("IF2: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
             dataProvider.getCouchConnector().update(valueData);      
             System.out.println("U2: " + valueData.get("_id").toString() + " " + valueData.get("_rev").toString());
@@ -172,7 +171,7 @@ public class CouchChangeSet implements PrestoChangeSet {
               PrestoField inverseField = type.getFieldById(inverseFieldId);
               System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
               ObjectNode valueData = valueTopic.getData(); 
-              removeValue(valueData, inverseField, Collections.singleton(topic));
+              removeValue(valueData, inverseField, Collections.singleton((Object)topic));
               System.out.println("IF2: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
               dataProvider.getCouchConnector().update(valueData);      
               System.out.println("U2: " + valueData.get("_id").toString() + " " + valueData.get("_rev").toString());
