@@ -34,10 +34,7 @@ public class CTMEncodingSniffer implements EncodingSnifferIF {
     } else if (bytesread != -1)
       stream.unread(bomBuffer, 0, bytesread);
 
-    if (foundBom) 
-      encoding = "utf-8";
-    else
-      encoding = "iso-8859-1";
+    encoding = "utf-8"; // this is what the spec says to assume here
 
     // Now look for an encoding declaration
     byte[] buf = new byte[50];

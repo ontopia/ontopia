@@ -309,12 +309,6 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     startElement("role", attributes);
     attributes.clear();
 
-    TopicIF player = role.getPlayer();
-    if (player == null)
-      throw new OntopiaRuntimeException(this.getClass().getName()
-              + " found a role without a player. OKS supports this possibility,"
-              + " but CXTM does not."
-              + " Please make sure all roles have a player.");
     startElement("player", topicRef(role.getPlayer()));
     endElement("player");
 
@@ -494,12 +488,113 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   }
 
   // --- Datatype normalisation
-  
+
   private String normalizeNumber(String number) {
-    if (number.startsWith("+"))
-      return number.substring(1);
+    if (number.indexOf('.') > -1)
+      return normalizeDecimal(number);
     else
-      return number;
+      return normalizeInteger(number);
+   }
+  
+  // NOTE: The following two methods are copied from tinyTiM, donated
+  // by Lars Heuer
+  private static String normalizeInteger(final String value) {
+    final String val = value.trim();
+    int len = val.length();
+    if (len == 0)
+      throw new IllegalArgumentException("Illegal integer value: " + value);
+
+    int idx = 0;
+    boolean negative = false;
+    switch (val.charAt(idx)) {
+    case '-':
+      idx++;
+      negative = true;
+      break;
+    case '+':
+      idx++;
+      break;
+    }
+    // Skip leading zeros if any
+    while (idx < len && val.charAt(idx) == '0') {
+      idx++;
+    }
+    if (idx == len) {
+      return "0";
+    }
+    final String normalized = val.substring(idx);
+    len = normalized.length();
+    // Check if everything is a digit
+    for (int i = 0; i < len; i++) {
+      if (!Character.isDigit(normalized.charAt(i))) {
+        throw new IllegalArgumentException("Illegal integer value: " + value);
+      }
+    }
+    return negative && normalized.charAt(0) != 0 ? '-' + normalized : normalized;
+  }
+
+  private static String normalizeDecimal(final String value) {
+    final String val = value.trim();
+    int len = val.length();
+    if (len == 0)
+      throw new IllegalArgumentException("Illegal decimal value: " + value);
+
+    int idx = 0;
+    boolean negative = false;
+    switch (val.charAt(idx)) {
+    case '-':
+      idx++;
+      negative = true;
+      break;
+    case '+':
+      idx++;
+      break;
+    }
+    // Skip leading zeros if any
+    while (idx < len && val.charAt(idx) == '0') {
+      idx++;
+    }
+    if (idx == len) {
+      return "0.0";
+    }
+    StringBuilder normalized = new StringBuilder(len);
+    if (val.charAt(idx) == '.') {
+      normalized.append('0');
+    }
+    else {
+      while (idx < len && val.charAt(idx) != '.') {
+        char c = val.charAt(idx);
+        if (!Character.isDigit(c)) {
+          throw new IllegalArgumentException("Illegal decimal value: " + value);
+        }
+        normalized.append(c);
+        idx++;
+      }
+    }
+    normalized.append('.');
+    len--;
+    while (len >= idx && val.charAt(len) == '0') {
+      len--;
+    }
+    if (len <= idx) {
+      normalized.append('0');
+      if (normalized.charAt(0) == '0') {
+        return "0.0";
+      }
+    }
+    else {
+      // idx points to the '.', increment it
+      idx++;
+      while (idx <= len) {
+        char c = val.charAt(idx);
+        if (!Character.isDigit(c)) {
+          throw new IllegalArgumentException("Illegal decimal value: " + value);
+        }
+        normalized.append(c);
+        idx++;
+      }
+    }
+    return negative ? '-' + normalized.toString() : normalized.toString();
   }
   
   /**

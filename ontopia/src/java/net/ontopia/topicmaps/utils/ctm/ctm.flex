@@ -39,7 +39,7 @@ import net.ontopia.topicmaps.xml.InvalidTopicMapException;
       return nextToken2();
     } catch (java.io.IOException e) {
       // FIXME: is this OK?
-      return new CommonToken(Token.EOF_TYPE, "END OF FUCKING FILE, OK?");
+      return new CommonToken(Token.EOF_TYPE, "END OF FILE, OK?");
     }
   }
   
@@ -89,8 +89,13 @@ Comment = "#"[^(] {InputCharacter}* {LineTerminator}?
 /* identifiers */
 QName = {Identifier} ":" ([0-9]+ {NamePart}* | {Identifier})
 Identifier = {NameStart} ("."* {NamePart}+)*
-NameStart = [A-Za-z_]
-NamePart = {NameStart} | "-" | [0-9]
+NameStart = [A-Za-z_]| [\u00C0-\u00D6] | [\u00D8-\u00F6] 
+                     | [\u00F8-\u02FF] | [\u0370-\u037D] 
+                     | [\u037F-\u1FFF] | [\u200C-\u200D] 
+                     | [\u2070-\u218F] | [\u2C00-\u2FEF] 
+                     | [\u3001-\uD7FF] | [\uF900-\uFDCF] 
+                     | [\uFDF0-\uFFFD] 
+NamePart = {NameStart} | "-" | [0-9] | \u00B7 | [\u0300-\u036F] | [\u203F-\u2040]
 
 Variable = "$" {Identifier}
 
@@ -98,17 +103,15 @@ Variable = "$" {Identifier}
 IRI = [a-z]+ "://" (("." | ";")* [^ \r\n\f\t;.(\]]+)*
 WrappedIRI = "<" [^>]+ ">"
 
-/* string 
-   SimpleString = "\"" [^\"]* "\""*/
-TripleString = "\"\"\"" ("\""? "\""? [^\"])* "\"\"\""
+/* used in strings */
 Hexdigit = [A-Fa-f0-9]
-                       
+
 /* number */
 Digit = [0-9]
 NonZero = [1-9]
 Sign = "+" | "-"                                             
 Integer = {Sign}? {Digit}+
-Decimal = {Sign}? {Digit}+ "." {Digit}+
+Decimal = {Sign}? {Digit}* "." {Digit}+
 Infinity = "*"
 
 /* dates and times */
@@ -116,6 +119,7 @@ Date = "-"?{NonZero}*{Digit}{Digit}{Digit}{Digit}"-"{Digit}{Digit}"-"{Digit}{Dig
 DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
 
 %state STRING
+%state TRIPLE_STRING
 %xstate ML_COMMENT
 %%
 <YYINITIAL> {
@@ -154,12 +158,10 @@ DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
   {Infinity}       { return newToken(CTMParser.INFINITY); }
   {Date}           { return newToken(CTMParser.DATE); }
   {DateTime}       { return newToken(CTMParser.DATETIME); }
-  /*  {SimpleString}   { return newToken(CTMParser.SINGLE_QUOTED_STRING,
-      yytext().substring(1, yylength() - 1)); }*/
+  \"\"\"           { string.setLength(0); // empty string buffer
+                     yybegin(TRIPLE_STRING); }
   \"               { string.setLength(0); // empty string buffer
                      yybegin(STRING); }
-  {TripleString}   { return newToken(CTMParser.TRIPLE_QUOTED_STRING,
-                                     yytext().substring(3, yylength() - 3)); }
   {IRI}            { return newToken(CTMParser.IRI); }
   {WrappedIRI}     { return newToken(CTMParser.WRAPPED_IRI,
                                      yytext().substring(1, yylength() - 1)); }
@@ -178,6 +180,21 @@ DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
   \" { yybegin(YYINITIAL);
        return newToken(CTMParser.SINGLE_QUOTED_STRING, string.toString()); }
   [^\"\\] { string.append(yycharat(0)); }
+  \\\"    { string.append('"'); }
+  \\\\    { string.append('\\'); }
+  \\n     { string.append((char) 10); }
+  \\r     { string.append((char) 13); }
+  \\t     { string.append((char) 9); }
+  \\u{Hexdigit}{Hexdigit}{Hexdigit}{Hexdigit}
+          { string.append(unhex(4)); }
+  \\U{Hexdigit}{Hexdigit}{Hexdigit}{Hexdigit}{Hexdigit}{Hexdigit}
+          { string.append(unhex(6)); }
+}
+
+<TRIPLE_STRING> {
+  \"\"\" { yybegin(YYINITIAL);
+           return newToken(CTMParser.TRIPLE_QUOTED_STRING, string.toString()); }
+  [^\\]   { string.append(yycharat(0)); }
   \\\"    { string.append('"'); }
   \\\\    { string.append('\\'); }
   \\n     { string.append((char) 10); }
