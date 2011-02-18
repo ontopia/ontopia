@@ -35,7 +35,7 @@ li {
 
 /* ---- Table Formatting  ---- */
 #header {
-  background: url("ontopia-header.gif") repeat-x left top;
+  background: url("ontopia-header.gif") no-repeat left top;
   background-color: #FF0000;
   padding-top: 16px;
 }
