@@ -25,11 +25,14 @@ import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
 
 public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
   static Logger log = LoggerFactory.getLogger(OntopiaBackend.class.getName());
+
+  private TopicMapRepositoryIF repository; // injected from outside
   
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot) {
     TopicMapStoreIF store = null;
@@ -83,6 +86,10 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     }
   }
 
+  public void setRepository(TopicMapRepositoryIF repository) {
+    this.repository = repository;
+  }
+
   // ===== INTERNAL IMPLEMENTATION CODE
 
   public int getLinkScore(AtomLink link) {
@@ -104,6 +111,10 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
 
   // overriden by test code to sneak in test TM
   protected TopicMapStoreIF getStore(String id) {
+    if (repository != null)
+      return repository.createStore(id, false);
+
+    // fallback alternative if we don't have a repository
     return TopicMaps.createStore(id, false);
   }
   
@@ -114,9 +125,10 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     if (link != null)
       url = link.getUri();
 
-    if (fragment.getTopicSIs().isEmpty())
-      throw new RuntimeException("Fragment " + url + " had no TopicSIs: " +
-                                 fragment.getTopicSIs().size());
+    if (fragment.getTopicSIs().isEmpty() &&
+        fragment.getTopicIIs().isEmpty() &&
+        fragment.getTopicSLs().isEmpty())
+      throw new RuntimeException("Fragment " + url + " had no identity");
     
     // (1) get the fragment
     // FIXME: for now we only support XTM
@@ -127,12 +139,12 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
     TopicMapIF tmfragment = reader.read();
     
     // (2) apply it
-    TopicIF ftopic = getTopic(tmfragment, fragment.getTopicSIs());
+    TopicIF ftopic = getTopic(tmfragment, fragment);
     TopicIF ltopic;
     if (ftopic != null)
       ltopic = MergeUtils.findTopic(topicmap, ftopic);
     else
-      ltopic = getTopic(topicmap, fragment.getTopicSIs());
+      ltopic = getTopic(topicmap, fragment);
 
     // (a) check if we need to create the topic
     if (ltopic == null && ftopic != null)
@@ -266,9 +278,10 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
                                         "acceptable links nor content");
   }
 
-  private TopicIF getTopic(TopicMapIF topicmap, Collection<String> sis) {
+  private TopicIF getTopic(TopicMapIF topicmap, Fragment f) {
     TopicIF topic = null;
-    for (String si : sis) {
+    
+    for (String si : f.getTopicSIs()) {
       LocatorIF psi = URILocator.create(si);
       TopicIF t = topicmap.getTopicBySubjectIdentifier(psi);
       if (topic == null)
@@ -276,6 +289,25 @@ public class OntopiaBackend extends AbstractBackend implements ClientBackendIF {
       else if (t != null && t != topic)
         MergeUtils.mergeInto(topic, t); // merging the topics first
     }
+
+    for (String sl : f.getTopicSLs()) {
+      LocatorIF psi = URILocator.create(sl);
+      TopicIF t = topicmap.getTopicBySubjectLocator(psi);
+      if (topic == null)
+        topic = t;
+      else if (t != null && t != topic)
+        MergeUtils.mergeInto(topic, t); // merging the topics first
+    }
+
+    for (String ii : f.getTopicIIs()) {
+      LocatorIF psi = URILocator.create(ii);
+      TopicIF t = (TopicIF) topicmap.getObjectByItemIdentifier(psi);
+      if (topic == null)
+        topic = t;
+      else if (t != null && t != topic)
+        MergeUtils.mergeInto(topic, t); // merging the topics first
+    }
+    
     return topic;
   }
 }

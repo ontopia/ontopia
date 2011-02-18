@@ -120,6 +120,28 @@ public class AtomWriter {
     out.characters(si.toCharArray(), 0, si.length());
     out.endElement("sdshare:TopicSI");    
   }
+
+  public void addTopicSL(LocatorIF loc) {
+    addTopicSL(loc.getExternalForm());
+  }
+
+  public void addTopicSL(String loc) {
+    atts.clear();
+    out.startElement("sdshare:TopicSL", atts);
+    out.characters(loc.toCharArray(), 0, loc.length());
+    out.endElement("sdshare:TopicSL");    
+  }
+
+  public void addTopicII(LocatorIF loc) {
+    addTopicII(loc.getExternalForm());
+  }
+
+  public void addTopicII(String loc) {
+    atts.clear();
+    out.startElement("sdshare:TopicII", atts);
+    out.characters(loc.toCharArray(), 0, loc.length());
+    out.endElement("sdshare:TopicII");    
+  }
   
   public void endEntry() {
     out.endElement("entry");    

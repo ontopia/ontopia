@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.xml.sax.SAXException;
 
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.utils.sdshare.client.Fragment;
 import net.ontopia.topicmaps.utils.sdshare.client.FeedReaders;
 import net.ontopia.topicmaps.utils.sdshare.client.FragmentFeed;
@@ -32,6 +33,9 @@ public class ReceivePushServlet extends HttpServlet {
   
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
     throws IOException {
+    // (0) connect to topic map repository
+    ((OntopiaBackend) backend).setRepository(NavigatorUtils.getTopicMapRepository(getServletContext()));
+    
     // (1) parse incoming request
     String url = req.getRequestURI();
     if (req.getQueryString() != null)

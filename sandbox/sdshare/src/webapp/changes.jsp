@@ -52,17 +52,31 @@
                    syntaxes[ix].getMIMEType(),
                    "alternate");
 
-    Collection<LocatorIF> psis;
+    Collection<LocatorIF> sis;
+    Collection<LocatorIF> iis;
+    Collection<LocatorIF> sls;
     if (change.isDeleted()) {
       DeletedTopic delete = (DeletedTopic) change;
-      psis = delete.getSubjectIdentifiers();
+      sis = delete.getSubjectIdentifiers();
+      sls = delete.getSubjectLocators();
+      iis = delete.getItemIdentifiers();
     } else {
       TopicIF topic = (TopicIF) tm.getObjectById(change.getObjectId());
-      psis = topic.getSubjectIdentifiers();
+      sis = topic.getSubjectIdentifiers();
+      sls = topic.getSubjectLocators();
+      iis = topic.getItemIdentifiers();
     }
 
-    if (!psis.isEmpty())
-      atom.addTopicSI(psis.iterator().next());
+    if (!sis.isEmpty()) {
+      for (LocatorIF loc : sis)
+        atom.addTopicSI(loc);
+    } else if (!sls.isEmpty())
+      for (LocatorIF loc : sls)
+        atom.addTopicSL(loc);
+    } else {
+      for (LocatorIF loc : iis)
+        atom.addTopicII(loc);
+    }
 
     atom.endEntry();
   }

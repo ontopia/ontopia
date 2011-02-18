@@ -67,8 +67,11 @@ public class PushBackendTest extends AbstractOntopiaTestCase {
   }
   
   private void makeFragments(int number) {
-    for (int ix = 0; ix < number; ix++)
-      original.add(new Fragment(null, Collections.singleton("" + ix), ix, null));
+    for (int ix = 0; ix < number; ix++) {
+      Fragment f = new Fragment(null, ix, null);
+      f.setTopicSIs(Collections.singleton("" + ix));
+      original.add(f);
+    }
   }
 
   // --- Special test backend

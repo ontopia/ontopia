@@ -74,11 +74,19 @@ public class PushBackend implements ClientBackendIF {
     for (Fragment fragment : fragments) {
       writer.startEntry("Push fragment", "Some id", fragment.getUpdated());
       writer.addContent(fragment.getContent());
-      if (fragment.getTopicSIs().isEmpty())
+      if (fragment.getTopicSIs().isEmpty() &&
+          fragment.getTopicSLs().isEmpty() &&
+          fragment.getTopicIIs().isEmpty())
         throw new RuntimeException("Tried making fragment for topic with no " +
-                                   "subject identifiers!");
+                                   "identity!");
       for (String si : fragment.getTopicSIs())
         writer.addTopicSI(si);
+      for (String sl : fragment.getTopicSLs())
+        writer.addTopicSL(sl);
+      if (fragment.getTopicSIs().isEmpty() && fragment.getTopicSLs().isEmpty()) {
+        for (String ii : fragment.getTopicIIs())
+          writer.addTopicII(ii);
+      }
       writer.endEntry();
     }
     

@@ -56,21 +56,38 @@ public class OntopiaFrontend implements ClientFrontendIF {
         break; // we've seen all the new changes, so stop
 
       Set<String> sis = new CompactHashSet();
+      Set<String> iis = new CompactHashSet();
+      Set<String> sls = new CompactHashSet();
       String fragment;
       if (topic instanceof DeletedTopic) {
         for (LocatorIF si : ((DeletedTopic) topic).getSubjectIdentifiers())
           sis.add(si.getExternalForm());
+        for (LocatorIF sl : ((DeletedTopic) topic).getSubjectLocators())
+          sls.add(sl.getExternalForm());
+        for (LocatorIF ii : ((DeletedTopic) topic).getItemIdentifiers())
+          iis.add(ii.getExternalForm());
         fragment = makeFragment(null);
       } else {
         TopicIF rtopic = (TopicIF) topicmap.getObjectById(topic.getObjectId());
         for (LocatorIF si : rtopic.getSubjectIdentifiers())
           sis.add(si.getExternalForm());
+        for (LocatorIF sl : rtopic.getSubjectLocators())
+          sls.add(sl.getExternalForm());
+        for (LocatorIF ii : rtopic.getItemIdentifiers())
+          iis.add(ii.getExternalForm());
         fragment = makeFragment(rtopic);
       }
 
       // FIXME: do we really need to serialize the fragment? could we produce
       // it on demand instead?
-      feed.addFragment(new Fragment(null, sis, topic.getTimestamp(), fragment));
+      Fragment f = new Fragment(null, topic.getTimestamp(), fragment);
+      if (!sis.isEmpty())
+        f.setTopicSIs(sis);
+      if (!sls.isEmpty())
+        f.setTopicSLs(sls);
+      if (!iis.isEmpty())
+        f.setTopicIIs(iis);
+      feed.addFragment(f);
     }
 
     return feed;

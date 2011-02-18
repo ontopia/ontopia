@@ -179,6 +179,8 @@ public class FeedReaders {
     // SAX tracking
     protected Set<AtomLink> links; // links in current entry
     protected Set<String> sis;     // current <TopicSI>s
+    protected Set<String> sls;     // current <TopicSL>s
+    protected Set<String> iis;     // current <TopicII>s
     // content is set by a subclass, never by FragmentFeedReader itself
     protected String content;      // contents of <content>
 
@@ -187,6 +189,8 @@ public class FeedReaders {
       this.lastChange = lastChange;
       this.feed = new FragmentFeed();
       this.sis = new CompactHashSet();
+      this.sls = new CompactHashSet();
+      this.iis = new CompactHashSet();
       this.links = new CompactHashSet();
     }
 
@@ -199,7 +203,6 @@ public class FeedReaders {
       try {
         startElement_(uri, name, qname, atts);
       } catch (Exception e) {
-        e.printStackTrace();
         throw new OntopiaRuntimeException(e);
       }
     }
@@ -208,7 +211,6 @@ public class FeedReaders {
       try {
         endElement_(uri, name, qname);
       } catch (Exception e) {
-        e.printStackTrace();
         throw new OntopiaRuntimeException(e);
       }
     }
@@ -218,7 +220,9 @@ public class FeedReaders {
       super.startElement(uri, name, qname, atts);
       
       if ((uri.equals(NS_SD) && name.equals("ServerSrcLocatorPrefix")) ||
-          (uri.equals(NS_SD) && name.equals("TopicSI")))
+          (uri.equals(NS_SD) && name.equals("TopicSI")) ||
+          (uri.equals(NS_SD) && name.equals("TopicII")) ||
+          (uri.equals(NS_SD) && name.equals("TopicSL")))
         keep = true;
       
       else if (uri.equals(NS_ATOM) && name.equals("link") && inEntry) {
@@ -250,6 +254,12 @@ public class FeedReaders {
 
       else if (uri.equals(NS_SD) && name.equals("TopicSI"))
         sis.add(buf.toString());
+
+      else if (uri.equals(NS_SD) && name.equals("TopicSL"))
+        sls.add(buf.toString());
+
+      else if (uri.equals(NS_SD) && name.equals("TopicII"))
+        iis.add(buf.toString());
       
       else if (uri.equals(NS_ATOM) && name.equals("entry")) {
         // verify that we've got everything
@@ -258,8 +268,8 @@ public class FeedReaders {
                                      "and no content");
         if (updated == -1)
           throw new RuntimeException("Fragment entry had no updated field");
-        if (sis.isEmpty())
-          throw new RuntimeException("Fragment entry had no TopicSIs");
+        if (sis.isEmpty() && sls.isEmpty() && iis.isEmpty())
+          throw new RuntimeException("Fragment entry had no identity");
         
         // check if this is a new fragment, or if we saw it before
         if (updated > lastChange) {
@@ -267,13 +277,22 @@ public class FeedReaders {
                    lastChange);
           
           // create new fragment
-          feed.addFragment(new Fragment(links, sis, updated, content));
+          Fragment f = new Fragment(links, updated, content);
+          if (!sis.isEmpty())
+            f.setTopicSIs(sis);
+          if (!iis.isEmpty())
+            f.setTopicIIs(iis);
+          if (!sls.isEmpty())
+            f.setTopicSLs(sls);
+          feed.addFragment(f);
         } else
           log.info("Found old fragment, updated: " + updated);
 
         // reset tracking fields
         links = new CompactHashSet();
-        sis = new CompactHashSet();        
+        sis = new CompactHashSet();
+        iis = new CompactHashSet();
+        sls = new CompactHashSet();
       }
 
       super.endElement(uri, name, qname);
