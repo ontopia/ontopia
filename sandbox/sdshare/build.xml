@@ -78,6 +78,23 @@
     </war>
   </target>
 
+  <!-- Make push .war file -->
+  <target name="push.war" depends="init">
+    <echo>Creating sdshare push webapp .war file...</echo>
+    <mkdir dir="${build.wars}"/>
+    <mkdir dir="${build.wars}/sdshare-push/"/>
+
+    <copy todir="${build.wars}/sdshare-push" overwrite="yes">
+      <fileset dir="${basedir}/src/push-webapp"/>
+    </copy>
+    
+    <delete file="${build.wars}/sdshare-push.war"/>
+    <war destfile="${build.wars}/sdshare-push.war"
+         webxml="${build.wars}/sdshare-push/WEB-INF/web.xml">
+      <fileset dir="${build.wars}/sdshare-push"/>
+    </war>
+  </target>
+  
   <!-- Set up Cobertura instrumentation -->
   <!--target name="instrument" depends="init">
     <cobertura-instrument todir="build/instrumented-classes">
