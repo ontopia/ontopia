@@ -35,7 +35,7 @@ li {
 
 /* ---- Table Formatting  ---- */
 #header {
-  background: url("ontopia-header.gif") no-repeat left top;
+  background: url("ontopia-header.gif") repeat-x left top;
   background-color: #FF0000;
   padding-top: 16px;
 }
@@ -111,7 +111,7 @@ table.frontbox table.anglelink td.angles {
 }
 
 #oksmenu {
-  background: url("new_topmenubg.gif") no-repeat right top;
+  background: url("new_topmenubg.gif") repeat-x right top;
   height: 28px;
   color: #fbb;
   padding: 0 10px;
@@ -137,7 +137,6 @@ table.frontbox table.anglelink td.angles {
   margin-bottom: 20px;
   padding: 0 0 0 10px;
   background: url("new_topn.gif") no-repeat right top;
-  width: 100%;
 }
 
 .topLinks tr {
