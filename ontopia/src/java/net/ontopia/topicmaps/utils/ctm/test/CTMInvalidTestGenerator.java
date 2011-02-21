@@ -59,6 +59,8 @@ public class CTMInvalidTestGenerator implements TestCaseGeneratorIF {
       } catch (IOException e) {
       } catch (InvalidTopicMapException e) {
       } catch (Exception e) {
+        // we're rethrowing this exception to make sure we get the file name
+        // of the test case into the error message.
         throw new OntopiaRuntimeException("Error reading: " + in, e);
       }
     }

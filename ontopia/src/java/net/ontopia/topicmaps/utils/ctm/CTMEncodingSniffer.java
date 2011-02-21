@@ -1,6 +1,4 @@
 
-// $Id: CTMEncodingSniffer.java,v 1.1 2009/02/09 08:20:16 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.IOException;
@@ -8,6 +6,7 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.impl.utils.EncodingSnifferIF;
+import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 
 /**
  * INTERNAL: An encoding sniffer for CTM.
@@ -49,7 +48,7 @@ public class CTMEncodingSniffer implements EncodingSnifferIF {
       
       // If a BOM is found then the encoding must be utf-8.
       if (foundBom && encoding != null && !encoding.equals("utf-8"))
-        throw new OntopiaRuntimeException("Contradicting encoding information."
+        throw new InvalidTopicMapException("Contradicting encoding information."
             + " The BOM indicates that the encoding should be utf-8,"
             + " but the encoding is declared to be: " + encoding + ".");
 

@@ -1,6 +1,4 @@
 
-// $Id: ctm.flex,v 1.2 2009/04/27 11:04:17 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import antlr.*;
@@ -84,7 +82,8 @@ InputCharacter = [^\r\n]
 WhiteSpace     = {LineTerminator} | [ \t\f]
 
 /* comments */
-Comment = "#"[^(] {InputCharacter}* {LineTerminator}?
+Comment = ("#"[^(\r\n] {InputCharacter}* {LineTerminator}? |
+           "#"{LineTerminator}?)
 
 /* identifiers */
 QName = {Identifier} ":" ([0-9]+ {NamePart}* | {Identifier})
@@ -94,7 +93,7 @@ NameStart = [A-Za-z_]| [\u00C0-\u00D6] | [\u00D8-\u00F6]
                      | [\u037F-\u1FFF] | [\u200C-\u200D] 
                      | [\u2070-\u218F] | [\u2C00-\u2FEF] 
                      | [\u3001-\uD7FF] | [\uF900-\uFDCF] 
-                     | [\uFDF0-\uFFFD] 
+                     | [\uFDF0-\uFFFD]
 NamePart = {NameStart} | "-" | [0-9] | \u00B7 | [\u0300-\u036F] | [\u203F-\u2040]
 
 Variable = "$" {Identifier}
@@ -116,7 +115,7 @@ Infinity = "*"
 
 /* dates and times */
 Date = "-"?{NonZero}*{Digit}{Digit}{Digit}{Digit}"-"{Digit}{Digit}"-"{Digit}{Digit}
-DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit}
+DateTime = {Date} "T" {Digit}{Digit}":"{Digit}{Digit}":"{Digit}{Digit} ("." {Digit}+)? ("Z" | ("+" | "-") {Digit}{Digit}":"{Digit}{Digit})?
 
 %state STRING
 %state TRIPLE_STRING

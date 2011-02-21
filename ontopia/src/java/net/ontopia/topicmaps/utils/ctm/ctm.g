@@ -398,12 +398,25 @@ literal :
            { literal = basic_literal;
              basic_literal.setLiteral(LT(0).getText());
              basic_literal.setDatatype(PSI.getXSDDecimal()); } |
-  DATE     { literal = basic_literal;
-             basic_literal.setLiteral(LT(0).getText());
-             basic_literal.setDatatype(PSI.getXSDDate());    } |
-  DATETIME { literal = basic_literal;
-             basic_literal.setLiteral(LT(0).getText());
-             basic_literal.setDatatype(PSI.getXSDDatetime());} |
+  (DATE     { literal = basic_literal;
+              basic_literal.setLiteral(LT(0).getText());
+              basic_literal.setDatatype(PSI.getXSDDate());    } |
+   DATETIME { literal = basic_literal;
+              basic_literal.setLiteral(LT(0).getText());
+              basic_literal.setDatatype(PSI.getXSDDatetime());} )
+   // common validation for date and datetime
+   { String value = literal.getLiteral();
+     if (value.startsWith("0000-"))
+       throw new InvalidTopicMapException("The year '0000' is prohibited");
+     int dash1 = value.indexOf('-', 1); // skip initial dash
+     int dash2 = dash1 + 3; // always two digits in month
+     int month = Integer.parseInt(value.substring(dash1 + 1, dash2));
+     if (month == 0 || month > 12)
+       throw new InvalidTopicMapException("Invalid month in '" + value + "'");
+     int day = Integer.parseInt(value.substring(dash2 + 1, dash2 + 3));
+     if (day == 0 || day > 31)
+       throw new InvalidTopicMapException("Invalid day in '" + value + "'");
+   } |
   VARIABLE { 
     if (current_template == null)
       throw new InvalidTopicMapException("Variable " + LT(0).getText() +

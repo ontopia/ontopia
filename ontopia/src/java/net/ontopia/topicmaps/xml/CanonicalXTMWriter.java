@@ -1,11 +1,10 @@
 
-// $Id: CanonicalXTMWriter.java,v 1.45 2009/02/27 12:04:53 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
+import java.io.Reader;
+import java.io.Writer;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +22,7 @@ import org.xml.sax.helpers.AttributeListImpl;
 
 import net.ontopia.xml.CanonicalPrinter;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
@@ -188,7 +188,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     for (int ix = 0; ix < names.length; ix++)
       write((TopicNameIF) names[ix], ix + 1);
 
-    Object[] occurrences = topic.getOccurrences().toArray();
+    Object[] occurrences = makeFakes(topic.getOccurrences().toArray());
     Arrays.sort(occurrences, occurrenceComparator);
     for (int ix = 0; ix < occurrences.length; ix++)
       write((OccurrenceIF) occurrences[ix], ix + 1);
@@ -258,6 +258,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     endElement("variant");
   }
 
+  private Object[] makeFakes(Object[] occs) {
+    for (int ix = 0; ix < occs.length; ix++) {
+      OccurrenceIF original = (OccurrenceIF) occs[ix];
+      occs[ix] = new FakeOccurrence(original);
+    }
+    return occs;
+  }
+  
   private void write(OccurrenceIF occurrence, int number) {
     AttributeListImpl attributes = reifier(occurrence);
     attributes.addAttribute("number", null, "" + number);
@@ -265,16 +273,7 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
     startElement("occurrence", attributes);
     attributes.clear();
 
-    LocatorIF datatype = occurrence.getDataType();
-    if (datatype.equals(DataTypes.TYPE_URI)) {
-      LocatorIF locator = occurrence.getLocator();
-      write(normaliseLocatorReference(locator.getAddress()));
-    } else if (datatype.equals(DataTypes.TYPE_INTEGER) ||
-               datatype.equals(DataTypes.TYPE_DECIMAL))
-      write(normalizeNumber(occurrence.getValue()));
-    else
-      write(occurrence.getValue());
-
+    write(occurrence.getValue()); // normalized in FakeOccurrence below
     write(occurrence.getDataType(), "datatype");
     writeType(occurrence);
     write(occurrence.getScope());
@@ -1199,5 +1198,122 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
   
     public void setReifier(TopicIF reifier) {}
 
+  }
+
+  // we need this class because occurrences are output ordered by normalized
+  // value, and not by the literal value
+  class FakeOccurrence implements OccurrenceIF {
+    private OccurrenceIF occ;
+    private String value;
+
+    public FakeOccurrence(OccurrenceIF occ) {
+      this.occ = occ;
+
+      LocatorIF datatype = occ.getDataType();
+      if (datatype.equals(DataTypes.TYPE_URI)) {
+        LocatorIF locator = occ.getLocator();
+        this.value = normaliseLocatorReference(locator.getAddress());
+      } else if (datatype.equals(DataTypes.TYPE_INTEGER) ||
+                 datatype.equals(DataTypes.TYPE_DECIMAL))
+        this.value = normalizeNumber(occ.getValue());
+      else
+        this.value = occ.getValue();
+    }
+    
+    public TopicIF getTopic() {
+      return occ.getTopic();
+    }
+  
+    public LocatorIF getDataType() {
+      return occ.getDataType();
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    public Reader getReader() {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setValue(String value) {
+      throw new UnsupportedOperationException();
+    }
+  
+    public LocatorIF getLocator() {
+      throw new UnsupportedOperationException();
+    }
+  
+    public void setLocator(LocatorIF locator) {
+      throw new UnsupportedOperationException();
+    }
+  
+    public void setValue(String value, LocatorIF datatype) {
+      throw new UnsupportedOperationException();
+    }
+  
+    public void setReader(Reader value, long length, LocatorIF datatype) {
+      throw new UnsupportedOperationException();
+    }
+  
+    public long getLength() {
+      throw new UnsupportedOperationException();
+    }
+
+    public TopicIF getType() {
+      return occ.getType();
+    }
+
+    public void setType(TopicIF type) {
+      throw new UnsupportedOperationException();
+    }
+
+    public TopicIF getReifier() {
+      return occ.getReifier();
+    }
+  
+    public void setReifier(TopicIF reifier) {
+      throw new UnsupportedOperationException();
+    }
+
+    public Collection getScope() {
+      return occ.getScope();
+    }
+
+    public void addTheme(TopicIF theme) {
+      throw new UnsupportedOperationException();
+    }
+    
+    public void removeTheme(TopicIF theme) {
+      throw new UnsupportedOperationException();
+    }
+
+    public String getObjectId() {
+      return occ.getObjectId();
+    }
+
+    public boolean isReadOnly() {
+      return true;
+    }
+
+    public TopicMapIF getTopicMap() {
+      return occ.getTopicMap();
+    }
+
+    public Collection getItemIdentifiers() {
+      return occ.getItemIdentifiers();
+    }
+
+    public void addItemIdentifier(LocatorIF source_locator) {
+      throw new UnsupportedOperationException();
+    }
+    
+    public void removeItemIdentifier(LocatorIF source_locator) {
+      throw new UnsupportedOperationException();
+    }
+
+    public void remove() {
+      throw new UnsupportedOperationException();
+    }
   }
 }
