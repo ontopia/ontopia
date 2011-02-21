@@ -10,8 +10,8 @@
 <shortaffil>Ontopia</shortaffil>
 </affiliation>
 </author>
-<pubdate>2010-10-18</pubdate>
-<releaseinfo>5.1.2</releaseinfo>
+<pubdate>2011-02-21</pubdate>
+<releaseinfo>5.1.3</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -87,6 +87,10 @@ adds some fairly minor new functionality.</para>
   <listitem>
     <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=356"
       >Issue 356: The literal "1.0" not allowed in CTM</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=360"
+      >Issue 360: CTM parser doesn't accept fractional seconds and timezones</ulink></para>
   </listitem>
 </itemizedlist>
 </section>

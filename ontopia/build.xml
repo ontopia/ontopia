@@ -130,7 +130,7 @@
     <!-- svn-revision to the external xtm21 test suite -->
     <property name="xtm21.revision" value="134" />
     <!-- svn-revision to the external tm/xml test suite -->
-    <property name="tmxml.revision" value="68" />
+    <property name="tmxml.revision" value="175" />
     <!-- svn-revision to the external jtm test suite -->
     <property name="jtm.revision" value="46" />
     <!-- svn-revision to the external ctm test suite -->
@@ -1708,7 +1708,7 @@
   </target>
 
   <target name="checkfiles-xtm21" depends="init">
-    <property name="xtm21.basename" value="${test.path}/xtm21-r${xtm2.revision}" />
+    <property name="xtm21.basename" value="${test.path}/xtm21-r${xtm21.revision}" />
     <!-- checks if file has already been downloaded -->
     <available file="${xtm21.basename}.tar.gz" property="xtm21.exists" />
   </target>
