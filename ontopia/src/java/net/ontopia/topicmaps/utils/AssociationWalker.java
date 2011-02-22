@@ -3,9 +3,22 @@
 
 package net.ontopia.topicmaps.utils;
 
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.utils.DeciderIterator;
+import net.ontopia.utils.EqualsDecider;
+import net.ontopia.utils.GrabberDecider;
 
 /**
  * PUBLIC: Computes the transitive closure of a relation characterized by
@@ -47,7 +60,7 @@ public class AssociationWalker {
    * PROTECTED: The listeners to be informed as the walker processes
    * the topic map.
    */
-  protected ArrayList listeners;
+  protected List<AssociationWalkerListenerIF> listeners;
     
   /**
    * PUBLIC: Creates a walker which determines that a topic A is
@@ -67,7 +80,7 @@ public class AssociationWalker {
     assocDecider = new GrabberDecider(new TypedIFGrabber(), new EqualsDecider(associationType));
     leftRoleDecider = new GrabberDecider(new TypedIFGrabber(), new EqualsDecider(leftRoleSpec));
     rightRoleDecider = new GrabberDecider(new TypedIFGrabber(), new EqualsDecider(rightRoleSpec));
-    listeners = new ArrayList();
+    listeners = new ArrayList<AssociationWalkerListenerIF>();
   }
 
   /**
@@ -81,7 +94,7 @@ public class AssociationWalker {
     this.assocDecider = assocDecider;
     leftRoleDecider = fromRoleDecider;
     rightRoleDecider = toRoleDecider;
-    listeners = new ArrayList();
+    listeners = new ArrayList<AssociationWalkerListenerIF>();
   }
     
 
@@ -95,7 +108,7 @@ public class AssociationWalker {
    * @return An unmodifiable Set of TopicIF objects; the topics
    * present in the closure.
    */
-  public Set walkTopics(TopicIF start) {
+  public Set<TopicIF> walkTopics(TopicIF start) {
     WalkerState state = walk(start, false);
     return Collections.unmodifiableSet(state.closure);
   }
@@ -118,7 +131,7 @@ public class AssociationWalker {
    * implementing TopicIF.
    * @return An unmodifiable Collection of List objects.
    */
-  public Collection walkPaths(TopicIF start) {
+  public Collection<List<TMObjectIF>> walkPaths(TopicIF start) {
     WalkerState state = walk(start, true);
     return Collections.unmodifiableCollection(state.paths);
   }
@@ -172,7 +185,7 @@ public class AssociationWalker {
     // ignore if from topic is null
     if (fromTopic == null) return;
 
-    Collection fromRoles = fromTopic.getRoles();
+    Collection<AssociationRoleIF> fromRoles = fromTopic.getRoles();
     if (fromRoles.isEmpty()) {
       foundLeaf(state);
     } else {
@@ -184,7 +197,7 @@ public class AssociationWalker {
         AssociationRoleIF leftRole = (AssociationRoleIF)leftRolesIt.next();
         AssociationIF assoc = leftRole.getAssociation();
         if (assocDecider.ok(assoc)) {
-          Collection assocRoles = assoc.getRoles();
+          Collection<AssociationRoleIF> assocRoles = assoc.getRoles();
           DeciderIterator rightRolesIt = new DeciderIterator(rightRoleDecider, assocRoles.iterator());
           if (!rightRolesIt.hasNext()) {
             // We have traversed to a leaf. Add the current path to the tree set
@@ -289,9 +302,9 @@ public class AssociationWalker {
    * @param rightRolePlayer The second topic in the triple; an object implementing TopicIF.
    */
   private void notifyListeners(TopicIF leftRolePlayer, AssociationIF assoc, TopicIF rightRolePlayer) {
-    Iterator it = listeners.iterator();
+    Iterator<AssociationWalkerListenerIF> it = listeners.iterator();
     while (it.hasNext()) {
-      AssociationWalkerListenerIF listener = (AssociationWalkerListenerIF)it.next();
+      AssociationWalkerListenerIF listener = it.next();
       listener.walkAssociation(leftRolePlayer, assoc, rightRolePlayer);
     }
   }
@@ -306,7 +319,7 @@ class WalkerState {
    * This variable is null if no walk has been
    * performed.
    */
-  protected Set closure;
+  protected Set<TopicIF> closure;
 
   /**
    * PROTECTED: The paths followed by the last walk. The storage of
@@ -314,12 +327,12 @@ class WalkerState {
    * null if no walk has been performed or if the last walk was
    * invoked without storing paths.
    */
-  protected Collection paths;
+  protected Collection<List<TMObjectIF>> paths;
 
   /**
    * PROTECTED: The tree path currently being walked.
    */
-  Stack currPath;
+  Stack<TMObjectIF> currPath;
 
   /**
    * PROTECTED: The topic to start walking from
@@ -346,16 +359,16 @@ class WalkerState {
   protected WalkerState(TopicIF start, boolean storePaths) {
     startTopic = start;
     this.storePaths = storePaths;
-    if (storePaths) paths = new ArrayList();
-    currPath = new Stack();
+    if (storePaths) paths = new ArrayList<List<TMObjectIF>>();
+    currPath = new Stack<TMObjectIF>();
     currPath.push(start);
     foundTopic = false;
     toTopic = null;
-    closure = new HashSet();
+    closure = new HashSet<TopicIF>();
   }
     
   protected void addCurrPath() {
-    paths.add(new ArrayList(currPath));
+    paths.add(new ArrayList<TMObjectIF>(currPath));
   }
     
   protected void pushPath(TMObjectIF lastElement) {

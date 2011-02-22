@@ -3,12 +3,19 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.utils.DeciderIF;
 
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.infoset.core.*;
-import net.ontopia.infoset.impl.basic.*;
 
 /**
  * INTERNAL: This class provides utility functions for traversing class
@@ -68,11 +75,11 @@ public class TypeHierarchyUtils {
    *            subtype of the given type
    */
   public boolean isInstanceOf(TopicIF typed, TopicIF klass) {
-    Collection _types = typed.getTypes();
+    Collection<TopicIF> _types = typed.getTypes();
     if (_types.contains(klass)) return true;
-    Iterator it = _types.iterator();
+    Iterator<TopicIF> it = _types.iterator();
     while (it.hasNext()) {
-      if (supertypesWalker.isAssociated((TopicIF)it.next(), klass)) {
+      if (supertypesWalker.isAssociated(it.next(), klass)) {
         return true;
       }
     }
@@ -97,25 +104,25 @@ public class TypeHierarchyUtils {
   
   public boolean isAssociatedWith(TopicIF start, TopicIF associated) {
 
-    Collection roles = start.getRoles();
-    Iterator itRoles = roles.iterator();
+    Collection<AssociationRoleIF> roles = start.getRoles();
+    Iterator<AssociationRoleIF> itRoles = roles.iterator();
 
     AssociationRoleIF assocRole;
     AssociationIF assoc;
-    Collection assocRoles;
-    Iterator itAssocRoles;
+    Collection<AssociationRoleIF> assocRoles;
+    Iterator<AssociationRoleIF> itAssocRoles;
     AssociationRoleIF otherAssocRole;
     
     // try all roles the start topic plays
     while (itRoles.hasNext()) {
-      assocRole = (AssociationRoleIF) itRoles.next();
+      assocRole = itRoles.next();
       assoc = assocRole.getAssociation();
 
       assocRoles = assoc.getRoles();
       itAssocRoles = assocRoles.iterator();
       // get all associations within this association role
       while (itAssocRoles.hasNext()) {
-        otherAssocRole = (AssociationRoleIF) itAssocRoles.next();
+        otherAssocRole = itAssocRoles.next();
         // stop further processing if found association
         TopicIF player = otherAssocRole.getPlayer();
         if (player != null && player.equals(associated)) 
@@ -133,7 +140,7 @@ public class TypeHierarchyUtils {
    * @return an unmodifiable collection of topicIF objects; the
    * supertypes of the given topic
    */
-  public Collection getSuperclasses(TopicIF klass) {
+  public Collection<TopicIF> getSuperclasses(TopicIF klass) {
     return supertypesWalker.walkTopics(klass);
   }
 
@@ -151,11 +158,11 @@ public class TypeHierarchyUtils {
    * supertypes of the given topic
    * @since 1.2.5
    */
-  public Collection getSuperclasses(TopicIF klass, int level) {
-    Collection supers = new ArrayList();
-    Iterator it = supertypesWalker.walkPaths(klass).iterator();
+  public Collection<TopicIF> getSuperclasses(TopicIF klass, int level) {
+    Collection<TopicIF> supers = new ArrayList<TopicIF>();
+    Iterator<List<TMObjectIF>> it = supertypesWalker.walkPaths(klass).iterator();
     while (it.hasNext()) {
-      List path = (List) it.next();
+      List<TMObjectIF> path = it.next();
       for (int ix = 2; ix < path.size() && ix <= level*2; ix += 2) 
         supers.add((TopicIF) path.get(ix));
     }
@@ -168,7 +175,7 @@ public class TypeHierarchyUtils {
    * @param klass a topicIF; the given typing topic 
    * @return a collection of topicIF objects; the subtypes of the given topic
    */
-  public Collection getSubclasses(TopicIF klass) {
+  public Collection<TopicIF> getSubclasses(TopicIF klass) {
     return subtypesWalker.walkTopics(klass);
   }
 
@@ -185,11 +192,11 @@ public class TypeHierarchyUtils {
    * @return a collection of topicIF objects; the subtypes of the given topic
    * @since 1.2.5
    */
-  public Collection getSubclasses(TopicIF klass, int level) {
-    Collection subs = new ArrayList();
-    Iterator it = subtypesWalker.walkPaths(klass).iterator();
+  public Collection<TopicIF> getSubclasses(TopicIF klass, int level) {
+    Collection<TopicIF> subs = new ArrayList<TopicIF>();
+    Iterator<List<TMObjectIF>> it = subtypesWalker.walkPaths(klass).iterator();
     while (it.hasNext()) {
-      List path = (List) it.next();
+      List<TMObjectIF> path = it.next();
       for (int ix = 2; ix < path.size() && ix <= level*2; ix += 2) 
         subs.add((TopicIF) path.get(ix));
     }
@@ -204,8 +211,8 @@ public class TypeHierarchyUtils {
    * @return a collection of topicIF objects; the type and all
    * supertypes of the given typedIF object.   
    */
-  public Collection getSupertypes(TypedIF typed) {
-    if (typed.getType() == null) return new ArrayList();
+  public Collection<TopicIF> getSupertypes(TypedIF typed) {
+    if (typed.getType() == null) return new ArrayList<TopicIF>();
     return supertypesWalker.walkTopics(typed.getType());
   }
 
@@ -217,7 +224,7 @@ public class TypeHierarchyUtils {
    * @return a collection of topicIF objects; the type and all supertypes
    *         of the given object
    */
-  public Collection getSupertypes(TopicIF typed) {
+  public Collection<TopicIF> getSupertypes(TopicIF typed) {
     return getSupertypes(typed, false);
   }
 
@@ -233,11 +240,11 @@ public class TypeHierarchyUtils {
    * supertypes of the given object
    * @since 1.1
    */
-  public Collection getSupertypes(TopicIF typed, boolean excludeTypes) {
-    Set ret = new HashSet();
-    Iterator it = typed.getTypes().iterator();
+  public Collection<TopicIF> getSupertypes(TopicIF typed, boolean excludeTypes) {
+    Set<TopicIF> ret = new HashSet<TopicIF>();
+    Iterator<TopicIF> it = typed.getTypes().iterator();
     while (it.hasNext()) {
-      TopicIF type = (TopicIF)it.next();
+      TopicIF type = it.next();
       // add type (if wanted)
       if (!excludeTypes)
         ret.add(type);
