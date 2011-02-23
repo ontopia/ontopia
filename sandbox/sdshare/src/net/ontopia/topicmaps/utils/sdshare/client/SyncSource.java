@@ -25,9 +25,11 @@ public class SyncSource {
    * by the server. In milliseconds since epoch.
    */
   private long lastChange;
+  private static String DEF_FRONT =
+    "net.ontopia.topicmaps.utils.sdshare.client.AtomFrontend";
   
   public SyncSource(String handle, int checkInterval, String frontend) {
-    this.frontend = instantiate(handle, frontend);
+    this.frontend = instantiate(handle, frontend == null ? DEF_FRONT : frontend);
     this.checkInterval = checkInterval;
   }
   

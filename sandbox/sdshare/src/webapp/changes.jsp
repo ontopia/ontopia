@@ -70,7 +70,7 @@
     if (!sis.isEmpty()) {
       for (LocatorIF loc : sis)
         atom.addTopicSI(loc);
-    } else if (!sls.isEmpty())
+    } else if (!sls.isEmpty()) {
       for (LocatorIF loc : sls)
         atom.addTopicSL(loc);
     } else {

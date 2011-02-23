@@ -5,7 +5,7 @@
           net.ontopia.topicmaps.entry.TopicMapReferenceIF"
 %><%
   String tmid = request.getParameter("topicmap");
-  TopicMapTracker tracker = StartUpServlet.topicmaps.get(tmid);
+  TopicMapTracker tracker = TrackerManager.getTracker(tmid);
   TopicMapReferenceIF ref = tracker.getReference();
   AtomWriter atom = new AtomWriter(out);
   atom.startFeed("Collection feed for " + ref.getTitle(),
