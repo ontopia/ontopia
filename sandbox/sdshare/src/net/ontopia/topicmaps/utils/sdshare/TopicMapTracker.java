@@ -248,38 +248,44 @@ public class TopicMapTracker implements TopicMapListenerIF {
         boolean changed = line.charAt(0) == 'C';
         int pos = line.indexOf(" ", 2);
         String objid = line.substring(2, pos);
-        long timestamp;
+        long timestamp = 0;
 
-        ChangedTopic change;
-        
+        ChangedTopic change = null;
         if (changed) {
           timestamp = Long.parseLong(line.substring(pos + 1));
           change = new ChangedTopic(objid, timestamp);
         } else {
           int pos2 = line.indexOf(" ", pos + 1);
-          timestamp = Long.parseLong(line.substring(pos + 1, pos2));
-          String[] ids = StringUtils.split(line.substring(pos2 + 1));
+          if (pos2 != -1) {
+            // if the deleted topic had no identity we can't make a
+            // change object for it, since there's no way of
+            // connecting it to anything else. we can't have included
+            // it in any SDshare feed, anyway, so we can safely drop
+            // the event. especially as the topic's gone now, anyway.
+            timestamp = Long.parseLong(line.substring(pos + 1, pos2));
+            String[] ids = StringUtils.split(line.substring(pos2 + 1));
 
-          Collection<LocatorIF> sids = new ArrayList<LocatorIF>();
-          Collection<LocatorIF> iids = new ArrayList<LocatorIF>();
-          Collection<LocatorIF> slos = new ArrayList<LocatorIF>();
-          for (int ix = 0; ix < ids.length; ix++) {
-            LocatorIF loc = URILocator.create(ids[ix].substring(1));
-            if (ids[ix].charAt(0) == 's')
-              sids.add(loc);
-            else if (ids[ix].charAt(0) == 'l')
-              slos.add(loc);
-            else if (ids[ix].charAt(0) == 'i')
-              iids.add(loc);
-            else
-              throw new RuntimeException("Unknown identifier type in '" +
-                                         ids[ix] + "'");
+            Collection<LocatorIF> sids = new ArrayList<LocatorIF>();
+            Collection<LocatorIF> iids = new ArrayList<LocatorIF>();
+            Collection<LocatorIF> slos = new ArrayList<LocatorIF>();
+            for (int ix = 0; ix < ids.length; ix++) {
+              LocatorIF loc = URILocator.create(ids[ix].substring(1));
+              if (ids[ix].charAt(0) == 's')
+                sids.add(loc);
+              else if (ids[ix].charAt(0) == 'l')
+                slos.add(loc);
+              else if (ids[ix].charAt(0) == 'i')
+                iids.add(loc);
+              else
+                throw new RuntimeException("Unknown identifier type in '" +
+                                           ids[ix] + "'");
+            }
+
+            change = new DeletedTopic(objid, timestamp, sids, slos, iids);
           }
-
-          change = new DeletedTopic(objid, timestamp, sids, slos, iids);
         }
         
-        if (timestamp > expireolderthan)
+        if (timestamp > expireolderthan && change != null)
           modified(change);
       
         line = reader.readLine();
