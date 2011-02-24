@@ -72,12 +72,12 @@ public class CouchTopic implements PrestoTopic {
     JsonNode fieldNode = data.get(field.getId());
     if (fieldNode != null) {
       for (JsonNode value : fieldNode) {
-        String value_ = value.getTextValue();
+        String textValue = value.getTextValue();
         if (isReferenceField) {
-          PrestoTopic valueTopic = dataProvider.getTopicById(value_);
+          PrestoTopic valueTopic = dataProvider.getTopicById(textValue);
           values.add(valueTopic);
         } else {
-          values.add(value_);          
+          values.add(textValue);          
         }
       }
     }

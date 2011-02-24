@@ -104,11 +104,12 @@ public class PojoSchemaModel {
         ArrayNode viewsNode = (ArrayNode)typeConfig.get("views");
         for (JsonNode viewNode_ : viewsNode) {
 
+          // view
           ObjectNode viewNode = (ObjectNode)viewNode_;
           String viewId = viewNode.get("id").getTextValue();
           PojoView view = new PojoView(viewId, schemaProvider);
           type.addView(view);
-          // name
+          // view name
           String viewName = viewNode.get("name").getTextValue();
           view.setName(viewName);
           // fields

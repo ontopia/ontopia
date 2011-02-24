@@ -6,16 +6,16 @@ import java.util.Collection;
 
 public interface PrestoDataProvider {
   
-  public PrestoTopic getTopicById(String id);
+  PrestoTopic getTopicById(String id);
 
-  public Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field);
+  Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field);
 
-  public PrestoChangeSet createTopic(PrestoType type);
+  PrestoChangeSet createTopic(PrestoType type);
 
-  public PrestoChangeSet updateTopic(PrestoTopic topic);
+  PrestoChangeSet updateTopic(PrestoTopic topic);
  
-  public boolean removeTopic(PrestoTopic topic);
+  boolean removeTopic(PrestoTopic topic);
   
-  public void close();
+  void close();
   
 }

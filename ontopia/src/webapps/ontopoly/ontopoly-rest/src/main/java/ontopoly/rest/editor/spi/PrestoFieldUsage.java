@@ -4,14 +4,14 @@ import java.util.Collection;
 
 public interface PrestoFieldUsage extends PrestoField {
 
-    public PrestoType getType();
+  PrestoType getType();
     
-    public PrestoView getView();
+  PrestoView getView();
     
-    public PrestoView getValueView();
+  PrestoView getValueView();
 
-    public Collection<PrestoType> getAvailableFieldCreateTypes();
+  Collection<PrestoType> getAvailableFieldCreateTypes();
 
-    public Collection<PrestoType> getAvailableFieldValueTypes(); // ISSUE: can be make internal
+  Collection<PrestoType> getAvailableFieldValueTypes(); // ISSUE: can this be made internal?
 
 }

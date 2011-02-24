@@ -27,23 +27,27 @@ import org.ektorp.impl.StdCouchDbInstance;
 
 public class CouchDataProvider implements PrestoDataProvider {
 
-  private HttpClient httpClient;
-  private CouchDbInstance dbInstance;
   private CouchDbConnector db;
 
   private final ObjectMapper mapper = new ObjectMapper();
   private final String designDocId;
+  private final String fallbackViewId;
 
   public CouchDataProvider(String host, int port, String databaseName, String designDocId) {
+      this(host, port, databaseName, designDocId, null);
+  }
+  
+  public CouchDataProvider(String host, int port, String databaseName, String designDocId, String fallbackViewId) {
 
     this.designDocId = designDocId;
-
-    httpClient = new StdHttpClient.Builder()
+    this.fallbackViewId = fallbackViewId;
+    
+    HttpClient httpClient = new StdHttpClient.Builder()
     .host(host)
     .port(port)
     .build();
 
-    dbInstance = new StdCouchDbInstance(httpClient);
+    CouchDbInstance dbInstance = new StdCouchDbInstance(httpClient);
 
     db = new StdCouchDbConnector(databaseName, dbInstance);
     db.createDatabaseIfNotExists();
@@ -58,7 +62,6 @@ public class CouchDataProvider implements PrestoDataProvider {
   }
 
   public PrestoTopic getTopicById(String topicId) {
-    System.out.println("ID: " + topicId);
     // look up by document id
     ObjectNode doc = null;
     try {
@@ -66,15 +69,11 @@ public class CouchDataProvider implements PrestoDataProvider {
     } catch (DocumentNotFoundException e) {      
     }
     if (doc == null) {
-      // look up in view
-      int ix = topicId.indexOf(':');
-      if (ix >= 0) {
-        String viewId = topicId.substring(0, ix);
-        String key = topicId; // topicId.substring(ix+1);
-        System.out.println("VIEWx: " + viewId + " " + key);
+      if (fallbackViewId != null) {
+        // look up identity in in fallback view
         ViewQuery query = new ViewQuery()
         .designDocId(designDocId)
-        .viewName(viewId).key(key).limit(1);
+        .viewName(fallbackViewId).includeDocs(true).key(topicId).limit(1);
         try {
           ViewResult viewResult = db.queryView(query);
           for (Row row : viewResult.getRows()) {
@@ -83,12 +82,10 @@ public class CouchDataProvider implements PrestoDataProvider {
           }
         } catch (DocumentNotFoundException e) {          
         }
-
       }
       if (doc == null) {
         throw new RuntimeException("Unknown topic: " + topicId);
       }
-      System.out.println("D: " + doc);
     }
     return CouchTopic.existing(this, doc);
   }

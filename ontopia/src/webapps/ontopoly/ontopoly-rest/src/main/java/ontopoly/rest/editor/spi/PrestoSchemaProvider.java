@@ -4,10 +4,10 @@ import java.util.Collection;
 
 public interface PrestoSchemaProvider {
 
-  public String getDatabaseId();
+  String getDatabaseId();
   
-  public PrestoType getTypeById(String typeId);
+  PrestoType getTypeById(String typeId);
   
-  public Collection<PrestoType> getRootTypes();
+  Collection<PrestoType> getRootTypes();
 
 }

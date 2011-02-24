@@ -4,18 +4,18 @@ package ontopoly.rest.editor.spi;
 
 public interface PrestoSession {
 
-  public String getDatabaseId();
+  String getDatabaseId();
   
-  public String getDatabaseName();
+  String getDatabaseName();
   
-  public void abort();
+  void abort();
 
-  public void commit();
+  void commit();
 
-  public void close();
+  void close();
 
-  public PrestoDataProvider getDataProvider();
+  PrestoDataProvider getDataProvider();
 
-  public PrestoSchemaProvider getSchemaProvider();
+  PrestoSchemaProvider getSchemaProvider();
   
 }

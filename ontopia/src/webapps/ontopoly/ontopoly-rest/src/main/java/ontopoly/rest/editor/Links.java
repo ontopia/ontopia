@@ -12,6 +12,10 @@ public class Links {
     return uriInfo.getBaseUri() + "editor/topic/" + fieldsView.getSchemaProvider().getDatabaseId() + "/" + topic.getId() + "/" + fieldsView.getId();
   }
 
+  protected static String getEditLinkFor(UriInfo uriInfo, PrestoTopic topic, PrestoView fieldsView, boolean readOnlyMode) {
+    return uriInfo.getBaseUri() + "editor/topic/" + fieldsView.getSchemaProvider().getDatabaseId() + "/" + topic.getId() + "/" + fieldsView.getId() + (readOnlyMode ? "?readOnly=true" : "");
+  }
+
   protected static String getCreateLinkFor(UriInfo uriInfo, PrestoType topicType, PrestoView fieldsView) {
     return uriInfo.getBaseUri() + "editor/topic/" + topicType.getSchemaProvider().getDatabaseId() + "/_" + topicType.getId() + "/" + fieldsView.getId();
   }

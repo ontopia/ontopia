@@ -14,11 +14,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import ontopoly.rest.editor.Utils.Link;
+import ontopoly.rest.editor.jaxb.Link;
 import ontopoly.rest.editor.spi.PrestoDataProvider;
 import ontopoly.rest.editor.spi.PrestoFieldUsage;
 import ontopoly.rest.editor.spi.PrestoSchemaProvider;
@@ -202,19 +203,20 @@ public class TopicResource {
   public Map<String,Object> getTopicInDefaultView(
       @Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
-      @PathParam("topicId") final String topicId) throws Exception {
+      @PathParam("topicId") final String topicId,
+      @QueryParam("readOnly") final boolean readOnly) throws Exception {
 
     PrestoSession session = createSession(topicMapId);
     PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
     PrestoDataProvider dataProvider = session.getDataProvider();
-    
+
     try {
 
       PrestoTopic topic = dataProvider.getTopicById(topicId);
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = topicType.getDefaultView();
       
-      return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
+      return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, readOnly);
 
     } catch (Exception e) {
       session.abort();
@@ -230,7 +232,8 @@ public class TopicResource {
   public Map<String,Object> getTopicInView(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId,
-      @PathParam("viewId") final String viewId) throws Exception {
+      @PathParam("viewId") final String viewId,
+      @QueryParam("readOnly") final boolean readOnly) throws Exception {
 
     PrestoSession session = createSession(topicMapId);
     PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
@@ -242,7 +245,7 @@ public class TopicResource {
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = topicType.getViewById(viewId);
 
-      return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView);
+      return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, readOnly);
 
     } catch (Exception e) {
       session.abort();

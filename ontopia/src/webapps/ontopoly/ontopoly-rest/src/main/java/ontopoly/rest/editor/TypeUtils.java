@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.ws.rs.core.UriInfo;
 
-import ontopoly.rest.editor.Utils.Link;
+import ontopoly.rest.editor.jaxb.Link;
 import ontopoly.rest.editor.spi.PrestoType;
 
 public class TypeUtils {

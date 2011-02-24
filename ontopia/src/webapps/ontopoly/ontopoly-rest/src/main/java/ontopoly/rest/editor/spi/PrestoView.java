@@ -3,10 +3,10 @@ package ontopoly.rest.editor.spi;
 
 public interface PrestoView {
 
-  public String getId();
+  String getId();
   
-  public String getName();
+  String getName();
 
-  public PrestoSchemaProvider getSchemaProvider();
+  PrestoSchemaProvider getSchemaProvider();
   
 }

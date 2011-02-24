@@ -61,7 +61,6 @@ public class CouchChangeSet implements PrestoChangeSet {
     changes.add(new Change(Change.ChangeType.REMOVE, field, values));
   }
 
-  @SuppressWarnings("unchecked")
   public PrestoTopic save() {
     this.saved = true;
 

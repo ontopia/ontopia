@@ -3,42 +3,42 @@ package ontopoly.rest.editor.spi;
 
 public interface PrestoField {
 
-  public String getId();
+  String getId();
 
-  public PrestoSchemaProvider getSchemaProvider();
+  PrestoSchemaProvider getSchemaProvider();
 
-  public String getName();
+  String getName();
   
-  public boolean isNameField();
+  boolean isNameField();
 
-  public boolean isPrimitiveField();
+  boolean isPrimitiveField();
   
-  public boolean isReferenceField();
+  boolean isReferenceField();
 
-  public String getFieldType();
+  String getFieldType();
   
-  public int getMinCardinality();
+  int getMinCardinality();
 
-  public int getMaxCardinality();
+  int getMaxCardinality();
 
-  public String getDataType();
+  String getDataType();
   
-  public String getValidationType();
+  String getValidationType();
 
-  public boolean isEmbedded();
+  boolean isEmbedded();
 
-  public boolean isTraversable();
+  boolean isTraversable();
 
-  public boolean isReadOnly();
+  boolean isReadOnly();
 
   // reference fields
 
-  public boolean isNewValuesOnly();
+  boolean isNewValuesOnly();
 
-  public boolean isExistingValuesOnly();
+  boolean isExistingValuesOnly();
   
-  public String getInverseFieldId();
+  String getInverseFieldId();
 
-  public String getInterfaceControl();
+  String getInterfaceControl();
   
 }
