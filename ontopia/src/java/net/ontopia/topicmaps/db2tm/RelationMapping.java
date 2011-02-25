@@ -603,10 +603,6 @@ public class RelationMapping extends SAXTracker {
 
     // relations
     for (Relation rel : getRelations()) {
-    iter = .iterator();
-    while (iter.hasNext()) {
-      Relation rel = (Relation)iter.next();
-      
       // <relation>
       addAttribute(atts, "name", "CDATA", rel.getName());
       addAttribute(atts, "columns", "CDATA", rel.getColumns());
