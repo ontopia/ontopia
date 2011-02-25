@@ -1,0 +1,44 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>net.ontopia.presto</groupId>
+    <artifactId>presto</artifactId>
+    <version>5.2.0-SNAPSHOT</version>
+  </parent>
+
+  <name>Presto - Utilities</name>
+  <groupId>net.ontopia.presto</groupId>
+  <artifactId>presto-utils</artifactId>
+  <packaging>jar</packaging>
+  <version>5.2.0-SNAPSHOT</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>net.ontopia.presto</groupId>
+      <artifactId>presto-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-core-asl</artifactId>
+      <version>1.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-jaxrs</artifactId>
+      <version>1.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.7.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-xc</artifactId>
+      <version>1.7.1</version>
+    </dependency>
+  </dependencies>
+
+</project>

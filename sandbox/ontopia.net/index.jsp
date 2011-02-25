@@ -107,6 +107,7 @@ product is what the community makes it. Anyone can join and contribute
 to help make the product better. Follow the links below to get involved.</p>
 
 <ul>
+<li><a href="http://code.google.com/p/ontopia/">Visit the project page</a>
 <li><a href="http://groups.google.com/group/ontopia">Join the mailing list</a>
 <li><a href="download.jsp">Download the software</a>
 <li><a href="http://code.google.com/p/ontopia/source/checkout">Check out the source code</a>

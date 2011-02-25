@@ -31,6 +31,7 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
     SameStoreFactory factory = new SameStoreFactory(topicmap.getStore());
     StoreFactoryReference ref =
       new StoreFactoryReference("jill.xtm", "jill.xtm", factory);
+    ref.createStore(false);
     tracker = new TopicMapTracker(ref);
     TopicMapEvents.addTopicListener(ref, tracker);
     ref.createStore(false); // turn on events (grrr)
