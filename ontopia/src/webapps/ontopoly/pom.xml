@@ -122,7 +122,6 @@
 
   <modules>
     <module>ontopoly-editor</module>
-    <module>ontopoly-rest</module>
     <module>ontopoly-webapp-base</module>
     <module>ontopoly-webapp-standalone</module>
   </modules>
