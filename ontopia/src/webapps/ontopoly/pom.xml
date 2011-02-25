@@ -126,15 +126,6 @@
     <module>ontopoly-webapp-standalone</module>
   </modules>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>agrep01-snapshots</id>
-      <name>agrep01-snapshots</name>
-      <url>http://agrep01:8080/artifactory/libs-snapshots-local</url>
-      <uniqueVersion>false</uniqueVersion>
-    </snapshotRepository>
-  </distributionManagement>
-
   <repositories>
     <repository>
       <id>Ontopia</id>
@@ -148,28 +139,6 @@
       <id>java.net</id>
       <url>http://download.java.net/maven/2</url>
     </repository>
-    <!--repository>
-      <id>libs.releases</id>
-      <name>Release repository</name>
-      <url>http://agrep01:8080/artifactory//libs-releases</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>libs.snapshots</id>
-      <name>Snapshot repository</name>
-      <url>http://agrep01:8080/artifactory//libs-snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository-->
   </repositories>
 
 </project>
