@@ -439,7 +439,7 @@ type.
 </para>
 </section>
 
-<section>
+<section id="sect-function-column">
 <title>Functional columns</title>
 
 <para>
@@ -796,7 +796,7 @@ problem, however, which we'll discuss in the next section.
 </para>
 </section>
 
-<section>
+<section id="sect-changelog">
 <title>Changelog tables</title>
 
 <para>

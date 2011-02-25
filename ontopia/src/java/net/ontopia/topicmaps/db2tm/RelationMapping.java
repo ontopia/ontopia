@@ -1,6 +1,4 @@
 
-// $Id: RelationMapping.java,v 1.45 2007/02/27 12:42:39 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
@@ -36,7 +34,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributeListImpl;
 
 /**
- * INTERNAL: DB2TM relation mapping defintion. Container for a set of
+ * INTERNAL: DB2TM relation mapping definition. Container for a set of
  * relations, entities and fields. The mapping can be instatiated by
  * calling the static read() methods, which will read its defintion
  * from an XML file.
@@ -52,7 +50,7 @@ public class RelationMapping extends SAXTracker {
   protected String commitMode;
   protected File baseDirectory;
   protected Map datasources;
-  protected Map relations;
+  protected Map<String, Relation> relations;
   protected Map iprefixes;
 
   RelationMapping() {
@@ -70,11 +68,12 @@ public class RelationMapping extends SAXTracker {
     keepContentsOf("occurrence");
     keepContentsOf("param");
     keepContentsOf("condition");
+    keepContentsOf("expression-column");
   }
 
   public void compile() {
-    Iterator iter = getRelations().iterator();
-    while (iter.hasNext()) ((Relation)iter.next()).compile();
+    for (Relation rel : getRelations())
+      rel.compile();
   }
 
   public void close() {
@@ -123,12 +122,12 @@ public class RelationMapping extends SAXTracker {
     datasources.put(id, datasource);
   }
 
-  public Collection getRelations() {
+  public Collection<Relation> getRelations() {
     return relations.values();
   }
 
   public Relation getRelation(String name) {
-    return (Relation)relations.get(name);
+    return relations.get(name);
   }
 
   public void addRelation(Relation relation) {
@@ -193,10 +192,10 @@ public class RelationMapping extends SAXTracker {
     // Create new parser object
     XMLReader parser;
     try {
-      parser = new DefaultXMLReaderFactory().createXMLReader();
-      
+      parser = new DefaultXMLReaderFactory().createXMLReader();      
     } catch (SAXException e) {
-      throw new IOException("Problems occurred when creating SAX2 XMLReader: " + e.getMessage());
+      throw new IOException("Problems occurred when creating SAX2 XMLReader: " +
+                            e.getMessage());
     }
     
     // Create content handler
@@ -237,6 +236,7 @@ public class RelationMapping extends SAXTracker {
   protected Field curfield;
   protected ValueIF curvcol;
   protected Changelog cursync;
+  protected ExpressionVirtualColumn curecol;
 
   // --------------------------------------------------------------------------
   // Document events
@@ -244,278 +244,274 @@ public class RelationMapping extends SAXTracker {
   
   public void startElement(String nsuri, String lname, String qname,
                            Attributes attrs) throws SAXException {
-    try {
 
-      // Relations    
-      if (lname == "relation") {
-        currel = new Relation(this);
-        currel.setName(getValue(attrs, "name"));
-        currel.setColumns(getValues(attrs, "columns", "column"));
-        currel.setPrimaryKey(getValues(attrs, "primary-key"));
-        currel.setCommitMode(getValue(attrs, "commit-mode"));
-        String synctype = getValue(attrs, "synctype");
-        if (synctype == null)
-          currel.setSynchronizationType(Relation.SYNCHRONIZATION_UNKNOWN);
-        else if (synctype.equals("none"))
-          currel.setSynchronizationType(Relation.SYNCHRONIZATION_NONE);
-        else if (synctype.equals("rescan"))
-          currel.setSynchronizationType(Relation.SYNCHRONIZATION_RESCAN);
-        else if (synctype.equals("changelog"))
-          currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);
-        addRelation(currel);
-      }
-
-      // Entities
-      else if (lname == "topic") {
-        curent = new Entity(Entity.TYPE_TOPIC, currel);
-        String primary = getValue(attrs, "primary");
-        if (primary != null)
-          curent.setPrimary(Boolean.valueOf(primary));
-        String repeatable = getValue(attrs, "repeatable");
-        if (repeatable != null)
-          curent.setRepeatable(Boolean.valueOf(repeatable));
-        curent.setId(getValue(attrs, "id"));
-        String condition = getValue(attrs, "condition");
-        if (condition != null)
-          curent.setConditionValue(Values.getColumnValue(currel, condition));
-        curent.setTypes(getValues(attrs, "types", "type"));
-        currel.addEntity(curent);
-      }
-      else if (lname == "association") {
-        curent = new Entity(Entity.TYPE_ASSOCIATION, currel);
-        String primary = getValue(attrs, "primary");
-        if (primary != null)
-          curent.setPrimary(Boolean.valueOf(primary));
-        curent.setId(getValue(attrs, "id"));
-        String condition = getValue(attrs, "condition");
-        if (condition != null)
-          curent.setConditionValue(Values.getColumnValue(currel, condition));
-        curent.setAssociationType(getValue(attrs, "type"));
-        curent.setScope(getValues(attrs, "scope"));      
-        currel.addEntity(curent);
-      }
-
-      // Identity Fields
-      else if (lname == "subject-locator") { 
-        curfield = new Field(Field.TYPE_SUBJECT_LOCATOR, curent);
-        curfield.setColumn(getValue(attrs, "column"));
-        curent.addField(curfield);
-      }
-      else if (lname == "subject-identifier") { 
-        curfield = new Field(Field.TYPE_SUBJECT_IDENTIFIER, curent);
-        curfield.setColumn(getValue(attrs, "column"));
-        curent.addField(curfield);
-      }
-      else if (lname == "item-identifier") { 
-        curfield = new Field(Field.TYPE_ITEM_IDENTIFIER, curent);
-        curfield.setColumn(getValue(attrs, "column"));
-        curent.addField(curfield);
-      }
-
-      // Characteristics
-      else if (lname == "occurrence") {
-        curfield = new Field(Field.TYPE_OCCURRENCE, curent);
-        curfield.setColumn(getValue(attrs, "column"));
-        curfield.setType(getValue(attrs, "type"));
-        curfield.setScope(getValues(attrs, "scope"));      
-        curfield.setDatatype(getValue(attrs, "datatype"));
-        curent.addField(curfield);
-      }
-      else if (lname == "topic-name") {
-        curfield = new Field(Field.TYPE_TOPIC_NAME, curent);
-        curfield.setColumn(getValue(attrs, "column"));
-        curfield.setType(getValue(attrs, "type"));
-        curfield.setScope(getValues(attrs, "scope"));      
-        curent.addField(curfield);
-      }
-      else if (lname == "player") {
-        curfield = new Field(Field.TYPE_PLAYER, curent);
-        curfield.setRoleType(getValue(attrs, "rtype"));
-        curfield.setAssociationType(getValue(attrs, "atype"));
-        curfield.setScope(getValues(attrs, "scope"));      
-        curent.addField(curfield);
-      }
-      else if (lname == "other") {
-        Field orole = new Field(Field.TYPE_ASSOCIATION_ROLE, curent);
-        orole.setRoleType(getValue(attrs, "rtype"));
-        orole.setPlayer(getValue(attrs, "player"));
-        String optional = getValue(attrs, "optional");
-        if (optional != null)
-          orole.setOptional(Boolean.valueOf(optional).booleanValue());
-        curfield.addOtherRoleField(orole);
-      }
-      else if (lname == "role") {
-        curfield = new Field(Field.TYPE_ASSOCIATION_ROLE, curent);
-        curfield.setColumn(getValue(attrs, "column"));
-        curfield.setRoleType(getValue(attrs, "type"));
-        curfield.setPlayer(getValue(attrs, "player"));
-        String optional = getValue(attrs, "optional");
-        if (optional != null)
-          curfield.setOptional(Boolean.valueOf(optional).booleanValue());
-        curent.addField(curfield);
-      }
-
-      // Virtual columns
-      else if (lname == "mapping-column") {
-        String colname = getValue(attrs, "name");
-        String inputName = getValue(attrs, "column");
-        curvcol = new MappingVirtualColumn(currel, colname, inputName);
-        currel.addVirtualColumn(colname, curvcol);
-      }
-      else if (lname == "map") {
-        ((MappingVirtualColumn)curvcol).addMapping(getValue(attrs, "from"), getValue(attrs, "to"));
-      }
-      else if (lname == "default") {
-        ((MappingVirtualColumn)curvcol).setDefault(getValue(attrs, "to"));
-      }
-
-      // Function columns
-      else if (lname == "function-column") {
-        String colname = getValue(attrs, "name");
-        String method = getValue(attrs, "method");
-        curvcol = new FunctionVirtualColumn(currel, colname, method);
-        currel.addVirtualColumn(colname, curvcol);
-      }
-      
-      // Sync
-      else if (lname == "changelog") {
-        cursync = new Changelog(currel);
-        cursync.setTable(getValue(attrs, "table"));
-        cursync.setPrimaryKey(getValues(attrs, "primary-key"));
-        cursync.setOrderColumn(getValue(attrs, "order-column"));
-        cursync.setLocalOrderColumn(getValue(attrs, "local-order-column"));
-        cursync.setAction(getValue(attrs, "action"));
-        cursync.setActionColumn(getValue(attrs, "action-column"));
-        currel.addSync(cursync);
-        if (currel.getSynchronizationType() == Relation.SYNCHRONIZATION_UNKNOWN)
-          currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);
-      }
-      else if (lname == "action") {
-        cursync.addActionMapping(getValue(attrs, "value"), getValue(attrs, "type"));
-      }
-      else if (lname == "extent") {
-        curent.addExtentQuery(getValue(attrs, "query"));
-      }
-      
-      // Prefixes
-      else if (lname == "using") {
-        String prefix = getValue(attrs, "prefix");
-        int type = Prefix.TYPE_SUBJECT_IDENTIFIER;
-        String locator = getValue(attrs, "subject-identifier");
-        if (locator != null)
-          type = Prefix.TYPE_SUBJECT_IDENTIFIER;
-        if (locator == null) {
-          locator = getValue(attrs, "item-identifier");
-          if (locator != null)
-            type = Prefix.TYPE_ITEM_IDENTIFIER;
-        }
-        if (locator == null) {
-          locator = getValue(attrs, "subject-locator");
-          if (locator != null)
-            type = Prefix.TYPE_SUBJECT_LOCATOR;
-        }
-        iprefixes.put(prefix, new Prefix(prefix, locator, type));
-      }
-
-      // Other
-      else if (lname == "db2tm") {
-        name = getValue(attrs, "name");
-        commitMode = getValue(attrs, "commit-mode");
-      }
-
-      // Sources
-      else if (lname == "sources") {
-      }
-      else if (lname == "csv") {
-        String id = getValue(attrs, "id");
-        CSVDataSource datasource = new CSVDataSource(this);        
-        // - path
-        datasource.setPath(getValue(attrs, "path"));
-        // - encoding
-        String encoding = getValue(attrs, "encoding");
-        if (encoding != null)
-          datasource.setEncoding(getValue(attrs, "encoding"));
-
-        // - separator
-        String separator = getValue(attrs, "separator");
-        if (separator != null)
-          datasource.setSeparator(separator.charAt(0));
-        // - quoting
-        String quoting = getValue(attrs, "quoting");
-        if (quoting != null)
-          datasource.setQuoteCharacter(quoting.charAt(0));
-        //! // - escaping
-        //! String escaping = getValue(attrs, "escaping");
-        //! if (escaping != null)
-        //!   datasource.setEscaping(escaping.charAt(0));
-        // - ignoreFirstLines
-        String ignoreFirstLines = getValue(attrs, "ignoreFirstLines");
-        if (ignoreFirstLines != null)
-          datasource.setIgnoreFirstLines(Integer.parseInt(ignoreFirstLines));
-
-        datasources.put(id, datasource);
-      }
-      else if (lname == "jdbc") {
-        String id = getValue(attrs, "id");
-        JDBCDataSource datasource = new JDBCDataSource(this);        
-        datasource.setPropertyFile(getValue(attrs, "propfile"));
-        datasources.put(id, datasource);
-      }
-
-      // call super
-      super.startElement(nsuri, lname, qname, attrs);
-
-    } catch (Exception e) {
-      throw new SAXException(e);
+    // Relations    
+    if (lname == "relation") {
+      currel = new Relation(this);
+      currel.setName(getValue(attrs, "name"));
+      currel.setColumns(getValues(attrs, "columns", "column"));
+      currel.setPrimaryKey(getValues(attrs, "primary-key"));
+      currel.setCommitMode(getValue(attrs, "commit-mode"));
+      String synctype = getValue(attrs, "synctype");
+      if (synctype == null)
+        currel.setSynchronizationType(Relation.SYNCHRONIZATION_UNKNOWN);
+      else if (synctype.equals("none"))
+        currel.setSynchronizationType(Relation.SYNCHRONIZATION_NONE);
+      else if (synctype.equals("rescan"))
+        currel.setSynchronizationType(Relation.SYNCHRONIZATION_RESCAN);
+      else if (synctype.equals("changelog"))
+        currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);
+      addRelation(currel);
     }
+
+    // Entities
+    else if (lname == "topic") {
+      curent = new Entity(Entity.TYPE_TOPIC, currel);
+      String primary = getValue(attrs, "primary");
+      if (primary != null)
+        curent.setPrimary(Boolean.valueOf(primary));
+      String repeatable = getValue(attrs, "repeatable");
+      if (repeatable != null)
+        curent.setRepeatable(Boolean.valueOf(repeatable));
+      curent.setId(getValue(attrs, "id"));
+      String condition = getValue(attrs, "condition");
+      if (condition != null)
+        curent.setConditionValue(Values.getColumnValue(currel, condition));
+      curent.setTypes(getValues(attrs, "types", "type"));
+      currel.addEntity(curent);
+    }
+    else if (lname == "association") {
+      curent = new Entity(Entity.TYPE_ASSOCIATION, currel);
+      String primary = getValue(attrs, "primary");
+      if (primary != null)
+        curent.setPrimary(Boolean.valueOf(primary));
+      curent.setId(getValue(attrs, "id"));
+      String condition = getValue(attrs, "condition");
+      if (condition != null)
+        curent.setConditionValue(Values.getColumnValue(currel, condition));
+      curent.setAssociationType(getValue(attrs, "type"));
+      curent.setScope(getValues(attrs, "scope"));      
+      currel.addEntity(curent);
+    }
+
+    // Identity Fields
+    else if (lname == "subject-locator") { 
+      curfield = new Field(Field.TYPE_SUBJECT_LOCATOR, curent);
+      curfield.setColumn(getValue(attrs, "column"));
+      curent.addField(curfield);
+    }
+    else if (lname == "subject-identifier") { 
+      curfield = new Field(Field.TYPE_SUBJECT_IDENTIFIER, curent);
+      curfield.setColumn(getValue(attrs, "column"));
+      curent.addField(curfield);
+    }
+    else if (lname == "item-identifier") { 
+      curfield = new Field(Field.TYPE_ITEM_IDENTIFIER, curent);
+      curfield.setColumn(getValue(attrs, "column"));
+      curent.addField(curfield);
+    }
+
+    // Characteristics
+    else if (lname == "occurrence") {
+      curfield = new Field(Field.TYPE_OCCURRENCE, curent);
+      curfield.setColumn(getValue(attrs, "column"));
+      curfield.setType(getValue(attrs, "type"));
+      curfield.setScope(getValues(attrs, "scope"));      
+      curfield.setDatatype(getValue(attrs, "datatype"));
+      curent.addField(curfield);
+    }
+    else if (lname == "topic-name") {
+      curfield = new Field(Field.TYPE_TOPIC_NAME, curent);
+      curfield.setColumn(getValue(attrs, "column"));
+      curfield.setType(getValue(attrs, "type"));
+      curfield.setScope(getValues(attrs, "scope"));      
+      curent.addField(curfield);
+    }
+    else if (lname == "player") {
+      curfield = new Field(Field.TYPE_PLAYER, curent);
+      curfield.setRoleType(getValue(attrs, "rtype"));
+      curfield.setAssociationType(getValue(attrs, "atype"));
+      curfield.setScope(getValues(attrs, "scope"));      
+      curent.addField(curfield);
+    }
+    else if (lname == "other") {
+      Field orole = new Field(Field.TYPE_ASSOCIATION_ROLE, curent);
+      orole.setRoleType(getValue(attrs, "rtype"));
+      orole.setPlayer(getValue(attrs, "player"));
+      String optional = getValue(attrs, "optional");
+      if (optional != null)
+        orole.setOptional(Boolean.valueOf(optional).booleanValue());
+      curfield.addOtherRoleField(orole);
+    }
+    else if (lname == "role") {
+      curfield = new Field(Field.TYPE_ASSOCIATION_ROLE, curent);
+      curfield.setColumn(getValue(attrs, "column"));
+      curfield.setRoleType(getValue(attrs, "type"));
+      curfield.setPlayer(getValue(attrs, "player"));
+      String optional = getValue(attrs, "optional");
+      if (optional != null)
+        curfield.setOptional(Boolean.valueOf(optional).booleanValue());
+      curent.addField(curfield);
+    }
+
+    // Virtual columns
+    else if (lname == "mapping-column") {
+      String colname = getValue(attrs, "name");
+      String inputName = getValue(attrs, "column");
+      curvcol = new MappingVirtualColumn(currel, colname, inputName);
+      currel.addVirtualColumn(colname, curvcol);
+    }
+    else if (lname == "map") {
+      ((MappingVirtualColumn)curvcol).addMapping(getValue(attrs, "from"), getValue(attrs, "to"));
+    }
+    else if (lname == "default") {
+      ((MappingVirtualColumn)curvcol).setDefault(getValue(attrs, "to"));
+    }
+
+    // Function columns
+    else if (lname == "function-column") {
+      String colname = getValue(attrs, "name");
+      String method = getValue(attrs, "method");
+      curvcol = new FunctionVirtualColumn(currel, colname, method);
+      currel.addVirtualColumn(colname, curvcol);
+    }
+      
+    // Sync
+    else if (lname == "changelog") {
+      cursync = new Changelog(currel);
+      cursync.setTable(getValue(attrs, "table"));
+      cursync.setPrimaryKey(getValues(attrs, "primary-key"));
+      cursync.setOrderColumn(getValue(attrs, "order-column"));
+      cursync.setLocalOrderColumn(getValue(attrs, "local-order-column"));
+      cursync.setAction(getValue(attrs, "action"));
+      cursync.setActionColumn(getValue(attrs, "action-column"));
+      cursync.setCondition(getValue(attrs, "condition"));
+      currel.addSync(cursync);
+      if (currel.getSynchronizationType() == Relation.SYNCHRONIZATION_UNKNOWN)
+        currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);
+    }
+    else if (lname == "action") {
+      cursync.addActionMapping(getValue(attrs, "value"), getValue(attrs, "type"));
+    }
+    else if (lname == "extent") {
+      curent.addExtentQuery(getValue(attrs, "query"));
+    }
+    else if (lname == "expression-column") {
+      curecol = new ExpressionVirtualColumn(getValue(attrs, "name"));
+      cursync.addVirtualColumn(curecol);
+    }
+      
+    // Prefixes
+    else if (lname == "using") {
+      String prefix = getValue(attrs, "prefix");
+      int type = Prefix.TYPE_SUBJECT_IDENTIFIER;
+      String locator = getValue(attrs, "subject-identifier");
+      if (locator != null)
+        type = Prefix.TYPE_SUBJECT_IDENTIFIER;
+      if (locator == null) {
+        locator = getValue(attrs, "item-identifier");
+        if (locator != null)
+          type = Prefix.TYPE_ITEM_IDENTIFIER;
+      }
+      if (locator == null) {
+        locator = getValue(attrs, "subject-locator");
+        if (locator != null)
+          type = Prefix.TYPE_SUBJECT_LOCATOR;
+      }
+      iprefixes.put(prefix, new Prefix(prefix, locator, type));
+    }
+
+    // Other
+    else if (lname == "db2tm") {
+      name = getValue(attrs, "name");
+      commitMode = getValue(attrs, "commit-mode");
+    }
+
+    // Sources
+    else if (lname == "sources") {
+    }
+    else if (lname == "csv") {
+      String id = getValue(attrs, "id");
+      CSVDataSource datasource = new CSVDataSource(this);        
+      // - path
+      datasource.setPath(getValue(attrs, "path"));
+      // - encoding
+      String encoding = getValue(attrs, "encoding");
+      if (encoding != null)
+        datasource.setEncoding(getValue(attrs, "encoding"));
+
+      // - separator
+      String separator = getValue(attrs, "separator");
+      if (separator != null)
+        datasource.setSeparator(separator.charAt(0));
+      // - quoting
+      String quoting = getValue(attrs, "quoting");
+      if (quoting != null)
+        datasource.setQuoteCharacter(quoting.charAt(0));
+      // - ignoreFirstLines
+      String ignoreFirstLines = getValue(attrs, "ignoreFirstLines");
+      if (ignoreFirstLines != null)
+        datasource.setIgnoreFirstLines(Integer.parseInt(ignoreFirstLines));
+
+      datasources.put(id, datasource);
+    }
+    else if (lname == "jdbc") {
+      String id = getValue(attrs, "id");
+      JDBCDataSource datasource = new JDBCDataSource(this);        
+      datasource.setPropertyFile(getValue(attrs, "propfile"));
+      datasources.put(id, datasource);
+    }
+
+    // call super
+    super.startElement(nsuri, lname, qname, attrs);
   }
   
   public void endElement(String nsuri, String lname, String qname) 
     throws SAXException {
 
-    try {
-      // call super
-      super.endElement(nsuri, lname, qname);
+    // call super
+    super.endElement(nsuri, lname, qname);
 
-      if (lname == "subject-locator") {
-        curfield.setPattern(content.toString());
-      }
-      else if (lname == "subject-identifier") {
-        curfield.setPattern(content.toString());
-      }
-      else if (lname == "item-identifier") {
-        curfield.setPattern(content.toString());
-      }
-      else if (lname == "topic-name") {
-        curfield.setPattern(content.toString());
-      }
-      else if (lname == "occurrence") {
-        curfield.setPattern(content.toString());
-      }
-      else if (lname == "relation") {
-        currel = null;
-      }
-      else if (lname == "topic" || lname == "association") {
-        curent = null;
-      }
-      else if (lname == "param") {
-        ((FunctionVirtualColumn)curvcol).addParameter(content.toString());
-      }
-      else if (lname == "condition") {
-        currel.setCondition(content.toString());
-      }
-      else if (lname == "mapping-column") {
-        curvcol = null;
-      }
-      else if (lname == "function-column") {
-        ((FunctionVirtualColumn)curvcol).compile();
-        curvcol = null;
-      }
-      else if (lname == "changelog") {
-        cursync = null;
-      }
-    } catch (Exception e) {
-      throw new SAXException(e);
+    if (lname == "subject-locator") {
+      curfield.setPattern(content.toString());
+    }
+    else if (lname == "subject-identifier") {
+      curfield.setPattern(content.toString());
+    }
+    else if (lname == "item-identifier") {
+      curfield.setPattern(content.toString());
+    }
+    else if (lname == "topic-name") {
+      curfield.setPattern(content.toString());
+    }
+    else if (lname == "occurrence") {
+      curfield.setPattern(content.toString());
+    }
+    else if (lname == "relation") {
+      currel = null;
+    }
+    else if (lname == "topic" || lname == "association") {
+      curent = null;
+    }
+    else if (lname == "param") {
+      ((FunctionVirtualColumn)curvcol).addParameter(content.toString());
+    }
+    else if (lname == "condition") {
+      currel.setCondition(content.toString());
+    }
+    else if (lname == "mapping-column") {
+      curvcol = null;
+    }
+    else if (lname == "function-column") {
+      ((FunctionVirtualColumn)curvcol).compile();
+      curvcol = null;
+    }
+    else if (lname == "changelog") {
+      cursync = null;
+    }
+    else if (lname == "expression-column") {
+      curecol.setSQLExpression(content.toString());
+      curecol = null;
     }
   }
 
@@ -606,7 +602,8 @@ public class RelationMapping extends SAXTracker {
     }
 
     // relations
-    iter = getRelations().iterator();
+    for (Relation rel : getRelations()) {
+    iter = .iterator();
     while (iter.hasNext()) {
       Relation rel = (Relation)iter.next();
       

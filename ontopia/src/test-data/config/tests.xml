@@ -614,6 +614,7 @@
     <test>net.ontopia.topicmaps.db2tm.test.RelationMappingTestCase</test>
     <test>net.ontopia.topicmaps.db2tm.test.FunctionsTestCase</test>
     <test>net.ontopia.topicmaps.db2tm.test.FunctionVirtualColumnTest</test>
+    <test>net.ontopia.topicmaps.db2tm.test.ChangelogTestGenerator</test>
   </group>
 
   <group>

@@ -1,22 +1,20 @@
 
-// $Id: Changelog.java,v 1.5 2007/01/30 08:36:06 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Collection;
+import net.ontopia.utils.CompactHashSet;
 
 /**
- * INTERNAL: 
+ * INTERNAL: Data carrier holding the information about a change log
+ * table from the mapping file.
  */
 public class Changelog {
-
   protected Relation relation;
   
   protected String table; // table name
@@ -24,11 +22,14 @@ public class Changelog {
   protected String order_column; // ordering column
   protected String local_order_column; // local ordering column
   
-  protected String action; // action
+  protected String action; // action  FIXME: wtf is this?
   protected String action_column; // action column
 
+  protected String condition; // added to where clause for filtering
+  
   protected Map actionMapping = new HashMap();
-  protected Set ignoreActions = new HashSet();
+  protected Set ignoreActions = new CompactHashSet();
+  protected Map<String, ExpressionVirtualColumn> virtualColumns = new HashMap();
   
   Changelog(Relation relation) {
     this.relation = relation;
@@ -76,6 +77,10 @@ public class Changelog {
     this.local_order_column = local_order_column;
   }
 
+  public void setCondition(String condition) {
+    this.condition = condition;
+  }
+
   public String getAction() {
     return action;
   }
@@ -94,6 +99,22 @@ public class Changelog {
 
   public Map getActionMapping() {
     return actionMapping;
+  }
+
+  public String getCondition() {
+    return condition;
+  }
+
+  public void addVirtualColumn(ExpressionVirtualColumn column) {
+    virtualColumns.put(column.getColumnName(), column);
+  }
+
+  public boolean isExpressionColumn(String colname) {
+    return virtualColumns.containsKey(colname);
+  }
+
+  public String getColumnExpression(String colname) {
+    return virtualColumns.get(colname).getSQLExpression();
   }
 
   public int getAction(String value) {

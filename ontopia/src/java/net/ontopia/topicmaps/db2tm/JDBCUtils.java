@@ -1,6 +1,4 @@
 
-// $Id: JDBCUtils.java,v 1.5 2007/02/27 11:33:39 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.*;
@@ -24,27 +22,8 @@ public class JDBCUtils {
   static DateFormat df_date = new SimpleDateFormat("yyyy-MM-dd");
   static DateFormat df_datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-  //! public static String getString(ResultSet rs, int ix, int sql_type) throws Exception {
-  //!   String v = _getString(rs, ix, sql_type);
-  //!   System.out.println("V: " + sql_type + " " + rs.getString(ix) + "->" + v);
-  //!   return v;
-  //! }
-
-  //! public static int getDatatypeByName(String sql_type) throws Exception {
-  //!   if (sql_type.equals("date"))
-  //!     return Types.DATE;
-  //!   else if(sql_type.equals("timestamp"))
-  //!     return Types.DATETIME;
-  //!   else if(sql_type.equals("varchar"))
-  //!     return Types.VARCHAR;
-  //!   else if(sql_type.equals("integer"))
-  //!     return Types.INTEGER;
-  //!   // TODO: complete list of datatypes
-  //!   else
-  //!     throw new DB2TMConfigException("Unsupported datatype: '" + sql_type);
-  //! }
-  
-  public static String getString(ResultSet rs, int ix, int sql_type) throws Exception {
+  public static String getString(ResultSet rs, int ix, int sql_type)
+    throws Exception {
     switch (sql_type) {
     case Types.DATE:
       java.sql.Date date = rs.getDate(ix);
@@ -59,7 +38,7 @@ public class JDBCUtils {
     }
   }
   
-  public static void setObject(PreparedStatement stmt, int ix, String value, int sql_type) throws Exception {
+  public static void setObject(PreparedStatement stmt, int ix, String value, int sql_type) throws SQLException {
     if (value == null || value.length() == 0) {
       stmt.setNull(ix, sql_type);
     } else {
@@ -92,10 +71,18 @@ public class JDBCUtils {
         stmt.setShort(ix, Short.parseShort(value));
         break;
       case Types.DATE:
-        stmt.setDate(ix, new java.sql.Date(df_date.parse(value).getTime()));
+        try {
+          stmt.setDate(ix, new java.sql.Date(df_date.parse(value).getTime()));
+        } catch (ParseException e) {
+          throw new OntopiaRuntimeException("Couldn't parse '" + value + "'", e);
+        }
         break;
       case Types.TIMESTAMP:
-        stmt.setTimestamp(ix, new java.sql.Timestamp(df_datetime.parse(value).getTime()));
+        try {
+          stmt.setTimestamp(ix, new java.sql.Timestamp(df_datetime.parse(value).getTime()));
+        } catch (ParseException e) {
+          throw new OntopiaRuntimeException("Couldn't parse '" + value + "'", e);
+        }
         break;
         //! case Types.BLOB:
       //!   try {
@@ -125,7 +112,7 @@ public class JDBCUtils {
     }
   }
   
-  public static void setHighPrecisionObject(PreparedStatement stmt, int ix, String value, int sql_type) throws Exception {
+  public static void setHighPrecisionObject(PreparedStatement stmt, int ix, String value, int sql_type) throws SQLException {
     // HACK: to make DATE type include timestamp information if available
     switch (sql_type) {
     case Types.DATE:

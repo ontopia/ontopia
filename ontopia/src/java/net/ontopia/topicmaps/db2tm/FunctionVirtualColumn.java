@@ -24,6 +24,10 @@ public class FunctionVirtualColumn implements ValueIF {
     this.fullMethodName = fullMethodName;
   }
 
+  public String getColumnName() {
+    return colname;
+  }
+
   public void compile() {
     if (fullMethodName.length() < 3)
       throw new DB2TMConfigException("Function column method is invalid: '" + fullMethodName + "'");

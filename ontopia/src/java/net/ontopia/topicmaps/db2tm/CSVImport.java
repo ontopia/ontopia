@@ -1,4 +1,3 @@
-// $Id: CSVImport.java,v 1.1 2006/08/27 14:37:56 grove Exp $
 
 package net.ontopia.topicmaps.db2tm;
 

@@ -18,7 +18,7 @@
 -->
 
 <project name="ontopia" default="bootstrap" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
-
+  
   <target name="init" depends="init.init" unless="init.done">
 
   </target>
@@ -74,9 +74,9 @@
 
     <property name="dist.version.major" value="5" />
     <property name="dist.version.minor" value="1" />
-    <property name="dist.version.micro" value="3" />
+    <property name="dist.version.micro" value="4" />
 
-    <property name="dist.version.beta" value="" />
+    <property name="dist.version.beta" value="b0" />
     <!-- "b1" if beta 1, empty if not beta -->
 
     <property name="dist.version" value="${dist.version.major}.${dist.version.minor}.${dist.version.micro}${dist.version.beta}" />
@@ -2804,4 +2804,19 @@
     </exec>
   </target>
 
+  <!-- Set up Cobertura instrumentation -->
+  <!--taskdef classpath="cobertura.jar" resource="tasks.properties"/-->
+  <!--target name="instrument" depends="init">
+    <cobertura-instrument todir="build/instrumented-classes">
+      <fileset dir="build/classes">
+        <include name="net/ontopia/topicmaps/db2tm/**/*.class"/>
+        <exclude name="net/ontopia/topicmaps/db2tm/**/test/*.class"/>
+      </fileset>
+    </cobertura-instrument>  
+  </target>
+
+  <target name="coverage">
+    <cobertura-report srcdir="src/java" destdir="report"/>
+  </target-->
+  
 </project>

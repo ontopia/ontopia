@@ -1,6 +1,4 @@
 
-// $Id: TupleReaderIF.java,v 1.2 2006/03/17 07:51:07 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 

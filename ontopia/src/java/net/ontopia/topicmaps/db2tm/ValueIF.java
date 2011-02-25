@@ -1,6 +1,4 @@
 
-// $Id: ValueIF.java,v 1.1 2006/07/11 08:33:00 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: ChangelogReaderIF.java,v 1.5 2009/01/23 13:11:43 lars.garshol Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import net.ontopia.utils.*;

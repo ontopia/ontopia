@@ -115,10 +115,8 @@ public class Execute {
         if ("add".equals(operation))
           Processor.addRelations(mapping, relations, topicmap, baseloc);
         else if ("sync".equals(operation)) {
-          if (ohandler.forceRescan != null && Boolean.valueOf(ohandler.forceRescan).booleanValue())
-            Processor.synchronizeRelations(mapping, relations, topicmap, baseloc, true);
-          else
-            Processor.synchronizeRelations(mapping, relations, topicmap, baseloc, false);            
+          boolean rescan = ohandler.forceRescan != null && Boolean.valueOf(ohandler.forceRescan).booleanValue();
+          Processor.synchronizeRelations(mapping, relations, topicmap, baseloc, rescan);
         } else if ("remove".equals(operation))
           Processor.removeRelations(mapping, relations, topicmap, baseloc);
         else

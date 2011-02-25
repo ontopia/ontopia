@@ -1,6 +1,4 @@
 
-// $Id: JDBCDataSource.java,v 1.32 2009/01/23 13:13:13 lars.garshol Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;
@@ -15,15 +13,16 @@ import java.util.Set;
 import java.util.HashMap;
 import java.util.Properties;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.persistence.proxy.*;
 
@@ -121,14 +120,27 @@ public class JDBCDataSource implements DataSourceIF {
   }
 
   public ChangelogReaderIF getChangelogReader(Changelog changelog, String startOrder) {
-    return new ChangelogReader(changelog, startOrder);
+    try {
+      return new ChangelogReader(changelog, startOrder);
+    } catch (SQLException e) {
+      throw new OntopiaRuntimeException("Error creating ChangelogReader", e);
+    }
   }
   
   public String getMaxOrderValue(Changelog changelog) {
     try {
       // get datatypes
-      Map cdatatypes = getColumnTypes(changelog.getTable(), conn);
-      int ocoltype = ((Integer)cdatatypes.get(changelog.getOrderColumn())).intValue();
+      Map<String, Integer> cdatatypes = getColumnTypes(changelog.getTable(), conn);
+      Integer ocoltypeobj = cdatatypes.get(changelog.getOrderColumn());
+      int ocoltype;
+      if (ocoltypeobj != null)
+        ocoltype = ocoltypeobj.intValue();
+      else {
+        ocoltype = 12; // varchar
+        throw new DB2TMException("Couldn't find data type of order column '" +
+                 changelog.getOrderColumn() + "'");
+      }
+       
       
       // prepare, bind and execute statement
       StringBuffer sb = new StringBuffer();
@@ -155,17 +167,44 @@ public class JDBCDataSource implements DataSourceIF {
       throw new OntopiaRuntimeException(t);
     }
   }    
-    
-  private Map getColumnTypes(String table, Connection conn) throws SQLException {
+
+  /**
+   * Returns a map from column names to Integer objects representing
+   * the SQL types of the columns.
+   */
+  private Map<String, Integer> getColumnTypes(String table, Connection conn)
+    throws SQLException {
     Map datatypes = new HashMap();
     ResultSet rs = conn.getMetaData().getColumns(null, null, table, null);
     try {
-      while(rs.next()) {
+      while(rs.next())
+        // 4: COLUMN_NAME
+        // 5: DATA_TYPE
         datatypes.put(rs.getString(4), new Integer(rs.getInt(5)));
-      }
     } finally {
       rs.close();
     }
+
+    // sometimes the above doesn't produce any results, for reasons
+    // that are obscure at the moment. if this is the case we have to
+    // try a workaround
+    if (datatypes.isEmpty()) {
+      Statement stmt = conn.createStatement();
+      try {        
+        stmt.execute("select * from " + table);
+        try {
+          rs = stmt.getResultSet();
+          ResultSetMetaData md = rs.getMetaData();
+          for (int ix = 1; ix <= md.getColumnCount(); ix++)
+            datatypes.put(md.getColumnName(ix), new Integer(md.getColumnType(ix)));
+        } finally {
+          rs.close();
+        }
+      } finally {
+        stmt.close();
+      }
+    }
+    
     return datatypes;
   }
   
@@ -264,7 +303,6 @@ public class JDBCDataSource implements DataSourceIF {
   }
 
   private class ChangelogReader implements ChangelogReaderIF {
-
     protected Changelog changelog;
     PreparedStatement stm;
     ResultSet rs;
@@ -277,10 +315,14 @@ public class JDBCDataSource implements DataSourceIF {
     int acix;
     int ocix;
     
-    private ChangelogReader(Changelog changelog, String orderValue) {
+    private ChangelogReader(Changelog changelog, String orderValue)
+      throws SQLException {
       this.changelog = changelog;
       this.orderValue = orderValue;
 
+      // FIXME: require primary key to be specified on both tables
+      // add test case for it
+      
       // build sql statement from relation and changelog definitions
       Relation relation = changelog.getRelation();
       String[] cpkey = changelog.getPrimaryKey();
@@ -304,7 +346,8 @@ public class JDBCDataSource implements DataSourceIF {
 
       // NOTE: ChangelogReaderWrapper relies on the order of the fields produced
       // here, so changes here must take that into account.
-      // primary keys
+      
+      // list primary key of main relation
       for (int i=0; i < rpkey.length; i++) {
         if (i > 0) sb.append(", ");
         sb.append(" r.");
@@ -332,12 +375,16 @@ public class JDBCDataSource implements DataSourceIF {
       sb.append(" from");
 
       sb.append(" (select ");
-      sb.append("m1.");
-      sb.append(cpkey[0]);
-      for (int i=1; i < cpkey.length; i++) {
-        sb.append(", m1.");
-        sb.append(cpkey[i]);
+
+      String[] cols = new String[cpkey.length];
+      for (int i=0; i < cpkey.length; i++) {
+        if (changelog.isExpressionColumn(cpkey[i]))
+          cols[i] = changelog.getColumnExpression(cpkey[i]) + " as " + cpkey[i];
+        else
+          cols[i] = " m1." + cpkey[i];
       }
+      sb.append(StringUtils.join(cols, ", "));
+
       sb.append(", m1.");
       sb.append(changelog.getActionColumn());
       sb.append(", m1.");
@@ -361,6 +408,16 @@ public class JDBCDataSource implements DataSourceIF {
         }
         sb.append(")");
       }
+
+      // add changelog table condition
+      if (changelog.getCondition() != null) {
+        if (ignoreActions.isEmpty())
+          sb.append(" where ");
+        else
+          sb.append(" and ");
+        sb.append(changelog.getCondition());
+      }
+      
       
       sb.append(" order by m1." + changelog.getOrderColumn());
       sb.append(") c");
@@ -369,16 +426,12 @@ public class JDBCDataSource implements DataSourceIF {
       sb.append(" left outer join ");
       sb.append(relation.getName());
       sb.append(" r on (");
-      sb.append("c.");
-      sb.append(cpkey[0]);
-      sb.append(" = r.");
-      sb.append(rpkey[0]);
-      for (int i=1; i < cpkey.length; i++) {
-        sb.append(" and c.");
-        sb.append(cpkey[i]);
-        sb.append(" = r.");
-        sb.append(rpkey[i]);
-      }
+
+      String[] clauses = new String[cpkey.length];
+      for (int i=0; i < cpkey.length; i++)
+        clauses[i] = "c." + cpkey[i] + " = r." + rpkey[i];
+
+      sb.append(StringUtils.join(clauses, " and "));
 
       // add condtion if specified
       String condition = relation.getCondition();
@@ -410,49 +463,44 @@ public class JDBCDataSource implements DataSourceIF {
       String sql = sb.toString();
       log.debug("changelog query: " + sql);
 
-      try {
-        Connection conn = getConnection();
+      Connection conn = getConnection();
 
-        // get hold of column data types
-        Map rdatatypes = getColumnTypes(relation.getName(), conn);
-        if (rdatatypes.isEmpty())
-          throw new DB2TMInputException("Relation '" + relation.getName() + "' does not exist.");
-        coltypes = new int[rcols.length];
-        for (int i=0; i < rcols.length; i++) {
-          if (rdatatypes.containsKey(rcols[i]))
-            coltypes[i] = ((Integer)rdatatypes.get(rcols[i])).intValue();
-          else
-            throw new DB2TMInputException("Column '" + rcols[i] + "' in relation '" + relation.getName() + "' does not exist.");
-        }
-        Map cdatatypes = getColumnTypes(changelog.getTable(), conn);
-        if (cdatatypes.isEmpty())
-          throw new DB2TMInputException("Relation '" + changelog.getTable() + "' does not exist.");
-        acoltype = ((Integer)cdatatypes.get(changelog.getActionColumn())).intValue();
-        ocoltype = ((Integer)cdatatypes.get(changelog.getOrderColumn())).intValue();
-        
-        // FIXME: consider locking strategy. lock table?
-
-        // prepare, bind and execute statement
-        this.stm = conn.prepareStatement(sql);
-
-        // ignore actions
-        int cix = 1;
-        Iterator iter = ignoreActions.iterator();
-        while (iter.hasNext()) {            
-          String value = (String)iter.next();
-          log.debug("ignore action " + cix + ": " + value);
-          JDBCUtils.setObject(this.stm, cix++, value, acoltype);
-        }
-        // order value
-        if (orderValue != null) {
-          log.debug("changelog order value: " + orderValue);
-          JDBCUtils.setHighPrecisionObject(this.stm, cix, orderValue, ocoltype);
-        }
-        this.rs = stm.executeQuery();
-        
-      } catch (Throwable t) {
-        throw new OntopiaRuntimeException("Problems occurred when reading changes from table " + changelog.getTable(), t);
+      // get hold of column data types
+      Map rdatatypes = getColumnTypes(relation.getName(), conn);
+      if (rdatatypes.isEmpty())
+        throw new DB2TMInputException("Relation '" + relation.getName() + "' does not exist.");
+      coltypes = new int[rcols.length];
+      for (int i=0; i < rcols.length; i++) {
+        if (rdatatypes.containsKey(rcols[i]))
+          coltypes[i] = ((Integer)rdatatypes.get(rcols[i])).intValue();
+        else
+          throw new DB2TMInputException("Column '" + rcols[i] + "' in relation '" + relation.getName() + "' does not exist.");
       }
+      Map cdatatypes = getColumnTypes(changelog.getTable(), conn);
+      if (cdatatypes.isEmpty())
+        throw new DB2TMInputException("Relation '" + changelog.getTable() + "' does not exist.");
+      acoltype = ((Integer)cdatatypes.get(changelog.getActionColumn())).intValue();
+      ocoltype = ((Integer)cdatatypes.get(changelog.getOrderColumn())).intValue();
+        
+      // FIXME: consider locking strategy. lock table?
+
+      // prepare, bind and execute statement
+      this.stm = conn.prepareStatement(sql);
+
+      // ignore actions
+      int cix = 1;
+      Iterator iter = ignoreActions.iterator();
+      while (iter.hasNext()) {            
+        String value = (String)iter.next();
+        log.debug("ignore action " + cix + ": " + value);
+        JDBCUtils.setObject(this.stm, cix++, value, acoltype);
+      }
+      // order value
+      if (orderValue != null) {
+        log.debug("changelog order value: " + orderValue);
+        JDBCUtils.setHighPrecisionObject(this.stm, cix, orderValue, ocoltype);
+      }
+      this.rs = stm.executeQuery();        
     }
     
     private String replacePrimaryKey(String col, String[] rpkey, String[] cpkey) {
@@ -526,7 +574,5 @@ public class JDBCDataSource implements DataSourceIF {
         throw new OntopiaRuntimeException(t);
       }
     }
-
   }
-  
 }

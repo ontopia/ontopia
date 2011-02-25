@@ -44,7 +44,7 @@ jdbc = element jdbc {
 
 # -- relations
 relation = element relation {
-  attribute name { text },
+  nameatt,
   attribute columns { text },
   attribute primary-key { text }?,
   attribute synctype { "none" | "rescan" | "changelog" }?,
@@ -109,7 +109,7 @@ condition = element condition { text }
 virtual-column = (mapping-column | function-column)
 
 mapping-column = element mapping-column {
-  attribute name { text },
+  nameatt,
   attribute column { text },
   element map {
     attribute from { text },
@@ -121,7 +121,7 @@ mapping-column = element mapping-column {
 }
 
 function-column = element function-column {
-  attribute name { text },
+  nameatt,
   attribute method { text },
   element param { text }*
 }
@@ -134,11 +134,20 @@ sync = element changelog {
   attribute local-order-column { text }?,
   ( attribute action { text } |
     attribute action-column { text }),
-  element action {
-    attribute value { text },
-    attribute type { "create" | "update" | "delete" | "ignore" }
-  }*
+  attribute condition { text }?,
+
+  (element action {
+     attribute value { text },
+     attribute type { "create" | "update" | "delete" | "ignore" }
+   } | expression-column)*
 }
 extent = element extent {
   attribute query { text }
+}
+
+# we don't allow this as a general virtual column just yet, but the tool
+# could be extended to allow it
+expression-column = element expression-column {
+  nameatt,
+  text
 }

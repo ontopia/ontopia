@@ -1362,8 +1362,10 @@ public class Processor {
   }
   
   public static void synchronizeRelations(RelationMapping rmapping,
-                                          Collection relnames, TopicMapIF topicmap,
-                                          LocatorIF baseloc, boolean forceRescan) {
+                                          Collection relnames,
+                                          TopicMapIF topicmap,
+                                          LocatorIF baseloc,
+                                          boolean forceRescan) {
     int ttuples = 0;
     long tstime = System.currentTimeMillis();
     Context ctx = new Context();
@@ -1386,14 +1388,14 @@ public class Processor {
       // loop over datasources
       Iterator dsiter = ds_relations.keySet().iterator();
       while (dsiter.hasNext()) {
-        DataSourceIF datasource = (DataSourceIF)dsiter.next();
+        DataSourceIF datasource = (DataSourceIF) dsiter.next();
         log.debug("Synchronizing relations in data source: " + datasource);
       
         // loop over relations
-        Collection rels = (Collection)ds_relations.get(datasource);
+        Collection rels = (Collection) ds_relations.get(datasource);
         Iterator riter = rels.iterator();
         while (riter.hasNext()) {
-          Relation relation = (Relation)riter.next();
+          Relation relation = (Relation) riter.next();
       
           // do not process non-listed relations
           if (relnames != null && !relnames.contains(relation.getName())) {
@@ -1538,8 +1540,6 @@ public class Processor {
           ttuples += rtuples;
         }
       }
-    } catch (Exception e) {
-      throw new DB2TMException("Error occurred in synchronizeRelations call.", e);
     } finally {
       ctx.close();
     }
@@ -1561,8 +1561,9 @@ public class Processor {
       if (otype != null) {
         // create prefix value
         String procname = ctx.getMapping().getName();
+        String relname = sync.getRelation().getName();
         String syncname = sync.getTable();
-        String prefix = procname + ":" + syncname + ":";      
+        String prefix = procname + ":" + relname + ":" + syncname + ":";      
         // loop over occurrences to find appropriate value
         Iterator iter = reifier.getOccurrences().iterator();
         while (iter.hasNext()) {
@@ -1593,8 +1594,9 @@ public class Processor {
       
       // create prefix value
       String procname = ctx.getMapping().getName();
+      String relname = sync.getRelation().getName();
       String syncname = sync.getTable();
-      String prefix = procname + ":" + syncname + ":";      
+      String prefix = procname + ":" + relname + ":" + syncname + ":";      
       OccurrenceIF match = null;
       
       if (reifier != null && otype != null) {
