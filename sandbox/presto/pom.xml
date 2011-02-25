@@ -33,4 +33,13 @@
     <module>presto-utils</module>
   </modules>
 
+  <distributionManagement>
+    <snapshotRepository>
+      <id>agrep01-snapshots</id>
+      <name>agrep01-snapshots</name>
+      <url>http://agrep01:8080/artifactory/libs-snapshots-local</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
+  </distributionManagement>
+
 </project>
