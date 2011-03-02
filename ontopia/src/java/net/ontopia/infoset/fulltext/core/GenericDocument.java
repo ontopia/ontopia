@@ -17,17 +17,17 @@ import java.util.Map;
 
 public class GenericDocument implements DocumentIF, java.io.Serializable {
 
-  protected Map fields;
+  protected Map<String, FieldIF> fields;
 
   public GenericDocument() {
-    this.fields = new HashMap();
+    this.fields = new HashMap<String, FieldIF>();
   }
   
   public FieldIF getField(String name) {
     return (FieldIF)fields.get(name);
   }
   
-  public Collection getFields() {
+  public Collection<FieldIF> getFields() {
     return fields.values();
   }
 
@@ -42,9 +42,9 @@ public class GenericDocument implements DocumentIF, java.io.Serializable {
   public String toString() {
     StringBuffer sb = new StringBuffer();
     sb.append("<Document");
-    Iterator iter = getFields().iterator();
+    Iterator<FieldIF> iter = getFields().iterator();
     while (iter.hasNext()) {
-      FieldIF field = (FieldIF)iter.next();
+      FieldIF field = iter.next();
       sb.append(" " + field.getName() + "='" + field.getValue() + "'");
     }
     sb.append('>');

@@ -23,7 +23,7 @@ public interface DocumentIF {
    *
    * @return A collection of FieldIF objects.
    */
-  public Collection getFields();
+  public Collection<FieldIF> getFields();
 
   /**
    * INTERNAL: Adds the given field to the document.
