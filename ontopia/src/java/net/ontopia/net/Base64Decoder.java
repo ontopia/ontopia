@@ -3,8 +3,12 @@
 
 package net.ontopia.net;
 
-import java.io.*;
-import net.ontopia.utils.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: This class contains methods for encoding base64

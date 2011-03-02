@@ -3,7 +3,11 @@
 
 package net.ontopia.net;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * INTERNAL: This class contains methods for decoding base64
