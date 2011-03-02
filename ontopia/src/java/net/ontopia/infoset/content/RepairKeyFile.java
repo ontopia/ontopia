@@ -7,11 +7,9 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
 import java.util.Arrays;
 import java.util.Comparator;
-import net.ontopia.utils.StreamUtils;
 
 /**
  * INTERNAL: A utility class that analyzes a file content store
@@ -38,17 +36,14 @@ public class RepairKeyFile {
 	}
       });
     
-    Arrays.sort(files, new Comparator() {
-	public int compare(Object o1, Object o2) {
-	  File f1 = (File)o1;
-	  File f2 = (File)o2;
-	  
-	  int i1 = Integer.parseInt(f1.getName());
-	  int i2 = Integer.parseInt(f2.getName());
-	  
-	  return (i1 > i2 ? -1 : (i1 < i2 ? 1 : 0));
-	}
-      });
+    Arrays.sort(files, new Comparator<File>() {
+      public int compare(File f1, File f2) {
+        int i1 = Integer.parseInt(f1.getName());
+        int i2 = Integer.parseInt(f2.getName());
+
+        return (i1 > i2 ? -1 : (i1 < i2 ? 1 : 0));
+      }
+    });
 
     int dirval = 0;
     if (files.length > 0) {

@@ -16,7 +16,7 @@ public class ContentStoreUtils {
    * @param topicmap The topic map
    * @param properties String properties for configuring the store.
    */
-  public static ContentStoreIF getContentStore(TopicMapIF topicmap, Map properties) {
+  public static ContentStoreIF getContentStore(TopicMapIF topicmap, Map<?, ?> properties) {
     if (topicmap instanceof net.ontopia.topicmaps.impl.rdbms.TopicMap)
       return JDBCContentStore.getInstance(topicmap);
     else

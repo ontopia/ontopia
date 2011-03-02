@@ -3,7 +3,9 @@
 
 package net.ontopia.infoset.content;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.HashMap;
 import net.ontopia.utils.StreamUtils;
@@ -16,8 +18,8 @@ public class InMemoryContentStore implements ContentStoreIF {
   private static InMemoryContentStore store;
 
   private int nextKey;
-  private Map content;
-  
+  private Map<Integer, byte[]> content;
+
   // --- Static interface
 
   public static ContentStoreIF getInstance(TopicMapIF topicmap) {
@@ -26,10 +28,10 @@ public class InMemoryContentStore implements ContentStoreIF {
     return store;
   }
 
-  // --- ContentStoreIF implementation  
-  
+  // --- ContentStoreIF implementation
+
   public InMemoryContentStore() {
-    content = new HashMap();    
+    content = new HashMap<Integer, byte[]>();
   }
 
   public boolean containsKey(int key) throws ContentStoreException {
@@ -37,7 +39,7 @@ public class InMemoryContentStore implements ContentStoreIF {
   }
 
   public ContentInputStream get(int key) throws ContentStoreException {
-    byte[] data = (byte[]) content.get(new Integer(key));
+    byte[] data = content.get(new Integer(key));
     if (data == null)
       throw new ContentStoreException("No content for key " + key);
     return new ContentInputStream(new ByteArrayInputStream(data), data.length);
@@ -45,8 +47,8 @@ public class InMemoryContentStore implements ContentStoreIF {
 
   public int add(ContentInputStream data) throws ContentStoreException {
     return add(data, data.getLength());
-  }  
-  
+  }
+
   public int add(InputStream data, int length) throws ContentStoreException {
     try {
       content.put(new Integer(nextKey), StreamUtils.read(data, length));
@@ -66,5 +68,5 @@ public class InMemoryContentStore implements ContentStoreIF {
   public void close() throws ContentStoreException {
     content = null;
   }
-  
+
 }

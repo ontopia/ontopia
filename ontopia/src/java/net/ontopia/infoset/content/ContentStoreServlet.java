@@ -3,19 +3,18 @@
 
 package net.ontopia.infoset.content;
 
-import java.io.*;
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.persistence.proxy.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
 import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.ontopia.utils.StreamUtils;
 
 /**
  * INTERNAL: A servlet implementation that returns content stored in a

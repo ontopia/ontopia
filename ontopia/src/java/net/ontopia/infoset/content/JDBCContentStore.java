@@ -3,15 +3,19 @@
 
 package net.ontopia.infoset.content;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.persistence.proxy.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collections;
+import net.ontopia.persistence.proxy.ConnectionFactoryIF;
+import net.ontopia.persistence.proxy.HighLowKeyGenerator;
+import net.ontopia.persistence.proxy.IdentityIF;
+import net.ontopia.persistence.proxy.KeyGeneratorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: Content store implementation on top of JDBC that uses a

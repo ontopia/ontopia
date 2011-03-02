@@ -3,10 +3,8 @@
 
 package net.ontopia.infoset.content;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-import net.ontopia.utils.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * INTERNAL: 

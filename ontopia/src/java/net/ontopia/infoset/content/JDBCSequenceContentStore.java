@@ -3,14 +3,14 @@
 
 package net.ontopia.infoset.content;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.persistence.proxy.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * INTERNAL: Content store implementation on top of JDBC that uses

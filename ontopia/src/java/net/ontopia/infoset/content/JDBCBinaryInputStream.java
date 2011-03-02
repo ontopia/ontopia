@@ -3,13 +3,11 @@
 
 package net.ontopia.infoset.content;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-import net.ontopia.utils.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * INTERNAL: 
