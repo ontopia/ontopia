@@ -4,8 +4,6 @@
 package net.ontopia.infoset.core;
 
 import java.io.File;
-import java.net.MalformedURLException;
-
 import net.ontopia.utils.URIUtils;
 
 /**

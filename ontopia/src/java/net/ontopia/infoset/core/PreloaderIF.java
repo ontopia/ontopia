@@ -2,7 +2,7 @@
 
 package net.ontopia.infoset.core;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * INTERNAL: Interface for preloading locators.<p>

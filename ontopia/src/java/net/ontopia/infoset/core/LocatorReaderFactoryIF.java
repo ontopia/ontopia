@@ -2,7 +2,8 @@
 
 package net.ontopia.infoset.core;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Reader;
 
 /**
  * INTERNAL: Factory that creates a Reader from a LocatorIF.<p>
