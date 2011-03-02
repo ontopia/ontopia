@@ -2,12 +2,12 @@
 
 package net.ontopia.infoset.utils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
-import net.ontopia.infoset.core.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.core.LocatorReaderFactoryIF;
 
 /**
  * INTERNAL: Creates a Reader for a LocatorIF that contains a URL in
