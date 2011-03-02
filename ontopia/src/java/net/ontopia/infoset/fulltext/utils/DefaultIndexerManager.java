@@ -3,7 +3,6 @@
 package net.ontopia.infoset.fulltext.utils;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.DocumentProcessorIF;

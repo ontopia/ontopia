@@ -5,8 +5,7 @@ package net.ontopia.infoset.fulltext.utils;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.DocumentProcessorIF;
@@ -52,8 +51,8 @@ public class ThreadedIndexerManager implements IndexerIF {
   // protected int min_threads = 1;
   protected ThreadFactory processor_thread_factory;
   
-  protected Collection non_processable = new Vector();
-  protected Collection non_indexable = new Vector();
+  protected Collection<DocumentIF> non_processable = new ArrayList<DocumentIF>();
+  protected Collection<DocumentIF> non_indexable = new ArrayList<DocumentIF>();
   
   protected int total;
   
