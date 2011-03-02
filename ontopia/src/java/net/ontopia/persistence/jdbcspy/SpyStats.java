@@ -5,9 +5,6 @@ package net.ontopia.persistence.jdbcspy;
 
 import java.io.Writer;
 import java.io.IOException;
-import java.sql.*;
-import java.util.Arrays;
-import java.util.Comparator;
 import net.ontopia.utils.QueryProfiler;
 
 /**

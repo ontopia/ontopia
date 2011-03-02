@@ -3,13 +3,27 @@
 
 package net.ontopia.persistence.jdbcspy;
 
-import java.sql.*;
 import java.util.Map;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Calendar;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Array;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.Date;
+import java.sql.NClob;
+import java.sql.Ref;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.RowId;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.sql.SQLXML;
+import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  * INTERNAL: 
@@ -520,7 +534,7 @@ public class SpyResultSet implements ResultSet {
     rs.updateObject(columnName, x, scale);
   }
 
-  public Object getObject(int columnIndex, Map map)
+  public Object getObject(int columnIndex, Map<String, Class<?>> map)
     throws SQLException {
     return rs.getObject(columnIndex, map);
   }
@@ -615,7 +629,7 @@ public class SpyResultSet implements ResultSet {
     return rs.getTimestamp(columnIndex, cal);
   }
 
-  public Object getObject(String columnName, Map map)
+  public Object getObject(String columnName, Map<String, Class<?>> map)
     throws SQLException {
     return rs.getObject(columnName, map);
   }

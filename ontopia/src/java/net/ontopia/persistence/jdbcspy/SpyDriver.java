@@ -3,7 +3,11 @@
 
 package net.ontopia.persistence.jdbcspy;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.DriverPropertyInfo;
+import java.sql.SQLException;
 import java.util.Properties;
 import net.ontopia.utils.OntopiaRuntimeException;
 
