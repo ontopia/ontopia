@@ -3,8 +3,13 @@
 
 package net.ontopia.infoset.impl.basic;
 
-import java.net.*;
-import java.io.*;
+import java.io.Externalizable;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.net.MalformedURLException;
+import java.net.URL;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
