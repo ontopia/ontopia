@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.ontopia.infoset.fulltext.core.DocumentIF;
+import net.ontopia.infoset.fulltext.core.FieldIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
 import net.ontopia.persistence.proxy.QueryResultIF;
   
@@ -32,7 +33,7 @@ public class RDBMSSearchResult implements SearchResultIF {
     while (result.next()) {
       result.getValues(row);
       // Produce fields
-      Map<String, RDBMSField> fields = new HashMap<String, RDBMSField>(fnames.length);
+      Map<String, FieldIF> fields = new HashMap<String, FieldIF>(fnames.length);
       for (int i=0; i < fnames.length-1; i++) { // skip last, since it has the score
         fields.put(fnames[i], new RDBMSField(fnames[i], (String)row[i]));
       }
