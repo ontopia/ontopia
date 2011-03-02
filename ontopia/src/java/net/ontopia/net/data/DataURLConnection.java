@@ -3,13 +3,11 @@
 
 package net.ontopia.net.data;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import net.ontopia.net.Base64Decoder;
 
 /**
  * INTERNAL: This class enables Java to dereference data: URLs, as
