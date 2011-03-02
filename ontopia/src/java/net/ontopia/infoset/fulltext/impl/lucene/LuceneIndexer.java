@@ -204,9 +204,9 @@ public class LuceneIndexer implements IndexerIF {
   
   protected Document getDocument(DocumentIF document) throws IOException {
     Document lucene_document = new Document();
-    Iterator iter = document.getFields().iterator();
+    Iterator<FieldIF> iter = document.getFields().iterator();
     while (iter.hasNext()) {      
-      FieldIF field = (FieldIF)iter.next();
+      FieldIF field = iter.next();
       lucene_document.add(getField(field));
     }
     return lucene_document;
@@ -262,7 +262,7 @@ public class LuceneIndexer implements IndexerIF {
 
   private static Analyzer createAnalyzer(String acname) {
     try {
-      Class aclass = Class.forName(acname);
+      Class<?> aclass = Class.forName(acname);
       return (Analyzer)aclass.newInstance();
     } catch (Throwable e) {
       throw new OntopiaRuntimeException("Could not create analyzer: " + acname , e);

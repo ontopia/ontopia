@@ -32,8 +32,8 @@ public class LuceneDocument implements DocumentIF {
     return new LuceneField(field);
   }
   
-  public Collection getFields() {
-    Collection result = new ArrayList();
+  public Collection<FieldIF> getFields() {
+    Collection<FieldIF> result = new ArrayList<FieldIF>();
     Enumeration enumeration = document.fields();
     while (enumeration.hasMoreElements()) {
       result.add(new LuceneField((Field)enumeration.nextElement()));
@@ -52,9 +52,9 @@ public class LuceneDocument implements DocumentIF {
   public String toString() {
     StringBuffer sb = new StringBuffer();
     sb.append("<lucene.Document ");
-    Iterator iter = getFields().iterator();
+    Iterator<FieldIF> iter = getFields().iterator();
     while (iter.hasNext()) {
-      FieldIF field = (FieldIF)iter.next();
+      FieldIF field = iter.next();
       sb.append(field.toString());
     }
     sb.append(">");
