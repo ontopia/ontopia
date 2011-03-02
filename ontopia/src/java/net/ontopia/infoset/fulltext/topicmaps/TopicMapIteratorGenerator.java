@@ -90,28 +90,28 @@ public class TopicMapIteratorGenerator implements EventGeneratorIF {
   public void generate() throws IOException {
 
     // Loop over the topics in the topic map
-    Iterator topics = topicmap.getTopics().iterator();
+    Iterator<TopicIF> topics = topicmap.getTopics().iterator();
     while (topics.hasNext()) {
-      TopicIF topic = (TopicIF)topics.next();
+      TopicIF topic = topics.next();
 
       // Loop over the basenames of the topic
-      Iterator basenames = topic.getTopicNames().iterator();
+      Iterator<TopicNameIF> basenames = topic.getTopicNames().iterator();
       while (basenames.hasNext()) {
-        TopicNameIF basename = (TopicNameIF)basenames.next();
+        TopicNameIF basename = basenames.next();
         indexer.index(docgen.generate(basename));
 
         // Loop over the variants of the basename
-        Iterator variants = basename.getVariants().iterator();
+        Iterator<VariantNameIF> variants = basename.getVariants().iterator();
         while (variants.hasNext()) {
-          VariantNameIF variant = (VariantNameIF)variants.next();
+          VariantNameIF variant = variants.next();
           indexer.index(docgen.generate(variant));
         }
       }
 
       // Loop over the occurences of the topic
-      Iterator occurs = topic.getOccurrences().iterator();
+      Iterator<OccurrenceIF> occurs = topic.getOccurrences().iterator();
       while (occurs.hasNext()) {
-        OccurrenceIF occur = (OccurrenceIF)occurs.next();
+        OccurrenceIF occur = occurs.next();
         indexer.index(docgen.generate(occur));
       }      
     }

@@ -9,6 +9,7 @@ import java.util.AbstractList;
 import net.ontopia.infoset.fulltext.core.DocumentIF;
 import net.ontopia.infoset.fulltext.core.FieldIF;
 import net.ontopia.infoset.fulltext.core.SearchResultIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -38,7 +39,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * </pre>
  */
 
-public class TopicMapSearchResult extends AbstractList {
+public class TopicMapSearchResult extends AbstractList<TMObjectIF> {
 
   protected TopicMapIF topicmap;
   protected SearchResultIF result;
@@ -79,7 +80,7 @@ public class TopicMapSearchResult extends AbstractList {
   /**
    * INTERNAL: This is the java.util.List.get(int) method.
    */
-  public Object get(int index) {
+  public TMObjectIF get(int index) {
     try {
       // Get document and extract object id
       DocumentIF document = result.getDocument(index);

@@ -3,7 +3,6 @@
 
 package net.ontopia.infoset.fulltext.topicmaps;
 
-import net.ontopia.infoset.fulltext.core.FieldIF;
 import net.ontopia.infoset.fulltext.core.GenericDocument;
 
 /**
@@ -17,11 +16,11 @@ public class TopicMapDocument extends GenericDocument {
 
   protected String _toString() {
     if (fields.containsKey("object_id") && !fields.containsKey("address") && fields.containsKey("content"))
-      return "Document ["  + ((FieldIF)fields.get("object_id")).getValue() + "] \"" + ((FieldIF)fields.get("content")).getValue()  + "\"";
+      return "Document ["  + (fields.get("object_id")).getValue() + "] \"" + (fields.get("content")).getValue()  + "\"";
     else if (fields.containsKey("object_id") && fields.containsKey("address"))
-      return "Document ["  + ((FieldIF)fields.get("object_id")).getValue() + "] <" + ((FieldIF)fields.get("address")).getValue()  + ">";
+      return "Document ["  + (fields.get("object_id")).getValue() + "] <" + (fields.get("address")).getValue()  + ">";
     else if (fields.containsKey("object_id"))
-      return "Document ["  + ((FieldIF)fields.get("object_id")).getValue() + "]";
+      return "Document ["  + (fields.get("object_id")).getValue() + "]";
     else
       return super.toString();    
   }
