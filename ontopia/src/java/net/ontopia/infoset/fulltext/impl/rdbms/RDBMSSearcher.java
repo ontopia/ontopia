@@ -15,7 +15,6 @@ import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapTransaction;
 import net.ontopia.topicmaps.impl.utils.AbstractIndex;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
-import net.ontopia.utils.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

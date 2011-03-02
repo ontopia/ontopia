@@ -22,17 +22,17 @@ public class RDBMSSearchResult implements SearchResultIF {
   // TODO: Should make the result traversal lazy, so that all the work
   // does not have to be done upfront.
   
-  protected List docs;
+  protected List<RDBMSDocument> docs;
   protected float[] scores;
   
   RDBMSSearchResult(QueryResultIF result, String[] fnames) {
     // Retrieve documents
-    this.docs = new ArrayList();    
+    this.docs = new ArrayList<RDBMSDocument>();    
     Object[] row = new Object[fnames.length];
     while (result.next()) {
       result.getValues(row);
       // Produce fields
-      Map fields = new HashMap(fnames.length);
+      Map<String, RDBMSField> fields = new HashMap<String, RDBMSField>(fnames.length);
       for (int i=0; i < fnames.length-1; i++) { // skip last, since it has the score
         fields.put(fnames[i], new RDBMSField(fnames[i], (String)row[i]));
       }
@@ -47,11 +47,11 @@ public class RDBMSSearchResult implements SearchResultIF {
   }
   
   public DocumentIF getDocument(int hit) throws IOException {
-    return (DocumentIF)docs.get(hit);
+    return docs.get(hit);
   }
 
   public float getScore(int hit) throws IOException {
-    RDBMSDocument doc = (RDBMSDocument)docs.get(hit);
+    RDBMSDocument doc = docs.get(hit);
     if (doc == null)
       return 0f;
     else

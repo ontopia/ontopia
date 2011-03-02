@@ -16,10 +16,10 @@ import net.ontopia.infoset.fulltext.core.FieldIF;
 
 public class RDBMSDocument implements DocumentIF {
 
-  protected Map fields;
+  protected Map<String, FieldIF> fields;
   protected float score;
   
-  RDBMSDocument(Map fields, float score) {
+  RDBMSDocument(Map<String, FieldIF> fields, float score) {
     this.fields = fields;
     this.score = score;
   }
@@ -29,10 +29,10 @@ public class RDBMSDocument implements DocumentIF {
   }
   
   public FieldIF getField(String name) {
-    return (FieldIF)fields.get(name);
+    return fields.get(name);
   }
   
-  public Collection getFields() {
+  public Collection<FieldIF> getFields() {
     return fields.values();
   }
 
@@ -47,9 +47,9 @@ public class RDBMSDocument implements DocumentIF {
   public String toString() {
     StringBuffer sb = new StringBuffer();
     sb.append("<rdbms.Document ");
-    Iterator iter = getFields().iterator();
+    Iterator<FieldIF> iter = getFields().iterator();
     while (iter.hasNext()) {
-      FieldIF field = (FieldIF)iter.next();
+      FieldIF field = iter.next();
       sb.append(field.toString());
     }
     sb.append(">");
