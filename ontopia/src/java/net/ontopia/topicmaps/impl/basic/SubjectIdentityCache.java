@@ -78,7 +78,7 @@ public class SubjectIdentityCache extends AbstractSubjectIdentityCache
   }
   
   public TopicIF getTopicBySubjectIdentifier(LocatorIF locator) {
-    return (TopicIF) subject_indicators.get(locator);    
+    return subject_indicators.get(locator);    
   }
 
   // --------------------------------------------------------------------------

@@ -34,21 +34,22 @@ public class Topic extends TMObject implements TopicIF {
 
   static final long serialVersionUID = 6846760964906826812L;
 
-  protected Set subjects;
-  protected Set indicators;
+  protected Set<LocatorIF> subjects;
+  protected Set<LocatorIF> indicators;
   protected ReifiableIF reified;
 
-  protected UniqueSet scope;
-  protected UniqueSet types;
-  protected Set names;
-  protected Set occurs;
-  protected Set roles;
+  protected UniqueSet<TopicIF> scope;
+  protected UniqueSet<TopicIF> types;
+  protected Set<TopicNameIF> names;
+  protected Set<OccurrenceIF> occurs;
+  protected Set<AssociationRoleIF> roles;
 
-  private static final Comparator rolecomp = new RoleComparator();
+  private static final Comparator<AssociationRoleIF> rolecomp = new RoleComparator();
 
   protected Topic(TopicMap tm) {
     super(tm);
-    types = topicmap.setpool.get(Collections.EMPTY_SET);
+	Set<TopicIF> empty = Collections.emptySet();
+    types = topicmap.setpool.get(empty);
     names = topicmap.cfactory.makeSmallSet();
     occurs = topicmap.cfactory.makeSmallSet();
     roles = topicmap.cfactory.makeSmallSet();
@@ -76,9 +77,9 @@ public class Topic extends TMObject implements TopicIF {
     this.parent = parent;
   }
 
-  public Collection getSubjectLocators() {
+  public Collection<LocatorIF> getSubjectLocators() {
     if (subjects == null)
-      return Collections.EMPTY_SET;
+      return Collections.emptySet();
     else
       return Collections.unmodifiableSet(subjects);
   }
@@ -117,7 +118,7 @@ public class Topic extends TMObject implements TopicIF {
 
   public Collection<LocatorIF> getSubjectIdentifiers() {
     if (indicators == null)
-      return Collections.EMPTY_SET;
+      return Collections.emptySet();
     else
       return Collections.unmodifiableSet(indicators);
   }
@@ -236,11 +237,11 @@ public class Topic extends TMObject implements TopicIF {
   public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     if (roletype == null) throw new NullPointerException("Role type cannot be null.");
     // see below for rationale for next line
-    Collection result = new ArrayList();
+    Collection<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
     synchronized (roles) {    
-      Iterator iter = roles.iterator();
+      Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+        AssociationRoleIF role = iter.next();
         if (role.getType() == roletype)
           result.add(role);
       }
@@ -273,10 +274,10 @@ public class Topic extends TMObject implements TopicIF {
         // CompactHashSet()     733 712 726 730 -> 725.25
         // CompactHashSet(size) 838 856 842     -> 845.33
 
-        Collection result = new ArrayList();
-        Iterator iter = roles.iterator();
+        Collection<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
+        Iterator<AssociationRoleIF> iter = roles.iterator();
         while (iter.hasNext()) {
-          AssociationRoleIF role = (AssociationRoleIF)iter.next();
+          AssociationRoleIF role = iter.next();
           if (role.getType() == roletype) {
             AssociationIF assoc = role.getAssociation();
             if (assoc != null && assoc.getType() == assoc_type)
@@ -300,7 +301,7 @@ public class Topic extends TMObject implements TopicIF {
   protected void addRole(AssociationRoleIF assoc_role) {
     // Add association role to list of association roles
     if (roles.size() > 100 && roles instanceof CompactHashSet) {
-      Set new_roles = new edu.emory.mathcs.backport.java.util.TreeSet(rolecomp);
+      Set<AssociationRoleIF> new_roles = new edu.emory.mathcs.backport.java.util.TreeSet(rolecomp);
       new_roles.addAll(roles);
       roles = new_roles;
     }
@@ -321,7 +322,7 @@ public class Topic extends TMObject implements TopicIF {
       topicmap.removeTopic(this);
   }
   
-  public Collection getTypes() {
+  public Collection<TopicIF> getTypes() {
     return types;
   }
 
@@ -365,10 +366,8 @@ public class Topic extends TMObject implements TopicIF {
     return ObjectStrings.toString("basic.Topic", (TopicIF)this);
   }
 
-  static class RoleComparator implements Comparator {
-    public int compare(Object o1, Object o2) {
-      AssociationRoleIF role1 = (AssociationRoleIF) o1;
-      AssociationRoleIF role2 = (AssociationRoleIF) o2;
+  static class RoleComparator implements Comparator<AssociationRoleIF> {
+    public int compare(AssociationRoleIF role1, AssociationRoleIF role2) {
 
       int c = role1.getType().hashCode() - role2.getType().hashCode();
       if (c == 0)
@@ -393,7 +392,7 @@ public class Topic extends TMObject implements TopicIF {
     public String getObjectId() { return null; }
     public boolean isReadOnly() { return true; }
     public TopicMapIF getTopicMap() { return null; }
-    public Collection getItemIdentifiers() { return null; }
+    public Collection<LocatorIF> getItemIdentifiers() { return null; }
     public void addItemIdentifier(LocatorIF item_identifier) { }
     public void removeItemIdentifier(LocatorIF item_identifier) { }
     public void remove() { }
@@ -444,10 +443,10 @@ public class Topic extends TMObject implements TopicIF {
     public TopicIF getReifier() { return null; }
     public void setReifier(TopicIF reifier) { }
     public void setType(TopicIF type) { }
-    public Collection getRoleTypes() { return null; }
-    public Collection getRolesByType(TopicIF roletype) { return null; }
-    public Collection getRoles() { return null; }
-    public Collection getScope() { return null; }
+    public Collection<TopicIF> getRoleTypes() { return null; }
+    public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) { return null; }
+    public Collection<AssociationRoleIF> getRoles() { return null; }
+    public Collection<TopicIF> getScope() { return null; }
     public void addTheme(TopicIF theme) { }
     public void removeTheme(TopicIF theme) { }
   }

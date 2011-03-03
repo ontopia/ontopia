@@ -3,11 +3,14 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
-import java.util.*;
+import java.util.HashMap;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.events.*;
-import net.ontopia.topicmaps.impl.utils.*;
+import net.ontopia.topicmaps.core.events.TopicMapListenerIF;
+import net.ontopia.topicmaps.impl.utils.EventListenerIF;
+import net.ontopia.topicmaps.impl.utils.EventManagerIF;
+import net.ontopia.topicmaps.impl.utils.SnapshotTMObject;
+import net.ontopia.topicmaps.impl.utils.SnapshotTopic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
