@@ -1,16 +1,18 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectInput;
-
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
 import org.apache.commons.collections.map.IdentityMap;
 

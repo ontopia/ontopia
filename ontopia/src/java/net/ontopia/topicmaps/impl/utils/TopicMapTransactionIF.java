@@ -3,7 +3,9 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 /**
  * PUBLIC: A topic map transaction is used to represent a transaction

@@ -26,14 +26,14 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * according to the signature.
  */
 public class ArgumentValidator {
-  protected List arguments;
+  protected List<Argument> arguments;
 
   /**
    * INTERNAL: Creates a validator for the signature represented by
    * this string.
    */
   public ArgumentValidator(String signature) {
-    arguments = new ArrayList();
+    arguments = new ArrayList<Argument>();
 
     if (signature.length() == 0)
       return; // otherwise we'll add an empty argument...
@@ -237,9 +237,9 @@ public class ArgumentValidator {
   // --- TYPE MAP
 
   // used to get nice type names in error messages
-  protected static Map typenames;
+  protected static Map<Class<?>, String> typenames;
   static {
-    typenames = new HashMap();
+    typenames = new HashMap<Class<?>, String>();
     typenames.put(net.ontopia.topicmaps.core.AssociationIF.class,
                   "an association");
     typenames.put(net.ontopia.topicmaps.core.TopicIF.class,

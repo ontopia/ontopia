@@ -22,8 +22,8 @@ import net.ontopia.utils.CollectionFactoryIF;
 
 public class TopicModificationManager implements EventManagerIF, java.io.Serializable {
 
-  protected Map handlers; 
-  protected Map listeners;
+  protected Map<String, EventHandler> handlers; 
+  protected Map<String, Set<EventListenerIF>> listeners;
 
   protected TopicModificationManager manager;
   protected CollectionFactoryIF cfactory;
@@ -99,9 +99,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
     handlers.put("TMObjectIF.removeItemIdentifier", xh);
 
     // Register as event listener
-    Iterator iter = handlers.keySet().iterator();
+    Iterator<String> iter = handlers.keySet().iterator();
     while (iter.hasNext()) {
-      emanager.addListener(this, (String)iter.next());
+      emanager.addListener(this, iter.next());
     }
 
     // Make this object available to nested classes.
@@ -116,16 +116,18 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
     // Adding itself causes infinite loops.
     if (listener == this) return;
     // Initialize event entry
-    if (!listeners.containsKey(event))
-      listeners.put(event, cfactory.makeSmallSet());
+    if (!listeners.containsKey(event)) {
+      Set<EventListenerIF> newset = cfactory.makeSmallSet();
+      listeners.put(event, newset);
+	}
     // Add listener to event entry listeners collection
-    ((Set)listeners.get(event)).add(listener);
+    listeners.get(event).add(listener);
   }
 
   public void removeListener(EventListenerIF listener, String event) {
     if (listeners.containsKey(event)) {
       // Remove listener from event listeners collection
-      Set event_listeners  = (Set)listeners.get(event);
+      Set<EventListenerIF> event_listeners  = listeners.get(event);
       event_listeners.remove(listener);
       // If there are no more listeners, remove event entry.
       if (event_listeners.isEmpty()) listeners.remove(event);      
@@ -138,7 +140,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
 
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     if (handlers.containsKey(event)) {
-      EventListenerIF handler = (EventListenerIF)handlers.get(event);
+      EventListenerIF handler = handlers.get(event);
       handler.processEvent(object, event, new_value, old_value);
     }
   }
@@ -157,11 +159,11 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
       String event = "TopicIF.modified";
       if (listeners.containsKey(event)) {
         // Loop over event listeners
-        Set event_listeners = (Set)listeners.get(event);
-        Iterator iter = event_listeners.iterator();
+        Set<EventListenerIF> event_listeners = listeners.get(event);
+        Iterator<EventListenerIF> iter = event_listeners.iterator();
         while (iter.hasNext()) {
           // Notify listener
-          ((EventListenerIF)iter.next()).processEvent(topic, event, null, null);
+         iter.next().processEvent(topic, event, null, null);
         }
       }      
     }
@@ -236,9 +238,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
       }
 
       if (assoc != null) {
-        Iterator iter = assoc.getRoles().iterator();
+        Iterator<AssociationRoleIF> iter = assoc.getRoles().iterator();
         while (iter.hasNext()) {
-          AssociationRoleIF orole = (AssociationRoleIF)iter.next();
+          AssociationRoleIF orole = iter.next();
           if (!orole.equals(role)) {
             TopicIF otopic = orole.getPlayer();
             if (otopic != null)
@@ -255,9 +257,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
   class AssociationHandler extends EventHandler {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationIF assoc = (AssociationIF)object;
-      Iterator iter = assoc.getRoles().iterator();
+      Iterator<AssociationRoleIF> iter = assoc.getRoles().iterator();
       while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+        AssociationRoleIF role = iter.next();
         TopicIF topic = role.getPlayer();
         if (topic != null)
           topicModified(topic);          
@@ -272,9 +274,9 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       if (event.equals("TopicMapIF.removeAssociation")) {
         AssociationIF assoc = (AssociationIF)old_value;
-        Iterator iter = assoc.getRoles().iterator();
+        Iterator<AssociationRoleIF> iter = assoc.getRoles().iterator();
         while (iter.hasNext()) {
-          AssociationRoleIF role = (AssociationRoleIF)iter.next();
+          AssociationRoleIF role = iter.next();
           TopicIF topic = role.getPlayer();
           if (topic != null)
             topicModified(topic);          

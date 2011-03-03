@@ -3,8 +3,6 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
-import net.ontopia.topicmaps.core.TopicMapIF;
-
 /**
  * INTERNAL: Interface implemented by a class that is able to
  * revitalize objects.

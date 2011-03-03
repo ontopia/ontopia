@@ -31,8 +31,8 @@ import net.ontopia.utils.CollectionFactoryIF;
 
 public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
 
-  protected Map handlers; 
-  protected Map listeners;
+  protected Map<String, EventHandler> handlers; 
+  protected Map<String, Set<EventListenerIF>> listeners;
 
   protected ObjectTreeManager otree;
   protected CollectionFactoryIF cfactory;
@@ -62,9 +62,9 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     handlers.put("AssociationIF.removeRole", new EH16());                       
 
     // Register as event listener
-    Iterator iter = handlers.keySet().iterator();
+    Iterator<String> iter = handlers.keySet().iterator();
     while (iter.hasNext()) {
-      emanager.addListener(this, (String)iter.next());
+      emanager.addListener(this, iter.next());
     }
 
     // Make this object available to nested classes.
@@ -79,16 +79,18 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     // Adding itself causes infinite loops.
     if (listener == this) return;
     // Initialize event entry
-    if (!listeners.containsKey(event))
-      listeners.put(event, cfactory.makeSmallSet());
+    if (!listeners.containsKey(event)) {
+      Set<EventListenerIF> newset = cfactory.makeSmallSet(); 
+      listeners.put(event, newset);
+	}
     // Add listener to event entry listeners collection
-    ((Set)listeners.get(event)).add(listener);
+    listeners.get(event).add(listener);
   }
 
   public void removeListener(EventListenerIF listener, String event) {
     if (listeners.containsKey(event)) {
       // Remove listener from event listeners collection
-      Set event_listeners  = (Set)listeners.get(event);
+      Set<EventListenerIF> event_listeners = listeners.get(event);
       event_listeners.remove(listener);
       // If there are no more listeners, remove event entry.
       if (event_listeners.isEmpty()) listeners.remove(event);      
@@ -119,11 +121,11 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     protected void treeAddEvent(Object parent, String event, Object added) {
       if (listeners.containsKey(event)) {
         // Loop over event listeners
-        Set event_listeners = (Set)listeners.get(event);
-        Iterator iter = event_listeners.iterator();
+        Set<EventListenerIF> event_listeners = listeners.get(event);
+        Iterator<EventListenerIF> iter = event_listeners.iterator();
         while (iter.hasNext()) {
           // Notify listener
-          ((EventListenerIF)iter.next()).processEvent(parent, event, added, null);
+          iter.next().processEvent(parent, event, added, null);
         }
       }      
     }
@@ -134,11 +136,11 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     protected void treeRemoveEvent(Object parent, String event, Object removed) {
       if (listeners.containsKey(event)) {
         // Loop over event listeners
-        Set event_listeners = (Set)listeners.get(event);
-        Iterator iter = event_listeners.iterator();
+        Set<EventListenerIF> event_listeners = listeners.get(event);
+        Iterator<EventListenerIF> iter = event_listeners.iterator();
         while (iter.hasNext()) {
           // Notify listener
-          ((EventListenerIF)iter.next()).processEvent(parent, event, null, removed);
+          iter.next().processEvent(parent, event, null, removed);
         }
       }      
     }

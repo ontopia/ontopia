@@ -13,7 +13,7 @@ import net.ontopia.utils.LookupIndexIF;
  * the nested index.
  */
 
-public class StatisticsIndex implements LookupIndexIF {
+public class StatisticsIndex<K, V> implements LookupIndexIF<K, V> {
 
   protected int total;
   protected int hits;
@@ -21,21 +21,21 @@ public class StatisticsIndex implements LookupIndexIF {
   protected int misses_deref;
 
   protected String name;
-  protected LookupIndexIF index;
+  protected LookupIndexIF<K, Reference<V>> index;
 
-  public StatisticsIndex(String name, LookupIndexIF index) {
+  public StatisticsIndex(String name, LookupIndexIF<K, Reference<V>> index) {
     this.name = name;
     this.index = index;
   }
   
-  public Object get(Object key) {
+  public V get(K key) {
     total++;
 
     Object retval = index.get(key);
     if (retval == null) 
       misses++;
     else {
-      retval = ((Reference)retval).get();
+      retval = ((Reference<V>)retval).get();
       if (retval == null)
 	misses_deref++;
     }
@@ -43,23 +43,23 @@ public class StatisticsIndex implements LookupIndexIF {
     if (retval != null) hits++;
 
     if (total % 1000 == 0) dump();
-    return retval;
+    return (V)retval;
   }
 
-  public Object put(Object key, Object value) {
-    Object retval = index.put(key, new SoftReference(value));
+  public V put(K key, V value) {
+    Reference<V> retval = index.put(key, new SoftReference<V>(value));
     if (retval == null)
       return null;
     else
-      return ((Reference)retval).get();
+      return retval.get();
   }
 
-  public Object remove(Object key) {
-    Object retval = index.remove(key);
+  public V remove(K key) {
+    Reference<V> retval = index.remove(key);
     if (retval == null)
       return null;
     else
-      return ((Reference)retval).get();
+      return retval.get();
   }
 
   protected int percent(int c, int total) {

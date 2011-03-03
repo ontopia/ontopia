@@ -3,7 +3,6 @@ package net.ontopia.topicmaps.impl.utils;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 
 /**

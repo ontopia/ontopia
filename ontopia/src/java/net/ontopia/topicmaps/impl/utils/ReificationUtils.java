@@ -5,7 +5,6 @@ package net.ontopia.topicmaps.impl.utils;
 
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 import net.ontopia.topicmaps.utils.MergeUtils;

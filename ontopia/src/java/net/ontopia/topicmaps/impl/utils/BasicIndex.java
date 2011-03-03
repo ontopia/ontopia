@@ -13,7 +13,7 @@ import net.ontopia.topicmaps.core.index.IndexIF;
  */
 public abstract class BasicIndex extends AbstractIndex implements EventListenerIF {
   
-  protected Map handlers = new HashMap();
+  protected Map<String, EventListenerIF> handlers = new HashMap<String, EventListenerIF>();
 
   public IndexIF getIndex() {
     return this;
@@ -26,7 +26,7 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
     // System.out.print("Yeah:" + event);
     if (handlers.containsKey(event)) {
-      ((EventListenerIF)handlers.get(event)).processEvent(object, event, new_value, old_value);
+      (handlers.get(event)).processEvent(object, event, new_value, old_value);
     }
     // System.out.println(". Done.");
   }
@@ -39,11 +39,11 @@ public abstract class BasicIndex extends AbstractIndex implements EventListenerI
     public abstract void processEvent(Object object, String event, Object new_value, Object old_value);
     protected void addEvent(Object object, String event, Object value) {
       // if (!handlers.containsKey(event)) System.out.println("+event> " + event + "=" + value);
-      ((EventListenerIF)handlers.get(event)).processEvent(object, event, value, null);
+      (handlers.get(event)).processEvent(object, event, value, null);
     }
     protected void removeEvent(Object object, String event, Object value) {
       // if (!handlers.containsKey(event)) System.out.println("-event> " + event + "=" + value);
-      ((EventListenerIF)handlers.get(event)).processEvent(object, event, null, value);
+      (handlers.get(event)).processEvent(object, event, null, value);
     }
   }
   

@@ -59,13 +59,13 @@ public abstract class AbstractAttachManager {
    * INTERNAL: Creates a new attach handler. This method can be
    * overridden in order to change the behaviour.
    */    
-  public abstract AttachHandlerIF getAttachHandler(Class klass);
+  public abstract AttachHandlerIF getAttachHandler(Class<?> klass);
   
   /**
    * INTERNAL: Creates a new detach handler. This method can be
    * overridden in order to change the behaviour. 
    */    
-  public abstract DetachHandlerIF getDetachHandler(Class klass);
+  public abstract DetachHandlerIF getDetachHandler(Class<?> klass);
 
   // -----------------------------------------------------------------------------
   // Attached and detached objects
@@ -83,8 +83,8 @@ public abstract class AbstractAttachManager {
   /**
    * INTERNAL: Returns all the objects that have been attached.
    */    
-  public Collection getAttachedObjects() {
-    Collection attached = new HashSet();
+  public Collection<Object> getAttachedObjects() {
+    Collection<Object> attached = new HashSet<Object>();
     attached.addAll(getAssociationAttachHandler().getAttached());
     attached.addAll(getAssociationRoleAttachHandler().getAttached());
     attached.addAll(getTopicNameAttachHandler().getAttached());
@@ -97,8 +97,8 @@ public abstract class AbstractAttachManager {
   /**
    * INTERNAL: Returns all the objects that have been detached.
    */    
-  public Collection getDetachedObjects() {
-    Collection detached = new HashSet();
+  public Collection<Object> getDetachedObjects() {
+    Collection<Object> detached = new HashSet<Object>();
     detached.addAll(getAssociationDetachHandler().getDetached());
     detached.addAll(getAssociationRoleDetachHandler().getDetached());
     detached.addAll(getTopicNameDetachHandler().getDetached());
@@ -162,7 +162,7 @@ public abstract class AbstractAttachManager {
    */
   public interface AttachHandlerIF extends EventListenerIF, CachedIF {
     public boolean isAttached(Object object);
-    public Collection getAttached();
+    public Collection<Object> getAttached();
     public void refresh();
   }
   
@@ -171,7 +171,7 @@ public abstract class AbstractAttachManager {
    */
   public interface DetachHandlerIF extends EventListenerIF, CachedIF {
     public boolean isDetached(Object object);
-    public Collection getDetached();
+    public Collection<Object> getDetached();
     public void refresh();
   }
 }

@@ -23,21 +23,21 @@ public class PhantomAssociation implements AssociationIF {
 
   // -- AssociationIF
 
-  public Collection getRoleTypes() {
+  public Collection<TopicIF> getRoleTypes() {
     throw new PhantomAccessException("Cannot access phantom association");
   }
 
-  public Collection getRolesByType(TopicIF roletype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
     throw new PhantomAccessException("Cannot access phantom association");
   }
 
-  public Collection getRoles() {
-    return Collections.EMPTY_SET;
+  public Collection<AssociationRoleIF> getRoles() {
+    return Collections.emptySet();
   }
 
   // -- ScopedIF
 
-  public Collection getScope() {
+  public Collection<TopicIF> getScope() {
     throw new PhantomAccessException("Cannot access phantom association");
   }
 
@@ -71,7 +71,7 @@ public class PhantomAssociation implements AssociationIF {
     throw new PhantomAccessException("Cannot access phantom association");
   }
 
-  public Collection getItemIdentifiers() {
+  public Collection<LocatorIF> getItemIdentifiers() {
     throw new PhantomAccessException("Cannot access phantom association");
   }
 

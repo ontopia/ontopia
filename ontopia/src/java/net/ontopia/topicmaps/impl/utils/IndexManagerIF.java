@@ -2,8 +2,7 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.Collection;
 import net.ontopia.topicmaps.core.index.IndexIF;
 
 /**
@@ -53,7 +52,7 @@ public interface IndexManagerIF {
    * manager supports.
    * @return A collection of strings which are index names.
    */
-  public Collection getSupportedIndexes();
+  public Collection<String> getSupportedIndexes();
 
   /**
    * DEPRECATED: Returns true if the index is active. An active index
@@ -72,7 +71,7 @@ public interface IndexManagerIF {
    *
    * @return A collection of IndexIF objects.
    */
-  public Collection getActiveIndexes();
+  public Collection<IndexIF> getActiveIndexes();
 
 }
 

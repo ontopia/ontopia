@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class StorePoolableObjectFactory
   protected TopicMapStoreFactoryIF sfactory;
 
   // track all open stores
-  public Collection stores = new HashSet();
+  public Collection<TopicMapStoreIF> stores = new HashSet<TopicMapStoreIF>();
   
   public StorePoolableObjectFactory(TopicMapStoreFactoryIF sfactory) {
     this.sfactory = sfactory;
@@ -38,7 +39,7 @@ public class StorePoolableObjectFactory
   public Object makeObject()
     throws Exception {
     // tell store factory to create a new store instance
-    Object o = sfactory.createStore();
+    TopicMapStoreIF o = sfactory.createStore();
     log.debug("makeObject " + o);
     stores.add(o);
     return o;
@@ -47,9 +48,9 @@ public class StorePoolableObjectFactory
   public void destroyObject(Object o)
     throws Exception {
     log.debug("destroyObject " + o);
-    stores.remove(o);
-    // close topic map store
     AbstractTopicMapStore s = (AbstractTopicMapStore)o;
+    stores.remove(s);
+    // close topic map store
     if (s.isOpen()) s.close(false);    
   }
 

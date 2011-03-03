@@ -36,11 +36,11 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
   protected Directory luceneDirectory;
   protected SearcherIF luceneSearcher;
   
-  protected Collection added;
+  protected Collection<TMObjectIF> added;
 
-  protected Collection removed;
+  protected Collection<String> removed;
 
-  protected Collection changed;
+  protected Collection<TMObjectIF> changed;
 
   protected TopicMapDocumentGeneratorIF docgen = DefaultTopicMapDocumentGenerator.INSTANCE;
 
@@ -52,9 +52,9 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
         .getTransaction()).getObjectTreeManager();
 
     // Initialize index maps
-    added = new HashSet();
-    removed = new HashSet();
-    changed = new HashSet();
+    added = new HashSet<TMObjectIF>();
+    removed = new HashSet<String>();
+    changed = new HashSet<TMObjectIF>();
 
     // Initialize object tree event handlers [objects added or removed]
     EventListenerIF listener_add = new TMObjectIF_added();
@@ -77,9 +77,9 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     handlers.put("OccurrenceIF.setValue", listener_chg);
 
     // Register dynamic index as event listener
-    Iterator iter = handlers.keySet().iterator();
+    Iterator<String> iter = handlers.keySet().iterator();
     while (iter.hasNext())
-      emanager.addListener(this, (String) iter.next());
+      emanager.addListener(this, iter.next());
 
     // register ourselves as index
     AbstractIndexManager ixm = (AbstractIndexManager) store.getTransaction().getIndexManager();
@@ -123,12 +123,12 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
   public synchronized boolean synchronizeIndex(IndexerIF indexer)
       throws IOException {
     boolean changes = false;
-    Iterator iter = null;
+
     // delete removed objects
     if (!removed.isEmpty()) {
-      iter = removed.iterator();
+      Iterator<String> iter = removed.iterator();
       while (iter.hasNext()) {
-        String oid = (String) iter.next();
+        String oid = iter.next();
         indexer.delete("object_id", oid);
       }
       removed.clear();
@@ -137,18 +137,18 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
 
     // delete changed objects
     if (!changed.isEmpty()) {
-      iter = changed.iterator();
+      Iterator<TMObjectIF> iter = changed.iterator();
       while (iter.hasNext()) {
-        TMObjectIF o = (TMObjectIF) iter.next();
+        TMObjectIF o = iter.next();
         indexer.delete("object_id", o.getObjectId());
       }
     }
 
     // add added objects
     if (!added.isEmpty()) {
-      iter = added.iterator();
+      Iterator<TMObjectIF> iter = added.iterator();
       while (iter.hasNext()) {
-        TMObjectIF o = (TMObjectIF) iter.next();
+        TMObjectIF o = iter.next();
         if (o instanceof OccurrenceIF)
           indexer.index(docgen.generate((OccurrenceIF) o));
         else if (o instanceof TopicNameIF)
@@ -164,9 +164,9 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
 
     // add changed objects
     if (!changed.isEmpty()) {
-      iter = changed.iterator();
+      Iterator<TMObjectIF> iter = changed.iterator();
       while (iter.hasNext()) {
-        TMObjectIF o = (TMObjectIF) iter.next();
+        TMObjectIF o = iter.next();
         if (o instanceof OccurrenceIF)
           indexer.index(docgen.generate((OccurrenceIF) o));
         else if (o instanceof TopicNameIF)
@@ -215,20 +215,23 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
   // -----------------------------------------------------------------------------
 
   protected synchronized void objectAdded(Object object) {
-    removed.remove(((TMObjectIF)object).getObjectId());
-    changed.remove(object);
-    added.add(object);
+    TMObjectIF tmo = (TMObjectIF) object;
+    removed.remove(tmo.getObjectId());
+    changed.remove(tmo);
+    added.add(tmo);
   }
 
   protected synchronized void objectRemoved(Object object) {
-    added.remove(object);
-    changed.remove(object);
-    removed.add(((TMObjectIF) object).getObjectId());
+    TMObjectIF tmo = (TMObjectIF) object;
+    added.remove(tmo);
+    changed.remove(tmo);
+    removed.add(tmo.getObjectId());
   }
 
   protected synchronized void objectChanged(Object object) {
-    if (!added.contains(object) && !removed.contains(((TMObjectIF)object).getObjectId()))
-      changed.add(object);
+    TMObjectIF tmo = (TMObjectIF) object;
+    if (!added.contains(tmo) && !removed.contains(tmo.getObjectId()))
+      changed.add(tmo);
   }
 
   // -----------------------------------------------------------------------------

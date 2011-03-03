@@ -11,24 +11,24 @@ import java.util.List;
  * ArgumentValidator.
  */
 public class Argument {
-  private List types;
+  private List<Class<?>> types;
   private boolean optional;
   private boolean repeatable;
   private boolean mustBeBound;
   private boolean multiValue;
 
   public Argument() {
-    types = new ArrayList();
+    types = new ArrayList<Class<?>>();
   }
 
-  public void addType(Class type) {
+  public void addType(Class<?> type) {
     types.add(type);
   }
 
-  public Class[] getTypes() {
-    Class[] a = new Class[types.size()];
+  public Class<?>[] getTypes() {
+    Class<?>[] a = new Class<?>[types.size()];
     for (int ix = 0; ix < a.length; ix++)
-      a[ix] = (Class) types.get(ix);
+      a[ix] = types.get(ix);
     return a;
   }
 
@@ -64,16 +64,16 @@ public class Argument {
     return mustBeBound;
   }
 
-  public boolean allows(Class type) {
+  public boolean allows(Class<?> type) {
     for (int ix = 0; ix < types.size(); ix++) {
-      Class required = (Class) types.get(ix);
+      Class<?> required = types.get(ix);
       if (required.isAssignableFrom(type))
         return true;
     }
     return false;
   }
     
-  public boolean requires(Class type) {
+  public boolean requires(Class<?> type) {
     return types.size() == 1 && type.equals(types.get(0));
   }
 }

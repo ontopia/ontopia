@@ -7,27 +7,20 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PushbackInputStream;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.net.URL;
-import java.net.MalformedURLException;
 
 import org.xml.sax.InputSource;
 
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
-import net.ontopia.topicmaps.utils.ClassInstanceUtils;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 
 /**
@@ -101,11 +94,11 @@ public abstract class AbstractTopicMapReader
     return read(getStoreFactory());
   }
 
-  public Collection readAll() throws IOException {
+  public Collection<TopicMapIF> readAll() throws IOException {
     return readAll(getStoreFactory());
   }
 
-  protected Collection readAll(TopicMapStoreFactoryIF store_factory) 
+  protected Collection<TopicMapIF> readAll(TopicMapStoreFactoryIF store_factory) 
       throws IOException {
     // we assume the data source must by necessity contain only a
     // single topic map; override if this assumption is wrong.

@@ -29,23 +29,23 @@ public class AttachManager extends AbstractAttachManager {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(AttachManager.class.getName());
   
-  protected Map ahandlers;
-  protected Map dhandlers;
+  protected Map<Class<?>, AttachHandlerIF> ahandlers;
+  protected Map<Class<?>, DetachHandlerIF> dhandlers;
   
   public AttachManager(ObjectTreeManager otree) {
     super(otree);
     
     // Declare handlers
-    ahandlers = new HashMap();
-    dhandlers = new HashMap();
+    ahandlers = new HashMap<Class<?>, AttachHandlerIF>();
+    dhandlers = new HashMap<Class<?>, DetachHandlerIF>();
 
     // Create shared collections
-    Collection assocs = new HashSet();
-    Collection roles = new HashSet();
-    Collection basenames = new HashSet();
-    Collection occurs  = new HashSet();
-    Collection topics  = new HashSet();
-    Collection variants  = new HashSet();
+    Collection<Object> assocs = new HashSet<Object>();
+    Collection<Object> roles = new HashSet<Object>();
+    Collection<Object> basenames = new HashSet<Object>();
+    Collection<Object> occurs  = new HashSet<Object>();
+    Collection<Object> topics  = new HashSet<Object>();
+    Collection<Object> variants  = new HashSet<Object>();
     
     ahandlers.put(AssociationIF.class, new AttachHandler(assocs));
     dhandlers.put(AssociationIF.class, new DetachHandler(assocs));
@@ -73,14 +73,14 @@ public class AttachManager extends AbstractAttachManager {
   // Attach/detach handler initializer methods
   // -----------------------------------------------------------------------------
 
-  public AttachHandlerIF getAttachHandler(Class klass) {
+  public AttachHandlerIF getAttachHandler(Class<?> klass) {
     if (!ahandlers.containsKey(klass)) throw new OntopiaRuntimeException("AttachHandler missing: " + klass);
-    return (AttachHandlerIF)ahandlers.get(klass);
+    return ahandlers.get(klass);
   }
   
-  public DetachHandlerIF getDetachHandler(Class klass) {
+  public DetachHandlerIF getDetachHandler(Class<?> klass) {
     if (!dhandlers.containsKey(klass)) throw new OntopiaRuntimeException("DetachHandler missing: " + klass);
-    return (DetachHandlerIF)dhandlers.get(klass);
+    return dhandlers.get(klass);
   }
   
   // -----------------------------------------------------------------------------
@@ -91,8 +91,8 @@ public class AttachManager extends AbstractAttachManager {
    * EventHandler:
    */
   class AttachHandler implements AttachHandlerIF, java.io.Serializable {
-    protected Collection objects;
-    AttachHandler(Collection objects) {
+    protected Collection<Object> objects;
+    AttachHandler(Collection<Object> objects) {
       this.objects = objects;
     }
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
@@ -104,7 +104,7 @@ public class AttachManager extends AbstractAttachManager {
     public boolean isAttached(Object object) {
       throw new UnsupportedOperationException("");
     }
-    public Collection getAttached() {
+    public Collection<Object> getAttached() {
       throw new UnsupportedOperationException("");
     }
     public void refresh() {
@@ -115,8 +115,8 @@ public class AttachManager extends AbstractAttachManager {
    * EventHandler:
    */
   class DetachHandler implements DetachHandlerIF, java.io.Serializable {
-    protected Collection objects;
-    DetachHandler(Collection objects) {
+    protected Collection<Object> objects;
+    DetachHandler(Collection<Object> objects) {
       this.objects = objects;
     }
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
@@ -128,7 +128,7 @@ public class AttachManager extends AbstractAttachManager {
     public boolean isDetached(Object object) {
       return objects.contains(object);
     }
-    public Collection getDetached() {
+    public Collection<Object> getDetached() {
       return objects;
     }
     public void refresh() {

@@ -3,10 +3,16 @@
 
 package net.ontopia.topicmaps.impl.utils;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.core.index.*;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.util.Collection;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 
 /**
  * INTERNAL: Topic map object deletion utilities.
@@ -116,7 +122,7 @@ public class DeletionUtils {
   public static void clear(TopicMapIF topicmap) {
     synchronized (topicmap) {
       // Delete topics
-      Collection ts = topicmap.getTopics();
+      Collection<TopicIF> ts = topicmap.getTopics();
       TopicIF[] topics = new TopicIF[ts.size()];
       ts.toArray(topics);
       
@@ -124,7 +130,7 @@ public class DeletionUtils {
         topics[i].remove();
       
       // Delete associations
-      Collection as = topicmap.getAssociations();
+      Collection<AssociationIF> as = topicmap.getAssociations();
       AssociationIF[] associations = new AssociationIF[as.size()];
       as.toArray(associations);
       
