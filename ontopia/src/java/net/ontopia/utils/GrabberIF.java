@@ -9,13 +9,13 @@ package net.ontopia.utils;
  * interface.</p>
  */
 
-public interface GrabberIF {
+public interface GrabberIF<O, G> {
 
   /**
    * Returns an object that is somehow extracted from the given
    * object.
    */
-  public Object grab(Object object);
+  public G grab(O object);
 
 }
 

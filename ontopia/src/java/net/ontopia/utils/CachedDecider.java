@@ -2,7 +2,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * INTERNAL: Decider that maintains a cache of decisions made on a set
@@ -13,32 +14,32 @@ import java.util.*;
  * updated.</p>
  */
 
-public class CachedDecider implements DeciderIF, CachedIF {
+public class CachedDecider<T> implements DeciderIF<T>, CachedIF {
 
-  protected DeciderIF decider;
-  protected Map cache = new HashMap();
+  protected DeciderIF<T> decider;
+  protected Map<T, Boolean> cache = new HashMap<T, Boolean>();
   
-  public CachedDecider(DeciderIF decider) {
+  public CachedDecider(DeciderIF<T> decider) {
     this.decider = decider;
   }
 
   /**
    * Gets the decider that being cached.
    */
-  public DeciderIF getDecider() {
+  public DeciderIF<T> getDecider() {
     return decider;
   }
   
   /**
    * Sets the decider that is to be cached.
    */
-  public void setDecider(DeciderIF decider) {
+  public void setDecider(DeciderIF<T> decider) {
     this.decider = decider;
   }
   
-  public boolean ok(Object object) {
+  public boolean ok(T object) {
     if (object == null) return false;
-    if (cache.containsKey(object)) return ((Boolean)cache.get(object)).booleanValue();
+    if (cache.containsKey(object)) return cache.get(object).booleanValue();
     boolean decision = decider.ok(object);
     if (decision == true)
       cache.put(object, Boolean.TRUE);

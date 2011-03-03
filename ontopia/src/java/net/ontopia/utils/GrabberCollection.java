@@ -2,7 +2,9 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * INTERNAL: A collection that uses a grabber to populate itself by
@@ -11,21 +13,21 @@ import java.util.*;
  * the collection or not.</p>
  */
 
-public class GrabberCollection implements Collection, CachedIF {
+public class GrabberCollection<O, G> implements Collection<G>, CachedIF {
 
-  protected Collection coll;
-  protected GrabberIF grabber;
-  protected DeciderIF decider;
+  protected Collection<O> coll;
+  protected GrabberIF<O, G> grabber;
+  protected DeciderIF<G> decider;
 
   protected boolean grabbed;
-  protected Collection grabbed_coll;
+  protected Collection<G> grabbed_coll;
   
-  public GrabberCollection(Collection coll, GrabberIF grabber) {
+  public GrabberCollection(Collection<O> coll, GrabberIF<O, G> grabber) {
     this.coll = coll;
     this.grabber = grabber;
   }
 
-  public GrabberCollection(Collection coll, GrabberIF grabber, DeciderIF decider) {
+  public GrabberCollection(Collection<O> coll, GrabberIF<O, G> grabber, DeciderIF<G> decider) {
     this(coll, grabber);
     this.decider = decider;
   }
@@ -36,10 +38,10 @@ public class GrabberCollection implements Collection, CachedIF {
    * collection will be lost.
    */
   public void refresh() {
-    grabbed_coll = new ArrayList();
-    Iterator iter = coll.iterator();
+    grabbed_coll = new ArrayList<G>();
+    Iterator<O> iter = coll.iterator();
     while (iter.hasNext()) {
-      Object grabbed = grabber.grab(iter.next());
+      G grabbed = grabber.grab(iter.next());
       // Add grabbed to the grabbed collection if accepted by the decider
       if (decider == null || decider.ok(grabbed))
         grabbed_coll.add(grabbed);
@@ -47,7 +49,7 @@ public class GrabberCollection implements Collection, CachedIF {
     grabbed = true;
   }
   
-  protected Collection getCollection() {
+  protected Collection<G> getCollection() {
     if (grabbed) return grabbed_coll;
     refresh();
     return grabbed_coll;
@@ -61,7 +63,7 @@ public class GrabberCollection implements Collection, CachedIF {
     return getCollection().contains(o);
   } 
 
-  public boolean containsAll(Collection c) {
+  public boolean containsAll(Collection<?> c) {
     return getCollection().containsAll(c);
   } 
 
@@ -74,7 +76,7 @@ public class GrabberCollection implements Collection, CachedIF {
     return getCollection().isEmpty();
   } 
 
-  public Iterator iterator() {
+  public Iterator<G> iterator() {
     return getCollection().iterator();
   } 
 
@@ -87,15 +89,15 @@ public class GrabberCollection implements Collection, CachedIF {
     return getCollection().toArray();    
   } 
 
-  public Object[] toArray(Object[] a) {
+  public <G extends Object> G[] toArray(G[] a) {
     return getCollection().toArray(a);
   } 
 
-  public boolean add(Object o) {
+  public boolean add(G o) {
     return getCollection().add(o);
   }
   
-  public boolean addAll(Collection c) {
+  public boolean addAll(Collection<? extends G> c) {
     return getCollection().addAll(c);
   } 
 
@@ -103,11 +105,11 @@ public class GrabberCollection implements Collection, CachedIF {
     return getCollection().remove(o);
   } 
 
-  public boolean removeAll(Collection c) {
+  public boolean removeAll(Collection<?> c) {
     return getCollection().removeAll(c);
   } 
 
-  public boolean retainAll(Collection c) {
+  public boolean retainAll(Collection<?> c) {
     return getCollection().retainAll(c);
   } 
 

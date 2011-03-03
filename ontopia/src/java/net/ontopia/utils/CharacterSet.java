@@ -15,11 +15,11 @@ import java.util.ArrayList;
  * U+FFFF) are not supported.
  */
 public class CharacterSet {
-  private List tempset; // used while building the set
+  private List<CharacterInterval> tempset; // used while building the set
   private CharacterInterval[] set;
   
   public CharacterSet() {
-    tempset = new ArrayList();
+    tempset = new ArrayList<CharacterInterval>();
   }
 
   /**
@@ -80,13 +80,10 @@ public class CharacterSet {
   /**
    * Compares character intervals for sorting.
    */
-  static class IntervalComparator implements java.util.Comparator {
+  static class IntervalComparator implements java.util.Comparator<CharacterInterval> {
 
-    public int compare(Object o1, Object o2) {
+    public int compare(CharacterInterval c1, CharacterInterval c2) {
       // INV: we assume o1 and o2 are both CharacterIntervals
-      CharacterInterval c1 = (CharacterInterval) o1;
-      CharacterInterval c2 = (CharacterInterval) o2;
-
       return c1.low - c2.low;
     }
     

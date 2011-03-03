@@ -3,7 +3,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * INTERNAL: A lookup index that extends HashMap. It never forgets
@@ -11,31 +12,31 @@ import java.util.*;
  * ask the fallback for values it does not have.
  */
 
-public class HashMapIndex extends HashMap implements LookupIndexIF {
+public class HashMapIndex<K, E> extends HashMap<K, E> implements LookupIndexIF<K, E> {
 
-  protected LookupIndexIF fallback;
+  protected LookupIndexIF<K, E> fallback;
 
   public HashMapIndex() {
   }
   
-  public HashMapIndex(Map map) {
+  public HashMapIndex(Map<K, E> map) {
     super(map);
   }
 
-  public HashMapIndex(LookupIndexIF fallback) {
+  public HashMapIndex(LookupIndexIF<K, E> fallback) {
     this.fallback = fallback;
   }
   
-  public HashMapIndex(Map map, LookupIndexIF fallback) {
+  public HashMapIndex(Map<K, E> map, LookupIndexIF<K, E> fallback) {
     super(map);
     this.fallback = fallback;
   }
   
-  public Object get(Object key) {
+  public E get(Object key) {
     if (containsKey(key))
       return super.get(key);
     else if (fallback != null)
-      return fallback.get(key);
+      return fallback.get((K)key);
     return null;
   }
 }

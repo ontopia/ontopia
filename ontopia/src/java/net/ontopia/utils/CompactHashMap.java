@@ -2,7 +2,6 @@
 package net.ontopia.utils;
 
 import java.util.Set;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.Collection;
 import java.util.AbstractMap;
@@ -93,7 +92,7 @@ public class CompactHashMap<K, V> extends AbstractMap<K, V> {
    */
   public boolean containsValue(Object v) {
     if (v == null)
-      v = nullObject;
+      v = (V)nullObject;
 
     for (int ix = 0; ix < values.length; ix++)
       if (values[ix] != null && values[ix].equals(v))
@@ -105,7 +104,7 @@ public class CompactHashMap<K, V> extends AbstractMap<K, V> {
   /**
    * Returns a read-only set view of the map's keys.
    */
-  public Set entrySet() {
+  public Set<Entry<K, V>> entrySet() {
     throw new UnsupportedOperationException();
   }
 
@@ -136,9 +135,9 @@ public class CompactHashMap<K, V> extends AbstractMap<K, V> {
    * Adds the specified mapping to this map, returning the old value for
    * the mapping, if there was one.
    */
-  public V put(Object k, Object v) {
+  public V put(K k, V v) {
     if (k == null)
-      k = nullObject;
+      k = (K)nullObject;
 
     int hash = k.hashCode();
     int index = (hash & 0x7FFFFFFF) % keys.length;
@@ -278,7 +277,7 @@ public class CompactHashMap<K, V> extends AbstractMap<K, V> {
       return containsKey(k);
     }
 
-    public Iterator iterator() {
+    public Iterator<K> iterator() {
       return new KeyIterator();
     }
   }
@@ -324,7 +323,7 @@ public class CompactHashMap<K, V> extends AbstractMap<K, V> {
       return elements;
     }
 
-    public Iterator iterator() {
+    public Iterator<V> iterator() {
       return new ValueIterator();
     }
 

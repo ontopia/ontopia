@@ -11,8 +11,8 @@ package net.ontopia.utils;
  * above this maximum size.
  */
 
-public class CachedIndex implements LookupIndexIF {
-  private LookupIndexIF fallback;
+public class CachedIndex<K, E> implements LookupIndexIF<K, E> {
+  private LookupIndexIF<K, E> fallback;
   private int           max;       // max number of entries in cache
   private int           entries;   // current number of entries in cache
   private int           decay;     // how many hits to decay hit count by
@@ -32,7 +32,7 @@ public class CachedIndex implements LookupIndexIF {
    * Creates an index with the given fallback and default settings.
    */
 
-  public CachedIndex(LookupIndexIF fallback) {
+  public CachedIndex(LookupIndexIF<K, E> fallback) {
     this.fallback  = fallback;
     this.max       = 10000;
     this.data      = new Entry[1001];
@@ -47,7 +47,7 @@ public class CachedIndex implements LookupIndexIF {
    * the specified nulls setting.
    */
 
-  public CachedIndex(LookupIndexIF fallback, boolean nulls) {
+  public CachedIndex(LookupIndexIF<K, E> fallback, boolean nulls) {
     this(fallback);
     this.nulls = nulls;
   }
@@ -60,7 +60,7 @@ public class CachedIndex implements LookupIndexIF {
    * @param nulls Store null values retrieved from fallback.
    */
 
-  public CachedIndex(LookupIndexIF fallback, int max, int size, boolean nulls) {
+  public CachedIndex(LookupIndexIF<K, E> fallback, int max, int size, boolean nulls) {
     this.fallback  = fallback;
     this.max       = max;
     this.data      = new Entry[size];
@@ -70,59 +70,59 @@ public class CachedIndex implements LookupIndexIF {
     this.nulls     = nulls;
   }
   
-  public Object get(Object key) {
-    Entry entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
+  public E get(K key) {
+    Entry Entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
 
-    while (entry != null && !entry.key.equals(key))
-      entry = entry.next;
+    while (Entry != null && !Entry.key.equals(key))
+      Entry = Entry.next;
 
     lookups++;
-    if (entry == null) { // not found
-      Object result = fallback.get(key);
+    if (Entry == null) { // not found
+      E result = fallback.get(key);
       if (result == null && !nulls) return null; // do not store null values
-      entry = addEntry(new Entry(key, result));
+      Entry = addEntry(new Entry(key, result));
     } else {
       hits++;
-      entry.hits++;
+      Entry.hits++;
     }
 
-    return entry.value;
+    return (E) Entry.value;
   }
 
-  public Object put(Object key, Object value) {
+  public E put(K key, E value) {
     // check if key already there; otherwise may end up with two entries
     // with same key
-    Entry entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
-    while (entry != null && !entry.key.equals(key))
-      entry = entry.next;
+    Entry Entry = data[(key.hashCode() & 0x7FFFFFFF) % data.length];
+    while (Entry != null && !Entry.key.equals(key))
+      Entry = Entry.next;
 
-    if (entry == null)
+    if (Entry == null)
       addEntry(new Entry(key, value));
     else
-      entry.value = value;
+      Entry.value = value;
 
     return value;
   }
 
-  public Object remove(Object key) {
+  public E remove(K key) {
     int ix = (key.hashCode() & 0x7FFFFFFF) % data.length;
-    Entry entry = data[ix];
-    Entry previous = null;
+    Entry<K, E> Entry = data[ix];
+    Entry<K, E> previous = null;
 
-    while (entry != null) {
-      if (entry.key.equals(key)) {
+    while (Entry != null) {
+      if (Entry.key.equals(key)) {
         // FIXME: pass on news to fallback?
         if (previous == null)
-          data[ix] = entry.next;
+          data[ix] = Entry.next;
         else
-          previous.next = entry.next;
+          previous.next = Entry.next;
         
         entries--;
-        return entry.value;
+        return (E)Entry.value;
       }
 
-      previous = entry;
-      entry = entry.next;
+      previous = Entry;
+      Entry = Entry.next;
     }    
     return null;
   }
@@ -147,11 +147,11 @@ public class CachedIndex implements LookupIndexIF {
   // --- Internal methods
 
   /**
-   * Called to add an entry object into the data array. Assumes that
-   * no entry with the same key already exists in the data array.
+   * Called to add an Entry object into the data array. Assumes that
+   * no Entry with the same key already exists in the data array.
    */
   
-  private Entry addEntry(Entry newEntry) {
+  private Entry<K, E> addEntry(Entry<K, E> newEntry) {
     if (entries >= max) 
       prune();
     else if (((float) entries) / data.length > threshold)
@@ -231,13 +231,13 @@ public class CachedIndex implements LookupIndexIF {
   
   // --- Internal Entry class
 
-  class Entry {
+  public class Entry<A, B> {
     public Object value;
     public Object key;
     public int    hits;
-    public Entry  next;
+    public Entry<A, B>  next;
 
-    public Entry(Object key, Object value) {
+    public Entry(A key, B value) {
       this.key = key;
       this.value = value;
       this.hits = 1;

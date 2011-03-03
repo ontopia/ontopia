@@ -2,7 +2,10 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * INTERNAL: Grabber that makes the second grabber grab what the first
@@ -10,55 +13,41 @@ import java.util.*;
  * together.</p>
  */
 
-public class GrabberGrabber implements GrabberIF {
+public class GrabberGrabber implements GrabberIF<Object, Object> {
 
-  protected List grabbers = new ArrayList();
+  protected List<GrabberIF<Object, Object>> grabbers = new ArrayList<GrabberIF<Object, Object>>();
   
-  public GrabberGrabber(GrabberIF grabber1, GrabberIF grabber2) {
-    grabbers.add(grabber1);
-    grabbers.add(grabber2);
-  }
-
-  public GrabberGrabber(GrabberIF grabber1, GrabberIF grabber2, GrabberIF grabber3) {
-    grabbers.add(grabber1);
-    grabbers.add(grabber2);
-    grabbers.add(grabber3);
-  }
-
-  public GrabberGrabber(GrabberIF grabber1, GrabberIF grabber2, GrabberIF grabber3, GrabberIF grabber4) {
-    grabbers.add(grabber1);
-    grabbers.add(grabber2);
-    grabbers.add(grabber3);
-    grabbers.add(grabber4);
+  public GrabberGrabber(GrabberIF<Object, Object>... grabbers) {
+    this.grabbers = new ArrayList<GrabberIF<Object, Object>>(Arrays.asList(grabbers));
   }
 
   /**
    * Gets the chained grabbers.
    */  
-  public List getGrabbers() {
+  public List<GrabberIF<Object, Object>> getGrabbers() {
     return grabbers;
   }
 
   /**
    * Sets the grabbers.
    */  
-  public void setGrabbers(List grabbers) {
+  public void setGrabbers(List<GrabberIF<Object, Object>> grabbers) {
     this.grabbers = grabbers;
   }
   
   /**
    * Add grabber to the end of the grabber list.
    */  
-  public void addGrabber(GrabberIF grabber) {
+  public void addGrabber(GrabberIF<Object, Object> grabber) {
     grabbers.add(grabber);
   }
   
   public Object grab(Object object) {
     Object grabbed = object;
     // Loop over grabbers
-    Iterator iter = grabbers.iterator();
+    Iterator<GrabberIF<Object, Object>> iter = grabbers.iterator();
     while (iter.hasNext()) {
-      GrabberIF grabber = (GrabberIF)iter.next();
+      GrabberIF<Object, Object> grabber = iter.next();
       grabbed = grabber.grab(grabbed);
     }
     return grabbed;

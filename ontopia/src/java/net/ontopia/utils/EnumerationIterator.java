@@ -3,17 +3,18 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 /**
  * INTERNAL: A wrapper class for traversing enumerations as iterators.
  */
 
-public class EnumerationIterator implements Iterator {
+public class EnumerationIterator<E> implements Iterator<E> {
 
-  protected Enumeration enumeration;
+  protected Enumeration<E> enumeration;
   
-  public EnumerationIterator(Enumeration enumeration) {
+  public EnumerationIterator(Enumeration<E> enumeration) {
     this.enumeration = enumeration;
   }
   
@@ -21,7 +22,7 @@ public class EnumerationIterator implements Iterator {
     return enumeration.hasMoreElements();
   }
 
-  public Object next() {
+  public E next() {
     return enumeration.nextElement();
   }
 

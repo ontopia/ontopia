@@ -8,12 +8,12 @@ package net.ontopia.utils;
  * e.g. be used to filter collections.</p>
  */
 
-public interface DeciderIF {
+public interface DeciderIF<T> {
 
   /**
    * PUBLIC: Returns true if the object is accepted.
    */
-  public boolean ok(Object object);
+  public boolean ok(T object);
 
 }
 

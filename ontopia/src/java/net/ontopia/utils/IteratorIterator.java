@@ -2,7 +2,9 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * INTERNAL: An iterator that works as a facade for multiple
@@ -10,32 +12,35 @@ import java.util.*;
  * iterators.</p>
  */
 
-public class IteratorIterator implements Iterator {
+public class IteratorIterator<T> implements Iterator<T> {
 
-  protected Iterator colls_iter;
-  protected Iterator iter;
+  protected Iterator<Iterator<T>> colls_iter;
+  protected Iterator<T> iter;
 
   /**
    * @param colls_or_iters a collection of collections or iterators.
    */
-  public IteratorIterator(Collection colls_or_iters) {
-    colls_iter = colls_or_iters.iterator();
+  public IteratorIterator(Collection<Collection<T>> colls_or_iters) {
+    Collection<Iterator<T>> iterators = new ArrayList<Iterator<T>>(colls_or_iters.size());
+    for (Collection<T> col : colls_or_iters) {
+      iterators.add(col.iterator());
+    }
+    colls_iter = iterators.iterator();
   }
 
-  protected Iterator getNextIterator() {
+  public IteratorIterator(Iterator<Iterator<T>> colls_or_iters) {
+    colls_iter = colls_or_iters;
+  }
+
+  protected Iterator<T> getNextIterator() {
     // Check to see if therre are any more collections
     if (colls_iter.hasNext()) {
     
       // Get next collection
       while (true) {
-        Object coll_or_iter = colls_iter.next();
-        Iterator iter;
-        if (coll_or_iter instanceof Collection)
-          iter = ((Collection)coll_or_iter).iterator();
-        else
-          iter = (Iterator)coll_or_iter;
-        if (iter.hasNext())
-            return iter;
+        Iterator<T> _iter = colls_iter.next();
+        if (_iter.hasNext())
+            return _iter;
         if (colls_iter.hasNext()) continue;
       }
     }
@@ -49,13 +54,13 @@ public class IteratorIterator implements Iterator {
     }
 
     // Get next iterator
-    Iterator _iter = getNextIterator();
+    Iterator<T> _iter = getNextIterator();
     if (_iter == null) return false;
     iter = _iter;
     return true;
   }
 
-  public Object next() {
+  public T next() {
     return iter.next();
   }
 

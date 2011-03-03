@@ -13,27 +13,27 @@ public class DeciderUtils {
   /**
    * INTERNAL: Returns a decider which always returns true.
    */
-  public static DeciderIF getTrueDecider() {
-    return new StaticDecider(true);
+  public static <T> DeciderIF<T> getTrueDecider() {
+    return new StaticDecider<T>(true);
   }
 
   /**
    * INTERNAL: Returns a decider which always returns false.
    */
-  public static DeciderIF getFalseDecider() {
-    return new StaticDecider(false);
+  public static <T> DeciderIF<T> getFalseDecider() {
+    return new StaticDecider<T>(false);
   }
   
   // --- The actual decider classes
 
-  static class StaticDecider implements DeciderIF {
+  static class StaticDecider<T> implements DeciderIF<T> {
     private boolean value;
 
     public StaticDecider(boolean value) {
       this.value = value;
     }
     
-    public boolean ok(Object object) {
+    public boolean ok(T object) {
       return value;
     }
   }

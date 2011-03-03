@@ -2,33 +2,38 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * INTERNAL: An implementation of Map that uses a key grabber and a
  * value grabber to extract its content.
  */
 
-public class GrabberMap implements Map, CachedIF {
+public class GrabberMap<O, KG, VG> implements Map<KG, Collection<VG>>, CachedIF {
 
-  protected Collection coll;
-  protected GrabberIF key_grabber;
-  protected GrabberIF value_grabber;
+  protected Collection<O> coll;
+  protected GrabberIF<O, KG> key_grabber;
+  protected GrabberIF<O, VG> value_grabber;
 
-  protected Map grabbed_map;
+  protected Map<KG, Collection<VG>> grabbed_map;
   protected boolean grabbed;
   
-  public GrabberMap(Collection coll, GrabberIF key_grabber, GrabberIF value_grabber) {
+  public GrabberMap(Collection<O> coll, GrabberIF<O, KG> key_grabber, GrabberIF<O, VG> value_grabber) {
     this.coll = coll;
     this.key_grabber = key_grabber;
     this.value_grabber = value_grabber;
   }
 
-  public Map getNestedMap() {
+  public Map<KG, Collection<VG>> getNestedMap() {
     return getMap();
   }
   
-  public void setNestedMap(Map map) {
+  public void setNestedMap(Map<KG, Collection<VG>> map) {
     this.grabbed_map = map;    
   }
   
@@ -39,23 +44,23 @@ public class GrabberMap implements Map, CachedIF {
    */
   public void refresh() {
     if (grabbed_map == null)
-      grabbed_map = new HashMap();
+      grabbed_map = new HashMap<KG, Collection<VG>>();
     else
       grabbed_map.clear();
     
     // Loop over all objects in the collection
-    Iterator iter = coll.iterator();
+    Iterator<O> iter = coll.iterator();
     while (iter.hasNext()) {
-      Object object = iter.next();
-      Object grabbed_key = key_grabber.grab(object);
-      Object grabbed_value = value_grabber.grab(object);
-      if (!grabbed_map.containsKey(grabbed_key)) grabbed_map.put(grabbed_key, new HashSet());
-      ((Collection)grabbed_map.get(grabbed_key)).add(grabbed_value);
+      O object = iter.next();
+      KG grabbed_key = key_grabber.grab(object);
+      VG grabbed_value = value_grabber.grab(object);
+      if (!grabbed_map.containsKey(grabbed_key)) grabbed_map.put(grabbed_key, new HashSet<VG>());
+      grabbed_map.get(grabbed_key).add(grabbed_value);
     }
     grabbed = true;
   }
 
-  protected Map getMap() {
+  protected Map<KG, Collection<VG>> getMap() {
     if (grabbed) return grabbed_map;
     refresh();
     return grabbed_map;
@@ -82,7 +87,7 @@ public class GrabberMap implements Map, CachedIF {
     return getMap().equals(o);
   }
 
-  public Object get(Object key) {
+  public Collection<VG> get(Object key) {
     return getMap().get(key);
   }
 
@@ -98,7 +103,7 @@ public class GrabberMap implements Map, CachedIF {
     return getMap().keySet();
   }
 
-  public Object put(Object key, Object value) {
+  public Collection<VG> put(KG key, Collection<VG> value) {
     return getMap().put(key, value);
   }
 
@@ -106,7 +111,7 @@ public class GrabberMap implements Map, CachedIF {
     getMap().putAll(t);
   }
 
-  public Object remove(Object key) {
+  public Collection<VG> remove(Object key) {
     return getMap().remove(key);
   }
 

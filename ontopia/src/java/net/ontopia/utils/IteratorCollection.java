@@ -3,36 +3,38 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * INTERNAL: A wrapper class for presenting a collection view on
  * iterators. The wrapped iterator will be lazily traversed.</p>
  */
 
-public class IteratorCollection implements Collection {
+public class IteratorCollection<T> implements Collection<T> {
 
-  protected Iterator iterator;
-  protected Collection coll;
+  protected Iterator<T> iterator;
+  protected Collection<T> coll;
   protected boolean resolved;
   protected int iter_size = -1;
   protected int max_size = Integer.MAX_VALUE;
   
-  public IteratorCollection(Iterator iterator) {
+  public IteratorCollection(Iterator<T> iterator) {
     this.iterator = iterator;
-    coll = new ArrayList();
+    coll = new ArrayList<T>();
     if (iterator.hasNext() && max_size > 0)
       resolved = false;
     else
       resolved = true;
   }
 
-  public IteratorCollection(Iterator iterator, int size) {
+  public IteratorCollection(Iterator<T> iterator, int size) {
     this(iterator);
     iter_size = size;
   }
 
-  public IteratorCollection(Iterator iterator, int size, int max_size) {
+  public IteratorCollection(Iterator<T> iterator, int size, int max_size) {
     this(iterator, size);
     if (max_size < 0)
       this.max_size = 0;
@@ -40,9 +42,9 @@ public class IteratorCollection implements Collection {
       this.max_size = max_size;
   }
 
-  protected synchronized Object nextObject() {
+  protected synchronized T nextObject() {
     // Get next object in iterator
-    Object object = iterator.next();
+    T object = iterator.next();
     // Set resolved flag to true if this was the last object
     int csize = coll.size();
     if (!iterator.hasNext() || csize >= max_size || (iter_size > 0 && csize >= iter_size)) {
@@ -72,7 +74,7 @@ public class IteratorCollection implements Collection {
   } 
 
   public boolean contains(Object o) {
-    if (coll.contains(o)) return true;
+    if (coll.contains((T)o)) return true;
     synchronized (this) {
       while (!resolved) {
         Object object = nextObject();
@@ -82,7 +84,7 @@ public class IteratorCollection implements Collection {
     return false;
   } 
 
-  public boolean containsAll(Collection c) {
+  public boolean containsAll(Collection<?> c) {
     // FIXME: This one can be improved.
     // If partially resolved collection contains all objects then we're fine
     if (coll.containsAll(c)) return true;
@@ -99,7 +101,7 @@ public class IteratorCollection implements Collection {
     return true;
   } 
 
-  public Iterator iterator() {
+  public Iterator<T> iterator() {
     // FIXME: This can be improved lot by lazily traversing internal iterator.
     if (!resolved) resolve();
     return coll.iterator();
@@ -154,7 +156,7 @@ public class IteratorCollection implements Collection {
     return coll.toArray(a);    
   } 
 
-  public boolean add(Object o) {
+  public boolean add(T o) {
     // Traverse the entire iterator
     if (!resolved) resolve();
     // Call method on nested collection

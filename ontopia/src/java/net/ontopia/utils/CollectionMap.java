@@ -1,7 +1,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * INTERNAL: A map which stores entries containing Collection
@@ -16,7 +17,7 @@ import java.util.*;
  * Empty entries are removed by default.<p>
  */
 
-public class CollectionMap extends HashMap {
+public class CollectionMap<K, V> extends HashMap<K, Collection<V>> {
 
   protected boolean drop_empty = true;
 
@@ -31,14 +32,14 @@ public class CollectionMap extends HashMap {
   // Collection index values
   // ---------------------------------------------------------------------------
 
-  protected Collection createCollection() {
-    return new CompactHashSet();
+  protected Collection<V> createCollection() {
+    return new CompactHashSet<V>();
   }
   
-  public void add(Object key, Object value) {
+  public void add(K key, V value) {
 
     // Get collection value
-    Collection coll = (Collection)get(key);
+    Collection<V> coll = get(key);
     
     // Add to collection
     if (coll != null) {
@@ -53,10 +54,10 @@ public class CollectionMap extends HashMap {
     }     
   }
 
-  public void remove(Object key, Object value) {
+  public void remove(K key, V value) {
 
     // Get collection value
-    Collection coll = (Collection)get(key);
+    Collection<V> coll = get(key);
     
     // Remove from collection
     if (coll != null) {
@@ -68,7 +69,7 @@ public class CollectionMap extends HashMap {
 
   }
 
-  public void move(Object value, Object old_key, Object new_key) {
+  public void move(V value, K old_key, K new_key) {
     remove(old_key, value);
     add(new_key, value);
   }

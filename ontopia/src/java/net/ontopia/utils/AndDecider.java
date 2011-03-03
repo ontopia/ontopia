@@ -3,7 +3,9 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * INTERNAL: Decider that checks all subdeciders and returns true if all
@@ -12,39 +14,39 @@ import java.util.*;
  * the rest is then not checked.</p>
  */
 
-public class AndDecider implements DeciderIF {
+public class AndDecider<T> implements DeciderIF<T> {
 
-  protected Collection deciders = new HashSet();
+  protected Collection<DeciderIF<T>> deciders = new HashSet<DeciderIF<T>>();
 
-  public AndDecider(Collection deciders) {
+  public AndDecider(Collection<DeciderIF<T>> deciders) {
     this.deciders = deciders;
   }
 
   /**
    * Gets the subdeciders.
    */
-  public Collection getDeciders() {
+  public Collection<DeciderIF<T>> getDeciders() {
     return deciders;
   }
 
   /**
    * Add a subdecider.
    */
-  public void addDecider(DeciderIF decider) {
+  public void addDecider(DeciderIF<T> decider) {
     deciders.add(decider);
   }
 
   /**
    * Remove a subdecider.
    */
-  public void removeDecider(DeciderIF decider) {
+  public void removeDecider(DeciderIF<T> decider) {
     deciders.remove(decider);
   }
   
-  public boolean ok(Object object) {
-    Iterator iter = deciders.iterator();
+  public boolean ok(T object) {
+    Iterator<DeciderIF<T>> iter = deciders.iterator();
     while (iter.hasNext()) {
-      DeciderIF decider = (DeciderIF)iter.next();
+      DeciderIF<T> decider = iter.next();
         if (!decider.ok(object)) return false;
     }
     return true;

@@ -11,14 +11,14 @@ package net.ontopia.utils;
 
 public class GrabberStringifier implements StringifierIF {
 
-  protected GrabberIF grabber;
+  protected GrabberIF<Object, Object> grabber;
   protected StringifierIF stringifier;
   
-  public GrabberStringifier(GrabberIF grabber) {
+  public GrabberStringifier(GrabberIF<Object, Object> grabber) {
     this(grabber, new DefaultStringifier());
   }
   
-  public GrabberStringifier(GrabberIF grabber, StringifierIF stringifier) {
+  public GrabberStringifier(GrabberIF<Object, Object> grabber, StringifierIF stringifier) {
     setGrabber(grabber);
     setStringifier(stringifier);
   }
@@ -26,7 +26,7 @@ public class GrabberStringifier implements StringifierIF {
   /**
    * Set the grabber which is to be used.
    */
-  public void setGrabber(GrabberIF grabber) {
+  public void setGrabber(GrabberIF<Object, Object> grabber) {
     this.grabber = grabber;
   }
 

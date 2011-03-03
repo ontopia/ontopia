@@ -13,33 +13,35 @@ package net.ontopia.utils;
  *
  * @since 1.3.2
  */
-public class ChainedIndex implements LookupIndexIF {
+public class ChainedIndex<K, E> implements LookupIndexIF<K, E> {
 
-  protected LookupIndexIF[] getters;
-  protected LookupIndexIF[] putters;
-  protected LookupIndexIF[] removers;
+  protected LookupIndexIF<K, E>[] getters;
+  protected LookupIndexIF<K, E>[] putters;
+  protected LookupIndexIF<K, E>[] removers;
   protected int gsize;
   protected int psize;
   protected int rsize;
-  protected Object missvalue = null;
+  protected E missvalue = null;
   
-  public ChainedIndex(LookupIndexIF[] chain) {
+  public ChainedIndex(LookupIndexIF<K, E>[] chain) {
     this(chain, chain, chain);
   }
   
-  public ChainedIndex(LookupIndexIF[] getters, LookupIndexIF[] setters) {
+  public ChainedIndex(LookupIndexIF<K, E>[] getters, LookupIndexIF<K, E>[] setters) {
     this(getters, setters, setters);
   }
   
-  public ChainedIndex(LookupIndexIF getter, LookupIndexIF[] setters) {
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  public ChainedIndex(LookupIndexIF<K, E> getter, LookupIndexIF<K, E>[] setters) {
     this(new LookupIndexIF[] { getter }, setters);
   }
   
-  public ChainedIndex(LookupIndexIF[] getters, LookupIndexIF setter) {
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  public ChainedIndex(LookupIndexIF<K, E>[] getters, LookupIndexIF<K, E> setter) {
     this(getters, new LookupIndexIF[] { setter });
   }
   
-  public ChainedIndex(LookupIndexIF[] getters, LookupIndexIF[] putters, LookupIndexIF[] removers) {
+  public ChainedIndex(LookupIndexIF<K, E>[] getters, LookupIndexIF<K, E>[] putters, LookupIndexIF<K, E>[] removers) {
     this.getters = getters;
     this.putters = putters;
     this.removers = removers;
@@ -48,10 +50,10 @@ public class ChainedIndex implements LookupIndexIF {
     this.rsize = removers.length;
   }
   
-  public Object get(Object key) {
+  public E get(K key) {
     // Return result of first non-null get(key) call.
     for (int i=0; i < gsize; i++) {
-      Object value = getters[i].get(key);
+      E value = getters[i].get(key);
       if (value == missvalue) continue;
       return value;
     }
@@ -74,22 +76,22 @@ public class ChainedIndex implements LookupIndexIF {
    *
    * @since 1.3.4
    */
-  public void setMissValue(Object missvalue) {
+  public void setMissValue(E missvalue) {
     this.missvalue = missvalue;
   }
   
-  public Object put(Object key, Object value) {
+  public E put(K key, E value) {
     // Call put(key) on all putters
-    Object rval = null;
+    E rval = null;
     for (int i=0; i < psize; i++) {
       rval = putters[i].put(key, value);
     }
     return rval;
   }
   
-  public Object remove(Object key) {
+  public E remove(K key) {
     // Call remove(key) on all removers
-    Object rval = null;
+    E rval = null;
     for (int i=0; i < rsize; i++) {
       rval = removers[i].remove(key);
     }

@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since 1.2.5
  */
-public class HistoryMap extends HashMap {
+public class HistoryMap<T> extends HashMap<Integer, T> {
   protected int maxEntries;
   protected boolean suppressDuplicates;
   private int counter;
@@ -56,7 +56,7 @@ public class HistoryMap extends HashMap {
     return suppressDuplicates;
   }
   
-  public void add(Object obj) {
+  public void add(T obj) {
     // do not add if object already exists
     if (suppressDuplicates && containsValue(obj))
       return;
@@ -71,12 +71,12 @@ public class HistoryMap extends HashMap {
       }
   }
 
-  public void removeEntry(Object obj) {
-    Iterator it = keySet().iterator();
+  public void removeEntry(T obj) {
+    Iterator<Integer> it = keySet().iterator();
     log.info("A removing from history");
     while (it.hasNext()) {
-      Integer key = (Integer) it.next();
-      Object val = get(key);
+      Integer key = it.next();
+      T val = get(key);
       if (val.equals(obj)) {
         log.info("removing from history " + key);
         remove(key);
@@ -85,12 +85,12 @@ public class HistoryMap extends HashMap {
     } // while it
   }
   
-  public Object getEntry(int index) {
+  public T getEntry(int index) {
     return get(new Integer(counter - size() + index));
   }
 
-  public Collection getEntries() {
-    Collection result = new ArrayList();
+  public Collection<T> getEntries() {
+    Collection<T> result = new ArrayList<T>();
     for (int i=1; i <= size(); i++) {
       if (getEntry(i) != null)
         result.add(getEntry(i));

@@ -3,7 +3,9 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Random;
 
 /**
  * INTERNAL: Class that contains useful array methods.

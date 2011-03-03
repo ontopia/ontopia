@@ -2,7 +2,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * INTERNAL: Comparator for Iterators.  Compares each element in turn
@@ -10,18 +11,15 @@ import java.util.*;
  * contains fewer elements than the other, it is ordered first.
  */
 
-public class IteratorComparator implements Comparator {
-  Comparator elementComparator;
+public class IteratorComparator<T> implements Comparator<Iterator<T>> {
+  Comparator<T> elementComparator;
   
-  public IteratorComparator (Comparator elementComparator) {
+  public IteratorComparator (Comparator<T> elementComparator) {
     this.elementComparator = elementComparator;
   }
   
-  public int compare(Object o1, Object o2) {
+  public int compare(Iterator<T> it1, Iterator<T> it2) {
     int retVal = 0;
-    
-    Iterator it1 = (Iterator)o1;
-    Iterator it2 = (Iterator)o2;
     
     // Iterate until difference is is found or reached end of one or both
     // iterators.

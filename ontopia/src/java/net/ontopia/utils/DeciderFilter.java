@@ -3,7 +3,10 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * INTERNAL: Filter that filters a collection using a decider. The
@@ -11,21 +14,21 @@ import java.util.*;
  * the object is accepted by the decider it will become part of the
  * result.</p>
  */
-public class DeciderFilter implements FilterIF {
+public class DeciderFilter<T> implements FilterIF<T> {
 
-  protected DeciderIF decider;
+  protected DeciderIF<T> decider;
 
-  public DeciderFilter(DeciderIF decider) {
+  public DeciderFilter(DeciderIF<T> decider) {
     this.decider = decider;
   }
   
-  public Collection filter(Iterator objects) {
+  public Collection<T> filter(Iterator<T> objects) {
     // Initialize result
-    List result = new ArrayList();
+    List<T> result = new ArrayList<T>();
 
     // Loop over the objects
     while (objects.hasNext()) {
-      Object object = objects.next();
+      T object = objects.next();
       // Add object to result if accepted by decider
       if (decider.ok(object))
         result.add(object);

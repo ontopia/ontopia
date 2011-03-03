@@ -2,22 +2,23 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * INTERNAL: An iterator that uses a decider to filter the elements of
  * another iterator.</p>
  */
 
-public class DeciderIterator implements Iterator {
+public class DeciderIterator<T> implements Iterator<T> {
 
-  protected DeciderIF decider;
-  protected Iterator iterator;
+  protected DeciderIF<T> decider;
+  protected Iterator<T> iterator;
 
   protected boolean done;
-  protected Object next;
+  protected T next;
   
-  public DeciderIterator(DeciderIF decider, Iterator iterator) {
+  public DeciderIterator(DeciderIF<T> decider, Iterator<T> iterator) {
     this.decider = decider;
     this.iterator = iterator;
 
@@ -28,7 +29,7 @@ public class DeciderIterator implements Iterator {
   protected void findNext() {
     // Loop over the remaining elements to find next applicable element.
     while (iterator.hasNext()) {
-      Object element = iterator.next();
+      T element = iterator.next();
       // Check to see if element is acceptable.
       if (decider.ok(element)) {
         next = element;
@@ -46,11 +47,11 @@ public class DeciderIterator implements Iterator {
     return true;
   }
 
-  public Object next() {
+  public T next() {
     // Throw exception if there are no more elements.
     if (done) throw new NoSuchElementException();
     // Locate next applicable element.
-    Object object = next;
+    T object = next;
     findNext();
     // Return element.
     return object;

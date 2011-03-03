@@ -7,15 +7,15 @@ package net.ontopia.utils;
  * object. The implementation uses the Object.equals method.</p>
  */
 
-public class EqualsDecider implements DeciderIF {
+public class EqualsDecider<T> implements DeciderIF<T> {
 
-  protected Object refobj;
+  protected T refobj;
   
-  public EqualsDecider(Object refobj) {
+  public EqualsDecider(T refobj) {
     this.refobj = refobj;
   }
   
-  public boolean ok(Object object) {
+  public boolean ok(T object) {
     return refobj.equals(object);
   }
 

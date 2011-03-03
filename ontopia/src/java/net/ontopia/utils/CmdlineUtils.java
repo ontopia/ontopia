@@ -3,13 +3,7 @@
 
 package net.ontopia.utils;
 
-import java.io.File;
-import java.util.*;
-import java.net.*;
 import java.lang.reflect.Method;
-
-import net.ontopia.infoset.core.LocatorIF;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +51,7 @@ public class CmdlineUtils {
 
   private static void resetLoggingConfiguration() {
     try {
-      Class basicConfiguratorClass = Class.forName("org.apache.log4j.BasicConfigurator");
+      Class<?> basicConfiguratorClass = Class.forName("org.apache.log4j.BasicConfigurator");
       basicConfiguratorClass.getDeclaredMethod("resetConfiguration").invoke(null);
       basicConfiguratorClass.getDeclaredMethod("configure").invoke(null);
     }
@@ -68,7 +62,7 @@ public class CmdlineUtils {
 
   private static void configureByFile(String propfile) {
     try {
-      Class propertyConfiguratorClass = Class.forName("org.apache.log4j.PropertyConfigurator");
+      Class<?> propertyConfiguratorClass = Class.forName("org.apache.log4j.PropertyConfigurator");
       propertyConfiguratorClass.getDeclaredMethod("configure", String.class).invoke(null, propfile);
     }
     catch (Exception ex) {
@@ -88,8 +82,8 @@ public class CmdlineUtils {
       priority = "OFF";
     }
     try {
-      Class log4jManagerClass = Class.forName("org.apache.log4j.LogManager");
-      Class levelClass = Class.forName("org.apache.log4j.Level");
+      Class<?> log4jManagerClass = Class.forName("org.apache.log4j.LogManager");
+      Class<?> levelClass = Class.forName("org.apache.log4j.Level");
       Object loggerRepository = log4jManagerClass.getDeclaredMethod("getLoggerRepository").invoke(null);
       Method setThreshold = loggerRepository.getClass().getDeclaredMethod("setThreshold", levelClass);
       Method toLevel = levelClass.getDeclaredMethod("toLevel", String.class);

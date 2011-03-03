@@ -2,35 +2,35 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Comparator;
 
 /**
  * INTERNAL: Comparator that compares grabbed objects using a
  * comparator.
  */
 
-public class GrabberComparator implements Comparator {
+public class GrabberComparator<T, G> implements Comparator<T> {
 
-  protected GrabberIF grabber1;
-  protected GrabberIF grabber2;
+  protected GrabberIF<T, G> grabber1;
+  protected GrabberIF<T, G> grabber2;
 
-  protected Comparator comparator;
+  protected Comparator<G> comparator;
    
-  public GrabberComparator(GrabberIF grabber, Comparator comparator) {
+  public GrabberComparator(GrabberIF<T, G> grabber, Comparator<G> comparator) {
     this.grabber1 = grabber;
     this.comparator = comparator;
   }
  
-  public GrabberComparator(GrabberIF grabber1, GrabberIF grabber2, Comparator comparator) {
+  public GrabberComparator(GrabberIF<T, G> grabber1, GrabberIF<T, G> grabber2, Comparator<G> comparator) {
     this.grabber1 = grabber1;
     this.grabber2 = grabber2;
     this.comparator = comparator;
   }
  
-  public int compare(Object object1, Object object2) {
+  public int compare(T object1, T object2) {
     // Grab objects
-    Object grabbed1 = grabber1.grab(object1);
-    Object grabbed2;
+    G grabbed1 = grabber1.grab(object1);
+    G grabbed2;
     if (grabber2 == null)
       grabbed2 = grabber1.grab(object2);
     else 

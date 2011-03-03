@@ -2,7 +2,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * INTERNAL: Stringifier that maintains a cache of previously
@@ -17,7 +18,7 @@ import java.util.*;
 public class CachedStringifier implements StringifierIF, CachedIF {
 
   protected StringifierIF stringifier;
-  protected Map cache = new HashMap();
+  protected Map<Object, String> cache = new HashMap<Object, String>();
   
   public CachedStringifier(StringifierIF stringifier) {
     this.stringifier = stringifier;
@@ -39,7 +40,7 @@ public class CachedStringifier implements StringifierIF, CachedIF {
     
   public String toString(Object object) {
     if (object == null) return "null";
-    String string = (String)cache.get(object);
+    String string = cache.get(object);
     if (string != null) return string;
     String stringified = stringifier.toString(object);
     cache.put(object, stringified);

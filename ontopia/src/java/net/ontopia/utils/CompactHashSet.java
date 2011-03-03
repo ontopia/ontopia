@@ -5,7 +5,6 @@ package net.ontopia.utils;
 // update CompactIdentityHashSet.java, UniqueSet.java and
 // SoftHashMapIndex.java accordingly.
 
-import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;

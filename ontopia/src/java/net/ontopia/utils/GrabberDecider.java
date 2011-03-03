@@ -2,24 +2,22 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
-
 /**
  * INTERNAL: Decider that grabs an object and passes it to the
  * subdecider.
  */
 
-public class GrabberDecider implements DeciderIF {
+public class GrabberDecider<T, G> implements DeciderIF<T> {
 
-  protected GrabberIF grabber;
-  protected DeciderIF decider;
+  protected GrabberIF<T, G> grabber;
+  protected DeciderIF<G> decider;
    
-  public GrabberDecider(GrabberIF grabber, DeciderIF decider) {
+  public GrabberDecider(GrabberIF<T, G> grabber, DeciderIF<G> decider) {
     this.grabber = grabber;
     this.decider = decider;
   }
 
-  public boolean ok(Object object) {
+  public boolean ok(T object) {
     return decider.ok(grabber.grab(object));
   }
   

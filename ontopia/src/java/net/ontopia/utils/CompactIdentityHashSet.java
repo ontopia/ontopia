@@ -10,15 +10,12 @@ package net.ontopia.utils;
 // changes.
 
 import java.util.Collection;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * INTERNAL: This class is a specialization of the CompactHashSet
  * class, and uses the == operator to compare objects.
  */
-public class CompactIdentityHashSet extends CompactHashSet {
+public class CompactIdentityHashSet<E> extends CompactHashSet<E> {
 
   public CompactIdentityHashSet() {
   }
@@ -27,7 +24,7 @@ public class CompactIdentityHashSet extends CompactHashSet {
     super(size);
   }
 
-  public CompactIdentityHashSet(Collection coll) {
+  public CompactIdentityHashSet(Collection<E> coll) {
     super(coll);
   }
 
@@ -95,7 +92,7 @@ public class CompactIdentityHashSet extends CompactHashSet {
 
       modCount++;
       elements++;
-      objects[index] = o;
+      objects[index] = (E)o;
 
       // rehash with same capacity
       if (1 - (freecells / (double) objects.length) > LOAD_FACTOR)
@@ -126,7 +123,7 @@ public class CompactIdentityHashSet extends CompactHashSet {
     // we found the right position, now do the removal
     if (objects[index] != null) {
       // we found the object
-      objects[index] = deletedObject;
+      objects[index] = (E)deletedObject;
       modCount++;
       elements--;
       return true;
@@ -142,10 +139,10 @@ public class CompactIdentityHashSet extends CompactHashSet {
    */
   protected void rehash(int newCapacity) {
     int oldCapacity = objects.length;
-    Object[] newObjects = new Object[newCapacity];
+    E[] newObjects = (E[]) new Object[newCapacity];
 
     for (int ix = 0; ix < oldCapacity; ix++) {
-      Object o = objects[ix];
+      E o = objects[ix];
       if (o == null || o == deletedObject)
         continue;
       

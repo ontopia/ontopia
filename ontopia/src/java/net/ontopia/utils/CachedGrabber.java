@@ -2,7 +2,8 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * INTERNAL: Grabber that maintains a cache of previously grabbed
@@ -16,19 +17,19 @@ import java.util.*;
  * refreshed automatically. This has to be done explicitly.</p>
  */
 
-public class CachedGrabber implements GrabberIF, CachedIF {
+public class CachedGrabber<O, G> implements GrabberIF<O, G>, CachedIF {
 
-  protected GrabberIF grabber;
-  protected Map cache = new HashMap();
+  protected GrabberIF<O, G> grabber;
+  protected Map<O, G> cache = new HashMap<O, G>();
   
-  public CachedGrabber(GrabberIF grabber) {
+  public CachedGrabber(GrabberIF<O, G> grabber) {
     this.grabber = grabber;
   }
 
   /**
    * Gets the grabber that is being cached.
    */
-  public GrabberIF getGrabber() {
+  public GrabberIF<O, G> getGrabber() {
     return grabber;
   }
   
@@ -37,14 +38,14 @@ public class CachedGrabber implements GrabberIF, CachedIF {
    * refreshed. If the cache is to be cleared call the refresh()
    * method explicitly.
    */
-  public void setGrabber(GrabberIF grabber) {
+  public void setGrabber(GrabberIF<O, G> grabber) {
     this.grabber = grabber;
   }
   
-  public Object grab(Object object) {
+  public G grab(O object) {
     if (object == null) return null;
     if (cache.containsKey(object)) return cache.get(object);
-    Object grabbed = grabber.grab(object);
+    G grabbed = grabber.grab(object);
     cache.put(object, grabbed);
     return grabbed;
   }

@@ -3,9 +3,12 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
 import gnu.getopt.LongOpt;
 import gnu.getopt.Getopt;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * INTERNAL: A class that parses command line options.
@@ -18,10 +21,10 @@ public class CmdlineOptions {
   protected String[] argv;
   
   protected StringBuffer sargs = new StringBuffer();
-  protected List largs = new ArrayList();
+  protected List<LongOpt> largs = new ArrayList<LongOpt>();
 
-  protected Map listeners = new HashMap();
-  protected List arguments = new ArrayList();
+  protected Map<Integer, ListenerIF> listeners = new HashMap<Integer, ListenerIF>();
+  protected List<String> arguments = new ArrayList<String>();
 
   public CmdlineOptions(String application, String[] argv) {
     this.argv = argv;
@@ -78,7 +81,7 @@ public class CmdlineOptions {
    * Parse the command line arguments and notify option listeners.
    */    
   public void parse() throws OptionsException {
-    Getopt g = new Getopt(application, argv, sargs.toString(), (LongOpt[])largs.toArray(new LongOpt[] {}));
+    Getopt g = new Getopt(application, argv, sargs.toString(), largs.toArray(new LongOpt[] {}));
     g.setOpterr(false); // We'll do our own error handling
     
     int c;
@@ -90,7 +93,7 @@ public class CmdlineOptions {
         String option = argv[(ix == 0 ? 0 : ix-1)];
         throw new OptionsException(option, g.getOptarg());
       default:
-        ListenerIF listener = (ListenerIF)listeners.get(new Integer(c));
+        ListenerIF listener = listeners.get(new Integer(c));
         if (listener != null)
           listener.processOption((char)c, g.getOptarg());
         else
@@ -113,7 +116,7 @@ public class CmdlineOptions {
    * command line arguments.
    */    
   public String[] getArguments() {
-    return (String[])arguments.toArray(new String[] {});
+    return arguments.toArray(new String[] {});
   }
 
   /**

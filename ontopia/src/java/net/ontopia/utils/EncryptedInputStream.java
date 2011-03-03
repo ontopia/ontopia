@@ -3,7 +3,8 @@
 
 package net.ontopia.utils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * INTERNAL: Input stream for reading in a encrypted input stream (for

@@ -2,7 +2,11 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * INTERNAL: A manager class that manages cached objects. Cached objects
@@ -17,44 +21,45 @@ import java.util.*;
 
 public class CacheManager implements CachedIF {
 
-  protected Map caches = new HashMap();
+  protected Map<Object, Set<CachedIF>> caches = new HashMap<Object, Set<CachedIF>>();
 
-  public Set getGroups() {
+  public Set<Object> getGroups() {
     return caches.keySet();
   }
 
-  public Set getCached(Object group) {
-    return (Set)caches.get(group);
+  public Set<CachedIF> getCached(Object group) {
+    return caches.get(group);
   }
   
   public void addCached(CachedIF cached, Object group) {
-    if (!caches.containsKey(group)) caches.put(group, new HashSet());
-    ((Set)caches.get(group)).add(cached);
+    if (!caches.containsKey(group)) caches.put(group, new HashSet<CachedIF>());
+    caches.get(group).add(cached);
   }
 
   public void removeCached(CachedIF cached, Object group) {
-    Set grouped = (Set)caches.get(group);
-    grouped.remove(group);
+    Set<CachedIF> grouped = caches.get(group);
+    // todo: correct fix?
+	grouped.remove(cached);
     if (grouped.isEmpty())
       caches.remove(group);
   }
 
   public void refresh(Object group) {
     if (!caches.containsKey(group)) return;
-    Iterator iter = ((Set)caches.get(group)).iterator();
+    Iterator<CachedIF> iter = caches.get(group).iterator();
     while (iter.hasNext()) {
-      CachedIF cached = (CachedIF)iter.next();
+      CachedIF cached = iter.next();
       cached.refresh();
     }
   }
 
   public void refresh() {
-    Iterator iter1 = caches.keySet().iterator();
+    Iterator<Object> iter1 = caches.keySet().iterator();
     while (iter1.hasNext()) {
       Object group = iter1.next();
-      Iterator iter2 = ((Set)caches.get(group)).iterator();
+      Iterator<CachedIF> iter2 = caches.get(group).iterator();
       while (iter2.hasNext()) {
-        CachedIF cached = (CachedIF)iter2.next();
+        CachedIF cached = iter2.next();
         cached.refresh();
       }
     }
