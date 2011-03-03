@@ -15,39 +15,39 @@ import java.util.List;
 
 public class GrabberGrabber implements GrabberIF<Object, Object> {
 
-  protected List<GrabberIF<Object, Object>> grabbers = new ArrayList<GrabberIF<Object, Object>>();
+  protected List<GrabberIF> grabbers = new ArrayList<GrabberIF>();
   
-  public GrabberGrabber(GrabberIF<Object, Object>... grabbers) {
-    this.grabbers = new ArrayList<GrabberIF<Object, Object>>(Arrays.asList(grabbers));
+  public GrabberGrabber(GrabberIF... grabbers) {
+    this.grabbers = new ArrayList<GrabberIF>(Arrays.asList(grabbers));
   }
 
   /**
    * Gets the chained grabbers.
    */  
-  public List<GrabberIF<Object, Object>> getGrabbers() {
+  public List<GrabberIF> getGrabbers() {
     return grabbers;
   }
 
   /**
    * Sets the grabbers.
    */  
-  public void setGrabbers(List<GrabberIF<Object, Object>> grabbers) {
+  public void setGrabbers(List<GrabberIF> grabbers) {
     this.grabbers = grabbers;
   }
   
   /**
    * Add grabber to the end of the grabber list.
    */  
-  public void addGrabber(GrabberIF<Object, Object> grabber) {
+  public void addGrabber(GrabberIF grabber) {
     grabbers.add(grabber);
   }
   
   public Object grab(Object object) {
     Object grabbed = object;
     // Loop over grabbers
-    Iterator<GrabberIF<Object, Object>> iter = grabbers.iterator();
+    Iterator<GrabberIF> iter = grabbers.iterator();
     while (iter.hasNext()) {
-      GrabberIF<Object, Object> grabber = iter.next();
+      GrabberIF grabber = iter.next();
       grabbed = grabber.grab(grabbed);
     }
     return grabbed;
