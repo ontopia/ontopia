@@ -2,7 +2,8 @@
 package net.ontopia.topicmaps.entry;
 
 import java.io.IOException;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapStore;
 
 /**

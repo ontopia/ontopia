@@ -4,7 +4,7 @@
 package net.ontopia.topicmaps.entry;
 
 import java.io.IOException;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 /**
  * PUBLIC: Represents a reference to a topic map. A topic map

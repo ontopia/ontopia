@@ -3,7 +3,7 @@
 
 package net.ontopia.topicmaps.entry;
 
-import java.util.*;
+import java.util.Collection;
 
 /**
  * PUBLIC: Topic map sources collect references to topic maps.<p>

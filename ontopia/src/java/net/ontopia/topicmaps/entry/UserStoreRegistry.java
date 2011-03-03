@@ -3,9 +3,9 @@
 
 package net.ontopia.topicmaps.entry;
 
-import java.io.*;
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
+import java.io.IOException;
+import java.util.Collection;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 /**
  * INTERNAL: Wrapper class for accessing a {@link StoreRegistry} using a

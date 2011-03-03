@@ -3,9 +3,9 @@
 
 package net.ontopia.topicmaps.entry;
 
-import java.util.*;
-
-import net.ontopia.topicmaps.core.*;
+import java.util.HashMap;
+import java.util.Map;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**

@@ -3,20 +3,36 @@
 
 package net.ontopia.topicmaps.entry;
 
-import java.io.*;
-import java.beans.*;
-import java.lang.reflect.*;
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.*;
-
-import org.xml.sax.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.PropertyUtils;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.URIUtils;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.ontopia.utils.*;
-import net.ontopia.xml.DefaultXMLReaderFactory;
-import net.ontopia.xml.Slf4jSaxErrorHandler;
 
 /**
  * PUBLIC: Reads store configuration parameters from an XML
