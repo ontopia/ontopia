@@ -117,16 +117,6 @@
     <class shortcut="ActionAssociationDelete"
            fullname="net.ontopia.topicmaps.webed.impl.actions.tmobject.Delete"/>
 
-    <!-- OmniEditor-specific action -->
-    <class shortcut="SetActionGroup"
-           fullname="net.ontopia.topicmaps.webed.webapps.omnieditor.SetActionGroup"/>
-
-    <!-- ParamRuleIF implementations -->
-    <class shortcut="add2ChooseRule"
-           fullname="net.ontopia.topicmaps.webed.webapps.omnieditor.ParamRuleChoose2Add"/>
-    <class shortcut="editAssocRule"
-           fullname="net.ontopia.topicmaps.webed.webapps.omnieditor.ParamRuleEditAssoc"/>
-
   </classMap>
 
 
@@ -219,8 +209,6 @@
     <!-- principal actions -->
     <action name="submitSubjIndsSourceLocs"
             class="DefaultAction"/>
-    <action name="leaveTab"
-            class="SetActionGroup"/>
     <action name="chooseType"
             class="DeferredAction"/>
     <action name="addType"
@@ -236,20 +224,9 @@
     <action name="removeSourceLoc"
             class="ActionTopicRemoveSourceLocator"/>
 
-    <!-- Define forward pages special to this action group -->
-    <forward name="chooseTypeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="addType"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="topicTypes"/>
-    </forward>
-
     <!-- Define forward rules -->
     <forwardRules>
       <forwardDefault forward="defaultForwardTopic"/>
-      <forwardRule action="chooseType"
-                   forward="chooseTypeForward"/>
     </forwardRules>
 
   </actionGroup>
@@ -272,8 +249,6 @@
     <!-- principal actions -->
     <action name="submitBasenamesVariants"
             class="DefaultAction"/>
-    <action name="leaveTab"
-            class="SetActionGroup"/>
     <action name="addBasename"
             class="ActionTopicAddBasename"/>
     <action name="removeBasename"
@@ -297,30 +272,10 @@
             class="ActionTopicRemoveVariantTheme"/>
 
 
-    <!-- Define forward pages special to this action group -->
-    <forward name="chooseBasenameThemeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="addBasenameTheme"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="basenameThemes"/>
-    </forward>
-    <forward name="chooseVariantThemeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="addVariantTheme"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="variantThemes"/>
-    </forward>
-
     <!-- Define forward rules -->
     <forwardRules>
       <forwardDefault forward="defaultForwardTopic"/>
       <forwardLocked path="locked.jsp" frame="search"/>
-      <forwardRule action="chooseBasenameTheme"
-                   forward="chooseBasenameThemeForward"/>
-      <forwardRule action="chooseVariantTheme"
-                   forward="chooseVariantThemeForward"/>
     </forwardRules>
 
   </actionGroup>
@@ -340,8 +295,6 @@
     <!-- principal actions -->
     <action name="submitIntOccs"
             class="DefaultAction"/>
-    <action name="leaveTab"
-            class="SetActionGroup"/>
     <action name="addIntOccurrence"
             class="ActionTopicAddIntOccurrence"/>
     <action name="removeOccurrence"
@@ -359,29 +312,9 @@
     <action name="removeOccurrenceTheme"
             class="ActionTopicRemoveOccurrenceTheme"/>
     
-    <!-- Define forward pages special to this action group -->
-    <forward name="chooseOccurrenceTypeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="addOccurrenceType"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="occTypes"/>
-    </forward>
-    <forward name="chooseOccurrenceThemeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="addOccurrenceTheme"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="occThemes"/>
-    </forward>
-    
     <!-- Define forward rules -->
     <forwardRules>
       <forwardDefault forward="defaultForwardTopic"/>
-      <forwardRule action="chooseOccurrenceType"
-                   forward="chooseOccurrenceTypeForward"/>
-      <forwardRule action="chooseOccurrenceTheme"
-                   forward="chooseOccurrenceThemeForward"/>
     </forwardRules>
 
   </actionGroup>
@@ -401,8 +334,6 @@
     <!-- principal actions -->
     <action name="submitExtOccs"
             class="DefaultAction"/>
-    <action name="leaveTab"
-            class="SetActionGroup"/>
     <action name="addExtOccurrence"
             class="ActionTopicAddExtOccurrence"/>
     <action name="removeExtOccurrence"
@@ -420,29 +351,9 @@
     <action name="removeExtOccurrenceTheme"
             class="ActionTopicRemoveOccurrenceTheme"/>
     
-    <!-- Define forward pages special to this action group -->
-    <forward name="chooseExtOccurrenceTypeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="addExtOccurrenceType"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="occTypes"/>
-    </forward>
-    <forward name="chooseExtOccurrenceThemeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="addExtOccurrenceTheme"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="occThemes"/>
-    </forward>
-    
     <!-- Define forward rules -->
     <forwardRules>
       <forwardDefault forward="defaultForwardTopic"/>
-      <forwardRule action="chooseExtOccurrenceType"
-                   forward="chooseExtOccurrenceTypeForward"/>
-      <forwardRule action="chooseExtOccurrenceTheme"
-                   forward="chooseExtOccurrenceThemeForward"/>
     </forwardRules>
 
   </actionGroup>
@@ -458,8 +369,6 @@
     <!-- principal actions -->
     <action name="createAssocWithPlayer"
             class="ActionTopicMapCreateAssoc"/>
-    <action name="leaveTab"
-            class="SetActionGroup"/>
     
     <!-- Define forward rules -->
     <forwardRules>
@@ -504,51 +413,9 @@
     <action name="assocRemoveRoleType"
             class="ActionAssociationRemoveRoleType"/>
     
-    <!-- Define forward pages special to this action group -->
-    <forward name="assocChooseTypeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="assocAddType"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="assocTypes"/>
-    </forward>
-    <forward name="assocChooseThemeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="assocAddTheme"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="assocThemes"/>
-    </forward>
-    <forward name="assocChoosePlayerForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="assocAddRole"
-             paramRule="add2ChooseRule">
-      <reqParam name="lookup_method" value="role_type"/>
-      <reqParam name="lookup_for"/>
-      <reqParam name="search" value="1"/>
-      <reqParam name="disp_search_form" value="off"/>
-      <reqParam name="searchContext" value="assocPlayer"/>
-    </forward>
-    <forward name="assocChooseRoleTypeForward"
-             path="search.jsp"
-             frame="search"
-             nextAction="assocAddRoleType"
-             paramRule="add2ChooseRule">
-      <reqParam name="searchContext" value="assocRoleTypes"/>
-    </forward>
-    
     <!-- Define forward rules -->
     <forwardRules>
       <forwardDefault forward="defaultForwardAssoc"/>
-      <forwardRule action="assocChooseType"
-                   forward="assocChooseTypeForward"/>
-      <forwardRule action="assocChooseTheme"
-                   forward="assocChooseThemeForward"/>
-      <forwardRule action="assocChoosePlayer"
-                   forward="assocChoosePlayerForward"/>
-      <forwardRule action="assocChooseRoleType"
-                   forward="assocChooseRoleTypeForward"/>
     </forwardRules>
     
   </actionGroup>
