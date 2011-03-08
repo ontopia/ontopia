@@ -957,7 +957,6 @@
     <include name="net/ontopia/topicmaps/webed/taglibs/*.java" />
     <include name="net/ontopia/topicmaps/webed/taglibs/form/*.java" />
     <include name="net/ontopia/topicmaps/webed/utils/*.java" />
-    <include name="net/ontopia/topicmaps/webed/webapps/omnieditor/*.java" />
   </patternset>
   
   <patternset id="classes.webed">
@@ -977,7 +976,6 @@
     <include name="net/ontopia/topicmaps/webed/taglibs/*.class" />
     <include name="net/ontopia/topicmaps/webed/taglibs/form/*.class" />
     <include name="net/ontopia/topicmaps/webed/utils/*.class" />
-    <include name="net/ontopia/topicmaps/webed/webapps/omnieditor/*.class" />
     <include name="*.vm" />
   </patternset>
   
@@ -990,7 +988,6 @@
     <include name="net/ontopia/topicmaps/webed/impl/utils/test/*.java" />
     <include name="net/ontopia/topicmaps/webed/utils/test/*.java" />
     <include name="net/ontopia/topicmaps/webed/test/**/*.java" />
-    <include name="net/ontopia/topicmaps/webed/webapps/omnieditor/test/*.java" />
   </patternset>
   
   <patternset id="classes.test.webed">
@@ -1002,7 +999,6 @@
     <include name="net/ontopia/topicmaps/webed/utils/test/*.class" />
     <include name="net/ontopia/topicmaps/webed/impl/utils/test/*.class" />
     <include name="net/ontopia/topicmaps/webed/test/**/*.class" />
-    <include name="net/ontopia/topicmaps/webed/webapps/omnieditor/test/*.class" />
   </patternset>
   
   <!-- ====================================================================
