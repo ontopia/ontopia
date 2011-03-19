@@ -103,7 +103,8 @@ public class SpyDriver implements Driver {
 
   static void initDriver(String driverClass) {
     try {
-      Class.forName(driverClass);
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      Class.forName(driverClass, true, classLoader);
     } catch (ClassNotFoundException e) {
       // ignore if not exists
     }

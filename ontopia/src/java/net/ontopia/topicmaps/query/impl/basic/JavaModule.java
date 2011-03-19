@@ -44,7 +44,8 @@ public class JavaModule implements ModuleIF {
     }
     Class klass = null;
     try {
-      klass = Class.forName(className);
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      klass = Class.forName(className, true, classLoader);
     } catch (Exception e) {
       throw new OntopiaRuntimeException("Java module class '" + className + "' cannot be found.", e);
     }

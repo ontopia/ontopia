@@ -50,7 +50,8 @@ public class ExternalFunctionTag extends TagSupport {
     if (function == null) {
       // instantiate it fresh and put into central pool
       try {
-        function = (FunctionIF) Class.forName(functionFQCN).newInstance();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        function = (FunctionIF) Class.forName(functionFQCN, true, classLoader).newInstance();
         contextTag.registerFunction(functionName, function);
         if (log.isInfoEnabled())
           log.info("registered external function: " + function.toString());       

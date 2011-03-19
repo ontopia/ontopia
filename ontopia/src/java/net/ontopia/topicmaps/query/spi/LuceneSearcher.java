@@ -68,7 +68,8 @@ public class LuceneSearcher extends AbstractSearcher {
           String analyzerClassName = (String)parameters.get("analyzer");
           Class analyzerClass = null;
           try {
-            analyzerClass = Class.forName(analyzerClassName);
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            analyzerClass = Class.forName(analyzerClassName, true, classLoader);
           } catch (Exception e) {
             throw new OntopiaRuntimeException("Lucene analyzer class '" + analyzerClassName + "' cannot be found.", e);
           }

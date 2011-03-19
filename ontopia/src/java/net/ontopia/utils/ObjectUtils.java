@@ -159,7 +159,8 @@ public class ObjectUtils {
    */
   public static Object newInstance(String className) {    
     try {
-      Class klass = Class.forName(className);
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      Class klass = Class.forName(className, true, classLoader);
       return klass.newInstance();
     }
     catch (Exception e) {

@@ -44,7 +44,8 @@ public class ObjectRelationalMapping {
      */
     protected Class getClassByName(String class_name) {
       try {
-        return Class.forName(class_name);
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        return Class.forName(class_name, true, classLoader);
       } catch (ClassNotFoundException e) {
         log.error("Cannot find class " + e.getMessage());
         throw new OntopiaRuntimeException(e);

@@ -48,7 +48,8 @@ public class FunctionVirtualColumn implements ValueIF {
 
     // look up Class.method(String, ..., String)
     try {
-      Class klass = Class.forName(className);
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      Class klass = Class.forName(className, true, classLoader);
       Class[] paramTypes = new Class[params.size()];
       for (int i=0; i < paramTypes.length; i++) {
         paramTypes[i] = String.class;

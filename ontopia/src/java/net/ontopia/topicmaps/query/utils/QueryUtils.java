@@ -93,7 +93,8 @@ public class QueryUtils {
         try {
           while ((line = rdr.readLine()) != null) {
             try {
-              Class<?> c = Class.forName(line);
+              ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+              Class<?> c = Class.forName(line, true, classLoader);
               if (QueryProcessorFactoryIF.class.isAssignableFrom(c)) {
                 QueryProcessorFactoryIF factory = (QueryProcessorFactoryIF) c
                     .newInstance();

@@ -34,7 +34,8 @@ public class DefaultConnectionFactory extends AbstractConnectionFactory {
     
     try {
       // load driver class
-      Class.forName(getDriver());
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      Class.forName(getDriver(), true, classLoader);
     }
     catch (ClassNotFoundException e) {
       throw new OntopiaRuntimeException("Couldn't find JDBC driver class '" + getDriver() + "' (name taken from init property net.ontopia.topicmaps.impl.rdbms.DriverClass)");

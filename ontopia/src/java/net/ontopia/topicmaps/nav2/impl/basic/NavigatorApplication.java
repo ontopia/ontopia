@@ -243,7 +243,8 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     // ... otherwise try to create a new instance of it
     if (instance == null) {
       try {
-        Class klass = Class.forName(fqcn);
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        Class klass = Class.forName(fqcn, true, classLoader);
         instance = klass.newInstance();
         instances.put(fqcn, instance);
       } catch (ClassNotFoundException e) {

@@ -395,7 +395,8 @@ public class ActionConfigContentHandler extends SAXTracker {
     }
   
     try {
-      return Class.forName(classname);
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      return Class.forName(classname, true, classLoader);
     } catch (Exception e) {
         log.error("Cannot create instance for class " + classname);
         throw new OntopiaRuntimeException("Instantiation of " + classname

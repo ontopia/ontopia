@@ -92,7 +92,8 @@ public class XTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
    */
   public void setExternalReferenceHandlerClass(String ref_handler) {
     try {
-      setExternalReferenceHandler((ExternalReferenceHandlerIF) Class.forName(ref_handler).newInstance());
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      setExternalReferenceHandler((ExternalReferenceHandlerIF) Class.forName(ref_handler, true, classLoader).newInstance());
     } catch (Throwable e) {
       throw new OntopiaRuntimeException(e);
     }

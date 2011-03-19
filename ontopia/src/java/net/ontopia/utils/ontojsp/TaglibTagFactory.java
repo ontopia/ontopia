@@ -65,7 +65,8 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
     TagSupport tag = null;
     try {
       // try to get class for tag classname
-      Class tagclass = Class.forName(classname);
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      Class tagclass = Class.forName(classname, true, classLoader);
       // try to instaniate an object of tag class
       tag = (TagSupport) tagclass.newInstance();
     } catch (Exception e) {

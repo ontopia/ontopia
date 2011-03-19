@@ -128,7 +128,8 @@ public class DBCPConnectionFactory extends AbstractConnectionFactory {
 
     try {
       // Make sure driver is registered
-      Class.forName(getDriver());
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      Class.forName(getDriver(), true, classLoader);
       // Create connection factory
       ConnectionFactory cfactory;
       if (getUserName() == null || getPassword() == null) {

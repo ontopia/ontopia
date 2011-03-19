@@ -130,7 +130,8 @@ public class PluginContentHandler extends SAXTracker {
 
   private PluginIF createPlugin(String klass) {
     try {
-      Class pclass = Class.forName(klass);
+      ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+      Class pclass = Class.forName(klass, true, classLoader);
       return (PluginIF) pclass.newInstance();
     }
     catch (ClassNotFoundException e){

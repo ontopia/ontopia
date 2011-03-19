@@ -288,7 +288,8 @@ public class XMLConfigSource {
         // Clear source member
         source = null;
         try {
-          source = (TopicMapSourceIF) Class.forName(atts.getValue("class")).newInstance();
+          ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+          source = (TopicMapSourceIF) Class.forName(atts.getValue("class"), true, classLoader).newInstance();
           String id = atts.getValue("id");
           if (id != null)
             source.setId(id);
