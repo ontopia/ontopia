@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapFragmentWriterIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapFragmentWriter;
 import net.ontopia.topicmaps.utils.rdf.RDFFragmentExporter;
@@ -84,11 +85,21 @@ public class StartUpServlet extends HttpServlet {
     return properties.getProperty("endpoint");
   }
 
-  private static String HOSTNAME;
-  public static String getTopicMapURL(String tmid) {
+  public static String getTopicMapURL(LocatorIF base, String tmid) {
+    // first look for configured URL
+    String prefix = properties.getProperty("prefix." + tmid);
+    if (prefix != null)
+      return prefix;
+
+    // then try the base URI
+    if (base != null)
+      return base.getExternalForm();
+
+    // use fallback
     return "http://" + getHostName() + "/sdshare/" + tmid;
   }
 
+  private static String HOSTNAME;
   private static String getHostName() {
     if (HOSTNAME == null) {
       try {

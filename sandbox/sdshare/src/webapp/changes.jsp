@@ -30,11 +30,7 @@
   TopicMapStoreIF store = ref.createStore(true);
   TopicMapIF tm = store.getTopicMap();  
   LocatorIF base = store.getBaseAddress();
-  String prefix;
-  if (base != null)
-    prefix = base.getExternalForm();
-  else
-    prefix = StartUpServlet.getTopicMapURL(tmid);
+  String prefix = StartUpServlet.getTopicMapURL(base, tmid);
 
   SyntaxIF[] syntaxes = StartUpServlet.getSyntaxes();
 
