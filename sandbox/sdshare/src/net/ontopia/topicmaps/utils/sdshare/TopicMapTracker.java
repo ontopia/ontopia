@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.io.Writer;
 import java.io.FileWriter;
 import java.io.FileReader;
@@ -75,6 +76,30 @@ public class TopicMapTracker implements TopicMapListenerIF {
     return changes;
   }
 
+  public List<ChangedTopic> getChangeFeed(long since) {
+    expireOldChanges();
+
+    int pos = binarySearch(since); // find position of this timestamp
+    
+    // now 'pos' will either point to a change with this timestamp
+    // (possibly somewhere in a run of changes with equal timestamps),
+    // or to the change on the edge between before and after. since we
+    // need to include all changes with times equal to this change we
+    // scan upwards until the timestamps are earlier than 'since'
+    while (pos > 0 && changes.get(pos).getTimestamp() >= since)
+      pos--;
+    
+    // it's possible that the above gives us a position where we need to
+    // run further out, so we try that too, to make sure
+    while (pos < changes.size() && changes.get(pos).getTimestamp() < since)
+      pos++;
+
+    if (pos == changes.size())
+      return Collections.EMPTY_LIST;
+    else
+      return changes.subList(pos, changes.size());
+  }
+  
   public long getLastChanged() {
     if (changes.isEmpty())
       return 0; // ie: it hasn't ever changed
@@ -149,10 +174,7 @@ public class TopicMapTracker implements TopicMapListenerIF {
   }
 
   private int binarySearch(ChangedTopic o) {
-    long key = o.getTimestamp();
-    int low = 0;
     int high = changes.size() - 1;
-    int pos = (low + high) / 2;
 
     // very often, the topic changed is the same as the previous, because
     // of how the event system works. therefore we cheat by checking the
@@ -160,7 +182,43 @@ public class TopicMapTracker implements TopicMapListenerIF {
     if (changes.get(high).equals(o))
       return high;
 
-    // ok, it wasn't there, so we really do need to search
+    long key = o.getTimestamp();
+    int pos = binarySearch(key);
+    int low = 0;
+    
+    // we've now either given up, or found an entry with the same time.
+    // however, there can be many entries with the same time, so we need
+    // to scan both up and down to find it.    
+    int origpos = pos;
+    ChangedTopic other = changes.get(pos);
+    while (!other.equals(o) && other.getTimestamp() == key && pos > low) {
+      pos--;
+      other = changes.get(pos);
+    }
+    if (other.equals(o))
+      return pos;
+
+    pos = origpos + 1;
+    other = changes.get(pos);
+    while (!other.equals(o) && other.getTimestamp() == key && pos < high) {
+      pos++;
+      other = changes.get(pos);
+    }
+    if (changes.get(pos).equals(o))
+      return pos;
+    return -1; // it's not here
+  }
+
+  /**
+   * Returns the index of a change (any change) with this timestamp.
+   */
+  private int binarySearch(long key) {
+    if (changes.isEmpty())
+      return 0;
+    
+    int low = 0;
+    int high = changes.size() - 1;
+    int pos = (low + high) / 2;
 
     ChangedTopic other = changes.get(pos);
     long time = other.getTimestamp();
@@ -180,28 +238,7 @@ public class TopicMapTracker implements TopicMapListenerIF {
       time = other.getTimestamp();      
     }
 
-    // we've now either given up, or found an entry with the same time.
-    // however, there can be many entries with the same time, so we need
-    // to scan both up and down to find it.    
-    int origpos = pos;
-
-    // other is already set correctly from loop above
-    while (!other.equals(o) && other.getTimestamp() == key && pos > low) {
-      pos--;
-      other = changes.get(pos);
-    }
-    if (other.equals(o))
-      return pos;
-
-    pos = origpos + 1;
-    other = changes.get(pos);
-    while (!other.equals(o) && other.getTimestamp() == key && pos < high) {
-      pos++;
-      other = changes.get(pos);
-    }
-    if (changes.get(pos).equals(o))
-      return pos;
-    return -1; // it's not here
+    return pos;
   }
 
   private synchronized void expireOldChanges() {

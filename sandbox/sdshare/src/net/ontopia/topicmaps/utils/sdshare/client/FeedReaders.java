@@ -50,6 +50,21 @@ public class FeedReaders {
   private static final String NS_ATOM = "http://www.w3.org/2005/Atom";
   private static final String NS_SD = "http://www.egovpt.org/sdshare";
 
+  /**
+   * Parses Atom-compatible date-time string and returns value as millisecs
+   * since epoch (same as System.currentTimeMillis()).
+   */
+  public static long parseDateTime(String date) {
+    try {
+      if (date.endsWith("Z"))
+        return format_wo_tz.parse(date).getTime();
+      else
+        return format_with_tz.parse(date).getTime();
+    } catch (ParseException e) {
+      throw new RuntimeException(e);
+    }
+  }
+  
   public static FragmentFeed readFragmentFeed(String filename_or_url)
     throws IOException, SAXException {
     return readFragmentFeed(filename_or_url, 0);
@@ -162,17 +177,8 @@ public class FeedReaders {
         inEntry = false;
         updated = -1;
 
-      } else if (uri.equals(NS_ATOM) && name.equals("updated")) {
-        try {
-          String date = buf.toString();
-          if (date.endsWith("Z"))
-            updated = format_wo_tz.parse(date).getTime();
-          else
-            updated = format_with_tz.parse(date).getTime();
-        } catch (ParseException e) {
-          throw new RuntimeException(e);
-        }
-      }
+      } else if (uri.equals(NS_ATOM) && name.equals("updated"))
+        updated = parseDateTime(buf.toString());
 
       if (keep) {
         buf.setLength(0); // empty, but reuse buffer

@@ -273,10 +273,7 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
     testChangeAllTopics();
 
     // wait 100 ms
-    try {
-      Thread.sleep(100);
-    } catch (InterruptedException e) {
-    }
+    waitms(100);
 
     // change a topic, and observe that all old changes are gone
     testAddedTopic();
@@ -291,20 +288,14 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
     testTwoChanges();
 
     // wait 6 ms
-    try {
-      Thread.sleep(6);
-    } catch (InterruptedException e) {
-    }
+    waitms(6);
 
     // create a new topic
     TopicMapBuilderIF builder = topicmap.getBuilder();
     TopicIF topic = builder.makeTopic();
 
     // wait another 6 ms
-    try {
-      Thread.sleep(6);
-    } catch (InterruptedException e) {
-    }
+    waitms(6);
 
     // now only the new topic should be visible
     List<ChangedTopic> changes = tracker.getChangeFeed();
@@ -315,12 +306,76 @@ public class TopicMapTrackerTest extends AbstractTopicMapTestCase {
                change.getObjectId().equals(topic.getObjectId()));
   }
 
+  public void testSinceNoChanges() {
+    assertTrue("found changes in feed, despite no changes having been made",
+               tracker.getChangeFeed(2341234).isEmpty());
+  }
+
+  public void testSinceAllChanged() {
+    // time before change
+    long before = System.currentTimeMillis();
+    
+    // we change all topics
+    int changed = 0;
+    for (TopicIF topic : topicmap.getTopics()) {
+      if (topic.getTopicNames().isEmpty())
+        continue;
+      TopicNameIF tn = topic.getTopicNames().iterator().next();
+      tn.setValue(topic.getObjectId());
+      changed++;
+    }
+
+    // first verify that we can get all changes
+    assertEquals("setting since to before all changes doesn't return all",
+                 changed, tracker.getChangeFeed(before).size());
+    
+    // then verify that we can get none
+    waitms(5);
+  
+    assertTrue("setting since to after all changes doesn't return none",
+               tracker.getChangeFeed(System.currentTimeMillis()).isEmpty());
+  }
+
+  public void testSinceInTheMiddle() {
+    // find all topics we can change
+    List<TopicIF> changed = new ArrayList<TopicIF>();
+    for (TopicIF topic : topicmap.getTopics()) {
+      if (topic.getTopicNames().isEmpty())
+        continue;
+      changed.add(topic);
+    }
+
+    // change first 7, then pause, then change the rest
+    long pausetime = -1;
+    for (int ix = 0; ix < changed.size(); ix++) {
+      TopicNameIF tn = changed.get(ix).getTopicNames().iterator().next();
+      tn.setValue(tn.getObjectId());
+
+      if (ix == 6) {
+        waitms(10);
+        pausetime = System.currentTimeMillis();
+        waitms(10);
+      }
+    }
+
+    // now, verify that we can get the last (n - 7) topics
+    assertEquals("setting since to gap in the middle doesn't return correct " +
+                 "number of changes", (changed.size() - 7),
+                 tracker.getChangeFeed(pausetime).size());
+  }
   
   // ===== UTILITIES
 
   private TopicIF getTopicById(String id) {
     LocatorIF ii = topicmap.getStore().getBaseAddress().resolveAbsolute('#' + id);
     return (TopicIF) topicmap.getObjectByItemIdentifier(ii);
+  }
+
+  private void waitms(long ms) {
+    try {
+      Thread.sleep(ms);
+    } catch (InterruptedException e) {
+    }
   }
   
 }

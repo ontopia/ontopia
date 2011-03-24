@@ -1,10 +1,12 @@
 <%@ page 
   language="java" 
   contentType="application/atom+xml; charset=utf-8"
-  import="java.util.Collection,
+  import="java.util.List,
+          java.util.Collection,
           java.net.InetAddress,
           net.ontopia.infoset.core.LocatorIF,
           net.ontopia.topicmaps.utils.sdshare.*,
+          net.ontopia.topicmaps.utils.sdshare.client.*,
           net.ontopia.topicmaps.entry.TopicMapReferenceIF,
 	  net.ontopia.topicmaps.core.*"
 %><%
@@ -12,6 +14,7 @@
   // TODO: should support if-modified-since
 
   String tmid = request.getParameter("topicmap");
+  String since = request.getParameter("since");
 
   TopicMapTracker tracker = TrackerManager.getTracker(tmid);
   if (tracker == null) {
@@ -42,7 +45,12 @@
 
   atom.addServerPrefix(prefix);
 
-  for (ChangedTopic change : tracker.getChangeFeed()) {
+  List<ChangedTopic> changes;
+  if (since == null)
+     changes = tracker.getChangeFeed();
+  else
+     changes = tracker.getChangeFeed(FeedReaders.parseDateTime(since));
+  for (ChangedTopic change : changes) {
     atom.startEntry("Topic with object ID " + change.getObjectId(),
                     prefix + "/" + change.getObjectId() + "/" + change.getTimestamp(),
 		    change.getTimestamp());
