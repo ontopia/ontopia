@@ -9,7 +9,16 @@
 %><%
 
   String tmid = request.getParameter("topicmap");
-  TopicMapTracker tracker = StartUpServlet.topicmaps.get(tmid);
+  TopicMapTracker tracker = TrackerManager.getTracker(tmid);
+  if (tracker == null) {
+    // means either there's no such TM, or we are not supposed to produce
+    // a feed for it.
+    response.setStatus(404);
+    response.setHeader("Content-type", "text/plain");
+    out.write("No such topic map: '" + tmid + "'.");
+    return;
+  }
+
   TopicMapReferenceIF ref = tracker.getReference();
   TopicMapStoreIF store = ref.createStore(true);
   LocatorIF base = store.getBaseAddress();

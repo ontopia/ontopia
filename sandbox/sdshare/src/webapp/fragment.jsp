@@ -22,7 +22,7 @@
     return;
   }
 
-  TopicMapTracker tracker = StartUpServlet.topicmaps.get(tmid);
+  TopicMapTracker tracker = TrackerManager.getTracker(tmid);
   TopicMapReferenceIF ref = tracker.getReference();
   TopicMapStoreIF store = ref.createStore(true);
   TopicMapIF tm = store.getTopicMap();

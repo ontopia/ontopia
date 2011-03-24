@@ -1,4 +1,4 @@
-<project name="ontopia" default="jar" basedir=".">
+<project name="ontopia-sdshare" default="jar" basedir=".">
 
   <!--taskdef classpath="cobertura.jar" resource="tasks.properties"/-->
 
