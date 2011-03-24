@@ -5,6 +5,7 @@ import java.io.Reader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Set;
+import java.util.Date;
 import java.util.TimeZone;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,7 @@ import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.xml.XMLReaderFactoryIF;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 
 /**
@@ -37,6 +39,8 @@ public class FeedReaders {
     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
   private static SimpleDateFormat format_with_tz =
     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+  public static XMLReaderFactoryIF parserfactory =
+    new DefaultXMLReaderFactory(); // public so we can modify for testing
   
   static {
     format_wo_tz.setTimeZone(TimeZone.getTimeZone("Z"));    
@@ -56,6 +60,16 @@ public class FeedReaders {
     throws IOException, SAXException {
     // TODO: we should support if-modified-since
     String uri = URIUtils.getURI(filename_or_url).getExternalForm();
+
+    if (uri.startsWith("http://") && lastChange > 0) {
+      // need to add 'since' parameter
+      String datetime = format_wo_tz.format(new Date(lastChange));
+      if (uri.indexOf('?') == -1)
+        uri += "?since=" + datetime;
+      else
+        uri += "&since=" + datetime;
+    }
+    
     FragmentFeedReader handler = new FragmentFeedReader(uri, lastChange);
     parseWithHandler(uri, handler);
     return handler.getFragmentFeed();
@@ -92,7 +106,7 @@ public class FeedReaders {
   public static FragmentFeed readPostFeed(Reader in)
     throws IOException, SAXException {
     PostFeedReader handler = new PostFeedReader();
-    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+    XMLReader parser = parserfactory.createXMLReader();
     // turning this on so we get the 'xmlns*' attributes
     parser.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
     parser.setContentHandler(handler);
@@ -102,7 +116,7 @@ public class FeedReaders {
   
   private static void parseWithHandler(String uri, ContentHandler handler)
     throws IOException, SAXException {
-    XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();
+    XMLReader parser = parserfactory.createXMLReader();
     parser.setContentHandler(handler);
     parser.parse(uri);
   }
