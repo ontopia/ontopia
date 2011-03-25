@@ -600,7 +600,7 @@ public class TopicResource {
     topicListener.onTopicUpdated(topicId);
   }
 
-  private Map<String, Object> postProcess(Map<String, Object> topicInfo) {
+  protected Map<String, Object> postProcess(Map<String, Object> topicInfo) {
     return topicListener.postProcess(topicInfo);
   }
   

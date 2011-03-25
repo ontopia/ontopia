@@ -217,15 +217,14 @@ public class PojoSchemaModel {
               }
 
               // availableFieldValueTypes
-              ArrayNode valueTypesArray = (ArrayNode)fieldConfig.get("valueTypes");
-              if (valueTypesArray == null) {
-                throw new RuntimeException("'valueTypes' not specified on field '" + field.getId() + "' on type '" + type.getId() + "'");
-              }
-              for (JsonNode valueTypeIdNode : valueTypesArray) {
-                String valueTypeId = valueTypeIdNode.getTextValue();
-                verifyDeclaredType(valueTypeId, typesMap, "valueTypes",type, field);
-                PojoType valueType = getPojoType(valueTypeId, types, schemaProvider);
-                field.addAvailableFieldValueType(valueType);
+              if (fieldConfig.has("valueTypes")) {
+                ArrayNode valueTypesArray = (ArrayNode)fieldConfig.get("valueTypes");
+                for (JsonNode valueTypeIdNode : valueTypesArray) {
+                  String valueTypeId = valueTypeIdNode.getTextValue();
+                  verifyDeclaredType(valueTypeId, typesMap, "valueTypes",type, field);
+                  PojoType valueType = getPojoType(valueTypeId, types, schemaProvider);
+                  field.addAvailableFieldValueType(valueType);
+                }
               }
             }
 
