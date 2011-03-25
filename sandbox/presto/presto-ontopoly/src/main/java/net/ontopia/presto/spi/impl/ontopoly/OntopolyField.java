@@ -203,6 +203,11 @@ public class OntopolyField implements PrestoFieldUsage {
     }
   }
 
+  public String getExternalType() {
+      // FIXME: implement support for external types?
+      return null;
+  }
+
   public boolean isPrimitiveField() {
     switch (fieldDefinition.getFieldType()) {
     case FieldDefinition.FIELD_TYPE_IDENTITY:

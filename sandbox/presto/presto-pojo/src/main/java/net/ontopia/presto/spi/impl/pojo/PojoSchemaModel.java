@@ -135,12 +135,18 @@ public class PojoSchemaModel {
             }
 
             // isPrimitiveField/isReferenceField
+            
             // dataType
             if (fieldConfig.has("datatype")) {
               String datatype = fieldConfig.get("datatype").getTextValue();
               field.setDataType(datatype);
             } else {
               field.setDataType("string");
+            }
+            // externalType
+            if (fieldConfig.has("externalType")) {
+              String externalType = fieldConfig.get("externalType").getTextValue();
+              field.setExternalType(externalType);
             }
             // valueView (using current view for now)
             if (fieldConfig.has("valueView")) {

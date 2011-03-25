@@ -21,7 +21,9 @@ public interface PrestoField {
   int getMaxCardinality();
 
   String getDataType();
-  
+
+  String getExternalType();
+
   String getValidationType();
 
   boolean isEmbedded();

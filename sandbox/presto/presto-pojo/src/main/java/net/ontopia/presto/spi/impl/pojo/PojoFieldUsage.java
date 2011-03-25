@@ -85,6 +85,10 @@ public class PojoFieldUsage implements PrestoFieldUsage {
         return field.getDataType();
     }
 
+    public String getExternalType() {
+        return field.getExternalType();
+    }
+
     public String getValidationType() {
         return field.getValidationType();
     }

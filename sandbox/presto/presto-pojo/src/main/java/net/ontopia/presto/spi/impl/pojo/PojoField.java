@@ -21,6 +21,7 @@ public class PojoField implements PrestoField {
     private int minCardinality;
     private int maxCardinality;
     private String dataType;
+    private String externalType;
     private String validationType;
     private boolean isEmbedded;
     private boolean isTraversable = true;
@@ -89,6 +90,10 @@ public class PojoField implements PrestoField {
 
     public String getDataType() {
         return dataType;
+    }
+
+    public String getExternalType() {
+        return externalType;
     }
 
     public String getValidationType() {
@@ -224,6 +229,10 @@ public class PojoField implements PrestoField {
 
     protected void addAvailableFieldValueType(PrestoType type) {
         this.availableFieldValueTypes.add(type);
+    }
+
+    public void setExternalType(String externalType) {
+        this.externalType = externalType;
     }
 
 }

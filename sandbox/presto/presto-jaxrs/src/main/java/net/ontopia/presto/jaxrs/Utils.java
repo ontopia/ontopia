@@ -174,6 +174,11 @@ public class Utils {
     if (interfaceControl != null) {
       fieldInfo.put("interfaceControl", interfaceControl);          
     }
+    
+    String externalType = field.getExternalType();
+    if (externalType != null) {
+      fieldInfo.put("externalType", externalType);
+    }
 
     if (field.isPrimitiveField()) {
       String dataType = field.getDataType();
@@ -324,7 +329,7 @@ public class Utils {
       PrestoFieldUsage field, PrestoTopic value, boolean readOnlyMode) {
 
     Map<String, Object> result = new LinkedHashMap<String,Object>();
-    result.put("id", value.getId());
+    result.put("value", value.getId());
     result.put("name", value.getName());
 
     if (!readOnlyMode && !field.isReadOnly()) {
@@ -344,7 +349,7 @@ public class Utils {
       PrestoTopic value, PrestoView childView, boolean traversable) {
 
     Map<String, Object> result = new LinkedHashMap<String,Object>();
-    result.put("id", value.getId());
+    result.put("value", value.getId());
     result.put("name", value.getName());
 
     List<Link> links = new ArrayList<Link>();
@@ -510,7 +515,7 @@ public class Utils {
   private static String getReferenceValue(JSONArray values, int vindex) throws JSONException {
 
     JSONObject valueObject = values.getJSONObject(vindex);
-    return valueObject.getString("id");              
+    return valueObject.getString("value");              
   }
 
 }
