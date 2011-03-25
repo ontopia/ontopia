@@ -232,13 +232,15 @@ public class Utils {
       fieldInfo.put("links", Collections.EMPTY_LIST);
     }
     
-    Collection<PrestoType> availableFieldCreateTypes = field.getAvailableFieldCreateTypes();
-    List<Object> types = new ArrayList<Object>(availableFieldCreateTypes.size());
-    for (PrestoType playerType : availableFieldCreateTypes) {
-      types.add(Utils.getCreateFieldInstance(uriInfo, topic, field, playerType));
+    Collection<PrestoType> availableFieldValueTypes = field.getAvailableFieldValueTypes();
+    if (!availableFieldValueTypes.isEmpty()) {
+        List<Object> valueTypes = new ArrayList<Object>(availableFieldValueTypes.size());
+        for (PrestoType playerType : availableFieldValueTypes) {
+          valueTypes.add(Utils.getTypeInfo(uriInfo, playerType));
+        }
+        fieldInfo.put("valueTypes", valueTypes);
     }
-    fieldInfo.put("valueTypes", types);
-
+    
     fieldInfo.put("values", getValues(uriInfo, field, fieldValues, readOnlyMode));
     return fieldInfo;
   }
@@ -352,7 +354,7 @@ public class Utils {
     return result;
   }
 
-  public static Object getAllowedTopicFieldValue(UriInfo uriInfo, 
+  public static Map<String, Object> getAllowedTopicFieldValue(UriInfo uriInfo, 
       PrestoTopic value, PrestoView childView, boolean traversable) {
 
     Map<String, Object> result = new LinkedHashMap<String,Object>();
@@ -368,11 +370,16 @@ public class Utils {
     return result;
   }
 
-  public static Object getCreateFieldInstance(UriInfo uriInfo, PrestoTopic topic, PrestoFieldUsage field, PrestoType type) {
+  public static Map<String, Object> getTypeInfo(UriInfo uriInfo, PrestoType type) {
+      Map<String, Object> result = new LinkedHashMap<String,Object>();
+      result.put("id", type.getId());
+      result.put("name", type.getName());
+      return result;
+  }
+  
+  public static Map<String, Object> getCreateFieldInstance(UriInfo uriInfo, PrestoTopic topic, PrestoFieldUsage field, PrestoType type) {
 
-    Map<String, Object> result = new LinkedHashMap<String,Object>();
-    result.put("id", type.getId());
-    result.put("name", type.getName());
+    Map<String, Object> result = getTypeInfo(uriInfo, type);
 
     List<Link> links = new ArrayList<Link>();
     links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "editor/create-field-instance/" + field.getSchemaProvider().getDatabaseId() + "/" + topic.getId() + "/" + field.getId() + "/" + type.getId()));
@@ -416,7 +423,7 @@ public class Utils {
     }
   }
 
-  public static Map<String, Object>  removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
+  public static Map<String, Object> removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
     try {
 
       PrestoDataProvider dataProvider = session.getDataProvider();
