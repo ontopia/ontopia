@@ -26,7 +26,7 @@ public class PojoSchemaModel {
     ClassLoader cl = Thread.currentThread().getContextClassLoader();
     InputStream istream = null;
     try {
-      File schemaFile = new File(System.getProperty("user.home") + File.pathSeparator + schemaFilename);
+      File schemaFile = new File(System.getProperty("user.home") + File.separator + schemaFilename);
       if (schemaFile.exists()) {
         istream = new FileInputStream(schemaFile);
       } else {
@@ -96,6 +96,7 @@ public class PojoSchemaModel {
       // extends
       if (typeConfig.has("extends")) {
         String superTypeId = typeConfig.get("extends").getTextValue();
+        verifyDeclaredType(superTypeId, typesMap, "extends", type);
         PojoType superType = getPojoType(superTypeId, types, schemaProvider);
         //                type.setSuperType(superType);
         superType.addDirectSubType(type);
@@ -132,6 +133,7 @@ public class PojoSchemaModel {
             if (fieldConfig.has("nameField")) {
               field.setNameField(fieldConfig.get("nameField").getBooleanValue());
             }
+
             // isPrimitiveField/isReferenceField
             // dataType
             if (fieldConfig.has("datatype")) {
@@ -148,7 +150,6 @@ public class PojoSchemaModel {
             } else {
               field.setValueView(type.getDefaultView());
             } 
-            // fieldType (get rid of this one?)
 
             // minCardinality
             if (fieldConfig.has("minCardinality")) {
@@ -203,6 +204,7 @@ public class PojoSchemaModel {
                 ArrayNode createTypesArray = (ArrayNode)fieldConfig.get("createTypes");
                 for (JsonNode createTypeIdNode : createTypesArray) {
                   String createTypeId = createTypeIdNode.getTextValue();
+                  verifyDeclaredType(createTypeId, typesMap, "createTypes",type, field);
                   PojoType createType = getPojoType(createTypeId, types, schemaProvider);
                   field.addAvailableFieldCreateType(createType);
                 }
@@ -210,8 +212,12 @@ public class PojoSchemaModel {
 
               // availableFieldValueTypes
               ArrayNode valueTypesArray = (ArrayNode)fieldConfig.get("valueTypes");
+              if (valueTypesArray == null) {
+                throw new RuntimeException("'valueTypes' not specified on field '" + field.getId() + "' on type '" + type.getId() + "'");
+              }
               for (JsonNode valueTypeIdNode : valueTypesArray) {
                 String valueTypeId = valueTypeIdNode.getTextValue();
+                verifyDeclaredType(valueTypeId, typesMap, "valueTypes",type, field);
                 PojoType valueType = getPojoType(valueTypeId, types, schemaProvider);
                 field.addAvailableFieldValueType(valueType);
               }
@@ -223,6 +229,18 @@ public class PojoSchemaModel {
       types.put(typeId, type);            
     }
     return schemaProvider;
+  }
+
+  private static void verifyDeclaredType(String typeId, Map<String, ObjectNode> typesMap, String jsonField, PojoType type) {
+    if (typesMap.containsKey(typeId)) {
+          throw new RuntimeException("Unknown type '" + typeId + " in " + jsonField + " on type '" + type.getId() + "'");
+      }
+  }
+
+  private static void verifyDeclaredType(String typeId, Map<String, ObjectNode> typesMap, String jsonField, PojoType type, PojoField field) {
+    if (typesMap.containsKey(typeId)) {
+          throw new RuntimeException("Unknown type '" + typeId + " in " + jsonField + " on field '" + field.getId() + "' on type '" + type.getId() + "'");
+      }
   }
 
   private static PojoType getPojoType(String typeId, Map<String,PojoType> types, PojoSchemaProvider schemaProvider) {

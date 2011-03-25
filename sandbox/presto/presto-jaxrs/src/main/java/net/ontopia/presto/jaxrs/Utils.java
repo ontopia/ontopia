@@ -170,13 +170,12 @@ public class Utils {
       fieldInfo.put("validation", validationType);
     }
 
-    String interfaceControl = field.getInterfaceControl();
+    String interfaceControl = field.getInterfaceControl(); // ISSUE: should we default the interface control?
     if (interfaceControl != null) {
       fieldInfo.put("interfaceControl", interfaceControl);          
     }
 
     if (field.isPrimitiveField()) {
-      // fieldInfo.put("type", field.getFieldType());
       String dataType = field.getDataType();
       if (dataType != null) {
         fieldInfo.put("datatype", dataType);
@@ -291,7 +290,8 @@ public class Utils {
     return result;
   }
 
-  protected static int compareStatic(Comparable o1, Comparable o2) {
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  protected static <T> int compareStatic(Comparable o1, Comparable o2) {
     if (o1 == null)
       return (o2 == null ? 0 : -1);
     else if (o2 == null)

@@ -35,6 +35,8 @@ import org.codehaus.jettison.json.JSONObject;
 
 @Path("/editor")
 public class TopicResource {
+    
+  public final static String APPLICATION_JSON_UTF8 = "application/json;charset=UTF-8";
 
   // TODO: add more endpoints: 
   //
@@ -45,7 +47,7 @@ public class TopicResource {
   private TopicListener topicListener;
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("")
   public Map<String,Object> getRootInfo(@Context UriInfo uriInfo) throws Exception {
 
@@ -62,7 +64,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("available-topicmaps")
   public Map<String,Object> getTopicMaps(@Context UriInfo uriInfo) throws Exception {
 
@@ -87,7 +89,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("topicmap-info/{topicMapId}")
   public Map<String,Object> getTopicMapInfo(
       @Context UriInfo uriInfo, 
@@ -117,7 +119,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("create-instance/{topicMapId}/{topicTypeId}")
   public Map<String,Object> createInstance(
       @Context UriInfo uriInfo, 
@@ -143,7 +145,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("create-field-instance/{topicMapId}/{parentTopicId}/{parentFieldId}/{playerTypeId}")
   public Map<String,Object> createInstance(
       @Context UriInfo uriInfo, 
@@ -171,7 +173,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("topic-data/{topicMapId}/{topicId}")
   public Map<String,Object> getTopicData(
       @Context UriInfo uriInfo, 
@@ -198,7 +200,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("topic/{topicMapId}/{topicId}")
   public Map<String,Object> getTopicInDefaultView(
       @Context UriInfo uriInfo, 
@@ -216,7 +218,7 @@ public class TopicResource {
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = topicType.getDefaultView();
       
-      return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, readOnly);
+      return postProcess(Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, readOnly));
 
     } catch (Exception e) {
       session.abort();
@@ -226,8 +228,8 @@ public class TopicResource {
     }
   }
 
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
+@GET
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("topic/{topicMapId}/{topicId}/{viewId}")
   public Map<String,Object> getTopicInView(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
@@ -256,7 +258,7 @@ public class TopicResource {
   }
 
 //  @GET
-//  @Produces(MediaType.APPLICATION_JSON)
+//  @Produces(APPLICATION_JSON_UTF8)
 //  @Path("topic-info/{topicMapId}/{topicId}")
 //  public Map<String,Object> getTopicInfo(@Context UriInfo uriInfo, 
 //      @PathParam("topicMapId") final String topicMapId, 
@@ -287,7 +289,7 @@ public class TopicResource {
 //  }
 
   @PUT
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("topic/{topicMapId}/{topicId}/{viewId}")
   public Map<String,Object> updateTopic(@Context UriInfo uriInfo, 
@@ -327,7 +329,7 @@ public class TopicResource {
   }
 
   @POST
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("add-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
   public Map<String,Object> addFieldValues(@Context UriInfo uriInfo, 
@@ -365,7 +367,7 @@ public class TopicResource {
   }
 
   @POST
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("remove-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
   public Map<String,Object> removeFieldValues(@Context UriInfo uriInfo, 
@@ -403,7 +405,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("available-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
   public Map<String,Object> getAvailableFieldValues(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
@@ -464,7 +466,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("available-field-types/{topicMapId}/{topicId}/{viewId}/{fieldId}")
   public Map<String,Object> getAvailableFieldTypes(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
@@ -507,7 +509,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("available-types-tree-lazy/{topicMapId}")
   public Map<String,Object> getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
@@ -530,7 +532,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("available-types-tree-lazy/{topicMapId}/{typeId}")
   public Map<String,Object> getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
@@ -555,7 +557,7 @@ public class TopicResource {
   }
 
   @GET
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces(APPLICATION_JSON_UTF8)
   @Path("available-types-tree/{topicMapId}")
   public Map<String,Object> getAvailableTypesTree(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
@@ -576,10 +578,6 @@ public class TopicResource {
       session.close();      
     }
   }
-
-  protected void onTopicUpdated(String topicId) {
-    topicListener.onTopicUpdated(topicId);
-  }
   
   protected PrestoSession createSession(String topicMapId) {
 //    // schema and data stored in ontopia
@@ -597,6 +595,14 @@ public class TopicResource {
 //    session.setStableIdPrefix("sek:");
     return session;
   }
+
+  protected void onTopicUpdated(String topicId) {
+    topicListener.onTopicUpdated(topicId);
+  }
+
+  private Map<String, Object> postProcess(Map<String, Object> topicInfo) {
+    return topicListener.postProcess(topicInfo);
+  }
   
   @Context
   public void setServletContext(ServletContext servletContext) {
@@ -613,6 +619,10 @@ public class TopicResource {
     } else {
       this.topicListener = new TopicListener() {
         public void onTopicUpdated(String topicId) {
+        }
+        
+        public Map<String, Object> postProcess(Map<String, Object> topicInfo) {
+            return topicInfo;
         }
       };
     }

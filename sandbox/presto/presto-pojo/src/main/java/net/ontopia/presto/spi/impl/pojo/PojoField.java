@@ -77,7 +77,6 @@ public class PojoField implements PrestoField {
         } else {
             return "http://psi.ontopia.net/ontology/occurrence-field";
         }
-//        return fieldType;
     }
 
     public int getMinCardinality() {
