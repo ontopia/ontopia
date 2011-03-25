@@ -68,12 +68,13 @@ public class CouchTopic implements PrestoTopic {
 
   public Collection<Object> getValues(PrestoField field) {
     boolean isReferenceField = field.isReferenceField();
+    boolean isExternalType = field.getExternalType() != null;
     List<Object> values = new ArrayList<Object>();
     JsonNode fieldNode = data.get(field.getId());
-    if (fieldNode != null) {
+    if (fieldNode != null) { 
       for (JsonNode value : fieldNode) {
         String textValue = value.getTextValue();
-        if (isReferenceField) {
+        if (isReferenceField && !isExternalType) {
           PrestoTopic valueTopic = dataProvider.getTopicById(textValue);
           values.add(valueTopic);
         } else {

@@ -481,7 +481,7 @@ public class Utils {
         PrestoFieldUsage field = fields.get(fieldId);
 
         boolean isReferenceField = field.isReferenceField();
-
+        boolean isExternalType = field.getExternalType() != null;
         boolean isReadOnly = fieldObject.optBoolean("readOnly", false); // ignore readOnly-fields 
         if (!isReadOnly) {
           if  (fields.containsKey(fieldId)) {
@@ -491,7 +491,7 @@ public class Utils {
             Collection<Object> newValues = new ArrayList<Object>(valuesCount); 
             for (int vc=0; vc < valuesCount; vc++) {
 
-              if (isReferenceField) {
+              if (isReferenceField && !isExternalType) {
                 String valueId = getReferenceValue(values, vc);
                 newValues.add(dataProvider.getTopicById(valueId));
               } else {
