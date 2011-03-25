@@ -66,9 +66,7 @@ public class Utils {
         result.put("readOnlyMode", readOnlyMode);
     }
 
-    Map<String,Object> typeInfo = new LinkedHashMap<String,Object>();    
-    typeInfo.put("id", type.getId());
-    typeInfo.put("name", type.getName());
+    Map<String,Object> typeInfo = getTypeInfo(uriInfo, type);    
     
     boolean readOnly = readOnlyMode || type.isReadOnly();
     typeInfo.put("readOnly", readOnly);
@@ -370,7 +368,7 @@ public class Utils {
     return result;
   }
 
-  public static Map<String, Object> getTypeInfo(UriInfo uriInfo, PrestoType type) {
+  protected static Map<String, Object> getTypeInfo(UriInfo uriInfo, PrestoType type) {
       Map<String, Object> result = new LinkedHashMap<String,Object>();
       result.put("id", type.getId());
       result.put("name", type.getName());

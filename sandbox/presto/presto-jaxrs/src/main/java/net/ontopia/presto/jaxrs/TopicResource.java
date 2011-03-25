@@ -134,7 +134,7 @@ public class TopicResource {
       PrestoType topicType = schemaProvider.getTypeById(topicTypeId);
       PrestoView fieldsView = topicType.getDefaultView();
 
-      return Utils.getNewTopicInfo(uriInfo, topicType, fieldsView);
+      return postProcess(Utils.getNewTopicInfo(uriInfo, topicType, fieldsView));
 
     } catch (Exception e) {
       session.abort();
@@ -162,7 +162,7 @@ public class TopicResource {
       PrestoType topicType = schemaProvider.getTypeById(playerTypeId);
       PrestoView fieldsView = topicType.getDefaultView();
 
-      return Utils.getNewTopicInfo(uriInfo, topicType, fieldsView, parentTopicId, parentFieldId);
+      return postProcess(Utils.getNewTopicInfo(uriInfo, topicType, fieldsView, parentTopicId, parentFieldId));
 
     } catch (Exception e) {
       session.abort();
