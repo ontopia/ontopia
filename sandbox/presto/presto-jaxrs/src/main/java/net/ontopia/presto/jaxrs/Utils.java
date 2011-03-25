@@ -231,6 +231,13 @@ public class Utils {
       }
       fieldInfo.put("links", Collections.EMPTY_LIST);
     }
+    
+    Collection<PrestoType> availableFieldCreateTypes = field.getAvailableFieldCreateTypes();
+    List<Object> types = new ArrayList<Object>(availableFieldCreateTypes.size());
+    for (PrestoType playerType : availableFieldCreateTypes) {
+      types.add(Utils.getCreateFieldInstance(uriInfo, topic, field, playerType));
+    }
+    fieldInfo.put("valueTypes", types);
 
     fieldInfo.put("values", getValues(uriInfo, field, fieldValues, readOnlyMode));
     return fieldInfo;
