@@ -232,14 +232,14 @@ public class PojoSchemaModel {
   }
 
   private static void verifyDeclaredType(String typeId, Map<String, ObjectNode> typesMap, String jsonField, PojoType type) {
-    if (typesMap.containsKey(typeId)) {
-          throw new RuntimeException("Unknown type '" + typeId + " in " + jsonField + " on type '" + type.getId() + "'");
+    if (!typesMap.containsKey(typeId)) {
+          throw new RuntimeException("Unknown type '" + typeId + "' in " + jsonField + " on type '" + type.getId() + "'");
       }
   }
 
   private static void verifyDeclaredType(String typeId, Map<String, ObjectNode> typesMap, String jsonField, PojoType type, PojoField field) {
-    if (typesMap.containsKey(typeId)) {
-          throw new RuntimeException("Unknown type '" + typeId + " in " + jsonField + " on field '" + field.getId() + "' on type '" + type.getId() + "'");
+    if (!typesMap.containsKey(typeId)) {
+          throw new RuntimeException("Unknown type '" + typeId + "' in " + jsonField + " in field '" + field.getId() + "' on type '" + type.getId() + "'");
       }
   }
 
