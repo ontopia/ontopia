@@ -247,7 +247,7 @@ public class TopicResource {
       PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
       PrestoView fieldsView = topicType.getViewById(viewId);
 
-      return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, readOnly);
+      return postProcess(Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, readOnly));
 
     } catch (Exception e) {
       session.abort();
@@ -319,7 +319,7 @@ public class TopicResource {
       session.commit();
       onTopicUpdated(id);
 
-      return result;
+      return postProcess(result);
     } catch (Exception e) {
       session.abort();
       throw e;
