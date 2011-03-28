@@ -122,7 +122,16 @@ public class CouchChangeSet implements PrestoChangeSet {
       }
       System.out.println("F: " + field.getId());
       if (field.isNameField()) {
-        String name = values.isEmpty() ? "No name" : values.iterator().next().toString();
+    	
+        String name;
+        Object value = values.isEmpty() ? null : values.iterator().next();
+		if (value == null) {
+		    name = "No name";
+		} else if (value instanceof CouchTopic) {
+		    name = ((CouchTopic)value).getName();
+		} else {
+		    name = value.toString();
+    	}
         data.put(":name", name);
       }
     }
