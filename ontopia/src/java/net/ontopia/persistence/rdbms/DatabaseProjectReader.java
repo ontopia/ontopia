@@ -6,6 +6,7 @@ package net.ontopia.persistence.rdbms;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,13 +40,13 @@ public class DatabaseProjectReader {
   /**
    * INTERNAL: Reads the database schema definition from the specified file.
    */
-  public static Project loadProject(String filename) throws Exception {
+  public static Project loadProject(String filename) throws IOException, SAXException {
     return loadProject(StreamUtils.getInputStream(filename));
   }
-  public static Project loadProject(InputStream istream) throws Exception {
+  public static Project loadProject(InputStream istream) throws IOException, SAXException {
     return loadProject(new InputSource(istream));
   }
-  public static Project loadProject(InputSource isource) throws Exception {
+  public static Project loadProject(InputSource isource) throws IOException, SAXException {
     
     ProjectHandler handler = new ProjectHandler();
     XMLReader parser = new DefaultXMLReaderFactory().createXMLReader();    
@@ -55,11 +56,11 @@ public class DatabaseProjectReader {
     return handler.project;
   }
   
-  public static void saveProject(Project project, String filename) throws Exception {
+  public static void saveProject(Project project, String filename) throws IOException, SAXException {
     saveProject(project, filename, "utf-8");
   }
   
-  public static void saveProject(Project project, String filename, String encoding) throws Exception {
+  public static void saveProject(Project project, String filename, String encoding) throws IOException, SAXException {
     PrintWriter print = new PrintWriter(new FileWriter(filename));
     saveProject(project, new PrettyPrinter(print, encoding));
     print.close();
@@ -451,7 +452,7 @@ public class DatabaseProjectReader {
     
   }
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws IOException, SAXException {
     DatabaseProjectReader preader = new DatabaseProjectReader();
     preader.loadProject(args[0]);
   }
