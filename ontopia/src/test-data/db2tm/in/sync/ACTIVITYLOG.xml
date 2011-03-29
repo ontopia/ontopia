@@ -1,0 +1,31 @@
+<db2tm name="ACTIVITYLOG">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <jdbc propfile="h2.properties"/>
+  </sources>
+
+  <relation name="ACTIVITYLOG" columns="ID NAME"
+            primary-key="ID">
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${ID}</subject-identifier>
+      <topic-name>${NAME}</topic-name>
+    </topic>
+
+    <changelog table="ACTIVITYLOG_CHANGELOG"
+               primary-key="PARSED_ID"
+               action-column="ACTION"
+               order-column="SEQUENCE"
+               condition="TABLE = 'ACTIVITYLOG'">
+      <expression-column name='PARSED_ID'>
+        <!-- turns 'columnname=value' into 'value' -->
+        substring(PKEY, position('=', PKEY) + 1)
+      </expression-column>
+      
+      <action value="DELETE" type="delete"/>
+      <action value="UPDATE" type="update"/>
+      <action value="CREATE" type="create"/>
+    </changelog>
+  </relation>   
+
+</db2tm>

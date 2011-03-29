@@ -1,6 +1,4 @@
 
-// $Id: StateMachine.java,v 1.2 2009/03/03 16:05:55 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 /**

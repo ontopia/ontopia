@@ -343,9 +343,6 @@ public class JDBCDataSource implements DataSourceIF {
       
       StringBuffer sb = new StringBuffer();
       sb.append("select distinct");
-
-      // NOTE: ChangelogReaderWrapper relies on the order of the fields produced
-      // here, so changes here must take that into account.
       
       // list primary key of main relation
       for (int i=0; i < rpkey.length; i++) {

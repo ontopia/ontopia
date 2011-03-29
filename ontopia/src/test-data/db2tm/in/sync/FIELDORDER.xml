@@ -1,0 +1,33 @@
+<db2tm name="1-1">
+  <using prefix="local" subject-identifier="http://psi.example.org/"/>
+  
+  <sources>
+    <jdbc propfile="h2.properties"/>
+  </sources>
+
+  <relation name="FIELDORDER" columns="OCCURRENCE ID NAME PLAYER"
+            primary-key="ID">
+    <topic id="other">
+      <subject-identifier>http://psi.example.org/other/${PLAYER}</subject-identifier>
+    </topic>
+    <topic type="local:topic" primary="true">
+      <subject-identifier>http://psi.example.org/topic/${ID}</subject-identifier>
+      <topic-name>${NAME}</topic-name>
+      <occurrence type="local:code">${OCCURRENCE}</occurrence>
+      <player atype="local:at1" rtype="local:rt1">
+        <other rtype="local:rt2" player="#other"/>
+      </player>
+    </topic>
+
+    <changelog table="FIELDORDER_CHANGELOG"
+               primary-key="O2OID"
+               action-column="ACTION"
+               order-column="SEQUENCE">
+      <action value="DELETE" type="delete"/>
+      <action value="UPDATE" type="update"/>
+      <action value="CREATE" type="create"/>
+      <action value="IGNORE" type="ignore"/>
+    </changelog>
+  </relation>   
+
+</db2tm>

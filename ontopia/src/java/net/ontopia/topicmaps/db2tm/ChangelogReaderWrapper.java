@@ -1,7 +1,13 @@
 
 package net.ontopia.topicmaps.db2tm;
 
+import java.util.Arrays;
+
+import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.ObjectUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * INTERNAL: This tuple reader wraps an underlying tuple reader, and
@@ -16,7 +22,7 @@ import net.ontopia.utils.ObjectUtils;
 public class ChangelogReaderWrapper implements ChangelogReaderIF {
   private ChangelogReaderIF source;
   private StateMachine machine;
-  private int keylength;
+  private int[] keycols; // contains index in relation of each key column
 
   // used for tracking next tuple
   private String[] tuple;
@@ -26,10 +32,17 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
   private int prevchange;   // ?
   private String[] prevtuple;
 
-  public ChangelogReaderWrapper(ChangelogReaderIF source, int keylength) {
+  static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class.getName());
+  
+  public ChangelogReaderWrapper(ChangelogReaderIF source,
+                                Relation relation) {
     this.source = source;
-    this.keylength = keylength;
     this.machine = new StateMachine();
+
+    String[] pkey = relation.getPrimaryKey();
+    this.keycols = new int[pkey.length];
+    for (int ix = 0; ix < pkey.length; ix++)
+      keycols[ix] = relation.getColumnIndex(pkey[ix]);
   }
   
   public int getChangeType() {
@@ -51,7 +64,8 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     if (prevtuple != null && tuple == null)
       return null;
     
-    // it could be that we haven't started yet (a), in which case, kickstart things
+    // it could be that we haven't started yet (a), in which case,
+    // kickstart things
     if (prevtuple == null && tuple == null)
       tuple = source.readNext();
 
@@ -60,13 +74,18 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     
     // now read new tuples until we find one belonging to a new key
     while (true) {
+      if (log.isDebugEnabled())
+        log.debug("State: " + machine.getChangeType() + " Tuple: (" +
+                  (tuple == null ? "null" : StringUtils.join(tuple, "|")) + ")");
+      
       // move one row forwards
       prevtuple = tuple;
       if (tuple != null) {
         try {
           machine.nextState(source.getChangeType());
         } catch (DB2TMException e) {
-          throw new DB2TMException("Illegal state transision for tuple: " + java.util.Arrays.asList(tuple), e);
+          throw new DB2TMException("Illegal state transition for tuple: " +
+                                   Arrays.asList(tuple), e);
         }
         prevorder = source.getOrderValue();
       }
@@ -99,8 +118,8 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     if (tuple1 == null && tuple2 == null)
       return true;
 
-    for (int ix = 0; ix < keylength; ix++)
-      if (ObjectUtils.different(tuple1[ix], tuple2[ix]))
+    for (int ix = 0; ix < keycols.length; ix++)
+      if (ObjectUtils.different(tuple1[keycols[ix]], tuple2[keycols[ix]]))
         return false;
     return true;
   }  

@@ -1,6 +1,4 @@
 
-// $Id: Functions.java,v 1.8 2008/05/14 14:05:11 lars.garshol Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.Date;

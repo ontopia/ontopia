@@ -19,7 +19,10 @@ import org.slf4j.LoggerFactory;
  * INTERNAL: Class that performs the actual db2tm processing.
  */
 public class Processor {
-
+  
+  // --- define a logging category.
+  static Logger log = LoggerFactory.getLogger(Processor.class.getName());
+  
   public static int NEVER_COMMIT_MODE = 0;
   public static int RELATIONAL_COMMIT_MODE = 1;
   public static int TUPLE_COMMIT_MODE = 2;
@@ -28,7 +31,10 @@ public class Processor {
 
   private static final LocatorIF LOC_SYNCHRONIZATION_STATE =
     URIUtils.getURILocator("http://psi.ontopia.net/db2tm/synchronization-state");
-
+    
+  private Processor() {
+  }
+  
   private static TopicMapIF doCommit(TopicMapIF topicmap) throws IOException {
     TopicMapStoreIF store = topicmap.getStore();
     TopicMapReferenceIF reference = store.getReference();
@@ -51,12 +57,6 @@ public class Processor {
     if (usedCommitMode == COUNT_COMMIT_MODE) return "count (" + usedCommitCount + ")";
     return "unknown";
   }
-    
-  private Processor() {
-  }
-  
-  // --- define a logging category.
-  static Logger log = LoggerFactory.getLogger(Processor.class.getName());
 
   /**
    * INTERNAL: Runs a DB2TM process by adding tuples to the topic map.
@@ -1443,8 +1443,7 @@ public class Processor {
                 String highestOrder = startOrder;
                 log.debug("Old order value: " + sync.getTable() + "=" + startOrder);
                 ChangelogReaderIF reader = datasource.getChangelogReader(sync, startOrder);
-                reader = new ChangelogReaderWrapper(reader,
-                                                    sync.getPrimaryKey().length);
+                reader = new ChangelogReaderWrapper(reader, relation);
                 
                 try {
                   String[] tuple;

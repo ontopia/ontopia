@@ -1,0 +1,3 @@
+#PREFIX local @"http://psi.example.org/"
+
+[local:topic = "Topic"]
