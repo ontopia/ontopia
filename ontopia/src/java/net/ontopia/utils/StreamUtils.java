@@ -250,8 +250,12 @@ public class StreamUtils {
 
   public static String readString(Reader r, long length) throws IOException {
     char[] chars = new char[(int)length];
-    int read = r.read(chars);
-    return new String(chars);
+    StringBuffer result = new StringBuffer((int)length);
+    int read;
+    while ((read = r.read(chars)) != -1) {
+      result.append(chars, 0, read);
+    }
+    return result.toString();
   }
   
 }
