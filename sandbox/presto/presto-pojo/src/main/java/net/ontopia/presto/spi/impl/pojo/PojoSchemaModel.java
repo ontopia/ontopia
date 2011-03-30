@@ -14,8 +14,12 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PojoSchemaModel {
+
+  private static Logger log = LoggerFactory.getLogger(PojoSchemaModel.class.getName());
 
   public static void main(String[] args) throws Exception {
     PojoSchemaProvider schemaProvider = parse("pojo-schema-example", "pojo-schema-example.json");
@@ -28,6 +32,7 @@ public class PojoSchemaModel {
     try {
       File schemaFile = new File(System.getProperty("user.home") + File.separator + schemaFilename);
       if (schemaFile.exists()) {
+        log.warn("Loading presto schema model from file in user's home directory: " + schemaFile.getAbsolutePath());
         istream = new FileInputStream(schemaFile);
       } else {
         istream = cl.getResourceAsStream(schemaFilename);
@@ -48,29 +53,10 @@ public class PojoSchemaModel {
 
   private static PojoSchemaProvider createSchemaProvider(String databaseId, ObjectNode json) {
     PojoSchemaProvider schemaProvider = new PojoSchemaProvider();
-
-    //        String id = json.get("id").getTextValue();
     schemaProvider.setDatabaseId(databaseId);
 
-    Map<String,ObjectNode> fieldsMap = new HashMap<String,ObjectNode>();
-    ObjectNode fieldsNode = (ObjectNode)json.get("fields");
-    Iterator<String> fieldNames = fieldsNode.getFieldNames();
-    while (fieldNames.hasNext()) {
-      String fieldName = fieldNames.next();
-      ObjectNode fieldConfig = (ObjectNode)fieldsNode.get(fieldName);
-      fieldsMap.put(fieldName, fieldConfig);
-    }
-
-    Map<String,ObjectNode> typesMap = new HashMap<String,ObjectNode>();
-    ObjectNode typesNode = (ObjectNode)json.get("types");
-    Iterator<String> typeNames = typesNode.getFieldNames();
-    while (typeNames.hasNext()) {
-      String typeName = typeNames.next();
-      ObjectNode typeConfig = (ObjectNode)typesNode.get(typeName);
-      typesMap.put(typeName, typeConfig);
-    }
-
-    //        Map<String,PojoView> views = new HashMap<String,PojoView>();
+    Map<String, ObjectNode> fieldsMap = createFieldsMap(json);
+    Map<String, ObjectNode> typesMap = createTypesMap(json);
 
     Map<String,PojoType> types = new HashMap<String,PojoType>();
     for (String typeId : typesMap.keySet()) {
@@ -115,13 +101,25 @@ public class PojoSchemaModel {
           view.setName(viewName);
           // fields
           ArrayNode fieldsArray = (ArrayNode)viewNode.get("fields");
-          for (JsonNode fieldIdNode : fieldsArray) {
-            String fieldId = fieldIdNode.getTextValue();                        
-            ObjectNode fieldConfig = fieldsMap.get(fieldId);
-            if (fieldConfig == null) {
-              throw new RuntimeException("Unknown field '" + fieldId + "'");
+          for (JsonNode fieldNode : fieldsArray) {
+            String fieldId;
+            ObjectNode fieldConfig;
+            if (fieldNode.isTextual()) {
+                fieldId = fieldNode.getTextValue();                        
+                fieldConfig = fieldsMap.get(fieldId);
+            } else if (fieldNode.isObject()) {
+                fieldConfig = (ObjectNode)fieldNode;
+                fieldId = fieldConfig.get("id").getTextValue();
+            } else {
+                throw new RuntimeException("Invalid field declaration or field reference: " + fieldNode);
             }
-
+            if (fieldId == null) {
+                throw new RuntimeException("Field id missing on field object: " + fieldConfig);
+            }
+            if (fieldConfig == null) {
+                throw new RuntimeException("Field declaration missing for field with id '" + fieldId + "'");
+            }
+            
             PojoField field = new PojoField(fieldId, schemaProvider);
             type.addField(field);
             field.addDefinedInView(view);
@@ -236,16 +234,40 @@ public class PojoSchemaModel {
     return schemaProvider;
   }
 
+  private static Map<String, ObjectNode> createTypesMap(ObjectNode json) {
+    Map<String,ObjectNode> typesMap = new HashMap<String,ObjectNode>();
+    ObjectNode typesNode = (ObjectNode)json.get("types");
+    Iterator<String> typeNames = typesNode.getFieldNames();
+    while (typeNames.hasNext()) {
+      String typeName = typeNames.next();
+      ObjectNode typeConfig = (ObjectNode)typesNode.get(typeName);
+      typesMap.put(typeName, typeConfig);
+    }
+    return typesMap;
+  }
+
+  private static Map<String, ObjectNode> createFieldsMap(ObjectNode json) {
+    Map<String,ObjectNode> fieldsMap = new HashMap<String,ObjectNode>();
+    ObjectNode fieldsNode = (ObjectNode)json.get("fields");
+    Iterator<String> fieldNames = fieldsNode.getFieldNames();
+    while (fieldNames.hasNext()) {
+      String fieldName = fieldNames.next();
+      ObjectNode fieldConfig = (ObjectNode)fieldsNode.get(fieldName);
+      fieldsMap.put(fieldName, fieldConfig);
+    }
+    return fieldsMap;
+  }
+
   private static void verifyDeclaredType(String typeId, Map<String, ObjectNode> typesMap, String jsonField, PojoType type) {
     if (!typesMap.containsKey(typeId)) {
           throw new RuntimeException("Unknown type '" + typeId + "' in " + jsonField + " on type '" + type.getId() + "'");
-      }
+    }
   }
 
   private static void verifyDeclaredType(String typeId, Map<String, ObjectNode> typesMap, String jsonField, PojoType type, PojoField field) {
     if (!typesMap.containsKey(typeId)) {
           throw new RuntimeException("Unknown type '" + typeId + "' in " + jsonField + " in field '" + field.getId() + "' on type '" + type.getId() + "'");
-      }
+    }
   }
 
   private static PojoType getPojoType(String typeId, Map<String,PojoType> types, PojoSchemaProvider schemaProvider) {
