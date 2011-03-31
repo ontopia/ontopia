@@ -19,14 +19,11 @@
     return;
   }
 
+  SyntaxIF[] syntaxes = StartUpServlet.getSyntaxes();
   TopicMapReferenceIF ref = tracker.getReference();
   TopicMapStoreIF store = ref.createStore(true);
   LocatorIF base = store.getBaseAddress();
-  String prefix;
-  if (base != null)
-    prefix = base.getExternalForm();
-  else
-    prefix = StartUpServlet.getTopicMapURL(tmid);
+  String prefix = StartUpServlet.getTopicMapURL(base, tmid);
 
   AtomWriter atom = new AtomWriter(out);
   atom.startFeed("Snapshots feed for " + ref.getTitle(),
@@ -37,9 +34,10 @@
   atom.startEntry("Snapshot of " + ref.getTitle(),
                   prefix + "/snapshot/" + tracker.getLastChanged(),
                   System.currentTimeMillis());
-  atom.addLink("snapshot.jsp?topicmap=" + tmid,
-               "application/x-tm+xml; version=1.0",
-               "alternate");
+  for (int ix = 0; ix < syntaxes.length; ix++)
+    atom.addLink("snapshot.jsp?topicmap=" + tmid + "&syntax=" + syntaxes[ix].getId(),
+                   syntaxes[ix].getMIMEType(),
+                   "alternate");
   atom.endEntry();
 
   atom.endFeed();

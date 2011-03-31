@@ -24,8 +24,11 @@ import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.core.TopicMapFragmentWriterIF;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapFragmentWriter;
+import net.ontopia.topicmaps.utils.rdf.RDFTopicMapWriter;
 import net.ontopia.topicmaps.utils.rdf.RDFFragmentExporter;
 
 /**
@@ -169,6 +172,11 @@ public class StartUpServlet extends HttpServlet {
       return "application/x-tm+xml; version=1.0";
     }
 
+    public TopicMapWriterIF getWriter(OutputStream out, String encoding)
+      throws IOException {
+      return new XTMTopicMapWriter(out, encoding);
+    }
+
     public TopicMapFragmentWriterIF getFragmentWriter(OutputStream out,
                                                       String encoding)
       throws IOException {
@@ -183,6 +191,11 @@ public class StartUpServlet extends HttpServlet {
 
     public String getMIMEType() {
       return "application/rdf+xml";
+    }
+
+    public TopicMapWriterIF getWriter(OutputStream out, String encoding)
+      throws IOException {
+      return new RDFTopicMapWriter(out, encoding);
     }
 
     public TopicMapFragmentWriterIF getFragmentWriter(OutputStream out,
