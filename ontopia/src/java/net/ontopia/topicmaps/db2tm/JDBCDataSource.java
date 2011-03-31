@@ -65,7 +65,7 @@ public class JDBCDataSource implements DataSourceIF {
         ConnectionFactoryIF cf = 
           new DefaultConnectionFactory(loadProperties(), false);
         conn = cf.requestConnection();
-      } catch (Throwable t) {
+      } catch (Exception t) {
         throw new OntopiaRuntimeException(t);
       }
     }
@@ -76,7 +76,7 @@ public class JDBCDataSource implements DataSourceIF {
     if (conn != null) {
       try {
         conn.close();
-      } catch (Throwable t) {
+      } catch (SQLException t) {
         throw new OntopiaRuntimeException(t);
       }
       conn = null;
@@ -140,7 +140,6 @@ public class JDBCDataSource implements DataSourceIF {
         throw new DB2TMException("Couldn't find data type of order column '" +
                  changelog.getOrderColumn() + "'");
       }
-       
       
       // prepare, bind and execute statement
       StringBuffer sb = new StringBuffer();
@@ -270,8 +269,6 @@ public class JDBCDataSource implements DataSourceIF {
 
       } catch (SQLException e) {
         throw new OntopiaRuntimeException("Error in query: " + sql, e);
-      } catch (Throwable t) {
-        throw new OntopiaRuntimeException(t);
       }
       
     }
@@ -295,7 +292,7 @@ public class JDBCDataSource implements DataSourceIF {
       try {
         if (rs != null) rs.close();
         if (stm != null) stm.close();
-      } catch (Throwable t) {
+      } catch (SQLException t) {
         throw new OntopiaRuntimeException(t);
       }
     }

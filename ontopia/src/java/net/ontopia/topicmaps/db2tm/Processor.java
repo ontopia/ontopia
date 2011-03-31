@@ -415,14 +415,14 @@ public class Processor {
     if (assoc == null) {    
       // create association
       assoc = ctx.getBuilder().makeAssociation(atype);
-      log.debug("      +A "  + assoc + " " + atype);
+      log.trace("      +A "  + assoc + " " + atype);
     
       // add roles
       int arity = 0;
       for (int i=0; i < rlen; i++) {
         if (players[i] != null) {
           arity++;
-          log.debug("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
           if (arity == 1)
             ctx.characteristicsChanged(players[i]);
@@ -435,7 +435,7 @@ public class Processor {
       
     } else {
       // reuse association      
-      log.debug("      =A "  + assoc);
+      log.trace("      =A "  + assoc);
       assoc.setType(atype);
 
       List oroles = new ArrayList(assoc.getRoles());
@@ -444,9 +444,9 @@ public class Processor {
         if (or != null) {
           if (ObjectUtils.different(or.getPlayer(), players[i]))
             or.setPlayer(players[i]);
-          log.debug("      =R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      =R "  + players[i] + " :" + rtypes[i]);
         } else {
-          log.debug("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         }
         if (i == 1)
@@ -455,7 +455,7 @@ public class Processor {
       if (!oroles.isEmpty()) {
         for (int i=0; i < oroles.size(); i++) {
           AssociationRoleIF or = (AssociationRoleIF)oroles.get(i);
-          log.debug("      -R "  + or.getPlayer() + " :" + or.getType());
+          log.trace("      -R "  + or.getPlayer() + " :" + or.getType());
           TopicIF player = or.getPlayer();
           or.remove();
           if (player != null) ctx.characteristicsChanged(player);
@@ -480,7 +480,8 @@ public class Processor {
   }
 
   public static void removeTuple(Relation relation, String[] tuple, Context ctx) {
-    if (log.isDebugEnabled()) log.debug("    r(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
+    if (log.isDebugEnabled())
+      log.trace("    r(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
 
     List entities = relation.getEntities();
     
@@ -519,7 +520,7 @@ public class Processor {
         if (reified instanceof AssociationIF) {
           // remove association
           AssociationIF assoc = (AssociationIF)reified;
-          log.debug("      -A-reified "  + topic + " -> " + assoc + " " + assoc.getType());
+          log.trace("      -A-reified "  + topic + " -> " + assoc + " " + assoc.getType());
           assoc.remove();
         }
         // remove reifier topic
@@ -552,7 +553,7 @@ public class Processor {
           List names = getTopicNames(topic, relation, entity, field, tuple, ctx);
           for (int i=0; i < names.size(); i++) {
             TopicNameIF _bn = (TopicNameIF)names.get(i);
-            log.debug("      -N "  + topic + " " + _bn);
+            log.trace("      -N "  + topic + " " + _bn);
             _bn.remove();
           }
           //! removeTopicName(topic, relation, entity, field, tuple, ctx);
@@ -561,7 +562,7 @@ public class Processor {
           List occs = getOccurrences(topic, relation, entity, field, tuple, ctx);
           for (int i=0; i < occs.size(); i++) {
             OccurrenceIF _occ = (OccurrenceIF)occs.get(i);
-            log.debug("      -O "  + topic + " " + _occ);
+            log.trace("      -O "  + topic + " " + _occ);
             _occ.remove();
           }
           //! removeOccurrence(topic, relation, entity, field, tuple, ctx);
@@ -571,7 +572,7 @@ public class Processor {
           for (int i=0; i < roles.size(); i++) {
             AssociationRoleIF role = (AssociationRoleIF)roles.get(i);
             AssociationIF assoc = role.getAssociation();
-            log.debug("      -P "  + assoc + " " + assoc.getType());
+            log.trace("      -P "  + assoc + " " + assoc.getType());
             assoc.remove();
           }
           //! removePlayer(topic, relation, entity, field, tuple, ctx);
@@ -595,7 +596,7 @@ public class Processor {
       TopicIF reifier = assoc.getReifier();
       if (reifier != null) {
         // remove reifier topic
-        log.debug("      -A-reifier "  + topic + " " + reifier + " -> " + assoc);
+        log.trace("      -A-reifier "  + topic + " " + reifier + " -> " + assoc);
         reifier.remove();
       }
     }
@@ -854,10 +855,10 @@ public class Processor {
       if (bn == null) {
         bn = ctx.getBuilder().makeTopicName(topic, type, value);
         addScope(bn, field.getScope(), entity, tuple, ctx);
-        log.debug("      +N "  + topic + " " + bn);
+        log.trace("      +N "  + topic + " " + bn);
       } else {
         bn.setValue(value);
-        log.debug("      =N "  + topic + " " + bn);
+        log.trace("      =N "  + topic + " " + bn);
       }
       // notify context
       ctx.characteristicsChanged(topic);
@@ -931,7 +932,7 @@ public class Processor {
       // check scope
       if (!compareScope(field.getScope(), _bn.getScope(), entity, tuple, ctx)) continue;
 
-      log.debug("      -N "  + topic + " " + _bn);
+      log.trace("      -N "  + topic + " " + _bn);
       // remove matching name
       _bn.remove();
       // notify context
@@ -964,13 +965,13 @@ public class Processor {
       
       OccurrenceIF oc = (OccurrenceIF)ctx.reuseOldFieldValue(topic, fieldIndex);
       if (oc == null) {
-				// FIXME: rewrite so that we can set occurrence value directly
-				oc = ctx.getBuilder().makeOccurrence(topic, type, occvalue, occDatatype); 
+        // FIXME: rewrite so that we can set occurrence value directly
+        oc = ctx.getBuilder().makeOccurrence(topic, type, occvalue, occDatatype); 
         addScope(oc, field.getScope(), entity, tuple, ctx);
-        log.debug("      +O "  + topic + " " + oc);
+        log.trace("      +O "  + topic + " " + oc);
       } else {
-				oc.setValue(occvalue, occDatatype);
-        log.debug("      =O "  + topic + " " + oc);
+        oc.setValue(occvalue, occDatatype);
+        log.trace("      =O "  + topic + " " + oc);
       }
       // notify context
       ctx.characteristicsChanged(topic);
@@ -1033,7 +1034,7 @@ public class Processor {
       // check scope
       if (!compareScope(field.getScope(), _occ.getScope(), entity, tuple, ctx)) continue;
 
-      log.debug("      -O "  + topic + " " + _occ);
+      log.trace("      -O "  + topic + " " + _occ);
       // remove matching occurrence
       _occ.remove();
       // notify context
@@ -1090,30 +1091,30 @@ public class Processor {
       
       // create association
       AssociationIF assoc = ctx.getBuilder().makeAssociation(atype);
-      log.debug("      +P "  + assoc + " " + atype);
+      log.trace("      +P "  + assoc + " " + atype);
 
       // add scope
       addScope(assoc, field.getScope(), entity, tuple, ctx);
       
       // add current role
-      log.debug("      +R "  + topic + " :" + rtype);
+      log.trace("      +R "  + topic + " :" + rtype);
       ctx.getBuilder().makeAssociationRole(assoc, rtype, topic);
       
       // add other roles
       for (int i=0; i < rlen; i++) {
         // do not create role if player is null
         if (players[i] != null) {
-          log.debug("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         } else {
-          log.debug("      ?R "  + players[i] + " :" + rtypes[i]);          
+          log.trace("      ?R "  + players[i] + " :" + rtypes[i]);          
         }
       }
 
     } else {
       // reuse association
       AssociationIF assoc = ar.getAssociation();
-      log.debug("      =P "  + topic + " " + assoc);
+      log.trace("      =P "  + topic + " " + assoc);
 
       List oroles = new ArrayList(assoc.getRoles());
       oroles.remove(ar);
@@ -1122,16 +1123,16 @@ public class Processor {
         if (or != null) {
           if (ObjectUtils.different(or.getPlayer(), players[i]))
             or.setPlayer(players[i]);
-          log.debug("      =R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      =R "  + players[i] + " :" + rtypes[i]);
         } else {
-          log.debug("      +R "  + players[i] + " :" + rtypes[i]);
+          log.trace("      +R "  + players[i] + " :" + rtypes[i]);
           ctx.getBuilder().makeAssociationRole(assoc, rtypes[i], players[i]);
         }
       }
       if (!oroles.isEmpty()) {
         for (int i=0; i < oroles.size(); i++) {
           AssociationRoleIF or = (AssociationRoleIF)oroles.get(i);
-          log.debug("      -R "  + or.getPlayer() + " :" + or.getType());
+          log.trace("      -R "  + or.getPlayer() + " :" + or.getType());
           TopicIF player = or.getPlayer();
           or.remove();
           if (player != null) ctx.characteristicsChanged(player);
@@ -1268,7 +1269,7 @@ public class Processor {
       //! if (reifier != null)
       //!   // remove reifier topic
       //!   reifier.remove();
-      log.debug("      -P "  + assoc + " " + atype);
+      log.trace("      -P "  + assoc + " " + atype);
       // remove association
       assoc.remove();
       // notify context
@@ -1342,10 +1343,10 @@ public class Processor {
         removeTopic(reifier, relation, entity, tuple, ctx);
       // remove association
       if (entity.isPrimary()) {
-        log.debug("      -A "  + assoc + " " + atype);
+        log.trace("      -A "  + assoc + " " + atype);
         assoc.remove();
       } else {
-        log.debug("      >A "  + assoc);
+        log.trace("      >A "  + assoc);
       }
       break;
     }    
@@ -1639,7 +1640,8 @@ public class Processor {
   
   private static void updateTuple(Relation relation, String[] tuple, Context ctx) {
 
-    if (log.isDebugEnabled()) log.debug("    u(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
+    if (log.isDebugEnabled())
+      log.debug("    u(" + StringUtils.join(tuple, "|") + "),"+ tuple.length);
     
     List entities = relation.getEntities();
     for (int i=0; i < entities.size(); i++) {
