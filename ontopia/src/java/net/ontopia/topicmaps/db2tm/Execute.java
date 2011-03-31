@@ -167,6 +167,8 @@ public class Execute {
     System.out.println("  (add|sync|remove): operation to perform");
     System.out.println("  <cfgfile>: the configuration file to use");
     System.out.println("");
+    System.out.println("  NOTE: to refer to RDBMS topic maps use:");
+    System.out.println("    x-ontopia:tm-rdbms:<numeric TM ID>");
   }
 
   private static class OptionsListener implements CmdlineOptions.ListenerIF {
