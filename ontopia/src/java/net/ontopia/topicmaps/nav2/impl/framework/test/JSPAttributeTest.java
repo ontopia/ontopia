@@ -89,10 +89,12 @@ public class JSPAttributeTest extends AbstractTopicMapTestCase {
     public Object getBar(String whatever) { return "badvalue"; }
   }
 
+  /* Disabled because of issue #382
   public void testDoubleStaticMethod() throws Exception {
     runJSPTestNotFound("jspattr-double.jsp",
                        makeMap("foo", new StaticObject()));
   }
+  */
   static class StaticObject {
     public static Object getBar() { return "badvalue"; }
   }
