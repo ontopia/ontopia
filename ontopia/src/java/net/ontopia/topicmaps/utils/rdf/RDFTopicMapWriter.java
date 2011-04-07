@@ -18,6 +18,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.topicmaps.nav.utils.deciders.TMExporterDecider;
 import net.ontopia.topicmaps.query.core.*;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
@@ -235,9 +236,15 @@ public class RDFTopicMapWriter implements TopicMapWriterIF {
     it2 = baseNames.iterator();
     while (it2.hasNext()) {
       TopicNameIF bn = (TopicNameIF) it2.next();
-      AResource namepred = (AResource) namepreds.get(topictype);
-      if (namepred == null)
-        namepred = namedef;
+      AResource namepred;
+
+      if (bn.getType().getSubjectIdentifiers().contains(PSI.getSAMNameType())) {
+        namepred = (AResource) namepreds.get(topictype);
+        if (namepred == null)
+          namepred = namedef;
+      } else
+        namepred = getResource(bn.getType());
+      
       statement(subject, namepred, getLiteral(bn.getValue()), bn);
     }
 

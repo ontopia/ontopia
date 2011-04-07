@@ -35,7 +35,8 @@ public class RDFWriterTestGenerator implements TestCaseGeneratorIF {
     if (infiles != null) {
       for (int ix = 0; ix < infiles.length; ix++) {
         String name = infiles[ix].getName();
-        if (name.endsWith(".xtm") || name.endsWith(".ltm"))
+        if (name.endsWith(".xtm") || name.endsWith(".ltm") ||
+            name.endsWith(".ctm"))
           tests.add(new CanonicalTestCase(name, base));
       }
     }
@@ -95,8 +96,8 @@ public class RDFWriterTestGenerator implements TestCaseGeneratorIF {
 
       // compare results
       assertTrue("test file " + filename + " produced non-isomorphic model: " + 
-								 bline + " " + tmp,
-          result.isIsomorphicWith(baseline));
+                 bline + " " + tmp,
+                 result.isIsomorphicWith(baseline));
     }
   }
 
