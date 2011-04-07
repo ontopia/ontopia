@@ -11,7 +11,7 @@
     return;			  
   }
 
-  // the user pressed sync, so go ahead
+  // the user pressed sync or add, so go ahead
 
   //  (1) get a reference to the mapping file
   String cfgfile = getServletContext().getRealPath("/plugins/db2tm/db2tm.xml");
@@ -23,7 +23,10 @@
     TopicMapIF tm = store.getTopicMap();
 
     //  (3) run!
-    DB2TM.sync(cfgfile, tm);
+    if (request.getParameter("sync") != null)
+      DB2TM.sync(cfgfile, tm);
+    else
+      DB2TM.add(cfgfile, tm);
 
     store.commit();
   } catch (java.io.IOException ioe) {

@@ -31,6 +31,7 @@
 
       <form method="POST" action="run.jsp">
         <input type=hidden name=tm value="<%= request.getParameter("tm") %>">
+        <input type=submit name="add"    value="Add">
         <input type=submit name="sync"   value="Sync">
         <input type=submit name="cancel" value="Cancel">
       </form>
