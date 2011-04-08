@@ -135,7 +135,7 @@ class SyncThread extends Thread {
           FragmentFeed feed = source.getFragmentFeed();
           log.info("FOUND " + feed.getFragments().size() + " fragments");
 
-          if (!feed.getFragments().isEmpty()) {
+           if (!feed.getFragments().isEmpty()) {
             backend.applyFragments(endpoint, feed.getFragments());
             for (Fragment fragment : feed.getFragments())
               source.setLastChange(fragment.getUpdated());

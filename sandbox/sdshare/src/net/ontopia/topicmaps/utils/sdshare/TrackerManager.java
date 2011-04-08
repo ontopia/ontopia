@@ -62,7 +62,9 @@ public class TrackerManager {
     TopicMapEvents.addTopicListener(ref, tracker);
     topicmaps.put(tmid, tracker);
 
-    log.debug("Registered topic map '" + tmid + "'");
+    log.debug("Registered topic map '" + tmid + "' in TrackerManager.class " +
+              System.identityHashCode(TrackerManager.class) +
+              " with tracker " + tracker);
 
     return tracker;
   }

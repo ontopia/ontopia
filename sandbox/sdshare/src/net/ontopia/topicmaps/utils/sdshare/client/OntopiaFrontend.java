@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import org.xml.sax.SAXException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.ontopia.utils.CompactHashSet;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
@@ -25,6 +28,7 @@ import net.ontopia.topicmaps.utils.sdshare.TopicMapTracker;
  * the Ontopia API.
  */
 public class OntopiaFrontend implements ClientFrontendIF {
+  static Logger log = LoggerFactory.getLogger(OntopiaFrontend.class.getName());
   private String handle; // handle (URL|id) of source collection
   private TopicMapTracker tracker;
 
@@ -51,10 +55,7 @@ public class OntopiaFrontend implements ClientFrontendIF {
     TopicMapIF topicmap = ref.createStore(true).getTopicMap();
     feed.setPrefix(topicmap.getStore().getBaseAddress().getExternalForm());
     
-    for (ChangedTopic topic : tracker.getChangeFeed()) {
-      if (topic.getTimestamp() < lastChange)
-        break; // we've seen all the new changes, so stop
-
+    for (ChangedTopic topic : tracker.getChangeFeed(lastChange)) {
       Set<String> sis = new CompactHashSet();
       Set<String> iis = new CompactHashSet();
       Set<String> sls = new CompactHashSet();
