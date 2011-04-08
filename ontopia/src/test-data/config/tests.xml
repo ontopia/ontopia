@@ -112,6 +112,10 @@
     <test>org.tmapi.index.TestScopedIndex</test>
     <test>org.tmapi.index.TestTypeInstanceIndex</test>
     <test>org.tmapi.index.TestLiteralIndex</test>
+    <!-- disabled tests, see issue 383
+    <test>org.tmapi.core.TestRFC3986</test>
+    <test>org.tmapi.core.TestTopicMapSystemFactory</test>
+    -->
   </group>
 
   <group>
