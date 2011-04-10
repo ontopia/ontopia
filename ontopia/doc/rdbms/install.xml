@@ -8,7 +8,7 @@
     <author>
       <affiliation><shortaffil>Ontopia</shortaffil></affiliation>
     </author>
-    <pubdate>2010-06-09</pubdate>
+    <pubdate>2011-04-10</pubdate>
     <releaseinfo>5.1</releaseinfo>
 
     <abstract>
@@ -20,6 +20,50 @@
   </articleinfo>
 
   <section>
+    <title>Quickstart</title>
+
+    <note>
+      <para>This is a short summary of the installation process for
+      the impatient. If you want more detail, jump to <ulink
+      url="#sect-intro">the introduction</ulink> and read on from
+      there.</para>
+    </note>
+
+    <para>In order to use the RDBMS backend you need:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>A database with the Ontopia Topic Maps schema set up.
+        SQL scripts to create the tables are in
+        <filename>rdbms/setup</filename>.</para>
+      </listitem>
+
+      <listitem>
+        <para>A JDBC driver for your particular database. In the
+        default installation this goes in
+        <filename>apache-tomcat/common/lib</filename>.</para>
+      </listitem>
+
+      <listitem>
+        <para>A property file describing how to connect to the
+        database. There are examples in
+        <filename>rdbms/config</filename>. Put it in
+        <filename>apache-tomcat/common/classes</filename>.</para>
+      </listitem>
+
+      <listitem>
+        <para>To make Ontopia look for topic maps in the database you
+        must also add an RDBMS source to the
+        <filename>apache-tomcat/common/classes/tm-sources.xml</filename>
+        file. You'll find examples commented out at the bottom of the
+        file.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>That's it!</para>
+  </section>
+
+  <section id="sect-intro">
     <title>Introduction</title>
 
     <para>The RDBMS Backend Connector adds relational database
