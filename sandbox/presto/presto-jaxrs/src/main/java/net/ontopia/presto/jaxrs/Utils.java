@@ -178,6 +178,10 @@ public class Utils {
       fieldInfo.put("externalType", externalType);
     }
 
+    if (field.isEmbedded()) {
+        fieldInfo.put("embedded", true);
+    }
+    
     if (field.isPrimitiveField()) {
       String dataType = field.getDataType();
       if (dataType != null) {
@@ -315,12 +319,7 @@ public class Utils {
   protected static Map<String,Object> getValue(UriInfo uriInfo, PrestoFieldUsage field, Object fieldValue, boolean readOnlyMode) {
     if (fieldValue instanceof PrestoTopic) {
       PrestoTopic valueTopic = (PrestoTopic)fieldValue;
-      if (field.isEmbedded()) {
-        PrestoType valueType = field.getSchemaProvider().getTypeById(valueTopic.getTypeId());
-        return getTopicInfo(uriInfo, valueTopic, valueType, field.getValueView(), readOnlyMode);
-      } else {
-        return getExistingTopicFieldValue(uriInfo, field, valueTopic, readOnlyMode);
-      }
+      return getExistingTopicFieldValue(uriInfo, field, valueTopic, readOnlyMode);
     } else {
       Map<String,Object> result = new LinkedHashMap<String, Object>();
       result.put("value", fieldValue);
@@ -338,7 +337,11 @@ public class Utils {
     Map<String, Object> result = new LinkedHashMap<String,Object>();
     result.put("value", value.getId());
     result.put("name", value.getName());
-
+    if (field.isEmbedded()) {
+        PrestoType valueType = field.getSchemaProvider().getTypeById(value.getTypeId());
+        result.put("embedded", getTopicInfo(uriInfo, value, valueType, field.getValueView(), readOnlyMode));
+    }
+    
     if (!readOnlyMode && !field.isReadOnly()) {
       result.put("removable", Boolean.TRUE);
     }
