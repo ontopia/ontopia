@@ -72,7 +72,7 @@ public class Utils {
     typeInfo.put("readOnly", readOnly);
     
     List<Link> typeLinks = new ArrayList<Link>();
-    if (!readOnlyMode && !type.isAbstract() && readOnly) {
+    if (!readOnlyMode && !type.isAbstract() && !readOnly) {
       typeLinks.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
     }
     typeInfo.put("links", typeLinks);

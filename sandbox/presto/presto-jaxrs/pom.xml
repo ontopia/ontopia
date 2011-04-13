@@ -21,16 +21,6 @@
     </dependency>
     <dependency>
       <groupId>net.ontopia.presto</groupId>
-      <artifactId>presto-couchdb</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>net.ontopia.presto</groupId>
-      <artifactId>presto-pojo</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>net.ontopia.presto</groupId>
       <artifactId>presto-utils</artifactId>
       <version>${project.version}</version>
     </dependency>

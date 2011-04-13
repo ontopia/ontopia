@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -27,14 +26,11 @@ import net.ontopia.presto.spi.PrestoSession;
 import net.ontopia.presto.spi.PrestoTopic;
 import net.ontopia.presto.spi.PrestoType;
 import net.ontopia.presto.spi.PrestoView;
-import net.ontopia.presto.spi.impl.couchdb.CouchDataProvider;
-import net.ontopia.presto.spi.impl.pojo.PojoSchemaProvider;
-import net.ontopia.presto.spi.impl.pojo.PojoSession;
 
 import org.codehaus.jettison.json.JSONObject;
 
 @Path("/editor")
-public class TopicResource {
+public abstract class TopicResource {
     
   public final static String APPLICATION_JSON_UTF8 = "application/json;charset=UTF-8";
 
@@ -43,8 +39,6 @@ public class TopicResource {
   // 1: / - information about server and link to /available-topicmaps
   // 2: /available-topicmaps - lists available topic maps
   // 3: /create-instance/{topicMapId}
-
-  private TopicListener topicListener;
 
   @GET
   @Produces(APPLICATION_JSON_UTF8)
@@ -55,7 +49,7 @@ public class TopicResource {
 
     result.put("id", uriInfo.getBaseUri() + "editor");
     result.put("version", 0);
-    result.put("name", "Ontopoly Editor REST API");
+    result.put("name", "Ontopia Presto REST API");
 
     List<Link> links = new ArrayList<Link>();
     links.add(new Link("available-topicmaps", uriInfo.getBaseUri() + "editor/available-topicmaps"));
@@ -71,7 +65,7 @@ public class TopicResource {
     Map<String,Object> result = new LinkedHashMap<String,Object>();
 
     result.put("id", "topicmaps");
-    result.put("name", "Ontopoly Editor REST API");
+    result.put("name", "Ontopia Presto REST API");
 
     List<Map<String,Object>> topicmaps = new ArrayList<Map<String,Object>>();
     
@@ -578,54 +572,16 @@ public class TopicResource {
       session.close();      
     }
   }
+
+  // overridable methods
   
-  protected PrestoSession createSession(String topicMapId) {
-//    // schema and data stored in ontopia
-//    OntopolySession session = new OntopolySession(topicMapId);
-//    session.setStableIdPrefix("sek:");
-//    return session;
+  protected abstract PrestoSession createSession(String topicMapId);
 
-    // schema stored in ontopia and data stored in couchdb
-    CouchDataProvider dataProvider = new CouchDataProvider("localhost", 5984, "presto", "_design/presto");
-
-    PojoSchemaProvider schemaProvider = PojoSchemaProvider.getSchemaProvider(topicMapId, topicMapId + ".presto.json");
-    PojoSession session = new PojoSession(topicMapId, topicMapId, schemaProvider, dataProvider);
-    
-//    OntopolySession session = new OntopolySession(topicMapId, dataProvider);
-//    session.setStableIdPrefix("sek:");
-    return session;
-  }
-
-  protected void onTopicUpdated(String topicId) {
-    topicListener.onTopicUpdated(topicId);
+  protected void onTopicUpdated(String topicId) {      
   }
 
   protected Map<String, Object> postProcess(Map<String, Object> topicInfo) {
-    return topicListener.postProcess(topicInfo);
-  }
-  
-  @Context
-  public void setServletContext(ServletContext servletContext) {
-    // set up topic listener
-    String listenerClassName = servletContext.getInitParameter("ontopoly-rest.listener");
-    if (listenerClassName != null) {
-      try {
-        Class<?> listenerClass = Class.forName(listenerClassName);
-        this.topicListener = (TopicListener) listenerClass.newInstance();
-
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
-    } else {
-      this.topicListener = new TopicListener() {
-        public void onTopicUpdated(String topicId) {
-        }
-        
-        public Map<String, Object> postProcess(Map<String, Object> topicInfo) {
-            return topicInfo;
-        }
-      };
-    }
+    return topicInfo;
   }
 
 }

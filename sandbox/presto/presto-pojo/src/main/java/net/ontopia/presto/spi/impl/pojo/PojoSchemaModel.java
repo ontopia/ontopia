@@ -99,6 +99,7 @@ public class PojoSchemaModel {
           // view name
           String viewName = viewNode.get("name").getTextValue();
           view.setName(viewName);
+          
           // fields
           ArrayNode fieldsArray = (ArrayNode)viewNode.get("fields");
           for (JsonNode fieldNode : fieldsArray) {

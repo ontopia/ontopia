@@ -35,11 +35,11 @@ public class CouchTopic implements PrestoTopic {
     return getId().hashCode();
   }
 
-  public static CouchTopic existing(CouchDataProvider dataProvider, ObjectNode doc) {
+  static CouchTopic existing(CouchDataProvider dataProvider, ObjectNode doc) {
     return new CouchTopic(dataProvider, doc);
   }
 
-  public static CouchTopic newInstance(CouchDataProvider dataProvider, PrestoType type) {
+  static CouchTopic newInstance(CouchDataProvider dataProvider, PrestoType type) {
     ObjectNode data = dataProvider.getObjectMapper().createObjectNode();
     data.put(":type", type.getId());
     return new CouchTopic(dataProvider, data);
