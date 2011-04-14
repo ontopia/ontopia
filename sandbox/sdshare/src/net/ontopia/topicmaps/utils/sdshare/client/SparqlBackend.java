@@ -42,8 +42,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
              "clear graph <" + graph + ">");
 
     // second, import the snapshot
-    doUpdate(endpoint.getHandle(),
-             "load <" + uri + "> into <" + graph + ">");
+    insertDataFrom(uri, endpoint.getHandle(), graph);
   }
 
   public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
@@ -72,17 +71,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
              "  { <" + subject + "> ?p ?v }");
     
     // second, load new fragment into graph
-    // doUpdate(endpoint.getHandle(),
-    //          "load " + uri + " into <" + graph + ">");
-    StringWriter tmp = new StringWriter();
-    try {
-      RDFUtils.parseRDFXML(uri, new InsertWriter(tmp));
-    } catch (IOException e) {
-      throw new OntopiaRuntimeException(e);
-    }
-    doUpdate(endpoint.getHandle(),
-             "insert data into <" + graph + "> { " +
-             tmp.toString() + " }");
+    insertDataFrom(uri, endpoint.getHandle(), graph);
   }
 
   // ===== Implementation code
@@ -96,6 +85,17 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
     return 0;
   }
 
+  public static void insertDataFrom(String sourceuri, String targeturi,
+                                    String graphuri) {
+    InsertHandler handler = new InsertHandler(targeturi, graphuri);
+    try {
+      RDFUtils.parseRDFXML(sourceuri, handler);
+      handler.close();
+    } catch (IOException e) {
+      throw new OntopiaRuntimeException(e);
+    }
+  }
+  
   public static void doUpdate(String endpoint, String statement) {    
     try {
       doUpdate_(endpoint, statement);
@@ -142,13 +142,18 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
 
   // ===== Writing INSERT-format triples
 
-  public static class InsertWriter implements StatementHandler {
+  public static class InsertHandler implements StatementHandler {
+    private String targeturi;
+    private String graphuri;
     private Writer out;
     private Map<String, String> nodelabels;
     private int counter;
+    private int stmts;
 
-    public InsertWriter(Writer out) {
-      this.out = out;
+    public InsertHandler(String targeturi, String graphuri) {
+      this.targeturi = targeturi;
+      this.graphuri = graphuri;
+      this.out = new StringWriter();
       this.nodelabels = new HashMap();
     }
     
@@ -174,8 +179,16 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
       }
     }
 
+    public void close() throws IOException {
+      insertBatch();
+      log.debug("Closed handler, finished inserting");
+    }
+
     private void terminate() throws IOException {
       out.write(".");
+      stmts++;
+      if (stmts % 1000 == 0)
+        insertBatch();
     }
 
     private void writeLiteral(ALiteral lit) throws IOException {
@@ -193,6 +206,14 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
         out.write(nodelabels.get(id) + " ");
       } else
         out.write("<" + res.getURI() + "> ");
+    }
+
+    private void insertBatch() throws IOException {
+      log.debug("Posting batch after " + stmts + " statements");
+      doUpdate(targeturi,
+               "insert data into <" + graphuri + "> { " +
+               out.toString() + " }");
+      out = new StringWriter();
     }
   }
 }
