@@ -17,6 +17,7 @@ import net.ontopia.presto.spi.PrestoChangeSet;
 import net.ontopia.presto.spi.PrestoDataProvider;
 import net.ontopia.presto.spi.PrestoField;
 import net.ontopia.presto.spi.PrestoFieldUsage;
+import net.ontopia.presto.spi.PrestoSchemaProvider;
 import net.ontopia.presto.spi.PrestoSession;
 import net.ontopia.presto.spi.PrestoTopic;
 import net.ontopia.presto.spi.PrestoType;
@@ -179,7 +180,7 @@ public class Utils {
     }
 
     if (field.isEmbedded()) {
-        fieldInfo.put("embedded", true);
+        fieldInfo.put("embeddable", true);
     }
     
     if (field.isPrimitiveField()) {
@@ -459,9 +460,9 @@ public class Utils {
     }
   }
 
-  public static Map<String, Object> updateTopic(UriInfo uriInfo, PrestoSession session, 
-      PrestoTopic topic, PrestoType topicType, PrestoView fieldsView, JSONObject data) {
-
+  public static PrestoTopic updateTopic(UriInfo uriInfo, PrestoSession session,
+        PrestoTopic topic, PrestoType topicType, PrestoView fieldsView,
+        JSONObject data) {
     PrestoDataProvider dataProvider = session.getDataProvider();
 
     PrestoChangeSet changeSet;
@@ -494,7 +495,11 @@ public class Utils {
             Collection<Object> newValues = new ArrayList<Object>(valuesCount); 
             for (int vc=0; vc < valuesCount; vc++) {
 
-              if (isReferenceField && !isExternalType) {
+              JSONObject embeddedReferenceValue = getEmbeddedReference(values, vc);
+              if (embeddedReferenceValue != null) {
+                PrestoView valueView = field.getValueView();
+                newValues.add(updateEmbeddedReference(uriInfo, session, valueView, embeddedReferenceValue));
+              } else if (isReferenceField && !isExternalType) {
                 String valueId = getReferenceValue(values, vc);
                 newValues.add(dataProvider.getTopicById(valueId));
               } else {
@@ -509,9 +514,29 @@ public class Utils {
     } catch (JSONException e) {
       throw new RuntimeException(e);
     }
-    return Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, false);
+    return topic;
   }
 
+  private static PrestoTopic updateEmbeddedReference(UriInfo uriInfo, PrestoSession session, PrestoView fieldsView, JSONObject newTopic) throws JSONException {
+      
+      PrestoDataProvider dataProvider = session.getDataProvider();
+      PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+      
+      String topicId = newTopic.has("id") ? newTopic.getString("id") : null;
+      
+      PrestoTopic topic = null;
+      PrestoType topicType;
+      if (topicId == null) {
+        String topicTypeId = newTopic.getJSONObject("type").getString("id");
+        topicType = schemaProvider.getTypeById(topicTypeId);
+      } else {
+        topic = dataProvider.getTopicById(topicId);
+        topicType = schemaProvider.getTypeById(topic.getTypeId());
+      }
+      
+     return Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, newTopic);
+  }
+  
   private static Map<String, PrestoFieldUsage> getFieldInstanceMap(PrestoTopic topic,
       PrestoType topicType, PrestoView fieldsView) {
     Map<String, PrestoFieldUsage> fields = new HashMap<String, PrestoFieldUsage>();
@@ -521,14 +546,21 @@ public class Utils {
     return fields;
   }
 
+  private static JSONObject getEmbeddedReference(JSONArray values, int vindex) throws JSONException {
+    JSONObject valueObject = values.getJSONObject(vindex);
+    if (valueObject.has("embedded")) {
+       return valueObject.getJSONObject("embedded");
+    } else {
+        return null;
+    }
+  }
+  
   private static String getPrimitiveValue(JSONArray values, int vindex) throws JSONException {
-
     JSONObject valueObject = values.getJSONObject(vindex);
     return valueObject.getString("value");              
   }
 
   private static String getReferenceValue(JSONArray values, int vindex) throws JSONException {
-
     JSONObject valueObject = values.getJSONObject(vindex);
     return valueObject.getString("value");              
   }

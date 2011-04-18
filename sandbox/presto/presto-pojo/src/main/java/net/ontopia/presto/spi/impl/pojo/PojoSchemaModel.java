@@ -173,6 +173,10 @@ public class PojoSchemaModel {
             if (fieldConfig.has("embedded")) {
               field.setEmbedded(fieldConfig.get("embedded").getBooleanValue());
             }
+            // isHidden
+            if (fieldConfig.has("hidden")) {
+              field.setHidden(fieldConfig.get("hidden").getBooleanValue());
+            }
             // isTraversable
             if (fieldConfig.has("traversable")) {
               field.setTraversable(fieldConfig.get("traversable").getBooleanValue());

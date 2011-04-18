@@ -97,6 +97,10 @@ public class PojoFieldUsage implements PrestoFieldUsage {
         return field.isEmbedded();
     }
 
+    public boolean isHidden() {
+        return field.isHidden();
+    }
+
     public boolean isTraversable() {
         return field.isTraversable();
     }

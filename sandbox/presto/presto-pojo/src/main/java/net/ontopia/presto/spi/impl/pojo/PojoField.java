@@ -24,6 +24,7 @@ public class PojoField implements PrestoField {
     private String externalType;
     private String validationType;
     private boolean isEmbedded;
+    private boolean isHidden;
     private boolean isTraversable = true;
     private boolean isReadOnly;
     private boolean isNewValuesOnly;
@@ -102,6 +103,10 @@ public class PojoField implements PrestoField {
 
     public boolean isEmbedded() {
         return isEmbedded;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
     }
 
     public boolean isTraversable() {
@@ -194,6 +199,10 @@ public class PojoField implements PrestoField {
 
     public void setEmbedded(boolean isEmbedded) {
         this.isEmbedded = isEmbedded;
+    }
+
+    public void setHidden(boolean isHidden) {
+        this.isHidden = isHidden;
     }
 
     public void setTraversable(boolean isTraversable) {

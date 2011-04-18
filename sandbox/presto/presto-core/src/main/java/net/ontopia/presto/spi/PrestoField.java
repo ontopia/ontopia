@@ -28,6 +28,8 @@ public interface PrestoField {
 
   boolean isEmbedded();
 
+  boolean isHidden();
+
   boolean isTraversable();
 
   boolean isReadOnly();

@@ -307,8 +307,10 @@ public abstract class TopicResource {
       }
 
       PrestoView fieldsView = topicType.getViewById(viewId);
-
-      Map<String, Object> result = Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, jsonObject);
+      
+      topic = Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, jsonObject);
+      
+      Map<String, Object> result = Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, false);
       String id = (String)result.get("id");
       session.commit();
       onTopicUpdated(id);
