@@ -48,7 +48,7 @@ public class ReadOnlyAssociation extends ReadOnlyTMObject implements Association
 
   public Collection<TopicIF> getRoleTypes() {
     Collection<TopicIF> result = new CompactHashSet<TopicIF>();
-    for (AssociationIF role : (Collection<AssociationIF>)
+    for (AssociationRoleIF role : (Collection<AssociationRoleIF>)
            loadCollectionField(Association.LF_roles)) {
       TopicIF type = role.getType();
       if (type != null)
