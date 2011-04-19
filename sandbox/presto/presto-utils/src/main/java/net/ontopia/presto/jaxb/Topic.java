@@ -15,10 +15,14 @@ public class Topic {
     private String name;
     private Boolean readOnlyMode;
 
+    private Origin origin;
+    
     private TopicType type;
     private String view;
     
     private Collection<Link> links = Collections.emptySet();
+    
+    private Collection<View> views = Collections.emptySet();
 
     private Collection<FieldData> fields;
 
@@ -28,18 +32,6 @@ public class Topic {
 
     public String getId() {
         return id;
-    }
-
-    public void setLinks(Collection<Link> links) {
-        this.links = links;
-    }
-
-    public Collection<Link> getLinks() {
-        if (links == null) {
-            return Collections.emptySet();
-        } else {
-            return links;
-        }
     }
 
     public void setName(String name) {
@@ -90,5 +82,37 @@ public class Topic {
         result.setName(name);
         return result;
     }
-    
+
+    public void setOrigin(Origin origin) {
+        this.origin = origin;
+    }
+
+    public Origin getOrigin() {
+        return origin;
+    }
+
+    public void setLinks(Collection<Link> links) {
+        this.links = links;
+    }
+
+    public Collection<Link> getLinks() {
+        if (links == null) {
+            return Collections.emptySet();
+        } else {
+            return links;
+        }
+    }
+
+    public void setViews(Collection<View> views) {
+        this.views = views;
+    }
+
+    public Collection<View> getViews() {
+        if (views == null) {
+            return Collections.emptySet();
+        } else {
+            return views;
+        }
+    }
+
 }

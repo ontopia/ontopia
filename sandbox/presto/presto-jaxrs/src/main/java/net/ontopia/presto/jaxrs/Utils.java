@@ -12,7 +12,13 @@ import java.util.Map;
 
 import javax.ws.rs.core.UriInfo;
 
+import net.ontopia.presto.jaxb.FieldData;
 import net.ontopia.presto.jaxb.Link;
+import net.ontopia.presto.jaxb.Origin;
+import net.ontopia.presto.jaxb.Topic;
+import net.ontopia.presto.jaxb.TopicType;
+import net.ontopia.presto.jaxb.Value;
+import net.ontopia.presto.jaxb.View;
 import net.ontopia.presto.spi.PrestoChangeSet;
 import net.ontopia.presto.spi.PrestoDataProvider;
 import net.ontopia.presto.spi.PrestoField;
@@ -58,83 +64,76 @@ public class Utils {
     return result;
   }
 
-  public static Map<String,Object> getTopicInfo(UriInfo uriInfo, PrestoTopic topic, PrestoType type, PrestoView view, boolean readOnlyMode) {
-    Map<String,Object> result = new LinkedHashMap<String,Object>();
+  public static Topic getTopicInfo(UriInfo uriInfo, PrestoTopic topic, PrestoType type, PrestoView view, boolean readOnlyMode) {
+    Topic result = new Topic();
 
-    result.put("id", topic.getId());
-    result.put("name", topic.getName());
+    result.setId(topic.getId());
+    result.setName(topic.getName());
     if (readOnlyMode) {
-        result.put("readOnlyMode", readOnlyMode);
+        result.setReadOnlyMode(readOnlyMode);
     }
 
-    Map<String,Object> typeInfo = getTypeInfo(uriInfo, type);    
+    TopicType typeInfo = getTypeInfo(uriInfo, type);    
     
     boolean readOnly = readOnlyMode || type.isReadOnly();
-    typeInfo.put("readOnly", readOnly);
+    typeInfo.setReadOnly(readOnly);
     
     List<Link> typeLinks = new ArrayList<Link>();
     if (!readOnlyMode && !type.isAbstract() && !readOnly) {
       typeLinks.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
     }
-    typeInfo.put("links", typeLinks);
+    typeInfo.setLinks(typeLinks);
 
-    result.put("type", typeInfo);
+    result.setType(typeInfo);
 
-    result.put("view", view.getId());
+    result.setView(view.getId());
 
     List<Link> topicLinks = new ArrayList<Link>();
     topicLinks.add(new Link("edit", Links.getEditLinkFor(uriInfo, topic, view)));    
     //    topicLinks.add(new Link("remove", "http://examples.org/topics/" + topic.getId() + "/remove"));
-    result.put("links", topicLinks);
+    result.setLinks(topicLinks);
 
-    List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
+    List<FieldData> fields = new ArrayList<FieldData>(); 
 
     for (PrestoFieldUsage field : type.getFields(view)) {
       fields.add(getFieldInfo(uriInfo, topic, field, topic.getValues(field), readOnlyMode));
     }
-    result.put("fields", fields);
-    result.put("views", getViews(uriInfo, topic, type, view, readOnlyMode));
+    result.setFields(fields);
+    result.setViews(getViews(uriInfo, topic, type, view, readOnlyMode));
     return result;
   }
 
-  public static Map<String,Object> getNewTopicInfo(UriInfo uriInfo, PrestoType topicType, PrestoView fieldsView) {
+  public static Topic getNewTopicInfo(UriInfo uriInfo, PrestoType topicType, PrestoView fieldsView) {
     return getNewTopicInfo(uriInfo, topicType, fieldsView, null, null);
   }
 
-  public static Map<String,Object> getNewTopicInfo(UriInfo uriInfo, PrestoType topicType, PrestoView fieldsView, String parentId, String parentFieldId) {
-    Map<String,Object> result = new LinkedHashMap<String,Object>();
+  public static Topic getNewTopicInfo(UriInfo uriInfo, PrestoType topicType, PrestoView fieldsView, String parentId, String parentFieldId) {
+    Topic result = new Topic();
 
     final boolean readOnlyMode = false;
     if (parentId != null) {
-      Map<String,Object> origin = new LinkedHashMap<String,Object>();    
-      origin.put("topicId", parentId);
-      origin.put("fieldId", parentFieldId);
-      result.put("origin", origin);
+      result.setOrigin(new Origin(parentId, parentFieldId));
     }
+    result.setType(new TopicType(topicType.getId(), topicType.getName()));
 
-    Map<String,Object> typeInfo = new LinkedHashMap<String,Object>();    
-    typeInfo.put("id", topicType.getId());
-    typeInfo.put("name", topicType.getName());
-    result.put("type", typeInfo);
-
-    result.put("view", fieldsView.getId());
+    result.setView(fieldsView.getId());
 
     List<Link> topicLinks = new ArrayList<Link>();
     topicLinks.add(new Link("create", Links.getCreateLinkFor(uriInfo, topicType, fieldsView)));    
-    result.put("links", topicLinks);
+    result.setLinks(topicLinks);
 
-    List<Map<String,Object>> fields = new ArrayList<Map<String,Object>>(); 
+    List<FieldData> fields = new ArrayList<FieldData>(); 
 
     PrestoTopic topic = null;
     for (PrestoFieldUsage field : topicType.getFields(fieldsView)) {
       fields.add(getFieldInfo(uriInfo, topic, field, Collections.emptyList(), readOnlyMode));
     }
-    result.put("fields", fields);
-    result.put("views", Collections.singleton(getView(uriInfo, null, fieldsView, readOnlyMode)));
+    result.setFields(fields);
+    result.setViews(Collections.singleton(getView(uriInfo, null, fieldsView, readOnlyMode)));
     return result;
   }
 
-  private static Map<String, Object> getFieldInfo(UriInfo uriInfo,
+  private static FieldData getFieldInfo(UriInfo uriInfo,
       PrestoTopic topic, PrestoFieldUsage field, Collection<? extends Object> fieldValues, boolean readOnlyMode) {
 
     PrestoType topicType = field.getType();
@@ -149,66 +148,66 @@ public class Utils {
 
     String fieldReference = databaseId + "/" + topicId + "/" + parentViewId + "/" + fieldId;
 
-    Map<String,Object> fieldInfo = new LinkedHashMap<String,Object>();
+    FieldData fieldInfo = new FieldData();
 
-    fieldInfo.put("id", fieldId);
-    fieldInfo.put("name", field.getName());
+    fieldInfo.setId(fieldId);
+    fieldInfo.setName(field.getName());
 
     int minCard = field.getMinCardinality();
     if (minCard > 0) {
-      fieldInfo.put("minCardinality", minCard);
+      fieldInfo.setMinCardinality(minCard);
     }
 
     int maxCard = field.getMaxCardinality();
     if (maxCard > 0) {
-      fieldInfo.put("maxCardinality", maxCard);
+      fieldInfo.setMaxCardinality(maxCard);
     }
 
     String validationType = field.getValidationType();
     if (validationType != null) {
-      fieldInfo.put("validation", validationType);
+      fieldInfo.setValidation(validationType);
     }
 
     String interfaceControl = field.getInterfaceControl(); // ISSUE: should we default the interface control?
     if (interfaceControl != null) {
-      fieldInfo.put("interfaceControl", interfaceControl);          
+      fieldInfo.setInterfaceControl(interfaceControl);          
     }
     
     String externalType = field.getExternalType();
     if (externalType != null) {
-      fieldInfo.put("externalType", externalType);
+      fieldInfo.setExternalType(externalType);
     }
 
     if (field.isEmbedded()) {
-        fieldInfo.put("embeddable", true);
+        fieldInfo.setEmbeddable(true);
     }
     
     if (field.isPrimitiveField()) {
       String dataType = field.getDataType();
       if (dataType != null) {
-        fieldInfo.put("datatype", dataType);
+        fieldInfo.setDatatype(dataType);
       }
       if (readOnlyMode || field.isReadOnly()) {
-        fieldInfo.put("readOnly", Boolean.TRUE);
-        fieldInfo.put("links", Collections.EMPTY_LIST);
+        fieldInfo.setReadOnly(Boolean.TRUE);
+        fieldInfo.setLinks(Collections.EMPTY_LIST);
       } else {
         List<Link> fieldLinks = new ArrayList<Link>();
         if (!isNewTopic) {
           fieldLinks.add(new Link("add-field-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
           fieldLinks.add(new Link("remove-field-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
         }
-        fieldInfo.put("links", fieldLinks);
+        fieldInfo.setLinks(fieldLinks);
       }
 
     } else if (field.isReferenceField()) {
       // fieldInfo.put("type", field.getFieldType());
-      fieldInfo.put("datatype", "reference");
+      fieldInfo.setDatatype("reference");
 
       boolean allowEdit = !field.isReadOnly();
       boolean allowAddRemove = allowEdit && !field.isNewValuesOnly();
       boolean allowCreate = allowEdit && !field.isExistingValuesOnly();
       if (readOnlyMode || !allowEdit) {
-        fieldInfo.put("readOnly", Boolean.TRUE);
+        fieldInfo.setReadOnly(Boolean.TRUE);
       }
 
       List<Link> fieldLinks = new ArrayList<Link>();      
@@ -223,83 +222,83 @@ public class Utils {
           fieldLinks.add(new Link("remove-field-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
         }
       }
-      fieldInfo.put("links", fieldLinks);
+      fieldInfo.setLinks(fieldLinks);
 
     } else {
       // used by query fields, which can have both primitive and reference values
       // fieldInfo.put("type", field.getFieldType());
-      fieldInfo.put("datatype", "query");
+      fieldInfo.setDatatype("query");
       if (readOnlyMode || field.isReadOnly()) {
-        fieldInfo.put("readOnly", Boolean.TRUE);
+        fieldInfo.setReadOnly(Boolean.TRUE);
       }
-      fieldInfo.put("links", Collections.EMPTY_LIST);
+      fieldInfo.setLinks(Collections.EMPTY_LIST);
     }
     
     Collection<PrestoType> availableFieldValueTypes = field.getAvailableFieldValueTypes();
     if (!availableFieldValueTypes.isEmpty()) {
-        List<Object> valueTypes = new ArrayList<Object>(availableFieldValueTypes.size());
+        List<TopicType> valueTypes = new ArrayList<TopicType>(availableFieldValueTypes.size());
         for (PrestoType playerType : availableFieldValueTypes) {
           valueTypes.add(Utils.getTypeInfo(uriInfo, playerType));
         }
-        fieldInfo.put("valueTypes", valueTypes);
+        fieldInfo.setValueTypes(valueTypes);
     }
     
-    fieldInfo.put("values", getValues(uriInfo, field, fieldValues, readOnlyMode));
+    fieldInfo.setValues(getValues(uriInfo, field, fieldValues, readOnlyMode));
     return fieldInfo;
   }
 
-  public static List<Map<String, Object>> getViews(UriInfo uriInfo,
+  public static List<View> getViews(UriInfo uriInfo,
       PrestoTopic topic, PrestoType topicType, PrestoView fieldsView, boolean readOnlyMode) {
 
     Collection<PrestoView> fieldViews = topicType.getViews(fieldsView);
 
-    List<Map<String,Object>> views = new ArrayList<Map<String,Object>>(fieldViews.size()); 
+    List<View> views = new ArrayList<View>(fieldViews.size()); 
     for (PrestoView _fieldsView : fieldViews) {
       views.add(getView(uriInfo, topic, _fieldsView, readOnlyMode));
     }
     return views;
   }
 
-  public static Map<String, Object> getView(UriInfo uriInfo, PrestoTopic topic,
+  public static View getView(UriInfo uriInfo, PrestoTopic topic,
       PrestoView _fieldsView, boolean readOnlyMode) {
-    Map<String,Object> view = new LinkedHashMap<String,Object>();
-    view.put("id", _fieldsView.getId());
-    view.put("name", _fieldsView.getName());
+    View view = new View();
+    view.setId(_fieldsView.getId());
+    view.setName(_fieldsView.getName());
 
     List<Link> links = new ArrayList<Link>();
     if (topic != null) {
       links.add(new Link("edit-in-view", Links.getEditLinkFor(uriInfo, topic, _fieldsView, readOnlyMode)));
     }
-    view.put("links", links);
+    view.setLinks(links);
     return view;
   }
 
-  protected static List<Object> getValues(UriInfo uriInfo, PrestoFieldUsage field, Collection<? extends Object> fieldValues, boolean readOnlyMode) {
-    List<Object> result = new ArrayList<Object>(fieldValues.size());
+  protected static Collection<Value> getValues(UriInfo uriInfo, PrestoFieldUsage field, Collection<? extends Object> fieldValues, boolean readOnlyMode) {
+    List<Value> result = new ArrayList<Value>(fieldValues.size());
     for (Object value : fieldValues) {
       result.add(getValue(uriInfo, field, value, readOnlyMode));
     }
-    Collections.sort(result, new Comparator<Object>() {
-      public int compare(Object o1, Object o2) {
-        if (o1 instanceof Map) {
+    Collections.sort(result, new Comparator<Value>() {
+      public int compare(Value o1, Value o2) {
+        if (o1 instanceof Value) {
           @SuppressWarnings("unchecked")
-          Map<String,Object> v1 = (Map<String,Object>)o1;
+          Value v1 = (Value)o1;
           @SuppressWarnings("unchecked")
-          Map<String,Object> v2 = (Map<String,Object>)o2;
-          String vx1 = (String)v1.get("name");
+          Value v2 = (Value)o2;
+          String vx1 = v1.getName();
           if (vx1 == null) {
-            vx1 = (String)v1.get("value");
+            vx1 = v1.getValue();
           }
-          String vx2 = (String)v2.get("name");
+          String vx2 = v2.getName();
           if (vx2 == null) {
-            vx2 = (String)v2.get("value");
+            vx2 = v2.getValue();
           }
           return compareStatic(vx1, vx2);
         } else {
           @SuppressWarnings("unchecked")
-          List<Map<String,Object>> v1 = (List<Map<String,Object>>)o1;
+          List<Value> v1 = (List<Value>)o1;
           @SuppressWarnings("unchecked")
-          List<Map<String,Object>> v2 = (List<Map<String,Object>>)o2;
+          List<Value> v2 = (List<Value>)o2;
           return compare(v1.get(0), v2.get(0));
         } 
       }
@@ -317,41 +316,41 @@ public class Utils {
       return o1.compareTo(o2);
   }
 
-  protected static Map<String,Object> getValue(UriInfo uriInfo, PrestoFieldUsage field, Object fieldValue, boolean readOnlyMode) {
+  protected static Value getValue(UriInfo uriInfo, PrestoFieldUsage field, Object fieldValue, boolean readOnlyMode) {
     if (fieldValue instanceof PrestoTopic) {
       PrestoTopic valueTopic = (PrestoTopic)fieldValue;
       return getExistingTopicFieldValue(uriInfo, field, valueTopic, readOnlyMode);
     } else {
-      Map<String,Object> result = new LinkedHashMap<String, Object>();
-      result.put("value", fieldValue);
+      Value result = new Value();
+      result.setValue(fieldValue.toString());
       boolean removable = !field.isReadOnly();
       if (!readOnlyMode && removable) {
-        result.put("removable", Boolean.TRUE);
+        result.setRemovable(Boolean.TRUE);
       }
       return result;
     }
   }
 
-  public static Map<String,Object> getExistingTopicFieldValue(UriInfo uriInfo,
+  public static Value getExistingTopicFieldValue(UriInfo uriInfo,
       PrestoFieldUsage field, PrestoTopic value, boolean readOnlyMode) {
 
-    Map<String, Object> result = new LinkedHashMap<String,Object>();
-    result.put("value", value.getId());
-    result.put("name", value.getName());
+    Value result = new Value();
+    result.setValue(value.getId());
+    result.setName(value.getName());
     if (field.isEmbedded()) {
         PrestoType valueType = field.getSchemaProvider().getTypeById(value.getTypeId());
-        result.put("embedded", getTopicInfo(uriInfo, value, valueType, field.getValueView(), readOnlyMode));
+        result.setEmbedded(getTopicInfo(uriInfo, value, valueType, field.getValueView(), readOnlyMode));
     }
     
     if (!readOnlyMode && !field.isReadOnly()) {
-      result.put("removable", Boolean.TRUE);
+      result.setRemovable(Boolean.TRUE);
     }
 
     List<Link> links = new ArrayList<Link>();
     if (field.isTraversable()) {
       links.add(new Link("edit", Links.getEditLinkFor(uriInfo, value, field.getValueView(), readOnlyMode)));
     }
-    result.put("links", links);
+    result.setLinks(links);
 
     return result;
   }
@@ -372,25 +371,22 @@ public class Utils {
     return result;
   }
 
-  protected static Map<String, Object> getTypeInfo(UriInfo uriInfo, PrestoType type) {
-      Map<String, Object> result = new LinkedHashMap<String,Object>();
-      result.put("id", type.getId());
-      result.put("name", type.getName());
-      return result;
+  protected static TopicType getTypeInfo(UriInfo uriInfo, PrestoType type) {
+      return new TopicType(type.getId(), type.getName());
   }
   
-  public static Map<String, Object> getCreateFieldInstance(UriInfo uriInfo, PrestoTopic topic, PrestoFieldUsage field, PrestoType type) {
+  public static TopicType getCreateFieldInstance(UriInfo uriInfo, PrestoTopic topic, PrestoFieldUsage field, PrestoType type) {
 
-    Map<String, Object> result = getTypeInfo(uriInfo, type);
+    TopicType result = getTypeInfo(uriInfo, type);
 
     List<Link> links = new ArrayList<Link>();
     links.add(new Link("create-field-instance", uriInfo.getBaseUri() + "editor/create-field-instance/" + field.getSchemaProvider().getDatabaseId() + "/" + topic.getId() + "/" + field.getId() + "/" + type.getId()));
-    result.put("links", links);
+    result.setLinks(links);
 
     return result;
   }
 
-  public static Map<String, Object> addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
+  public static FieldData addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
     try {
 
       PrestoDataProvider dataProvider = session.getDataProvider();
@@ -425,7 +421,7 @@ public class Utils {
     }
   }
 
-  public static Map<String, Object> removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
+  public static FieldData removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
     try {
 
       PrestoDataProvider dataProvider = session.getDataProvider();

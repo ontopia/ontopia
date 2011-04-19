@@ -11,16 +11,21 @@ public class FieldData {
     private String id;
     private String name;
     private Boolean readOnly;
+    private Boolean embeddable;
+
     private String datatype;
     private String validation;
     private String interfaceControl;
+    private String externalType;
     
     private Integer minCardinality;
     private Integer maxCardinality;
     
     private Collection<Link> links = Collections.emptySet();
     private Collection<Value> values;
-    
+
+    private Collection<TopicType> valueTypes;
+
     public void setId(String id) {
         this.id = id;
     }
@@ -55,6 +60,14 @@ public class FieldData {
 
     public Boolean isReadOnly() {
         return readOnly;
+    }
+
+    public Boolean isEmbeddable() {
+        return embeddable;
+    }
+
+    public void setEmbeddable(Boolean embeddable) {
+        this.embeddable = embeddable;
     }
 
     public void setDatatype(String datatype) {
@@ -103,6 +116,22 @@ public class FieldData {
 
     public Collection<Value> getValues() {
         return values;
+    }
+
+    public void setExternalType(String externalType) {
+        this.externalType = externalType;
+    }
+
+    public String getExternalType() {
+        return externalType;
+    }
+
+    public void setValueTypes(Collection<TopicType> valueTypes) {
+        this.valueTypes = valueTypes;
+    }
+
+    public Collection<TopicType> getValueTypes() {
+        return valueTypes;
     }
 
 }

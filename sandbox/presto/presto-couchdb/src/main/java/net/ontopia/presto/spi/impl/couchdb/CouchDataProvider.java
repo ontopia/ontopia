@@ -33,6 +33,17 @@ public class CouchDataProvider implements PrestoDataProvider {
   private final String designDocId;
   private final String fallbackViewId;
 
+
+  public CouchDataProvider(CouchDbConnector db, String designDocId) {
+      this(db, designDocId, null);
+  }
+
+  public CouchDataProvider(CouchDbConnector db, String designDocId, String fallbackViewId) {
+    this.db = db;
+    this.designDocId = designDocId;
+    this.fallbackViewId = fallbackViewId;
+  }
+
   public CouchDataProvider(String host, int port, String databaseName, String designDocId) {
       this(host, port, databaseName, designDocId, null);
   }

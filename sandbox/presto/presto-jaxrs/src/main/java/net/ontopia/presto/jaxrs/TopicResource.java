@@ -18,7 +18,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import net.ontopia.presto.jaxb.FieldData;
 import net.ontopia.presto.jaxb.Link;
+import net.ontopia.presto.jaxb.Topic;
+import net.ontopia.presto.jaxb.TopicMap;
 import net.ontopia.presto.spi.PrestoDataProvider;
 import net.ontopia.presto.spi.PrestoFieldUsage;
 import net.ontopia.presto.spi.PrestoSchemaProvider;
@@ -67,15 +70,15 @@ public abstract class TopicResource {
     result.put("id", "topicmaps");
     result.put("name", "Ontopia Presto REST API");
 
-    List<Map<String,Object>> topicmaps = new ArrayList<Map<String,Object>>();
+    List<TopicMap> topicmaps = new ArrayList<TopicMap>();
     
-    Map<String,Object> topicmap = new LinkedHashMap<String,Object>();
-    topicmap.put("id", "litteraturklubben.xtm");
-    topicmap.put("name", "Litteraturklubben");
+    TopicMap topicmap = new TopicMap();
+    topicmap.setId("litteraturklubben.xtm");
+    topicmap.setName("Litteraturklubben");
 
     List<Link> links = new ArrayList<Link>();
     links.add(new Link("edit", uriInfo.getBaseUri() + "editor/topicmap-info/litteraturklubben.xtm"));
-    topicmap.put("links", links);    
+    topicmap.setLinks(links);    
     
     topicmaps.add(topicmap);
     result.put("topicmaps", topicmaps);      
@@ -85,22 +88,22 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("topicmap-info/{topicMapId}")
-  public Map<String,Object> getTopicMapInfo(
+  public TopicMap getTopicMapInfo(
       @Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
 
     PrestoSession session = createSession(topicMapId);
     try {
-      Map<String,Object> result = new LinkedHashMap<String,Object>();
+      TopicMap result = new TopicMap();
 
-      result.put("id", session.getDatabaseId());
-      result.put("name", session.getDatabaseName());
+      result.setId(session.getDatabaseId());
+      result.setName(session.getDatabaseName());
 
       List<Link> links = new ArrayList<Link>();
       links.add(new Link("available-types-tree", uriInfo.getBaseUri() + "editor/available-types-tree/" + session.getDatabaseId()));
       links.add(new Link("available-types-tree-lazy", uriInfo.getBaseUri() + "editor/available-types-tree-lazy/" + session.getDatabaseId()));
       links.add(new Link("edit-topic-by-id", uriInfo.getBaseUri() + "editor/topic/" + session.getDatabaseId() + "/{topicId}"));
-      result.put("links", links);      
+      result.setLinks(links);      
       return result;
 
 
@@ -115,7 +118,7 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("create-instance/{topicMapId}/{topicTypeId}")
-  public Map<String,Object> createInstance(
+  public Topic createInstance(
       @Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicTypeId") final String topicTypeId) throws Exception {
@@ -141,7 +144,7 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("create-field-instance/{topicMapId}/{parentTopicId}/{parentFieldId}/{playerTypeId}")
-  public Map<String,Object> createInstance(
+  public Topic createInstance(
       @Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId,
       @PathParam("parentTopicId") final String parentTopicId,
@@ -196,7 +199,7 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("topic/{topicMapId}/{topicId}")
-  public Map<String,Object> getTopicInDefaultView(
+  public Topic getTopicInDefaultView(
       @Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId,
@@ -225,7 +228,7 @@ public abstract class TopicResource {
 @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("topic/{topicMapId}/{topicId}/{viewId}")
-  public Map<String,Object> getTopicInView(@Context UriInfo uriInfo, 
+  public Topic getTopicInView(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId,
       @PathParam("viewId") final String viewId,
@@ -286,7 +289,7 @@ public abstract class TopicResource {
   @Produces(APPLICATION_JSON_UTF8)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("topic/{topicMapId}/{topicId}/{viewId}")
-  public Map<String,Object> updateTopic(@Context UriInfo uriInfo, 
+  public Topic updateTopic(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId, JSONObject jsonObject) throws Exception {
@@ -310,8 +313,8 @@ public abstract class TopicResource {
       
       topic = Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, jsonObject);
       
-      Map<String, Object> result = Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, false);
-      String id = (String)result.get("id");
+      Topic result = Utils.getTopicInfo(uriInfo, topic, topicType, fieldsView, false);
+      String id = result.getId();
       session.commit();
       onTopicUpdated(id);
 
@@ -328,7 +331,7 @@ public abstract class TopicResource {
   @Produces(APPLICATION_JSON_UTF8)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("add-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
-  public Map<String,Object> addFieldValues(@Context UriInfo uriInfo, 
+  public FieldData addFieldValues(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId,
@@ -346,7 +349,7 @@ public abstract class TopicResource {
 
       PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
 
-      Map<String, Object> result = Utils.addFieldValues(uriInfo, session, topic, field, jsonObject);
+      FieldData result = Utils.addFieldValues(uriInfo, session, topic, field, jsonObject);
 
       String id = topic.getId();
 
@@ -366,7 +369,7 @@ public abstract class TopicResource {
   @Produces(APPLICATION_JSON_UTF8)
   @Consumes(MediaType.APPLICATION_JSON)
   @Path("remove-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
-  public Map<String,Object> removeFieldValues(@Context UriInfo uriInfo, 
+  public FieldData removeFieldValues(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId,
@@ -384,7 +387,7 @@ public abstract class TopicResource {
 
       PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
 
-      Map<String, Object> result =  Utils.removeFieldValues(uriInfo, session, topic, field, jsonObject);
+      FieldData result =  Utils.removeFieldValues(uriInfo, session, topic, field, jsonObject);
 
       String id = topic.getId();
 
@@ -582,7 +585,7 @@ public abstract class TopicResource {
   protected void onTopicUpdated(String topicId) {      
   }
 
-  protected Map<String, Object> postProcess(Map<String, Object> topicInfo) {
+  protected Topic postProcess(Topic topicInfo) {
     return topicInfo;
   }
 

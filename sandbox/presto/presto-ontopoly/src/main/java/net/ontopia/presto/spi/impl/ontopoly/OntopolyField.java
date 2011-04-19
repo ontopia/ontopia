@@ -108,6 +108,11 @@ public class OntopolyField implements PrestoFieldUsage {
     return viewModes.isEmbedded();    
   }
 
+  public boolean isHidden() {
+    ViewModes viewModes = getViewModes();
+    return viewModes.isHidden();    
+  }
+
   public boolean isTraversable() {
     ViewModes viewModes = getViewModes();
     return viewModes.isTraversable();
