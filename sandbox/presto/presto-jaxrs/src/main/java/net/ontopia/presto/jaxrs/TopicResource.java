@@ -2,7 +2,6 @@ package net.ontopia.presto.jaxrs;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +17,17 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import net.ontopia.presto.jaxb.AvailableFieldTypes;
+import net.ontopia.presto.jaxb.AvailableFieldValues;
+import net.ontopia.presto.jaxb.AvailableTopicMaps;
+import net.ontopia.presto.jaxb.AvailableTopicTypes;
 import net.ontopia.presto.jaxb.FieldData;
 import net.ontopia.presto.jaxb.Link;
+import net.ontopia.presto.jaxb.RootInfo;
 import net.ontopia.presto.jaxb.Topic;
 import net.ontopia.presto.jaxb.TopicMap;
+import net.ontopia.presto.jaxb.TopicType;
+import net.ontopia.presto.jaxb.Value;
 import net.ontopia.presto.spi.PrestoDataProvider;
 import net.ontopia.presto.spi.PrestoFieldUsage;
 import net.ontopia.presto.spi.PrestoSchemaProvider;
@@ -29,8 +35,6 @@ import net.ontopia.presto.spi.PrestoSession;
 import net.ontopia.presto.spi.PrestoTopic;
 import net.ontopia.presto.spi.PrestoType;
 import net.ontopia.presto.spi.PrestoView;
-
-import org.codehaus.jettison.json.JSONObject;
 
 @Path("/editor")
 public abstract class TopicResource {
@@ -46,31 +50,31 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("")
-  public Map<String,Object> getRootInfo(@Context UriInfo uriInfo) throws Exception {
+  public RootInfo getRootInfo(@Context UriInfo uriInfo) throws Exception {
 
-    Map<String,Object> result = new LinkedHashMap<String,Object>();
+    RootInfo result = new RootInfo();
 
-    result.put("id", uriInfo.getBaseUri() + "editor");
-    result.put("version", 0);
-    result.put("name", "Ontopia Presto REST API");
+    result.setId(uriInfo.getBaseUri() + "editor");
+    result.setVersion(0);
+    result.setName("Ontopia Presto REST API");
 
     List<Link> links = new ArrayList<Link>();
     links.add(new Link("available-topicmaps", uriInfo.getBaseUri() + "editor/available-topicmaps"));
-    result.put("links", links);      
+    result.setLinks(links);      
     return result;
   }
 
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("available-topicmaps")
-  public Map<String,Object> getTopicMaps(@Context UriInfo uriInfo) throws Exception {
+  public AvailableTopicMaps getTopicMaps(@Context UriInfo uriInfo) throws Exception {
 
-    Map<String,Object> result = new LinkedHashMap<String,Object>();
+    AvailableTopicMaps result = new AvailableTopicMaps();
 
-    result.put("id", "topicmaps");
-    result.put("name", "Ontopia Presto REST API");
+    result.setId("topicmaps");
+    result.setName("Ontopia Presto REST API");
 
-    List<TopicMap> topicmaps = new ArrayList<TopicMap>();
+    Collection<TopicMap> topicmaps = new ArrayList<TopicMap>();
     
     TopicMap topicmap = new TopicMap();
     topicmap.setId("litteraturklubben.xtm");
@@ -81,7 +85,7 @@ public abstract class TopicResource {
     topicmap.setLinks(links);    
     
     topicmaps.add(topicmap);
-    result.put("topicmaps", topicmaps);      
+    result.setTopicMaps(topicmaps);      
     return result;
   }
 
@@ -225,7 +229,7 @@ public abstract class TopicResource {
     }
   }
 
-@GET
+  @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("topic/{topicMapId}/{topicId}/{viewId}")
   public Topic getTopicInView(@Context UriInfo uriInfo, 
@@ -254,37 +258,6 @@ public abstract class TopicResource {
     }
   }
 
-//  @GET
-//  @Produces(APPLICATION_JSON_UTF8)
-//  @Path("topic-info/{topicMapId}/{topicId}")
-//  public Map<String,Object> getTopicInfo(@Context UriInfo uriInfo, 
-//      @PathParam("topicMapId") final String topicMapId, 
-//      @PathParam("topicId") final String topicId) throws Exception {
-//
-//    TopicMapStoreIF store = TopicMaps.createStore(topicMapId, true);
-//
-//    try {
-//      TopicMap topicMap = new TopicMap(store.getTopicMap(), topicMapId);
-//      Topic topic = topicMap.getTopicById(topicId);
-//
-//      TopicType topicType = OntopolyUtils.getDefaultTopicType(topic);
-//
-//      FieldsView fieldsView = FieldsView.getDefaultFieldsView(topicMap);
-//
-//      Map<String,Object> result = new LinkedHashMap<String,Object>();
-//
-//      result.put("id", topic.getId());
-//      result.put("views", Utils.getViews(uriInfo, topic, topicType, fieldsView));
-//      return result;
-//
-//    } catch (Exception e) {
-//      store.abort();
-//      throw e;
-//    } finally {
-//      store.close();      
-//    }
-//  }
-
   @PUT
   @Produces(APPLICATION_JSON_UTF8)
   @Consumes(MediaType.APPLICATION_JSON)
@@ -292,7 +265,7 @@ public abstract class TopicResource {
   public Topic updateTopic(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
-      @PathParam("viewId") final String viewId, JSONObject jsonObject) throws Exception {
+      @PathParam("viewId") final String viewId, Topic jsonObject) throws Exception {
 
     PrestoSession session = createSession(topicMapId);
     PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
@@ -335,7 +308,7 @@ public abstract class TopicResource {
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId,
-      @PathParam("fieldId") final String fieldId, JSONObject jsonObject) throws Exception {
+      @PathParam("fieldId") final String fieldId, FieldData jsonObject) throws Exception {
 
     PrestoSession session = createSession(topicMapId);
     PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
@@ -373,7 +346,7 @@ public abstract class TopicResource {
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId,
-      @PathParam("fieldId") final String fieldId, JSONObject jsonObject) throws Exception {
+      @PathParam("fieldId") final String fieldId, FieldData jsonObject) throws Exception {
 
     PrestoSession session = createSession(topicMapId);
     PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
@@ -406,7 +379,7 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("available-field-values/{topicMapId}/{topicId}/{viewId}/{fieldId}")
-  public Map<String,Object> getAvailableFieldValues(@Context UriInfo uriInfo, 
+  public AvailableFieldValues getAvailableFieldValues(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId,
@@ -443,13 +416,13 @@ public abstract class TopicResource {
     }
   }
 
-  private Map<String,Object> createFieldInfoAllowed(UriInfo uriInfo, PrestoFieldUsage field, Collection<PrestoTopic> availableFieldValues) {
+  private AvailableFieldValues createFieldInfoAllowed(UriInfo uriInfo, PrestoFieldUsage field, Collection<PrestoTopic> availableFieldValues) {
 
-    Map<String,Object> result = new LinkedHashMap<String,Object>();
-    result.put("id", field.getId());
-    result.put("name", field.getName());
+    AvailableFieldValues result = new AvailableFieldValues();
+    result.setId(field.getId());
+    result.setName(field.getName());
 
-    List<Object> values = new ArrayList<Object>(availableFieldValues.size());
+    List<Value> values = new ArrayList<Value>(availableFieldValues.size());
     if (!availableFieldValues.isEmpty()) {
       
       PrestoView valueView = field.getValueView();
@@ -459,7 +432,7 @@ public abstract class TopicResource {
         values.add(Utils.getAllowedTopicFieldValue(uriInfo, value, valueView, traversable));
       }
     } 
-    result.put("values", values);
+    result.setValues(values);
 
     return result;
   }
@@ -467,7 +440,7 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("available-field-types/{topicMapId}/{topicId}/{viewId}/{fieldId}")
-  public Map<String,Object> getAvailableFieldTypes(@Context UriInfo uriInfo, 
+  public AvailableFieldTypes getAvailableFieldTypes(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("topicId") final String topicId, 
       @PathParam("viewId") final String viewId,
@@ -485,18 +458,18 @@ public abstract class TopicResource {
 
       PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
       
-      Map<String,Object> result = new LinkedHashMap<String,Object>();
-      result.put("id", field.getId());
-      result.put("name", field.getName());
+      AvailableFieldTypes result = new AvailableFieldTypes();
+      result.setId(field.getId());
+      result.setName(field.getName());
       
       Collection<PrestoType> availableFieldCreateTypes = field.getAvailableFieldCreateTypes();
 
-      List<Object> types = new ArrayList<Object>(availableFieldCreateTypes.size());
+      List<TopicType> types = new ArrayList<TopicType>(availableFieldCreateTypes.size());
       for (PrestoType playerType : availableFieldCreateTypes) {
         types.add(Utils.getCreateFieldInstance(uriInfo, topic, field, playerType));
       }
 
-      result.put("types", types);
+      result.setTypes(types);
       return result;
       
     } catch (Exception e) {
@@ -510,7 +483,7 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("available-types-tree-lazy/{topicMapId}")
-  public Map<String,Object> getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
+  public AvailableTopicTypes getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
 
     PrestoSession session = createSession(topicMapId);
@@ -518,8 +491,8 @@ public abstract class TopicResource {
 
     try {
 
-      Map<String,Object> result = new LinkedHashMap<String,Object>();
-      result.put("types", TypeUtils.getAvailableTypesTreeLazy(uriInfo, schemaProvider.getRootTypes()));      
+      AvailableTopicTypes result = new AvailableTopicTypes();
+      result.setTypes(TypeUtils.getAvailableTypes(uriInfo, schemaProvider.getRootTypes(), false));      
       return result;
 
     } catch (Exception e) {
@@ -533,7 +506,7 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("available-types-tree-lazy/{topicMapId}/{typeId}")
-  public Map<String,Object> getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
+  public AvailableTopicTypes getAvailableTypesTreeLazy(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId, 
       @PathParam("typeId") final String typeId) throws Exception {
 
@@ -543,8 +516,8 @@ public abstract class TopicResource {
     try {
       PrestoType type = schemaProvider.getTypeById(typeId);
 
-      Map<String,Object> result = new LinkedHashMap<String,Object>();
-      result.put("types", TypeUtils.getAvailableTypesTreeLazy(uriInfo, type.getDirectSubTypes()));      
+      AvailableTopicTypes result = new AvailableTopicTypes();
+      result.setTypes(TypeUtils.getAvailableTypes(uriInfo, type.getDirectSubTypes(), false));      
       return result;
 
     } catch (Exception e) {
@@ -558,7 +531,7 @@ public abstract class TopicResource {
   @GET
   @Produces(APPLICATION_JSON_UTF8)
   @Path("available-types-tree/{topicMapId}")
-  public Map<String,Object> getAvailableTypesTree(@Context UriInfo uriInfo, 
+  public AvailableTopicTypes getAvailableTypesTree(@Context UriInfo uriInfo, 
       @PathParam("topicMapId") final String topicMapId) throws Exception {
 
     PrestoSession session = createSession(topicMapId);
@@ -566,8 +539,8 @@ public abstract class TopicResource {
 
     try {
 
-      Map<String,Object> result = new LinkedHashMap<String,Object>();
-      result.put("types", TypeUtils.getAvailableTypesTree(uriInfo, schemaProvider.getRootTypes()));      
+      AvailableTopicTypes result = new AvailableTopicTypes();
+      result.setTypes(TypeUtils.getAvailableTypes(uriInfo, schemaProvider.getRootTypes(), true));      
       return result;
 
     } catch (Exception e) {

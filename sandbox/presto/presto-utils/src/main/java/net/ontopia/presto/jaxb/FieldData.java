@@ -3,9 +3,14 @@ package net.ontopia.presto.jaxb;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+@XmlRootElement
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class FieldData {
 
     private String id;

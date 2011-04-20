@@ -29,9 +29,7 @@ import net.ontopia.presto.spi.PrestoTopic;
 import net.ontopia.presto.spi.PrestoType;
 import net.ontopia.presto.spi.PrestoView;
 
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 
 public class Utils {
 
@@ -70,14 +68,14 @@ public class Utils {
     result.setId(topic.getId());
     result.setName(topic.getName());
     if (readOnlyMode) {
-        result.setReadOnlyMode(readOnlyMode);
+      result.setReadOnlyMode(readOnlyMode);
     }
 
     TopicType typeInfo = getTypeInfo(uriInfo, type);    
-    
+
     boolean readOnly = readOnlyMode || type.isReadOnly();
     typeInfo.setReadOnly(readOnly);
-    
+
     List<Link> typeLinks = new ArrayList<Link>();
     if (!readOnlyMode && !type.isAbstract() && !readOnly) {
       typeLinks.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
@@ -172,16 +170,16 @@ public class Utils {
     if (interfaceControl != null) {
       fieldInfo.setInterfaceControl(interfaceControl);          
     }
-    
+
     String externalType = field.getExternalType();
     if (externalType != null) {
       fieldInfo.setExternalType(externalType);
     }
 
     if (field.isEmbedded()) {
-        fieldInfo.setEmbeddable(true);
+      fieldInfo.setEmbeddable(true);
     }
-    
+
     if (field.isPrimitiveField()) {
       String dataType = field.getDataType();
       if (dataType != null) {
@@ -233,16 +231,16 @@ public class Utils {
       }
       fieldInfo.setLinks(Collections.EMPTY_LIST);
     }
-    
+
     Collection<PrestoType> availableFieldValueTypes = field.getAvailableFieldValueTypes();
     if (!availableFieldValueTypes.isEmpty()) {
-        List<TopicType> valueTypes = new ArrayList<TopicType>(availableFieldValueTypes.size());
-        for (PrestoType playerType : availableFieldValueTypes) {
-          valueTypes.add(Utils.getTypeInfo(uriInfo, playerType));
-        }
-        fieldInfo.setValueTypes(valueTypes);
+      List<TopicType> valueTypes = new ArrayList<TopicType>(availableFieldValueTypes.size());
+      for (PrestoType playerType : availableFieldValueTypes) {
+        valueTypes.add(Utils.getTypeInfo(uriInfo, playerType));
+      }
+      fieldInfo.setValueTypes(valueTypes);
     }
-    
+
     fieldInfo.setValues(getValues(uriInfo, field, fieldValues, readOnlyMode));
     return fieldInfo;
   }
@@ -279,28 +277,16 @@ public class Utils {
       result.add(getValue(uriInfo, field, value, readOnlyMode));
     }
     Collections.sort(result, new Comparator<Value>() {
-      public int compare(Value o1, Value o2) {
-        if (o1 instanceof Value) {
-          @SuppressWarnings("unchecked")
-          Value v1 = (Value)o1;
-          @SuppressWarnings("unchecked")
-          Value v2 = (Value)o2;
-          String vx1 = v1.getName();
-          if (vx1 == null) {
-            vx1 = v1.getValue();
-          }
-          String vx2 = v2.getName();
-          if (vx2 == null) {
-            vx2 = v2.getValue();
-          }
-          return compareStatic(vx1, vx2);
-        } else {
-          @SuppressWarnings("unchecked")
-          List<Value> v1 = (List<Value>)o1;
-          @SuppressWarnings("unchecked")
-          List<Value> v2 = (List<Value>)o2;
-          return compare(v1.get(0), v2.get(0));
-        } 
+      public int compare(Value v1, Value v2) {
+        String vx1 = v1.getName();
+        if (vx1 == null) {
+          vx1 = v1.getValue();
+        }
+        String vx2 = v2.getName();
+        if (vx2 == null) {
+          vx2 = v2.getValue();
+        }
+        return compareStatic(vx1, vx2);
       }
     });
     return result;
@@ -338,10 +324,10 @@ public class Utils {
     result.setValue(value.getId());
     result.setName(value.getName());
     if (field.isEmbedded()) {
-        PrestoType valueType = field.getSchemaProvider().getTypeById(value.getTypeId());
-        result.setEmbedded(getTopicInfo(uriInfo, value, valueType, field.getValueView(), readOnlyMode));
+      PrestoType valueType = field.getSchemaProvider().getTypeById(value.getTypeId());
+      result.setEmbedded(getTopicInfo(uriInfo, value, valueType, field.getValueView(), readOnlyMode));
     }
-    
+
     if (!readOnlyMode && !field.isReadOnly()) {
       result.setRemovable(Boolean.TRUE);
     }
@@ -355,26 +341,26 @@ public class Utils {
     return result;
   }
 
-  public static Map<String, Object> getAllowedTopicFieldValue(UriInfo uriInfo, 
+  public static Value getAllowedTopicFieldValue(UriInfo uriInfo, 
       PrestoTopic value, PrestoView childView, boolean traversable) {
 
-    Map<String, Object> result = new LinkedHashMap<String,Object>();
-    result.put("value", value.getId());
-    result.put("name", value.getName());
+    Value result = new Value();
+    result.setValue(value.getId());
+    result.setName(value.getName());
 
     List<Link> links = new ArrayList<Link>();
     if (traversable) {
       links.add(new Link("edit", Links.getEditLinkFor(uriInfo, value, childView)));
     }
-    result.put("links", links);
+    result.setLinks(links);
 
     return result;
   }
 
   protected static TopicType getTypeInfo(UriInfo uriInfo, PrestoType type) {
-      return new TopicType(type.getId(), type.getName());
+    return new TopicType(type.getId(), type.getName());
   }
-  
+
   public static TopicType getCreateFieldInstance(UriInfo uriInfo, PrestoTopic topic, PrestoFieldUsage field, PrestoType type) {
 
     TopicType result = getTypeInfo(uriInfo, type);
@@ -386,34 +372,29 @@ public class Utils {
     return result;
   }
 
-  public static FieldData addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
+  public static FieldData addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, FieldData fieldObject) {
     try {
 
       PrestoDataProvider dataProvider = session.getDataProvider();
 
       if  (field != null) {
 
-        JSONArray values = fieldObject.getJSONArray("values");
-        int valuesCount = values.length();
-        if (valuesCount > 0) {
+        PrestoChangeSet changeSet = dataProvider.updateTopic(topic);        
+        boolean isReferenceField = field.isReferenceField();        
+        Collection<Object> addableValues = new HashSet<Object>();
 
-          PrestoChangeSet changeSet = dataProvider.updateTopic(topic);
+        for (Value value : fieldObject.getValues()) {
 
-          boolean isReferenceField = field.isReferenceField();
-
-          Collection<Object> addableValues = new HashSet<Object>(valuesCount);
-          for (int vc=0; vc < valuesCount; vc++) {
-            if (isReferenceField) {
-              String valueId = getReferenceValue(values, vc);
-              PrestoTopic valueTopic = dataProvider.getTopicById(valueId);
-              addableValues.add(valueTopic);
-            } else {
-              addableValues.add(getPrimitiveValue(values, vc));
-            }
+          if (isReferenceField) {
+            String valueId = getReferenceValue(value);
+            PrestoTopic valueTopic = dataProvider.getTopicById(valueId);
+            addableValues.add(valueTopic);
+          } else {
+            addableValues.add(getPrimitiveValue(value));
           }
-          changeSet.addValues(field, addableValues);
-          changeSet.save();
         }
+        changeSet.addValues(field, addableValues);
+        changeSet.save();
       }
       return getFieldInfo(uriInfo, topic, field, topic.getValues(field), false);
     } catch (JSONException e) {
@@ -421,34 +402,29 @@ public class Utils {
     }
   }
 
-  public static FieldData removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, JSONObject fieldObject) {
+  public static FieldData removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, FieldData fieldObject) {
     try {
 
       PrestoDataProvider dataProvider = session.getDataProvider();
 
       if  (field != null) {
 
-        JSONArray values = fieldObject.getJSONArray("values");
-        int valuesCount = values.length();
-        if (valuesCount > 0) {
+        PrestoChangeSet changeSet = dataProvider.updateTopic(topic);
+        boolean isReferenceField = field.isReferenceField();
+        Collection<Object> removeableValues = new HashSet<Object>();
 
-          PrestoChangeSet changeSet = dataProvider.updateTopic(topic);
+        for (Value value : fieldObject.getValues()) {
 
-          boolean isReferenceField = field.isReferenceField();
-
-          Collection<Object> removeableValues = new HashSet<Object>(valuesCount);
-          for (int vc=0; vc < valuesCount; vc++) {
-            if (isReferenceField) {
-              String valueId = getReferenceValue(values, vc);
-              PrestoTopic valueTopic = dataProvider.getTopicById(valueId);
-              removeableValues.add(valueTopic);
-            } else {
-              removeableValues.add(getPrimitiveValue(values, vc));
-            }
+          if (isReferenceField) {
+            String valueId = getReferenceValue(value);
+            PrestoTopic valueTopic = dataProvider.getTopicById(valueId);
+            removeableValues.add(valueTopic);
+          } else {
+            removeableValues.add(getPrimitiveValue(value));
           }
-          changeSet.removeValues(field, removeableValues);
-          changeSet.save();
         }
+        changeSet.removeValues(field, removeableValues);
+        changeSet.save();
       }
       return getFieldInfo(uriInfo, topic, field, topic.getValues(field), false);
     } catch (JSONException e) {
@@ -457,8 +433,8 @@ public class Utils {
   }
 
   public static PrestoTopic updateTopic(UriInfo uriInfo, PrestoSession session,
-        PrestoTopic topic, PrestoType topicType, PrestoView fieldsView,
-        JSONObject data) {
+      PrestoTopic topic, PrestoType topicType, PrestoView fieldsView,
+      Topic data) {
     PrestoDataProvider dataProvider = session.getDataProvider();
 
     PrestoChangeSet changeSet;
@@ -471,35 +447,29 @@ public class Utils {
     Map<String, PrestoFieldUsage> fields = getFieldInstanceMap(topic, topicType, fieldsView);
 
     try {
-      JSONArray fieldsArray = data.getJSONArray("fields");
-      int fieldsCount = fieldsArray.length();
-      for (int fc=0; fc < fieldsCount; fc++) {
-
-        JSONObject fieldObject = fieldsArray.getJSONObject(fc);
-        String fieldId = fieldObject.getString("id");
+      for (FieldData jsonField : data.getFields()) {
+        String fieldId = jsonField.getId();
 
         PrestoFieldUsage field = fields.get(fieldId);
 
         boolean isReferenceField = field.isReferenceField();
         boolean isExternalType = field.getExternalType() != null;
-        boolean isReadOnly = fieldObject.optBoolean("readOnly", false); // ignore readOnly-fields 
+        boolean isReadOnly = field.isReadOnly(); // ignore readOnly-fields 
         if (!isReadOnly) {
           if  (fields.containsKey(fieldId)) {
+            Collection<Value> values = jsonField.getValues();
+            Collection<Object> newValues = new ArrayList<Object>(values.size());
+            for (Value value : values) {
 
-            JSONArray values = fieldObject.getJSONArray("values");
-            int valuesCount = values.length();
-            Collection<Object> newValues = new ArrayList<Object>(valuesCount); 
-            for (int vc=0; vc < valuesCount; vc++) {
-
-              JSONObject embeddedReferenceValue = getEmbeddedReference(values, vc);
+              Topic embeddedReferenceValue = getEmbeddedReference(value);
               if (embeddedReferenceValue != null) {
                 PrestoView valueView = field.getValueView();
                 newValues.add(updateEmbeddedReference(uriInfo, session, valueView, embeddedReferenceValue));
               } else if (isReferenceField && !isExternalType) {
-                String valueId = getReferenceValue(values, vc);
+                String valueId = getReferenceValue(value);
                 newValues.add(dataProvider.getTopicById(valueId));
               } else {
-                newValues.add(getPrimitiveValue(values, vc));
+                newValues.add(getPrimitiveValue(value));
               }
             }
             changeSet.setValues(field, newValues);
@@ -513,26 +483,27 @@ public class Utils {
     return topic;
   }
 
-  private static PrestoTopic updateEmbeddedReference(UriInfo uriInfo, PrestoSession session, PrestoView fieldsView, JSONObject newTopic) throws JSONException {
-      
-      PrestoDataProvider dataProvider = session.getDataProvider();
-      PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
-      
-      String topicId = newTopic.has("id") ? newTopic.getString("id") : null;
-      
-      PrestoTopic topic = null;
-      PrestoType topicType;
-      if (topicId == null) {
-        String topicTypeId = newTopic.getJSONObject("type").getString("id");
-        topicType = schemaProvider.getTypeById(topicTypeId);
-      } else {
-        topic = dataProvider.getTopicById(topicId);
-        topicType = schemaProvider.getTypeById(topic.getTypeId());
-      }
-      
-     return Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, newTopic);
+  private static PrestoTopic updateEmbeddedReference(UriInfo uriInfo, PrestoSession session, PrestoView fieldsView, Topic newTopic) throws JSONException {
+
+    PrestoDataProvider dataProvider = session.getDataProvider();
+    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+
+    String topicId = newTopic.getId();
+
+    PrestoTopic topic = null;
+    PrestoType topicType;
+    if (topicId == null) {
+      TopicType type = newTopic.getType();
+      String topicTypeId = type.getId();
+      topicType = schemaProvider.getTypeById(topicTypeId);
+    } else {
+      topic = dataProvider.getTopicById(topicId);
+      topicType = schemaProvider.getTypeById(topic.getTypeId());
+    }
+
+    return Utils.updateTopic(uriInfo, session, topic, topicType, fieldsView, newTopic);
   }
-  
+
   private static Map<String, PrestoFieldUsage> getFieldInstanceMap(PrestoTopic topic,
       PrestoType topicType, PrestoView fieldsView) {
     Map<String, PrestoFieldUsage> fields = new HashMap<String, PrestoFieldUsage>();
@@ -542,23 +513,16 @@ public class Utils {
     return fields;
   }
 
-  private static JSONObject getEmbeddedReference(JSONArray values, int vindex) throws JSONException {
-    JSONObject valueObject = values.getJSONObject(vindex);
-    if (valueObject.has("embedded")) {
-       return valueObject.getJSONObject("embedded");
-    } else {
-        return null;
-    }
-  }
-  
-  private static String getPrimitiveValue(JSONArray values, int vindex) throws JSONException {
-    JSONObject valueObject = values.getJSONObject(vindex);
-    return valueObject.getString("value");              
+  private static Topic getEmbeddedReference(Value value) throws JSONException {
+    return value.getEmbedded();
   }
 
-  private static String getReferenceValue(JSONArray values, int vindex) throws JSONException {
-    JSONObject valueObject = values.getJSONObject(vindex);
-    return valueObject.getString("value");              
+  private static String getPrimitiveValue(Value value) throws JSONException {
+    return value.getValue();
+  }
+
+  private static String getReferenceValue(Value value) throws JSONException {
+    return value.getValue();
   }
 
 }
