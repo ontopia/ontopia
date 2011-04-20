@@ -3,9 +3,11 @@ package net.ontopia.presto.jaxb;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Value {
 
     private Boolean removable;
