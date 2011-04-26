@@ -129,6 +129,7 @@ public class Utils {
     return result;
   }
 
+  @SuppressWarnings("unchecked")
   private static FieldData getFieldInfo(UriInfo uriInfo,
       PrestoTopic topic, PrestoFieldUsage field, Collection<? extends Object> fieldValues, boolean readOnlyMode) {
 

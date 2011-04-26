@@ -79,7 +79,7 @@ public class CouchChangeSet implements PrestoChangeSet {
     ObjectNode data = topic.getData();
 
     List<Change> inverseChanges = new ArrayList<Change>();
-    
+
     for (Change change : changes) {
       PrestoFieldUsage field = change.getField();
       Collection<Object> values = change.getValues();
@@ -95,17 +95,17 @@ public class CouchChangeSet implements PrestoChangeSet {
             addableValues.add(value);
           }
         }
-//        System.out.println("-----e> " + existingValues);
-//        System.out.println("-----a> " + addableValues);
-//        System.out.println("-----r> " + removableValues);
-        
+        //        System.out.println("-----e> " + existingValues);
+        //        System.out.println("-----a> " + addableValues);
+        //        System.out.println("-----r> " + removableValues);
+
         if (!addableValues.isEmpty()) {
           inverseChanges.add(new Change(Change.ChangeType.ADD, field, addableValues));
         }
         if (!removableValues.isEmpty()) {
           inverseChanges.add(new Change(Change.ChangeType.REMOVE, field, removableValues));
         }
-        
+
         setValue(data, field, values);        
         break;
       }
@@ -120,34 +120,41 @@ public class CouchChangeSet implements PrestoChangeSet {
         break;
       }
       }
-//      System.out.println("F: " + field.getId());
+      //      System.out.println("F: " + field.getId());
+ 
+      // update name property
       if (field.isNameField()) {
-    	
         String name;
         Object value = values.isEmpty() ? null : values.iterator().next();
-		if (value == null) {
-		    name = "No name";
-		} else if (value instanceof CouchTopic) {
-		    name = ((CouchTopic)value).getName();
-		} else {
-		    name = value.toString();
-    	}
+        if (value == null) {
+          name = "No name";
+        } else if (value instanceof CouchTopic) {
+          name = ((CouchTopic)value).getName();
+        } else {
+          name = value.toString();
+        }
         data.put(":name", name);
       }
     }
     if (isNew) {
       couchConnector.create(data);
-//      System.out.println("C: " + data.get("_id").toString() + " " + data.get("_rev").toString());
+      //      System.out.println("C: " + data.get("_id").toString() + " " + data.get("_rev").toString());
     } else {
       couchConnector.update(data);      
-//      System.out.println("U: " + data.get("_id").toString() + " " + data.get("_rev").toString());
+      //      System.out.println("U: " + data.get("_id").toString() + " " + data.get("_rev").toString());
     }
 
+    updateInverseFields(isNew, inverseChanges);
+
+    return topic;
+  }
+
+  private void updateInverseFields(boolean isNew, List<Change> inverseChanges) {
     // update inverse fields
     for (Change change : inverseChanges) {
       PrestoFieldUsage field = change.getField();
       Collection<Object> values = change.getValues();
-//      System.out.println("Ch: " + field.getId() + " " + change.getType() + " " +  values);
+      //      System.out.println("Ch: " + field.getId() + " " + change.getType() + " " +  values);
       switch(change.getType()) {
       case SET: {
         throw new RuntimeException("Should not get one of these.");
@@ -159,12 +166,12 @@ public class CouchChangeSet implements PrestoChangeSet {
             CouchTopic valueTopic = (CouchTopic)value;
             PrestoType type = field.getSchemaProvider().getTypeById(valueTopic.getTypeId());
             PrestoField inverseField = type.getFieldById(inverseFieldId);
-//            System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
+            //            System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
             ObjectNode valueData = valueTopic.getData(); 
             addValue(valueData, inverseField, Collections.singleton((Object)topic));
-//            System.out.println("IF2: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
+            //            System.out.println("IF2: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
             dataProvider.getCouchConnector().update(valueData);      
-//            System.out.println("U2: " + valueData.get("_id").toString() + " " + valueData.get("_rev").toString());
+            //            System.out.println("U2: " + valueData.get("_id").toString() + " " + valueData.get("_rev").toString());
           }
         }
         break;
@@ -177,12 +184,12 @@ public class CouchChangeSet implements PrestoChangeSet {
               CouchTopic valueTopic = (CouchTopic)value;
               PrestoType type = field.getSchemaProvider().getTypeById(valueTopic.getTypeId());
               PrestoField inverseField = type.getFieldById(inverseFieldId);
-//              System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
+              //              System.out.println("IF1: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
               ObjectNode valueData = valueTopic.getData(); 
               removeValue(valueData, inverseField, Collections.singleton((Object)topic));
-//              System.out.println("IF2: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
+              //              System.out.println("IF2: " + field.getId() + " " + inverseFieldId + " " + inverseField + " " + valueTopic.getData());
               dataProvider.getCouchConnector().update(valueData);      
-//              System.out.println("U2: " + valueData.get("_id").toString() + " " + valueData.get("_rev").toString());
+              //              System.out.println("U2: " + valueData.get("_id").toString() + " " + valueData.get("_rev").toString());
             }
           }
         }
@@ -190,12 +197,12 @@ public class CouchChangeSet implements PrestoChangeSet {
       }
       }
     }
-
-    return topic;
   }
 
   private void setValue(ObjectNode data, PrestoField field, Collection<Object> values) {
-    if (!values.isEmpty()) {
+    if (values.isEmpty()) {
+      data.remove(field.getId());
+    } else {
       ArrayNode arrayNode = dataProvider.getObjectMapper().createArrayNode();
       for (Object value : values) {
         if (value instanceof CouchTopic) {
@@ -214,9 +221,9 @@ public class CouchChangeSet implements PrestoChangeSet {
       Collection<String> result = new HashSet<String>();
       JsonNode jsonNode = data.get(field.getId());
       if (jsonNode != null && jsonNode.isArray()) {
-          for (JsonNode existing : jsonNode) {
-              result.add(existing.getTextValue());
-          }
+        for (JsonNode existing : jsonNode) {
+          result.add(existing.getTextValue());
+        }
       }
       for (Object value : values) {
         if (value instanceof CouchTopic) {
@@ -228,10 +235,10 @@ public class CouchChangeSet implements PrestoChangeSet {
       }
       ArrayNode arrayNode = dataProvider.getObjectMapper().createArrayNode();
       for (String value : result) {
-          arrayNode.add(value);
+        arrayNode.add(value);
       }
-      
-//      System.out.println("A: " + arrayNode);
+
+      //      System.out.println("A: " + arrayNode);
       data.put(field.getId(), arrayNode);
     }
   }
@@ -239,7 +246,7 @@ public class CouchChangeSet implements PrestoChangeSet {
   private void removeValue(ObjectNode data, PrestoField field, Collection<Object> values) {
     if (!values.isEmpty()) {
       JsonNode jsonNode = data.get(field.getId());
-//      System.out.println("R: " + field.getId() + " " + values);
+      //      System.out.println("R: " + field.getId() + " " + values);
       if (jsonNode != null && jsonNode.isArray()) {
         Collection<String> existing = new HashSet<String>(jsonNode.size());
         for (JsonNode item : jsonNode) {
