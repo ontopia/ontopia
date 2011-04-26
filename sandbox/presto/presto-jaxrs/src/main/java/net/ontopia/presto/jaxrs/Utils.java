@@ -29,8 +29,6 @@ import net.ontopia.presto.spi.PrestoTopic;
 import net.ontopia.presto.spi.PrestoType;
 import net.ontopia.presto.spi.PrestoView;
 
-import org.codehaus.jettison.json.JSONException;
-
 public class Utils {
 
   public static Map<String,Object> getTopicData(UriInfo uriInfo, PrestoTopic topic, PrestoType type) {
@@ -373,63 +371,53 @@ public class Utils {
   }
 
   public static FieldData addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, FieldData fieldObject) {
-    try {
+    PrestoDataProvider dataProvider = session.getDataProvider();
 
-      PrestoDataProvider dataProvider = session.getDataProvider();
+    if  (field != null) {
 
-      if  (field != null) {
+      PrestoChangeSet changeSet = dataProvider.updateTopic(topic);        
+      boolean isReferenceField = field.isReferenceField();        
+      Collection<Object> addableValues = new HashSet<Object>();
 
-        PrestoChangeSet changeSet = dataProvider.updateTopic(topic);        
-        boolean isReferenceField = field.isReferenceField();        
-        Collection<Object> addableValues = new HashSet<Object>();
+      for (Value value : fieldObject.getValues()) {
 
-        for (Value value : fieldObject.getValues()) {
-
-          if (isReferenceField) {
-            String valueId = getReferenceValue(value);
-            PrestoTopic valueTopic = dataProvider.getTopicById(valueId);
-            addableValues.add(valueTopic);
-          } else {
-            addableValues.add(getPrimitiveValue(value));
-          }
+        if (isReferenceField) {
+          String valueId = getReferenceValue(value);
+          PrestoTopic valueTopic = dataProvider.getTopicById(valueId);
+          addableValues.add(valueTopic);
+        } else {
+          addableValues.add(getPrimitiveValue(value));
         }
-        changeSet.addValues(field, addableValues);
-        changeSet.save();
       }
-      return getFieldInfo(uriInfo, topic, field, topic.getValues(field), false);
-    } catch (JSONException e) {
-      throw new RuntimeException(e);
+      changeSet.addValues(field, addableValues);
+      changeSet.save();
     }
+    return getFieldInfo(uriInfo, topic, field, topic.getValues(field), false);
   }
 
   public static FieldData removeFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, FieldData fieldObject) {
-    try {
+    PrestoDataProvider dataProvider = session.getDataProvider();
 
-      PrestoDataProvider dataProvider = session.getDataProvider();
+    if  (field != null) {
 
-      if  (field != null) {
+      PrestoChangeSet changeSet = dataProvider.updateTopic(topic);
+      boolean isReferenceField = field.isReferenceField();
+      Collection<Object> removeableValues = new HashSet<Object>();
 
-        PrestoChangeSet changeSet = dataProvider.updateTopic(topic);
-        boolean isReferenceField = field.isReferenceField();
-        Collection<Object> removeableValues = new HashSet<Object>();
+      for (Value value : fieldObject.getValues()) {
 
-        for (Value value : fieldObject.getValues()) {
-
-          if (isReferenceField) {
-            String valueId = getReferenceValue(value);
-            PrestoTopic valueTopic = dataProvider.getTopicById(valueId);
-            removeableValues.add(valueTopic);
-          } else {
-            removeableValues.add(getPrimitiveValue(value));
-          }
+        if (isReferenceField) {
+          String valueId = getReferenceValue(value);
+          PrestoTopic valueTopic = dataProvider.getTopicById(valueId);
+          removeableValues.add(valueTopic);
+        } else {
+          removeableValues.add(getPrimitiveValue(value));
         }
-        changeSet.removeValues(field, removeableValues);
-        changeSet.save();
       }
-      return getFieldInfo(uriInfo, topic, field, topic.getValues(field), false);
-    } catch (JSONException e) {
-      throw new RuntimeException(e);
+      changeSet.removeValues(field, removeableValues);
+      changeSet.save();
     }
+    return getFieldInfo(uriInfo, topic, field, topic.getValues(field), false);
   }
 
   public static PrestoTopic updateTopic(UriInfo uriInfo, PrestoSession session,
@@ -446,44 +434,40 @@ public class Utils {
 
     Map<String, PrestoFieldUsage> fields = getFieldInstanceMap(topic, topicType, fieldsView);
 
-    try {
-      for (FieldData jsonField : data.getFields()) {
-        String fieldId = jsonField.getId();
+    for (FieldData jsonField : data.getFields()) {
+      String fieldId = jsonField.getId();
 
-        PrestoFieldUsage field = fields.get(fieldId);
+      PrestoFieldUsage field = fields.get(fieldId);
 
-        boolean isReferenceField = field.isReferenceField();
-        boolean isExternalType = field.getExternalType() != null;
-        boolean isReadOnly = field.isReadOnly(); // ignore readOnly-fields 
-        if (!isReadOnly) {
-          if  (fields.containsKey(fieldId)) {
-            Collection<Value> values = jsonField.getValues();
-            Collection<Object> newValues = new ArrayList<Object>(values.size());
-            for (Value value : values) {
+      boolean isReferenceField = field.isReferenceField();
+      boolean isExternalType = field.getExternalType() != null;
+      boolean isReadOnly = field.isReadOnly(); // ignore readOnly-fields 
+      if (!isReadOnly) {
+        if  (fields.containsKey(fieldId)) {
+          Collection<Value> values = jsonField.getValues();
+          Collection<Object> newValues = new ArrayList<Object>(values.size());
+          for (Value value : values) {
 
-              Topic embeddedReferenceValue = getEmbeddedReference(value);
-              if (embeddedReferenceValue != null) {
-                PrestoView valueView = field.getValueView();
-                newValues.add(updateEmbeddedReference(uriInfo, session, valueView, embeddedReferenceValue));
-              } else if (isReferenceField && !isExternalType) {
-                String valueId = getReferenceValue(value);
-                newValues.add(dataProvider.getTopicById(valueId));
-              } else {
-                newValues.add(getPrimitiveValue(value));
-              }
+            Topic embeddedReferenceValue = getEmbeddedReference(value);
+            if (embeddedReferenceValue != null) {
+              PrestoView valueView = field.getValueView();
+              newValues.add(updateEmbeddedReference(uriInfo, session, valueView, embeddedReferenceValue));
+            } else if (isReferenceField && !isExternalType) {
+              String valueId = getReferenceValue(value);
+              newValues.add(dataProvider.getTopicById(valueId));
+            } else {
+              newValues.add(getPrimitiveValue(value));
             }
-            changeSet.setValues(field, newValues);
           }
+          changeSet.setValues(field, newValues);
         }
       }
-      topic = changeSet.save();
-    } catch (JSONException e) {
-      throw new RuntimeException(e);
     }
+    topic = changeSet.save();
     return topic;
   }
 
-  private static PrestoTopic updateEmbeddedReference(UriInfo uriInfo, PrestoSession session, PrestoView fieldsView, Topic newTopic) throws JSONException {
+  private static PrestoTopic updateEmbeddedReference(UriInfo uriInfo, PrestoSession session, PrestoView fieldsView, Topic newTopic) {
 
     PrestoDataProvider dataProvider = session.getDataProvider();
     PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
@@ -513,15 +497,15 @@ public class Utils {
     return fields;
   }
 
-  private static Topic getEmbeddedReference(Value value) throws JSONException {
+  private static Topic getEmbeddedReference(Value value) {
     return value.getEmbedded();
   }
 
-  private static String getPrimitiveValue(Value value) throws JSONException {
+  private static String getPrimitiveValue(Value value) {
     return value.getValue();
   }
 
-  private static String getReferenceValue(Value value) throws JSONException {
+  private static String getReferenceValue(Value value) {
     return value.getValue();
   }
 
