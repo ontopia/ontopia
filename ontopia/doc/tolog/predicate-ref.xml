@@ -1194,18 +1194,6 @@ association to the reifying topic (or vice versa).
 This query finds the topic map first, then the topic reifying it (if
 there is one).
 </para>
-
-<example>
-<title>Redefining the <symbol>reifies</symbol> predicate</title>
-<literallayout>reifies($T, $O) :-
-  subject-identifier($T, $LOC),
-  item-identifier($O, $LOC).</literallayout>
-</example>
-
-<para>
-If tolog did not have the <symbol>reifies</symbol> predicate, the rule
-above could have been used to free it.
-</para>
 </refsect1>
 </refentry>
 
