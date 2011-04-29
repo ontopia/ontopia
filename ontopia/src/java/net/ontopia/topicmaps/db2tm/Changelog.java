@@ -120,7 +120,7 @@ public class Changelog {
   public int getAction(String value) {
     Integer a = (Integer)actionMapping.get(value);
     if (a == null)
-      throw new DB2TMInputException("Unknown action value '" + value + " 'in change log table '" + getTable() + "'");
+      throw new DB2TMInputException("Unknown action value '" + value + "' in change log table '" + getTable() + "'");
     else
       return a.intValue();
   }
@@ -140,7 +140,7 @@ public class Changelog {
       actionMapping.put(value, new Integer(ChangelogReaderIF.CHANGE_TYPE_IGNORE));
       ignoreActions.add(value);
     } else
-      throw new DB2TMConfigException("Unknown action value '" + value + " 'in change log table '" + getTable() + "'");
+      throw new DB2TMConfigException("Unknown action value '" + value + "' in change log table '" + getTable() + "'");
   }
 
   public void removeActionMapping(String value) {
