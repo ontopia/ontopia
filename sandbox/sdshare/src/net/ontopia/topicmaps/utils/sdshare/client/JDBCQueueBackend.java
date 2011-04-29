@@ -13,11 +13,12 @@ import java.sql.SQLException;
  * INTERNAL: Backend which stores list of changed URIs in a database
  * via JDBC so that another process can get them from there.
  */
-public class JDBCQueueBackend extends AbstractBackend {
+public class JDBCQueueBackend extends AbstractBackend
+  implements ClientBackendIF {
   //static Logger log = LoggerFactory.getLogger(JDBCQueueBackend.class.getName());
   
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot) {
-    // somewhat tricky, this one
+    // FIXME: implement!
   }
 
   public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
@@ -37,7 +38,8 @@ public class JDBCQueueBackend extends AbstractBackend {
     }
   }
 
-  private void writeResource(Statement stmt, String topicsi, String datauri) {
+  private void writeResource(Statement stmt, String topicsi, String datauri)
+    throws SQLException {
     stmt.executeUpdate("insert into UPDATED_RESOURCES values (" +
                        "  NULL, '" + topicsi + "', '" + datauri + "')");
   }
@@ -74,7 +76,7 @@ public class JDBCQueueBackend extends AbstractBackend {
   }
 
   private void verifySchema(Statement stmt) throws SQLException {
-    ResultSet rs = stmt.executeQuery("select * from tables where " +
+    ResultSet rs = stmt.executeQuery("select * from information_schema.tables where " +
                                      "table_name = 'UPDATED_RESOURCES'");
     boolean present = rs.next();
     rs.close();
