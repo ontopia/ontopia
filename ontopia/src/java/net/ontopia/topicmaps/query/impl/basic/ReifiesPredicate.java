@@ -1,6 +1,4 @@
 
-// $Id: ReifiesPredicate.java,v 1.13 2007/09/18 10:03:56 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import net.ontopia.topicmaps.core.TMObjectIF;
@@ -31,9 +29,9 @@ public class ReifiesPredicate implements BasicPredicateIF {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
     else if (boundparams[0] && !boundparams[1])
-      return PredicateDrivenCostEstimator.SMALL_RESULT;
+      return PredicateDrivenCostEstimator.SINGLE_RESULT;
     else if (!boundparams[0] && boundparams[1])
-      return PredicateDrivenCostEstimator.FILTER_RESULT;
+      return PredicateDrivenCostEstimator.SINGLE_RESULT;
     else
       return PredicateDrivenCostEstimator.BIG_RESULT;
   }
