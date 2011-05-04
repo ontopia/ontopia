@@ -41,7 +41,8 @@ public class JDBCQueueBackend extends AbstractBackend
   private void writeResource(Statement stmt, String topicsi, String datauri)
     throws SQLException {
     stmt.executeUpdate("insert into UPDATED_RESOURCES values (" +
-                       "  NULL, '" + topicsi + "', '" + datauri + "')");
+                       "  NULL, '" + escape(topicsi) + "', '" +
+                       escape(datauri) + "')");
   }
 
   public int getLinkScore(AtomLink link) {
@@ -88,5 +89,9 @@ public class JDBCQueueBackend extends AbstractBackend
                        "  id int auto_increment primary key, " +
                        "  uri varchar not null, " +
                        "  fragment_uri varchar not null )");
+  }
+
+  private String escape(String strval) {
+    return strval.replace("'", "''");
   }
 }

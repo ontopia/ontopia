@@ -293,8 +293,8 @@ public class FeedReaders {
         
         // check if this is a new fragment, or if we saw it before
         if (updated > lastChange) {
-          log.info("New fragment, updated: " + updated + ", last change: " +
-                   lastChange);
+          log.trace("New fragment, updated: " + updated + ", last change: " +
+                    lastChange);
           
           // create new fragment
           Fragment f = new Fragment(links, updated, content);

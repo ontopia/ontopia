@@ -119,8 +119,9 @@ class SyncThread extends Thread {
    * @param force If true we ignore whether it's time to check yet.
    */
   public void sync(boolean force) throws IOException {
+    boolean found = false;
     for (SyncEndpoint endpoint : endpoints) {
-      log.debug("Checking " + endpoint.getHandle());
+      log.trace("Checking endpoint " + endpoint.getHandle());
       for (SyncSource source : endpoint.getSources()) {
         // verify that it's time to check this source now, and that the source
         // hasn't failed.
@@ -128,6 +129,9 @@ class SyncThread extends Thread {
           continue;
         if (!source.isTimeToCheck() && !force)
           continue;
+        
+        log.debug("Checking source " + source.getHandle() + " in " +
+                  endpoint.getHandle());
 
         // it was time, so we download the feed and go through the
         // actual fragments
@@ -139,6 +143,7 @@ class SyncThread extends Thread {
             backend.applyFragments(endpoint, feed.getFragments());
             for (Fragment fragment : feed.getFragments())
               source.setLastChange(fragment.getUpdated());
+            found = true;
           }
         } catch (Throwable e) {
           // we log the error, and note it on the source. that stops further
@@ -151,8 +156,9 @@ class SyncThread extends Thread {
         // even if it failed.
         source.updated();
       }
-    }    
-    save();
+    }
+    if (found)
+      save();
   }
 
   /**

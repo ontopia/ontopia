@@ -22,8 +22,6 @@ public abstract class AbstractBackend {
     AtomLink preferred = null;
     for (AtomLink link : links) {
       int score = getLinkScore(link);
-      log.warn("Link " + link.getUri() + " score: " + score + ", MIME: " +
-               link.getMIMEType());
       if (score > highest) {
         highest = score;
         preferred = link;
