@@ -5,7 +5,7 @@ import java.util.Stack;
 import java.io.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.ParserFactory;
-import net.ontopia.utils.StringUtils;
+
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
