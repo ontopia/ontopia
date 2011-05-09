@@ -3,11 +3,19 @@ package net.ontopia.topicmaps.utils.sdshare.client;
 
 import java.util.List;
 import java.util.Properties;
+import java.io.IOException;
 import java.sql.Driver;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import com.hp.hpl.jena.rdf.arp.AResource;
+import com.hp.hpl.jena.rdf.arp.ALiteral;
+import com.hp.hpl.jena.rdf.arp.StatementHandler;
+
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.topicmaps.utils.rdf.RDFUtils;
 
 /**
  * INTERNAL: Backend which stores list of changed URIs in a database
@@ -18,7 +26,14 @@ public class JDBCQueueBackend extends AbstractBackend
   //static Logger log = LoggerFactory.getLogger(JDBCQueueBackend.class.getName());
   
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot) {
-    // FIXME: implement!
+    InsertHandler handler = new InsertHandler(endpoint.getHandle());
+    try {
+      String sourceuri = snapshot.getSnapshotURI();
+      RDFUtils.parseRDFXML(sourceuri, handler);
+      handler.close();
+    } catch (IOException e) {
+      throw new OntopiaRuntimeException(e);
+    }
   }
 
   public void applyFragments(SyncEndpoint endpoint, List<Fragment> fragments) {
@@ -88,10 +103,46 @@ public class JDBCQueueBackend extends AbstractBackend
     stmt.executeUpdate("create table UPDATED_RESOURCES ( " +
                        "  id int auto_increment primary key, " +
                        "  uri varchar not null, " +
-                       "  fragment_uri varchar not null )");
+                       "  fragment_uri varchar )");
   }
 
   private String escape(String strval) {
     return strval.replace("'", "''");
+  }
+
+  // ===== Writing INSERT-format triples
+
+  public class InsertHandler implements StatementHandler {
+    private Statement stmt;
+    
+    public InsertHandler(String jdbcuri) {
+      stmt = getConnection(jdbcuri);
+    }
+
+    public void statement(AResource sub, AResource pred, ALiteral lit) {
+      try {
+        // FIXME: this doesn't handle blank nodes
+        writeResource(stmt, sub.getURI(), null);
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    public void statement(AResource sub, AResource pred, AResource obj) {
+      try {
+        // FIXME: this doesn't handle blank nodes
+        writeResource(stmt, sub.getURI(), null);
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
+     
+    public void close() {
+      try {
+        stmt.close();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
   }
 }
