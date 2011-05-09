@@ -116,6 +116,7 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
 
     // (1) putting together the request
     
+    statement = statement.replace('\n', '+');
     statement = statement.replace(' ', '+');
     byte rawdata[] = ("query=" + statement).getBytes("utf-8");
     
@@ -137,7 +138,8 @@ public class SparqlBackend extends AbstractBackend implements ClientBackendIF {
 
     if (response.getStatusLine().getStatusCode() != 200)
       throw new OntopiaRuntimeException("Error sending SPARQL query: " +
-                                        response.getStatusLine());
+                                        response.getStatusLine() + " " +
+                                        msg);
   }
 
   // ===== Writing INSERT-format triples
