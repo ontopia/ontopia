@@ -28,6 +28,7 @@ public class JDBCQueueBackend extends AbstractBackend
   public void loadSnapshot(SyncEndpoint endpoint, Snapshot snapshot) {
     InsertHandler handler = new InsertHandler(endpoint.getHandle());
     try {
+      // FIXME: should we delete contents first?
       String sourceuri = snapshot.getSnapshotURI();
       RDFUtils.parseRDFXML(sourceuri, handler);
       handler.close();
@@ -139,6 +140,7 @@ public class JDBCQueueBackend extends AbstractBackend
      
     public void close() {
       try {
+        stmt.getConnection().commit();
         stmt.close();
       } catch (SQLException e) {
         throw new RuntimeException(e);
