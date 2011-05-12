@@ -19,8 +19,9 @@ public class PojoType implements PrestoType {
 
   private String id;
   private String name;
-  private boolean isAbstract;
   private boolean isReadOnly;
+  private boolean isHidden;
+  private boolean isCreatable;
 
   private Collection<PrestoType> directSubTypes = new HashSet<PrestoType>();
 
@@ -66,12 +67,16 @@ public class PojoType implements PrestoType {
     return schemaProvider;
   }
 
-  public boolean isAbstract() {
-    return isAbstract;
-  }
-
   public boolean isReadOnly() {
     return isReadOnly;
+  }
+
+  public boolean isHidden() {
+    return isHidden;
+  }
+
+  public boolean isCreatable() {
+    return isCreatable && !isReadOnly;
   }
   
   public Collection<PrestoType> getDirectSubTypes() {
@@ -132,12 +137,16 @@ public class PojoType implements PrestoType {
     this.name = name;
   }
 
-  protected void setAbstract(boolean isAbstract) {
-    this.isAbstract = isAbstract;
-  }
-
   protected void setReadOnly(boolean isReadOnly) {
     this.isReadOnly = isReadOnly;
+  }
+
+  protected void setHidden(boolean isHidden) {
+    this.isHidden = isHidden;
+  }
+
+  protected void setCreatable(boolean isCreatable) {
+    this.isCreatable = isCreatable;
   }
 
   protected void addDirectSubType(PrestoType type) {

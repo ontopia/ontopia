@@ -71,11 +71,11 @@ public class Utils {
 
     TopicType typeInfo = getTypeInfo(uriInfo, type);    
 
-    boolean readOnly = readOnlyMode || type.isReadOnly();
+    boolean readOnly = readOnlyMode || type.isReadOnly(); // ISSUE: do we really need this?
     typeInfo.setReadOnly(readOnly);
 
     List<Link> typeLinks = new ArrayList<Link>();
-    if (!readOnlyMode && !type.isAbstract() && !readOnly) {
+    if (!readOnlyMode && type.isCreatable()) {
       typeLinks.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
     }
     typeInfo.setLinks(typeLinks);
@@ -200,7 +200,8 @@ public class Utils {
       // fieldInfo.put("type", field.getFieldType());
       fieldInfo.setDatatype("reference");
 
-      boolean allowEdit = !field.isReadOnly();
+      // TODO: make this a bit clearer
+      boolean allowEdit = !readOnlyMode && !field.isReadOnly();
       boolean allowAddRemove = allowEdit && !field.isNewValuesOnly();
       boolean allowCreate = allowEdit && !field.isExistingValuesOnly();
       if (readOnlyMode || !allowEdit) {
@@ -218,11 +219,12 @@ public class Utils {
           fieldLinks.add(new Link("add-field-values", uriInfo.getBaseUri() + "editor/add-field-values/" + fieldReference));
           fieldLinks.add(new Link("remove-field-values", uriInfo.getBaseUri() + "editor/remove-field-values/" + fieldReference));
         }
-      }
+      }      
       fieldInfo.setLinks(fieldLinks);
 
     } else {
       // used by query fields, which can have both primitive and reference values
+        
       // fieldInfo.put("type", field.getFieldType());
       fieldInfo.setDatatype("query");
       if (readOnlyMode || field.isReadOnly()) {

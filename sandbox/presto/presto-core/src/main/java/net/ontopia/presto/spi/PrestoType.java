@@ -12,9 +12,11 @@ public interface PrestoType {
 
   PrestoSchemaProvider getSchemaProvider();
 
-  boolean isAbstract();
+  boolean isReadOnly(); // can you edit it?
 
-  boolean isReadOnly();
+  boolean isHidden(); // will it show up? (instances will if exposed as field values)
+
+  boolean isCreatable(); // standalone creatable (yes by default). can still be created through a field if in createTypes.
 
   // TODO: public boolean delete();
   

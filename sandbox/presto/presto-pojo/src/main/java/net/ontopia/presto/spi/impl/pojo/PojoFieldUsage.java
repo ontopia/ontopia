@@ -69,10 +69,6 @@ public class PojoFieldUsage implements PrestoFieldUsage {
         return field.getValueView();
     }
 
-    public String getFieldType() {
-        return field.getFieldType();
-    }
-
     public int getMinCardinality() {
         return field.getMinCardinality();
     }

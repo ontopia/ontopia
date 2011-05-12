@@ -13,8 +13,6 @@ public interface PrestoField {
   boolean isPrimitiveField();
   
   boolean isReferenceField();
-
-  String getFieldType();
   
   int getMinCardinality();
 
@@ -24,7 +22,7 @@ public interface PrestoField {
 
   String getExternalType();
 
-  String getValidationType();
+  String getValidationType(); // ISSUE: or concreteType/actualType?
 
   boolean isEmbedded();
 

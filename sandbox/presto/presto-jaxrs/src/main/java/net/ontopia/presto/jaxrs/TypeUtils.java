@@ -15,7 +15,7 @@ public class TypeUtils {
   static Collection<TopicTypeTree> getAvailableTypes(UriInfo uriInfo, Collection<PrestoType> types, boolean tree) {
     Collection<TopicTypeTree> result = new ArrayList<TopicTypeTree>(); 
     for (PrestoType type : types) {
-      if (type.isReadOnly()) {
+      if (type.isHidden()) {
         continue;
       }
       TopicTypeTree typeMap = new TopicTypeTree();
@@ -23,7 +23,7 @@ public class TypeUtils {
       typeMap.setName(type.getName());
 
       List<Link> links = new ArrayList<Link>();
-      if (!type.isAbstract()) {
+      if (type.isCreatable()) {
         links.add(new Link("create-instance", Links.getCreateInstanceLinkFor(uriInfo, type)));
       }
 

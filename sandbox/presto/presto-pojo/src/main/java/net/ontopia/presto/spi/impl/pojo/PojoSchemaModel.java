@@ -68,16 +68,20 @@ public class PojoSchemaModel {
       // name
       String name = typeConfig.get("name").getTextValue();
       type.setName(name);
-      // abstract
-      if (typeConfig.has("abstract")) {
-        type.setAbstract(typeConfig.get("abstract").getBooleanValue());
-      }
       // readOnly
       boolean readOnlyType = false;
       if (typeConfig.has("readOnly")) {
         readOnlyType = typeConfig.get("readOnly").getBooleanValue();
       }
       type.setReadOnly(readOnlyType);
+      // hidden
+      if (typeConfig.has("hidden")) {
+        type.setHidden(typeConfig.get("hidden").getBooleanValue());
+      }
+      // creatable
+      if (typeConfig.has("creatable")) {
+        type.setCreatable(typeConfig.get("creatable").getBooleanValue());
+      }
       
       // extends
       if (typeConfig.has("extends")) {

@@ -73,14 +73,6 @@ public class PojoField implements PrestoField {
         return valueView;
     }
 
-    public String getFieldType() {
-        if (dataType.equals("reference")) {
-            return "http://psi.ontopia.net/ontology/role-field";
-        } else {
-            return "http://psi.ontopia.net/ontology/occurrence-field";
-        }
-    }
-
     public int getMinCardinality() {
         return minCardinality;
     }
