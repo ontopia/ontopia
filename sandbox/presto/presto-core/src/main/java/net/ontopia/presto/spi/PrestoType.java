@@ -14,9 +14,9 @@ public interface PrestoType {
 
   boolean isReadOnly(); // can you edit it?
 
-  boolean isHidden(); // will it show up? (instances will if exposed as field values)
+  boolean isHidden(); // will it show up? instances will show up if exposed as field values.
 
-  boolean isCreatable(); // standalone creatable (yes by default). can still be created through a field if in createTypes.
+  boolean isCreatable(); // standalone creatable. default is yes. can still be created through a field if in createTypes.
 
   // TODO: public boolean delete();
   

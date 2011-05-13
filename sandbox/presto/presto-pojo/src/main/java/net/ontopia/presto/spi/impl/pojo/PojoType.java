@@ -21,7 +21,7 @@ public class PojoType implements PrestoType {
   private String name;
   private boolean isReadOnly;
   private boolean isHidden;
-  private boolean isCreatable;
+  private boolean isCreatable = true;
 
   private Collection<PrestoType> directSubTypes = new HashSet<PrestoType>();
 
