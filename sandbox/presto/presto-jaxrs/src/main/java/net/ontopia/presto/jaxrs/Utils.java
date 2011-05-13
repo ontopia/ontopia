@@ -277,19 +277,21 @@ public class Utils {
     for (Object value : fieldValues) {
       result.add(getValue(uriInfo, field, value, readOnlyMode));
     }
-    Collections.sort(result, new Comparator<Value>() {
-      public int compare(Value v1, Value v2) {
-        String vx1 = v1.getName();
-        if (vx1 == null) {
-          vx1 = v1.getValue();
-        }
-        String vx2 = v2.getName();
-        if (vx2 == null) {
-          vx2 = v2.getValue();
-        }
-        return compareStatic(vx1, vx2);
-      }
-    });
+    if (field.isSorted()) {
+        Collections.sort(result, new Comparator<Value>() {
+          public int compare(Value v1, Value v2) {
+            String vx1 = v1.getName();
+            if (vx1 == null) {
+              vx1 = v1.getValue();
+            }
+            String vx2 = v2.getName();
+            if (vx2 == null) {
+              vx2 = v2.getValue();
+            }
+            return compareStatic(vx1, vx2);
+          }
+        });
+    }
     return result;
   }
 

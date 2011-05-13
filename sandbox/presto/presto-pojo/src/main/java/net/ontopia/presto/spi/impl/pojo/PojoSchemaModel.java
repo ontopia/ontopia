@@ -191,6 +191,10 @@ public class PojoSchemaModel {
             } else {
               field.setReadOnly(readOnlyType);
             }
+            // isSorted
+            if (fieldConfig.has("sorted")) {
+              field.setSorted(fieldConfig.get("sorted").getBooleanValue());
+            }
             // isNewValuesOnly
             if (fieldConfig.has("newValuesOnly")) {
               field.setNewValuesOnly(fieldConfig.get("newValuesOnly").getBooleanValue());

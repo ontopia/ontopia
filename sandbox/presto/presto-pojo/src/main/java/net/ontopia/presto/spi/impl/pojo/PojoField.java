@@ -27,6 +27,7 @@ public class PojoField implements PrestoField {
     private boolean isHidden;
     private boolean isTraversable = true;
     private boolean isReadOnly;
+    private boolean isSorted;
     private boolean isNewValuesOnly;
     private boolean isExistingValuesOnly;
     private String inverseFieldId;
@@ -107,6 +108,10 @@ public class PojoField implements PrestoField {
 
     public boolean isReadOnly() {
         return isReadOnly;
+    }
+
+    public boolean isSorted() {
+        return isSorted;
     }
 
     public boolean isNewValuesOnly() {
@@ -203,6 +208,10 @@ public class PojoField implements PrestoField {
 
     public void setReadOnly(boolean isReadOnly) {
         this.isReadOnly = isReadOnly;
+    }
+
+    public void setSorted(boolean isSorted) {
+        this.isSorted = isSorted;
     }
 
     public void setNewValuesOnly(boolean isNewValuesOnly) {

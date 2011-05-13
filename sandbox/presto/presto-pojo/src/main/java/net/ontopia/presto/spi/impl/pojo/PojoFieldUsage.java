@@ -105,6 +105,10 @@ public class PojoFieldUsage implements PrestoFieldUsage {
         return field.isReadOnly();
     }
 
+    public boolean isSorted() {
+        return field.isSorted();
+    }
+
     public boolean isNewValuesOnly() {
         return field.isNewValuesOnly();
     }

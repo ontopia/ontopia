@@ -177,7 +177,11 @@ public class OntopolyField implements PrestoFieldUsage {
     if (editMode != null && editMode.isNoEdit()) return true;
     return false;
   }
-
+  
+  public boolean isSorted() {
+      return true;
+  }
+  
   public boolean isNewValuesOnly() {
     return getEditMode().isNewValuesOnly();
   }

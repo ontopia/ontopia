@@ -32,6 +32,8 @@ public interface PrestoField {
 
   boolean isReadOnly();
 
+  boolean isSorted();
+
   // reference fields
 
   boolean isNewValuesOnly();
