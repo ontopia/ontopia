@@ -78,12 +78,15 @@ public abstract class CouchTopic implements PrestoTopic {
     List<Object> values = new ArrayList<Object>();
     ArrayNode fieldNode = getFieldValue(field);
     if (fieldNode != null) { 
-      for (JsonNode value : fieldNode) {
-        String textValue = value.getTextValue();
-        if (isReferenceField && !isExternalType) {
-          PrestoTopic valueTopic = dataProvider.getTopicById(textValue);
-          values.add(valueTopic);
-        } else {
+      if (isReferenceField && !isExternalType) {
+        List<String> topicIds = new ArrayList<String>(fieldNode.size());
+        for (JsonNode value : fieldNode) {
+          topicIds.add(value.getTextValue());
+        }
+        values.addAll(dataProvider.getTopicsByIds(topicIds));
+      } else {
+        for (JsonNode value : fieldNode) {
+          String textValue = value.getTextValue();
           values.add(textValue);          
         }
       }

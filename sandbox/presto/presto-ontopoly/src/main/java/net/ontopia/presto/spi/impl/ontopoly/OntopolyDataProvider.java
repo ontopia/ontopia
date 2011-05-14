@@ -1,7 +1,9 @@
 package net.ontopia.presto.spi.impl.ontopoly;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import ontopoly.model.EditMode;
 import ontopoly.model.FieldDefinition;
@@ -30,7 +32,15 @@ public class OntopolyDataProvider implements PrestoDataProvider {
     }
     return new OntopolyTopic(session, topic);
   }
-
+  
+  public Collection<PrestoTopic> getTopicsByIds(Collection<String> topicIds) {
+    List<PrestoTopic> result = new ArrayList<PrestoTopic>(topicIds.size());
+    for (String topicId : topicIds) {
+      result.add(getTopicById(topicId));
+    }
+    return result;
+  }
+  
   public Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field) {
     FieldDefinition fieldDefinition = FieldDefinition.getFieldDefinition(session.getTopicById(field.getId()), session.getTopicMap());
     

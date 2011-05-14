@@ -27,7 +27,6 @@ public abstract class CouchDataProvider implements PrestoDataProvider {
   protected CouchDbConnector db;
 
   protected String designDocId = "_design/presto";
-  protected String fallbackViewId = null;
 
   public CouchDataProvider(CouchDbConnector db) {
     this.db = db;
@@ -48,44 +47,42 @@ public abstract class CouchDataProvider implements PrestoDataProvider {
       doc = getCouchConnector().get(ObjectNode.class, topicId);
     } catch (DocumentNotFoundException e) {      
     }
+    return existing(doc);
+  }
 
-    // look up document id in fallback view
-    if (doc == null) {
-      if (fallbackViewId != null) {
-        ViewQuery query = new ViewQuery()
-        .designDocId(designDocId)
-        .viewName(fallbackViewId).includeDocs(true).key(topicId).limit(1);
-        try {
-          ViewResult viewResult = getCouchConnector().queryView(query);
-          for (Row row : viewResult.getRows()) {
-            doc = (ObjectNode)row.getValueAsNode();
-            break;
-          }
-        } catch (DocumentNotFoundException e) {          
-        }
-      }
-      if (doc == null) {
-        throw new RuntimeException("Unknown topic: " + topicId);
-      }
+  public Collection<PrestoTopic> getTopicsByIds(Collection<String> topicIds) {
+    Collection<PrestoTopic> result = new ArrayList<PrestoTopic>(topicIds.size());
+    // look up by document ids
+    ViewQuery query = new ViewQuery()
+    .allDocs()
+    .includeDocs(true).keys(topicIds);
+
+    ViewResult viewResult = getCouchConnector().queryView(query);
+    for (Row row : viewResult.getRows()) {
+      ObjectNode doc = (ObjectNode)row.getDocAsNode();
+      result.add(existing(doc));
     }
-    return existing(topicId, doc);
+    return result;
   }
 
   public Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field) {
-    List<PrestoTopic> result = new ArrayList<PrestoTopic>();
-    for (PrestoType type : field.getAvailableFieldValueTypes()) {
-      ViewQuery query = new ViewQuery()
-      .designDocId(designDocId)
-      .viewName("by-type").includeDocs(true).key(type.getId());
-      try {
-        ViewResult viewResult = getCouchConnector().queryView(query);
-        for (Row row : viewResult.getRows()) {
-          String topicId = row.getId();
-          ObjectNode doc = (ObjectNode)row.getDocAsNode();        
-          result.add(existing(topicId, doc));
-        }
-      } catch (DocumentNotFoundException e) {          
-      }
+    Collection<PrestoType> types = field.getAvailableFieldValueTypes();
+    if (types.isEmpty()) {
+      return Collections.emptyList();
+    }
+    List<String> typeIds = new ArrayList<String>();
+    for (PrestoType type : types) {
+      typeIds.add(type.getId());
+    }
+    List<PrestoTopic> result = new ArrayList<PrestoTopic>(typeIds.size());
+    ViewQuery query = new ViewQuery()
+    .designDocId(designDocId)
+    .viewName("by-type").includeDocs(true).keys(typeIds);
+
+    ViewResult viewResult = getCouchConnector().queryView(query);
+    for (Row row : viewResult.getRows()) {
+      ObjectNode doc = (ObjectNode)row.getDocAsNode();        
+      result.add(existing(doc));
     }
     Collections.sort(result, new Comparator<PrestoTopic>() {
       public int compare(PrestoTopic o1, PrestoTopic o2) {
@@ -103,7 +100,7 @@ public abstract class CouchDataProvider implements PrestoDataProvider {
     else
       return o1.compareTo(o2);
   }
-  
+
   public PrestoChangeSet createTopic(PrestoType type) {
     return new CouchChangeSet(this, type);
   }
@@ -121,12 +118,12 @@ public abstract class CouchDataProvider implements PrestoDataProvider {
   public void close() {
   }
 
-  abstract CouchTopic existing(String topicId, ObjectNode doc);
+  abstract CouchTopic existing(ObjectNode doc);
 
   abstract CouchTopic newInstance(PrestoType type);
 
   // couchdb crud operations
-  
+
   void create(CouchTopic topic) {
     getCouchConnector().create(topic.getData());
   }

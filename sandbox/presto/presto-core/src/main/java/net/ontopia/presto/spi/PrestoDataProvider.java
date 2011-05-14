@@ -5,6 +5,8 @@ import java.util.Collection;
 public interface PrestoDataProvider {
   
   PrestoTopic getTopicById(String id);
+  
+  Collection<PrestoTopic> getTopicsByIds(Collection<String> id);
 
   Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field);
 

@@ -25,7 +25,7 @@ public class CouchBucketDataProvider extends CouchDataProvider {
   }
   
   @Override
-  protected CouchTopic existing(String topicId, ObjectNode doc) {
+  protected CouchTopic existing(ObjectNode doc) {
     return new CouchBucketTopic(this, doc);
   }
 
@@ -38,11 +38,6 @@ public class CouchBucketDataProvider extends CouchDataProvider {
   
   public CouchBucketDataProvider designDocId(String designDocId) {    
     this.designDocId = designDocId;
-    return this;
-  }
-  
-  public CouchBucketDataProvider fallbackViewId(String fallbackViewId) {    
-    this.fallbackViewId = fallbackViewId;
     return this;
   }
 

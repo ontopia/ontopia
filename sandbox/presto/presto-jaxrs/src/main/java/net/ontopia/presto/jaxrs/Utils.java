@@ -224,7 +224,7 @@ public class Utils {
 
     } else {
       // used by query fields, which can have both primitive and reference values
-        
+
       // fieldInfo.put("type", field.getFieldType());
       fieldInfo.setDatatype("query");
       if (readOnlyMode || field.isReadOnly()) {
@@ -278,19 +278,19 @@ public class Utils {
       result.add(getValue(uriInfo, field, value, readOnlyMode));
     }
     if (field.isSorted()) {
-        Collections.sort(result, new Comparator<Value>() {
-          public int compare(Value v1, Value v2) {
-            String vx1 = v1.getName();
-            if (vx1 == null) {
-              vx1 = v1.getValue();
-            }
-            String vx2 = v2.getName();
-            if (vx2 == null) {
-              vx2 = v2.getValue();
-            }
-            return compareStatic(vx1, vx2);
+      Collections.sort(result, new Comparator<Value>() {
+        public int compare(Value v1, Value v2) {
+          String vx1 = v1.getName();
+          if (vx1 == null) {
+            vx1 = v1.getValue();
           }
-        });
+          String vx2 = v2.getName();
+          if (vx2 == null) {
+            vx2 = v2.getValue();
+          }
+          return compareStatic(vx1, vx2);
+        }
+      });
     }
     return result;
   }
@@ -376,7 +376,7 @@ public class Utils {
   }
 
   public static FieldData addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, 
-          Integer index, Boolean replaceExisting, FieldData fieldObject) {
+      Integer index, Boolean replaceExisting, FieldData fieldObject) {
     PrestoDataProvider dataProvider = session.getDataProvider();
 
     if  (field != null) {
@@ -452,16 +452,36 @@ public class Utils {
         if  (fields.containsKey(fieldId)) {
           Collection<Value> values = jsonField.getValues();
           Collection<Object> newValues = new ArrayList<Object>(values.size());
-          for (Value value : values) {
 
-            Topic embeddedReferenceValue = getEmbeddedReference(value);
-            if (embeddedReferenceValue != null) {
-              PrestoView valueView = field.getValueView();
-              newValues.add(updateEmbeddedReference(uriInfo, session, valueView, embeddedReferenceValue));
-            } else if (isReferenceField && !isExternalType) {
-              String valueId = getReferenceValue(value);
-              newValues.add(dataProvider.getTopicById(valueId));
-            } else {
+          if (!values.isEmpty()) {
+            if (isReferenceField) {
+              if (field.isEmbedded()) {
+                for (Value value : values) {
+                  Topic embeddedReferenceValue = getEmbeddedReference(value);
+                  if (embeddedReferenceValue != null) {
+                    PrestoView valueView = field.getValueView();
+                    newValues.add(updateEmbeddedReference(uriInfo, session, valueView, embeddedReferenceValue));
+                  }
+                }                
+              } else if (isExternalType) {
+                for (Value value : values) {
+                  newValues.add(getPrimitiveValue(value));
+                }
+              } else {
+                if (values.size() == 1) {
+                  Value value = values.iterator().next();
+                  newValues.add(dataProvider.getTopicById(getReferenceValue(value)));
+                } else {
+                  List<String> valueIds = new ArrayList<String>(values.size());
+                  for (Value value : values) {                
+                    valueIds.add(getReferenceValue(value));
+                  }
+                  newValues.add(dataProvider.getTopicsByIds(valueIds));
+                }
+              }
+            }
+          } else {
+            for (Value value : values) {
               newValues.add(getPrimitiveValue(value));
             }
           }
