@@ -12,6 +12,7 @@ import net.ontopia.presto.spi.PrestoFieldUsage;
 import net.ontopia.presto.spi.PrestoTopic;
 import net.ontopia.presto.spi.PrestoType;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.DocumentNotFoundException;
@@ -19,27 +20,25 @@ import org.ektorp.ViewQuery;
 import org.ektorp.ViewResult;
 import org.ektorp.ViewResult.Row;
 
-public class CouchDataProvider implements PrestoDataProvider {
+public abstract class CouchDataProvider implements PrestoDataProvider {
 
-  private CouchDbConnector db;
+  private final ObjectMapper mapper = new ObjectMapper();
 
-  private final String designDocId;
-  private final String fallbackViewId;
+  protected CouchDbConnector db;
 
-  private CouchDataStrategy dataStrategy = new CouchDataStrategy();
+  protected String designDocId = "_design/presto";
+  protected String fallbackViewId = null;
 
-  public CouchDataProvider(CouchDbConnector db, String designDocId) {
-      this(db, designDocId, null);
-  }
-
-  public CouchDataProvider(CouchDbConnector db, String designDocId, String fallbackViewId) {
+  public CouchDataProvider(CouchDbConnector db) {
     this.db = db;
-    this.designDocId = designDocId;
-    this.fallbackViewId = fallbackViewId;
   }
 
-  CouchDbConnector getCouchConnector() {
+  protected CouchDbConnector getCouchConnector() {
     return db;
+  }
+
+  protected ObjectMapper getObjectMapper() {
+    return mapper;
   }
 
   public PrestoTopic getTopicById(String topicId) {
@@ -69,7 +68,7 @@ public class CouchDataProvider implements PrestoDataProvider {
         throw new RuntimeException("Unknown topic: " + topicId);
       }
     }
-    return existingTopic(topicId, doc);
+    return existing(topicId, doc);
   }
 
   public Collection<PrestoTopic> getAvailableFieldValues(PrestoFieldUsage field) {
@@ -83,7 +82,7 @@ public class CouchDataProvider implements PrestoDataProvider {
         for (Row row : viewResult.getRows()) {
           String topicId = row.getId();
           ObjectNode doc = (ObjectNode)row.getDocAsNode();        
-          result.add(existingTopic(topicId, doc));
+          result.add(existing(topicId, doc));
         }
       } catch (DocumentNotFoundException e) {          
       }
@@ -112,31 +111,32 @@ public class CouchDataProvider implements PrestoDataProvider {
   public PrestoChangeSet updateTopic(PrestoTopic topic) {
     return new CouchChangeSet(this, (CouchTopic)topic);
   }
-  
-  CouchTopic existingTopic(String topicId, ObjectNode doc) {
-    return CouchTopic.existing(this, doc);
-  }
-  
-  CouchTopic newInstance(PrestoType type) {
-    return CouchTopic.newInstance(this, type);
-  }
 
-  public boolean removeTopic(PrestoTopic topic) {
+  public boolean removeTopic(PrestoTopic topic) {    
     // TODO: Remove inverse references
-    CouchTopic couchTopic = (CouchTopic)topic;
-    getCouchConnector().delete(couchTopic.getData());
+    delete((CouchTopic)topic);
     return true;
   }
 
   public void close() {
   }
 
-  public void setDataStrategy(CouchDataStrategy dataStrategy) {
-    this.dataStrategy = dataStrategy;
+  abstract CouchTopic existing(String topicId, ObjectNode doc);
+
+  abstract CouchTopic newInstance(PrestoType type);
+
+  // couchdb crud operations
+  
+  void create(CouchTopic topic) {
+    getCouchConnector().create(topic.getData());
   }
 
-  public CouchDataStrategy getDataStrategy() {
-    return dataStrategy;
+  void update(CouchTopic topic) {
+    getCouchConnector().update(topic.getData());
+  }
+
+  void delete(CouchTopic topic) {
+    getCouchConnector().delete(topic.getData());
   }
 
 }

@@ -375,7 +375,8 @@ public class Utils {
     return result;
   }
 
-  public static FieldData addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, FieldData fieldObject) {
+  public static FieldData addFieldValues(UriInfo uriInfo, PrestoSession session, PrestoTopic topic, PrestoFieldUsage field, 
+          Integer index, Boolean replaceExisting, FieldData fieldObject) {
     PrestoDataProvider dataProvider = session.getDataProvider();
 
     if  (field != null) {

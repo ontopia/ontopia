@@ -46,10 +46,6 @@ public class OntopolyTopic implements PrestoTopic {
     return session.getStableId(topic);
   }
 
-  public PrestoDataProvider getDataProvider() {
-    return session.getDataProvider();
-  }
-
   public String getName() {
     return topic.getName();
   }

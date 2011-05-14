@@ -6,8 +6,6 @@ public interface PrestoTopic {
 
   String getId();
 
-  PrestoDataProvider getDataProvider();
-
   String getName();
 
   String getTypeId();

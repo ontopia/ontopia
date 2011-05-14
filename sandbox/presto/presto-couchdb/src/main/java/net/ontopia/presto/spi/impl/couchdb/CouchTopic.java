@@ -2,10 +2,9 @@ package net.ontopia.presto.spi.impl.couchdb;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
-import net.ontopia.presto.spi.PrestoDataProvider;
 import net.ontopia.presto.spi.PrestoField;
 import net.ontopia.presto.spi.PrestoTopic;
 import net.ontopia.presto.spi.PrestoType;
@@ -14,14 +13,18 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 
-public class CouchTopic implements PrestoTopic {
+public abstract class CouchTopic implements PrestoTopic {
 
-  protected final CouchDataProvider dataProvider;  
-  protected final ObjectNode data;
+  private final CouchDataProvider dataProvider;  
+  private final ObjectNode data;
 
   protected CouchTopic(CouchDataProvider dataProvider, ObjectNode data) {
     this.dataProvider = dataProvider;
     this.data = data;    
+  }
+
+  protected CouchDataProvider getDataProvider() {
+    return dataProvider;
   }
   
   public boolean equals(Object o) {
@@ -31,31 +34,19 @@ public class CouchTopic implements PrestoTopic {
     }
     return false;
   }
-  
+
   public int hashCode() {
     return getId().hashCode();
   }
 
-  static CouchTopic existing(CouchDataProvider dataProvider, ObjectNode doc) {
-    return new CouchTopic(dataProvider, doc);
-  }
-
-  static CouchTopic newInstance(CouchDataProvider dataProvider, PrestoType type) {
-    return new CouchTopic(dataProvider, CouchTopic.newInstanceObjectNode(dataProvider, type));
-  }
-
   protected static ObjectNode newInstanceObjectNode(CouchDataProvider dataProvider, PrestoType type) {
-    ObjectNode data = dataProvider.getDataStrategy().getObjectMapper().createObjectNode();
+    ObjectNode data = dataProvider.getObjectMapper().createObjectNode();
     data.put(":type", type.getId());
     return data;
   }
-  
+
   ObjectNode getData() {
     return data;
-  }
-  
-  public PrestoDataProvider getDataProvider() {
-    return dataProvider;
   }
 
   public String getId() {
@@ -71,11 +62,21 @@ public class CouchTopic implements PrestoTopic {
     return data.get(":type").getTextValue();
   }
 
+  // json data access strategy
+
+  protected abstract ArrayNode getFieldValue(PrestoField field);
+
+  protected abstract void putFieldValue(PrestoField field, ArrayNode value);
+
+  protected abstract void removeFieldValue(PrestoField field);
+
+  // methods for retrieving the state of a couchdb document
+
   public Collection<Object> getValues(PrestoField field) {
     boolean isReferenceField = field.isReferenceField();
     boolean isExternalType = field.getExternalType() != null;
     List<Object> values = new ArrayList<Object>();
-    ArrayNode fieldNode = dataProvider.getDataStrategy().getFieldValue(this, field);
+    ArrayNode fieldNode = getFieldValue(field);
     if (fieldNode != null) { 
       for (JsonNode value : fieldNode) {
         String textValue = value.getTextValue();
@@ -94,9 +95,9 @@ public class CouchTopic implements PrestoTopic {
 
   void setValue(PrestoField field, Collection<? extends Object> values) {
     if (values.isEmpty()) {
-      dataProvider.getDataStrategy().removeFieldValue(this, field);
+      removeFieldValue(field);
     } else {
-      ArrayNode arrayNode = dataProvider.getDataStrategy().getObjectMapper().createArrayNode();
+      ArrayNode arrayNode = dataProvider.getObjectMapper().createArrayNode();
       for (Object value : values) {
         if (value instanceof CouchTopic) {
           CouchTopic valueTopic = (CouchTopic)value;
@@ -105,14 +106,14 @@ public class CouchTopic implements PrestoTopic {
           arrayNode.add((String)value);
         }
       }
-      dataProvider.getDataStrategy().putFieldValue(this, field, arrayNode);
+      putFieldValue(field, arrayNode);
     }
   }
 
   void addValue(PrestoField field, Collection<? extends Object> values) {
     if (!values.isEmpty()) {
-      Collection<String> result = new HashSet<String>();
-      ArrayNode jsonNode = dataProvider.getDataStrategy().getFieldValue(this, field);
+      Collection<String> result = new LinkedHashSet<String>(); // FIXME: should not be hashset if duplicates allowed
+      ArrayNode jsonNode = getFieldValue(field);
       if (jsonNode != null) {
         for (JsonNode existing : jsonNode) {
           result.add(existing.getTextValue());
@@ -126,22 +127,22 @@ public class CouchTopic implements PrestoTopic {
           result.add((String)value);
         }
       }
-      ArrayNode arrayNode = dataProvider.getDataStrategy().getObjectMapper().createArrayNode();
+      ArrayNode arrayNode = dataProvider.getObjectMapper().createArrayNode();
       for (String value : result) {
         arrayNode.add(value);
       }
 
       //      System.out.println("A: " + arrayNode);
-      dataProvider.getDataStrategy().putFieldValue(this, field, arrayNode);
+      putFieldValue(field, arrayNode);
     }
   }
 
   void removeValue(PrestoField field, Collection<? extends Object> values) {
     if (!values.isEmpty()) {
-      ArrayNode jsonNode = dataProvider.getDataStrategy().getFieldValue(this, field);
+      ArrayNode jsonNode = getFieldValue(field);
       //      System.out.println("R: " + field.getId() + " " + values);
       if (jsonNode != null) {
-        Collection<String> existing = new HashSet<String>(jsonNode.size());
+        Collection<String> existing = new LinkedHashSet<String>(jsonNode.size());
         for (JsonNode item : jsonNode) {
           existing.add(item.getValueAsText());
         }
@@ -153,15 +154,15 @@ public class CouchTopic implements PrestoTopic {
             existing.remove((String)value);
           }
         }
-        ArrayNode arrayNode  = dataProvider.getDataStrategy().getObjectMapper().createArrayNode();
+        ArrayNode arrayNode  = dataProvider.getObjectMapper().createArrayNode();
         for (String value : existing) {
           arrayNode.add(value);
         }
-        dataProvider.getDataStrategy().putFieldValue(this, field, arrayNode);
+        putFieldValue(field, arrayNode);
       }
     }
   }
-  
+
   void updateNameProperty(Collection<? extends Object> values) {
     String name;
     Object value = values.isEmpty() ? null : values.iterator().next();
@@ -172,7 +173,7 @@ public class CouchTopic implements PrestoTopic {
     } else {
       name = value.toString();
     }
-    data.put(":name", name);
+    getData().put(":name", name);
   }
 
 }

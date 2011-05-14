@@ -299,7 +299,62 @@ public abstract class TopicResource {
       session.close();
     }
   }
+  
+  @POST
+  @Produces(APPLICATION_JSON_UTF8)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("add-field-values-at-index/{topicMapId}/{topicId}/{viewId}/{fieldId}")
+  public FieldData addFieldValuesAtIndex(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId, 
+      @PathParam("viewId") final String viewId,
+      @PathParam("fieldId") final String fieldId, 
+      @QueryParam("index") final Integer index, 
+      @QueryParam("replaceExisting") final Boolean replaceExisting, FieldData jsonObject) throws Exception {
 
+      PrestoSession session = createSession(topicMapId);
+      PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
+      PrestoDataProvider dataProvider = session.getDataProvider();
+
+      try {
+
+        PrestoTopic topic = dataProvider.getTopicById(topicId);
+        PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
+        PrestoView fieldsView = topicType.getViewById(viewId);
+
+        PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
+
+        FieldData result = Utils.addFieldValues(uriInfo, session, topic, field, index, replaceExisting, jsonObject);
+
+        String id = topic.getId();
+
+        session.commit();
+        onTopicUpdated(id);
+
+        return result;
+      } catch (Exception e) {
+        session.abort();
+        throw e;
+      } finally {
+        session.close();      
+      } 
+  }
+  
+  @POST
+  @Produces(APPLICATION_JSON_UTF8)
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Path("move-field-values-to-index/{topicMapId}/{topicId}/{viewId}/{fieldId}/{index}")
+  public FieldData moveFieldValuesAtIndex(@Context UriInfo uriInfo, 
+      @PathParam("topicMapId") final String topicMapId, 
+      @PathParam("topicId") final String topicId, 
+      @PathParam("viewId") final String viewId,
+      @PathParam("fieldId") final String fieldId, 
+      @PathParam("index") final Integer index, FieldData jsonObject) throws Exception {
+      
+      Boolean replaceExisting = Boolean.TRUE;
+      return addFieldValuesAtIndex(uriInfo, topicMapId, topicId, viewId, fieldId, index, replaceExisting, jsonObject);
+  }
+  
   @POST
   @Produces(APPLICATION_JSON_UTF8)
   @Consumes(MediaType.APPLICATION_JSON)
@@ -310,32 +365,9 @@ public abstract class TopicResource {
       @PathParam("viewId") final String viewId,
       @PathParam("fieldId") final String fieldId, FieldData jsonObject) throws Exception {
 
-    PrestoSession session = createSession(topicMapId);
-    PrestoSchemaProvider schemaProvider = session.getSchemaProvider();
-    PrestoDataProvider dataProvider = session.getDataProvider();
-
-    try {
-
-      PrestoTopic topic = dataProvider.getTopicById(topicId);
-      PrestoType topicType = schemaProvider.getTypeById(topic.getTypeId());
-      PrestoView fieldsView = topicType.getViewById(viewId);
-
-      PrestoFieldUsage field = topicType.getFieldById(fieldId, fieldsView);
-
-      FieldData result = Utils.addFieldValues(uriInfo, session, topic, field, jsonObject);
-
-      String id = topic.getId();
-
-      session.commit();
-      onTopicUpdated(id);
-
-      return result;
-    } catch (Exception e) {
-      session.abort();
-      throw e;
-    } finally {
-      session.close();      
-    } 
+      Integer index = Integer.MAX_VALUE;
+      Boolean replaceExisting = null;
+      return addFieldValuesAtIndex(uriInfo, topicMapId, topicId, viewId, fieldId, index, replaceExisting, jsonObject);
   }
 
   @POST
