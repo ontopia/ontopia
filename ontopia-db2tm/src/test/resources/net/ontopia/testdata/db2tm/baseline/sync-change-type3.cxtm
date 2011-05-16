@@ -1,7 +1,7 @@
 <topicMap reifier="1">
 <topic number="1">
 <occurrence number="1">
-<value>SyncTest:testchanges:2</value>
+<value>SyncTest:testdata:testchanges:2</value>
 <datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
 <type topicref="3"></type>
 </occurrence>

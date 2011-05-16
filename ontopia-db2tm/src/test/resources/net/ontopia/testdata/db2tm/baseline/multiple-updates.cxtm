@@ -1,7 +1,7 @@
 <topicMap reifier="1">
 <topic number="1">
 <occurrence number="1">
-<value>SyncTest:testchanges:3</value>
+<value>SyncTest:testdata:testchanges:3</value>
 <datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
 <type topicref="5"></type>
 </occurrence>
@@ -67,17 +67,12 @@
 </topic>
 <topic number="10">
 <subjectIdentifiers>
-<locator>psi:test/1</locator>
-</subjectIdentifiers>
-<rolePlayed ref="association.1.role.2"></rolePlayed>
-</topic>
-<topic number="11">
-<subjectIdentifiers>
 <locator>psi:test/2</locator>
 </subjectIdentifiers>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
 <rolePlayed ref="association.2.role.2"></rolePlayed>
 </topic>
-<topic number="12">
+<topic number="11">
 <subjectIdentifiers>
 <locator>psi:test/3</locator>
 </subjectIdentifiers>
@@ -101,7 +96,7 @@
 <type topicref="6"></type>
 </role>
 <role number="2">
-<player topicref="11"></player>
+<player topicref="10"></player>
 <type topicref="8"></type>
 </role>
 </association>
@@ -112,7 +107,7 @@
 <type topicref="6"></type>
 </role>
 <role number="2">
-<player topicref="12"></player>
+<player topicref="11"></player>
 <type topicref="8"></type>
 </role>
 </association>
