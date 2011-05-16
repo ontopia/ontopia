@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>net.ontopia.maven</groupId>
+		<groupId>net.ontopia</groupId>
 		<artifactId>ontopia-parent</artifactId>
 		<version>5.2.0-SNAPSHOT</version>
 	</parent>
