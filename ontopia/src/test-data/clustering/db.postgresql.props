@@ -1,9 +1,0 @@
-net.ontopia.topicmaps.impl.rdbms.Database=postgresql
-net.ontopia.topicmaps.impl.rdbms.ConnectionString=jdbcspy:jdbc:postgresql://oks01/topicmaps
-net.ontopia.topicmaps.impl.rdbms.DriverClass=org.postgresql.Driver
-
-net.ontopia.topicmaps.impl.rdbms.UserName=oks
-net.ontopia.topicmaps.impl.rdbms.Password=oks
-
-net.ontopia.topicmaps.impl.rdbms.ConnectionPool=true
-net.ontopia.topicmaps.impl.rdbms.Cluster.id=jgroups:cluster-test-topicmaps

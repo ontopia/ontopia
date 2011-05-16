@@ -1,9 +1,0 @@
-#* 
-    $Id: control.vm,v 1.17 2007/07/25 08:03:16 geir.gronmo Exp $ 
-
-    This is the control template for the
-    documentation index HTML page generator.
-*# 
-
-#set ($theDir = "doc/")
-$generator.parse("docindex-template.vm", "docindex.html")

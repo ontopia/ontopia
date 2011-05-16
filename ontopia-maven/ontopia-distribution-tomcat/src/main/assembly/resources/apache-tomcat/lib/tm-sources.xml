@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<repository>
+  <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../../topicmaps"/>
+    <param name="suffix" value=".xtm"/>
+    <param name="duplicateSuppression" value="false"/>
+    <param name="validation" value="true"/>
+    <param name="title" value="XTM topic maps"/>
+    <param name="id" value="xtm"/>
+    <param name="supportsCreate" value="true"/>
+    <param name="supportsDelete" value="true"/>
+    <param name="maintainFulltextIndexes" value="true"/>
+    <param name="indexDirectory" value="${CWD}/../../topicmaps/indexes"/>
+  </source>
+  <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../../topicmaps"/>
+    <param name="suffix" value=".psi"/>
+    <param name="duplicateSuppression" value="false"/>
+    <param name="validation" value="true"/>
+  </source>
+  <source class="net.ontopia.topicmaps.utils.ltm.LTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../../topicmaps"/>
+    <param name="suffix" value=".ltm"/>
+    <param name="duplicateSuppression" value="true"/>
+  </source>
+  <source class="net.ontopia.topicmaps.utils.rdf.RDFPathTopicMapSource">
+    <param name="path" value="${CWD}/../../topicmaps"/>
+    <param name="suffix" value=".rdf"/>
+    <param name="duplicateSuppression" value="false"/>
+    <param name="generateNames" value="true"/>
+    <param name="lenient" value="true"/>
+    <param name="mappingFile" value="${CWD}/../../topicmaps/mapping.rdff"/>
+  </source>
+  <source class="net.ontopia.topicmaps.utils.rdf.RDFPathTopicMapSource">
+    <param name="path" value="${CWD}/../../topicmaps"/>
+    <param name="suffix" value=".n3"/>
+    <param name="syntax" value="N3"/>
+    <param name="generateNames" value="true"/>
+    <param name="lenient" value="true"/>
+    <param name="duplicateSuppression" value="false"/>
+    <param name="mappingFile" value="${CWD}/../../topicmaps/mapping.rdff"/>
+  </source>
+  <source class="net.ontopia.topicmaps.utils.rdf.RDFPathTopicMapSource">
+    <param name="path" value="${CWD}/../../topicmaps"/>
+    <param name="suffix" value=".ntriple"/>
+    <param name="syntax" value="N-TRIPLE"/>
+    <param name="generateNames" value="true"/>
+    <param name="lenient" value="true"/>
+    <param name="duplicateSuppression" value="false"/>
+    <param name="mappingFile" value="${CWD}/../../topicmaps/mapping.rdff"/>
+  </source>
+  <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../webapps/ontopoly/WEB-INF/config"/>
+    <param name="hidden" value="false"/>
+    <param name="suffix" value=".xtm"/>
+    <param name="duplicateSuppression" value="true"/>
+  </source>
+  <source class="net.ontopia.topicmaps.utils.ltm.LTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../webapps/ontopoly/WEB-INF/config"/>
+    <param name="hidden" value="true"/>
+    <param name="suffix" value=".ltm"/>
+    <param name="duplicateSuppression" value="true"/>
+  </source>
+  <source class="net.ontopia.topicmaps.xml.TMXMLPathTopicMapSource">
+    <param name="path" value="${CWD}/../../topicmaps"/>
+    <param name="suffix" value=".tmx"/>
+    <param name="duplicateSuppression" value="true"/>
+    <param name="validation" value="true"/>
+    <param name="title" value="TM/XML topic maps"/>
+    <param name="id" value="tmxml"/>
+    <param name="supportsCreate" value="false"/>
+    <param name="supportsDelete" value="true"/>
+    <param name="maintainFulltextIndexes" value="true"/>
+    <param name="indexDirectory" value="${CWD}/../../topicmaps/indexes"/>
+  </source>    
+  <source class="net.ontopia.topicmaps.utils.ctm.CTMPathTopicMapSource">
+    <param name="path" value="${CWD}/../../topicmaps"/>
+    <param name="suffix" value=".ctm"/>
+    <param name="duplicateSuppression" value="true"/>
+    <param name="title" value="CTM topic maps"/>
+    <param name="id" value="ctm"/>
+  </source>    
+  <!--source class="net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource">
+    <param name="propertyFile" value="db.postgresql.props"/>
+    <param name="id" value="postgresql"/>
+    <param name="title" value="PostgreSQL database"/>
+    <param name="supportsCreate" value="true"/>
+    <param name="supportsDelete" value="true"/>
+  </source-->
+  <!--source class="net.ontopia.topicmaps.impl.rdbms.RDBMSSingleTopicMapSource">
+    <param name="propertyFile" value="db.postgresql.props"/>
+    <param name="topicMapId" value="M1"/>
+    <param name="referenceId" value="mytopicmap"/>
+    <param name="title" value="My Topic Map"/>
+  </source-->
+  <!-- ${CWD} -->
+</repository>

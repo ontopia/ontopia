@@ -1,9 +1,0 @@
-#PREFIX ont @"http://psi.ontopia.net/ontology/"
-
-/* this one exists */
-[tm1 : ont:ted-topic-map = "Topic Map 1"]
-  {tm1, ont:topic-map-id, [[tm1.xtm]]}
-
-/* this one does not */
-[tm3 : ont:ted-topic-map = "Topic Map 3"]
-  {tm3, ont:topic-map-id, [[tm3.xtm]]}

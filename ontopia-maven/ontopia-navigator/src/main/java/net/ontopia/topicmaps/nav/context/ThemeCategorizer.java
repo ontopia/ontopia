@@ -1,0 +1,300 @@
+// $Id: ThemeCategorizer.java,v 1.13 2008/06/13 08:36:26 geir.gronmo Exp $
+
+package net.ontopia.topicmaps.nav.context;
+
+import java.util.*;
+
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.StringifierIF;
+import net.ontopia.utils.LexicalComparator;
+import net.ontopia.utils.GrabberStringifier;
+
+import net.ontopia.topicmaps.xml.*;
+import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.utils.*;
+import net.ontopia.topicmaps.core.index.*;
+
+import net.ontopia.topicmaps.nav.utils.comparators.TopicComparator;
+import net.ontopia.topicmaps.nav.utils.comparators.ContextNameGrabber;
+
+/**
+ * INTERNAL: Class for categorizing a collection of themes according to
+ * their theme class.  The theme classes as well as the themes in each
+ * theme class could be sorted.
+ */
+public class ThemeCategorizer {
+
+  /** representation of theme class for themes which belong to no type */
+  protected static final String STRING_NO_CLASS = "[unspecified]";
+  
+  /** Stringifier for theme class topics */
+  protected StringifierIF stringifier;
+  /** for sorting the theme class strings */
+  protected Comparator lexicalComparator;
+  /** for sorting the theme topics */
+  protected Comparator topicComparator;   
+
+  /**
+   * empty constructor.
+   */
+  public ThemeCategorizer(TopicMapIF tm, Collection context) {
+    init(tm, context);
+  }
+
+  /**
+   * INTERNAL: initialisation of Stringifier and Comparators
+   */
+  private void init(TopicMapIF tm, Collection context) {
+    TopicIF display = tm.getTopicBySubjectIdentifier(PSI.getXTMDisplay());
+    TopicIF sort = tm.getTopicBySubjectIdentifier(PSI.getXTMSort());
+    
+    // ----- initialisation
+    // for output of theme class topic basename
+    Collection vnc = new ArrayList(context);
+    if (display != null)
+      vnc.add(display);
+    stringifier = new GrabberStringifier(new ContextNameGrabber(context, vnc),
+                                         new NameStringifier());
+
+    // for string sorting use case-insensitive Lexical Comparator
+    lexicalComparator = LexicalComparator.CASE_SENSITIVE;
+
+    // for topic sorting (themes)
+    vnc = new ArrayList(context);
+    if (sort != null)
+      vnc.add(sort);    
+    topicComparator = new TopicComparator(context, vnc);
+  }
+
+  /**
+   * INTERNAL: Returns the internal stringifier used to stringify
+   * topics correctly in the current context.
+   */
+  public StringifierIF getTopicStringifier() {
+    return stringifier;
+  }
+  
+  /**
+   * process <code>themes</code> and generate HashMap which
+   * reflects theme categories.
+   *
+   * @return HashMap which contains as keys Strings
+   *         of the theme type that lead to HasSet objects.
+   *         These store TopicIF objects for the themes.
+   */       
+  public HashMap getThemeClasses(Collection themes) {
+    // list of theme classes
+    HashMap themeClassMap = new HashMap();
+    themeClassMap.put(STRING_NO_CLASS, new HashSet());
+
+    Iterator itThemes = themes.iterator();
+    TopicIF actTheme = null;
+    
+    // ----- iterate through all base name themes
+    while (itThemes.hasNext()) {
+      actTheme = (TopicIF) itThemes.next();
+
+      // find out theme classes of this theme
+      Collection themeTypes = actTheme.getTypes();
+      HashSet actSet;
+      if (themeTypes.size() > 0) {
+        Iterator itThemeTypes = themeTypes.iterator();
+        TopicIF actThemeType = null;
+        String actThemeTypeString;
+        while (itThemeTypes.hasNext()) {
+          actThemeType = (TopicIF) itThemeTypes.next();
+          actThemeTypeString = stringifier.toString( actThemeType );
+                                        
+          // if theme class already exists, just get the set, otherwise create it
+          if (themeClassMap.containsKey(actThemeTypeString)) {
+            actSet = (HashSet) themeClassMap.get(actThemeTypeString);
+          } else {
+            actSet = new HashSet();
+            themeClassMap.put(actThemeTypeString, actSet);
+          }
+          actSet.add(actTheme);
+
+        } // while itThemeTypes
+      } else {
+        actSet = (HashSet) themeClassMap.get(STRING_NO_CLASS);
+        actSet.add(actTheme);
+      }
+      
+    } // while itThemes
+
+    return themeClassMap;
+  }
+
+  /**
+   * Generate a ordered list of theme classes.
+   * Note: In every theme class there are at least one theme.
+   */
+  public String generateThemeList(HashMap themeClassMap,
+                                  StringifierIF stringifierThemeClass,
+                                  StringifierIF stringifierTheme) {
+    return generateThemeList(themeClassMap, null,
+                             stringifierThemeClass, stringifierTheme, null);
+  }
+  
+  /**
+   * Generate a ordered list of theme classes.
+   * The themes which are found in the collection of selectedThemes use
+   * their own stringifier <code>stringifierSelectedTheme</code>.
+   * Note: In every theme class there are at least one theme.
+   */
+  public String generateThemeList(HashMap themeClassMap,
+                                  Collection selectedThemes,
+                                  StringifierIF stringifierThemeClass,
+                                  StringifierIF stringifierTheme,
+                                  StringifierIF stringifierSelectedTheme) {
+    if (themeClassMap == null
+        || stringifierThemeClass == null
+        || stringifierTheme == null)
+      return "";
+    
+    StringBuffer strBuf = new StringBuffer();
+
+    // ----- loop over all themes classes
+    List themeClassList = new ArrayList( themeClassMap.keySet() );
+    Collections.sort( themeClassList, lexicalComparator );
+    Iterator itThemeClasses = themeClassList.iterator();
+    String actThemeClass;
+
+    HashSet actSet;
+    List themeList;
+    Iterator itRelThemes;
+    TopicIF actTheme;
+    
+    while (itThemeClasses.hasNext()) {
+      actThemeClass = (String) itThemeClasses.next();
+      actSet = (HashSet) themeClassMap.get(actThemeClass);
+
+      // only proceed if category name has related themes
+      if (actSet.size() > 0) {
+        // append string representation for theme class
+        strBuf.append( stringifierThemeClass.toString( actThemeClass) );
+        // themeList = new ArrayList(stringifyTopics((Collection) actSet, stringifier));
+        themeList = new ArrayList( actSet );
+        Collections.sort( themeList, topicComparator );
+        itRelThemes = themeList.iterator();
+        while (itRelThemes.hasNext()) {
+          actTheme = (TopicIF) itRelThemes.next();
+          // append string representation for theme
+          if (selectedThemes != null && stringifierSelectedTheme != null) {
+            if (selectedThemes.contains(actTheme))
+              strBuf.append( stringifierSelectedTheme.toString( actTheme ));
+            else
+              strBuf.append( stringifierTheme.toString( actTheme ));  
+          } else {
+            strBuf.append( stringifierTheme.toString( actTheme ));
+          }
+        } // while itRelThemes
+      }
+
+    } // while itThemeClasses
+    
+    return strBuf.toString();
+  }
+
+
+  /**
+   * Generate a ordered list of theme classes.
+   * Use template strings to render result string, this approach
+   * is used by the navigator framework 2nd generation.
+   * Note: In every theme class there are at least one theme.
+   */
+  public String generateThemeList(HashMap themeClassMap,
+                                  Collection selectedThemes,
+                                  String templThemeClass,
+                                  String templTheme,
+                                  String templSelectedTheme) {
+    if (themeClassMap == null
+        || templThemeClass == null
+        || templTheme == null)
+      return "";
+    if (templSelectedTheme == null)
+      templSelectedTheme = "";
+    
+    StringBuffer strBuf = new StringBuffer();
+
+    // ----- loop over all themes classes
+    List themeClassList = new ArrayList( themeClassMap.keySet() );
+    Collections.sort( themeClassList, lexicalComparator );
+    Iterator itThemeClasses = themeClassList.iterator();
+    String actThemeClass;
+
+    HashSet actSet;
+    List themeList;
+    Iterator itRelThemes;
+    TopicIF actTheme;
+    String tmp;
+    
+    while (itThemeClasses.hasNext()) {
+      actThemeClass = (String) itThemeClasses.next();
+      actSet = (HashSet) themeClassMap.get(actThemeClass);
+
+      // only proceed if category name has related themes
+      if (actSet.size() > 0) {
+        // -- append string representation for theme class
+        strBuf.append(StringUtils.replace(templThemeClass, "%className%",
+                                          actThemeClass));
+
+        themeList = new ArrayList( actSet );
+        Collections.sort( themeList, topicComparator );
+        itRelThemes = themeList.iterator();
+        while (itRelThemes.hasNext()) {
+          actTheme = (TopicIF) itRelThemes.next();
+          // a: replace theme name
+          tmp = StringUtils.replace(templTheme, "%themeName%",
+                                    stringifier.toString(actTheme));
+          // b: replace theme id
+          tmp = StringUtils.replace(tmp, "%themeId%",
+                                    actTheme.getObjectId());
+          // c: if selected, replace selected template
+          if (selectedThemes != null && selectedThemes.contains(actTheme))
+            tmp = StringUtils.replace(tmp, "%selected%",
+                                      templSelectedTheme);
+          else
+            tmp = StringUtils.replace(tmp, "%selected%", "");
+
+          // -- append string representation for theme
+          strBuf.append( tmp );
+
+        } // while itRelThemes
+      }
+
+    } // while itThemeClasses
+    
+    return strBuf.toString();
+  }
+
+
+  //
+  // internal helper methods
+  //
+  
+  /**
+   * INTERNAL: generate new Collection of String objects out of
+   * stringified TopicIF Collection.
+   */
+  private static Collection stringifyTopics(Collection topics,
+                                            StringifierIF stringifier) {
+    Collection res = new ArrayList();
+    Iterator it = topics.iterator();
+    TopicIF actTopic;
+    String actTopicString;
+    while (it.hasNext()) {
+      actTopic = (TopicIF) it.next();
+      actTopicString = stringifier.toString( actTopic );
+      res.add(actTopicString);
+    }
+    return res;
+  }
+
+}
+
+
+
+
+
+

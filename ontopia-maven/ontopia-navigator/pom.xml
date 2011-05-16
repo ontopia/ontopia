@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia.maven</groupId>
+		<version>5.2.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>ontopia-navigator</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>Ontopia Navigator</name>
+	<description>Ontopia Navigator.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+		<dependency>
+		 	<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>docbook-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-shared-docbook-resources</id>
+						<configuration>
+							<target>
+								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

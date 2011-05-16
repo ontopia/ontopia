@@ -1,0 +1,216 @@
+package net.ontopia.topicmaps.core.events;
+
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.infoset.core.Locators;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.events.AbstractTopicMapListener;
+import net.ontopia.topicmaps.core.events.TopicMapEvents;
+import net.ontopia.topicmaps.core.AbstractTopicMapTest;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.FileUtils;
+
+public abstract class AssociationEventsTest extends AbstractTopicMapTest {
+
+  protected TopicMapReferenceIF topicmapRef;
+  protected TopicMapIF topicmap;       // topic map of object being tested
+  protected TopicMapBuilderIF builder; // builder used for creating new objects
+  protected EventListener listener;
+  
+
+  public AssociationEventsTest(String name) {
+    super(name);
+  }
+
+  @Override
+  public void setUp() throws Exception {
+    // get a new topic map object from the factory.
+    factory = getFactory();
+    try {
+      topicmapRef = factory.makeTopicMapReference();
+      listener = new EventListener();
+      TopicMapEvents.addTopicListener(topicmapRef, listener);
+      // load topic map
+      topicmap = topicmapRef.createStore(false).getTopicMap();
+      ImportExportUtils.getImporter(FileUtils.getTestInputFile("various", "alumni.xtm")).importInto(topicmap);
+      topicmap.getStore().commit();
+      
+      // get the builder of that topic map.
+      builder = topicmap.getBuilder();
+      
+      // clean up the listener
+      listener.reset();
+      
+    } catch (java.io.IOException e) {
+      throw new OntopiaRuntimeException(e);
+    }
+  }
+
+  @Override
+  public void tearDown() {
+    // Inform the factory that the topic map is not needed anymore.
+    topicmap.getStore().close();
+    TopicMapEvents.removeTopicListener(topicmapRef, listener);
+    factory.releaseTopicMapReference(topicmapRef);
+    // Reset the member variables.
+    topicmap = null;
+    builder = null;
+  }
+
+  TopicIF getTopicBySubjectIdentifier(LocatorIF si) {
+    TopicIF result = topicmap.getTopicBySubjectIdentifier(si);
+    if(result == null) {
+      throw new RuntimeException("topic " + si.getAddress() + " not found in the test topic map");
+    }
+    return result;
+  }
+  
+  // --- Test Cases
+  
+  public void testRolePlayerEvent1() throws MalformedURLException {
+    TopicIF johnDoe = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#JohnDoe"));
+    TopicIF graduatedFromAssocType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#graduatedFrom"));
+    TopicIF alumnusRoleType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#Alumnus"));
+  
+    assertTrue("Unexpected events prior to any modifications", listener.traces.isEmpty());
+    
+    final String annotation1 = "create association";
+    listener.traceAnnotation = annotation1;
+    AssociationIF grad = builder.makeAssociation(graduatedFromAssocType);
+    
+    final String annotation2 = "make John Doe an alumnus";
+    listener.traceAnnotation = annotation2;
+    builder.makeAssociationRole(grad, alumnusRoleType, johnDoe);
+    topicmap.getStore().commit();
+    assertTrue("no event for " + johnDoe + " when it became a role player; event list: " + listener.traces, 
+        listener.findTrace(null, annotation2, johnDoe) != null);
+  }
+  
+  public void testRolePlayerEvent2() throws MalformedURLException {
+    TopicIF johnDoe = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#JohnDoe"));
+    TopicIF uOfSwhere = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#UniversityOfSomewhere"));
+    TopicIF graduatedFromAssocType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#graduatedFrom"));
+    TopicIF alumnusRoleType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#Alumnus"));
+    TopicIF almaMaterRoleType = getTopicBySubjectIdentifier(Locators.getURILocator("http://psi.chludwig.de/playground#AlmaMater"));
+  
+    assertTrue("Unexpected events prior to any modifications", listener.traces.isEmpty());
+    
+    final String annotation1 = "create association";
+    listener.traceAnnotation = annotation1;
+    AssociationIF grad = builder.makeAssociation(graduatedFromAssocType);
+    
+    final String annotation2 = "make John Doe an alumnus";
+    listener.traceAnnotation = annotation2;
+    builder.makeAssociationRole(grad, alumnusRoleType, johnDoe);
+    topicmap.getStore().commit();
+    
+    final String annotation3 = "make University of Somewhere an alma mater";
+    listener.traceAnnotation = annotation3;
+    builder.makeAssociationRole(grad, almaMaterRoleType, uOfSwhere);
+    topicmap.getStore().commit();
+    
+    // Note: the first test ignores the annotation, so it only checks that johnDoe was modified at some point
+    assertTrue("no event for " + johnDoe + " when it became a role player; event list: " + listener.traces, 
+        listener.findTrace(null, null, johnDoe) != null);
+    assertTrue("no event for " + uOfSwhere + " when it became a role player; event list: " + listener.traces, 
+        listener.findTrace(null, annotation3, uOfSwhere) != null);
+  }
+  
+  
+  // --- Test Infrastructure
+  
+  public static class EventTrace {
+    final public String event;
+    final public String annotation;
+    final public TMObjectIF tmObject;
+    
+    public EventTrace(String event, String annotation, TMObjectIF tmObject) {
+      super();
+      
+      if(event == null) {
+        throw new NullPointerException("event must not be null");
+      }
+      this.event = event;
+
+      if(annotation == null) {
+        throw new NullPointerException("annotation must not be null");
+      }
+      this.annotation = annotation;
+
+      if(tmObject == null) {
+        throw new NullPointerException("tmObject must not be null");
+      }
+      this.tmObject = tmObject;
+    }
+        
+    @Override
+    public String toString() {
+      return "EventTrace(\"" + event + "\", \"" + annotation + "\", " + tmObject + ")";
+    }
+  }
+  
+  public static class EventListener extends AbstractTopicMapListener {
+    ArrayList<EventTrace> traces = new ArrayList<EventTrace>();
+    String traceAnnotation = "";
+
+    final public static String ADD = "add";
+    final public static String MODIFIED = "modified";
+    final public static String REMOVED = "removed";
+    
+    public void reset() {
+      traces.clear();
+    }
+    
+    /**
+     * Find the first trace entry that matches the arguments.  
+     * @param event The requested event string or null if the event string does not matter.
+     * @param annotation The requested annotation string or null if the annotation string does not matter.
+     * @param tmObject The requested Topic Maps object or null if the object does not matter. 
+     *                 The objects are compared by their object ids. 
+     * @return The first trace entry that matches the given criteria or null if no such entry is found.
+     */
+    public EventTrace findTrace(String event, String annotation, TMObjectIF tmObject) {
+      EventTrace result = null;
+      for(EventTrace trace : traces) {
+        if((event == null || trace.event.equals(event)) &&
+            (annotation == null || trace.annotation.equals(annotation)) &&
+            (tmObject == null || trace.tmObject.getObjectId().equals(tmObject.getObjectId()))) {
+          result = trace;
+          break;
+        }
+      }
+      return result;
+    }
+    
+    @Override
+    public void objectAdded(TMObjectIF snapshot) {
+      EventTrace trace = new EventTrace(ADD, traceAnnotation, snapshot);
+      // System.out.println(trace);
+      traces.add(trace);
+    }
+
+    @Override
+    public void objectModified(TMObjectIF snapshot) {
+      EventTrace trace = new EventTrace(MODIFIED, traceAnnotation, snapshot);
+      // System.out.println(trace);
+      traces.add(trace);
+    }
+
+    @Override
+    public void objectRemoved(TMObjectIF snapshot) {
+      EventTrace trace = new EventTrace(REMOVED, traceAnnotation, snapshot);
+      // System.out.println(trace);
+      traces.add(trace);
+    }
+
+  }
+
+}

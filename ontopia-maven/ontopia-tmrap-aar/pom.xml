@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia.maven</groupId>
+		<version>5.2.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>ontopia-tmrap-aar</artifactId>
+	<packaging>aar</packaging>
+	
+	<name>Ontopia TMRAP Axis Archive</name>
+
+	<dependencies>
+		<!-- Ontopia dependencies will be included in webapp-tmrap -->
+		<dependency>
+			<groupId>net.ontopia.maven</groupId>
+			<artifactId>ontopia-tmrap</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+		<!-- Axis2 dependencies will be included in webapp-tmrap -->
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2</groupId>
+			<artifactId>axis2-java2wsdl</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.axis2</groupId>
+				<artifactId>axis2-wsdl2code-maven-plugin</artifactId>
+				<configuration>
+					<wsdlFile>${basedir}/src/main/axis2/service.wsdl</wsdlFile>
+					<packageName>net.ontopia.topicmaps.utils.tmrap.axis2</packageName>
+					<generateServerSide>true</generateServerSide>
+					<generateServerSideInterface>true</generateServerSideInterface>
+					<generateServicesXml>true</generateServicesXml>
+					<namespaceToPackages>http://localhost:8080/tmrap/services/TMRAP=net.ontopia.topicmaps.utils.tmrap.axis2</namespaceToPackages>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<configuration>
+							<target>
+								<property name="axis.sources" value="${project.build.directory}/generated-sources/axis2/wsdl2code"/>
+								<!-- remove generated TMRAPServiceSkeleton file as it will be overwritten by file in /src/main/java/ -->
+								<delete file="${axis.sources}/src/net/ontopia/topicmaps/utils/tmrap/axis2/TMRAPServiceSkeleton.java"/>
+								<!-- copy resources files manually, due to http://issues.apache.org/jira/browse/AXIS2-4547 -->
+								<copy todir="${project.build.directory}/classes/META-INF">
+									<fileset dir="${axis.sources}/resources"/>
+								</copy>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.axis2</groupId>
+				<artifactId>axis2-aar-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,17 @@
+<!-- $Id: SyncTest-mapping.xml,v 1.2 2009/01/23 13:13:48 lars.garshol Exp $ -->
+<db2tm name='SyncTest'>
+  <sources>
+    <jdbc id="jdbc" propfile='classpath:db2tm.h2.props'/>
+  </sources>
+
+  <relation name='testdata' columns='id name type'>
+    <topic id='type'>
+      <subject-identifier>psi:test/${type}</subject-identifier>
+    </topic>
+    <topic type='#type'>
+      <subject-identifier>http://example.org/test/${id}</subject-identifier>
+      <topic-name>${name}</topic-name>
+    </topic>
+  </relation>
+ 
+</db2tm>

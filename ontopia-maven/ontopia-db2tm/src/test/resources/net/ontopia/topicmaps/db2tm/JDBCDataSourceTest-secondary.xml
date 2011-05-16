@@ -1,0 +1,52 @@
+<!-- $Id: JDBCDataSourceTest-secondary.xml,v 1.2 2007/02/27 12:42:39 grove Exp $ -->
+<db2tm name='fellesdata'>
+
+  <using prefix='px' subject-identifier='test:secondary/'></using>
+
+  <sources>
+    <jdbc id="jdbc" propfile='classpath:db2tm.h2.props'/>
+  </sources>
+
+  <relation name='first' columns='a b c d' synctype='changelog'>
+    <topic id='over'>
+      <subject-identifier>psi:first/${c}</subject-identifier>
+    </topic>
+    <topic type='px:first'>
+      <subject-identifier>psi:first/${a}</subject-identifier>
+      <topic-name>${b}</topic-name>
+      <occurrence type='px:fo'>${c}</occurrence>
+      <player atype='px:fp' rtype='px:underlagt'>
+        <other player='#over' rtype='px:overordnet'></other>
+      </player>
+    </topic>
+    <changelog action-column='ct' table='first_changes' order-column='cd' primary-key='a'>
+      <action type='create' value='a'></action>
+      <action type='delete' value='r'></action>
+      <action type='update' value='u'></action>
+      <action type='ignore' value='i'></action>
+      <action type='ignore' value='x'></action>
+    </changelog>
+  </relation>
+
+  <relation name='second' columns='a b c d' synctype='changelog'>
+    <topic id='over'>
+      <subject-identifier>psi:first/${c}</subject-identifier>
+    </topic>
+    <topic primary='false' repeatable='false'>
+      <subject-identifier>psi:first/${a}</subject-identifier>
+      <topic-name type="px:sn">${b}</topic-name>
+      <occurrence type='px:so'>${c}</occurrence>
+      <player atype='px:sp' rtype='px:underlagt'>
+        <other player='#over' rtype='px:overordnet'></other>
+      </player>
+    </topic>
+    <changelog action-column='ct' table='second_changes' order-column='cd' primary-key='a'>
+      <action type='create' value='a'></action>
+      <action type='delete' value='r'></action>
+      <action type='update' value='u'></action>
+      <action type='ignore' value='i'></action>
+      <action type='ignore' value='x'></action>
+    </changelog>
+  </relation>
+
+</db2tm>

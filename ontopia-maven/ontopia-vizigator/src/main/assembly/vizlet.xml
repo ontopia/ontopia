@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	<id>vizlet</id>
+	<formats>
+		<format>jar</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/</outputDirectory>
+			<useProjectArtifact>true</useProjectArtifact>
+			<unpack>true</unpack>
+			<scope>runtime</scope>
+			
+			<unpackOptions>
+				<excludes>
+					<!-- exclude all unneeded classes to save space -->
+					<exclude>net/ontopia/persistence/**</exclude>
+					<exclude>net/ontopia/topicmaps/entry/**</exclude>
+					<exclude>net/ontopia/topicmaps/utils/ltm/**</exclude>
+					<exclude>net/ontopia/topicmaps/utils/rdf/**</exclude>
+					<exclude>net/ontopia/topicmaps/utils/xfml/**</exclude>
+					<exclude>net/ontopia/topicmaps/xml/ISO13250*.class</exclude>
+					<exclude>net/ontopia/topicmaps/xml/XTMExporter.class</exclude>
+					<exclude>net/ontopia/topicmaps/xml/XTMTopicMapWriter.class</exclude>
+					<exclude>net/ontopia/topicmaps/xml/XTMFragmentExporter*.class</exclude>
+					<exclude>net/ontopia/topicmaps/xml/*Canonical*.class</exclude>
+					<exclude>net/ontopia/topicmaps/xml/XTMPathTopicMapSource*.class</exclude>
+					<exclude>net/ontopia/topicmaps/xml/XTMValidationHandler*.class</exclude>
+					<exclude>net/ontopia/topicmaps/impl/rdbms/**</exclude>
+					<exclude>net/ontopia/topicmaps/impl/tmapi2/**</exclude>
+					<exclude>net/ontopia/topicmaps/query/**</exclude>
+					<exclude>net/ontopia/topicmaps/schema/**</exclude>
+					<exclude>net/ontopia/utils/ontojsp/**</exclude>
+					
+					<!-- we need nav2.utils, exclude the rest -->
+					<exclude>net/ontopia/topicmaps/nav2/**</exclude>
+					<exclude>net/ontopia/topicmaps/nav/conf</exclude>
+					<exclude>net/ontopia/topicmaps/nav/context/**</exclude>
+					<exclude>net/ontopia/topicmaps/nav/taglibs/**</exclude>
+					
+					<!-- dependency cleanup -->
+					<exclude>*.*</exclude>
+					<exclude>META-INF/*.tld</exclude>
+					<exclude>META-INF/maven/**</exclude>
+					<exclude>META-INF/LICENSE*</exclude>
+					<exclude>META-INF/NOTICE*</exclude>
+					<exclude>META-INF/NOTICE*</exclude>
+					<exclude>META-INF/services/org.tmapi*</exclude>
+					<exclude>edu/emory/mathcs/backport/java/util/concurrent/**</exclude>
+				</excludes>
+			</unpackOptions>
+			
+			<excludes>
+				<exclude>javax.servlet:jstl:*</exclude>
+				<exclude>taglibs:standard:*</exclude>
+				<exclude>concurrent:concurrent:*</exclude>
+				<exclude>antlr:antlr:*</exclude>
+				<exclude>net.sourceforge.jena:jena:*</exclude>
+				<exclude>org.apache.lucene:lucene-snowball:*</exclude>
+				<exclude>jgroups:jgroups:*</exclude>
+				<exclude>org.tmapi:tmapi:*</exclude>
+				<exclude>org.apache.lucene:lucene-core:*</exclude>
+				<exclude>gnu.trove:trove4j:*</exclude>
+				<exclude>com.thaiopensource:jing:*</exclude>
+				<exclude>com.ibm.icu:icu4j:*</exclude>
+				<exclude>urbanophile:java-getopt:*</exclude>
+				<exclude>org.hibernate:jtidy:*</exclude>
+				<exclude>stax:stax:*</exclude>
+				<exclude>stax:stax-api:*</exclude>
+				<exclude>xml-apis:xml-apis:*</exclude>
+				<exclude>commons-dbcp:commons-dbcp:*</exclude>
+				<exclude>commons-collections:commons-collections</exclude>
+				<exclude>commons-pool:commons-pool</exclude>
+				<exclude>oro:oro:*</exclude>
+				
+				<!-- we need logging
+				<exclude>commons-logging:commons-logging</exclude>
+				-->
+				
+			</excludes>
+		   
+		</dependencySet>
+	</dependencySets>
+</assembly>

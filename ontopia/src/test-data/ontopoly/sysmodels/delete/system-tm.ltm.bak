@@ -1,4 +1,0 @@
-#PREFIX ont @"http://psi.ontopia.net/ontology/"
-
-[tm2 : ont:ted-topic-map = "Topic Map 2"]
-  {tm2, ont:topic-map-id, [[tm2.xtm]]}

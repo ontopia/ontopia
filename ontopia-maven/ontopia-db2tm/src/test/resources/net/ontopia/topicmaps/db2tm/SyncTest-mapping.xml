@@ -1,0 +1,40 @@
+<!-- $Id: SyncTest-mapping.xml,v 1.2 2009/01/23 13:13:48 lars.garshol Exp $ -->
+<db2tm name='SyncTest'>
+  <sources>
+    <jdbc id="jdbc" propfile='classpath:db2tm.h2.props'/>
+  </sources>
+
+  <relation name='testdata' columns='id name type' synctype='changelog'>
+    <topic id='type'>
+      <subject-identifier>psi:test/${type}</subject-identifier>
+    </topic>
+    <topic type='#type'>
+      <subject-identifier>http://example.org/test/${id}</subject-identifier>
+      <topic-name>${name}</topic-name>
+    </topic>
+
+    <changelog table='testchanges' action-column='changetype'
+               order-column='seq' primary-key='id'>
+      <action type='create' value='1'></action>
+      <action type='delete' value='-1'></action>
+      <action type='update' value='0'></action>
+      <action type='ignore' value='2'></action>
+    </changelog>
+  </relation>
+
+  <relation name='complexdata' columns='id1 id2 name' synctype='changelog'>
+    <topic>
+      <subject-identifier>http://example.org/test/${id1}/${id2}</subject-identifier>
+      <topic-name>${name}</topic-name>
+    </topic>
+
+    <changelog table='complexchanges' action-column='changetype'
+               order-column='seq' primary-key='id1 id2'>
+      <action type='create' value='1'></action>
+      <action type='delete' value='-1'></action>
+      <action type='update' value='0'></action>
+      <action type='ignore' value='2'></action>
+    </changelog>
+  </relation>
+  
+</db2tm>

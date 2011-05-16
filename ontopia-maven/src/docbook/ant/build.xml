@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<project name="copy-shared-docbook-resources">
+
+	<!-- adds the ant-contrib tasks (propertyregex and foreach used below) -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+	<target name="main">
+		<!-- default documentation directory is final part of project artifactId -->
+		<!-- e.g. ontopia-webed -> webed, webapp-ontopoly -> ontopoly -->
+		<!-- this can be overwritten by providing a comma separated property 'documentation.directories' -->
+		<propertyregex property="documentation.directories" input="${project.artifactId}"
+			regexp="([^\.]*)-([^\.]*)" select="\2" override="false"/>
+		<foreach list=".,${documentation.directories}" param="documentation.directory" target="copy-resources" inheritall="true"/>
+		
+		<!-- copy the site (without index or api) to the parent -->
+		<copy todir="../target/site">
+			<fileset dir="target/site" excludes="index.html,api/**" includes="**/*.*"/>
+		</copy>
+				
+	</target>
+
+	<!-- copy all shared resources -->
+	<target name="copy-resources">
+		<copy todir="target/site/${documentation.directory}">
+			<fileset dir="../src/docbook/resources"/>
+		</copy>
+	</target>
+
+	<!-- Collects all the omnigator documentation that is included in the WAR -->
+	<target name="collect-omnigator-docs">
+		<!-- omnigator -->
+		<copy todir="target/docbook-collected/navigator">
+			<fileset dir="src/docbook/omnigator"/>
+		</copy>
+		<copy todir="target/docbook-collected/resources/navigator">
+			<fileset dir="src/docbook/resources/omnigator"/>
+			<fileset dir="../src/docbook/resources"/>
+		</copy> 
+		
+		<!-- query -->
+		<copy todir="target/docbook-collected/query">
+			<fileset dir="../ontopia-core/src/docbook/query"/>
+		</copy>
+		<copy todir="target/docbook-collected/resources/query">
+			<fileset dir="../src/docbook/resources"/>
+		</copy>
+
+		<!-- schema -->
+		<copy todir="target/docbook-collected/schema">
+			<fileset dir="../ontopia-core/src/docbook/schema"/>
+		</copy>
+		<copy todir="target/docbook-collected/resources/schema">
+			<fileset dir="../ontopia-core/src/docbook/resources/schema"/>
+			<fileset dir="../src/docbook/resources"/>
+		</copy>
+
+		<!-- vizigator -->
+		<copy todir="target/docbook-collected/vizigator">
+			<fileset dir="../ontopia-vizigator/src/docbook/vizigator"/>
+		</copy>
+		<copy todir="target/docbook-collected/resources/vizigator">
+			<fileset dir="../ontopia-vizigator/src/docbook/resources/vizigator"/>
+			<fileset dir="../src/docbook/resources"/>
+		</copy>
+		
+		<!-- jill.xtm -->
+		<copy file="../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/jill.xtm"
+			tofile="target/docbook-collected/resources/navigator/jill.xtm"/>
+	</target>
+	
+	<!-- Collects all the ontopoly documentation that is included in the WAR -->
+	<target name="collect-ontopoly-docs">
+		<property name="ontodocs" value="target/${finalName}/doc"/>
+		<mkdir dir="${ontodocs}"/>
+		
+		<copy todir="target/docbook-collected">
+			<fileset dir="src/docbook/ontopoly"/>
+		</copy>
+		<copy todir="target/docbook-collected/resources">
+			<fileset dir="src/docbook/resources/ontopoly"/>
+			<fileset dir="../src/docbook/resources"/>
+		</copy> 
+	</target>
+</project>

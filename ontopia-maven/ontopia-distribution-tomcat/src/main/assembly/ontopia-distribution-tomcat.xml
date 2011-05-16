@@ -1,0 +1,264 @@
+<?xml version="1.0"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>ontopia-dist</id>
+	
+	<formats>
+		<format>dir</format>
+	</formats>
+
+	<includeBaseDirectory>false</includeBaseDirectory>
+	
+	<fileSets>
+		<!-- Move tomcat to the correct location -->
+		<fileSet>
+			<directory>target/apache-tomcat-6.0.32/apache-tomcat-6.0.32</directory>
+			<outputDirectory>apache-tomcat</outputDirectory>
+			<excludes>
+				<!-- exclude the default webapps -->
+				<exclude>webapps/**</exclude>
+				
+				<!-- exclude all runnable files, copied later with correct mods -->
+				<exclude>bin/*.sh</exclude>
+				
+				<!-- exclude catalina.bat and setclasspath.bat, is replaced later -->
+				<exclude>bin/catalina.bat</exclude>
+				<exclude>bin/setclasspath.bat</exclude>
+				
+				<!-- exclude server.xml, catalina.properties -->
+				<exclude>conf/server.xml</exclude>
+				<exclude>conf/catalina.properties</exclude>
+			</excludes>
+		</fileSet>
+		
+		<!-- chmod runnable files -->
+		<fileSet>
+			<directory>target/apache-tomcat-6.0.32/apache-tomcat-6.0.32/bin</directory>
+			<outputDirectory>apache-tomcat/bin</outputDirectory>
+			<fileMode>0755</fileMode>
+			<includes>
+				<include>*.sh</include>
+			</includes>
+			
+			<!-- except catalina.sh, is replaced later -->
+			<excludes>
+				<exclude>catalina.sh</exclude>
+			</excludes>
+		</fileSet>
+			
+		<!-- copy modified configuration to distribution -->
+		<fileSet>
+			<directory>src/main/assembly/resources/</directory>
+			<outputDirectory>.</outputDirectory>
+			<fileMode>0644</fileMode>
+			<excludes>
+				<exclude>apache-tomcat/bin/*.sh</exclude>
+				<exclude>bin/*.sh</exclude>
+				<exclude>tests/*.sh</exclude>
+			</excludes>
+		</fileSet>
+		
+		<!-- copy executable files -->
+		<fileSet>
+			<directory>src/main/assembly/resources</directory>
+			<outputDirectory>.</outputDirectory>
+			<fileMode>0755</fileMode>
+			<filtered>true</filtered>
+			<includes>
+				<include>apache-tomcat/bin/*.sh</include>
+				<include>bin/*.sh</include>
+				<include>tests/*.sh</include>
+			</includes>
+		</fileSet>
+		
+		<!-- site inclusion (needed because maven-assembly-plugin:single can only take current project's site due to bug) -->
+		<fileSet>
+			<directory>${project.parent.reporting.outputDirectory}</directory>
+			<outputDirectory>doc</outputDirectory>
+		</fileSet>
+	</fileSets>
+	
+	<files>
+		<file>
+			<source>src/main/assembly/resources/topicmaps/jill.xtm</source>
+			<outputDirectory>apache-tomcat/webapps/omnigator/docs/navigator</outputDirectory>
+			<fileMode>644</fileMode>
+		</file>
+	</files>
+
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>apache-tomcat/lib/ontopia</outputDirectory>
+			<excludes>
+				<exclude>*:war:*</exclude>
+				<exclude>*:vizlet:*</exclude>
+			</excludes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<excludes>
+				<exclude>*:war:*</exclude>
+				<exclude>*:vizlet:*</exclude>
+			</excludes>
+		</dependencySet>
+		
+		<dependencySet>
+			<outputDirectory>extras</outputDirectory>
+			<includes>
+				<include>*:vizlet:*</include>
+			</includes>
+			<outputFileNameMapping>ontopia-vizlet-${version}.jar</outputFileNameMapping>
+		</dependencySet>
+		
+		<!-- add ROOT webapp -->
+		<dependencySet>
+			<includes><include>*:webapp-root:war</include></includes>
+			<outputDirectory>apache-tomcat/webapps/ROOT</outputDirectory>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<excludes>
+					<exclude>WEB-INF/lib/**</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		
+		<!-- add accessctl webapp -->
+		<dependencySet>
+			<includes><include>*:webapp-accessctl:war</include></includes>
+			<outputDirectory>apache-tomcat/webapps/accessctl</outputDirectory>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<excludes>
+					<exclude>WEB-INF/lib/**</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		
+		<!-- add xmltools webapp -->
+		<dependencySet>
+			<includes><include>*:webapp-xmltools:war</include></includes>
+			<outputDirectory>apache-tomcat/webapps/xtmltools</outputDirectory>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<excludes>
+					<exclude>WEB-INF/lib/**</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		
+		<!-- add i18n webapp -->
+		<dependencySet>
+			<includes><include>*:webapp-i18n:war</include></includes>
+			<outputDirectory>apache-tomcat/webapps/i18n</outputDirectory>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<excludes>
+					<exclude>WEB-INF/lib/**</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		
+		<!-- add omnigator -->
+		<dependencySet>
+			<includes><include>*:webapp-omnigator:war</include></includes>
+			<outputDirectory>apache-tomcat/webapps/omnigator</outputDirectory>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<excludes>
+					<exclude>WEB-INF/lib/**</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		
+		<!-- add ontopoly -->
+		<dependencySet>
+			<includes><include>*:webapp-ontopoly:war</include></includes>
+			<outputDirectory>apache-tomcat/webapps/ontopoly</outputDirectory>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<includes>
+					<include>examples/*.jsp</include>
+					<include>WEB-INF/web.xml</include>
+					<include>WEB-INF/config/**</include>
+					<include>WEB-INF/lib/wicket*.jar</include>
+					<include>WEB-INF/classes/ontopoly/**</include>
+				</includes>
+			</unpackOptions>
+		</dependencySet>
+		
+		<!-- add manage -->
+		<dependencySet>
+			<includes><include>*:webapp-manager:war</include></includes>
+			<outputDirectory>apache-tomcat/webapps/manage</outputDirectory>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<excludes>
+					<exclude>WEB-INF/lib/**</exclude>
+				</excludes>
+			</unpackOptions>
+		</dependencySet>
+		
+		<!-- add tmrap -->
+		<dependencySet>
+			<includes><include>*:webapp-tmrap:war</include></includes>
+			<outputDirectory>apache-tomcat/webapps/tmrap</outputDirectory>
+			<unpack>true</unpack>
+			<unpackOptions>
+				<includes>
+					<include>META-INF/**</include>
+					<include>WEB-INF/web.xml</include>
+					<include>WEB-INF/services/**</include>
+					
+					<!-- axis dependencies are unique to the tmrap webapp -->
+					<include>WEB-INF/lib/activation-1.1.jar</include>
+					<include>WEB-INF/lib/annogen-0.1.0.jar</include>
+					<include>WEB-INF/lib/ant-1.7.0.jar</include>
+					<include>WEB-INF/lib/ant-launcher-1.7.0.jar</include>
+					<include>WEB-INF/lib/axiom-api-1.2.7.jar</include>
+					<include>WEB-INF/lib/axiom-dom-1.2.7.jar</include>
+					<include>WEB-INF/lib/axiom-impl-1.2.7.jar</include>
+					<include>WEB-INF/lib/axis2-1.4.1.jar</include>
+					<include>WEB-INF/lib/axis2-java2wsdl-1.4.1.jar</include>
+					<include>WEB-INF/lib/axis2-kernel-1.4.1.jar</include>
+					<include>WEB-INF/lib/commons-codec-1.2.jar</include>
+					<include>WEB-INF/lib/commons-httpclient-3.1.jar</include>
+					<include>WEB-INF/lib/geronimo-activation_1.1_spec-1.0.1.jar</include>
+					<include>WEB-INF/lib/geronimo-javamail_1.4_spec-1.2.jar</include>
+					<include>WEB-INF/lib/geronimo-jms_1.1_spec-1.1.jar</include>
+					<include>WEB-INF/lib/httpcore-4.0-beta1.jar</include>
+					<include>WEB-INF/lib/httpcore-nio-4.0-beta1.jar</include>
+					<include>WEB-INF/lib/jaxen-1.1.1.jar</include>
+					<include>WEB-INF/lib/jdom-1.0.jar</include>
+					<include>WEB-INF/lib/mail-1.4.jar</include>
+					<include>WEB-INF/lib/neethi-2.0.4.jar</include>
+					<include>WEB-INF/lib/woden-api-1.0M8.jar</include>
+					<include>WEB-INF/lib/woden-impl-dom-1.0M8.jar</include>
+					<include>WEB-INF/lib/wsdl4j-1.6.2.jar</include>
+					<include>WEB-INF/lib/wstx-asl-3.2.4.jar</include>
+					<include>WEB-INF/lib/xalan-2.7.0.jar</include>
+					<include>WEB-INF/lib/xmlParserAPIs-2.6.0.jar</include>
+					<include>WEB-INF/lib/XmlSchema-1.4.2.jar</include>
+					<include>WEB-INF/lib/xom-1.0.jar</include>
+				</includes>
+			</unpackOptions>
+		</dependencySet>
+	</dependencySets>
+
+	<moduleSets>
+		<moduleSet>
+			<useAllReactorProjects>true</useAllReactorProjects>
+			<binaries>
+				<attachmentClassifier>tests</attachmentClassifier>
+				<outputDirectory>tests/lib</outputDirectory>
+				<includes>
+					<include>**/target/*-tests.jar</include>
+				</includes>
+				<includeDependencies>false</includeDependencies>
+				<unpack>false</unpack>
+			</binaries>
+			<excludes>
+				<exclude>*:ontopia-testrunner:*</exclude>
+			</excludes>
+		</moduleSet>
+	</moduleSets>
+	
+</assembly>

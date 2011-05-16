@@ -1,0 +1,51 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id3</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#ot1</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id1</locator>
+</itemIdentifiers>
+<name number="1">
+<value>ot1</value>
+<type topicref="1"></type>
+</name>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#ot2</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id4</locator>
+</itemIdentifiers>
+<name number="1">
+<value>fOccs-ot2</value>
+<type topicref="1"></type>
+</name>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#t1</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id6</locator>
+</itemIdentifiers>
+<name number="1">
+<value>t1</value>
+<type topicref="1"></type>
+</name>
+<occurrence number="1">
+<value>t1-occ1</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="2"></type>
+</occurrence>
+</topic>
+</topicMap>

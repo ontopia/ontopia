@@ -1,0 +1,54 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id3</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#at1</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id1</locator>
+</itemIdentifiers>
+<name number="1">
+<value>fAssocs-at1</value>
+<type topicref="1"></type>
+</name>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#rt1</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id6</locator>
+</itemIdentifiers>
+</topic>
+<topic number="4">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#rt2</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id9</locator>
+</itemIdentifiers>
+</topic>
+<topic number="5">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#t1</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id5</locator>
+</itemIdentifiers>
+</topic>
+<topic number="6">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#t2</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id8</locator>
+</itemIdentifiers>
+</topic>
+</topicMap>

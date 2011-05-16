@@ -1,0 +1,22 @@
+<topicMap>
+<topic number="1">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id3</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>http://xtmfragmentexporter/tests#t1</locator>
+</subjectIdentifiers>
+<itemIdentifiers>
+<locator>#id1</locator>
+</itemIdentifiers>
+<name number="1">
+<value>t1</value>
+<type topicref="1"></type>
+</name>
+</topic>
+</topicMap>

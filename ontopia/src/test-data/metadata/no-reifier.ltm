@@ -1,6 +1,0 @@
-
-#TOPICMAP externally-reified
-
-[tm @"#topicmap"]
-[osl-schema @"http://psi.ontopia.net/xtm/occurrence-type/osl-schema"]
-{tm, osl-schema, "tag:larsga@ontopia.net,2002-08-27:the-schema2"}

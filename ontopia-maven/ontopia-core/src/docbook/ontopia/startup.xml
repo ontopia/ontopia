@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<!-- DOCTYPE article PUBLIC '-//OASIS//DTD DocBook XML V4.1//EN' '' -->
+
+<article class="techreport">
+  <title>Ontopia</title>
+  <subtitle>Installation and getting started</subtitle>
+  <articleinfo>
+    <author>
+      <affiliation>
+        <shortaffil>Ontopia</shortaffil>
+      </affiliation>
+    </author>
+    <pubdate>2010-06-09</pubdate>
+    <releaseinfo>5.1</releaseinfo>
+  </articleinfo>
+
+<abstract>
+<para>
+This is a guide to installing and getting started with using
+Ontopia. It is assumed that the reader is familiar with the basics of
+the host platform and of Java development.  See the <citetitle>What's
+new in this release?</citetitle> document for information about this
+release.
+</para>
+</abstract>
+
+
+<!-- ===== REQUIREMENTS =================================================== -->
+<section>
+<title>Requirements</title>
+
+<para>The most important requirement is that you must have the Java 2
+Software Development Kit (SDK) version 1.5 or newer. There should be
+no platform dependencies in the code, so the software should run on
+all operating systems for which there is a supported JDK available.</para>
+
+<para>
+We have verified that the Navigator Framework runs in Tomcat versions
+3.3, 4.1, 5.0, and 5.5, Oracle9i AS 9.0.3, WebLogic 7.0, and WebSphere
+versions 4.0 and 5.0. It is quite likely that the framework also works
+in other application servers than these, but this has not been
+verified.
+</para>
+
+<para>
+The RDBMS backend has been verified to work with Oracle 8.1.7, 9i, and
+10g, PostgreSQL 8.1, 8.2 and 8.3, MySQL 5.0, H2 Database 1.0.74 and
+Microsoft SQL Server 2005.
+</para>
+</section>
+
+
+<!-- ===== RELEASE CONTENTS =============================================== -->
+<section>
+<title>What the release contains</title>
+
+<para>
+Ontopia has the following components:
+</para>
+
+<itemizedlist>
+  <listitem><para>The Ontopia Topic Maps Engine</para>
+  <itemizedlist>
+    <listitem><para>Full-text Integration</para></listitem>
+    <listitem><para>Query Engine</para></listitem>
+    <listitem><para>Schema Tools</para></listitem>
+  </itemizedlist></listitem>
+
+  <listitem><para>The Ontopia Navigator Framework</para>
+  <itemizedlist>
+    <listitem><para>TMRAP</para></listitem>
+  </itemizedlist>
+  </listitem>
+<listitem><para>The Ontopia Web Editor Framework</para></listitem>
+  <listitem><para>The Ontopia Vizigator</para></listitem>
+  <listitem><para>DB2TM</para></listitem>
+  <listitem><para>The Ontopia RDBMS Backend Connector,
+  with SQL implementation of Query Engine</para></listitem>
+  <listitem><para>The Ontopia Omnigator</para></listitem>
+  <listitem><para>The Ontopoly Topic Maps Editor</para></listitem>
+</itemizedlist>
+</section>
+
+
+<!-- =====  =============================================== -->
+<section id="INSTALL_engine">
+<title>Installation</title>
+
+<para>
+The first step in the installation is to uncompress the distribution
+file, which you have presumably already done, since you are reading
+this document. The topmost directory created by uncompressing the
+distribution, the file called
+
+  <filename>ontopia-X.X.X.zip</filename>
+
+, will from now on be referred to as
+<symbol>basedir</symbol>.</para>
+
+<section>
+<title>Setting the CLASSPATH</title>
+
+<para>
+If you want to use the Ontopia APIs to write Java software, or just
+run the test suite, you will have to set up the
+<envar>CLASSPATH</envar> environment variable. If you only want to run
+the Navigator Framework this is not necessary, and you can skip this
+section.
+</para>
+
+<para>
+To set up the <envar>CLASSPATH</envar>, put the
+
+  <filename>${basedir}/lib/ontopia.jar</filename>
+
+file in your <envar>CLASSPATH</envar>. If this does not work, or you
+want more detailed control over the jar files being used, please see
+<xref linkend="sect-jar-details"/>.</para>
+
+<note>
+<para>The jar-file automatically includes the other required jar-files
+for you via its manifest. In practice this means that you normally
+need not put the other jar-files on your <envar>CLASSPATH</envar>
+explicitly, but they all have to be located in the same directory for
+this to work.</para>
+</note>
+
+<warning>
+<para><emphasis>There may be some Java Virtual Machines out there that
+do not support the new <envar>CLASSPATH</envar> jar-file manifest
+header. If that is the case you'll have to add all the individual
+jar-files to your <envar>CLASSPATH</envar>.</emphasis></para>
+</warning>
+</section>
+
+<section>
+<title>Verifying</title>
+
+<para>
+Now that you've set up your <envar>CLASSPATH</envar> environment
+variable you can verify it by issuing the following command:
+</para>
+
+<screen>java net.ontopia.Ontopia</screen>
+
+<para>It will run and produce the following output if it can find all
+the classes required:
+</para>
+
+<screen>
+Ontopia Topic Maps Engine [version]
+Success: All required classes found.</screen>
+
+<para>If it fails you will get output similar to the following:</para>
+
+<screen>
+Ontopia Topic Maps Engine [version]
+Class 'org.apache.log4j.BasicConfigurator' not found. Please add log4j.jar to your CLASSPATH.</screen>
+
+<para>The message is hopefully self-explanatory.</para>
+
+<para>
+</para>
+</section>
+
+<section>
+<title>Testing</title>
+
+<para>
+Once you've set up your <envar>CLASSPATH</envar> environment variable
+you can check that Ontopia is indeed working correctly on your
+system. This step is optional.
+</para>
+
+<para>Ontopia comes with a set of test suites, so you can check that
+it is working correctly on your system. Each test suite is a set of
+<ulink url="http://www.junit.org">JUnit</ulink> test cases that
+exercise most aspects of Ontopia to verify that it works as it
+should. This includes testing all engine policies, all engine methods,
+testing import and export of topic map documents and so on. Running
+the test suite is therefore the best and quickest way to test whether
+it has been installed correctly or not.
+</para>
+
+<para>
+You need to add the
+
+ <filename>${basedir}/lib/ontopia-tests.jar</filename>
+
+jar-file to your <envar>CLASSPATH</envar> to run the test suite, as
+well as
+<filename>${basedir}/apache-tomcat/common/lib/</filename>:
+<filename>servlet-api.jar</filename>,
+<filename>jsp-api.jar</filename>, 
+<filename>jstl.jar</filename>, and
+<filename>standard.jar</filename>
+required by the Navigator and Web Editor Frameworks.
+Note that you only need these extra jar-files when running the
+test suite. They are not required when you are using Ontopia.</para>
+
+<para>You can now run the test suite by following the instructions
+below:</para>
+
+<variablelist>
+<varlistentry>
+<term>Windows</term>
+<listitem><para>Go to the <filename>${basedir}</filename>
+directory. Set the environment variable <envar>ONTOPIA_HOME</envar> to
+<filename>${basedir}</filename>, using the command
+<command>set ONTOPIA_HOME=${basedir}</command>. Then run the
+<command>tests\runtests-ontopia.bat</command> script.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Unix</term>
+<listitem>
+<para>Go to the <filename>${basedir}</filename> directory. Then run
+the <command>tests/runtests-ontopia.sh</command> script.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para>
+You should see the following output:
+</para>
+
+<screen>
+Ontopia Topic Maps Engine [version]
+License: [license info]
+Success: All required classes found.
+Running tests
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+.........................................
+..
+Time: 10.367
+
+OK (1109 tests)
+
+Asserts: 12905
+</screen>
+
+<para>The test should end with <screen>OK (xxx tests)</screen>. If it
+does not and running the tests produces any kind of error the engine
+might not be working correctly on your system. In that case please
+report an issue at <ulink
+url="http://code.google.com/p/ontopia/issues/list">Google Code</ulink>
+including:
+</para>
+
+<itemizedlist>
+<listitem>
+<para>a brief description of what you have done,</para>
+</listitem>
+<listitem>
+<para>the output from the test run,</para>
+</listitem>
+<listitem>
+<para>your entire <envar>CLASSPATH</envar> when you ran the tests,</para>
+</listitem>
+<listitem>
+<para>what platform you ran the test on,</para>
+</listitem>
+<listitem>
+<para>the output from the command
+<command>java -version</command>, and</para>
+</listitem>
+<listitem>
+<para>the output from the command
+<command>java net.ontopia.Ontopia</command>.</para>
+</listitem>
+</itemizedlist>
+
+<para>
+If the test runs without errors, as it should do, you can be confident
+that you have a working version of the Ontopia Topic Maps Engine.
+</para>
+
+<para>
+The tests for the RDBMS backend have been separated out, since they
+require a database to be set up and configured, and so require quite a
+bit of initial setup. To run these tests set up your database (as
+described further down), then run
+<command>tests\runtests-rdbms.bat</command> or
+<command>tests/runtests-rdbms.sh</command>.</para>
+</section>
+
+<section id="INSTALL_rdbms">
+<title>Installing the RDBMS Backend Connector</title>
+
+<para>See the <citetitle>The RDBMS Backend Connector - Installation
+Guide</citetitle> document for information about how to install and
+setup the relational database backend. Note that it's possible to run
+Ontopia and the web applications without using the RDBMS backend.</para>
+</section>
+</section>
+
+
+<!-- ===== GETTING STARTED =============================================== -->
+<section>
+<title>Getting started</title>
+
+<para>Following is a short introduction to the end-user applications
+that come with Ontopia.</para>
+
+<para>For more information about developing with Ontopia you can find
+a complete list of developer documentation <ulink
+url="../index.html">here</ulink>.</para>
+
+<section>
+<title>The engine</title>
+
+<para>
+The engine consists of an SDK and some command-line utilities, and so
+there is little that can be done with it apart from developing
+applications on top of it.
+</para>
+
+<para>
+To get started with application development we recommend that you
+start by reading the <ulink url="engine/devguide.html">developer's
+guide</ulink>. Once you have read that we recommend that you use the
+javadocs in <filename>${basedir}/doc/api</filename> to learn the
+details of the APIs.
+</para>
+
+<para>
+You can find example topic maps in the
+<filename>${basedir}/apache-tomcat/webapps/omnigator/WEB-INF/topicmaps</filename>
+directory, which contains topic maps in the XTM 1.0, 2.0, CTM, and LTM
+formats.
+</para>
+</section>
+
+<section>
+<title>The command-line utilities</title>
+
+<para>
+The engine comes with a collection of command-line utilities, which
+can be used to perform various tasks on topic maps. The command-line
+options of the utilities are not given here, but explanations can be
+had by running the utilities with no arguments.
+</para>
+
+<variablelist>
+<varlistentry>
+<term>net.ontopia.topicmaps.cmdlineutils.Canonicalizer</term>
+<listitem>
+<para>This application reads in a topic map and creates a canonical
+representation of it using CXTM. CXTM has the property that logically
+equivalent topic maps will always have byte-by-byte identical
+canonical representations.</para>
+<para>For more information on CXTM, see
+<ulink url="http://www.isotopicmaps.org/cxtm/">the home page</ulink>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>net.ontopia.topicmaps.cmdlineutils.TopicMapConverter</term>
+<listitem>
+<para>Used to convert to and from different topic map syntaxes. It can
+read XTM 1.0, ISO HyTM, and LTM 1.3 syntax, and can export to XTM 1.0,
+HyTM, and LTM 1.3. It also supports importing from and exporting to
+RDF.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>net.ontopia.topicmaps.cmdlineutils.Merger</term>
+<listitem>
+<para>This application reads in two topic maps, merges them according
+to XTM 1.0 rules, and outputs the result to a third file.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>net.ontopia.topicmaps.cmdlineutils.StatisticsPrinter</term>
+<listitem>
+<para>Prints various kinds of statistics for topic maps to standard
+output.</para>
+</listitem>
+</varlistentry>
+
+<!--varlistentry>
+<term>net.ontopia.topicmaps.cmdlineutils.SanityChecker</term>
+<listitem>
+<para>Checks a topic map for dubious constructs.</para>
+</listitem>
+</varlistentry-->
+</variablelist>
+</section>
+
+<section>
+<title>The Web Applications</title>
+
+<para>
+Ontopia comes with a number of useful web applications built with
+Ontopia already set up and configured in a Tomcat installation. The
+main applications are:
+</para>
+
+      <itemizedlist> 
+        <listitem> 
+          <para><emphasis role="bold">Ontopoly: The Ontopia Topic Map
+          Editor</emphasis>, the user's guide to which can be found
+          in<symbol>${basedir}/apache-tomcat/webapps/ontopoly/doc/user-guide.html</symbol></para>
+          
+        </listitem> 
+        <listitem> 
+          <para><emphasis role="bold">Ontopia Omnigator</emphasis>,
+          the user's guide to which can be found
+          in<symbol>${basedir}/apache-tomcat/webapps/omnigator/docs/navigator/userguide.html</symbol></para>
+          
+        </listitem> 
+      </itemizedlist>
+
+<para>
+Try out these web applications by following these steps:
+</para>
+
+<section>
+<title>Start the application server</title>
+
+  <variablelist>
+  <varlistentry>
+  <term>Windows</term>
+    <listitem>
+    <para>Locate the <filename>${basedir}/apache-tomcat/bin</filename> directory in
+    Windows Explorer.</para>
+    <para>Double-click on the <command>startup.bat</command> file.</para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+  <term>Unix</term>
+  <listitem>
+  <para>Change directory to
+  <filename>${basedir}/apache-tomcat</filename>.</para>
+  <para>Execute the <command>bin/startup.sh</command> script.</para>
+  </listitem>
+  </varlistentry>
+  </variablelist>
+
+<para>
+After starting the application server it will take a few seconds
+before the server is initialized and ready to answer requests.
+</para>
+
+<para>If the application server fails to start correctly you may have
+to set the <envar>JAVA_HOME</envar> environment variable to point to
+the directory where the Java Runtime Environment is installed. This
+can be done either at the command-line before running the tomcat
+startup script, or by editing the script to insert a line setting it.
+See <xref linkend="sect-set-java-home"/> for details.
+</para>
+</section>
+
+<section>
+<title>Try it out</title>
+
+<para>
+To try out Ontopia you can use any of the applications listed
+below. The first time you're accessing a page it may take some time
+since the web application server needs to compile the JavaServer
+Pages. If you are able to see the front page of the application then
+the installation is successful. Congratulations!
+</para>
+
+<warning>
+<para>
+Internet Explorer Users: Please note that IE 5.0 may not be able to
+connect to the application server if you are working 'Offline'.
+</para>
+</warning>
+
+<itemizedlist>
+<listitem>
+<formalpara>
+<title><ulink url="http://localhost:8080/">Overview Page</ulink></title>
+<para>This link takes you to an Ontopia Overview Page, which can be very
+useful for getting started.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title><ulink url="http://localhost:8080/omnigator/">The
+Omnigator</ulink></title>
+<para>The Omnigator is a Navigator application which can display any
+topic map in a user-friendly fashion. Use this application to learn
+more about topic maps, to explore the example topic maps, and also to
+check your own topic maps. See <citetitle><ulink
+url="navigator/userguide.html">The Ontopia Omnigator - User's
+Guide</ulink></citetitle> for information on how to use this
+application.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title><ulink url="http://localhost:8080/ontopoly/">Ontopoly</ulink></title>
+<para>Ontopoly is a user-friendly Topic Maps editor, which can be used
+to create and populate an ontology.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title><ulink url="http://localhost:8080/i18n/">Scripts and languages</ulink></title>
+<para>This is a web application written specifically for the i18n.ltm
+topic map, to show how the Navigator Framework can be used to create
+ontology-specific web applications. This application is very useful
+for learning to use the tag libraries.</para>
+</formalpara>
+</listitem>
+
+<listitem>
+<formalpara>
+<title><ulink url="http://localhost:8080/xmltools/">Free XML Tools</ulink></title>
+<para>This is the beginnings of a web application for the 'Free XML
+Tools' topic map. It is used as an example in the navigator
+developer's guide. The application is not complete, but you may find
+it instructive to complete it on your own.</para>
+</formalpara>
+</listitem>
+</itemizedlist>
+</section>
+
+<section>
+<title>Stop the application server</title>
+
+  <variablelist>
+  <varlistentry>
+  <term>Windows</term>
+    <listitem>
+    <para>Close the server window(s) or run
+    <filename>shutdown.bat</filename>.</para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+  <term>Unix</term>
+  <listitem>
+  <para>Change directory to <filename>${basedir}/apache-tomcat</filename>.</para>
+  <para>Execute the <command>bin/shutdown.sh</command> script.</para>
+  </listitem>
+  </varlistentry>
+  </variablelist>
+</section>
+
+</section>
+</section>
+
+
+<!-- ===== FAQ ============================================================ -->
+<section>
+<title>Frequently asked questions</title>
+
+<para>
+This section contains answers to frequently asked questions about
+Ontopia.
+</para>
+
+<variablelist>
+<varlistentry>
+<term>Why do I get Not Found (404) when accessing the Omnigator?</term>
+<listitem>
+<para>If you get an error message saying <screen>Not Found
+(404)</screen> followed by <screen>Original request:
+/navigator/models/index.jsp</screen> and <screen>Not found request:
+/navigator/views/template_no_frames.jsp</screen> when accessing the
+Omnigator you have used a decompression tool that truncates file names
+when unpacking files.</para>
+
+<para>
+We have confirmed that WinZip version 6.3 and earlier have this
+problem, as does WinRar 2.90. WinAce may also have this problem. We
+have confirmed that WinZip 8.0 and later do not have this problem.
+</para>
+<para>
+The solution to the problem is simply to install a newer version
+of the decompression tool and unpacking the distribution again.
+</para>
+</listitem>
+</varlistentry>
+
+<!--varlistentry>
+<term>Why is the distribution incomplete?</term>
+<listitem>
+<para>If you find after unpacking the Omnigator on Solaris that
+some of the files or directories are missing, you have probably
+used a version of Solaris tar that is known to be buggy. Use GNU
+tar instead.</para>
+</listitem>
+</varlistentry-->
+
+<varlistentry>
+<term>(Windows) When I start the server the window appears for a
+moment, then disappears, so I can't even read the error
+messages.</term>
+<listitem>
+<para>There are two things you can do. If you've created an icon to
+start the server you can go into the properties of the icon, under the
+"Program" tab, and unset the "Close on exit" option. This will make
+the window stay around after the server exits, and give you time to
+read any error messages that may appear. (If you're just starting it
+by double-clicking <filename>startup.bat</filename>, then either make
+an icon and set it up as described above, or try the option below.)
+</para>
+
+<para>
+The other approach is to change the <filename>startup.bat</filename>
+so that the line near that end that now reads:
+</para>
+
+<literallayout>call "%EXECUTABLE%" start %CMD_LINE_ARGS%</literallayout>
+
+<para>
+is changed to:
+</para>
+
+<literallayout>call "%EXECUTABLE%" run %CMD_LINE_ARGS%</literallayout>
+
+<para>
+This will keep Tomcat from opening a new window, so if you run
+<filename>startup.bat</filename> from the command-line you should get
+the error messages there.
+</para>
+
+<para>The server log is in
+<filename>${basedir}/apache-tomcat/logs/localhost_log.&lt;date>.txt</filename>,
+and it is likely to contain much detail information on errors. You can
+try to decipher this file to find the cause of the problem, or if that
+is difficult, you can just send the file to us at
+<email>support@ontopia.net</email>, and we will try to help. Note that
+if the file doesn't exist it means the server has been unable to start
+and you should try one of the two options above to find out why.
+</para>
+</listitem>
+</varlistentry>
+
+<!--varlistentry>
+<term>Why do I get "No topic maps in document"?</term>
+<listitem>
+<para>If you get this error whenever you try to load an XTM topic map
+the problem is that the navigator is using some other XML parser than
+Crimson. It uses JAXP to find the XML parser it uses, and this means
+that if your Java (or tomcat) environment has another parser before
+Crimson on the <envar>CLASSPATH</envar> that parser will be used
+instead.</para>
+<para>This problem can usually be fixed by making sure that tomcat is
+run with an empty <envar>CLASSPATH</envar> and that no other tomcat
+installations than the one in the navigator distribution are
+present.</para>
+</listitem>
+</varlistentry-->
+
+<varlistentry>
+<term>Installing the Omnigator in another Tomcat instance</term>
+<listitem>
+<para>To install the Omnigator in another Tomcat instance than the one
+which comes with Ontopia, follow these steps:</para>
+
+<orderedlist>
+<listitem>
+<para>Copy all the .jar files, except
+<filename>ontopia-tests.jar</filename> and
+<filename>junit.jar</filename>, from
+<filename>${basedir}/lib</filename> to
+<filename>${tomcat.home}/common/lib</filename>.
+</para> 
+</listitem> 
+<listitem> 
+<para>Copy <filename>${basedir}/apache-tomcat/webapps/omnigator</filename> to the
+other Tomcat installation.</para> 
+</listitem> 
+</orderedlist>
+</listitem> 
+</varlistentry> 
+</variablelist> 
+</section>
+
+
+<!-- ===== CLASSPATH DETAIL =============================================== -->
+<appendix id="sect-jar-details">
+<title>Details about CLASSPATH setup</title>
+
+<section id="reqjars">
+<title>Required jar-files</title>
+
+<para>Ontopia has the following jar-file dependencies. The files can
+be found in the <filename>${basedir}/lib</filename> directory.</para>
+
+<itemizedlist>
+  <listitem><para>Topic Map Engine:</para>
+    <orderedlist>
+      <listitem><para><filename>crimson.jar</filename>, version 1.1.3, (<ulink url="http://xml.apache.org/crimson/">Apache XML - Crimson</ulink>)</para></listitem>
+      <listitem><para><filename>getopt.jar</filename>, version 1.0.9, (<ulink url="http://www.urbanophile.com/arenn/hacking/download.html">GNU Java getopt</ulink>)</para></listitem>
+      <listitem><para><filename>slf4j-api.jar</filename>, <filename>slf4j-log4j12.jar</filename>, <filename>jcl-over-slf4j.jar</filename> version 1.5.8, (<ulink url="http://www.slf4j.org/">Simple Logging Facade for Java (SLF4J)</ulink>)</para></listitem>
+      <listitem><para><filename>log4j.jar</filename>, version 1.2.14, (<ulink url="http://logging.apache.org/log4j/1.2/index.html">Apache log4J</ulink>)</para></listitem>
+      <listitem><para><filename>antlr.jar</filename>, version 2.7.7, (<ulink url="http://www.antlr.org">ANTLR parser generator</ulink>)</para></listitem>
+      <listitem><para><filename>commons-collections.jar</filename>, version 3.2.1, (<ulink url="http://commons.apache.org/collections/">Apache Commons Collections</ulink>)</para></listitem>
+      <listitem><para><filename>oro.jar</filename>, version 2.0.8, (<ulink url="http://jakarta.apache.org/oro/">Apache Jakarta ORO</ulink>)</para></listitem>
+      <listitem><para><filename>jing.jar</filename>, version 2003-01-31, (<ulink url="http://www.thaiopensource.com/relaxng/jing.html">Jing - A RELAX NG validator in Java</ulink>)</para></listitem>
+      <listitem><para><filename>xerces.jar</filename>, version 2.7.1, (<ulink url="http://xml.apache.org/xerces2-j/index.html">Apache Xerces2 Java Parser</ulink>)</para></listitem>
+      <listitem><para><filename>jena.jar</filename>, version 2.3, (<ulink url="http://jena.sourceforge.net/">Jena - A Semantic Web Framework for Java</ulink>)</para></listitem>
+      <listitem><para><filename>icu4j.jar</filename>, version 3.4.4, (<ulink url="http://www.ibm.com/developerworks/oss/icu4j/">International Components for Unicode for Java</ulink>)</para></listitem>
+      <listitem><para><filename>concurrent.jar</filename>, version 1.3.4, (<ulink url="http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/concurrent/intro.html">util.concurrent</ulink>)</para></listitem>
+      <listitem><para><filename>trove.jar</filename>, version 2.0.4, (<ulink url="http://trove4j.sourceforge.net/">GNU Trove</ulink>)</para></listitem>
+      <listitem><para><filename>backport-util-concurrent.jar</filename>, version 3.1, (<ulink url="http://backport-jsr166.sourceforge.net/">backport-util-concurrent, a backport of JSR 166</ulink>)</para></listitem>
+      <listitem><para><filename>tmapi.jar</filename>, version 2.0 a2, (<ulink url="http://www.tmapi.org/2.0/">TMAPI - Common Topic Maps Application Programming Interface</ulink>)</para></listitem>
+    </orderedlist>
+  </listitem>        
+</itemizedlist>
+<itemizedlist>
+  <listitem><para>Vizigator:</para>
+    <orderedlist>
+      <listitem><para><filename>touchgraph.jar</filename>, built from source with patches, (<ulink url="http://touchgraph.sourceforge.net/">TouchGraph</ulink>)</para></listitem>
+    </orderedlist>
+  </listitem>        
+</itemizedlist>
+<itemizedlist>
+  <listitem><para>Web Editor Framework:</para>
+    <orderedlist>
+      <listitem><para><filename>velocity.jar</filename>, version 1.3, (<ulink url="http://velocity.apache.org/">Apache Velocity</ulink>)</para></listitem>
+      <listitem><para><filename>commons-fileupload.jar</filename>, version 1.1, (<ulink url="http://commons.apache.org/fileupload/">Apache Commons FileUpload</ulink>)</para></listitem>
+    </orderedlist>
+  </listitem>        
+</itemizedlist>
+<itemizedlist>
+  <listitem><para>Full-text Integration:</para>
+    <orderedlist>
+      <listitem><para><filename>lucene.jar</filename>, version 1.4.3, (<ulink url="http://lucene.apache.org/java/docs/">Apache Lucene</ulink>)</para></listitem>
+    </orderedlist>
+  </listitem>        
+</itemizedlist>
+<itemizedlist>
+  <listitem><para>DB2TM:</para>
+    <orderedlist>
+      <listitem><para><filename>opencsv.jar</filename>, version 1.8, (<ulink url="http://opencsv.sourceforge.net/">opencsv</ulink>)</para></listitem>
+    </orderedlist>
+  </listitem>        
+</itemizedlist>
+<itemizedlist>
+  <listitem><para>TMRAP (AXIS+SOAP support):</para>
+    <orderedlist>
+      <listitem><para>Ontopia uses AXIS2 version 1.2, (<ulink
+      url="http://ws.apache.org/axis/">Apache Web Services -
+      Axis</ulink>), to provide support for SOAP. The jar files used
+      can be found in
+      <filename>${basedir}/apache-tomcat/webapps/tmrap/WEB-INF/lib</filename>.</para></listitem>
+    </orderedlist>
+  </listitem>        
+</itemizedlist>
+<itemizedlist>
+  <listitem><para>RDBMS Backend Connector:</para>
+    <orderedlist>
+      <listitem><para><filename>commons-pool.jar</filename>, version 1.3, (<ulink url="http://commons.apache.org/pool/">Apache Commons Pool</ulink>)</para></listitem>
+      <listitem><para><filename>commons-dbcp.jar</filename>, version 1.2.2, (<ulink url="http://commons.apache.org/dbcp/">Apache Commons DBCP</ulink>)</para></listitem>
+      <listitem><para><filename>jgroups-all.jar</filename>, version 2.6.10 GA, (<ulink url="http://www.jgroups.org/">JGroups - A Toolkit for Reliable Multicast Communication</ulink>)</para></listitem>
+    </orderedlist>
+  </listitem>        
+</itemizedlist>
+
+
+<para>
+The Query Engine and the Schema Tools require no jar files beyond the
+ones needed for the Topic Map Engine.
+</para>
+
+</section>
+</appendix>
+
+<appendix id="sect-set-java-props">
+<title>How to set Java properties</title>
+
+<para>
+Java system properties are set by using a command-line argument to the
+<command>java</command> command when it is run. The command
+<command>java -D&lt;prop>=&lt;value> ...</command> will set Java system
+property <symbol>&lt;prop></symbol> to <symbol>&lt;value></symbol>.
+</para>
+
+<para>
+Tomcat is usually started using the Tomcat startup scripts, and so one
+needs to modify these in order to be able to pass command-line
+arguments to the Java runtime. Below is explained how to do this on
+Windows and Unix:
+</para>
+
+<variablelist>
+<varlistentry>
+<term>Windows</term>
+<listitem>
+<para>Edit the <filename>${basedir}/apache-tomcat/bin/catalina.bat</filename>
+file and insert the line below near the top of it.</para>
+<para><command>set CATALINA_OPTS="-D&lt;prop>=&lt;value>"</command></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term>Unix</term>
+<listitem>
+<para>Edit the <filename>${basedir}/apache-tomcat/bin/catalina.sh</filename>
+file and insert the line below near the top of it.</para>
+<para><command>CATALINA_OPTS="-D=&lt;prop>=&lt;value>"</command></para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<warning>
+<para><emphasis>Note that by default there should be no need to
+specify any system properties to get Ontopia
+working.</emphasis></para>
+</warning>
+
+</appendix>
+
+<appendix id="sect-set-java-home">
+<title>Setting JAVA_HOME</title>
+
+<para>
+This section explains how to set the <envar>JAVA_HOME</envar>
+environment variable on Windows.
+</para>
+
+<para>
+If you start tomcat from the command-line you can give the command
+<command>set JAVA_HOME=c:\path\to\java</command> before starting
+the application server. Please replace
+<filename>c:\path\to\java</filename> with the path to your Java
+installation (for example <filename>c:\jdk1.5.0_13</filename>), make
+sure that you have not accidentally put the <filename>bin</filename> sub
+directory into the <envar>JAVA_HOME</envar> environment variable.
+</para>
+
+<para>
+On Windows NT, 2000, and XP you can also go into the control panel,
+select 'System', then click the 'Advanced' tab, then click
+'Environment variables'. This gives you a window where you can enter a
+new environment variable named 'JAVA_HOME', the value of which must be
+the directory where you installed Java.
+</para>
+
+<para>
+On Windows 95/98/ME you can also edit the
+<filename>AUTOEXEC.BAT</filename> file in the root directory of your
+startup drive (usually <filename>C:</filename>) and insert a line like
+the following into it: <command>set JAVA_HOME=c:\path\to\java</command>.
+You will then need to reboot your computer before the change takes
+effect.
+</para>
+</appendix>
+
+</article>

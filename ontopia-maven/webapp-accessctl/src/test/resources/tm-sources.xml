@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<repository>
+    <source class="net.ontopia.topicmaps.entry.ResourceTopicMapSource">
+      <param name="referenceId" value="userman.ltm"/>
+      <param name="id" value="userman"/>
+      <param name="resourceName" value="userman.ltm"/>
+      <param name="syntax" value="LTM"/>
+    </source>
+</repository>

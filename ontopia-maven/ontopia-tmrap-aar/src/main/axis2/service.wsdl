@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions 
+    targetNamespace="http://localhost:8080/tmrap/services/TMRAP" 
+    xmlns:tns="http://localhost:8080/tmrap/services/TMRAP" 
+    xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified" targetNamespace="http://localhost:8080/tmrap/services/TMRAP">
+      <xsd:element name="addFragmentRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="fragment" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="1" name="syntax" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="1" name="tmid" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addFragmentResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any maxOccurs="1" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTologRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="query" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="1" name="tmid" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="0" name="syntax" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="0" name="view" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTologResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any maxOccurs="1" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTopicRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="items" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="subjects" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="identifiers" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="tmids" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="0" name="syntax" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="0" name="view" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTopicResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any maxOccurs="1" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTopicPageRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="items" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="subjects" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="identifiers" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="tmids" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="0" name="syntax" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getTopicPageResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:any maxOccurs="1" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteTopicRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" name="items" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" name="subjects" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" name="identifiers" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" name="tmids" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteTopicResponse" type="xsd:string"/>
+      <xsd:element name="updateTopicRequest">
+      	<xsd:complexType>
+      		<xsd:sequence>
+              <xsd:element maxOccurs="1" minOccurs="1" name="fragment" type="xsd:string"/>
+              <xsd:element maxOccurs="1" minOccurs="1" name="syntax" type="xsd:string"/>
+              <xsd:element maxOccurs="1" minOccurs="1" name="tmid" type="xsd:string"/>
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="items" type="xsd:string"/>
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="subjects" type="xsd:string"/>
+              <xsd:element maxOccurs="unbounded" minOccurs="0" name="identifiers" type="xsd:string"/>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateTopicResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+      			<xsd:any maxOccurs="1" minOccurs="0"/>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getTologRequest">
+    <wsdl:part name="parameters" element="tns:getTologRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addFragmentRequest">
+    <wsdl:part name="parameters" element="tns:addFragmentRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTopicResponse">
+    <wsdl:part name="response" element="tns:getTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateTopicRequest">
+    <wsdl:part name="parameters" element="tns:updateTopicRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteTopicRequest">
+    <wsdl:part name="parameters" element="tns:deleteTopicRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTopicPageRequest">
+    <wsdl:part name="parameters" element="tns:getTopicPageRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTopicPageResponse">
+    <wsdl:part name="response" element="tns:getTopicPageResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addFragmentResponse">
+  </wsdl:message>
+  <wsdl:message name="updateTopicResponse">
+  </wsdl:message>
+  <wsdl:message name="deleteTopicResponse">
+    <wsdl:part name="response" element="tns:deleteTopicResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTologResponse">
+    <wsdl:part name="response" element="tns:getTologResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTopicRequest">
+    <wsdl:part name="parameters" element="tns:getTopicRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="TMRAPServiceSoap">
+    <wsdl:operation name="getTopic">
+      <wsdl:input message="tns:getTopicRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getTopicResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTolog">
+      <wsdl:input message="tns:getTologRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getTologResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTopic">
+      <wsdl:input message="tns:deleteTopicRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteTopicResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addFragment">
+      <wsdl:input message="tns:addFragmentRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:addFragmentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTopicPage">
+      <wsdl:input message="tns:getTopicPageRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getTopicPageResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTopic">
+      <wsdl:input message="tns:updateTopicRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:updateTopicResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TMRAPServiceSoap" type="tns:TMRAPServiceSoap">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getTopic">
+      <soap:operation soapAction="http://localhost:8080/tmrap/services/TMRAP/getTopic" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTolog">
+      <soap:operation soapAction="http://localhost:8080/tmrap/services/TMRAP/getTolog" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteTopic">
+      <soap:operation soapAction="http://localhost:8080/tmrap/services/TMRAP/deleteTopic" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addFragment">
+      <soap:operation soapAction="http://localhost:8080/tmrap/services/TMRAP/addFragment" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTopic">
+      <soap:operation soapAction="http://localhost:8080/tmrap/services/TMRAP/updateTopic" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTopicPage">
+      <soap:operation soapAction="http://localhost:8080/tmrap/services/TMRAP/getTopicPage" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TMRAPService">
+    <wsdl:port name="TMRAPServiceSoap" binding="tns:TMRAPServiceSoap">
+      <soap:address location="http://localhost:8080/tmrap/services/TMRAPService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

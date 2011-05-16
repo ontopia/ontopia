@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia.maven</groupId>
+		<version>5.2.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>ontopia-core</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>Ontopia Core</name>
+	<description>Ontopia Core.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.tmapi</groupId>
+			<artifactId>tmapi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>gnu.trove</groupId>
+			<artifactId>trove4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thaiopensource</groupId>
+			<artifactId>jing</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>urbanophile</groupId>
+			<artifactId>java-getopt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>antlr</groupId>
+			<artifactId>antlr</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>concurrent</groupId>
+			<artifactId>concurrent</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.hp.hpl.jena</groupId>
+			<artifactId>jena</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>backport-util-concurrent</groupId>
+			<artifactId>backport-util-concurrent</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jgroups</groupId>
+			<artifactId>jgroups</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>jtidy</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.jflex</groupId>
+			<artifactId>jflex</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-snowball</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>crimson</groupId>
+			<artifactId>crimson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>net.ontopia.Ontopia</mainClass>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- Add TMAPI test cases -->
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>process-test-classes</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.tmapi</groupId>
+									<artifactId>tmapi-tests</artifactId>
+									<version>${tmapi.version}</version>
+									<outputDirectory>${project.build.directory}/test-classes/</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<!-- Has not tests, but is not abstract nor named Abstract -->
+						<exclude>**/TMAPITestCase**</exclude>
+						
+						<!-- Test runners -->
+						<exclude>**/tmapi/AllTests**</exclude>
+						<exclude>**/tmapi/core/AllCoreTests**</exclude>
+						<exclude>**/tmapi/index/AllIndexTests**</exclude>
+						
+						<!-- TMAPI tests disabled following issue 383 -->
+						<exclude>**/tmapi/core/TestTopicMapSystemFactory**</exclude>
+						<exclude>**/tmapi/core/TestRFC3986**</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<configuration>
+					<format>{0,date,yyyy-MM-dd-HH-mm}</format>
+					<items>
+						<item>timestamp</item>
+					</items>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>antlr-maven-plugin</artifactId>
+				<configuration>
+					<grammars>
+						net/ontopia/topicmaps/query/parser/tolog.g,
+						net/ontopia/topicmaps/utils/ltm/ltm.g,
+						net/ontopia/topicmaps/utils/ctm/ctm.g
+					</grammars>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>de.jflex</groupId>
+				<artifactId>maven-jflex-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>docbook-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-shared-docbook-resources</id>
+						<configuration>
+							<target>
+								<property name="documentation.directories" value=".,engine,misc,query,rdbms,schema"/>
+								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<phase>generate-test-resources</phase>
+						<configuration>
+							<target name="main" description="Download and unpack CXTM-tests">
+								<ant target="init"/>
+								<ant target="xtm2.checked.get"/>
+								<ant target="xtm21.checked.get"/>
+								<ant target="ctm.checked.get"/>
+								<ant target="jtm.checked.get"/>
+								<ant target="tmxml.checked.get"/>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

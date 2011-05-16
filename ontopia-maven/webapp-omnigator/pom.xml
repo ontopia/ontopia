@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>net.ontopia.maven</groupId>
+		<artifactId>ontopia-parent</artifactId>
+		<version>5.2.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>webapp-omnigator</artifactId>
+	<packaging>war</packaging>
+
+	<name>Ontopia Omnigator webapplication</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-navigator</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-db2tm</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+		
+		<!-- 
+			vizlet jar 
+			does NOT overwrite navigator completely due to size stripping in assembly
+		-->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-vizigator</artifactId>
+			<version>${project.version}</version>
+			<classifier>vizlet</classifier>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>omnigator</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jspc-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!-- execution to collect omnigator webapp documentation -->
+					<execution>
+						<id>collect-omnigator-docs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<ant antfile="../src/docbook/ant/build.xml" target="collect-omnigator-docs"/>
+							</target>
+						</configuration>
+					</execution>
+					
+					<!-- default doc generation for site building -->
+					<execution>
+						<id>copy-shared-docbook-resources</id>
+						<configuration>
+							<target>
+								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>docbook-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>collect-omnigator-docs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>transform</goal>
+						</goals>
+						<configuration>
+							<resourceDirectory>target/docbook-collected/resources</resourceDirectory>
+							<sourceDirectory>target/docbook-collected</sourceDirectory>
+							<outputDirectory>target/${build.finalName}/docs</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>ontopia-vizigator</artifactId>
+									<version>${project.version}</version>
+									<classifier>vizlet</classifier>
+									<outputDirectory>${project.build.directory}/${build.finalName}/plugins/viz</outputDirectory>
+									<destFileName>ontopia-vizlet.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

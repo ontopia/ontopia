@@ -1,4 +1,0 @@
-#PREFIX ont @"http://psi.ontopia.net/ontology/"
-
-[ont:ted-topic-map]
-[ont:topic-map-id]
