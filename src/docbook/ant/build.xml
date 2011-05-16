@@ -39,7 +39,7 @@
 		
 		<!-- query -->
 		<copy todir="target/docbook-collected/query">
-			<fileset dir="../ontopia-core/src/docbook/query"/>
+			<fileset dir="../ontopia-engine/src/docbook/query"/>
 		</copy>
 		<copy todir="target/docbook-collected/resources/query">
 			<fileset dir="../src/docbook/resources"/>
@@ -47,10 +47,10 @@
 
 		<!-- schema -->
 		<copy todir="target/docbook-collected/schema">
-			<fileset dir="../ontopia-core/src/docbook/schema"/>
+			<fileset dir="../ontopia-engine/src/docbook/schema"/>
 		</copy>
 		<copy todir="target/docbook-collected/resources/schema">
-			<fileset dir="../ontopia-core/src/docbook/resources/schema"/>
+			<fileset dir="../ontopia-engine/src/docbook/resources/schema"/>
 			<fileset dir="../src/docbook/resources"/>
 		</copy>
 

@@ -18,7 +18,7 @@
 	</scm>
 
 	<modules>
-		<module>ontopia-core</module>
+		<module>ontopia-engine</module>
 		<module>ontopia-navigator</module>
 		<module>ontopia-webed</module>
 		<module>ontopia-contentstore</module>

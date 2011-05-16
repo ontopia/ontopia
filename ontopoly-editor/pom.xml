@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>ontopia-core</artifactId>
+            <artifactId>ontopia-engine</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -12,7 +12,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>ontopia-core</artifactId>
+			<artifactId>ontopia-engine</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>

@@ -8,11 +8,11 @@
 		<version>5.2.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>ontopia-core</artifactId>
+	<artifactId>ontopia-engine</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>Ontopia Core</name>
-	<description>Ontopia Core.</description>
+	<name>Ontopia Engine</name>
+	<description>Ontopia Engine.</description>
 
 	<dependencies>
 		<dependency>

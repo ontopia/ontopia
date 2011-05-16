@@ -73,7 +73,7 @@
 	</target>
 	
 	<target name="usage">
-		<echo>This build file is to be used from the ontopia-core Ontopia Maven module, please do not run it manually.</echo>
+		<echo>This build file is to be used from the ontopia-engine Ontopia Maven module, please do not run it manually.</echo>
 	</target>
 	
 </project>
