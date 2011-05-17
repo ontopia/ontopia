@@ -1,5 +1,0 @@
-<decorators>
-    <decorator name="product" page="/product/product-decorator.jsp">
-          <pattern>/product/*</pattern>
-    </decorator>
-</decorators>
