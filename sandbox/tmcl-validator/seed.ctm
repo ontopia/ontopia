@@ -1,6 +1,0 @@
-%prefix xtm http://www.topicmaps.org/xtm/1.0/core.xtm#
-%prefix tmdm http://psi.topicmaps.org/iso13250/model/
-
-xtm:superclass-subclass tmdm:supertype-subtype.
-xtm:superclass tmdm:supertype.
-xtm:subclass tmdm:subtype.
