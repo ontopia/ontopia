@@ -36,7 +36,7 @@ public class FakeServletContext implements ServletContext {
   private static Logger logger = LoggerFactory
     .getLogger(FakeServletContext.class.getName());
   
-  private File rootpath;
+  private String rootpath;
   private Hashtable attrs;
   private Hashtable initParams;
 
@@ -57,7 +57,10 @@ public class FakeServletContext implements ServletContext {
   }
 
   public FakeServletContext(String rootpath, Hashtable attrs, Hashtable initParams) {
-    this.rootpath = new File(rootpath);
+    this.rootpath = rootpath;
+    if (!this.rootpath.endsWith("/")) {
+      this.rootpath += '/';
+    }
     this.attrs = attrs;
     this.initParams = initParams;
     setVersion(2,3);
@@ -109,7 +112,14 @@ public class FakeServletContext implements ServletContext {
   }
 
   public String getRealPath(String path) {
-    File current = rootpath;
+    if (rootpath.startsWith("file://")) {
+      return getRealFilePath(path);
+    }
+    return rootpath + path;
+  }
+  
+  public String getRealFilePath(String path) {
+    File current = new File(rootpath);
     String[] components = StringUtils.split(path, "/");
     for (int ix = 0; ix < components.length; ix++) {
       logger.debug(" - comp: " + components[ix]);
