@@ -21,7 +21,7 @@ public class HelloWorldFunction extends AbstractFunction {
   
   public Collection execute(PageContext pageContext, TagSupport callingTag)
     throws IOException, JspException {
-    pageContext.getOut().println("Hello World!");
+    pageContext.getOut().print("Hello World!\n");
     return null;
   }
   
