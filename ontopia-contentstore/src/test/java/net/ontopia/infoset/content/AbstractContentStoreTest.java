@@ -124,6 +124,7 @@ public abstract class AbstractContentStoreTest extends TestCase {
     throws ContentStoreException, IOException {
     ContentInputStream cis = store.get(key);
     byte[] content = StreamUtils.read(cis, cis.getLength());
+    cis.close();
 
     assertTrue("Returned content of wrong length",
                content.length == CONTENT.length);
