@@ -44,9 +44,8 @@ import org.slf4j.LoggerFactory;
 public class QueryUtils {
   static Logger log = LoggerFactory.getLogger(QueryUtils.class.getName());
 
-  // QueryProcessorIF cache structure {TopicMapIF : {LocatorIF : SoftReference(QueryProcessorIF)}}
-  private static Map<TopicMapIF, 
-    Map<LocatorIF, Reference<QueryProcessorIF>>> qpcache = 
+  // QueryProcessorIF cache structure {TopicMapIF : {LocatorIF : {String : SoftReference(QueryProcessorIF)}}}
+  private static Map<TopicMapIF, Map<LocatorIF, Map<String, Reference<QueryProcessorIF>>>> qpcache = 
     new ReferenceMap(AbstractReferenceMap.SOFT, AbstractReferenceMap.HARD);
 
   private static final String DEFAULT_LANGUAGE = TologQueryProcessorFactory.NAME;
@@ -149,39 +148,54 @@ public class QueryUtils {
   
   /**
    * PUBLIC: Returns a query processor for the given topic map; will
-   * always return the same processor for the same topic map. The base
-   * address of the topic map store will be the base address of the
-   * query processor.
+   * always return the same processor with the default query language 
+   * for the same topic map. The base address of the topic map store 
+   * will be the base address of the query processor.
    */
   public static QueryProcessorIF getQueryProcessor(TopicMapIF topicmap) {
     return getQueryProcessor(topicmap, (LocatorIF) null);
+  }
+  
+  public static QueryProcessorIF getQueryProcessor(String queryLanguage, TopicMapIF topicmap) {
+    return getQueryProcessor(queryLanguage, topicmap, null);
+  }
+  
+  public static QueryProcessorIF getQueryProcessor(TopicMapIF topicmap, LocatorIF base) {
+    return getQueryProcessor(DEFAULT_LANGUAGE, topicmap, base);
   }
 
   /**
    * PUBLIC: Returns the default query processor for the given topic
    * map and base address. Will always return the same processor for
-   * the same (topic map, base address) combination.
+   * the same (query language, topic map, base address) combination.
    *
    * @since 2.0
    */
-  public static QueryProcessorIF getQueryProcessor(TopicMapIF topicmap,
+  public static QueryProcessorIF getQueryProcessor(String queryLanguage, TopicMapIF topicmap,
       LocatorIF base) {
     // Get {LocatorIF : QueryProcessorIF} entry
-    Map<LocatorIF, Reference<QueryProcessorIF>> qps = qpcache.get(topicmap);
+    Map<LocatorIF, Map<String, Reference<QueryProcessorIF>>> qps = qpcache.get(topicmap);
     if (qps == null) {
-      qps = new HashMap<LocatorIF, Reference<QueryProcessorIF>>();
+      qps = new HashMap<LocatorIF, Map<String, Reference<QueryProcessorIF>>>();
       qpcache.put(topicmap, qps);
     }
+
+    Map<String, Reference<QueryProcessorIF>> refmap = qps.get(base);
+    if (refmap == null) {
+      refmap = new HashMap<String, Reference<QueryProcessorIF>>();
+      qps.put(base, refmap);
+    }
+
     // Get QueryProcessorIF
-    Reference<QueryProcessorIF> ref = qps.get(base);
+    Reference<QueryProcessorIF> ref = refmap.get(queryLanguage);
     if (ref != null) {
       if (ref.get() != null) {
         return ref.get();
       }
     }
     
-    QueryProcessorIF qp = createQueryProcessor(topicmap, base);
-    qps.put(base, new SoftReference<QueryProcessorIF>(qp));
+    QueryProcessorIF qp = createQueryProcessor(queryLanguage, topicmap, base);
+    refmap.put(queryLanguage, new SoftReference<QueryProcessorIF>(qp));
     return qp;
   }
 
@@ -205,7 +219,12 @@ public class QueryUtils {
    */
   public static QueryProcessorIF createQueryProcessor(TopicMapIF topicmap,
       LocatorIF base) {
-    return createQueryProcessor(topicmap, base, null);
+    return createQueryProcessor(DEFAULT_LANGUAGE, topicmap, base, null);
+  }
+
+  public static QueryProcessorIF createQueryProcessor(String queryLanguage, TopicMapIF topicmap,
+      LocatorIF base) {
+    return createQueryProcessor(queryLanguage, topicmap, base, null);
   }
 
   /**
@@ -213,16 +232,26 @@ public class QueryUtils {
    */
   public static QueryProcessorIF createQueryProcessor(TopicMapIF topicmap,
       Map properties) {
-    return createQueryProcessor(topicmap, (LocatorIF) null, properties);
+    return createQueryProcessor(DEFAULT_LANGUAGE, topicmap, (LocatorIF) null, properties);
+  }
+  
+  public static QueryProcessorIF createQueryProcessor(TopicMapIF topicmap,
+      LocatorIF base, Map properties) {
+    return createQueryProcessor(DEFAULT_LANGUAGE, topicmap, base, properties);
+  }
+  
+  public static QueryProcessorIF createQueryProcessor(String queryLanguage, TopicMapIF topicmap,
+      Map properties) {
+    return createQueryProcessor(queryLanguage, topicmap, (LocatorIF) null, properties);
   }
 
   /**
    * EXPERIMENTAL: ...
    */
-  public static QueryProcessorIF createQueryProcessor(TopicMapIF topicmap,
+  public static QueryProcessorIF createQueryProcessor(String queryLanguage, TopicMapIF topicmap,
       LocatorIF base, Map properties) {
-    QueryProcessorFactoryIF tolog = qpFactoryMap.get(DEFAULT_LANGUAGE);
-    return tolog.createQueryProcessor(topicmap, base, properties);
+    QueryProcessorFactoryIF factory = qpFactoryMap.get(queryLanguage);
+    return factory.createQueryProcessor(topicmap, base, properties);
   }
 
   /**
