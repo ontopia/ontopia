@@ -194,7 +194,7 @@
 					<version>2.5</version>
 					<configuration>
 						<reportOutputDirectory>${basedir}/target/site</reportOutputDirectory>
-						<destDir>api</destDir>
+						<destDir>${basedir}/target/site/api</destDir>
 						<author>true</author>
 						<version>true</version>
 						<use>true</use>
