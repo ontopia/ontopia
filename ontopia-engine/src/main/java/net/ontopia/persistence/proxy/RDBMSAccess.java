@@ -38,7 +38,7 @@ public class RDBMSAccess implements StorageAccessIF {
   protected RDBMSMapping mapping;
   
   protected Connection conn_;
-  protected ThreadLocal conn_tl = new ThreadLocal();
+  protected Map<Thread, Connection> conn_map = new HashMap<Thread, Connection>();
 
   protected boolean closed;
   
@@ -85,13 +85,17 @@ public class RDBMSAccess implements StorageAccessIF {
 
   protected Connection getConn() {
     if (readonly)
-      return (Connection)conn_tl.get();
+      synchronized (conn_map) {
+        return (Connection)conn_map.get(Thread.currentThread());
+      }
     else
       return conn_;
   }
   protected void setConn(Connection conn) {
     if (readonly)
-      this.conn_tl.set(conn);
+      synchronized (conn_map) {
+        this.conn_map.put(Thread.currentThread(), conn);
+      }
     else
       this.conn_ = conn;
   }
@@ -277,6 +281,20 @@ public class RDBMSAccess implements StorageAccessIF {
         log.debug(getId() + ": Storage access rw closed.");
       } else {
         log.debug(getId() + ": Storage access closed (no connection).");          
+      }
+      
+      synchronized (conn_map) {
+        // close all the connections
+        for (Connection con : conn_map.values()) {
+          if (con != null) {
+            try {
+              con.close();
+            } catch (SQLException sqle) {
+              // ignore
+            }
+          }
+        }
+        conn_map = null;
       }
     } finally {
       closed = true;
