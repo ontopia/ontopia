@@ -49,6 +49,13 @@
 	  window.onload = function () {
 		changeDescription('tolog')
 	  }
+
+	  function changesize(x, y)
+	  {
+	     document.getElementById("query").cols+=x
+	     document.getElementById("query").rows+=y
+	     return false;
+	  }
   </script>
   <h1 class="boxed">Query</h1>
 </template:put>
@@ -94,7 +101,7 @@ String skin = user.getSkin();
 <table width="100%">
 <tr><td>
 <b>Query:</b><br>
-<font size="+1"><textarea name="query" rows="15" cols="62" tabindex="2"><%= (request.getParameter("query") == null ? "" : request.getParameter("query")) %></textarea></font>
+<font size="+1"><textarea id="query" name="query" rows="15" cols="62" tabindex="2"><%= (request.getParameter("query") == null ? "" : request.getParameter("query")) %></textarea></font>
 
 <tr><td>
     <input type=submit name=search value="Search" tabindex="3">
@@ -102,6 +109,10 @@ String skin = user.getSkin();
     <input type=radio name="executeQuery" value="normal" checked="checked"> Run query
     <input type=radio name="executeQuery" value="trace"> Show trace
     <input type=radio name="executeQuery" value="analyze"> Analyze query
+    <input type="button" value="<" onclick="return changesize(-10, 0)">
+    <input type="button" value=">" onclick="return changesize(10, 0)">
+    <input type="button" value="^" onclick="return changesize(0, -10)">
+    <input type="button" value="v" onclick="return changesize(0, 10)">
 
 </table>
 <input type=hidden value="<%= tmid %>" name=tm>
