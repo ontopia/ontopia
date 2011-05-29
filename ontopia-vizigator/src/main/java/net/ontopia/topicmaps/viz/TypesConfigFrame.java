@@ -1,6 +1,4 @@
 
-// $Id: TypesConfigFrame.java,v 1.38 2008/07/18 13:27:14 lars.garshol Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.BorderLayout;

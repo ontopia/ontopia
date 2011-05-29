@@ -1,6 +1,4 @@
 
-// $Id: MenuFileParser.java,v 1.7 2006/09/07 12:41:05 opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.event.ActionEvent;

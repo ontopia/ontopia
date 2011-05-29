@@ -1,6 +1,4 @@
 
-// $Id: HighlightNode.java,v 1.5 2007/05/02 14:52:50 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Component;

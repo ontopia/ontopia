@@ -1,6 +1,4 @@
 
-// $Id: Messages.java,v 1.6 2008/11/03 12:26:00 lars.garshol Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.text.MessageFormat;

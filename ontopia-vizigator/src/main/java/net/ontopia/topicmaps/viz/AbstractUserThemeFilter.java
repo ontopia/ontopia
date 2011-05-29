@@ -1,4 +1,3 @@
-// $Id: AbstractUserThemeFilter.java,v 1.2 2008/06/11 16:55:57 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.viz;
 

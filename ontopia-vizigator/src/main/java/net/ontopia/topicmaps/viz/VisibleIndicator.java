@@ -1,6 +1,4 @@
 
-// $Id: VisibleIndicator.java,v 1.2 2006/03/21 12:22:19 larsga Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;

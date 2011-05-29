@@ -1,6 +1,4 @@
 
-// $Id: TMAssociationEdge.java,v 1.16 2007/05/02 15:01:56 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Graphics;

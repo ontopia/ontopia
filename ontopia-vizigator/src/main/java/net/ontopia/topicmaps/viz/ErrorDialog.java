@@ -1,6 +1,4 @@
 
-// $Id: ErrorDialog.java,v 1.7 2007/09/12 09:25:55 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.io.StringWriter;

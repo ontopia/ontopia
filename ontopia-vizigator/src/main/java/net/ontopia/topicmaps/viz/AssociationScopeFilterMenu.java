@@ -1,6 +1,4 @@
 
-// $Id: AssociationScopeFilterMenu.java,v 1.6 2008/06/11 16:56:02 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.event.ActionEvent;

@@ -1,6 +1,4 @@
 
-// $Id: VizDesktop.java,v 1.94 2009/04/27 11:08:29 lars.garshol Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;

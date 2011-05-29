@@ -1,6 +1,4 @@
 
-// $Id: Vizlet.java,v 1.28 2007/09/12 09:25:54 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;

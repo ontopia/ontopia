@@ -1,4 +1,3 @@
-// $Id: OSpinner.java,v 1.13 2006/11/03 10:57:10 opland Exp $
 
 package net.ontopia.topicmaps.viz;
 

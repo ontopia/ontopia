@@ -1,6 +1,4 @@
 
-// $Id: VizUtils.java,v 1.10 2008/06/13 08:17:56 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.io.File;

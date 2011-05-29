@@ -1,6 +1,4 @@
 
-// $Id: NavigateUI.java,v 1.55 2007/05/02 16:14:07 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Toolkit;

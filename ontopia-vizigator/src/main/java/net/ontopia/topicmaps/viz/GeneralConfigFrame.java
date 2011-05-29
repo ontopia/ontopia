@@ -1,6 +1,4 @@
 
-// $Id: GeneralConfigFrame.java,v 1.25 2007/08/22 14:36:49 lars.garshol Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;

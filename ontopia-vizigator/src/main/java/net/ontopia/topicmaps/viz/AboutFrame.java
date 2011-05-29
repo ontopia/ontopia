@@ -1,4 +1,3 @@
-// $Id: AboutFrame.java,v 1.12 2007/06/07 09:55:15 lars.garshol Exp $
 
 package net.ontopia.topicmaps.viz;
 

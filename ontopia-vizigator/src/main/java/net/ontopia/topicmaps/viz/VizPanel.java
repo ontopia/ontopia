@@ -1,6 +1,4 @@
 
-// $Id: VizPanel.java,v 1.92 2008/07/18 13:28:17 lars.garshol Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.BorderLayout;

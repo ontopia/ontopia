@@ -1,6 +1,4 @@
 
-// $Id: TMTopicNode.java,v 1.31 2007/07/13 19:37:52 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;

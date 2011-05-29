@@ -1,6 +1,4 @@
 
-// $Id: ColouredSquareMenuItem.java,v 1.7 2006/07/26 13:41:40 opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;

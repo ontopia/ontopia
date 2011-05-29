@@ -1,6 +1,4 @@
 
-// $Id: VizigatorReportException.java,v 1.1 2007/09/12 09:25:54 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import net.ontopia.utils.OntopiaRuntimeException;

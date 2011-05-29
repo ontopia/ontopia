@@ -1,6 +1,4 @@
 
-// $Id: TMAbstractEdge.java,v 1.24 2006/12/21 13:58:42 larsga Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.BasicStroke;

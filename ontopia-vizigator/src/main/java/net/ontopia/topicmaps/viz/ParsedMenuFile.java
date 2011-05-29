@@ -1,6 +1,4 @@
 
-// $Id: ParsedMenuFile.java,v 1.2 2006/11/03 10:46:42 larsga Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.util.Map;

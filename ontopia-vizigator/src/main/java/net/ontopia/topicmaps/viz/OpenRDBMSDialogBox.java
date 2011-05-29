@@ -1,6 +1,4 @@
 
-// $Id: OpenRDBMSDialogBox.java,v 1.7 2007/02/20 11:24:16 opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.event.ActionEvent;

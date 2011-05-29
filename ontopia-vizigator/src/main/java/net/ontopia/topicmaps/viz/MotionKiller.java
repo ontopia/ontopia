@@ -1,6 +1,4 @@
 
-// $Id: MotionKiller.java,v 1.6 2006/11/02 13:24:06 larsga Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.event.ActionListener;

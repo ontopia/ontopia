@@ -1,6 +1,4 @@
 
-// $Id: TMRoleEdge.java,v 1.20 2007/05/02 15:07:39 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Dimension;
