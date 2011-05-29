@@ -1,6 +1,4 @@
 
-// $Id: LockManagers.java,v 1.2 2007/11/19 10:08:19 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.util.ArrayList;

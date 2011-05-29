@@ -1,4 +1,3 @@
-// $Id: AssignUnaryAssociation.java,v 1.6 2008/01/14 12:52:33 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.webed.impl.actions.association;
 

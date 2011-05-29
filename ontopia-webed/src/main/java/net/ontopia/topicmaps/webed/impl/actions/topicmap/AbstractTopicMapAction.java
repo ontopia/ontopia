@@ -1,6 +1,4 @@
 
-// $Id: AbstractTopicMapAction.java,v 1.17 2005/09/13 14:37:39 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.topicmap;
 
 import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;

@@ -1,4 +1,3 @@
-// $Id: NamedLockManagerTest.java,v 1.17 2007/11/13 14:07:01 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.webed.utils;
 

@@ -1,6 +1,4 @@
 
-// $Id: ParamRuleIF.java,v 1.1 2003/12/22 19:14:36 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 /**

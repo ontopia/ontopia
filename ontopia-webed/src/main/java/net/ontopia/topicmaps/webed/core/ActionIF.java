@@ -1,6 +1,4 @@
 
-// $Id: ActionIF.java,v 1.29 2004/01/05 21:05:08 grove Exp $
-
 package net.ontopia.topicmaps.webed.core;
 
 /**

@@ -1,6 +1,4 @@
 
-// $Id: SetValue.java,v 1.8 2008/06/12 14:37:26 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.variant;
 
 import net.ontopia.topicmaps.core.TopicNameIF;

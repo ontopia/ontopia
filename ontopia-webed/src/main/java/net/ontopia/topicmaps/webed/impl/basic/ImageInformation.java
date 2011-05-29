@@ -1,6 +1,4 @@
 
-// $Id: ImageInformation.java,v 1.10 2006/05/04 07:34:07 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import net.ontopia.utils.ObjectUtils;

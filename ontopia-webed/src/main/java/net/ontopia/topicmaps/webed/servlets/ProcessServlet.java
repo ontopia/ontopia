@@ -1,6 +1,4 @@
 
-// $Id: ProcessServlet.java,v 1.119 2008/06/11 16:56:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.servlets;
 
 import java.io.IOException;

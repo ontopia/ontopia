@@ -1,6 +1,4 @@
 
-// $Id: NoActionDataFoundException.java,v 1.2 2005/09/07 07:49:51 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import net.ontopia.utils.OntopiaRuntimeException;

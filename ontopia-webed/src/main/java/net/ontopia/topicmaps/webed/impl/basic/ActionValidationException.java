@@ -1,6 +1,4 @@
 
-// $Id: ActionValidationException.java,v 1.1 2005/09/14 07:20:17 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;

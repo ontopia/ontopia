@@ -1,6 +1,4 @@
 
-// $Id: ActionRegistry.java,v 1.11 2005/03/11 14:04:49 ian Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import java.util.HashMap;

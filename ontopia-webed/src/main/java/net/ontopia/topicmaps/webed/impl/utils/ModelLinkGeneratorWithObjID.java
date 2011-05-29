@@ -1,6 +1,4 @@
 
-// $Id: ModelLinkGeneratorWithObjID.java,v 1.3 2005/09/14 07:23:57 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import net.ontopia.topicmaps.core.TMObjectIF;

@@ -1,4 +1,3 @@
-// $Id: AssignRolePlayers.java,v 1.4 2008/01/14 12:52:33 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.webed.impl.actions.association;
 

@@ -1,6 +1,4 @@
 
-// $Id: WebEdRequestIF.java,v 1.4 2005/01/12 16:29:30 larsga Exp $
-
 package net.ontopia.topicmaps.webed.core;
 
 import net.ontopia.topicmaps.nav2.core.UserIF;

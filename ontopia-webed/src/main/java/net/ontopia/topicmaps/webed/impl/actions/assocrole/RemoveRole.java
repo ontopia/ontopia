@@ -1,6 +1,4 @@
 
-// $Id: RemoveRole.java,v 1.1 2008/06/12 14:37:25 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.assocrole;
 
 import net.ontopia.topicmaps.core.AssociationRoleIF;

@@ -1,6 +1,4 @@
 
-// $Id: SetLocator.java,v 1.11 2008/06/11 16:56:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
 import java.net.MalformedURLException;

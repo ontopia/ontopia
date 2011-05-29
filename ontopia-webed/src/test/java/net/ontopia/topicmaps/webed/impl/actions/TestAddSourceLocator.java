@@ -1,4 +1,3 @@
-// $Id: TestAddSourceLocator.java,v 1.3 2009/04/27 11:08:58 lars.garshol Exp $
 
 package net.ontopia.topicmaps.webed.impl.actions;
 

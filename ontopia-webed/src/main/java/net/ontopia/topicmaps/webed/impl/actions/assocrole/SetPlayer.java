@@ -1,6 +1,4 @@
 
-// $Id: SetPlayer.java,v 1.9 2008/05/28 10:30:50 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.assocrole;
 
 import net.ontopia.topicmaps.core.AssociationRoleIF;

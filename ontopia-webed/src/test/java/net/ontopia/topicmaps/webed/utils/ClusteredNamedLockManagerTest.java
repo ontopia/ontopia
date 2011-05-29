@@ -1,6 +1,4 @@
 
-// $Id: ClusteredNamedLockManagerTest.java,v 1.2 2007/11/06 14:25:08 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.utils;
 
 import java.util.*;

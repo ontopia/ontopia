@@ -1,6 +1,4 @@
 
-// $Id: ActionIDTag.java,v 1.17 2007/04/30 10:04:21 larsga Exp $
-
 package net.ontopia.topicmaps.webed.taglibs.form;
 
 import java.io.IOException;

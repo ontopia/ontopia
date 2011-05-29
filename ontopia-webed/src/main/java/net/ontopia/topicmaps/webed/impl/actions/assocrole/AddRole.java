@@ -1,6 +1,4 @@
 
-// $Id: AddRole.java,v 1.5 2008/01/11 12:58:58 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.assocrole;
 
 import net.ontopia.topicmaps.core.AssociationIF;

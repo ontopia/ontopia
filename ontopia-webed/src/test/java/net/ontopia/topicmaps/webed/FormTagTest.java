@@ -1,6 +1,4 @@
 
-// $Id: FormTagTest.java,v 1.9 2006/05/25 06:34:48 larsga Exp $
-
 package net.ontopia.topicmaps.webed;
 
 import net.ontopia.topicmaps.webed.impl.basic.Constants;

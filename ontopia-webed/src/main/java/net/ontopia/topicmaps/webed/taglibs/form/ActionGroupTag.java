@@ -1,6 +1,4 @@
 
-// $Id: ActionGroupTag.java,v 1.4 2005/09/09 06:51:29 grove Exp $
-
 package net.ontopia.topicmaps.webed.taglibs.form;
 
 import javax.servlet.jsp.JspException;

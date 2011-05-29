@@ -1,6 +1,4 @@
 
-// $Id: AddBasename.java,v 1.9 2008/06/13 12:31:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.basename;
 
 import java.util.Collection;

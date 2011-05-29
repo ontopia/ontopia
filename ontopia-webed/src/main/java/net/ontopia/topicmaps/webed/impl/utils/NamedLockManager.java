@@ -1,6 +1,4 @@
 
-// $Id: NamedLockManager.java,v 1.26 2007/11/13 14:07:28 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.util.ArrayList;

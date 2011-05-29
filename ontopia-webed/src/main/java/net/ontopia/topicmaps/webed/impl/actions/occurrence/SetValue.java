@@ -1,6 +1,4 @@
 
-// $Id: SetValue.java,v 1.10 2008/06/11 16:56:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
 import net.ontopia.topicmaps.core.OccurrenceIF;

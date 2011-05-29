@@ -1,6 +1,4 @@
 
-// $Id: RemovePlayer.java,v 1.3 2005/09/13 14:44:51 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.assocrole;
 
 import net.ontopia.topicmaps.core.AssociationRoleIF;

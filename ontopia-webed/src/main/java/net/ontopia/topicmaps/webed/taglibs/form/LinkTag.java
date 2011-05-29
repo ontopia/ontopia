@@ -1,6 +1,4 @@
 
-// $Id: LinkTag.java,v 1.42 2007/07/25 07:46:56 eirik.opland Exp $
-
 package net.ontopia.topicmaps.webed.taglibs.form;
 
 import java.util.Collections;

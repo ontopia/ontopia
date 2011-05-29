@@ -1,6 +1,4 @@
 
-// $Id: WebEdRequest.java,v 1.4 2006/07/10 12:40:14 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import java.util.Map;

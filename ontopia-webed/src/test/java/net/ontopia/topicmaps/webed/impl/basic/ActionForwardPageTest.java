@@ -1,6 +1,4 @@
 
-// $Id: ActionForwardPageTest.java,v 1.6 2003/08/28 13:24:17 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import java.util.*;

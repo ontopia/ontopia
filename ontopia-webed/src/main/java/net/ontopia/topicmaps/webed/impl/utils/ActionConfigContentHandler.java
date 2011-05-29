@@ -1,6 +1,4 @@
 
-// $Id: ActionConfigContentHandler.java,v 1.9 2006/04/24 11:07:51 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.lang.reflect.InvocationTargetException;

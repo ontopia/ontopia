@@ -1,6 +1,4 @@
 
-// $Id: TestOccSetValue2.java,v 1.1 2006/01/04 15:27:54 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.io.IOException;

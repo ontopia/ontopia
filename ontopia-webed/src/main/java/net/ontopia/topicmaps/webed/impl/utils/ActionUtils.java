@@ -1,6 +1,4 @@
 
-// $Id: ActionUtils.java,v 1.4 2006/05/15 08:38:15 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import net.ontopia.topicmaps.webed.impl.basic.ActionGroupIF;

@@ -1,6 +1,4 @@
 
-// $Id: CreateTopic.java,v 1.22 2008/06/13 12:31:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.topicmap;
 
 import java.util.Collection;

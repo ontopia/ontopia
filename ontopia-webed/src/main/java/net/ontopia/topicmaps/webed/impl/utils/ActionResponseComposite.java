@@ -1,6 +1,4 @@
 
-// $Id: ActionResponseComposite.java,v 1.1 2003/12/22 19:15:08 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.io.Serializable;

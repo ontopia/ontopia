@@ -1,6 +1,4 @@
 
-// $Id: OSLValidate.java,v 1.2 2008/01/14 11:37:15 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.tmobject;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: ActionIdTagTest.java,v 1.6 2006/05/25 14:01:40 larsga Exp $
-
 package net.ontopia.topicmaps.webed;
 
 import org.w3c.dom.Node;

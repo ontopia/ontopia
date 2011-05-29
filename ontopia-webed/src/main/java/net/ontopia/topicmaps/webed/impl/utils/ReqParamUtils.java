@@ -1,6 +1,4 @@
 
-// $Id: ReqParamUtils.java,v 1.14 2006/04/28 13:03:35 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.io.IOException;

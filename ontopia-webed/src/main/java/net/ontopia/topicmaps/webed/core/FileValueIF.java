@@ -1,6 +1,4 @@
 
-// $Id: FileValueIF.java,v 1.2 2003/12/22 21:12:25 larsga Exp $
-
 package net.ontopia.topicmaps.webed.core;
 
 import java.io.InputStream;

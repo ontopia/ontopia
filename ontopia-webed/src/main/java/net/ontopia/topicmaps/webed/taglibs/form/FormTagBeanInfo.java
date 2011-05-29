@@ -1,6 +1,4 @@
 
-// $Id: FormTagBeanInfo.java,v 1.2 2006/05/15 08:15:24 grove Exp $
-
 package net.ontopia.topicmaps.webed.taglibs.form;
 
 import java.beans.IntrospectionException;

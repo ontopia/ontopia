@@ -1,6 +1,4 @@
 
-// $Id: ActionRuntimeException.java,v 1.9 2006/01/05 09:27:09 larsga Exp $
-
 package net.ontopia.topicmaps.webed.core;
 
 import net.ontopia.utils.OntopiaRuntimeException;

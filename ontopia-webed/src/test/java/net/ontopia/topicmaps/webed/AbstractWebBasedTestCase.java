@@ -1,6 +1,4 @@
 
-// $Id: AbstractWebBasedTestCase.java,v 1.8 2006/05/25 06:47:50 larsga Exp $
-
 package net.ontopia.topicmaps.webed;
 
 import java.util.ArrayList;

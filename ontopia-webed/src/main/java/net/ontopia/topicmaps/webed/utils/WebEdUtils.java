@@ -1,6 +1,4 @@
 
-// $Id: WebEdUtils.java,v 1.6 2004/11/30 15:39:01 larsga Exp $
-
 package net.ontopia.topicmaps.webed.utils;
 
 import java.util.Set;

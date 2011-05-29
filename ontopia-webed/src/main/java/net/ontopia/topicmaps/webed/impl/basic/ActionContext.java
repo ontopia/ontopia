@@ -1,6 +1,4 @@
 
-// $Id: ActionContext.java,v 1.15 2005/09/19 10:12:52 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import java.util.Arrays;

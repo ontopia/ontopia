@@ -1,6 +1,4 @@
 
-// $Id: FormUnregisterServlet.java,v 1.6 2005/06/28 13:34:26 opland Exp $
-
 package net.ontopia.topicmaps.webed.servlets;
 
 import java.io.IOException;

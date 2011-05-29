@@ -1,6 +1,4 @@
 
-// $Id: ActionConfigurator.java,v 1.13 2008/03/18 09:10:44 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.io.File;

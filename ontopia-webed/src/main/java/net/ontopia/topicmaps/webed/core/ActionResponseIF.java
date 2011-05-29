@@ -1,6 +1,4 @@
 
-// $Id: ActionResponseIF.java,v 1.16 2003/12/22 21:12:21 larsga Exp $
-
 package net.ontopia.topicmaps.webed.core;
 
 import java.util.Map;

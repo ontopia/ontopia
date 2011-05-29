@@ -1,6 +1,4 @@
 
-// $Id: ActionDataSet.java,v 1.2 2005/07/06 11:18:10 opland Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import java.util.Map;

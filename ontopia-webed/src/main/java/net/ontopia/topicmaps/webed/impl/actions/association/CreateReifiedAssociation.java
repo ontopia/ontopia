@@ -1,6 +1,4 @@
 
-// $Id: CreateReifiedAssociation.java,v 1.12 2008/06/13 08:17:56 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.association;
 
 import java.net.MalformedURLException;

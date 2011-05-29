@@ -1,6 +1,4 @@
 
-// $Id: Constants.java,v 1.9 2007/11/06 14:25:08 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 

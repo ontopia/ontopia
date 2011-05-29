@@ -1,6 +1,4 @@
 
-// $Id: ActionForwardPage.java,v 1.17 2005/03/15 15:29:30 ian Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import java.util.HashMap;

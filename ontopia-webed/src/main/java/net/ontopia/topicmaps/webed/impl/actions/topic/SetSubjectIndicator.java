@@ -1,6 +1,4 @@
 
-// $Id: SetSubjectIndicator.java,v 1.26 2008/06/13 08:17:57 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.topic;
 
 import java.net.MalformedURLException;

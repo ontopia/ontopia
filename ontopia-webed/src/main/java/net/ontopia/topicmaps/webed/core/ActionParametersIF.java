@@ -1,6 +1,4 @@
 
-// $Id: ActionParametersIF.java,v 1.12 2005/09/19 10:11:12 grove Exp $
-
 package net.ontopia.topicmaps.webed.core;
 
 import java.util.Collection;

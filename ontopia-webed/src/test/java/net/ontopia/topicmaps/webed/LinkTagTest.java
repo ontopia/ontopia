@@ -1,6 +1,4 @@
 
-// $Id: LinkTagTest.java,v 1.3 2007/07/13 19:05:54 eirik.opland Exp $
-
 package net.ontopia.topicmaps.webed;
 
 import org.w3c.dom.Node;

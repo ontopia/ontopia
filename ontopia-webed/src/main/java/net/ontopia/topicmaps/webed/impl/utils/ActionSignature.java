@@ -1,6 +1,4 @@
 
-// $Id: ActionSignature.java,v 1.10 2006/05/25 06:36:36 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.util.Collection;

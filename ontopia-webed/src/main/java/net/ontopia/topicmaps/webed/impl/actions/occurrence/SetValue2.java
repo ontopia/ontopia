@@ -1,6 +1,4 @@
 
-// $Id: SetValue2.java,v 1.3 2006/01/12 16:29:21 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
 import java.util.Collections;

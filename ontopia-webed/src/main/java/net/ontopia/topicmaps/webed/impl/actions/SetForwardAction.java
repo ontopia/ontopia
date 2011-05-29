@@ -1,6 +1,4 @@
 
-// $Id: SetForwardAction.java,v 1.10 2005/09/13 14:54:02 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import net.ontopia.topicmaps.webed.core.ActionIF;

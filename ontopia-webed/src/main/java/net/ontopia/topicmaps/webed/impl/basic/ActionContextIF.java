@@ -1,6 +1,4 @@
 
-// $Id: ActionContextIF.java,v 1.2 2005/09/19 10:12:52 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.basic;
 
 import java.util.Map;

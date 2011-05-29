@@ -1,6 +1,4 @@
 
-// $Id: NamedLock.java,v 1.7 2007/10/02 14:28:09 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.utils;
 
 import java.util.Date;

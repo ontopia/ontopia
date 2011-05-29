@@ -1,4 +1,3 @@
-// $Id: SetSubjectIndicator2.java,v 1.2 2006/01/12 16:28:43 grove Exp $
 
 package net.ontopia.topicmaps.webed.impl.actions.topic;
 

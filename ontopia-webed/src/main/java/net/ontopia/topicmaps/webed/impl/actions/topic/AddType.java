@@ -1,6 +1,4 @@
 
-// $Id: AddType.java,v 1.16 2005/07/26 07:30:54 ian Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.topic;
 
 import net.ontopia.topicmaps.core.TopicIF;

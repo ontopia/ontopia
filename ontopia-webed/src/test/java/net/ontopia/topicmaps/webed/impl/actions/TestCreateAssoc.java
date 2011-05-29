@@ -1,6 +1,4 @@
 
-// $Id: TestCreateAssoc.java,v 1.6 2008/05/23 09:24:24 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.util.*;

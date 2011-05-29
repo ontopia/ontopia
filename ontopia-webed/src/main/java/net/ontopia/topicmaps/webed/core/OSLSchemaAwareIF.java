@@ -1,6 +1,4 @@
 
-// $Id: OSLSchemaAwareIF.java,v 1.2 2004/11/29 18:48:25 grove Exp $
-
 package net.ontopia.topicmaps.webed.core;
 
 import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;

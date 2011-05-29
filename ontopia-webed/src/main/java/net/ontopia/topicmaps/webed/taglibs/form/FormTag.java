@@ -1,6 +1,4 @@
 
-// $Id: FormTag.java,v 1.81 2007/08/31 09:09:23 eirik.opland Exp $
-
 package net.ontopia.topicmaps.webed.taglibs.form;
 
 import java.io.IOException;

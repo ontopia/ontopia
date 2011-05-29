@@ -1,6 +1,4 @@
 
-// $Id: ModelLinkGeneratorWithObjID.java,v 1.6 2004/11/29 18:48:25 grove Exp $
-
 package net.ontopia.topicmaps.webed.utils;
 
 import javax.servlet.jsp.PageContext;

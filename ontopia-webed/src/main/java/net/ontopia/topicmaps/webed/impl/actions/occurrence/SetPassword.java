@@ -1,6 +1,4 @@
 
-// $Id: SetPassword.java,v 1.14 2008/06/13 08:36:30 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.occurrence;
 
 import java.util.Iterator;

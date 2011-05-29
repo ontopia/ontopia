@@ -1,6 +1,4 @@
 
-// $Id: EvaluateLTM.java,v 1.23 2008/06/13 08:36:30 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.tmobject;
 
 import java.io.StringReader;

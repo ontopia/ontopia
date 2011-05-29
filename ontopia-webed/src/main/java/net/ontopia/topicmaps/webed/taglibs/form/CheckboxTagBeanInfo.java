@@ -1,6 +1,4 @@
 
-// $Id: CheckboxTagBeanInfo.java,v 1.1 2005/11/24 09:58:18 grove Exp $
-
 package net.ontopia.topicmaps.webed.taglibs.form;
 
 import java.beans.IntrospectionException;

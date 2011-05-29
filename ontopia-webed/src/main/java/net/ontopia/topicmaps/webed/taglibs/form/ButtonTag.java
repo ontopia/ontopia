@@ -1,6 +1,4 @@
 
-// $Id: ButtonTag.java,v 1.42 2007/07/13 19:05:54 eirik.opland Exp $
-
 package net.ontopia.topicmaps.webed.taglibs.form;
 
 import java.io.StringWriter;

@@ -1,6 +1,4 @@
 
-// $Id: SetType.java,v 1.19 2005/07/26 07:30:54 ian Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.topic;
 
 import java.util.Collection;

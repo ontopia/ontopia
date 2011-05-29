@@ -1,6 +1,4 @@
 
-// $Id: GeneralActionTest.java,v 1.12 2006/05/25 14:01:02 larsga Exp $
-
 package net.ontopia.topicmaps.webed;
 
 import com.meterware.httpunit.*;

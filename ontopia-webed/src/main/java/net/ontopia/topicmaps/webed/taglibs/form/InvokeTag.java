@@ -1,6 +1,4 @@
 
-// $Id: InvokeTag.java,v 1.18 2007/07/25 07:46:23 eirik.opland Exp $
-
 package net.ontopia.topicmaps.webed.taglibs.form;
 
 import java.util.Collections;
