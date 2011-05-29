@@ -1,4 +1,3 @@
-// $Id: LocatorReaderFactoryIF.java,v 1.4 2004/11/29 19:19:53 grove Exp $
 
 package net.ontopia.infoset.core;
 

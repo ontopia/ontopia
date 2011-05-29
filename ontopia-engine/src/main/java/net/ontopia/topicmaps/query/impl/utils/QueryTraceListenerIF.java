@@ -1,6 +1,4 @@
 
-// $Id: QueryTraceListenerIF.java,v 1.7 2008/07/23 11:25:51 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.List;

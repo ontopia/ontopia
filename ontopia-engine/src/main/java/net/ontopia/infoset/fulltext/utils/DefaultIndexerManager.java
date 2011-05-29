@@ -1,4 +1,3 @@
-// $Id: DefaultIndexerManager.java,v 1.11 2005/07/08 13:29:48 grove Exp $
 
 package net.ontopia.infoset.fulltext.utils;
 

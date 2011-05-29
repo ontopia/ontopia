@@ -1,6 +1,4 @@
 
-// $Id: AbstractDynamicPredicate.java,v 1.6 2008/06/25 11:24:15 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.Iterator;

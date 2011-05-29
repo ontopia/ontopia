@@ -1,6 +1,4 @@
 
-// $Id: RDBMSTopicMapSource.java,v 1.40 2007/10/17 08:18:26 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;

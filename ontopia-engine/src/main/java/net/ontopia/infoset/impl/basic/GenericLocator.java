@@ -1,6 +1,4 @@
 
-// $Id: GenericLocator.java,v 1.11 2004/11/29 19:19:53 grove Exp $
-
 package net.ontopia.infoset.impl.basic;
 
 import java.io.Externalizable;

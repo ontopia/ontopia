@@ -1,6 +1,4 @@
 
-// $Id: Feature.java,v 1.1 2004/11/18 07:36:46 grove Exp $
-
 package net.ontopia.topicmaps.impl.tmapi2;
 
 

@@ -1,6 +1,4 @@
 
-// $Id: PhantomAccessException.java,v 1.1 2004/12/03 11:37:10 grove Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import net.ontopia.utils.OntopiaRuntimeException;

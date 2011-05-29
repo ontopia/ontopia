@@ -1,6 +1,4 @@
 
-// $Id: LuceneIndexer.java,v 1.50 2008/01/09 10:07:26 geir.gronmo Exp $
-
 package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.File;

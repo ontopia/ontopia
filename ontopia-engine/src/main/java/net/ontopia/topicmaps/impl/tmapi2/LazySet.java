@@ -1,6 +1,4 @@
 
-// $Id: LazySet.java,v 1.5 2004/11/19 09:06:24 grove Exp $
-
 package net.ontopia.topicmaps.impl.tmapi2;
 
 import java.util.AbstractSet;

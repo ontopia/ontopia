@@ -1,6 +1,4 @@
 
-// $Id: TopicMapReaderIF.java,v 1.10 2009/02/09 08:22:53 lars.garshol Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.io.IOException;

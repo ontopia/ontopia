@@ -1,4 +1,3 @@
-// $Id: CardinalityConstraintIF.java,v 1.4 2004/11/29 18:44:27 grove Exp $
 
 package net.ontopia.topicmaps.schema.core;
 

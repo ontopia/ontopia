@@ -1,6 +1,4 @@
 
-// $Id: EqualsPredicate.java,v 1.4 2006/05/02 09:38:34 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;

@@ -1,6 +1,4 @@
 
-// $Id: TopicMapBuilderIF.java,v 1.47 2008/11/03 12:24:00 lars.garshol Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.io.Reader;

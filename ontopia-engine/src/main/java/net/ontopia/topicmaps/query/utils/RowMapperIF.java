@@ -1,6 +1,4 @@
 
-// $Id: RowMapperIF.java,v 1.4 2007/11/21 13:09:49 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.utils;
 
 import net.ontopia.topicmaps.query.core.QueryResultIF;

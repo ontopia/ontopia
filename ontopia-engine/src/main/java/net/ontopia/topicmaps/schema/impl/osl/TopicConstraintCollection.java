@@ -1,4 +1,3 @@
-// $Id: TopicConstraintCollection.java,v 1.7 2008/06/12 14:37:22 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.schema.impl.osl;
 

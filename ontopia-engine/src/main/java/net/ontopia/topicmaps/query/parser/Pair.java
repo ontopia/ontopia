@@ -1,6 +1,4 @@
 
-// $Id: Pair.java,v 1.5 2003/01/10 13:16:15 larsga Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 /**

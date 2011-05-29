@@ -1,4 +1,3 @@
-// $Id: URIFragmentLocator.java,v 1.7 2004/03/08 09:21:27 larsga Exp $
 
 package net.ontopia.infoset.impl.basic;
 

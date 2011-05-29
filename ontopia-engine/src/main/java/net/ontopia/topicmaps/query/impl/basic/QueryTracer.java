@@ -1,6 +1,4 @@
 
-// $Id: QueryTracer.java,v 1.22 2009/05/18 12:26:12 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.Iterator;

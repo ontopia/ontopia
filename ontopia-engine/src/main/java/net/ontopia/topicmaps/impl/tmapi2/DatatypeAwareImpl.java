@@ -1,4 +1,3 @@
-// $Id:$
 
 package net.ontopia.topicmaps.impl.tmapi2;
 

@@ -1,6 +1,4 @@
 
-// $Id: ParsedRule.java,v 1.10 2009/04/08 11:33:22 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.ArrayList;

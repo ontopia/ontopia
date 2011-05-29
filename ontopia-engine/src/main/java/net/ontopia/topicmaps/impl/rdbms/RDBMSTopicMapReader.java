@@ -1,6 +1,4 @@
 
-// $Id: RDBMSTopicMapReader.java,v 1.12 2004/11/12 09:41:48 grove Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.*;

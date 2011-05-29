@@ -1,6 +1,4 @@
 
-// $Id: AbstractCardinalityConstraint.java,v 1.7 2003/07/28 10:08:12 larsga Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import net.ontopia.topicmaps.schema.core.CardinalityConstraintIF;

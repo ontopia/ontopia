@@ -1,6 +1,4 @@
 
-// $Id: IndexManager.java,v 1.29 2008/06/11 17:14:48 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms.index;
 
 import java.util.Collection;

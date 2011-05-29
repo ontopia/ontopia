@@ -1,6 +1,4 @@
 
-// $Id: URILocator.java,v 1.54 2009/04/27 11:00:23 lars.garshol Exp $
-
 package net.ontopia.infoset.impl.basic;
 
 import java.io.Externalizable;

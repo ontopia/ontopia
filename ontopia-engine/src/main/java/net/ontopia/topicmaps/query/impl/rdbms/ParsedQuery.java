@@ -1,4 +1,3 @@
-// $Id: ParsedQuery.java,v 1.81 2008/07/25 20:12:16 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.query.impl.rdbms;
 

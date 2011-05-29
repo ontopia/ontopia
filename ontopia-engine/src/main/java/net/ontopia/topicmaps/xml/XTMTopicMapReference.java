@@ -1,6 +1,4 @@
 
-// $Id: XTMTopicMapReference.java,v 1.41 2006/11/08 11:53:31 larsga Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;

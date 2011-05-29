@@ -1,6 +1,4 @@
 
-// $Id: UniquenessViolationException.java,v 1.8 2004/11/18 08:38:34 grove Exp $
-
 package net.ontopia.topicmaps.core;
 
 /**

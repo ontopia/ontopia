@@ -1,6 +1,4 @@
 
-// $Id: AssociationRole.java,v 1.46 2008/06/02 10:50:12 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.basic;
 
 import net.ontopia.topicmaps.core.AssociationIF;

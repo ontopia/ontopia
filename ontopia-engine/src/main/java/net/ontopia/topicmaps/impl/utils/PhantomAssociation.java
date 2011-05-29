@@ -1,6 +1,4 @@
 
-// $Id: PhantomAssociation.java,v 1.8 2008/06/13 08:17:52 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.Collection;

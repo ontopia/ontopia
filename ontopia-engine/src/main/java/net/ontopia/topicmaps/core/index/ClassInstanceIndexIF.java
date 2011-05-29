@@ -1,6 +1,4 @@
 
-// $Id: ClassInstanceIndexIF.java,v 1.16 2008/06/12 14:37:13 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core.index;
 
 import java.util.*;

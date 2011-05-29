@@ -1,4 +1,3 @@
-// $Id: IndexIF.java,v 1.10 2008/06/11 17:14:48 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.core.index;
 

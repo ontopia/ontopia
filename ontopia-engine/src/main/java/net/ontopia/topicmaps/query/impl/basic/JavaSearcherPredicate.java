@@ -1,6 +1,4 @@
 
-// $Id: JavaSearcherPredicate.java,v 1.4 2008/06/13 08:36:28 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.*;

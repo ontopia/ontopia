@@ -1,6 +1,4 @@
 
-// $Id: NotClause.java,v 1.7 2005/07/13 08:57:21 grove Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.ArrayList;

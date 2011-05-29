@@ -1,6 +1,4 @@
 
-// $Id: IdentityUtils.java,v 1.8 2008/06/13 08:36:28 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.*;

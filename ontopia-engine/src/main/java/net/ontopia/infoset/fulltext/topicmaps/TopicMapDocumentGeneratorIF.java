@@ -1,6 +1,4 @@
 
-// $Id: TopicMapDocumentGeneratorIF.java,v 1.8 2008/06/12 14:37:11 geir.gronmo Exp $
-
 package net.ontopia.infoset.fulltext.topicmaps;
 
 import net.ontopia.infoset.fulltext.core.DocumentIF;

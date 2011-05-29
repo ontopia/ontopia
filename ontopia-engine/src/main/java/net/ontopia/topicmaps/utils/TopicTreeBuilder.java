@@ -1,6 +1,4 @@
 
-// $Id: TopicTreeBuilder.java,v 1.12 2008/06/11 16:56:02 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.Iterator;

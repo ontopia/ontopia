@@ -1,6 +1,4 @@
 
-// $Id: TopicMapIF.java,v 1.56 2009/02/09 08:22:49 lars.garshol Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: RDBMSField.java,v 1.2 2005/07/07 13:15:08 grove Exp $
-
 package net.ontopia.infoset.fulltext.impl.rdbms;
 
 import java.io.Reader;

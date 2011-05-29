@@ -1,6 +1,4 @@
 
-// $Id: EqualsFilter.java,v 1.3 2008/05/29 10:54:59 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.spi;
 
 import net.ontopia.utils.ObjectUtils;

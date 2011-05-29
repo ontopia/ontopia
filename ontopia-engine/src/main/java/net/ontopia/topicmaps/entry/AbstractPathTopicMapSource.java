@@ -1,6 +1,4 @@
 
-// $Id: AbstractPathTopicMapSource.java,v 1.48 2007/08/29 12:56:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.io.File;

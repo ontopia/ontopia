@@ -1,6 +1,4 @@
 
-// $Id: RulePredicate.java,v 1.35 2008/07/23 11:24:23 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.Collection;

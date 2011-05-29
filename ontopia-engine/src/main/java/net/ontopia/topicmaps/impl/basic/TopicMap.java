@@ -1,6 +1,4 @@
 
-// $Id: TopicMap.java,v 1.95 2008/06/13 08:36:26 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.basic;
 
 import java.util.ArrayList;

@@ -1,6 +1,4 @@
 
-// $Id: TologParser.java,v 1.16 2005/12/14 13:08:35 grove Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import java.io.File;

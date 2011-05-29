@@ -1,6 +1,4 @@
 
-// $Id: ParseFrame.java,v 1.1 2009/02/09 08:20:16 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import net.ontopia.topicmaps.core.*;

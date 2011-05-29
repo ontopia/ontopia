@@ -1,6 +1,4 @@
 
-// $Id: ParsedQuery.java,v 1.6 2008/06/25 11:25:58 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.ArrayList;

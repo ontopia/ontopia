@@ -1,6 +1,4 @@
 
-// $Id: XMLConfigSource.java,v 1.55 2008/11/03 12:24:09 lars.garshol Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.beans.BeanInfo;

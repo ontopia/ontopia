@@ -1,6 +1,4 @@
 
-// $Id: RDBMSTopicMapReference.java,v 1.42 2007/08/30 09:12:31 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Map;

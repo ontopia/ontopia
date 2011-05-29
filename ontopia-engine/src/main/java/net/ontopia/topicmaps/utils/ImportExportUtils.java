@@ -1,6 +1,4 @@
 
-// $Id: ImportExportUtils.java,v 1.41 2009/02/12 11:51:39 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.io.File;

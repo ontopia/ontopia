@@ -1,4 +1,3 @@
-// $Id: StatisticsIndex.java,v 1.2 2005/07/12 10:09:04 grove Exp $
 
 package net.ontopia.topicmaps.impl.utils;
 

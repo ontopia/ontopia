@@ -1,6 +1,4 @@
 
-// $Id: TopicClassAnalyzer.java,v 1.4 2008/06/12 14:37:23 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 
 import java.util.Iterator;

@@ -1,6 +1,4 @@
 
-// $Id: SnapshotTopicName.java,v 1.3 2008/06/24 10:04:32 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.ArrayList;

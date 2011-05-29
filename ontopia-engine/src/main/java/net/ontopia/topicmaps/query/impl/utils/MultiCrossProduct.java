@@ -1,6 +1,4 @@
 
-// $Id: MultiCrossProduct.java,v 1.2 2005/07/13 08:55:33 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.Arrays;

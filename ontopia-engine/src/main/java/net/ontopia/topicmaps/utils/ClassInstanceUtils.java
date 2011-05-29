@@ -1,6 +1,4 @@
 
-// $Id: ClassInstanceUtils.java,v 1.14 2008/06/13 08:36:28 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.*;

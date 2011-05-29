@@ -1,6 +1,4 @@
 
-// $Id: TMXMLReader.java,v 1.23 2008/12/04 11:31:56 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.InputStream;

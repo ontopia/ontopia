@@ -1,6 +1,4 @@
 
-// $Id: Parameter.java,v 1.3 2004/11/28 13:52:11 larsga Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 /**

@@ -1,6 +1,4 @@
 
-// $Id: QueryContext.java,v 1.7 2006/07/18 12:56:42 larsga Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.Map;

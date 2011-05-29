@@ -1,6 +1,4 @@
 
-// $Id: ReadOnlyAssociationRole.java,v 1.3 2008/05/21 13:40:10 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.*;

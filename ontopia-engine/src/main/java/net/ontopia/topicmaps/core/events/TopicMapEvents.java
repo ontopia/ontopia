@@ -1,6 +1,4 @@
 
-// $Id: TopicMapEvents.java,v 1.11 2007/09/04 08:57:20 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core.events;
 
 import net.ontopia.topicmaps.entry.AbstractTopicMapReference;

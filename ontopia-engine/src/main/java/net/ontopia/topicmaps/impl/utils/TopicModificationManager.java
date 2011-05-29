@@ -1,6 +1,4 @@
 
-// $Id: TopicModificationManager.java,v 1.9 2008/06/13 08:17:52 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.Iterator;

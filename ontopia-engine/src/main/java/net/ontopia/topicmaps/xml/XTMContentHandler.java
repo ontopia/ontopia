@@ -1,6 +1,4 @@
 
-// $Id: XTMContentHandler.java,v 1.127 2008/06/13 10:33:34 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.IOException;

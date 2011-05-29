@@ -1,4 +1,3 @@
-// $Id: InstanceDecider.java,v 1.10 2008/01/11 13:50:21 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.utils.deciders;
 

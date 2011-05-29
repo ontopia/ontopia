@@ -1,6 +1,4 @@
 
-// $Id: AbstractSubjectIdentityCache.java,v 1.19 2009/02/27 11:58:49 lars.garshol Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.Iterator;

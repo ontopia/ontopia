@@ -1,6 +1,4 @@
 
-// $Id: TopicPredicate.java,v 1.6 2006/04/27 16:03:12 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;

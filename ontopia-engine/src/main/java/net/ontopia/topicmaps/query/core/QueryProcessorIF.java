@@ -1,6 +1,4 @@
 
-// $Id: QueryProcessorIF.java,v 1.18 2005/07/13 08:58:29 grove Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

@@ -1,4 +1,3 @@
-// $Id: RuleSet.java,v 1.6 2004/11/29 18:44:27 grove Exp $
 
 package net.ontopia.topicmaps.schema.impl.osl;
 

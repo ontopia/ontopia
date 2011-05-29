@@ -1,6 +1,4 @@
 
-// $Id: AssociationClassAnalyzer.java,v 1.3 2008/01/10 11:08:49 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 
 import java.util.*;

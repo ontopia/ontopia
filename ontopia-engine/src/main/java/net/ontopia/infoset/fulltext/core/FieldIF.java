@@ -1,4 +1,3 @@
-// $Id: FieldIF.java,v 1.7 2005/07/07 13:15:09 grove Exp $
 
 package net.ontopia.infoset.fulltext.core;
 

@@ -1,6 +1,4 @@
 
-// $Id: OccurrenceIF.java,v 1.23 2008/05/29 10:54:57 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.io.Reader;

@@ -1,6 +1,4 @@
 
-// $Id: NamedWildcardTopicGenerator.java,v 1.3 2009/02/27 12:01:50 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import net.ontopia.topicmaps.core.TopicIF;

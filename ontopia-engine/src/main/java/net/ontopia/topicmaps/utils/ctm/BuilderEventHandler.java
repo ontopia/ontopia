@@ -1,6 +1,4 @@
 
-// $Id: BuilderEventHandler.java,v 1.4 2009/04/27 11:03:48 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.util.List;

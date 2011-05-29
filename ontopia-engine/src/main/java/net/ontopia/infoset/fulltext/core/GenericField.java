@@ -1,6 +1,4 @@
 
-// $Id: GenericField.java,v 1.8 2005/07/07 13:15:09 grove Exp $
-
 package net.ontopia.infoset.fulltext.core;
 
 import java.io.Reader;

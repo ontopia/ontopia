@@ -1,6 +1,4 @@
 
-// $Id: BasicPredicateIF.java,v 1.4 2003/02/18 14:56:56 larsga Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;

@@ -1,6 +1,4 @@
 
-// $Id: Hit.java,v 1.1 2007/12/14 12:43:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.spi;
 
 /**

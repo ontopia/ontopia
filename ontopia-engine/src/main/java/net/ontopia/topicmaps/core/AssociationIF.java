@@ -1,6 +1,4 @@
 
-// $Id: AssociationIF.java,v 1.24 2008/05/21 13:40:08 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.util.Collection;

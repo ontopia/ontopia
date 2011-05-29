@@ -1,6 +1,4 @@
 
-// $Id: AbstractTopicMapStore.java,v 1.25 2008/06/11 16:55:59 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import net.ontopia.infoset.core.LocatorIF;

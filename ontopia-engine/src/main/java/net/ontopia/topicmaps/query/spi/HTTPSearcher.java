@@ -1,6 +1,4 @@
 
-// $Id: HTTPSearcher.java,v 1.2 2008/01/02 08:34:39 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.spi;
 
 import java.io.IOException;

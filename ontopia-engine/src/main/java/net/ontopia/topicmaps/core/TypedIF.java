@@ -1,6 +1,4 @@
 
-// $Id: TypedIF.java,v 1.14 2008/01/09 11:51:41 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
   
 /**

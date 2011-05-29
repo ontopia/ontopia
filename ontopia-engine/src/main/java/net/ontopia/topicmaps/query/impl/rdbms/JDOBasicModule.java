@@ -1,6 +1,4 @@
 
-// $Id: JDOBasicModule.java,v 1.3 2006/06/01 08:21:20 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.HashMap;

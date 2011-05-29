@@ -1,6 +1,4 @@
 
-// $Id: MergeReference.java,v 1.4 2008/05/28 10:30:49 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.io.IOException;

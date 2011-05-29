@@ -1,6 +1,4 @@
 
-// $Id: SimpleCostEstimator.java,v 1.2 2007/11/21 15:09:23 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.Set;

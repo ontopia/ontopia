@@ -1,4 +1,4 @@
-// $Id:$
+
 package net.ontopia.topicmaps.impl.tmapi2;
 
 import java.io.IOException;

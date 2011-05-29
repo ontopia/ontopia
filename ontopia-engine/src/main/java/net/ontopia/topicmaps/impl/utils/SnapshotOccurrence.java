@@ -1,6 +1,4 @@
 
-// $Id: SnapshotOccurrence.java,v 1.9 2008/06/24 10:04:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.io.Reader;

@@ -1,6 +1,4 @@
 
-// $Id: CTMTopicMapReader.java,v 1.3 2009/02/27 12:00:31 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.IOException;

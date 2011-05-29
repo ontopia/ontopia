@@ -1,6 +1,4 @@
 
-// $Id: OccurrenceIndex.java,v 1.13 2008/07/15 09:02:07 lars.garshol Exp $
-
 package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.ArrayList;

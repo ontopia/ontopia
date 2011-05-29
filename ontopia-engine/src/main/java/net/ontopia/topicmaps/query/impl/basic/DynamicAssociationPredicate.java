@@ -1,6 +1,4 @@
 
-// $Id: DynamicAssociationPredicate.java,v 1.37 2008/06/11 16:56:01 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.ArrayList;

@@ -1,6 +1,4 @@
 
-// $Id: ObjectIdPredicate.java,v 1.3 2007/09/18 10:03:56 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import net.ontopia.topicmaps.core.TMObjectIF;

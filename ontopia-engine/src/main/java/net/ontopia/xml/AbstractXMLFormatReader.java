@@ -1,6 +1,4 @@
 
-// $Id: AbstractXMLFormatReader.java,v 1.1 2007/07/11 11:38:48 geir.gronmo Exp $
-
 package net.ontopia.xml;
 
 import java.io.*;

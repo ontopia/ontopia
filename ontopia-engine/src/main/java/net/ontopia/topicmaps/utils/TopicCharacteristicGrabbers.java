@@ -1,6 +1,4 @@
 
-// $Id: TopicCharacteristicGrabbers.java,v 1.13 2008/06/12 14:37:23 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import net.ontopia.utils.*;

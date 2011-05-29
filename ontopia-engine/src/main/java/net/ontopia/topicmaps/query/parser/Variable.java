@@ -1,6 +1,4 @@
 
-// $Id: Variable.java,v 1.7 2003/12/15 10:30:37 larsga Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 /**

@@ -1,4 +1,3 @@
-// $Id: RDBMSSearcher.java,v 1.2 2006/08/31 09:38:24 grove Exp $
 
 package net.ontopia.topicmaps.query.spi;
 

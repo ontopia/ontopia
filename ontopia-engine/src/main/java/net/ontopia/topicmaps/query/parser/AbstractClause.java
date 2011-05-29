@@ -1,6 +1,4 @@
 
-// $Id: AbstractClause.java,v 1.7 2004/09/14 10:14:50 larsga Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.Collection;

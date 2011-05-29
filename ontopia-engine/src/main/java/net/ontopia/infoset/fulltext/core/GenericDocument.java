@@ -1,6 +1,4 @@
 
-// $Id: GenericDocument.java,v 1.11 2007/07/09 12:50:35 geir.gronmo Exp $
-
 package net.ontopia.infoset.fulltext.core;
 
 import java.util.Collection;

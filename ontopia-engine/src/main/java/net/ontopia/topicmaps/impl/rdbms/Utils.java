@@ -1,6 +1,4 @@
 
-// $Id: Utils.java,v 1.17 2008/06/12 14:37:15 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.*;

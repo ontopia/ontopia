@@ -1,6 +1,4 @@
 
-// $Id: NoFollowTopicRefExternalReferenceHandler.java,v 1.2 2006/11/08 11:35:10 larsga Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import net.ontopia.topicmaps.xml.ExternalReferenceHandlerIF;

@@ -1,6 +1,4 @@
 
-// $Id: QueryMatches.java,v 1.36 2008/06/13 08:17:54 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.Arrays;

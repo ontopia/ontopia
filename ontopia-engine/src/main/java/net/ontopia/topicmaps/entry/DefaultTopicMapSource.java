@@ -1,6 +1,4 @@
 
-// $Id: DefaultTopicMapSource.java,v 1.14 2007/08/30 09:18:42 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.util.Collection;

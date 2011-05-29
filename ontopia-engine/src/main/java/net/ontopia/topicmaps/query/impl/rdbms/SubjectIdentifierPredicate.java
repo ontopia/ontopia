@@ -1,6 +1,4 @@
 
-// $Id: SubjectIdentifierPredicate.java,v 1.9 2008/06/13 08:17:54 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;

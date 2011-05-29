@@ -1,6 +1,4 @@
 
-// $Id: AbstractTopicMapExporter.java,v 1.30 2008/07/07 11:49:20 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.util.Iterator;

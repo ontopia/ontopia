@@ -1,6 +1,4 @@
 
-// $Id: SAXTracker.java,v 1.9 2005/02/22 15:46:52 grove Exp $
-
 package net.ontopia.xml;
 
 import java.util.HashSet;

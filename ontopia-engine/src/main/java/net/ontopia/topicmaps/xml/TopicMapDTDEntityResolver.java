@@ -1,6 +1,4 @@
 
-// $Id: TopicMapDTDEntityResolver.java,v 1.3 2005/03/20 17:40:20 larsga Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.net.URL;

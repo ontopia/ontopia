@@ -1,6 +1,4 @@
 
-// $Id: HierarchyWalkerRulePredicate.java,v 1.5 2008/07/23 11:24:35 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.Collection;

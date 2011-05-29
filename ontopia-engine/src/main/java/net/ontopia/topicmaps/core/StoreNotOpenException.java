@@ -1,6 +1,4 @@
 
-// $Id: StoreNotOpenException.java,v 1.5 2004/11/30 11:47:32 grove Exp $
-
 package net.ontopia.topicmaps.core;
 
 import net.ontopia.utils.OntopiaRuntimeException;

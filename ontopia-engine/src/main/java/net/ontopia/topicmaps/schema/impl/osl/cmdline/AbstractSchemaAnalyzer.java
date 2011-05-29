@@ -1,6 +1,4 @@
 
-// $Id: AbstractSchemaAnalyzer.java,v 1.5 2008/06/13 08:17:54 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 
 import java.util.Iterator;

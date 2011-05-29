@@ -1,6 +1,4 @@
 
-// $Id: DataTypes.java,v 1.5 2009/02/27 11:58:15 lars.garshol Exp $
-
 package net.ontopia.topicmaps.core;
 
 import net.ontopia.infoset.core.LocatorIF;

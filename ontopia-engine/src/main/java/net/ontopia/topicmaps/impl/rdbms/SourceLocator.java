@@ -1,6 +1,4 @@
 
-// $Id: SourceLocator.java,v 1.14 2008/06/04 12:23:09 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import net.ontopia.infoset.core.*;

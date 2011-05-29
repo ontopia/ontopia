@@ -1,6 +1,4 @@
 
-// $Id: BasicQueryComponent.java,v 1.21 2008/07/22 06:50:22 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;

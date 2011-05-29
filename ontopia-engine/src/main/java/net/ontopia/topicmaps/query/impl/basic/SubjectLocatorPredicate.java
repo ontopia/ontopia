@@ -1,6 +1,4 @@
 
-// $Id: SubjectLocatorPredicate.java,v 1.7 2008/05/26 07:21:41 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import net.ontopia.topicmaps.core.TopicIF;

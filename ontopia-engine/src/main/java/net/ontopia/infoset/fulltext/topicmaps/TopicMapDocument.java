@@ -1,6 +1,4 @@
 
-// $Id: TopicMapDocument.java,v 1.11 2005/07/07 13:15:08 grove Exp $
-
 package net.ontopia.infoset.fulltext.topicmaps;
 
 import net.ontopia.infoset.fulltext.core.GenericDocument;

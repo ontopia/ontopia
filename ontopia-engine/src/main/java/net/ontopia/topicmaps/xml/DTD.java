@@ -1,6 +1,4 @@
 
-// $Id: DTD.java,v 1.15 2008/04/23 11:43:44 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import net.ontopia.utils.OntopiaRuntimeException;

@@ -1,6 +1,4 @@
 
-// $Id: OccurrenceIndex.java,v 1.13 2008/07/22 06:32:13 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms.index;
 
 import java.util.Iterator;

@@ -1,6 +1,4 @@
 
-// $Id: QueryResult.java,v 1.12 2004/03/08 09:42:11 larsga Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import net.ontopia.topicmaps.query.core.QueryResultIF;

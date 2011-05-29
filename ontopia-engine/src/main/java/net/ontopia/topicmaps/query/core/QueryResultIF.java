@@ -1,6 +1,4 @@
 
-// $Id: QueryResultIF.java,v 1.16 2005/02/01 14:41:52 larsga Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 /**

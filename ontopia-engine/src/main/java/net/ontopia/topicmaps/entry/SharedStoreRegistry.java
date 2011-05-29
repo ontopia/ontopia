@@ -1,6 +1,4 @@
 
-// $Id: SharedStoreRegistry.java,v 1.19 2007/04/30 09:16:09 grove Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.util.HashMap;

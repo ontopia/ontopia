@@ -1,4 +1,3 @@
-// $Id: BooleanQueryResult.java,v 1.5 2005/07/13 06:28:19 grove Exp $
 
 package net.ontopia.topicmaps.query.impl.rdbms;
 

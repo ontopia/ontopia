@@ -1,6 +1,4 @@
 
-// $Id: TopicMapSearchResult.java,v 1.12 2008/06/12 14:37:11 geir.gronmo Exp $
-
 package net.ontopia.infoset.fulltext.topicmaps;
 
 import java.io.IOException;

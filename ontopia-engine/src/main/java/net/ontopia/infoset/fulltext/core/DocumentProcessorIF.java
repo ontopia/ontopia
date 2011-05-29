@@ -1,4 +1,3 @@
-// $Id: DocumentProcessorIF.java,v 1.6 2004/11/18 13:11:04 grove Exp $
 
 package net.ontopia.infoset.fulltext.core;
 

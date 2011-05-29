@@ -1,4 +1,3 @@
-// $Id: InputSourceFactoryIF.java,v 1.4 2004/11/18 13:14:02 grove Exp $
 
 package net.ontopia.xml;
 

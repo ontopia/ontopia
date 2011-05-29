@@ -1,6 +1,4 @@
 
-// $Id: Association.java,v 1.63 2008/06/02 10:50:12 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.basic;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: InPredicate.java,v 1.8 2006/04/27 16:03:12 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.ArrayList;

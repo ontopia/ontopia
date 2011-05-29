@@ -1,6 +1,4 @@
 
-// $Id: ApplicableInContextDecider.java,v 1.7 2008/01/10 11:08:49 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.*;

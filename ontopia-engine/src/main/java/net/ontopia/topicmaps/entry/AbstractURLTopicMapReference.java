@@ -1,6 +1,4 @@
 
-// $Id: AbstractURLTopicMapReference.java,v 1.26 2008/01/11 13:29:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.io.File;

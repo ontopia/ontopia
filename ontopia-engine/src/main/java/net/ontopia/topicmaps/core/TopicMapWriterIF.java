@@ -1,6 +1,4 @@
 
-// $Id: TopicMapWriterIF.java,v 1.9 2007/09/06 12:42:39 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.io.IOException;

@@ -1,4 +1,3 @@
-// $Id: CrossTopicMapException.java,v 1.2 2009/05/07 12:25:48 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.core;
 

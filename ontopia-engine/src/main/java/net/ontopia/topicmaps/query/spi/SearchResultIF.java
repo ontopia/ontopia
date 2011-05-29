@@ -1,6 +1,4 @@
 
-// $Id: SearchResultIF.java,v 1.5 2007/05/30 07:27:53 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.spi;
 
 /**

@@ -1,4 +1,3 @@
-// $Id: TopicMapSystemFactory.java,v 1.6 2005/03/20 11:52:05 grove Exp $
 
 package net.ontopia.topicmaps.impl.tmapi2;
 

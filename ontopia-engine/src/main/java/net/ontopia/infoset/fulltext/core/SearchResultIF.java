@@ -1,6 +1,4 @@
 
-// $Id: SearchResultIF.java,v 1.8 2003/10/30 09:48:08 grove Exp $
-
 package net.ontopia.infoset.fulltext.core;
 
 import java.io.IOException;

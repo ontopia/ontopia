@@ -1,6 +1,4 @@
 
-// $Id: AbstractProduct.java,v 1.28 2008/05/16 12:10:33 geir.gronmo Exp $
-
 package net.ontopia;
 
 import java.io.BufferedReader;

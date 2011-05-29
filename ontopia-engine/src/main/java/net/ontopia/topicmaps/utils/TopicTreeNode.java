@@ -1,6 +1,4 @@
 
-// $Id: TopicTreeNode.java,v 1.9 2006/08/01 13:40:35 grove Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.List;

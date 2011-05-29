@@ -1,6 +1,4 @@
 
-// $Id: QueryUtils.java,v 1.32 2006/04/07 07:02:05 grove Exp $
-
 package net.ontopia.topicmaps.query.utils;
 
 import java.io.BufferedReader;

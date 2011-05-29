@@ -1,6 +1,4 @@
 
-// $Id: ObjectStrings.java,v 1.15 2008/06/13 08:17:52 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import net.ontopia.topicmaps.core.AssociationIF;

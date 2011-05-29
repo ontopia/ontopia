@@ -1,6 +1,4 @@
 
-// $Id: AbstractTopicMapListener.java,v 1.4 2007/10/17 08:18:06 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core.events;
 
 import net.ontopia.topicmaps.core.TMObjectIF;

@@ -1,6 +1,4 @@
 
-// $Id: OSLSchema.java,v 1.8 2006/01/12 11:13:41 larsga Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: TopicMap.java,v 1.111 2008/06/13 08:36:26 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.net.MalformedURLException;

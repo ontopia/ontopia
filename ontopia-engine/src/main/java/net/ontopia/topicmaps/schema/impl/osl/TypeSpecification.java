@@ -1,6 +1,4 @@
 
-// $Id: TypeSpecification.java,v 1.11 2008/01/11 13:50:21 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.util.Iterator;

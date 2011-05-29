@@ -1,6 +1,4 @@
 
-// $Id: BindingContext.java,v 1.18 2005/10/10 13:36:57 larsga Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.Arrays;

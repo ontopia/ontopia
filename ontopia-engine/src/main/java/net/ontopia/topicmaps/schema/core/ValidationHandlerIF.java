@@ -1,6 +1,4 @@
 
-// $Id: ValidationHandlerIF.java,v 1.6 2003/10/20 13:09:22 larsga Exp $
-
 package net.ontopia.topicmaps.schema.core;
 
 import net.ontopia.topicmaps.core.TMObjectIF;

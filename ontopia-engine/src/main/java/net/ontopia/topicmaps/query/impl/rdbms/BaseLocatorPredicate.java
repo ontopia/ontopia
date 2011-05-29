@@ -1,6 +1,4 @@
 
-// $Id: BaseLocatorPredicate.java,v 1.5 2008/01/11 13:29:34 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;

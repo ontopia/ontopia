@@ -1,6 +1,4 @@
 
-// $Id: NameIndex.java,v 1.34 2008/07/21 07:42:01 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.ArrayList;

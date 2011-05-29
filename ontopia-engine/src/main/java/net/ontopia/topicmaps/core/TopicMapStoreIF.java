@@ -1,6 +1,4 @@
 
-// $Id: TopicMapStoreIF.java,v 1.51 2008/06/11 16:55:57 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 import net.ontopia.infoset.core.LocatorIF;

@@ -1,6 +1,4 @@
 
-// $Id: XTM2TopicMapExporter.java,v 1.5 2008/07/04 10:20:37 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.BufferedOutputStream;

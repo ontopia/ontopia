@@ -1,6 +1,4 @@
 
-// $Id: TopicMapReferenceIF.java,v 1.26 2008/05/29 10:54:58 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.io.IOException;

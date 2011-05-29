@@ -1,6 +1,4 @@
 
-// $Id: SimpleQueryTracer.java,v 1.1 2006/10/19 13:56:41 larsga Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.io.Writer;

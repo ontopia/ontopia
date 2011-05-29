@@ -1,6 +1,4 @@
 
-// $Id: DefaultTopicMapIndexer.java,v 1.23 2008/06/13 12:31:32 geir.gronmo Exp $
-
 package net.ontopia.infoset.fulltext.topicmaps;
 
 import java.io.IOException;

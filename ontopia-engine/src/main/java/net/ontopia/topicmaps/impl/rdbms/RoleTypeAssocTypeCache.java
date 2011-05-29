@@ -1,6 +1,4 @@
 
-// $Id: RoleTypeAssocTypeCache.java,v 1.23 2008/06/11 16:55:58 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.ArrayList;

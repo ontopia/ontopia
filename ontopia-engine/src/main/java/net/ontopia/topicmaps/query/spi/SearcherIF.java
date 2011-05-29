@@ -1,6 +1,4 @@
 
-// $Id: SearcherIF.java,v 1.3 2006/06/16 10:10:38 larsga Exp $
-
 package net.ontopia.topicmaps.query.spi;
 
 import java.util.Map;

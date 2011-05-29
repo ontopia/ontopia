@@ -1,6 +1,4 @@
 
-// $Id: LuceneSearcher.java,v 1.24 2007/10/30 11:45:20 lars.garshol Exp $
-
 package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.IOException;

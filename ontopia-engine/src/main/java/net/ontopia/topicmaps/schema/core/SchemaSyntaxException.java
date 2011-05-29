@@ -1,6 +1,4 @@
 
-// $Id: SchemaSyntaxException.java,v 1.4 2003/07/28 10:08:03 larsga Exp $
-
 package net.ontopia.topicmaps.schema.core;
 
 import org.xml.sax.Locator;

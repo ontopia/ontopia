@@ -1,6 +1,4 @@
 
-// $Id: ReadOnlyTMObject.java,v 1.5 2008/06/13 08:17:51 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.*;

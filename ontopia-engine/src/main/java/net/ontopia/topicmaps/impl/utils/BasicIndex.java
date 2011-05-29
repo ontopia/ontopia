@@ -1,6 +1,4 @@
 
-// $Id: BasicIndex.java,v 1.2 2008/06/11 17:14:49 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.HashMap;

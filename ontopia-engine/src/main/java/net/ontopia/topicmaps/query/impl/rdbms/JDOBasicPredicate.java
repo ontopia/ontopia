@@ -1,6 +1,4 @@
 
-// $Id: JDOBasicPredicate.java,v 1.4 2007/09/18 10:04:02 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;

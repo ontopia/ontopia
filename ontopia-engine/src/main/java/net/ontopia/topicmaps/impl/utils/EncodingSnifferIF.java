@@ -1,6 +1,4 @@
 
-// $Id: EncodingSnifferIF.java,v 1.1 2009/01/23 13:14:23 lars.garshol Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.io.IOException;

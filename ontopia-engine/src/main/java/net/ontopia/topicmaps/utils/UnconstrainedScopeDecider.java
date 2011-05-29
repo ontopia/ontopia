@@ -1,4 +1,3 @@
-// $Id: UnconstrainedScopeDecider.java,v 1.5 2004/11/29 19:01:50 grove Exp $
 
 package net.ontopia.topicmaps.utils;
 

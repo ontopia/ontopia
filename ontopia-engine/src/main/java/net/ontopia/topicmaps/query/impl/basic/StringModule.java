@@ -1,6 +1,4 @@
 
-// $Id: StringModule.java,v 1.24 2008/06/06 10:19:23 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.HashMap;

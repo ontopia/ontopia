@@ -1,6 +1,4 @@
 
-// $Id: OccurrenceIndexIF.java,v 1.8 2008/06/25 11:23:14 lars.garshol Exp $
-
 package net.ontopia.topicmaps.core.index;
 
 import java.util.*;

@@ -1,6 +1,4 @@
 
-// $Id: ParameterArray.java,v 1.3 2005/10/26 09:05:26 grove Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.Externalizable;

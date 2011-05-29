@@ -1,6 +1,4 @@
 
-// $Id: Template.java,v 1.3 2009/02/27 12:02:29 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.util.Map;

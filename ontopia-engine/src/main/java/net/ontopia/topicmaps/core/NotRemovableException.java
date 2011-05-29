@@ -1,4 +1,3 @@
-// $Id: NotRemovableException.java,v 1.5 2008/06/02 10:50:12 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.core;
 

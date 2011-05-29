@@ -1,6 +1,4 @@
 
-// $Id: Occurrence.java,v 1.57 2008/06/04 11:42:23 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.*;

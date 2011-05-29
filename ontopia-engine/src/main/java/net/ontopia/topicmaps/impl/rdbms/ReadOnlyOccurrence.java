@@ -1,6 +1,4 @@
 
-// $Id: ReadOnlyOccurrence.java,v 1.7 2008/07/22 06:31:40 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.*;

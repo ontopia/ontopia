@@ -1,6 +1,4 @@
 
-// $Id: ParseContextIF.java,v 1.9 2008/06/23 09:31:25 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import net.ontopia.infoset.core.LocatorIF;

@@ -1,6 +1,4 @@
 
-// $Id: PSI.java,v 1.15 2009/02/27 11:59:19 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import net.ontopia.infoset.impl.basic.URILocator;

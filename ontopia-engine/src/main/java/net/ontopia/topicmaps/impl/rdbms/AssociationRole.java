@@ -1,6 +1,4 @@
 
-// $Id: AssociationRole.java,v 1.54 2008/06/02 10:50:13 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.*;

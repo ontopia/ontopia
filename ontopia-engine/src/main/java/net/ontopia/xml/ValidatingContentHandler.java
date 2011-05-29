@@ -1,6 +1,4 @@
 
-// $Id: ValidatingContentHandler.java,v 1.5 2008/08/19 12:08:51 geir.gronmo Exp $
-
 package net.ontopia.xml;
 
 import java.io.StringReader;

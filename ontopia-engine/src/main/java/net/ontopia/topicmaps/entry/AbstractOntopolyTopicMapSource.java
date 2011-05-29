@@ -1,6 +1,4 @@
 
-// $Id: AbstractOntopolyTopicMapSource.java,v 1.3 2007/08/29 14:56:44 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.io.File;

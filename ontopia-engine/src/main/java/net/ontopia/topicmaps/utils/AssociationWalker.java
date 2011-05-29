@@ -1,6 +1,4 @@
 
-// $Id: AssociationWalker.java,v 1.16 2004/06/13 12:14:24 grove Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.ArrayList;

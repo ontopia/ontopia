@@ -1,6 +1,4 @@
 
-// $Id: TopicNameIF.java,v 1.12 2008/06/12 14:37:13 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.util.Collection;

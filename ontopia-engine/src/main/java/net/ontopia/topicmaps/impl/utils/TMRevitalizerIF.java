@@ -1,6 +1,4 @@
 
-// $Id: TMRevitalizerIF.java,v 1.2 2006/04/06 11:40:35 grove Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 /**

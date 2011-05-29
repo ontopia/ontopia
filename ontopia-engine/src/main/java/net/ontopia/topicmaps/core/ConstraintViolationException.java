@@ -1,6 +1,4 @@
 
-// $Id: ConstraintViolationException.java,v 1.9 2004/11/18 08:42:43 grove Exp $
-
 package net.ontopia.topicmaps.core;
 
 import net.ontopia.utils.OntopiaRuntimeException;

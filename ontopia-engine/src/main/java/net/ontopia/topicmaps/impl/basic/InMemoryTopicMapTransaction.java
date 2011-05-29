@@ -1,6 +1,4 @@
 
-// $Id: InMemoryTopicMapTransaction.java,v 1.33 2008/06/11 16:55:57 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.basic;
 
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;

@@ -1,6 +1,4 @@
 
-// $Id: TopicMaps.java,v 1.3 2007/08/24 13:19:12 lars.garshol Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.util.HashMap;

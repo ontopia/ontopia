@@ -1,6 +1,4 @@
 
-// $Id: Locators.java,v 1.1 2007/08/30 06:45:19 geir.gronmo Exp $
-
 package net.ontopia.infoset.core;
 
 import java.io.File;

@@ -1,6 +1,4 @@
 
-// $Id: PredicateSignature.java,v 1.13 2007/11/22 14:56:25 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.HashMap;

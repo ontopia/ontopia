@@ -1,6 +1,4 @@
 
-// $Id: XMLReaderFactoryIF.java,v 1.5 2004/11/18 13:14:02 grove Exp $
-
 package net.ontopia.xml;
 
 import org.xml.sax.*;

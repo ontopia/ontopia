@@ -1,4 +1,3 @@
-// $Id: SchemaReaderIF.java,v 1.5 2002/05/29 13:38:43 hca Exp $
 
 package net.ontopia.topicmaps.schema.core;
 

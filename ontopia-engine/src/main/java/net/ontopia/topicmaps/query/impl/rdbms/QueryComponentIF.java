@@ -1,4 +1,3 @@
-// $Id: QueryComponentIF.java,v 1.6 2005/07/13 08:54:59 grove Exp $
 
 package net.ontopia.topicmaps.query.impl.rdbms;
 

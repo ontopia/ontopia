@@ -1,4 +1,3 @@
-// $Id: ObjectIdComparator.java,v 1.8 2009/05/07 12:24:43 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.utils;
 

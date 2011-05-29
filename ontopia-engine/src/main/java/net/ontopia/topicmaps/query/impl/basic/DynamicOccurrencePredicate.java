@@ -1,6 +1,4 @@
 
-// $Id: DynamicOccurrencePredicate.java,v 1.28 2008/12/04 14:58:04 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.net.MalformedURLException;

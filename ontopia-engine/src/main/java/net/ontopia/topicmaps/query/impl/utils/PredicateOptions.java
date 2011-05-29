@@ -1,6 +1,4 @@
 
-// $Id: PredicateOptions.java,v 1.2 2005/04/05 11:38:58 larsga Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 /**

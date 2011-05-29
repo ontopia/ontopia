@@ -1,6 +1,4 @@
 
-// $Id: TMXMLTopicMapReference.java,v 1.1 2006/07/12 14:03:32 larsga Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;

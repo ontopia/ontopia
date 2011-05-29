@@ -1,4 +1,3 @@
-// $Id: TypedIFGrabber.java,v 1.10 2004/11/29 19:01:50 grove Exp $
 
 package net.ontopia.topicmaps.utils;
 

@@ -1,6 +1,4 @@
 
-// $Id: ContentWriter.java,v 1.2 2006/04/28 13:05:13 larsga Exp $
-
 package net.ontopia.xml;
 
 import java.io.Writer;

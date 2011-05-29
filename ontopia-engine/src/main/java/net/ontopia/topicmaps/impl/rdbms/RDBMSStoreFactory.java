@@ -1,6 +1,4 @@
 
-// $Id: RDBMSStoreFactory.java,v 1.9 2005/03/11 11:24:03 larsga Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Map;

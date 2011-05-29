@@ -1,6 +1,4 @@
 
-// $Id: LocalParseContext.java,v 1.13 2008/06/23 09:31:24 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import java.io.InputStream;

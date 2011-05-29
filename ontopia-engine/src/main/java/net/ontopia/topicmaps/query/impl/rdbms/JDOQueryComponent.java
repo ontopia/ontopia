@@ -1,6 +1,4 @@
 
-// $Id: JDOQueryComponent.java,v 1.19 2006/05/02 07:26:22 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.Arrays;

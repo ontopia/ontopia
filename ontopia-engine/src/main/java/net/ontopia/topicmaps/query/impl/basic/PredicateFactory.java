@@ -1,6 +1,4 @@
 
-// $Id: PredicateFactory.java,v 1.45 2008/06/05 10:31:57 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.HashMap;

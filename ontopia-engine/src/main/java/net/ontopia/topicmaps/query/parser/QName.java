@@ -1,6 +1,4 @@
 
-// $Id: QName.java,v 1.1 2003/12/15 10:28:04 larsga Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 /**

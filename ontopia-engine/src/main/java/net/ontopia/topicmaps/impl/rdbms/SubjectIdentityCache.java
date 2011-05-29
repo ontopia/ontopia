@@ -1,6 +1,4 @@
 
-// $Id: SubjectIdentityCache.java,v 1.44 2008/06/13 08:36:26 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import net.ontopia.infoset.core.LocatorIF;

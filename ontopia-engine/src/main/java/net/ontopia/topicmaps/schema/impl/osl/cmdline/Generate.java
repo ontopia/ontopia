@@ -1,6 +1,4 @@
 
-// $Id: Generate.java,v 1.17 2008/06/11 16:56:01 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 
 import java.io.*;

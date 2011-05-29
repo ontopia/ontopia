@@ -1,6 +1,4 @@
 
-// $Id: Log4jSaxErrorHandler.java,v 1.15 2003/03/16 14:22:33 larsga Exp $
-
 package net.ontopia.xml;
 
 import org.xml.sax.*;

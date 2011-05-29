@@ -1,6 +1,4 @@
 
-// $Id: TopicPredicate.java,v 1.6 2008/06/11 16:56:01 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import net.ontopia.topicmaps.core.TopicIF;

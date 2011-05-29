@@ -1,6 +1,4 @@
 
-// $Id: OSLSchemaReader.java,v 1.11 2007/07/11 11:39:14 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.File;

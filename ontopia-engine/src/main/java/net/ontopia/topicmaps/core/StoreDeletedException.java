@@ -1,6 +1,4 @@
 
-// $Id: StoreDeletedException.java,v 1.2 2004/12/14 13:14:36 grove Exp $
-
 package net.ontopia.topicmaps.core;
 
 import net.ontopia.utils.OntopiaRuntimeException;

@@ -1,6 +1,4 @@
 
-// $Id: PredicateFactoryIF.java,v 1.8 2005/04/27 10:07:17 larsga Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import net.ontopia.topicmaps.core.TopicIF;

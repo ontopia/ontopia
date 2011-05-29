@@ -1,6 +1,4 @@
 
-// $Id: HTMLValidationHandler.java,v 1.10 2008/06/12 14:37:23 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.utils;
 
 import java.io.Writer;

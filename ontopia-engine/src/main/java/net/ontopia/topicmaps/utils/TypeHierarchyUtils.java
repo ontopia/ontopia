@@ -1,6 +1,4 @@
 
-// $Id: TypeHierarchyUtils.java,v 1.21 2008/01/11 13:50:21 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.ArrayList;

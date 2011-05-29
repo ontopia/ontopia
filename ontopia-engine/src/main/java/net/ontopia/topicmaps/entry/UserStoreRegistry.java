@@ -1,6 +1,4 @@
 
-// $Id: UserStoreRegistry.java,v 1.6 2007/08/30 09:44:01 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.io.IOException;

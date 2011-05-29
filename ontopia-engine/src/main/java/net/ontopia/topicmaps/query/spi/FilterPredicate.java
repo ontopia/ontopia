@@ -1,6 +1,4 @@
 
-// $Id: FilterPredicate.java,v 1.3 2008/06/11 20:08:09 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.spi;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;

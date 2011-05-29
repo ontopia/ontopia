@@ -1,6 +1,4 @@
 
-// $Id: TMObjectIF.java,v 1.29 2009/02/09 08:22:40 lars.garshol Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.util.Collection;

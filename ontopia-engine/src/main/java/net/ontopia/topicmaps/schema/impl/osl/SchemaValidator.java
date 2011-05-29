@@ -1,6 +1,4 @@
 
-// $Id: SchemaValidator.java,v 1.20 2008/06/13 08:36:28 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.util.Collection;

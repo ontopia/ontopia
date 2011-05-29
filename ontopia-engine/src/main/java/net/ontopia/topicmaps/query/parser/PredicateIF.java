@@ -1,6 +1,4 @@
 
-// $Id: PredicateIF.java,v 1.13 2007/09/18 10:04:18 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import net.ontopia.topicmaps.query.core.InvalidQueryException;

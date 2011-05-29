@@ -1,6 +1,4 @@
 
-// $Id: ResourcePredicate.java,v 1.11 2008/06/12 14:37:22 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.ArrayList;

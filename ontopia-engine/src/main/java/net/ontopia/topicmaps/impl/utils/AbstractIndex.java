@@ -1,4 +1,3 @@
-// $Id: AbstractIndex.java,v 1.4 2005/07/11 12:26:22 grove Exp $
 
 package net.ontopia.topicmaps.impl.utils;
 

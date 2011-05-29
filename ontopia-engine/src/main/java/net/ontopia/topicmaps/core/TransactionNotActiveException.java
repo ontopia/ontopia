@@ -1,4 +1,3 @@
-// $Id: TransactionNotActiveException.java,v 1.4 2006/01/20 16:46:33 grove Exp $
 
 package net.ontopia.topicmaps.core;
 

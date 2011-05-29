@@ -1,6 +1,4 @@
 
-// $Id: CanonicalTopicMapWriter.java,v 1.37 2008/06/13 08:17:57 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

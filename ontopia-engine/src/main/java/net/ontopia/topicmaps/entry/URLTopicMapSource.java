@@ -1,6 +1,4 @@
 
-// $Id: URLTopicMapSource.java,v 1.14 2008/01/09 10:07:28 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.net.MalformedURLException;

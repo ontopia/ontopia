@@ -1,6 +1,4 @@
 
-// $Id: VariantPredicate.java,v 1.8 2008/06/13 12:31:32 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.ArrayList;

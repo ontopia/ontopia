@@ -1,4 +1,3 @@
-// $Id: TopicRoleConstraint.java,v 1.7 2007/08/20 08:02:12 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.schema.impl.osl;
 

@@ -1,6 +1,4 @@
 
-// $Id: BadObjectReferenceException.java,v 1.1 2007/03/19 13:58:57 grove Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 /**

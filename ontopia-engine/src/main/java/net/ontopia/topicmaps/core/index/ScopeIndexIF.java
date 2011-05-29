@@ -1,4 +1,3 @@
-// $Id: ScopeIndexIF.java,v 1.10 2008/06/12 14:37:13 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.core.index;
 

@@ -1,6 +1,4 @@
 
-// $Id: TopicEvents.java,v 1.4 2008/06/24 10:04:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.basic;
 
 import java.util.HashMap;

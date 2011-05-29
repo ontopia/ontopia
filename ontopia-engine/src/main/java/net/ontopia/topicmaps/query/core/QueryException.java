@@ -1,6 +1,4 @@
 
-// $Id: QueryException.java,v 1.5 2005/12/14 13:08:34 grove Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import net.ontopia.utils.OntopiaException;

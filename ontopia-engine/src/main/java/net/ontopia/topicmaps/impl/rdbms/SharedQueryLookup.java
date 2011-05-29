@@ -1,6 +1,4 @@
 
-// $Id: SharedQueryLookup.java,v 1.6 2007/09/27 06:37:08 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.util.Collection;

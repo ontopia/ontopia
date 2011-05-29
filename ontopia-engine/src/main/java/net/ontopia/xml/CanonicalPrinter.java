@@ -1,6 +1,4 @@
 
-// $Id: CanonicalPrinter.java,v 1.9 2009/02/16 08:40:52 lars.garshol Exp $
-
 package net.ontopia.xml;
 
 import java.io.PrintWriter;

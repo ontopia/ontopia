@@ -1,6 +1,4 @@
 
-// $Id: TopicMapRepositoryIF.java,v 1.11 2007/08/27 15:35:11 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: DeclarationContextIF.java,v 1.3 2005/07/06 11:46:07 grove Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 

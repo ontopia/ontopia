@@ -1,6 +1,4 @@
 
-// $Id: RDBMSLocator.java,v 1.9 2008/06/04 12:23:09 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.*;

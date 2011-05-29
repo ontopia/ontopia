@@ -1,6 +1,4 @@
 
-// $Id: ReadOnlyVariantName.java,v 1.5 2008/06/12 14:37:15 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 import java.io.Reader;
 import java.io.InputStream;

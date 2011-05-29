@@ -1,6 +1,4 @@
 
-// $Id: StorePoolableObjectFactory.java,v 1.7 2005/09/14 09:31:01 grove Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.Collection;

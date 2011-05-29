@@ -1,6 +1,4 @@
 
-// $Id: JavaModule.java,v 1.13 2007/11/27 09:13:38 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.io.InputStream;

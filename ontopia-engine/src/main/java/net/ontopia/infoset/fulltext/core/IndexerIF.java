@@ -1,4 +1,3 @@
-// $Id: IndexerIF.java,v 1.10 2005/07/08 13:29:48 grove Exp $
 
 package net.ontopia.infoset.fulltext.core;
 

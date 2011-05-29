@@ -1,4 +1,3 @@
-// $Id: SingleQueryResultIterator.java,v 1.3 2005/07/13 08:55:47 grove Exp $
 
 package net.ontopia.topicmaps.query.utils;
 

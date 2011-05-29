@@ -1,6 +1,4 @@
 
-// $Id: Validate.java,v 1.7 2002/11/25 23:33:47 larsga Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 
 import java.io.File;

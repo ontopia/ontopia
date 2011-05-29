@@ -1,4 +1,3 @@
-// $Id: LuceneSearcher.java,v 1.3 2006/06/07 11:12:33 grove Exp $
 
 package net.ontopia.topicmaps.query.spi;
 

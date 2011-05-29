@@ -1,6 +1,4 @@
 
-// $Id: InstanceOfPredicate.java,v 1.14 2005/07/13 08:56:21 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.util.ArrayList;

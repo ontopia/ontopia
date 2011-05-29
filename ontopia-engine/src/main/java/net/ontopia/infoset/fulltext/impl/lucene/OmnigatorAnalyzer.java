@@ -1,6 +1,4 @@
 
-// $Id: OmnigatorAnalyzer.java,v 1.4 2005/07/08 10:45:25 grove Exp $
-
 package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.Reader;

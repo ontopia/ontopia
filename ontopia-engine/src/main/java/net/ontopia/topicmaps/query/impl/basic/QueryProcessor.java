@@ -1,6 +1,4 @@
 
-// $Id: QueryProcessor.java,v 1.93 2009/04/08 11:33:22 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import java.io.IOException;

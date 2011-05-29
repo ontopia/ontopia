@@ -1,6 +1,4 @@
 
-// $Id: QNameLookup.java,v 1.1 2009/04/27 11:05:24 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import net.ontopia.infoset.core.LocatorIF;

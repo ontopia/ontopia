@@ -1,6 +1,4 @@
 
-// $Id: QueryResult.java,v 1.21 2003/12/17 20:15:10 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import net.ontopia.topicmaps.query.core.QueryResultIF;

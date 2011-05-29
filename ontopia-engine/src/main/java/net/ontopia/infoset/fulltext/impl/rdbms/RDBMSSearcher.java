@@ -1,6 +1,4 @@
 
-// $Id: RDBMSSearcher.java,v 1.24 2008/06/11 16:55:56 geir.gronmo Exp $
-
 package net.ontopia.infoset.fulltext.impl.rdbms;
 
 import java.io.IOException;

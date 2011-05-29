@@ -1,6 +1,4 @@
 
-// $Id: LocatorIF.java,v 1.10 2008/06/04 12:23:09 geir.gronmo Exp $
-
 package net.ontopia.infoset.core;
 
 /**

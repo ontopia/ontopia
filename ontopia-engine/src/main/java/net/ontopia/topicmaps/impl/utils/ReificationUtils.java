@@ -1,6 +1,4 @@
 
-// $Id: ReificationUtils.java,v 1.4 2008/06/13 10:25:27 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import net.ontopia.topicmaps.core.ReifiableIF;

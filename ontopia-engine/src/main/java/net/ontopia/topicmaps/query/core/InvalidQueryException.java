@@ -1,6 +1,4 @@
 
-// $Id: InvalidQueryException.java,v 1.4 2005/12/14 13:08:34 grove Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 /**

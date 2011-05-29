@@ -1,6 +1,4 @@
 
-// $Id: Argument.java,v 1.4 2005/07/12 10:09:04 grove Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import java.util.ArrayList;

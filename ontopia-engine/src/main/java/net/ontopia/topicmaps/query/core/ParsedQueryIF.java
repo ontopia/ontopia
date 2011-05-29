@@ -1,6 +1,4 @@
 
-// $Id: ParsedQueryIF.java,v 1.8 2003/12/19 09:01:46 larsga Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.util.Map;

@@ -1,6 +1,4 @@
 
-// $Id: QueryOptimizerIF.java,v 1.3 2005/03/21 18:27:31 larsga Exp $
-
 package net.ontopia.topicmaps.query.impl.utils;
 
 import java.util.List;

@@ -1,6 +1,4 @@
 
-// $Id: AntlrWrapException.java,v 1.5 2004/11/29 09:53:50 larsga Exp $
-
 package net.ontopia.topicmaps.query.parser;
 
 import antlr.RecognitionException;

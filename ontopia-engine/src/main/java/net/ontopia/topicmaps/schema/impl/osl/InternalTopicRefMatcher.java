@@ -1,6 +1,4 @@
 
-// $Id: InternalTopicRefMatcher.java,v 1.10 2008/06/13 08:17:54 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import net.ontopia.infoset.core.LocatorIF;

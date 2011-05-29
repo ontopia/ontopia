@@ -1,6 +1,4 @@
 
-// $Id: TopicMapTransactionIF.java,v 1.1 2008/06/12 14:37:17 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;

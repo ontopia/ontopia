@@ -1,6 +1,4 @@
 
-// $Id: Stats.java,v 1.7 2006/07/05 08:50:18 grove Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.sql.Connection;

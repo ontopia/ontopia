@@ -1,6 +1,4 @@
 
-// $Id: XTM20TopicMapWriter.java 1108 2010-06-06 21:08:51Z lars.heuer $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;

@@ -1,6 +1,4 @@
 
-// $Id: AbstractTopicMapTransaction.java,v 1.15 2008/06/11 16:55:59 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.utils;
 
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;

@@ -1,6 +1,4 @@
 
-// $Id: Topic.java,v 1.86 2008/06/13 08:17:51 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.basic;
 
 import java.util.Set;

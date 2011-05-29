@@ -1,6 +1,4 @@
 
-// $Id: NullResolvingExternalReferenceHandler.java,v 1.3 2002/08/28 08:47:34 grove Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import net.ontopia.topicmaps.xml.ExternalReferenceHandlerIF;
