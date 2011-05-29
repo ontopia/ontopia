@@ -1,6 +1,4 @@
 
-// $Id: NavigatorApplication.java,v 1.110 2008/09/04 10:17:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.io.File;

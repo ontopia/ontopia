@@ -1,6 +1,4 @@
 
-// $Id: ContextExtraInfo.java,v 1.7 2006/04/06 13:37:12 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
 import javax.servlet.jsp.tagext.TagExtraInfo;

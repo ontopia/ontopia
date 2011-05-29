@@ -1,6 +1,4 @@
 
-// $Id: ContextTag.java,v 1.75 2007/08/27 09:20:19 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
 import java.util.ArrayList;

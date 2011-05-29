@@ -1,6 +1,4 @@
 
-// $Id: CheckUserExtraInfo.java,v 1.7 2004/01/28 19:10:05 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
 import javax.servlet.jsp.tagext.TagExtraInfo;

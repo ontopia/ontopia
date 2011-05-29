@@ -1,6 +1,4 @@
 
-// $Id: ModelLinkGenerator.java,v 1.15 2005/10/14 16:07:44 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import javax.servlet.jsp.PageContext;

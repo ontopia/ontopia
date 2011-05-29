@@ -1,4 +1,3 @@
-// $Id: PropertyTag.java,v 1.7 2004/01/13 09:16:34 grove Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.output;
 

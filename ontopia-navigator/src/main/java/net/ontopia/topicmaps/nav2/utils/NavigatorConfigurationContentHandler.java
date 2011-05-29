@@ -1,4 +1,3 @@
-// $Id: NavigatorConfigurationContentHandler.java,v 1.7 2005/02/22 15:46:52 grove Exp $
 
 package net.ontopia.topicmaps.nav2.utils;
 

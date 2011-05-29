@@ -1,6 +1,4 @@
 
-// $Id: TopicsTag.java,v 1.16 2008/06/12 14:37:19 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.util.ArrayList;

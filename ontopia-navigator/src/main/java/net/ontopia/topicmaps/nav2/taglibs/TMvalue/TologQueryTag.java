@@ -1,6 +1,4 @@
 
-// $Id: TologQueryTag.java,v 1.36 2005/06/28 13:23:57 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.util.*;

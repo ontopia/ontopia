@@ -1,6 +1,4 @@
 
-// $Id: AssociationRoleTypeComparator.java,v 1.6 2004/11/12 11:47:19 grove Exp $
-
 package net.ontopia.topicmaps.nav.utils.comparators;
 
 import java.util.*;

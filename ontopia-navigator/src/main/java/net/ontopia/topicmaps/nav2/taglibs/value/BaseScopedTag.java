@@ -1,6 +1,4 @@
 
-// $Id: BaseScopedTag.java,v 1.11 2003/07/28 10:07:26 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import net.ontopia.utils.DeciderIF;

@@ -1,4 +1,3 @@
-// $Id: AssocInfoStorageComparator.java,v 1.5 2002/05/29 13:38:41 hca Exp $
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 

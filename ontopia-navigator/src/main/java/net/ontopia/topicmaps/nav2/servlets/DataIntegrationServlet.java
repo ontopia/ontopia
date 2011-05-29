@@ -1,6 +1,4 @@
 
-// $Id: DataIntegrationServlet.java,v 1.5 2008/01/14 11:37:14 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.servlets;
 
 import java.io.IOException;

@@ -1,6 +1,4 @@
 
-// $Id: JSPTreeNodeIF.java,v 1.7 2005/02/24 09:43:41 larsga Exp $
-
 package net.ontopia.utils.ontojsp;
 
 import java.util.List;

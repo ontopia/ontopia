@@ -1,6 +1,4 @@
 
-// $Id: FakeServletContext.java,v 1.19 2007/06/07 07:10:10 geir.gronmo Exp $
-
 package net.ontopia.utils.ontojsp;
 
 import java.io.File;

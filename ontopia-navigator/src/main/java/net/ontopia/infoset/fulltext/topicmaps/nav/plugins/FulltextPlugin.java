@@ -1,6 +1,4 @@
 
-// $Id: FulltextPlugin.java,v 1.22 2007/01/29 11:06:50 grove Exp $
-
 package net.ontopia.infoset.fulltext.topicmaps.nav.plugins;
 
 import java.io.File;

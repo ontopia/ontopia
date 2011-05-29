@@ -1,6 +1,4 @@
 
-// $Id: JSPPageExecuter.java,v 1.34 2008/11/03 12:26:55 lars.garshol Exp $
-
 package net.ontopia.utils.ontojsp;
 
 import java.io.IOException;

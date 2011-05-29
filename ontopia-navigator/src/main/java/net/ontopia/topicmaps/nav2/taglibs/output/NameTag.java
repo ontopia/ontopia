@@ -1,6 +1,4 @@
 
-// $Id: NameTag.java,v 1.38 2003/02/04 10:59:29 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.output;
 
 import java.io.IOException;

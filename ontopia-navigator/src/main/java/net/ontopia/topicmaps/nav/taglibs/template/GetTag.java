@@ -1,6 +1,4 @@
 
-// $Id: GetTag.java,v 1.25 2005/10/04 10:05:21 grove Exp $
-
 package net.ontopia.topicmaps.nav.taglibs.template;
 
 import java.util.Map;

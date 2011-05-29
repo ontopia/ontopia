@@ -1,6 +1,4 @@
 
-// $Id: ValueProducingTagIF.java,v 1.8 2003/09/03 16:22:15 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.core;
 
 import java.util.Collection;

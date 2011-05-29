@@ -1,4 +1,3 @@
-// $Id: ExternalFunctionTag.java,v 1.13 2004/01/13 09:16:34 grove Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 

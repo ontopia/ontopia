@@ -1,6 +1,4 @@
 
-// $Id: Context.java,v 1.2 2005/12/13 14:16:20 opland Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.util.ArrayList;

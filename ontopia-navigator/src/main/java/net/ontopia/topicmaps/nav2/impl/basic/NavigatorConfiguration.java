@@ -1,6 +1,4 @@
 
-// $Id: NavigatorConfiguration.java,v 1.20 2006/05/11 10:09:11 grove Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.util.*;

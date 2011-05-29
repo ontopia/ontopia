@@ -1,4 +1,3 @@
-// $Id: DefaultSkin.java,v 1.4 2002/08/26 15:02:59 grove Exp $
 
 package net.ontopia.topicmaps.nav2.impl.framework;
 

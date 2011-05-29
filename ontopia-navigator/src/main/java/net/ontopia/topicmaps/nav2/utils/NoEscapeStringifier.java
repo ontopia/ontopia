@@ -1,6 +1,4 @@
 
-// $Id: NoEscapeStringifier.java,v 1.4 2007/07/13 12:35:06 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import net.ontopia.utils.StringifierIF;

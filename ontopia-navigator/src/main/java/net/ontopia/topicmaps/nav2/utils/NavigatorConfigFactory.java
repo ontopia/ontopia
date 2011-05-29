@@ -1,6 +1,4 @@
 
-// $Id: NavigatorConfigFactory.java,v 1.10 2004/11/24 12:05:06 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.io.File;

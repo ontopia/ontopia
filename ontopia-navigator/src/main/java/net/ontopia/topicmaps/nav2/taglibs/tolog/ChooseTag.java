@@ -1,6 +1,4 @@
 
-// $Id: ChooseTag.java,v 1.8 2006/02/06 07:00:21 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;

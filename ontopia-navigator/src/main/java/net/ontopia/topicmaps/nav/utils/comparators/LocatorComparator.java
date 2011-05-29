@@ -1,4 +1,3 @@
-// $Id: LocatorComparator.java,v 1.9 2004/11/12 11:47:19 grove Exp $
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 

@@ -1,6 +1,4 @@
 
-// $Id: FilterTag.java,v 1.32 2008/06/13 08:36:27 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.net.MalformedURLException;

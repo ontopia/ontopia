@@ -1,4 +1,3 @@
-// $Id: ModuleReaderTest.java,v 1.1 2002/09/11 13:21:16 niko Exp $
 
 package net.ontopia.topicmaps.nav2.utils;
 

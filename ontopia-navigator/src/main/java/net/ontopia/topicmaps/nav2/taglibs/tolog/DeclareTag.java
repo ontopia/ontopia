@@ -1,6 +1,4 @@
 
-// $Id: DeclareTag.java,v 1.6 2005/03/30 17:15:48 opland Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import javax.servlet.jsp.JspException;

@@ -1,6 +1,4 @@
 
-// $Id: DefaultPlugin.java,v 1.19 2005/09/26 10:37:12 ian Exp $
-
 package net.ontopia.topicmaps.nav2.plugins;
 
 import java.util.Map;

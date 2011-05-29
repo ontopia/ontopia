@@ -1,6 +1,4 @@
 
-// $Id: ClassesOfTag.java,v 1.13 2008/01/11 13:50:21 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.util.Set;

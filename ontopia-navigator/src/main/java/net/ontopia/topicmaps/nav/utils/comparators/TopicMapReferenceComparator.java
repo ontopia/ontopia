@@ -1,4 +1,3 @@
-// $Id: TopicMapReferenceComparator.java,v 1.10 2006/01/16 08:23:48 grove Exp $
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 

@@ -1,6 +1,4 @@
 
-// $Id: CheckUserTag.java,v 1.7 2003/06/03 18:38:23 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
 import javax.servlet.jsp.JspTagException;

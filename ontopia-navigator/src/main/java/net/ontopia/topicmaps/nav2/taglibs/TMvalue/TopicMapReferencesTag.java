@@ -1,4 +1,3 @@
-// $Id: TopicMapReferencesTag.java,v 1.9 2004/11/19 12:52:48 grove Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 

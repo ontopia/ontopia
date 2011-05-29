@@ -1,6 +1,4 @@
 
-// $Id: NavigatorRuntimeException.java,v 1.12 2007/07/13 12:35:07 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.core;
 
 /**

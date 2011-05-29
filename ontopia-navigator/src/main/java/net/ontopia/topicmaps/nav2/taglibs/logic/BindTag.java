@@ -1,6 +1,4 @@
 
-// $Id: BindTag.java,v 1.15 2004/03/25 14:23:14 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
 import java.util.*;

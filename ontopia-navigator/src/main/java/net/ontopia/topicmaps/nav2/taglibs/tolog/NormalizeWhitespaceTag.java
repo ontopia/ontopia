@@ -1,6 +1,4 @@
 
-// $Id: NormalizeWhitespaceTag.java,v 1.2 2006/05/05 12:15:11 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;

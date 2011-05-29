@@ -1,6 +1,4 @@
 
-// $Id: TopicMapLinkPlugin.java,v 1.3 2008/05/21 13:40:12 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.plugins;
 
 import net.ontopia.utils.OntopiaRuntimeException;

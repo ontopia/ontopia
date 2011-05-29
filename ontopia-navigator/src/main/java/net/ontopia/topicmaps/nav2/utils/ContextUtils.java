@@ -1,6 +1,4 @@
 
-// $Id: ContextUtils.java,v 1.26 2007/08/28 07:41:22 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.util.ArrayList;

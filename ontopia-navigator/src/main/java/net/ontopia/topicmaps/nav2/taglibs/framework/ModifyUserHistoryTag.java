@@ -1,6 +1,4 @@
 
-// $Id: ModifyUserHistoryTag.java,v 1.9 2003/07/28 10:07:04 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
 import javax.servlet.jsp.JspTagException;

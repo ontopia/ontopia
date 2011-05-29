@@ -1,6 +1,4 @@
 
-// $Id: IncludeTag.java,v 1.21 2007/12/04 08:53:35 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
 import java.io.IOException;

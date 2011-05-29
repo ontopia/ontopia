@@ -1,4 +1,3 @@
-// $Id: ScopeTag.java,v 1.12 2008/01/10 11:08:49 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 

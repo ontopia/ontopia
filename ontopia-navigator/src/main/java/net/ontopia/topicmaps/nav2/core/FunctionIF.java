@@ -1,4 +1,3 @@
-// $Id: FunctionIF.java,v 1.17 2004/11/29 19:22:58 grove Exp $
 
 package net.ontopia.topicmaps.nav2.core;
 

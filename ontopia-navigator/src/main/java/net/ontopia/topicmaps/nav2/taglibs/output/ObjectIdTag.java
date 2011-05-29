@@ -1,4 +1,3 @@
-// $Id: ObjectIdTag.java,v 1.12 2002/08/26 14:25:49 grove Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.output;
 

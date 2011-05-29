@@ -1,6 +1,4 @@
 
-// $Id: QueryTag.java,v 1.16 2005/07/06 14:03:37 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import javax.servlet.jsp.JspException;

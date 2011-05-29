@@ -1,6 +1,4 @@
 
-// $Id: ThemesTag.java,v 1.13 2008/11/03 12:25:08 lars.garshol Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.io.IOException;

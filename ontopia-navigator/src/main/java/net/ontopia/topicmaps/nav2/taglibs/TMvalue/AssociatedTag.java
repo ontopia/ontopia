@@ -1,6 +1,4 @@
 
-// $Id: AssociatedTag.java,v 1.16 2003/11/12 12:31:10 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.util.HashSet;

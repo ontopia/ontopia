@@ -1,6 +1,4 @@
 
-// $Id: OccurrencesTag.java,v 1.20 2008/04/10 08:10:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.util.ArrayList;

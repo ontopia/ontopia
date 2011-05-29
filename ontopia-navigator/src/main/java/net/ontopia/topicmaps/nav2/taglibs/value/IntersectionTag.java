@@ -1,6 +1,4 @@
 
-// $Id: IntersectionTag.java,v 1.8 2003/08/14 19:30:29 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import java.util.HashSet;

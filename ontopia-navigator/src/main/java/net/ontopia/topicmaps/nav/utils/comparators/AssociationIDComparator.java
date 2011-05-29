@@ -1,4 +1,3 @@
-// $Id: AssociationIDComparator.java,v 1.4 2004/11/12 11:47:19 grove Exp $
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 

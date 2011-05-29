@@ -1,6 +1,4 @@
 
-// $Id: BrokenNavigatorConfiguration.java,v 1.1 2004/03/01 15:49:41 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.util.Map;

@@ -1,6 +1,4 @@
 
-// $Id: ContextManagerMapWrapper.java,v 1.14 2006/08/09 09:42:46 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.util.Collection;

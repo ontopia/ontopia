@@ -1,6 +1,4 @@
 
-// $Id: NavigatorApplicationIF.java,v 1.42 2007/07/13 12:35:07 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.core;
 
 import java.net.URL;

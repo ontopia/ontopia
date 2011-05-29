@@ -1,4 +1,3 @@
-// $Id: ValidationPlugin.java,v 1.1 2002/12/20 11:06:23 grove Exp $
 
 package net.ontopia.topicmaps.schema.impl.osl.nav.plugins;
 

@@ -1,6 +1,4 @@
 
-// $Id: ModuleContentHandler.java,v 1.7 2003/07/28 10:07:34 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.util.Map;

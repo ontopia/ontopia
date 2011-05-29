@@ -1,6 +1,4 @@
 
-// $Id: RelatedTag.java,v 1.14 2007/09/18 08:11:37 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.portlets.taglib;
 
 import java.util.List;

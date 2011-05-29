@@ -1,4 +1,3 @@
-// $Id: PluginTableTag.java,v 1.1 2005/10/07 11:51:08 ian Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 

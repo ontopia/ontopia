@@ -1,6 +1,4 @@
 
-// $Id: OtherwiseTag.java,v 1.5 2005/03/30 17:36:36 opland Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;

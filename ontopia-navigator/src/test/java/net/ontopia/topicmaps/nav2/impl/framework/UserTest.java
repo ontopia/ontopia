@@ -1,6 +1,4 @@
 
-// $Id: UserTest.java,v 1.7 2003/08/28 13:27:30 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.io.IOException;

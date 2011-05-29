@@ -1,4 +1,3 @@
-// $Id: PluginUtils.java,v 1.5 2004/11/12 11:24:52 grove Exp $
 
 package net.ontopia.topicmaps.nav2.plugins;
 

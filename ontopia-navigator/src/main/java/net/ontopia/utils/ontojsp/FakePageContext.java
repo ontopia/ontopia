@@ -1,6 +1,4 @@
 
-// $Id: FakePageContext.java,v 1.20 2006/02/15 15:16:30 larsga Exp $
-
 package net.ontopia.utils.ontojsp;
 
 import java.io.IOException;

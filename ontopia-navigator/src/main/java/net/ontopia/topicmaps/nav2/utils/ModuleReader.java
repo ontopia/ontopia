@@ -1,6 +1,4 @@
 
-// $Id: ModuleReader.java,v 1.3 2003/07/28 10:24:20 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.io.IOException;

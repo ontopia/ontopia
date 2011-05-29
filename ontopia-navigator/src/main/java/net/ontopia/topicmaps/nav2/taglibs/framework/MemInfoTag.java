@@ -1,6 +1,4 @@
 
-// $Id: MemInfoTag.java,v 1.6 2003/08/29 12:32:44 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
 import java.io.IOException;

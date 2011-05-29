@@ -1,6 +1,4 @@
 
-// $Id: LocatorTag.java,v 1.3 2008/01/11 13:29:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 
 import java.util.ArrayList;

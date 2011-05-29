@@ -1,6 +1,4 @@
 
-// $Id: UserFilterContextStore.java,v 1.11 2008/06/12 14:37:17 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav.context;
 
 import java.util.Collection;

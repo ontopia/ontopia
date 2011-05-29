@@ -1,6 +1,4 @@
 
-// $Id: AutoSuggestServlet.java,v 1.1 2007/12/13 11:04:26 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.servlets;
 
 import java.io.IOException;

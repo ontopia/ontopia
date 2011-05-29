@@ -1,6 +1,4 @@
 
-// $Id: PluginConfigFactory.java,v 1.6 2004/08/27 13:59:08 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.plugins;
 
 import java.io.InputStream;

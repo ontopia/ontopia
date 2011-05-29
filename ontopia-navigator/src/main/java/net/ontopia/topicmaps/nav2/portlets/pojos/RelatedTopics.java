@@ -1,6 +1,4 @@
 
-// $Id: RelatedTopics.java,v 1.23 2009/05/20 12:42:16 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
 import java.util.Map;

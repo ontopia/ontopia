@@ -1,6 +1,4 @@
 
-// $Id: HttpRequestWrapper.java,v 1.1 2003/08/14 19:31:42 larsga Exp $
-
 package net.ontopia.utils.ontojsp;
 
 import javax.servlet.http.HttpServletRequest;

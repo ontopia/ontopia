@@ -1,4 +1,3 @@
-// $Id: FakeServletConfig.java,v 1.5 2005/09/08 10:00:53 ian Exp $
 
 package net.ontopia.utils.ontojsp;
 

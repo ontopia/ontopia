@@ -1,6 +1,4 @@
 
-// $Id: JSPAttributeTest.java,v 1.2 2007/06/06 12:34:55 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.io.File;

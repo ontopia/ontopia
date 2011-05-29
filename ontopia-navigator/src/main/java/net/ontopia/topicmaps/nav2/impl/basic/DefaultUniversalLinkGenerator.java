@@ -1,6 +1,4 @@
 
-// $Id: DefaultUniversalLinkGenerator.java,v 1.8 2004/11/12 11:25:35 grove Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import net.ontopia.topicmaps.core.*;

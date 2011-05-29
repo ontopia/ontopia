@@ -1,6 +1,4 @@
 
-// $Id: IfTag.java,v 1.10 2008/06/17 08:54:06 lars.garshol Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import javax.servlet.jsp.JspException;

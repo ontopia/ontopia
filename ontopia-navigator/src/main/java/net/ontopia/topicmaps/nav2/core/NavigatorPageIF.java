@@ -1,6 +1,4 @@
 
-// $Id: NavigatorPageIF.java,v 1.14 2005/07/06 14:03:37 grove Exp $
-
 package net.ontopia.topicmaps.nav2.core;
 
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;

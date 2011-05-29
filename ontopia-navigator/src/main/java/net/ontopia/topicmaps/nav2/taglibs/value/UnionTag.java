@@ -1,6 +1,4 @@
 
-// $Id: UnionTag.java,v 1.10 2005/12/19 20:57:30 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import java.util.HashSet;

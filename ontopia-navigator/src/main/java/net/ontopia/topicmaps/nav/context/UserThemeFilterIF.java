@@ -1,4 +1,3 @@
-// $Id: UserThemeFilterIF.java,v 1.4 2008/06/11 16:55:59 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.nav.context;
 

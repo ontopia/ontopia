@@ -1,6 +1,4 @@
 
-// $Id: QueryWrapper.java,v 1.18 2007/06/04 11:06:08 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.util.Collection;

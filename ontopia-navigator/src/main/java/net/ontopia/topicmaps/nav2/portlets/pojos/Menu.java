@@ -1,6 +1,4 @@
 
-// $Id: Menu.java,v 1.16 2008/06/12 14:37:18 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
 import java.util.ArrayList;

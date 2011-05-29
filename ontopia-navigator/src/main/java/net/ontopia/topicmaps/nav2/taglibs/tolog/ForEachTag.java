@@ -1,6 +1,4 @@
 
-// $Id: ForEachTag.java,v 1.26 2008/01/02 08:03:34 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;

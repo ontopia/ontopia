@@ -1,6 +1,4 @@
 
-// $Id: SymbolicIdTag.java,v 1.6 2004/11/24 12:04:31 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.output;
 
 import java.io.IOException;

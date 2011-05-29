@@ -1,6 +1,4 @@
 
-// $Id: ContextManager.java,v 1.22 2004/11/24 12:04:03 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.util.Map;

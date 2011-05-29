@@ -1,6 +1,4 @@
 
-// $Id: IfTag.java,v 1.30 2005/12/19 20:57:46 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
 import java.io.IOException;

@@ -1,6 +1,4 @@
 
-// $Id: FakeServletRequest.java,v 1.19 2006/01/05 13:40:24 larsga Exp $
-
 package net.ontopia.utils.ontojsp;
 
 import java.io.BufferedReader;

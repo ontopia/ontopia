@@ -1,6 +1,4 @@
 
-// $Id: BaseValueProducingAndAcceptingTag.java,v 1.15 2004/01/13 09:16:34 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import java.io.IOException;

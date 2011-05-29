@@ -1,6 +1,4 @@
 
-// $Id: CopyTag.java,v 1.5 2005/12/19 20:57:23 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import java.util.ArrayList;

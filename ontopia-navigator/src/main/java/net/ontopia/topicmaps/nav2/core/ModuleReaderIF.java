@@ -1,4 +1,3 @@
-// $Id: ModuleReaderIF.java,v 1.8 2002/09/11 14:18:35 niko Exp $
 
 package net.ontopia.topicmaps.nav2.core;
 

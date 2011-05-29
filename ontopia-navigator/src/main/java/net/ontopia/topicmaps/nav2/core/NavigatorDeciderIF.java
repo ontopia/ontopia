@@ -1,4 +1,3 @@
-// $Id: NavigatorDeciderIF.java,v 1.6 2004/11/12 11:25:23 grove Exp $
 
 package net.ontopia.topicmaps.nav2.core;
 

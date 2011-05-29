@@ -1,6 +1,4 @@
 
-// $Id: PluginListTag.java,v 1.20 2006/11/24 09:13:56 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
 import java.io.IOException;

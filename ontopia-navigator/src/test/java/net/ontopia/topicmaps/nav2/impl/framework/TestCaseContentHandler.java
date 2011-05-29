@@ -1,6 +1,4 @@
 
-// $Id: TestCaseContentHandler.java,v 1.9 2002/08/28 08:27:53 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.util.Map;

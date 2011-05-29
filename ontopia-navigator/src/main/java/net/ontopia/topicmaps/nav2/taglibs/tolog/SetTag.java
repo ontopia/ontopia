@@ -1,6 +1,4 @@
 
-// $Id: SetTag.java,v 1.27 2006/01/04 15:33:39 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.util.ArrayList;

@@ -1,6 +1,4 @@
 
-// $Id: AssocInfoStorage.java,v 1.9 2003/01/22 12:29:26 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.util.*;

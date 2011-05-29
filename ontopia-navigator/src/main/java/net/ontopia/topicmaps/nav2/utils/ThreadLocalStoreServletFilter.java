@@ -1,6 +1,4 @@
 
-// $Id: ThreadLocalStoreServletFilter.java,v 1.2 2007/08/24 13:23:57 lars.garshol Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.io.*;

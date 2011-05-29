@@ -1,6 +1,4 @@
 
-// $Id: TMRAP.java,v 1.2 2009/02/09 08:23:22 lars.garshol Exp $
-
 package net.ontopia.topicmaps.nav2.portlets.pojos;
 
 import java.util.Map;

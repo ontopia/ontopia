@@ -1,6 +1,4 @@
 
-// $Id: FakeServletResponse.java,v 1.11 2006/05/03 16:58:30 larsga Exp $
-
 package net.ontopia.utils.ontojsp;
 
 import java.io.IOException;

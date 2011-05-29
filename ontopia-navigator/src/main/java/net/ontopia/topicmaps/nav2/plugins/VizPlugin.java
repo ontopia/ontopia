@@ -1,6 +1,4 @@
 
-// $Id: VizPlugin.java,v 1.2 2005/05/19 12:47:00 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.plugins;
 
 import java.util.Set;

@@ -1,6 +1,4 @@
 
-// $Id: PutTag.java,v 1.23 2004/12/05 15:23:56 grove Exp $
-
 package net.ontopia.topicmaps.nav.taglibs.template;
 
 import java.util.Map;

@@ -1,4 +1,3 @@
-// $Id: NamesTag.java,v 1.15 2008/06/12 14:37:18 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 

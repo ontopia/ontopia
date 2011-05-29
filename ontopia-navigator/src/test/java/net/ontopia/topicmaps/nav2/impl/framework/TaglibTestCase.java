@@ -1,6 +1,4 @@
 
-// $Id: TaglibTestCase.java,v 1.52 2007/09/10 13:35:22 lars.garshol Exp $
-
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.io.File;

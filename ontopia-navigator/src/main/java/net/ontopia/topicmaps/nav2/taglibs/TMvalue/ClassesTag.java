@@ -1,4 +1,3 @@
-// $Id: ClassesTag.java,v 1.16 2008/06/11 16:56:00 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 

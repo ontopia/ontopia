@@ -1,6 +1,4 @@
 
-// $Id: Module.java,v 1.26 2007/09/10 13:35:11 lars.garshol Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.io.IOException;

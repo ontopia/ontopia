@@ -1,6 +1,4 @@
 
-// $Id: HelloWorldFunction.java,v 1.8 2003/12/18 17:03:18 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.io.IOException;

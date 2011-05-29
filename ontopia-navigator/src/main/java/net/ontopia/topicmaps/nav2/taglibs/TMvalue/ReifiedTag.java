@@ -1,4 +1,3 @@
-// $Id: ReifiedTag.java,v 1.11 2008/05/21 13:40:12 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.TMvalue;
 

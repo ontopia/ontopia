@@ -1,4 +1,3 @@
-// $Id: TypeDecider.java,v 1.7 2008/06/13 08:36:27 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 

@@ -1,6 +1,4 @@
 
-// $Id: JSPEngineWrapper.java,v 1.10 2006/11/24 09:14:25 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.lang.reflect.Constructor;

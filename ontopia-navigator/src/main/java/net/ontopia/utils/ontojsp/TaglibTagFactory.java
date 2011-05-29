@@ -1,6 +1,4 @@
 
-// $Id: TaglibTagFactory.java,v 1.29 2007/09/10 13:35:58 lars.garshol Exp $
-
 package net.ontopia.utils.ontojsp;
 
 import java.util.HashMap;

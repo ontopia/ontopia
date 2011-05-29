@@ -1,6 +1,4 @@
 
-// $Id: TimerTag.java,v 1.1 2005/10/04 09:26:30 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.framework;
 
 import java.io.IOException;

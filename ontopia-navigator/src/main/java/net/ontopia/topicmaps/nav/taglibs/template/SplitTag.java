@@ -1,6 +1,4 @@
 
-// $Id: SplitTag.java,v 1.5 2004/11/28 13:45:57 larsga Exp $
-
 package net.ontopia.topicmaps.nav.taglibs.template;
 
 import javax.servlet.jsp.JspException;

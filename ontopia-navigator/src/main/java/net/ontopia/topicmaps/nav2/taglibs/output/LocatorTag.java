@@ -1,6 +1,4 @@
 
-// $Id: LocatorTag.java,v 1.18 2008/04/10 08:10:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.output;
 
 import java.io.IOException;

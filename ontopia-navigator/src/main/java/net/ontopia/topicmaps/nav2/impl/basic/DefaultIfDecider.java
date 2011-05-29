@@ -1,4 +1,3 @@
-// $Id: DefaultIfDecider.java,v 1.17 2004/11/12 11:25:35 grove Exp $
 
 package net.ontopia.topicmaps.nav2.impl.basic;
 

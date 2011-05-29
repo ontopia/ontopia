@@ -1,6 +1,4 @@
 
-// $Id: TreeTag.java,v 1.1 2006/11/09 08:26:12 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.portlets.taglib;
 
 import java.io.IOException;

@@ -1,6 +1,4 @@
 
-// $Id: SearchServlet.java,v 1.3 2007/12/14 14:42:19 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.servlets;
 
 import java.io.IOException;

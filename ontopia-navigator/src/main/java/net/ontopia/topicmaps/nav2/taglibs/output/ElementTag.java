@@ -1,4 +1,3 @@
-// $Id: ElementTag.java,v 1.11 2007/01/08 07:42:37 grove Exp $
 
 package net.ontopia.topicmaps.nav2.taglibs.output;
 

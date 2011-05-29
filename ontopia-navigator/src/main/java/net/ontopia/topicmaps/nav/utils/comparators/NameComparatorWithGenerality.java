@@ -1,4 +1,3 @@
-// $Id: NameComparatorWithGenerality.java,v 1.7 2008/06/12 14:37:17 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 

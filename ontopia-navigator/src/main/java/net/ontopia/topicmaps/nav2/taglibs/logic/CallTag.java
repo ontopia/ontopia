@@ -1,6 +1,4 @@
 
-// $Id: CallTag.java,v 1.23 2004/01/13 09:16:34 grove Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
 import java.io.IOException;

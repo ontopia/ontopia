@@ -1,6 +1,4 @@
 
-// $Id: NavigatorUtils.java,v 1.38 2008/06/13 08:36:27 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.net.MalformedURLException;

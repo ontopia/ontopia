@@ -1,6 +1,4 @@
 
-// $Id: BaseValueProducingTag.java,v 1.18 2004/06/14 10:52:27 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.value;
 
 import java.util.Collection;

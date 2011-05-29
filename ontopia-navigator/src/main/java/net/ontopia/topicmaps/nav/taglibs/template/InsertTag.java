@@ -1,6 +1,4 @@
 
-// $Id: InsertTag.java,v 1.23 2006/04/20 10:53:59 grove Exp $
-
 package net.ontopia.topicmaps.nav.taglibs.template;
 
 import java.io.PrintWriter;

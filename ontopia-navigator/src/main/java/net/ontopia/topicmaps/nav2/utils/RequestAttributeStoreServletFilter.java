@@ -1,6 +1,4 @@
 
-// $Id: RequestAttributeStoreServletFilter.java,v 1.2 2007/08/24 13:22:43 lars.garshol Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.io.*;

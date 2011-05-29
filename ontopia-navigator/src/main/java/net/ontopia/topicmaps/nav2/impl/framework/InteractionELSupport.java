@@ -1,6 +1,4 @@
 
-// $Id: InteractionELSupport.java,v 1.12 2007/01/15 10:30:40 opland Exp $
-
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.lang.reflect.Method;

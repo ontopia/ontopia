@@ -1,6 +1,4 @@
 
-// $Id: DynamicTreeWidget.java,v 1.19 2008/06/12 14:37:19 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.io.IOException;

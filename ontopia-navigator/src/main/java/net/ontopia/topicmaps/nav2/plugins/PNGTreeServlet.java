@@ -1,4 +1,3 @@
-// $Id: PNGTreeServlet.java,v 1.10 2004/11/12 11:24:52 grove Exp $
 
 package net.ontopia.topicmaps.nav2.plugins;
 

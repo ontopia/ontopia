@@ -1,6 +1,4 @@
 
-// $Id: OutTag.java,v 1.23 2008/06/12 14:37:19 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;

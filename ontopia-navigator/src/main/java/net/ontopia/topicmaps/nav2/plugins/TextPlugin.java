@@ -1,6 +1,4 @@
 
-// $Id: TextPlugin.java,v 1.7 2004/11/12 11:24:52 grove Exp $
-
 package net.ontopia.topicmaps.nav2.plugins;
 
 import javax.servlet.jsp.PageContext;

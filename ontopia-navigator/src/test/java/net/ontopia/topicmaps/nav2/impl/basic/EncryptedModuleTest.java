@@ -1,6 +1,4 @@
 
-// $Id: EncryptedModuleTest.java,v 1.5 2002/09/11 13:26:26 niko Exp $
-
 package net.ontopia.topicmaps.nav2.impl.basic;
 
 import java.io.*;

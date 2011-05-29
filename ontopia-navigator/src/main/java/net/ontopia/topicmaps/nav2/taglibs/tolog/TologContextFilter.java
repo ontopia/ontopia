@@ -1,6 +1,4 @@
 
-// $Id: TologContextFilter.java,v 1.5 2006/01/12 11:12:33 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;

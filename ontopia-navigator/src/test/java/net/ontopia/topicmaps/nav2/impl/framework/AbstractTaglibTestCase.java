@@ -1,6 +1,4 @@
 
-// $Id: AbstractTaglibTestCase.java,v 1.17 2006/01/04 15:32:28 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.io.File;

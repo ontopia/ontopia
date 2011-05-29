@@ -1,4 +1,3 @@
-// $Id: NavigatorConfigurationTest.java,v 1.4 2002/09/13 09:58:45 niko Exp $
 
 package net.ontopia.topicmaps.nav2.utils;
 

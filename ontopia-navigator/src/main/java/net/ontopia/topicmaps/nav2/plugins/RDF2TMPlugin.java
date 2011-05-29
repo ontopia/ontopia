@@ -1,6 +1,4 @@
 
-// $Id: RDF2TMPlugin.java,v 1.3 2005/01/03 11:55:06 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.plugins;
 
 import java.util.Collection;

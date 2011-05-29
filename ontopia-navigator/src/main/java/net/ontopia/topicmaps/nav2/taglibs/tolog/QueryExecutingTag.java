@@ -1,6 +1,4 @@
 
-// $Id: QueryExecutingTag.java,v 1.16 2008/12/04 11:27:28 lars.garshol Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import java.io.IOException;

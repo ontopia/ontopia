@@ -1,6 +1,4 @@
 
-// $Id: TreeWidget.java,v 1.25 2008/01/11 13:29:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.servlets;
 
 import java.io.IOException;

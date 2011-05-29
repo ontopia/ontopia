@@ -1,6 +1,4 @@
 
-// $Id: AbstractTemplateTag.java,v 1.2 2003/09/16 15:07:50 larsga Exp $
-
 package net.ontopia.topicmaps.nav.taglibs.template;
 
 import java.util.Map;

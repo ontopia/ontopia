@@ -1,6 +1,4 @@
 
-// $Id: User.java,v 1.41 2007/10/02 14:41:42 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.impl.framework;
 
 import java.util.Date;

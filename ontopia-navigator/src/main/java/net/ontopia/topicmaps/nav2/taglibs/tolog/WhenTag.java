@@ -1,6 +1,4 @@
 
-// $Id: WhenTag.java,v 1.4 2004/11/29 10:11:45 opland Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.tolog;
 
 import javax.servlet.jsp.JspTagException;

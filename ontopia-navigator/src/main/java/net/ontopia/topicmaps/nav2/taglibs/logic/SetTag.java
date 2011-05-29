@@ -1,6 +1,4 @@
 
-// $Id: SetTag.java,v 1.31 2008/06/13 08:36:27 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.taglibs.logic;
 
 import java.io.IOException;

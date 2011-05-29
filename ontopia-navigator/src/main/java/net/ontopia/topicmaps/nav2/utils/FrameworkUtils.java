@@ -1,6 +1,4 @@
 
-// $Id: FrameworkUtils.java,v 1.18 2005/06/21 08:53:22 ian Exp $
-
 package net.ontopia.topicmaps.nav2.utils;
 
 import java.util.List;
