@@ -80,10 +80,6 @@
 			<artifactId>jtidy</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>de.jflex</groupId>
-			<artifactId>jflex</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 		</dependency>

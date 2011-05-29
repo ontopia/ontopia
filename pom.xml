@@ -479,12 +479,6 @@
 			
 			<!-- provided dependencies -->
 			<dependency>
-				<groupId>de.jflex</groupId>
-				<artifactId>jflex</artifactId>
-				<version>1.4.3</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
 				<version>2.4</version>
