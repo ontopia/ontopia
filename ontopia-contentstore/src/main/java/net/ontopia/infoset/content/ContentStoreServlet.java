@@ -1,6 +1,4 @@
 
-// $Id: ContentStoreServlet.java,v 1.6 2004/11/19 12:52:46 grove Exp $
-
 package net.ontopia.infoset.content;
 
 import java.io.IOException;

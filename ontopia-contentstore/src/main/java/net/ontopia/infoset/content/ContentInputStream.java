@@ -1,6 +1,4 @@
 
-// $Id: ContentInputStream.java,v 1.2 2003/10/15 13:43:53 larsga Exp $
-
 package net.ontopia.infoset.content;
 
 import java.io.IOException;

@@ -1,6 +1,4 @@
 
-// $Id: AbstractContentStoreTest.java,v 1.2 2004/01/28 13:32:17 larsga Exp $
-
 package net.ontopia.infoset.content;
 
 import java.io.*;

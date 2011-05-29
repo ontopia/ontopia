@@ -1,6 +1,4 @@
 
-// $Id: InMemoryContentStore.java,v 1.3 2004/01/27 22:11:54 larsga Exp $
-
 package net.ontopia.infoset.content;
 
 import java.io.ByteArrayInputStream;

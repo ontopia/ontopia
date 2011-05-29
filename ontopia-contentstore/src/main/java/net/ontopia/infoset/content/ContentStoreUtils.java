@@ -1,6 +1,4 @@
 
-// $Id: ContentStoreUtils.java,v 1.3 2003/10/30 11:18:29 grove Exp $
-
 package net.ontopia.infoset.content;
 
 import java.util.Map;

@@ -1,6 +1,4 @@
 
-// $Id: JDBCContentStore.java,v 1.9 2006/06/27 12:25:21 grove Exp $
-
 package net.ontopia.infoset.content;
 
 import java.io.IOException;

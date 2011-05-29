@@ -1,6 +1,4 @@
 
-// $Id: FileContentStore.java,v 1.9 2006/04/06 12:16:03 grove Exp $
-
 package net.ontopia.infoset.content;
 
 import java.io.File;

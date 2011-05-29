@@ -1,6 +1,4 @@
 
-// $Id: FileContentStoreTest.java,v 1.2 2004/01/28 13:36:50 larsga Exp $
-
 package net.ontopia.infoset.content;
 
 import java.io.*;

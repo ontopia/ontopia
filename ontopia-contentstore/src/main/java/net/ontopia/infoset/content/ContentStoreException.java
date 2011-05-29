@@ -1,6 +1,4 @@
 
-// $Id: ContentStoreException.java,v 1.1 2003/10/01 14:07:25 grove Exp $
-
 package net.ontopia.infoset.content;
 
 import net.ontopia.utils.OntopiaException;

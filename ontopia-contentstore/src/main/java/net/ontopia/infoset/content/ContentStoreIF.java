@@ -1,6 +1,4 @@
 
-// $Id: ContentStoreIF.java,v 1.6 2004/01/27 22:11:39 larsga Exp $
-
 package net.ontopia.infoset.content;
 
 import java.io.InputStream;
