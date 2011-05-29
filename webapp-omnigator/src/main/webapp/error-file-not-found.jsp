@@ -4,7 +4,6 @@
 <framework:response/>
 
 <%-- Omnigator: Error 404: 'File not found.' --%>
-<%-- $Id: error-file-not-found.jsp,v 1.12 2007/09/14 11:14:42 geir.gronmo Exp $ --%>
 
 <template:insert template='views/template_no_frames.jsp'>
 

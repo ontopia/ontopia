@@ -12,7 +12,6 @@
 <framework:response/>
 
 <%-- Plugin Administration page --%>
-<%-- $Id: plugins.jsp,v 1.3 2007/09/14 11:14:39 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" settm="topicmap">
 

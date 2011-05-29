@@ -16,7 +16,6 @@
 <logic:context tmparam="tm" settm="topicmap">
 
 <%-- Selection of the user MVS preferences --%>
-<%-- $Id: user.jsp,v 1.14 2007/09/14 11:14:40 geir.gronmo Exp $ --%>
 
   <template:insert template='/views/template_%view%.jsp'>
 

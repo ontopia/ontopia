@@ -8,7 +8,6 @@
 <framework:response/>
 
 <%-- Omnigator: General Error handling page  --%>
-<%-- $Id: error.jsp,v 1.3 2007/09/14 11:14:39 geir.gronmo Exp $ --%>
 
 <logic:context tmparam="tm">
 <template:insert template='/views/template_no_frames.jsp'>

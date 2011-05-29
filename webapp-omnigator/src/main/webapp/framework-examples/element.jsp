@@ -4,7 +4,6 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/value'   prefix='value'  %>
 
 <%-- Demo Page for testing the usage of the element/attribute tags --%>
-<%-- $Id: element.jsp,v 1.2 2007/09/14 11:14:41 geir.gronmo Exp $ --%>
 
 <html>
   <head>

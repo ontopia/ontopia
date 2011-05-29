@@ -1,6 +1,5 @@
-package ontopoly.conversion;
 
-//$Id: SchemaTracker.java,v 1.1 2009/04/23 05:39:14 geir.gronmo Exp $
+package ontopoly.conversion;
 
 import gnu.trove.TObjectIntHashMap;
 

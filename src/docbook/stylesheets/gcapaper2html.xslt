@@ -2,7 +2,6 @@
 <!--
 
  This XSLT stylesheet converts gcapaper documents to HTML.
- $Id: gcapaper2html.xslt,v 1.19 2005/01/25 09:00:29 larsga Exp $
 
 -->
 

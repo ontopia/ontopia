@@ -11,7 +11,6 @@
     org.apache.log4j.Category" 
 %>
 <%
-  // $Id: userfilterAction.jsp,v 1.6 2008/06/12 14:37:10 geir.gronmo Exp $
   // --------------------------------------------------------------
   // handles form submitted from page userContextFilter.jsp
   // and after setting up the user context filter for all

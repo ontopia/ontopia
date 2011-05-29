@@ -1,4 +1,3 @@
-//$Id: TopicSelectionPrompter.java,v 1.4 2006/07/26 16:10:55 opland Exp $
 
 package net.ontopia.topicmaps.viz;
 

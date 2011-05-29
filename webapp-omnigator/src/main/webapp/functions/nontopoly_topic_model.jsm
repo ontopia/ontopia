@@ -2,7 +2,6 @@
      Definition of functions that are used inside the topic page
      for the complete model.
      ...........................................................................
-     $Id: nontopoly_topic_model.jsm,v 1.8 2006/08/22 16:38:08 pepper Exp $
 -->
 
 <module>

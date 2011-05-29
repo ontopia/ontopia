@@ -1,7 +1,6 @@
 <!--
 
  This XSLT stylesheet converts DocBook whitepapers to HTML.
- $Id: docbook2html.xslt,v 1.53 2007/11/19 08:50:08 lars.garshol Exp $
 
 -->
 

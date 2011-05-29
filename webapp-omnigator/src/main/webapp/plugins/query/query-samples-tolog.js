@@ -1,6 +1,4 @@
 
-// $Id: query-samples.js,v 1.24 2006/10/27 12:15:24 pepper Exp $
-
 function insertExample(exName) {
 
   // ===== ItalianOpera.ltm =================================================

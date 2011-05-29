@@ -6,7 +6,6 @@
 <html>
   <head>
     <title>Very Simple Topic Page</title>
-    <meta name='CVS-Id' content='$Id: simple.jsp,v 1.2 2007/09/14 11:14:41 geir.gronmo Exp $' />
   </head>
 
   <body>

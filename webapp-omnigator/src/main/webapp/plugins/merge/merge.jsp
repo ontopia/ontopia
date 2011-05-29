@@ -15,7 +15,6 @@
 <framework:response/>
 
 <%-- Trigger Topic Map Process --%>
-<%-- $Id: merge.jsp,v 1.26 2008/05/29 06:06:42 geir.gronmo Exp $' --%>
 
 <%
   // checking if a TM is selected (bug #1228)

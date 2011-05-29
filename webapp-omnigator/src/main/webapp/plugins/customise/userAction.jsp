@@ -7,7 +7,6 @@
     net.ontopia.utils.StringUtils" %>
 
 <%
-  // $Id: userAction.jsp,v 1.6 2004/12/27 10:48:42 grove Exp $
   // handling submitted 'customise' form (user.jsp)
 	
   // get new attributes

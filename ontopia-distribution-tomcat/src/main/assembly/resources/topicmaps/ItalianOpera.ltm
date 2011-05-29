@@ -9,8 +9,6 @@
     commercial or non-commercial, provided that it is not modified in
     any way and that this copyright notice is left intact.
 
-    $Id: opera.ltm,v 2.1 2009/08/26 12:16:15 pepper Exp $
-
     TODO:
     - clean up usage of PSIs (and create PSDs)
       * fixme: Work -> Musical_work (as in NorwegianOpera.xtm)

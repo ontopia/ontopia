@@ -4,8 +4,6 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
 >
 
-<!-- $Id: geography.xtm,v 1.5 2006/05/04 12:50:38 grove Exp $ -->
-
 <!-- Include Ontopia PSIs -->
 <mergeMap xlink:href="ontopsi.xtm"/>
 

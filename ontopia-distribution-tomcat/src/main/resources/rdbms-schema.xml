@@ -1,8 +1,6 @@
 <!--DOCTYPE dbschema SYSTEM "dbschema.dtd"-->
 <dbschema>
 
-  <!-- $Id: TopicMaps.xml,v 1.68 2008/08/29 12:55:46 geir.gronmo Exp $ -->
-
   <!-- DATA TYPES -->
 
   <datatypes platform="generic">

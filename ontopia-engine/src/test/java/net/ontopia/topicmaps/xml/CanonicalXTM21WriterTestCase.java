@@ -1,6 +1,4 @@
 
-//$Id: CanonicalXTM2WriterTestGenerator.java,v 1.4 2008/07/04 10:22:20 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

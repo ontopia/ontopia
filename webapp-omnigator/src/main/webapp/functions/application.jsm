@@ -2,7 +2,6 @@
      Definition of functions that are of general interest for the complete
      application.
      .........................................................................
-     $Id: application.jsm,v 1.2 2002/02/20 11:30:22 niko Exp $
 -->
 
 <module>

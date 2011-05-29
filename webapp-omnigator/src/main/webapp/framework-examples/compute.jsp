@@ -4,13 +4,10 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/value' prefix='value' %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/tmvalue' prefix='tm' %>
 
-<%-- $Id: compute.jsp,v 1.3 2007/09/14 11:14:41 geir.gronmo Exp $ --%>
-  
 <html>
   <head>
     <title>Topic SetTest-Page-Preview</title>
     <link rel='stylesheet' href='skins/standard.css' />
-    <meta name='version' content='$Id: compute.jsp,v 1.3 2007/09/14 11:14:41 geir.gronmo Exp $' />
   </head>
 
   <body>

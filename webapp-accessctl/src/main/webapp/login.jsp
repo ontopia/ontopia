@@ -12,7 +12,6 @@
 <HTML>
 <HEAD>
   <title>Accessctl</title>
-  <meta name='version' content='$Id: login.jsp,v 1.16 2005/09/08 07:40:09 opland Exp $' />
 </HEAD>
 <BODY>
 

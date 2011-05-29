@@ -7,8 +7,6 @@
 <framework:response/>
 
 <%-- Omnigator: File not found error handling page  --%>
-<%-- $Id: filenotfound-error.jsp,v 1.3 2007/09/14 11:13:56 geir.gronmo Exp $ --%>
-
   
 <%
 FileNotFoundException cause = (FileNotFoundException) request.getAttribute("cause");

@@ -1,6 +1,4 @@
 
-//$Id: TestAction.java,v 1.2 2006/05/25 14:02:13 larsga Exp $
-
 package net.ontopia.topicmaps.webed.actions;
 
 import net.ontopia.topicmaps.webed.core.ActionIF;

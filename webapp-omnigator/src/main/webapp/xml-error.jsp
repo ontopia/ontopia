@@ -7,8 +7,6 @@
 <framework:response/>
 
 <%-- Omnigator: XML error handling page  --%>
-<%-- $Id: xml-error.jsp,v 1.5 2007/09/14 11:14:41 geir.gronmo Exp $ --%>
-
   
 <%
 SAXParseException cause = (SAXParseException) request.getAttribute("cause");

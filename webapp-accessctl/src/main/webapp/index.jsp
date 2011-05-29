@@ -4,7 +4,6 @@
 <HEAD>
   <title>Accessctl</title>
   <link rel='stylesheet' href='accessctl.css' />
-  <meta name='version' content='$Id: index.jsp,v 1.9 2005/03/14 14:46:33 opland Exp $' />
 </HEAD>
 <BODY>
 

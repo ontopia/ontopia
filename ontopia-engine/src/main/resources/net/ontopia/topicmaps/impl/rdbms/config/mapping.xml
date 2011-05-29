@@ -1,7 +1,5 @@
 <mapping>
 
-  <!-- $Id: mapping.xml,v 1.32 2008/07/23 13:29:16 geir.gronmo Exp $ -->
-
   <!-- TopicMap -->
   <class name="net.ontopia.topicmaps.impl.rdbms.TopicMap" 
          immutable="net.ontopia.topicmaps.impl.rdbms.ReadOnlyTopicMap" 

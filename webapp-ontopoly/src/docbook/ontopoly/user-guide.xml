@@ -25,7 +25,6 @@
   <!ENTITY help '<graphic role="Contextual help" fileref="images/help.gif"/>'>
   <!ENTITY save-icon '<graphic role="Save" fileref="images/save-icon.png"/>'>
 ]>
-<!-- $Id: user-guide.xml,v 1.51 2009/05/22 08:20:34 geir.gronmo Exp $ -->
 <!--
      markup conventions:
 

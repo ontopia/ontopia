@@ -3,8 +3,6 @@
           PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
 	  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
 
-<!-- $Id: nav2-output.tld,v 1.2 2005/12/01 08:24:14 grove Exp $ -->
-
 <taglib>
   <tlib-version>$Date: 2005/12/01 08:24:14 $ [$Revision: 1.2 $]</tlib-version>
   <jsp-version>1.2</jsp-version>

@@ -17,7 +17,6 @@
 <framework:response/>
 
 <%-- Index AdminPage --%>
-<%-- $Id: index_admin.jsp,v 1.4 2007/09/14 11:13:56 geir.gronmo Exp $ --%>
 
 <logic:context>
 <%

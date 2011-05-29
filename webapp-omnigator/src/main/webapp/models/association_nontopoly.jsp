@@ -9,7 +9,6 @@
 <framework:response/>
 
 <%-- Association Page - Model: 'complete' --%>
-<%-- $Id: association_nontopoly.jsp,v 1.3 2007/09/14 11:14:41 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" settm="topicmap">
 

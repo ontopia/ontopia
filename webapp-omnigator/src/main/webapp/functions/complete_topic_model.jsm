@@ -2,7 +2,6 @@
      Definition of functions that are used inside the topic page
      for the complete model.
      ...........................................................................
-     $Id: complete_topic_model.jsm,v 1.58 2007/11/23 10:00:44 geir.gronmo Exp $
 -->
 
 <module>

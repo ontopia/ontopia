@@ -9,7 +9,6 @@
 <framework:response/>
 
 <%-- Omnigator: Welcome page which provides an overview of topic maps --%>
-<%-- $Id: index.jsp,v 1.48 2008/10/13 12:45:17 geir.gronmo Exp $ --%>
 
 <logic:context>
   <logic:include file="/functions/application.jsm"/>

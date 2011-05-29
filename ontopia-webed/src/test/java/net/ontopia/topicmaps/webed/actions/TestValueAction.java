@@ -1,4 +1,3 @@
-//$Id: TestValueAction.java,v 1.1 2005/02/23 12:53:02 ian Exp $
 
 package net.ontopia.topicmaps.webed.actions;
 

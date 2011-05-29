@@ -9,7 +9,6 @@
 <framework:response/>
 
 <%-- Topic Page - Model: 'complete' --%>
-<%-- $Id: topic_complete.jsp,v 1.23 2007/09/14 11:14:41 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" objparam="id" set="topic" settm="topicmap">
 

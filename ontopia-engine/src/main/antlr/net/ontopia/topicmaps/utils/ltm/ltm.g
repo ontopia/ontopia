@@ -1,6 +1,4 @@
 
-// $Id: ltm.g,v 1.68 2009/01/23 13:15:32 lars.garshol Exp $
-
 header { package net.ontopia.topicmaps.utils.ltm; }
 
 {

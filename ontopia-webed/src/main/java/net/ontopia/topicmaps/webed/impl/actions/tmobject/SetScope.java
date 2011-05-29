@@ -1,6 +1,4 @@
 
-//$Id: SetScope.java,v 1.5 2005/09/13 15:07:47 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions.tmobject;
 
 import java.util.ArrayList;

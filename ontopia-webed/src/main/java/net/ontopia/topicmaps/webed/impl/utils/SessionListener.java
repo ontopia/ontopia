@@ -1,4 +1,3 @@
-//$Id: SessionListener.java,v 1.4 2007/08/23 08:31:08 eirik.opland Exp $
 
 package net.ontopia.topicmaps.webed.impl.utils;
 

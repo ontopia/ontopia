@@ -1,6 +1,4 @@
 <!--
-     $Id: names.jsm,v 1.2 2002/02/19 11:55:50 niko Exp $
-
      A very basic module file which contains functions for
      retrieving and showing the base names available for the
      given topic.

@@ -3,8 +3,6 @@
           PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
           "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
 
-<!-- $Id: webed-form.tld,v 1.16 2006/06/30 08:09:50 grove Exp $ -->
-
 <taglib>
   <tlib-version>
     $Date: 2006/06/30 08:09:50 $ [$Revision: 1.16 $]

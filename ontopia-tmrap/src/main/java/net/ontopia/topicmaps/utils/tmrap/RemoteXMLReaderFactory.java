@@ -1,4 +1,3 @@
-//$Id: RemoteXMLReaderFactory.java,v 1.2 2004/11/25 10:59:52 ian Exp $
 
 package net.ontopia.topicmaps.utils.tmrap;
 

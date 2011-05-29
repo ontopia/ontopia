@@ -13,7 +13,7 @@
 <framework:response/>
 
 <%-- Template Page - View: 'no_frames' --%>
-<%-- $Id: template_no_frames.jsp,v 1.31 2007/09/24 12:44:18 geir.gronmo Exp $' --%>
+
 <html>
   <head>
     <title><template:get name='title'/></title>

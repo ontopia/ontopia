@@ -22,7 +22,6 @@
 <framework:response/>
 
 <%-- Export Config Page --%>
-<%-- $Id: statistics.jsp,v 1.22 2008/06/12 14:37:10 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" settm="topicmap">
   <framework:checkUser/>

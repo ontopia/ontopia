@@ -12,7 +12,6 @@
 <framework:response/>
 
 <%-- Plugin Administration page --%>
-<%-- $Id: plugins.jsp,v 1.2 2007/09/14 11:13:56 geir.gronmo Exp $' --%>
 
 <logic:context>
 

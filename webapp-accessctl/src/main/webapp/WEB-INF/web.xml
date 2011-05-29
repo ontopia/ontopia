@@ -2,8 +2,6 @@
           PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
           "http://java.sun.com/dtd/web-app_2_3.dtd">
 
-<!-- $Id: web.xml,v 1.13 2007/07/23 12:19:02 geir.gronmo Exp $ -->
-
 <web-app>
 
   <display-name></display-name>

@@ -4,7 +4,6 @@
 <framework:response/>
 
 <%-- Omnigator: Page handling OOM errors  --%>
-<%-- $Id: out-of-memory.jsp,v 1.4 2007/11/21 09:07:28 geir.gronmo Exp $ --%>
   
 <template:insert template='/views/template_no_frames.jsp'>
 

@@ -22,8 +22,6 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/tmvalue'   prefix='tm'        %>
 <framework:response/>
 
-<%-- $Id: search.jsp,v 1.39 2008/06/12 14:37:10 geir.gronmo Exp $ --%>
-
 <logic:context tmparam="tm" settm="topicmap">
 
   <template:insert template='/views/template_%view%.jsp'>

@@ -12,8 +12,6 @@
     commercial or non-commercial, provided that it is not modified in
     any way and that this copyright notice is left intact.
 
-    $Id: opera.hytm,v 1.1 2004/01/19 09:01:46 larsga Exp $
-
     IMPORTANT NOTE REGARDING SYNTAX:
     This version of the Italian Opera topic map conforms to an XML version of a
     DTD derived from the meta-DTD in ISO 13250:2000. The main difference with

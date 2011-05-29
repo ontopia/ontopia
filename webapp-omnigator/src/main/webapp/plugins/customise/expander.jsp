@@ -6,8 +6,6 @@
 
 <%
 /**
- * $Id: expander.jsp,v 1.11 2007/09/14 11:14:40 geir.gronmo Exp $
- *
  * This page takes a URL in the request parameter ("redirect")
  * and redirects to the top frame.
  * 

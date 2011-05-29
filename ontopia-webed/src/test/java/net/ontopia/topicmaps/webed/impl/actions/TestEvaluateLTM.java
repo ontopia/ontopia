@@ -1,6 +1,4 @@
 
-//$Id: TestEvaluateLTM.java,v 1.12 2008/06/12 14:37:26 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.io.IOException;

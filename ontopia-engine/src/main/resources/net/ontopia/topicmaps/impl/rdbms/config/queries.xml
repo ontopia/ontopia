@@ -1,7 +1,5 @@
 <queries>
 
-  <!-- $Id: queries.xml,v 1.69 2008/08/29 13:01:02 geir.gronmo Exp $ -->
-
   <class-indicator name="TMObjectIFs">
     <indicator token="A" class="net.ontopia.topicmaps.impl.rdbms.Association"/>
     <indicator token="R" class="net.ontopia.topicmaps.impl.rdbms.AssociationRole"/>

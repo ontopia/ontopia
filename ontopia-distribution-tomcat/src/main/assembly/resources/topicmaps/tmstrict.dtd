@@ -1,7 +1,5 @@
 <!--
 
-  $Id: tmstrict.dtd,v 1.13 2001/04/30 15:16:40 pepper Exp $
-
   An XML DTD supported by the Ontopia Navigator. This version is very
   strict and should be used for validating purposes. Topic map
   documents should in general always be validated before they are

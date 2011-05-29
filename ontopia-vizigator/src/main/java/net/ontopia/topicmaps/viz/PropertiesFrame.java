@@ -1,6 +1,4 @@
 
-//$Id: PropertiesFrame.java,v 1.8 2007/05/02 15:15:13 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import javax.swing.JFrame;

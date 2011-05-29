@@ -3,8 +3,6 @@
 <!--
   Configuration File for the Omnigator Web Application
   =====================================================================
-  $Id: application.xml,v 1.58 2008/01/09 10:07:25 geir.gronmo Exp $
-  =====================================================================
   This configuration file contains information which is loaded into
   application scope when the first page with a context tag is requested.
   Note: The location of this file needs to be recorded in web.xml.

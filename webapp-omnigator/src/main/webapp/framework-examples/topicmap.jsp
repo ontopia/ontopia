@@ -7,7 +7,6 @@
   <head>
     <title>TopicMap-Page-Preview</title>
     <link rel='stylesheet' href='../skins/standard.css' />
-    <meta name='version' content='$Id: topicmap.jsp,v 1.3 2007/09/14 11:14:41 geir.gronmo Exp $' />
   </head>
 
   <body>

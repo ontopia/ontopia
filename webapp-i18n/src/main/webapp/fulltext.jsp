@@ -18,9 +18,6 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/template'  prefix='template'  %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/tolog'          prefix='tolog'     %>
 
-<%-- $Id: fulltext.jsp,v 1.9 2007/09/14 11:15:03 geir.gronmo Exp $ --%>
-
-
 <tolog:context topicmap="i18n.ltm">
 <template:insert template='i18n-template.jsp'>
 

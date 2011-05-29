@@ -1,5 +1,3 @@
-  
-//$Id: TestTopicRemoveType.java,v 1.1 2004/09/20 13:15:18 trost Exp $
 
 package net.ontopia.topicmaps.webed.impl.actions;
 

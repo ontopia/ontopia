@@ -1,6 +1,4 @@
 <!--
-    $Id: tests.xml,v 1.109 2008/01/10 11:35:50 geir.gronmo Exp $
-
     The Framework configuration test file. This file is read by the
     TaglibFrameworkTestCaseGenerator and produces pairs of tests
     containing different jspfile and topicmap files.

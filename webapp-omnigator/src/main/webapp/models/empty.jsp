@@ -3,7 +3,6 @@
 <framework:response/>
 
 <%-- Simple template page with no topicmap specific information --%>
-<%-- $Id: empty.jsp,v 1.4 2007/09/14 11:14:41 geir.gronmo Exp $ --%>
 <template:insert template='/views/template_no_frames.jsp'>
 
   <template:put name='title' body='true'><%-- Window Title --%></template:put>

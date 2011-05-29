@@ -1,6 +1,4 @@
 
-// $Id: tolog.g,v 1.48 2009/04/08 11:33:22 geir.gronmo Exp $
-
 header { package net.ontopia.topicmaps.query.parser; }
 
 {

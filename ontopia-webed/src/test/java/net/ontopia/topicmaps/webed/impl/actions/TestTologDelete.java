@@ -1,6 +1,4 @@
 
-//$Id: TestTologDelete.java,v 1.4 2004/10/05 18:08:02 larsga Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.util.*;

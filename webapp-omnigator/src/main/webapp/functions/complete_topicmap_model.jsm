@@ -2,7 +2,6 @@
      Definition of functions that are used inside the topicmap page
      for the 'complete' model.
      ...........................................................................
-     $Id: complete_topicmap_model.jsm,v 1.27 2008/01/09 10:07:26 geir.gronmo Exp $
 -->
 
 <module>

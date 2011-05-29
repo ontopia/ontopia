@@ -8,7 +8,6 @@
 <framework:response/>
 
 <%-- Topic Page - Model: 'simple' --%>
-<%-- $Id: topic_simple.jsp,v 1.16 2007/09/14 11:14:40 geir.gronmo Exp $' --%>
 
 <framework:meminfo name="overall">
 <logic:context tmparam="tm" objparam="id" set="topic" settm="topicmap">

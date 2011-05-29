@@ -1,4 +1,3 @@
-//$Id: TestActionParameters.java,v 1.2 2008/06/13 08:36:30 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.webed.actions;
 

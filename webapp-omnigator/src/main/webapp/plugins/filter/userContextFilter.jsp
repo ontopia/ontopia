@@ -16,7 +16,6 @@
 <framework:response/>
 
 <%-- User context filter selection page --%>
-<%-- $Id: userContextFilter.jsp,v 1.17 2008/06/12 14:37:10 geir.gronmo Exp $ --%>
 
 <logic:context tmparam="tm" settm="topicmap">
 

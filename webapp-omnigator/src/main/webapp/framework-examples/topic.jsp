@@ -5,13 +5,11 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/tmvalue' prefix='tm'     %>
 
 <%-- Demo Page for outputing information about one topic --%>
-<%-- $Id: topic.jsp,v 1.7 2007/09/14 11:14:41 geir.gronmo Exp $ --%>
-  
+
 <html>
   <head>
     <title>Topic-Page-Preview</title>
     <link rel='stylesheet' href='../skins/standard.css' />
-    <meta name='version' content='$Id: topic.jsp,v 1.7 2007/09/14 11:14:41 geir.gronmo Exp $' />
   </head>
 
   <body>

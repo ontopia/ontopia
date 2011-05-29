@@ -4,7 +4,6 @@
      Configuration file for the OmniEditor actions
      that can triggered by the web application.
      .................................................................
-     $Id: actionConfig.xml,v 1.19 2008/05/26 07:21:41 geir.gronmo Exp $
  -->
 <actionConfig>
 

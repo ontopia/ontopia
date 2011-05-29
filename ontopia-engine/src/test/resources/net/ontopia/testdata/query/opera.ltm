@@ -9,8 +9,6 @@
     commercial or non-commercial, provided that it is not modified in
     any way and that this copyright notice is left intact.
 
-    $Id: opera.ltm,v 1.1 2008/01/09 10:07:38 geir.gronmo Exp $
-
     TODO:
     - clean up usage of PSIs (and create PSDs)
     - complete appears-in, killed-by, contains-aria

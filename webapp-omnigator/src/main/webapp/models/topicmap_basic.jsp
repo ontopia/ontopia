@@ -8,7 +8,6 @@
 <framework:response/>
 
 <%-- TopicMap Page - Model: 'basic' --%>
-<%-- $Id: topicmap_basic.jsp,v 1.12 2008/01/09 10:07:26 geir.gronmo Exp $ --%>
 
 <%
   // get the page view selection

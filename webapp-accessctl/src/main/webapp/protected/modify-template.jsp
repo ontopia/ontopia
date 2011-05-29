@@ -4,7 +4,6 @@
   <HEAD>
     <title>Accessctl</title>
     <link rel='stylesheet' href='../accessctl.css' />
-    <meta name='version' content='$Id: modify-template.jsp,v 1.17 2008/12/04 14:58:03 geir.gronmo Exp $' />
   </HEAD>
 
   <BODY>

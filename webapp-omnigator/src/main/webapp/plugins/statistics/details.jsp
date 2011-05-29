@@ -1,6 +1,4 @@
 
-<!--	$Id: details.jsp,v 1.13 2007/09/14 11:14:39 geir.gronmo Exp $	-->
-
 <%@ page import="
     java.lang.reflect.Array,
     java.util.StringTokenizer,
@@ -18,8 +16,6 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/logic'     prefix='logic'     %>
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/output'    prefix='output'    %>
 <framework:response/>
-
-<%-- $Id: details.jsp,v 1.13 2007/09/14 11:14:39 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" settm="topicmap">
 

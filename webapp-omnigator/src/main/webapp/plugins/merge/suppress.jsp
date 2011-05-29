@@ -14,7 +14,6 @@
 <framework:response/>
 
 <%-- Trigger topic map duplicate suppress process --%>
-<%-- $Id: suppress.jsp,v 1.4 2007/09/14 11:14:39 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" settm="topicmap">
 <%

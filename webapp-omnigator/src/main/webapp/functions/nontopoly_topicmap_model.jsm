@@ -2,7 +2,6 @@
      Definition of functions that are used inside the topicmap page
      for the 'complete' model.
      ...........................................................................
-     $Id: nontopoly_topicmap_model.jsm,v 1.5 2008/11/03 13:04:43 lars.garshol Exp $
 -->
 
 <module>

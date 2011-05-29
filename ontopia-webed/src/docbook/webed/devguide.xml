@@ -171,8 +171,6 @@ and paste the example below into a file called
           PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
           "http://java.sun.com/dtd/web-app_2_3.dtd">
 
-<!-- $Id: devguide.xml,v 1.44 2009/05/22 09:34:39 geir.gronmo Exp $ -->
-
 <web-app>        
 
   <display-name>TaskEditor</display-name>

@@ -1,4 +1,3 @@
-//$Id: TMClassInstanceAssociation.java,v 1.13 2007/05/02 15:33:22 eirik.opland Exp $
 
 package net.ontopia.topicmaps.viz;
 

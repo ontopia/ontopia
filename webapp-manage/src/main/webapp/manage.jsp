@@ -43,7 +43,6 @@
 </script>
 
 <%-- Manage Page --%>
-<%-- $Id: manage.jsp,v 1.7 2007/11/12 08:31:15 geir.gronmo Exp $ --%>
 
 <logic:context>
 <%

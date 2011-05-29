@@ -1,6 +1,4 @@
 
-//$Id: VizTMObjectIF.java,v 1.11 2007/05/02 15:08:33 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;

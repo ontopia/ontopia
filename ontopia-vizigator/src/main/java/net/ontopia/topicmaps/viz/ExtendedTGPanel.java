@@ -115,7 +115,6 @@ import com.touchgraph.graphlayout.interaction.TGAbstractClickUI;
  * 
  * @author Alexander Shapiro
  * @author Murray Altheim (2001-11-06; 2002-01-14 cleanup)
- * @version 1.21 $Id: ExtendedTGPanel.java,v 1.7 2007/05/31 13:24:47 eirik.opland Exp $
  */
 public class ExtendedTGPanel extends TGPanel {
 

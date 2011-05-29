@@ -1,4 +1,3 @@
-//$Id: DynamicAssociation.java,v 1.5 2008/06/13 08:17:52 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.impl.remote;
 

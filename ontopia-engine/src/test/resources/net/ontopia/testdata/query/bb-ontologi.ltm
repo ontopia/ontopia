@@ -6,8 +6,6 @@
    Ontologi for BrainBank, utviklet av Ontopia
    (C) BrainBank 2003
 
-   $Id: bb-ontologi.ltm,v 1.2 2003/12/15 10:37:17 larsga Exp $
-
 =================================================================================== */
 
 #INCLUDE "core.ltm"

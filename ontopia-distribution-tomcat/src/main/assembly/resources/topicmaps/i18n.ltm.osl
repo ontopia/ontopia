@@ -1,7 +1,6 @@
 
 <!--
   Schema for the i18n.ltm topic map.
-  $Id: i18n-schema.xml,v 1.5 2003/12/23 08:37:03 larsga Exp $
 -->
 
 <!--DOCTYPE tm-schema SYSTEM "/home/larsga/cvs-co/doc/developer/schema-tools/schema.dtd"-->

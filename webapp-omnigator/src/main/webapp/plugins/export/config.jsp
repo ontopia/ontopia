@@ -7,7 +7,6 @@
 <framework:response/>
 
 <%-- Export Config Page --%>
-<%-- $Id: config.jsp,v 1.23 2008/07/24 05:51:22 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" settm="topicmap">
 

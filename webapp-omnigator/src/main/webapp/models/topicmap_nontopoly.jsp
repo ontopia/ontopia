@@ -9,7 +9,6 @@
 <framework:response/>
 
 <%-- TopicMap Page - Model: 'complete' --%>
-<%-- $Id: topicmap_nontopoly.jsp,v 1.4 2007/09/14 11:14:40 geir.gronmo Exp $ --%>
 
 <%
   // get the page view selection

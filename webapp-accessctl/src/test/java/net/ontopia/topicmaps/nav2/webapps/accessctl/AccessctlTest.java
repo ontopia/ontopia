@@ -1,4 +1,3 @@
-//$Id: AccessctlTest.java,v 1.7 2005/05/06 10:59:31 opland Exp $
 
 package net.ontopia.topicmaps.nav2.webapps.accessctl;
 

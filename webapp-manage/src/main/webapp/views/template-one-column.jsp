@@ -10,7 +10,7 @@
 <framework:response/>
 
 <%-- Template Page - View: 'no_frames' --%>
-<%-- $Id: template-one-column.jsp,v 1.2 2007/09/14 11:13:55 geir.gronmo Exp $' --%>
+
 <html>
   <head>
     <title><template:get name='title'/></title>

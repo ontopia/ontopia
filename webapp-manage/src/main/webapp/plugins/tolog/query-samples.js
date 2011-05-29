@@ -1,6 +1,4 @@
 
-// $Id: query-samples.js,v 1.1 2006/12/21 23:03:54 opland Exp $
-
 function insertExample(exName) {
 
   // ===== opera.hytm ========================================================

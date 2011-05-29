@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: errorActionConfig.xml,v 1.1 2005/03/09 07:48:30 ian Exp $ -->
 <!--  This is a bare bones config file with just one action group
        which does not have a defaultForward. This should cause
        an error to occur when loading-->

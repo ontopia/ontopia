@@ -1,6 +1,4 @@
 <!--
-     $Id: refresh-button.jsm,v 1.1 2005/05/24 09:02:26 grove Exp $
-
      Module file used with refresh-button.jsp.
 -->
 <module>

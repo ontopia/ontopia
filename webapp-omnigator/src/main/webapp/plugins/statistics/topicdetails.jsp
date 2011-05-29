@@ -1,6 +1,3 @@
-
-<!--	$Id: topicdetails.jsp,v 1.13 2008/06/12 14:37:10 geir.gronmo Exp $	-->
-
 <%@ page import="
 	java.lang.reflect.Array,
 	java.util.*,
@@ -19,8 +16,6 @@
 <%@ taglib uri='http://psi.ontopia.net/jsp/taglib/output'    prefix='output'    %>
 
 <framework:response/>
-
-<%-- $Id: topicdetails.jsp,v 1.13 2008/06/12 14:37:10 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" settm="topicmap">
 

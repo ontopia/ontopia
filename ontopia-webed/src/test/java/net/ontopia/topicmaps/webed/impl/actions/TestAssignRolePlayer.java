@@ -1,6 +1,4 @@
 
-//$Id: TestAssignRolePlayer.java,v 1.3 2005/03/20 16:52:13 grove Exp $
-
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.util.*;

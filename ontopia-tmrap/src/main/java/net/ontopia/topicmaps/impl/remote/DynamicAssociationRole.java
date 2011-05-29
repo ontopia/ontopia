@@ -1,6 +1,4 @@
 
-//$Id: DynamicAssociationRole.java,v 1.3 2008/06/13 08:17:52 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.remote;
 
 import java.util.Collection;

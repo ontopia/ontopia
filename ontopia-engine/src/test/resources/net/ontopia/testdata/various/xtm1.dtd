@@ -24,7 +24,6 @@
                     Steven R. Newcomb <srn@coolheads.com>
         Status:     Release
         Version:    v1.0.1
-        Revision:   $Id: xtm1.dtd,v 1.1 2001/04/07 14:49:56 grove Exp $
         PublicId:   "-//TopicMaps.Org//DTD XML Topic Map (XTM) 1.0//EN"
 
         Revisions:

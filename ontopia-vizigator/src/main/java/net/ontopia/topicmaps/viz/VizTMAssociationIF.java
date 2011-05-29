@@ -1,6 +1,4 @@
 
-//$Id: VizTMAssociationIF.java,v 1.3 2007/05/08 13:13:08 eirik.opland Exp $
-
 package net.ontopia.topicmaps.viz;
 
 /**

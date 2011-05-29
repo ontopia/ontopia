@@ -1,7 +1,6 @@
 @"utf-8"
 /*
  A topic map of internationalization information.
- $Id: i18n.ltm,v 1.107 2008/07/21 10:58:26 lars.garshol Exp $
  */
 
 /* Information sources from which more info should be dug:

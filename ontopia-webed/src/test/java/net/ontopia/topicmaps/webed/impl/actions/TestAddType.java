@@ -1,5 +1,3 @@
-  
-//$Id: TestAddType.java,v 1.2 2004/10/06 20:29:55 larsga Exp $
 
 package net.ontopia.topicmaps.webed.impl.actions;
 

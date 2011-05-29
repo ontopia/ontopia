@@ -14,7 +14,6 @@
 <framework:response/>
 
 <%-- Topicmap Selection for Merge Process --%>
-<%-- $Id: select.jsp,v 1.28 2008/05/29 06:06:42 geir.gronmo Exp $' --%>
 
 <logic:context tmparam="tm" settm="topicmap">
 <%

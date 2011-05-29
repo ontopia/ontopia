@@ -1,6 +1,4 @@
 
-// $Id: ctm.flex,v 1.2 2009/04/27 11:04:17 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import antlr.*;

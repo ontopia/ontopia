@@ -1,4 +1,3 @@
-//      $Id: DuplicateNames.java,v 1.8 2008/06/12 14:37:12 geir.gronmo Exp $  
 
 package net.ontopia.topicmaps.cmdlineutils.sanity;
 

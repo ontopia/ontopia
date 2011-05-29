@@ -1,6 +1,4 @@
 
-<!-- $Id: functions.jsm,v 1.10 2002/11/26 11:11:28 larsga Exp $ -->
-
 <module>
 
 <!-- ===== OCCURRENCES ============================== 

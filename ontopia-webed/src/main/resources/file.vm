@@ -1,4 +1,3 @@
-## $Id: file.vm,v 1.4 2005/11/24 08:22:58 grove Exp $
 ## Template used by net.ontopia.topicmaps.webed.taglibs.form.FileTag
 ## -----------------------------------------------------------------------
 #if ($readonly)

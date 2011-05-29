@@ -1,6 +1,4 @@
 
-//$Id: VizConfigurationManager.java,v 1.62 2009/04/27 11:06:42 lars.garshol Exp $
-
 package net.ontopia.topicmaps.viz;
 
 import java.io.File;

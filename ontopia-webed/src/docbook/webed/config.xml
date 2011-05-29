@@ -743,7 +743,6 @@
     formatting.</remark></para>
 
 <literallayout><![CDATA[
-<!-- $Id: config.xml,v 1.8 2009/05/22 09:34:39 geir.gronmo Exp $ -->
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      This is the DTD defining the Action Configuration

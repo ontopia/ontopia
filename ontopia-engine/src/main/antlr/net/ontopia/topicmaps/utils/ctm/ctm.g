@@ -1,6 +1,4 @@
 
-// $Id: ctm.g,v 1.4 2009/04/27 11:04:38 lars.garshol Exp $
-
 header { package net.ontopia.topicmaps.utils.ctm; }
 
 {

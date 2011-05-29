@@ -7,7 +7,6 @@
 <framework:response/>
 
 <%-- Omnigator: Page handling missing object errors  --%>
-<%-- $Id: no-topic.jsp,v 1.2 2007/09/14 11:14:41 geir.gronmo Exp $ --%>
   
 <template:insert template='/views/template_no_frames.jsp'>
 

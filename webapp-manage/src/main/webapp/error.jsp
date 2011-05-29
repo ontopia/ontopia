@@ -8,7 +8,6 @@
 <framework:response/>
 
 <%-- Omnigator: General Error handling page  --%>
-<%-- $Id: error.jsp,v 1.5 2007/09/14 11:13:57 geir.gronmo Exp $ --%>
   
 <%
 Properties sys_props = System.getProperties();
