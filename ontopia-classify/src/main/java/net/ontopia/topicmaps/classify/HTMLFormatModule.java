@@ -1,6 +1,4 @@
 
-// $Id: HTMLFormatModule.java,v 1.8 2007/04/30 09:16:09 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.io.*;

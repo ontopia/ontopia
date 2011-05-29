@@ -1,6 +1,4 @@
 
-// $Id: Token.java,v 1.2 2006/11/22 10:08:06 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

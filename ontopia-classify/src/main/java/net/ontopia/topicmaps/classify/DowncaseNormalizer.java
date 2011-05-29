@@ -1,6 +1,4 @@
 
-// $Id: DowncaseNormalizer.java,v 1.2 2007/03/22 15:05:06 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

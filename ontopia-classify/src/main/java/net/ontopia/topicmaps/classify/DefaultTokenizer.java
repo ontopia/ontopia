@@ -1,6 +1,4 @@
 
-// $Id: DefaultTokenizer.java,v 1.5 2006/11/15 13:29:01 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.StringTokenizer;

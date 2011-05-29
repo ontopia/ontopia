@@ -1,6 +1,4 @@
 
-// $Id: DocumentAnalyzerIF.java,v 1.3 2006/11/17 12:42:00 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.Collection;

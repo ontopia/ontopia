@@ -1,6 +1,4 @@
 
-// $Id: SpecialCharNormalizer.java,v 1.7 2007/03/22 14:51:30 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

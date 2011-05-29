@@ -1,6 +1,4 @@
 
-// $Id: ClassifyPluginIF.java,v 1.3 2007/05/07 08:11:39 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.io.InputStream;

@@ -1,6 +1,4 @@
 
-// $Id: AbstractDocumentAnalyzer.java,v 1.1 2006/11/17 16:03:19 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

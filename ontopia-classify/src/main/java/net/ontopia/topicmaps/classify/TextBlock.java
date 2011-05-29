@@ -1,6 +1,4 @@
 
-// $Id: TextBlock.java,v 1.6 2007/03/07 10:25:32 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

@@ -1,6 +1,4 @@
 
-// $Id: TermDatabase.java,v 1.15 2007/03/14 14:01:38 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.Map;

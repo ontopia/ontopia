@@ -1,6 +1,4 @@
 
-// $Id: CharacterAnalyzer.java,v 1.9 2007/07/13 06:21:22 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

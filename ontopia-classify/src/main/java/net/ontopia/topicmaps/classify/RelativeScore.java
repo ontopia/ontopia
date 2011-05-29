@@ -1,6 +1,4 @@
 
-// $Id: RelativeScore.java,v 1.5 2007/07/13 06:21:21 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 /**

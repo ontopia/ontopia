@@ -1,6 +1,4 @@
 
-// $Id: FormatModule.java,v 1.14 2007/06/01 10:11:06 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.io.*;

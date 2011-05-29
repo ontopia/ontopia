@@ -1,6 +1,4 @@
 
-// $Id: TermStemmerIF.java,v 1.2 2007/10/30 13:46:17 lars.garshol Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: CompoundAnalyzer.java,v 1.22 2007/07/13 11:34:34 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

@@ -1,6 +1,4 @@
 
-// $Id: ClassifiableContent.java,v 1.1 2007/03/26 08:39:04 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.io.InputStream;

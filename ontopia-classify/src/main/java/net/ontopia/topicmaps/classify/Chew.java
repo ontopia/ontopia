@@ -1,6 +1,4 @@
 
-// $Id: Chew.java,v 1.35 2007/05/02 12:28:03 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.io.*;

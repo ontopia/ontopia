@@ -1,6 +1,4 @@
 
-// $Id: Document.java,v 1.4 2007/03/07 10:25:32 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

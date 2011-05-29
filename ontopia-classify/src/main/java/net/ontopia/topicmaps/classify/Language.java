@@ -1,6 +1,4 @@
 
-// $Id: Language.java,v 1.9 2007/10/30 13:46:16 lars.garshol Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

@@ -1,6 +1,4 @@
 
-// $Id: TopicContentPlugin.java,v 1.1 2007/07/13 08:33:30 lars.garshol Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.io.IOException;

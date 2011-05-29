@@ -1,6 +1,4 @@
 
-// $Id: TopicMapClassification.java,v 1.13 2007/06/01 10:11:27 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.*;

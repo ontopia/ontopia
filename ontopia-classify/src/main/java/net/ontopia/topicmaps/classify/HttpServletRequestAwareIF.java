@@ -1,6 +1,4 @@
 
-// $Id: HttpServletRequestAwareIF.java,v 1.2 2007/05/07 08:22:36 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import javax.servlet.http.*;

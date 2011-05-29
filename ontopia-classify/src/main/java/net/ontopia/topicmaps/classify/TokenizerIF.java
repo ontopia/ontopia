@@ -1,6 +1,4 @@
 
-// $Id: TokenizerIF.java,v 1.3 2006/11/15 13:29:00 grove Exp $
-
 package net.ontopia.topicmaps.classify;
 
 import java.util.Collection;
