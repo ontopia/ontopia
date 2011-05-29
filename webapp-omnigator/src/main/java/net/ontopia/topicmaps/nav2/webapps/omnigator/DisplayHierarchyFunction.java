@@ -1,6 +1,4 @@
 
-// $Id: DisplayHierarchyFunction.java,v 1.9 2006/05/11 13:28:18 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.webapps.omnigator;
 
 import java.io.IOException;
