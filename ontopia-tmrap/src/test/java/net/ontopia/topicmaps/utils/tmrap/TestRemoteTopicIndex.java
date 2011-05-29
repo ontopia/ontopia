@@ -1,6 +1,4 @@
 
-// $Id: TestRemoteTopicIndex.java,v 1.6 2008/07/18 13:26:05 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.Writer;

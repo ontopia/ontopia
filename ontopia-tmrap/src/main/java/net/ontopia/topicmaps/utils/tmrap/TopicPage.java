@@ -1,6 +1,4 @@
 
-// $Id: TopicPage.java,v 1.5 2008/05/21 13:40:14 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import net.ontopia.topicmaps.core.TopicIF;

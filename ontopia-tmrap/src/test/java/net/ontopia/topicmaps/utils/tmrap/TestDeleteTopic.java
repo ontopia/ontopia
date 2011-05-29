@@ -1,6 +1,4 @@
 
-// $Id: TestDeleteTopic.java,v 1.4 2006/05/05 14:22:17 opland Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.IOException;

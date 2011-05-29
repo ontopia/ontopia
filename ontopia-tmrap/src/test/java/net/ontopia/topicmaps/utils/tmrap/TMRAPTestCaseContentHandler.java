@@ -1,6 +1,4 @@
 
-// $Id: TMRAPTestCaseContentHandler.java,v 1.2 2006/02/06 13:06:38 opland Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.util.Collection;

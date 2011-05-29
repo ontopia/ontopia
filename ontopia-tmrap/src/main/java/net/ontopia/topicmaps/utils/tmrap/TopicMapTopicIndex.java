@@ -1,6 +1,4 @@
 
-// $Id: TopicMapTopicIndex.java,v 1.19 2008/07/17 10:14:07 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.util.ArrayList;

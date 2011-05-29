@@ -1,6 +1,4 @@
 
-// $Id: TestAddFragment.java,v 1.5 2007/06/18 09:04:34 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.IOException;

@@ -1,6 +1,4 @@
 
-// $Id: TMRAPTestDescriptor.java,v 1.3 2006/04/28 12:47:03 larsga Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import net.ontopia.utils.OntopiaRuntimeException;

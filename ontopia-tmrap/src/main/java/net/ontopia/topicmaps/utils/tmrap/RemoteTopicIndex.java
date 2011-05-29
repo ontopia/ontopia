@@ -1,6 +1,4 @@
 
-// $Id: RemoteTopicIndex.java,v 1.39 2008/07/22 06:56:52 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.IOException;

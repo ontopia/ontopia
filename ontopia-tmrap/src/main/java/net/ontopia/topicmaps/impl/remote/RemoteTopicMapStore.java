@@ -1,6 +1,4 @@
 
-// $Id: RemoteTopicMapStore.java,v 1.8 2008/06/11 16:55:59 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.remote;
 
 import java.util.*;

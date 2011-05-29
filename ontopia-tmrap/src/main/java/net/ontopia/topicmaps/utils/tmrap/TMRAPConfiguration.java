@@ -1,6 +1,4 @@
 
-// $Id: TMRAPConfiguration.java,v 1.2 2006/08/01 14:31:33 grove Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.util.Map;

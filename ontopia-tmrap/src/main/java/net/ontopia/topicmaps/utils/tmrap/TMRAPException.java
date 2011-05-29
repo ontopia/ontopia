@@ -1,6 +1,4 @@
 
-// $Id: TMRAPException.java,v 1.3 2006/05/08 07:18:31 grove Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import net.ontopia.utils.OntopiaException;

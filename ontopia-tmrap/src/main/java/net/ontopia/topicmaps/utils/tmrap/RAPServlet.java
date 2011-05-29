@@ -1,6 +1,4 @@
 
-// $Id: RAPServlet.java,v 1.36 2008/07/18 13:24:56 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.IOException;

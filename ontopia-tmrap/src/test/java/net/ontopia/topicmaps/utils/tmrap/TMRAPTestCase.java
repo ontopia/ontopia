@@ -1,6 +1,4 @@
 
-// $Id: TMRAPTestGenerator.java,v 1.15 2008/07/18 13:25:49 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.io.File;
