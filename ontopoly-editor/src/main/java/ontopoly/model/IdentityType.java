@@ -1,6 +1,4 @@
 
-// $Id: IdentityType.java,v 1.3 2009/04/21 06:23:51 geir.gronmo Exp $
-
 package ontopoly.model;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: FieldsView.java,v 1.2 2009/04/08 08:59:04 geir.gronmo Exp $
-
 package ontopoly.model;
 
 import java.util.Iterator;

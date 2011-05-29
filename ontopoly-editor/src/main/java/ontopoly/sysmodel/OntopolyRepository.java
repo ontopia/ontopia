@@ -1,6 +1,4 @@
 
-// $Id: OntopolyRepository.java,v 1.5 2009/05/25 05:48:06 geir.gronmo Exp $
-
 package ontopoly.sysmodel;
 
 import java.io.File;

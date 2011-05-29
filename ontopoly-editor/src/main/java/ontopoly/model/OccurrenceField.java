@@ -1,6 +1,4 @@
 
-// $Id: OccurrenceField.java,v 1.9 2009/04/30 09:53:41 geir.gronmo Exp $
-
 package ontopoly.model;
 
 import java.util.Collection;

@@ -1,6 +1,4 @@
 
-// $Id: OccurrenceType.java,v 1.3 2009/04/21 06:23:52 geir.gronmo Exp $
-
 package ontopoly.model;
 
 import java.util.Collection;

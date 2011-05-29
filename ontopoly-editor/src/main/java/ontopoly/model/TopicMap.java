@@ -1,6 +1,4 @@
 
-// $Id: TopicMap.java,v 1.11 2009/04/30 09:53:42 geir.gronmo Exp $
-
 package ontopoly.model;
 
 import java.io.IOException;

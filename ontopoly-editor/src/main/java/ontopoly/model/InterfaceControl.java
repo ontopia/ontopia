@@ -1,4 +1,3 @@
-// $Id: InterfaceControl.java,v 1.1 2008/10/23 05:18:36 geir.gronmo Exp $
 
 package ontopoly.model;
 

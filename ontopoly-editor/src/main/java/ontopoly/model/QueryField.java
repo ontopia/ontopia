@@ -1,6 +1,4 @@
 
-// $Id: NameField.java,v 1.5 2009/05/06 14:19:11 geir.gronmo Exp $
-
 package ontopoly.model;
 
 import java.util.Collections;

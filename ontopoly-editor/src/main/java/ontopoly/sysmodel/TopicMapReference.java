@@ -1,6 +1,4 @@
 
-// $Id: TopicMapReference.java,v 1.1 2008/10/23 05:18:38 geir.gronmo Exp $
-
 package ontopoly.sysmodel;
 
 import java.io.Serializable;

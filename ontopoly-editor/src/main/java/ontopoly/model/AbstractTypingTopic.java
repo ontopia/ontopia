@@ -1,4 +1,3 @@
-// $Id: AbstractTypingTopic.java,v 1.4 2009/04/21 06:23:52 geir.gronmo Exp $
 
 package ontopoly.model;
 

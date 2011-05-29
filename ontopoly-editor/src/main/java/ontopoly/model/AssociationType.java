@@ -1,4 +1,3 @@
-// $Id: AssociationType.java,v 1.8 2009/05/12 20:26:26 geir.gronmo Exp $
 
 package ontopoly.model;
 
