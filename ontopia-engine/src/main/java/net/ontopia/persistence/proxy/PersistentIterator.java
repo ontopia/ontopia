@@ -1,6 +1,4 @@
 
-// $Id: PersistentIterator.java,v 1.3 2007/09/27 06:36:48 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.ArrayList;

@@ -1,6 +1,4 @@
 
-// $Id: SpyDriver.java,v 1.11 2008/12/04 11:25:15 lars.garshol Exp $
-
 package net.ontopia.persistence.jdbcspy;
 
 import java.sql.Connection;

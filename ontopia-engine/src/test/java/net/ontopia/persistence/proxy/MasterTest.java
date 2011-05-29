@@ -1,6 +1,4 @@
 
-// $Id: MasterTest.java,v 1.5 2008/06/12 14:37:11 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.*;

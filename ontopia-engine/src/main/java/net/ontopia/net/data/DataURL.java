@@ -1,6 +1,4 @@
 
-// $Id: DataURL.java,v 1.10 2005/07/07 07:52:00 grove Exp $
-
 package net.ontopia.net.data;
 
 import java.io.ByteArrayInputStream;

@@ -1,6 +1,4 @@
 
-// $Id: ClearableIF.java,v 1.1 2007/09/10 10:31:57 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 /**

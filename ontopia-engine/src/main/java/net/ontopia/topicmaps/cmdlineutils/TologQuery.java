@@ -1,6 +1,4 @@
 
-// $Id: TologQuery.java,v 1.10 2008/06/25 11:17:59 lars.garshol Exp $
-
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.IOException;

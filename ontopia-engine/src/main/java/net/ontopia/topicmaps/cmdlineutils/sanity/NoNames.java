@@ -1,6 +1,4 @@
 
-// $Id: NoNames.java,v 1.25 2008/06/13 08:17:50 geir.gronmo Exp $  
-
 package net.ontopia.topicmaps.cmdlineutils.sanity;
 
 import java.util.*;

@@ -1,6 +1,4 @@
 
-// $Id: LTMTemplateImporter.java,v 1.5 2008/06/13 08:36:29 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.IOException;

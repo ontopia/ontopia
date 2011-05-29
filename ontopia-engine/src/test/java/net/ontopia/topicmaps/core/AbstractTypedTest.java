@@ -1,4 +1,3 @@
-// $Id: AbstractTypedTest.java,v 1.8 2008/05/23 11:49:49 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.core;
 

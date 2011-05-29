@@ -1,6 +1,4 @@
 
-// $Id: SpyStats.java,v 1.15 2008/12/04 11:25:08 lars.garshol Exp $
-
 package net.ontopia.persistence.jdbcspy;
 
 import java.io.Writer;

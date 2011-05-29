@@ -1,6 +1,4 @@
 
-// $Id: RDFPropertyMapping.java,v 1.1 2004/06/21 18:14:37 larsga Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 /**

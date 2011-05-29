@@ -1,6 +1,4 @@
 
-// $Id: CmdlineUtils.java,v 1.30 2006/02/15 15:16:04 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.lang.reflect.Method;

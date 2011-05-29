@@ -1,4 +1,3 @@
-// $Id: CachedIndex.java,v 1.13 2002/05/29 13:38:46 hca Exp $
 
 package net.ontopia.utils;
 

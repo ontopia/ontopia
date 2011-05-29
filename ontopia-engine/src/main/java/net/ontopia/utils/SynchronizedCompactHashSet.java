@@ -1,6 +1,4 @@
 
-// $Id: SynchronizedCompactHashSet.java,v 1.1 2003/02/23 13:50:18 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.util.Collection;

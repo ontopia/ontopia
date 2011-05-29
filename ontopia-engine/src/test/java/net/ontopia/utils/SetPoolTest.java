@@ -1,6 +1,4 @@
 
-// $Id: SetPoolTest.java,v 1.1 2003/05/12 06:20:13 grove Exp $
-
 package net.ontopia.utils;
 
 import java.util.*;

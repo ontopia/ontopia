@@ -1,6 +1,4 @@
 
-// $Id: ItemIdentifierPredicateTest.java,v 1.1 2007/06/13 08:31:19 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

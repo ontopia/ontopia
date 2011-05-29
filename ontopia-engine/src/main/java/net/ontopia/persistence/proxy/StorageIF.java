@@ -1,6 +1,4 @@
 
-// $Id: StorageIF.java,v 1.29 2007/09/27 12:20:22 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Map;

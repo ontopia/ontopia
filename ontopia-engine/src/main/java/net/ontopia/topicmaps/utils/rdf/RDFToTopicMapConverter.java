@@ -1,6 +1,4 @@
 
-// $Id: RDFToTopicMapConverter.java,v 1.23 2008/06/13 08:36:29 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.io.IOException;

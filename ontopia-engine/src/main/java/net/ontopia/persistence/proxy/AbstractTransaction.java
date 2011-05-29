@@ -1,6 +1,4 @@
 
-// $Id: AbstractTransaction.java,v 1.35 2008/04/09 11:05:14 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.File;

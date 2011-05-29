@@ -1,6 +1,4 @@
 
-// $Id: AbstractCanonicalTests.java,v 1.15 2008/04/23 11:43:45 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

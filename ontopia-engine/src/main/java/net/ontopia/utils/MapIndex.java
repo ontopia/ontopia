@@ -1,4 +1,3 @@
-// $Id: MapIndex.java,v 1.11 2007/09/10 10:32:11 geir.gronmo Exp $
 
 package net.ontopia.utils;
 

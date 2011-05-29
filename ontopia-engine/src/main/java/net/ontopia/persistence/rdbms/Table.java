@@ -1,4 +1,3 @@
-// $Id: Table.java,v 1.11 2007/07/17 12:34:43 geir.gronmo Exp $
 
 package net.ontopia.persistence.rdbms;
 

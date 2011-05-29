@@ -1,4 +1,3 @@
-// $Id: GrabberMap.java,v 1.8 2004/11/29 19:10:44 grove Exp $
 
 package net.ontopia.utils;
 

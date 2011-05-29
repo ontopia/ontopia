@@ -1,6 +1,4 @@
 
-// $Id: RDBMSConsistencyChecker.java,v 1.19 2008/05/22 05:43:10 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
 import java.io.BufferedReader;

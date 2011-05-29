@@ -1,6 +1,4 @@
 
-// $Id: EqualsPredicateTest.java,v 1.1 2005/04/29 11:04:17 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

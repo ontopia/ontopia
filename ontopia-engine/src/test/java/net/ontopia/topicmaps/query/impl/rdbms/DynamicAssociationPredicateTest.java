@@ -1,6 +1,4 @@
 
-// $Id: DynamicAssociationPredicateTest.java,v 1.1 2003/11/21 13:23:44 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

@@ -1,6 +1,4 @@
 
-// $Id: AssociationRoleTest.java,v 1.13 2008/05/23 09:24:21 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 public abstract class AssociationRoleTest extends AbstractTypedTest {

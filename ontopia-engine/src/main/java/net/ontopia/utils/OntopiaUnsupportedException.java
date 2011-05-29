@@ -1,4 +1,3 @@
-// $Id: OntopiaUnsupportedException.java,v 1.7 2005/07/12 09:49:21 grove Exp $
 
 package net.ontopia.utils;
 

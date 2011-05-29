@@ -1,6 +1,4 @@
 
-// $Id: ROLocalCache.java,v 1.3 2007/10/03 12:09:44 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;

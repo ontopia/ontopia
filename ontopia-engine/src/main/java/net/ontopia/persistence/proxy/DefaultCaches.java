@@ -1,6 +1,4 @@
 
-// $Id: DefaultCaches.java,v 1.4 2007/09/27 06:36:49 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.*;

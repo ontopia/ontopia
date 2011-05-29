@@ -1,6 +1,4 @@
 
-// $Id: IdentityUtilsTest.java,v 1.5 2008/06/13 08:17:55 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import junit.framework.TestCase;

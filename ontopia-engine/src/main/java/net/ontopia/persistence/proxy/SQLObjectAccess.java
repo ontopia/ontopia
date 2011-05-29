@@ -1,6 +1,4 @@
 
-// $Id: SQLObjectAccess.java,v 1.22 2008/04/10 08:04:25 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.sql.PreparedStatement;

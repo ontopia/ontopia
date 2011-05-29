@@ -1,4 +1,3 @@
-// $Id: JDONot.java,v 1.10 2003/12/18 22:33:06 grove Exp $
 
 package net.ontopia.persistence.query.jdo;
 

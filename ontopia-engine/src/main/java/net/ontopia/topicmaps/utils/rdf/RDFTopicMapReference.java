@@ -1,6 +1,4 @@
 
-// $Id: RDFTopicMapReference.java,v 1.17 2005/10/17 23:26:38 larsga Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.io.*;

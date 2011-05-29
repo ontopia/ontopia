@@ -1,6 +1,4 @@
 
-// $Id: CollectionUtils.java,v 1.27 2008/09/09 08:06:55 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import java.util.ArrayList;

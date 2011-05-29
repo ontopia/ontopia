@@ -1,6 +1,4 @@
 
-// $Id: ALiteralWrapper.java,v 1.3 2003/11/07 15:49:21 larsga Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import net.ontopia.utils.OntopiaRuntimeException;

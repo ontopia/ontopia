@@ -1,6 +1,4 @@
 
-// $Id: ObjectStates.java,v 1.10 2006/02/15 15:04:17 larsga Exp $
-
 package net.ontopia.persistence.proxy;
 
 import gnu.trove.TObjectIntHashMap;

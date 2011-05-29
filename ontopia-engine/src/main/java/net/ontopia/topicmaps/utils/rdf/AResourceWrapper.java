@@ -1,6 +1,4 @@
 
-// $Id: AResourceWrapper.java,v 1.5 2005/06/13 09:47:52 larsga Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import com.hp.hpl.jena.rdf.arp.AResource;

@@ -1,6 +1,4 @@
 
-// $Id: LTMTopicMapReference.java,v 1.8 2005/07/13 09:00:31 grove Exp $
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.IOException;

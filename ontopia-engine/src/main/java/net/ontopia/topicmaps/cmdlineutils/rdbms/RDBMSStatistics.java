@@ -1,6 +1,4 @@
 
-// $Id: RDBMSStatistics.java,v 1.3 2008/01/10 14:39:52 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
 import java.io.File;

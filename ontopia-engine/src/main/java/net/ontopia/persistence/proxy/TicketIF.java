@@ -1,4 +1,3 @@
-// $Id: TicketIF.java,v 1.1 2006/03/14 10:08:12 grove Exp $
 
 package net.ontopia.persistence.proxy;
 

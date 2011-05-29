@@ -1,6 +1,4 @@
 
-// $Id: RDBMSConnectionInfo.java,v 1.6 2007/07/11 06:29:53 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
 import java.io.*;

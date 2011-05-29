@@ -1,6 +1,4 @@
 
-// $Id: AbstractIndexTest.java,v 1.13 2008/06/11 16:55:57 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core.index;
 
 import java.lang.reflect.InvocationTargetException;

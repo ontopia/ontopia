@@ -1,4 +1,3 @@
-// $Id: DBCPConnectionFactory.java,v 1.25 2007/06/12 12:56:05 geir.gronmo Exp $
 
 package net.ontopia.persistence.proxy;
 

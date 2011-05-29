@@ -1,6 +1,4 @@
 
-// $Id: RDFWriterTestGenerator.java,v 1.10 2009/05/25 05:48:17 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.io.*;

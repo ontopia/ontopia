@@ -1,6 +1,4 @@
 
-// $Id: IdentityCollectionWrapper.java,v 1.4 2006/07/07 09:01:34 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;

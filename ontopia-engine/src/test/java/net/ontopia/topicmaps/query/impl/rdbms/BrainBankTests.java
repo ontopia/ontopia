@@ -1,6 +1,4 @@
 
-// $Id: BrainBankTests.java,v 1.1 2003/08/06 15:57:08 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

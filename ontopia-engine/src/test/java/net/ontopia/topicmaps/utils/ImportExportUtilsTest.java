@@ -1,6 +1,4 @@
 
-// $Id: ImportExportUtilsTest.java,v 1.1 2007/01/05 10:20:57 grove Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import junit.framework.TestCase;

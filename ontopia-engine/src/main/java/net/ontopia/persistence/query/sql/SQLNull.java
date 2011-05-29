@@ -1,6 +1,4 @@
 
-// $Id: SQLNull.java,v 1.10 2005/07/12 09:37:40 grove Exp $
-
 package net.ontopia.persistence.query.sql;
 
 import net.ontopia.persistence.proxy.DefaultFieldHandler;

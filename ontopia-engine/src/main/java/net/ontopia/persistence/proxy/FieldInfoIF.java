@@ -1,6 +1,4 @@
 
-// $Id: FieldInfoIF.java,v 1.20 2008/12/04 11:26:01 lars.garshol Exp $
-
 package net.ontopia.persistence.proxy;
 
 

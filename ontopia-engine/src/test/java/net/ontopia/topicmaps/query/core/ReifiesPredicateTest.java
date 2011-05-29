@@ -1,6 +1,4 @@
 
-// $Id: ReifiesPredicateTest.java,v 1.6 2005/07/13 08:56:48 grove Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

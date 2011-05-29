@@ -1,4 +1,3 @@
-// $Id: SchemaGeneratorTest.java,v 1.7 2002/11/21 09:23:11 grove Exp $
 
 package net.ontopia.topicmaps.schema.impl.osl.cmdline;
 

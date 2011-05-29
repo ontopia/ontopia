@@ -1,6 +1,4 @@
 
-// $Id: ExternalRefTest.java,v 1.11 2003/03/28 15:45:15 larsga Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import net.ontopia.topicmaps.impl.basic.*;

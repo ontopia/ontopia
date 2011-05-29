@@ -1,6 +1,4 @@
 
-// $Id: SpyStatement.java,v 1.7 2008/05/09 10:17:21 geir.gronmo Exp $
-
 package net.ontopia.persistence.jdbcspy;
 
 import java.sql.Connection;

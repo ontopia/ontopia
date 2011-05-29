@@ -1,6 +1,4 @@
 
-// $Id: XTMWriterFilterTestGenerator.java,v 1.5 2008/07/04 10:22:49 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;

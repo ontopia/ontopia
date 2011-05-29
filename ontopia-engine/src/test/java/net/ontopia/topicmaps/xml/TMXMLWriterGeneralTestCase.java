@@ -1,6 +1,4 @@
 
-// $Id: TMXMLWriterTestGenerator.java,v 1.16 2008/12/04 11:32:29 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;

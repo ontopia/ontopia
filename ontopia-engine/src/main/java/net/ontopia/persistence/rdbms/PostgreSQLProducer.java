@@ -1,6 +1,4 @@
 
-// $Id: PostgreSQLProducer.java,v 1.5 2005/10/05 18:01:47 grove Exp $
-
 package net.ontopia.persistence.rdbms;
 
 import java.io.IOException;

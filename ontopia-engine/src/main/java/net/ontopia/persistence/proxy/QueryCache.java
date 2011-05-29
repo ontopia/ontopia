@@ -1,6 +1,4 @@
 
-// $Id: QueryCache.java,v 1.25 2007/10/03 11:33:33 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;

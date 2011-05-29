@@ -1,4 +1,3 @@
-// $Id: DisplayNameGrabber.java,v 1.9 2008/06/12 14:37:23 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.utils;
 

@@ -1,6 +1,4 @@
 
-// $Id: RDBMSIndexTool.java,v 1.4 2006/08/01 14:31:32 grove Exp $
-
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
 import java.io.*;

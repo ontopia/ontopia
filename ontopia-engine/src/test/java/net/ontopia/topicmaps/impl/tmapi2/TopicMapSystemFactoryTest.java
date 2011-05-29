@@ -1,6 +1,4 @@
 
-// $Id: TopicMapSystemFactoryTest.java,v 1.2 2005/03/21 18:40:16 larsga Exp $
-
 package net.ontopia.topicmaps.impl.tmapi2;
 
 import junit.framework.TestCase;

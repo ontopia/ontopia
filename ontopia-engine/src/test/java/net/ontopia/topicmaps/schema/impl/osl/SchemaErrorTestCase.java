@@ -1,6 +1,4 @@
 
-// $Id: SchemaErrorTestGenerator.java,v 1.7 2003/07/28 10:08:39 larsga Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.File;

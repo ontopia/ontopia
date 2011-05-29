@@ -1,6 +1,4 @@
 
-// $Id: CanonicalXTMimportIntoTests.java,v 1.9 2004/10/18 10:32:29 grove Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

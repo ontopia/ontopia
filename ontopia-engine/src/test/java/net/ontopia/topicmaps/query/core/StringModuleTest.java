@@ -1,6 +1,4 @@
 
-// $Id: StringModuleTest.java,v 1.21 2009/04/27 11:00:50 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

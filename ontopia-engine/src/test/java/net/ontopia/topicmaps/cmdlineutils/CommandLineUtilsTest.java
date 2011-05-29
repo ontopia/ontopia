@@ -1,4 +1,3 @@
-// $Id: CommandLineUtilsTest.java,v 1.14 2004/11/19 12:52:47 grove Exp $
 
 package net.ontopia.topicmaps.cmdlineutils;
 

@@ -1,6 +1,4 @@
 
-// $Id: RDBMSTestUtils.java,v 1.7 2008/01/11 12:58:56 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.File;

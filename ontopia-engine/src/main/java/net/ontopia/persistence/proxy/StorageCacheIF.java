@@ -1,4 +1,3 @@
-// $Id: StorageCacheIF.java,v 1.27 2007/09/27 12:20:22 geir.gronmo Exp $
 
 package net.ontopia.persistence.proxy;
 

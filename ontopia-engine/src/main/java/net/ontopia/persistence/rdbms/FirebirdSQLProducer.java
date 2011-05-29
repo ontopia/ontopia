@@ -1,6 +1,4 @@
 
-// $Id: FirebirdSQLProducer.java,v 1.3 2006/12/18 12:44:45 grove Exp $
-
 package net.ontopia.persistence.rdbms;
 
 import java.io.IOException;

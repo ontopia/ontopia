@@ -1,4 +1,3 @@
-// $Id: Index.java,v 1.2 2007/07/17 12:34:43 geir.gronmo Exp $
 
 package net.ontopia.persistence.rdbms;
 

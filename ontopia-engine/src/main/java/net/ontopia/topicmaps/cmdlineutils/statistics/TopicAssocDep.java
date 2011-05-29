@@ -1,6 +1,4 @@
 
-// $Id: TopicAssocDep.java,v 1.33 2004/12/01 15:25:21 grove Exp $ 
-
 package net.ontopia.topicmaps.cmdlineutils.statistics;
 
 import java.util.*;

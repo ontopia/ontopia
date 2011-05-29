@@ -1,6 +1,4 @@
 
-// $Id: CacheEntry.java,v 1.7 2008/12/04 14:58:04 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.Externalizable;

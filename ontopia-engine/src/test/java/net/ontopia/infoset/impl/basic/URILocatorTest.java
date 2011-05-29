@@ -1,6 +1,4 @@
 
-// $Id: URILocatorTest.java,v 1.15 2009/02/27 11:57:40 lars.garshol Exp $	
-
 package net.ontopia.infoset.impl.basic;
 
 import java.io.File;

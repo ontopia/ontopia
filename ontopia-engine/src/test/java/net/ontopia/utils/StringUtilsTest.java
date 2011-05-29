@@ -1,6 +1,4 @@
 
-// $Id: StringUtilsTest.java,v 1.14 2007/03/13 08:39:05 grove Exp $
-
 package net.ontopia.utils;
 
 import junit.framework.TestCase;

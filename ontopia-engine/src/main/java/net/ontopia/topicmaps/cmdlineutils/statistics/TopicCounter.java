@@ -1,4 +1,3 @@
-// $Id: TopicCounter.java,v 1.21 2008/06/11 16:55:57 geir.gronmo Exp $  
 
 package net.ontopia.topicmaps.cmdlineutils.statistics;
 

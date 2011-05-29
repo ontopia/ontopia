@@ -1,6 +1,4 @@
 
-// $Id: TimeMeasureUtils.java,v 1.5 2004/06/29 01:29:07 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.util.Map;

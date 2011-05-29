@@ -1,6 +1,4 @@
 
-// $Id: XTMReadErrorTests.java,v 1.5 2006/05/04 15:40:59 larsga Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

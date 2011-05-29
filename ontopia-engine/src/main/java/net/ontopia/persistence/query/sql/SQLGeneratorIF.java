@@ -1,4 +1,3 @@
-// $Id: SQLGeneratorIF.java,v 1.6 2003/10/01 12:23:05 grove Exp $
 
 package net.ontopia.persistence.query.sql;
 

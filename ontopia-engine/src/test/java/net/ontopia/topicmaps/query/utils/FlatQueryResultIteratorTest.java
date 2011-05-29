@@ -1,6 +1,4 @@
 
-// $Id: FlatQueryResultIteratorTest.java,v 1.2 2005/07/13 08:55:47 grove Exp $
-
 package net.ontopia.topicmaps.query.utils;
 
 import java.io.IOException;

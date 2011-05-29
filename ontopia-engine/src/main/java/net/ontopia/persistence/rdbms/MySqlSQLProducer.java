@@ -1,6 +1,4 @@
 
-// $Id: MySqlSQLProducer.java,v 1.12 2008/05/30 09:06:09 geir.gronmo Exp $
-
 package net.ontopia.persistence.rdbms;
 
 import java.io.IOException;

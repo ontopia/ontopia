@@ -1,6 +1,4 @@
 
-// $Id: BrainBankTests.java,v 1.5 2008/06/11 16:56:01 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

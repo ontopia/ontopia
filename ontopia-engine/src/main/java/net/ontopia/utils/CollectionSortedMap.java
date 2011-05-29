@@ -1,6 +1,4 @@
 
-// $Id: CollectionSortedMap.java,v 1.3 2008/07/15 09:02:47 lars.garshol Exp $
-
 package net.ontopia.utils;
 
 //import edu.emory.mathcs.backport.java.util.TreeMap;

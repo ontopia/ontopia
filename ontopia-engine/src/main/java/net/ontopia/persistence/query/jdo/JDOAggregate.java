@@ -1,4 +1,3 @@
-// $Id: JDOAggregate.java,v 1.5 2002/06/27 15:43:47 grove Exp $
 
 package net.ontopia.persistence.query.jdo;
 

@@ -1,6 +1,4 @@
 
-// $Id: ClassInfo.java,v 1.19 2008/12/04 11:25:41 lars.garshol Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.HashMap;

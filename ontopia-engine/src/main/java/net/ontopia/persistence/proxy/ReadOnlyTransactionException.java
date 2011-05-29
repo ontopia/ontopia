@@ -1,6 +1,4 @@
 
-// $Id: ReadOnlyTransactionException.java,v 1.1 2006/02/06 09:15:16 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 

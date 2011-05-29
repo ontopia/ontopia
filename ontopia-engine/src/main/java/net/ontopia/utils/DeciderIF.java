@@ -1,4 +1,3 @@
-// $Id: DeciderIF.java,v 1.7 2007/01/18 09:30:45 grove Exp $
 
 package net.ontopia.utils;
 

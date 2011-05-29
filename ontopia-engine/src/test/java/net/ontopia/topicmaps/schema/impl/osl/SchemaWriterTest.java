@@ -1,6 +1,4 @@
 
-// $Id: SchemaWriterTest.java,v 1.1 2003/03/16 14:17:07 larsga Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.IOException;

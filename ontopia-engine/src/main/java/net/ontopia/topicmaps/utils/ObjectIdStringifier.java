@@ -1,4 +1,3 @@
-// $Id: ObjectIdStringifier.java,v 1.7 2004/11/29 19:01:50 grove Exp $
 
 package net.ontopia.topicmaps.utils;
 

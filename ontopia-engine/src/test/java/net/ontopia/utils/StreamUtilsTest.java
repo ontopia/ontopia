@@ -1,6 +1,4 @@
 
-// $Id: StreamUtilsTest.java,v 1.1 2003/10/20 13:12:57 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.io.*;

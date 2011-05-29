@@ -1,6 +1,4 @@
 
-// $Id: StoreFactoryReferenceTest.java,v 1.2 2004/11/19 12:52:47 grove Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;

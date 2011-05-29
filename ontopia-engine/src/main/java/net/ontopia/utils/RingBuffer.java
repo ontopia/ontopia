@@ -1,6 +1,4 @@
 
-// $Id: RingBuffer.java,v 1.5 2003/12/19 09:12:05 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.util.*;

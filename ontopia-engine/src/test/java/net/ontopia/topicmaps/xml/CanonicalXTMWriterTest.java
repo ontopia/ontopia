@@ -1,6 +1,4 @@
 
-// $Id: CanonicalXTMWriterTest.java,v 1.1 2008/05/23 11:46:12 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

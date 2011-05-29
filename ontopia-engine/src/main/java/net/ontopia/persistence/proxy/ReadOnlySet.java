@@ -1,6 +1,4 @@
 
-// $Id: ReadOnlySet.java,v 1.6 2007/06/06 11:08:39 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;

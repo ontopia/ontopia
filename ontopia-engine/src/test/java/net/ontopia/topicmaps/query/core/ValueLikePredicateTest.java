@@ -1,6 +1,4 @@
 
-// $Id: ValueLikePredicateTest.java,v 1.12 2006/05/05 12:18:16 grove Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

@@ -1,4 +1,3 @@
-// $Id: SQLExecuter.java,v 1.4 2006/07/06 09:50:53 grove Exp $
 
 package net.ontopia.persistence.rdbms;
 

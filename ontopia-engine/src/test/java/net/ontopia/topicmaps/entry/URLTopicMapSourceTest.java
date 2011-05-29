@@ -1,6 +1,4 @@
 
-// $Id: URLTopicMapSourceTest.java,v 1.5 2008/01/09 10:07:29 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import java.util.*;

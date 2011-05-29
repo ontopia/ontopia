@@ -1,6 +1,4 @@
 
-// $Id: AbstractTopicMapSourceTest.java,v 1.7 2005/12/14 07:31:24 grove Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import junit.framework.TestCase;

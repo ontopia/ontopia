@@ -1,4 +1,3 @@
-// $Id: ClassInstanceTest.java,v 1.24 2008/06/11 17:14:48 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.impl.basic.index;
 

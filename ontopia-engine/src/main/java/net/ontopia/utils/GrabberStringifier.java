@@ -1,6 +1,4 @@
 
-// $Id: GrabberStringifier.java,v 1.7 2004/11/29 19:10:44 grove Exp $
-
 package net.ontopia.utils;
 
 /**

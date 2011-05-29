@@ -1,4 +1,3 @@
-// $Id: VariantNameTest.java,v 1.21 2008/06/12 14:37:13 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.core;
 

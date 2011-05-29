@@ -1,6 +1,4 @@
 
-// $Id: CoreTestGenerator.java,v 1.22 2008/01/11 13:29:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.*;

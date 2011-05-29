@@ -1,6 +1,4 @@
 
-// $Id: TrackableSetTest.java,v 1.5 2005/07/12 09:37:41 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Collections;

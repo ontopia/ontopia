@@ -1,4 +1,3 @@
-// $Id: QueryDeclarations.java,v 1.13 2005/07/12 09:37:39 grove Exp $
 
 package net.ontopia.persistence.proxy;
 

@@ -1,4 +1,3 @@
-// $Id: SQLTable.java,v 1.8 2003/08/05 15:45:54 grove Exp $
 
 package net.ontopia.persistence.query.sql;
 

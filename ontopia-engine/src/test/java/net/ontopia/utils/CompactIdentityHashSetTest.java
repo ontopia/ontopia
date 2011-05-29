@@ -1,6 +1,4 @@
 
-// $Id: CompactIdentityHashSetTest.java,v 1.1 2003/03/31 09:15:53 grove Exp $
-
 package net.ontopia.utils;
 
 public class CompactIdentityHashSetTest extends CompactHashSetTest {

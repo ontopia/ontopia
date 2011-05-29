@@ -1,6 +1,4 @@
 
-// $Id: RolePlayerPredicateTest.java,v 1.1 2003/07/15 14:14:27 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

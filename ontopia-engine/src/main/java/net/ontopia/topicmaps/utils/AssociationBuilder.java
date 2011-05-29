@@ -1,6 +1,4 @@
 
-// $Id: AssociationBuilder.java,v 1.16 2008/05/29 10:54:59 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.Collection;

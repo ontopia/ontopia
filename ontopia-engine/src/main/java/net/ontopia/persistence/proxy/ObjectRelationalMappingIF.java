@@ -1,4 +1,3 @@
-// $Id: ObjectRelationalMappingIF.java,v 1.2 2002/11/29 20:50:18 grove Exp $
 
 package net.ontopia.persistence.proxy;
 

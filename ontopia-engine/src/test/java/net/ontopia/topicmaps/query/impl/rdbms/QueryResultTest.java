@@ -1,6 +1,4 @@
 
-// $Id: QueryResultTest.java,v 1.5 2005/07/13 08:54:59 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

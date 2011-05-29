@@ -1,6 +1,4 @@
 
-// $Id: TopicVariantNameGrabber.java,v 1.5 2008/06/12 14:37:24 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.*;

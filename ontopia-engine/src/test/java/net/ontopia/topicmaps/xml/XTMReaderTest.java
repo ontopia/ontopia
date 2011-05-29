@@ -1,4 +1,3 @@
-// $Id: XTMReaderTest.java,v 1.36 2008/06/13 08:17:58 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.xml;
 

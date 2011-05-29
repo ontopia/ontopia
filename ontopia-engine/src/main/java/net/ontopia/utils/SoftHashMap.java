@@ -1,6 +1,4 @@
 
-// $Id: SoftHashMap.java,v 1.10 2005/06/19 12:31:49 grove Exp $
-
 package net.ontopia.utils;
 
 import java.util.Iterator;

@@ -1,6 +1,4 @@
 
-// $Id: EncryptedOutputStream.java,v 1.4 2002/06/13 11:11:10 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.io.IOException;

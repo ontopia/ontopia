@@ -1,6 +1,4 @@
 
-// $Id: SoftHashMapIndex.java,v 1.17 2007/08/20 08:15:37 lars.garshol Exp $
-
 package net.ontopia.utils;
 
 import java.lang.ref.SoftReference;

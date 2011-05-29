@@ -1,6 +1,4 @@
 
-// $Id: AtomicIdentity.java,v 1.11 2005/09/20 11:24:19 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.Externalizable;

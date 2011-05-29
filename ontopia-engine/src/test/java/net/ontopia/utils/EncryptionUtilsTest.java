@@ -1,6 +1,4 @@
 
-// $Id: EncryptionUtilsTest.java,v 1.4 2008/05/16 13:57:55 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import java.io.*;

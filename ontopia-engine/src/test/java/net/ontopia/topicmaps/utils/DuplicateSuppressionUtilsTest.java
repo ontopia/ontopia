@@ -1,6 +1,4 @@
 
-// $Id: DuplicateSuppressionUtilsTest.java,v 1.12 2008/06/12 14:37:24 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.net.MalformedURLException;

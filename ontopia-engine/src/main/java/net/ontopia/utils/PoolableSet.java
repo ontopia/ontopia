@@ -1,6 +1,4 @@
 
-// $Id: PoolableSet.java,v 1.6 2005/09/20 12:00:21 grove Exp $
-
 package net.ontopia.utils;
 
 import java.util.Collection;

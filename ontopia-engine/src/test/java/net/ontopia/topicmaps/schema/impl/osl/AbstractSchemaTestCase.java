@@ -1,6 +1,4 @@
 
-// $Id: AbstractSchemaTestCase.java,v 1.6 2004/09/06 10:13:54 grove Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.File;

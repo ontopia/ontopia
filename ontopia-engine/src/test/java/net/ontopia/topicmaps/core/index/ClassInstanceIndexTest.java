@@ -1,6 +1,4 @@
 
-// $Id: ClassInstanceIndexTest.java,v 1.23 2008/06/12 14:37:13 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core.index;
 
 import net.ontopia.topicmaps.core.AssociationIF;

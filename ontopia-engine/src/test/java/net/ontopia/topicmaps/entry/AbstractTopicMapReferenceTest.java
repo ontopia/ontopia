@@ -1,6 +1,4 @@
 
-// $Id: AbstractTopicMapReferenceTest.java,v 1.7 2007/08/29 12:56:02 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.entry;
 
 import junit.framework.*;

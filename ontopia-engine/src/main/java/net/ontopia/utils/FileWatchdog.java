@@ -1,6 +1,4 @@
 
-// $Id: FileWatchdog.java,v 1.4 2004/11/28 13:54:54 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.io.File;

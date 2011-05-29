@@ -1,4 +1,3 @@
-// $Id: SQLParameter.java,v 1.14 2003/05/23 08:48:04 grove Exp $
 
 package net.ontopia.persistence.query.sql;
 

@@ -1,6 +1,4 @@
 
-// $Id: MergeTMTestGenerator.java,v 1.14 2006/01/19 12:35:35 grove Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.io.*;

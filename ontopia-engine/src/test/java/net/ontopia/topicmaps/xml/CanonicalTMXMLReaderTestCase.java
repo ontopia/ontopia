@@ -1,6 +1,4 @@
 
-// $Id: CanonicalTMXMLReaderTests.java,v 1.4 2008/01/11 13:29:36 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

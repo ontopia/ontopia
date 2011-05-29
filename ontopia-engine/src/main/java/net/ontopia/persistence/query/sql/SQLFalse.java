@@ -1,6 +1,4 @@
 
-// $Id: SQLFalse.java,v 1.1 2003/08/06 07:57:34 grove Exp $
-
 package net.ontopia.persistence.query.sql;
 
 /**

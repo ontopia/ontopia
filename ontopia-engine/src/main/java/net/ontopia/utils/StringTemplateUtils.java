@@ -1,6 +1,4 @@
 
-// $Id: StringTemplateUtils.java,v 1.9 2004/03/08 09:36:14 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.util.Map;

@@ -1,6 +1,4 @@
 
-// $Id: SQLBatchObjectAccess.java,v 1.5 2005/10/24 11:12:03 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.sql.PreparedStatement;

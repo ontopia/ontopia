@@ -1,4 +1,3 @@
-// $Id: AbstractTopicMapTest.java,v 1.5 2002/06/06 11:56:56 grove Exp $
 
 package net.ontopia.topicmaps.core;
 

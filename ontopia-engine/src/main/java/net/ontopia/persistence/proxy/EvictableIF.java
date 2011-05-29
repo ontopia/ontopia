@@ -1,4 +1,3 @@
-// $Id: EvictableIF.java,v 1.2 2007/09/27 08:34:29 geir.gronmo Exp $
 
 package net.ontopia.persistence.proxy;
 

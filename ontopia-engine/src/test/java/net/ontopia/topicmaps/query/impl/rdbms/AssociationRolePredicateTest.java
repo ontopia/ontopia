@@ -1,6 +1,4 @@
 
-// $Id: AssociationRolePredicateTest.java,v 1.1 2003/08/18 10:16:39 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

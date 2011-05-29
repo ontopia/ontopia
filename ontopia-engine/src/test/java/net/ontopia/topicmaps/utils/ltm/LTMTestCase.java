@@ -1,6 +1,4 @@
 
-// $Id: LTMTestGenerator.java,v 1.11 2006/01/19 12:35:35 grove Exp $
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.*;

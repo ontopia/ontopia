@@ -1,4 +1,3 @@
-// $Id: AbstractConnectionFactory.java,v 1.9 2006/01/18 08:23:47 grove Exp $
 
 package net.ontopia.persistence.proxy;
 

@@ -1,6 +1,4 @@
 
-// $Id: RDBMSMapping.java,v 1.13 2008/12/04 11:25:49 lars.garshol Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.HashMap;

@@ -1,6 +1,4 @@
 
-// $Id: ScopePredicateTest.java,v 1.1 2003/10/27 07:51:02 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

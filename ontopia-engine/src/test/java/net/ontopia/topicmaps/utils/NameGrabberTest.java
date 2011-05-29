@@ -1,4 +1,3 @@
-// $Id: NameGrabberTest.java,v 1.12 2008/06/13 08:17:55 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.utils;
 

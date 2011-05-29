@@ -1,6 +1,4 @@
 
-// $Id: HighLowKeyGenerator.java,v 1.30 2006/09/28 13:02:37 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.sql.Connection;

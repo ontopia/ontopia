@@ -1,4 +1,3 @@
-// $Id: StringTemplateUtilsTest.java,v 1.8 2004/03/08 09:37:27 larsga Exp $
 
 package net.ontopia.utils;
 

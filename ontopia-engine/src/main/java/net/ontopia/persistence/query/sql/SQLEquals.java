@@ -1,4 +1,3 @@
-// $Id: SQLEquals.java,v 1.3 2003/10/15 08:44:24 grove Exp $
 
 package net.ontopia.persistence.query.sql;
 

@@ -1,6 +1,4 @@
 
-// $Id: AbstractXMLTestCase.java,v 1.11 2003/03/28 15:44:04 larsga Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

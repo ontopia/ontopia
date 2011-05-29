@@ -1,6 +1,4 @@
 
-// $Id: PropertyUtils.java,v 1.12 2008/12/04 11:32:39 lars.garshol Exp $
-
 package net.ontopia.utils;
 
 import java.io.File;

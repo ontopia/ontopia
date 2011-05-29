@@ -1,4 +1,3 @@
-// $Id: DefaultTMDocGeneratorTest.java,v 1.12 2009/05/18 12:54:01 geir.gronmo Exp $
 
 package net.ontopia.infoset.fulltext.topicmaps;
 

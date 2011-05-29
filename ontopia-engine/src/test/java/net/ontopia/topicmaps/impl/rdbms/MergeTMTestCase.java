@@ -1,4 +1,3 @@
-// $Id: MergeTMTestGenerator.java,v 1.8 2007/05/14 07:22:29 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.impl.rdbms;
 

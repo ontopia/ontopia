@@ -1,6 +1,4 @@
 
-// $Id: TMXMLReadErrorTests.java,v 1.1 2006/05/04 15:41:05 larsga Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

@@ -1,6 +1,4 @@
 
-// $Id: TypePredicateTest.java,v 1.13 2008/06/12 14:37:21 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

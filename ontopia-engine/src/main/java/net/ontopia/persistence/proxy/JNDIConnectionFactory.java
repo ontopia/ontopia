@@ -1,6 +1,4 @@
 
-// $Id: JNDIConnectionFactory.java,v 1.8 2005/10/14 13:25:07 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.sql.Connection;

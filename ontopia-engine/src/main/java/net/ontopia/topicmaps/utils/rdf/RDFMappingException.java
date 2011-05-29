@@ -1,6 +1,4 @@
 
-// $Id: RDFMappingException.java,v 1.3 2004/06/29 01:25:09 larsga Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import net.ontopia.utils.OntopiaRuntimeException;

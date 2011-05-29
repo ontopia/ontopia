@@ -1,6 +1,4 @@
 
-// $Id: NameTest.java,v 1.20 2008/06/12 14:37:14 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.basic.index;
 
 import java.io.IOException;

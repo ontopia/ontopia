@@ -1,6 +1,4 @@
 
-// $Id: OccurrenceTest.java,v 1.19 2008/06/04 11:41:47 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 

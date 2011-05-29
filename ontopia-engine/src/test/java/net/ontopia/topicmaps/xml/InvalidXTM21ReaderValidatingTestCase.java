@@ -1,6 +1,4 @@
 
-// $Id: InvalidXTM21ReaderTestGenerator.java 1099 2010-06-06 12:42:25Z lars.heuer $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

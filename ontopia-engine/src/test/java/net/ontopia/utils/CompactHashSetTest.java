@@ -1,6 +1,4 @@
 
-// $Id: CompactHashSetTest.java,v 1.9 2005/05/03 12:40:27 grove Exp $
-
 package net.ontopia.utils;
 
 import java.util.*;

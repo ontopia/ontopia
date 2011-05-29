@@ -1,6 +1,4 @@
 
-// $Id: MD5.java,v 1.5 2004/08/20 10:24:45 trost Exp $
-
 package net.ontopia.net;
 
 // This class computes MD5 hashes.

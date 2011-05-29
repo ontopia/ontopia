@@ -1,6 +1,4 @@
 
-// $Id: QueryProfiler.java,v 1.1 2008/12/04 11:32:59 lars.garshol Exp $
-
 package net.ontopia.utils;
 
 import java.io.Writer;

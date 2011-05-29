@@ -1,4 +1,3 @@
-// $Id: StringifierGrabberTest.java,v 1.5 2002/08/01 13:04:37 grove Exp $
 
 package net.ontopia.utils;
 

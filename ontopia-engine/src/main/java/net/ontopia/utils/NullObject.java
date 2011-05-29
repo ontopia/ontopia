@@ -1,6 +1,4 @@
 
-// $Id: NullObject.java,v 1.11 2007/09/27 07:00:43 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 /**

@@ -1,6 +1,4 @@
 
-// $Id: TranslateSourceLocators.java,v 1.11 2008/06/13 08:36:25 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
 import java.util.Iterator;

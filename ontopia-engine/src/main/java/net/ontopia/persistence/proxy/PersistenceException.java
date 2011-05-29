@@ -1,6 +1,4 @@
 
-// $Id: PersistenceException.java,v 1.6 2003/10/01 14:05:48 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import net.ontopia.utils.OntopiaException;

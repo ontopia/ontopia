@@ -1,6 +1,4 @@
 
-// $Id: DataURLConnection.java,v 1.10 2004/11/28 13:44:24 larsga Exp $
-
 package net.ontopia.net.data;
 
 import java.io.InputStream;

@@ -1,6 +1,4 @@
 
-// $Id: ValuePredicateTest.java,v 1.11 2008/06/24 12:43:40 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

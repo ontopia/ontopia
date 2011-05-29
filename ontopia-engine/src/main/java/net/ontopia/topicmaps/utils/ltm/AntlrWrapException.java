@@ -1,6 +1,4 @@
 
-// $Id: AntlrWrapException.java,v 1.5 2008/12/04 11:30:50 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import antlr.RecognitionException;

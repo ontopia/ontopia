@@ -1,6 +1,4 @@
 
-// $Id: TopicMapListenerTests.java,v 1.13 2008/06/13 08:17:51 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core.events;
 
 import java.util.*;

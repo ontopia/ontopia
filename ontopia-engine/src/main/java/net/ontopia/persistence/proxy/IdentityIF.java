@@ -1,6 +1,4 @@
 
-// $Id: IdentityIF.java,v 1.15 2005/09/20 11:24:19 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 

@@ -1,6 +1,4 @@
 
-// $Id: XTMExporterTest.java,v 1.36 2008/06/25 11:28:58 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

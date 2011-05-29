@@ -1,6 +1,4 @@
 
-// $Id: RDFIntroSpector.java,v 1.3 2005/10/18 09:22:13 larsga Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.net.URL;

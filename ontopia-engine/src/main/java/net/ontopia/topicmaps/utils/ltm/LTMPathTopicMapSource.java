@@ -1,6 +1,4 @@
 
-// $Id: LTMPathTopicMapSource.java,v 1.11 2006/07/12 14:17:22 larsga Exp $
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.net.URL;

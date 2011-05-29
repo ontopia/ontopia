@@ -1,6 +1,4 @@
 
-// $Id: SourceLocatorPredicateTest.java,v 1.1 2003/11/21 16:32:49 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

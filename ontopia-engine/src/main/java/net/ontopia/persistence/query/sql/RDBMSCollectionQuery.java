@@ -1,4 +1,3 @@
-// $Id: RDBMSCollectionQuery.java,v 1.11 2006/03/14 10:08:11 grove Exp $
 
 package net.ontopia.persistence.query.sql;
 

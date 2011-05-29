@@ -1,6 +1,4 @@
 
-// $Id: SetPoolIF.java,v 1.6 2003/12/22 19:20:25 grove Exp $
-
 package net.ontopia.utils;
 
 import java.util.Set;

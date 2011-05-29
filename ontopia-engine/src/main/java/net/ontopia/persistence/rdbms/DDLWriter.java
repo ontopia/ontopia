@@ -1,4 +1,3 @@
-// $Id: DDLWriter.java,v 1.13 2006/12/18 12:27:23 grove Exp $
 
 package net.ontopia.persistence.rdbms;
 

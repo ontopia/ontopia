@@ -1,6 +1,4 @@
 
-// $Id: LTMEncodingSniffer.java,v 1.1 2009/02/09 08:19:33 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.IOException;

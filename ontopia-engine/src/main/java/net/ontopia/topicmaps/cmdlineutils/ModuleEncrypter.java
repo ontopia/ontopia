@@ -1,6 +1,4 @@
 
-// $Id: ModuleEncrypter.java,v 1.8 2002/08/27 18:13:50 larsga Exp $
-
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.File;

@@ -1,6 +1,4 @@
 
-// $Id: TimeSamples.java,v 1.5 2002/11/29 09:51:37 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.util.ArrayList;

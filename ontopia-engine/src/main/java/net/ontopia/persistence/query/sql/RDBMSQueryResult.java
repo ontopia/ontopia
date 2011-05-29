@@ -1,6 +1,4 @@
 
-// $Id: RDBMSQueryResult.java,v 1.12 2007/01/03 08:36:19 grove Exp $
-
 package net.ontopia.persistence.query.sql;
 
 import java.sql.Connection;

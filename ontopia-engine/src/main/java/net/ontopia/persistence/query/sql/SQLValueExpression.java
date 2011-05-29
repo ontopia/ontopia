@@ -1,6 +1,4 @@
 
-// $Id: SQLValueExpression.java,v 1.1 2004/06/08 09:21:33 grove Exp $
-
 package net.ontopia.persistence.query.sql;
 
 /**

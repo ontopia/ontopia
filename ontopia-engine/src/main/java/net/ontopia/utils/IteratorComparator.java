@@ -1,4 +1,3 @@
-// $Id: IteratorComparator.java,v 1.1 2005/03/17 17:05:31 grove Exp $
 
 package net.ontopia.utils;
 

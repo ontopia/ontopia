@@ -1,6 +1,4 @@
 
-// $Id: DatabaseProjectReader.java,v 1.19 2008/08/29 12:55:19 geir.gronmo Exp $
-
 package net.ontopia.persistence.rdbms;
 
 import java.io.FileInputStream;

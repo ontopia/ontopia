@@ -1,6 +1,4 @@
 
-// $Id: CharacterSetTest.java,v 1.1 2005/04/13 14:46:09 larsga Exp $
-
 package net.ontopia.utils;
 
 import junit.framework.TestCase;

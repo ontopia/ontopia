@@ -1,6 +1,4 @@
 
-// $Id: XTMValidator.java,v 1.13 2008/05/29 10:54:57 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.*;

@@ -1,6 +1,4 @@
 
-// $Id: RDBMSMatrixQuery.java,v 1.14 2006/03/14 10:08:11 grove Exp $
-
 package net.ontopia.persistence.query.sql;
 
 import java.sql.Connection;

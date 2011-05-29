@@ -1,6 +1,4 @@
 
-// $Id: ObjectAccessIF.java,v 1.16 2005/07/12 09:37:39 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 

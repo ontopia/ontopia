@@ -1,4 +1,3 @@
-// $Id: ContainmentDecider.java,v 1.2 2008/05/29 10:55:00 geir.gronmo Exp $
 
 package net.ontopia.utils;
 

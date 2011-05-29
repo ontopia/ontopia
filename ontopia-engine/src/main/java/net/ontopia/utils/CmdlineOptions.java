@@ -1,6 +1,4 @@
 
-// $Id: CmdlineOptions.java,v 1.13 2007/09/03 13:08:34 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import gnu.getopt.LongOpt;

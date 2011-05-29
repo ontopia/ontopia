@@ -1,6 +1,4 @@
 
-// $Id: DeletionUtilsTest.java,v 1.11 2008/05/23 11:49:49 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.io.*;

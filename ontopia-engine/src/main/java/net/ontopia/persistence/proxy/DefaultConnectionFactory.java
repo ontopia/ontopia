@@ -1,6 +1,4 @@
 
-// $Id: DefaultConnectionFactory.java,v 1.12 2008/12/04 11:26:07 lars.garshol Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.sql.Connection;

@@ -1,6 +1,4 @@
 
-// $Id: FieldDescriptor.java,v 1.16 2008/04/09 11:05:39 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.lang.reflect.Method;

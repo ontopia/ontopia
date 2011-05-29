@@ -1,6 +1,4 @@
 
-// $Id: PrefetcherTests.java,v 1.8 2008/06/13 08:36:26 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.File;

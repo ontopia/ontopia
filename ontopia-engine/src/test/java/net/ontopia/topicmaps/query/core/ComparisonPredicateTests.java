@@ -1,6 +1,4 @@
 
-// $Id: ComparisonPredicateTests.java,v 1.6 2008/06/13 11:16:17 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

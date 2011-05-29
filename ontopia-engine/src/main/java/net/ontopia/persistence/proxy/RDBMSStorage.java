@@ -1,6 +1,4 @@
 
-// $Id: RDBMSStorage.java,v 1.139 2008/09/04 09:27:00 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.File;

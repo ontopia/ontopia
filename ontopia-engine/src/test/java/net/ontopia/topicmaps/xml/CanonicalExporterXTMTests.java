@@ -1,6 +1,4 @@
 
-// $Id: CanonicalExporterXTMTests.java,v 1.10 2008/06/25 11:28:58 lars.garshol Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

@@ -1,6 +1,4 @@
 
-// $Id: TransactionalSoftHashMapIndex.java,v 1.2 2007/09/27 06:36:47 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;

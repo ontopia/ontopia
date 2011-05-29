@@ -1,6 +1,4 @@
 
-// $Id: AbstractScopedTest.java,v 1.10 2008/01/14 12:52:28 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 public abstract class AbstractScopedTest extends AbstractTMObjectTest {

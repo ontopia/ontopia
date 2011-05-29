@@ -1,6 +1,4 @@
 
-// $Id: TrackableSet.java,v 1.26 2007/09/27 06:36:47 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.ArrayList;

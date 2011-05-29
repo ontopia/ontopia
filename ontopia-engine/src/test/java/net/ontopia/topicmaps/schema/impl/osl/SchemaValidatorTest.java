@@ -1,6 +1,4 @@
 
-// $Id: SchemaValidatorTest.java,v 1.19 2008/06/13 08:17:54 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.IOException;

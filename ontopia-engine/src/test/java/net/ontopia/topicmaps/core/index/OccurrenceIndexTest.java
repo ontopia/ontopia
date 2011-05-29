@@ -1,6 +1,4 @@
 
-// $Id: OccurrenceIndexTest.java,v 1.16 2008/06/24 12:43:39 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core.index;
 
 import net.ontopia.topicmaps.core.DataTypes;

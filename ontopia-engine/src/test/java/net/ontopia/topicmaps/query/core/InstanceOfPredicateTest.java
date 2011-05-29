@@ -1,6 +1,4 @@
 
-// $Id: InstanceOfPredicateTest.java,v 1.4 2006/07/06 12:07:22 grove Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

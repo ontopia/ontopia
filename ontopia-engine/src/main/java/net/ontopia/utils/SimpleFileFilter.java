@@ -1,4 +1,3 @@
-// $Id: SimpleFileFilter.java,v 1.3 2004/10/15 09:07:40 ian Exp $
 
 package net.ontopia.utils;
 

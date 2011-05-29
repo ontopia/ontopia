@@ -1,4 +1,3 @@
-// $Id: SQLOneToManyReference.java,v 1.41 2008/04/10 08:04:25 geir.gronmo Exp $
 
 package net.ontopia.persistence.proxy;
 

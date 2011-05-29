@@ -1,6 +1,4 @@
 
-// $Id: TopicStringifiersTest.java,v 1.17 2008/06/13 08:17:55 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.*;

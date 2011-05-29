@@ -1,6 +1,4 @@
 
-// $Id: AssociationTest.java,v 1.17 2008/05/23 09:24:21 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 public abstract class AssociationTest extends AbstractTypedScopedTest {

@@ -1,6 +1,4 @@
 
-// $Id: LTMErrorTestGenerator.java,v 1.6 2005/03/30 11:45:47 opland Exp $
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.*;

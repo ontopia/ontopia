@@ -1,6 +1,4 @@
 
-// $Id: RDBMSDelete.java,v 1.3 2007/09/11 10:10:56 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
 import java.io.File;

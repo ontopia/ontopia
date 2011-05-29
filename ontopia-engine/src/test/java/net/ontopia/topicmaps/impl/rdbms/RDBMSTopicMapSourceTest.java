@@ -1,6 +1,4 @@
 
-// $Id: RDBMSTopicMapSourceTest.java,v 1.3 2007/09/03 07:38:18 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.impl.rdbms;
 
 import net.ontopia.topicmaps.entry.AbstractTopicMapSourceTest;

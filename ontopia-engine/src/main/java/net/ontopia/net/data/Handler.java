@@ -1,6 +1,4 @@
 
-// $Id: Handler.java,v 1.12 2004/11/28 13:44:37 larsga Exp $
-
 package net.ontopia.net.data;
 
 import java.io.IOException;

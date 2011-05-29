@@ -1,6 +1,4 @@
 
-// $Id: RandomTopicMapGenerator.java,v 1.6 2008/06/13 08:17:50 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.*;

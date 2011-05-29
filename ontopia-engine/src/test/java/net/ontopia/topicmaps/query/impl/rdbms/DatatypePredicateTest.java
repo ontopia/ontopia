@@ -1,6 +1,4 @@
 
-// $Id: DatatypePredicateTest.java,v 1.1 2008/07/23 14:25:42 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

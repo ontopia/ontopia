@@ -1,6 +1,4 @@
 
-// $Id: LongIdentity.java,v 1.1 2005/09/20 11:24:19 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.Externalizable;

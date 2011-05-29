@@ -1,4 +1,3 @@
-// $Id: ScopedIFComparator.java,v 1.14 2007/08/20 06:24:12 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.utils;
 

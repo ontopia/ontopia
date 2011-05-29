@@ -1,6 +1,4 @@
 
-// $Id: ObjectUtils.java,v 1.15 2008/09/29 08:52:41 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import java.util.*;

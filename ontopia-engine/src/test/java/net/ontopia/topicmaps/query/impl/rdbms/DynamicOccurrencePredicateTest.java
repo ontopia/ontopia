@@ -1,6 +1,4 @@
 
-// $Id: DynamicOccurrencePredicateTest.java,v 1.1 2003/09/04 12:58:50 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

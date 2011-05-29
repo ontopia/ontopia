@@ -1,6 +1,4 @@
 
-// $Id: BaseLocatorPredicateTest.java,v 1.6 2008/01/11 13:29:34 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

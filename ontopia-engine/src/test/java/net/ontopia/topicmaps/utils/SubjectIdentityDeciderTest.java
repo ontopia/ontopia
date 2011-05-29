@@ -1,6 +1,4 @@
 
-// $Id: SubjectIdentityDeciderTest.java,v 1.7 2008/06/13 08:36:29 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import junit.framework.TestCase;

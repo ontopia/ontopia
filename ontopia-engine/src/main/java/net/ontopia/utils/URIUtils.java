@@ -1,6 +1,4 @@
 
-// $Id: URIUtils.java,v 1.17 2007/08/29 13:05:23 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import java.io.File;

@@ -1,6 +1,4 @@
 
-// $Id: ContentInputStream.java,v 1.2 2008/05/29 10:54:56 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.FilterInputStream;

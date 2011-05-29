@@ -1,4 +1,3 @@
-// $Id: SQLTypes.java,v 1.15 2008/05/28 12:38:43 geir.gronmo Exp $
 
 package net.ontopia.persistence.proxy;
 

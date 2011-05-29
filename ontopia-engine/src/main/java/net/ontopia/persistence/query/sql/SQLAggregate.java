@@ -1,4 +1,3 @@
-// $Id: SQLAggregate.java,v 1.5 2004/05/21 12:29:18 grove Exp $
 
 package net.ontopia.persistence.query.sql;
 

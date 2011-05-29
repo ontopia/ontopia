@@ -1,6 +1,4 @@
 
-// $Id: FileUtilsTest.java,v 1.5 2003/09/11 12:33:18 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.io.*;

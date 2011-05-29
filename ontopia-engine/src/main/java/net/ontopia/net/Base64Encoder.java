@@ -1,6 +1,4 @@
 
-// $Id: Base64Encoder.java,v 1.7 2003/07/28 10:06:18 larsga Exp $
-
 package net.ontopia.net;
 
 import java.io.ByteArrayInputStream;

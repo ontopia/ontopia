@@ -1,6 +1,4 @@
 
-// $Id: DeciderUtils.java,v 1.3 2004/11/29 19:10:44 grove Exp $
-
 package net.ontopia.utils;
 
 /**

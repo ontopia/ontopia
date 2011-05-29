@@ -1,6 +1,4 @@
 
-// $Id: ROTransaction.java,v 1.6 2007/09/17 08:28:02 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import gnu.trove.TObjectIntProcedure;

@@ -1,6 +1,4 @@
 
-// $Id: JGroupsCluster.java,v 1.18 2008/01/07 12:48:52 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.StringWriter;

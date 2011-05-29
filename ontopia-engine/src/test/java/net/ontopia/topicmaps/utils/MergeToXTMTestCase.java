@@ -1,4 +1,3 @@
-// $Id: MergeToXTMTestGenerator.java,v 1.5 2006/01/19 12:35:35 grove Exp $
 
 package net.ontopia.topicmaps.utils;
 

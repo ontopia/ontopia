@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.*;

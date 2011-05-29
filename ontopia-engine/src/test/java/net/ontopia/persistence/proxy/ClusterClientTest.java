@@ -1,6 +1,4 @@
 
-// $Id: ClusterClientTest.java,v 1.14 2008/06/13 08:36:25 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.*;

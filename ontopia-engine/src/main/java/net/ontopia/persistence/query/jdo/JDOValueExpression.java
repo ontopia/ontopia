@@ -1,6 +1,4 @@
 
-// $Id: JDOValueExpression.java,v 1.1 2004/06/08 09:21:32 grove Exp $
-
 package net.ontopia.persistence.query.jdo;
 
 /**

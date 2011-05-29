@@ -1,6 +1,4 @@
 
-// $Id: ClosureIF.java,v 1.4 2002/06/03 13:32:47 larsga Exp $
-
 package net.ontopia.utils;
 
 /**

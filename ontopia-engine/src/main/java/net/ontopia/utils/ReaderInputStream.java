@@ -1,6 +1,4 @@
 
-// $Id: ReaderInputStream.java,v 1.1 2008/04/10 08:12:08 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import java.io.*;

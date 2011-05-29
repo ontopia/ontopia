@@ -1,6 +1,4 @@
 
-// $Id: ChainedIndex.java,v 1.7 2002/07/31 21:45:41 grove Exp $
-
 package net.ontopia.utils;
 
 /**

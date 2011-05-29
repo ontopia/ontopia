@@ -1,6 +1,4 @@
 
-// $Id: TologDelete.java,v 1.5 2008/01/14 11:37:13 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.*;

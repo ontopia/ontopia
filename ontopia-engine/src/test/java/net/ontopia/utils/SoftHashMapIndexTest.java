@@ -1,6 +1,4 @@
 
-// $Id: SoftHashMapIndexTest.java,v 1.6 2007/08/20 08:15:50 lars.garshol Exp $
-
 package net.ontopia.utils;
 
 import junit.framework.TestCase;

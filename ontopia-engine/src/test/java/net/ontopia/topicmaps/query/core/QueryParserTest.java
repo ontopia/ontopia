@@ -1,6 +1,4 @@
 
-// $Id: QueryParserTest.java,v 1.30 2008/01/09 10:07:33 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

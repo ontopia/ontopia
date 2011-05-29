@@ -1,6 +1,4 @@
 
-// $Id: ClassDescriptor.java,v 1.12 2006/01/20 16:49:46 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.ArrayList;

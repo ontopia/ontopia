@@ -1,6 +1,4 @@
 
-// $Id: AndDecider.java,v 1.9 2004/11/29 19:10:44 grove Exp $
-
 package net.ontopia.utils;
 
 import java.util.Collection;

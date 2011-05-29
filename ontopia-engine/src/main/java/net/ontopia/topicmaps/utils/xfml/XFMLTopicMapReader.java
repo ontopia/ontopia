@@ -1,6 +1,4 @@
 
-// $Id: XFMLTopicMapReader.java,v 1.3 2008/01/11 13:29:35 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils.xfml;
 
 import java.io.*;

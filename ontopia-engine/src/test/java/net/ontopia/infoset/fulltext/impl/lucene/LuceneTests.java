@@ -1,6 +1,4 @@
 
-// $Id: LuceneTests.java,v 1.27 2008/06/12 14:37:11 geir.gronmo Exp $
-
 package net.ontopia.infoset.fulltext.impl.lucene;
 
 import java.io.File;

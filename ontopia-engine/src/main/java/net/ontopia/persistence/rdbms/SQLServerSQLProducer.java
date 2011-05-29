@@ -1,6 +1,4 @@
 
-// $Id: SQLServerSQLProducer.java,v 1.2 2006/12/18 12:32:52 grove Exp $
-
 package net.ontopia.persistence.rdbms;
 
 import java.io.IOException;

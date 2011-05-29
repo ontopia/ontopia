@@ -1,6 +1,4 @@
 
-// $Id: ArrayUtils.java,v 1.10 2009/02/10 12:28:12 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import java.util.Arrays;

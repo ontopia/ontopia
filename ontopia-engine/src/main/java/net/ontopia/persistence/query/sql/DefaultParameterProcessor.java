@@ -1,6 +1,4 @@
 
-// $Id: DefaultParameterProcessor.java,v 1.9 2005/07/12 09:37:40 grove Exp $
-
 package net.ontopia.persistence.query.sql;
 
 import java.sql.Connection;

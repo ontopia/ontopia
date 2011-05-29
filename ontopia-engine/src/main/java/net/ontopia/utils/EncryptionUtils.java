@@ -1,6 +1,4 @@
 
-// $Id: EncryptionUtils.java,v 1.1 2002/06/13 11:12:11 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.io.ByteArrayInputStream;

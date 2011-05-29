@@ -1,6 +1,4 @@
 
-// $Id: DataURLTest.java,v 1.1 2005/03/20 12:59:15 larsga Exp $
-
 package net.ontopia.net.data;
 
 import junit.framework.TestCase;

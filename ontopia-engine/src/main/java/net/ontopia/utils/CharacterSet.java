@@ -1,6 +1,4 @@
 
-// $Id: CharacterSet.java,v 1.1 2005/04/13 14:45:59 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.util.List;

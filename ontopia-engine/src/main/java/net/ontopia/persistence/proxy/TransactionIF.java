@@ -1,6 +1,4 @@
 
-// $Id: TransactionIF.java,v 1.43 2006/02/06 09:15:16 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;

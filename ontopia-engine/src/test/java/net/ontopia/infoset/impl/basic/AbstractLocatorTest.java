@@ -1,6 +1,4 @@
 
-// $Id: AbstractLocatorTest.java,v 1.5 2003/02/13 13:56:02 larsga Exp $	
-
 package net.ontopia.infoset.impl.basic;
 
 import junit.framework.TestCase;

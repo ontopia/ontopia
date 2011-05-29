@@ -1,6 +1,4 @@
 
-// $Id: URIFragmentLocatorTest.java,v 1.1 2004/03/08 09:22:09 larsga Exp $
-
 package net.ontopia.infoset.impl.basic;
 
 import junit.framework.TestCase;

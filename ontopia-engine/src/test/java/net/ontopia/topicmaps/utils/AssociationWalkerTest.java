@@ -1,4 +1,3 @@
-// $Id: AssociationWalkerTest.java,v 1.16 2008/05/23 09:24:23 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.utils;
 

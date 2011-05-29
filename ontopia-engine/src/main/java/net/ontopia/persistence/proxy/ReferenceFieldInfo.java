@@ -1,6 +1,4 @@
 
-// $Id: ReferenceFieldInfo.java,v 1.30 2008/12/04 11:25:57 lars.garshol Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.sql.PreparedStatement;

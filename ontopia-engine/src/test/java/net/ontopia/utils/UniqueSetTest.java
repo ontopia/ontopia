@@ -1,6 +1,4 @@
 
-// $Id: UniqueSetTest.java,v 1.6 2003/06/04 17:24:20 grove Exp $
-
 package net.ontopia.utils;
 
 import java.util.*;

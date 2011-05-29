@@ -1,6 +1,4 @@
 
-// $Id: LTMTopicMapWriter.java,v 1.52 2008/12/04 11:31:29 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ltm;
 
 import java.io.IOException;

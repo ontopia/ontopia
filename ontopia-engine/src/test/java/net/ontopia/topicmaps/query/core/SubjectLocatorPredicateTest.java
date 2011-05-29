@@ -1,6 +1,4 @@
 
-// $Id: SubjectLocatorPredicateTest.java,v 1.6 2008/05/26 07:21:41 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

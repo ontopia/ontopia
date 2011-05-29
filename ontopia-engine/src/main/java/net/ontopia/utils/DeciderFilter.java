@@ -1,6 +1,4 @@
 
-// $Id: DeciderFilter.java,v 1.8 2005/04/07 08:42:31 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.util.ArrayList;

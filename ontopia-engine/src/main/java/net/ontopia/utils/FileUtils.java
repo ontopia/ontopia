@@ -1,6 +1,4 @@
 
-// $Id: FileUtils.java,v 1.17 2008/11/03 12:26:44 lars.garshol Exp $
-
 package net.ontopia.utils;
 
 import java.io.BufferedInputStream;

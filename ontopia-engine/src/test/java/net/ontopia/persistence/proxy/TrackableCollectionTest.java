@@ -1,6 +1,4 @@
 
-// $Id: TrackableCollectionTest.java,v 1.4 2005/07/12 09:37:41 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import junit.framework.TestCase;

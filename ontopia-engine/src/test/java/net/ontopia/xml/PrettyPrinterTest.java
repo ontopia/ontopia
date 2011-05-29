@@ -1,6 +1,4 @@
 
-// $Id: PrettyPrinterTest.java,v 1.10 2004/12/01 15:09:24 larsga Exp $	
-
 package net.ontopia.xml;
 
 import java.io.StringWriter;

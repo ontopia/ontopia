@@ -1,6 +1,4 @@
 
-// $Id: CompactIdentityHashSet.java,v 1.4 2006/04/06 07:41:24 grove Exp $
-
 package net.ontopia.utils;
 
 // WARNING: This class is a direct copy of the CompactHashSet.java

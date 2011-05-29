@@ -1,6 +1,4 @@
 
-// $Id: DynamicAssociationPredicateTest.java,v 1.11 2008/05/23 09:24:22 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

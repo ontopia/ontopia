@@ -1,6 +1,4 @@
 
-// $Id: RDBMSAccess.java,v 1.84 2007/06/12 13:10:04 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.sql.Connection;

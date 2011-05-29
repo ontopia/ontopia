@@ -1,6 +1,4 @@
 
-// $Id: MergeTest.java,v 1.38 2009/04/27 11:06:20 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.io.File;

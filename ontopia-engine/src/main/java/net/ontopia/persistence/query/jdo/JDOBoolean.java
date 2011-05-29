@@ -1,6 +1,4 @@
 
-// $Id: JDOBoolean.java,v 1.3 2003/12/18 22:33:06 grove Exp $
-
 package net.ontopia.persistence.query.jdo;
 
 /**

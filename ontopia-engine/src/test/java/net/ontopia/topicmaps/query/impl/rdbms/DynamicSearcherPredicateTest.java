@@ -1,6 +1,4 @@
 
-// $Id: DynamicSearcherPredicateTest.java,v 1.1 2006/07/06 10:55:31 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

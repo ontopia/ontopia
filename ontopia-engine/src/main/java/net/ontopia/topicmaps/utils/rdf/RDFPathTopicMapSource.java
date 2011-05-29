@@ -1,6 +1,4 @@
 
-// $Id: RDFPathTopicMapSource.java,v 1.9 2004/11/30 14:59:52 larsga Exp $
-
 package net.ontopia.topicmaps.utils.rdf;
 
 import java.net.URL;

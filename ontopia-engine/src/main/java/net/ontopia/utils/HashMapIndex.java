@@ -1,6 +1,4 @@
 
-// $Id: HashMapIndex.java,v 1.4 2002/11/18 13:51:25 larsga Exp $
-
 package net.ontopia.utils;
 
 import java.util.HashMap;

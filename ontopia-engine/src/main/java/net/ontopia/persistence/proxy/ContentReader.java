@@ -1,6 +1,4 @@
 
-// $Id: ContentReader.java,v 1.3 2008/05/30 12:46:40 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.FilterReader;

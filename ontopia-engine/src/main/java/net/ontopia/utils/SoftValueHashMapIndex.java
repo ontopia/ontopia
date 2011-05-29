@@ -1,6 +1,4 @@
 
-// $Id: SoftValueHashMapIndex.java,v 1.6 2006/03/23 08:32:50 grove Exp $
-
 package net.ontopia.utils;
 
 import java.lang.ref.ReferenceQueue;

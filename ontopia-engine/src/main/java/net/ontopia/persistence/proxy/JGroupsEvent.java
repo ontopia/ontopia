@@ -1,6 +1,4 @@
 
-// $Id: JGroupsEvent.java,v 1.3 2007/09/27 12:20:22 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.io.Externalizable;

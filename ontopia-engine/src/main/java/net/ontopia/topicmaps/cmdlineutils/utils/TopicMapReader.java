@@ -1,4 +1,3 @@
-// $Id: TopicMapReader.java,v 1.7 2008/01/09 10:07:27 geir.gronmo Exp $
 
 package net.ontopia.topicmaps.cmdlineutils.utils;
 

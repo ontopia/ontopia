@@ -1,6 +1,4 @@
 
-// $Id: CmdlineOptionsTest.java,v 1.2 2007/09/03 13:08:34 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 import java.util.*;

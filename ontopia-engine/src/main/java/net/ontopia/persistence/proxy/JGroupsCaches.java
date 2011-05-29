@@ -1,6 +1,4 @@
 
-// $Id: JGroupsCaches.java,v 1.5 2007/09/27 08:34:28 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.*;

@@ -1,4 +1,3 @@
-// $Id: StorageAccessIF.java,v 1.38 2006/01/20 07:31:22 grove Exp $
 
 package net.ontopia.persistence.proxy;
 

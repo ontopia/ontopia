@@ -1,6 +1,4 @@
 
-// $Id: QueryWrapperTest.java,v 1.1 2007/11/20 09:07:41 lars.garshol Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.util.Map;

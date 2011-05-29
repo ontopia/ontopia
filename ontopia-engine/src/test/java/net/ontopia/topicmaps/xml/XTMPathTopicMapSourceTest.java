@@ -1,6 +1,4 @@
 
-// $Id: XTMPathTopicMapSourceTest.java,v 1.1 2005/07/04 10:19:26 grove Exp $
-
 package net.ontopia.topicmaps.xml;
 
 import java.io.File;

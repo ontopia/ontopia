@@ -1,6 +1,4 @@
 
-// $Id: AbstractPredicateTest.java,v 1.5 2008/01/11 12:58:56 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 

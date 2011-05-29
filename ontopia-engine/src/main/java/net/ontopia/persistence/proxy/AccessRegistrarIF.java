@@ -1,4 +1,3 @@
-// $Id: AccessRegistrarIF.java,v 1.14 2006/03/14 10:08:12 grove Exp $
 
 package net.ontopia.persistence.proxy;
 

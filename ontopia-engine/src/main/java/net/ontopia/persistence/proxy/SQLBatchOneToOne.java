@@ -1,4 +1,3 @@
-// $Id: SQLBatchOneToOne.java,v 1.10 2005/10/24 11:12:03 grove Exp $
 
 package net.ontopia.persistence.proxy;
 

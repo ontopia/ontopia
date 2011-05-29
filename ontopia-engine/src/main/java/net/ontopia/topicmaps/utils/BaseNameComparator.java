@@ -1,6 +1,4 @@
 
-// $Id: BaseNameComparator.java,v 1.3 2008/06/12 14:37:23 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.utils;
 
 import java.util.*;

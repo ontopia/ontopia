@@ -1,4 +1,3 @@
-// $Id: AggregateFieldInfo.java,v 1.23 2008/04/10 08:04:26 geir.gronmo Exp $
 
 package net.ontopia.persistence.proxy;
 

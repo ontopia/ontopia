@@ -1,4 +1,3 @@
-// $Id: StringifierComparator.java,v 1.9 2005/10/16 12:06:05 grove Exp $
 
 package net.ontopia.utils;
 

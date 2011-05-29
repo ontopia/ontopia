@@ -1,6 +1,4 @@
 
-// $Id: AbstractFieldInfo.java,v 1.10 2005/07/12 09:37:39 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.lang.reflect.Method;

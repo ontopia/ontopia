@@ -1,4 +1,3 @@
-// $Id: IdentityFieldInfo.java,v 1.36 2008/04/10 08:04:25 geir.gronmo Exp $
 
 package net.ontopia.persistence.proxy;
 

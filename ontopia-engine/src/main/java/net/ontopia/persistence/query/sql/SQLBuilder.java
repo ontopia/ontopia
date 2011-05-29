@@ -1,6 +1,4 @@
 
-// $Id: SQLBuilder.java,v 1.151 2008/07/23 13:23:58 geir.gronmo Exp $
-
 package net.ontopia.persistence.query.sql;
 
 import java.sql.Types;

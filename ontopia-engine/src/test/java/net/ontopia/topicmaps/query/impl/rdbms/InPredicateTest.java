@@ -1,6 +1,4 @@
 
-// $Id: InPredicateTest.java,v 1.1 2003/11/27 20:49:35 grove Exp $
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.io.IOException;

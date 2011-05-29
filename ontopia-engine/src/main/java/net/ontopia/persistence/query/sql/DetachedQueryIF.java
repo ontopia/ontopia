@@ -1,4 +1,3 @@
-// $Id: DetachedQueryIF.java,v 1.1 2005/10/05 19:52:11 grove Exp $
 
 package net.ontopia.persistence.query.sql;
 

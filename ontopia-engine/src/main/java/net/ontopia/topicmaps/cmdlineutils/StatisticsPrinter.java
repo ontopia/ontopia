@@ -1,6 +1,4 @@
 
-// $Id: StatisticsPrinter.java,v 1.33 2008/06/13 08:17:50 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.util.*;

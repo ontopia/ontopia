@@ -1,6 +1,4 @@
 
-// $Id: SynchronizedLookupIndex.java,v 1.2 2007/05/29 09:03:27 geir.gronmo Exp $
-
 package net.ontopia.utils;
 
 /**

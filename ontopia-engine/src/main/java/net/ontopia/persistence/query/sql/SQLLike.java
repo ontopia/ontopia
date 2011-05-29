@@ -1,6 +1,4 @@
 
-// $Id: SQLLike.java,v 1.10 2004/03/25 14:20:35 larsga Exp $
-
 package net.ontopia.persistence.query.sql;
 
 /** 

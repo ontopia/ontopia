@@ -1,6 +1,4 @@
 
-// $Id: URIUtilsTest.java,v 1.3 2005/06/19 13:03:28 larsga Exp $
-
 package net.ontopia.utils;
 
 import junit.framework.TestCase;

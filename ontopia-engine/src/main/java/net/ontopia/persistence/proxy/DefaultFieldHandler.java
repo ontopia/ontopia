@@ -1,4 +1,3 @@
-// $Id: DefaultFieldHandler.java,v 1.15 2008/04/10 08:04:26 geir.gronmo Exp $
 
 package net.ontopia.persistence.proxy;
 

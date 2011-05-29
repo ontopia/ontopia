@@ -1,4 +1,3 @@
-// $Id: LexicalComparator.java,v 1.10 2006/02/09 18:58:17 grove Exp $
 
 package net.ontopia.utils;
 

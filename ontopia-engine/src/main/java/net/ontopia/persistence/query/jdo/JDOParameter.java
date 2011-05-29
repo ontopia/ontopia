@@ -1,4 +1,3 @@
-// $Id: JDOParameter.java,v 1.12 2005/07/12 09:37:40 grove Exp $
 
 package net.ontopia.persistence.query.jdo;
 

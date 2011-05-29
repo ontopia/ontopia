@@ -1,4 +1,3 @@
-// $Id: ClassInfoIF.java,v 1.8 2006/01/20 16:49:46 grove Exp $
 
 package net.ontopia.persistence.proxy;
 

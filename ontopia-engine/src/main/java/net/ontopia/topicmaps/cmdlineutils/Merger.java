@@ -1,6 +1,4 @@
 
-// $Id: Merger.java,v 1.22 2008/05/28 10:30:49 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.File;

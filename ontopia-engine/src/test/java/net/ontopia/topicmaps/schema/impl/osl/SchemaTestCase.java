@@ -1,6 +1,4 @@
 
-// $Id: SchemaTestGenerator.java,v 1.10 2005/02/22 15:46:52 grove Exp $
-
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.IOException;

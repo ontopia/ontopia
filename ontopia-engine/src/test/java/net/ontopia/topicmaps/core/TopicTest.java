@@ -1,6 +1,4 @@
 
-// $Id: TopicTest.java,v 1.25 2008/06/13 08:17:51 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.core;
 
 import java.net.MalformedURLException;

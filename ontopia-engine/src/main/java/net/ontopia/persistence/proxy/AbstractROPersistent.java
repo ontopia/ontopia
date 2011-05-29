@@ -1,6 +1,4 @@
 
-// $Id: AbstractROPersistent.java,v 1.2 2008/04/30 19:43:36 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Arrays;

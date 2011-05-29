@@ -1,4 +1,3 @@
-// $Id: CSVImport.java,v 1.11 2006/08/15 07:44:02 grove Exp $
 
 package net.ontopia.persistence.rdbms;
 

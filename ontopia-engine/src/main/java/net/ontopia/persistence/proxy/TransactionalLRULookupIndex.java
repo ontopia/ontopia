@@ -1,6 +1,4 @@
 
-// $Id: TransactionalLRULookupIndex.java,v 1.15 2007/10/03 11:33:33 geir.gronmo Exp $
-
 package net.ontopia.persistence.proxy;
 
 import java.util.Collection;

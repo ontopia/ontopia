@@ -1,6 +1,4 @@
 
-// $Id: CSVExport.java,v 1.5 2006/08/07 08:40:45 grove Exp $
-
 package net.ontopia.persistence.rdbms;
 
 import java.io.FileInputStream;

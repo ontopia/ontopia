@@ -1,6 +1,4 @@
 
-// $Id: SubjectIdentifierPredicateTest.java,v 1.3 2008/06/13 08:17:53 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;

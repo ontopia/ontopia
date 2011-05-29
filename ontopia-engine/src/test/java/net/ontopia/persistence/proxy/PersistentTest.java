@@ -1,6 +1,4 @@
 
-// $Id: PersistentTest.java,v 1.5 2006/02/21 08:09:54 grove Exp $
-
 package net.ontopia.persistence.proxy;
 
 import junit.framework.TestCase;

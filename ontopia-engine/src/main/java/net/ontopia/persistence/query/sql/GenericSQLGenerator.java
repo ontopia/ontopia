@@ -1,6 +1,4 @@
 
-// $Id: GenericSQLGenerator.java,v 1.106 2008/07/23 13:23:49 geir.gronmo Exp $
-
 package net.ontopia.persistence.query.sql;
 
 import java.sql.Types;

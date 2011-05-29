@@ -1,6 +1,4 @@
 
-// $Id: IRIAsArgumentGenerator.java,v 1.1 2009/02/27 12:01:16 lars.garshol Exp $
-
 package net.ontopia.topicmaps.utils.ctm;
 
 import net.ontopia.infoset.core.LocatorIF;
