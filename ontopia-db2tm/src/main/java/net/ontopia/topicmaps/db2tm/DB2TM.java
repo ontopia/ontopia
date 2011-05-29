@@ -1,6 +1,4 @@
 
-// $Id: DB2TM.java,v 1.8 2006/11/09 13:42:13 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;

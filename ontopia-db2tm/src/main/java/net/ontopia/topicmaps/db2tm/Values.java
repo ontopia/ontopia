@@ -1,6 +1,4 @@
 
-// $Id: Values.java,v 1.5 2006/11/30 10:39:11 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.List;

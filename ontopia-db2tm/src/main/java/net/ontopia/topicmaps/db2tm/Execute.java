@@ -1,6 +1,4 @@
 
-// $Id: Execute.java,v 1.31 2007/01/31 09:34:20 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.*;

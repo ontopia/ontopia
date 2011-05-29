@@ -1,6 +1,4 @@
 
-// $Id: SynchronizationServlet.java,v 1.13 2007/06/07 08:17:36 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;

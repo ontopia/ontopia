@@ -1,6 +1,4 @@
 
-// $Id: Utils.java,v 1.5 2008/06/13 08:36:25 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.*;

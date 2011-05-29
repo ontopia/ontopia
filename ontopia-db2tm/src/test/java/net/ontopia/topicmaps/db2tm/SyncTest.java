@@ -1,6 +1,4 @@
 
-// $Id: SyncTest.java,v 1.2 2009/01/23 13:13:48 lars.garshol Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.Map;

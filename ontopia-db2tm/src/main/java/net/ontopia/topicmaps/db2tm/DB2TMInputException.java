@@ -1,6 +1,4 @@
 
-// $Id: DB2TMInputException.java,v 1.4 2006/08/02 09:05:33 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.Arrays;

@@ -1,6 +1,4 @@
 
-// $Id: CSVDataSource.java,v 1.18 2006/12/01 14:06:09 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.BufferedReader;

@@ -1,6 +1,4 @@
 
-// $Id: SynchronizationTask.java,v 1.10 2006/12/18 12:59:37 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.File;

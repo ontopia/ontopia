@@ -1,6 +1,4 @@
 
-// $Id: DB2TMConfigException.java,v 1.1 2006/06/28 08:21:49 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import net.ontopia.utils.OntopiaRuntimeException;

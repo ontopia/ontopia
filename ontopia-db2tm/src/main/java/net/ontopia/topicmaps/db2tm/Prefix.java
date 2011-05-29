@@ -1,6 +1,4 @@
 
-// $Id: Prefix.java,v 1.2 2006/05/03 10:19:05 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.ArrayList;

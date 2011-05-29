@@ -1,6 +1,4 @@
 
-// $Id: Context.java,v 1.31 2008/06/12 14:37:13 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.Collection;

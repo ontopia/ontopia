@@ -1,6 +1,4 @@
 
-// $Id: Entity.java,v 1.14 2007/02/27 12:42:39 grove Exp $
-
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.ArrayList;
