@@ -1,6 +1,4 @@
 
-// $Id: UserPrincipal.java,v 1.2 2006/01/12 11:11:58 larsga Exp $
-
 package net.ontopia.topicmaps.nav2.realm;
 
 import java.io.Serializable;

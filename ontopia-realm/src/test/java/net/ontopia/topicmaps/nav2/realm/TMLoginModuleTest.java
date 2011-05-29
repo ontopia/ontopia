@@ -1,6 +1,4 @@
 
-// $Id: TMLoginModuleTest.java,v 1.3 2005/03/20 13:41:11 grove Exp $
-
 package net.ontopia.topicmaps.nav2.realm;
 
 

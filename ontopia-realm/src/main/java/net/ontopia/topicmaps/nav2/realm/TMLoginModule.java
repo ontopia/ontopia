@@ -1,6 +1,4 @@
 
-// $Id: TMLoginModule.java,v 1.32 2007/08/27 15:36:00 geir.gronmo Exp $
-
 package net.ontopia.topicmaps.nav2.realm;
 
 import java.util.ArrayList;

@@ -1,6 +1,4 @@
 
-// $Id: TestableTMLoginModule.java,v 1.1 2005/03/04 09:42:27 grove Exp $
-
 package net.ontopia.topicmaps.nav2.realm;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
