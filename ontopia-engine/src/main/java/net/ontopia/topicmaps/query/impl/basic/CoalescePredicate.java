@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.query.impl.basic;
 
 import net.ontopia.utils.ObjectUtils;
@@ -18,7 +16,7 @@ public class CoalescePredicate implements BasicPredicateIF {
   }
 
   public String getSignature() {
-    return ". .! .+";
+    return ". . .+"; // must have at least three arguments
   }
   
   public int getCost(boolean[] boundparams) {

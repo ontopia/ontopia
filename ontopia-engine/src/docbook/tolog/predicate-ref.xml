@@ -449,8 +449,8 @@ $DATE &gt;= "1900"?</literallayout>
 <refpurpose>
  This predicate is often used to assign fallback or default values to
  variables. If the first argument is unbound then it is bound to the
- first non-null argument following it. If the first argument is bound
- then it will be compared to the first non-null argument following it.
+ first unbound argument following it. If the first argument is bound
+ then it will be compared to the first unbound argument following it.
 </refpurpose>
 </refnamediv>
 
@@ -479,9 +479,11 @@ $DATE &gt;= "1900"?</literallayout>
 <row>
 <entry>v1..vN</entry>
 <entry>object+</entry>
+<entry>no</entry>
 <entry>yes</entry>
-<entry>yes</entry>
-<entry>The value to check to see if it is not null. If not null then it will be bound or compared to the result argument. In that case any following arguments will be ignored.</entry>
+<entry>The value to check to see if it is bound. If it is not bound
+then it will be bound to or compared to the result argument. In that
+case any following arguments will be ignored.</entry>
 </row>
 </tbody>
 </tgroup>
