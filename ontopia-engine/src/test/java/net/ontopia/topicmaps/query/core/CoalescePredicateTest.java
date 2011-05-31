@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.query.core;
 
 import java.io.IOException;
@@ -80,5 +78,25 @@ public class CoalescePredicateTest extends AbstractPredicateTest {
                 "{ $A = thequeen, $B = horse | " +
                 "  $A = horse, $B = thequeen }, " +
                 "coalesce(thequeen, $A, $B)?");
-  }  
+  }
+
+  public void testIssue389() throws InvalidQueryException, IOException {
+    makeEmpty();
+
+    List matches = new ArrayList();
+    addMatch(matches, "value", "default");
+
+    verifyQuery(matches, "select $value from " +
+                         "coalesce($value, $unknown, \"default\")?");
+  }
+
+  public void testIssue389b() throws InvalidQueryException, IOException {
+    makeEmpty();
+
+    List matches = new ArrayList();
+    addMatch(matches, "value", "default");
+
+    verifyQuery(matches, "select $value from " +
+                         "coalesce($value, \"default\", $unknown)?");
+  }
 }
