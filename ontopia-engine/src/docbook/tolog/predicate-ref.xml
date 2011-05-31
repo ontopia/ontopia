@@ -448,9 +448,11 @@ $DATE &gt;= "1900"?</literallayout>
 <refname>coalesce</refname>
 <refpurpose>
  This predicate is often used to assign fallback or default values to
- variables. If the first argument is unbound then it is bound to the
- first unbound argument following it. If the first argument is bound
- then it will be compared to the first unbound argument following it.
+ variables; it ensures that the first argument is equal to the first
+ bound argument following it. In other words, if the first argument is
+ unbound then it is bound to the first bound argument following it. If
+ the first argument is bound then it will be compared to the first
+ bound argument following it.
 </refpurpose>
 </refnamediv>
 
