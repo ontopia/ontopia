@@ -57,7 +57,7 @@
 		<jtm.revision>46</jtm.revision>
 		<tmxml.revision>68</tmxml.revision>
 		<!-- reused dependency versions -->
-		<axis2.version>1.4.1</axis2.version>
+		<axis2.version>1.6.0</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
 	</properties>
 	
