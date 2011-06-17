@@ -17,6 +17,7 @@
       <artifactId>webapp-ontopoly</artifactId>
       <version>${project.version}</version>
       <type>war</type>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -49,29 +50,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>exploded</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <overlays>
-            <overlay>
-              <!-- empty groupId/artifactId represents the current build -->
-            </overlay>
-            <overlay>
-              <groupId>${project.groupId}</groupId>
-              <artifactId>webapp-ontopoly</artifactId>
-            </overlay>
-          </overlays>
-        </configuration>
-      </plugin>
       <plugin>
         <!-- usage: mvn jetty:run-exploded -->
         <groupId>org.mortbay.jetty</groupId>
