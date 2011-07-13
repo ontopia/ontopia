@@ -163,7 +163,7 @@ public abstract class TMObject extends AbstractRWPersistent
 
   /**
    * INTERNAL: Fires an event, so that listeners can be informed about
-   * the event. This method is typically called when the object id
+   * the event. This method is typically called when the object is
    * modified.
    */
   protected void fireEvent(String event, Object new_value, Object old_value) {
