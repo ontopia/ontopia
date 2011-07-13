@@ -198,30 +198,39 @@ public class FileUtils {
       thedir.mkdirs();
   }
 
-
-
   public static final String testdataInputRoot = "net/ontopia/testdata/";
   private static String testdataOutputRoot = null;
 
-  public static List getTestInputFiles(String baseDirectory, String subDirectory, String filter) {
+  public static List getTestInputFiles(String baseDirectory,
+                                       String subDirectory, String filter) {
     return getTestInputFiles(baseDirectory + "/" + subDirectory, filter);
   }
-  public static List getTestInputFiles(String baseDirectory, String subDirectory, ResourcesFilterIF filter) {
+  
+  public static List getTestInputFiles(String baseDirectory,
+                                       String subDirectory,
+                                       ResourcesFilterIF filter) {
     return getTestInputFiles(baseDirectory + "/" + subDirectory, filter);
   }
+  
   public static List getTestInputFiles(String directory, String filter) {
     String resourcesDirectory = testdataInputRoot + directory;
     ResourcesDirectoryReader directoryReader = new ResourcesDirectoryReader(resourcesDirectory, filter);
     return getTestInputFiles(directoryReader, resourcesDirectory);
   }
+  
   public static List getTestInputFiles(String directory, ResourcesFilterIF filter) {
     String resourcesDirectory = testdataInputRoot + directory;
-    ResourcesDirectoryReader directoryReader = new ResourcesDirectoryReader(resourcesDirectory, filter);
+    ResourcesDirectoryReader directoryReader =
+      new ResourcesDirectoryReader(resourcesDirectory, filter);
     return getTestInputFiles(directoryReader, resourcesDirectory);
   }
-  public static List getTestInputFiles(ResourcesDirectoryReader directoryReader, String resourcesDirectory) {
+  
+  public static List getTestInputFiles(ResourcesDirectoryReader directoryReader,
+                                       String resourcesDirectory) {
     Set<String> resources = directoryReader.getResources();
-    if (resources.size() == 0) throw new RuntimeException("No resources found in directory " + resourcesDirectory);
+    if (resources.size() == 0)
+      throw new RuntimeException("No resources found in directory " +
+                                 resourcesDirectory);
     List<String[]> tests = new ArrayList<String[]>();
     for (String resource : resources) {
       int slashPos = resource.lastIndexOf("/") + 1;
@@ -235,14 +244,20 @@ public class FileUtils {
   public static String getTestInputFile(String directory, String filename) {
     return "classpath:" + testdataInputRoot + directory + "/" + filename;
   }
-  public static String getTestInputFile(String directory, String subDirectory, String filename) {
+  
+  public static String getTestInputFile(String directory, String subDirectory,
+                                        String filename) {
     return getTestInputFile(directory + "/" + subDirectory, filename);
   }
-  public static String getTestInputFile(String directory, String subDirectory, String subSubDirectory, String filename) {
+  
+  public static String getTestInputFile(String directory, String subDirectory,
+                                        String subSubDirectory,
+                                        String filename) {
     return getTestInputFile(directory + "/" + subDirectory + "/" + subSubDirectory, filename);
   }
 
-  private static File getTransferredTestInputFile(String filein, File fileout) throws IOException, FileNotFoundException {
+  private static File getTransferredTestInputFile(String filein, File fileout)
+    throws IOException, FileNotFoundException {
     if (fileout.exists()) {
       // file has already been transferred, return as is
       return fileout;
@@ -255,40 +270,70 @@ public class FileUtils {
     streamin.close();
     return fileout;
   }
-  public static File getTransferredTestInputFile(String directory, String filename) throws IOException, FileNotFoundException {
+  
+  public static File getTransferredTestInputFile(String directory,
+                                                 String filename)
+    throws IOException, FileNotFoundException {
     return getTransferredTestInputFile(
       getTestInputFile(directory, filename),
       getTestOutputFile(directory, filename));
   }
-  public static File getTransferredTestInputFile(String directory, String subDirectory, String filename) throws IOException, FileNotFoundException {
+  
+  public static File getTransferredTestInputFile(String directory,
+                                                 String subDirectory,
+                                                 String filename)
+    throws IOException, FileNotFoundException {
     return getTransferredTestInputFile(
       getTestInputFile(directory, subDirectory, filename),
       getTestOutputFile(directory, subDirectory, filename));
   }
-  public static File getTransferredTestInputFile(String directory, String subDirectory, String subSubDirectory, String filename) throws IOException, FileNotFoundException {
+  
+  public static File getTransferredTestInputFile(String directory,
+                                                 String subDirectory,
+                                                 String subSubDirectory,
+                                                 String filename)
+    throws IOException, FileNotFoundException {
     return getTransferredTestInputFile(
       getTestInputFile(directory, subDirectory, subSubDirectory, filename),
       getTestOutputFile(directory, subDirectory, subSubDirectory, filename));
   }
 
-  public static void transferTestInputDirectory(String directory) throws IOException {
+  public static void transferTestInputDirectory(String directory)
+    throws IOException {
     transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory));
   }
-  public static void transferTestInputDirectory(String directory, boolean searchSubdirectories) throws IOException {
+  
+  public static void transferTestInputDirectory(String directory,
+                                                boolean searchSubdirectories)
+    throws IOException {
     transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories));
   }
-  public static void transferTestInputDirectory(String directory, String filter) throws IOException {
+  
+  public static void transferTestInputDirectory(String directory, String filter)
+    throws IOException {
     transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, filter));
   }
-  public static void transferTestInputDirectory(String directory, boolean searchSubdirectories, String filter) throws IOException {
+  
+  public static void transferTestInputDirectory(String directory,
+                                                boolean searchSubdirectories,
+                                                String filter)
+    throws IOException {
     transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories, filter));
   }
-  public static void transferTestInputDirectory(String directory, ResourcesFilterIF filter) throws IOException {
+  
+  public static void transferTestInputDirectory(String directory,
+                                                ResourcesFilterIF filter)
+    throws IOException {
     transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, filter));
   }
-  public static void transferTestInputDirectory(String directory, boolean searchSubdirectories, ResourcesFilterIF filter) throws IOException {
+  
+  public static void transferTestInputDirectory(String directory,
+                                                boolean searchSubdirectories,
+                                                ResourcesFilterIF filter)
+    throws IOException {
     transferTestInputDirectory(new ResourcesDirectoryReader(testdataInputRoot + directory, searchSubdirectories, filter));
   }
+  
   public static void transferTestInputDirectory(ResourcesDirectoryReader directoryReader) throws IOException {
     Set<String> resources = directoryReader.getResources();
     for (String resource : resources) {
@@ -303,16 +348,21 @@ public class FileUtils {
     verifyDirectory(getTestdataOutputDirectory(), directory);
     return new File(getTestdataOutputDirectory() + File.separator + directory + File.separator + filename);
   }
-  public static File getTestOutputFile(String directory, String subDirectory, String filename) {
+  
+  public static File getTestOutputFile(String directory, String subDirectory,
+                                       String filename) {
     return getTestOutputFile(directory + File.separator + subDirectory, filename);
   }
-  public static File getTestOutputFile(String directory, String subDirectory, String subSubDirectory, String filename) {
-    return getTestOutputFile(directory + File.separator + subDirectory + File.separator + subSubDirectory, filename);
+  
+  public static File getTestOutputFile(String directory, String subDirectory,
+                                       String subSubDirectory,
+                                       String filename) {
+    return getTestOutputFile(directory + File.separator + subDirectory +
+                             File.separator + subSubDirectory, filename);
   }
 
   /**
    * Returns the folder used for test output files
-   * @return the folder used for test output files
    */
   public static String getTestdataOutputDirectory() {
     if (testdataOutputRoot == null) {
