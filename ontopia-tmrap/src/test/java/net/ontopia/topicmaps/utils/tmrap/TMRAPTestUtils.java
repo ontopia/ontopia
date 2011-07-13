@@ -1,3 +1,4 @@
+
 package net.ontopia.topicmaps.utils.tmrap;
 
 import java.util.ArrayList;
@@ -7,6 +8,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.net.URLDecoder;
+import java.io.UnsupportedEncodingException;
+
+import net.ontopia.utils.OntopiaRuntimeException;
 
 public class TMRAPTestUtils {
 
@@ -30,6 +35,12 @@ public class TMRAPTestUtils {
           keyValueTokenizer.nextToken("=") : null;
       String value = keyValueTokenizer.hasMoreTokens() ?
           keyValueTokenizer.nextToken("=") : null;
+      if (value != null)
+        try {
+          value = URLDecoder.decode(value, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+          throw new OntopiaRuntimeException(e); // not bloody likely
+        }
       
       if (key != null)
         addParam(retVal, key, value);
