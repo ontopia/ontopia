@@ -91,5 +91,22 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
       throw new IOException(e.getMessage()); 
     }
   }
-  
+
+  /**
+   * PUBLIC: Controls whether or not internal references of the form
+   * '#id' will be exported.
+   * @since %NEXT%
+   */
+  public void setUseLocalIds(boolean use_local_ids) {
+    exporter.setUseLocalIds(use_local_ids);
+  }
+
+  /**
+   * PUBLIC: Whether or not internal references of the form '#id' will
+   * be exported.
+   * @since %NEXT%
+   */
+  public boolean getUseLocalIds() {
+    return exporter.getUseLocalIds();
+  }
 }

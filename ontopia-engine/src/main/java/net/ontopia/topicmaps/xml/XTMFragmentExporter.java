@@ -72,7 +72,15 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
   public void setUseLocalIds(boolean use_local_ids) {
     this.use_local_ids = use_local_ids;
   }
-   
+
+  /**
+   * PUBLIC: Whether or not internal references of the form '#id' will
+   * be exported.
+   */
+  public boolean getUseLocalIds() {
+    return use_local_ids;
+  }
+  
   /**
    * PUBLIC: Exports an XTM Fragment (complete with root element) to
    * the given DocumentHandler, containing all the topics retrieved
@@ -214,8 +222,6 @@ public class XTMFragmentExporter extends XTMTopicMapExporter {
       dh.endElement("baseName");
     }
   }
-
-
 
   protected void writeTopicRef(TopicIF topic, DocumentHandler dh)
     throws SAXException {
