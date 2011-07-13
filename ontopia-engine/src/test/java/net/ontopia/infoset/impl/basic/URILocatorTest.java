@@ -42,7 +42,7 @@ public class URILocatorTest extends AbstractLocatorTest {
   public void testFileWithPlus() {
     File file = new File("+");
     LocatorIF locator = new URILocator(file);
-    String correct = getCorrectFileURI(file);
+    String correct = getCorrectFileURI(file); 
     assertTrue("+ character not escaped correctly, got '" + locator.getAddress() + "'"
                + ", correct: '" + correct + "'",
                locator.getAddress().equals(correct));
@@ -51,7 +51,8 @@ public class URILocatorTest extends AbstractLocatorTest {
   public void testFileWithPercent() {
     File file = new File("%");
     LocatorIF locator = new URILocator(file);
-    String correct = getCorrectFileURI(file);
+    // % must be escaped, even in internal form
+    String correct = getCorrectFileURI(file) + "25";
     assertTrue("% character not escaped correctly: '" + locator.getAddress() + "', " +
                "correct: '" + correct + "'",
                locator.getAddress().equals(correct));
@@ -95,12 +96,12 @@ public class URILocatorTest extends AbstractLocatorTest {
   }
 
   public void testGetExternalFormHostname() {
-    testExternalForm("http://www.%F8l.no/", "http://www.%F8l.no/");
+    testExternalForm("http://www.%F8l.no/", "http://www.%C3%B8l.no/");
   }
   
   public void testGetExternalFormDirname() {
     testExternalForm("http://www.ontopia.no/%F8l.html",
-                     "http://www.ontopia.no/%F8l.html");
+                     "http://www.ontopia.no/%C3%B8l.html");
   }
 
   public void testGetExternalFormDirnameSpace() {
@@ -123,7 +124,7 @@ public class URILocatorTest extends AbstractLocatorTest {
                      "http://www.ontopia.net/this%7Cthat/");
   }
 
-  public void _testGetExternalFormBug2105() {
+  public void testGetExternalFormBug2105() {
     testExternalForm("http://en.wikipedia.org/wiki/Anton\u00EDn_Dvo\u0159\u00E1k",
                      "http://en.wikipedia.org/wiki/Anton%C3%ADn_Dvo%C5%99%C3%A1k");
   }
@@ -156,6 +157,16 @@ public class URILocatorTest extends AbstractLocatorTest {
     testAbsoluteResolution(base, "../../g", "http://a/g");
   }
 
+  public void testEscapedAmpersand() {
+    testExternalForm("http://www.ontopia.net/?foo=bar%26baz",
+                     "http://www.ontopia.net/?foo=bar%26baz");
+  }
+
+  public void testEscapedHash() {
+    testExternalForm("http://www.ontopia.net/?foo=bar%23baz",
+                     "http://www.ontopia.net/?foo=bar%23baz");
+  }
+  
   // --- Internal
 
   private void testAbsoluteResolution(String base, String uri, String external) {

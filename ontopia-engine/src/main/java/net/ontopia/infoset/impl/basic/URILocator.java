@@ -1,4 +1,6 @@
 
+// $Id: URILocator.java,v 1.54 2009/04/27 11:00:23 lars.garshol Exp $
+
 package net.ontopia.infoset.impl.basic;
 
 import java.io.Externalizable;
@@ -112,9 +114,7 @@ public class URILocator extends AbstractLocator implements Externalizable {
     if (schemeEnd == -1)
       throw new MalformedURLException("No valid scheme in URI: " + address);
 
-    if (StringUtils.regionEquals("file", uri, 0, 4) || 
-        StringUtils.regionEquals("jar:file", uri, 0, 8) || 
-        StringUtils.regionEquals("classpath", uri, 0, 9))
+    if (StringUtils.regionEquals("file", uri, 0, 4))
       length = parseFileUrl(uri, schemeEnd, length);
     else if (StringUtils.regionEquals("//", uri, schemeEnd+1, 2))
       length = parseHierarchicalUrl(uri, schemeEnd, length);
@@ -223,27 +223,52 @@ public class URILocator extends AbstractLocator implements Externalizable {
   
   static String toExternalForm(String address) {
     // need to escape characters that are not unreserved or reserved
-    char[] tmp = new char[address.length() * 3]; // worst case scenario
+    char[] tmp = new char[address.length() * 6]; // worst case scenario
     int pos = 0;
-    
+
+    // we don't escape % because if it's present in the URI it's because
+    // we didn't unescape it on the way in.
     for (int ix = 0; ix < address.length(); ix++) {
       char ch = address.charAt(ix);
       if ((ch >= 'a' && ch <= 'z') || // a-z
           (ch >= '?' && ch <= 'Z') || // ? @ A-Z
-          (ch >= '&' && ch <= ';') || // & ' ( ) * + , - . / 0-9 : ;
+          (ch >= '%' && ch <= ';') || // % & ' ( ) * + , - . / 0-9 : ;
           ch == '#' | ch == '!' || ch == '$' || ch == '=' || ch == '_' || ch == '~' ||
           (ch == '|' && ix == 7))     // file:/X|/; special case...
         tmp[pos++] = ch;
       else { // have to escape
-        // FIXME: should do proper UTF-8-encoding here
-        ch = (char) (ch & 0x00FF); // cutoff
         tmp[pos++] = '%';
-        tmp[pos++] = encodeHexDigit((ch & 0x00F0) >> 4);
-        tmp[pos++] = encodeHexDigit(ch & 0x000F);
+        if (ch <= 0x7F) {
+          // 0xxxxxxx
+          addByte(tmp, pos, ch);
+          pos += 2;
+        } else if (ch <= 0x07FF) {
+          // 110xxxxx 10xxxxxx
+          addByte(tmp, pos, (ch >> 6) | 0xC0);
+          pos += 2;
+          tmp[pos++] = '%';
+          addByte(tmp, pos, (ch & 0x3F) | 0x80);
+          pos += 2;
+        } else {
+          // 1110xxxx 10xxxxxx 10xxxxxx
+          addByte(tmp, pos, (ch >> 12) | 0xE0);
+          pos += 2;
+          tmp[pos++] = '%';
+          addByte(tmp, pos, ((ch >> 6) & 0x3F) | 0x80);
+          pos += 2;
+          tmp[pos++] = '%';
+          addByte(tmp, pos, (ch & 0x3F) | 0x80);
+          pos += 2;
+        }
       }
     }
     
     return new String(tmp, 0, pos);
+  }
+
+  private static void addByte(char[] tmp, int pos, int ch) {
+    tmp[pos] = encodeHexDigit((ch & 0x00F0) >> 4);
+    tmp[pos + 1] = encodeHexDigit(ch & 0x000F);
   }
 
   // escaping that has no understanding of the URI's internal structure
@@ -603,9 +628,15 @@ public class URILocator extends AbstractLocator implements Externalizable {
       case '%':
         if (ix + 2 >= length)
           throw new MalformedURLException("Incomplete percent-escape at end of URI");
-        uri[pos++] = (char) (decodeHexDigit(uri[ix+1]) * 16 +
-                             decodeHexDigit(uri[ix+2]));
-        ix += 2;
+        char ch = (char) (decodeHexDigit(uri[ix+1]) * 16 +
+                          decodeHexDigit(uri[ix+2]));
+        if (ch != 38 && ch != 37 && ch != 35) {
+          // it's not #, & or %, so we can unescape it
+          uri[pos++] = ch;
+          ix += 2;
+        } else
+          // it *is* #, & or %. therefore must leave alone
+          uri[pos++] = '%';
         break;
       case '+':
         uri[pos++] = ' ';
