@@ -170,8 +170,9 @@ public abstract class TMObject extends AbstractRWPersistent
     // Note: The object should already have been materialized at this
     // point, because it is about to be modified.
     TopicMapIF topicmap = getTopicMap();
-    if (topicmap == null) return;
-		RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
+    if (topicmap == null)
+      return;
+    RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
     EventManagerIF emanager = (EventManagerIF)store.getTransaction();
     // System.out.println("->Object: " + this + " event: " + event + " new: " + new_value + " old:" + old_value);
     emanager.processEvent(this, event, new_value, old_value);
