@@ -67,7 +67,7 @@ public class Processor {
     Context ctx = new Context();
     if (log.isInfoEnabled()) log.info("Adding relations: " + new Date());
 
-    try {      
+    try {
       // verify relation mapping
       Map ds_relations = Utils.verifyRelationsForMapping(rmapping);
       
@@ -787,16 +787,28 @@ public class Processor {
   }
 
   protected static void updateTypes(TopicIF topic, String[] types, Entity entity, String[] tuple, Context ctx) {
-    // clear existing topic types
-    Collection _types = topic.getTypes();
-    if (!_types.isEmpty()) {
-      Object[] typea = _types.toArray();
-      for (int i=0; i < typea.length; i++) {
-        topic.removeType((TopicIF)typea[i]);
-      }
+    // this is a bit convoluted because we don't want to change anything
+    // unless the set of types has actually changed
+
+    // tracking old types with this
+    Set<TopicIF> oldtypes = new CompactHashSet(topic.getTypes());
+
+    // loop over new list of types
+    for (int i = 0; i < types.length; i++) {
+      TopicIF type = Utils.getTopic(types[i], ctx);
+      if (type == null)
+        throw new DB2TMInputException("Topic type not found", entity, tuple,
+                                      types[i]);
+
+      if (oldtypes.contains(type))
+        oldtypes.remove(type);
+      else
+        topic.addType(type);
     }
-    // add new topic type(s)
-    addTypes(topic, types, entity, tuple, ctx);
+
+    // any old types that still remain need to be removed
+    for (TopicIF oldtype : oldtypes)
+      topic.removeType(oldtype);
   }
   
   protected static void removeTypes(TopicIF topic, String[] types, Context ctx) {
@@ -857,8 +869,10 @@ public class Processor {
         addScope(bn, field.getScope(), entity, tuple, ctx);
         log.trace("      +N "  + topic + " " + bn);
       } else {
-        bn.setValue(value);
-        log.trace("      =N "  + topic + " " + bn);
+        if (!bn.getValue().equals(value)) {
+          bn.setValue(value);
+          log.trace("      =N "  + topic + " " + bn);
+        }
       }
       // notify context
       ctx.characteristicsChanged(topic);
@@ -951,16 +965,15 @@ public class Processor {
       if (type == null)
         throw new DB2TMInputException("Occurrence type not found", entity, tuple, field.getType());
 
-			String occvalue = value;
-			LocatorIF occDatatype = DataTypes.TYPE_STRING;
+      String occvalue = value;
+      LocatorIF occDatatype = DataTypes.TYPE_STRING;
       if (field.getDatatype() != null) {
         String datatype = Utils.expandPrefixedValue(field.getDatatype(), ctx);
         if (datatype.equals(DataTypes.TYPE_URI)) {
           occvalue = ctx.getBaseLocator().resolveAbsolute(value).getAddress();
-					occDatatype = DataTypes.TYPE_URI;
-        } else {
-					occDatatype = URILocator.create(datatype);
-        }
+          occDatatype = DataTypes.TYPE_URI;
+        } else
+          occDatatype = URILocator.create(datatype);
       }
       
       OccurrenceIF oc = (OccurrenceIF)ctx.reuseOldFieldValue(topic, fieldIndex);
@@ -970,8 +983,11 @@ public class Processor {
         addScope(oc, field.getScope(), entity, tuple, ctx);
         log.trace("      +O "  + topic + " " + oc);
       } else {
-        oc.setValue(occvalue, occDatatype);
-        log.trace("      =O "  + topic + " " + oc);
+        if (!oc.getValue().equals(occvalue) ||
+            !oc.getDataType().equals(occDatatype)) {
+          oc.setValue(occvalue, occDatatype);
+          log.trace("      =O "  + topic + " " + oc);
+        }
       }
       // notify context
       ctx.characteristicsChanged(topic);

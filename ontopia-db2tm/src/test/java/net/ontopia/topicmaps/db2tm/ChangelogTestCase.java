@@ -45,117 +45,124 @@ public class ChangelogTestCase {
   public static List generateTests() throws IOException {
     FileUtils.transferTestInputDirectory(testdataDirectory + "/in/sync");
     return FileUtils.getTestInputFiles(testdataDirectory, "in/sync", ".xml");
-    }
+  }
 
-    private String base;
-    private String casename;
+  private String base;
+  private String casename;
 
-    public ChangelogTestCase(String root, String xmlfile) {
-      this.casename = xmlfile.substring(0, xmlfile.length() - 4);
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
-    }
+  public ChangelogTestCase(String root, String xmlfile) {
+    this.casename = xmlfile.substring(0, xmlfile.length() - 4);
+    this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+  }
     
-    @Test
-    public void testFile() throws IOException, SQLException {
-      FileUtils.verifyDirectory(base, "out");
-      
-      String cfg = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".xml").getPath();
-      String tm = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".ltm").getPath();
-      File out = FileUtils.getTestOutputFile(testdataDirectory, "out", casename + ".cxtm");
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "in/sync/baseline", casename + ".cxtm");
-      
-      // Connect to the DB
-      Connection conn = getConnection();
-      Statement stm = conn.createStatement();
-
-      // Load the starter data into the table
-      importCSV(stm, casename, casename + "-before.csv");
-
-      // Create the changelog table (DB2TM.add needs it), but leave it empty
-      importCSV(stm, casename + "_changelog", casename + "-changelog.csv",
-                false);
-      
-      // Import the topic map seed.
-      TopicMapIF topicmap = ImportExportUtils.getReader("file:" + tm).read();
-      
-      // Extend the topic map seed with the the config file.
-      DB2TM.add(cfg, topicmap);
-
-      // Now load the database with the changed data
-      importCSV(stm, casename, casename + "-after.csv");
-      importCSV(stm, casename + "_changelog", casename + "-changelog.csv");
-      conn.commit(); // necessary to avoid timeout from DB2TM connection
-
-      // OK, now, finally, we can sync!
-      DB2TM.sync(cfg, topicmap);
-
-      // Canonicalize!
-      FileOutputStream fos = new FileOutputStream(out);
-      (new CanonicalXTMWriter(fos)).write(topicmap);
-      fos.close();
-      
-      // Check that the cxtm output matches the baseline.
-      Assert.assertTrue("The canonicalized conversion from " + casename
-          + " does not match the baseline: " + out + " " + baseline,
-                 FileUtils.compareFileToResource(out, baseline));
-    }
+  @Test
+  public void testFile() throws IOException, SQLException {
+    // this particular test file is for FullRescanEventTest, and we don't
+    // want to test it again here. we lack the -changelog.csv in any case.
+    if (casename.equals("EVENTS"))
+      return;
     
-    private Connection getConnection() throws SQLException, IOException {
-      String propfile = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties").getPath();
-      Map props = PropertyUtils.loadProperties(propfile);
-      props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
-      DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);
-      return cf.requestConnection();
-    }
-
-    private void importCSV(Statement stm, String table, String file)
-      throws IOException, SQLException {
-      importCSV(stm, table, file, true);
-    }
-    
-    private void importCSV(Statement stm, String table, String file,
-                           boolean load_data)
-      throws IOException, SQLException {
-      // first, get rid of the table if it's already there
-      try {
-        stm.executeUpdate("drop table " + table);
-      } catch (SQLException e) {
-        // table wasn't there. never mind
-      }
+    FileUtils.verifyDirectory(base, "out");
       
-      // open the CSV file
-      String csv = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", file).getPath();
-      FileReader reader = new FileReader(csv);
-      CSVReader csvreader = new CSVReader(reader, ';', '"');
+    String cfg = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".xml").getPath();
+    String tm = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".ltm").getPath();
+    File out = FileUtils.getTestOutputFile(testdataDirectory, "out", casename + ".cxtm");
+    String baseline = FileUtils.getTestInputFile(testdataDirectory, "in/sync/baseline", casename + ".cxtm");
+      
+    // Connect to the DB
+    Connection conn = getConnection();
+    Statement stm = conn.createStatement();
 
-      // read the first line to get the column names
-      String[] colnames = csvreader.readNext();
-      String[] columndefs = new String[colnames.length];
-      for (int ix = 0; ix < colnames.length; ix++)
-        columndefs[ix] = colnames[ix] + " varchar";
+    // Load the starter data into the table
+    importCSV(stm, casename, casename + "-before.csv");
 
-      // now we can create the table
-      stm.executeUpdate("create table " + table + " (" +
-                        StringUtils.join(columndefs, ", ") + ")");
+    // Create the changelog table (DB2TM.add needs it), but leave it empty
+    importCSV(stm, casename + "_changelog", casename + "-changelog.csv",
+              false);
+      
+    // Import the topic map seed.
+    TopicMapIF topicmap = ImportExportUtils.getReader("file:" + tm).read();
+      
+    // Extend the topic map seed with the the config file.
+    DB2TM.add(cfg, topicmap);
 
-      // are we just creating the table, or should we load the data?
-      if (!load_data)
-        return;
+    // Now load the database with the changed data
+    importCSV(stm, casename, casename + "-after.csv");
+    importCSV(stm, casename + "_changelog", casename + "-changelog.csv");
+    conn.commit(); // necessary to avoid timeout from DB2TM connection
 
-      // ok, now insert the actual data
-      String cols = StringUtils.join(colnames, ", ");
-      String[] tuple = csvreader.readNext();
-      while (tuple != null) {
-        String[] values = new String[tuple.length];
-        for (int ix = 0; ix < tuple.length; ix++)
-          values[ix] = "'" + tuple[ix] + "'"; // escaping? hah!
+    // OK, now, finally, we can sync!
+    DB2TM.sync(cfg, topicmap);
+
+    // Canonicalize!
+    FileOutputStream fos = new FileOutputStream(out);
+    (new CanonicalXTMWriter(fos)).write(topicmap);
+    fos.close();
+      
+    // Check that the cxtm output matches the baseline.
+    Assert.assertTrue("The canonicalized conversion from " + casename
+                      + " does not match the baseline: " + out + " " + baseline,
+                      FileUtils.compareFileToResource(out, baseline));
+  }
+
+  // public so it can be accessed from FullRescanEventTest
+  public static Connection getConnection() throws SQLException, IOException {
+    String propfile = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties").getPath();
+    Map props = PropertyUtils.loadProperties(propfile);
+    props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
+    DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);
+    return cf.requestConnection();
+  }
+
+  // public so it can be accessed from FullRescanEventTest
+  public static void importCSV(Statement stm, String table, String file)
+    throws IOException, SQLException {
+    importCSV(stm, table, file, true);
+  }
+    
+  private static void importCSV(Statement stm, String table, String file,
+                                boolean load_data)
+    throws IOException, SQLException {
+    // first, get rid of the table if it's already there
+    try {
+      stm.executeUpdate("drop table " + table);
+    } catch (SQLException e) {
+      // table wasn't there. never mind
+    }
+      
+    // open the CSV file
+    String csv = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", file).getPath();
+    FileReader reader = new FileReader(csv);
+    CSVReader csvreader = new CSVReader(reader, ';', '"');
+
+    // read the first line to get the column names
+    String[] colnames = csvreader.readNext();
+    String[] columndefs = new String[colnames.length];
+    for (int ix = 0; ix < colnames.length; ix++)
+      columndefs[ix] = colnames[ix] + " varchar";
+
+    // now we can create the table
+    stm.executeUpdate("create table " + table + " (" +
+                      StringUtils.join(columndefs, ", ") + ")");
+
+    // are we just creating the table, or should we load the data?
+    if (!load_data)
+      return;
+
+    // ok, now insert the actual data
+    String cols = StringUtils.join(colnames, ", ");
+    String[] tuple = csvreader.readNext();
+    while (tuple != null) {
+      String[] values = new String[tuple.length];
+      for (int ix = 0; ix < tuple.length; ix++)
+        values[ix] = "'" + tuple[ix] + "'"; // escaping? hah!
           
-        stm.executeUpdate("insert into " + table + " (" + cols + ") values (" +
-                          StringUtils.join(values, ", ") + ")");
+      stm.executeUpdate("insert into " + table + " (" + cols + ") values (" +
+                        StringUtils.join(values, ", ") + ")");
           
-        tuple = csvreader.readNext();
-      }
+      tuple = csvreader.readNext();
     }
+  }
 
   // ===== FUNCTION METHODS
 

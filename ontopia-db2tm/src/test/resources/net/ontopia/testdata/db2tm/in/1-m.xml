@@ -12,8 +12,9 @@
     </topic>
   </relation>   
 
-  <!-- NOTE: doesn't really work as only single locators are supported. in practice this 
-             will mean that only the last subject locator survives -->
+  <!-- NOTE: doesn't really work as only single locators are
+       supported. in practice this will mean that only the last
+       subject locator survives -->
   <relation name="1-m-subjectlocator.csv" columns="id code">
     <topic type="local:topic" primary="true">
       <subject-identifier>http://psi.example.org/topic/${id}</subject-identifier>

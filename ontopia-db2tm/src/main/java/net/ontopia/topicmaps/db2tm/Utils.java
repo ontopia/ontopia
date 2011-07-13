@@ -20,8 +20,8 @@ public class Utils {
    * instance throughout a page context.
    */  
   public static RelationMapping getRelationMapping(PageContext ctxt) {
-    RelationMapping db = (RelationMapping) ctxt.getAttribute("RelationMapping",
-                                                             ctxt.APPLICATION_SCOPE);
+    RelationMapping db = (RelationMapping)
+      ctxt.getAttribute("RelationMapping", ctxt.APPLICATION_SCOPE);
     if (db == null) {
       db = new RelationMapping();
       ctxt.setAttribute("RelationMapping", db, ctxt.APPLICATION_SCOPE);
@@ -71,17 +71,19 @@ public class Utils {
       for (int i=0; i < relnames.length; i++) {
         relnames[i] = ((Relation)missingRelations.get(i)).getName();
       }
-      throw new DB2TMException("No relations found for mappings: " + StringUtils.join(relnames, ", "));
+      throw new DB2TMException("No relations found for mappings: " +
+                               StringUtils.join(relnames, ", "));
     } else if (size == 1) {
-      throw new DB2TMException("No relation found for mapping: " + ((Relation)missingRelations.get(0)).getName());
+      throw new DB2TMException("No relation found for mapping: " +
+                               ((Relation)missingRelations.get(0)).getName());
     }
 
     return foundRelations;
   }
   
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Utility methods
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   
   static TopicIF getTopic(String id, Context ctx) {
     // Note: null values or empty strings are considered dead
@@ -104,7 +106,8 @@ public class Utils {
       String prefix_id = id.substring(0, cix);
       Prefix prefix = ctx.getMapping().getPrefix(prefix_id);
       if (prefix == null)
-        throw new DB2TMConfigException("Unknown prefix: '" + prefix_id + "' (value='" + id + "')");
+        throw new DB2TMConfigException("Unknown prefix: '" + prefix_id +
+                                       "' (value='" + id + "')");
       String relloc = prefix.getLocator() + id.substring(cix + 1);
       loc = ctx.getBaseLocator().resolveAbsolute(relloc);
       loctype = prefix.getType();
@@ -176,7 +179,8 @@ public class Utils {
       String prefix_id = value.substring(0, cix);
       Prefix prefix = ctx.getMapping().getPrefix(prefix_id);
       if (prefix == null)
-        throw new DB2TMConfigException("Unknown prefix: '" + prefix_id + "' (value='" + value + "')");      
+        throw new DB2TMConfigException("Unknown prefix: '" + prefix_id +
+                                       "' (value='" + value + "')");      
       return prefix.getLocator() + value.substring(cix + 1);
     } else {
       throw new DB2TMConfigException("Illegal prefixed value: '" + value + "'");
