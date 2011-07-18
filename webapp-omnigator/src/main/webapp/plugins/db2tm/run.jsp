@@ -1,5 +1,6 @@
 <%@ page language="java" 
-  import="net.ontopia.topicmaps.core.*,
+  import="java.io.File,
+          net.ontopia.topicmaps.core.*,
           net.ontopia.topicmaps.entry.*,
           net.ontopia.topicmaps.nav2.utils.*,
           net.ontopia.topicmaps.db2tm.DB2TM"%>
@@ -14,7 +15,9 @@
   // the user pressed sync or add, so go ahead
 
   //  (1) get a reference to the mapping file
-  String cfgfile = getServletContext().getRealPath("/plugins/db2tm/db2tm.xml");
+  String cfgdir = getServletContext().getRealPath("/plugins/db2tm/");
+  String file = request.getParameter("cfgfile");
+  String cfgfile = cfgdir + File.separator + file;
   
   //  (2) get the topic map
   TopicMapRepositoryIF rep = ContextUtils.getRepository(pageContext.getServletContext());
