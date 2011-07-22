@@ -49,6 +49,8 @@
       </select></p>
 
 <% } %>
+        <p>Force rescan <input type=checkbox name=force_rescan></p>
+
         <input type=hidden name=tm value="<%= request.getParameter("tm") %>">
         <input type=submit name="add"    value="Add">
         <input type=submit name="sync"   value="Sync">

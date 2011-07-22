@@ -52,6 +52,21 @@ public class DB2TM {
    */
   public static void sync(String cfgfile, TopicMapIF topicmap)
     throws IOException {
+    sync(cfgfile, topicmap, false);
+  }
+
+  /**
+   * PUBLIC: Run synchronization from a configuration file against a
+   * given topic map.
+   *
+   * @since %NEXT%
+   * @param cfgfile File name of XML configuration file.
+   * @param topicmap Topic map to synchronize the data against.
+   * @param force_rescan Iff true, all relations are rescanned
+   */
+  public static void sync(String cfgfile, TopicMapIF topicmap,
+                          boolean force_rescan)
+    throws IOException {
     log.info("Reading DB2TM configuration file: " + cfgfile);
     RelationMapping mapping;
     try {
@@ -60,7 +75,8 @@ public class DB2TM {
       throw new DB2TMException("Error occurred while reading DB2TM configuration file: " + cfgfile, e);
     }
     LocatorIF baseloc = topicmap.getStore().getBaseAddress();
-    Processor.synchronizeRelations(mapping, null, topicmap, baseloc);
+    Processor.synchronizeRelations(mapping, null, topicmap, baseloc,
+                                   force_rescan);
   }
   
 }

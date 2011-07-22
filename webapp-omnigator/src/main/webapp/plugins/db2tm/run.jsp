@@ -18,6 +18,8 @@
   String cfgdir = getServletContext().getRealPath("/plugins/db2tm/");
   String file = request.getParameter("cfgfile");
   String cfgfile = cfgdir + File.separator + file;
+
+  boolean force_rescan = request.getParameter("force_rescan") != null;
   
   //  (2) get the topic map
   TopicMapRepositoryIF rep = ContextUtils.getRepository(pageContext.getServletContext());
@@ -27,7 +29,7 @@
 
     //  (3) run!
     if (request.getParameter("sync") != null)
-      DB2TM.sync(cfgfile, tm);
+      DB2TM.sync(cfgfile, tm, force_rescan);
     else
       DB2TM.add(cfgfile, tm);
 
