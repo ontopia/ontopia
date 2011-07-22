@@ -54,7 +54,7 @@ public final class Ontopia {
 
       String[] d = datetime.split("-");
       build_date = Calendar.getInstance();
-      build_date.set(Integer.parseInt(d[0]), Integer.parseInt(d[1]), Integer.parseInt(d[2]), Integer.parseInt(d[3]), Integer.parseInt(d[4]));
+      build_date.set(Integer.parseInt(d[0]), Integer.parseInt(d[1]) - 1, Integer.parseInt(d[2]), Integer.parseInt(d[3]), Integer.parseInt(d[4]));
 
     } catch (IOException ex) {
       
