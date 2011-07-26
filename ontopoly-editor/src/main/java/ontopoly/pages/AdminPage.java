@@ -66,8 +66,7 @@ public class AdminPage extends OntopolyAbstractPage {
     
     // Second column of radio buttons
     List<String> syntaxCategories = 
-      Arrays.asList("ltm", "xtm1", "xtm2", "xtm21", "rdf");
-    // TODO: cxtm and tm/xml
+      Arrays.asList("ltm", "xtm1", "xtm2", "xtm21", "rdf", "tmxml");
     
     syntax = syntaxCategories.get(1);
     filename = topicMap.getId();

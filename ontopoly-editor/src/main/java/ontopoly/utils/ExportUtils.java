@@ -59,7 +59,7 @@ public class ExportUtils {
         if (!includeSchema)
           filterer.setFilter(decider);
         writer = filterer;
-      } else if (format.equalsIgnoreCase("tm/xml")) {
+      } else if (format.equalsIgnoreCase("tmxml")) {
         TMXMLWriter filterer = new TMXMLWriter(out);
         if (!includeSchema)
           filterer.setFilter(decider);
