@@ -51,7 +51,8 @@ public class AdminPage extends OntopolyAbstractPage {
     // First column of radio buttons
     final List<String> contentCategories = Arrays.asList(
         new ResourceModel("AdminPage.export.entire.topic.map").getObject().toString(), 
-        new ResourceModel("AdminPage.export.topic.map.without.schema").getObject().toString());
+        new ResourceModel("AdminPage.export.topic.map.without.schema").getObject().toString(),
+        new ResourceModel("AdminPage.export.only.schema").getObject().toString());
     content = (String)contentCategories.get(0);
     RadioChoice<String> contentRadioChoice = new RadioChoice<String>("content", new PropertyModel<String>(this, "content"), contentCategories);
     contentRadioChoice.add(new AjaxFormChoiceComponentUpdatingBehavior() {
@@ -115,12 +116,14 @@ public class AdminPage extends OntopolyAbstractPage {
       public IResourceStream getResourceStream() {
         AbstractResourceStreamWriter abstractResourceStreamWriter = new AbstractResourceStreamWriter() {
           public void write(OutputStream output) {
-            boolean includeSchema = false;
-            if(content.equals((String)contentCategories.get(0))) {
-              includeSchema = true;
-            }
+            ExportUtils.Content contentchoice =
+              ExportUtils.Content.ENTIRE_TOPIC_MAP;
+            if (content.equals((String) contentCategories.get(1)))
+              contentchoice = ExportUtils.Content.INSTANCES_ONLY;
+            else if (content.equals((String) contentCategories.get(2)))
+              contentchoice = ExportUtils.Content.SCHEMA_ONLY;
             try {
-              ExportUtils.export(getTopicMap(), syntax, includeSchema, new OutputStreamWriter(output, "utf-8"));
+              ExportUtils.export(getTopicMap(), syntax, contentchoice, new OutputStreamWriter(output, "utf-8"));
             } catch (UnsupportedEncodingException e) {
               throw new OntopiaRuntimeException(e);
             }

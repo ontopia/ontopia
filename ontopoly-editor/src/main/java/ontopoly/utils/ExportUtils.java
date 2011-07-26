@@ -15,6 +15,7 @@ import net.ontopia.topicmaps.xml.XTM2TopicMapWriter;
 import net.ontopia.topicmaps.xml.XTM21TopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMVersion;
+import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 public class ExportUtils {
@@ -22,46 +23,54 @@ public class ExportUtils {
   private ExportUtils() {
   }
   
-  public static void export(TopicMap topicMap, String format, boolean includeSchema, OutputStreamWriter out) {
+  public static void export(TopicMap topicMap, String format,
+                            Content content,
+                            OutputStreamWriter out) {
     TopicMapIF tm = topicMap.getTopicMapIF();
     try {
       String charset = "utf-8";
 
       TopicMapWriterIF writer;
-      SchemaFilter filter = new SchemaFilter();
+      DeciderIF filter = null;
+      if (content == Content.INSTANCES_ONLY)
+        filter = new SchemaFilter();
+      else if (content == Content.SCHEMA_ONLY)
+        filter = new SchemaOnlyFilter();
+
+      // if filter == null it never gets used
       TMExporterDecider decider = new TMExporterDecider(filter);
 
       if (format.equalsIgnoreCase("xtm1")) { 
         XTMTopicMapWriter filterer = new XTMTopicMapWriter(out, charset);
-        if (!includeSchema)
+        if (filter != null)
           filterer.setFilter(decider);
         filterer.setVersion(XTMVersion.XTM_1_0);
         writer = filterer;
       } else if (format.equalsIgnoreCase("xtm2")) { 
         XTM2TopicMapWriter filterer = new XTM2TopicMapWriter(out, charset);
-        if (!includeSchema)
+        if (filter != null)
           filterer.setFilter(decider);
         filterer.setVersion(XTMVersion.XTM_2_0);
         writer = filterer;
       } else if (format.equalsIgnoreCase("xtm21")) { 
         XTM21TopicMapWriter filterer = new XTM21TopicMapWriter(out, charset);
-        if (!includeSchema)
+        if (filter != null)
           filterer.setFilter(decider);
         filterer.setVersion(XTMVersion.XTM_2_1);
         writer = filterer;
       } else if (format.equalsIgnoreCase("rdf")) { 
         RDFTopicMapWriter filterer = new RDFTopicMapWriter(out);
-        if (!includeSchema)
+        if (filter != null)
           filterer.setFilter(decider);
         writer = filterer;
       } else if (format.equalsIgnoreCase("ltm")) {
         LTMTopicMapWriter filterer = new LTMTopicMapWriter(out, charset);
-        if (!includeSchema)
+        if (filter != null)
           filterer.setFilter(decider);
         writer = filterer;
       } else if (format.equalsIgnoreCase("tmxml")) {
         TMXMLWriter filterer = new TMXMLWriter(out);
-        if (!includeSchema)
+        if (filter != null)
           filterer.setFilter(decider);
         writer = filterer;
       } else
@@ -73,5 +82,11 @@ public class ExportUtils {
       throw new OntopiaRuntimeException(ioe);
     }
     
+  }
+
+  public enum Content {
+    ENTIRE_TOPIC_MAP,
+    INSTANCES_ONLY,
+    SCHEMA_ONLY
   }
 }
