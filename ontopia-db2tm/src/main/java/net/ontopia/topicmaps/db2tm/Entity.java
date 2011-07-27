@@ -22,7 +22,6 @@ public class Entity {
   protected int etype;
   protected Relation relation;
   protected Boolean primary;
-  protected Boolean repeatable;
   
   protected String id;
   protected ValueIF condition;
@@ -85,8 +84,6 @@ public class Entity {
             synctype = Relation.SYNCHRONIZATION_RESCAN;
           }
         }
-        if (synctype == Relation.SYNCHRONIZATION_CHANGELOG && repeatable != Boolean.FALSE)
-          throw new DB2TMConfigException("Non-primary topic entity with characteristic(s) cannot be used with changelog synchronization unless repeatable flag is set to false.");
       }
     }
   }
@@ -109,14 +106,6 @@ public class Entity {
 
   public void setPrimary(Boolean primary) {
     this.primary = primary;
-  }
-
-  public boolean isRepeatable() {
-    return repeatable.booleanValue();
-  }
-
-  public void setRepeatable(Boolean repeatable) {
-    this.repeatable = repeatable;
   }
 
   public String getId() {

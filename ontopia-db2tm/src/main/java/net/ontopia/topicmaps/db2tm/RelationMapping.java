@@ -270,9 +270,6 @@ public class RelationMapping extends SAXTracker {
       String primary = getValue(attrs, "primary");
       if (primary != null)
         curent.setPrimary(Boolean.valueOf(primary));
-      String repeatable = getValue(attrs, "repeatable");
-      if (repeatable != null)
-        curent.setRepeatable(Boolean.valueOf(repeatable));
       curent.setId(getValue(attrs, "id"));
       String condition = getValue(attrs, "condition");
       if (condition != null)

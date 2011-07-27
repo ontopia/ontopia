@@ -60,7 +60,6 @@ topic = element topic {
   attribute id { xsd:NMTOKEN }?,
   attribute condition { text }?,
   attribute primary { xsd:boolean }?,
-  attribute repeatable { xsd:boolean }?,
   (typeatt | typesatt)?,
   extent*,
   identity-field+,
