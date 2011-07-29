@@ -31,7 +31,7 @@
     <topic id='over'>
       <subject-identifier>psi:first/${c}</subject-identifier>
     </topic>
-    <topic primary='false' repeatable='false'>
+    <topic primary='false'>
       <subject-identifier>psi:first/${a}</subject-identifier>
       <topic-name type="px:sn">${b}</topic-name>
       <occurrence type='px:so'>${c}</occurrence>
