@@ -9,6 +9,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 import java.util.List;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -18,7 +19,7 @@ public class TMXMLReadErrorTestCase extends AbstractCanonicalTests {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "invalid", ".xml");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "invalid", ".xml");
   }
 
   protected String getFileDirectory() {
@@ -33,12 +34,12 @@ public class TMXMLReadErrorTestCase extends AbstractCanonicalTests {
 
     public TMXMLReadErrorTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
       this._testdataDirectory = testdataDirectory;
     }
 
     public void testFile() throws IOException {
-      String in = FileUtils.getTestInputFile(testdataDirectory, "invalid", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid", filename);
       TMXMLReader reader = new TMXMLReader(in);
 
       try {

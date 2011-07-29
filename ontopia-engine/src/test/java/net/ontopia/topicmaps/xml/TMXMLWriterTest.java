@@ -15,6 +15,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public class TMXMLWriterTest {
   private TopicMapIF topicmap;
@@ -143,8 +144,8 @@ public class TMXMLWriterTest {
   // --- Helpers
 
   private String getAbsoluteFilename(String file) {
-    String root = FileUtils.getTestdataOutputDirectory();
-    FileUtils.verifyDirectory(root, testdataDirectory, "out");
+    String root = TestFileUtils.getTestdataOutputDirectory();
+    TestFileUtils.verifyDirectory(root, testdataDirectory, "out");
     String base = root + File.separator + testdataDirectory + File.separator;
     return base + "out" + File.separator + file;
   }

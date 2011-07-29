@@ -25,6 +25,7 @@ import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import junit.framework.TestCase;
 
@@ -93,7 +94,7 @@ public class PrefetcherTests extends TestCase {
     }
 
     // import topic map
-    String filename = FileUtils.getTestInputFile(testdataDirectory, "prefetch.ltm");
+    String filename = TestFileUtils.getTestInputFile(testdataDirectory, "prefetch.ltm");
     LocatorIF base = URIUtils.getURI(filename);
 
     // create reference

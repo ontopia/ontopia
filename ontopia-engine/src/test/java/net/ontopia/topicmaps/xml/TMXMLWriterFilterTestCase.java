@@ -12,6 +12,7 @@ import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import java.util.List;
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class TMXMLWriterFilterTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
   }
 
   // --- Test case class
@@ -47,19 +48,19 @@ public class TMXMLWriterFilterTestCase {
 
     public TMXMLWriterFilterTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "filter-out");
-      FileUtils.verifyDirectory(base, "filter-tmxml");
+      TestFileUtils.verifyDirectory(base, "filter-out");
+      TestFileUtils.verifyDirectory(base, "filter-tmxml");
 
       // Path to the input topic map document.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "filter-in", 
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "filter-in", 
           filename);
       // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "filter-baseline", 
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline", 
           filename + ".cxtm");
       // Path to the exported TMXML topic map document.
       String tmxml = base + File.separator + "filter-tmxml" + File.separator

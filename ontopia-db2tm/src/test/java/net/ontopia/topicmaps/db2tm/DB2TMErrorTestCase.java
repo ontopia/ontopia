@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -18,7 +19,6 @@ import net.ontopia.topicmaps.db2tm.*;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
-import net.ontopia.utils.FileUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,8 +39,8 @@ public class DB2TMErrorTestCase {
    */
   @Parameters
   public static List generateTests() throws IOException {
-    FileUtils.transferTestInputDirectory(testdataDirectory + "/error");
-    return FileUtils.getTestInputFiles(testdataDirectory, "error", ".xml");
+    TestFileUtils.transferTestInputDirectory(testdataDirectory + "/error");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "error", ".xml");
   }
 
   // --- Test case class
@@ -50,7 +50,7 @@ public class DB2TMErrorTestCase {
 
     public DB2TMErrorTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
@@ -58,11 +58,11 @@ public class DB2TMErrorTestCase {
       String name = filename.substring(0, filename.length() - ".xml".length());
 
       // Path to the config file.
-      String cfg = FileUtils.getTransferredTestInputFile(testdataDirectory, "error", filename).getPath();
+      String cfg = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "error", filename).getPath();
 
       // Path to the topic map seed.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "error", name + ".ltm");
-      String default_in = FileUtils.getTestInputFile(testdataDirectory, "error", "default.ltm");
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "error", name + ".ltm");
+      String default_in = TestFileUtils.getTestInputFile(testdataDirectory, "error", "default.ltm");
       
       // Import the topic map seed.
       TopicMapIF topicmap;

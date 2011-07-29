@@ -213,12 +213,12 @@ public class JDBCDataSourceTest {
   }
 
   private void exportTopicMap(TopicMapIF topicmap, String name) throws IOException {
-    File cxtm = FileUtils.getTestOutputFile(testdataDirectory, "out", name + ".cxtm");
-    String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", name + ".cxtm");
+    File cxtm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", name + ".cxtm");
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", name + ".cxtm");
     
     // Export the result topic map to ltm, for manual inspection purposes.
     if (DEBUG_LTM) {
-      File ltm = FileUtils.getTestOutputFile(testdataDirectory, "out", name + ".ltm");
+      File ltm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", name + ".ltm");
       (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(topicmap);
     }
     

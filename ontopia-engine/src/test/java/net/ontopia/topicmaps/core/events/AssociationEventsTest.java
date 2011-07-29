@@ -17,6 +17,7 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public abstract class AssociationEventsTest extends AbstractTopicMapTest {
 
@@ -40,7 +41,7 @@ public abstract class AssociationEventsTest extends AbstractTopicMapTest {
       TopicMapEvents.addTopicListener(topicmapRef, listener);
       // load topic map
       topicmap = topicmapRef.createStore(false).getTopicMap();
-      ImportExportUtils.getImporter(FileUtils.getTestInputFile("various", "alumni.xtm")).importInto(topicmap);
+      ImportExportUtils.getImporter(TestFileUtils.getTestInputFile("various", "alumni.xtm")).importInto(topicmap);
       topicmap.getStore().commit();
       
       // get the builder of that topic map.

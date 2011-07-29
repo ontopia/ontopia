@@ -19,6 +19,7 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.PSI;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -877,7 +878,7 @@ public class MenuTest {
   // --- Helpers
   
   private TopicMapIF load(String filename) throws IOException {
-    filename = FileUtils.getTestInputFile(testdataDirectory, "topicmaps", filename);
+    filename = TestFileUtils.getTestInputFile(testdataDirectory, "topicmaps", filename);
     return ImportExportUtils.getReader(filename).read();
   }
 

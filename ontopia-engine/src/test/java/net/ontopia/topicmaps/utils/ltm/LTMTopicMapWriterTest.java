@@ -12,6 +12,7 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.utils.ltm.*;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,10 +30,10 @@ public class LTMTopicMapWriterTest {
     TopicIF topic = builder.makeTopic();
     topic.addItemIdentifier(base.resolveAbsolute("#22"));
     
-    String root = FileUtils.getTestdataOutputDirectory();
-    FileUtils.verifyDirectory(root, testdataDirectory);
+    String root = TestFileUtils.getTestdataOutputDirectory();
+    TestFileUtils.verifyDirectory(root, testdataDirectory);
     String thebase = root + File.separator + testdataDirectory + File.separator;
-    FileUtils.verifyDirectory(thebase, "out");
+    TestFileUtils.verifyDirectory(thebase, "out");
     String filename = thebase + File.separator + "out" + File.separator +
       "testBadId.ltm";
     

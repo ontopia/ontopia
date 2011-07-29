@@ -16,6 +16,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.URIUtils;
 
@@ -33,7 +34,7 @@ public class RDFWriterCanonicalTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm|.ltm|.ctm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm|.ltm|.ctm");
   }
 
   // --- Canonical test case class
@@ -43,18 +44,18 @@ public class RDFWriterCanonicalTestCase {
 
     public RDFWriterCanonicalTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
-      FileUtils.verifyDirectory(base, "tmp");
+      TestFileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "tmp");
 
       // export
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       String tmp = base + File.separator + "tmp" + File.separator + filename;
-      String bline = FileUtils.getTestInputFile(testdataDirectory, "baseline",
+      String bline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           filename);
       TopicMapReaderIF reader = ImportExportUtils.getReader(in);
       if (reader instanceof XTMTopicMapReader)

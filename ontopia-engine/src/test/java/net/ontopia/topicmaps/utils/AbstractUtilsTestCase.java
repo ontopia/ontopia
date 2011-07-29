@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import net.ontopia.infoset.core.*;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public abstract class AbstractUtilsTestCase extends TestCase {
 
@@ -33,7 +34,7 @@ public abstract class AbstractUtilsTestCase extends TestCase {
 
   protected void readFile(String fileName) {
     try {
-      TopicMapReaderIF reader = ImportExportUtils.getReader(FileUtils.getTestInputFile(testdataDirectory, fileName));
+      TopicMapReaderIF reader = ImportExportUtils.getReader(TestFileUtils.getTestInputFile(testdataDirectory, fileName));
       tm = reader.read();
       baseAddress = tm.getStore().getBaseAddress();
     } catch(IOException ex) {

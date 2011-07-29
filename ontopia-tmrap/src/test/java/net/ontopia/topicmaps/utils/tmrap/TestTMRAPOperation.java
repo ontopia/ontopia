@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ontojsp.FakeServletConfig;
 import net.ontopia.utils.ontojsp.FakeServletContext;
@@ -47,7 +48,7 @@ public abstract class TestTMRAPOperation {
 
   @BeforeClass
   public static void transferInputFiles() throws IOException {
-    FileUtils.transferTestInputDirectory(testdataDirectory + "/topicmaps");
+    TestFileUtils.transferTestInputDirectory(testdataDirectory + "/topicmaps");
   }
   
   protected TestTMRAPOperation() {
@@ -157,10 +158,10 @@ public abstract class TestTMRAPOperation {
   protected static void setupRAPServlet(RAPServlet rapServlet, 
                                         String viewURIPrefix)
     throws ServletException {
-    String base = FileUtils.getTestdataOutputDirectory() + testdataDirectory + File.separator;
+    String base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory + File.separator;
     
     Hashtable initParams = new Hashtable();
-    initParams.put("source_config", FileUtils.getTestInputFile(testdataDirectory, "WEB-INF/config/tm-sources.xml"));
+    initParams.put("source_config", TestFileUtils.getTestInputFile(testdataDirectory, "WEB-INF/config/tm-sources.xml"));
     FakeServletContext servletContext = new FakeServletContext(base, new Hashtable(), initParams);
 
     Map params = new HashMap();
@@ -177,7 +178,7 @@ public abstract class TestTMRAPOperation {
   private static int counter = 0;
   protected String canonicalizeXTM(String XTM) throws IOException {
     // Figure out base URL
-    String root = FileUtils.getTestdataOutputDirectory() +
+    String root = TestFileUtils.getTestdataOutputDirectory() +
       File.separator + testdataDirectory + File.separator + "topicmaps" + File.separator;
     LocatorIF base = new URILocator(new File(root));
     
@@ -220,7 +221,7 @@ public abstract class TestTMRAPOperation {
   
   protected void verifyCanonical(String filename) throws IOException {
     // Figure out base URL
-    String root = FileUtils.getTestdataOutputDirectory() +
+    String root = TestFileUtils.getTestdataOutputDirectory() +
      File.separator + testdataDirectory + File.separator;
     LocatorIF base = new URILocator(new File(root));    
     
@@ -240,7 +241,7 @@ public abstract class TestTMRAPOperation {
     out.close();
 
     // Compare results
-    String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
     Assert.assertTrue(filename + " did not match baseline",
                FileUtils.compareFileToResource(xtmfile + ".cxtm", baseline));
   }

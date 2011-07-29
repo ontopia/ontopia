@@ -8,6 +8,7 @@ import java.util.Set;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class RDFErrorTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "err", ".rdf");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "err", ".rdf");
   }
 
   // --- Error test case class
@@ -37,7 +38,7 @@ public class RDFErrorTestCase {
 
     @Test
     public void testFile() throws IOException {
-      String in = FileUtils.getTestInputFile(testdataDirectory, "err", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "err", filename);
 
       try {
         new RDFTopicMapReader(URIUtils.getURI(in)).read();

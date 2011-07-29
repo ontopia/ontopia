@@ -8,6 +8,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -28,14 +29,14 @@ public class MergeTMTestCase extends net.ontopia.topicmaps.utils.MergeTMTestCase
     }
 
     public void testMergeTM() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
       
       // produce canonical output
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
-      String in2 = FileUtils.getTestInputFile(testdataDirectory, "in", 
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String in2 = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
         filename.substring(0, filename.length() - 3) + "sub");
       String out = base + File.separator + "out" + File.separator + filename;
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
 
 
       // Import first document

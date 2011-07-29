@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -43,8 +44,8 @@ public class ChangelogTestCase {
       
   @Parameters
   public static List generateTests() throws IOException {
-    FileUtils.transferTestInputDirectory(testdataDirectory + "/in/sync");
-    return FileUtils.getTestInputFiles(testdataDirectory, "in/sync", ".xml");
+    TestFileUtils.transferTestInputDirectory(testdataDirectory + "/in/sync");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in/sync", ".xml");
   }
 
   private String base;
@@ -52,7 +53,7 @@ public class ChangelogTestCase {
 
   public ChangelogTestCase(String root, String xmlfile) {
     this.casename = xmlfile.substring(0, xmlfile.length() - 4);
-    this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
   }
     
   @Test
@@ -62,12 +63,12 @@ public class ChangelogTestCase {
     if (casename.equals("EVENTS"))
       return;
     
-    FileUtils.verifyDirectory(base, "out");
+    TestFileUtils.verifyDirectory(base, "out");
       
-    String cfg = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".xml").getPath();
-    String tm = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".ltm").getPath();
-    File out = FileUtils.getTestOutputFile(testdataDirectory, "out", casename + ".cxtm");
-    String baseline = FileUtils.getTestInputFile(testdataDirectory, "in/sync/baseline", casename + ".cxtm");
+    String cfg = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".xml").getPath();
+    String tm = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", casename + ".ltm").getPath();
+    File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", casename + ".cxtm");
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "in/sync/baseline", casename + ".cxtm");
       
     // Connect to the DB
     Connection conn = getConnection();
@@ -107,7 +108,7 @@ public class ChangelogTestCase {
 
   // public so it can be accessed from FullRescanEventTest
   public static Connection getConnection() throws SQLException, IOException {
-    String propfile = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties").getPath();
+    String propfile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", "h2.properties").getPath();
     Map props = PropertyUtils.loadProperties(propfile);
     props.put("net.ontopia.topicmaps.impl.rdbms.ConnectionPool", "false");
     DefaultConnectionFactory cf = new DefaultConnectionFactory(props, false);
@@ -131,7 +132,7 @@ public class ChangelogTestCase {
     }
       
     // open the CSV file
-    String csv = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", file).getPath();
+    String csv = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", "sync", file).getPath();
     FileReader reader = new FileReader(csv);
     CSVReader csvreader = new CSVReader(reader, ';', '"');
 

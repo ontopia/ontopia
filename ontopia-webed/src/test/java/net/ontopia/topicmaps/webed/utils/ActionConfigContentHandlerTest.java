@@ -14,6 +14,7 @@ import net.ontopia.topicmaps.webed.impl.basic.ImageInformation;
 import net.ontopia.topicmaps.webed.impl.basic.ImageInformationIF;
 import net.ontopia.topicmaps.webed.impl.utils.ActionConfigurator;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import junit.framework.TestCase;
 
 import org.slf4j.Logger;
@@ -37,7 +38,7 @@ public class ActionConfigContentHandlerTest extends TestCase {
   public void setUp() throws Exception {
     super.setUp();
     if (registry == null) {
-      String configFile = FileUtils.getTestInputFile(testdataDirectory, "actionConfig.xml");
+      String configFile = TestFileUtils.getTestInputFile(testdataDirectory, "actionConfig.xml");
       ActionConfigurator ac = new ActionConfigurator("/omnieditor", "/", configFile);
       ac.readRegistryConfiguration();
       registry = ac.getRegistry();

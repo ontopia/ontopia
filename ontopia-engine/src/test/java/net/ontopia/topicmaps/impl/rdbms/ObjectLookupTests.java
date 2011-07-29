@@ -8,6 +8,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import junit.framework.TestCase;
 
@@ -31,7 +32,7 @@ public class ObjectLookupTests extends TestCase {
 
   public void testLookups() throws IOException {
     
-    String file = FileUtils.getTestInputFile(testdataDirectory, "topicmap-object-lookup.xtm");
+    String file = TestFileUtils.getTestInputFile(testdataDirectory, "topicmap-object-lookup.xtm");
     LocatorIF base = URIUtils.getURI(file);
 
     // Load topic map, commit and close

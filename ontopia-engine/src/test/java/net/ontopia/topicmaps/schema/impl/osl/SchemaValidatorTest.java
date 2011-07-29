@@ -9,6 +9,7 @@ import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.schema.core.*;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -283,7 +284,7 @@ public class SchemaValidatorTest extends AbstractSchemaTestCase {
   @Test
   public void testBug430() throws IOException, SchemaSyntaxException {
 
-    topicmap = ImportExportUtils.getReader(FileUtils.getTestInputFile(testdataDirectory, "topicmaps", "bug430.ltm")).read();
+    topicmap = ImportExportUtils.getReader(TestFileUtils.getTestInputFile(testdataDirectory, "topicmaps", "bug430.ltm")).read();
     OSLSchema schema = (OSLSchema) readSchema("in", "bug430.xml");
     validate(schema);
   }

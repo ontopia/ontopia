@@ -29,6 +29,7 @@ import net.ontopia.topicmaps.utils.tmrap.RAPServlet;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.ontojsp.FakeServletConfig;
@@ -55,9 +56,9 @@ public class TMRAPTestCase {
   @Parameters
   public static Collection generateTests() throws IOException {
 	
-    FileUtils.transferTestInputDirectory(testdataDirectory + "/topicmaps");
+    TestFileUtils.transferTestInputDirectory(testdataDirectory + "/topicmaps");
 	
-    String source = FileUtils.getTestInputFile(testdataDirectory, "tests.xml");
+    String source = TestFileUtils.getTestInputFile(testdataDirectory, "tests.xml");
     InputStream in = StreamUtils.getInputStream(source);
 
     // Parse the test configuration file to get all the test descriptors.
@@ -82,7 +83,7 @@ public class TMRAPTestCase {
     private TMRAPTestDescriptor descriptor;
 
     public TMRAPTestCase(TMRAPTestDescriptor descriptor) {
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory + File.separator;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory + File.separator;
       this.descriptor = descriptor;
     }
 
@@ -112,8 +113,8 @@ public class TMRAPTestCase {
         return;
       }
       
-      FileUtils.verifyDirectory(base, "out");
-      FileUtils.verifyDirectory(base, "cxtm");
+      TestFileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "cxtm");
 
       String id = descriptor.getId();
       
@@ -126,7 +127,7 @@ public class TMRAPTestCase {
           + id + ".cxtm";
 
       // Path to the baseline.
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline",
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           id + ".cxtm");
 
       PrintWriter pw = new PrintWriter(new FileWriter(out));
@@ -221,7 +222,7 @@ public class TMRAPTestCase {
     Hashtable paramsTable = TMRAPTestUtils.tabularizeParameters(params);
     
     Hashtable initParams = new Hashtable();
-    initParams.put("source_config", FileUtils.getTestInputFile(testdataDirectory, "WEB-INF/config/tm-sources.xml"));
+    initParams.put("source_config", TestFileUtils.getTestInputFile(testdataDirectory, "WEB-INF/config/tm-sources.xml"));
     FakeServletContext servletContext = new FakeServletContext(base, new Hashtable(), initParams);
     
     FakeServletConfig servletConfig = new FakeServletConfig(servletContext,

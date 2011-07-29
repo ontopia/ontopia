@@ -7,6 +7,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 
 import java.util.List;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -16,7 +17,7 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
 
   public CanonicalExporterXTMTests(String root, String filename) {
     this.filename = filename;
-    this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
 
@@ -33,7 +34,7 @@ public class CanonicalExporterXTMTests extends AbstractCanonicalExporterTests {
         return resourcePath.endsWith(".xtm");
       }
     };
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", filter);
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", filter);
   }
 
   protected String getTestdataDirectory() {

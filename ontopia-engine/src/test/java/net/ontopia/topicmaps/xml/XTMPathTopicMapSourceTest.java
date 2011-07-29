@@ -4,6 +4,7 @@ package net.ontopia.topicmaps.xml;
 import java.io.File;
 import net.ontopia.topicmaps.entry.AbstractTopicMapSourceTest;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Test;
 
 
@@ -22,7 +23,7 @@ public class XTMPathTopicMapSourceTest extends AbstractTopicMapSourceTest {
     XTMPathTopicMapSource source = new XTMPathTopicMapSource();
     source.setId("fooid");
     source.setTitle("footitle");
-    source.setPath("classpath:" + FileUtils.testdataInputRoot + testdataDirectory + "/" + "in");
+    source.setPath("classpath:" + TestFileUtils.testdataInputRoot + testdataDirectory + "/" + "in");
     source.setSuffix(".xtm");
     
     // run abstract topic map source tests

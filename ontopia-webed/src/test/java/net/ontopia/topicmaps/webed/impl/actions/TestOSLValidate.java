@@ -17,6 +17,7 @@ import net.ontopia.topicmaps.webed.impl.basic.*;
 import net.ontopia.topicmaps.webed.impl.actions.tmobject.OSLValidate;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public class TestOSLValidate extends AbstractWebedTestCase {
 
@@ -159,7 +160,7 @@ public class TestOSLValidate extends AbstractWebedTestCase {
 
   private OSLSchema loadSchema(String file) 
     throws IOException, SchemaSyntaxException {
-    file = FileUtils.getTestInputFile(testdataDirectory, file);
+    file = TestFileUtils.getTestInputFile(testdataDirectory, file);
     OSLSchemaReader reader = new OSLSchemaReader(file);
     return (OSLSchema) reader.read();
   }

@@ -30,6 +30,7 @@ import net.ontopia.topicmaps.xml.TMXMLReader;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.xml.sax.InputSource;
 
@@ -75,7 +76,7 @@ public abstract class AbstractQueryTest extends TestCase {
   protected void load(String filename) throws IOException {
     // IMPORTANT: This method is being overloaded by the RDBMS
     // implementation to provide the right object implementations.
-    filename = FileUtils.getTestInputFile(testdataDirectory, filename);
+    filename = TestFileUtils.getTestInputFile(testdataDirectory, filename);
 
     InMemoryTopicMapStore store = new InMemoryTopicMapStore();
     topicmap = store.getTopicMap();

@@ -9,9 +9,9 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.*;
 import net.ontopia.topicmaps.utils.ltm.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import java.util.List;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.URIUtils;
 
 import org.junit.Assert;
@@ -36,7 +36,7 @@ public class LTMTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm");
   }
 
     private String base;
@@ -44,15 +44,15 @@ public class LTMTestCase {
         
     public LTMTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
       
       // produce canonical output
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", 
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
         filename);
       String out = base + File.separator + "out" + File.separator +
         filename;
@@ -64,7 +64,7 @@ public class LTMTestCase {
         new CanonicalXTMWriter(new FileOutputStream(out)).write(source);
   
         // compare results
-        String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline",
+        String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           filename + ".cxtm");
         Assert.assertTrue("test file " + filename + " canonicalized wrongly",
               FileUtils.compareFileToResource(out, baseline));
@@ -72,7 +72,7 @@ public class LTMTestCase {
         new CanonicalTopicMapWriter(out).write(source);
   
         // compare results
-        String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline",
+        String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           filename);
         Assert.assertTrue("test file " + filename + " canonicalized wrongly",
               FileUtils.compareFileToResource(out, baseline));

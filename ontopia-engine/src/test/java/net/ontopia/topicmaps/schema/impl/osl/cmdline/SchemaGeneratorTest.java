@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.schema.impl.osl.*;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
 
 import org.junit.Assert;
@@ -38,7 +39,7 @@ public class SchemaGeneratorTest extends TestCase {
         return false;
       }
     };
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", filter);
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", filter);
   }
 
   private String base;
@@ -46,13 +47,13 @@ public class SchemaGeneratorTest extends TestCase {
 
   public SchemaGeneratorTest(String root, String filename) {
     this.filename = filename;
-    this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
   }
 
   @Test
   public void validate() throws Exception {
-    FileUtils.verifyDirectory(base, "out");
-    String tmfile = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+    TestFileUtils.verifyDirectory(base, "out");
+    String tmfile = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
     String schemafile = base + File.separator + "out" + File.separator + filename + ".xml";
     Generate gen = new Generate();
     OSLSchema schemaOutput = gen.createSchema(tmfile);

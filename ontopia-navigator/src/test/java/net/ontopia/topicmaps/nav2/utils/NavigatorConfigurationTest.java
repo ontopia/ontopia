@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
 import net.ontopia.topicmaps.nav2.utils.NavigatorConfigFactory;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
 
 import org.junit.Assert;
@@ -24,7 +25,7 @@ public class NavigatorConfigurationTest {
 
   @Before  
   public void setUp() throws IOException, SAXException {
-    String configFile = FileUtils.getTestInputFile(testdataDirectory, "WEB-INF", "config", "application.xml");
+    String configFile = TestFileUtils.getTestInputFile(testdataDirectory, "WEB-INF", "config", "application.xml");
     // read in configuration file and generate object
     navConf = NavigatorConfigFactory.getConfiguration(StreamUtils.getInputStream(configFile));    
   }

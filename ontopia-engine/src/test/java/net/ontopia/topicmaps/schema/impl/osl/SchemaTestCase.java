@@ -13,6 +13,7 @@ import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.schema.core.*;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class SchemaTestCase extends AbstractSchemaTestCase {
 
   @Parameters
   public static Collection<String[]> params() throws IOException {
-    String config = FileUtils.getTestInputFile(testdataDirectory, "config", "config.xml");
+    String config = TestFileUtils.getTestInputFile(testdataDirectory, "config", "config.xml");
     InputStream in = StreamUtils.getInputStream(config);
     
     try {
@@ -78,7 +79,7 @@ public class SchemaTestCase extends AbstractSchemaTestCase {
 
   protected TopicMapIF readTopicMap(String directory, String file)
     throws IOException {
-    String filename = FileUtils.getTestInputFile(testdataDirectory, directory, file);
+    String filename = TestFileUtils.getTestInputFile(testdataDirectory, directory, file);
     TopicMapReaderIF reader = ImportExportUtils.getReader(filename);
     return reader.read();
   }

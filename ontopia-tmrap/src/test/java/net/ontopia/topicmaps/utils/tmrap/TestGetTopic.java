@@ -10,6 +10,7 @@ import java.io.StringWriter;
 import javax.servlet.ServletException;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import org.junit.Test;
 import org.junit.Assert;
@@ -78,7 +79,7 @@ public class TestGetTopic extends TestTMRAPOperation {
   @Test
   public void testTwoTopics() throws ServletException, IOException {
     // Check that the topics italy and finland exist.
-    File outfile = FileUtils.getTestOutputFile(testdataDirectory, "out", "get-topic-two-topics.xtm");
+    File outfile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "get-topic-two-topics.xtm");
     Writer out = new FileWriter(outfile);
     doGet(uriPrefix + "get-topic", "topicmap=i18n.ltm" +
         "&identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT" +
@@ -95,7 +96,7 @@ public class TestGetTopic extends TestTMRAPOperation {
    */
   @Test
   public void testXTM() throws ServletException, IOException {
-    File outfile = FileUtils.getTestOutputFile(testdataDirectory, "out", "get-topic-two-topics.xtm");
+    File outfile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "get-topic-two-topics.xtm");
     Writer out = new FileWriter(outfile);
     doGet(uriPrefix + "get-topic", "topicmap=i18n.ltm&syntax=application/x-xtm" +
         "&identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT" +
@@ -113,7 +114,7 @@ public class TestGetTopic extends TestTMRAPOperation {
   @Test
   public void testTopicsFromTwoMaps() throws ServletException, IOException {
     // Check that the topics italy and finland exist.
-    File outfile = FileUtils.getTestOutputFile(testdataDirectory, "out", "get-topic-two-maps.xtm");
+    File outfile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "get-topic-two-maps.xtm");
     Writer out = new FileWriter(outfile);
     doGet(uriPrefix + "get-topic", "topicmap=i18n.ltm&topicmap=opera.xtm&" +
           "identifier=http://www.topicmaps.org/xtm/1.0/country.xtm%23IT",

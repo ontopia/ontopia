@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.utils.ltm.*;
 
 import java.util.List;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 
 import org.junit.Assert;
@@ -25,7 +26,7 @@ public class LTMErrorTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "error", ".ltm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "error", ".ltm");
   }
 
     private String filename;
@@ -37,7 +38,7 @@ public class LTMErrorTestCase {
     @Test
     public void testFile() throws IOException {
       // produce canonical output
-      String in = FileUtils.getTestInputFile(testdataDirectory, "error", 
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "error", 
         filename);
 
       try {

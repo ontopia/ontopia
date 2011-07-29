@@ -345,8 +345,8 @@ public class SyncTest {
   }
 
   private void exportTopicMap(String name) throws IOException {
-    File cxtm = FileUtils.getTestOutputFile(testdataDirectory, "out", name + ".cxtm");
-    String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", name + ".cxtm");
+    File cxtm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", name + ".cxtm");
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", name + ".cxtm");
     
     // Export the result topic map to cxtm
     FileOutputStream out = new FileOutputStream(cxtm);

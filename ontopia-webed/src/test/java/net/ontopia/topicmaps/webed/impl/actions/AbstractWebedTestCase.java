@@ -34,7 +34,7 @@ public abstract class AbstractWebedTestCase extends TestCase {
   
   public void setUp() {
     try {
-      tm = ImportExportUtils.getReader(FileUtils.getTestInputFile(testdataDirectory, "football.ltm")).read();
+      tm = ImportExportUtils.getReader(TestFileUtils.getTestInputFile(testdataDirectory, "football.ltm")).read();
     } catch (java.io.IOException e) {
       throw new OntopiaRuntimeException(e);
     }

@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public class ClassInstanceUtilsTest extends TestCase {
   protected TopicMapIF        topicmap; 
@@ -19,7 +20,7 @@ public class ClassInstanceUtilsTest extends TestCase {
   }
 
   protected void load(String dir, String filename) throws IOException {
-    filename = FileUtils.getTestInputFile(dir, filename);
+    filename = TestFileUtils.getTestInputFile(dir, filename);
     topicmap = ImportExportUtils.getReader(filename).read();
     base = topicmap.getStore().getBaseAddress();
   }

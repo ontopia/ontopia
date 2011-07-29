@@ -11,9 +11,9 @@ import net.ontopia.topicmaps.xml.*;
 import net.ontopia.topicmaps.utils.ctm.*;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import java.util.List;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.URIUtils;
 
 import org.junit.Assert;
@@ -29,7 +29,7 @@ public class CTMTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".ctm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ctm");
   }
 
     private String base;
@@ -37,15 +37,15 @@ public class CTMTestCase {
         
     public CTMTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
       
       // produce canonical output
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", 
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", 
         filename);
       String out = base + File.separator + "out" + File.separator +
         filename;
@@ -65,7 +65,7 @@ public class CTMTestCase {
       }
   
       // compare results
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", 
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
         filename + ".cxtm");
       Assert.assertTrue("test file " + filename + " canonicalized wrongly",
                  FileUtils.compareFileToResource(out, baseline));

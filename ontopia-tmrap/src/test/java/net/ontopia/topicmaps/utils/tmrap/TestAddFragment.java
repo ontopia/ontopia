@@ -11,6 +11,7 @@ import java.util.Hashtable;
 import javax.servlet.ServletException;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import org.junit.Test;
 import org.junit.Assert;
@@ -97,7 +98,7 @@ public class TestAddFragment extends TestTMRAPOperation {
     doPost(uriPrefix + "add-fragment", tempTable, rapServlet, out);
     
     // Verify that denmark was added correctly
-    File outfile = FileUtils.getTestOutputFile(testdataDirectory, "out", "add-fragment-denmark.xtm");    
+    File outfile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "add-fragment-denmark.xtm");    
     out = new FileWriter(outfile);
     doGet(uriPrefix + "get-topic",
           "topicmap=i18n.ltm&syntax=application/x-xtm&identifier" +

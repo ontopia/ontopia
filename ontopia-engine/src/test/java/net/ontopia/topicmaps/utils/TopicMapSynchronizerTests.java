@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.List;
 import java.util.Set;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -23,7 +24,7 @@ public class TopicMapSynchronizerTests {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", "-target.ltm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", "-target.ltm");
   }
 
   // --- Test case class
@@ -35,21 +36,21 @@ public class TopicMapSynchronizerTests {
     public TopicMapSynchronizerTests(String root, String filename) {
       this.root = root;
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
 
       String suffix = "-target.ltm";
 
       // setup canonicalization filenames
-      String in1 = FileUtils.getTestInputFile(testdataDirectory, "in" ,filename);
+      String in1 = TestFileUtils.getTestInputFile(testdataDirectory, "in" ,filename);
       String testname =
         filename.substring(0, filename.length() - suffix.length());
-      String in2 = FileUtils.getTestInputFile(testdataDirectory, "in", testname + "-source.ltm");
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
+      String in2 = TestFileUtils.getTestInputFile(testdataDirectory, "in", testname + "-source.ltm");
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
 
       String out = base + File.separator + "out" + File.separator + filename;
 

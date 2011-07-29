@@ -14,6 +14,7 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.xml.sax.SAXException;
 import org.junit.Ignore;
@@ -26,7 +27,7 @@ public class RDBMSTestUtils {
   // ===== Helper methods (topic maps)
 
   public static void load(AbstractQueryTest test, String filename) throws IOException {
-    filename = FileUtils.getTestInputFile(testdataDirectory, filename);
+    filename = TestFileUtils.getTestInputFile(testdataDirectory, filename);
 
     checkDatabasePresence();
 
@@ -64,7 +65,7 @@ public class RDBMSTestUtils {
       test.topicmap = store.getTopicMap();
       test.builder = test.topicmap.getBuilder();
       //! test.processor = new QueryProcessor(test.topicmap);
-      String filename = FileUtils.getTestInputFile(testdataDirectory, "");
+      String filename = TestFileUtils.getTestInputFile(testdataDirectory, "");
       test.processor = QueryUtils.createQueryProcessor(test.topicmap, URIUtils.getURI(filename));
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);

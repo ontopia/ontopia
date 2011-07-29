@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -17,7 +18,6 @@ import net.ontopia.topicmaps.db2tm.*;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
-import net.ontopia.utils.FileUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,8 +38,8 @@ public class DB2TMGeneralTestCase {
    */
   @Parameters
   public static List generateTests() throws IOException {
-    FileUtils.transferTestInputDirectory(testdataDirectory + "/in");
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".xml");
+    TestFileUtils.transferTestInputDirectory(testdataDirectory + "/in");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xml");
   }
 
   // --- Test case class
@@ -49,26 +49,26 @@ public class DB2TMGeneralTestCase {
 
     public DB2TMGeneralTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
 
       String name = filename.substring(0, filename.length() - 4);
 
       // Path to the config file.
-      String cfg = FileUtils.getTransferredTestInputFile(testdataDirectory, "in", filename).getPath();
+      String cfg = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in", filename).getPath();
 
       // Path to the topic map seed.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", name + ".ltm");
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", name + ".ltm");
       
       // Path to the cxtm version of the output topic map.
-      File cxtm = FileUtils.getTestOutputFile(testdataDirectory, "out", name + ".cxtm");
+      File cxtm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", name + ".cxtm");
       
       // Path to the baseline.
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", name + ".cxtm");
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", name + ".cxtm");
       
       // Import the topic map seed.
       TopicMapIF topicmap = ImportExportUtils.getReader(in).read();
@@ -78,7 +78,7 @@ public class DB2TMGeneralTestCase {
       
       // Export the result topic map to ltm, for manual inspection purposes.
       if (DEBUG_LTM) {
-        File ltm = FileUtils.getTestOutputFile(testdataDirectory, "out", name + ".ltm");
+        File ltm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", name + ".ltm");
         (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(topicmap);
       }
       

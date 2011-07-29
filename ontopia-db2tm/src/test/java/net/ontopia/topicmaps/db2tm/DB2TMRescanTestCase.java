@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -17,7 +18,6 @@ import net.ontopia.topicmaps.db2tm.*;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
-import net.ontopia.utils.FileUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,8 +38,8 @@ public class DB2TMRescanTestCase {
    */
   @Parameters
   public static List generateTests() throws IOException {
-    FileUtils.transferTestInputDirectory(testdataDirectory + "/in/rescan");
-    return FileUtils.getTestInputFiles(testdataDirectory, "in/rescan", ".xml");
+    TestFileUtils.transferTestInputDirectory(testdataDirectory + "/in/rescan");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in/rescan", ".xml");
   }
 
   // --- Test case class
@@ -49,26 +49,26 @@ public class DB2TMRescanTestCase {
 
     public DB2TMRescanTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
 
       String name = filename.substring(0, filename.length() - ".xml".length());
       
       // Path to the config file.
-      File cfg = FileUtils.getTransferredTestInputFile(testdataDirectory, "in/rescan", filename);
+      File cfg = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "in/rescan", filename);
 
       // Path to the topic map seed.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in/rescan", name + ".ltm");
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in/rescan", name + ".ltm");
       
       // Path to the cxtm version of the output topic map.
-      File cxtm = FileUtils.getTestOutputFile(testdataDirectory, "out", "rescan-" + name + ".cxtm");
+      File cxtm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "rescan-" + name + ".cxtm");
       
       // Path to the baseline.
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", "rescan-" + name + ".cxtm");
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", "rescan-" + name + ".cxtm");
       
       // Import the topic map seed.
       TopicMapIF topicmap = ImportExportUtils.getReader(in).read();
@@ -78,9 +78,9 @@ public class DB2TMRescanTestCase {
       RelationMapping mapping = RelationMapping.read(cfg);
 
       // Prepare files
-      File target = FileUtils.getTestOutputFile(testdataDirectory, "in", "rescan", name + ".csv");
-      File before = FileUtils.getTestOutputFile(testdataDirectory, "in", "rescan", name + "-before.csv");
-      File after = FileUtils.getTestOutputFile(testdataDirectory, "in", "rescan", name + "-after.csv");
+      File target = TestFileUtils.getTestOutputFile(testdataDirectory, "in", "rescan", name + ".csv");
+      File before = TestFileUtils.getTestOutputFile(testdataDirectory, "in", "rescan", name + "-before.csv");
+      File after = TestFileUtils.getTestOutputFile(testdataDirectory, "in", "rescan", name + "-after.csv");
       
       // Copy before-file
       FileUtils.copyFile(before, target);
@@ -99,7 +99,7 @@ public class DB2TMRescanTestCase {
       
       // Export the result topic map to ltm, for manual inspection purposes.
       if (DEBUG_LTM) {
-        File ltm = FileUtils.getTestOutputFile(testdataDirectory, "out", "rescan-" + name + ".ltm");
+        File ltm = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "rescan-" + name + ".ltm");
         (new LTMTopicMapWriter(new FileOutputStream(ltm))).write(topicmap);
       }
       

@@ -21,6 +21,7 @@ import net.ontopia.utils.ontojsp.JSPPageReader;
 import net.ontopia.utils.ontojsp.JSPTreeNodeIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,6 @@ import net.ontopia.xml.ConfiguredXMLReaderFactory;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.StreamUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,7 +72,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
 
   @Parameters
   public static List generateTests() throws IOException, SAXException {
-    String config = FileUtils.getTestInputFile(testdataDirectory, "config", "tests.xml");
+    String config = TestFileUtils.getTestInputFile(testdataDirectory, "config", "tests.xml");
     InputStream in = StreamUtils.getInputStream(config);
 
     XMLReader parser = new ConfiguredXMLReaderFactory().createXMLReader();
@@ -129,7 +129,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
     try {
       // setup environment and execute single test case
       PageContext page = makePageContext();
-      String jspSource = FileUtils.getTestInputFile(testdataDirectory, "jsp", jspfile);
+      String jspSource = TestFileUtils.getTestInputFile(testdataDirectory, "jsp", jspfile);
       JSPPageReader reader = new JSPPageReader(jspSource);
       JSPTreeNodeIF root = reader.read();
       JSPPageExecuter exec = new JSPPageExecuter();
@@ -174,8 +174,8 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
    */
   private void evaluate() throws IOException {
     String _filename = (filename == null) ? generateTestCaseFilename() : filename;
-    String infile = FileUtils.getTestInputFile(testdataDirectory, "baseline", _filename);
-    File outfile = FileUtils.getTestOutputFile(testdataDirectory, "out", _filename);
+    String infile = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", _filename);
+    File outfile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", _filename);
 
     boolean fileExists = true;
     try {
@@ -237,7 +237,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
    */
   private Writer getWriter() throws IOException {
     String _filename = (filename == null) ? generateTestCaseFilename() : filename;
-    File file = FileUtils.getTestOutputFile(testdataDirectory, "out", _filename);
+    File file = TestFileUtils.getTestOutputFile(testdataDirectory, "out", _filename);
 
     if (!file.createNewFile()) {
       file.delete();

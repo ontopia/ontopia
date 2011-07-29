@@ -8,6 +8,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 
 import java.util.List;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
@@ -18,7 +19,7 @@ public class InvalidXTM2ReaderTestCase extends AbstractCanonicalTests {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "invalid", ".xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "invalid", ".xtm");
   }
   
   // --- Canonicalization type methods
@@ -40,12 +41,12 @@ public class InvalidXTM2ReaderTestCase extends AbstractCanonicalTests {
 
     public InvalidXTM2ReaderTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
       this._testdataDirectory = testdataDirectory;
     }
 
     public void testFile() throws IOException {
-      String in = FileUtils.getTestInputFile(testdataDirectory, "invalid", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid", filename);
       XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(in));
       reader.setValidation(true);
       // FIXME: should we do a setXTM2Required(true) or something?

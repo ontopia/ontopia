@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 import net.ontopia.topicmaps.nav2.core.*;
 import net.ontopia.topicmaps.nav2.utils.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
 
 import org.junit.Assert;
@@ -19,7 +20,7 @@ public class ModuleReaderTest {
 
   @Test
   public void testPlain() throws IOException, SAXException {
-    String inpFile = FileUtils.getTestInputFile(testdataDirectory, "functions", "plainTest.jsm");
+    String inpFile = TestFileUtils.getTestInputFile(testdataDirectory, "functions", "plainTest.jsm");
     ModuleReaderIF modReader = new ModuleReader(false);
     Map funcs = modReader.read(StreamUtils.getInputStream(inpFile));
 
@@ -35,7 +36,7 @@ public class ModuleReaderTest {
   
   @Test
   public void testEncrypted() throws IOException, SAXException {
-    String inpFile = FileUtils.getTestInputFile(testdataDirectory, "functions", "encryptedTest.jsm");
+    String inpFile = TestFileUtils.getTestInputFile(testdataDirectory, "functions", "encryptedTest.jsm");
     ModuleReaderIF modReader = new ModuleReader(true);
     Map funcs = modReader.read(StreamUtils.getInputStream(inpFile));
 

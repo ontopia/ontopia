@@ -4,6 +4,7 @@ package net.ontopia.topicmaps.nav2.plugins;
 import java.io.*;
 import java.util.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
 
 import org.junit.Assert;
@@ -19,7 +20,7 @@ public class PluginContentHandlerTest {
 
   @Before  
   public void setUp() throws Exception {
-    String pluginPath = FileUtils.getTestInputFile(testdataDirectory, "plugins", "sample-plugins.xml");
+    String pluginPath = TestFileUtils.getTestInputFile(testdataDirectory, "plugins", "sample-plugins.xml");
     plugins = PluginConfigFactory.getPlugins(StreamUtils.getInputStream(pluginPath), pluginPath, pluginBasePath);
   }
 

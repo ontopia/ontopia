@@ -16,6 +16,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.URIUtils;
 
@@ -33,7 +34,7 @@ public class RDFWriterFilterTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
   }
 
   // --- Canonical test case class
@@ -43,19 +44,19 @@ public class RDFWriterFilterTestCase {
 
     public RDFWriterFilterTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
       // setup
-      FileUtils.verifyDirectory(base, "out");
-      FileUtils.verifyDirectory(base, "filter-tmp");
-      String in = FileUtils.getTestInputFile(testdataDirectory, "filter-in",
+      TestFileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "filter-tmp");
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "filter-in",
           filename);
       String tmp = base + File.separator + "filter-tmp" + File.separator
           + filename + ".rdf";
-      String bline = FileUtils.getTestInputFile(testdataDirectory, "filter-baseline",
+      String bline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline",
           filename + ".rdf");
 
       // Import

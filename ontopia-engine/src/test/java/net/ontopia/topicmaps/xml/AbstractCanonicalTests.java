@@ -9,6 +9,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryStoreFactory;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 
 import java.util.ArrayList;
@@ -60,10 +61,10 @@ public abstract class AbstractCanonicalTests {
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
       
       // setup canonicalization filenames
-      String in = FileUtils.getTestInputFile(_testdataDirectory, getFileDirectory(), 
+      String in = TestFileUtils.getTestInputFile(_testdataDirectory, getFileDirectory(), 
         filename);
       String out = base + File.separator + "out" + File.separator +
         getOutFilename(filename);
@@ -71,7 +72,7 @@ public abstract class AbstractCanonicalTests {
       canonicalize(in, out);
       
       // compare results
-      String baseline = FileUtils.getTestInputFile(_testdataDirectory, "baseline", 
+      String baseline = TestFileUtils.getTestInputFile(_testdataDirectory, "baseline", 
         getOutFilename(filename));
       Assert.assertTrue("test file " + filename + " canonicalized wrongly",
               FileUtils.compareFileToResource(out, baseline));

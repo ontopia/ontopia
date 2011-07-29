@@ -7,6 +7,7 @@ import net.ontopia.utils.URIUtils;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 
 public class PackageTest extends TopicMapPackageTest {
@@ -21,7 +22,7 @@ public class PackageTest extends TopicMapPackageTest {
     if (tm == null) {
       try {
         TopicMapReaderIF reader =
-          new XTMTopicMapReader(URIUtils.getURI(FileUtils.getTestInputFile(testdataDirectory, "package-test.xtm")));
+          new XTMTopicMapReader(URIUtils.getURI(TestFileUtils.getTestInputFile(testdataDirectory, "package-test.xtm")));
         tm = reader.read();
         base = tm.getStore().getBaseAddress();
       }

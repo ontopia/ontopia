@@ -13,6 +13,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import java.util.List;
 import org.junit.Assert;
@@ -28,7 +29,7 @@ public class XTMWriterFilterTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "filter-in", ".ltm|.rdf|.xtm");
   }
 
   // --- Test case class
@@ -45,18 +46,18 @@ public class XTMWriterFilterTestCase {
 
     public XTMWriterFilterTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "filter-out");
-      FileUtils.verifyDirectory(base, "filter-xtm");
+      TestFileUtils.verifyDirectory(base, "filter-out");
+      TestFileUtils.verifyDirectory(base, "filter-xtm");
 
       // Path to the input topic map document.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "filter-in", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "filter-in", filename);
       // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "filter-baseline", filename + ".cxtm");
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "filter-baseline", filename + ".cxtm");
       // Path to the exported xtm topic map document.
       String xtm = base + File.separator + "filter-xtm" + File.separator
           + filename + ".xtm";

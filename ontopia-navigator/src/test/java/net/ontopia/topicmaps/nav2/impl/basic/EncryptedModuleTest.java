@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.nav2.core.*;
 import net.ontopia.topicmaps.nav2.impl.basic.*;
 import net.ontopia.topicmaps.nav2.utils.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,15 +23,15 @@ public class EncryptedModuleTest {
   @Before
   public void setUp() throws IOException {
     // create encrypted module file
-    File inFile = FileUtils.getTransferredTestInputFile(testdataDirectory, "functions", "plainTest.jsm");
-    File outFile = FileUtils.getTestOutputFile(testdataDirectory, "out", "testEncWriterOut.jsm");
+    File inFile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "functions", "plainTest.jsm");
+    File outFile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "testEncWriterOut.jsm");
     EncryptionUtils.encrypt(inFile, outFile);
   }
    
 
   @Test
   public void testVerifyWritten() throws IOException, SAXException {
-    File inFile = FileUtils.getTestOutputFile(testdataDirectory, "out", "testEncWriterOut.jsm");
+    File inFile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "testEncWriterOut.jsm");
     ModuleReaderIF modReader = new ModuleReader(true);
     Map funcs = modReader.read(new FileInputStream(inFile));
 

@@ -17,6 +17,7 @@ import javax.servlet.jsp.JspException;
 import org.xml.sax.SAXException;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ontojsp.FakeHttpSession;
 import net.ontopia.utils.ontojsp.FakePageContext;
 import net.ontopia.utils.ontojsp.FakeServletConfig;
@@ -153,7 +154,7 @@ public class JSPAttributeTest {
    */
   private void runJSPTest(String file, Map attributes)
     throws IOException, JspException, SAXException {
-    String jsp = FileUtils.getTestInputFile(testdataDirectory, "jsp", file);
+    String jsp = TestFileUtils.getTestInputFile(testdataDirectory, "jsp", file);
 
     // run test
     PageContext page = makePageContext(file, attributes);
@@ -164,8 +165,8 @@ public class JSPAttributeTest {
     page.getOut().flush();
 
     // compare baseline and actual result
-    String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", file);
-    File outfile  = FileUtils.getTestOutputFile(testdataDirectory, "out", file);
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", file);
+    File outfile  = TestFileUtils.getTestOutputFile(testdataDirectory, "out", file);
     Assert.assertTrue("result not equal to baseline for file '" + file + "'",
                FileUtils.compareFileToResource(outfile, baseline));
   }
@@ -175,7 +176,7 @@ public class JSPAttributeTest {
    */
   private PageContext makePageContext(String file, Map attributes) 
     throws IOException {
-    File jspout = FileUtils.getTestOutputFile(testdataDirectory, "out", file);
+    File jspout = TestFileUtils.getTestOutputFile(testdataDirectory, "out", file);
     Writer out = new OutputStreamWriter(new FileOutputStream(jspout),
                                         "iso-8859-1");
     FakePageContext pageContext = new FakePageContext(out);

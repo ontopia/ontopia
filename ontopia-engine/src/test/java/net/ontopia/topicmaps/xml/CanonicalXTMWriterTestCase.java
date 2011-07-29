@@ -8,6 +8,7 @@ import java.util.Set;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import java.util.List;
 import org.junit.Assert;
@@ -23,7 +24,7 @@ public class CanonicalXTMWriterTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.xtm");
   }
 
     protected String base;
@@ -31,17 +32,17 @@ public class CanonicalXTMWriterTestCase {
       
     public CanonicalXTMWriterTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
   
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
    
       // Path to the input topic map document.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       // Path to the baseline
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", 
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
         filename + ".cxtm");
       // Path to the canonicalized output.
       String out = base + File.separator + "out" + File.separator 

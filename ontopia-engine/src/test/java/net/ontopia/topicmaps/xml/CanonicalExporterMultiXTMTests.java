@@ -7,6 +7,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import java.util.List;
 import org.junit.Assert;
@@ -19,13 +20,13 @@ public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTes
 
   public CanonicalExporterMultiXTMTests(String root, String filename) {
     this.filename = filename;
-    this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm.multi");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm.multi");
   }
 
   protected String getTestdataDirectory() {
@@ -43,7 +44,7 @@ public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTes
   // --- Test case class
 
     public void testExport() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
       
       // setup canonicalization filenames
       String outpath = base + File.separator + "out" + File.separator;
@@ -52,7 +53,7 @@ public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTes
       TopicMapStoreFactoryIF sfactory = getStoreFactory();
       
       // Read all topic maps from document
-      String infile = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String infile = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(infile));
       reader.setValidation(false);
       reader.setStoreFactory(sfactory);
@@ -87,7 +88,7 @@ public class CanonicalExporterMultiXTMTests extends AbstractCanonicalExporterTes
         source2.getStore().close();
                 
         // Compare results
-        String basefile = FileUtils.getTestInputFile(testdataDirectory, "baseline", filename + "-" + counter);
+        String basefile = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename + "-" + counter);
         Assert.assertTrue("test file " + filename + " canonicalized wrongly, " +
                    outfile + " not equal to " + basefile,
                    FileUtils.compareFileToResource(outfile, basefile));

@@ -9,6 +9,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class CTMInvalidTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "invalid", ".ctm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "invalid", ".ctm");
   }
 
     private String filename;
@@ -39,7 +40,7 @@ public class CTMInvalidTestCase {
     @Test
     public void testFile() throws IOException {
       // produce canonical output
-      String in = FileUtils.getTestInputFile(testdataDirectory, "invalid", 
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "invalid", 
         filename);
 
       try {

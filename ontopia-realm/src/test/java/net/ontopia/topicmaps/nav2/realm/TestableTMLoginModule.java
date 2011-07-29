@@ -5,6 +5,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Ignore;
 
 /**
@@ -23,7 +24,7 @@ public class TestableTMLoginModule extends TMLoginModule {
   @Override
   protected TopicMapIF getTopicMap() {
     try {
-      String topicmapFile = FileUtils.getTestInputFile(testdataDirectory, "tmloginmodule.ltm");
+      String topicmapFile = TestFileUtils.getTestInputFile(testdataDirectory, "tmloginmodule.ltm");
       return ImportExportUtils.getReader(topicmapFile).read();
     } catch (java.io.IOException e) {
       throw new OntopiaRuntimeException(e);

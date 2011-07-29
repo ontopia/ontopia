@@ -9,6 +9,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 
 import java.util.List;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.ResourcesDirectoryReader.ResourcesFilterIF;
 import net.ontopia.utils.URIUtils;
 import org.junit.runners.Parameterized.Parameters;
@@ -19,7 +20,7 @@ public class CanonicalXTMimportIntoTests extends AbstractCanonicalTests {
 
   public CanonicalXTMimportIntoTests(String root, String filename) {
     this.filename = filename;
-    this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
 
@@ -36,7 +37,7 @@ public class CanonicalXTMimportIntoTests extends AbstractCanonicalTests {
           return false;
       }
     };
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", filter);
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", filter);
   }
 
   // --- Canonicalization type methods

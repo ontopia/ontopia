@@ -12,6 +12,7 @@ import java.io.*;
 import java.net.*;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class ExternalRefTest
     CountingRefHandler extRefHandler = new CountingRefHandler();
     try {
 
-      String testfile = FileUtils.getTestInputFile(testdataDirectory, fileName);
+      String testfile = TestFileUtils.getTestInputFile(testdataDirectory, fileName);
       XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(testfile));
       reader.setExternalReferenceHandler(extRefHandler);
       reader.read();

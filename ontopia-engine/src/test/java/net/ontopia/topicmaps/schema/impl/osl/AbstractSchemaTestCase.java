@@ -6,6 +6,7 @@ import java.io.IOException;
 import junit.framework.TestCase;
 import net.ontopia.topicmaps.schema.core.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public abstract class AbstractSchemaTestCase {
   
@@ -16,10 +17,10 @@ public abstract class AbstractSchemaTestCase {
 
     OSLSchemaReader reader;
     if ("out".equals(directory)) {
-      File file = FileUtils.getTestOutputFile(testdataDirectory, directory, filename);
+      File file = TestFileUtils.getTestOutputFile(testdataDirectory, directory, filename);
       reader = new OSLSchemaReader(file);
     } else {
-      String file = FileUtils.getTestInputFile(testdataDirectory, directory, filename);
+      String file = TestFileUtils.getTestInputFile(testdataDirectory, directory, filename);
       reader = new OSLSchemaReader(file);
     }
     return reader.read();
@@ -27,7 +28,7 @@ public abstract class AbstractSchemaTestCase {
   
   protected void writeSchema(String directory, String filename, OSLSchema schema)
     throws IOException, SchemaSyntaxException {
-    File file = FileUtils.getTestOutputFile(testdataDirectory, directory, filename);
+    File file = TestFileUtils.getTestOutputFile(testdataDirectory, directory, filename);
     OSLSchemaWriter writer = new OSLSchemaWriter(file, "utf-8");
     writer.write(schema);
   }

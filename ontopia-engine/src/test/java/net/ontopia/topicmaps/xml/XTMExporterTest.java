@@ -9,6 +9,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
   @Test
   public void testEncoding() throws IOException {
     TopicMapIF tm = load(testdataDirectory, "in", "latin1.xtm");
-    File out = FileUtils.getTestOutputFile(testdataDirectory, "out", "tmp-latin1.xtm");
+    File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "tmp-latin1.xtm");
     XTMTopicMapWriter writer = new XTMTopicMapWriter(out, "iso-8859-1");
     writer.setVersion(1);
     writer.write(tm);
@@ -47,7 +48,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
   @Test
   public void testEncoding2() throws IOException {
     TopicMapIF tm = load(testdataDirectory, "in", "latin1.xtm");
-    File out = FileUtils.getTestOutputFile(testdataDirectory, "out", "tmp-utf-8.xtm");
+    File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "tmp-utf-8.xtm");
     XTMTopicMapWriter writer = new XTMTopicMapWriter(out);
     writer.setVersion(1);
     writer.write(tm);
@@ -290,7 +291,7 @@ public class XTMExporterTest extends AbstractXMLTestCase {
   public void testDuplicateIDs() throws IOException {
     // importing and exporting this file causes duplicate IDs
     // these are detected on re-import
-    tmfile = FileUtils.getTestOutputFile(testdataDirectory, "out", "duplicate-ids.xtm");
+    tmfile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "duplicate-ids.xtm");
     topicmap = load("various", "duplicate-ids.xtm");
     reload();
   }
@@ -430,6 +431,6 @@ public class XTMExporterTest extends AbstractXMLTestCase {
     return load(dir + "/" + subdir, file);
   }
   private TopicMapIF load(String dir, String file) throws IOException {
-    return new XTMTopicMapReader(URIUtils.getURI(FileUtils.getTestInputFile(dir, file))).read();
+    return new XTMTopicMapReader(URIUtils.getURI(TestFileUtils.getTestInputFile(dir, file))).read();
   }
 }

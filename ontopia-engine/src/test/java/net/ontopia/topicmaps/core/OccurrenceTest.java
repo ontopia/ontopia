@@ -12,6 +12,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public abstract class OccurrenceTest extends AbstractTypedScopedTest {
   protected OccurrenceIF occurrence;
@@ -122,8 +123,8 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
 
   public void testReader() throws Exception {
     // read file and store in object
-    File filein = FileUtils.getTransferredTestInputFile("various", "clob.xml");
-    File fileout = FileUtils.getTestOutputFile("various", "clob.xml.out");
+    File filein = TestFileUtils.getTransferredTestInputFile("various", "clob.xml");
+    File fileout = TestFileUtils.getTestOutputFile("various", "clob.xml.out");
 
 		long inlen = filein.length();
     Reader ri = new FileReader(filein);
@@ -164,7 +165,7 @@ public abstract class OccurrenceTest extends AbstractTypedScopedTest {
 
   public void _testBinaryReader() throws Exception {
     // read file and store in occurrence
-    String file = FileUtils.getTestInputFile("various", "blob.gif");
+    String file = TestFileUtils.getTestInputFile("various", "blob.gif");
     Reader ri = new InputStreamReader(new Base64.InputStream(new FileInputStream(file), Base64.ENCODE), "utf-8");
     occurrence.setReader(ri, file.length(), DataTypes.TYPE_BINARY);
 

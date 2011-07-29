@@ -19,6 +19,7 @@ import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
 import net.ontopia.topicmaps.utils.tmrap.TopicPage;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import org.junit.Test;
 import org.junit.Assert;
@@ -32,7 +33,7 @@ public class TestRemoteTopicIndex extends TestTMRAPOperation {
   @Test
   public void testTopicsFromTwoMaps() throws ServletException, IOException {
     // Init
-    File outfile = FileUtils.getTestOutputFile(testdataDirectory, "out", "get-topic-page_remote.xtm");
+    File outfile = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "get-topic-page_remote.xtm");
     String outurl = outfile.toURL().toString();
     
     // Write get-topic-page result to a file

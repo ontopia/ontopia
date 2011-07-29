@@ -18,6 +18,7 @@ import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 import org.apache.xml.serialize.OutputFormat;
@@ -41,7 +42,7 @@ public class XTMFragmentExporterTestCase {
    */
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.rdf|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.rdf|.xtm");
   }
 
   // --- Test case class
@@ -51,19 +52,19 @@ public class XTMFragmentExporterTestCase {
 
     public XTMFragmentExporterTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "xtm");
-      FileUtils.verifyDirectory(base, "ltm");
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "xtm");
+      TestFileUtils.verifyDirectory(base, "ltm");
+      TestFileUtils.verifyDirectory(base, "out");
 
        // Path to the input topic map document.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", 
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
         filename + ".xtm.cxtm");
        // Path to the exported ltm topic map document.
       String xtm = base + File.separator + "xtm" + File.separator + filename

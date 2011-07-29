@@ -18,6 +18,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.PropertyUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -44,13 +45,13 @@ public class FullRescanEventTest {
   
   @Test
   public void testRescan() throws IOException, SQLException {
-    FileUtils.transferTestInputDirectory(dir + "/in/sync");
+    TestFileUtils.transferTestInputDirectory(dir + "/in/sync");
     
     String casename = "EVENTS";
-    String cfg = FileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".xml").getPath();
-    String tm = FileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".ltm").getPath();
-    String out = FileUtils.getTestOutputFile(dir, "out", casename + ".cxtm").getPath();
-    String baseline = FileUtils.getTestInputFile(dir, "in/sync/baseline", casename + ".cxtm");
+    String cfg = TestFileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".xml").getPath();
+    String tm = TestFileUtils.getTransferredTestInputFile(dir, "in", "sync", casename + ".ltm").getPath();
+    String out = TestFileUtils.getTestOutputFile(dir, "out", casename + ".cxtm").getPath();
+    String baseline = TestFileUtils.getTestInputFile(dir, "in/sync/baseline", casename + ".cxtm");
       
     // Connect to the DB
     Connection conn = ChangelogTestCase.getConnection();

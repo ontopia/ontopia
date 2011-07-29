@@ -7,6 +7,7 @@ import net.ontopia.infoset.core.*;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
   
 public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
@@ -25,7 +26,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     TopicMapEvents.addTopicListener(topicmapRef, listener);
     // load topic map
     topicmap = topicmapRef.createStore(false).getTopicMap();
-    ImportExportUtils.getImporter(FileUtils.getTestInputFile("various", "bart.ltm")).importInto(topicmap);
+    ImportExportUtils.getImporter(TestFileUtils.getTestInputFile("various", "bart.ltm")).importInto(topicmap);
     topicmap.getStore().commit();
     
     // get the builder of that topic map.

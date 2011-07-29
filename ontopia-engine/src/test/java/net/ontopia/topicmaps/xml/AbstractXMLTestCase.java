@@ -8,6 +8,7 @@ import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Before;
 import net.ontopia.utils.URIUtils;
 
@@ -21,12 +22,12 @@ public abstract class AbstractXMLTestCase {
 
   @Before
   public void setUp() throws Exception {
-    String root = FileUtils.getTestdataOutputDirectory();
-    FileUtils.verifyDirectory(root, "canonical", "out");
+    String root = TestFileUtils.getTestdataOutputDirectory();
+    TestFileUtils.verifyDirectory(root, "canonical", "out");
   }
 
   protected void prepareTopicMap() throws IOException {
-    tmfile = FileUtils.getTestOutputFile("canonical", "out", "tmid.xtm");
+    tmfile = TestFileUtils.getTestOutputFile("canonical", "out", "tmid.xtm");
     tmbase = new URILocator(tmfile);
     sourceLoc = tmbase.resolveAbsolute("#id");
     

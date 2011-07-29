@@ -7,6 +7,7 @@ import net.ontopia.topicmaps.webed.impl.basic.ActionRegistryIF;
 import net.ontopia.topicmaps.webed.impl.utils.ActionConfigurator;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import junit.framework.TestCase;
 
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class ActionConfigContentHandlerErrorTest extends TestCase {
 
   public void testReadIn() {
 
-    String configFile = FileUtils.getTestInputFile(testdataDirectory, "errorActionConfig.xml");
+    String configFile = TestFileUtils.getTestInputFile(testdataDirectory, "errorActionConfig.xml");
     ActionConfigurator ac = new ActionConfigurator("omnieditor", "/", configFile);
     ac.logErrors(false); // disable error logging while running test
     boolean failOccurred = false;

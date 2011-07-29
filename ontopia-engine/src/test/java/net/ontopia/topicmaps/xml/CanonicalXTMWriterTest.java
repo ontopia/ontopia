@@ -3,6 +3,7 @@ package net.ontopia.topicmaps.xml;
 
 import java.io.*;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.*;
@@ -22,16 +23,16 @@ public class CanonicalXTMWriterTest extends AbstractXMLTestCase {
 
   public void setUp() throws IOException {
     topicmap = makeEmptyTopicMap();
-    String root = FileUtils.getTestdataOutputDirectory();
-    FileUtils.verifyDirectory(root, testdataDirectory, "out");
+    String root = TestFileUtils.getTestdataOutputDirectory();
+    TestFileUtils.verifyDirectory(root, testdataDirectory, "out");
   }
   
   // --- Test cases
 
   @Test
   public void testOutputStream() throws IOException {
-    String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", "outputstream.cxtm");
-    File out = FileUtils.getTestOutputFile(testdataDirectory, "out", "outputstream.cxtm");
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", "outputstream.cxtm");
+    File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "outputstream.cxtm");
 
     FileOutputStream outs = new FileOutputStream(out);
     new CanonicalXTMWriter(outs).write(topicmap);
@@ -43,8 +44,8 @@ public class CanonicalXTMWriterTest extends AbstractXMLTestCase {
 
   @Test
   public void testWriter() throws IOException {
-    String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", "writer.cxtm");
-    File out = FileUtils.getTestOutputFile(testdataDirectory, "out", "writer.cxtm");
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", "writer.cxtm");
+    File out = TestFileUtils.getTestOutputFile(testdataDirectory, "out", "writer.cxtm");
 
     Writer outw = new OutputStreamWriter(new FileOutputStream(out), "utf-8");
     new CanonicalXTMWriter(outw).write(topicmap);

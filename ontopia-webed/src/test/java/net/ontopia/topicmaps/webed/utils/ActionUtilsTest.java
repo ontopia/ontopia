@@ -15,6 +15,7 @@ import net.ontopia.topicmaps.webed.impl.actions.basename.AddBasename;
 import net.ontopia.topicmaps.webed.impl.utils.ActionUtils;
 import net.ontopia.topicmaps.webed.impl.utils.ActionConfigurator;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import junit.framework.TestCase;
 
 public class ActionUtilsTest extends TestCase {
@@ -33,7 +34,7 @@ public class ActionUtilsTest extends TestCase {
     super.setUp();
     // only read in registry once (we are not modifying it)
     if (registry == null) {
-      File realFile = FileUtils.getTransferredTestInputFile(testdataDirectory, "actionConfig.xml");
+      File realFile = TestFileUtils.getTransferredTestInputFile(testdataDirectory, "actionConfig.xml");
       ActionConfigurator ac = new ActionConfigurator("omnieditor", realFile.getParent(), "actionConfig.xml");
       ac.readAndWatchRegistry();
       registry = ac.getRegistry();

@@ -27,6 +27,7 @@ import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import junit.framework.TestCase;
 
@@ -94,7 +95,7 @@ public class RDBMSBackendTests extends TestCase {
     }
 
     // import topic map
-    String filename = FileUtils.getTestInputFile("various", "gcache.ltm");
+    String filename = TestFileUtils.getTestInputFile("various", "gcache.ltm");
     
     // create reference
     long topicmap_id = importTopicMap(filename);
@@ -251,7 +252,7 @@ public class RDBMSBackendTests extends TestCase {
     }
 
     // import topic map
-    String filename = FileUtils.getTestInputFile("various", "gcache.ltm");
+    String filename = TestFileUtils.getTestInputFile("various", "gcache.ltm");
     
     // create reference
     long topicmap_id = importTopicMap(filename);
@@ -317,7 +318,7 @@ public class RDBMSBackendTests extends TestCase {
     }
 
     // import topic map
-    String filename = FileUtils.getTestInputFile("various", "commroll.ltm");
+    String filename = TestFileUtils.getTestInputFile("various", "commroll.ltm");
     
     // create reference
     long topicmap_id = importTopicMap(filename);
@@ -453,7 +454,7 @@ public class RDBMSBackendTests extends TestCase {
     }
 
     // import topic map
-    String filename = FileUtils.getTestInputFile("various", "gcache.ltm");
+    String filename = TestFileUtils.getTestInputFile("various", "gcache.ltm");
     
     // create reference
     long topicmap_id = importTopicMap(filename);

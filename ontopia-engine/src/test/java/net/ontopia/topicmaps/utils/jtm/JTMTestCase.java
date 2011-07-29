@@ -11,9 +11,9 @@ import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.utils.jtm.JTMTopicMapReader;
 import net.ontopia.topicmaps.utils.jtm.JTMTopicMapWriter;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import java.util.List;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.URIUtils;
 
 import org.junit.Assert;
@@ -29,7 +29,7 @@ public class JTMTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".jtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".jtm");
   }
 
     private String base;
@@ -37,7 +37,7 @@ public class JTMTestCase {
 
     public JTMTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     /**
@@ -46,12 +46,12 @@ public class JTMTestCase {
      */
     @Test
     public void testReader() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
 
       // Path to the input topic map document.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", 
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
           filename + ".cxtm");
       // Path to the output (canonicalized output of exported jtm topic map).
       String out = base + File.separator + "out" + filename
@@ -79,13 +79,13 @@ public class JTMTestCase {
      */
     @Test
     public void testWriter() throws IOException {
-      FileUtils.verifyDirectory(base, "jtm-in");
-      FileUtils.verifyDirectory(base, "jtm-out");    
+      TestFileUtils.verifyDirectory(base, "jtm-in");
+      TestFileUtils.verifyDirectory(base, "jtm-out");    
 
       // Path to the input topic map document.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", 
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
           filename + ".cxtm");
       
       // Path to the intermediate jtm file

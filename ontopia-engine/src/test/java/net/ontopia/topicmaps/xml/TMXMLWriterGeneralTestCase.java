@@ -12,6 +12,7 @@ import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import java.util.List;
 import org.junit.Assert;
@@ -29,7 +30,7 @@ public class TMXMLWriterGeneralTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.rdf|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.rdf|.xtm");
   }
 
   // --- Test case class
@@ -39,7 +40,7 @@ public class TMXMLWriterGeneralTestCase {
 
     public TMXMLWriterGeneralTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     /**
@@ -52,13 +53,13 @@ public class TMXMLWriterGeneralTestCase {
      */
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
-      FileUtils.verifyDirectory(base, "tmxml");
+      TestFileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "tmxml");
 
       // Path to the input topic map document.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", 
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", 
         filename + ".cxtm");
       // Path to the exported tmxml topic map document.
       String tmxml = base + File.separator + "tmxml" + File.separator + filename

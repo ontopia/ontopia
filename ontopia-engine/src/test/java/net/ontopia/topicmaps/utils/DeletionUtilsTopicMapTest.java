@@ -22,7 +22,7 @@ public class DeletionUtilsTopicMapTest {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.xtm");
   }
 
   private String filename;
@@ -40,7 +40,7 @@ public class DeletionUtilsTopicMapTest {
 
   @Test
   public void testTopicMapDeletion() throws Exception {
-    String name = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+    String name = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
     TopicMapIF tm = makeTopicMap();
     TopicMapImporterIF importer = ImportExportUtils.getImporter(name);
     if (name.endsWith(".xtm"))

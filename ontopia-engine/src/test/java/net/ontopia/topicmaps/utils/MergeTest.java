@@ -15,6 +15,7 @@ import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.utils.ObjectUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 
 public class MergeTest extends TestCase {
@@ -606,7 +607,7 @@ public class MergeTest extends TestCase {
   }
 
   public void testMergeDuplicateAssociations() throws IOException {
-    TopicMapIF tm = ImportExportUtils.getReader(FileUtils.getTestInputFile("various", "merge-duplicate-assoc.ltm")).read();
+    TopicMapIF tm = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("various", "merge-duplicate-assoc.ltm")).read();
     LocatorIF base = tm.getStore().getBaseAddress();
     TopicIF puccini1 = (TopicIF) tm.getObjectByItemIdentifier(base.resolveAbsolute("#puccini1"));
     TopicIF puccini2 = (TopicIF) tm.getObjectByItemIdentifier(base.resolveAbsolute("#puccini2"));
@@ -623,8 +624,8 @@ public class MergeTest extends TestCase {
   // FIXME: must test duplicates
 
   public void testMergeSelf() throws IOException {
-    TopicMapIF tm1 = ImportExportUtils.getReader(FileUtils.getTestInputFile("query", "jill.xtm")).read();
-    TopicMapIF tm2 = ImportExportUtils.getReader(FileUtils.getTestInputFile("query", "jill.xtm")).read();
+    TopicMapIF tm1 = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("query", "jill.xtm")).read();
+    TopicMapIF tm2 = ImportExportUtils.getReader(TestFileUtils.getTestInputFile("query", "jill.xtm")).read();
 
     MergeUtils.mergeInto(tm1, tm2);
   }
@@ -954,12 +955,12 @@ public class MergeTest extends TestCase {
 
   public void testMergeAllTopics() throws MalformedURLException, IOException {
     String sep = File.separator;
-    String root = FileUtils.getTestdataOutputDirectory();
-    FileUtils.verifyDirectory(root, "canonical", "out");
+    String root = TestFileUtils.getTestdataOutputDirectory();
+    TestFileUtils.verifyDirectory(root, "canonical", "out");
       
-    String file = FileUtils.getTestInputFile("various", "houdini.xtm");
+    String file = TestFileUtils.getTestInputFile("various", "houdini.xtm");
     String outfile = root + sep + "canonical" + sep + "out" + sep + "houdini.xtm";
-    String baseline = FileUtils.getTestInputFile("various", "baseline-houdini.xtm");
+    String baseline = TestFileUtils.getTestInputFile("various", "baseline-houdini.xtm");
 
     TopicMapIF topicmap = new XTMTopicMapReader(URIUtils.getURI(file)).read();
     

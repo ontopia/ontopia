@@ -8,6 +8,7 @@ import java.util.Collection;
 import net.ontopia.topicmaps.schema.core.*;
 import net.ontopia.utils.ResourcesDirectoryReader;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +20,7 @@ public class SchemaErrorTestCase extends AbstractSchemaTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "error", ".xml");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "error", ".xml");
   }
 
     private final String base;
@@ -27,12 +28,12 @@ public class SchemaErrorTestCase extends AbstractSchemaTestCase {
 
     public SchemaErrorTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     @Test
     public void testSchemaError() throws IOException, SchemaSyntaxException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
       try {
         readSchema("error", filename);
         Assert.fail("Read bad schema " + filename + " and found no errors");

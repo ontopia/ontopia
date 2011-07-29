@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -81,10 +82,10 @@ public abstract class AbstractCanonicalExporterTests {
 
     @Test
     public void testExport() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "out");
       
       // setup canonicalization filenames
-      String in = FileUtils.getTestInputFile(_testdataDirectory, "in", 
+      String in = TestFileUtils.getTestInputFile(_testdataDirectory, "in", 
         filename);
       String tmp = base + File.separator + "out" + File.separator + 
         "tmp-" + filename;
@@ -102,7 +103,7 @@ public abstract class AbstractCanonicalExporterTests {
       }
 
       // compare results
-      String baseline = FileUtils.getTestInputFile(_testdataDirectory, "baseline", 
+      String baseline = TestFileUtils.getTestInputFile(_testdataDirectory, "baseline", 
                         filename);
       Assert.assertTrue("test file " + filename + " canonicalized wrongly (" + baseline
                  + " != " + out + "), tmp=" + tmp,

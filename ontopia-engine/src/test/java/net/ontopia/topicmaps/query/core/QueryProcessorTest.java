@@ -13,6 +13,7 @@ import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryMatches;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 // TODO:
 //  - move tests that are really tests of specific predicates out
@@ -1164,7 +1165,7 @@ public class QueryProcessorTest extends AbstractQueryTest {
     addMatch(matches, "GCC", getTopicById("lmg"));
     addMatch(matches, "GCC", getTopicById("silje"));
     
-    String url = FileUtils.getTransferredTestInputFile("query", "grandchild.tl").toURL().toString();
+    String url = TestFileUtils.getTransferredTestInputFile("query", "grandchild.tl").toURL().toString();
 
     verifyQuery(matches,
                 "import \"" + url + "\" as fam " +

@@ -13,6 +13,7 @@ import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.utils.deciders.TMDecider;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class LTMTopicMapWriterGeneralTestCase {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.rdf|.xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".ltm|.rdf|.xtm");
   }
 
   // --- Test case class
@@ -38,7 +39,7 @@ public class LTMTopicMapWriterGeneralTestCase {
 
     public LTMTopicMapWriterGeneralTestCase(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     }
 
     /**
@@ -50,13 +51,13 @@ public class LTMTopicMapWriterGeneralTestCase {
      */
     @Test
     public void testFile() throws IOException {
-      FileUtils.verifyDirectory(base, "out");
-      FileUtils.verifyDirectory(base, "ltm");
+      TestFileUtils.verifyDirectory(base, "out");
+      TestFileUtils.verifyDirectory(base, "ltm");
 
       // Path to the input topic map document.
-      String in = FileUtils.getTestInputFile(testdataDirectory, "in", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "in", filename);
       // Path to the baseline (canonicalized output of the source topic map).
-      String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline",
+      String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline",
           filename + ".cxtm");
       // Path to the exported ltm topic map document.
       String ltm = base + File.separator + "ltm" + File.separator + filename

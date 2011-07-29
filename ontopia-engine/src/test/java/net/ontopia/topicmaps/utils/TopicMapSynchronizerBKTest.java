@@ -18,6 +18,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalXTMWriter;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public class TopicMapSynchronizerBKTest extends TestCase {
   private String ttopicq;
@@ -50,10 +51,10 @@ public class TopicMapSynchronizerBKTest extends TestCase {
     psis.clear();
     schard = DeciderUtils.getTrueDecider();
 
-    String root = FileUtils.getTestdataOutputDirectory();
+    String root = TestFileUtils.getTestdataOutputDirectory();
     base = root + File.separator + testdataDirectory + File.separator;
 
-    FileUtils.verifyDirectory(base, "out");
+    TestFileUtils.verifyDirectory(base, "out");
   }
 
   public void testEmptyTM() throws InvalidQueryException, IOException {
@@ -177,7 +178,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
   // ===== INTERNAL
 
   private TopicMapIF load(String filename) throws IOException {
-    return ImportExportUtils.getReader(FileUtils.getTestInputFile(testdataDirectory, "bk", filename)).read();
+    return ImportExportUtils.getReader(TestFileUtils.getTestInputFile(testdataDirectory, "bk", filename)).read();
   }
 
   private void canonicalize(String filename, TopicMapIF tm) throws IOException {
@@ -192,7 +193,7 @@ public class TopicMapSynchronizerBKTest extends TestCase {
 
   private void compare(String filename) throws IOException {
     String out = base + File.separator + "out" + File.separator + filename;
-    String baseline = FileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
+    String baseline = TestFileUtils.getTestInputFile(testdataDirectory, "baseline", filename);
     assertTrue("test file " + filename + " canonicalized wrongly",
                FileUtils.compareFileToResource(out, baseline));
   }

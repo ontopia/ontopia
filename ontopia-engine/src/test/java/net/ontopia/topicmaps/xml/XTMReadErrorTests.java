@@ -9,6 +9,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
 
 import java.util.List;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;
 import org.junit.runners.Parameterized.Parameters;
@@ -19,7 +20,7 @@ public class XTMReadErrorTests extends AbstractCanonicalTests {
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "errors", ".xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "errors", ".xtm");
   }
   
   protected String getFileDirectory() {
@@ -34,12 +35,12 @@ public class XTMReadErrorTests extends AbstractCanonicalTests {
 
     public XTMReadErrorTests(String root, String filename) {
       this.filename = filename;
-      this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+      this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
       this._testdataDirectory = testdataDirectory;
     }
 
     public void testFile() throws IOException {
-      String in = FileUtils.getTestInputFile(testdataDirectory, "errors", filename);
+      String in = TestFileUtils.getTestInputFile(testdataDirectory, "errors", filename);
       XTMTopicMapReader reader = new XTMTopicMapReader(URIUtils.getURI(in));
 
       try {

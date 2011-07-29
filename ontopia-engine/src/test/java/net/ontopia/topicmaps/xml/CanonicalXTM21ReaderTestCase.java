@@ -7,6 +7,7 @@ import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
 
 import java.util.List;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -16,13 +17,13 @@ public class CanonicalXTM21ReaderTestCase extends AbstractCanonicalTests {
 
   public CanonicalXTM21ReaderTestCase(String root, String filename) {
     this.filename = filename;
-    this.base = FileUtils.getTestdataOutputDirectory() + testdataDirectory;
+    this.base = TestFileUtils.getTestdataOutputDirectory() + testdataDirectory;
     this._testdataDirectory = testdataDirectory;
   }
 
   @Parameters
   public static List generateTests() {
-    return FileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm");
+    return TestFileUtils.getTestInputFiles(testdataDirectory, "in", ".xtm");
   }
 
   // --- Canonicalization type methods

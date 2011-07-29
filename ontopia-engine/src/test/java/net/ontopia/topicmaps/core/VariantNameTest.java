@@ -9,6 +9,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.GenericLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.utils.FileUtils;
+import net.ontopia.utils.TestFileUtils;
 
 public abstract class VariantNameTest extends AbstractScopedTest {
   protected VariantNameIF variant;
@@ -129,8 +130,8 @@ public abstract class VariantNameTest extends AbstractScopedTest {
 
   public void testReader() throws Exception {
     // read file and store in object
-    File filein = FileUtils.getTransferredTestInputFile("various", "clob.xml");
-    File fileout = FileUtils.getTestOutputFile("various", "clob.xml.out");
+    File filein = TestFileUtils.getTransferredTestInputFile("various", "clob.xml");
+    File fileout = TestFileUtils.getTestOutputFile("various", "clob.xml.out");
     
     Reader ri = new FileReader(filein);
 		long inlen = filein.length();
