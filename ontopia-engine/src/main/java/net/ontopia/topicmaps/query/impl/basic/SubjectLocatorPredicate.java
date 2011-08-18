@@ -29,7 +29,7 @@ public class SubjectLocatorPredicate implements BasicPredicateIF {
     if (boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.FILTER_RESULT;
     else if (boundparams[0] && !boundparams[1])
-      return PredicateDrivenCostEstimator.FILTER_RESULT;
+      return PredicateDrivenCostEstimator.SMALL_RESULT;
     else if (!boundparams[0] && boundparams[1])
       return PredicateDrivenCostEstimator.SINGLE_RESULT;
     else
@@ -45,11 +45,11 @@ public class SubjectLocatorPredicate implements BasicPredicateIF {
     if (matches.bound(topix) && !matches.bound(locix)) {
 
       Prefetcher.prefetch(topicmap, matches, topix,
-			  Prefetcher.TopicIF, 
-			  Prefetcher.TopicIF_subject, false);
+                          Prefetcher.TopicIF, 
+                          Prefetcher.TopicIF_subject, false);
 
       return PredicateUtils.objectToMany(matches, topix, locix, TopicIF.class,
-																				 PredicateUtils.TOPIC_TO_SUBJLOC, null);
+                                         PredicateUtils.TOPIC_TO_SUBJLOC, null);
     } else if (!matches.bound(topix) && matches.bound(locix)) {
       return PredicateUtils.objectToOne(matches, locix, topix, String.class,
                                         PredicateUtils.SUBJLOC_TO_TOPIC);
@@ -59,8 +59,8 @@ public class SubjectLocatorPredicate implements BasicPredicateIF {
     } else {
 
       Prefetcher.prefetch(topicmap, matches, topix,
-			  Prefetcher.TopicIF, 
-			  Prefetcher.TopicIF_subject, false);
+                          Prefetcher.TopicIF, 
+                          Prefetcher.TopicIF_subject, false);
 
       return PredicateUtils.generateFromCollection(matches, topix, locix,
                                                    topicmap.getTopics(),
