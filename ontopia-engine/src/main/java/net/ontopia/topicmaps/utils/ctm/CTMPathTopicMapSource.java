@@ -2,16 +2,20 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.net.URL;
-import net.ontopia.topicmaps.entry.*;
-import net.ontopia.infoset.core.LocatorIF;
+import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.entry.*;
 
 /**
  * INTERNAL: Source that locates CTM topic map files in a directory on
  * the file system.
  * @since 4.0.5
  */
-public class CTMPathTopicMapSource extends AbstractPathTopicMapSource {
+public class CTMPathTopicMapSource extends AbstractOntopolyTopicMapSource {
 
   public CTMPathTopicMapSource() {
   }
@@ -32,11 +36,18 @@ public class CTMPathTopicMapSource extends AbstractPathTopicMapSource {
     super(path, filter);
   }
 
-  protected TopicMapReferenceIF createReference(URL url, String id, String title,
-                                                LocatorIF base) {
+  public TopicMapReferenceIF createReference(URL url, String id, String title,
+                                             LocatorIF base) {
     CTMTopicMapReference ref = new CTMTopicMapReference(url, id, title, base);
     ref.setDuplicateSuppression(duplicate_suppression);
     ref.setSource(this);
+    ref.setMaintainFulltextIndexes(maintainFulltextIndexes);
+    ref.setIndexDirectory(indexDirectory);
+    ref.setAlwaysReindexOnLoad(alwaysReindexOnLoad);
     return ref;
+  }
+
+  public TopicMapWriterIF getWriter(File file) throws IOException {
+    throw new UnsupportedOperationException("No CTM writer exists");
   }
 }

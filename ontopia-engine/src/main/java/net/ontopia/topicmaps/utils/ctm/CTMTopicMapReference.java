@@ -3,44 +3,47 @@ package net.ontopia.topicmaps.utils.ctm;
 
 import java.io.IOException;
 import java.net.URL;
+import java.net.MalformedURLException;
 
+import org.xml.sax.InputSource;
+
+import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
-import net.ontopia.topicmaps.entry.AbstractURLTopicMapReference;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
+import net.ontopia.topicmaps.core.TopicMapImporterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
+import net.ontopia.topicmaps.entry.AbstractOntopolyURLReference;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 
 /**
  * INTERNAL: An CTM file topic map reference.
  */
-public class CTMTopicMapReference extends AbstractURLTopicMapReference {
+public class CTMTopicMapReference extends AbstractOntopolyURLReference {
   
   public CTMTopicMapReference(URL url, String id, String title) {
-    super(id, title, url, null);
+    super(url, id, title, null);
   }
   
   public CTMTopicMapReference(URL url, String id, String title, LocatorIF base_address) {
-    super(id, title, url, base_address);
+    super(url, id, title, base_address);
   }
 
-  protected TopicMapIF loadTopicMap(boolean readonly) throws IOException {
-    CTMTopicMapReader reader;
+  // using loadTopicMap inherited from AbstractOntopolyURLReference
+
+  public TopicMapImporterIF getImporter() {
+    try {
+      return makeReader();
+    } catch (IOException e) {
+      throw new OntopiaRuntimeException("Bad URL: " + url, e);
+    }
+  }
+  
+  private CTMTopicMapReader makeReader() throws IOException {
     if (base_address == null)
-      reader = new CTMTopicMapReader(url.toString());
+      return new CTMTopicMapReader(url.toString());
     else
-      reader = new CTMTopicMapReader(new org.xml.sax.InputSource(url.toString()), base_address);      
-    
-    // Load topic map
-    TopicMapStoreIF store = new InMemoryTopicMapStore();
-    TopicMapIF tm = store.getTopicMap();
-    reader.importInto(tm);
-    
-    if (tm == null)
-      throw new IOException("No topic map was found in: " + url);
-    // Suppress duplicates
-    if (getDuplicateSuppression())
-      DuplicateSuppressionUtils.removeDuplicates(tm);
-    return tm;
+      return new CTMTopicMapReader(new InputSource("" + url), base_address);
   }
 }
