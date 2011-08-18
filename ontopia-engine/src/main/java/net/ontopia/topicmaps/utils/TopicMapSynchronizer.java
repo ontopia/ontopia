@@ -109,9 +109,12 @@ public class TopicMapSynchronizer {
     TopicIF targett = getTopic(target, source);
     if (targett == null) {
       targett = builder.makeTopic();
-      if (debug) log.debug("Updating new target " + targett + " with source " + source);
+      if (debug)
+        log.debug("Updating new target " + targett + " with source " + source);
     } else {
-      if (debug) log.debug("Updating existing target " + targett + " with source " + source);
+      if (debug)
+        log.debug("Updating existing target " + targett + " with source " +
+                  source);
     }
     targett = copyIdentifiers(targett, source);
     
@@ -136,20 +139,24 @@ public class TopicMapSynchronizer {
     while (it.hasNext()) {
       TopicNameIF bn = (TopicNameIF) it.next();
       if (tfilter.ok(bn)) {
-        if (debug) log.debug("  target name included " + bn); 
+        if (debug)
+          log.debug("  target name included " + bn); 
         origs.put(KeyGenerator.makeTopicNameKey(bn), bn);
       } else {
-        if (debug) log.debug("  target name excluded " + bn); 
+        if (debug)
+          log.debug("  target name excluded " + bn); 
       }        
     }
     it = source.getTopicNames().iterator();
     while (it.hasNext()) {
       TopicNameIF sbn = (TopicNameIF) it.next();
       if (!sfilter.ok(sbn)) {
-        if (debug) log.debug("  source name excluded " + sbn); 
+        if (debug)
+          log.debug("  source name excluded " + sbn); 
         continue;
       }
-      if (debug) log.debug("  source name included " + sbn); 
+      if (debug)
+        log.debug("  source name included " + sbn); 
       TopicIF ttype = getOrCreate(target, sbn.getType());
       Collection tscope = translateScope(target, sbn.getScope());
       String key =  KeyGenerator.makeScopeKey(tscope) + "$" +
