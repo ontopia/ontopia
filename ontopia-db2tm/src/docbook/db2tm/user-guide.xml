@@ -7,7 +7,7 @@
   <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
 <pubdate>2010-10-11</pubdate> 
-<releaseinfo>5.1</releaseinfo> 
+<releaseinfo>5.2</releaseinfo> 
 
 <abstract>
 <para>
@@ -875,6 +875,80 @@ data source. We have used CSV to explain it here for simplicity, but
 currently you need to use a database for this to work. (The rationale
 is that the speedup for a CSV file is very limited, since one has to
 read the entire CSV file even if only a few rows have changed.)
+</para>
+</section>
+
+<section>
+<title>Handling a single changelog for multiple tables</title>
+
+<para>
+Some systems use a single changelog table for all tables, which causes
+difficulties, because it means that not all rows are relevant for each
+table. Further, it often means that primary key values are encoded in
+a single column and need to be parsed.
+</para>
+
+<para>
+Let's assume that we have a changelog table with the following columns:  
+</para>
+
+<itemizedlist>
+  <listitem>
+    <formalpara>
+      <title>table</title>
+      <para>Which table the change occurred in.</para>
+    </formalpara>
+  </listitem>
+  <listitem>
+    <formalpara>
+      <title>keys</title>
+      <para>The primary key, encoded as a single string value. The
+      scheme used is <symbol>colname1=value|colname2=value|...</symbol></para>
+    </formalpara>
+  </listitem>
+  <listitem>
+    <formalpara>
+      <title>timestamp</title>
+      <para>The time the change was made.</para>
+    </formalpara>
+  </listitem>
+  <listitem>
+    <formalpara>
+      <title>changetype</title>
+      <para>Describes the kind of change: 'I' for insert of new row,
+      'U' for update, and 'D' for delete.</para>
+    </formalpara>
+  </listitem>
+</itemizedlist>
+
+<para>
+To be able to set up a changelog for the organization table we need to
+fix both issues. This can be done as follows:
+</para>
+
+<literallayout><![CDATA[
+<changelog table="organization-changes.csv"
+           primary-key="PARSED_ID"
+           action-column="CHANGETYPE"
+           order-column="TIMESTAMP"
+           condition="table='organization'">
+  <expression-column name="PARSED_ID">
+    <!-- turns 'columnname=value' into 'value' --> 
+    substring(KEYS, position('=', KEYS) + 1)
+  </expression-column>
+  
+  <action value="D" type="delete"/>
+  <action value="U" type="update"/>
+  <action value="I" type="create"/>
+</changelog>
+]]></literallayout>
+
+<para>
+The <symbol>condition</symbol> attribute filters out changes to tables
+other than the one we're interested in. The
+<symbol>expression-column</symbol> takes care of the parsing of the
+primary key values so that DB2TM can join the changelog table with the
+data table.
 </para>
 </section>
 
