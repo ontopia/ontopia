@@ -80,15 +80,6 @@ options {
               new InvalidQueryException("Qualified names not allowed here"));
   }
 
-  protected void isIntegerHere() throws AntlrWrapException, TokenStreamException {
-    try {
-      Integer.parseInt(LT(0).getText()); 
-    } catch (NumberFormatException e) {
-      throw new AntlrWrapException(
-              new InvalidQueryException("Non-integers not allowed here."));
-    }
-  }
-
   protected Number parseNumber(String number) {
     try {
       return new Integer(Integer.parseInt(number)); 
@@ -324,12 +315,12 @@ orderpart:
   ;
 
 limit:
-  LIMIT NUMBER { isIntegerHere(); }
+  LIMIT POSITIVEINTEGER { }
   { ((TologQuery) statement).setLimit(Integer.parseInt(LT(0).getText())); }
   ;
 
 offset:
-  OFFSET NUMBER { isIntegerHere(); }
+  OFFSET POSITIVEINTEGER { }
   { try {
       ((TologQuery) statement).setOffset(Integer.parseInt(LT(0).getText()));
     } catch (InvalidQueryException e) {
@@ -389,6 +380,7 @@ value:
  (VARIABLE          { prevValue = new Variable(LT(0).getText());     } |
   topicref                                                             |
   STRING            { prevValue = LT(0).getText();                   } |
+  POSITIVEINTEGER   { prevValue = parseNumber(LT(0).getText());      } |
   NUMBER            { prevValue = parseNumber(LT(0).getText());      } |
   PARAMETER         { prevValue = new Parameter(LT(0).getText());    });
 

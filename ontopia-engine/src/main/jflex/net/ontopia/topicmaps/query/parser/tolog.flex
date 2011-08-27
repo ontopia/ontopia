@@ -158,7 +158,8 @@ SourceLoc = "s" {UriString}
 Address   = "a" {UriString}
 Indicator = "i" {UriString}
   
-Number = [0-9]+ ( "." [0-9]+ )?
+Number = (\-)? [0-9]+ ( "." [0-9]+ )?
+PositiveInteger = [0-9]+
 
 String = "\"" ([^\"] | "\"\"" )* "\""
 
@@ -203,6 +204,7 @@ String = "\"" ([^\"] | "\"\"" )* "\""
   "<="               { return newToken(RealTologParser.LESSTHANEQ); }
   ">="               { return newToken(RealTologParser.GREATERTHANEQ); }
   
+  {PositiveInteger}  { return newToken(RealTologParser.POSITIVEINTEGER); }
   {ObjectId}         {
     return newToken(RealTologParser.OBJID, yytext().substring(1));
   }
