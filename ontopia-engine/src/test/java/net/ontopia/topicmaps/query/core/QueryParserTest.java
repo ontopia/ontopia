@@ -362,6 +362,16 @@ public class QueryParserTest extends AbstractQueryTest {
     getParseError("instance-of($A, human) order by $A limit -10?");
   }
 
+  public void testFloatingOffset() throws InvalidQueryException, IOException {
+    load("family2.ltm");
+    getParseError("instance-of($A, human) order by $A offset 3.2?");
+  }
+
+  public void testFloatingLimit() throws InvalidQueryException, IOException {
+    load("family2.ltm");
+    getParseError("instance-of($A, human) order by $A limit 3.2?");
+  }
+
   /// comment tests
   
   public void testBasicComment() throws InvalidQueryException, IOException{
