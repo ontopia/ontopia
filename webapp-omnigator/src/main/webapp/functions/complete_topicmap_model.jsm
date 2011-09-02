@@ -153,7 +153,7 @@
 
       <!-- ============== List of topic types =============== -->
 
-      <tolog:set var="topics" query="select $TYPES from topic($T), instance-of($T, $TYPES) order by $TYPES?"/>
+      <tolog:set var="topics" query="select $TYPES from instance-of($T, $TYPES) order by $TYPES?"/>
 
       <table class="shboxed" width="100%"><tr><td>
       <h3><span title="Topics that type other topics">Topic Types (<output:count of="topics"/>)</span></h3>
