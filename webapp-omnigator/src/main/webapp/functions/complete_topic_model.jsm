@@ -350,6 +350,7 @@
                   </logic:then></logic:if>
                   <!-- ===== List n-ary associations ===== -->
 <tolog:if query='select $A from
+role-player($R1, %topic%),
 type($A, %assocType%),
 association-role($A, $R1),
 association-role($A, $R2),
