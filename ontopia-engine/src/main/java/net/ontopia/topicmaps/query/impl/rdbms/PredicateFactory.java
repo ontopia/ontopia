@@ -8,6 +8,7 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.impl.basic.JavaModule;
+import net.ontopia.topicmaps.query.impl.basic.NumbersModule;
 import net.ontopia.topicmaps.query.impl.basic.StringModule;
 import net.ontopia.topicmaps.query.parser.ModuleIF;
 import net.ontopia.topicmaps.query.parser.ParsedRule;
@@ -84,6 +85,8 @@ public class PredicateFactory implements PredicateFactoryIF {
       return new JDOBasicModule(new StringModule());
     else if (uri.startsWith(JavaModule.MODULE_PREFIX))
       return new JDOBasicModule(new JavaModule(topicmap, uri));
+    else if (uri.equals(NumbersModule.MODULE_URI))
+      return new NumbersModule();
     else
       return null;
   }

@@ -1,0 +1,25 @@
+
+[object-1 = "Object 1"]
+[object-2 = "Object 2"]
+[object-3 = "Object 3"]
+[object-4 = "Object 4"]
+[object-5 = "Object 5"]
+[object-6 = "Object 6"]
+
+{object-1, value-1, [[480.000]]}
+{object-1, value-2, [[520.000]]}
+
+{object-2, value-1, [[1.600.000]]}
+{object-2, value-2, [[1.542.781,18]]}
+
+{object-3, value-1, [[16.000]]}
+{object-3, value-2, [[47.500,00]]}
+
+{object-4, value-1, [[400.000]]}
+{object-4, value-2, [[400.000]]}
+
+{object-5, value-1, [[67.524,75]]}
+{object-5, value-2, [[84.520,00]]}
+
+{object-6, value-1, [[110.000,00]]}
+{object-6, value-2, [[100.000,00]]}

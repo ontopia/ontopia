@@ -82,6 +82,8 @@ public class PredicateFactory implements PredicateFactoryIF {
       return new StringModule();
     else if (uri.startsWith(JavaModule.MODULE_PREFIX))
       return new JavaModule(topicmap, uri);
+    else if (uri.equals(NumbersModule.MODULE_URI))
+      return new NumbersModule();
     else
       return null;
   }
