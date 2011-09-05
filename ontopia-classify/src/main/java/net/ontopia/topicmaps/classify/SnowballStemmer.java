@@ -5,7 +5,7 @@ import java.util.*;
 import java.lang.reflect.Method;
 
 import net.ontopia.utils.*;
-import net.sf.snowball.SnowballProgram;
+import org.tartarus.snowball.SnowballProgram;
 
 /**
  * INTERNAL: 
@@ -17,22 +17,22 @@ public class SnowballStemmer implements TermStemmerIF {
 
   static {
     languages = new HashMap();
-    languages.put("dk", "net.sf.snowball.ext.DanishStemmer");
-    languages.put("nl", "net.sf.snowball.ext.DutchStemmer");
-    languages.put("en", "net.sf.snowball.ext.EnglishStemmer");
-    languages.put("fi", "net.sf.snowball.ext.FinnishStemmer");
-    languages.put("fr", "net.sf.snowball.ext.FrenchStemmer");
-    languages.put("de2", "net.sf.snowball.ext.German2Stemmer");
-    languages.put("de", "net.sf.snowball.ext.GermanStemmer");
-    languages.put("it", "net.sf.snowball.ext.ItalianStemmer");
-    languages.put("kp", "net.sf.snowball.ext.KpStemmer");
-    languages.put("lovins", "net.sf.snowball.ext.LovinsStemmer");
-    languages.put("no", "net.sf.snowball.ext.NorwegianStemmer");
-    languages.put("porter", "net.sf.snowball.ext.PorterStemmer");
-    languages.put("pt", "net.sf.snowball.ext.PortugueseStemmer");
-    languages.put("ru", "net.sf.snowball.ext.RussianStemmer");
-    languages.put("es", "net.sf.snowball.ext.SpanishStemmer");
-    languages.put("se", "net.sf.snowball.ext.SwedishStemmer");
+    languages.put("dk", "org.tartarus.snowball.ext.DanishStemmer");
+    languages.put("nl", "org.tartarus.snowball.ext.DutchStemmer");
+    languages.put("en", "org.tartarus.snowball.ext.EnglishStemmer");
+    languages.put("fi", "org.tartarus.snowball.ext.FinnishStemmer");
+    languages.put("fr", "org.tartarus.snowball.ext.FrenchStemmer");
+    languages.put("de2", "org.tartarus.snowball.ext.German2Stemmer");
+    languages.put("de", "org.tartarus.snowball.ext.GermanStemmer");
+    languages.put("it", "org.tartarus.snowball.ext.ItalianStemmer");
+    languages.put("kp", "org.tartarus.snowball.ext.KpStemmer");
+    languages.put("lovins", "org.tartarus.snowball.ext.LovinsStemmer");
+    languages.put("no", "org.tartarus.snowball.ext.NorwegianStemmer");
+    languages.put("porter", "org.tartarus.snowball.ext.PorterStemmer");
+    languages.put("pt", "org.tartarus.snowball.ext.PortugueseStemmer");
+    languages.put("ru", "org.tartarus.snowball.ext.RussianStemmer");
+    languages.put("es", "org.tartarus.snowball.ext.SpanishStemmer");
+    languages.put("se", "org.tartarus.snowball.ext.SwedishStemmer");
   }
 
   protected SnowballProgram stemmer;
