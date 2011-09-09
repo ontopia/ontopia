@@ -476,6 +476,11 @@
 				<artifactId>axis2-java2wsdl</artifactId>
 				<version>${axis2.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>xerces</groupId>
+				<artifactId>xercesImpl</artifactId>
+				<version>2.7.1</version>
+			</dependency>
 			
 			<!-- provided dependencies -->
 			<dependency>
@@ -498,12 +503,6 @@
 			</dependency>
 
 			<!-- Test dependencies -->
-			<dependency>
-				<groupId>xerces</groupId>
-				<artifactId>xercesImpl</artifactId>
-				<version>2.7.1</version>
-				<scope>test</scope>
-			</dependency>
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
