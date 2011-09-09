@@ -26,23 +26,32 @@ public class Functions {
   }
 
   /**
-   * INTERNAL: Uppercases the given String.
+   * INTERNAL: Uppercases the given String. If the parameter is null
+   * it returns null.
    */
   public static String toUpperCase(String str) {
+    if (str == null)
+      return null;
     return str.toUpperCase();
   }
 
   /**
-   * INTERNAL: Lowercases the given String.
+   * INTERNAL: Lowercases the given String. If the parameter is null
+   * it returns null.
    */
   public static String toLowerCase(String str) {
+    if (str == null)
+      return null;
     return str.toLowerCase();
   }
 
   /**
-   * INTERNAL: Trims the given String.
+   * INTERNAL: Trims the given String. If the parameter is null it
+   * returns null.
    */
   public static String trim(String str) {
+    if (str == null)
+      return null;
     return str.trim();
   }
 
