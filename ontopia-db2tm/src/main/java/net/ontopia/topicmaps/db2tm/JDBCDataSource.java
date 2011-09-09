@@ -177,6 +177,22 @@ public class JDBCDataSource implements DataSourceIF {
    */
   private Map<String, Integer> getColumnTypes(String table, Connection conn)
     throws SQLException {
+    Map<String, Integer> ctypes = getColumnTypes(null, table, conn);
+
+    // workaround/hack for Oracle issue. this is safe, but we may want to
+    // sanitize it somewhat.
+    if (ctypes.isEmpty() && table.indexOf('.') != -1) {
+      int pos = table.indexOf('.');
+      ctypes = getColumnTypes(table.substring(0, pos),
+                              table.substring(pos + 1),
+                              conn);
+    }
+    return ctypes;
+  }
+
+  private Map<String, Integer> getColumnTypes(String schema,
+                                              String table, Connection conn)
+    throws SQLException {
     Map datatypes = new HashMap();
     ResultSet rs = conn.getMetaData().getColumns(null, null, table, null);
     try {
@@ -188,8 +204,8 @@ public class JDBCDataSource implements DataSourceIF {
       rs.close();
     }
 
-    // sometimes the above doesn't produce any results, because some implementations
-    // require uppercase table names here
+    // sometimes the above doesn't produce any results, because some
+    // implementations require uppercase table names here
     if (datatypes.isEmpty()) {
       // try with uppercase
       rs = conn.getMetaData().getColumns(null, null, table.toUpperCase(), null);
