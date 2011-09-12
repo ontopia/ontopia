@@ -6,10 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import java.util.WeakHashMap;
 import net.ontopia.persistence.query.jdo.JDOQuery;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
@@ -36,7 +38,7 @@ public class RDBMSAccess implements StorageAccessIF {
   protected RDBMSMapping mapping;
   
   protected Connection conn_;
-  protected Map<Thread, Connection> conn_map = new HashMap<Thread, Connection>();
+  protected Map<Thread, Connection> conn_map = new WeakHashMap<Thread, Connection>();
 
   protected boolean closed;
   
