@@ -1,0 +1,71 @@
+
+/* topic types */
+[person         = "Person"
+ @"http://xmlns.com/foaf/0.1/Person"]
+[task = "Task"
+ @"http://psi.ontopia.net/planning/#action"]
+
+/* association types */
+
+[depends-on 	= "dependent on"
+		= "dependent tasks" /prior
+		= "preceding tasks" /after
+ @"http://psi.ontopia.net/planning/#dependent-on"]
+  [prior		= "Prior"
+   @"http://psi.ontopia.net/planning/#prior"]
+  [after		= "After"
+   @"http://psi.ontopia.net/planning/#after"]
+
+[assigned-to   	= "Assigned to"
+@"http://psi.ontopia.net/planning/#assigned-to"]
+  [responsible = "Responsible"]
+  [assignment  = "Assignment"]
+
+/* occurrence types */
+[description  = "Description"
+ @"http://psi.ontopia.net/xtm/occurrence-type/description"]
+[deadline     = "Deadline"]
+
+/* --- Task status --- */
+
+[status       = "Status"
+ @"http://psi.ontopia.net/occurrence/#status"]
+
+[moving   : status = "Moving"]
+[on-ice   : status = "On ice"]
+[custwait : status = "Waiting for customer"]
+[actionwait : status = "Waiting for other action"]
+[followup : status = "Follow-up"]
+[waiting  : status = "Waiting"]
+[update   : status = "Update"]
+[closed   : status = "Closed"]
+[discuss  : status = "Discuss"]
+[delayed  : status = "Delayed"]
+[na       : status = "N/A"]
+
+/* --- Task priority --- */
+
+[priority   = "Priority"
+@"http://psi.ontopia.net/planning/#priority"]
+
+[action-priority  = "Action priority"
+                  = "priority" /action
+                  = "Action" /priority
+                  @"http://psi.ontopia.net/planning/#action-priority"]
+
+[v.high   : priority = "1. very high"]
+[high     : priority = "2. high"]
+[medium   : priority = "3. medium"]
+[low      : priority = "4. low"]
+[v.low    : priority = "5. very low"]
+[unset    : priority = "6. unset"]
+
+/* --- Stuff --- */
+
+[sylvia  : person = "Sylvia Schwab";        "schwab, sylvia"]
+[larsga  : person = "Lars Marius Garshol";  "garshol, lars marius"]
+[pepper  : person = "Steve Pepper";         "pepper, steve"]
+[niko    : person = "Niko Schmuck";         "schmuck, niko"]
+[grove   : person = "Geir Ove Grønmo";      "grønmo, geir ove"]
+[hca     : person = "Hans Christian Alsos"; "alsos, hans christian"]
+[pam     : person = "Pamela Gennusa";       "gennusa, pam"]
