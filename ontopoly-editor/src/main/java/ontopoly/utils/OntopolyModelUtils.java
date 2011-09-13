@@ -176,7 +176,7 @@ public class OntopolyModelUtils {
         Iterator<AssociationRoleIF> riter = roles.iterator();
         while (riter.hasNext()) {
           AssociationRoleIF role2 = riter.next();
-          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2)) {
+          if (ObjectUtils.different(role1, role2) && role2.getType().equals(rType2) && role2.getPlayer().equals(player2)) {
             return assoc;
           }
         }
