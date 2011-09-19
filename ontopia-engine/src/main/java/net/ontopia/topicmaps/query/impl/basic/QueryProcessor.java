@@ -425,6 +425,7 @@ public class QueryProcessor extends AbstractQueryProcessor implements
     private final static int ORDER_OBJECT = 2;
     private final static int ORDER_INT = 3;
     private final static int ORDER_FLOAT = 4;
+    private final static int ORDER_NUMBERS = 5;
 
     public RowComparator(TologQuery query, QueryMatches result) {
       Collection counted = query.getCountedVariables();
@@ -442,9 +443,14 @@ public class QueryProcessor extends AbstractQueryProcessor implements
           orderType[ix] = ORDER_INT;
         else if (types == null) // we don't know the type of the variable
           orderType[ix] = ORDER_UNKNOWN;
-        else if (types.length > 1) // multiple types (possibly TMObjectIFs)
-          orderType[ix] = ORDER_OBJECT;
-        else if (types[0].equals(String.class))
+        else if (types.length > 1) { // multiple types (possibly TMObjectIFs)
+          // types might hold only Number classes, treat those separately
+          boolean onlyNumbers = true;
+          for (Object type : types) {
+            onlyNumbers &= Number.class.isAssignableFrom((Class) type);
+          }
+          orderType[ix] = onlyNumbers ? ORDER_NUMBERS : ORDER_OBJECT;
+        } else if (types[0].equals(String.class))
           orderType[ix] = ORDER_STRING;
         else if (types[0].equals(TopicIF.class)) {
           orderType[ix] = ORDER_TOPIC;
@@ -548,6 +554,12 @@ public class QueryProcessor extends AbstractQueryProcessor implements
             String id2 = (x2 instanceof TMObjectIF ? ((TMObjectIF) x2).getObjectId() : ObjectUtils.toString(x2));
             comp = id1.compareTo(id2);
           }
+          break;
+        case ORDER_NUMBERS:
+          // cast to highest precision to sort
+          Double n1 = ((Number) row1[orderColumns[ix]]).doubleValue();
+          Double n2 = ((Number) row2[orderColumns[ix]]).doubleValue();
+          comp = n1.compareTo(n2);
           break;
         case ORDER_UNKNOWN:
           throw new OntopiaRuntimeException(
