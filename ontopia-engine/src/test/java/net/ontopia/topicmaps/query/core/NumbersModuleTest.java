@@ -454,4 +454,54 @@ public class NumbersModuleTest extends AbstractPredicateTest {
     );
   }
 
+  // sorting
+  public void testIntegerSorting() throws InvalidQueryException, IOException {
+    load("numbers.ltm");
+    List matches = new ArrayList();
+    addMatch(matches, "value", 6);
+    addMatch(matches, "value", 45);
+    addMatch(matches, "value", 78);
+    addMatch(matches, "value", 123);
+    verifyQueryOrder(matches, PREFIX +
+      "select $value from " +
+      "{ numbers:value(\"6\", $value)" +
+      "| numbers:value(\"78\", $value)" +
+      "| numbers:value(\"45\", $value)" +
+      "| numbers:value(\"123\", $value)" +
+      "} order by $value?"
+    );
+  }
+  public void testFloatSorting() throws InvalidQueryException, IOException {
+    load("numbers.ltm");
+    List matches = new ArrayList();
+    addMatch(matches, "value", 6.0f);
+    addMatch(matches, "value", 45.0f);
+    addMatch(matches, "value", 78.0f);
+    addMatch(matches, "value", 123.0f);
+    verifyQueryOrder(matches, PREFIX +
+      "select $value from " +
+      "{ numbers:value(\"6.0\", $value)" +
+      "| numbers:value(\"78.0\", $value)" +
+      "| numbers:value(\"45.0\", $value)" +
+      "| numbers:value(\"123.0\", $value)" +
+      "} order by $value?"
+    );
+  }
+  public void testIntegerAndFloatSorting() throws InvalidQueryException, IOException {
+    load("numbers.ltm");
+    List matches = new ArrayList();
+    addMatch(matches, "value", 6.0f);
+    addMatch(matches, "value", 45);
+    addMatch(matches, "value", 78.0f);
+    addMatch(matches, "value", 123);
+    verifyQueryOrder(matches, PREFIX +
+      "select $value from " +
+      "{ numbers:value(\"6.0\", $value)" +
+      "| numbers:value(\"78.0\", $value)" +
+      "| numbers:value(\"45\", $value)" +
+      "| numbers:value(\"123\", $value)" +
+      "} order by $value?"
+    );
+  }
+
 }
