@@ -94,7 +94,11 @@ public class RDBMSAccess implements StorageAccessIF {
   protected void setConn(Connection conn) {
     if (readonly)
       synchronized (conn_map) {
-        this.conn_map.put(Thread.currentThread(), conn);
+        if (conn == null) {
+          this.conn_map.remove(Thread.currentThread());
+        } else {
+          this.conn_map.put(Thread.currentThread(), conn);
+        }
       }
     else
       this.conn_ = conn;
