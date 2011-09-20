@@ -134,6 +134,7 @@ sync = element changelog {
   ( attribute action { text } |
     attribute action-column { text }),
   attribute condition { text }?,
+  attribute state-machine { "strict" | "lenient" }?,
 
   (element action {
      attribute value { text },

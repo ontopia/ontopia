@@ -26,6 +26,8 @@ public class Changelog {
   protected String action_column; // action column
 
   protected String condition; // added to where clause for filtering
+
+  protected String state_machine; // which state machine to use
   
   protected Map actionMapping = new HashMap();
   protected Set ignoreActions = new CompactHashSet();
@@ -103,6 +105,14 @@ public class Changelog {
 
   public String getCondition() {
     return condition;
+  }
+
+  public String getStateMachine() {
+    return state_machine;
+  }
+
+  public void setStateMachine(String state_machine) {
+    this.state_machine = state_machine;
   }
 
   public void addVirtualColumn(ExpressionVirtualColumn column) {

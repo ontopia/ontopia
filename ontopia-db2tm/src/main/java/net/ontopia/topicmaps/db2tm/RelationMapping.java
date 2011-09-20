@@ -383,6 +383,7 @@ public class RelationMapping extends SAXTracker {
       cursync.setAction(getValue(attrs, "action"));
       cursync.setActionColumn(getValue(attrs, "action-column"));
       cursync.setCondition(getValue(attrs, "condition"));
+      cursync.setStateMachine(getValue(attrs, "state-machine"));
       currel.addSync(cursync);
       if (currel.getSynchronizationType() == Relation.SYNCHRONIZATION_UNKNOWN)
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);

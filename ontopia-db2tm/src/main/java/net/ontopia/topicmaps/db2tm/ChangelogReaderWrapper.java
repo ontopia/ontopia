@@ -35,9 +35,10 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
   static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class.getName());
   
   public ChangelogReaderWrapper(ChangelogReaderIF source,
-                                Relation relation) {
+                                Relation relation,
+                                String state_machine) {
     this.source = source;
-    this.machine = new StateMachine();
+    this.machine = new StateMachine(state_machine);
 
     String[] pkey = relation.getPrimaryKey();
     this.keycols = new int[pkey.length];

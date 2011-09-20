@@ -7,6 +7,7 @@ package net.ontopia.topicmaps.db2tm;
  */
 public class StateMachine {
   private int state;
+  private int[][] transitions;
 
   // 0: error (also unknown change)
   // 1: create
@@ -14,7 +15,7 @@ public class StateMachine {
   // 3: doesn't exist (WTF?)
   // 4: delete
   // 5: ignore (also start position)
-  private static int[][] TRANSITIONS = {
+  private static int[][] STRICT_MACHINE = {
     /* 0: error  */ {0, 0, 0, 0, 0, 0},
     /* 1: create */ {0, 0, 1, 0, 4, 1},
     /* 2: update */ {0, 2, 2, 0, 4, 2},
@@ -22,17 +23,31 @@ public class StateMachine {
     /* 4: delete */ {0, 2, 0, 0, 4, 4},
     /* 5: ignore */ {0, 1, 2, 0, 4, 5},
   };
-  // note that other state machines (that is, transition tables) are possible
-  // this one was created to suit Bergen Kommune, in the hope that it would
-  // apply generally. it is, however, quite strict.
+  private static int[][] LENIENT_MACHINE = {
+    /* 0: error  */ {0, 0, 0, 0, 0, 0},
+    /* 1: create */ {0, 1, 1, 0, 4, 1},
+    /* 2: update */ {0, 2, 2, 0, 4, 2},
+    /* 3: nothing*/ {0, 0, 0, 3, 0, 0},
+    /* 4: delete */ {0, 1, 1, 0, 4, 4},
+    /* 5: ignore */ {0, 1, 2, 0, 4, 5},
+  };
 
   public StateMachine() {
-    state = ChangelogReaderIF.CHANGE_TYPE_IGNORE;
+    this.state = ChangelogReaderIF.CHANGE_TYPE_IGNORE;
+    this.transitions = STRICT_MACHINE;
   }
 
+  public StateMachine(String machine_type) {
+    this.state = ChangelogReaderIF.CHANGE_TYPE_IGNORE;
+    if (machine_type != null && machine_type.equals("lenient"))
+      this.transitions = LENIENT_MACHINE;
+    else
+      this.transitions = STRICT_MACHINE;
+  }
+  
   public void nextState(int changetype) {
     int oldstate = state;
-    state = TRANSITIONS[state][changetype];
+    state = transitions[state][changetype];
     if (state == ChangelogReaderIF.CHANGE_TYPE_UNKNOWN)
       throw new DB2TMException("Illegal sequence of change types: " + oldstate + "->" + changetype);
   }

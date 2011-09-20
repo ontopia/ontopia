@@ -1460,7 +1460,8 @@ public class Processor {
                 String highestOrder = startOrder;
                 log.debug("Old order value: " + sync.getTable() + "=" + startOrder);
                 ChangelogReaderIF reader = datasource.getChangelogReader(sync, startOrder);
-                reader = new ChangelogReaderWrapper(reader, relation);
+                reader = new ChangelogReaderWrapper(reader, relation,
+                                                    sync.getStateMachine());
                 
                 try {
                   String[] tuple;
