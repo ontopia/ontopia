@@ -110,9 +110,16 @@ public class InstancesPage extends OntopolyAbstractPage {
     } else {
       // just make a list
       form.add(new TopicListPanel("instancesPanel", new AbstractReadOnlyModel<List<Topic>>() {
+
+          // short time cache because getObject is called for each object in the list
+          transient private List<Topic> instances = null;
+
           @Override
           public List<Topic> getObject() {
-            return topicTypeModel.getTopicType().getInstances();
+            if (instances == null) {
+              instances = topicTypeModel.getTopicType().getInstances();
+            }
+            return instances;
           }
         }));
     }
