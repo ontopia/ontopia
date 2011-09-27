@@ -14,17 +14,12 @@
 
     <changelog table="ACTIVITYLOG_CHANGELOG"
                primary-key="PARSED_ID"
-               action-column="ACTION"
                order-column="SEQUENCE"
                condition="TABLE = 'ACTIVITYLOG'">
       <expression-column name='PARSED_ID'>
         <!-- turns 'columnname=value' into 'value' -->
         substring(PKEY, position('=', PKEY) + 1)
       </expression-column>
-      
-      <action value="DELETE" type="delete"/>
-      <action value="UPDATE" type="update"/>
-      <action value="CREATE" type="create"/>
     </changelog>
   </relation>   
 

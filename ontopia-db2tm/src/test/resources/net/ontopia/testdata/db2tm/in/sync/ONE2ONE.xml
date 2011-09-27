@@ -21,11 +21,7 @@
 
     <changelog table="ONE2ONE_CHANGELOG"
                primary-key="O2OID"
-               action-column="ACTION"
                order-column="SEQUENCE">
-      <action value="DELETE" type="delete"/>
-      <action value="UPDATE" type="update"/>
-      <action value="CREATE" type="create"/>
     </changelog>
   </relation>   
 

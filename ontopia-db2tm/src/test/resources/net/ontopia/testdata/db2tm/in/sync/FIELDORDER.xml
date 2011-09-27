@@ -21,12 +21,7 @@
 
     <changelog table="FIELDORDER_CHANGELOG"
                primary-key="O2OID"
-               action-column="ACTION"
                order-column="SEQUENCE">
-      <action value="DELETE" type="delete"/>
-      <action value="UPDATE" type="update"/>
-      <action value="CREATE" type="create"/>
-      <action value="IGNORE" type="ignore"/>
     </changelog>
   </relation>   
 

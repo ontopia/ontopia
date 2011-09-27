@@ -142,22 +142,9 @@ public class RelationMappingTestCase {
     Changelog sync = (Changelog)r.getSyncs().get(0);
     Assert.assertEquals("Wrong relation", sync.getRelation(), r);
     Assert.assertEquals("Wrong table", sync.getTable(), "TEST_CLOG");
-    Assert.assertEquals("Wrong action column", sync.getActionColumn(), "CTYPE");
     Assert.assertEquals("Wrong order column", sync.getOrderColumn(), "CORDER");
     Assert.assertTrue("Wrong primary key size", sync.getPrimaryKey().length == 1);
     Assert.assertEquals("Wrong primary key", sync.getPrimaryKey()[0], "ID");
-    Map actionMapping = sync.getActionMapping();
-    Assert.assertTrue("Wrong number of action mappings", actionMapping.size() == 4);
-    Assert.assertTrue("Wrong action mapping N", sync.getAction("N") == ChangelogReaderIF.CHANGE_TYPE_CREATE);
-    Assert.assertTrue("Wrong action mapping U", sync.getAction("U") == ChangelogReaderIF.CHANGE_TYPE_DELETE);
-    Assert.assertTrue("Wrong action mapping E1", sync.getAction("E1") == ChangelogReaderIF.CHANGE_TYPE_UPDATE);
-    Assert.assertTrue("Wrong action mapping E2", sync.getAction("E2") == ChangelogReaderIF.CHANGE_TYPE_IGNORE);
-    try {
-      sync.getAction("FOO");
-      Assert.fail("Didn't fail when accessing unknown action id FOO.");
-    } catch (DB2TMInputException ex) {
-      // yeah
-    }
     
   }
   

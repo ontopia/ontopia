@@ -6,13 +6,13 @@
   </sources>
   
   <relation name="onerelation.csv" columns="tt1">
-    <topic type="local:tt1">
+    <topic type="local:tt1" primary="true">
       <item-identifier>#${tt1}</item-identifier>
     </topic>
   </relation> 
   
   <relation name="multiple-relations.csv" columns="tt2">
-    <topic type="local:tt1">
+    <topic type="local:tt1" primary="true">
       <item-identifier>#other-${tt2}</item-identifier>
     </topic>
   </relation> 

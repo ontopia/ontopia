@@ -15,9 +15,9 @@ import net.ontopia.utils.OntopiaRuntimeException;
  * defintions.
  */
 public class Relation {
-  protected String name; // relation name
+  protected String name;      // relation name
   protected String[] columns; // all columns
-  protected String[] pkey; // primary key
+  protected String[] pkey;    // primary key
 
   protected String condition;
 

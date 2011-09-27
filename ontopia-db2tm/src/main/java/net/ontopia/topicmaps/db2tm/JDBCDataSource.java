@@ -318,12 +318,10 @@ public class JDBCDataSource implements DataSourceIF {
     PreparedStatement stm;
     ResultSet rs;
     int[] coltypes;
-    int acoltype;
     int ocoltype;
     
     String orderValue;
     int tcix; // tuple start index
-    int acix;
     int ocix;
     
     private ChangelogReader(Changelog changelog, String orderValue)
@@ -371,13 +369,10 @@ public class JDBCDataSource implements DataSourceIF {
       }
       // list changelog columns
       sb.append(", c.");
-      sb.append(changelog.getActionColumn());
-      sb.append(", c.");
       sb.append(changelog.getOrderColumn());
 
       this.tcix = rpkey.length;
-      this.acix = tcix+rcols.length+1;
-      this.ocix = tcix+rcols.length+2;
+      this.ocix = tcix+rcols.length+1;
 
       // nested query to find latest changes
       sb.append(" from");
@@ -394,35 +389,14 @@ public class JDBCDataSource implements DataSourceIF {
       sb.append(StringUtils.join(cols, ", "));
 
       sb.append(", m1.");
-      sb.append(changelog.getActionColumn());
-      sb.append(", m1.");
       sb.append(changelog.getOrderColumn());
       sb.append(" from ");
       sb.append(changelog.getTable());
       sb.append(" m1 ");
 
-      // filter out ignored actions
-      Collection ignoreActions = changelog.getIgnoreActions();
-      if (!ignoreActions.isEmpty()) {
-        sb.append("where m1.");
-        sb.append(changelog.getActionColumn());
-        sb.append(" not in (");        
-        Iterator iter = ignoreActions.iterator();
-        while (iter.hasNext()) {            
-          String value = (String)iter.next();
-          sb.append("?");
-          if (iter.hasNext())
-            sb.append(", ");
-        }
-        sb.append(")");
-      }
-
       // add changelog table condition
       if (changelog.getCondition() != null) {
-        if (ignoreActions.isEmpty())
-          sb.append(" where ");
-        else
-          sb.append(" and ");
+        sb.append(" where ");
         sb.append(changelog.getCondition());
       }
       
@@ -490,11 +464,8 @@ public class JDBCDataSource implements DataSourceIF {
         Map cdatatypes = getColumnTypes(changelog.getTable(), conn);
         if (cdatatypes.isEmpty())
           throw new DB2TMInputException("Relation '" + changelog.getTable() + "' does not exist.");
-        Integer act = (Integer)cdatatypes.get(changelog.getActionColumn());
-        if (act == null) act = (Integer)cdatatypes.get(changelog.getActionColumn().toUpperCase());
         Integer oct = (Integer)cdatatypes.get(changelog.getOrderColumn());
         if (oct == null) oct = (Integer)cdatatypes.get(changelog.getOrderColumn().toUpperCase());
-        acoltype = act.intValue();
         ocoltype = oct.intValue();
         
       // FIXME: consider locking strategy. lock table?
@@ -502,16 +473,9 @@ public class JDBCDataSource implements DataSourceIF {
       // prepare, bind and execute statement
       this.stm = conn.prepareStatement(sql);
 
-      // ignore actions
-      int cix = 1;
-      Iterator iter = ignoreActions.iterator();
-      while (iter.hasNext()) {            
-        String value = (String)iter.next();
-        log.debug("ignore action " + cix + ": " + value);
-        JDBCUtils.setObject(this.stm, cix++, value, acoltype);
-      }
       // order value
       if (orderValue != null) {
+        int cix = 1;
         log.debug("changelog order value: " + orderValue);
         JDBCUtils.setHighPrecisionObject(this.stm, cix, orderValue, ocoltype);
       }
@@ -542,34 +506,17 @@ public class JDBCDataSource implements DataSourceIF {
       }
     }
 
-    public int getChangeType() {
+    public ChangeType getChangeType() {
       try {
-        boolean rowExists = (rs.getObject(1) != null);
-        int changeType = changelog.getAction(JDBCUtils.getString(rs, acix, acoltype));
-
-        // rewrite change type depending on whether row exists or not
-        switch (changeType) {
-        case ChangelogReaderIF.CHANGE_TYPE_CREATE:
-          if (rowExists)
-            return changeType;
-          else
-            return ChangelogReaderIF.CHANGE_TYPE_DELETE;
-        case ChangelogReaderIF.CHANGE_TYPE_UPDATE:
-          if (rowExists)
-            return changeType;
-          else
-            return ChangelogReaderIF.CHANGE_TYPE_DELETE;
-        case ChangelogReaderIF.CHANGE_TYPE_DELETE:
-          if (rowExists)
-            return changeType;
-          else
-            return ChangelogReaderIF.CHANGE_TYPE_DELETE;
-        default:
-          return changeType;
-        }
+        // if the primary key is null, then obviously the row has been
+        // deleted
+        if (rs.getObject(1) == null)
+          return ChangeType.DELETE;
         
-      } catch (Throwable t) {
-        throw new OntopiaRuntimeException(t);
+        // otherwise it's an update
+        return ChangeType.UPDATE;
+      } catch (SQLException e) {
+        throw new OntopiaRuntimeException(e);
       }
     }
 

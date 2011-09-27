@@ -6,7 +6,7 @@
   </sources>
   
   <relation name="onerelation.csv" columns="tt1">
-    <topic type="local:tt1">
+    <topic type="local:tt1" primary="true">
       <item-identifier>#${tt1}</item-identifier>
     </topic>
   </relation> 

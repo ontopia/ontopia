@@ -12,16 +12,11 @@ import org.slf4j.LoggerFactory;
 /**
  * INTERNAL: This tuple reader wraps an underlying tuple reader, and
  * collapses a sequence of actions for the same key into a single
- * final action, using a state machine.
- *
- * Tuples are coming through ordered by key first, then by sequence.
- * We run the changes for each key through a state machine to
- * determine the final action for that key, then move on to the next
- * key.
+ * final action. Tuples are coming through ordered by key first, then
+ * by sequence.
  */
 public class ChangelogReaderWrapper implements ChangelogReaderIF {
   private ChangelogReaderIF source;
-  private StateMachine machine;
   private int[] keycols; // contains index in relation of each key column
 
   // used for tracking next tuple
@@ -29,16 +24,14 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
   
   // used for tracking previous tuple
   private String prevorder; // ?
-  private int prevchange;   // ?
+  private ChangeType prevchange;
   private String[] prevtuple;
 
   static Logger log = LoggerFactory.getLogger(ChangelogReaderWrapper.class.getName());
   
   public ChangelogReaderWrapper(ChangelogReaderIF source,
-                                Relation relation,
-                                String state_machine) {
+                                Relation relation) {
     this.source = source;
-    this.machine = new StateMachine(state_machine);
 
     String[] pkey = relation.getPrimaryKey();
     this.keycols = new int[pkey.length];
@@ -46,8 +39,8 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
       keycols[ix] = relation.getColumnIndex(pkey[ix]);
   }
   
-  public int getChangeType() {
-    return machine.getChangeType();
+  public ChangeType getChangeType() {
+    return prevchange;
   }
 
   public String getOrderValue() {
@@ -69,25 +62,17 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     // kickstart things
     if (prevtuple == null && tuple == null)
       tuple = source.readNext();
-
-    // get ready to process new key
-    machine.reset();
     
     // now read new tuples until we find one belonging to a new key
     while (true) {
       if (log.isDebugEnabled())
-        log.debug("State: " + machine.getChangeType() + " Tuple: (" +
+        log.debug("State: " + prevchange + " Tuple: (" +
                   (tuple == null ? "null" : StringUtils.join(tuple, "|")) + ")");
       
       // move one row forwards
       prevtuple = tuple;
       if (tuple != null) {
-        try {
-          machine.nextState(source.getChangeType());
-        } catch (DB2TMException e) {
-          throw new DB2TMException("Illegal state transition for tuple: " +
-                                   Arrays.asList(tuple), e);
-        }
+        prevchange = source.getChangeType();
         prevorder = source.getOrderValue();
       }
       

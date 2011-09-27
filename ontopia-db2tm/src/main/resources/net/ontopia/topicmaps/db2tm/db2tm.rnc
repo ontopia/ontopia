@@ -131,15 +131,8 @@ sync = element changelog {
   attribute primary-key { text },
   attribute order-column { text },
   attribute local-order-column { text }?,
-  ( attribute action { text } |
-    attribute action-column { text }),
   attribute condition { text }?,
-  attribute state-machine { "strict" | "lenient" }?,
-
-  (element action {
-     attribute value { text },
-     attribute type { "create" | "update" | "delete" | "ignore" }
-   } | expression-column)*
+  expression-column*
 }
 extent = element extent {
   attribute query { text }

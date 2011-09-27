@@ -12,12 +12,7 @@
       <topic-name>${name}</topic-name>
     </topic>
 
-    <changelog table='testchanges' action-column='changetype'
-               order-column='seq' primary-key='id'>
-      <action type='create' value='1'></action>
-      <action type='delete' value='-1'></action>
-      <action type='update' value='0'></action>
-      <action type='ignore' value='2'></action>
+    <changelog table='testchanges' order-column='seq' primary-key='id'>
     </changelog>
   </relation>
 
@@ -27,12 +22,7 @@
       <topic-name>${name}</topic-name>
     </topic>
 
-    <changelog table='complexchanges' action-column='changetype'
-               order-column='seq' primary-key='id1 id2'>
-      <action type='create' value='1'></action>
-      <action type='delete' value='-1'></action>
-      <action type='update' value='0'></action>
-      <action type='ignore' value='2'></action>
+    <changelog table='complexchanges' order-column='seq' primary-key='id1 id2'>
     </changelog>
   </relation>
   

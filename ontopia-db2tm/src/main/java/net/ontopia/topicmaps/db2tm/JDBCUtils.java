@@ -23,7 +23,7 @@ public class JDBCUtils {
   static DateFormat df_datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
   public static String getString(ResultSet rs, int ix, int sql_type)
-    throws Exception {
+    throws SQLException {
     switch (sql_type) {
     case Types.DATE:
       java.sql.Date date = rs.getDate(ix);
@@ -49,11 +49,6 @@ public class JDBCUtils {
       case Types.VARCHAR:
       case Types.LONGVARCHAR:
       case Types.CHAR:
-        //! if (value.length() > 500) {
-        //!   System.out.println("L: " + value.length());
-        //!   //stmt.setString(ix, value);
-        //!   stmt.setString(ix, value.substring(0, 500) + "[cut]"); // HACK: to get around bug in oracle
-        //! } else
           stmt.setString(ix, value);
         break;
       case Types.INTEGER:
@@ -84,7 +79,7 @@ public class JDBCUtils {
           throw new OntopiaRuntimeException("Couldn't parse '" + value + "'", e);
         }
         break;
-        //! case Types.BLOB:
+      //! case Types.BLOB:
       //!   try {
       //!     InputStream stream = (InputStream) value;
       //!     stmt.setBinaryStream(ix, stream, stream.available());

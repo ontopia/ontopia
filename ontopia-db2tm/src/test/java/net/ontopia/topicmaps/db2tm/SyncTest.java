@@ -220,6 +220,7 @@ public class SyncTest {
     // sync TM with database
     Processor.synchronizeRelations(mapping, null, topicmap,
                                    topicmap.getStore().getBaseAddress());
+
     exportTopicMap("ignore");
   }
 
@@ -243,36 +244,7 @@ public class SyncTest {
     // sync TM with database
     Processor.synchronizeRelations(mapping, null, topicmap,
                                    topicmap.getStore().getBaseAddress());
-    exportTopicMap("ignore");
-  }
-  
-  /**
-   * Tests an INSERT followed by another INSERT. This should produce an error.
-   */
-  @Test
-  public void testSequenceError() throws SQLException, IOException {
-    // create initial data set
-    stm.executeUpdate("insert into testdata values (1, 'Topic', 2)");
-    conn.commit();
-
-    // read data into TM
-    mapping = RelationMapping.readFromClasspath("net/ontopia/topicmaps/db2tm/SyncTest-mapping.xml");
-    Processor.addRelations(mapping, null, topicmap,
-                           topicmap.getStore().getBaseAddress());
-
-    // update data set
-    stm.executeUpdate("insert into testchanges values (1, 1, 1)");
-    stm.executeUpdate("insert into testchanges values (1, 1, 2)");
-    conn.commit();
-
-    // sync TM with database
-    try {
-      Processor.synchronizeRelations(mapping, null, topicmap,
-                                     topicmap.getStore().getBaseAddress());
-      Assert.fail("Erroneous sequence of changes not detected.");
-    } catch (DB2TMException e) {
-      // good; error detected
-    }
+    exportTopicMap("nochanges");
   }
 
   /**
@@ -352,10 +324,11 @@ public class SyncTest {
     FileOutputStream out = new FileOutputStream(cxtm);
     (new CanonicalXTMWriter(out)).write(topicmap);
     out.close();
-      
+    
       // Check that the cxtm output matches the baseline.
     Assert.assertTrue("The canonicalized conversion from " + name
-               + " does not match the baseline.",
-               FileUtils.compareFileToResource(cxtm, baseline));
+                      + " does not match the baseline: " + cxtm + " != " +
+                      baseline,
+                      FileUtils.compareFileToResource(cxtm, baseline));
   }
 }

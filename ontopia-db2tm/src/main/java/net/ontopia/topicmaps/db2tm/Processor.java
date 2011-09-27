@@ -163,6 +163,9 @@ public class Processor {
       
             // process individual tuple
             long time = System.currentTimeMillis();
+            // FIXME: we could change to updateTuple here with no ill effects,
+            // except possibly a performance hit. still debating whether to do
+            // that.
             addTuple(relation, tuple, ctx);
             rstime2 += (System.currentTimeMillis()-time);
             rtuples++;
@@ -485,7 +488,8 @@ public class Processor {
 
     List entities = relation.getEntities();
     
-    // first find entity objects with ids (used to look up other characteristics)
+    // first find entity objects with ids (used to look up other
+    // characteristics)
     for (int i=0; i < entities.size(); i++) {
       Entity entity = (Entity)entities.get(i);
       Object o = findTopicByIdentities(relation, entity, tuple, ctx);
@@ -1460,8 +1464,7 @@ public class Processor {
                 String highestOrder = startOrder;
                 log.debug("Old order value: " + sync.getTable() + "=" + startOrder);
                 ChangelogReaderIF reader = datasource.getChangelogReader(sync, startOrder);
-                reader = new ChangelogReaderWrapper(reader, relation,
-                                                    sync.getStateMachine());
+                reader = new ChangelogReaderWrapper(reader, relation);
                 
                 try {
                   String[] tuple;
@@ -1474,23 +1477,11 @@ public class Processor {
                     if (highestOrder == null ||
                         highestOrder.compareTo(orderValue) < 0)
                       highestOrder = orderValue;
-                    
-                    switch (reader.getChangeType()) {
-                    case ChangelogReaderIF.CHANGE_TYPE_CREATE:
-                      addTuple(relation, tuple, ctx);
-                      break;
-                    case ChangelogReaderIF.CHANGE_TYPE_UPDATE:
+
+                    if (reader.getChangeType() == ChangeType.UPDATE)
                       updateTuple(relation, tuple, ctx);
-                      break;
-                    case ChangelogReaderIF.CHANGE_TYPE_DELETE:
+                    else
                       removeTuple(relation, tuple, ctx);
-                      break;
-                    case ChangelogReaderIF.CHANGE_TYPE_IGNORE:
-                      // ignore tuple
-                      break;
-                    default:
-                      throw new DB2TMInputException("Illegal change type: " + reader.getChangeType());
-                    }
                     
                     rstime2 += (System.currentTimeMillis()-time);
                     rtuples++;
@@ -1674,7 +1665,7 @@ public class Processor {
   }
 
   private static Object updateEntity(Relation relation, Entity entity, String[] tuple, Context ctx) {
-    // 1. create entity if it does not exists
+    // 1. create entity if it does not exist
     // 2. synchronize characteristics
 
     TopicIF topic = null;

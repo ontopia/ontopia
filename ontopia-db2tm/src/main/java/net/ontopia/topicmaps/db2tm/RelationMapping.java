@@ -380,16 +380,10 @@ public class RelationMapping extends SAXTracker {
       cursync.setPrimaryKey(getValues(attrs, "primary-key"));
       cursync.setOrderColumn(getValue(attrs, "order-column"));
       cursync.setLocalOrderColumn(getValue(attrs, "local-order-column"));
-      cursync.setAction(getValue(attrs, "action"));
-      cursync.setActionColumn(getValue(attrs, "action-column"));
       cursync.setCondition(getValue(attrs, "condition"));
-      cursync.setStateMachine(getValue(attrs, "state-machine"));
       currel.addSync(cursync);
       if (currel.getSynchronizationType() == Relation.SYNCHRONIZATION_UNKNOWN)
         currel.setSynchronizationType(Relation.SYNCHRONIZATION_CHANGELOG);
-    }
-    else if (lname == "action") {
-      cursync.addActionMapping(getValue(attrs, "value"), getValue(attrs, "type"));
     }
     else if (lname == "extent") {
       curent.addExtentQuery(getValue(attrs, "query"));

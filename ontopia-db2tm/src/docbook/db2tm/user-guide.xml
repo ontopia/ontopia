@@ -6,7 +6,7 @@
 <author>
   <affiliation><orgname>Ontopia</orgname></affiliation>
 </author>
-<pubdate>2010-10-11</pubdate> 
+<pubdate>2011-09-27</pubdate> 
 <releaseinfo>5.2</releaseinfo> 
 
 <abstract>
@@ -812,9 +812,9 @@ alternative approach, which is to use a changelog table.
 A changelog table is basically a table that contains an entry for
 every change made to the master table. For DB2TM to be able to make
 use of the table it has to contain a primary key reference to the
-changed row in the master table, a column by which the changes can be
-ordered, and a column that gives the nature of the change. It can
-contain other information as well, but DB2TM will ignore this.
+changed row in the master table, and a column by which the changes can
+be ordered. It can contain other information as well, but DB2TM will
+ignore it.
 </para>
 
 <para>
@@ -836,10 +836,12 @@ linkend="sect-basics"/> (that is, to the United Nations row), and the
 second column says it was deleted. The last column is there to tell us
 in what order the changes happen. We are using numbers here, but
 timestamps would work just as well, as long as we can sort on the
-values. The second row refers to Ontopia, and says the row was
-changed somehow. (The name changed.) Finally, the third row says that
-a new row with ID 4 has been added. This gives DB2TM the information
-it needs to do the updates correctly without reading the entire table.
+values. The second row refers to Ontopia, and says the row was changed
+somehow. (The name changed.) Finally, the third row says that a new
+row with ID 4 has been added. This gives DB2TM the information it
+needs to do the updates correctly without reading the entire table.
+(Note that the <symbol>CHANGE</symbol> column is ignored, since
+version 5.2.0.)
 </para>
 
 <para>
@@ -851,21 +853,12 @@ need to change is that we have to add the following inside the
 <literallayout><![CDATA[
 <changelog table="organization-changes.csv"
            primary-key="ID"
-           action-column="ACTION"
-           order-column="ORDER">
-  <action value="D" type="delete"/>
-  <action value="C" type="update"/>
-  <action value="A" type="create"/>
-</changelog>
+           order-column="ORDER"/>
 ]]></literallayout>
 
 <para>
 This element tells DB2TM where the changelog is, which column contains
-the primary key reference, which column tells it what the change is,
-and finally what column to order the changes by. The three
-<symbol>action</symbol> elements map the values in the action column
-to change types that DB2TM understands. (Note that a fourth possible
-change type is <symbol>ignore</symbol>.)
+the primary key reference, and what column to order the changes by.
 </para>
 
 <para>
@@ -916,7 +909,8 @@ Let's assume that we have a changelog table with the following columns:
     <formalpara>
       <title>changetype</title>
       <para>Describes the kind of change: 'I' for insert of new row,
-      'U' for update, and 'D' for delete.</para>
+      'U' for update, and 'D' for delete. This is not needed by
+      DB2TM.</para>
     </formalpara>
   </listitem>
 </itemizedlist>
@@ -929,17 +923,12 @@ fix both issues. This can be done as follows:
 <literallayout><![CDATA[
 <changelog table="organization-changes.csv"
            primary-key="PARSED_ID"
-           action-column="CHANGETYPE"
            order-column="TIMESTAMP"
            condition="table='organization'">
   <expression-column name="PARSED_ID">
     <!-- turns 'columnname=value' into 'value' --> 
     substring(KEYS, position('=', KEYS) + 1)
   </expression-column>
-  
-  <action value="D" type="delete"/>
-  <action value="U" type="update"/>
-  <action value="I" type="create"/>
 </changelog>
 ]]></literallayout>
 

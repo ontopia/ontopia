@@ -30,11 +30,7 @@
       <role player='#primary' type='local:rt3'></role>
       <role player='#non-primary' type='local:rt4'></role>
     </association>
-    <changelog action-column='CTYPE' table='TEST_CLOG' order-column='CORDER' primary-key='ID'>
-      <action type='create' value='N'></action>
-      <action type='delete' value='U'></action>
-      <action type='update' value='E1'></action>
-      <action type='ignore' value='E2'></action>
+    <changelog table='TEST_CLOG' order-column='CORDER' primary-key='ID'>
     </changelog>
   </relation>
 
