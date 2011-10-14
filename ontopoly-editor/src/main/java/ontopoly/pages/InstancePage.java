@@ -91,18 +91,21 @@ public class InstancePage extends OntopolyAbstractPage {
       this.fieldsViewModel = new FieldsViewModel(topicMapId, viewId);
     else
       this.fieldsViewModel = new FieldsViewModel(FieldsView.getDefaultFieldsView(topic.getTopicMap()));
-    
+
+    Privilege privilege = ((OntopolySession)Session.get()).getPrivilege(topic);
+
+    // Block access to page if user has privilege NONE
+    if (privilege == Privilege.NONE) {
+      setResponsePage(new AccessDeniedPage(parameters));
+      return;
+    }
+
     // page is read-only if topic type is read-only
     setReadOnlyPage(tt.isReadOnly() || 
-    		ObjectUtils.equals(getRequest().getParameter("ro"), "true") || 
-    		!((AbstractOntopolyPage)this).filterTopic(topic) ||
-    		((OntopolySession)Session.get()).getPrivilege(topic) == Privilege.READ_ONLY);
-    
-    // TODO: authorize access to topic
-    if (!isReadOnlyPage()) {
-//      OntopolySession session = (OntopolySession)getSession();      
-    }
-    
+        ObjectUtils.equals(getRequest().getParameter("ro"), "true") || 
+        !((AbstractOntopolyPage)this).filterTopic(topic) ||
+        privilege != Privilege.EDIT);
+
     this.isOntologyPage = (parameters.get("ontology") != null);
 
     // Add form
