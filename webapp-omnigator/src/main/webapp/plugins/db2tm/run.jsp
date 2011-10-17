@@ -3,8 +3,14 @@
           net.ontopia.topicmaps.core.*,
           net.ontopia.topicmaps.entry.*,
           net.ontopia.topicmaps.nav2.utils.*,
-          net.ontopia.topicmaps.db2tm.DB2TM"%>
-<%
+          net.ontopia.topicmaps.db2tm.DB2TM,
+          org.slf4j.*"%><%!
+
+  static Logger log = LoggerFactory.getLogger("net.ontopia.topicmaps.db2tm"+
+                        ".OmnigatorPlugin");
+
+
+%><%
   // did the user press cancel?
   if (request.getParameter("cancel") != null) {
     response.sendRedirect("/omnigator/models/topicmap_complete.jsp?tm=" + 
@@ -34,9 +40,8 @@
       DB2TM.add(cfgfile, tm);
 
     store.commit();
-  } catch (java.io.IOException ioe) {
-     throw new net.ontopia.utils.OntopiaRuntimeException(ioe);
   } catch (Throwable e) {
+    log.error("Couldn't run DB2TM sync", e);
     store.abort();
     throw e;
   } finally {
