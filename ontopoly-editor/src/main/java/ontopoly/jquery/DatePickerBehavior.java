@@ -36,12 +36,14 @@ public class DatePickerBehavior extends JQueryBehavior {
     sb.append("  $(\"").append(selector).append("\").datepicker('destroy');\n");
     sb.append("  $(\"").append(selector).append("\").datepicker({firstDay: 1, dateFormat: '")
     .append(dateFormat).append("', yearRange: '1750:2100', showOn: 'both', buttonImageOnly: true, buttonImage: '")
-    .append(getDateIconURL()).append("' });\n");
+    .append(getDateIconURL())
+    .append("', onSelect: function(d, i) { $('").append(selector).append("').trigger('blur'); $.datepicker._hideDatepicker(); }")
+    .append(" });\n");
     sb.append("};\n");
     sb.append("$(document).ready(function() {\n");
     sb.append("  ").append(functionId).append("();\n");
     sb.append("});");
-
+    
     response.renderJavascript(sb, "jquery-dp-" + markupId);
     response.renderOnLoadJavascript("Wicket.Ajax.registerPostCallHandler(function(){ " + functionId + "(); });");
   }
