@@ -283,12 +283,12 @@ the example below into a file called <filename>application.xml</filename>.
 </example>
 
 <para>
-Once this is done, the next step is to take the
-<filename>tasks.ltm</filename> file from
-<filename>${ONTOPIA_HOME}/samples</filename> and copy it into the
-Omnigator's topic maps directory, since we have told our web
-application to get its topic maps from there. Now everything is ready,
-and we can start using the tag libraries.
+Once this is done, the next step is to check if the
+<filename>tasks.ltm</filename> file is present in 
+<filename>${ONTOPIA_HOME}/topicmaps</filename>, since we have told our web
+application to get its topic maps from there (by using the omnigator 
+<filename>tm-sources.xml</filename>). Now everything is ready, and we can 
+start using the tag libraries.
 </para>
 </section>
 
