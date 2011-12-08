@@ -1,6 +1,4 @@
 
-// $Id: URILocator.java,v 1.54 2009/04/27 11:00:23 lars.garshol Exp $
-
 package net.ontopia.infoset.impl.basic;
 
 import java.io.Externalizable;
@@ -114,7 +112,9 @@ public class URILocator extends AbstractLocator implements Externalizable {
     if (schemeEnd == -1)
       throw new MalformedURLException("No valid scheme in URI: " + address);
 
-    if (StringUtils.regionEquals("file", uri, 0, 4))
+    if (StringUtils.regionEquals("file", uri, 0, 4) ||
+	        StringUtils.regionEquals("jar:file", uri, 0, 8) ||
+	        StringUtils.regionEquals("classpath", uri, 0, 9))
       length = parseFileUrl(uri, schemeEnd, length);
     else if (StringUtils.regionEquals("//", uri, schemeEnd+1, 2))
       length = parseHierarchicalUrl(uri, schemeEnd, length);
