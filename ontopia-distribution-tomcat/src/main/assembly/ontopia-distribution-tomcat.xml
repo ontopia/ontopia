@@ -11,7 +11,7 @@
 	<fileSets>
 		<!-- Move tomcat to the correct location -->
 		<fileSet>
-			<directory>target/apache-tomcat-6.0.32/apache-tomcat-6.0.32</directory>
+			<directory>target/apache-tomcat-6.0.35-windows-x64/apache-tomcat-6.0.35</directory>
 			<outputDirectory>apache-tomcat</outputDirectory>
 			<excludes>
 				<!-- exclude the default webapps -->
@@ -32,7 +32,7 @@
 		
 		<!-- chmod runnable files -->
 		<fileSet>
-			<directory>target/apache-tomcat-6.0.32/apache-tomcat-6.0.32/bin</directory>
+			<directory>target/apache-tomcat-6.0.35-windows-x64/apache-tomcat-6.0.35/bin</directory>
 			<outputDirectory>apache-tomcat/bin</outputDirectory>
 			<fileMode>0755</fileMode>
 			<includes>
