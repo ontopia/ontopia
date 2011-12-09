@@ -86,16 +86,6 @@ public class NumbersModuleTest extends AbstractPredicateTest {
       addMatch(matches, "result", -1234.5678f);
     verifyQuery(matches, PREFIX + "numbers:value(\"-1234.5678\", $result)?");
   }
-  public void testNumbersValueClosedPattern() throws InvalidQueryException, IOException {
-    load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:value(\"1,234,567.89\", 1234567.8901234, \"#,##0.00\")?");
-  }
-  public void testNumbersValueOpenPattern() throws InvalidQueryException, IOException {
-    load("numbers.ltm");
-    List matches = new ArrayList();
-    addMatch(matches, "result", 1234567.8901234f);
-    verifyQuery(matches, PREFIX + "numbers:value(\"1,234,567.89\", $result, \"#,##0.00\")?");
-  }
   public void testNumbersValueClosedPatternLocale() throws InvalidQueryException, IOException {
     load("numbers.ltm");
     verifyQuery(PREFIX + "numbers:value(\"1.234.567,89\", 1234567.8901234, \"#,##0.00\", \"NL\")?");
@@ -145,16 +135,6 @@ public class NumbersModuleTest extends AbstractPredicateTest {
     List matches = new ArrayList();
     addMatch(matches, "result", "1234.5677"); // Float works in mysterious ways
     verifyQuery(matches, PREFIX + "numbers:format(1234.5678, $result)?");
-  }
-  public void testNumbersFormatClosedPattern() throws InvalidQueryException, IOException {
-    load("numbers.ltm");
-    verifyQuery(PREFIX + "numbers:format(1234, \"1,234.00\", \"#,##0.00\")?");
-  }
-  public void testNumbersFormatOpenPattern() throws InvalidQueryException, IOException {
-    load("numbers.ltm");
-    List matches = new ArrayList();
-    addMatch(matches, "result", "1,234.00");
-    verifyQuery(matches, PREFIX + "numbers:format(1234, $result, \"#,##0.00\")?");
   }
   public void testNumbersFormatClosedPatternLocale() throws InvalidQueryException, IOException {
     load("numbers.ltm");

@@ -254,9 +254,15 @@ public class NumbersModule implements ModuleIF {
       PredicateSignature sign = PredicateSignature.getSignature(this);
       sign.verifyBound(matches, arguments, this);
 
+      if (arguments.length == 3) {
+        throw new InvalidQueryException("Variable 'locale' must be provided" +
+                                        " when 'pattern' is used in predicate " +
+                                        this.getName());
+      }
+
       int colix1 = matches.getIndex(arguments[0]);
       int colix2 = matches.getIndex(arguments[1]);
-      int colix3 = (arguments.length > 2) ? matches.getIndex(arguments[2]) : -1;
+      int colix3 = (arguments.length > 3) ? matches.getIndex(arguments[2]) : -1;
       int colix4 = (arguments.length > 3) ? matches.getIndex(arguments[3]) : -1;
 
       QueryMatches result = new QueryMatches(matches);
@@ -264,7 +270,6 @@ public class NumbersModule implements ModuleIF {
         Object[] row = matches.data[ix];
         Number resultValue = 
           (arguments.length > 3) ? calculateResult((String) row[colix1], (String) row[colix3], (String) row[colix4]) :
-          (arguments.length > 2) ? calculateResult((String) row[colix1], (String) row[colix3]) :
                                    calculateResult((String) row[colix1]);
         if (matches.bound(colix2)) {
           if (resultValue.equals((Number) row[colix2])) {
@@ -289,15 +294,6 @@ public class NumbersModule implements ModuleIF {
           throw new InvalidQueryException(e);
         }
         }
-    }
-
-    private Number calculateResult(String value, String pattern) throws InvalidQueryException {
-      try {
-        DecimalFormat formatter = new DecimalFormat(pattern);
-        return calculateResult(value, formatter);
-      } catch (IllegalArgumentException e) {
-        throw new InvalidQueryException(e);
-      }
     }
 
     private Number calculateResult(String value, String pattern, String locale) throws InvalidQueryException {
@@ -337,9 +333,15 @@ public class NumbersModule implements ModuleIF {
       PredicateSignature sign = PredicateSignature.getSignature(this);
       sign.verifyBound(matches, arguments, this);
 
+      if (arguments.length == 3) {
+        throw new InvalidQueryException("Variable 'locale' must be provided" +
+                                        " when 'pattern' is used in predicate " +
+                                        this.getName());
+      }
+
       int colix1 = matches.getIndex(arguments[0]);
       int colix2 = matches.getIndex(arguments[1]);
-      int colix3 = (arguments.length > 2) ? matches.getIndex(arguments[2]) : -1;
+      int colix3 = (arguments.length > 3) ? matches.getIndex(arguments[2]) : -1;
       int colix4 = (arguments.length > 3) ? matches.getIndex(arguments[3]) : -1;
 
       try {
@@ -348,7 +350,6 @@ public class NumbersModule implements ModuleIF {
           Object[] row = matches.data[ix];
           String resultValue = 
             (arguments.length > 3) ? calculateResult((Number) row[colix1], (String) row[colix3], (String) row[colix4]) :
-            (arguments.length > 2) ? calculateResult((Number) row[colix1], (String) row[colix3]) :
                                      calculateResult((Number) row[colix1]);
           if (matches.bound(colix2)) {
             if (resultValue.equals((String) row[colix2])) {
@@ -368,15 +369,6 @@ public class NumbersModule implements ModuleIF {
 
     private String calculateResult(Number value) {
       return value.toString();
-    }
-
-    private String calculateResult(Number value, String pattern) throws InvalidQueryException {
-      try {
-        DecimalFormat formatter = new DecimalFormat(pattern);
-        return formatter.format(value);
-      } catch (IllegalArgumentException e) {
-        throw new InvalidQueryException(e);
-      }
     }
 
     private String calculateResult(Number value, String pattern, String locale) throws InvalidQueryException {
