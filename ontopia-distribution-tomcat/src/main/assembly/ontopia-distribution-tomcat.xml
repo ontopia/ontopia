@@ -174,7 +174,7 @@
 			<unpack>true</unpack>
 			<unpackOptions>
 				<includes>
-					<include>doc/*</include>
+					<include>doc/**</include>
 					<include>examples/*.jsp</include>
 					<include>WEB-INF/web.xml</include>
 					<include>WEB-INF/config/**</include>
