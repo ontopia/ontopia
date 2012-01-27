@@ -111,10 +111,11 @@ section.
 <para>
 To set up the <envar>CLASSPATH</envar>, put the
 
-  <filename>${basedir}/lib/ontopia.jar</filename>
+  <filename>${basedir}/lib/ontopia-engine-x.y.x.jar</filename>
 
-file in your <envar>CLASSPATH</envar>. If this does not work, or you
-want more detailed control over the jar files being used, please see
+file in your <envar>CLASSPATH</envar> (Change x.y.z to your Ontopia 
+version). If this does not work, or you want more detailed control 
+over the jar files being used, please see
 <xref linkend="sect-jar-details"/>.</para>
 
 <note>
@@ -167,101 +168,9 @@ Class 'org.apache.log4j.BasicConfigurator' not found. Please add log4j.jar to yo
 <title>Testing</title>
 
 <para>
-Once you've set up your <envar>CLASSPATH</envar> environment variable
-you can check that Ontopia is indeed working correctly on your
-system. This step is optional.
-</para>
-
-<para>Ontopia comes with a set of test suites, so you can check that
-it is working correctly on your system. Each test suite is a set of
-<ulink url="http://www.junit.org">JUnit</ulink> test cases that
-exercise most aspects of Ontopia to verify that it works as it
-should. This includes testing all engine policies, all engine methods,
-testing import and export of topic map documents and so on. Running
-the test suite is therefore the best and quickest way to test whether
-it has been installed correctly or not.
-</para>
-
-<para>
-You need to add the
-
- <filename>${basedir}/lib/ontopia-tests.jar</filename>
-
-jar-file to your <envar>CLASSPATH</envar> to run the test suite, as
-well as
-<filename>${basedir}/apache-tomcat/common/lib/</filename>:
-<filename>servlet-api.jar</filename>,
-<filename>jsp-api.jar</filename>, 
-<filename>jstl.jar</filename>, and
-<filename>standard.jar</filename>
-required by the Navigator and Web Editor Frameworks.
-Note that you only need these extra jar-files when running the
-test suite. They are not required when you are using Ontopia.</para>
-
-<para>You can now run the test suite by following the instructions
-below:</para>
-
-<variablelist>
-<varlistentry>
-<term>Windows</term>
-<listitem><para>Go to the <filename>${basedir}</filename>
-directory. Set the environment variable <envar>ONTOPIA_HOME</envar> to
-<filename>${basedir}</filename>, using the command
-<command>set ONTOPIA_HOME=${basedir}</command>. Then run the
-<command>tests\runtests-ontopia.bat</command> script.</para>
-</listitem>
-</varlistentry>
-
-<varlistentry>
-<term>Unix</term>
-<listitem>
-<para>Go to the <filename>${basedir}</filename> directory. Then run
-the <command>tests/runtests-ontopia.sh</command> script.</para>
-</listitem>
-</varlistentry>
-</variablelist>
-
-<para>
-You should see the following output:
-</para>
-
-<screen>
-Ontopia Topic Maps Engine [version]
-Success: All required classes found.
-Running tests
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-.........................................
-..
-Time: 10.367
-
-OK (1109 tests)
-
-Asserts: 12905
-</screen>
-
-<para>The test should end with <screen>OK (xxx tests)</screen>. If it
-does not and running the tests produces any kind of error the engine
-might not be working correctly on your system. In that case please
-report an issue at <ulink
+Since Ontopia 5.2.0, testing is automatically done during creation of
+the distribution. It is no longer needed to run the test suite yourself.
+If you are experiencing problems, please report an issue at <ulink
 url="http://code.google.com/p/ontopia/issues/list">Google Code</ulink>
 including:
 </para>
@@ -289,18 +198,6 @@ including:
 </listitem>
 </itemizedlist>
 
-<para>
-If the test runs without errors, as it should do, you can be confident
-that you have a working version of the Ontopia Topic Maps Engine.
-</para>
-
-<para>
-The tests for the RDBMS backend have been separated out, since they
-require a database to be set up and configured, and so require quite a
-bit of initial setup. To run these tests set up your database (as
-described further down), then run
-<command>tests\runtests-rdbms.bat</command> or
-<command>tests/runtests-rdbms.sh</command>.</para>
 </section>
 
 <section id="INSTALL_rdbms">
