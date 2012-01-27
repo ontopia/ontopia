@@ -10,8 +10,8 @@
 <shortaffil>Ontopia</shortaffil>
 </affiliation>
 </author>
-<pubdate>2011-02-21</pubdate>
-<releaseinfo>5.1.3</releaseinfo>
+<pubdate>2012-01-27</pubdate>
+<releaseinfo>5.2.0</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -21,6 +21,198 @@ both at a higher level, and in more detail.
 </para>
 </abstract>
 
+<!-- ======================================================================
+     5.2.0                                                              -->
+<section id="sect-5.2.0">
+<title>Ontopia 5.2.0 release notes</title>
+
+<para>This is the first release in the new Maven structure. It includes 
+  the modularization of Ontopia along with bug fixes along with some
+  new functionality.</para>
+
+<para>The following changes have been made:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>Ontopia is now divided into Maven modules based functionality.
+      For developers working with Ontopia as a dependency this means that 
+      there is a more controlled way of including parts of Ontopia as a 
+      dependency. This change does not affect Ontopia distribution users.
+    </para>
+  </listitem>
+  <listitem>
+    <para>The distribution has been updated to include Tomcat version 6.</para>
+  </listitem>
+  <listitem>
+    <para>The DB2TM functionality has been extended and improved.</para>
+  </listitem>
+  <listitem>
+    <para>Ontopoly had several outstanding bugs. Support for exporting
+      TM/XML and schema without data was added.</para>
+  </listitem>
+  <listitem>
+    <para>Tolog now supports negative integer values and some basic numeric 
+      operations through the numbers module.</para>
+  </listitem>
+  <listitem>
+    <para>Ontopia now uses Lucene 2.9.4 (up from 2.2.0).</para>
+  </listitem>
+</itemizedlist>
+
+<para>The following bugs have been fixed:</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=41"
+      >Issue 41: CVS tags in source code</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=59"
+      >Issue 59: Modularize the product</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=60"
+      >Issue 60: Tweak the directory-structure to add initial Maven2 support</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=152"
+      >Issue 152: Document access control in Ontopoly</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=189"
+      >Issue 189: Query text box in omnigator could be larger</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=285"
+      >Issue 285: URIUtils.getURI to support resources</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=307"
+      >Issue 307: Omnigator doesn't show correct "untyped" name for topics</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=325"
+      >Issue 325: Ontopoly date and datetime fields don't allow user input</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=339"
+      >Issue 339: export topicmap without data</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=344"
+      >Issue 344: CanonicalXTMWriterTestGenerator is not included in test configuration + testdata baseline is outdated</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=363"
+      >Issue 363: Document DB2TM changelog improvement</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=368"
+      >Issue 368: Ontopoly 5.1.3 fails to add Subject identifier Identity for Topic classes</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=369"
+      >Issue 369: Ontopoly - Removing fields from topic type definition</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=378"
+      >Issue 378: Apache Tomcat should be updated to 5.5.33</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=380"
+      >Issue 380: Class.forName uses wrong classloader</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=381"
+      >Issue 381: StreamUtils.readString might return incorrect result</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=383"
+      >Issue 383: Not all TMAPI2 test are ran in the trunk, and fail when enabled</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=384"
+      >Issue 384: LTM export of RDBMS readonly topicmap causes ClassCastException</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=385"
+      >Issue 385: tolog subject-locator predicate returns wrong costs iff topic is bound and IRI is unbound</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=386"
+      >Issue 386: tolog reifies predicate returns wrong costs</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=387"
+      >Issue 387: Docs "The Built-in tolog Predicates" - Wrong example for the reifies predicate</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=389"
+      >Issue 389: coalesce() predicate in ontopia 5.1.3 doesn't allow unbound second argument</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=389"
+      >Issue 389: coalesce() predicate in ontopia 5.1.3 doesn't allow unbound second argument</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=390"
+      >Issue 390: Allow CTM topic map sources should be able to have their full-text indexes maintained just like XTM and LTM topic maps</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=391"
+      >Issue 391: QueryUtils circumvents query processor caching for non-tolog languages</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=393"
+      >Issue 393: JFlex is an unnecessary compile/runtime dependency</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=395"
+      >Issue 395: Test-specific methods in FileUtils</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=397"
+      >Issue 397: Documentation for Ontopia Web Editor framework is broken.</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=399"
+      >Issue 399: Build date is wrong</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=407"
+      >Issue 407: Ontopia distribution doesn't contain xerces.jar</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=408"
+      >Issue 408: Cannot sort on numbers</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=412"
+      >Issue 412: Ontopoly instances page takes very long to load on types with a lot of intsances</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=413"
+      >Issue 413: The Tomcat download link returns a 404</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=415"
+      >Issue 415: Build Ontopia from tomcat.zip, not tomcat.tar.gz</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=417"
+      >Issue 417: Ontopoly access right 'NONE' gives a user read-write rights</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=418"
+      >Issue 418: StringUtils.compare() should be case-sensitive</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=434"
+      >Issue 434: NumbersModuleTest fails due to locale</ulink></para>
+  </listitem>
+</itemizedlist>
+</section>
+    
 <!-- ======================================================================
      5.1.3                                                              -->
 <section id="sect-5.1.3">
