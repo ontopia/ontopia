@@ -95,7 +95,7 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Controls whether or not internal references of the form
    * '#id' will be exported.
-   * @since %NEXT%
+   * @since 5.2.0
    */
   public void setUseLocalIds(boolean use_local_ids) {
     exporter.setUseLocalIds(use_local_ids);
@@ -104,7 +104,7 @@ public class XTMTopicMapFragmentWriter implements TopicMapFragmentWriterIF {
   /**
    * PUBLIC: Whether or not internal references of the form '#id' will
    * be exported.
-   * @since %NEXT%
+   * @since 5.2.0
    */
   public boolean getUseLocalIds() {
     return exporter.getUseLocalIds();

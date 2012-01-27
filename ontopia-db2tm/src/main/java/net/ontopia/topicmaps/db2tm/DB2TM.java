@@ -59,7 +59,7 @@ public class DB2TM {
    * PUBLIC: Run synchronization from a configuration file against a
    * given topic map.
    *
-   * @since %NEXT%
+   * @since 5.2.0
    * @param cfgfile File name of XML configuration file.
    * @param topicmap Topic map to synchronize the data against.
    * @param force_rescan Iff true, all relations are rescanned
