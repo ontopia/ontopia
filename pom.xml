@@ -44,9 +44,6 @@
 		<!-- Distribution -->
 		<module>ontopia-distribution-tomcat</module>
 		
-		<!-- Test runner -->
-		<module>ontopia-testrunner</module>
-		
 	</modules>
 	
 	<properties>

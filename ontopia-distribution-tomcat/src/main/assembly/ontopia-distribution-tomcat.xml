@@ -53,7 +53,6 @@
 			<excludes>
 				<exclude>apache-tomcat/bin/*.sh</exclude>
 				<exclude>bin/*.sh</exclude>
-				<exclude>tests/*.sh</exclude>
 			</excludes>
 		</fileSet>
 		
@@ -66,7 +65,6 @@
 			<includes>
 				<include>apache-tomcat/bin/*.sh</include>
 				<include>bin/*.sh</include>
-				<include>tests/*.sh</include>
 			</includes>
 		</fileSet>
 		
@@ -243,22 +241,4 @@
 		</dependencySet>
 	</dependencySets>
 
-	<moduleSets>
-		<moduleSet>
-			<useAllReactorProjects>true</useAllReactorProjects>
-			<binaries>
-				<attachmentClassifier>tests</attachmentClassifier>
-				<outputDirectory>tests/lib</outputDirectory>
-				<includes>
-					<include>**/target/*-tests.jar</include>
-				</includes>
-				<includeDependencies>false</includeDependencies>
-				<unpack>false</unpack>
-			</binaries>
-			<excludes>
-				<exclude>*:ontopia-testrunner:*</exclude>
-			</excludes>
-		</moduleSet>
-	</moduleSets>
-	
 </assembly>
