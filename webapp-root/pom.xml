@@ -11,7 +11,7 @@
 	<artifactId>webapp-root</artifactId>
 	<packaging>war</packaging>
 
-	<name>Ontopia ROOT webapp</name>
+	<name>Ontopia ROOT webapplication</name>
 
 	<build>
 		<finalName>ROOT</finalName>
