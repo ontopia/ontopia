@@ -198,7 +198,7 @@
 						<version>true</version>
 						<use>true</use>
 						<public>true</public>
-						<bottom><![CDATA[<i>Copyright &#169; 2000-2011 <a href="http://www.ontopia.net">Ontopia</a>.</i>]]></bottom>
+						<bottom><![CDATA[<i>Copyright &#169; 2000-2012 <a href="http://www.ontopia.net">Ontopia</a>.</i>]]></bottom>
 						<doctitle>Ontopia API documentation</doctitle>
 						<windowtitle>Ontopia</windowtitle>
 						<excludePackageNames>jsp.*</excludePackageNames>
