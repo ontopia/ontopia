@@ -192,8 +192,8 @@
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>2.5</version>
 					<configuration>
-						<reportOutputDirectory>${basedir}/target/site</reportOutputDirectory>
-						<destDir>${basedir}/target/site/api</destDir>
+						<reportOutputDirectory>target/site</reportOutputDirectory>
+						<destDir>api</destDir>
 						<author>true</author>
 						<version>true</version>
 						<use>true</use>
