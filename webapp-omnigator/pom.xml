@@ -80,7 +80,7 @@
 							</target>
 						</configuration>
 					</execution>
-					
+										
 					<!-- default doc generation for site building -->
 					<execution>
 						<id>copy-shared-docbook-resources</id>
@@ -107,6 +107,11 @@
 							<sourceDirectory>target/docbook-collected</sourceDirectory>
 							<outputDirectory>target/${build.finalName}/docs</outputDirectory>
 						</configuration>
+					</execution>
+					<execution>
+						<!-- position the docbook execution before antrun -->
+						<id>default</id>
+						<phase>pre-site</phase><goals><goal>transform</goal></goals>
 					</execution>
 				</executions>
 			</plugin>
