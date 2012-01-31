@@ -14,9 +14,9 @@
 		<url>http://code.google.com/p/ontopia/issues/list</url>
 	</issueManagement>
 	<scm>
-		<url>http://ontopia.googlecode.com/svn/tags/release-2.5.0</url>
-		<connection>scm:svn:http://ontopia.googlecode.com/svn/tags/release-2.5.0</connection>
-		<developerConnection>scm:svn:https://ontopia.googlecode.com/svn/tags/release-2.5.0</developerConnection>
+		<url>http://ontopia.googlecode.com/svn/tags/release-5.2.0</url>
+		<connection>scm:svn:http://ontopia.googlecode.com/svn/tags/release-5.2.0</connection>
+		<developerConnection>scm:svn:https://ontopia.googlecode.com/svn/tags/release-5.2.0</developerConnection>
 	</scm>
 
 	<modules>
