@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<artifactId>ontopia-parent</artifactId>
 		<groupId>net.ontopia</groupId>
-		<version>5.2.0-SNAPSHOT</version>
+		<version>5.2.0</version>
 	</parent>
 
 	<artifactId>ontopia-tmrap-aar</artifactId>
@@ -60,12 +60,12 @@
 						<phase>generate-sources</phase>
 						<configuration>
 							<target>
-								<property name="axis.sources" value="${project.build.directory}/generated-sources/axis2/wsdl2code"/>
+								<property name="axis.sources" value="${project.build.directory}/generated-sources/axis2/wsdl2code" />
 								<!-- remove generated TMRAPServiceSkeleton file as it will be overwritten by file in /src/main/java/ -->
-								<delete file="${axis.sources}/src/net/ontopia/topicmaps/utils/tmrap/axis2/TMRAPServiceSkeleton.java"/>
+								<delete file="${axis.sources}/src/net/ontopia/topicmaps/utils/tmrap/axis2/TMRAPServiceSkeleton.java" />
 								<!-- copy resources files manually, due to http://issues.apache.org/jira/browse/AXIS2-4547 -->
 								<copy todir="${project.build.directory}/classes/META-INF">
-									<fileset dir="${axis.sources}/resources"/>
+									<fileset dir="${axis.sources}/resources" />
 								</copy>
 							</target>
 						</configuration>

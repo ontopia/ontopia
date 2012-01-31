@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<artifactId>ontopia-parent</artifactId>
 		<groupId>net.ontopia</groupId>
-		<version>5.2.0-SNAPSHOT</version>
+		<version>5.2.0</version>
 	</parent>
 
 	<artifactId>ontopia-engine</artifactId>
@@ -207,8 +207,8 @@
 						<id>copy-shared-docbook-resources</id>
 						<configuration>
 							<target>
-								<property name="documentation.directories" value=".,engine,misc,query,rdbms,schema"/>
-								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+								<property name="documentation.directories" value=".,engine,misc,query,rdbms,schema" />
+								<ant antfile="../src/docbook/ant/build.xml" target="main" />
 							</target>
 						</configuration>
 					</execution>
@@ -216,12 +216,12 @@
 						<phase>generate-test-resources</phase>
 						<configuration>
 							<target name="main" description="Download and unpack CXTM-tests">
-								<ant target="init"/>
-								<ant target="xtm2.checked.get"/>
-								<ant target="xtm21.checked.get"/>
-								<ant target="ctm.checked.get"/>
-								<ant target="jtm.checked.get"/>
-								<ant target="tmxml.checked.get"/>
+								<ant target="init" />
+								<ant target="xtm2.checked.get" />
+								<ant target="xtm21.checked.get" />
+								<ant target="ctm.checked.get" />
+								<ant target="jtm.checked.get" />
+								<ant target="tmxml.checked.get" />
 							</target>
 						</configuration>
 					</execution>

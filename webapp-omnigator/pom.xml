@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>net.ontopia</groupId>
 		<artifactId>ontopia-parent</artifactId>
-		<version>5.2.0-SNAPSHOT</version>
+		<version>5.2.0</version>
 	</parent>
 
 	<artifactId>webapp-omnigator</artifactId>
@@ -76,7 +76,7 @@
 						</goals>
 						<configuration>
 							<target>
-								<ant antfile="../src/docbook/ant/build.xml" target="collect-omnigator-docs"/>
+								<ant antfile="../src/docbook/ant/build.xml" target="collect-omnigator-docs" />
 							</target>
 						</configuration>
 					</execution>
@@ -86,7 +86,7 @@
 						<id>copy-shared-docbook-resources</id>
 						<configuration>
 							<target>
-								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+								<ant antfile="../src/docbook/ant/build.xml" target="main" />
 							</target>
 						</configuration>
 					</execution>

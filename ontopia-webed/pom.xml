@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<artifactId>ontopia-parent</artifactId>
 		<groupId>net.ontopia</groupId>
-		<version>5.2.0-SNAPSHOT</version>
+		<version>5.2.0</version>
 	</parent>
 
 	<artifactId>ontopia-webed</artifactId>
@@ -75,13 +75,12 @@
 						<configuration>
 							<target name="main">
 								<copy todir="target/test-webapp">
-									<fileset dir="src/test/webapp"/>
+									<fileset dir="src/test/webapp" />
 								</copy>
 								
 								<!-- TLD file needs to be either in a Jar file or in webapp directory for Apache Jasper -->
 								<!-- This statement copies it to the designated Maven directory -->
-								<copy file="src/main/resources/META-INF/webed-form.tld"
-									tofile="target/test-webapp/WEB-INF/jsp/webed-form.tld"/>
+								<copy file="src/main/resources/META-INF/webed-form.tld" tofile="target/test-webapp/WEB-INF/jsp/webed-form.tld" />
 							</target>
 						</configuration>
 					</execution>
@@ -89,7 +88,7 @@
 						<id>copy-shared-docbook-resources</id>
 						<configuration>
 							<target>
-								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+								<ant antfile="../src/docbook/ant/build.xml" target="main" />
 							</target>
 						</configuration>
 					</execution>
