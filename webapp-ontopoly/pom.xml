@@ -38,7 +38,7 @@
 						<goals><goal>run</goal></goals>
 						<configuration>
 							<target>
-								<property name="finalName" value="${build.finalName}"/>
+								<property name="finalName" value="${project.build.finalName}"/>
 								<ant antfile="../src/docbook/ant/build.xml" target="collect-ontopoly-docs"/>
 							</target>
 						</configuration>

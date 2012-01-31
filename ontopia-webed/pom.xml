@@ -85,6 +85,14 @@
 							</target>
 						</configuration>
 					</execution>
+					<execution>
+						<id>copy-shared-docbook-resources</id>
+						<configuration>
+							<target>
+								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+							</target>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			
@@ -115,20 +123,6 @@
 						<goals>
 							<goal>stop</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-shared-docbook-resources</id>
-						<configuration>
-							<target>
-								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
-							</target>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>

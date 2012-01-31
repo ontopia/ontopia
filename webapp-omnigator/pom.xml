@@ -105,7 +105,7 @@
 						<configuration>
 							<resourceDirectory>target/docbook-collected/resources</resourceDirectory>
 							<sourceDirectory>target/docbook-collected</sourceDirectory>
-							<outputDirectory>target/${build.finalName}/docs</outputDirectory>
+							<outputDirectory>target/${project.build.finalName}/docs</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
@@ -133,7 +133,7 @@
 									<artifactId>ontopia-vizigator</artifactId>
 									<version>${project.version}</version>
 									<classifier>vizlet</classifier>
-									<outputDirectory>${project.build.directory}/${build.finalName}/plugins/viz</outputDirectory>
+									<outputDirectory>${project.build.directory}/${project.build.finalName}/plugins/viz</outputDirectory>
 									<destFileName>ontopia-vizlet.jar</destFileName>
 								</artifactItem>
 							</artifactItems>

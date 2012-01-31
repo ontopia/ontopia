@@ -54,6 +54,7 @@
       <plugin>
         <groupId>net.sf.alchim</groupId>
         <artifactId>winstone-maven-plugin</artifactId>
+        <version>1.2</version>
         <configuration>
           <filename>ontopoly-standalone.war</filename>
         </configuration>

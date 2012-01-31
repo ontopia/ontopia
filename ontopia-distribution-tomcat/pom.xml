@@ -42,11 +42,6 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>ontopia-realm</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>ontopia-vizigator</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
