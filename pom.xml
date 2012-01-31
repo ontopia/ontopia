@@ -247,14 +247,12 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<!-- seperate execution for parent aggregation of javadoc, not inherited by modules -->
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
 				<inherited>false</inherited>
 				<executions>
 					<execution>
+						<!-- seperate execution for parent aggregation of javadoc, not inherited by modules -->
 						<id>javadoc-parent</id>
+						<inherited>false</inherited>
 						<phase>site</phase>
 						<goals>
 							<goal>aggregate</goal>
