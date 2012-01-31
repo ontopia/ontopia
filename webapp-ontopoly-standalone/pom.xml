@@ -4,7 +4,7 @@
   <parent>
     <groupId>net.ontopia</groupId>
     <artifactId>ontopia-parent</artifactId>
-    <version>5.2.0</version>
+    <version>5.2.1-SNAPSHOT</version>
   </parent>
 
   <name>Ontopia Ontopoly webapplication (standalone)</name>
