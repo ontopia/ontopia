@@ -51,8 +51,6 @@ public class NamedLockManager {
   /**
    * INTERNAL: Attempts to lock all the objects in the input collection and
    * assigns name to the collection for later retrieval.
-   * 
-   * @return see {@link LockManager#attemptToLock(Object, Collection)}
    */
   public synchronized LockResult attemptToLock(UserIF user, Collection objects,
                                                String nameBase, 

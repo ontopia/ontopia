@@ -11,7 +11,7 @@ import net.ontopia.topicmaps.webed.impl.basic.ActionForwardPageIF;
  * information as a triple consisting of (key: forward id, value =
  * forward page + response type).
  *
- * @see net.ontopia.topicmaps.webed.utils.ActionConfigContentHandler
+ * @see net.ontopia.topicmaps.webed.impl.utils.ActionConfigContentHandler
  */
 public class ForwardPageResponseComposite implements Serializable {
 

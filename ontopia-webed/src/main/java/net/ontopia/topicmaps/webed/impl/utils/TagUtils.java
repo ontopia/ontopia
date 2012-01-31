@@ -384,7 +384,7 @@ public final class TagUtils {
    * INTERNAL: Creates an ActionData wrapper for the given action and
    * parameters.
    *
-   * @param paramlist A whitespace-separated list of navigator variable names
+   * @param params A whitespace-separated list of navigator variable names
    */
   public static ActionData makeActionData(PageContext pageContext,
                                           String action_name, String group_name,

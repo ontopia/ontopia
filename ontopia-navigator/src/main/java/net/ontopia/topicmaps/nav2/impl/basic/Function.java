@@ -20,7 +20,7 @@ import net.ontopia.topicmaps.nav2.core.ModuleIF;
  * ModuleIF reader code. The function evaluates the taglib tree node
  * in the context of the calling tag and the page context.
  *
- * @see net.ontopia.topicmaps.nav2.impl.basic.ModuleReader
+ * @see net.ontopia.topicmaps.nav2.utils.ModuleReader
  */
 public final class Function extends AbstractFunction {
 

@@ -30,7 +30,6 @@ public class TopicLink<T extends Topic> extends AbstractBookmarkablePageLink<T> 
 
   /**
    * Return true if the label text should be escaped.
-   * @return
    */
   public boolean getEscapeLabel() {
     return true;

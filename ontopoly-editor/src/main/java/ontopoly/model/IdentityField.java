@@ -120,8 +120,6 @@ public class IdentityField extends FieldDefinition {
   /**
    * Replaces a subject locator of or adds a subject identifier to a topic.
    * 
-   * @param fieldInstance
-   *            field instance to which the value is going to be added.
    * @param _value
    *            value which is going to be added to the topic.
    */
@@ -145,8 +143,6 @@ public class IdentityField extends FieldDefinition {
   /**
    * Removes the subject locator or a subject identifier from a topic.
    * 
-   * @param fieldInstance
-   *            field instance from which the value is going to be removed.
    * @param _value
    *            value which is going to be removed from the topic.
    */

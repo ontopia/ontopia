@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * implentation of the call tag and internally for testing.
  *
  * @see net.ontopia.topicmaps.nav2.taglibs.logic.CallTag
- * @see net.ontopia.topicmaps.nav2.impl.framework.test.TaglibTestCase
  */
 public class TaglibTagFactory implements JSPTagFactoryIF {
 

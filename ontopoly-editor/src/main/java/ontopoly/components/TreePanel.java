@@ -170,10 +170,8 @@ public abstract class TreePanel extends Panel {
 
   /**
    * Renders a tree node. Subclasses should override this method so that the tree's nodes can be rendered.
-   * @param container The container to add the node component to.
    * @param id The id of the node component.
    * @param treeNode The tree node that should be rendered.
-   * @param level The level in the tree that the tree node is placed.
    */
   protected abstract Component populateNode(String id, TreeNode treeNode);
 

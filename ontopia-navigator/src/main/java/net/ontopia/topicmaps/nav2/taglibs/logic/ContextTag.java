@@ -287,7 +287,7 @@ public class ContextTag extends TagSupport
    * The variable name which the object will be set as the
    * value of.
    *
-   * @param varname String which specifies a variable name
+   * @param varObjName String which specifies a variable name
    *                for the object.
    */
   public void setSet(String varObjName) {
@@ -298,7 +298,7 @@ public class ContextTag extends TagSupport
    * The variable name which the topic map will be set as the
    * value of.
    *
-   * @param varname String which specifies a variable name
+   * @param varTMName String which specifies a variable name
    *                for the topicmap.
    */
   public void setSettm(String varTMName) {

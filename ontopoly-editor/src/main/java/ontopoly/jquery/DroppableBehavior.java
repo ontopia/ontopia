@@ -64,7 +64,6 @@ public abstract class DroppableBehavior extends JQueryBehavior {
    * Should return the container that contains all the droppable 
    * targets. This will then be used to search for the appropriate 
    * target.
-   * @return
    */
   protected abstract MarkupContainer getDropContainer();
   

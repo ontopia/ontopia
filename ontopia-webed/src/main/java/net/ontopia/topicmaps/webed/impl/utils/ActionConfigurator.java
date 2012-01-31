@@ -56,7 +56,7 @@ public class ActionConfigurator implements ConfigurationObservableIF {
   }
   
   /**
-   * See {@link ActionConfigurator(String, String)} with automatic
+   * See {@link #ActionConfigurator(String, String, String)} with automatic
    * observation for changes of the configuration file.
    *
    * @param delay - The delay in milliseconds between file change

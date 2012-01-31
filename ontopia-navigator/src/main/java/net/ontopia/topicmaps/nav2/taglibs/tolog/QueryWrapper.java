@@ -152,7 +152,7 @@ public class QueryWrapper {
   }
     
   /**
-    * @ return true if the query result has changed with respect in any of the
+    * @return true if the query result has changed with respect in any of the
     * columns corresponding to the entries of groupColumns.
     * This happens iff for any particular index diffs and groupColumns both
     * contain the value true.

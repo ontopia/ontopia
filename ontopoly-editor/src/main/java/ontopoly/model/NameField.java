@@ -88,8 +88,6 @@ public class NameField extends FieldDefinition {
    * identical names are associated with the topic, a new one is added, but if
    * some names already exist, all except the first one is deleted.
    * 
-   * @param fieldInstance
-   *            field instance to which the value is going to be added.
    * @param _value
    *            value which is going to be added to the topic.
    */
@@ -124,8 +122,6 @@ public class NameField extends FieldDefinition {
    * names with the value, _value, are associated with the topic, topic, they
    * will be deleted.
    * 
-   * @param fieldInstance
-   *            field instance from which the value is going to be removed.
    * @param _value
    *            value which is going to be removed from the topic.
    */

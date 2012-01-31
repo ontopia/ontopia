@@ -132,7 +132,7 @@ public class IncludeTag extends TagSupport {
    * INTERNAL: Sets the filename of the module (which is a function
    * collection) to read in.
    *
-   * @param filename - The filename is interpreted relative to the URI
+   * @param fileName - The filename is interpreted relative to the URI
    *                   of the parent page.
    */
   public void setFile(String fileName) {

@@ -158,7 +158,7 @@ public interface NavigatorConfigurationIF {
    * should be autoloaded at startup or can be loaded
    * afterwards by request otherwise false.
    *
-   * @see net.ontopia.topicmaps.entry.TopicMapRegistry
+   * @see net.ontopia.topicmaps.entry.TopicMapRepositoryIF
    */
   public boolean isAutoloadTopicMap(String topicmapId);
 

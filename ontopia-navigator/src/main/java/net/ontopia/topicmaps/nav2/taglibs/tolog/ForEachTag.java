@@ -185,10 +185,6 @@ public class ForEachTag extends BodyTagSupport {
   
   /**
     * Finds out which columns to group by based on a space separated string.
-    * @param groupBy space separated string of column names.
-    * @return Boolean array corresponding to the headers of queryResult,
-    * where each column is asserted if the corresponding columnName occurred
-    * in groupBy.
     */
   protected void processGroupBy() throws JspTagException {
     groupColumns = new boolean[queryWrapper.getWidth()];

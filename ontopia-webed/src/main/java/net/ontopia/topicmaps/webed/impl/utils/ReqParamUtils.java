@@ -37,8 +37,6 @@ public final class ReqParamUtils {
    * URL. Use all request parameter (that are key, value) pairs from
    * the provided <code>extraReqParams</code> Map object.
    *
-   * @param outputStartSeparator if separation character should be used
-   *        before the first parameter is generated.
    * @param charenc the character encoding to use in the URL
    */
   public static final String params2URLQuery(Map extraReqParams,

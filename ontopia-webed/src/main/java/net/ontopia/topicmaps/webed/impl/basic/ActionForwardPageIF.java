@@ -38,8 +38,6 @@ public interface ActionForwardPageIF {
    * INTERNAL: Gets name of the template for the request parameter which
    * identifies the next action. May be making use of name patterns
    * with the help of placeholders.
-   *
-   * @see ActionNamePatternIF
    */
   public String getNextActionTemplate();
   

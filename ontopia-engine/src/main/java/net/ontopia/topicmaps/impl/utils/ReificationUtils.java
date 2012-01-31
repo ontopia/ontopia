@@ -16,7 +16,7 @@ public class ReificationUtils {
   /**
    * INTERNAL: Make the reifier topic reify the reifiable object.
    *
-   * @returns the topic that ends up being the reifier
+   * @return the topic that ends up being the reifier
    * @throws InvalidTopicMapException if the reifier already reifies a
    *         different object
    */

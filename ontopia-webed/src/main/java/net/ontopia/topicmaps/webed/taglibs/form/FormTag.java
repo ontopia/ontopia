@@ -87,7 +87,7 @@ public class FormTag extends BodyTagSupport {
    * If a action URI is specified directly the default process servlet ACTION is
    * overwritten.
    * 
-   * @see net.ontopia.topicmaps.webed.core.Constants#PROCESS_SERVLET
+   * @see net.ontopia.topicmaps.webed.impl.basic.Constants#PROCESS_SERVLET
    */
   protected String action_uri;
 

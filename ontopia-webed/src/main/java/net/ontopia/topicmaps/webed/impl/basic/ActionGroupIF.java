@@ -55,9 +55,8 @@ public interface ActionGroupIF {
    * group.
    *
    * @return A map containing the action response type (as Integer
-   *         object, see {@link ActionResponseIF} constants) as key
-   *         and the corresponding {@link ActionForwardPageIF}
-   *         object.
+   *         object, see {@link net.ontopia.topicmaps.webed.core.ActionResponseIF} constants) as 
+   *         key and the corresponding {@link ActionForwardPageIF} object.
    */
   public Map getDefaultForwardPages();
   

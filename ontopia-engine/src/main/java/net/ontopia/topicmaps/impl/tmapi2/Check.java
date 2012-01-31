@@ -241,7 +241,7 @@ public final class Check {
   /**
    * Throws a IllegalArgumentException if the datatype is <code>null</code>
    * 
-   * @param datatype
+   * @param loc
    *          the locator to check
    */
   public static void datatypeNotNull(Locator loc) {

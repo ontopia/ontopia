@@ -76,7 +76,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
   /**
    * INTERNAL: Default Constructor.
    *
-   * @param servletConfig - The servletConfig object, which is
+   * @param context - The ServletContext object, which is
    *        needed to retrieve the context and configuration information
    *        about this web application.
    */

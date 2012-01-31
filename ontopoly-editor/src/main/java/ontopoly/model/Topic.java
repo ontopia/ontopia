@@ -73,7 +73,7 @@ public class Topic {
   /**
    * Gets the unscoped name of the topic.
    * 
-   * @Return the unscoped name of the topic or null if no name has been set.
+   * @return the unscoped name of the topic or null if no name has been set.
    */
   public String getName() {
     if (cachedName == null) 

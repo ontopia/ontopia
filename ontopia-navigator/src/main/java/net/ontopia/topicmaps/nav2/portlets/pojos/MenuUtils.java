@@ -40,7 +40,7 @@ public class MenuUtils {
    * Runs the given query with the given topic as parameter %topic% and returns
    * the first value (of the first collumn) in the result collection.
    * @param topic The parameter refered to as %topic% in the query.
-   * @param query The query that genereates the result.
+   * @param pq The query that genereates the result.
    * @return The first value returned by the query.
    */
   public static Object getFirstValue(TopicIF topic, ParsedQueryIF pq) {

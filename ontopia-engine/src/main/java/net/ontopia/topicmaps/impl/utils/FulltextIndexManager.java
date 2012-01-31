@@ -89,7 +89,7 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
    * specified topic map.
    * 
    * @param topicmap
-   * @return
+   * @return The index manager for specified topicmap
    */
   public static FulltextIndexManager manageTopicMap(TopicMapIF topicmap) {
     return new FulltextIndexManager(topicmap);

@@ -93,7 +93,7 @@ public class RoleField extends FieldDefinition {
   /**
    * Gets the association type.
    * 
-   * @Return the association type.
+   * @return the association type.
    */
   public AssociationType getAssociationType() {
     AssociationField afield = getAssociationField();
@@ -103,7 +103,7 @@ public class RoleField extends FieldDefinition {
   /**
    * Gets the role type.
    * 
-   * @Return the role type.
+   * @return the role type.
    */
   public RoleType getRoleType() {
     if (roleType == null) {
@@ -126,7 +126,7 @@ public class RoleField extends FieldDefinition {
   /**
    * Gets the other RoleField objects this object's association type topic takes part in.
    * 
-   * @returns the other RoleField objects this object's association type topic takes part in.
+   * @return the other RoleField objects this object's association type topic takes part in.
    */
   public Collection<RoleField> getFieldsForOtherRoles() {
     AssociationField afield = getAssociationField();
@@ -447,7 +447,6 @@ public class RoleField extends FieldDefinition {
   /**
    * Removes an instance topic from the other side of an association an instance topic takes part in.
    * 
-   * @param fieldInstance the field instance that takes part in the association.
    * @param _value an object representing the instance topic that will be removed from the other
    * side of the association the instance topic (topic) takes part in.
    */  

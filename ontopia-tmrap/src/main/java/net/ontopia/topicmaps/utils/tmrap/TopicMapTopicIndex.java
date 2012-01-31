@@ -28,7 +28,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
   protected String tmid;
 
   /**
-   * @param baseuri a URL of the form
+   * @param editBaseuri a URL of the form
    * http://whatever/omnigator/stuff.jsp?tmid=%tmid%&id=%topicid% Note
    * that the %key% tokens are used to build the correct URI.
    */

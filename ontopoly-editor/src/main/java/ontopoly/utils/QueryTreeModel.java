@@ -82,7 +82,6 @@ public abstract class QueryTreeModel extends DefaultTreeModel {
    * Filter method that should return true if objects should be part of result set.p
    * @param p Parent object.
    * @param c Child object.
-   * @return
    */
   protected boolean filter(Object p, Object c) {
     return true;

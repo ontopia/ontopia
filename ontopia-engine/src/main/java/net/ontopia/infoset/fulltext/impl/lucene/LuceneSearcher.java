@@ -70,7 +70,6 @@ public class LuceneSearcher implements SearcherIF {
    * <p>
    * 
    * @param dir The lucene directory where the index is located.
-   * @param analyzer The token stream analyzer that the searcer is to use.
    * @since 3.0
    */
   public LuceneSearcher(Directory dir) throws IOException {

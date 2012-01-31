@@ -189,8 +189,6 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
   /**
    * Returns the display name of the given topic. This method is meant as 
    * an extension point for retrieval of topic names.
-   * @param topic
-   * @return
    */
   public String getLabel(Topic topic) {
 	String name;
@@ -206,7 +204,6 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
    * in various places around the application to generate links to topics.
    * Subclasses may override it.
    * @param topic
-   * @return
    */
   public Class<? extends Page> getPageClass(Topic topic) {
     return getClass();
@@ -216,8 +213,6 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
    * Given the topic return the page parameters to use. This method is used 
    * in various places around the application to generate links to topics. 
    * Subclasses may override it.
-   * @param topic
-   * @return
    */
   public PageParameters getPageParameters(Topic topic) {
     // WARNING: if you do a change here then you may also want to do so in EmbeddedInstancePage.

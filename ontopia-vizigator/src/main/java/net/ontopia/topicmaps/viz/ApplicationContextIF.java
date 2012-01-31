@@ -60,7 +60,7 @@ public interface ApplicationContextIF {
    * is used is defined by the 'propTarget' applet parameter.  Does
    * nothing for non applet context.
    * 
-   * @param url String representing the target url
+   * @param aUrl String representing the target url
    */
   public void openPropertiesURL(String aUrl);
 

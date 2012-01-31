@@ -12,7 +12,6 @@ public class User {
 
   /**
    * Returns the user name.
-   * @return
    */
   public String getName() {
     return username;
@@ -20,7 +19,6 @@ public class User {
 
   /**
    * Returns the full name of the user. Will fall back to the username if not exists. 
-   * @return
    */
   public String getFullname() {
     return getName();
@@ -28,7 +26,6 @@ public class User {
 
   /**
    * Returns true if the user was automatically logged in.
-   * @return
    */
   public boolean isAutoLogin() {
     return autoLogin;

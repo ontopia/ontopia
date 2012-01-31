@@ -44,7 +44,6 @@ public class PropertiesPanel extends JScrollPane {
   private JMenuItem goToMenuItem;
 
   /**
-   * @param controller
    * @throws java.awt.HeadlessException
    */
   public PropertiesPanel(VizController aController) {

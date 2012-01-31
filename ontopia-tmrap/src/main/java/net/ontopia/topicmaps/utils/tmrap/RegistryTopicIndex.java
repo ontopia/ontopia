@@ -31,7 +31,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
   protected StringifierIF strify;
 
   /**
-   * @param baseuri a URL of the form
+   * @param editBaseuri a URL of the form
    * http://whatever/omnigator/stuff.jsp?tmid=%tmid%&id=%topicid% Note
    * that the %key% tokens are used to build the correct URI.
    */

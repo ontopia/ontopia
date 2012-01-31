@@ -20,8 +20,6 @@ public class OntopolyUtils {
   /**
    * Returns the topic type that is the default topic type amongst the topic types of the topic.
    * @param topic
-   * @param roleField
-   * @return
    */
   public static TopicType getDefaultTopicType(Topic topic) {
     List<TopicType> topicTypes = topic.getTopicTypes();
