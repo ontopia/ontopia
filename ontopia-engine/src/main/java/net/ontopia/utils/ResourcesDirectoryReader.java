@@ -17,15 +17,16 @@ import java.util.TreeSet;
 
 public class ResourcesDirectoryReader {
 
+  private static final boolean SEARCHSUBDIRECTORIESDEFAULTVALUE = false;
+
   private final ClassLoader classLoader;
   private final String directoryPath;
   private final boolean searchSubdirectories;
-  private final static boolean searchSubdirectoriesDefaultValue = false;
-  private HashSet<ResourcesFilterIF> filters;
-  private TreeSet<String> resources = null;
+  private Set<ResourcesFilterIF> filters;
+  private Set<String> resources = null;
 
   public ResourcesDirectoryReader(ClassLoader classLoader, String directoryPath) {
-    this(classLoader, directoryPath, searchSubdirectoriesDefaultValue);
+    this(classLoader, directoryPath, SEARCHSUBDIRECTORIESDEFAULTVALUE);
   }
   public ResourcesDirectoryReader(ClassLoader classLoader, String directoryPath, boolean searchSubdirectories) {
     this.classLoader = classLoader;
@@ -36,7 +37,7 @@ public class ResourcesDirectoryReader {
 
   // Constructors without classloader default to Thread.currentThread().getContextClassLoader()
   public ResourcesDirectoryReader(String directoryPath) {
-    this(directoryPath, searchSubdirectoriesDefaultValue);
+    this(directoryPath, SEARCHSUBDIRECTORIESDEFAULTVALUE);
   }
   public ResourcesDirectoryReader(String directoryPath, boolean searchSubdirectories) {
     this(Thread.currentThread().getContextClassLoader(), directoryPath, searchSubdirectories);
@@ -44,13 +45,13 @@ public class ResourcesDirectoryReader {
 
   // Constructors with filter
   public ResourcesDirectoryReader(String directoryPath, ResourcesFilterIF filter) {
-    this(directoryPath, searchSubdirectoriesDefaultValue, filter);
+    this(directoryPath, SEARCHSUBDIRECTORIESDEFAULTVALUE, filter);
   }
   public ResourcesDirectoryReader(String directoryPath, boolean searchSubdirectories, ResourcesFilterIF filter) {
     this(Thread.currentThread().getContextClassLoader(), directoryPath, searchSubdirectories, filter);
   }
   public ResourcesDirectoryReader(ClassLoader classLoader, String directoryPath, ResourcesFilterIF filter) {
-    this(classLoader, directoryPath, searchSubdirectoriesDefaultValue, filter);
+    this(classLoader, directoryPath, SEARCHSUBDIRECTORIESDEFAULTVALUE, filter);
   }
   public ResourcesDirectoryReader(ClassLoader classLoader, String directoryPath, boolean searchSubdirectories, ResourcesFilterIF filter) {
     this(classLoader, directoryPath, searchSubdirectories);
@@ -59,13 +60,13 @@ public class ResourcesDirectoryReader {
 
   // Constructors with FilenameExtensionFilter shortcuts
   public ResourcesDirectoryReader(String directoryPath, String filenameFilter) {
-    this(directoryPath, searchSubdirectoriesDefaultValue, filenameFilter);
+    this(directoryPath, SEARCHSUBDIRECTORIESDEFAULTVALUE, filenameFilter);
   }
   public ResourcesDirectoryReader(String directoryPath, boolean searchSubdirectories, String filenameFilter) {
     this(Thread.currentThread().getContextClassLoader(), directoryPath, searchSubdirectories, filenameFilter);
   }
   public ResourcesDirectoryReader(ClassLoader classLoader, String directoryPath, String filenameFilter) {
-    this(classLoader, directoryPath, searchSubdirectoriesDefaultValue, filenameFilter);
+    this(classLoader, directoryPath, SEARCHSUBDIRECTORIESDEFAULTVALUE, filenameFilter);
   }
   public ResourcesDirectoryReader(ClassLoader classLoader, String directoryPath, boolean searchSubdirectories, String filenameFilter) {
     this(classLoader, directoryPath, searchSubdirectories);
@@ -93,7 +94,6 @@ public class ResourcesDirectoryReader {
     }
     return streams;
   }
-
 
   private void findResources() {
     resources = new TreeSet<String>();
@@ -156,11 +156,12 @@ public class ResourcesDirectoryReader {
 
   private boolean filtersApply(String resourcePath) {
     for (ResourcesFilterIF filter : filters) {
-      if (filter.ok(resourcePath)) return true;
+      if (filter.ok(resourcePath)) {
+        return true;
+      }
     }
     return filters.isEmpty();
   }
-  
 
   public interface ResourcesFilterIF {
     public boolean ok(String resourcePath);
