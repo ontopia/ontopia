@@ -248,8 +248,9 @@ public class QueryUtils {
    */
   public static QueryProcessorIF createQueryProcessor(String queryLanguage, TopicMapIF topicmap,
       LocatorIF base, Map properties) {
-    QueryProcessorFactoryIF factory = qpFactoryMap.get(queryLanguage);
-    return factory.createQueryProcessor(topicmap, base, properties);
+    QueryProcessorFactoryIF factory = getQueryProcessorFactory(queryLanguage);
+    return (factory == null) ? null
+      : factory.createQueryProcessor(topicmap, base, properties);
   }
 
   /**
