@@ -1,1 +1,1 @@
-java -jar ../lib/ontopia-viz-${project.version}.jar $@
+java -jar ../lib/ontopia-vizigator-${project.version}.jar $@
