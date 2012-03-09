@@ -26,8 +26,13 @@ public class TopicNameComparator extends ScopedIFComparator {
     
     // check for default type
     TopicIF untypedname = tm.getTopicBySubjectIdentifier(PSI.getSAMNameType());
-    if (untypedname.equals(t1)) t1 = null;
-    if (untypedname.equals(t2)) t2 = null;
+    if (untypedname == null) {
+      t1 = null;
+      t2 = null;
+    } else {
+      if (untypedname.equals(t1)) t1 = null;
+      if (untypedname.equals(t2)) t2 = null;
+    }
 
     // untyped should sort before typed
     if (t1 == null) {

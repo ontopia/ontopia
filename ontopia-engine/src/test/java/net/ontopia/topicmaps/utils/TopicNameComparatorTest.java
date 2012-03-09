@@ -79,4 +79,13 @@ public class TopicNameComparatorTest {
     TopicNameIF[] expected = new TopicNameIF[] { untyped_scoped, untyped, typed_scoped, typed };
     Assert.assertArrayEquals("Incorrect scoped name ordering", expected, names.toArray());
   }
+
+  @Test
+  public void testIssue439() {
+    TopicMapIF tm = new InMemoryTopicMapStore().getTopicMap();
+    TopicIF topic = tm.getBuilder().makeTopic();
+    TopicNameIF name1 = tm.getBuilder().makeTopicName(topic, topic, "value1");
+    TopicNameIF name2 = tm.getBuilder().makeTopicName(topic, topic, "value2");
+    new TopicNameComparator(Collections.EMPTY_LIST).compare(name1, name2);
+  }
 }
