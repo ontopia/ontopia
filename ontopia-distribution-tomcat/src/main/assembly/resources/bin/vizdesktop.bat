@@ -1,3 +1,3 @@
 @echo off
-java -jar ../lib/ontopia-viz-${project.version}.jar %1 %2 %3
+java -jar ../lib/ontopia-vizigator-${project.version}.jar %1 %2 %3
 
