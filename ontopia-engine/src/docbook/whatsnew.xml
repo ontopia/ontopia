@@ -10,8 +10,8 @@
 <shortaffil>Ontopia</shortaffil>
 </affiliation>
 </author>
-<pubdate>2012-01-27</pubdate>
-<releaseinfo>5.2.0</releaseinfo>
+<pubdate>2012-03-30</pubdate>
+<releaseinfo>5.2.1</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -20,6 +20,32 @@ This document describes what has changed in Ontopia between releases,
 both at a higher level, and in more detail.
 </para>
 </abstract>
+
+<!-- ======================================================================
+     5.2.1                                                              -->
+<section id="sect-5.2.1">
+<title>Ontopia 5.2.1 release notes</title>
+
+<para>This release is a minor bug fix release, which includes the fixed 
+  vizigator and omnigator vizlet.</para>
+
+<para>The following bugs have been fixed:</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=438"
+      >Issue 438: Vizigator is not starting on Mac!</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=439"
+      >Issue 439: TopicNameComparator might throw NullPointerException</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=440"
+      >Issue 440: bat file pointing to noneixisting jar file in 5.2.0</ulink></para>
+  </listitem>
+</itemizedlist>
+</section>
 
 <!-- ======================================================================
      5.2.0                                                              -->
