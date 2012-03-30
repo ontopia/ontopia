@@ -90,6 +90,20 @@
 							</target>
 						</configuration>
 					</execution>
+					
+					<execution>
+						<id>move-docs-in-place</id>
+						<phase>package</phase>
+						<goals><goal>run</goal></goals>
+						<configuration>
+							<target>
+								<copy todir="target/site/">
+									<fileset dir="target/${project.build.finalName}/docs/"/>
+								</copy>
+								<ant antfile="../src/docbook/ant/build.xml" target="main" />
+							</target>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -107,11 +121,6 @@
 							<sourceDirectory>target/docbook-collected</sourceDirectory>
 							<outputDirectory>target/${project.build.finalName}/docs</outputDirectory>
 						</configuration>
-					</execution>
-					<execution>
-						<!-- position the docbook execution before antrun -->
-						<id>default</id>
-						<phase>pre-site</phase><goals><goal>transform</goal></goals>
 					</execution>
 				</executions>
 			</plugin>

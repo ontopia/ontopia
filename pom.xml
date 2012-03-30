@@ -86,7 +86,7 @@
 							</goals>
 						</execution>
 						<execution>
-							<phase>site</phase>
+							<phase>package</phase>
 							<goals>
 								<goal>run</goal>
 							</goals>
@@ -141,7 +141,7 @@
 						<outputDirectory>target/site</outputDirectory>
 					</configuration>
 					<executions>
-						<execution><phase>site</phase><goals><goal>transform</goal></goals></execution>
+						<execution><phase>prepare-package</phase><goals><goal>transform</goal></goals></execution>
 					</executions>
 				</plugin>
 				<plugin>
@@ -189,10 +189,12 @@
 					<version>1.2</version>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.8.1</version>
 					<configuration>
-						<reportOutputDirectory>target/site</reportOutputDirectory>
+						<reportOutputDirectory>${project.build.directory}/site/</reportOutputDirectory>
+						<outputDirectory>${project.build.directory}/site/</outputDirectory>
 						<destDir>api</destDir>
 						<author>true</author>
 						<version>true</version>
@@ -213,16 +215,8 @@
 							<group><title>Navigator Framework Packages</title><packages>net.ontopia.topicmaps.nav*:net.ontopia.topicmaps.nav2*</packages></group>
 							<group><title>RDBMS Backend Connector Packages</title><packages>net.ontopia.topicmaps.impl.rdbms</packages></group>
 						</groups>
+						<encoding>utf-8</encoding>
 					</configuration>
-					<executions>
-						<execution>
-							<id>javadoc</id>
-							<phase>pre-site</phase>
-							<goals>
-								<goal>javadoc</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.axis2</groupId>
@@ -242,24 +236,14 @@
 					<version>${axis2.version}</version>
 					<extensions>true</extensions>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.1.2</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<inherited>false</inherited>
-				<executions>
-					<execution>
-						<!-- seperate execution for parent aggregation of javadoc, not inherited by modules -->
-						<id>javadoc-parent</id>
-						<inherited>false</inherited>
-						<phase>site</phase>
-						<goals>
-							<goal>aggregate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 			<!-- disabled default site to allow our own implementation -->
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
@@ -287,6 +271,19 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.3.1</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -557,4 +554,73 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	
+	<profiles>
+		<profile>
+			<!-- Profile used for making the tomcat distribution -->
+			<id>ontopia-distribution-tomcat</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<inherited>false</inherited>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>aggregate</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<!-- profile used to prepare for a release -->
+			<id>release</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<executions>
+								<execution>
+									<phase>package</phase>
+									<goals>
+										<goal>jar</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-source-plugin</artifactId>
+							<configuration>
+								<excludes>
+									<exclude>**/ontopoly/resources/tiny_mce/**</exclude>
+									<exclude>**/ontopoly/images/jquery**</exclude>
+								</excludes>
+							</configuration>
+							<executions>
+								<execution>
+									<phase>package</phase>
+									<goals><goal>jar-no-fork</goal><goal>test-jar-no-fork</goal></goals>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-install-plugin</artifactId>
+							<configuration>
+								<createChecksum>true</createChecksum>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+	</profiles>
 </project>

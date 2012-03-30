@@ -29,10 +29,10 @@
 	<!-- Collects all the omnigator documentation that is included in the WAR -->
 	<target name="collect-omnigator-docs">
 		<!-- omnigator -->
-		<copy todir="target/docbook-collected/navigator">
+		<copy todir="target/docbook-collected/omnigator">
 			<fileset dir="src/docbook/omnigator"/>
 		</copy>
-		<copy todir="target/docbook-collected/resources/navigator">
+		<copy todir="target/docbook-collected/resources/omnigator">
 			<fileset dir="src/docbook/resources/omnigator"/>
 			<fileset dir="../src/docbook/resources"/>
 		</copy> 
@@ -65,7 +65,7 @@
 		
 		<!-- jill.xtm -->
 		<copy file="../ontopia-distribution-tomcat/src/main/assembly/resources/topicmaps/jill.xtm"
-			tofile="target/docbook-collected/resources/navigator/jill.xtm"/>
+			tofile="target/docbook-collected/resources/omnigator/jill.xtm"/>
 	</target>
 	
 	<!-- Collects all the ontopoly documentation that is included in the WAR -->
