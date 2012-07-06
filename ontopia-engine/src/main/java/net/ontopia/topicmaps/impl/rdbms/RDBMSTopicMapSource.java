@@ -9,12 +9,10 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.core.Locators;
 import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.RDBMSStorage;
-import net.ontopia.topicmaps.entry.AbstractTopicMapReference;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapSourceIF;
 import net.ontopia.utils.OntopiaRuntimeException;
@@ -33,12 +31,12 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
 
   protected String id;
   protected String title;
-  protected Map properties;
+  protected Map<String, String> properties;
   protected String propfile;
 
   protected String topicListeners;
   
-  protected Map refmap;
+  protected Map<String, TopicMapReferenceIF> refmap;
 
   protected RDBMSStorage storage;
 
@@ -66,7 +64,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
    * database properties.
    * @since 1.2.4
    */
-  public RDBMSTopicMapSource(Map properties) {
+  public RDBMSTopicMapSource(Map<String, String> properties) {
     this.properties = properties;
   }
 
@@ -130,7 +128,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     this.propfile = propfile;
   }
 
-  public synchronized Collection getReferences() {
+  public synchronized Collection<TopicMapReferenceIF> getReferences() {
     if (!isInitialized()) refresh();
     return refmap.values();
   }
@@ -151,7 +149,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     Connection conn = null;
     try {
       
-      RDBMSStorage storage = createStorage();
+      createStorage();
       
       // Create connection for transaction
       conn = storage.getConnectionFactory(true).requestConnection();
@@ -159,7 +157,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
       ResultSet rs = stm.executeQuery("select id, title, base_address from TM_TOPIC_MAP");
       
       // Loop over result rows
-      Map newmap = new HashMap();
+      Map<String, TopicMapReferenceIF> newmap = new HashMap<String, TopicMapReferenceIF>();
       while (rs.next()) {       
         // Add row object to result collection
         long topicmap_id = rs.getLong(1);
@@ -167,7 +165,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
 
         // Do not create new reference if active reference exist.
         if (refmap != null) {
-          TopicMapReferenceIF ref = (TopicMapReferenceIF)refmap.get(referenceId);
+          TopicMapReferenceIF ref = refmap.get(referenceId);
           if (ref != null && ref.isOpen()) {
             // Use existing reference
             newmap.put(referenceId, ref);
@@ -243,11 +241,10 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     if (!supportsCreate())
       throw new UnsupportedOperationException("This source does not support creating new topic maps.");
     // create topic map instance
-    RDBMSStorage storage = null;
     RDBMSTopicMapStore store = null;
     long topicmap_id = -1;
     try {
-      storage = createStorage();
+      createStorage();
       store = new RDBMSTopicMapStore(storage);
       TopicMap tm = (TopicMap)store.getTopicMap();
       tm.setTitle(name);
@@ -266,7 +263,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
       if (topicListeners != null)
         ref.registerTopicListeners(topicListeners);
       
-      if (refmap == null) refmap = new HashMap();
+      if (refmap == null) refmap = new HashMap<String, TopicMapReferenceIF>();
       refmap.put(id, ref);
       return ref;
     
