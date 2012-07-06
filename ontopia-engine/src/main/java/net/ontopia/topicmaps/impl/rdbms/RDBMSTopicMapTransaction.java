@@ -144,7 +144,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
         txn.getStorageAccess().getStorage().notifyCluster();
         
         // commmit listeners
-        te.commitListeners();
+        processEvent(this, "TopicMapTransactionIF.commit", null, null);
       }
     } else {
       txn.commit();
@@ -157,7 +157,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
         super.abort();
 
         // abort listeners
-        te.abortListeners();
+        processEvent(this, "TopicMapTransactionIF.abort", null, null);
       }
     }
   }

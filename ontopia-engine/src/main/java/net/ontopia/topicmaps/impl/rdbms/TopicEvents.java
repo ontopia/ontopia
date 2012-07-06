@@ -31,7 +31,7 @@ public class TopicEvents implements EventListenerIF {
   // Transaction callbacks
   // -----------------------------------------------------------------------------
   
-  void commitListeners() {
+  protected void commitListeners() {
     if (store.topic_listeners != null) {
       TopicMapListenerIF[] topic_listeners = store.topic_listeners;
       Iterator aiter = topicsAdded.iterator();
@@ -76,7 +76,7 @@ public class TopicEvents implements EventListenerIF {
     }
   }
 
-  void abortListeners() {
+  protected void abortListeners() {
     if (store.topic_listeners != null) {
       topicsAdded.clear();
       topicsRemoved.clear();
@@ -110,11 +110,20 @@ public class TopicEvents implements EventListenerIF {
   void registerListeners(EventManagerIF emanager) {
     // listen to topic modification events
     emanager.addListener(this, "TopicIF.modified");
+    emanager.addListener(this, "TopicMapTransactionIF.commit");
+    emanager.addListener(this, "TopicMapTransactionIF.abort");
   }
   
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
-    if (store.topic_listeners != null && "TopicIF.modified".equals(event))
+    if (store.topic_listeners != null && "TopicIF.modified".equals(event)) {
       topicsModified.add(object);
+    }
+    if ("TopicMapTransactionIF.commit".equals(event)) {
+      commitListeners();
+    }
+    if ("TopicMapTransactionIF.abort".equals(event)) {
+      abortListeners();
+    }
   }
   
 }
