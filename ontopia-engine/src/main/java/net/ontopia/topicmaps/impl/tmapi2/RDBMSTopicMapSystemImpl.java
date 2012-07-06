@@ -47,7 +47,11 @@ public class RDBMSTopicMapSystemImpl implements TopicMapSystemIF {
   
   public RDBMSTopicMapSystemImpl(TopicMapSystemFactory topicMapSystemFactory) {
     systemFactory = topicMapSystemFactory;
-    source = new RDBMSTopicMapSource(systemFactory.properties);
+    Map<String, String> props = new HashMap<String, String>();
+    for (String key : systemFactory.properties.stringPropertyNames()) {
+      props.put(key, systemFactory.properties.getProperty(key));
+    }
+    source = new RDBMSTopicMapSource(props);
     source.setSupportsDelete(true);
     source.setSupportsCreate(true);
     storeFactory = new RDBMSStoreFactory(systemFactory.properties);
