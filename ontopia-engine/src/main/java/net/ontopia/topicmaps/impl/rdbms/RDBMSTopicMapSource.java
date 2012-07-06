@@ -161,7 +161,9 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
       while (rs.next()) {       
         // Add row object to result collection
         long topicmap_id = rs.getLong(1);
-        String referenceId = getReferenceId(topicmap_id);
+        String _title = rs.getString(2);
+        String loc = rs.getString(3);
+        String referenceId = getReferenceId(loc, _title, topicmap_id);
 
         // Do not create new reference if active reference exist.
         if (refmap != null) {
@@ -173,19 +175,17 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
           }
         }
         
-        String _title = rs.getString(2);
         if (_title == null)
           _title = referenceId;
         
         LocatorIF _base_address = this.base_address;
         if (_base_address == null) {
-          String loc = rs.getString(3);
           if (loc != null)
             _base_address = Locators.getURILocator(loc);
         }
         
         // Create a new reference
-        RDBMSTopicMapReference ref = new RDBMSTopicMapReference(referenceId, _title, storage, topicmap_id, _base_address);
+        RDBMSTopicMapReference ref = createTopicMapReference(referenceId, _title, storage, topicmap_id, _base_address);
         ref.setSource(this);
 
         // register topic listeners
@@ -206,11 +206,15 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
     }
   }
   
-  protected String getReferenceId(long topicmap_id) {
+  protected String getReferenceId(String baseAdress, String title, long topicmap_id) {
     if (id == null)
       return "RDBMS-" + topicmap_id;
     else
       return id + "-" + topicmap_id;
+  }
+  
+  protected RDBMSTopicMapReference createTopicMapReference(String referenceId, String title, RDBMSStorage storage, long topicmapId, LocatorIF baseAddress) {
+    return new RDBMSTopicMapReference(referenceId, title, storage, topicmapId, baseAddress);
   }
 
   public boolean supportsCreate() {
@@ -254,9 +258,9 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
       store.commit();
 
       // create topic map reference
-      String id = getReferenceId(topicmap_id);
+      String id = getReferenceId(baseAddress, name, topicmap_id);
       String title = (name == null ? id : name);
-      RDBMSTopicMapReference ref = new RDBMSTopicMapReference(id, title, storage, topicmap_id, _base_address);
+      RDBMSTopicMapReference ref = createTopicMapReference(id, title, storage, topicmap_id, _base_address);
       ref.setSource(this);
 
       // register topic listeners
