@@ -46,18 +46,18 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     handlers = cfactory.makeLargeMap();
 
     // Initialize parent-child relationship event handlers
-    handlers.put("TopicMapIF.addTopic", new EH01());                
-    handlers.put("TopicMapIF.removeTopic", new EH02());             
-    handlers.put("TopicMapIF.addAssociation", new EH03());                  
-    handlers.put("TopicMapIF.removeAssociation", new EH04());               
-    handlers.put("TopicIF.addTopicName", new EH07());                
-    handlers.put("TopicIF.removeTopicName", new EH08());             
-    handlers.put("TopicNameIF.addVariant", new EH09());              
-    handlers.put("TopicNameIF.removeVariant", new EH10());                   
-    handlers.put("TopicIF.addOccurrence", new EH13());             
-    handlers.put("TopicIF.removeOccurrence", new EH14());                  
-    handlers.put("AssociationIF.addRole", new EH15());                  
-    handlers.put("AssociationIF.removeRole", new EH16());                       
+    handlers.put("TopicMapIF.addTopic", new EH01());
+    handlers.put("TopicMapIF.removeTopic", new EH02());
+    handlers.put("TopicMapIF.addAssociation", new EH03());
+    handlers.put("TopicMapIF.removeAssociation", new EH04());
+    handlers.put("TopicIF.addTopicName", new EH07());
+    handlers.put("TopicIF.removeTopicName", new EH08());
+    handlers.put("TopicNameIF.addVariant", new EH09());
+    handlers.put("TopicNameIF.removeVariant", new EH10());
+    handlers.put("TopicIF.addOccurrence", new EH13());
+    handlers.put("TopicIF.removeOccurrence", new EH14());
+    handlers.put("AssociationIF.addRole", new EH15());
+    handlers.put("AssociationIF.removeRole", new EH16());
 
     // Register as event listener
     Iterator<String> iter = handlers.keySet().iterator();
