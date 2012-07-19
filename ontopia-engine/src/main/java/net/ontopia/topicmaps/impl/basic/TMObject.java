@@ -63,7 +63,7 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
     // Check to see if the source locator is already a source locator of this topic.
     else if (sources.contains(source_locator)) return;
     // Notify listeners
-    fireEvent("TMObjectIF.addItemIdentifier", source_locator, null);
+    fireEvent(TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, source_locator, null);
     // Modify property    
     sources.add(source_locator);
   }
@@ -76,7 +76,7 @@ public abstract class TMObject implements TMObjectIF, java.io.Serializable {
     // Check to see if source locator is a source locator of this topic.
     if (sources == null || !sources.contains(source_locator)) return;
     // Notify listeners
-    fireEvent("TMObjectIF.removeItemIdentifier", null, source_locator);
+    fireEvent(TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, source_locator);
     // Modify property
     sources.remove(source_locator);
   }

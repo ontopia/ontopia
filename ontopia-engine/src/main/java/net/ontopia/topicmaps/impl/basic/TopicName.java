@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
@@ -72,7 +73,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     if (value == null)
       throw new NullPointerException("Topic name value must not be null.");
     // Notify listeners
-    fireEvent("TopicNameIF.setValue", value, getValue());
+    fireEvent(TopicNameIF.EVENT_SET_VALUE, value, getValue());
     this.value = value;
   }
 
@@ -94,7 +95,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     if (variant.parent != null)
       throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
-    fireEvent("TopicNameIF.addVariant", variant, null);
+    fireEvent(TopicNameIF.EVENT_ADD_VARIANT, variant, null);
     // Set topic name property
     if (variants == null)
       variants = topicmap.cfactory.makeSmallSet();
@@ -116,7 +117,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     if (variant.parent != this)
       return;
     // Notify listeners
-    fireEvent("TopicNameIF.removeVariant", null, variant);
+    fireEvent(TopicNameIF.EVENT_REMOVE_VARIANT, null, variant);
 
     // Remove inherited themes from variant name
     if (scope != null && !scope.isEmpty())
@@ -153,7 +154,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("TopicNameIF.addTheme", theme, null);
+    fireEvent(TopicNameIF.EVENT_ADD_THEME, theme, null);
     // Add theme to scope
     if (scope == null) {
       Set<TopicIF> empty = Collections.emptySet();
@@ -176,7 +177,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("TopicNameIF.removeTheme", null, theme);
+    fireEvent(TopicNameIF.EVENT_REMOVE_THEME, null, theme);
 
     // remove theme from variants
     if (variants != null && !variants.isEmpty()) {
@@ -209,7 +210,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     }
 
     // Notify listeners
-    fireEvent("TopicNameIF.setType", type, getType());
+    fireEvent(TopicNameIF.EVENT_SET_TYPE, type, getType());
     this.type = type;
   }
 
@@ -237,7 +238,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     // Notify listeners
     Topic reifier = (Topic) _reifier;
     Topic oldReifier = (Topic) getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
     if (oldReifier != null)
       oldReifier.setReified(null);

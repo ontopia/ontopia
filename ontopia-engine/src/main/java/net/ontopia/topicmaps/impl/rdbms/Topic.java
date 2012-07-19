@@ -133,7 +133,7 @@ public class Topic extends TMObject implements TopicIF {
       subject_locator = new SubjectLocator(subject_locator);
     
     // Notify listeners
-    fireEvent("TopicIF.addSubjectLocator", subject_locator, null);    
+    fireEvent(TopicIF.EVENT_ADD_SUBJECTLOCATOR, subject_locator, null);    
     // Notify transaction
     valueAdded(LF_subjects, subject_locator, true);
   }
@@ -153,7 +153,7 @@ public class Topic extends TMObject implements TopicIF {
       subject_locator = new SubjectLocator(subject_locator);
     
     // Notify listeners
-    fireEvent("TopicIF.removeSubjectLocator", null, subject_locator);    
+    fireEvent(TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, null, subject_locator);    
     // Notify transaction
     valueRemoved(LF_subjects, subject_locator, true);
   }
@@ -178,7 +178,7 @@ public class Topic extends TMObject implements TopicIF {
       subject_indicator = new SubjectIndicatorLocator(subject_indicator);
     
     // Notify listeners
-    fireEvent("TopicIF.addSubjectIdentifier", subject_indicator, null);    
+    fireEvent(TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, subject_indicator, null);    
     // Notify transaction
     valueAdded(LF_indicators, subject_indicator, true);
   }
@@ -198,7 +198,7 @@ public class Topic extends TMObject implements TopicIF {
       subject_indicator = new SubjectIndicatorLocator(subject_indicator);
     
     // Notify listeners
-    fireEvent("TopicIF.removeSubjectIdentifier", null, subject_indicator);    
+    fireEvent(TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, null, subject_indicator);    
     // Notify transaction
     valueRemoved(LF_indicators, subject_indicator, true);
   }
@@ -217,7 +217,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new ConstraintViolationException("Moving objects is not allowed.");
     
     // Notify listeners
-    fireEvent("TopicIF.addTopicName", name, null);    
+    fireEvent(TopicIF.EVENT_ADD_TOPICNAME, name, null);    
     // Set topic property
     ((TopicName)name).setTopic(this);
     // Notify transaction
@@ -231,7 +231,7 @@ public class Topic extends TMObject implements TopicIF {
     if (name.getTopic() != this) return;
     
     // Notify listeners
-    fireEvent("TopicIF.removeTopicName", null, name);    
+    fireEvent(TopicIF.EVENT_REMOVE_TOPICNAME, null, name);    
     // Unset topic property
     ((TopicName)name).setTopic(null);
     // Notify transaction
@@ -253,7 +253,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new ConstraintViolationException("Moving objects is not allowed.");
     
     // Notify listeners
-    fireEvent("TopicIF.addOccurrence", occurrence, null);    
+    fireEvent(TopicIF.EVENT_ADD_OCCURRENCE, occurrence, null);    
     // Set topic property
     ((Occurrence)occurrence).setTopic(this);
     // Notify transaction
@@ -267,7 +267,7 @@ public class Topic extends TMObject implements TopicIF {
     if (occurrence.getTopic() != this) return;
     
     // Notify listeners
-    fireEvent("TopicIF.removeOccurrence", null, occurrence);    
+    fireEvent(TopicIF.EVENT_REMOVE_OCCURRENCE, null, occurrence);    
     // Unset topic property
     ((Occurrence)occurrence).setTopic(null);
     // Notify transaction
@@ -389,7 +389,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(type, this);    
     // Notify listeners
-    fireEvent("TopicIF.addType", type, null);
+    fireEvent(TopicIF.EVENT_ADD_TYPE, type, null);
     // Notify transaction
     valueAdded(LF_types, type, true);
   }
@@ -399,7 +399,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(type, this);    
     // Notify listeners
-    fireEvent("TopicIF.removeType", null, type);
+    fireEvent(TopicIF.EVENT_REMOVE_TYPE, null, type);
     // Notify transaction
     valueRemoved(LF_types, type, true);
   }

@@ -96,12 +96,12 @@ public class RoleTypeAssocTypeCache {
     }
       
     // register event handlers
-    otree.addListener(new AssociationRoleAddedHandler(), "AssociationRoleIF.added");
-    otree.addListener(new AssociationRoleRemovedHandler(), "AssociationRoleIF.removed");
+    otree.addListener(new AssociationRoleAddedHandler(), AssociationRoleIF.EVENT_ADDED);
+    otree.addListener(new AssociationRoleRemovedHandler(), AssociationRoleIF.EVENT_REMOVED);
     
-    emanager.addListener(new EH01(), "AssociationRoleIF.setType");
-    emanager.addListener(new EH02(), "AssociationRoleIF.setPlayer");
-    emanager.addListener(new EH03(), "AssociationIF.setType");
+    emanager.addListener(new EH01(), AssociationRoleIF.EVENT_SET_TYPE);
+    emanager.addListener(new EH02(), AssociationRoleIF.EVENT_SET_PLAYER);
+    emanager.addListener(new EH03(), AssociationIF.EVENT_SET_TYPE);
     
     // get mapping data
     ObjectRelationalMappingIF mapping = storage.getMapping();

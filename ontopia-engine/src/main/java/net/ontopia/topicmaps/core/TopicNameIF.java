@@ -13,6 +13,15 @@ import java.util.Collection;
 
 public interface TopicNameIF extends ScopedIF, TypedIF, ReifiableIF {
 
+  public static final String EVENT_ADDED = "TopicNameIF.added";
+  public static final String EVENT_REMOVED = "TopicNameIF.removed";
+  public static final String EVENT_SET_TYPE = "TopicNameIF.setType";
+  public static final String EVENT_SET_VALUE = "TopicNameIF.setValue";
+  public static final String EVENT_ADD_VARIANT = "TopicNameIF.addVariant";
+  public static final String EVENT_REMOVE_VARIANT = "TopicNameIF.removeVariant";
+  public static final String EVENT_ADD_THEME = "TopicNameIF.addTheme";
+  public static final String EVENT_REMOVE_THEME = "TopicNameIF.removeTheme";
+
   /**
    * PUBLIC: Gets the topic to which this topic name belongs.
    *

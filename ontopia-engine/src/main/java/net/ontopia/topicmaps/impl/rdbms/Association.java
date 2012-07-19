@@ -127,7 +127,7 @@ public class Association extends TMObject implements AssociationIF {
       throw new ConstraintViolationException("Moving objects is not allowed.");
 
     // Notify listeners
-    fireEvent("AssociationIF.addRole", assoc_role, null);    
+    fireEvent(AssociationIF.EVENT_ADD_ROLE, assoc_role, null);    
     // Set association property
     ((AssociationRole)assoc_role).setAssociation(this);
     // Add association role to list of association roles
@@ -147,7 +147,7 @@ public class Association extends TMObject implements AssociationIF {
       return;
 
     // Notify listeners
-    fireEvent("AssociationIF.removeRole", null, assoc_role);    
+    fireEvent(AssociationIF.EVENT_REMOVE_ROLE, null, assoc_role);    
     // Unset association property
     ((AssociationRole)assoc_role).setAssociation(null);
     // Remove role from list of roles
@@ -157,7 +157,7 @@ public class Association extends TMObject implements AssociationIF {
     Topic player = (Topic) assoc_role.getPlayer();
     if (player != null && getTopicMap() != null) {
       // Notify listeners
-      ((AssociationRole)assoc_role).fireEvent("AssociationRoleIF.setPlayer", player, null);
+      ((AssociationRole)assoc_role).fireEvent(AssociationRoleIF.EVENT_SET_PLAYER, player, null);
       player.removeRole(assoc_role);
     }
   }
@@ -183,7 +183,7 @@ public class Association extends TMObject implements AssociationIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("AssociationIF.addTheme", theme, null);
+    fireEvent(AssociationIF.EVENT_ADD_THEME, theme, null);
     // Notify transaction
     valueAdded(LF_scope, theme, true);
   }
@@ -193,7 +193,7 @@ public class Association extends TMObject implements AssociationIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("AssociationIF.removeTheme", null, theme);
+    fireEvent(AssociationIF.EVENT_REMOVE_THEME, null, theme);
     // Notify transaction
     valueRemoved(LF_scope, theme, true);
   }
@@ -216,7 +216,7 @@ public class Association extends TMObject implements AssociationIF {
       throw new NullPointerException("Association type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
-    fireEvent("AssociationIF.setType", type, getType());
+    fireEvent(AssociationIF.EVENT_SET_TYPE, type, getType());
     // Notify transaction
     valueChanged(LF_type, type, true);
   }
@@ -240,7 +240,7 @@ public class Association extends TMObject implements AssociationIF {
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
     if (oldReifier != null) oldReifier.setReified(null);
     if (reifier != null) reifier.setReified(this);

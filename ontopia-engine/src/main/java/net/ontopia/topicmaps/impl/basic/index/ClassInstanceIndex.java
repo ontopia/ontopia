@@ -6,7 +6,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
@@ -37,29 +41,29 @@ public class ClassInstanceIndex extends BasicIndex implements ClassInstanceIndex
     roles = new CollectionMap();
     
     // Initialize object tree event handlers [objects added or removed]    
-    otree.addListener(new TopicIF_added(topics, "TopicIF.addType"), "TopicIF.added");
-    otree.addListener(new TopicIF_removed(topics, "TopicIF.removeType"), "TopicIF.removed");
+    otree.addListener(new TopicIF_added(topics, TopicIF.EVENT_ADD_TYPE), TopicIF.EVENT_ADDED);
+    otree.addListener(new TopicIF_removed(topics, TopicIF.EVENT_REMOVE_TYPE), TopicIF.EVENT_REMOVED);
 
-    otree.addListener(new TypedIF_added(assocs), "AssociationIF.added");
-    otree.addListener(new TypedIF_removed(assocs), "AssociationIF.removed");
+    otree.addListener(new TypedIF_added(assocs), AssociationIF.EVENT_ADDED);
+    otree.addListener(new TypedIF_removed(assocs), AssociationIF.EVENT_REMOVED);
                           
-    otree.addListener(new TypedIF_added(bnames), "TopicNameIF.added");
-    otree.addListener(new TypedIF_removed(bnames), "TopicNameIF.removed");
+    otree.addListener(new TypedIF_added(bnames), TopicNameIF.EVENT_ADDED);
+    otree.addListener(new TypedIF_removed(bnames), TopicNameIF.EVENT_REMOVED);
                           
-    otree.addListener(new TypedIF_added(occurs), "OccurrenceIF.added");
-    otree.addListener(new TypedIF_removed(occurs), "OccurrenceIF.removed");
+    otree.addListener(new TypedIF_added(occurs), OccurrenceIF.EVENT_ADDED);
+    otree.addListener(new TypedIF_removed(occurs), OccurrenceIF.EVENT_REMOVED);
                           
-    otree.addListener(new TypedIF_added(roles), "AssociationRoleIF.added");
-    otree.addListener(new TypedIF_removed(roles), "AssociationRoleIF.removed");
+    otree.addListener(new TypedIF_added(roles), AssociationRoleIF.EVENT_ADDED);
+    otree.addListener(new TypedIF_removed(roles), AssociationRoleIF.EVENT_REMOVED);
     
     // Initialize object property event handlers
-    handlers.put("TopicIF.addType", new TopicIF_addType(topics));
-    handlers.put("TopicIF.removeType", new TopicIF_removeType(topics));
+    handlers.put(TopicIF.EVENT_ADD_TYPE, new TopicIF_addType(topics));
+    handlers.put(TopicIF.EVENT_REMOVE_TYPE, new TopicIF_removeType(topics));
 
-    handlers.put("TopicNameIF.setType", new TypedIF_setType(bnames));
-    handlers.put("OccurrenceIF.setType", new TypedIF_setType(occurs));
-    handlers.put("AssociationRoleIF.setType", new TypedIF_setType(roles));
-    handlers.put("AssociationIF.setType", new TypedIF_setType(assocs));
+    handlers.put(TopicNameIF.EVENT_SET_TYPE, new TypedIF_setType(bnames));
+    handlers.put(OccurrenceIF.EVENT_SET_TYPE, new TypedIF_setType(occurs));
+    handlers.put(AssociationRoleIF.EVENT_SET_TYPE, new TypedIF_setType(roles));
+    handlers.put(AssociationIF.EVENT_SET_TYPE, new TypedIF_setType(assocs));
 
     // Register dynamic index as event listener
     Iterator iter = handlers.keySet().iterator();

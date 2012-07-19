@@ -117,7 +117,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
   protected void setDataType(LocatorIF datatype) {
     LocatorIF _datatype = new DataTypeLocator(datatype);
     // Notify listeners
-    fireEvent("OccurrenceIF.setDataType", _datatype, getDataType());
+    fireEvent(OccurrenceIF.EVENT_SET_DATATYPE, _datatype, getDataType());
     // Notify transaction
     valueChanged(LF_datatype, _datatype, true);
   }
@@ -164,7 +164,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     valueChanged(LF_length, new Long(length), true);
     valueChanged(LF_hashcode, new Long(hashcode), true);
     // Notify listeners
-    fireEvent("OccurrenceIF.setValue", value, getValue());
+    fireEvent(OccurrenceIF.EVENT_SET_VALUE, value, getValue());
     // Notify transaction
     valueChanged(LF_value, value, true);
   }
@@ -232,7 +232,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("OccurrenceIF.addTheme", theme, null);
+    fireEvent(OccurrenceIF.EVENT_ADD_THEME, theme, null);
     // Notify transaction
     valueAdded(LF_scope, theme, true);
   }
@@ -242,7 +242,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("OccurrenceIF.removeTheme", null, theme);
+    fireEvent(OccurrenceIF.EVENT_REMOVE_THEME, null, theme);
     // Notify transaction
     valueRemoved(LF_scope, theme, true);
   }
@@ -260,7 +260,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       throw new NullPointerException("Occurrence type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
-    fireEvent("OccurrenceIF.setType", type, getType());
+    fireEvent(OccurrenceIF.EVENT_SET_TYPE, type, getType());
     // Notify transaction
     valueChanged(LF_type, type, true);
   }
@@ -279,7 +279,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     // Notify listeners
     Topic reifier = (Topic) _reifier;
     Topic oldReifier = (Topic) getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
     if (oldReifier != null)
       oldReifier.setReified(null);

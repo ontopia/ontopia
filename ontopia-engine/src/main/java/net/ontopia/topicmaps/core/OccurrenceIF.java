@@ -16,6 +16,14 @@ import net.ontopia.infoset.core.LocatorIF;
 
 public interface OccurrenceIF extends ScopedIF, TypedIF, ReifiableIF {
 
+  public static final String EVENT_ADDED = "OccurrenceIF.added";
+  public static final String EVENT_REMOVED = "OccurrenceIF.removed";
+  public static final String EVENT_SET_TYPE = "OccurrenceIF.setType";
+  public static final String EVENT_SET_VALUE = "OccurrenceIF.setValue";
+  public static final String EVENT_SET_DATATYPE = "OccurrenceIF.setDataType";
+  public static final String EVENT_ADD_THEME = "OccurrenceIF.addTheme";
+  public static final String EVENT_REMOVE_THEME = "OccurrenceIF.removeTheme";
+
   /**
    * PUBLIC: Gets the topic for this occurrence.
    *

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -46,18 +47,18 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     handlers = cfactory.makeLargeMap();
 
     // Initialize parent-child relationship event handlers
-    handlers.put("TopicMapIF.addTopic", new EH01());
-    handlers.put("TopicMapIF.removeTopic", new EH02());
-    handlers.put("TopicMapIF.addAssociation", new EH03());
-    handlers.put("TopicMapIF.removeAssociation", new EH04());
-    handlers.put("TopicIF.addTopicName", new EH07());
-    handlers.put("TopicIF.removeTopicName", new EH08());
-    handlers.put("TopicNameIF.addVariant", new EH09());
-    handlers.put("TopicNameIF.removeVariant", new EH10());
-    handlers.put("TopicIF.addOccurrence", new EH13());
-    handlers.put("TopicIF.removeOccurrence", new EH14());
-    handlers.put("AssociationIF.addRole", new EH15());
-    handlers.put("AssociationIF.removeRole", new EH16());
+    handlers.put(TopicMapIF.EVENT_ADD_TOPIC, new EH01());
+    handlers.put(TopicMapIF.EVENT_REMOVE_TOPIC, new EH02());
+    handlers.put(TopicMapIF.EVENT_ADD_ASSOCIATION, new EH03());
+    handlers.put(TopicMapIF.EVENT_REMOVE_ASSOCIATION, new EH04());
+    handlers.put(TopicIF.EVENT_ADD_TOPICNAME, new EH07());
+    handlers.put(TopicIF.EVENT_REMOVE_TOPICNAME, new EH08());
+    handlers.put(TopicNameIF.EVENT_ADD_VARIANT, new EH09());
+    handlers.put(TopicNameIF.EVENT_REMOVE_VARIANT, new EH10());
+    handlers.put(TopicIF.EVENT_ADD_OCCURRENCE, new EH13());
+    handlers.put(TopicIF.EVENT_REMOVE_OCCURRENCE, new EH14());
+    handlers.put(AssociationIF.EVENT_ADD_ROLE, new EH15());
+    handlers.put(AssociationIF.EVENT_REMOVE_ROLE, new EH16());
 
     // Register as event listener
     Iterator<String> iter = handlers.keySet().iterator();
@@ -151,15 +152,15 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicIF added = (TopicIF)new_value;
       // Fire object added event
-      treeAddEvent(object, "TopicIF.added", added);
+      treeAddEvent(object, TopicIF.EVENT_ADDED, added);
       // Add basenames
       Object[] basenames = added.getTopicNames().toArray();
       for (int i=0; i < basenames.length; i++)
-        otree.processEvent(added, "TopicIF.addTopicName", basenames[i], null);
+        otree.processEvent(added, TopicIF.EVENT_ADD_TOPICNAME, basenames[i], null);
       // Add occurrences
       Object[] occurs = added.getOccurrences().toArray();
       for (int i=0; i < occurs.length; i++)
-        otree.processEvent(added, "TopicIF.addOccurrence", occurs[i], null);
+        otree.processEvent(added, TopicIF.EVENT_ADD_OCCURRENCE, occurs[i], null);
     }
   }
   /**
@@ -169,15 +170,15 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicIF removed = (TopicIF)old_value;
       // Fire tree event
-      treeRemoveEvent(object, "TopicIF.removed", removed);
+      treeRemoveEvent(object, TopicIF.EVENT_REMOVED, removed);
       // Remove basenames
       Object[] basenames = removed.getTopicNames().toArray();
       for (int i=0; i < basenames.length; i++)
-        otree.processEvent(removed, "TopicIF.removeTopicName", null, basenames[i]);
+        otree.processEvent(removed, TopicIF.EVENT_REMOVE_TOPICNAME, null, basenames[i]);
       // Remove occurrences
       Object[] occurs = removed.getOccurrences().toArray();
       for (int i=0; i < occurs.length; i++)
-        otree.processEvent(removed, "TopicIF.removeOccurrence", null, occurs[i]);
+        otree.processEvent(removed, TopicIF.EVENT_REMOVE_OCCURRENCE, null, occurs[i]);
     }
   }
   /**
@@ -187,11 +188,11 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationIF added = (AssociationIF)new_value;
       // Fire object added event
-      treeAddEvent(object, "AssociationIF.added", added);
+      treeAddEvent(object, AssociationIF.EVENT_ADDED, added);
       // Add association roles
       Object[] roles = added.getRoles().toArray();
       for (int i=0; i < roles.length; i++)
-        otree.processEvent(added, "AssociationIF.addRole", roles[i], null);
+        otree.processEvent(added, AssociationIF.EVENT_ADD_ROLE, roles[i], null);
     }
   }
   /**
@@ -201,11 +202,11 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationIF removed = (AssociationIF)old_value;
       // Fire tree event
-      treeRemoveEvent(object, "AssociationIF.removed", removed);
+      treeRemoveEvent(object, AssociationIF.EVENT_REMOVED, removed);
       // Remove association roles
       Object[] roles = removed.getRoles().toArray();
       for (int i=0; i < roles.length; i++)
-        otree.processEvent(removed, "AssociationIF.removeRole", null, roles[i]);
+        otree.processEvent(removed, AssociationIF.EVENT_REMOVE_ROLE, null, roles[i]);
     }
   }
   /**
@@ -215,11 +216,11 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicNameIF added = (TopicNameIF)new_value;
       // Fire object added event
-      treeAddEvent(object, "TopicNameIF.added", added);
+      treeAddEvent(object, TopicNameIF.EVENT_ADDED, added);
       // Add variants
       Object[] variants = added.getVariants().toArray();
       for (int i=0; i < variants.length; i++)
-        otree.processEvent(added, "TopicNameIF.addVariant", variants[i], null);
+        otree.processEvent(added, TopicNameIF.EVENT_ADD_VARIANT, variants[i], null);
     }
   }
   /**
@@ -229,11 +230,11 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       TopicNameIF removed = (TopicNameIF)old_value;
       // Fire tree event
-      treeRemoveEvent(object, "TopicNameIF.removed", removed);
+      treeRemoveEvent(object, TopicNameIF.EVENT_REMOVED, removed);
       // Remove variants
       Object[] variants = removed.getVariants().toArray();
       for (int i=0; i < variants.length; i++)
-        otree.processEvent(removed, "TopicNameIF.removeVariant", null, variants[i]);
+        otree.processEvent(removed, TopicNameIF.EVENT_REMOVE_VARIANT, null, variants[i]);
     }
   }
   /**
@@ -243,7 +244,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       VariantNameIF added = (VariantNameIF)new_value;
       // Fire object added event
-      treeAddEvent(object, "VariantNameIF.added", added);
+      treeAddEvent(object, VariantNameIF.EVENT_ADDED, added);
     }
   }
   /**
@@ -253,7 +254,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       VariantNameIF removed = (VariantNameIF)old_value;
       // Fire tree event
-      treeRemoveEvent(object, "VariantNameIF.removed", removed);
+      treeRemoveEvent(object, VariantNameIF.EVENT_REMOVED, removed);
     }
   }
   /**
@@ -263,7 +264,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       OccurrenceIF added = (OccurrenceIF)new_value;
       // Fire object added event
-      treeAddEvent(object, "OccurrenceIF.added", added);
+      treeAddEvent(object, OccurrenceIF.EVENT_ADDED, added);
     }
   }
   /**
@@ -273,7 +274,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       OccurrenceIF removed = (OccurrenceIF)old_value;
       // Fire tree event
-      treeRemoveEvent(object, "OccurrenceIF.removed", removed);
+      treeRemoveEvent(object, OccurrenceIF.EVENT_REMOVED, removed);
     }
   }
   /**
@@ -283,7 +284,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF added = (AssociationRoleIF)new_value;
       // Fire object added event
-      treeAddEvent(object, "AssociationRoleIF.added", added);
+      treeAddEvent(object, AssociationRoleIF.EVENT_ADDED, added);
     }
   }
   /**
@@ -293,7 +294,7 @@ public class ObjectTreeManager implements EventManagerIF, java.io.Serializable {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
       AssociationRoleIF removed = (AssociationRoleIF)old_value;
       // Fire tree event
-      treeRemoveEvent(object, "AssociationRoleIF.removed", removed);
+      treeRemoveEvent(object, AssociationRoleIF.EVENT_REMOVED, removed);
     }
   }
     

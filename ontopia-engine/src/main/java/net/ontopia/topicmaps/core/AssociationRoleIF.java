@@ -15,6 +15,11 @@ package net.ontopia.topicmaps.core;
 
 public interface AssociationRoleIF extends TypedIF, ReifiableIF {
 
+  public static final String EVENT_ADDED = "AssociationRoleIF.added";
+  public static final String EVENT_REMOVED = "AssociationRoleIF.removed";
+  public static final String EVENT_SET_TYPE = "AssociationRoleIF.setType";
+  public static final String EVENT_SET_PLAYER = "AssociationRoleIF.setPlayer";
+
   /**
    * PUBLIC: Gets the association to which this association role
    * belongs.

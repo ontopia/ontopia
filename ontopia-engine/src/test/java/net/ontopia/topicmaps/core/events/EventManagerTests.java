@@ -36,45 +36,45 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
       TopicMapStoreIF store = topicmapRef.createStore(false);
       TopicMapIF tm = store.getTopicMap();
       EventManagerIF emanager = ((AbstractTopicMapStore)store).getEventManager();
-      emanager.addListener(listener, "AssociationIF.addRole");    
-      emanager.addListener(listener, "AssociationIF.addTheme");
-      emanager.addListener(listener, "AssociationIF.removeRole");
-      emanager.addListener(listener, "AssociationIF.removeTheme");
-      emanager.addListener(listener, "AssociationIF.setType");
-      emanager.addListener(listener, "AssociationRoleIF.setPlayer");
-      emanager.addListener(listener, "AssociationRoleIF.setType");
-      emanager.addListener(listener, "OccurrenceIF.addTheme");
-      emanager.addListener(listener, "OccurrenceIF.removeTheme");
-      emanager.addListener(listener, "OccurrenceIF.setDataType");
-      emanager.addListener(listener, "OccurrenceIF.setType");
-      emanager.addListener(listener, "OccurrenceIF.setValue");
-      emanager.addListener(listener, "ReifiableIF.setReifier");
-      emanager.addListener(listener, "TMObjectIF.addItemIdentifier");
-      emanager.addListener(listener, "TMObjectIF.removeItemIdentifier");
-      emanager.addListener(listener, "TopicIF.addOccurrence");    
-      emanager.addListener(listener, "TopicIF.addSubjectIdentifier");    
-      emanager.addListener(listener, "TopicIF.addSubjectLocator");    
-      emanager.addListener(listener, "TopicIF.addTopicName");    
-      emanager.addListener(listener, "TopicIF.addType");
-      emanager.addListener(listener, "TopicIF.removeOccurrence");    
-      emanager.addListener(listener, "TopicIF.removeSubjectIdentifier");    
-      emanager.addListener(listener, "TopicIF.removeSubjectLocator");    
-      emanager.addListener(listener, "TopicIF.removeTopicName");    
-      emanager.addListener(listener, "TopicIF.removeType");
-      emanager.addListener(listener, "TopicMapIF.addAssociation");    
-      emanager.addListener(listener, "TopicMapIF.addTopic");    
-      emanager.addListener(listener, "TopicMapIF.removeAssociation");
-      emanager.addListener(listener, "TopicMapIF.removeTopic");
-      emanager.addListener(listener, "TopicNameIF.addTheme");
-      emanager.addListener(listener, "TopicNameIF.addVariant");
-      emanager.addListener(listener, "TopicNameIF.removeTheme");
-      emanager.addListener(listener, "TopicNameIF.removeVariant");
-      emanager.addListener(listener, "TopicNameIF.setType");
-      emanager.addListener(listener, "TopicNameIF.setValue");
-      emanager.addListener(listener, "VariantNameIF.addTheme");
-      emanager.addListener(listener, "VariantNameIF.removeTheme");
-      emanager.addListener(listener, "VariantNameIF.setDataType");
-      emanager.addListener(listener, "VariantNameIF.setValue");     
+      emanager.addListener(listener, AssociationIF.EVENT_ADD_ROLE);    
+      emanager.addListener(listener, AssociationIF.EVENT_ADD_THEME);
+      emanager.addListener(listener, AssociationIF.EVENT_REMOVE_ROLE);
+      emanager.addListener(listener, AssociationIF.EVENT_REMOVE_THEME);
+      emanager.addListener(listener, AssociationIF.EVENT_SET_TYPE);
+      emanager.addListener(listener, AssociationRoleIF.EVENT_SET_PLAYER);
+      emanager.addListener(listener, AssociationRoleIF.EVENT_SET_TYPE);
+      emanager.addListener(listener, OccurrenceIF.EVENT_ADD_THEME);
+      emanager.addListener(listener, OccurrenceIF.EVENT_REMOVE_THEME);
+      emanager.addListener(listener, OccurrenceIF.EVENT_SET_DATATYPE);
+      emanager.addListener(listener, OccurrenceIF.EVENT_SET_TYPE);
+      emanager.addListener(listener, OccurrenceIF.EVENT_SET_VALUE);
+      emanager.addListener(listener, ReifiableIF.EVENT_SET_REIFIER);
+      emanager.addListener(listener, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER);
+      emanager.addListener(listener, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER);
+      emanager.addListener(listener, TopicIF.EVENT_ADD_OCCURRENCE);    
+      emanager.addListener(listener, TopicIF.EVENT_ADD_SUBJECTIDENTIFIER);    
+      emanager.addListener(listener, TopicIF.EVENT_ADD_SUBJECTLOCATOR);    
+      emanager.addListener(listener, TopicIF.EVENT_ADD_TOPICNAME);    
+      emanager.addListener(listener, TopicIF.EVENT_ADD_TYPE);
+      emanager.addListener(listener, TopicIF.EVENT_REMOVE_OCCURRENCE);    
+      emanager.addListener(listener, TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER);    
+      emanager.addListener(listener, TopicIF.EVENT_REMOVE_SUBJECTLOCATOR);    
+      emanager.addListener(listener, TopicIF.EVENT_REMOVE_TOPICNAME);    
+      emanager.addListener(listener, TopicIF.EVENT_REMOVE_TYPE);
+      emanager.addListener(listener, TopicMapIF.EVENT_ADD_ASSOCIATION);    
+      emanager.addListener(listener, TopicMapIF.EVENT_ADD_TOPIC);    
+      emanager.addListener(listener, TopicMapIF.EVENT_REMOVE_ASSOCIATION);
+      emanager.addListener(listener, TopicMapIF.EVENT_REMOVE_TOPIC);
+      emanager.addListener(listener, TopicNameIF.EVENT_ADD_THEME);
+      emanager.addListener(listener, TopicNameIF.EVENT_ADD_VARIANT);
+      emanager.addListener(listener, TopicNameIF.EVENT_REMOVE_THEME);
+      emanager.addListener(listener, TopicNameIF.EVENT_REMOVE_VARIANT);
+      emanager.addListener(listener, TopicNameIF.EVENT_SET_TYPE);
+      emanager.addListener(listener, TopicNameIF.EVENT_SET_VALUE);
+      emanager.addListener(listener, VariantNameIF.EVENT_ADD_THEME);
+      emanager.addListener(listener, VariantNameIF.EVENT_REMOVE_THEME);
+      emanager.addListener(listener, VariantNameIF.EVENT_SET_DATATYPE);
+      emanager.addListener(listener, VariantNameIF.EVENT_SET_VALUE);     
       topicmap = store.getTopicMap();
 
       // get the builder of that topic map.
@@ -193,13 +193,13 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     topic.removeItemIdentifier(topic_item_identifier);
 
     listener.assertEvents(
-      Arrays.asList(new Event(topicmap, "TopicMapIF.addTopic", topic, null), 
-                    new Event(topic, "TopicIF.addSubjectLocator", topic_subject_locator, null), 
-                    new Event(topic, "TopicIF.removeSubjectLocator", null, topic_subject_locator), 
-                    new Event(topic, "TopicIF.addSubjectIdentifier", topic_subject_identifier, null), 
-                    new Event(topic, "TopicIF.removeSubjectIdentifier", null, topic_subject_locator), 
-                    new Event(topic, "TMObjectIF.addItemIdentifier", topic_item_identifier, null), 
-                    new Event(topic, "TMObjectIF.removeItemIdentifier", null, topic_item_identifier)));
+      Arrays.asList(new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, topic, null), 
+                    new Event(topic, TopicIF.EVENT_ADD_SUBJECTLOCATOR, topic_subject_locator, null), 
+                    new Event(topic, TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, null, topic_subject_locator), 
+                    new Event(topic, TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, topic_subject_identifier, null), 
+                    new Event(topic, TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, null, topic_subject_locator), 
+                    new Event(topic, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, topic_item_identifier, null), 
+                    new Event(topic, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, topic_item_identifier)));
 
     // TopicIF.addType
     TopicIF topic_type = builder.makeTopic();
@@ -209,9 +209,9 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     topic.removeType(topic_type);
 
     listener.assertEvents(
-      Arrays.asList(new Event(topicmap, "TopicMapIF.addTopic", topic_type, null), 
-                    new Event(topic, "TopicIF.addType", topic_type, null), 
-                    new Event(topic, "TopicIF.removeType", null, topic_type)));
+      Arrays.asList(new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, topic_type, null), 
+                    new Event(topic, TopicIF.EVENT_ADD_TYPE, topic_type, null), 
+                    new Event(topic, TopicIF.EVENT_REMOVE_TYPE, null, topic_type)));
 
     // -----------------------------------------------------------------------------
 
@@ -243,18 +243,18 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     tn.removeTheme(tn_theme);
 
     listener.assertEvents(
-      Arrays.asList(new Event(topicmap, "TopicMapIF.addTopic", tn_type1, null), 
-                    new Event(topic, "TopicIF.addTopicName", tn, null), 
-                    new Event(tn, "TopicNameIF.setType", tn_type1, null), 
-                    new Event(tn, "TopicNameIF.setValue", tn_tn1, null), 
-                    new Event(tn, "TopicNameIF.setValue", tn_tn2, tn_tn1), 
-                    new Event(topicmap, "TopicMapIF.addTopic", tn_type2, null), 
-                    new Event(tn, "TopicNameIF.setType", tn_type2, tn_type1), 
-                    new Event(tn, "TMObjectIF.addItemIdentifier", tn_item_identifier, null), 
-                    new Event(tn, "TMObjectIF.removeItemIdentifier", null, tn_item_identifier), 
-                    new Event(topicmap, "TopicMapIF.addTopic", tn_theme, null), 
-                    new Event(tn, "TopicNameIF.addTheme", tn_theme, null), 
-                    new Event(tn, "TopicNameIF.removeTheme", null, tn_theme)));
+      Arrays.asList(new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, tn_type1, null), 
+                    new Event(topic, TopicIF.EVENT_ADD_TOPICNAME, tn, null), 
+                    new Event(tn, TopicNameIF.EVENT_SET_TYPE, tn_type1, null), 
+                    new Event(tn, TopicNameIF.EVENT_SET_VALUE, tn_tn1, null), 
+                    new Event(tn, TopicNameIF.EVENT_SET_VALUE, tn_tn2, tn_tn1), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, tn_type2, null), 
+                    new Event(tn, TopicNameIF.EVENT_SET_TYPE, tn_type2, tn_type1), 
+                    new Event(tn, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, tn_item_identifier, null), 
+                    new Event(tn, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, tn_item_identifier), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, tn_theme, null), 
+                    new Event(tn, TopicNameIF.EVENT_ADD_THEME, tn_theme, null), 
+                    new Event(tn, TopicNameIF.EVENT_REMOVE_THEME, null, tn_theme)));
 
     // TopicNameIF.addVariant
     String vn_vn1 = "vn1";
@@ -279,22 +279,22 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     vn.removeTheme(vn_theme);
 
     listener.assertEvents(
-      Arrays.asList(new Event(tn, "TopicNameIF.addVariant", vn, null), 
-                    new Event(vn, "VariantNameIF.setDataType", DataTypes.TYPE_STRING, null), 
-                    new Event(vn, "VariantNameIF.setValue", vn_vn1, null), 
-                    new Event(vn, "VariantNameIF.setDataType", DataTypes.TYPE_INTEGER, null), 
-                    new Event(vn, "VariantNameIF.setValue", vn_vn2, vn_vn1), 
-                    new Event(vn, "TMObjectIF.addItemIdentifier", vn_item_identifier, null), 
-                    new Event(vn, "TMObjectIF.removeItemIdentifier", null, vn_item_identifier), 
-                    new Event(topicmap, "TopicMapIF.addTopic", vn_theme, null), 
-                    new Event(vn, "VariantNameIF.addTheme", vn_theme, null), 
-                    new Event(vn, "VariantNameIF.removeTheme", null, vn_theme)));
+      Arrays.asList(new Event(tn, TopicNameIF.EVENT_ADD_VARIANT, vn, null), 
+                    new Event(vn, VariantNameIF.EVENT_SET_DATATYPE, DataTypes.TYPE_STRING, null), 
+                    new Event(vn, VariantNameIF.EVENT_SET_VALUE, vn_vn1, null), 
+                    new Event(vn, VariantNameIF.EVENT_SET_DATATYPE, DataTypes.TYPE_INTEGER, null), 
+                    new Event(vn, VariantNameIF.EVENT_SET_VALUE, vn_vn2, vn_vn1), 
+                    new Event(vn, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, vn_item_identifier, null), 
+                    new Event(vn, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, vn_item_identifier), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, vn_theme, null), 
+                    new Event(vn, VariantNameIF.EVENT_ADD_THEME, vn_theme, null), 
+                    new Event(vn, VariantNameIF.EVENT_REMOVE_THEME, null, vn_theme)));
 
     // VariantNameIF.remove
     vn.remove();
     
     listener.assertEvents(
-      Arrays.asList(new Event(tn, "TopicNameIF.removeVariant", vn, null)));
+      Arrays.asList(new Event(tn, TopicNameIF.EVENT_REMOVE_VARIANT, vn, null)));
  
     // TopicNameIF.remove
     tn.remove();
@@ -302,7 +302,7 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     // WARN: TopicNameIF.removeVariant event if variants exist at this point
 
     listener.assertEvents(
-      Arrays.asList(new Event(topic, "TopicIF.removeTopicName", tn, null))); 
+      Arrays.asList(new Event(topic, TopicIF.EVENT_REMOVE_TOPICNAME, tn, null))); 
 
     // -----------------------------------------------------------------------------
  
@@ -334,32 +334,32 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     oc.removeTheme(oc_theme);
 
     listener.assertEvents(
-      Arrays.asList(new Event(topicmap, "TopicMapIF.addTopic", oc_type1, null), 
-                    new Event(topic, "TopicIF.addOccurrence", oc, null), 
-                    new Event(oc, "OccurrenceIF.setType", oc_type1, null), 
-                    new Event(oc, "OccurrenceIF.setDataType", DataTypes.TYPE_STRING, null), 
-                    new Event(oc, "OccurrenceIF.setValue", oc_oc1, null), 
-                    new Event(oc, "OccurrenceIF.setDataType", DataTypes.TYPE_INTEGER, null), 
-                    new Event(oc, "OccurrenceIF.setValue", oc_oc2, oc_oc1), 
-                    new Event(topicmap, "TopicMapIF.addTopic", oc_type2, null), 
-                    new Event(oc, "OccurrenceIF.setType", oc_type2, oc_type1), 
-                    new Event(oc, "TMObjectIF.addItemIdentifier", oc_item_identifier, null), 
-                    new Event(oc, "TMObjectIF.removeItemIdentifier", null, oc_item_identifier), 
-                    new Event(topicmap, "TopicMapIF.addTopic", oc_theme, null), 
-                    new Event(oc, "OccurrenceIF.addTheme", oc_theme, null), 
-                    new Event(oc, "OccurrenceIF.removeTheme", null, oc_theme)));
+      Arrays.asList(new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, oc_type1, null), 
+                    new Event(topic, TopicIF.EVENT_ADD_OCCURRENCE, oc, null), 
+                    new Event(oc, OccurrenceIF.EVENT_SET_TYPE, oc_type1, null), 
+                    new Event(oc, OccurrenceIF.EVENT_SET_DATATYPE, DataTypes.TYPE_STRING, null), 
+                    new Event(oc, OccurrenceIF.EVENT_SET_VALUE, oc_oc1, null), 
+                    new Event(oc, OccurrenceIF.EVENT_SET_DATATYPE, DataTypes.TYPE_INTEGER, null), 
+                    new Event(oc, OccurrenceIF.EVENT_SET_VALUE, oc_oc2, oc_oc1), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, oc_type2, null), 
+                    new Event(oc, OccurrenceIF.EVENT_SET_TYPE, oc_type2, oc_type1), 
+                    new Event(oc, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, oc_item_identifier, null), 
+                    new Event(oc, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, oc_item_identifier), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, oc_theme, null), 
+                    new Event(oc, OccurrenceIF.EVENT_ADD_THEME, oc_theme, null), 
+                    new Event(oc, OccurrenceIF.EVENT_REMOVE_THEME, null, oc_theme)));
  
     // OccurrenceIF.remove
     oc.remove();
 
     listener.assertEvents(
-      Arrays.asList(new Event(topic, "TopicIF.removeOccurrence", oc, null))); 
+      Arrays.asList(new Event(topic, TopicIF.EVENT_REMOVE_OCCURRENCE, oc, null))); 
 
     // TopicIF.remove
     topic.remove();
 
     listener.assertEvents(
-      Arrays.asList(new Event(topicmap, "TopicMapIF.removeTopic", null, topic))); 
+      Arrays.asList(new Event(topicmap, TopicMapIF.EVENT_REMOVE_TOPIC, null, topic))); 
 
     // -----------------------------------------------------------------------------
 
@@ -394,26 +394,26 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     as.removeTheme(as_theme);
 
     listener.assertEvents(
-      Arrays.asList(new Event(topicmap, "TopicMapIF.addTopic", as_type1, null), 
-                    new Event(topicmap, "TopicMapIF.addAssociation", as, null), 
-                    new Event(as, "AssociationIF.setType", as_type1, null), 
-                    new Event(topicmap, "TopicMapIF.addTopic", ar1_type1, null), 
-                    new Event(topicmap, "TopicMapIF.addTopic", ar1_player1, null), 
-                    new Event(as, "AssociationIF.addRole", ar1, null), 
-                    new Event(ar1, "AssociationRoleIF.setType", ar1_type1, null), 
-                    new Event(ar1, "AssociationRoleIF.setPlayer", ar1_player1, null), 
-                    new Event(topicmap, "TopicMapIF.addTopic", ar2_type1, null), 
-                    new Event(topicmap, "TopicMapIF.addTopic", ar2_player1, null), 
-                    new Event(as, "AssociationIF.addRole", ar2, null), 
-                    new Event(ar2, "AssociationRoleIF.setType", ar2_type1, null), 
-                    new Event(ar2, "AssociationRoleIF.setPlayer", ar2_player1, null), 
-                    new Event(topicmap, "TopicMapIF.addTopic", as_type2, null), 
-                    new Event(as, "AssociationIF.setType", as_type2, as_type1), 
-                    new Event(as, "TMObjectIF.addItemIdentifier", as_item_identifier, null), 
-                    new Event(as, "TMObjectIF.removeItemIdentifier", null, as_item_identifier), 
-                    new Event(topicmap, "TopicMapIF.addTopic", as_theme, null), 
-                    new Event(as, "AssociationIF.addTheme", as_theme, null), 
-                    new Event(as, "AssociationIF.removeTheme", null, as_theme)));
+      Arrays.asList(new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, as_type1, null), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_ASSOCIATION, as, null), 
+                    new Event(as, AssociationIF.EVENT_SET_TYPE, as_type1, null), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, ar1_type1, null), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, ar1_player1, null), 
+                    new Event(as, AssociationIF.EVENT_ADD_ROLE, ar1, null), 
+                    new Event(ar1, AssociationRoleIF.EVENT_SET_TYPE, ar1_type1, null), 
+                    new Event(ar1, AssociationRoleIF.EVENT_SET_PLAYER, ar1_player1, null), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, ar2_type1, null), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, ar2_player1, null), 
+                    new Event(as, AssociationIF.EVENT_ADD_ROLE, ar2, null), 
+                    new Event(ar2, AssociationRoleIF.EVENT_SET_TYPE, ar2_type1, null), 
+                    new Event(ar2, AssociationRoleIF.EVENT_SET_PLAYER, ar2_player1, null), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, as_type2, null), 
+                    new Event(as, AssociationIF.EVENT_SET_TYPE, as_type2, as_type1), 
+                    new Event(as, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, as_item_identifier, null), 
+                    new Event(as, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, as_item_identifier), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, as_theme, null), 
+                    new Event(as, AssociationIF.EVENT_ADD_THEME, as_theme, null), 
+                    new Event(as, AssociationIF.EVENT_REMOVE_THEME, null, as_theme)));
  
     // AssociationRoleIF.setType
     TopicIF ar2_type2 = builder.makeTopic();
@@ -431,24 +431,24 @@ public abstract class EventManagerTests extends AbstractTopicMapTest {
     ar2.removeItemIdentifier(ar2_item_identifier);
 
     listener.assertEvents(
-      Arrays.asList(new Event(topicmap, "TopicMapIF.addTopic", ar2_type2, null), 
-                    new Event(ar2, "AssociationRoleIF.setType", ar2_type2, ar2_type1), 
-                    new Event(topicmap, "TopicMapIF.addTopic", ar2_player2, null), 
-                    new Event(ar2, "AssociationRoleIF.setPlayer", ar2_player2, ar2_player1), 
-                    new Event(ar2, "TMObjectIF.addItemIdentifier", ar2_item_identifier, null), 
-                    new Event(ar2, "TMObjectIF.removeItemIdentifier", null, ar2_item_identifier)));
+      Arrays.asList(new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, ar2_type2, null), 
+                    new Event(ar2, AssociationRoleIF.EVENT_SET_TYPE, ar2_type2, ar2_type1), 
+                    new Event(topicmap, TopicMapIF.EVENT_ADD_TOPIC, ar2_player2, null), 
+                    new Event(ar2, AssociationRoleIF.EVENT_SET_PLAYER, ar2_player2, ar2_player1), 
+                    new Event(ar2, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, ar2_item_identifier, null), 
+                    new Event(ar2, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, ar2_item_identifier)));
  
     // AssociationRoleIF.remove
     ar2.remove();
 
     listener.assertEvents(
-      Arrays.asList(new Event(as, "AssociationIF.removeRole", null, ar2))); 
+      Arrays.asList(new Event(as, AssociationIF.EVENT_REMOVE_ROLE, null, ar2))); 
  
     // AssociationIF.remove
     as.remove();
 
     listener.assertEvents(
-      Arrays.asList(new Event(topicmap, "TopicMapIF.removeAssociation", null, as))); 
+      Arrays.asList(new Event(topicmap, TopicMapIF.EVENT_REMOVE_ASSOCIATION, null, as))); 
     
   }
 

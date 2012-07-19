@@ -9,6 +9,7 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
@@ -46,55 +47,55 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
 
     // Initialize parent-child relationship event handlers
     this.th = new TopicHandler();
-    handlers.put("TopicIF.addSubjectLocator", th);
-    handlers.put("TopicIF.removeSubjectLocator", th);
-    handlers.put("TopicIF.addSubjectIdentifier", th);
-    handlers.put("TopicIF.removeSubjectIdentifier", th);
-    handlers.put("TopicIF.addTopicName", th);
-    handlers.put("TopicIF.removeTopicName", th);
-    handlers.put("TopicIF.addOccurrence", th);
-    handlers.put("TopicIF.removeOccurrence", th);
+    handlers.put(TopicIF.EVENT_ADD_SUBJECTLOCATOR, th);
+    handlers.put(TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, th);
+    handlers.put(TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, th);
+    handlers.put(TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, th);
+    handlers.put(TopicIF.EVENT_ADD_TOPICNAME, th);
+    handlers.put(TopicIF.EVENT_REMOVE_TOPICNAME, th);
+    handlers.put(TopicIF.EVENT_ADD_OCCURRENCE, th);
+    handlers.put(TopicIF.EVENT_REMOVE_OCCURRENCE, th);
     handlers.put("TopicIF.addTheme", th);
     handlers.put("TopicIF.removeTheme", th);
-    handlers.put("TopicIF.addType", th);
-    handlers.put("TopicIF.removeType", th);
+    handlers.put(TopicIF.EVENT_ADD_TYPE, th);
+    handlers.put(TopicIF.EVENT_REMOVE_TYPE, th);
 
     this.bh = new TopicNameHandler();
-    handlers.put("TopicNameIF.setValue", bh);
-    handlers.put("TopicNameIF.addVariant", bh);
-    handlers.put("TopicNameIF.removeVariant", bh);
-    handlers.put("TopicNameIF.addTheme", bh);
-    handlers.put("TopicNameIF.removeTheme", bh);
-    handlers.put("TopicNameIF.setType", bh);
+    handlers.put(TopicNameIF.EVENT_SET_VALUE, bh);
+    handlers.put(TopicNameIF.EVENT_ADD_VARIANT, bh);
+    handlers.put(TopicNameIF.EVENT_REMOVE_VARIANT, bh);
+    handlers.put(TopicNameIF.EVENT_ADD_THEME, bh);
+    handlers.put(TopicNameIF.EVENT_REMOVE_THEME, bh);
+    handlers.put(TopicNameIF.EVENT_SET_TYPE, bh);
 
     this.vh = new VariantNameHandler();
-    handlers.put("VariantNameIF.setValue", vh);
-    handlers.put("VariantNameIF.addTheme", vh);
-    handlers.put("VariantNameIF.removeTheme", vh);
+    handlers.put(VariantNameIF.EVENT_SET_VALUE, vh);
+    handlers.put(VariantNameIF.EVENT_ADD_THEME, vh);
+    handlers.put(VariantNameIF.EVENT_REMOVE_THEME, vh);
 
     this.oh = new OccurrenceHandler();
-    handlers.put("OccurrenceIF.setValue", oh);
-    handlers.put("OccurrenceIF.addTheme", oh);
-    handlers.put("OccurrenceIF.removeTheme", oh);
-    handlers.put("OccurrenceIF.setType", oh);
+    handlers.put(OccurrenceIF.EVENT_SET_VALUE, oh);
+    handlers.put(OccurrenceIF.EVENT_ADD_THEME, oh);
+    handlers.put(OccurrenceIF.EVENT_REMOVE_THEME, oh);
+    handlers.put(OccurrenceIF.EVENT_SET_TYPE, oh);
 
     this.ah = new AssociationHandler();
-    handlers.put("AssociationIF.addRole", ah);
-    handlers.put("AssociationIF.removeRole", ah);
-    handlers.put("AssociationIF.addTheme", ah);
-    handlers.put("AssociationIF.removeTheme", ah);
-    handlers.put("AssociationIF.setType", ah);
+    handlers.put(AssociationIF.EVENT_ADD_ROLE, ah);
+    handlers.put(AssociationIF.EVENT_REMOVE_ROLE, ah);
+    handlers.put(AssociationIF.EVENT_ADD_THEME, ah);
+    handlers.put(AssociationIF.EVENT_REMOVE_THEME, ah);
+    handlers.put(AssociationIF.EVENT_SET_TYPE, ah);
 
     this.rh = new AssociationRoleHandler();
-    handlers.put("AssociationRoleIF.setPlayer", rh);
-    handlers.put("AssociationRoleIF.setType", rh);
+    handlers.put(AssociationRoleIF.EVENT_SET_PLAYER, rh);
+    handlers.put(AssociationRoleIF.EVENT_SET_TYPE, rh);
 
     this.mh = new TopicMapHandler();
-    handlers.put("TopicMapIF.removeAssociation", mh);
+    handlers.put(TopicMapIF.EVENT_REMOVE_ASSOCIATION, mh);
 
     TMObjectHandler xh = new TMObjectHandler();
-    handlers.put("TMObjectIF.addItemIdentifier", xh);
-    handlers.put("TMObjectIF.removeItemIdentifier", xh);
+    handlers.put(TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, xh);
+    handlers.put(TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, xh);
 
     // Register as event listener
     Iterator<String> iter = handlers.keySet().iterator();
@@ -154,7 +155,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
      * Inform object tree event listeners about object tree add event.
      */
     protected void topicModified(TopicIF topic) {
-      String event = "TopicIF.modified";
+      String event = TopicIF.EVENT_MODIFIED;
       if (listeners.containsKey(event)) {
         // Loop over event listeners
         Set<EventListenerIF> event_listeners = listeners.get(event);
@@ -224,7 +225,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
       AssociationRoleIF role = (AssociationRoleIF)object;
       AssociationIF assoc = role.getAssociation();
 
-      if (event.equals("AssociationRoleIF.setPlayer")) {                 
+      if (event.equals(AssociationRoleIF.EVENT_SET_PLAYER)) {                 
         if (old_value != null)
           topicModified((TopicIF)old_value);
         if (new_value != null)
@@ -270,7 +271,7 @@ public class TopicModificationManager implements EventManagerIF, java.io.Seriali
    */
   class TopicMapHandler extends EventHandler {
     public void processEvent(Object object, String event, Object new_value, Object old_value) {
-      if (event.equals("TopicMapIF.removeAssociation")) {
+      if (event.equals(TopicMapIF.EVENT_REMOVE_ASSOCIATION)) {
         AssociationIF assoc = (AssociationIF)old_value;
         Iterator<AssociationRoleIF> iter = assoc.getRoles().iterator();
         while (iter.hasNext()) {

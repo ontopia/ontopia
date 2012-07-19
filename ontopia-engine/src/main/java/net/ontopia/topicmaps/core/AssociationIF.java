@@ -15,6 +15,14 @@ import java.util.Collection;
 
 public interface AssociationIF extends ScopedIF, TypedIF, ReifiableIF {
 
+  public static final String EVENT_ADDED = "AssociationIF.added";
+  public static final String EVENT_REMOVED = "AssociationIF.removed";
+  public static final String EVENT_SET_TYPE = "AssociationIF.setType";
+  public static final String EVENT_ADD_ROLE = "AssociationIF.addRole";
+  public static final String EVENT_REMOVE_ROLE = "AssociationIF.removeRole";
+  public static final String EVENT_ADD_THEME = "AssociationIF.addTheme";
+  public static final String EVENT_REMOVE_THEME = "AssociationIF.removeTheme";
+
   /**
    * PUBLIC: Gets a Collection of association role types found
    * in this association. The returned collection does not contain any

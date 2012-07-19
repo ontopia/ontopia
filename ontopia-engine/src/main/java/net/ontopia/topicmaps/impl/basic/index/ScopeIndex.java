@@ -6,8 +6,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ScopedIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.IndexManagerIF;
 import net.ontopia.topicmaps.core.index.ScopeIndexIF;
 import net.ontopia.topicmaps.impl.utils.BasicIndex;
@@ -35,30 +39,30 @@ public class ScopeIndex extends BasicIndex implements ScopeIndexIF {
     assocs = new CollectionMap();
 
     // Initialize object tree event handlers [objects added or removed]    
-    otree.addListener(new ScopedIF_added(basenames, "TopicNameIF.addTheme"), "TopicNameIF.added");
-    otree.addListener(new ScopedIF_removed(basenames, "TopicNameIF.removeTheme"), "TopicNameIF.removed");
+    otree.addListener(new ScopedIF_added(basenames, TopicNameIF.EVENT_ADD_THEME), TopicNameIF.EVENT_ADDED);
+    otree.addListener(new ScopedIF_removed(basenames, TopicNameIF.EVENT_REMOVE_THEME), TopicNameIF.EVENT_REMOVED);
                           
-    otree.addListener(new ScopedIF_added(variants, "VariantNameIF.addTheme"), "VariantNameIF.added");
-    otree.addListener(new ScopedIF_removed(variants, "VariantNameIF.removeTheme"), "VariantNameIF.removed");
+    otree.addListener(new ScopedIF_added(variants, VariantNameIF.EVENT_ADD_THEME), VariantNameIF.EVENT_ADDED);
+    otree.addListener(new ScopedIF_removed(variants, VariantNameIF.EVENT_REMOVE_THEME), VariantNameIF.EVENT_REMOVED);
                           
-    otree.addListener(new ScopedIF_added(occurs, "OccurrenceIF.addTheme"), "OccurrenceIF.added");
-    otree.addListener(new ScopedIF_removed(occurs, "OccurrenceIF.removeTheme"), "OccurrenceIF.removed");
+    otree.addListener(new ScopedIF_added(occurs, OccurrenceIF.EVENT_ADD_THEME), OccurrenceIF.EVENT_ADDED);
+    otree.addListener(new ScopedIF_removed(occurs, OccurrenceIF.EVENT_REMOVE_THEME), OccurrenceIF.EVENT_REMOVED);
                           
-    otree.addListener(new ScopedIF_added(assocs, "AssociationIF.addTheme"), "AssociationIF.added");
-    otree.addListener(new ScopedIF_removed(assocs, "AssociationIF.removeTheme"), "AssociationIF.removed");
+    otree.addListener(new ScopedIF_added(assocs, AssociationIF.EVENT_ADD_THEME), AssociationIF.EVENT_ADDED);
+    otree.addListener(new ScopedIF_removed(assocs, AssociationIF.EVENT_REMOVE_THEME), AssociationIF.EVENT_REMOVED);
         
     // Initialize object property event handlers
-    handlers.put("TopicNameIF.addTheme", new ScopedIF_addTheme(basenames));
-    handlers.put("TopicNameIF.removeTheme", new ScopedIF_removeTheme(basenames));
+    handlers.put(TopicNameIF.EVENT_ADD_THEME, new ScopedIF_addTheme(basenames));
+    handlers.put(TopicNameIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme(basenames));
 
-    handlers.put("VariantNameIF.addTheme", new ScopedIF_addTheme(variants));
-    handlers.put("VariantNameIF.removeTheme", new ScopedIF_removeTheme(variants));
+    handlers.put(VariantNameIF.EVENT_ADD_THEME, new ScopedIF_addTheme(variants));
+    handlers.put(VariantNameIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme(variants));
 
-    handlers.put("OccurrenceIF.addTheme", new ScopedIF_addTheme(occurs));
-    handlers.put("OccurrenceIF.removeTheme", new ScopedIF_removeTheme(occurs));
+    handlers.put(OccurrenceIF.EVENT_ADD_THEME, new ScopedIF_addTheme(occurs));
+    handlers.put(OccurrenceIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme(occurs));
 
-    handlers.put("AssociationIF.addTheme", new ScopedIF_addTheme(assocs));
-    handlers.put("AssociationIF.removeTheme", new ScopedIF_removeTheme(assocs));
+    handlers.put(AssociationIF.EVENT_ADD_THEME, new ScopedIF_addTheme(assocs));
+    handlers.put(AssociationIF.EVENT_REMOVE_THEME, new ScopedIF_removeTheme(assocs));
     
     // Register dynamic index as event listener
     Iterator iter = handlers.keySet().iterator();

@@ -14,6 +14,8 @@ import java.util.Collection;
  */
 
 public interface ReifiableIF extends TMObjectIF {
+
+  public static final String EVENT_SET_REIFIER = "ReifiableIF.setReifier";
   
   /**
    * PUBLIC: Returns the topic that reifies this object.

@@ -132,7 +132,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     TopicIF oldplayer = getPlayer();
     
     // Notify listeners
-    fireEvent("AssociationRoleIF.setPlayer", player, oldplayer);
+    fireEvent(AssociationRoleIF.EVENT_SET_PLAYER, player, oldplayer);
     
     // Notify transaction
     valueChanged(LF_player, player, true);
@@ -173,7 +173,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
       throw new NullPointerException("Association role type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
-    fireEvent("AssociationRoleIF.setType", type, getType());
+    fireEvent(AssociationRoleIF.EVENT_SET_TYPE, type, getType());
     // Notify transaction
     valueChanged(LF_type, type, true);
   }
@@ -197,7 +197,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
     if (oldReifier != null) oldReifier.setReified(null);
     if (reifier != null) reifier.setReified(this);

@@ -118,7 +118,7 @@ public class VariantName extends TMObject implements VariantNameIF {
   protected void setDataType(LocatorIF datatype) {
     LocatorIF _datatype = new DataTypeLocator(datatype);
     // Notify listeners
-    fireEvent("VariantNameIF.setDataType", _datatype, getDataType());
+    fireEvent(VariantNameIF.EVENT_SET_DATATYPE, _datatype, getDataType());
     // Notify transaction
     valueChanged(LF_datatype, _datatype, true);
   }
@@ -165,7 +165,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     valueChanged(LF_length, new Long(length), true);
     valueChanged(LF_hashcode, new Long(hashcode), true);
     // Notify listeners
-    fireEvent("VariantNameIF.setValue", value, getValue());
+    fireEvent(VariantNameIF.EVENT_SET_VALUE, value, getValue());
     // Notify transaction
     valueChanged(LF_value, value, true);
   }
@@ -237,7 +237,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("VariantNameIF.addTheme", theme, null);
+    fireEvent(VariantNameIF.EVENT_ADD_THEME, theme, null);
     // Notify transaction
     valueAdded(LF_scope, theme, true);
   }
@@ -251,7 +251,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("VariantNameIF.removeTheme", null, theme);
+    fireEvent(VariantNameIF.EVENT_REMOVE_THEME, null, theme);
     // Notify transaction
     valueRemoved(LF_scope, theme, true);
 
@@ -277,7 +277,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
     if (oldReifier != null)
       oldReifier.setReified(null);

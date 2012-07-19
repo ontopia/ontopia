@@ -36,11 +36,11 @@ public class OccurrenceIndex extends BasicIndex implements OccurrenceIndexIF {
     occurs = new CollectionSortedMap(STRING_PREFIX_COMPARATOR);
 
     // Initialize object tree event handlers [objects added or removed]    
-    otree.addListener(new OccurrenceIF_added(occurs), "OccurrenceIF.added");
-    otree.addListener(new OccurrenceIF_removed(occurs), "OccurrenceIF.removed");
+    otree.addListener(new OccurrenceIF_added(occurs), OccurrenceIF.EVENT_ADDED);
+    otree.addListener(new OccurrenceIF_removed(occurs), OccurrenceIF.EVENT_REMOVED);
 
     // Initialize object property event handlers
-    handlers.put("OccurrenceIF.setValue", new OccurrenceIF_setValue(occurs));
+    handlers.put(OccurrenceIF.EVENT_SET_VALUE, new OccurrenceIF_setValue(occurs));
 
     // Register dynamic index as event listener
     Iterator iter = handlers.keySet().iterator();

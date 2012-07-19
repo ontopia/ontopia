@@ -5,6 +5,7 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
@@ -54,7 +55,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     if (player == null) throw new NullPointerException("Association role player must not be null.");
     CrossTopicMapException.check(player, this);
     // Notify listeners
-    fireEvent("AssociationRoleIF.setPlayer", player, this.player);
+    fireEvent(AssociationRoleIF.EVENT_SET_PLAYER, player, this.player);
     // Unregister association role with topic
     if (this.player != null && parent != null && parent.parent != null)
         ((Topic) this.player).removeRole(this);
@@ -84,7 +85,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     if (type == null) throw new NullPointerException("Association role type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
-    fireEvent("AssociationRoleIF.setType", type, getType());
+    fireEvent(AssociationRoleIF.EVENT_SET_TYPE, type, getType());
     this.type = type;
   }
   
@@ -101,7 +102,7 @@ public class AssociationRole extends TMObject implements AssociationRoleIF {
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
     if (oldReifier != null) oldReifier.setReified(null);
     if (reifier != null) reifier.setReified(this);

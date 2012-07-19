@@ -5,10 +5,15 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.UniquenessViolationException;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
  * INTERNAL: Class that maintains indexes for use with the TopicMapIF locator
@@ -39,32 +44,32 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
   public void registerListeners(EventManagerIF emanager, EventManagerIF otree) {
 
     // Initialize object tree event handlers [objects added or removed]
-    otree.addListener(new TopicAddedHandler(), "TopicIF.added");
-    otree.addListener(new TopicRemovedHandler(), "TopicIF.removed");
+    otree.addListener(new TopicAddedHandler(), TopicIF.EVENT_ADDED);
+    otree.addListener(new TopicRemovedHandler(), TopicIF.EVENT_REMOVED);
 
     EventHandler oah = new TMObjectAddedHandler();
     EventHandler orh = new TMObjectRemovedHandler();
 
-    otree.addListener(oah, "AssociationIF.added");
-    otree.addListener(orh, "AssociationIF.removed");
-    otree.addListener(oah, "AssociationRoleIF.added");
-    otree.addListener(orh, "AssociationRoleIF.removed");
-    otree.addListener(oah, "TopicNameIF.added");
-    otree.addListener(orh, "TopicNameIF.removed");
-    otree.addListener(oah, "OccurrenceIF.added");
-    otree.addListener(orh, "OccurrenceIF.removed");
-    otree.addListener(oah, "VariantNameIF.added");
-    otree.addListener(orh, "VariantNameIF.removed");
+    otree.addListener(oah, AssociationIF.EVENT_ADDED);
+    otree.addListener(orh, AssociationIF.EVENT_REMOVED);
+    otree.addListener(oah, AssociationRoleIF.EVENT_ADDED);
+    otree.addListener(orh, AssociationRoleIF.EVENT_REMOVED);
+    otree.addListener(oah, TopicNameIF.EVENT_ADDED);
+    otree.addListener(orh, TopicNameIF.EVENT_REMOVED);
+    otree.addListener(oah, OccurrenceIF.EVENT_ADDED);
+    otree.addListener(orh, OccurrenceIF.EVENT_REMOVED);
+    otree.addListener(oah, VariantNameIF.EVENT_ADDED);
+    otree.addListener(orh, VariantNameIF.EVENT_REMOVED);
 
     // Initialize object property event handlers
-    handlers.put("TopicIF.addSubjectLocator", new TopicIF_addSubjectLocator());
-    handlers.put("TopicIF.removeSubjectLocator", new TopicIF_removeSubjectLocator());
+    handlers.put(TopicIF.EVENT_ADD_SUBJECTLOCATOR, new TopicIF_addSubjectLocator());
+    handlers.put(TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, new TopicIF_removeSubjectLocator());
 
-    handlers.put("TopicIF.addSubjectIdentifier", new TopicIF_addSubjectIdentifier());
-    handlers.put("TopicIF.removeSubjectIdentifier", new TopicIF_removeSubjectIdentifier());
+    handlers.put(TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, new TopicIF_addSubjectIdentifier());
+    handlers.put(TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, new TopicIF_removeSubjectIdentifier());
 
-    handlers.put("TMObjectIF.addItemIdentifier", new TMObjectIF_addItemIdentifier());
-    handlers.put("TMObjectIF.removeItemIdentifier", new TMObjectIF_removeItemIdentifier());
+    handlers.put(TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, new TMObjectIF_addItemIdentifier());
+    handlers.put(TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, new TMObjectIF_removeItemIdentifier());
 
     // Register as event listener
     Iterator<String> iter = handlers.keySet().iterator();
@@ -173,15 +178,15 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       // Add subject locators
       Object[] subjects = added.getSubjectLocators().toArray();
       for (int i = 0; i < subjects.length; i++)
-        addEvent(added, "TopicIF.addSubjectLocator", subjects[i]);
+        addEvent(added, TopicIF.EVENT_ADD_SUBJECTLOCATOR, subjects[i]);
       // Add indicators
       Object[] indicators = added.getSubjectIdentifiers().toArray();
       for (int i = 0; i < indicators.length; i++)
-        addEvent(added, "TopicIF.addSubjectIdentifier", indicators[i]);
+        addEvent(added, TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, indicators[i]);
       // Add source locators
       Object[] sources = added.getItemIdentifiers().toArray();
       for (int i = 0; i < sources.length; i++)
-        addEvent(added, "TMObjectIF.addItemIdentifier", sources[i]);
+        addEvent(added, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, sources[i]);
     }
   }
 
@@ -195,15 +200,15 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       // Remove subject locators
       Object[] subjects = removed.getSubjectLocators().toArray();
       for (int i = 0; i < subjects.length; i++)
-        removeEvent(removed, "TopicIF.removeSubjectLocator", subjects[i]);
+        removeEvent(removed, TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, subjects[i]);
       // Remove indicators
       Object[] indicators = removed.getSubjectIdentifiers().toArray();
       for (int i = 0; i < indicators.length; i++)
-        removeEvent(removed, "TopicIF.removeSubjectIdentifier", indicators[i]);
+        removeEvent(removed, TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, indicators[i]);
       // Remove source locators
       Object[] sources = removed.getItemIdentifiers().toArray();
       for (int i = 0; i < sources.length; i++)
-        removeEvent(removed, "TMObjectIF.removeItemIdentifier", sources[i]);
+        removeEvent(removed, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, sources[i]);
       // Unregister object
       unregisterObject(removed);
     }
@@ -221,7 +226,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       // Add source locators
       Object[] sources = added.getItemIdentifiers().toArray();
       for (int i = 0; i < sources.length; i++)
-        addEvent(added, "TMObjectIF.addItemIdentifier", sources[i]);
+        addEvent(added, TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, sources[i]);
     }
   }
 
@@ -235,7 +240,7 @@ public abstract class AbstractSubjectIdentityCache implements EventListenerIF,
       // Remove source locators
       Object[] sources = removed.getItemIdentifiers().toArray();
       for (int i = 0; i < sources.length; i++)
-        removeEvent(removed, "TMObjectIF.removeItemIdentifier", sources[i]);
+        removeEvent(removed, TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, sources[i]);
       // Unregister object
       unregisterObject(removed);
     }

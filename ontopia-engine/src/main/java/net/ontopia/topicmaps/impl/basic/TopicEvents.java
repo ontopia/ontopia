@@ -70,11 +70,11 @@ public class TopicEvents implements EventListenerIF {
 
   void registerListeners(EventManagerIF emanager) {
     // listen to topic modification events
-    emanager.addListener(this, "TopicIF.modified");
+    emanager.addListener(this, TopicIF.EVENT_MODIFIED);
   }
   
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
-    if ("TopicIF.modified".equals(event)) {
+    if (TopicIF.EVENT_MODIFIED.equals(event)) {
       TopicIF topic = (TopicIF)object;
       synchronized (this) {
         TopicMapListenerIF[] topic_listeners = store.topic_listeners;

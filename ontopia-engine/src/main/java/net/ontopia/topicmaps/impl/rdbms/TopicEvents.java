@@ -12,6 +12,7 @@ import net.ontopia.topicmaps.impl.utils.EventListenerIF;
 import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import net.ontopia.topicmaps.impl.utils.SnapshotTMObject;
 import net.ontopia.topicmaps.impl.utils.SnapshotTopic;
+import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,19 +110,19 @@ public class TopicEvents implements EventListenerIF {
 
   void registerListeners(EventManagerIF emanager) {
     // listen to topic modification events
-    emanager.addListener(this, "TopicIF.modified");
-    emanager.addListener(this, "TopicMapTransactionIF.commit");
-    emanager.addListener(this, "TopicMapTransactionIF.abort");
+    emanager.addListener(this, TopicIF.EVENT_MODIFIED);
+    emanager.addListener(this, TopicMapTransactionIF.EVENT_COMMIT);
+    emanager.addListener(this, TopicMapTransactionIF.EVENT_ABORT);
   }
   
   public void processEvent(Object object, String event, Object new_value, Object old_value) {
-    if (store.topic_listeners != null && "TopicIF.modified".equals(event)) {
+    if (store.topic_listeners != null && TopicIF.EVENT_MODIFIED.equals(event)) {
       topicsModified.add((TopicIF)object);
     }
-    if ("TopicMapTransactionIF.commit".equals(event)) {
+    if (TopicMapTransactionIF.EVENT_COMMIT.equals(event)) {
       commitListeners();
     }
-    if ("TopicMapTransactionIF.abort".equals(event)) {
+    if (TopicMapTransactionIF.EVENT_ABORT.equals(event)) {
       abortListeners();
     }
   }

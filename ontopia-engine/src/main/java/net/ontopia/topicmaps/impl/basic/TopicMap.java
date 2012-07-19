@@ -14,6 +14,7 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -126,7 +127,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     if (topic.parent != null)
       throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
-    fireEvent("TopicMapIF.addTopic", topic, null);    
+    fireEvent(TopicMapIF.EVENT_ADD_TOPIC, topic, null);    
     // Set topic map property
     topic.setTopicMap(this);
     // Register topic with topic map
@@ -153,7 +154,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     DeletionUtils.removeDependencies(topic);    
     
     // Notify listeners
-    fireEvent("TopicMapIF.removeTopic", null, topic);
+    fireEvent(TopicMapIF.EVENT_REMOVE_TOPIC, null, topic);
     // Notify topic listener
     txn.te.removingTopic(topic);
     // Unset topic map property
@@ -179,7 +180,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     if (association.parent != null)
       throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
-    fireEvent("TopicMapIF.addAssociation", association, null);    
+    fireEvent(TopicMapIF.EVENT_ADD_ASSOCIATION, association, null);    
     // Set topic map property
     association.setTopicMap(this);
     // Register association with topic map
@@ -207,7 +208,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     if (association.parent != this)
       return;
     // Notify listeners
-    fireEvent("TopicMapIF.removeAssociation", null, association);
+    fireEvent(TopicMapIF.EVENT_REMOVE_ASSOCIATION, null, association);
 
     // Remove players of the association roles
     Collection<AssociationRoleIF> roles = association.roles;
@@ -271,7 +272,7 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
     // Notify listeners
 		Topic reifier = (Topic)_reifier;
 		Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
 		if (oldReifier != null) oldReifier.setReified(null);
 		if (reifier != null) reifier.setReified(this);

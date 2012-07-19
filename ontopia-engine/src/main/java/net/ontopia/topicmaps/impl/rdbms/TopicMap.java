@@ -22,6 +22,7 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.NotRemovableException;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -181,7 +182,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     if (topic.getTopicMap() != null)
       throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
-    fireEvent("TopicMapIF.addTopic", topic, null);
+    fireEvent(TopicMapIF.EVENT_ADD_TOPIC, topic, null);
     // Set topic map property
     ((Topic)topic).setTopicMap(this);
     // Notify topic listener
@@ -200,7 +201,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     DeletionUtils.removeDependencies(topic);    
 
     // Notify listeners
-    fireEvent("TopicMapIF.removeTopic", null, topic);    
+    fireEvent(TopicMapIF.EVENT_REMOVE_TOPIC, null, topic);    
     // Notify topic listener
     transaction.te.removingTopic(topic);
     // Unset topic map property
@@ -226,7 +227,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     if (association.getTopicMap() != null)
       throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
-    fireEvent("TopicMapIF.addAssociation", association, null);    
+    fireEvent(TopicMapIF.EVENT_ADD_ASSOCIATION, association, null);    
     // Set topic map property
     ((Association)association).setTopicMap(this);
   }
@@ -239,7 +240,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     if (association.getTopicMap() != this)
       return;
     // Notify listeners
-    fireEvent("TopicMapIF.removeAssociation", null, association);
+    fireEvent(TopicMapIF.EVENT_REMOVE_ASSOCIATION, null, association);
     // Unset topic map property
     ((Association)association).setTopicMap(null);
   }
@@ -363,7 +364,7 @@ public class TopicMap extends TMObject implements TopicMapIF {
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
     if (oldReifier != null) oldReifier.setReified(null);
     if (reifier != null) reifier.setReified(this);

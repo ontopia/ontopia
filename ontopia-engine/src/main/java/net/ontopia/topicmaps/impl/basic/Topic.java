@@ -94,7 +94,7 @@ public class Topic extends TMObject implements TopicIF {
     else if (subjects.contains(subject_locator))
       return;
     // Notify listeners
-    fireEvent("TopicIF.addSubjectLocator", subject_locator, null);    
+    fireEvent(TopicIF.EVENT_ADD_SUBJECTLOCATOR, subject_locator, null);    
     // Modify property
     subjects.add(subject_locator);
   }
@@ -109,7 +109,7 @@ public class Topic extends TMObject implements TopicIF {
     if (subjects == null || !subjects.contains(subject_locator))
       return;
     // Notify listeners
-    fireEvent("TopicIF.removeSubjectLocator", null, subject_locator);    
+    fireEvent(TopicIF.EVENT_REMOVE_SUBJECTLOCATOR, null, subject_locator);    
     // Modify property
     subjects.remove(subject_locator);
   }
@@ -133,7 +133,7 @@ public class Topic extends TMObject implements TopicIF {
     else if (indicators.contains(subject_indicator))
       return;
     // Notify listeners
-    fireEvent("TopicIF.addSubjectIdentifier", subject_indicator, null);    
+    fireEvent(TopicIF.EVENT_ADD_SUBJECTIDENTIFIER, subject_indicator, null);    
     // Modify property
     indicators.add(subject_indicator);
   }
@@ -148,7 +148,7 @@ public class Topic extends TMObject implements TopicIF {
     if (indicators == null || !indicators.contains(subject_indicator))
       return;
     // Notify listeners
-    fireEvent("TopicIF.removeSubjectIdentifier", null, subject_indicator);    
+    fireEvent(TopicIF.EVENT_REMOVE_SUBJECTIDENTIFIER, null, subject_indicator);    
     // Modify property
     indicators.remove(subject_indicator);
   }
@@ -169,7 +169,7 @@ public class Topic extends TMObject implements TopicIF {
     if (name.parent != null)
       throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
-    fireEvent("TopicIF.addTopicName", name, null);    
+    fireEvent(TopicIF.EVENT_ADD_TOPICNAME, name, null);    
     // Set topic property
     name.setTopic(this);
     // Add name to list of names
@@ -184,7 +184,7 @@ public class Topic extends TMObject implements TopicIF {
     if (name.parent != this)
       return;
     // Notify listeners
-    fireEvent("TopicIF.removeTopicName", null, name);    
+    fireEvent(TopicIF.EVENT_REMOVE_TOPICNAME, null, name);    
     // Unset topic property
     name.setTopic(null);
     // Remove name from list of names
@@ -206,7 +206,7 @@ public class Topic extends TMObject implements TopicIF {
     if (occurrence.parent != null)
       throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
-    fireEvent("TopicIF.addOccurrence", occurrence, null);    
+    fireEvent(TopicIF.EVENT_ADD_OCCURRENCE, occurrence, null);    
     // Set topic property
     occurrence.setTopic(this);
     // Add occurrence to list of occurrences
@@ -221,7 +221,7 @@ public class Topic extends TMObject implements TopicIF {
     if (occurrence.parent != this)
       return;
     // Notify listeners
-    fireEvent("TopicIF.removeOccurrence", null, occurrence);    
+    fireEvent(TopicIF.EVENT_REMOVE_OCCURRENCE, null, occurrence);    
     // Unset topic property
     occurrence.setTopic(null);
     // Remove occurrence from list of occurrences
@@ -329,7 +329,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
-    fireEvent("TopicIF.addType", type, null);
+    fireEvent(TopicIF.EVENT_ADD_TYPE, type, null);
     // Add type to list of types
     types = topicmap.setpool.add(types, type, true);
   }
@@ -339,7 +339,7 @@ public class Topic extends TMObject implements TopicIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
-    fireEvent("TopicIF.removeType", null, type);
+    fireEvent(TopicIF.EVENT_REMOVE_TYPE, null, type);
     // Remove type from list of types
     types = topicmap.setpool.remove(types, type, true);
   }

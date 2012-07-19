@@ -10,6 +10,7 @@ import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
@@ -97,7 +98,7 @@ public class Association extends TMObject implements AssociationIF {
     if (assoc_role.parent != null)
       throw new ConstraintViolationException("Moving objects is not allowed.");
     // Notify listeners
-    fireEvent("AssociationIF.addRole", assoc_role, null);    
+    fireEvent(AssociationIF.EVENT_ADD_ROLE, assoc_role, null);    
     // Set association property
     assoc_role.setAssociation(this);
     // Add association role to list of association roles
@@ -116,7 +117,7 @@ public class Association extends TMObject implements AssociationIF {
     if (assoc_role.parent != this)
       return;
     // Notify listeners
-    fireEvent("AssociationIF.removeRole", null, assoc_role);
+    fireEvent(AssociationIF.EVENT_REMOVE_ROLE, null, assoc_role);
     // Remove role from list of roles
     roles.remove(assoc_role);
     // Removing role from player's list of roles
@@ -149,7 +150,7 @@ public class Association extends TMObject implements AssociationIF {
       throw new NullPointerException(MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("AssociationIF.addTheme", theme, null);
+    fireEvent(AssociationIF.EVENT_ADD_THEME, theme, null);
     // Add theme to scope
     if (scope == null) {
       Set<TopicIF> empty = Collections.emptySet();
@@ -163,7 +164,7 @@ public class Association extends TMObject implements AssociationIF {
       throw new NullPointerException(MSG_NULL_ARGUMENT);
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("AssociationIF.removeTheme", null, theme);
+    fireEvent(AssociationIF.EVENT_REMOVE_THEME, null, theme);
     // Remove theme from scope
     if (scope == null)
       return;
@@ -182,7 +183,7 @@ public class Association extends TMObject implements AssociationIF {
     if (type == null) throw new NullPointerException("Association type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
-    fireEvent("AssociationIF.setType", type, getType());
+    fireEvent(AssociationIF.EVENT_SET_TYPE, type, getType());
     this.type = type;
   }
   
@@ -199,7 +200,7 @@ public class Association extends TMObject implements AssociationIF {
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
     if (oldReifier != null) oldReifier.setReified(null);
     if (reifier != null) reifier.setReified(this);

@@ -15,6 +15,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.DataTypes;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
@@ -87,7 +88,7 @@ public class VariantName extends TMObject implements VariantNameIF {
 
   protected void setDataType(LocatorIF datatype) {
     // Notify listeners
-    fireEvent("VariantNameIF.setDataType", value, getDataType());
+    fireEvent(VariantNameIF.EVENT_SET_DATATYPE, value, getDataType());
     this.datatype = LocatorInterningTable.intern(datatype);
   }
   
@@ -106,7 +107,7 @@ public class VariantName extends TMObject implements VariantNameIF {
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setDataType(datatype);
     // Notify listeners
-    fireEvent("VariantNameIF.setValue", value, getValue());
+    fireEvent(VariantNameIF.EVENT_SET_VALUE, value, getValue());
     this.value = value;
   }
 
@@ -158,7 +159,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     if (theme == null) throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("VariantNameIF.addTheme", theme, null);
+    fireEvent(VariantNameIF.EVENT_ADD_THEME, theme, null);
     // Add theme to scope
     scope = topicmap.setpool.add(scope, theme, true);
   }
@@ -169,7 +170,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     if (theme == null) throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("VariantNameIF.removeTheme", null, theme);
+    fireEvent(VariantNameIF.EVENT_REMOVE_THEME, null, theme);
     // Remove theme from scope
     scope = topicmap.setpool.remove(scope, theme, true);
 
@@ -199,7 +200,7 @@ public class VariantName extends TMObject implements VariantNameIF {
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
     if (oldReifier != null) oldReifier.setReified(null);
     if (reifier != null) reifier.setReified(this);

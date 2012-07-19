@@ -127,7 +127,7 @@ public abstract class TMObject extends AbstractRWPersistent
     _source_locator._setTopicMap(((TopicMap)getTopicMap()).getLongId());
     
     // Notify listeners
-    fireEvent("TMObjectIF.addItemIdentifier", _source_locator, null);
+    fireEvent(TMObjectIF.EVENT_ADD_ITEMIDENTIFIER, _source_locator, null);
     // Notify transaction
     valueAdded(LF_sources, _source_locator, true);
   }
@@ -152,7 +152,7 @@ public abstract class TMObject extends AbstractRWPersistent
     _source_locator._setTopicMap(((TopicMap)getTopicMap()).getLongId());
     
     // Notify listeners
-    fireEvent("TMObjectIF.removeItemIdentifier", null, _source_locator);
+    fireEvent(TMObjectIF.EVENT_REMOVE_ITEMIDENTIFIER, null, _source_locator);
     // Notify transaction
     valueRemoved(LF_sources, _source_locator, true);
   }

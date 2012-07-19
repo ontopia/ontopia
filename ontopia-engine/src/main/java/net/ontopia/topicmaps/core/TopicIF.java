@@ -24,6 +24,20 @@ import net.ontopia.infoset.core.LocatorIF;
  */
 
 public interface TopicIF extends TMObjectIF {
+
+  public static final String EVENT_ADDED = "TopicIF.added";
+  public static final String EVENT_MODIFIED = "TopicIF.modified";
+  public static final String EVENT_REMOVED = "TopicIF.removed";
+  public static final String EVENT_ADD_TYPE = "TopicIF.addType";
+  public static final String EVENT_REMOVE_TYPE = "TopicIF.removeType";
+  public static final String EVENT_ADD_SUBJECTLOCATOR = "TopicIF.addSubjectLocator";
+  public static final String EVENT_REMOVE_SUBJECTLOCATOR = "TopicIF.removeSubjectLocator";
+  public static final String EVENT_ADD_SUBJECTIDENTIFIER = "TopicIF.addSubjectIdentifier";
+  public static final String EVENT_REMOVE_SUBJECTIDENTIFIER = "TopicIF.removeSubjectIdentifier";
+  public static final String EVENT_ADD_TOPICNAME = "TopicIF.addTopicName";
+  public static final String EVENT_REMOVE_TOPICNAME = "TopicIF.removeTopicName";
+  public static final String EVENT_ADD_OCCURRENCE = "TopicIF.addOccurrence";
+  public static final String EVENT_REMOVE_OCCURRENCE = "TopicIF.removeOccurrence";
   
   /**
    * PUBLIC: Gets the subject locators of this topic. These are

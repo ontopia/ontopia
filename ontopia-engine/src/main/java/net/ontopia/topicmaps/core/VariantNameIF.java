@@ -23,6 +23,13 @@ import net.ontopia.infoset.core.LocatorIF;
 
 public interface VariantNameIF extends ScopedIF, ReifiableIF {
 
+  public static final String EVENT_ADDED = "VariantNameIF.added";
+  public static final String EVENT_REMOVED = "VariantNameIF.removed";
+  public static final String EVENT_SET_VALUE = "VariantNameIF.setValue";
+  public static final String EVENT_SET_DATATYPE = "VariantNameIF.setDataType";
+  public static final String EVENT_ADD_THEME = "VariantNameIF.addTheme";
+  public static final String EVENT_REMOVE_THEME = "VariantNameIF.removeTheme";
+
   /**
    * PUBLIC: Gets the topic name to which this variant name belongs. The
    * topic name may be a direct parent or an ancestor.

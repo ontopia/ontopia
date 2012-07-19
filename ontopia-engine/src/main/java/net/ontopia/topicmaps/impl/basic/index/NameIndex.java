@@ -38,15 +38,15 @@ public class NameIndex extends BasicIndex implements NameIndexIF {
     variants = new CollectionMap();
 
     // Initialize object tree event handlers [objects added or removed]    
-    otree.addListener(new TopicNameIF_added(basenames), "TopicNameIF.added");
-    otree.addListener(new TopicNameIF_removed(basenames), "TopicNameIF.removed");
+    otree.addListener(new TopicNameIF_added(basenames), TopicNameIF.EVENT_ADDED);
+    otree.addListener(new TopicNameIF_removed(basenames), TopicNameIF.EVENT_REMOVED);
 
-    otree.addListener(new VariantNameIF_added(variants), "VariantNameIF.added");
-    otree.addListener(new VariantNameIF_removed(variants), "VariantNameIF.removed");
+    otree.addListener(new VariantNameIF_added(variants), VariantNameIF.EVENT_ADDED);
+    otree.addListener(new VariantNameIF_removed(variants), VariantNameIF.EVENT_REMOVED);
 
     // Initialize object property event handlers
-    handlers.put("TopicNameIF.setValue", new TopicNameIF_setValue(basenames));
-    handlers.put("VariantNameIF.setValue", new VariantNameIF_setValue(variants));
+    handlers.put(TopicNameIF.EVENT_SET_VALUE, new TopicNameIF_setValue(basenames));
+    handlers.put(VariantNameIF.EVENT_SET_VALUE, new VariantNameIF_setValue(variants));
 
     // Register dynamic index as event listener
     Iterator iter = handlers.keySet().iterator();

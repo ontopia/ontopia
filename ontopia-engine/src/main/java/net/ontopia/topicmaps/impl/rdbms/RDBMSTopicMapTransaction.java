@@ -100,7 +100,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     this.topicmods = new TopicModificationManager(this, cfactory);
     this.te = new TopicEvents(store);
     this.te.registerListeners(this);
-    this.topicmods.addListener(this.te, "TopicIF.modified");
+    this.topicmods.addListener(this.te, TopicIF.EVENT_MODIFIED);
     
     // QueryCache: subject identity cache
     this.sicache = new SubjectIdentityCache(this, cfactory);
@@ -144,7 +144,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
         txn.getStorageAccess().getStorage().notifyCluster();
         
         // commmit listeners
-        processEvent(this, "TopicMapTransactionIF.commit", null, null);
+        processEvent(this, TopicMapTransactionIF.EVENT_COMMIT, null, null);
       }
     } else {
       txn.commit();
@@ -157,7 +157,7 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
         super.abort();
 
         // abort listeners
-        processEvent(this, "TopicMapTransactionIF.abort", null, null);
+        processEvent(this, TopicMapTransactionIF.EVENT_ABORT, null, null);
       }
     }
   }

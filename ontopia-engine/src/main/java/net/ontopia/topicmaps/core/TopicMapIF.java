@@ -10,6 +10,11 @@ import net.ontopia.infoset.core.LocatorIF;
  */
 public interface TopicMapIF extends TMObjectIF, ReifiableIF  {
 
+  public static final String EVENT_ADD_TOPIC = "TopicMapIF.addTopic";
+  public static final String EVENT_REMOVE_TOPIC = "TopicMapIF.removeTopic";
+  public static final String EVENT_ADD_ASSOCIATION = "TopicMapIF.addAssociation";
+  public static final String EVENT_REMOVE_ASSOCIATION = "TopicMapIF.removeAssociation";
+
   /**
    * PUBLIC: Gets the store to which the topic map's transaction is
    * connected.

@@ -111,7 +111,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     if (value == null)
       throw new NullPointerException("Topic name value must not be null.");
     // Notify listeners
-    fireEvent("TopicNameIF.setValue", value, getValue());
+    fireEvent(TopicNameIF.EVENT_SET_VALUE, value, getValue());
     // Notify transaction
     valueChanged(LF_value, value, true);
   }
@@ -131,7 +131,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       throw new ConstraintViolationException("Moving objects is not allowed.");
     
     // Notify listeners
-    fireEvent("TopicNameIF.addVariant", variant, null);
+    fireEvent(TopicNameIF.EVENT_ADD_VARIANT, variant, null);
     // Set parent name property
     ((VariantName) variant).setTopicName(this);
     // Notify transaction
@@ -150,7 +150,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       return;
     
     // Notify listeners
-    fireEvent("TopicNameIF.removeVariant", null, variant);
+    fireEvent(TopicNameIF.EVENT_REMOVE_VARIANT, null, variant);
 
     // Remove inherited themes from variant name
     for (TopicIF theme : getScope())
@@ -183,7 +183,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);    
     // Notify listeners
-    fireEvent("TopicNameIF.addTheme", theme, null);
+    fireEvent(TopicNameIF.EVENT_ADD_THEME, theme, null);
     // Notify transaction
     valueAdded(LF_scope, theme, true);
 
@@ -203,7 +203,7 @@ public class TopicName extends TMObject implements TopicNameIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("TopicNameIF.removeTheme", null, theme);
+    fireEvent(TopicNameIF.EVENT_REMOVE_THEME, null, theme);
 
     // remove theme from variants
     Collection variants = getVariants();
@@ -235,7 +235,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     }
 
     // Notify listeners
-    fireEvent("TopicNameIF.setType", type, getType());
+    fireEvent(TopicNameIF.EVENT_SET_TYPE, type, getType());
     // Notify transaction
     valueChanged(LF_type, type, true);
   }
@@ -264,7 +264,7 @@ public class TopicName extends TMObject implements TopicNameIF {
     // Notify listeners
     Topic reifier = (Topic) _reifier;
     Topic oldReifier = (Topic) getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     valueChanged(LF_reifier, reifier, true);
     if (oldReifier != null)
       oldReifier.setReified(null);

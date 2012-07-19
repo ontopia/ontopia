@@ -1,6 +1,7 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.basic.index.IndexManager;
 import net.ontopia.topicmaps.impl.utils.AbstractTopicMapTransaction;
@@ -47,7 +48,7 @@ public class InMemoryTopicMapTransaction extends AbstractTopicMapTransaction {
     this.topicmods = new TopicModificationManager(emanager, cfactory);
     this.te = new TopicEvents(store);
     this.te.registerListeners(emanager);
-    this.topicmods.addListener(this.te, "TopicIF.modified");
+    this.topicmods.addListener(this.te, TopicIF.EVENT_MODIFIED);
     
     // Register a subject identity cache object with the topic map
     SubjectIdentityCache sicache = new SubjectIdentityCache(this, cfactory);

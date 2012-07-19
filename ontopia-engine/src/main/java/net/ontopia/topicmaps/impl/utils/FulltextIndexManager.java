@@ -58,21 +58,21 @@ public class FulltextIndexManager extends BasicIndex implements SearcherIF {
     EventListenerIF listener_add = new TMObjectIF_added();
     EventListenerIF listener_rem = new TMObjectIF_removed();
 
-    otree.addListener(listener_add, "TopicNameIF.added");
-    otree.addListener(listener_rem, "TopicNameIF.removed");
+    otree.addListener(listener_add, TopicNameIF.EVENT_ADDED);
+    otree.addListener(listener_rem, TopicNameIF.EVENT_REMOVED);
 
-    otree.addListener(listener_add, "VariantNameIF.added");
-    otree.addListener(listener_rem, "VariantNameIF.removed");
+    otree.addListener(listener_add, VariantNameIF.EVENT_ADDED);
+    otree.addListener(listener_rem, VariantNameIF.EVENT_REMOVED);
 
-    otree.addListener(listener_add, "OccurrenceIF.added");
-    otree.addListener(listener_rem, "OccurrenceIF.removed");
+    otree.addListener(listener_add, OccurrenceIF.EVENT_ADDED);
+    otree.addListener(listener_rem, OccurrenceIF.EVENT_REMOVED);
 
     // Initialize object property event handlers
     EventListenerIF listener_chg = new TMObjectIF_changed();
     
-    handlers.put("TopicNameIF.setValue", listener_chg);    
-    handlers.put("VariantNameIF.setValue", listener_chg);
-    handlers.put("OccurrenceIF.setValue", listener_chg);
+    handlers.put(TopicNameIF.EVENT_SET_VALUE, listener_chg);    
+    handlers.put(VariantNameIF.EVENT_SET_VALUE, listener_chg);
+    handlers.put(OccurrenceIF.EVENT_SET_VALUE, listener_chg);
 
     // Register dynamic index as event listener
     Iterator<String> iter = handlers.keySet().iterator();

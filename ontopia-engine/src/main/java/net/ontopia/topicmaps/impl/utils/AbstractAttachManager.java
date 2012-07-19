@@ -31,23 +31,23 @@ public abstract class AbstractAttachManager {
    */
   public void register() {
     // Initialize object tree event handlers [objects added or removed]                           
-    otree.addListener(getAttachHandler(AssociationIF.class), "AssociationIF.added");
-    otree.addListener(getDetachHandler(AssociationIF.class), "AssociationIF.removed");
+    otree.addListener(getAttachHandler(AssociationIF.class), AssociationIF.EVENT_ADDED);
+    otree.addListener(getDetachHandler(AssociationIF.class), AssociationIF.EVENT_REMOVED);
     
-    otree.addListener(getAttachHandler(AssociationRoleIF.class), "AssociationRoleIF.added");
-    otree.addListener(getDetachHandler(AssociationRoleIF.class), "AssociationRoleIF.removed");
+    otree.addListener(getAttachHandler(AssociationRoleIF.class), AssociationRoleIF.EVENT_ADDED);
+    otree.addListener(getDetachHandler(AssociationRoleIF.class), AssociationRoleIF.EVENT_REMOVED);
     
-    otree.addListener(getAttachHandler(TopicNameIF.class), "TopicNameIF.added");
-    otree.addListener(getDetachHandler(TopicNameIF.class), "TopicNameIF.removed");
+    otree.addListener(getAttachHandler(TopicNameIF.class), TopicNameIF.EVENT_ADDED);
+    otree.addListener(getDetachHandler(TopicNameIF.class), TopicNameIF.EVENT_REMOVED);
                                        
-    otree.addListener(getAttachHandler(OccurrenceIF.class), "OccurrenceIF.added");
-    otree.addListener(getDetachHandler(OccurrenceIF.class), "OccurrenceIF.removed");
+    otree.addListener(getAttachHandler(OccurrenceIF.class), OccurrenceIF.EVENT_ADDED);
+    otree.addListener(getDetachHandler(OccurrenceIF.class), OccurrenceIF.EVENT_REMOVED);
     
-    otree.addListener(getAttachHandler(TopicIF.class), "TopicIF.added");
-    otree.addListener(getDetachHandler(TopicIF.class), "TopicIF.removed");
+    otree.addListener(getAttachHandler(TopicIF.class), TopicIF.EVENT_ADDED);
+    otree.addListener(getDetachHandler(TopicIF.class), TopicIF.EVENT_REMOVED);
                                        
-    otree.addListener(getAttachHandler(VariantNameIF.class), "VariantNameIF.added");
-    otree.addListener(getDetachHandler(VariantNameIF.class), "VariantNameIF.removed");    
+    otree.addListener(getAttachHandler(VariantNameIF.class), VariantNameIF.EVENT_ADDED);
+    otree.addListener(getDetachHandler(VariantNameIF.class), VariantNameIF.EVENT_REMOVED);    
   }
   
   // -----------------------------------------------------------------------------

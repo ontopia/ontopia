@@ -15,6 +15,7 @@ import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.DataTypes;
 import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
@@ -82,7 +83,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
 
   protected void setDataType(LocatorIF datatype) {
     // Notify listeners
-    fireEvent("OccurrenceIF.setDataType", value, getDataType());
+    fireEvent(OccurrenceIF.EVENT_SET_DATATYPE, value, getDataType());
     this.datatype = LocatorInterningTable.intern(datatype);
   }
 
@@ -103,7 +104,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       throw new ConstraintViolationException("Only datatypes with notation 'URI' are supported: " + datatype);
     setDataType(datatype);
     // Notify listeners
-    fireEvent("OccurrenceIF.setValue", value, getValue());
+    fireEvent(OccurrenceIF.EVENT_SET_VALUE, value, getValue());
     this.value = value;
   }
 
@@ -173,7 +174,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("OccurrenceIF.addTheme", theme, null);
+    fireEvent(OccurrenceIF.EVENT_ADD_THEME, theme, null);
     // Add theme to scope
     if (scope == null) {
       Set<TopicIF> empty = Collections.emptySet();
@@ -186,7 +187,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       throw new NullPointerException("null is not a valid argument.");
     CrossTopicMapException.check(theme, this);
     // Notify listeners
-    fireEvent("OccurrenceIF.removeTheme", null, theme);
+    fireEvent(OccurrenceIF.EVENT_REMOVE_THEME, null, theme);
     // Remove theme from scope
     if (scope == null)
       return;
@@ -206,7 +207,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
       throw new NullPointerException("Occurrence type must not be null.");
     CrossTopicMapException.check(type, this);
     // Notify listeners
-    fireEvent("OccurrenceIF.setType", type, getType());
+    fireEvent(OccurrenceIF.EVENT_SET_TYPE, type, getType());
     this.type = type;
   }
   
@@ -224,7 +225,7 @@ public class Occurrence extends TMObject implements OccurrenceIF {
     // Notify listeners
     Topic reifier = (Topic)_reifier;
     Topic oldReifier = (Topic)getReifier();
-    fireEvent("ReifiableIF.setReifier", reifier, oldReifier);
+    fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
     if (oldReifier != null) oldReifier.setReified(null);
     if (reifier != null) reifier.setReified(this);

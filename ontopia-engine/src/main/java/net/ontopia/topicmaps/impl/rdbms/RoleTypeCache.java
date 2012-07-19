@@ -65,12 +65,12 @@ public class RoleTypeCache {
 
       // register event handlers (only needed with shared query cache)
       otree.addListener(new AssociationRoleAddedHandler(),
-          "AssociationRoleIF.added");
+          AssociationRoleIF.EVENT_ADDED);
       otree.addListener(new AssociationRoleRemovedHandler(),
-          "AssociationRoleIF.removed");
+          AssociationRoleIF.EVENT_REMOVED);
 
-      emanager.addListener(new EH01(), "AssociationRoleIF.setType");
-      emanager.addListener(new EH02(), "AssociationRoleIF.setPlayer");
+      emanager.addListener(new EH01(), AssociationRoleIF.EVENT_SET_TYPE);
+      emanager.addListener(new EH02(), AssociationRoleIF.EVENT_SET_PLAYER);
 
     } else {
       int lrusize = PropertyUtils

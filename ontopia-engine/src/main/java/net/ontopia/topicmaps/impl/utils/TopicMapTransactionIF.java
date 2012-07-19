@@ -26,6 +26,9 @@ import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 public interface TopicMapTransactionIF {
 
+  public static final String EVENT_COMMIT = "TopicMapTransactionIF.commit";
+  public static final String EVENT_ABORT = "TopicMapTransactionIF.abort";
+
   /**
    * PUBLIC: Gets a topic map builder for use with this transaction.
    *

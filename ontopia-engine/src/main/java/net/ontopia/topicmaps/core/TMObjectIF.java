@@ -17,6 +17,9 @@ import net.ontopia.infoset.core.LocatorIF;
 
 public interface TMObjectIF {
 
+  public static final String EVENT_ADD_ITEMIDENTIFIER = "TMObjectIF.addItemIdentifier";
+  public static final String EVENT_REMOVE_ITEMIDENTIFIER = "TMObjectIF.removeItemIdentifier";
+
   /**
    * PUBLIC: Gets the id of this object. The object id is part of the topic
    * map id space, and must be unique. The object id is not
