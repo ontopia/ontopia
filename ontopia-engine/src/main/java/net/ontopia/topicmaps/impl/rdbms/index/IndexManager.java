@@ -38,6 +38,8 @@ public class IndexManager extends AbstractIndexManager {
                 new ScopeIndex(this));
     indexes.put("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF",
                 new ClassInstanceIndex(this));
+    indexes.put("net.ontopia.topicmaps.core.index.StatisticsIndexIF",
+                new StatisticsIndex(this));
     indexes.put("net.ontopia.infoset.fulltext.core.SearcherIF",
                 new RDBMSSearcher((RDBMSTopicMapTransaction)transaction));
   }

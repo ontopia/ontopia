@@ -817,13 +817,25 @@
     <select class="java.lang.Integer"/>
     <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
     <statement platform="generic"
-      query="select count(I.id), count(distinct T.type_id) from TM_TOPIC_TYPES T, TM_TOPIC I where T.topic_id = I.id and I.topicmap_id = ?"/>
+      query="select count(distinct T.type_id) from TM_TOPIC_TYPES T, TM_TOPIC I where T.topic_id = I.id and I.topicmap_id = ?"/>
+  </query>
+  <query name="Stats.topicTypePairs" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(I.id) from TM_TOPIC_TYPES T, TM_TOPIC I where T.topic_id = I.id and I.topicmap_id = ?"/>
   </query>
   <query name="Stats.topicTyped" type="matrix">
     <select class="java.lang.Integer"/>
     <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
     <statement platform="generic"
       query="select count(I.id) from TM_TOPIC I where I.topicmap_id = ? and exists (select null from TM_TOPIC_TYPES T where T.topic_id = I.id)"/>
+  </query>
+  <query name="Stats.topicUntyped" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(I.id) from TM_TOPIC I where I.topicmap_id = ? and not exists (select null from TM_TOPIC_TYPES T where T.topic_id = I.id)"/>
   </query>
   <query name="Stats.associations" type="matrix">
     <select class="java.lang.Integer"/>
@@ -835,7 +847,7 @@
     <select class="java.lang.Integer"/>
     <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
     <statement platform="generic"
-      query="select count(id), count(distinct type_id) from TM_ASSOCIATION where topicmap_id = ?"/>
+      query="select count(distinct type_id) from TM_ASSOCIATION where topicmap_id = ?"/>
   </query>
   <query name="Stats.roles" type="matrix">
     <select class="java.lang.Integer"/>
@@ -847,7 +859,7 @@
     <select class="java.lang.Integer"/>
     <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
     <statement platform="generic"
-      query="select count(id), count(distinct type_id) from TM_ASSOCIATION_ROLE where topicmap_id = ?"/>
+      query="select count(distinct type_id) from TM_ASSOCIATION_ROLE where topicmap_id = ?"/>
   </query>
   <query name="Stats.occurrences" type="matrix">
     <select class="java.lang.Integer"/>
@@ -859,13 +871,19 @@
     <select class="java.lang.Integer"/>
     <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
     <statement platform="generic"
-      query="select count(id), count(distinct type_id) from TM_OCCURRENCE where topicmap_id = ?"/>
+      query="select count(distinct type_id) from TM_OCCURRENCE where topicmap_id = ?"/>
   </query>
   <query name="Stats.names" type="matrix">
     <select class="java.lang.Integer"/>
     <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
     <statement platform="generic"
       query="select count(*) from TM_TOPIC_NAME where topicmap_id = ?"/>
+  </query>
+  <query name="Stats.nonames" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_TOPIC T where T.topicmap_id = ? and not exists (select null from TM_TOPIC_NAME N where N.topic_id = T.id)"/>
   </query>
   <query name="Stats.nameTypes" type="matrix">
     <select class="java.lang.Integer"/>
@@ -896,6 +914,24 @@
     <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
     <statement platform="generic"
       query="select count(*) from (select distinct r.player_id as player_id, r.type_id as rtype_id, a.type_id as atype_id from TM_ASSOCIATION_ROLE r, TM_ASSOCIATION a where r.topicmap_id = ? and r.assoc_id = a.id) X"/>
+  </query>
+  <query name="Stats.psis" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_SUBJECT_IDENTIFIERS P, TM_TOPIC T where T.topicmap_id = ? and P.topic_id = T.id"/>
+  </query>
+  <query name="Stats.sls" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_SUBJECT_LOCATORS P, TM_TOPIC T where T.topicmap_id = ? and P.topic_id = T.id"/>
+  </query>
+  <query name="Stats.iis" type="matrix">
+    <select class="java.lang.Integer"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <statement platform="generic"
+      query="select count(*) from TM_ITEM_IDENTIFIERS where topicmap_id = ?"/>
   </query>
 
 </queries>

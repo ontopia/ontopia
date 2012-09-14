@@ -2,7 +2,6 @@
 package net.ontopia.topicmaps.impl.basic.index;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
@@ -35,6 +34,7 @@ public class IndexManager extends AbstractIndexManager implements java.io.Serial
     indexes.put("net.ontopia.topicmaps.core.index.OccurrenceIndexIF", new OccurrenceIndex(this, emanager, otree));      
     indexes.put("net.ontopia.topicmaps.core.index.ScopeIndexIF", new ScopeIndex(this, emanager, otree)); 
     indexes.put("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF", new ClassInstanceIndex(this, emanager, otree));
+    indexes.put("net.ontopia.topicmaps.core.index.StatisticsIndexIF", new StatisticsIndex(this, transaction));
   }
   
   public TopicMapTransactionIF getTransaction() {

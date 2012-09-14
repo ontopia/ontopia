@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.index.StatisticsIndexIF;
 
 /**
  * INTERNAL: An internal utility class that generates statistics based on 
@@ -20,63 +21,55 @@ public class Stats {
         
   public static Map<String, Integer> getStatistics(TopicMapIF topicmap)
     throws SQLException {
-    RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
+    
+    StatisticsIndexIF index = (StatisticsIndexIF) topicmap.getIndex(StatisticsIndexIF.class.getName());
     
     Map<String, Integer> stats = new HashMap<String, Integer>();
 
-    Integer c;
-    Integer[] cs;
-    
     // number of topics in the topic map
-    c = getCount("Stats.topics", store);
-    stats.put("topics", c);
+    stats.put("topics", index.getTopicCount());
     
     // number of typed topics and number of topic types
-    cs = getCounts("Stats.topicTypes", store);
-    stats.put("topics.type.pairs", cs[0]);
-    stats.put("topic.types", cs[1]);
+    stats.put("topic.types", index.getTopicTypeCount());
     
     // number of topics that have a type
-    c = getCount("Stats.topicTyped", store);
-    stats.put("topics.typed", c);
+    stats.put("topics.typed", index.getTypedTopicCount());
     
-      // number of associations in the topic map
-    c = getCount("Stats.associations", store);
-    stats.put("associations", c);
+    // number of associations in the topic map
+    stats.put("associations", index.getAssociationCount());
     
     // number of typed associations and number of association types
-    cs = getCounts("Stats.associationTypes", store);
-    stats.put("associations.typed", cs[0]);
-    stats.put("association.types", cs[1]);
+    stats.put("associations.typed", index.getAssociationCount());
+    stats.put("association.types", index.getAssociationTypeCount());
     
     // number of association roles in the topic map
-    c = getCount("Stats.roles", store);
-    stats.put("roles", c);
+    stats.put("roles", index.getRoleCount());
     
     // number of typed association roles and number of association role types
-    cs = getCounts("Stats.roleTypes", store);
-    stats.put("roles.typed", cs[0]);
-    stats.put("role.types", cs[1]);
+    stats.put("roles.typed", index.getRoleCount());
+    stats.put("role.types", index.getRoleTypeCount());
     
-    c = getCount("Stats.occurrences", store);
-    stats.put("occurrences", c);
+    stats.put("occurrences", index.getOccurrenceCount());
     
-    cs = getCounts("Stats.occurrenceTypes", store);
-    stats.put("occurrences.typed", cs[0]);
-    stats.put("occurrence.types", cs[1]);
+    stats.put("occurrences.typed", index.getOccurrenceCount());
+    stats.put("occurrence.types", index.getOccurrenceTypeCount());
     
-    c = getCount("Stats.names", store);
-    stats.put("names", c);
+    stats.put("names", index.getTopicNameCount());
     
-    //! cs = getCounts("Stats.nameTypes", store);
     //! stats.put("names.typed", cs[0]);
-    //! stats.put("name.types", cs[1]);
+    stats.put("name.types", index.getTopicNameTypeCount());
     
-    c = getCount("Stats.variants", store);
-    stats.put("variants", c);
+    stats.put("variants", index.getVariantCount());
     
     //! c = getCount("select count(*) from (select distinct r.type_id, a.type_id from TM_ASSOCIATION_ROLE r, TM_ASSOCIATION a where r.topicmap_id = ? and r.assoc_id = a.id) X", store);
     //! stats.put("(r.type_id, a_type_id)", c);
+    
+    RDBMSTopicMapStore store = (RDBMSTopicMapStore)topicmap.getStore();
+    Integer c;
+    Integer[] cs;
+    
+    c = getCount("Stats.topicTypePairs", store);
+    stats.put("topics.type.pairs", c);
     
     c = getCount("Stats.rolesByType1", store);
     stats.put("rolesbytype1.keys", c);
@@ -103,24 +96,4 @@ public class Stats {
       pstm.close();
     }
   }
-
-  private static Integer[] getCounts(String sqlid, RDBMSTopicMapStore store) throws SQLException {    
-    Connection conn = store.getConnection();
-    String sql = store.getQueryString(sqlid);
-    PreparedStatement pstm = conn.prepareStatement(sql);
-    try {
-      pstm.setLong(1, store.getLongId());
-      ResultSet rs = pstm.executeQuery();
-      rs.next();
-      int cols = rs.getMetaData().getColumnCount();
-      Integer[] result = new Integer[cols];
-      for (int i=0; i < cols; i++) {
-        result[i] = new Integer(rs.getInt(i+1));
-      }
-      return result;
-    } finally {
-      pstm.close();
-    }
-  }
-  
 }
