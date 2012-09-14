@@ -163,23 +163,15 @@ public class RDBMSStorage implements StorageIF {
   }
   
   protected InputStream getInputStream(String property, String filename)
-    throws FileNotFoundException {
+    throws IOException {
     
-    InputStream istream = null;
     String _filename = (String)properties.get(property);
-    if (_filename != null) {
-      // Check to see if file exists
-      File file = new File(_filename);
-      istream = new FileInputStream(file);
-    }
-    if (istream != null)
+    if (_filename == null) {
+      _filename = "classpath:net/ontopia/topicmaps/impl/rdbms/config/" + filename;
+    } else {
       log.debug(filename + ": using file '" + _filename + "'");
-    else {
-      ClassLoader cloader = RDBMSStorage.class.getClassLoader();
-      istream = cloader.getResourceAsStream("net/ontopia/topicmaps/impl/rdbms/config/" + filename);
-      if (istream != null) log.debug(filename + ": loading from classpath");
     }
-    return istream;
+    return StreamUtils.getInputStream(_filename);
   }
   
   /**
