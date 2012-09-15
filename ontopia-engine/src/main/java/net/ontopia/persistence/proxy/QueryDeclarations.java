@@ -1,6 +1,7 @@
 
 package net.ontopia.persistence.proxy;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.PropertyUtils;
+import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.xml.DefaultXMLReaderFactory;
 import net.ontopia.xml.Slf4jSaxErrorHandler;
@@ -176,7 +178,7 @@ public class QueryDeclarations {
   protected Map indicators = new HashMap();
   
   public QueryDeclarations(InputStream istream) {
-    loadQueries(new InputSource(istream));
+    loadQueries(istream);
   }
 
   /**
@@ -230,6 +232,9 @@ public class QueryDeclarations {
     }
   }
   
+  public void loadQueries(InputStream stream) {
+    loadQueries(new InputSource(stream));
+  }
 }
 
 

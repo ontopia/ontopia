@@ -314,6 +314,10 @@ public class RDBMSStorage implements StorageIF {
     return mapping;
   }
   
+  public QueryDeclarations getQueryDeclarations() {
+    return queries;
+  }
+  
   public IdentityIF generateIdentity(Object type) {
     return keygen.generateKey(type);
   }
@@ -665,5 +669,5 @@ public class RDBMSStorage implements StorageIF {
       }
     }
   }
-  
+
 }
