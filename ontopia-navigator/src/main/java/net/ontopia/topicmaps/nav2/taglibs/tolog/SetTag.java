@@ -118,12 +118,12 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
       if (queryResult.getWidth() == 0)
         throw new NavigatorRuntimeException("<tolog:set> : got a query result"
                 + " with zero columns, instead of the expected: one."
-                + "\nPlease check the query.\n");
+                + "\nPlease check the query.");
 
       if (queryResult.getWidth() >= 2)
         throw new NavigatorRuntimeException("<tolog:set> : got a query result"
                 + " with more than one column, instead of the expected: one."
-                + " Please check the query.\n");
+                + " Please check the query.");
 
       // Get 'outValue' from the first column of 'queryResult'.
       outValue = getColumn(queryResult, 0);
@@ -142,18 +142,18 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
     if (query == null) {
       if (var == null)
         throw new JspTagException("<tolog:set> : requires a 'var'- or a"
-                + " 'query'-attribute (or both), but got neither.\n");
+                + " 'query'-attribute (or both), but got neither.");
 
       if (!(reqparam == null || value == null))
         throw new JspTagException("<tolog:set> : requires either a"
                 + " 'query'-, a 'reqparam'- or a 'value'-attribute,"
-                + " but got both.\n");
+                + " but got both.");
 
     } else {
       if (reqparam != null || value != null)
         throw new JspTagException("<tolog:set> : requires either a"
                 + " 'query'-, a 'reqparam'- or a 'value'-attribute,"
-                + " but got more than one of them.\n");
+                + " but got more than one of them.");
     }
   }
 
