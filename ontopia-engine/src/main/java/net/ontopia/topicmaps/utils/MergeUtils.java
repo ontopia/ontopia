@@ -1039,7 +1039,15 @@ public class MergeUtils {
     it = source.getTopicNames().iterator();
     while (it.hasNext()) {
       TopicNameIF bn2 = (TopicNameIF) it.next();
-      TopicNameIF bn1 = builder.makeTopicName(target, copyTopic(builder.getTopicMap(), bn2.getType()), bn2.getValue());
+
+      // first copy the type, fixes #409
+      TopicIF nametype = (TopicIF)mergemap.get(bn2.getType());
+      if (nametype == null) {
+        nametype = copyTopic(builder.getTopicMap(), bn2.getType());
+        mergemap.put(bn2.getType(), nametype);
+        copyCharacteristics(nametype, bn2.getType(), mergemap);
+      }
+      TopicNameIF bn1 = builder.makeTopicName(target, nametype, bn2.getValue());
       copyScope(bn1, bn2, mergemap);
 
       String key = KeyGenerator.makeTopicNameKey(bn1);
@@ -1064,7 +1072,15 @@ public class MergeUtils {
     it = source.getOccurrences().iterator();
     while (it.hasNext()) {
       OccurrenceIF occ2 = (OccurrenceIF) it.next();
-      OccurrenceIF occ1 = builder.makeOccurrence(target, copyTopic(builder.getTopicMap(), occ2.getType()), "");
+
+      // first copy the type, fixes #409
+      TopicIF occtype = (TopicIF)mergemap.get(occ2.getType());
+      if (occtype == null) {
+        occtype = copyTopic(builder.getTopicMap(), occ2.getType());
+        mergemap.put(occ2.getType(), occtype);
+        copyCharacteristics(occtype, occ2.getType(), mergemap);
+      }
+      OccurrenceIF occ1 = builder.makeOccurrence(target, occtype, "");      
       CopyUtils.copyOccurrenceData(occ1, occ2);
       copyScope(occ1, occ2, mergemap);
       copyReifier(occ1, occ2, mergemap);
