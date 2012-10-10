@@ -750,7 +750,7 @@
     <param class="java.lang.String"/>
 
     <statement platform="postgresql"
-     query="select * from (select class, id as objectid, content, score as score from (select 'B' as class, 'B' || id as id, content as content, rank(tsearch2, to_tsquery('default', ?), 1) as score from TM_TOPIC_NAME where topicmap_id = ? and tsearch2 @@ to_tsquery('default', ?) union all select 'O' as class, 'O' || id as id, content as content, rank(tsearch2, to_tsquery('default', ?), 1) as score from TM_OCCURRENCE where topicmap_id = ? and tsearch2 @@ to_tsquery('default', ?) union all select 'N' as class, 'N' || id as id, content as content, rank(tsearch2, to_tsquery('default', ?), 1) as score from TM_VARIANT_NAME where topicmap_id = ? and tsearch2 @@ to_tsquery('default', ?)) tsearch_tm_type) as X order by score"/>
+     query="select * from (select class, id as objectid, content, score as score from (select 'B' as class, 'B' || id as id, content as content, ts_rank(to_tsvector(content), to_tsquery(?), 1) as score from TM_TOPIC_NAME where topicmap_id = ? and content @@ to_tsquery(?) union all select 'O' as class, 'O' || id as id, content as content, ts_rank(to_tsvector(content), to_tsquery(?), 1) as score from TM_OCCURRENCE where topicmap_id = ? and content @@ to_tsquery(?) union all select 'N' as class, 'N' || id as id, content as content, ts_rank(to_tsvector(content), to_tsquery(?), 1) as score from TM_VARIANT_NAME where topicmap_id = ? and content @@ to_tsquery(?)) tsearch_tm_type) as X order by score desc"/>
 
   </query>
 

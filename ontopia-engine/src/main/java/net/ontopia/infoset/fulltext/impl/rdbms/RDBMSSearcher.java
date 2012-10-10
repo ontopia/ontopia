@@ -113,9 +113,10 @@ public class RDBMSSearcher extends AbstractIndex implements SearcherIF {
    * order is different this method must be overridden.
    */
   protected Object[] getParameters(String query, TopicMapIF topicmap) {
-    if (ft_platform == FT_PLATFORM_TSEARCH2)
+    if (ft_platform == FT_PLATFORM_TSEARCH2) {
+      query = query.replaceAll("\\s", " & ");
       return new Object[] { query, topicmap, query, query, topicmap, query, query, topicmap, query };
-    else if (ft_platform == FT_PLATFORM_SQLSERVER)
+    } else if (ft_platform == FT_PLATFORM_SQLSERVER)
       return new Object[] { query, topicmap, query, topicmap, query, topicmap };
     else
       return new Object[] { topicmap, query, topicmap, query, topicmap, query };      
