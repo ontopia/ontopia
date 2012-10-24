@@ -46,7 +46,6 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   };
 
   // members
-  private ContextManagerIF contextManager;
   Collection outValue;
 
   // tag attributes
@@ -68,13 +67,12 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
    */
   public int doStartTag() throws JspTagException {
     ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
-
     if (contextTag == null)
       throw new JspTagException("<tolog:set> must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
               + " <tolog:context> was found.");
 
-    this.contextManager = contextTag.getContextManager();
+    ContextManagerIF ctxmgr = contextTag.getContextManager();
 
     // Get the TopicMap from the context.
     TopicMapIF topicmap = contextTag.getTopicMap();
@@ -167,25 +165,25 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
   /**
    * Set a variable in the ontopia environment to a given value.
    */
-  private void setOntopia(String var, Object val) {
+  private void setOntopia(String var, Object val, ContextManagerIF ctxmgr) {
     if (val instanceof Object[]) {
 
       Object[] jstlArray = (Object[])val;
 
       // Let the context manager create a collection to hold the array values.
       // Need one value to do this, so use first value in jstlArray (or null).
-      contextManager.setValue(var, (jstlArray.length == 0)
+      ctxmgr.setValue(var, (jstlArray.length == 0)
               ? null
               : jstlArray[0]);
-      Collection ontopiaValue = contextManager.getValue(var);
+      Collection ontopiaValue = ctxmgr.getValue(var);
 
       // Add the rest of the values in jstlArray to ontopiaValue.
       for (int i = 1; i < jstlArray.length; i++)
         ontopiaValue.add(jstlArray[i]);
     } else if (val instanceof Collection) {
-      contextManager.setValue(var, (Collection)val);
+      ctxmgr.setValue(var, (Collection)val);
     } else {
-      contextManager.setValue(var, val);
+      ctxmgr.setValue(var, val);
     }
   }
 
@@ -230,12 +228,13 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
    */
   public int doEndTag() throws JspException {
     // Bind 'outValue' to var in appropriate scope.
-    if (scope == null || scope.equals("ontopia") || scope.equals("oks"))
-      setOntopia(var, outValue);
-    else
+    if (scope == null || scope.equals("ontopia") || scope.equals("oks")) {
+      ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
+      ContextManagerIF ctxmgr = contextTag.getContextManager();
+      setOntopia(var, outValue, ctxmgr);
+    } else
       setJstl(var, outValue, mapScope(scope));
 
-    release();
     return EVAL_PAGE;
   }
 
@@ -243,17 +242,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
    * Resets the state of the Tag.
    */
   public void release() {
-    // reset members
-    contextManager = null;
-
-    // reset tag attributes
-    query = null;
-    reqparam = null;
-    scope = null;
-    value = null;
-    var = null;
-
-    // do not set parent to null!!!
+    // do *not* reset tag attributes
   }
 
   // -----------------------------------------------------------------

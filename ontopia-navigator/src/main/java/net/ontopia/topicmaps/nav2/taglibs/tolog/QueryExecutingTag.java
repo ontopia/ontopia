@@ -32,7 +32,6 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
   // members
   protected String columnNames[];
   protected ContextManagerIF contextManager;
-  protected ContextTag contextTag;
   protected QueryResultIF queryResult;
 
   // tag attributes
@@ -52,7 +51,7 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
    * Returns EVAL_BODY_BUFFERED by default.
    */
   public int doStartTag() throws JspTagException {
-    this.contextTag = FrameworkUtils.getContextTag(pageContext);
+    ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
 
     if (contextTag == null)
       throw new JspTagException("<tolog:*> tags must be nested directly or"
@@ -146,11 +145,9 @@ public abstract class QueryExecutingTag extends BodyTagSupport {
     // reset members
     columnNames = null;
     contextManager = null;
-    contextTag = null;
     queryResult = null;
 
-    // reset tag attributes
-    query = null;
+    // do *not* reset tag attributes
   }
 
   // -----------------------------------------------------------------

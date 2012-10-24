@@ -4,6 +4,7 @@ package net.ontopia.topicmaps.nav2.taglibs.tolog;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 
+import net.ontopia.topicmaps.nav2.taglibs.logic.ContextTag;
 import net.ontopia.topicmaps.nav2.core.VariableNotSetException;
 import net.ontopia.topicmaps.nav2.utils.FrameworkUtils;
 
@@ -36,8 +37,7 @@ public class IfTag extends QueryExecutingTag {
    * Process the start tag for this instance.
    */
   public int doStartTag() throws JspTagException {
-    this.contextTag = FrameworkUtils.getContextTag(pageContext);
-    
+    ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
     if (contextTag == null)
       throw new JspTagException("<tolog:if> must be nested directly or"
               + " indirectly within a <tolog:context> tag, but no"
@@ -95,9 +95,7 @@ public class IfTag extends QueryExecutingTag {
   public void release() {
     super.release();
     
-    // reset members specific to this class.
-    var = null;
-    
+    // do not reset tag attributes (causes problems with tag pooling)
     // do not set parent to null!!!
   }
   

@@ -339,14 +339,14 @@ public class ForEachTag extends BodyTagSupport {
   
     // establish old lexical scope, back to outside of the loop
     queryWrapper.getContextManager().popScope();
-    release();
+    reset();
     return super.doEndTag();
   }
 
   /**
-   * Resets the state of the Tag.
+   * Reset state so we're ready to run again.
    */
-  public void release() {
+  private void reset() {
     // reset member variables
     groupingAncestor = null; 
     queryWrapper = null;
@@ -356,12 +356,14 @@ public class ForEachTag extends BodyTagSupport {
     hasValidated = false;
     sequenceNumber = 0;
     neverEvaluatedBody = false;
-    
-    // reset tag attributes
-    groupBy = null;
-    separator = null;
-    query = null;
+  }
 
+  /**
+   * Resets the state of the Tag.
+   */
+  public void release() {
+    // do *not* reset tag attributes here, as that will cause problems
+    // with tag pooling
     super.release();
   }
   

@@ -92,7 +92,6 @@ public class OutTag extends BaseOutputProducingTag {
    * Resets the state of the Tag.
    */
   public void release() {
-    scope = null;
     super.release();
   }
 

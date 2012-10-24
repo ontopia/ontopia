@@ -104,10 +104,7 @@ public class QueryTag extends BodyTagSupport {
   public void release() {
     // reset members
 
-    // reset tag attributes
-    query = null;
-    name = null;
-
+    // do *not* reset tag attributes
     // do not set parent to null!!!
   }
 
