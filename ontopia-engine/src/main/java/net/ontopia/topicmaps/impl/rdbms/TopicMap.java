@@ -29,6 +29,7 @@ import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.topicmaps.impl.utils.DeletionUtils;
@@ -358,6 +359,10 @@ public class TopicMap extends TMObject implements TopicMapIF {
   
   public Collection<OccurrenceIF> getOccurrencesByType(TopicIF topic, TopicIF type) {
     return transaction.getOccurrencesByType(topic, type);
+  }
+  
+  public Collection<TopicNameIF> getTopicNamesByType(TopicIF topic, TopicIF type) {
+    return transaction.getTopicNamesByType(topic, type);
   }
 
   // ---------------------------------------------------------------------------

@@ -84,6 +84,10 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     return (Collection<TopicNameIF>) loadCollectionField(Topic.LF_names);
   }
   
+  public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
+    return ((TopicMap)getTopicMap()).getTopicNamesByType(this, type);
+  }
+  
   void addTopicName(TopicNameIF name) {
     throw new ReadOnlyException();
   }

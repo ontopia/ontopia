@@ -20,6 +20,7 @@ import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.core.TransactionNotActiveException;
 import net.ontopia.topicmaps.core.ReadOnlyException;
@@ -321,6 +322,12 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     return new QueryCollection<OccurrenceIF>(txn, 
             "TopicIF.getOccurrencesByType_size", new Object[] {getTopicMap(), topic, type}, 
             "TopicIF.getOccurrencesByType", new Object[] {getTopicMap(), topic, type});
+  }
+  
+  public Collection<TopicNameIF> getTopicNamesByType(TopicIF topic, TopicIF type) {
+    return new QueryCollection<TopicNameIF>(txn, 
+            "TopicIF.getTopicNamesByType_size", new Object[] {getTopicMap(), topic, type}, 
+            "TopicIF.getTopicNamesByType", new Object[] {getTopicMap(), topic, type});
   }
 
   public String toString() {

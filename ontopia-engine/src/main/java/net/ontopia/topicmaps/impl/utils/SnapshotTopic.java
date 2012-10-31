@@ -129,6 +129,10 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
     return (basenames == null ? empty : basenames);
   }
   
+  public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
+    return Collections.emptyList();
+  }
+
   public Collection<OccurrenceIF> getOccurrences() {
     Collection<OccurrenceIF> empty = Collections.emptyList();
     return (occurrences == null ? empty : occurrences);

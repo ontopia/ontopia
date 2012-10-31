@@ -432,6 +432,23 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     assertTrue("occurrence with with incorrect type found",
                topic.getOccurrencesByType(type).size() == 1);
   }
+  
+  public void testNamesByType() {
+    TopicIF type = builder.makeTopic();
+        
+    assertTrue("names by non-existent type initially not empty",
+               topic.getTopicNamesByType(type).size() == 0);
+
+    TopicNameIF name = builder.makeTopicName(topic, type, "foo");
+
+    assertTrue("names of correct type not found",
+               topic.getTopicNamesByType(type).size() == 1);
+
+    TopicNameIF name2 = builder.makeTopicName(topic, builder.makeTopic(), "bar");
+
+    assertTrue("name with with incorrect type found",
+               topic.getTopicNamesByType(type).size() == 1);
+  }
 
   // --- Internal methods
 

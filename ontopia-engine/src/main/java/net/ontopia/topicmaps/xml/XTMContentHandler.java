@@ -1393,6 +1393,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     public Collection getTopicNames() {
       throw new UnsupportedOperationException();
     }
+    public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
+      throw new UnsupportedOperationException();
+    }
     public Collection getOccurrences() {
       throw new UnsupportedOperationException();
     }

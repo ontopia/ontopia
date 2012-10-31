@@ -129,6 +129,31 @@
 
   </query>
   
+  <query name="TopicIF.getTopicNamesByType" type="matrix">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.TopicName"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select t1.id from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.topic_id = ? and t1.type_id = ?"/>
+
+  </query>
+  <query name="TopicIF.getTopicNamesByType_size" type="matrix">
+  
+    <select class="java.lang.Integer"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select count(t1.id) from TM_TOPIC_NAME t1 where t1.topicmap_id = ? and t1.topic_id = ? and t1.type_id = ?"/>
+
+  </query>
+  
   <query name="TopicIF.getOccurrencesByType" type="matrix">
   
     <select class="net.ontopia.topicmaps.impl.rdbms.Occurrence"/>

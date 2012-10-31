@@ -191,6 +191,16 @@ public class Topic extends TMObject implements TopicIF {
     names.remove(name);
   }
   
+  public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
+    Set<TopicNameIF> namesbytype = topicmap.cfactory.makeSmallSet();
+    for (TopicNameIF name : names) {
+      if (name.getType().equals(type)) {
+        namesbytype.add(name);
+      }
+    }
+    return Collections.unmodifiableSet(namesbytype);
+  }
+
   public Collection<OccurrenceIF> getOccurrences() {
     return Collections.unmodifiableSet(occurs);
   }

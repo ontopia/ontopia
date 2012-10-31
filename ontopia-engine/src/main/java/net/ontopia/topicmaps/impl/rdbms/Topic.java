@@ -207,6 +207,10 @@ public class Topic extends TMObject implements TopicIF {
     return (Collection<TopicNameIF>) loadCollectionField(LF_names);
   }
   
+  public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
+    return ((TopicMap)getTopicMap()).getTopicNamesByType(this, type);
+  }
+  
   void addTopicName(TopicNameIF name) {
     if (name == null)
       throw new NullPointerException("null is not a valid argument.");

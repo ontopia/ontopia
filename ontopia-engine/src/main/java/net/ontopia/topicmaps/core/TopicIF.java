@@ -145,6 +145,14 @@ public interface TopicIF extends TMObjectIF {
   public Collection<TopicNameIF> getTopicNames();
   
   /**
+   * PUBLIC: Gets the topic names of this topic with a specified type. 
+   *
+   * @return A collection of TopicNameIF objects typed by specified 
+   * type.
+   */
+  public Collection<TopicNameIF> getTopicNamesByType(TopicIF type);
+  
+  /**
    * PUBLIC: Gets the occurrences of this topic. The occurrences are
    * not guaranteed to have any specific order.
    *
