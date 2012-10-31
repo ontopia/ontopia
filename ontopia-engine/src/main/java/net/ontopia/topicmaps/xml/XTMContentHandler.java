@@ -1396,6 +1396,9 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     public Collection getOccurrences() {
       throw new UnsupportedOperationException();
     }
+    public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
+      throw new UnsupportedOperationException();
+    }
     public Collection getRoles() {
       throw new UnsupportedOperationException();
     }

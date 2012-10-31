@@ -133,6 +133,10 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
     Collection<OccurrenceIF> empty = Collections.emptyList();
     return (occurrences == null ? empty : occurrences);
   }
+
+  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
+    return Collections.emptyList();
+  }
   
   public Collection<AssociationRoleIF> getRoles() {
     return Collections.emptyList();

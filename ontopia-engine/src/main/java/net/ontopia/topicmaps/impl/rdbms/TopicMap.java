@@ -22,6 +22,7 @@ import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.CrossTopicMapException;
 import net.ontopia.topicmaps.core.NotRemovableException;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.ReifiableIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -350,7 +351,15 @@ public class TopicMap extends TMObject implements TopicMapIF {
   public Collection<AssociationRoleIF> getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return transaction.getRolesByType(player, rtype, atype);
   }
+
+  // ---------------------------------------------------------------------------
+  // Optimized shortcuts
+  // ---------------------------------------------------------------------------
   
+  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF topic, TopicIF type) {
+    return transaction.getOccurrencesByType(topic, type);
+  }
+
   // ---------------------------------------------------------------------------
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------

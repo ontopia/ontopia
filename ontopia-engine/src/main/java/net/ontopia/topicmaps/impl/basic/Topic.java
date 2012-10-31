@@ -195,6 +195,16 @@ public class Topic extends TMObject implements TopicIF {
     return Collections.unmodifiableSet(occurs);
   }
 
+  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
+    Set<OccurrenceIF> occsbytype = topicmap.cfactory.makeSmallSet();
+    for (OccurrenceIF occ : occurs) {
+      if (occ.getType().equals(type)) {
+        occsbytype.add(occ);
+      }
+    }
+    return Collections.unmodifiableSet(occsbytype);
+  }
+
   protected void addOccurrence(OccurrenceIF _occurrence) {
     Occurrence occurrence = (Occurrence)_occurrence;
     if (occurrence == null)

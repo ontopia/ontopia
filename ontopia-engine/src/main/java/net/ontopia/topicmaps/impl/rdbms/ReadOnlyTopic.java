@@ -96,6 +96,10 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     return (Collection<OccurrenceIF>) loadCollectionField(Topic.LF_occurrences);
   }
   
+  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
+    return ((TopicMap)getTopicMap()).getOccurrencesByType(this, type);
+  }
+
   void addOccurrence(OccurrenceIF occurrence) {
     throw new ReadOnlyException();
   }

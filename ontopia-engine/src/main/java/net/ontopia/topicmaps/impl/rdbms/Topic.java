@@ -242,6 +242,10 @@ public class Topic extends TMObject implements TopicIF {
     return (Collection<OccurrenceIF>) loadCollectionField(LF_occurrences);
   }
   
+  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
+    return ((TopicMap)getTopicMap()).getOccurrencesByType(this, type);
+  }
+  
   void addOccurrence(OccurrenceIF occurrence) {
     if (occurrence == null)
       throw new NullPointerException("null is not a valid argument.");

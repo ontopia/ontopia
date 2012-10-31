@@ -416,6 +416,23 @@ public abstract class TopicTest extends AbstractTMObjectTest {
                topicmap.getAssociations().size() == 0);
   }
   
+  public void testOccurrencesByType() {
+    TopicIF type = builder.makeTopic();
+        
+    assertTrue("occurrences by non-existent type initially not empty",
+               topic.getOccurrencesByType(type).size() == 0);
+
+    OccurrenceIF occ = builder.makeOccurrence(topic, type, "foo");
+
+    assertTrue("occurrences of correct type not found",
+               topic.getOccurrencesByType(type).size() == 1);
+
+    OccurrenceIF occ2 = builder.makeOccurrence(topic, builder.makeTopic(), "bar");
+
+    assertTrue("occurrence with with incorrect type found",
+               topic.getOccurrencesByType(type).size() == 1);
+  }
+
   // --- Internal methods
 
   public void setUp() throws Exception {

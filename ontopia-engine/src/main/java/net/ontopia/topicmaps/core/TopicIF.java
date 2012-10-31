@@ -151,6 +151,15 @@ public interface TopicIF extends TMObjectIF {
    * @return A collection of OccurrenceIF objects.
    */
   public Collection<OccurrenceIF> getOccurrences();
+  
+  /**
+   * PUBLIC: Gets the occurrences of this topic with a specified type. 
+   * The occurrences are not guaranteed to have any specific order.
+   *
+   * @return A collection of OccurrenceIF objects typed by specified 
+   * type.
+   */
+  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type);
 
   /**
    * PUBLIC: Gets the association roles played by this topic. There

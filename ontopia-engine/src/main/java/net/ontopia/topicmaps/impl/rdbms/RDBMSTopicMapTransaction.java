@@ -13,7 +13,10 @@ import java.util.Iterator;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.PersistentIF;
+import net.ontopia.persistence.proxy.QueryCollection;
+import net.ontopia.persistence.proxy.QueryResultIF;
 import net.ontopia.persistence.proxy.TransactionIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -308,6 +311,16 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
 
   public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return rtatcache.getRolesByType(player, rtype, atype);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Optimized shortcuts
+  // ---------------------------------------------------------------------------
+
+  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF topic, TopicIF type) {
+    return new QueryCollection<OccurrenceIF>(txn, 
+            "TopicIF.getOccurrencesByType_size", new Object[] {getTopicMap(), topic, type}, 
+            "TopicIF.getOccurrencesByType", new Object[] {getTopicMap(), topic, type});
   }
 
   public String toString() {

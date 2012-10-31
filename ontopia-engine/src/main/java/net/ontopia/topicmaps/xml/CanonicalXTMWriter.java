@@ -1096,6 +1096,10 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return Collections.EMPTY_SET;
     }
 
+    public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
+      return Collections.EMPTY_SET;
+    }
+
     public Collection getRoles() {
       return Collections.EMPTY_SET;
     }
