@@ -449,7 +449,40 @@ public abstract class TopicTest extends AbstractTMObjectTest {
     assertTrue("name with with incorrect type found",
                topic.getTopicNamesByType(type).size() == 1);
   }
+  
+  public void testAssociations() {
+    
+    assertTrue("associations initially not empty",
+               topic.getAssociations().size() == 0);
+    
+    builder.makeAssociation(builder.makeTopic(), builder.makeTopic(), topic);
+       
+    assertTrue("associations incorrect count",
+               topic.getAssociations().size() == 1);
+    
+    builder.makeAssociation(builder.makeTopic(), builder.makeTopic(), topic);
+       
+    assertTrue("associations incorrect count",
+               topic.getAssociations().size() == 2);
+  }  
 
+  public void testAssociationsByType() {
+    TopicIF type = builder.makeTopic();
+        
+    assertTrue("associations by non-existent type initially not empty",
+               topic.getAssociationsByType(type).size() == 0);
+
+    builder.makeAssociation(type, builder.makeTopic(), topic);
+
+    assertTrue("associations of correct type not found",
+               topic.getAssociationsByType(type).size() == 1);
+
+    builder.makeAssociation(builder.makeTopic(), builder.makeTopic(), topic);
+
+    assertTrue("associations with with incorrect type found",
+               topic.getAssociationsByType(type).size() == 1);
+  }
+  
   // --- Internal methods
 
   public void setUp() throws Exception {

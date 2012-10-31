@@ -1116,6 +1116,14 @@ public class CanonicalXTMWriter implements TopicMapWriterIF {
       return Collections.EMPTY_SET;
     }
     
+    public Collection<AssociationIF> getAssociations() {
+      return Collections.EMPTY_SET;
+    }
+
+    public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
+      return Collections.EMPTY_SET;
+    }
+
     public TopicMapIF getTopicMap() {
       return tmForFake;
     }

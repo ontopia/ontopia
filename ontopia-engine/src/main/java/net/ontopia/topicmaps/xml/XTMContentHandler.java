@@ -1411,6 +1411,12 @@ public class XTMContentHandler extends AbstractTopicMapContentHandler
     public Collection getRolesByType(TopicIF roletype, TopicIF assoc_type) {
       throw new UnsupportedOperationException();
     }
+    public Collection<AssociationIF> getAssociations() {
+      throw new UnsupportedOperationException();
+    }
+    public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
+      throw new UnsupportedOperationException();
+    }
     public void merge(TopicIF topic) {
       throw new UnsupportedOperationException();
     }

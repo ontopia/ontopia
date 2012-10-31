@@ -179,6 +179,58 @@
 
   </query>
 
+  <query name="TopicIF.getAssociations" type="matrix">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select a.id from TM_ASSOCIATION a, TM_ASSOCIATION_ROLE r where a.topicmap_id = ? and r.topicmap_id = ? and r.assoc_id = a.id and r.player_id = ?"/>
+
+  </query>
+  <query name="TopicIF.getAssociations_size" type="matrix">
+  
+    <select class="java.lang.Integer"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select count(a.id) from TM_ASSOCIATION a, TM_ASSOCIATION_ROLE r where a.topicmap_id = ? and r.topicmap_id = ? and r.assoc_id = a.id and r.player_id = ?"/>
+
+  </query>
+
+  <query name="TopicIF.getAssociationsByType" type="matrix">
+  
+    <select class="net.ontopia.topicmaps.impl.rdbms.Association"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select a.id from TM_ASSOCIATION a, TM_ASSOCIATION_ROLE r where a.topicmap_id = ? and a.type_id = ? and r.topicmap_id = ? and r.assoc_id = a.id and r.player_id = ?"/>
+
+  </query>
+  <query name="TopicIF.getAssociationsByType_size" type="matrix">
+  
+    <select class="java.lang.Integer"/>
+
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.TopicMap"/>
+    <param class="net.ontopia.topicmaps.impl.rdbms.Topic"/>
+
+    <statement platform="generic"
+     query="select count(a.id) from TM_ASSOCIATION a, TM_ASSOCIATION_ROLE r where a.topicmap_id = ? and a.type_id = ? and r.topicmap_id = ? and r.assoc_id = a.id and r.player_id = ?"/>
+
+  </query>
+
   // -----------------------------------------------------------------------------
   // ClassInstanceIndexIF
   // -----------------------------------------------------------------------------

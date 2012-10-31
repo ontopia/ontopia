@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -154,6 +155,14 @@ public class SnapshotTopic extends SnapshotTMObject implements TopicIF {
     return Collections.emptyList();
   }
   
+  public Collection<AssociationIF> getAssociations() {
+    return Collections.emptyList();
+  }
+
+  public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
+    return Collections.emptyList();
+  }
+
   public void merge(TopicIF topic) {
     throw new ReadOnlyException();
   }

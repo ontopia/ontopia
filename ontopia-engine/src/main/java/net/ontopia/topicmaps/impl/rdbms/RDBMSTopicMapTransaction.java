@@ -16,6 +16,7 @@ import net.ontopia.persistence.proxy.PersistentIF;
 import net.ontopia.persistence.proxy.QueryCollection;
 import net.ontopia.persistence.proxy.QueryResultIF;
 import net.ontopia.persistence.proxy.TransactionIF;
+import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -328,6 +329,18 @@ public class RDBMSTopicMapTransaction extends AbstractTopicMapTransaction
     return new QueryCollection<TopicNameIF>(txn, 
             "TopicIF.getTopicNamesByType_size", new Object[] {getTopicMap(), topic, type}, 
             "TopicIF.getTopicNamesByType", new Object[] {getTopicMap(), topic, type});
+  }
+
+  public Collection<AssociationIF> getAssocations(TopicIF topic) {
+    return new QueryCollection<AssociationIF>(txn, 
+            "TopicIF.getAssociations_size", new Object[] {getTopicMap(), getTopicMap(), topic}, 
+            "TopicIF.getAssociations", new Object[] {getTopicMap(), getTopicMap(), topic});
+  }
+
+  public Collection<AssociationIF> getAssocationsByType(TopicIF topic, TopicIF type) {
+    return new QueryCollection<AssociationIF>(txn, 
+            "TopicIF.getAssociationsByType_size", new Object[] {getTopicMap(), type, getTopicMap(), topic}, 
+            "TopicIF.getAssociationsByType", new Object[] {getTopicMap(), type, getTopicMap(), topic});
   }
 
   public String toString() {

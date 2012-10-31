@@ -359,6 +359,14 @@ public class Topic extends TMObject implements TopicIF {
     }
   }
   
+  public Collection<AssociationIF> getAssociations() {
+    return ((TopicMap)getTopicMap()).getAssocations(this);
+  }
+
+  public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
+    return ((TopicMap)getTopicMap()).getAssocationsByType(this, type);
+  }
+  
   public void merge(TopicIF topic) {
     CrossTopicMapException.check(topic, this);
     net.ontopia.topicmaps.utils.MergeUtils.mergeInto(this, topic);

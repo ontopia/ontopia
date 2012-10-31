@@ -365,6 +365,14 @@ public class TopicMap extends TMObject implements TopicMapIF {
     return transaction.getTopicNamesByType(topic, type);
   }
 
+  public Collection<AssociationIF> getAssocations(TopicIF topic) {
+    return transaction.getAssocations(topic);
+  }
+
+  public Collection<AssociationIF> getAssocationsByType(TopicIF topic, TopicIF type) {
+    return transaction.getAssocationsByType(topic, type);
+  }
+  
   // ---------------------------------------------------------------------------
   // ReifiableIF implementation
   // ---------------------------------------------------------------------------

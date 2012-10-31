@@ -200,6 +200,23 @@ public interface TopicIF extends TMObjectIF {
                                                       TopicIF assoc_type);
 
   /**
+   * PUBLIC: Gets the associations that have roles played by this topic. 
+   * There is no guarantee as to the order these are returned in.
+   *
+   * @return A collection of AssociationIF objects.
+   */
+  public Collection<AssociationIF> getAssociations();
+  
+  /**
+   * PUBLIC: Gets the associations that have roles played by this topic,
+   * where the association is of specified type. 
+   * There is no guarantee as to the order these are returned in.
+   *
+   * @return A collection of AssociationIF objects.
+   */
+  public Collection<AssociationIF> getAssociationsByType(TopicIF type);
+  
+  /**
    * EXPERIMENTAL: Merges the characteristics of one topic into
    * another topic.  The source topic stripped of characteristics, all
    * of which are moved to the target topic. Duplicate characteristics

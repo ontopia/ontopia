@@ -2,6 +2,7 @@
 package net.ontopia.topicmaps.impl.basic;
 
 import java.util.Set;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Comparator;
 import java.util.Collection;
@@ -305,6 +306,25 @@ public class Topic extends TMObject implements TopicIF {
         return result;
       }
     }    
+  }
+
+  public Collection<AssociationIF> getAssociations() {
+    Set<AssociationIF> assocs = new HashSet<AssociationIF>();
+    for (AssociationRoleIF role : roles) {
+      assocs.add(role.getAssociation());
+    }
+    return Collections.unmodifiableSet(assocs);
+  }
+
+  public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
+    Set<AssociationIF> assocs = new HashSet<AssociationIF>();
+    for (AssociationRoleIF role : roles) {
+      AssociationIF assoc = role.getAssociation();
+      if (assoc.getType().equals(type)) {
+        assocs.add(assoc);
+      }
+    }
+    return Collections.unmodifiableSet(assocs);
   }
 
   public void merge(TopicIF topic) {

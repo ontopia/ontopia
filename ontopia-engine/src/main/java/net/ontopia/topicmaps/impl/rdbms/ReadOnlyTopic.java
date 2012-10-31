@@ -144,6 +144,14 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
     }
   }
   
+  public Collection<AssociationIF> getAssociations() {
+    return ((TopicMap)getTopicMap()).getAssocations(this);
+  }
+
+  public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
+    return ((TopicMap)getTopicMap()).getAssocationsByType(this, type);
+  }
+  
   public void merge(TopicIF topic) {
     throw new ReadOnlyException();
   } 
