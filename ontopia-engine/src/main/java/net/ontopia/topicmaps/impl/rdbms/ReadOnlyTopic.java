@@ -85,7 +85,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
   
   public Collection<TopicNameIF> getTopicNamesByType(TopicIF type) {
-    return ((TopicMap)getTopicMap()).getTopicNamesByType(this, type);
+    return ((ReadOnlyTopicMap)getTopicMap()).getTopicNamesByType(this, type);
   }
   
   void addTopicName(TopicNameIF name) {
@@ -101,7 +101,7 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
   
   public Collection<OccurrenceIF> getOccurrencesByType(TopicIF type) {
-    return ((TopicMap)getTopicMap()).getOccurrencesByType(this, type);
+    return ((ReadOnlyTopicMap)getTopicMap()).getOccurrencesByType(this, type);
   }
 
   void addOccurrence(OccurrenceIF occurrence) {
@@ -145,11 +145,11 @@ public class ReadOnlyTopic extends ReadOnlyTMObject implements TopicIF {
   }
   
   public Collection<AssociationIF> getAssociations() {
-    return ((TopicMap)getTopicMap()).getAssocations(this);
+    return ((ReadOnlyTopicMap)getTopicMap()).getAssocations(this);
   }
 
   public Collection<AssociationIF> getAssociationsByType(TopicIF type) {
-    return ((TopicMap)getTopicMap()).getAssocationsByType(this, type);
+    return ((ReadOnlyTopicMap)getTopicMap()).getAssocationsByType(this, type);
   }
   
   public void merge(TopicIF topic) {

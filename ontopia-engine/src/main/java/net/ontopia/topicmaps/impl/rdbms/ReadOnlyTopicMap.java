@@ -20,6 +20,7 @@ import net.ontopia.persistence.proxy.TransactionIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.ConstraintViolationException;
 import net.ontopia.topicmaps.core.NotRemovableException;
+import net.ontopia.topicmaps.core.OccurrenceIF;
 import net.ontopia.topicmaps.core.TMObjectIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
@@ -27,6 +28,7 @@ import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
 import net.ontopia.topicmaps.core.ReadOnlyException;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.impl.utils.ObjectStrings;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -266,6 +268,26 @@ public class ReadOnlyTopicMap extends ReadOnlyTMObject implements TopicMapIF {
 
   public Collection getRolesByType(TopicIF player, TopicIF rtype, TopicIF atype) {
     return transaction.getRolesByType(player, rtype, atype);
+  }
+  
+  // ---------------------------------------------------------------------------
+  // Optimized shortcuts
+  // ---------------------------------------------------------------------------
+  
+  public Collection<OccurrenceIF> getOccurrencesByType(TopicIF topic, TopicIF type) {
+    return transaction.getOccurrencesByType(topic, type);
+  }
+  
+  public Collection<TopicNameIF> getTopicNamesByType(TopicIF topic, TopicIF type) {
+    return transaction.getTopicNamesByType(topic, type);
+  }
+
+  public Collection<AssociationIF> getAssocations(TopicIF topic) {
+    return transaction.getAssocations(topic);
+  }
+
+  public Collection<AssociationIF> getAssocationsByType(TopicIF topic, TopicIF type) {
+    return transaction.getAssocationsByType(topic, type);
   }
   
   // ---------------------------------------------------------------------------
