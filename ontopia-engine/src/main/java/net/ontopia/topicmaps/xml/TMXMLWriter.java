@@ -588,7 +588,7 @@ public class TMXMLWriter extends AbstractTopicMapExporter
     return new PrettyPrinter(out, encoding);
   }
   
-  private void addPrefix(String prefix, String nsuri) {
+  public void addPrefix(String prefix, String nsuri) {
     prefixes.put(prefix, nsuri);
     nsuris.put(nsuri, prefix);
   }
