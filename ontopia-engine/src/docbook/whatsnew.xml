@@ -10,8 +10,8 @@
 <shortaffil>Ontopia</shortaffil>
 </affiliation>
 </author>
-<pubdate>2012-11-29</pubdate>
-<releaseinfo>5.2.2</releaseinfo>
+<pubdate>2012-03-30</pubdate>
+<releaseinfo>5.2.1</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -20,59 +20,6 @@ This document describes what has changed in Ontopia between releases,
 both at a higher level, and in more detail.
 </para>
 </abstract>
-
-<!-- ======================================================================
-     5.2.2                                                              -->
-<section id="sect-5.2.2">
-<title>Ontopia 5.2.2 release notes</title>
-
-<para>This release is a bug fix release and introduces some new API methods for <interfacename>TopicIF</interfacename>.</para>
-
-<para>The following changes have been made:</para>
-
-<itemizedlist>
-  <listitem>
-    <para><interfacename>TopicIF</interfacename> now has the new optimized methods <interfacename>getOccurrencesByType()</interfacename>, 
-      <interfacename>getTopicNamesByType()</interfacename>, <interfacename>getAssociations()</interfacename> and 
-      <interfacename>getAssociationsByType()</interfacename>. The RDBMS implementation uses SQL queries for these methods to increase performance.
-    </para>
-  </listitem>
-  <listitem>
-    <para>A long standing issue regarding merging of occurrence and name types in RDBMS topicmaps has been fixed (issue 409)</para>
-  </listitem>
-  <listitem>
-    <para>Statistics of a topicmap can now be obtained from the new <interfacename>StatisticsIndexIF</interfacename> index</para>
-  </listitem>
-  <listitem>
-    <para><interfacename>TMXMLWriter</interfacename> now supports setting prefixes beforehand</para>
-  </listitem>
-</itemizedlist>
-
-<para>The following bugs have been fixed:</para>
-
-<itemizedlist>
-  <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=447"
-      >Issue 447: The PostgreSQL specific searcher implementation is broken due to deprecated function use</ulink></para>
-  </listitem>
-  <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=448"
-      >Issue 448: Topicmap statistics should be available though API</ulink></para>
-  </listitem>
-  <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=449"
-      >Issue 449: TMXMLWriter should support user defined prefixes</ulink></para>
-  </listitem>
-  <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=411"
-      >Issue 411: TopicIF should have a getOccurrencesByType(TopicIF type) method</ulink></para>
-  </listitem>
-  <listitem>
-    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=409"
-      >Issue 409: MergeUtils fails to merge names of name and occurrences types that do not have a subject identifier</ulink></para>
-  </listitem>
-</itemizedlist>
-</section>
 
 <!-- ======================================================================
      5.2.1                                                              -->
