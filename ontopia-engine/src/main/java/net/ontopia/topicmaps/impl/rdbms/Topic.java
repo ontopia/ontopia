@@ -305,19 +305,10 @@ public class Topic extends TMObject implements TopicIF {
       return result;
     } else {
       // lookup roles by type
-      // FIXME: is it possible to get rid of this if statement? looks like
-      // the two branches are doing the same thing. if not possible, add
-      // a comment explaining why not
-      if (roletype == null) {
-        TopicMap tm = (TopicMap)getTopicMap();
-        if (tm == null)
-          throw new ConstraintViolationException("Cannot retrieve roles by type when topic isn't attached to a topic map.");
-        return tm.getRolesByType(this, roletype);
-        
-      } else {
-        TopicMap tm = (TopicMap) roletype.getTopicMap();
-        return tm.getRolesByType(this, roletype);
-      }
+      TopicMap tm = (TopicMap)getTopicMap();
+      if (tm == null)
+        throw new ConstraintViolationException("Cannot retrieve roles by type when topic isn't attached to a topic map.");
+      return tm.getRolesByType(this, roletype);
     }
   }
   
