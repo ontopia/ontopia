@@ -514,8 +514,7 @@ topicmapid :
   TOPICMAPID (NAME { notQname(LT(0).getText());
     if (!subordinate)
       topicmap.addItemIdentifier(makeURI('#' + LT(0).getText()));
-  } | (TILDE NAME { notQname(LT(0).getText());
-                    reify(topicmap, LT(0).getText()); } ))
+  } | (TILDE NAME { reify(topicmap, LT(0).getText()); } ))
   ;
 
 encodingDecl :
