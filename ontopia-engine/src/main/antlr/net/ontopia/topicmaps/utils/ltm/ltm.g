@@ -286,8 +286,7 @@ options {
     */
   private void reify(ReifiableIF reifiable, String id) 
           throws SemanticException {
-    notQname(id);
-    TopicIF reifier = getTopicById(id);
+    TopicIF reifier = getTopicByName(id);
     try {
       ReificationUtils.reify(reifiable, reifier);
     } catch (InvalidTopicMapException e) {

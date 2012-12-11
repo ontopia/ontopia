@@ -1,0 +1,4 @@
+#BASEURI "http://some.random.baseuri/base"
+#PREFIX baz @"foo:bar/"
+[some-topic = "Just Some Topic" ~baz:basename-of-my-topic]
+[baz:basename-of-my-topic = "Basename of my topic"]

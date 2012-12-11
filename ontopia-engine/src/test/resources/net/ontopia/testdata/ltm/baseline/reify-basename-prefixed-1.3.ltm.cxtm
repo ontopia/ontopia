@@ -1,0 +1,25 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#some-topic</locator>
+</itemIdentifiers>
+<name number="1" reifier="2">
+<value>Just Some Topic</value>
+<type topicref="3"></type>
+</name>
+</topic>
+<topic number="2">
+<subjectIdentifiers>
+<locator>foo:bar/basename-of-my-topic</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>Basename of my topic</value>
+<type topicref="3"></type>
+</name>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>

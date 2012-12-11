@@ -1,0 +1,22 @@
+<topicMap>
+<topic number="1">
+<itemIdentifiers>
+<locator>#info</locator>
+</itemIdentifiers>
+</topic>
+<topic number="2">
+<itemIdentifiers>
+<locator>#mytopic</locator>
+</itemIdentifiers>
+<occurrence number="1" reifier="3">
+<value>Some information about mytopic</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="1"></type>
+</occurrence>
+</topic>
+<topic number="3">
+<subjectIdentifiers>
+<locator>foo:bar/mytopic-info</locator>
+</subjectIdentifiers>
+</topic>
+</topicMap>
