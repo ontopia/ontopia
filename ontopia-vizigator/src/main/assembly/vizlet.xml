@@ -31,7 +31,10 @@
 					<exclude>net/ontopia/topicmaps/xml/XTMValidationHandler*.class</exclude>
 					<exclude>net/ontopia/topicmaps/impl/rdbms/**</exclude>
 					<exclude>net/ontopia/topicmaps/impl/tmapi2/**</exclude>
-					<exclude>net/ontopia/topicmaps/query/**</exclude>
+					<exclude>net/ontopia/topicmaps/query/impl/**</exclude>
+					<exclude>net/ontopia/topicmaps/query/parser/**</exclude>
+					<exclude>net/ontopia/topicmaps/query/spi/**</exclude>
+					<exclude>net/ontopia/topicmaps/query/utils/**</exclude>
 					<exclude>net/ontopia/topicmaps/schema/**</exclude>
 					<exclude>net/ontopia/utils/ontojsp/**</exclude>
 					
