@@ -93,6 +93,8 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
 
   protected String groupString1;
 
+  private Map<String, String> prefixes = new HashMap<String, String>();
+
   /**
    * PUBLIC: Create an LTMTopicMapWriter that writes to a given
    * OutputStream in UTF-8. <b>Warning:</b> Use of this method is
@@ -188,6 +190,27 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     return false;
   }
 
+  public boolean addPrefix(String key, String prefix) {
+    if (key == null) {
+      log.warn("Attempting to add prefix with null key for prefix '" + prefix + "'");
+      return false;
+    }
+    if (prefix == null) {
+      log.warn("Attempting to add prefix with null value for key '" + key + "'");
+      return false;
+    }
+    if (prefixes.containsKey(key) && (!prefixes.get(key).equals(prefix))) {
+      log.warn("Attempting to re-add prefix key '" + key + "' for prefix '" + prefix + "', sticking to original prefix '" + prefixes.get(key));
+      return false;
+    }
+    if (prefixes.containsValue(prefix)) {
+      log.warn("Attempting to re-add prefix '" + prefix + "' for key '" + key + "', ignoring key for this prefix");
+      return false;
+    }
+    prefixes.put(key, prefix);
+    return true;
+  }
+
   /**
    * PUBLIC: Writes out the given topic map.
    */
@@ -273,6 +296,10 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
     out.write(':');
     out.write(minLengthString(calendar.get(Calendar.MINUTE), 2));
     out.write("\n*/\n");
+
+    for (String key : prefixes.keySet()) {
+      out.write("#PREFIX " + key + " @\"" + prefixes.get(key) + "\"\n");
+    }
 
     // If necessary, output the prefix for untyped topic map constructs.
     if (existsUntyped)
@@ -582,7 +609,21 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
       while (subjectIndicatorsIt.hasNext()) {
         String externalForm = ((LocatorIF)subjectIndicatorsIt.next())
             .getExternalForm();
-        if (base == null || !externalForm.startsWith(base)) {
+
+        boolean skip = false;
+        if (prefixes.size() > 0) {
+          int colonIndex = id.indexOf(":");
+          if (colonIndex > -1) {
+            String key = id.substring(0, colonIndex);
+            String prefix = prefixes.get(key);
+            String suffix = id.substring(colonIndex + 1);
+            if (prefix != null) {
+              skip = externalForm.equals(prefix + suffix);
+            }
+          }
+        }
+
+        if (!skip && (base == null || !externalForm.startsWith(base))) {
           out.write("\n    ");
           out.write("@\"");
           out.write(escapeString(externalForm));
@@ -1290,6 +1331,24 @@ public class LTMTopicMapWriter implements TopicMapWriterIF {
      * @param forceSuffix A suffix is always added if forceSuffix is true.
      */
     private String makeId(TopicIF topic, String baseId, boolean forceSuffix) {
+
+      if (prefixes.size() > 0) {
+        for (LocatorIF psi : topic.getSubjectIdentifiers()) {
+          String externalForm = psi.getExternalForm();
+          for (String key : prefixes.keySet()) {
+            String prefix = prefixes.get(key);
+            if (externalForm.startsWith(prefix)) {
+              String suffix = externalForm.substring(prefix.length());
+              if ((suffix.length() > 0) && !suffix.contains("/")) {
+                String result = key + ":" + suffix;
+                ids.put(topic, result);
+                return result;
+              }
+            }
+          }
+        }
+      }
+
       String retVal = baseId;
       Integer suffix = (Integer)counters.get(baseId);
       if (suffix == null) {

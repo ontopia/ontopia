@@ -1,0 +1,11 @@
+#VERSION "1.3"
+#PREFIX a @"foo:bar/"
+#PREFIX b @"bar:baz/"
+
+[a:b : b:c = "a:b"]
+[b:c = "b:c"]
+a:d(b:e : a:e, b:f : a:f) ~ b:r
+[b:r : b:d]
+[b:d = "b:d"]
+a:g(b:g : a:h) ~ b:h
+[b:h : a:k = "b:h"]

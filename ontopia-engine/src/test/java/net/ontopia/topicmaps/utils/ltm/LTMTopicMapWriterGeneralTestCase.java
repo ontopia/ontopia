@@ -66,6 +66,8 @@ public class LTMTopicMapWriterGeneralTestCase {
       String out = base + File.separator + "out" + File.separator + filename
           + ".cxtm";
 
+      boolean isPrefixed = filename.startsWith("prefixed-");
+
       // Import topic map from arbitrary source.
       TopicMapIF sourceMap = ImportExportUtils.getReader(in).read();
 
@@ -79,8 +81,23 @@ public class LTMTopicMapWriterGeneralTestCase {
 
       // Export the topic map to ltm.
       FileOutputStream fos = new FileOutputStream(ltm);
-      (new LTMTopicMapWriter(fos)).write(sourceMap);
+      LTMTopicMapWriter ltmWriter = new LTMTopicMapWriter(fos);
+      if (isPrefixed) {
+        ltmWriter.addPrefix("a", "foo:bar/");
+        ltmWriter.addPrefix("b", "bar:baz/");
+        ltmWriter.addPrefix("m", "http://psi.topicmaps.org/iso13250/model/");
+      }
+      ltmWriter.write(sourceMap);
       fos.close();
+
+      if (isPrefixed) {
+        // re-route baseline to reloaded original file
+        baseline = base + File.separator + "out" + File.separator +
+          filename + ".original.cxtm";
+        fos = new FileOutputStream(baseline);
+        (new CanonicalXTMWriter(fos)).write(sourceMap);
+        fos.close();
+      }
 
       // Reimport the exported ltm.
       TopicMapIF ltmMap = ImportExportUtils.getReader(ltm).read();
