@@ -23,6 +23,7 @@ public class FieldInstanceDateField extends TextField<String> implements ITextFo
   private FieldValueModel fieldValueModel;
   private String oldValue;
   private String cols = "10";
+  private static final String DATE_FORMAT = "yyyy-MM-dd";
   
   public FieldInstanceDateField(String id, FieldValueModel fieldValueModel) {
     super(id);
@@ -31,12 +32,15 @@ public class FieldInstanceDateField extends TextField<String> implements ITextFo
     OccurrenceIF occ = (OccurrenceIF)fieldValueModel.getObject();
     this.oldValue = (occ == null ? null : occ.getValue());
     setModel(new Model<String>(oldValue));
-    
-    add(new DatePickerBehavior("yy-mm-dd"));
+
+    // NOTE: the date format syntax used for DatePickerBehavior is the jquery
+    // date format syntax, which is NOT the same as the Java syntax. it's
+    // documented here: http://docs.jquery.com/UI/Datepicker/formatDate
+    add(new DatePickerBehavior("yy-mm-dd")); // yy-mm-dd == 2013-01-18
     add(new DateFormatValidator(this, fieldValueModel.getFieldInstanceModel()) {
       @Override
       public DateFormat createDateFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd");
+        return new SimpleDateFormat(DATE_FORMAT);
       }
       @Override
       protected String resourceKey() {
@@ -61,7 +65,7 @@ public class FieldInstanceDateField extends TextField<String> implements ITextFo
   }
   
   public String getTextFormat() {
-    return "yyyy-MM-dd";
+    return "DATE_FORMAT";
   }
 
   @Override

@@ -37,7 +37,7 @@ public class DatePickerBehavior extends JQueryBehavior {
     sb.append("  $(\"").append(selector).append("\").datepicker({firstDay: 1, dateFormat: '")
     .append(dateFormat).append("', yearRange: '1750:2100', showOn: 'both', buttonImageOnly: true, buttonImage: '")
     .append(getDateIconURL())
-    .append("', onSelect: function(d, i) { $('").append(selector).append("').trigger('blur'); $.datepicker._hideDatepicker(); }")
+    .append("', onSelect: function(d, i) { $('").append(selector).append("').trigger('blur').change(); $.datepicker._hideDatepicker(); }")
     .append(" });\n");
     sb.append("};\n");
     sb.append("$(document).ready(function() {\n");
