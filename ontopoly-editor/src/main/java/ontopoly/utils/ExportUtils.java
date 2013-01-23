@@ -38,7 +38,9 @@ public class ExportUtils {
         filter = new SchemaOnlyFilter();
 
       // if filter == null it never gets used
-      TMExporterDecider decider = new TMExporterDecider(filter);
+      TMExporterDecider decider = null;
+      if (filter != null)
+        decider = new TMExporterDecider(filter);
 
       if (format.equalsIgnoreCase("xtm1")) { 
         XTMTopicMapWriter filterer = new XTMTopicMapWriter(out, charset);
