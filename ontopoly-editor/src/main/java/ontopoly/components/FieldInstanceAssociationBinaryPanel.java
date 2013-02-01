@@ -354,7 +354,11 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
           RoleField selectedField = (RoleField)currentField.getFieldsForOtherRoles().iterator().next();
 
           // check with page to see if add is allowed
-          if (ObjectUtils.different(currentField, selectedField)) {
+          if (ObjectUtils.different(currentField, selectedField) ||
+              // if assoc type is symmetric currentField == selectedField,
+              // but we're still OK to go ahead, so checking for that
+              // (this is issue 457)
+              currentField.getAssociationType().isSymmetric()) {
 
             Topic currentTopic = fieldInstance.getInstance();
             TopicMap topicMap = currentTopic.getTopicMap();
@@ -363,7 +367,7 @@ public class FieldInstanceAssociationBinaryPanel extends AbstractFieldInstancePa
             Iterator<String> iter = selected.iterator();
             while (iter.hasNext()) {
               String objectId = (String)iter.next();
-
+              
               AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
               Topic selectedTopic = topicMap.getTopicById(objectId);
 
