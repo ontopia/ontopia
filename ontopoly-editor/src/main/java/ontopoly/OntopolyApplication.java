@@ -156,13 +156,12 @@ public class OntopolyApplication extends WebApplication implements Serializable 
   }
   
   protected OntopolyAccessStrategy newAccessStrategy() {	  
-	  return new OntopolyAccessStrategy() {
-	    @Override
-	    public boolean isEnabled() {
-	      return false;
-	    }
-	  };
-
+    return new OntopolyAccessStrategy() {
+      @Override
+        public boolean isEnabled() {
+        return false;
+      }
+    };
   }
   
   @Override
