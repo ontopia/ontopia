@@ -65,7 +65,7 @@ public class FieldInstanceDateField extends TextField<String> implements ITextFo
   }
   
   public String getTextFormat() {
-    return "DATE_FORMAT";
+    return DATE_FORMAT;
   }
 
   @Override
