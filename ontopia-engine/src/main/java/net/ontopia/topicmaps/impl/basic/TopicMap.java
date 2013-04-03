@@ -264,19 +264,19 @@ public class TopicMap extends TMObject implements TopicMapIF, EventManagerIF {
   // -----------------------------------------------------------------------------
 
   public TopicIF getReifier() {
-		return reifier;
-	}
+    return reifier;
+  }
   
   public void setReifier(TopicIF _reifier) {
-		if (_reifier != null) CrossTopicMapException.check(_reifier, this);
+    if (_reifier != null) CrossTopicMapException.check(_reifier, this);
     // Notify listeners
-		Topic reifier = (Topic)_reifier;
-		Topic oldReifier = (Topic)getReifier();
+    Topic reifier = (Topic)_reifier;
+    Topic oldReifier = (Topic)getReifier();
     fireEvent(ReifiableIF.EVENT_SET_REIFIER, reifier, oldReifier);
     this.reifier = reifier;
-		if (oldReifier != null) oldReifier.setReified(null);
-		if (reifier != null) reifier.setReified(this);
-	}
+    if (oldReifier != null) oldReifier.setReified(null);
+    if (reifier != null) reifier.setReified(this);
+  }
 
   // -----------------------------------------------------------------------------
   // Misc. methods

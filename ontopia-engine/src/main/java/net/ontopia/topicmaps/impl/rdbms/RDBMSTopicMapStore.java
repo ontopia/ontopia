@@ -11,7 +11,6 @@ import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.PersistentIF;
 import net.ontopia.persistence.proxy.RDBMSAccess;
 import net.ontopia.persistence.proxy.RDBMSStorage;
-import net.ontopia.persistence.proxy.RDBMSStorage;
 import net.ontopia.persistence.proxy.StorageCacheIF;
 import net.ontopia.persistence.proxy.StorageIF;
 import net.ontopia.persistence.proxy.AbstractTransaction;

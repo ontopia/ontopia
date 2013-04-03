@@ -2,6 +2,7 @@
 package net.ontopia.infoset.impl.basic;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 
@@ -24,7 +25,7 @@ public class URILocatorTest extends AbstractLocatorTest {
 					"' unsupported.");
     try {
       return new URILocator(address);
-    } catch (java.net.MalformedURLException e) {
+    } catch (MalformedURLException e) {
       throw new OntopiaRuntimeException(e);
     }
   }
@@ -156,7 +157,7 @@ public class URILocatorTest extends AbstractLocatorTest {
     testAbsoluteResolution(base, "../../", "http://a/");
     testAbsoluteResolution(base, "../../g", "http://a/g");
   }
-
+  
   public void testEscapedAmpersand() {
     testExternalForm("http://www.ontopia.net/?foo=bar%26baz",
                      "http://www.ontopia.net/?foo=bar%26baz");
@@ -165,6 +166,18 @@ public class URILocatorTest extends AbstractLocatorTest {
   public void testEscapedHash() {
     testExternalForm("http://www.ontopia.net/?foo=bar%23baz",
                      "http://www.ontopia.net/?foo=bar%23baz");
+  }
+
+  // FIXME: this important test fails, but disabling for now
+  public void _testNonAsciiIdempotency() throws MalformedURLException {
+    String original = "http://dbpedia.org/resource/K%C3%B8benhavn";
+
+    URILocator uri1 = new URILocator(original);
+    assertEquals("External form differs from original",
+                 original, uri1.getExternalForm());
+    URILocator uri2 = new URILocator(uri1.getExternalForm());
+    assertEquals("External form differs from original",
+                 original, uri2.getExternalForm());
   }
   
   // --- Internal

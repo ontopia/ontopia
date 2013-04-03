@@ -158,7 +158,7 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
       
       // Loop over result rows
       Map<String, TopicMapReferenceIF> newmap = new HashMap<String, TopicMapReferenceIF>();
-      while (rs.next()) {       
+      while (rs.next()) {
         // Add row object to result collection
         long topicmap_id = rs.getLong(1);
         String _title = rs.getString(2);
