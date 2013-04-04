@@ -465,7 +465,12 @@ public class JDBCDataSource implements DataSourceIF {
         if (cdatatypes.isEmpty())
           throw new DB2TMInputException("Relation '" + changelog.getTable() + "' does not exist.");
         Integer oct = (Integer)cdatatypes.get(changelog.getOrderColumn());
-        if (oct == null) oct = (Integer)cdatatypes.get(changelog.getOrderColumn().toUpperCase());
+        if (oct == null)
+          oct = (Integer)cdatatypes.get(changelog.getOrderColumn().toUpperCase());
+        if (oct == null)
+          throw new DB2TMInputException("Order column '" +
+                                        changelog.getOrderColumn() +
+                                        "' does not exist");
         ocoltype = oct.intValue();
         
       // FIXME: consider locking strategy. lock table?
