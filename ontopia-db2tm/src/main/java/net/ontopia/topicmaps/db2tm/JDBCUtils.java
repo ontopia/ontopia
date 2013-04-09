@@ -2,7 +2,6 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.io.*;
-import java.util.*;
 import java.sql.*;
 import java.text.*;
 
@@ -26,11 +25,11 @@ public class JDBCUtils {
     throws SQLException {
     switch (sql_type) {
     case Types.DATE:
-      java.sql.Date date = rs.getDate(ix);
+      Date date = rs.getDate(ix);
       if (date == null) return null;
       return df_date.format(date);
     case Types.TIMESTAMP:
-      java.sql.Timestamp timestamp = rs.getTimestamp(ix);
+      Timestamp timestamp = rs.getTimestamp(ix);
       if (timestamp == null) return null;
       return df_datetime.format(timestamp);
     default:
@@ -67,14 +66,14 @@ public class JDBCUtils {
         break;
       case Types.DATE:
         try {
-          stmt.setDate(ix, new java.sql.Date(df_date.parse(value).getTime()));
+          stmt.setDate(ix, new Date(df_date.parse(value).getTime()));
         } catch (ParseException e) {
           throw new OntopiaRuntimeException("Couldn't parse '" + value + "'", e);
         }
         break;
       case Types.TIMESTAMP:
         try {
-          stmt.setTimestamp(ix, new java.sql.Timestamp(df_datetime.parse(value).getTime()));
+          stmt.setTimestamp(ix, new Timestamp(df_datetime.parse(value).getTime()));
         } catch (ParseException e) {
           throw new OntopiaRuntimeException("Couldn't parse '" + value + "'", e);
         }
