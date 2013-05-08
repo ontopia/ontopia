@@ -118,11 +118,11 @@ public abstract class BaseOutputProducingTag extends TagSupport {
 
       if (coll.isEmpty()) {
         if (fallbackValue == null) {
-        throw new NavigatorRuntimeException(getName() + " : requires"
-                + " a variable (attribute 'var') containing a non-empty"
-                + " Collection, but the Collection in the variable '"
-                + variableName + "' is empty. It is possible to get a"
-                + " fallback value by setting the 'fallback' attribute.\n");
+          throw new NavigatorRuntimeException(getName() + " : requires"
+                  + " a variable (attribute 'var') containing a non-empty"
+                  + " Collection, but the Collection in the variable '"
+                  + variableName + "' is empty. It is possible to get a"
+                  + " fallback value by setting the 'fallback' attribute.\n");
         } else {
           return fallbackValue;
         }
@@ -135,10 +135,10 @@ public abstract class BaseOutputProducingTag extends TagSupport {
 
       if (!queryWrapper.hasNext()) {
         if (fallbackValue == null) {
-        throw new NavigatorRuntimeException(getName() + " :"
-                + " requires a query result of at least one row, but got an"
-                + " empty result set. It is possible to get a fallback value"
-                + " by setting the 'fallback' attribute.\n");
+          throw new NavigatorRuntimeException(getName() + " :"
+                  + " requires a query result of at least one row, but got an"
+                  + " empty result set. It is possible to get a fallback value"
+                  + " by setting the 'fallback' attribute.\n");
         } else {
           return fallbackValue;
         }
