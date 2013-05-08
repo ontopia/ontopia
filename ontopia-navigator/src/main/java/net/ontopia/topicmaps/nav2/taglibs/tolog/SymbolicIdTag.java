@@ -26,6 +26,11 @@ public class SymbolicIdTag extends BaseOutputProducingTag {
   public final void generateOutput(JspWriter out, Object outObject)
     throws JspTagException, IOException {
     
+    if (outObject.equals(fallbackValue)) {
+      print2Writer(out, fallbackValue);
+      return;
+    }
+
     String objectId = null;
     
     // --- first try if object is instance of TMObjectIF

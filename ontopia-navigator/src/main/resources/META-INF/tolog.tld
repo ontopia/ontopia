@@ -119,6 +119,11 @@
       <rtexprvalue>true</rtexprvalue>
     </attribute>
     <attribute>
+      <name>fallback</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
       <name>escape</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
@@ -143,6 +148,11 @@
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
+    <attribute>
+      <name>fallback</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
   </tag>
 
   <!-- oid tag -->
@@ -160,6 +170,11 @@
     </attribute>
     <attribute>
       <name>var</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>fallback</name>
       <required>false</required>
       <rtexprvalue>true</rtexprvalue>
     </attribute>

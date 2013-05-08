@@ -33,6 +33,7 @@ public abstract class BaseOutputProducingTag extends TagSupport {
   // tag attributes
   protected String variableName;
   protected String query;
+  protected String fallbackValue;
 
   protected abstract String getName();
 
@@ -115,21 +116,33 @@ public abstract class BaseOutputProducingTag extends TagSupport {
         coll = Collections.singleton(pageContextValue);
       }
 
-      if (coll.isEmpty())
+      if (coll.isEmpty()) {
+        if (fallbackValue == null) {
         throw new NavigatorRuntimeException(getName() + " : requires"
                 + " a variable (attribute 'var') containing a non-empty"
                 + " Collection, but the Collection in the variable '"
-                + variableName + "' is empty.\n");
+                + variableName + "' is empty. It is possible to get a"
+                + " fallback value by setting the 'fallback' attribute.\n");
+        } else {
+          return fallbackValue;
+        }
+      }
 
       outObject = coll.iterator().next();
       // outObject contains the element of the input variable.
     } else { // query != null   must be true.
       QueryWrapper queryWrapper = new QueryWrapper(pageContext, query);
 
-      if (!queryWrapper.hasNext())
+      if (!queryWrapper.hasNext()) {
+        if (fallbackValue == null) {
         throw new NavigatorRuntimeException(getName() + " :"
                 + " requires a query result of at least one row, but got an"
-                + " empty result set.\n");
+                + " empty result set. It is possible to get a fallback value"
+                + " by setting the 'fallback' attribute.\n");
+        } else {
+          return fallbackValue;
+        }
+      }
 
       queryWrapper.next();
       Object firstRow[] = queryWrapper.getCurrentRow();
@@ -157,6 +170,10 @@ public abstract class BaseOutputProducingTag extends TagSupport {
 
   public final void setVar(String variableName) {
     this.variableName = variableName;
+  }
+
+  public final void setFallback(String fallbackValue) {
+    this.fallbackValue = fallbackValue;
   }
 
   // -----------------------------------------------------------------

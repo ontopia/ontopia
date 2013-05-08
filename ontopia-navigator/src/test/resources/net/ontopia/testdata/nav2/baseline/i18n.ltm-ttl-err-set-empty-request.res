@@ -1,1 +1,1 @@
-net.ontopia.topicmaps.nav2.taglibs.tolog.OutTag : requires a variable (attribute 'var') containing a non-empty Collection, but the Collection in the variable 'id' is empty.
+net.ontopia.topicmaps.nav2.taglibs.tolog.OutTag : requires a variable (attribute 'var') containing a non-empty Collection, but the Collection in the variable 'id' is empty. It is possible to get a fallback value by setting the 'fallback' attribute.

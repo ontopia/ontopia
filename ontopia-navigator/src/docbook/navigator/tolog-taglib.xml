@@ -444,6 +444,13 @@ is not set, does not contain anything, or contains null it is an error.
       topics; has no effect on other objects.</entry>
     </row>
     <row> 
+      <entry>fallback</entry> 
+      <entry>No</entry> 
+      <entry>string</entry> 
+      <entry>A fallback value to be displayed if the <symbol>query</symbol>
+      result is empty or the <symbol>var</symbol> variable is not set.</entry>
+    </row>
+    <row> 
       <entry>escape</entry> 
       <entry>No</entry> 
       <entry>true | false</entry> 
@@ -488,6 +495,21 @@ print this number.
 This topic map contains 
 <tolog:out query="select count($T) from topic($T)?"/>
 topics.</p>]]></literallayout>
+</example>
+
+<para>
+The example below shows how to use the <symbol>fallback</symbol>
+attribute to output a fallback value if a <symbol>query</symbol> result
+is empty or a <symbol>var</symbol> variable is not set.
+</para>
+
+<example>
+<title>Using a fallback value for tolog:out</title>
+<literallayout><![CDATA[<p>
+<tolog:out var="person"/>'s date of birth is 
+<tolog:out query="p:date-of-birth(%person%, $dob)" fallback="not set"/>.</p>
+<%-- returns: <p>John's date of birth is 1974-08-12.</p>
+          or: <p>Mick's date of birth is not set.</p> --%>]]></literallayout>
 </example>
 </refsect1>
 </refentry>
@@ -1052,6 +1074,13 @@ is not set, does not contain anything, or contains null it is an error.
       be looked up, and bean properties accessed. (Either this attribute or
       <symbol>query</symbol> must be set.)</entry>
     </row>
+    <row> 
+      <entry>fallback</entry> 
+      <entry>No</entry> 
+      <entry>string</entry> 
+      <entry>A fallback value to be displayed if the <symbol>query</symbol>
+      result is empty or the <symbol>var</symbol> variable is not set.</entry>
+    </row>
   </tbody> 
 </tgroup> 
 </informaltable>
@@ -1144,6 +1173,13 @@ is not set, does not contain anything, or contains null it is an error.
       value is picked. If no variable is found, a JSP attribute will
       be looked up, and bean properties accessed. (Either this attribute or
       <symbol>query</symbol> must be set.)</entry>
+    </row>
+    <row> 
+      <entry>fallback</entry> 
+      <entry>No</entry> 
+      <entry>string</entry> 
+      <entry>A fallback value to be displayed if the <symbol>query</symbol>
+      result is empty or the <symbol>var</symbol> variable is not set.</entry>
     </row>
   </tbody> 
 </tgroup> 
