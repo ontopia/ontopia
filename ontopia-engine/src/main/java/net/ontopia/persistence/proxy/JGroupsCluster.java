@@ -60,20 +60,20 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
   
   public synchronized void join() {   
     try {
-      log.debug("Joining JGroups cluster: '" + clusterId + "'");
+      log.info("Joining JGroups cluster: '" + clusterId + "'");
 
       try {
         URL url = (clusterProps != null ? StreamUtils.getResource(clusterProps) : null);
         if (url == null) {
           if (clusterProps == null) {
-            log.debug("Using default cluster properties.");
+            log.info("Using default cluster properties.");
             this.dchannel = new JChannel();
           } else {
-            log.debug("Using cluster properties as given: '" + clusterProps + "'");
+            log.info("Using cluster properties as given: '" + clusterProps + "'");
             this.dchannel = new JChannel(clusterProps);
           }
         } else {
-          log.debug("Using cluster properties in: '" + url + "'");
+          log.info("Using cluster properties in: '" + url + "'");
           this.dchannel = new JChannel(url);
         }
       } catch (Exception e) {
@@ -94,7 +94,7 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
   }
   
   public synchronized void leave() {
-    log.debug("Leaving cluster: '" + clusterId + "'");
+    log.info("Leaving cluster: '" + clusterId + "'");
     flush();
     if (ppadapter != null) {
       ppadapter.stop();
