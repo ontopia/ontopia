@@ -205,6 +205,13 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
       if (conn != null) try { conn.close(); } catch (Exception e) { };
     }
   }
+
+	public void close() {
+		if (storage != null) {
+			storage.close();
+		}
+	}
+
   
   protected String getReferenceId(String baseAdress, String title, long topicmap_id) {
     if (id == null)
