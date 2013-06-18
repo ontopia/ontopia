@@ -38,6 +38,8 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
 
   protected RDBMSTopicMapReference reference;
   
+  protected RDBMSStorage storage;
+
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(RDBMSSingleTopicMapSource.class.getName());
 
@@ -59,7 +61,7 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
 
     boolean foundReference = false;
     try {
-      RDBMSStorage storage = createStorage();
+      createStorage();
       
       String _title = title;
       LocatorIF _base_address = base_address;
@@ -123,6 +125,12 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
     }      
   }
   
+  public void close() {
+    if (storage != null) {
+      storage.close();
+    }
+  }
+
   public String getId() {
     return id;
   }
@@ -150,9 +158,12 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
   // --- Internal helpers
   
   protected RDBMSStorage createStorage() throws IOException {
-    if (propfile == null)
-      throw new OntopiaRuntimeException("propertyFile property must be specified on source with id '" + getId() + "'.");
-    return new RDBMSStorage(propfile);
+    if (storage == null) {
+      if (propfile == null)
+        throw new OntopiaRuntimeException("propertyFile property must be specified on source with id '" + getId() + "'.");
+      storage = new RDBMSStorage(propfile);
+    }
+    return storage;
   }
   
   protected String getReferenceId(long topicmap_id) {
