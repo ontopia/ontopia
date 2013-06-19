@@ -97,6 +97,7 @@ public abstract class AbstractTopicMapReferenceTest extends TestCase {
     public void setTitle(String title) { this.title = title; }
     public Collection getReferences() { return Collections.EMPTY_SET; }
     public void refresh() {};    
+    public void close() {}
     public boolean supportsCreate() {
       return false;
     }

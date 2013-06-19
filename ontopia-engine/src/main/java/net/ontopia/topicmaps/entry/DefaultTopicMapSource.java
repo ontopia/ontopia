@@ -57,6 +57,11 @@ public class DefaultTopicMapSource implements TopicMapSourceIF {
     // Do nothing
   }
 
+  @Override
+  public void close() {
+    // Do nothing
+  }
+
   /**
    * INTERNAL: Adds the reference to the source and registers the source
    * as the source of the reference.<p>

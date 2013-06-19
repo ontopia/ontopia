@@ -62,6 +62,14 @@ public interface TopicMapSourceIF {
   // references are *NOT* refreshed, the collection of them is updated
 
   /**
+   * PUBLIC: Closes the source by releasing references it holds to e.g.
+   * database or file system objects.
+   *
+   * @since %NEXT%
+   */
+  public void close();
+
+  /**
    * PUBLIC: Returns true if the source supports creating new
    * topic maps with the createTopicMap.
    *

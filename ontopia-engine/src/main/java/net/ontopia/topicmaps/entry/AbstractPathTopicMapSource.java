@@ -202,6 +202,11 @@ public abstract class AbstractPathTopicMapSource
     refmap = (path.startsWith("classpath:")) ? refreshFromClasspath() : refreshFromFilesystem();
   }
   
+  @Override
+  public void close() {
+    // Do nothing
+  }
+
   protected Map<String, TopicMapReferenceIF> refreshFromFilesystem() {
     Map<String, TopicMapReferenceIF> newmap = new HashMap<String, TopicMapReferenceIF>();
     // Initialize filter

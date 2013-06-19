@@ -125,6 +125,7 @@ public class RDBMSSingleTopicMapSource implements TopicMapSourceIF {
     }      
   }
   
+  @Override
   public void close() {
     if (storage != null) {
       storage.close();

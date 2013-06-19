@@ -278,6 +278,11 @@ public class URLTopicMapSource implements TopicMapSourceIF {
     
   }
 
+  @Override
+  public void close() {
+    // Do nothing
+  }
+
   public boolean supportsCreate() {
     return false;
   }
