@@ -60,24 +60,26 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
   
   public synchronized void join() {   
     try {
-      log.info("Joining JGroups cluster: '" + clusterId + "'");
+      String joinMessage = "Joining JGroups cluster: '" + clusterId + "'";
 
       try {
         URL url = (clusterProps != null ? StreamUtils.getResource(clusterProps) : null);
         if (url == null) {
           if (clusterProps == null) {
-            log.info("Using default cluster properties.");
+            log.info(joinMessage + ", using default cluster properties.");
             this.dchannel = new JChannel();
           } else {
-            log.info("Using cluster properties as given: '" + clusterProps + "'");
+            log.info(joinMessage + ", using cluster properties as given: '" + clusterProps + "'");
             this.dchannel = new JChannel(clusterProps);
           }
         } else {
-          log.info("Using cluster properties in: '" + url + "'");
+          log.info(joinMessage + ", using cluster properties in: '" + url + "'");
           this.dchannel = new JChannel(url);
         }
       } catch (Exception e) {
-        throw new OntopiaRuntimeException("Problems occurred while loading JGroups properties from " + clusterProps, e);
+        throw new OntopiaRuntimeException("Problems occurred while loading " + 
+          "JGroups properties from " + clusterProps + ", trying to join cluster '" +
+          clusterId + "'", e);
       }
       
       this.dchannel.setOpt(Channel.LOCAL, Boolean.FALSE);
