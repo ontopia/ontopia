@@ -191,6 +191,15 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
         log.warn("Problems occurred when closing reference " + ref, e);
       }
     }
+    for (TopicMapSourceIF source : sources) {
+      String message = source.getId() + ": '" + source.getTitle() + "' (" + source + ")";
+      try {
+        log.debug("Closing source " + message);
+        source.close();
+      } catch (Exception e) {
+        log.warn("Problems occurred when closing source " + message, e);
+      }
+    }
   }
 
   // -- legacy methods

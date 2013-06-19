@@ -91,7 +91,8 @@ public interface TopicMapRepositoryIF {
   /**
    * PUBLIC: Closes the repository and releases all resources bound by
    * the repository. Closing the repository will also close any open
-   * topic map references held by the topic map repository.
+   * topic map references held by the topic map repository as well as
+   * the topic map sources added to it.
    *
    * @since 2.1
    */
