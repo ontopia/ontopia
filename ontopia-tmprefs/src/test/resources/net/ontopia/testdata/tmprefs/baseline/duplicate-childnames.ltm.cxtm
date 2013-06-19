@@ -1,0 +1,412 @@
+<topicMap>
+<topic number="1">
+<name number="1">
+<value>impl</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.1.role.1"></rolePlayed>
+<rolePlayed ref="association.2.role.1"></rolePlayed>
+<rolePlayed ref="association.10.role.1"></rolePlayed>
+</topic>
+<topic number="2">
+<name number="1">
+<value>basic</value>
+<type topicref="19"></type>
+</name>
+<occurrence number="1">
+<value>existing-value-prefs2</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="6"></type>
+</occurrence>
+<occurrence number="2">
+<value>new-value-prefs2</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="8"></type>
+</occurrence>
+<rolePlayed ref="association.2.role.2"></rolePlayed>
+<rolePlayed ref="association.11.role.1"></rolePlayed>
+</topic>
+<topic number="3">
+<name number="1">
+<value>core</value>
+<type topicref="19"></type>
+</name>
+<occurrence number="1">
+<value>new-value-prefs1</value>
+<datatype>http://www.w3.org/2001/XMLSchema#string</datatype>
+<type topicref="8"></type>
+</occurrence>
+<rolePlayed ref="association.3.role.1"></rolePlayed>
+<rolePlayed ref="association.12.role.1"></rolePlayed>
+</topic>
+<topic number="4">
+<name number="1">
+<value>ontopia</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.4.role.1"></rolePlayed>
+<rolePlayed ref="association.5.role.1"></rolePlayed>
+<rolePlayed ref="association.13.role.1"></rolePlayed>
+</topic>
+<topic number="5">
+<name number="1">
+<value>net</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.6.role.1"></rolePlayed>
+<rolePlayed ref="association.4.role.2"></rolePlayed>
+<rolePlayed ref="association.14.role.1"></rolePlayed>
+</topic>
+<topic number="6">
+<name number="1">
+<value>prop-a</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.15.role.1"></rolePlayed>
+</topic>
+<topic number="7">
+<name number="1">
+<value>topicmaps</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.5.role.2"></rolePlayed>
+<rolePlayed ref="association.1.role.2"></rolePlayed>
+<rolePlayed ref="association.3.role.2"></rolePlayed>
+<rolePlayed ref="association.16.role.1"></rolePlayed>
+</topic>
+<topic number="8">
+<name number="1">
+<value>new-key</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.17.role.1"></rolePlayed>
+</topic>
+<topic number="9">
+<itemIdentifiers>
+<locator>#b</locator>
+</itemIdentifiers>
+<name number="1">
+<value>b</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.7.role.1"></rolePlayed>
+<rolePlayed ref="association.8.role.1"></rolePlayed>
+<rolePlayed ref="association.18.role.1"></rolePlayed>
+</topic>
+<topic number="10">
+<itemIdentifiers>
+<locator>#a1</locator>
+<locator>#a2</locator>
+</itemIdentifiers>
+<name number="1">
+<value>a</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.9.role.1"></rolePlayed>
+<rolePlayed ref="association.7.role.2"></rolePlayed>
+<rolePlayed ref="association.19.role.1"></rolePlayed>
+</topic>
+<topic number="11">
+<itemIdentifiers>
+<locator>#c1</locator>
+<locator>#c2</locator>
+</itemIdentifiers>
+<name number="1">
+<value>c</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.8.role.2"></rolePlayed>
+<rolePlayed ref="association.20.role.1"></rolePlayed>
+</topic>
+<topic number="12">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmprefs/child</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="13">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmprefs/parent</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="14">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmprefs/parent-child</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="15">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmprefs/preference</locator>
+</subjectIdentifiers>
+<rolePlayed ref="association.10.role.2"></rolePlayed>
+<rolePlayed ref="association.11.role.2"></rolePlayed>
+<rolePlayed ref="association.12.role.2"></rolePlayed>
+<rolePlayed ref="association.13.role.2"></rolePlayed>
+<rolePlayed ref="association.14.role.2"></rolePlayed>
+<rolePlayed ref="association.16.role.2"></rolePlayed>
+<rolePlayed ref="association.18.role.2"></rolePlayed>
+<rolePlayed ref="association.19.role.2"></rolePlayed>
+<rolePlayed ref="association.20.role.2"></rolePlayed>
+</topic>
+<topic number="16">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmprefs/preference-property</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>preference-property</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.15.role.2"></rolePlayed>
+<rolePlayed ref="association.17.role.2"></rolePlayed>
+</topic>
+<topic number="17">
+<subjectIdentifiers>
+<locator>http://psi.ontopia.net/tmprefs/system-root</locator>
+</subjectIdentifiers>
+<name number="1">
+<value>TMPrefs System Root</value>
+<type topicref="19"></type>
+</name>
+<rolePlayed ref="association.6.role.2"></rolePlayed>
+<rolePlayed ref="association.9.role.2"></rolePlayed>
+</topic>
+<topic number="18">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/instance</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="19">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/topic-name</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="20">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type</locator>
+</subjectIdentifiers>
+</topic>
+<topic number="21">
+<subjectIdentifiers>
+<locator>http://psi.topicmaps.org/iso13250/model/type-instance</locator>
+</subjectIdentifiers>
+</topic>
+<association number="1">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="7"></player>
+<type topicref="13"></type>
+</role>
+</association>
+<association number="2">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="13"></type>
+</role>
+<role number="2">
+<player topicref="2"></player>
+<type topicref="12"></type>
+</role>
+</association>
+<association number="3">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="3"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="7"></player>
+<type topicref="13"></type>
+</role>
+</association>
+<association number="4">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="4"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="5"></player>
+<type topicref="13"></type>
+</role>
+</association>
+<association number="5">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="4"></player>
+<type topicref="13"></type>
+</role>
+<role number="2">
+<player topicref="7"></player>
+<type topicref="12"></type>
+</role>
+</association>
+<association number="6">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="5"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="17"></player>
+<type topicref="13"></type>
+</role>
+</association>
+<association number="7">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="9"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="10"></player>
+<type topicref="13"></type>
+</role>
+</association>
+<association number="8">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="9"></player>
+<type topicref="13"></type>
+</role>
+<role number="2">
+<player topicref="11"></player>
+<type topicref="12"></type>
+</role>
+</association>
+<association number="9">
+<type topicref="14"></type>
+<role number="1">
+<player topicref="10"></player>
+<type topicref="12"></type>
+</role>
+<role number="2">
+<player topicref="17"></player>
+<type topicref="13"></type>
+</role>
+</association>
+<association number="10">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="1"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="11">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="2"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="12">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="3"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="13">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="4"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="14">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="5"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="15">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="6"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="16"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="16">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="7"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="17">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="8"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="16"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="18">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="9"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="19">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="10"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+<association number="20">
+<type topicref="21"></type>
+<role number="1">
+<player topicref="11"></player>
+<type topicref="18"></type>
+</role>
+<role number="2">
+<player topicref="15"></player>
+<type topicref="20"></type>
+</role>
+</association>
+</topicMap>

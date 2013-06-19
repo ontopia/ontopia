@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia</groupId>
+		<version>5.2.3-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>ontopia-tmprefs</artifactId>
+
+	<packaging>jar</packaging>
+	<name>Ontopia TopicMapPreferences</name>
+	<description>Ontopia TopicMapPreferences provides a java.util.prefs.Preferences implementation that 
+		reads and writes Preferences from and to Topic Maps.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.ontopia</groupId>
+			<artifactId>ontopia-engine</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

@@ -1,0 +1,24 @@
+
+#VERSION "1.3"
+#PREFIX p @"http://psi.ontopia.net/tmprefs/"
+
+[p:system-root = "TMPrefs System Root"]
+	[net : p:preference = "net"]                                      p:parent-child(p:system-root : p:parent, net : p:child)
+		[ontopia : p:preference = "ontopia"]                          p:parent-child(net : p:parent, ontopia : p:child)
+			[topicmaps : p:preference = "topicmaps"]                  p:parent-child(ontopia : p:parent, topicmaps : p:child)
+				[utils : p:preference = "utils"]                      p:parent-child(topicmaps : p:parent, utils : p:child)
+					[tmprefs : p:preference = "tmprefs"]              p:parent-child(utils : p:parent, tmprefs : p:child)
+				[test : p:preference = "test"]                        p:parent-child(topicmaps : p:parent, test : p:child)
+				[remove : p:preference = "remove"]                    p:parent-child(topicmaps : p:parent, remove : p:child)
+					[removechild : p:preference = "removechild"]      p:parent-child(remove : p:parent, removechild : p:child)
+
+[prop-a : p:preference-property = "prop-a"]
+[prop-b : p:preference-property = "prop-b"]
+[prop-c : p:preference-property = "prop-c"]
+
+{net, prop-a, [[net-value-a]]}
+{net, prop-c, [[net-value-c]]}
+{tmprefs, prop-a, [[tmprefs-value-a]]}
+{tmprefs, prop-b, [[tmprefs-value-b]]}
+{remove, prop-a, [[remove-value-b]]}
+{removechild, prop-b, [[removechild-value-b]]}

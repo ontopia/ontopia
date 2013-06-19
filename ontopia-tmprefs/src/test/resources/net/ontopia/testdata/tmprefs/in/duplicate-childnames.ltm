@@ -1,0 +1,11 @@
+
+#VERSION "1.3"
+#PREFIX p @"http://psi.ontopia.net/tmprefs/"
+
+[p:system-root = "TMPrefs System Root"]
+	[a1 : p:preference = "a"]                                         p:parent-child(p:system-root : p:parent, a1 : p:child)
+		[b : p:preference = "b"]                                      p:parent-child(a1 : p:parent, b : p:child)
+			[c1 : p:preference = "c"]                                 p:parent-child(b : p:parent, c1 : p:child)
+	[a2 : p:preference = "a"]                                         p:parent-child(p:system-root : p:parent, a2 : p:child)
+		[b : p:preference = "b"]                                      p:parent-child(a1 : p:parent, b : p:child) /* duplicate topic */
+			[c2 : p:preference = "c"]                                 p:parent-child(b : p:parent, c2 : p:child)
