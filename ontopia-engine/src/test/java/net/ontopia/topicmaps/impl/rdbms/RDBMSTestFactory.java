@@ -34,6 +34,10 @@ public class RDBMSTestFactory implements TestFactoryIF {
     return this;
   }
 
+  public TopicMapSourceIF getSource() {
+    return source;
+  }
+
   public TopicMapStoreIF makeStandaloneTopicMapStore() {
     try {
       return new RDBMSTopicMapStore();

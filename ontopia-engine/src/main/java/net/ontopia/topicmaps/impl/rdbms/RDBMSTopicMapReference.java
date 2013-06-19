@@ -162,6 +162,22 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     }
   }
 
+  @Override
+  public void setTitle(String title) {
+    super.setTitle(title);
+    TopicMapStoreIF store = null;
+    try {
+      store = createStore(false);
+      TopicMap topicmap = (TopicMap) store.getTopicMap();
+      topicmap.setTitle(title);
+      store.commit();
+    } finally {
+      if (store != null) {
+        store.close();
+      }
+    }
+  }
+
   public synchronized void close() {
     // ISSUE: should block until all stores are returned to pool?
     this.isopen = false;
