@@ -207,11 +207,11 @@ public class RDBMSTopicMapSource implements TopicMapSourceIF {
   }
 
   @Override
-	public void close() {
-		if (storage != null) {
-			storage.close();
-		}
-	}
+  public void close() {
+    if (storage != null) {
+      storage.close();
+    }
+  }
 
   
   protected String getReferenceId(String baseAdress, String title, long topicmap_id) {
