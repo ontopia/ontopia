@@ -178,6 +178,33 @@ public class RDBMSTopicMapReference extends AbstractTopicMapReference {
     }
   }
 
+  /**
+   * INTERNAL: Returns the base address locator to be used when loading
+   * the topic map.
+   */
+  public LocatorIF getBaseAddress() {
+    return base_address;
+  }
+
+  /**
+   * INTERNAL: Sets the base address locator to be used when loading
+   * the topic map and persists it in the database.
+   */
+  public void setBaseAddress(LocatorIF base_address) {
+    this.base_address = base_address;
+    TopicMapStoreIF store = null;
+    try {
+      store = createStore(false);
+      TopicMap topicmap = (TopicMap) store.getTopicMap();
+      topicmap.setBaseAddress(base_address);
+      store.commit();
+    } finally {
+      if (store != null) {
+        store.close();
+      }
+    }
+  }
+
   public synchronized void close() {
     // ISSUE: should block until all stores are returned to pool?
     this.isopen = false;
