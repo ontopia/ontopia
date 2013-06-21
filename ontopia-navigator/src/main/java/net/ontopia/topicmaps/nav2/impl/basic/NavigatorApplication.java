@@ -10,12 +10,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -29,7 +27,6 @@ import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
 import net.ontopia.topicmaps.entry.UserStoreRegistry;
-import net.ontopia.topicmaps.entry.XMLConfigSource;
 import net.ontopia.topicmaps.nav2.core.ModuleIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.NavigatorConfigurationIF;
@@ -145,12 +142,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
   }
 
   public TopicMapRepositoryIF getTopicMapRepository() {
-    if (repository != null)
       return repository;
-    else if (repositoryId != null)
-      return TopicMaps.getRepository(repositoryId);
-    else
-      return TopicMaps.getRepository();
   }
 
   public UserStoreRegistry getUserStoreRegistry() {
@@ -176,33 +168,18 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
   
   public TopicMapIF getTopicMapById(String topicmapId, boolean readonly)
     throws NavigatorRuntimeException {
-    return getTopicMapById(topicmapId, readonly, repositoryId);
-  }
-  
-  public TopicMapIF getTopicMapById(String topicmapId, boolean readonly, String repositoryId)
-    throws NavigatorRuntimeException {
     
+    // use local or jndi repository (for backwards compatibility);
+    TopicMapReferenceIF ref = repository.getReferenceByKey(topicmapId);
+    if (ref == null) 
+      throw new NavigatorRuntimeException("Topic map with id '" + topicmapId +
+                                          "' not found.");      
     TopicMapStoreIF store;
-
-    if (repository == null) {
-      // use default repository
-      if (repositoryId == null)
-        store = TopicMaps.createStore(topicmapId, readonly);
-      else
-        store = TopicMaps.createStore(topicmapId, readonly, repositoryId);
-      
-    } else {
-      // use local or jndi repository (for backwards compatibility);
-      TopicMapReferenceIF ref = repository.getReferenceByKey(topicmapId);
-      if (ref == null) 
-        throw new NavigatorRuntimeException("Topic map with id '" + topicmapId +
-                                            "' not found.");      
-      try {
-        store = ref.createStore(readonly);
-      } catch (java.io.IOException e) {
-        throw new NavigatorRuntimeException("Problems occurred when creating topic map store '" + 
-                                            topicmapId + "'", e);
-      }
+    try {
+      store = ref.createStore(readonly);
+    } catch (java.io.IOException e) {
+      throw new NavigatorRuntimeException("Problems occurred when creating topic map store '" + 
+                                          topicmapId + "'", e);
     }
     
     if (readonly)
@@ -427,23 +404,29 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     // load topic map repository from specific file
     String source_config = servlet_context.getInitParameter(SOURCE_CONFIG_KEY);
     if (source_config != null) {
-      Map environ = new HashMap();
-      environ.put("WEBAPP", servlet_context.getRealPath(""));
-      String source_config_file = makeAbsolute(source_config);
-      this.repository = (source_config.startsWith("classpath:"))
-        ? XMLConfigSource.getRepositoryFromClassPath(source_config.substring("classpath:".length()), environ)
-        : XMLConfigSource.getRepository(source_config_file, environ);
+      Map<String, String> environ = new HashMap<String, String>(Collections.singletonMap("WEBAPP", servlet_context.getRealPath("")));
+      if (source_config.startsWith("classpath:")) {
+        this.repository = TopicMaps.getRepository(source_config, environ);
+        log.info("Navigator application '" + getName() + "' loaded topic maps repository: " + this.repository + " from file '" + source_config + "'");        
+      } else {
+        String source_config_file = makeAbsolute(source_config);
+        this.repository = TopicMaps.getRepository("file:" + source_config_file, environ);
+        log.info("Navigator application '" + getName() + "' loaded topic maps repository: " + this.repository + " from file '" + source_config_file + "'");        
+      }
       this.localRepository = true;
-      log.info("Navigator application '" + getName() + "' loaded topic maps repository: " + this.repository + " from file '" + source_config_file + "'");
       return; // we're done
     }
 
     // application can specify specific repository id
     this.repositoryId = servlet_context.getInitParameter(TOPICMAPS_REPOSITORY_ID);
-    if (this.repositoryId == null)
-      log.info("Navigator application '" + getName() + "' will use default shared topic maps repository");
-    else
+    if (this.repositoryId != null) {
+      this.repository = TopicMaps.getRepository(this.repositoryId);
       log.info("Navigator application '" + getName() + "' will use shared topic maps repository with id '" + this.repositoryId + "'");
+    }
+    
+    // fallback to default repository
+    this.repository = TopicMaps.getRepository();
+    log.info("Navigator application '" + getName() + "' will use default shared topic maps repository");
   }
   
   /**

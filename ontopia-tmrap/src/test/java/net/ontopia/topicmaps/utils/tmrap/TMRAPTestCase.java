@@ -23,6 +23,9 @@ import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URIFragmentLocator;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.entry.TopicMapRepositoryIF;
+import net.ontopia.topicmaps.entry.TopicMaps;
+import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
 import net.ontopia.topicmaps.utils.NullResolvingExternalReferenceHandler;
 import net.ontopia.topicmaps.utils.ltm.LTMTopicMapWriter;
 import net.ontopia.topicmaps.utils.tmrap.RAPServlet;
@@ -37,6 +40,7 @@ import net.ontopia.utils.ontojsp.FakeServletContext;
 import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.FakeServletResponse;
 import net.ontopia.xml.ConfiguredXMLReaderFactory;
+import org.junit.After;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -236,6 +240,8 @@ public class TMRAPTestCase {
     
     rapServlet.init(servletConfig);
     rapServlet.doGet(servletRequest, servletResponse, uriString);
+
+    TopicMaps.forget(NavigatorUtils.getTopicMapRepository(servletContext));
 
     if (servletResponse.getStatus() != 200)
       throw new ServletException("Error in running RAP servlet: " +

@@ -58,19 +58,34 @@ public class TopicMaps {
    * PUBLIC: Returns the default topic maps repository.
    */
   public static TopicMapRepositoryIF getRepository(String repositoryId) {
+      return getRepository(repositoryId, null);
+  }
+
+  public static TopicMapRepositoryIF getRepository(String repositoryId, Map<String, String> environ) {
     synchronized (repositories) {
       TopicMapRepositoryIF repository = repositories.get(repositoryId);
       if (repository == null) {
         if (repositoryId.startsWith("file:"))
-          repository = XMLConfigSource.getRepository(repositoryId.substring("file:".length()));
+          repository = XMLConfigSource.getRepository(repositoryId.substring("file:".length()), environ);
         else if (repositoryId.startsWith("classpath:"))
-          repository = XMLConfigSource.getRepositoryFromClassPath(repositoryId.substring("classpath:".length()));
+          repository = XMLConfigSource.getRepositoryFromClassPath(repositoryId.substring("classpath:".length()), environ);
         else
           throw new IllegalArgumentException("Invalid scheme on repository id: '" + repositoryId + "'. Must be either file: or classpath.");
         repositories.put(repositoryId, repository);
       }
       return repository;
     }
+  }
+
+  public static void forget(TopicMapRepositoryIF repositoryIF) {
+    String match = null;
+    for (String key : repositories.keySet()) {
+      if (repositories.get(key).equals(repositoryIF)) {
+        match = key;
+        break;
+      }
+    }
+    if (match != null) repositories.remove(match);
   }
   
 }
