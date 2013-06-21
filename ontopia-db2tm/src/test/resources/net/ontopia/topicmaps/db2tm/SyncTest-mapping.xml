@@ -3,7 +3,8 @@
     <jdbc id="jdbc" propfile='classpath:db2tm.h2.props'/>
   </sources>
 
-  <relation name='testdata' columns='id name type' synctype='changelog'>
+  <relation name='testdata' columns='id name type' synctype='changelog'
+            primary-key='id'>
     <topic id='type'>
       <subject-identifier>psi:test/${type}</subject-identifier>
     </topic>
@@ -16,7 +17,8 @@
     </changelog>
   </relation>
 
-  <relation name='complexdata' columns='id1 id2 name' synctype='changelog'>
+  <relation name='complexdata' columns='id1 id2 name' synctype='changelog'
+            primary-key='id1 id2'>
     <topic>
       <subject-identifier>http://example.org/test/${id1}/${id2}</subject-identifier>
       <topic-name>${name}</topic-name>

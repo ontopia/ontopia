@@ -37,12 +37,12 @@ public class ChangelogReaderWrapper implements ChangelogReaderIF {
     this.keycols = new int[pkey.length];
     for (int ix = 0; ix < pkey.length; ix++)
       keycols[ix] = relation.getColumnIndex(pkey[ix]);
-    // if (pkey.length == 0)
-    //   // this will cause the reader to ignore rows, because they will
-    //   // look the same (equalsKey will proclaim all rows equal since
-    //   // none of the values in their zero-length keys differ)
-    //   throw new DB2TMException("Must specify primary key on " +
-    //                            relation.getName());
+    if (pkey.length == 0)
+      // this will cause the reader to ignore rows, because they will
+      // look the same (equalsKey will proclaim all rows equal since
+      // none of the values in their zero-length keys differ)
+      throw new DB2TMException("Must specify primary key on '" +
+                               relation.getName() + "'");
   }
   
   public ChangeType getChangeType() {

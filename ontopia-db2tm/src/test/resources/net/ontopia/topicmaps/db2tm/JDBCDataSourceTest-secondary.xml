@@ -6,7 +6,8 @@
     <jdbc id="jdbc" propfile='classpath:db2tm.h2.props'/>
   </sources>
 
-  <relation name='first' columns='a b c d' synctype='changelog'>
+  <relation name='first' columns='a b c d' synctype='changelog'
+            primary-key='a'>
     <topic id='over'>
       <subject-identifier>psi:first/${c}</subject-identifier>
     </topic>
@@ -22,7 +23,8 @@
     </changelog>
   </relation>
 
-  <relation name='second' columns='a b c d' synctype='changelog'>
+  <relation name='second' columns='a b c d' synctype='changelog'
+            primary-key='a'>
     <topic id='over'>
       <subject-identifier>psi:first/${c}</subject-identifier>
     </topic>
