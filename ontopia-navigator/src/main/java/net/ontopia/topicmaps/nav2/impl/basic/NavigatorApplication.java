@@ -422,6 +422,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
     if (this.repositoryId != null) {
       this.repository = TopicMaps.getRepository(this.repositoryId);
       log.info("Navigator application '" + getName() + "' will use shared topic maps repository with id '" + this.repositoryId + "'");
+      return; // we're done
     }
     
     // fallback to default repository
