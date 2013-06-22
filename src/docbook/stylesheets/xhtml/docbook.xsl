@@ -12,12 +12,12 @@
   <!-- This parameter controls whether a table of contents is generated
        or not. -->
   <xsl:param name = "make-toc">
-    <xsl:value-of select="true"/>
+    <xsl:value-of select="true()"/>
   </xsl:param>
 
   <!-- This parameter controls whether sections are numbered or not. -->
   <xsl:param name = "number-sects">
-    <xsl:value-of select="true"/>
+    <xsl:value-of select="true()"/>
   </xsl:param>
 
   <!-- Used for conditional includes -->
