@@ -206,6 +206,10 @@ public class JGroupsCluster implements ClusterIF, MessageListener {
 
   protected void processEvent(JGroupsEvent e) {
     //! log.debug("Processing event: " + e);
+    if (storage.getStorageCache() == null) {
+      log.warn("Cannot process cluster event without shared storage cache. Ignoring event: " + e);
+      return;
+    }
     switch (e.eventType) {
     case ClusterIF.DATA_CACHE_IDENTITY_EVICT:
       log.debug("  IE: " + e.value);
