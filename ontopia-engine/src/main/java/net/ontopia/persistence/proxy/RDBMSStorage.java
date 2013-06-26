@@ -303,6 +303,19 @@ public class RDBMSStorage implements StorageIF {
         log.info("Instrumenting shared cache.");
         this.scache = new StatisticsCache("scache", scache, dinterval);
       }      
+    } else if (this.cluster != null) {
+      log.warn("");
+      log.warn("");
+      log.warn("  /vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv\\");
+      log.warn("  >                                                                                  <");
+      log.warn("  >         Joining a cluster without a shared storage cache will not work !         <");
+      log.warn("  >                                                                                  <");
+      log.warn("  >  Don't set property 'net.ontopia.topicmaps.impl.rdbms.Cache.shared' to 'false'   <");
+      log.warn("  >   in combination with property 'net.ontopia.topicmaps.impl.rdbms.Cluster.id'.    <");
+      log.warn("  >                                                                                  <");
+      log.warn("  \\^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^/");
+      log.warn("");
+      log.warn("");
     }
 
     // join cluster
