@@ -18,7 +18,7 @@ public class ClassifyUtils {
     File file = new File(file_or_url);
     if (file.exists()) {
       try {
-        return StreamUtils.read(new FileInputStream(file));
+        return StreamUtils.readAndClose(new FileInputStream(file));
       } catch (IOException e) {
         // ignore
       }
