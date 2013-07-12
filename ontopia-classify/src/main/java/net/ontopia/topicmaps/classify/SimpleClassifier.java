@@ -40,10 +40,21 @@ public class SimpleClassifier {
     return tcl.getTermDatabase();
   }
 
+  /**
+   * PUBLIC: Extracts keywords from the given content and returns
+   * a TermDatabase representing the results.
+   * @since %NEXT%
+   */
   public static TermDatabase classify(byte[] content) {
     return classify(content, null);
   }
 
+  /**
+   * PUBLIC: Extracts keywords from the given content, using the
+   * information in the topic map, and returns a TermDatabase
+   * representing the results.
+   * @since %NEXT%
+   */
   public static TermDatabase classify(byte[] content, TopicMapIF topicmap) {
     // create classifier
     TopicMapClassification tcl = (topicmap == null)
