@@ -101,6 +101,19 @@ public class StreamUtils {
   }
 
   /**
+   * INTERNAL : Returns the entire contents of a stream as a byte array
+   * and closes the stream afterwards.
+   * @since %NEXT%
+   */
+  public static byte[] readAndClose(InputStream in) throws IOException {
+    try {
+      return read(in);
+    } finally {
+      in.close();
+    }
+  }
+
+  /**
    * INTERNAL: Compares the contents of the two InputStreams for equality.
    * @since 4.0
    */
