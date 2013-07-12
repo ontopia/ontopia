@@ -39,5 +39,25 @@ public class SimpleClassifier {
     // return the terms
     return tcl.getTermDatabase();
   }
+
+  public static TermDatabase classify(byte[] content) {
+    return classify(content, null);
+  }
+
+  public static TermDatabase classify(byte[] content, TopicMapIF topicmap) {
+    // create classifier
+    TopicMapClassification tcl = (topicmap == null)
+      ? new TopicMapClassification()
+      : new TopicMapClassification(topicmap);
+
+    // read content
+    ClassifiableContentIF cc = ClassifyUtils.getClassifiableContent(content);
+
+    // classify content
+    tcl.classify(cc);
+
+    // return the terms
+    return tcl.getTermDatabase();
+  }
   
 }

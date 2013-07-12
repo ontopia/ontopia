@@ -6,6 +6,7 @@ import java.util.Iterator;
 import javax.servlet.http.*;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
+import net.ontopia.utils.StringUtils;
 
 import org.apache.commons.fileupload.*;
 
@@ -28,10 +29,17 @@ public class ClassifyUtils {
   }
 
   public static ClassifiableContentIF getClassifiableContent(String file_or_url) {
-    byte[] content = getContent(file_or_url);
+    return getClassifiableContent(getContent(file_or_url), file_or_url);
+  }
+
+  public static ClassifiableContentIF getClassifiableContent(byte[] content) {
+    return getClassifiableContent(content, "content-" + StringUtils.md5_32(new String(content)));
+  }
+
+  private static ClassifiableContentIF getClassifiableContent(byte[] content, String identifier) {
     if (content != null) {
       ClassifiableContent cc = new ClassifiableContent();
-      cc.setIdentifier(file_or_url);
+      cc.setIdentifier(identifier);
       cc.setContent(content);
       return cc;
     }
