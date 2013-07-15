@@ -1,19 +1,24 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the most appropriate basename from a topic.
  */
-public class TopicNameGrabber implements GrabberIF {
+public class TopicNameGrabber implements GrabberIF<TopicIF, TopicNameIF> {
 
   /**
    * PROTECTED: The comparator used to sort the base names.
    */
-  protected Comparator comparator;
+  protected Comparator<TopicNameIF> comparator;
  
   /**
    * INTERNAL: Creates a grabber; uses a BaseComparator with the given
@@ -21,7 +26,7 @@ public class TopicNameGrabber implements GrabberIF {
    *
    * @param scope A scope; a collection of TopicIF objects.
    */
-  public TopicNameGrabber(Collection scope) {
+  public TopicNameGrabber(Collection<TopicIF> scope) {
     this.comparator = new TopicNameComparator(scope);
   }
   
@@ -30,7 +35,7 @@ public class TopicNameGrabber implements GrabberIF {
    *
    * @param comparator The given comparator
    */
-  public TopicNameGrabber(Comparator comparator) {
+  public TopicNameGrabber(Comparator<TopicNameIF> comparator) {
     this.comparator = comparator;
   }
   
@@ -44,28 +49,19 @@ public class TopicNameGrabber implements GrabberIF {
    * @exception throws OntopiaRuntimeException if the given topic is not
    *            a TopicIF object.
    */
-  public Object grab(Object topic) {
+  public TopicNameIF grab(TopicIF topic) {
     if (topic == null)
       return null;
     
-    TopicIF _topic;
-    try {
-      _topic = (TopicIF) topic;
-    } catch (ClassCastException e) {
-      throw new OntopiaRuntimeException(topic + " is not a TopicIF.", e);
-    }
-
-    Collection basenames = _topic.getTopicNames();
+    List<TopicNameIF> basenames = new ArrayList<TopicNameIF>(topic.getTopicNames());
 
     // If there is no base name return null
     if (basenames.isEmpty())
       return null;
 
     // If there are multiple basenames rank them.    
-    Object[] _basenames = basenames.toArray();
-    if (_basenames.length > 1)
-      Arrays.sort(_basenames, comparator);
-    return _basenames[0];
+    Collections.sort(basenames, comparator);
+    return basenames.iterator().next();
   }
 
 }

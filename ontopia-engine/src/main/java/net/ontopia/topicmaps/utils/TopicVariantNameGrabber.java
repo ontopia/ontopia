@@ -1,9 +1,16 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the most highest ranked variant name by
@@ -15,20 +22,20 @@ import net.ontopia.topicmaps.core.*;
  *
  * @since 2.0.3
  */
-public class TopicVariantNameGrabber implements GrabberIF {
+public class TopicVariantNameGrabber implements GrabberIF<TopicIF, VariantNameIF> {
 
   /**
    * PROTECTED: The comparator used to sort the variant names.
    */
-  protected Comparator comparator;
+  protected Comparator<? super VariantNameIF> comparator;
  
   /**
    * INTERNAL: Creates a grabber.
    *
    * @param scope A scope; a collection of TopicIF objects.
    */
-  public TopicVariantNameGrabber(Collection scope) {
-    this.comparator = new ScopedIFComparator(scope);
+  public TopicVariantNameGrabber(Collection<TopicIF> scope) {
+    this.comparator = new ScopedIFComparator<VariantNameIF>(scope);
   }
 
   /**
@@ -36,7 +43,7 @@ public class TopicVariantNameGrabber implements GrabberIF {
    *
    * @param comparator The given comparator
    */
-  public TopicVariantNameGrabber(Comparator comparator) {
+  public TopicVariantNameGrabber(Comparator<? super VariantNameIF> comparator) {
     this.comparator = comparator;
   }
 
@@ -50,16 +57,12 @@ public class TopicVariantNameGrabber implements GrabberIF {
    * @exception throws OntopiaRuntimeException if the given topic
    *                   is not a TopicIF object.
    */
-  public Object grab(Object topic) {
-    if (!(topic instanceof TopicIF))
-      throw new OntopiaRuntimeException(topic + " is not a TopicIF");
-    
-    TopicIF _topic = (TopicIF) topic;
-    Collection variants = new ArrayList();
+  public VariantNameIF grab(TopicIF topic) {
+    List<VariantNameIF> variants = new ArrayList<VariantNameIF>();
 
-    Iterator it = _topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> it = topic.getTopicNames().iterator();
     while (it.hasNext()) {
-      TopicNameIF basename = (TopicNameIF) it.next();
+      TopicNameIF basename = it.next();
       variants.addAll(basename.getVariants());
     }
     
@@ -68,10 +71,8 @@ public class TopicVariantNameGrabber implements GrabberIF {
       return null;
 
     // If there is multiple variant names rank them.
-    Object[] _variants = variants.toArray();
-    if (_variants.length > 1)
-      Arrays.sort(_variants, comparator);
-    return _variants[0];
+    Collections.sort(variants, comparator);
+    return variants.get(0);
   }
   
 }

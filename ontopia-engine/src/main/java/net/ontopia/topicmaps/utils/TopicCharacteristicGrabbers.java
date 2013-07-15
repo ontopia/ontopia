@@ -1,7 +1,7 @@
 
 package net.ontopia.topicmaps.utils;
 
-import net.ontopia.utils.*;
+import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: A convenience class for creating grabbers that grab

@@ -1,9 +1,12 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.utils.LexicalComparator;
 
 /**
  * INTERNAL: Comparator that compares ScopedIF objects based on their
@@ -25,20 +28,20 @@ import net.ontopia.utils.*;
  * </ol>
  */
 
-public class ScopedIFComparator implements Comparator {
+public class ScopedIFComparator<T extends ScopedIF> implements Comparator<T> {
 
   protected TopicIF[] scope;
-  protected Comparator subcomparator;
+  protected Comparator<? super T> subcomparator;
 
   public ScopedIFComparator() {
     this(Collections.EMPTY_SET);
   }
 
-  public ScopedIFComparator(Collection scope) {
+  public ScopedIFComparator(Collection<TopicIF> scope) {
     this(scope, LexicalComparator.CASE_SENSITIVE);
   }
 
-  public ScopedIFComparator(Collection scope, Comparator subcomparator) {    
+  public ScopedIFComparator(Collection<TopicIF> scope, Comparator<? super T> subcomparator) {    
     this.scope = new TopicIF[scope.size()];
     scope.toArray(this.scope);
     this.subcomparator = subcomparator;
@@ -52,10 +55,10 @@ public class ScopedIFComparator implements Comparator {
    * @param obj2 An object implementing ScopedIF.
    * @return See {@link java.util.Comparator#compare(Object,Object)}
    */
-  public int compare(Object obj1, Object obj2) {
+  public int compare(T obj1, T obj2) {
     // Collect the scope of both objects
-    Collection scope1 = ((ScopedIF)obj1).getScope();
-    Collection scope2 = ((ScopedIF)obj2).getScope();
+    Collection<TopicIF> scope1 = obj1.getScope();
+    Collection<TopicIF> scope2 = obj2.getScope();
 
     // Count number of matching themes
     int matches = 0;

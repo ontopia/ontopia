@@ -1,9 +1,10 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.utils.GrabberIF;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Stringifier that generates a string representation of the
@@ -14,12 +15,12 @@ import net.ontopia.topicmaps.core.*;
  * with a stringifier used to stringify the resulting topic.</p>
  */
 
-public class TypedIFStringifier implements StringifierIF {
+public class TypedIFStringifier implements StringifierIF<TypedIF> {
 
-  protected GrabberIF grabber = new TypedIFGrabber();
-  protected StringifierIF topic_stringifier;
+  protected GrabberIF<TypedIF, TopicIF> grabber = new TypedIFGrabber();
+  protected StringifierIF<? super TopicIF> topic_stringifier;
   
-  public TypedIFStringifier(StringifierIF topic_stringifier) {
+  public TypedIFStringifier(StringifierIF<? super TopicIF> topic_stringifier) {
     this.topic_stringifier = topic_stringifier;
   }
 
@@ -31,8 +32,8 @@ public class TypedIFStringifier implements StringifierIF {
    * @return The string that results from applying the configured
    * stringifier to the type extracted from the typed object.
    */
-  public String toString(Object typed) {
-    TopicIF type = (TopicIF)grabber.grab(typed);
+  public String toString(TypedIF typed) {
+    TopicIF type = grabber.grab(typed);
     return topic_stringifier.toString(type);
   }
   

@@ -10,7 +10,7 @@ import java.text.Collator;
  * configured to be case insensitive. It is case sensitive by default.</p>
  */
 
-public class LexicalComparator implements Comparator {
+public class LexicalComparator implements Comparator<Object> {
 
   public final static LexicalComparator CASE_SENSITIVE = new LexicalComparator(true);
   public final static LexicalComparator CASE_INSENSITIVE = new LexicalComparator(false);

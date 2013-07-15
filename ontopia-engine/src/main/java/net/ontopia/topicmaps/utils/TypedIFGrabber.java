@@ -1,15 +1,16 @@
 
 package net.ontopia.topicmaps.utils;
 
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the type property of the TypedIF object
  * given to it.</p>
  */
 
-public class TypedIFGrabber implements GrabberIF {
+public class TypedIFGrabber implements GrabberIF<TypedIF, TopicIF> {
 
 
   /**
@@ -19,8 +20,8 @@ public class TypedIFGrabber implements GrabberIF {
    * @return object which is the type; an object implementing TopicIF
    */  
 
-  public Object grab(Object typed) {
-    return ((TypedIF)typed).getType();
+  public TopicIF grab(TypedIF typed) {
+    return typed.getType();
   }
 
 }

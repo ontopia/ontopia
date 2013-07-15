@@ -1,8 +1,7 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
+import java.util.Comparator;
 
 /**
  * INTERNAL: Comparator that stringifies the arguments and compares them
@@ -10,20 +9,20 @@ import net.ontopia.utils.*;
  * stringifier.</p>
  */
 
-public class StringifierComparator implements Comparator {
+public class StringifierComparator<T> implements Comparator<T> {
   
-  protected Comparator comparator;
-  protected StringifierIF stringifier;
+  protected Comparator<? super T> comparator;
+  protected StringifierIF<T> stringifier;
 
   public StringifierComparator() {
-    stringifier = new DefaultStringifier();
+    stringifier = new DefaultStringifier<T>();
   }
 
-  public StringifierComparator(StringifierIF stringifier) {
+  public StringifierComparator(StringifierIF<T> stringifier) {
     this.stringifier = stringifier;
   }
   
-  public StringifierComparator(StringifierIF stringifier, Comparator comparator) {
+  public StringifierComparator(StringifierIF<T> stringifier, Comparator<? super T> comparator) {
     this.stringifier = stringifier;
     this.comparator = comparator;
   }
@@ -31,18 +30,18 @@ public class StringifierComparator implements Comparator {
   /**
    * Gets the comparator which is to be used.
    */
-  public Comparator getComparator() {
+  public Comparator<? super T> getComparator() {
     return comparator;
   }
   
   /**
    * Sets the comparator which is to be used.
    */
-  public void setComparator(Comparator comparator) {
+  public void setComparator(Comparator<? super T> comparator) {
     this.comparator = comparator;
   }
   
-  public int compare(Object obj1, Object obj2) {
+  public int compare(T obj1, T obj2) {
     if (obj1 == obj2) return 0;
 
     String name1 = stringifier.toString(obj1);

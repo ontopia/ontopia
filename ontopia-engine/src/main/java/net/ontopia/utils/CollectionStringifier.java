@@ -13,21 +13,21 @@ import java.util.List;
  * be used to order the objects in the collection.</p>
  */
 
-public class CollectionStringifier implements StringifierIF {
+public class CollectionStringifier<T> implements StringifierIF<Collection<T>> {
 
-  protected Comparator comparator;
-  protected StringifierIF stringifier;
+  protected Comparator<? super T> comparator;
+  protected StringifierIF<? super T> stringifier;
 
   protected String item_prefix = "";
   protected String item_suffix = "";
   protected String list_prefix = "";
   protected String list_suffix = "";
   
-  public CollectionStringifier(StringifierIF stringifier) {
+  public CollectionStringifier(StringifierIF<? super T> stringifier) {
     this.stringifier = stringifier;
   }
   
-  public CollectionStringifier(StringifierIF stringifier, Comparator comparator) {
+  public CollectionStringifier(StringifierIF<? super T> stringifier, Comparator<? super T> comparator) {
     this.stringifier = stringifier;
     this.comparator = comparator;
   }
@@ -64,17 +64,17 @@ public class CollectionStringifier implements StringifierIF {
     list_suffix = suffix;
   }
   
-  public String toString(Object objects) {
+  public String toString(Collection<T> objects) {
     if (objects == null) return "null";
     StringBuffer sb = new StringBuffer();
     
     // Sort and output list
-    List list = new ArrayList((Collection)objects);
+    List<T> list = new ArrayList<T>(objects);
     if (comparator != null)
       Collections.sort(list, comparator);
 
     // Loop over objects
-    Iterator iter = list.iterator();
+    Iterator<T> iter = list.iterator();
     while (iter.hasNext())
       sb.append(item_prefix + stringifier.toString(iter.next()) + item_suffix);
 

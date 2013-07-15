@@ -1,9 +1,13 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: Scope processing utilities.
@@ -22,9 +26,9 @@ public class ScopeUtils {
    *
    * @return boolean; true if the scoped object's scope is applicable in the user context.
    */
-  public static boolean isApplicableInContext(ScopedIF obj, Collection context) {
+  public static boolean isApplicableInContext(ScopedIF obj, Collection<TopicIF> context) {
     // Get object scope
-    Collection objscope = obj.getScope();
+    Collection<TopicIF> objscope = obj.getScope();
     return (objscope.isEmpty() || objscope.containsAll(context));
   }
   
@@ -41,17 +45,17 @@ public class ScopeUtils {
    *
    * @return boolean; true if the scoped object's scope is a superset of the context.
    */
-  public static boolean isSupersetOfContext(ScopedIF obj, Collection context) {
+  public static boolean isSupersetOfContext(ScopedIF obj, Collection<TopicIF> context) {
     // Get object scope
-    Collection objscope = obj.getScope();
+    Collection<TopicIF> objscope = obj.getScope();
     return objscope.containsAll(context);
   }
   /**
    * EXPERIMENTAL:
    */
-  public static boolean isSupersetOfContext(ScopedIF obj, Object[] context) {
+  public static boolean isSupersetOfContext(ScopedIF obj, TopicIF[] context) {
     // Get object scope
-    Collection objscope = obj.getScope();
+    Collection<TopicIF> objscope = obj.getScope();
 
     for (int i=0; i < context.length; i++) {
       if (!objscope.contains(context[i]))
@@ -73,9 +77,9 @@ public class ScopeUtils {
    
    * @return boolean; true if the scoped object's scope is a subset of the context.
    */
-  public static boolean isSubsetOfContext(ScopedIF obj, Collection context) {
+  public static boolean isSubsetOfContext(ScopedIF obj, Collection<TopicIF> context) {
     // Get object scope
-    Collection objscope = obj.getScope();
+    Collection<TopicIF> objscope = obj.getScope();
     return context.containsAll(objscope);
   }
 
@@ -94,12 +98,12 @@ public class ScopeUtils {
    * with the user context.
    */
   public static boolean isIntersectionOfContext(ScopedIF obj,
-                                                Collection context) {
+                                                Collection<TopicIF> context) {
     // Get object scope
-    Collection objscope = obj.getScope();
+    Collection<TopicIF> objscope = obj.getScope();
 
     // Loop over context to see if there is an intersection with the object scope.
-    Iterator iter = context.iterator();
+    Iterator<TopicIF> iter = context.iterator();
     while (iter.hasNext()) {
       // If object scope contains context theme then there is an intersection.
       if (objscope.contains(iter.next())) return true;
@@ -111,9 +115,9 @@ public class ScopeUtils {
    * EXPERIMENTAL:
    */
   public static boolean isIntersectionOfContext(ScopedIF obj,
-                                                Object[] context) {
+                                                TopicIF[] context) {
     // Get object scope
-    Collection objscope = obj.getScope();
+    Collection<TopicIF> objscope = obj.getScope();
 
     // Loop over context to see if there is an intersection with the object scope.
     for (int i=0; i < context.length; i++) {
@@ -128,18 +132,18 @@ public class ScopeUtils {
   /**
    * Ranks the ScopedIFs by the applicability to the specified scope.
    */
-  public static List rankByScope(Collection scoped, TopicIF theme) {
+  public static List<ScopedIF> rankByScope(Collection<ScopedIF> scoped, TopicIF theme) {
     return rankByScope(scoped, Collections.singleton(theme));
   }
   
   /**
    * Ranks the ScopedIFs by the applicability to the specified scope.
    */
-  public static List rankByScope(Collection scoped, Collection scope) {
+  public static List<ScopedIF> rankByScope(Collection<ScopedIF> scoped, Collection<TopicIF> scope) {
     // Initialize result
-    Object[] ranklist = scoped.toArray();
-    Arrays.sort(ranklist, new ScopedIFComparator(scope));
-    return Arrays.asList(ranklist);
+    List<ScopedIF> ranklist = new ArrayList<ScopedIF>(scoped);
+    Collections.sort(ranklist, new ScopedIFComparator<ScopedIF>(scope));
+    return ranklist;
   }
 
 }

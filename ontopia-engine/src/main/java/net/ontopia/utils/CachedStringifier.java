@@ -14,30 +14,30 @@ import java.util.Map;
  * updated.</p>
  */
 
-public class CachedStringifier implements StringifierIF, CachedIF {
+public class CachedStringifier<T> implements StringifierIF<T>, CachedIF {
 
-  protected StringifierIF stringifier;
-  protected Map<Object, String> cache = new HashMap<Object, String>();
+  protected StringifierIF<? super T> stringifier;
+  protected Map<T, String> cache = new HashMap<T, String>();
   
-  public CachedStringifier(StringifierIF stringifier) {
+  public CachedStringifier(StringifierIF<? super T> stringifier) {
     this.stringifier = stringifier;
   }
 
   /**
    * Gets the stringifier that is to be cached.
    */
-  public StringifierIF getStringifier() {
+  public StringifierIF<? super T> getStringifier() {
     return stringifier;
   }
   
   /**
    * Sets the stringifier that is to be cached.
    */
-  public void setStringifier(StringifierIF stringifier) {
+  public void setStringifier(StringifierIF<? super T> stringifier) {
     this.stringifier = stringifier;
   }
     
-  public String toString(Object object) {
+  public String toString(T object) {
     if (object == null) return "null";
     String string = cache.get(object);
     if (string != null) return string;

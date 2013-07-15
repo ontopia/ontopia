@@ -1,9 +1,9 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Stringifier that stringifies TopicNameIFs and VariantNameIFs

@@ -1,9 +1,15 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.utils.GrabberIF;
 
 /**
  * INTERNAL: Grabber that grabs the most highest ranked variant name by
@@ -13,12 +19,12 @@ import net.ontopia.topicmaps.core.*;
  * variant names of the given basename. If the basename has no
  * applicable variant names, null is returned.</p>
  */
-public class VariantNameGrabber implements GrabberIF {
+public class VariantNameGrabber implements GrabberIF<TopicNameIF, VariantNameIF> {
 
   /**
    * PROTECTED: The comparator used to sort the variant names.
    */
-  protected Comparator comparator;
+  protected Comparator<? super VariantNameIF> comparator;
  
   /**
    * INTERNAL: Creates a grabber; makes the comparator a ScopedIFComparator
@@ -26,8 +32,8 @@ public class VariantNameGrabber implements GrabberIF {
    *
    * @param scope A scope; a collection of TopicIF objects.
    */
-  public VariantNameGrabber(Collection scope) {
-    this.comparator = new ScopedIFComparator(scope);
+  public VariantNameGrabber(Collection<TopicIF> scope) {
+    this.comparator = new ScopedIFComparator<VariantNameIF>(scope);
   }
 
   /**
@@ -35,7 +41,7 @@ public class VariantNameGrabber implements GrabberIF {
    *
    * @param comparator The given comparator
    */
-  public VariantNameGrabber(Comparator comparator) {
+  public VariantNameGrabber(Comparator<? super VariantNameIF> comparator) {
     this.comparator = comparator;
   }
 
@@ -49,22 +55,16 @@ public class VariantNameGrabber implements GrabberIF {
    * @exception throws OntopiaRuntimeException if the given base name 
    *                   is not a TopicNameIF object.
    */
-  public Object grab(Object basename) {
-    if (!(basename instanceof TopicNameIF))
-      throw new OntopiaRuntimeException(basename + " is not a TopicNameIF");
-
-    TopicNameIF _basename = (TopicNameIF) basename;
-    Collection variants = _basename.getVariants();
+  public VariantNameIF grab(TopicNameIF basename) {
+    List<VariantNameIF> variants = new ArrayList<VariantNameIF>(basename.getVariants());
 
     // If there are no variant names return the base name itself.
     if (variants.isEmpty())
       return null;
 
     // If there are multiple variant names rank them.
-    Object[] _variants = variants.toArray();
-    if (_variants.length > 1)
-      Arrays.sort(_variants, comparator);
-    return _variants[0];
+    Collections.sort(variants, comparator);
+    return variants.get(0);
   }
   
 }

@@ -1,10 +1,18 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.utils.GrabberIF;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Grabber that grabs the most suitable name from a topic,
@@ -31,14 +39,14 @@ public class NameGrabber implements GrabberIF {
    * suitablity can be setup instantly.
    * @since 1.1.2
    */
-  protected Collection scope;
+  protected Collection<TopicIF> scope;
   
   /**
    * INTERNAL: A collection containing topic themes used for specifying
    * the variant name scope.
    * @since 1.2.1
    */
-  protected Collection variantScope;
+  protected Collection<TopicIF> variantScope;
 
   /**
    * INTERNAL: Determine if grab should deliver only the most
@@ -73,8 +81,8 @@ public class NameGrabber implements GrabberIF {
   public NameGrabber(LocatorIF themeIndicator, boolean variant) {
     this.themeIndicator = themeIndicator;
     this.indicatorVariant = variant;
-    this.scope = Collections.EMPTY_SET;
-    this.variantScope = Collections.EMPTY_SET;
+    this.scope = new HashSet<TopicIF>();
+    this.variantScope = new HashSet<TopicIF>();
   }
   
   /**
@@ -84,8 +92,8 @@ public class NameGrabber implements GrabberIF {
    *
    * @since 1.1.2
    */
-  public NameGrabber(Collection scope) {
-    this(scope, Collections.EMPTY_SET);
+  public NameGrabber(Collection<TopicIF> scope) {
+    this(scope, new HashSet<TopicIF>());
   }
   
   /**
@@ -95,7 +103,7 @@ public class NameGrabber implements GrabberIF {
    *
    * @since 1.2.1
    */
-  public NameGrabber(Collection basenameScope, Collection variantScope) {
+  public NameGrabber(Collection<TopicIF> basenameScope, Collection<TopicIF> variantScope) {
     this(basenameScope, variantScope, true);
   }
 
@@ -108,7 +116,7 @@ public class NameGrabber implements GrabberIF {
    *
    * @since 1.2.2
    */
-  public NameGrabber(Collection basenameScope, Collection variantScope,
+  public NameGrabber(Collection<TopicIF> basenameScope, Collection<TopicIF> variantScope,
                      boolean grabOnlyTopicName) {
     this.themeIndicator = null;
     this.scope = basenameScope;
@@ -164,7 +172,7 @@ public class NameGrabber implements GrabberIF {
       throw new OntopiaRuntimeException(object + " is not a TopicIF.", e);
     }
 
-    Collection basenames = topic.getTopicNames();
+    List<TopicNameIF> basenames = new ArrayList<TopicNameIF>(topic.getTopicNames());
     if (basenames.isEmpty())
       return null;
 
@@ -188,30 +196,26 @@ public class NameGrabber implements GrabberIF {
     }
     
     // sort the base names
-    Object[] sorted = basenames.toArray();
-    int sorted_length = sorted.length;
-    if (sorted_length > 1)
-      Arrays.sort(sorted, new TopicNameComparator(scope));
+    Collections.sort(basenames, new TopicNameComparator(scope));
 
     // TODO: Do we really have to create this grabber over and over again?
     VariantNameGrabber vngrabber = new VariantNameGrabber(variantScope);
     Object name = null;
     VariantNameIF vn = null;
 
-    for (int i=0; i < sorted_length; i++) {
-      TopicNameIF current = (TopicNameIF) sorted[i];
+    for (TopicNameIF current : basenames) {
       if (name == null)
         name = current;
 
       if (!variantScope.isEmpty()) {
-        vn = (VariantNameIF) vngrabber.grab(current);
+        vn = vngrabber.grab(current);
         if (vn != null) {
           // TODO: Should not use intersection to find appropriate
           // variant, but rather exact matching, or perhaps ranking.
           
           // if there exists some overlap between variant name themes
           // and specified scope then we are delivering this variant
-          Collection interSection = new HashSet(vn.getScope());
+          Collection<TopicIF> interSection = new HashSet<TopicIF>(vn.getScope());
           interSection.retainAll(variantScope);
           if (!interSection.isEmpty())
             break;

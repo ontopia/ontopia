@@ -1,15 +1,39 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.*;
-import java.util.*;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.infoset.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.utils.*;
-import net.ontopia.xml.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapWriterIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.utils.GrabberIF;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringifierComparator;
+import net.ontopia.utils.StringifierIF;
+import net.ontopia.xml.CanonicalPrinter;
+import org.xml.sax.AttributeList;
+import org.xml.sax.DocumentHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributeListImpl;
 
 /**
  * PUBLIC: A topic map writer that writes topic maps out to Ontopia's
@@ -116,24 +140,24 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
     // topics
     ContextHolder context = createContext(topicmap);
-    Iterator it = context.topicsInOrder(topicmap.getTopics());
+    Iterator<TopicIF> it = context.topicsInOrder(topicmap.getTopics());
     while (it.hasNext()) 
-      writeTopic((TopicIF) it.next(), dh, context);
+      writeTopic(it.next(), dh, context);
 
     // associations
-    it = context.assocsInOrder(topicmap.getAssociations());
-    while (it.hasNext()) 
-      writeAssociation((AssociationIF) it.next(), dh, context);
+    Iterator<AssociationIF> ait = context.assocsInOrder(topicmap.getAssociations());
+    while (ait.hasNext()) 
+      writeAssociation(ait.next(), dh, context);
         
     dh.endElement("topicMap");
     dh.endDocument();
   }
     
   private ContextHolder createContext(TopicMapIF topicmap) {
-    HashMap topicIds = new HashMap();
+    HashMap<TopicIF, String> topicIds = new HashMap<TopicIF, String>();
     ContextHolder context = new ContextHolder(topicIds);
         
-    Iterator it = context.topicsInOrder(topicmap.getTopics());
+    Iterator<TopicIF> it = context.topicsInOrder(topicmap.getTopics());
     int counter = 1;
     while (it.hasNext())
       topicIds.put(it.next(), "id" + Integer.toString(counter++));
@@ -148,13 +172,11 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     dh.startElement("topic", atts);
     atts.clear();
 
-    Iterator it;
-    
     // instanceOf
     if (topic.getTypes().size() != 0) {
-      it = context.topicRefsInOrder(topic.getTypes());
+      Iterator<TopicIF> it = context.topicRefsInOrder(topic.getTypes());
       while (it.hasNext())
-        writeInstanceOf((TopicIF) it.next(), dh, context);
+        writeInstanceOf(it.next(), dh, context);
     }
         
     // subjectIdentity
@@ -162,15 +184,15 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
         topic.getSubjectIdentifiers().size() > 0) {
       dh.startElement("subjectIdentity", empty);
 
-      it = orderedIterator(topic.getSubjectLocators(),
-                           new StringifierComparator(new LocatorStringifier()));
+      Iterator<LocatorIF> it = orderedIterator(topic.getSubjectLocators(),
+                           new StringifierComparator<LocatorIF>(new LocatorStringifier()));
       while (it.hasNext())
-        writeResourceRef((LocatorIF)it.next(), dh);
+        writeResourceRef(it.next(), dh);
 
       it = orderedIterator(topic.getSubjectIdentifiers(),
-                           new StringifierComparator(new LocatorStringifier()));
+                           new StringifierComparator<LocatorIF>(new LocatorStringifier()));
       while (it.hasNext()) {
-        LocatorIF loc = (LocatorIF) it.next();
+        LocatorIF loc = it.next();
         atts.addAttribute("href", "CDATA", resolveRelative(loc));
         dh.startElement("subjectIndicatorRef", atts);
         atts.clear();
@@ -182,16 +204,16 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
         
     // baseName
     if (topic.getTopicNames().size() > 0) {
-      it = context.baseNamesInOrder(topic.getTopicNames());
+      Iterator<TopicNameIF> it = context.baseNamesInOrder(topic.getTopicNames());
       while (it.hasNext())
-        writeTopicName((TopicNameIF) it.next(), dh, context);
+        writeTopicName(it.next(), dh, context);
     }
         
     // occurrences
-    it = orderedIterator(topic.getOccurrences(),
-                         new StringifierComparator(new OccurrenceStringifier()));
+    Iterator<OccurrenceIF> it = orderedIterator(topic.getOccurrences(),
+                         new StringifierComparator<OccurrenceIF>(new OccurrenceStringifier()));
     while (it.hasNext()) {
-      OccurrenceIF occ = (OccurrenceIF) it.next();
+      OccurrenceIF occ = it.next();
       dh.startElement("occurrence", empty);
       if (occ.getType() != null)
         writeInstanceOf(occ.getType(), dh, context);
@@ -219,9 +241,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     if (scoped.getScope().size() > 0) {
       dh.startElement("scope", empty);
         
-      Iterator it = context.topicRefsInOrder(scoped.getScope());
+      Iterator<TopicIF> it = context.topicRefsInOrder(scoped.getScope());
       while (it.hasNext())
-        writeTopicRef((TopicIF) it.next(), dh, context);
+        writeTopicRef(it.next(), dh, context);
 
       dh.endElement("scope");
     }
@@ -268,9 +290,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     dh.endElement("baseNameString");
 
     if (basename.getVariants().size() > 0) {
-      Iterator it = context.variantsInOrder(basename.getVariants());
+      Iterator<VariantNameIF> it = context.variantsInOrder(basename.getVariants());
       while (it.hasNext()) 
-        writeVariant((VariantNameIF) it.next(), dh, context);
+        writeVariant(it.next(), dh, context);
     }
     dh.endElement("baseName");
   }
@@ -296,9 +318,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       writeInstanceOf(assoc.getType(), dh, context);
     writeScope(assoc, dh, context);
 
-    Iterator it = context.rolesInOrder(assoc.getRoles());
+    Iterator<AssociationRoleIF> it = context.rolesInOrder(assoc.getRoles());
     while (it.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      AssociationRoleIF role = it.next();
       dh.startElement("member", empty);
       if (role.getType() != null)
         writeInstanceOf(role.getType(), dh, context);
@@ -312,8 +334,8 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
   // --- Utility methods
 
-  private Iterator orderedIterator(Collection coll, Comparator comparator) {
-    List list = new ArrayList(coll);
+  private <T> Iterator<T> orderedIterator(Collection<T> coll, Comparator<? super T> comparator) {
+    List<T> list = new ArrayList<T>(coll);
     Collections.sort(list, comparator);
     return list.iterator();
   }
@@ -344,9 +366,9 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
 
   // --- Comparators
 
-  static abstract class AbstractComparator implements Comparator {
+  static abstract class AbstractComparator<T> implements Comparator<T> {
 
-    protected int compareObjects(Comparable obj1, Comparable obj2) {
+    protected <O> int compareObjects(Comparable<O> obj1, O obj2) {
       // Compares two objects; null values means lower ordering
       if (obj1 == null) {
         if (obj2 != null) return -1;
@@ -357,7 +379,7 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       }
     }
     
-    protected int compareObjects(Object obj1, Object obj2, Comparator comparator) {
+    protected <O> int compareObjects(O obj1, O obj2, Comparator<? super O> comparator) {
       // Compares two objects; null values means lower ordering
       if (obj1 == null) {
         if (obj2 != null) return -1;
@@ -368,17 +390,18 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
       }
     }
 
-    protected int compareCollections(Collection coll1, Collection coll2, Comparator comparator) {
+    @SuppressWarnings("unchecked")
+    protected <O> int compareCollections(Collection<O> coll1, Collection<O> coll2, Comparator<? super O> comparator) {
       // Convert collections to arrays
       Object[] array1 = coll1.toArray();
       Object[] array2 = coll2.toArray();
       // Sort the arrays
-      Arrays.sort(array1, comparator);
-      Arrays.sort(array2, comparator);
+      Arrays.sort((O[])array1, comparator);
+      Arrays.sort((O[])array2, comparator);
       // Compare individual items
       int length = (array1.length < array2.length ? array1.length : array2.length);
       for (int i=0; i < length; i++) {
-        int cval = comparator.compare(array1[i], array2[i]);
+        int cval = comparator.compare((O)array1[i], (O)array2[i]);
         if (cval != 0) return cval;
       }
       // Compare array sizes
@@ -391,16 +414,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
   
-  static class TopicComparator extends AbstractComparator {
+  static class TopicComparator extends AbstractComparator<TopicIF> {
     protected static TopicComparator instance;
     public static TopicComparator getInstance() {
       if (instance == null) instance = new TopicComparator();
       return instance;      
     }    
-    public int compare(Object obj1, Object obj2) {
-      if (obj1 == obj2) return 0;
-      TopicIF topic1 = (TopicIF)obj1;
-      TopicIF topic2 = (TopicIF)obj2;
+    public int compare(TopicIF topic1, TopicIF topic2) {
+      if (topic1 == topic2) return 0;
 
       // Compare the subject
       int cval0 = compareCollections(topic1.getSubjectLocators(), topic2.getSubjectLocators(),
@@ -437,16 +458,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
 
-  static class LocatorComparator extends AbstractComparator {
+  static class LocatorComparator extends AbstractComparator<LocatorIF> {
     protected static LocatorComparator instance;
     public static LocatorComparator getInstance() {
       if (instance == null) instance = new LocatorComparator();
       return instance;      
     }
-    public int compare(Object obj1, Object obj2) {
-      if (obj1 == obj2) return 0;
-      LocatorIF loc1 = (LocatorIF)obj1;
-      LocatorIF loc2 = (LocatorIF)obj2;
+    public int compare(LocatorIF loc1, LocatorIF loc2) {
+      if (loc1 == loc2) return 0;
 
       // Compare address
       int c_address = loc1.getExternalForm().compareTo(loc2.getExternalForm());
@@ -457,16 +476,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
   
-  static class TopicNameComparator extends AbstractComparator {
+  static class TopicNameComparator extends AbstractComparator<TopicNameIF> {
     protected static TopicNameComparator instance;
     public static TopicNameComparator getInstance() {
       if (instance == null) instance = new TopicNameComparator();
       return instance;      
     }
-    public int compare(Object obj1, Object obj2) {
-      if (obj1 == obj2) return 0;
-      TopicNameIF bn1 = (TopicNameIF)obj1;
-      TopicNameIF bn2 = (TopicNameIF)obj2;
+    public int compare(TopicNameIF bn1, TopicNameIF bn2) {
+      if (bn1 == bn2) return 0;
       
       // Compare basename values
       int cval1 = compareObjects(bn1.getValue(), bn2.getValue());
@@ -483,16 +500,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
   
-  static class VariantNameComparator extends AbstractComparator {
+  static class VariantNameComparator extends AbstractComparator<VariantNameIF> {
     protected static VariantNameComparator instance;
     public static VariantNameComparator getInstance() {
       if (instance == null) instance = new VariantNameComparator();
       return instance;      
     }
-    public int compare(Object obj1, Object obj2) {
-      if (obj1 == obj2) return 0;
-      VariantNameIF vn1 = (VariantNameIF)obj1;
-      VariantNameIF vn2 = (VariantNameIF)obj2;
+    public int compare(VariantNameIF vn1, VariantNameIF vn2) {
+      if (vn1 == vn2) return 0;
       
       // Compare variant name values
       int cval1 = compareObjects(vn1.getValue(), vn2.getValue());
@@ -509,16 +524,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
   
-  static class OccurrenceComparator extends AbstractComparator {
+  static class OccurrenceComparator extends AbstractComparator<OccurrenceIF> {
     protected static OccurrenceComparator instance;
     public static OccurrenceComparator getInstance() {
       if (instance == null) instance = new OccurrenceComparator();
       return instance;      
     }
-    public int compare(Object obj1, Object obj2) {
-      if (obj1 == obj2) return 0;
-      OccurrenceIF occ1 = (OccurrenceIF)obj1;
-      OccurrenceIF occ2 = (OccurrenceIF)obj2;
+    public int compare(OccurrenceIF occ1, OccurrenceIF occ2) {
+      if (occ1 == occ2) return 0;
       
       // Compare occurrence values
       int cval1 = compareObjects(occ1.getValue(), occ2.getValue());
@@ -540,16 +553,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
   
-  static class AssociationComparator extends AbstractComparator {
+  static class AssociationComparator extends AbstractComparator<AssociationIF> {
     protected static AssociationComparator instance;
     public static AssociationComparator getInstance() {
       if (instance == null) instance = new AssociationComparator();
       return instance;      
     }
-    public int compare(Object obj1, Object obj2) {
-      if (obj1 == obj2) return 0;
-      AssociationIF assoc1 = (AssociationIF)obj1;
-      AssociationIF assoc2 = (AssociationIF)obj2;
+    public int compare(AssociationIF assoc1, AssociationIF assoc2) {
+      if (assoc1 == assoc2) return 0;
       
       // Compare type
       int cval1 = compareObjects(assoc1.getType(), assoc2.getType(),
@@ -567,16 +578,14 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
   }
   
-  static class AssociationRoleComparator extends AbstractComparator {
+  static class AssociationRoleComparator extends AbstractComparator<AssociationRoleIF> {
     protected static AssociationRoleComparator instance;
     public static AssociationRoleComparator getInstance() {
       if (instance == null) instance = new AssociationRoleComparator();
       return instance;      
     }
-    public int compare(Object obj1, Object obj2) {
-      if (obj1 == obj2) return 0;
-      AssociationRoleIF role1 = (AssociationRoleIF)obj1;
-      AssociationRoleIF role2 = (AssociationRoleIF)obj2;
+    public int compare(AssociationRoleIF role1, AssociationRoleIF role2) {
+      if (role1 == role2) return 0;
       
       // Compare types
       int cval2 = compareObjects(role1.getType(), role2.getType(),
@@ -591,32 +600,32 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
   
   // --- Sort key stringifiers
 
-  class TopicRefStringifier implements StringifierIF {
-    private Map topicIds;
+  class TopicRefStringifier implements StringifierIF<TopicIF> {
+    private Map<TopicIF, String> topicIds;
         
-    public TopicRefStringifier(Map topicIds) {
+    public TopicRefStringifier(Map<TopicIF, String> topicIds) {
       this.topicIds = topicIds;
     }
                               
-    public String toString(Object topic) {
-      return (String) topicIds.get(topic);
+    public String toString(TopicIF topic) {
+      return topicIds.get(topic);
     }
   }
     
   // --- Other utilities
 
   class ContextHolder {
-    private Map topicIds;
-    private Comparator topicComparator;
-    private Comparator topicRefComparator;
-    private Comparator baseNameComparator;
-    private Comparator variantNameComparator;
-    private Comparator assocComparator;
-    private Comparator roleComparator;
+    private Map<TopicIF, String> topicIds;
+    private Comparator<TopicIF> topicComparator;
+    private Comparator<TopicIF> topicRefComparator;
+    private Comparator<TopicNameIF> baseNameComparator;
+    private Comparator<VariantNameIF> variantNameComparator;
+    private Comparator<AssociationIF> assocComparator;
+    private Comparator<AssociationRoleIF> roleComparator;
 
-    public ContextHolder(Map topicIds) {
+    public ContextHolder(Map<TopicIF, String> topicIds) {
       this.topicIds = topicIds;
-      topicRefComparator = new StringifierComparator(new TopicRefStringifier(topicIds));
+      topicRefComparator = new StringifierComparator<TopicIF>(new TopicRefStringifier(topicIds));
       
       topicComparator = TopicComparator.getInstance();
       baseNameComparator = TopicNameComparator.getInstance();
@@ -627,78 +636,74 @@ public class CanonicalTopicMapWriter implements TopicMapWriterIF {
     }
 
     public String getTopicId(TopicIF topic) {
-      return (String) topicIds.get(topic);
+      return topicIds.get(topic);
     }
 
-    public Iterator topicsInOrder(Collection topics) {
+    public Iterator<TopicIF> topicsInOrder(Collection<TopicIF> topics) {
       return orderedIterator(topics, topicComparator);
     }
 
-    public Iterator topicRefsInOrder(Collection topics) {
+    public Iterator<TopicIF> topicRefsInOrder(Collection<TopicIF> topics) {
       return orderedIterator(topics, topicRefComparator);
     }
 
-    public Iterator variantsInOrder(Collection variants) {
+    public Iterator<VariantNameIF> variantsInOrder(Collection<VariantNameIF> variants) {
       return orderedIterator(variants, variantNameComparator);
     }
 
-    public Iterator baseNamesInOrder(Collection basenames) {
+    public Iterator<TopicNameIF> baseNamesInOrder(Collection<TopicNameIF> basenames) {
       return orderedIterator(basenames, baseNameComparator);
     }
 
-    public Iterator assocsInOrder(Collection assocs) {
+    public Iterator<AssociationIF> assocsInOrder(Collection<AssociationIF> assocs) {
       return orderedIterator(assocs, assocComparator);
     }
 
-    public Iterator rolesInOrder(Collection roles) {
+    public Iterator<AssociationRoleIF> rolesInOrder(Collection<AssociationRoleIF> roles) {
       return orderedIterator(roles, roleComparator);
     }
   }
     
-  class TopicRefComparator implements Comparator {
-    private Map topicIds;
+  class TopicRefComparator implements Comparator<TopicIF> {
+    private Map<TopicIF, String> topicIds;
         
-    public TopicRefComparator(Map topicIds) {
+    public TopicRefComparator(Map<TopicIF, String> topicIds) {
       this.topicIds = topicIds;
     }
 
-    public int compare(Object o1, Object o2) {
-      String s1 = (String) topicIds.get(o1);
-      String s2 = (String) topicIds.get(o2);
+    public int compare(TopicIF o1, TopicIF o2) {
+      String s1 = topicIds.get(o1);
+      String s2 = topicIds.get(o2);
       return s1.compareTo(s2);
     }
   }
 
-  class FirstGrabber implements GrabberIF {
-    private Comparator comparator;
+  class FirstGrabber<T> implements GrabberIF<Collection<T>, T> {
+    private Comparator<? super T> comparator;
         
-    public FirstGrabber(Comparator comparator) {
+    public FirstGrabber(Comparator<? super T> comparator) {
       this.comparator = comparator;
     }
             
-    public Object grab(Object coll) {
-      return orderedIterator((Collection) coll, comparator).next();
+    public T grab(Collection<T> coll) {
+      return orderedIterator(coll, comparator).next();
     }
   }
 
-  class StringComparator implements Comparator {
-    public int compare(Object o1, Object o2) {
-      String s1 = (String) o1;
-      String s2 = (String) o2;
+  class StringComparator implements Comparator<String> {
+    public int compare(String s1, String s2) {
       return s1.compareTo(s2);
     }
   }
     
-  class LocatorStringifier implements StringifierIF {
-    public String toString(Object obj) {
-      LocatorIF loc = (LocatorIF) obj;
+  class LocatorStringifier implements StringifierIF<LocatorIF> {
+    public String toString(LocatorIF loc) {
       return loc.getExternalForm();
     }
   }
 
-  class OccurrenceStringifier implements StringifierIF {
-    public String toString(Object obj) {
-      OccurrenceIF occ = (OccurrenceIF) obj;
+  class OccurrenceStringifier implements StringifierIF<OccurrenceIF> {
+    public String toString(OccurrenceIF occ) {
       if (occ.getLocator() != null)
         return occ.getLocator().getExternalForm();
       else

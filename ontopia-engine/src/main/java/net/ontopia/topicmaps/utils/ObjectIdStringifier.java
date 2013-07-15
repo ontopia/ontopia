@@ -1,14 +1,14 @@
 
 package net.ontopia.topicmaps.utils;
 
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: Stringifier that returns the object id of a topic map object.
  */
 
-public class ObjectIdStringifier implements StringifierIF {
+public class ObjectIdStringifier implements StringifierIF<TMObjectIF> {
   
   /**
    * INTERNAL: Stringifies an arbitrary topicmap object, using its objectId
@@ -17,9 +17,9 @@ public class ObjectIdStringifier implements StringifierIF {
    * given topicmap object
    * @return string the topic map object id
    */
-  public String toString(Object tmobject) {
+  public String toString(TMObjectIF tmobject) {
     if (tmobject == null) return "null";
-    return ((TMObjectIF)tmobject).getObjectId();
+    return tmobject.getObjectId();
   }
   
 }

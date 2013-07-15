@@ -1,10 +1,10 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
+import java.util.Collection;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 
 /**
  * INTERNAL: Comparator that first sorts by type then by scope,
@@ -12,17 +12,17 @@ import net.ontopia.topicmaps.core.*;
  *
  * @since 3.0
  */
-public class TopicNameComparator extends ScopedIFComparator {
+public class TopicNameComparator extends ScopedIFComparator<TopicNameIF> {
   
-  TopicNameComparator(Collection scope) {
+  TopicNameComparator(Collection<TopicIF> scope) {
     super(scope);
   }
   
-  public int compare(Object o1, Object o2) {
-    TopicMapIF tm = ((TopicNameIF)o1).getTopicMap();
+  public int compare(TopicNameIF o1, TopicNameIF o2) {
+    TopicMapIF tm = o1.getTopicMap();
 
-    TopicIF t1 = ((TopicNameIF)o1).getType();
-    TopicIF t2 = ((TopicNameIF)o2).getType();
+    TopicIF t1 = o1.getType();
+    TopicIF t2 = o2.getType();
     
     // check for default type
     TopicIF untypedname = tm.getTopicBySubjectIdentifier(PSI.getSAMNameType());

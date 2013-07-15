@@ -8,7 +8,7 @@ package net.ontopia.utils;
  * representation of that object.</p>
  */
 
-public interface StringifierIF {
+public interface StringifierIF<T> {
 
   /**
    * Returns a stringified version of the object, i.e. a string
@@ -19,7 +19,7 @@ public interface StringifierIF {
    * @return a string representation of the <code>object</code>
    * argument.
    */
-  public String toString(Object object);
+  public String toString(T object);
 
 }
 
