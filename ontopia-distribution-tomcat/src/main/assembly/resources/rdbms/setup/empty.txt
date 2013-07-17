@@ -1,0 +1,1 @@
+This empty placeholder fixes git empty folder ignore

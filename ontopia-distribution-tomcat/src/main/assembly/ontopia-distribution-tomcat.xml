@@ -51,6 +51,7 @@
 			<outputDirectory>.</outputDirectory>
 			<fileMode>0644</fileMode>
 			<excludes>
+				<exclude>rdbms/setup/empty.txt</exclude>
 				<exclude>apache-tomcat/bin/*.sh</exclude>
 				<exclude>bin/*.sh</exclude>
 				<exclude>bin/*.bat</exclude>
