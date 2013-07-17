@@ -955,7 +955,7 @@ configuration files for the Omnigator, is described in the Navigator
 Framework Configuration guide.) The default is to recognise all files
 with the extensions <filename>.xtm</filename>,
 <filename>.hytm</filename>, <filename>.ltm</filename>, or
-<filename>.rdf</filename> in the <filename>WEB-INF/topicmaps/</filename>
+<filename>.rdf</filename> in the <filename>{Ontopia}/topicmaps/</filename>
 directory. (LTM is the Linear Topic Map Notation, a compact clear-text
 syntax for topic maps, defined by Ontopia and useful for rapid
 prototyping. An example LTM file is included in the distribution of the
@@ -1021,7 +1021,7 @@ have a <sgmltag>topicMap</sgmltag> element in your document.</para>
 <para>The <guibutton>Refresh Sources</guibutton> button is
 used to refresh the list of topic maps available to the system without
 restarting the application. This is useful if you have just added a new
-topic map (perhaps your own!) to the <filename>WEB-INF/topicmaps/</filename>
+topic map (perhaps your own!) to the <filename>{Ontopia}/topicmaps/</filename>
 directory.</para>
 </section>
 
@@ -1334,7 +1334,7 @@ on the Merging and Duplicate Suppression page.</para>
 <para><emphasis role="bold">TIP:</emphasis> A useful trick for testing
 the consistency of your topic map is to merge it with itself and compare
 the statistics of the result with those of the original. Put two copies
-of your topic map in the <filename>WEB-INF/topicmaps/</filename> directory
+of your topic map in the <filename>{Ontopia}/topicmaps/</filename> directory
 under different names, and <guilabel>Refresh Sources</guilabel> from the Manage Page. Load
 one of them and run the Statistics plug-in. Open the same topic map in a
 new browser window and merge it with the copy using the Merge plug-in.
@@ -1515,7 +1515,7 @@ schema for the Scripts and Languages topic map
 (<filename>i18n.ltm.osl</filename>) and a partial schema for the Italian
 Opera Topic Map (<filename>opera.ltm.osl</filename>), both of which
 reside in the
-<filename>$TOMCAT_HOME/&#x200b;webapps/&#x200b;omnigator/&#x200b;WEB-INF/&#x200b;schemas/</filename>
+<filename>{Ontopia}/topicmaps</filename>
 directory. (Note that the Opera topic map schema may cause some errors
 to be reported during validation depending on the current state of
 experimentation. If so, regard it as being intentional!)</para>
@@ -1685,9 +1685,7 @@ cheating!) using your favourite text editor (e.g., emacs, TextPad,
 Notepad, etc.), and save it under a name with the extension
 <filename>.xtm</filename> in the appropriate directory. (By default
 this is
-<filename>$TOMCAT_HOME/webapps/omnigator/WEB-INF/topicmaps/</filename>,
-where <filename>${basedir}</filename> is the Omnigator base directory,
-which is usually called ontopia.</para>
+<filename>{Ontopia}/topicmaps/</filename>.</para>
 
 <para>Once the topic map file is in the correct place, start the
 Omnigator, go to the Manage Page, and there you will see your XTM
@@ -2272,7 +2270,7 @@ Good luck!</para>
 
 <para>Here is the complete version of the topic map used for the tutorial,
 including comments. It is available as <filename>jill.xtm</filename> in the
-<filename>WEB-INF/topicmaps/</filename> directory of the Omnigator distribution,
+<filename>{Ontopia}/topicmaps/</filename> directory of the Omnigator distribution,
 and you can also view it as XML <ulink url="jill.xtm">in your browser</ulink>.</para>
 
 <example>
