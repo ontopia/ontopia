@@ -19,10 +19,10 @@
 		<developerConnection>scm:svn:https://ontopia.googlecode.com/svn/trunk/</developerConnection>
 	</scm>
 	<licenses>
-	  <license>
-	    <name>The Apache Software License, Version 2.0</name>
-	    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-	  </license>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
 	</licenses>	
 
 	<modules>
