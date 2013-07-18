@@ -18,6 +18,12 @@
 		<connection>scm:svn:http://ontopia.googlecode.com/svn/trunk/</connection>
 		<developerConnection>scm:svn:https://ontopia.googlecode.com/svn/trunk/</developerConnection>
 	</scm>
+	<licenses>
+	  <license>
+	    <name>The Apache Software License, Version 2.0</name>
+	    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+	  </license>
+	</licenses>	
 
 	<modules>
 		<module>ontopia-engine</module>
@@ -285,6 +291,21 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
 				<version>2.3.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.5</version>
+				<configuration>
+					<licenseName>apache_v2</licenseName>
+				</configuration>
+				<executions>
+					<execution>
+						<inherited>false</inherited>
+						<goals><goal>update-project-license</goal></goals>
+						<phase>initialize</phase>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
