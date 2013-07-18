@@ -314,9 +314,9 @@
 						<id>child-update-project-license</id>
 						<inherited>true</inherited>
 						<goals><goal>update-project-license</goal></goals>
-						<phase>prepare-package</phase>
+						<phase>generate-resources</phase>
 						<configuration>
-							<licenseFile>${basedir}/target/classes/LICENSE.txt</licenseFile>
+							<licenseFile>${basedir}/target/generated-sources/license/LICENSE.txt</licenseFile>
 						</configuration>
 					</execution>
 				</executions>
