@@ -1,3 +1,4 @@
+//#! Ignore-License
 /*
  * Copyright 2007 - 2009 Lars Heuer (heuer[at]semagia.com)
  *

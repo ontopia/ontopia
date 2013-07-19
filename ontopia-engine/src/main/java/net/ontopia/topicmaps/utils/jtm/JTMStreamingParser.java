@@ -1,3 +1,4 @@
+//#! Ignore-License
 /*
  * Copyright 2009 Thomas Neidhart, thomas.neidhart@spaceapplications.com
  *   based on work from Lars Heuer (heuer[at]semagia.com)

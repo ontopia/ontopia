@@ -1,3 +1,4 @@
+//#! Ignore-License
 package net.ontopia.net;
 
 /**
