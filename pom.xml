@@ -18,6 +18,13 @@
 		<connection>scm:svn:http://ontopia.googlecode.com/svn/trunk/</connection>
 		<developerConnection>scm:svn:https://ontopia.googlecode.com/svn/trunk/</developerConnection>
 	</scm>
+
+	<inceptionYear>2001</inceptionYear>
+	<organization>
+		<name>The Ontopia Project</name>
+		<url>https://code.google.com/p/ontopia</url>
+	</organization>
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
