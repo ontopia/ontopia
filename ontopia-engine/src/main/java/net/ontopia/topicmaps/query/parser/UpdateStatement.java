@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.query.parser;
 
 import java.util.Map;

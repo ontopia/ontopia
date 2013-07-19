@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.query.impl.rdbms;
 
 import java.util.List;
