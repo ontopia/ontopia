@@ -30,7 +30,7 @@ import java.util.Collection;
  * syntax, when extended by the VariantNameIF interface.</p>
  */
 
-public interface TopicNameIF extends ScopedIF, TypedIF, ReifiableIF {
+public interface TopicNameIF extends NameIF, ScopedIF, TypedIF, ReifiableIF {
 
   public static final String EVENT_ADDED = "TopicNameIF.added";
   public static final String EVENT_REMOVED = "TopicNameIF.removed";
@@ -41,34 +41,6 @@ public interface TopicNameIF extends ScopedIF, TypedIF, ReifiableIF {
   public static final String EVENT_ADD_THEME = "TopicNameIF.addTheme";
   public static final String EVENT_REMOVE_THEME = "TopicNameIF.removeTheme";
 
-  /**
-   * PUBLIC: Gets the topic to which this topic name belongs.
-   *
-   * @return The topic named by this topic name; an object implementing TopicIF.
-   */
-  public TopicIF getTopic();
-  
-  /**
-   * PUBLIC: Gets the value of this topic name. This corresponds to
-   * the content of the 'baseNameString' element in XTM 1.0, as a
-   * string.
-   *
-   * Where this method is implemented by an object implementing VariantNameIF,
-   * the contents of the 'variantName' element are returned instead.
-   *
-   * @return A string which is the value of this topic name.
-   */
-  public String getValue();
-
-  /**
-   * PUBLIC: Sets the value of this topic name. This corresponds to
-   * the content of the 'baseNameString' element in XTM 1.0, as a
-   * string.
-   *
-   * @param name A string which is the value of this topic name.
-   */
-  public void setValue(String name);
-  
   /**
    * PUBLIC: Gets the variant names of the topic named by this
    * topic name. These correspond to the 'variant' child elements of the

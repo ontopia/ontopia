@@ -20,6 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
+import net.ontopia.topicmaps.core.NameIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.GrabberIF;
 
 /**
@@ -43,7 +45,7 @@ public class TopicCharacteristicGrabbers {
    * @return A TopicNameIF or VariantNameIF object; null if the topic
    *         has no base names.
    */
-  public static GrabberIF getDisplayNameGrabber() {
+  public static GrabberIF<TopicIF, NameIF> getDisplayNameGrabber() {
     // Note: Grabs variant name if it exists.
     NameGrabber grabber = new NameGrabber(PSI.getXTMDisplay(), true);
     grabber.setGrabOnlyTopicName(false);
@@ -58,7 +60,7 @@ public class TopicCharacteristicGrabbers {
    * @return A TopicNameIF or VariantNameIF object; null if the topic
    *         has no base names.
    */
-  public static GrabberIF getSortNameGrabber() {
+  public static GrabberIF<TopicIF, NameIF> getSortNameGrabber() {
     // Note: Grabs variant name if it exists.
     NameGrabber grabber = new NameGrabber(PSI.getXTMSort(), true);
     grabber.setGrabOnlyTopicName(false);

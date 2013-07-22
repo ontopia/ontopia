@@ -20,8 +20,7 @@
 
 package net.ontopia.topicmaps.utils;
 
-import net.ontopia.topicmaps.core.TopicNameIF;
-import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.utils.StringifierIF;
 
 /**
@@ -29,7 +28,7 @@ import net.ontopia.utils.StringifierIF;
  * by calling their getValue() method.
  */
 
-public class NameStringifier implements StringifierIF {
+public class NameStringifier implements StringifierIF<NameIF> {
   
   /**
    * INTERNAL: Stringifies the given name.
@@ -37,13 +36,10 @@ public class NameStringifier implements StringifierIF {
    * internally; the given name
    * @return string containing name value or "[No name]"
    */
-  public String toString(Object name) {
+  public String toString(NameIF name) {
     if (name == null)
       return "[No name]";
-    if (name instanceof TopicNameIF)
-      return ((TopicNameIF) name).getValue();
-    else
-      return ((VariantNameIF) name).getValue();
+    return name.getValue();
   }
   
 }

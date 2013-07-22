@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils;
 import java.util.Iterator;
 import java.util.Collection;
 import java.util.Collections;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
@@ -36,7 +37,7 @@ import net.ontopia.utils.StringifierIF;
  */
 public class TopicStringifiers {
   private static final StringifierIF<TopicIF> DEFAULT_STRINGIFIER
-    = new GrabberStringifier(TopicCharacteristicGrabbers.getDisplayNameGrabber(),
+    = new GrabberStringifier<TopicIF, NameIF>(TopicCharacteristicGrabbers.getDisplayNameGrabber(),
                              new NameStringifier());
 
   private TopicStringifiers() {
@@ -66,8 +67,8 @@ public class TopicStringifiers {
    *    topic name of its given topic, selected according to the 
    *    logic in TopicNameGrabber.
    */
-  public static StringifierIF<TopicIF> getTopicNameStringifier(Collection scope) {
-    return new GrabberStringifier(new TopicNameGrabber(scope),
+  public static StringifierIF<TopicIF> getTopicNameStringifier(Collection<TopicIF> scope) {
+    return new GrabberStringifier<TopicIF, TopicNameIF>(new TopicNameGrabber(scope),
                                   new NameStringifier());
   }
 
@@ -82,8 +83,8 @@ public class TopicStringifiers {
    *    variant name of its given topic, selected according to the 
    *    logic in VariantNameGrabber.
    */  
-  public static StringifierIF<TopicIF> getVariantNameStringifier(Collection scope) {
-    return new GrabberStringifier(new TopicVariantNameGrabber(scope),
+  public static StringifierIF<TopicIF> getVariantNameStringifier(Collection<TopicIF> scope) {
+    return new GrabberStringifier<TopicIF, VariantNameIF>(new TopicVariantNameGrabber(scope),
                                   new NameStringifier());
   }
 
@@ -98,7 +99,7 @@ public class TopicStringifiers {
    * @since 1.1
    */
   public static StringifierIF<TopicIF> getSortNameStringifier() {
-    return new GrabberStringifier(TopicCharacteristicGrabbers.getSortNameGrabber(),
+    return new GrabberStringifier<TopicIF, NameIF>(TopicCharacteristicGrabbers.getSortNameGrabber(),
                                   new NameStringifier());
   }
 
@@ -136,7 +137,7 @@ public class TopicStringifiers {
     } else if (vnscope == null || vnscope.isEmpty())
       return getTopicNameStringifier(tnscope);
     else
-      return new GrabberStringifier(new NameGrabber(tnscope, vnscope, false),
+      return new GrabberStringifier<TopicIF, NameIF>(new NameGrabber(tnscope, vnscope, false),
                                     new NameStringifier());
   }
 

@@ -26,12 +26,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.GrabberIF;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Grabber that grabs the most suitable name from a topic,
@@ -42,7 +42,7 @@ import net.ontopia.utils.OntopiaRuntimeException;
  *
  * @since 1.1
  */
-public class NameGrabber implements GrabberIF {
+public class NameGrabber implements GrabberIF<TopicIF, NameIF> {
 
   /**
    * PROTECTED: The subject indicator of the theme used to decide
@@ -100,8 +100,8 @@ public class NameGrabber implements GrabberIF {
   public NameGrabber(LocatorIF themeIndicator, boolean variant) {
     this.themeIndicator = themeIndicator;
     this.indicatorVariant = variant;
-    this.scope = new HashSet<TopicIF>();
-    this.variantScope = new HashSet<TopicIF>();
+    this.scope = Collections.emptySet();
+    this.variantScope = Collections.emptySet();
   }
   
   /**
@@ -180,17 +180,10 @@ public class NameGrabber implements GrabberIF {
    *         basenames.
    * @exception throws OntopiaRuntimeException if object is not a topic.
    */
-  public Object grab(Object object) {
-    if (object == null)
+  public NameIF grab(TopicIF topic) {
+    if (topic == null)
       return null;
     
-    TopicIF topic;
-    try {
-      topic = (TopicIF) object;
-    } catch (ClassCastException e) {
-      throw new OntopiaRuntimeException(object + " is not a TopicIF.", e);
-    }
-
     List<TopicNameIF> basenames = new ArrayList<TopicNameIF>(topic.getTopicNames());
     if (basenames.isEmpty())
       return null;
@@ -219,7 +212,7 @@ public class NameGrabber implements GrabberIF {
 
     // TODO: Do we really have to create this grabber over and over again?
     VariantNameGrabber vngrabber = new VariantNameGrabber(variantScope);
-    Object name = null;
+    NameIF name = null;
     VariantNameIF vn = null;
 
     for (TopicNameIF current : basenames) {

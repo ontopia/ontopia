@@ -40,7 +40,7 @@ import net.ontopia.infoset.core.LocatorIF;
  * resource appears in the locator property of the variantName.</p>
  */
 
-public interface VariantNameIF extends ScopedIF, ReifiableIF {
+public interface VariantNameIF extends NameIF, ScopedIF, ReifiableIF {
 
   public static final String EVENT_ADDED = "VariantNameIF.added";
   public static final String EVENT_REMOVED = "VariantNameIF.removed";
@@ -59,14 +59,6 @@ public interface VariantNameIF extends ScopedIF, ReifiableIF {
    */
   public TopicNameIF getTopicName();
 
-  /**
-   * PUBLIC: Gets the topic to which this variant name belongs.
-   *
-   * @return The topic named by this variant name; an object implementing TopicIF.
-   *
-   */
-  public TopicIF getTopic();
-  
   /**
    * PUBLIC: Gets the data type of this variant.
    *
