@@ -47,7 +47,7 @@ public abstract class AbstractWebBasedTestCase extends TestCase {
   
     super.setUp();
     webedTestApplication = System.getProperty("net.ontopia.webed.test.testApplicationPath", "/webedtest");
-    webedTestLocation = System.getProperty("net.ontopia.webed.test.testServerLocation", "http://127.0.0.1:" + System.getProperty("jetty.port", "8080")) + webedTestApplication;
+    webedTestLocation = System.getProperty("net.ontopia.webed.test.testServerLocation", "http://127.0.0.1:" + System.getProperty("ontopia.jetty.port", "8080")) + webedTestApplication;
     
     wc = new WebConversation();
     checkedAttributes = new ArrayList();
