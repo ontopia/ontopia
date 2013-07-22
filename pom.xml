@@ -72,6 +72,7 @@
 		<!-- reused dependency versions -->
 		<axis2.version>1.6.0</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
+		<jetty.port>8080</jetty.port>
 	</properties>
 	
 	<build>
@@ -120,6 +121,7 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.8</version>
 					<configuration>
+						<argLine>-Djetty.port=${jetty.port}</argLine>
 						<includes>
 							<include>**/*Tests.java</include>
 							<include>**/*Test.java</include>
@@ -183,6 +185,12 @@
 					<artifactId>maven-jetty-plugin</artifactId>
 					<version>6.1.26</version>
 					<configuration>
+						<connectors>
+							<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+								<port>${jetty.port}</port>
+								<maxIdleTime>60000</maxIdleTime>
+							</connector>
+						</connectors>
 						<stopKey>foo</stopKey>
 						<stopPort>9999</stopPort>
 					</configuration>
