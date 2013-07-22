@@ -1,6 +1,4 @@
 
-// $Id$
-
 package net.ontopia.topicmaps.viz;
 
 import java.awt.Color;
