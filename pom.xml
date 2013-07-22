@@ -72,7 +72,7 @@
 		<!-- reused dependency versions -->
 		<axis2.version>1.6.0</axis2.version>
 		<tmapi.version>2.0.2</tmapi.version>
-		<ontopia.jetty.port>9092</ontopia.jetty.port>
+		<ontopia.jetty.port>8080</ontopia.jetty.port>
 	</properties>
 	
 	<build>
