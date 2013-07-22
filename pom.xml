@@ -260,7 +260,21 @@
 					<artifactId>license-maven-plugin</artifactId>
 					<version>1.5</version>
 					<configuration>
+						<verbose>false</verbose>
 						<licenseName>apache_v2</licenseName>
+						<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+						<processStartTag>#!</processStartTag>
+						<processEndTag>!#</processEndTag>
+						<sectionDelimiter>#-</sectionDelimiter>
+						<roots>
+							<root>src/main/java</root>
+							<root>src/test/java</root>
+							<root>target/generated-sources</root>
+						</roots>
+						<includes>
+							<include>**/*.java</include>
+						</includes>
+						<ignoreTag>#! Ignore-License</ignoreTag>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -325,6 +339,12 @@
 						<configuration>
 							<licenseFile>${basedir}/target/generated-sources/license/LICENSE.txt</licenseFile>
 						</configuration>
+					</execution>
+					<execution>
+						<id>child-set-license-headers</id>
+						<inherited>true</inherited>
+						<goals><goal>update-file-header</goal></goals>
+						<phase>process-sources</phase>
 					</execution>
 				</executions>
 			</plugin>
