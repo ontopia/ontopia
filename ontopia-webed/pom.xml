@@ -102,8 +102,6 @@
 					<webAppSourceDirectory>${basedir}/target/test-webapp</webAppSourceDirectory>
 					<contextPath>webedtest</contextPath>
 					<useTestClasspath>true</useTestClasspath>
-					<stopKey>foo</stopKey>
-					<stopPort>9999</stopPort>
 				</configuration>
 				<executions>
 					<execution>
