@@ -638,7 +638,7 @@ be found in the <filename>${basedir}/lib</filename> directory.</para>
   <listitem><para>Web Editor Framework:</para>
     <orderedlist>
       <listitem><para><filename>velocity.jar</filename>, version 1.3, (<ulink url="http://velocity.apache.org/">Apache Velocity</ulink>)</para></listitem>
-      <listitem><para><filename>commons-fileupload.jar</filename>, version 1.1, (<ulink url="http://commons.apache.org/fileupload/">Apache Commons FileUpload</ulink>)</para></listitem>
+      <listitem><para><filename>commons-fileupload.jar</filename>, version 1.3, (<ulink url="http://commons.apache.org/fileupload/">Apache Commons FileUpload</ulink>)</para></listitem>
     </orderedlist>
   </listitem>        
 </itemizedlist>
