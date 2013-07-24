@@ -31,7 +31,6 @@ import org.tartarus.snowball.SnowballProgram;
  */
 public class SnowballStemmer implements TermStemmerIF {
 
-  private static final Object [] EMPTY_ARGS = new Object[0];
   private static Map languages;
 
   static {
@@ -55,7 +54,6 @@ public class SnowballStemmer implements TermStemmerIF {
   }
 
   protected SnowballProgram stemmer;
-  protected Method stemMethod;
   
   public SnowballStemmer(String lang) {
     String stemClassName = (String)languages.get(lang);
@@ -64,8 +62,6 @@ public class SnowballStemmer implements TermStemmerIF {
     try {
       Class stemClass = Class.forName(stemClassName);
       this.stemmer = (SnowballProgram) stemClass.newInstance();
-      // why doesn't the SnowballProgram class have an abstract stem method?
-      stemMethod = stemClass.getMethod("stem", new Class[0]);
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
     }
@@ -73,11 +69,7 @@ public class SnowballStemmer implements TermStemmerIF {
 
   public String stem(String term) {
     stemmer.setCurrent(term);
-    try {
-      stemMethod.invoke(stemmer, EMPTY_ARGS);
-    } catch (Exception e) {
-      throw new OntopiaRuntimeException(e);
-    }
+    stemmer.stem();
     // lower-case stem
     String stem = stemmer.getCurrent();
     return (stem == null ? null : stem.toLowerCase());
