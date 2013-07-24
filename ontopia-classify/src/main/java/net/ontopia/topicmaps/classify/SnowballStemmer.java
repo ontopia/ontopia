@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import net.ontopia.utils.OntopiaRuntimeException;
