@@ -72,11 +72,11 @@ public interface OccurrenceIndexIF extends IndexIF {
    * INTERNAL: Gets all occurrence values that are greather than or
    * equal to the given value.
    */
-  public Iterator<OccurrenceIF> getValuesGreaterThanOrEqual(String value);
+  public Iterator<String> getValuesGreaterThanOrEqual(String value);
 
   /**
    * INTERNAL: Gets all occurrence values that are smaller than or
    * equal to the given value.
    */
-  public Iterator<OccurrenceIF> getValuesSmallerThanOrEqual(String value);
+  public Iterator<String> getValuesSmallerThanOrEqual(String value);
 }
