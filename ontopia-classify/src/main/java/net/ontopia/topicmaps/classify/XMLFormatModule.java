@@ -20,22 +20,28 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.xml.*;
-import net.ontopia.utils.*;
-import net.ontopia.xml.SAXTracker;
-
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.xml.DefaultXMLReaderFactory;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * INTERNAL: 
  */
 public class XMLFormatModule implements FormatModuleIF {
 
-  protected Collection skipElements;
+  protected Collection<String> skipElements;
   protected String[] extensions = new String[] {".xml"};
   protected byte[] magicBytes = FormatModule.getBytes("<?xml");
 
@@ -43,8 +49,8 @@ public class XMLFormatModule implements FormatModuleIF {
     setSkipElements(Arrays.asList(new String[] {"sgml.block", "verbatim", "example", "sgml", "author", "bibliog", "web", "Authorinfo", "AuthorInfo", "AUTHORINFO", "code.block", "code.line", "Pre", "PRE", "programlisting", "acknowl", "code"}));
   }
   
-  public void setSkipElements(Collection skipElements) {
-    this.skipElements = new HashSet(skipElements);
+  public void setSkipElements(Collection<String> skipElements) {
+    this.skipElements = new HashSet<String>(skipElements);
   }
   
   protected XMLReader createXMLReader() throws SAXException {

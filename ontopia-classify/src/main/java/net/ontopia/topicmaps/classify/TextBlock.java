@@ -20,9 +20,8 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * INTERNAL: 
@@ -30,13 +29,13 @@ import net.ontopia.utils.*;
 public class TextBlock {
 
   StringBuffer sb;
-  List tokens = new ArrayList();
+  List<Token> tokens = new ArrayList<Token>();
 
   public String getText() {
     return (sb == null ? null : sb.toString());
   }
 
-  public List getTokens() {
+  public List<Token> getTokens() {
     return tokens;
   }
   
@@ -52,7 +51,7 @@ public class TextBlock {
 
   public void visitTokens(TokenVisitor visitor) {
     for (int i=0; i < tokens.size(); i++) {
-      Token token = (Token)tokens.get(i);
+      Token token = tokens.get(i);
       visitor.visit(token);
     }
   }

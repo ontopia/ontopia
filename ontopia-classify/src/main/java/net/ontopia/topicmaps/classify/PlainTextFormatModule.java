@@ -20,11 +20,8 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.xml.*;
-import net.ontopia.utils.*;
+import java.io.UnsupportedEncodingException;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: 

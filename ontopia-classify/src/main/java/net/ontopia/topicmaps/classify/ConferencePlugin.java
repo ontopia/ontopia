@@ -20,17 +20,15 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
-import java.util.Map;
-import java.net.URL;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.query.core.QueryProcessorIF;
 import net.ontopia.topicmaps.query.core.QueryResultIF;
-import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**

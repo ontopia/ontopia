@@ -20,12 +20,8 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.xml.*;
-import net.ontopia.utils.*;
-
+import java.io.ByteArrayInputStream;
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 

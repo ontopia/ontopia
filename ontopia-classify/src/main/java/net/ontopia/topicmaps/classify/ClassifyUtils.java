@@ -20,14 +20,16 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.Iterator;
-import javax.servlet.http.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StreamUtils;
 import net.ontopia.utils.StringUtils;
-
-import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.DefaultFileItemFactory;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
 
 /**
  * INTERNAL: 
@@ -72,9 +74,7 @@ public class ClassifyUtils {
     if (contentType != null && contentType.startsWith("multipart/form-data")) {
       try {
         FileUpload upload = new FileUpload(new DefaultFileItemFactory());
-        Iterator iter = upload.parseRequest(request).iterator();
-        if (iter.hasNext())  {
-          FileItem item = (FileItem) iter.next();
+        for (FileItem item : upload.parseRequest(request)) {
           if (item.getSize() > 0) {
             // ISSUE: could make use of content type if known
             byte[] content = item.get();

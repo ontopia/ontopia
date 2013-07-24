@@ -20,22 +20,32 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.*;
-import java.text.*;
-
-import javax.servlet.*;
-import javax.servlet.http.*;
-  
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.classify.*;
-import net.ontopia.topicmaps.nav2.utils.*;
-import net.ontopia.topicmaps.query.core.*;
-import net.ontopia.topicmaps.query.utils.*;
-
-import org.apache.commons.fileupload.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.nav2.utils.ContextUtils;
+import net.ontopia.topicmaps.nav2.utils.NavigatorUtils;
+import net.ontopia.topicmaps.query.core.ParsedQueryIF;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StringUtils;
 
 /**
  * INTERNAL: 
@@ -139,7 +149,7 @@ public class WebChew {
                   if (ctype == null)
                     throw new OntopiaRuntimeException("Cannot find topic type: " + ct + " " + ctoid);
                   ctopic = builder.makeTopic(ctype);
-                  TopicNameIF bname = builder.makeTopicName(ctopic, cn);
+                  builder.makeTopicName(ctopic, cn);
                 } else if (ct.equals("-")) {
                   continue; // ignore
                 } else {
@@ -272,51 +282,49 @@ public class WebChew {
   public class WebClassification {
 
     TopicMapClassification tmc;
-    List topterms;
+    List<WebTerm> topterms;
     
     WebClassification(TopicMapClassification tmc) {
       this.tmc = tmc;
 
       // get top terms
-      Object[] terms = tmc.getTermDatabase().getTermsByRank();
-      topterms = new ArrayList(visibleRows);
+      Term[] terms = tmc.getTermDatabase().getTermsByRank();
+      topterms = new ArrayList<WebTerm>(visibleRows);
 
       // ignore black listed terms
       BlackList bl = getBlackList();
       for (int i=0; i < terms.length && topterms.size() < visibleRows; i++) {
-        Term term = (Term)terms[i];
+        Term term = terms[i];
         if (bl == null || !bl.isStopWord(term.getPreferredName())) {
           topterms.add(new WebTerm(this, term, i));
         }
       }
     }
 
-    public List getTerms() {
+    public List<WebTerm> getTerms() {
       return topterms;
     }
 
-    public Collection getCandidateTypes() {
+    public Collection<TopicIF> getCandidateTypes() {
       return tmc.getCandidateTypes();
     }
 
-    public Collection getAssociationTypes() {
+    public Collection<TopicMapAnalyzer.AssociationType> getAssociationTypes() {
       return tmc.getAssociationTypes();
     }
 
-    public Collection getExistingAssociations() {
-      Collection result = new ArrayList();
+    public Collection<ExistingAssociation> getExistingAssociations() {
+      Collection<ExistingAssociation> result = new ArrayList<ExistingAssociation>();
       
       try {
         TopicMapIF topicmap = ContextUtils.getTopicMap(request);
         QueryProcessorIF qp = QueryUtils.getQueryProcessor(topicmap);
         ParsedQueryIF pq = qp.parse("select $A, $O from role-player($R1, %TOPIC%), type($R1, %CRTYPE%), association-role($A, $R1), type($A, %ATYPE%), association-role($A, $R2), $R1 /= $R2, type($R2, %PRTYPE%), role-player($R2, $O)?");
         
-        Map params = new HashMap();
+        Map<String, Object> params = new HashMap<String, Object>();
         params.put("TOPIC", topicmap.getObjectById(request.getParameter("id")));
         
-        Iterator iter = getAssociationTypes().iterator();
-        while (iter.hasNext()) {
-          TopicMapAnalyzer.AssociationType _atype = (TopicMapAnalyzer.AssociationType)iter.next();
+        for (TopicMapAnalyzer.AssociationType _atype : getAssociationTypes()) {
           TopicIF atype = (TopicIF)topicmap.getObjectById(_atype.getAssociationTypeId());
           TopicIF crtype = (TopicIF)topicmap.getObjectById(_atype.getContentRoleTypeId());
           TopicIF prtype = (TopicIF)topicmap.getObjectById(_atype.getTopicRoleTypeId());
@@ -367,19 +375,16 @@ public class WebChew {
     WebClassification wc;
     Term term;
     int sequenceId;
-    List candidates;
+    List<TopicIF> candidates;
     
     WebTerm(WebClassification wc, Term term, int sequenceId) {
       this.wc = wc;
       this.term = term;
       this.sequenceId = sequenceId;
-      this.candidates = new ArrayList();
-      Object[] variants = term.getVariantsByRank();
+      this.candidates = new ArrayList<TopicIF>();
+      Variant[] variants = term.getVariantsByRank();
       for (int i=0; i < variants.length; i++) {
-        Collection cs = wc.tmc.getTopics((Variant)variants[i]);
-        Iterator iter = cs.iterator();
-        while (iter.hasNext()) {
-          Object c = iter.next();
+        for (TopicIF c : wc.tmc.getTopics(variants[i])) {
           if (!candidates.contains(c))
             candidates.add(c);
         }
@@ -445,7 +450,7 @@ public class WebChew {
       return !candidates.isEmpty();
     }
 
-    public Collection getCandidateTopics() {
+    public Collection<TopicIF> getCandidateTopics() {
       return candidates;
     }
     
@@ -461,9 +466,7 @@ public class WebChew {
       double ttscore = -1.0d;
       
       //! System.out.println("|----------------------------");
-      Iterator iter = wc.getAssociationTypes().iterator();
-      while (iter.hasNext()) {
-        TopicMapAnalyzer.AssociationType xtype = (TopicMapAnalyzer.AssociationType)iter.next();
+      for (TopicMapAnalyzer.AssociationType xtype : wc.getAssociationTypes()) {
         double xscore = xtype.getScoreThreshold(hasCandidates);
 
         //! System.out.println("AT: " + xtype.atype + " " + xscore + "->" + tscore);

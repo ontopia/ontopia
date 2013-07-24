@@ -20,15 +20,12 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.xml.*;
-import net.ontopia.utils.*;
-import net.ontopia.xml.SAXTracker;
-
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import java.util.Arrays;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * INTERNAL: 

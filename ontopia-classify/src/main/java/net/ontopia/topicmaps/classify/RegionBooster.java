@@ -20,21 +20,20 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * INTERNAL: 
  */
 public class RegionBooster extends AbstractDocumentAnalyzer {
 
-  Map regions;
+  Map<String, Double> regions;
   double boost = 1.0d;
 
   public RegionBooster() {
     super(1);
-    this.regions = new HashMap();
+    this.regions = new HashMap<String, Double>();
   }
 
   public void addBoost(String rname, double boost) {
@@ -44,7 +43,7 @@ public class RegionBooster extends AbstractDocumentAnalyzer {
   public void startRegion(Region region) {
     super.startRegion(region);
     String rname = region.getName();
-    Double d = (Double)regions.get(rname);    
+    Double d = regions.get(rname);    
     if (d != null) {
       this.boost = d.doubleValue();
     } else {

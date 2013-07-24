@@ -20,11 +20,7 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.InputStream;
-import java.util.Map;
-import javax.servlet.http.*;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * INTERNAL: Interface implemented by code that is able to locate

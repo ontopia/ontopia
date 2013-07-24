@@ -20,12 +20,11 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import net.ontopia.utils.ObjectUtils;
 import gnu.trove.TObjectIntHashMap;
 import gnu.trove.TObjectIntIterator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   
@@ -43,7 +42,6 @@ public class Term {
   protected double score = 1.0d;
   protected int totalOccurrences;
   
-  // key: variant, value: int
   protected TObjectIntHashMap<Variant> variants = new TObjectIntHashMap<Variant>(); 
   
   Term(String stem) {
@@ -181,19 +179,15 @@ public class Term {
     return '\'' + getStem() + "\'" + getScore() + ":" + (variants.isEmpty() ? "" : Arrays.asList(variants.keys()).toString());
   }
   
-  protected static Comparator SCORE_COMPARATOR =
-    new Comparator() {
-      public int compare(Object o1, Object o2) {
-        Term t1 = (Term)o1;
-        Term t2 = (Term)o2;
+  protected static Comparator<Term> SCORE_COMPARATOR =
+    new Comparator<Term>() {
+      public int compare(Term t1, Term t2) {
         return ObjectUtils.compare(t2.getScore(), t1.getScore()); // NOTE: reverse order
       }
     };
   
-  private class VariantComparator implements Comparator {    
-    public int compare(Object o1, Object o2) {
-      Variant v1 = (Variant)o1;
-      Variant v2 = (Variant)o2;
+  private class VariantComparator implements Comparator<Variant> {    
+    public int compare(Variant v1, Variant v2) {
       int c = ObjectUtils.compare(getOccurrences(v2), getOccurrences(v1)); // NOTE: reverse order
       if (c != 0) return c;
       return v1.getValue().compareTo(v2.getValue());

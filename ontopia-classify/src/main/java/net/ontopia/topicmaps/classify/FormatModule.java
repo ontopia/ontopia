@@ -20,11 +20,10 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.utils.*;
-
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,11 +35,11 @@ public class FormatModule implements FormatModuleIF {
   // Define a logging category.
   static Logger log = LoggerFactory.getLogger(FormatModule.class.getName());
   
-  protected List modules;
+  protected List<FormatModuleIF> modules;
   protected FormatModuleIF fallout_module;
   
   public FormatModule() {
-    modules = new ArrayList();
+    modules = new ArrayList<FormatModuleIF>();
     modules.add(new XMLFormatModule());
     modules.add(new HTMLFormatModule());
     modules.add(new PDFFormatModule());
@@ -71,7 +70,7 @@ public class FormatModule implements FormatModuleIF {
 
     // auto-detect by looking at document content
     for (int i=0; i < modules.size(); i++) {
-      FormatModuleIF fm = (FormatModuleIF)modules.get(i);
+      FormatModuleIF fm = modules.get(i);
       if (fm.matchesContent(cc)) {
         log.debug("Match content: " + cc.getIdentifier() + ", format: " + fm);
         return fm;
@@ -80,7 +79,7 @@ public class FormatModule implements FormatModuleIF {
 
     // auto-detect by looking at document identifier
     for (int i=0; i < modules.size(); i++) {
-      FormatModuleIF fm = (FormatModuleIF)modules.get(i);
+      FormatModuleIF fm = modules.get(i);
       if (fm.matchesIdentifier(cc)) {
         log.debug("Match uri: " + cc.getIdentifier() + ", format: " + fm);
         return fm;

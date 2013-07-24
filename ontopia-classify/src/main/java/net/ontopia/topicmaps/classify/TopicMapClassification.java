@@ -20,12 +20,9 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.query.core.*;
-import net.ontopia.topicmaps.query.utils.*;
+import java.util.Collection;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * INTERNAL: 
@@ -115,15 +112,15 @@ public class TopicMapClassification {
   /**
    * INTERNAL: Returns the topics that matches the given variant.
    */
-  public Collection getTopics(Variant variant) {
+  public Collection<TopicIF> getTopics(Variant variant) {
     return ta.getTopics(variant);
   }
 
-  public Collection getCandidateTypes() {
+  public Collection<TopicIF> getCandidateTypes() {
     return ta.getCandidateTypes();
   }
 
-  public Collection getAssociationTypes() {
+  public Collection<TopicMapAnalyzer.AssociationType> getAssociationTypes() {
     return ta.getAssociationTypes();
   }
   

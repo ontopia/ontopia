@@ -20,9 +20,8 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * INTERNAL: 
@@ -31,7 +30,7 @@ public class Region {
 
   private String name;
   private Region parent;
-  private List children = new ArrayList(); // list of TextBlock and Region
+  private List<Object> children = new ArrayList<Object>(); // list of TextBlock and Region
     
   Region() {
   }
@@ -52,7 +51,7 @@ public class Region {
     this.parent = parent;
   }
 
-  public List getChildren() {
+  public List<Object> getChildren() {
     return children;
   }
   

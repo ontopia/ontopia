@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import org.xml.sax.SAXException;
-import org.xml.sax.DocumentHandler;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.PrettyPrinter;
 import net.ontopia.topicmaps.core.TopicIF;

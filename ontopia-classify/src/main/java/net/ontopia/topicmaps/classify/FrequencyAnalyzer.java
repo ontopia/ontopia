@@ -20,10 +20,13 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-import java.io.*;
-
-import net.ontopia.utils.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import net.ontopia.utils.OntopiaRuntimeException;
 import gnu.trove.TObjectDoubleHashMap;
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -32,7 +35,7 @@ import au.com.bytecode.opencsv.CSVReader;
  * particular word is used in a particular language.
  */
 public class FrequencyAnalyzer implements TermAnalyzerIF {
-  protected TObjectDoubleHashMap freqs;
+  protected TObjectDoubleHashMap<String> freqs;
 
   /**
    * INTERNAL: Loads a frequency table as a resource. The format is a
@@ -71,10 +74,10 @@ public class FrequencyAnalyzer implements TermAnalyzerIF {
     // istream is closed inside load
   }
 
-  private TObjectDoubleHashMap load(InputStream istream) {
+  private TObjectDoubleHashMap<String> load(InputStream istream) {
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(istream, "utf-8"));
-      TObjectDoubleHashMap freqs = new TObjectDoubleHashMap();
+      TObjectDoubleHashMap<String> freqs = new TObjectDoubleHashMap<String>();
       char separator = ';'; 
       char quoteCharacter = '"';
       CSVReader csv = new CSVReader(reader, separator, quoteCharacter);

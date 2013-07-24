@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.Collection;
-
-import net.ontopia.utils.*;
-
 /**
  * INTERNAL: Callback interface used by format modules to tell the
  * classification framework about the structure of classifiable

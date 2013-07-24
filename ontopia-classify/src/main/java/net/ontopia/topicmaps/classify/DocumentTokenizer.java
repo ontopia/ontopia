@@ -20,10 +20,9 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.ontopia.utils.*;
-  
 /**
  * INTERNAL: 
  */
@@ -31,7 +30,7 @@ public class DocumentTokenizer {
   TermDatabase tdb;
   TokenizerIF tokenizer;
   DelimiterTrimmerIF delimiterTrimmer;
-  List termNormalizers = new ArrayList();
+  List<TermNormalizerIF> termNormalizers = new ArrayList<TermNormalizerIF>();
 
   public DocumentTokenizer(TermDatabase tdb) {
     this.tdb = tdb;
@@ -73,10 +72,7 @@ public class DocumentTokenizer {
   
   protected void tokenize(Region region) {
     // loop over region's children
-    List children = region.getChildren();
-    int size = children.size();
-    for (int i=0; i < size; i++) {
-      Object child = children.get(i);
+    for (Object child : region.getChildren()) {
       if (child instanceof TextBlock) {
         TextBlock tb = (TextBlock)child;
         tokenize(region, tb);
@@ -123,7 +119,7 @@ public class DocumentTokenizer {
     if (termNormalizers != null && !termNormalizers.isEmpty()) {
       int size = termNormalizers.size();
       for (int i=0; i < size; i++) {
-        TermNormalizerIF normalizer = (TermNormalizerIF)termNormalizers.get(i);
+        TermNormalizerIF normalizer = termNormalizers.get(i);
         normalized = normalizer.normalize(normalized);
         if (normalized == null) break;
       }

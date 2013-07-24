@@ -20,12 +20,9 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.xml.*;
-import net.ontopia.utils.*;
-
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
 

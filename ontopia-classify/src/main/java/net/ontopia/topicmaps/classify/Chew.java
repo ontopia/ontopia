@@ -20,12 +20,10 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-import java.util.*;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
 
 /**
  * PUBLIC: Command-line tool for extracting keywords from a document.

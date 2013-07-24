@@ -20,10 +20,10 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
 import java.lang.reflect.Method;
-
-import net.ontopia.utils.*;
+import java.util.HashMap;
+import java.util.Map;
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.tartarus.snowball.SnowballProgram;
 
 /**
@@ -31,10 +31,10 @@ import org.tartarus.snowball.SnowballProgram;
  */
 public class SnowballStemmer implements TermStemmerIF {
 
-  private static Map languages;
+  private static Map<String, String> languages;
 
   static {
-    languages = new HashMap();
+    languages = new HashMap<String, String>();
     languages.put("dk", "org.tartarus.snowball.ext.DanishStemmer");
     languages.put("nl", "org.tartarus.snowball.ext.DutchStemmer");
     languages.put("en", "org.tartarus.snowball.ext.EnglishStemmer");
@@ -56,12 +56,13 @@ public class SnowballStemmer implements TermStemmerIF {
   protected SnowballProgram stemmer;
   
   public SnowballStemmer(String lang) {
-    String stemClassName = (String)languages.get(lang);
+    String stemClassName = languages.get(lang);
     if (stemClassName == null)
       throw new OntopiaRuntimeException("Unknown language: '" + lang + "'");
     try {
-      Class stemClass = Class.forName(stemClassName);
-      this.stemmer = (SnowballProgram) stemClass.newInstance();
+      @SuppressWarnings("unchecked")
+      Class<SnowballProgram> stemClass = (Class<SnowballProgram>) Class.forName(stemClassName);
+      this.stemmer = stemClass.newInstance();
     } catch (Exception e) {
       throw new OntopiaRuntimeException(e);
     }

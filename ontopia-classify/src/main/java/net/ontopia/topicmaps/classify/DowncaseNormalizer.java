@@ -20,11 +20,6 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-import java.lang.reflect.Method;
-
-import net.ontopia.utils.*;
-
 /**
  * INTERNAL: 
  */

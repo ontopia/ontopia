@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

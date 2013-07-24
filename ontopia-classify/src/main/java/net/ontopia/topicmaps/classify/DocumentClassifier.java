@@ -20,9 +20,8 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * INTERNAL: 
@@ -30,7 +29,7 @@ import net.ontopia.utils.*;
 public class DocumentClassifier {
   TermDatabase tdb;
   TermStemmerIF termStemmer;
-  List docAnalyzers = new ArrayList();
+  List<DocumentAnalyzerIF> docAnalyzers = new ArrayList<DocumentAnalyzerIF>();
   List<TermAnalyzerIF> termAnalyzers = new ArrayList<TermAnalyzerIF>();
 
   public DocumentClassifier(TermDatabase tdb) {
@@ -72,10 +71,7 @@ public class DocumentClassifier {
   
   protected void extractTerms(Region region) {
     // loop over region's children
-    List children = region.getChildren();
-    int size = children.size();
-    for (int i=0; i < size; i++) {
-      Object child = children.get(i);
+    for (Object child : region.getChildren()) {
       if (child instanceof TextBlock) {
         TextBlock tb = (TextBlock)child;
         extractTerms(region, tb);
@@ -87,11 +83,7 @@ public class DocumentClassifier {
   }
   
   protected void extractTerms(Region parent, TextBlock tb) {
-
-    List tokens = tb.getTokens();
-    for (int i=0; i < tokens.size(); i++) {
-      Token token = (Token)tokens.get(i);
-      
+    for (Token token : tb.getTokens()) {
       if (token.getType() == Token.TYPE_VARIANT) {
         Variant variant = (Variant)token;
         Term term = variant.getTerm();
@@ -116,9 +108,7 @@ public class DocumentClassifier {
     // do document analysis
     if (docAnalyzers != null && !docAnalyzers.isEmpty()) {
       Region root = doc.getRoot();
-      int size = docAnalyzers.size();
-      for (int i=0; i < size; i++) {
-        DocumentAnalyzerIF analyzer = (DocumentAnalyzerIF)docAnalyzers.get(i);
+      for (DocumentAnalyzerIF analyzer : docAnalyzers) {
         analyzer.startAnalysis();
         try {
           while (analyzer.doDocumentAnalysis()) {
@@ -136,10 +126,7 @@ public class DocumentClassifier {
   protected void analyzeRegion(Region region, DocumentAnalyzerIF analyzer) {
     analyzer.startRegion(region);
     // loop over region's children
-    List children = region.getChildren();
-    int size = children.size();
-    for (int i=0; i < size; i++) {
-      Object child = children.get(i);
+    for (Object child : region.getChildren()) {
       if (child instanceof TextBlock) {
         TextBlock tb = (TextBlock)child;
         analyzeTextBlock(region, tb, analyzer);
@@ -153,10 +140,10 @@ public class DocumentClassifier {
   
   protected void analyzeTextBlock(Region parent, TextBlock tb, DocumentAnalyzerIF analyzer) {
     // loop over terms in text block
-    List tokens = tb.getTokens();
+    List<Token> tokens = tb.getTokens();
     int size = tokens.size();
     for (int i=0; i < size; i++) {
-      Token t = (Token)tokens.get(i);
+      Token t = tokens.get(i);
       analyzer.analyzeToken(tb, t, i);
     }
   }
@@ -186,9 +173,7 @@ public class DocumentClassifier {
   // --------------------------------------------------------------------------
 
   public void dump() {
-    Iterator<TermAnalyzerIF> iter = termAnalyzers.iterator();
-    while (iter.hasNext()) {
-      TermAnalyzerIF ta = iter.next();
+    for (TermAnalyzerIF ta : termAnalyzers) {
       if (ta instanceof CompoundAnalyzer) {
         CompoundAnalyzer ca = (CompoundAnalyzer)ta;
         Term[] terms = tdb.getTermsByRank();

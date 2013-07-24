@@ -20,11 +20,13 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import net.ontopia.utils.ObjectUtils;
 import gnu.trove.TObjectIntHashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +41,7 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   TermDatabase tdb;
   TermStemmerIF termStemmer;
   
-  Map followers = new HashMap(); // key: variant, value: followers
+  Map<Variant, Followers> followers = new HashMap<Variant, Followers>();
 
   int maxLength = 3;
 
@@ -82,7 +84,7 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   }
   
   protected void addFollower(Variant variant, Token token, int counts) {
-    Followers f = (Followers)followers.get(variant);
+    Followers f = followers.get(variant);
     if (f == null) {
       f = new Followers();
       followers.put(variant, f);
@@ -97,10 +99,10 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   public void analyzeToken(TextBlock parent, Token token, int index) {
     // ignore non variant tokens
     if (token.getType() == Token.TYPE_VARIANT) {
-      List tokens = parent.getTokens();
+      List<Token> tokens = parent.getTokens();
       int size = tokens.size();
       if (size-1 > index) {
-        Token next = (Token)tokens.get(index+1);      
+        Token next = tokens.get(index+1);      
         addFollower(((Variant)token), next);
       }
     }
@@ -131,12 +133,12 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
     Variant[] variants = t1.getVariants();
     for (int x=0; x < variants.length; x++) {
       Variant v1 = variants[x];      
-      Followers f1 = (Followers)followers.get(v1);
+      Followers f1 = followers.get(v1);
       if (f1 != null) {
         double limit = f1.getLimit();
-        Object[] followers1 = f1.getFollowers();
+        Variant[] followers1 = f1.getFollowers();
         for (int z=0; z < followers1.length; z++) {
-          Variant v2 = (Variant)followers1[z];
+          Variant v2 = followers1[z];
           Term t2 = v2.getTerm();
 
           if (t1.equals(t2)) continue; // ignore repeated terms
@@ -179,11 +181,11 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
             t3.addVariant(v3, compositeOccs);
 
             // register the followers of the new composite
-            Followers f2 = (Followers)followers.get(v2);
+            Followers f2 = followers.get(v2);
             if (f2 != null) {
-              Object[] followers2 = f2.getFollowers();
+              Variant[] followers2 = f2.getFollowers();
               for (int y=0; y < followers2.length; y++) {
-                Variant v4 = (Variant)followers2[y];
+                Variant v4 = followers2[y];
                 addFollower(v3, v4, f2.getFollowerOccurrences(v4));
               }
             }
@@ -215,7 +217,7 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
     for (int x=0; x < variants.length; x++) {
       Variant v = (Variant)variants[x];
       System.out.println("  v:" + v + ":" + t.getOccurrences(v));
-      Followers f = (Followers)followers.get(v);
+      Followers f = followers.get(v);
       if (f == null)
         System.out.println("    f:null");
       else {
@@ -239,56 +241,40 @@ public class CompoundAnalyzer extends AbstractDocumentAnalyzer implements TermAn
   // nested classes
   // --------------------------------------------------------------------------
   
-  private class OccurrencesComparator implements Comparator {    
-      public int compare(Object o1, Object o2) {
-        Variant v1 = (Variant)o1;
-        Variant v2 = (Variant)o2;
-        Followers f1 = (Followers)followers.get(v1);
-        Followers f2 = (Followers)followers.get(v2);
-        if (f1 == null)
-          return (f2 == null ? 0 : -1);
-        else if (f2 == null)
-          return (f1 == null ? 0 : 1);
-        else
-          return ObjectUtils.compare(f2.getFollowerOccurrences(v2), f1.getFollowerOccurrences(v1)); // NOTE: reverse order
-      }
-  };
-  
-  private class CompositeScoreComparator implements Comparator {
+  private class CompositeScoreComparator implements Comparator<Variant> {
     Followers f;
     CompositeScoreComparator(Followers f) {
       this.f = f;
     }    
-    public int compare(Object o1, Object o2) {
-      Variant v1 = (Variant)o1;
-      Variant v2 = (Variant)o2;
+    public int compare(Variant v1, Variant v2) {
       return ObjectUtils.compare(f.getScore(v2), f.getScore(v1));
     }
   };
   
   private class Followers {
-    TObjectIntHashMap followers = new TObjectIntHashMap();
+    TObjectIntHashMap<Variant> followers = new TObjectIntHashMap<Variant>();
     int followedByDelimiter;
     int totalFollowerOccurrences;
 
     public void addFollower(Token token, int counts) {
       if (token.getType() == Token.TYPE_VARIANT) {
-        if (followers.get(token) > 0)
-          followers.adjustValue(token, counts);
+        Variant variant = (Variant) token;
+        if (followers.get(variant) > 0)
+          followers.adjustValue(variant, counts);
         else
-          followers.put(token, counts);
+          followers.put(variant, counts);
         totalFollowerOccurrences += counts;
       } else {
         followedByDelimiter += counts;
       }
     }
 
-    public Object[] getFollowers() {
-      return followers.keys();
+    public Variant[] getFollowers() {
+      return followers.keys(new Variant[followers.keys().length]);
     }
     
-    public Object[] getFollowersByRank() {
-      Object[] ranked = followers.keys();
+    public Variant[] getFollowersByRank() {
+      Variant[] ranked = followers.keys(new Variant[followers.keys().length]);
       Arrays.sort(ranked, new CompositeScoreComparator(this));
       return ranked;
     }

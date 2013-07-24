@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.io.*;
-
-import net.ontopia.utils.*;
-
 /**
  * INTERNAL: Interface that encapsulates the support for a given
  * document format.

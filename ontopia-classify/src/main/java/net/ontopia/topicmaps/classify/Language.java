@@ -20,11 +20,8 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-import java.io.*;
-
-import net.ontopia.utils.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,9 +36,9 @@ public class Language {
   static Logger log = LoggerFactory.getLogger(Language.class.getName());
 
   // Initializer
-  private static List languages;
+  private static List<Language> languages;
   static {
-    languages = new ArrayList();
+    languages = new ArrayList<Language>();
     languages.add(Language.getLanguage("en"));
     languages.add(Language.getLanguage("no"));
   }
@@ -114,9 +111,7 @@ public class Language {
     Language high = null;
     int highscore = -1;
     
-    Iterator it = languages.iterator();
-    while (it.hasNext()) {
-      Language lang = (Language) it.next();
+    for (Language lang : languages) {
       int score = lang.getScore(doc);
       log.debug("Score '" + lang + "'=" + score);
       if (score >= highscore) {

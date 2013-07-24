@@ -20,13 +20,23 @@
 
 package net.ontopia.topicmaps.classify;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.query.core.*;
-import net.ontopia.topicmaps.query.utils.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.query.core.ParsedQueryIF;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: 
@@ -40,13 +50,13 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
   QueryProcessorIF qp;
   ParsedQueryIF pq_byName;
   
-  Collection ctypes;
-  List ctypes_sorted;
-  Map atypes;
+  Collection<TopicIF> ctypes;
+  List<TopicIF> ctypes_sorted;
+  Map<TopicIF, AssociationType> atypes;
   
-  Collection atopics = new HashSet();
-  Map smap = new HashMap(); // key: string, value: variant
-  Map vtopics = new HashMap(); // key: string, value: collection of topics
+  Collection<TopicIF> atopics = new HashSet<TopicIF>();
+  Map<String, Variant> smap = new HashMap<String, Variant>();
+  Map<String, Collection<TopicIF>> vtopics = new HashMap<String, Collection<TopicIF>>();
 
   double matchFactor = 4.0d;
   
@@ -56,9 +66,9 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
       this.qp = QueryUtils.getQueryProcessor(topicmap);
       this.pq_byName = qp.parse("select $T from topic-name($T, $N), value($N, %VALUE%)?");
 
-      this.ctypes = new HashSet();
-      this.ctypes_sorted = new ArrayList();
-      this.atypes = new HashMap();
+      this.ctypes = new HashSet<TopicIF>();
+      this.ctypes_sorted = new ArrayList<TopicIF>();
+      this.atypes = new HashMap<TopicIF, AssociationType>();
       QueryResultIF qr = qp.execute("/* #OPTION: optimizer.reorder = false */ " +
                                     "using on for i\"http://psi.ontopia.net/ontology/\" " +
                                     "using cl for i\"http://psi.ontopia.net/classify/\" " +
@@ -92,7 +102,7 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
         if (ctypes.add(ctype))
           ctypes_sorted.add(ctype);
 
-        AssociationType at = (AssociationType)atypes.get(atype);
+        AssociationType at = atypes.get(atype);
         if (at == null) {
           double ascore = -1.0d;
           if (asc != null) {
@@ -138,9 +148,8 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
             
             // ignore topic if topic type is unknown
             boolean validType = false;
-            Iterator iter = topic.getTypes().iterator();
-            while (iter.hasNext()) {
-              if (ctypes.contains(iter.next())) {
+            for (TopicIF type : topic.getTypes()) {
+              if (ctypes.contains(type)) {
                 validType = true;
                 break;
               }
@@ -152,9 +161,9 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
             
             String value = variant.getValue(); 
             smap.put(value, variant);
-            Collection matching = (Collection)vtopics.get(value);
+            Collection<TopicIF> matching = vtopics.get(value);
             if (matching == null) {
-              matching = new HashSet();
+              matching = new HashSet<TopicIF>();
               vtopics.put(value, matching);
             }
             matching.add(topic);
@@ -181,19 +190,11 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
 
   public void endAnalysis() {
     // merge terms that are synonyms
-    Iterator iter = atopics.iterator();
-    while (iter.hasNext()) {
-      TopicIF topic = (TopicIF)iter.next();
-
+    for (TopicIF topic : atopics) {
       Term term = null;      
-      Iterator niter = topic.getTopicNames().iterator();
-      while (niter.hasNext()) {
-        TopicNameIF bname = (TopicNameIF)niter.next();
+      for (TopicNameIF bname : topic.getTopicNames()) {
         term = createTerm(term, bname.getValue());
-
-        Iterator viter = bname.getVariants().iterator();
-        while (viter.hasNext()) {
-          VariantNameIF vname = (VariantNameIF)viter.next();
+        for (VariantNameIF vname : bname.getVariants()) {
           term = createTerm(term, vname.getValue());
         }
       }
@@ -226,7 +227,7 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
     public TopicIF crtype;
     public double ascore;
     public double uscore;
-    public Collection ctypes = new HashSet();
+    public Collection<TopicIF> ctypes = new HashSet<TopicIF>();
     
     AssociationType(TopicIF atype, TopicIF prtype, TopicIF crtype, double ascore, double uscore) {
       this.atype = atype;
@@ -273,16 +274,16 @@ public class TopicMapAnalyzer implements TermAnalyzerIF {
 
   // -- public methods
   
-  public Collection getTopics(Variant variant) {
-    Collection result = (Collection)vtopics.get(variant.getValue());
-    return (result == null ? Collections.EMPTY_SET : result);
+  public Collection<TopicIF> getTopics(Variant variant) {
+    Collection<TopicIF> result = vtopics.get(variant.getValue());
+    return (result == null ? new HashSet<TopicIF>() : result);
   }
 
-  public Collection getCandidateTypes() {
+  public Collection<TopicIF> getCandidateTypes() {
     return ctypes_sorted;
   }
 
-  public Collection getAssociationTypes() {
+  public Collection<AssociationType> getAssociationTypes() {
     return atypes.values();
   }
   
