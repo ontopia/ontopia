@@ -64,7 +64,7 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
     return (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesBetween_datatype", new Object[] { getTopicMap(), prefix, ltval, datatype.getAddress() });
   }
 
-  public Iterator<OccurrenceIF> getValuesGreaterThanOrEqual(String value) {
+  public Iterator<String> getValuesGreaterThanOrEqual(String value) {
     Collection coll = (Collection)executeQuery("OccurrenceIndexIF.getOccurrencesGreaterThanOrEqual", new Object[] { getTopicMap(), value });
     return new GrabberIterator(coll.iterator(), new GrabberIF() {
         public Object grab(Object o) {
@@ -73,7 +73,7 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
       });
   }  
 
-  public Iterator<OccurrenceIF> getValuesSmallerThanOrEqual(String value) {
+  public Iterator<String> getValuesSmallerThanOrEqual(String value) {
     Collection coll = (Collection)executeQuery("OccurrenceIndexIF.getOccurrencesLessThanOrEqual", new Object[] { getTopicMap(), value });
     return new GrabberIterator(coll.iterator(), new GrabberIF() {
         public Object grab(Object o) {
