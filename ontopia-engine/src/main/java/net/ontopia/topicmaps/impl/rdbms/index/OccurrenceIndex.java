@@ -65,19 +65,19 @@ public class OccurrenceIndex extends RDBMSIndex implements OccurrenceIndexIF {
   }
 
   public Iterator<String> getValuesGreaterThanOrEqual(String value) {
-    Collection coll = (Collection)executeQuery("OccurrenceIndexIF.getOccurrencesGreaterThanOrEqual", new Object[] { getTopicMap(), value });
-    return new GrabberIterator(coll.iterator(), new GrabberIF() {
-        public Object grab(Object o) {
-          return ((OccurrenceIF)o).getValue();					
+    Collection<OccurrenceIF> coll = (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesGreaterThanOrEqual", new Object[] { getTopicMap(), value });
+    return new GrabberIterator<OccurrenceIF, String>(coll.iterator(), new GrabberIF<OccurrenceIF, String>() {
+        public String grab(OccurrenceIF o) {
+          return o.getValue();
         }
       });
   }  
 
   public Iterator<String> getValuesSmallerThanOrEqual(String value) {
-    Collection coll = (Collection)executeQuery("OccurrenceIndexIF.getOccurrencesLessThanOrEqual", new Object[] { getTopicMap(), value });
-    return new GrabberIterator(coll.iterator(), new GrabberIF() {
-        public Object grab(Object o) {
-          return ((OccurrenceIF)o).getValue();					
+    Collection<OccurrenceIF> coll = (Collection<OccurrenceIF>)executeQuery("OccurrenceIndexIF.getOccurrencesLessThanOrEqual", new Object[] { getTopicMap(), value });
+    return new GrabberIterator<OccurrenceIF, String>(coll.iterator(), new GrabberIF<OccurrenceIF, String>() {
+        public String grab(OccurrenceIF o) {
+          return o.getValue();
         }
       });
   }  
