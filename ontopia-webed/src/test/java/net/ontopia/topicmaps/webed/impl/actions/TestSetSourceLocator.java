@@ -20,17 +20,15 @@
 
 package net.ontopia.topicmaps.webed.impl.actions;
 
-import java.util.*;
-import net.ontopia.utils.ontojsp.FakeServletRequest;
-import net.ontopia.utils.ontojsp.FakeServletResponse;
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.basic.*;
-import net.ontopia.topicmaps.webed.impl.actions.*;
-import net.ontopia.topicmaps.webed.impl.actions.tmobject.*;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
+import java.io.IOException;
+import java.util.Collections;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.webed.core.ActionIF;
+import net.ontopia.topicmaps.webed.core.ActionParametersIF;
+import net.ontopia.topicmaps.webed.core.ActionResponseIF;
+import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
+import net.ontopia.topicmaps.webed.impl.actions.tmobject.SetSourceLocator;
 
 public class TestSetSourceLocator extends AbstractWebedTestCase {
   
@@ -46,7 +44,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
     4. Bad url
   */
 
-  public void testNormalOperation() throws java.io.IOException {
+  public void testNormalOperation() throws IOException {
     ActionIF action = new SetSourceLocator();
     TopicIF topic = getTopicById(tm, "super");
     LocatorIF SL = (LocatorIF) topic.getItemIdentifiers().iterator().next();
@@ -65,7 +63,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
     }
   }
   
-  public void testSetNewSL() throws java.io.IOException {
+  public void testSetNewSL() throws IOException {
     // setting sourcelocator on topic without predefined SL
     ActionIF action = new SetSourceLocator();
     TopicIF topic = getTopicById(tm, "gamst");
@@ -87,7 +85,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
     }
   }
 
-  public void testNoParams() throws java.io.IOException{
+  public void testNoParams() throws IOException{
     //setting sourcelocator on topic without predefined SL
     ActionIF action = new SetSourceLocator();
     
@@ -102,7 +100,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
     }
   }
   
-  public void testBadURL() throws java.io.IOException{
+  public void testBadURL() throws IOException{
     
     ActionIF action = new SetSourceLocator();
     TopicIF topic = getTopicById(tm, "super");

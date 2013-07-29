@@ -20,14 +20,18 @@
 
 package net.ontopia.topicmaps.webed.impl.actions;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import junit.framework.TestCase;
+import net.ontopia.topicmaps.webed.core.ActionIF;
+import net.ontopia.topicmaps.webed.core.ActionParametersIF;
+import net.ontopia.topicmaps.webed.core.ActionResponseIF;
+import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
+import net.ontopia.topicmaps.webed.impl.basic.ActionParameters;
+import net.ontopia.topicmaps.webed.impl.basic.ActionResponse;
 import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.FakeServletResponse;
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.basic.*;
-import net.ontopia.topicmaps.webed.impl.actions.*;
-import junit.framework.TestCase;
 
 public class TestSetForwardAction extends TestCase {
 

@@ -21,10 +21,11 @@
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.io.IOException;
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.actions.*;
-import net.ontopia.topicmaps.webed.impl.actions.occurrence.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.webed.core.ActionParametersIF;
+import net.ontopia.topicmaps.webed.core.ActionResponseIF;
+import net.ontopia.topicmaps.webed.impl.actions.occurrence.SetValue2;
 
 public class TestOccSetValue2 extends TestOccSetValue {
   

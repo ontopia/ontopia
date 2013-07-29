@@ -20,23 +20,33 @@
 
 package net.ontopia.topicmaps.webed.impl.actions;
 
-import java.util.*;
-import net.ontopia.utils.OntopiaRuntimeException;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.webed.core.ActionParametersIF;
+import net.ontopia.topicmaps.webed.core.ActionResponseIF;
+import net.ontopia.topicmaps.webed.core.WebEdRequestIF;
+import net.ontopia.topicmaps.webed.impl.basic.ActionParameters;
+import net.ontopia.topicmaps.webed.impl.basic.ActionResponse;
+import net.ontopia.topicmaps.webed.impl.basic.Constants;
+import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.ontojsp.FakeServletRequest;
 import net.ontopia.utils.ontojsp.FakeServletResponse;
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.basic.*;
-import net.ontopia.topicmaps.webed.impl.actions.*;
-import net.ontopia.topicmaps.webed.impl.actions.topicmap.*;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-
-import net.ontopia.utils.*;
-import java.io.*;
-import net.ontopia.topicmaps.xml.*;
-import net.ontopia.topicmaps.query.core.*;
-import net.ontopia.topicmaps.query.utils.*;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.TestFileUtils;
 
 import junit.framework.TestCase;
  
@@ -168,8 +178,8 @@ public abstract class AbstractWebedTestCase extends TestCase {
   }
   
   public ActionResponseIF makeResponse() {
-    javax.servlet.http.HttpServletRequest request = new FakeServletRequest();
-    javax.servlet.http.HttpServletResponse response = new FakeServletResponse();
+    HttpServletRequest request = new FakeServletRequest();
+    HttpServletResponse response = new FakeServletResponse();
     return new ActionResponse(request, response);
   }  
   

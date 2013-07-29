@@ -21,14 +21,14 @@
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.util.Collections;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.webed.core.*;
+import net.ontopia.topicmaps.webed.core.ActionIF;
+import net.ontopia.topicmaps.webed.core.ActionParametersIF;
+import net.ontopia.topicmaps.webed.core.ActionResponseIF;
+import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.actions.topic.RemoveSubjectIndicator;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
 
 public class TestRemoveSubjectIndicator extends AbstractWebedTestCase {
   

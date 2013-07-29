@@ -20,18 +20,16 @@
 
 package net.ontopia.topicmaps.webed.impl.actions;
 
-import java.util.*;
-import net.ontopia.utils.ontojsp.FakeServletRequest;
-import net.ontopia.utils.ontojsp.FakeServletResponse;
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.basic.*;
-import net.ontopia.topicmaps.webed.impl.actions.*;
-import net.ontopia.topicmaps.webed.impl.actions.variant.*;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
-import net.ontopia.infoset.impl.basic.URILocator;
+import java.util.Collections;
+import java.util.Iterator;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.webed.core.ActionIF;
+import net.ontopia.topicmaps.webed.core.ActionParametersIF;
+import net.ontopia.topicmaps.webed.core.ActionResponseIF;
+import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
+import net.ontopia.topicmaps.webed.impl.actions.variant.AddIntVariant;
 
 public class TestAddIntVariant extends AbstractWebedTestCase {
   

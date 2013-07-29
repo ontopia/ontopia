@@ -20,22 +20,21 @@
 
 package net.ontopia.topicmaps.webed.impl.actions;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import net.ontopia.utils.ontojsp.FakeServletRequest;
-import net.ontopia.utils.ontojsp.FakeServletResponse;
-import net.ontopia.infoset.core.*;
-import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
 import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
-import net.ontopia.topicmaps.schema.impl.osl.*;
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.basic.*;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchemaReader;
+import net.ontopia.topicmaps.webed.core.ActionIF;
+import net.ontopia.topicmaps.webed.core.ActionParametersIF;
+import net.ontopia.topicmaps.webed.core.ActionResponseIF;
+import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
+import net.ontopia.topicmaps.webed.core.OSLSchemaAwareIF;
 import net.ontopia.topicmaps.webed.impl.actions.tmobject.OSLValidate;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 
 public class TestOSLValidate extends AbstractWebedTestCase {

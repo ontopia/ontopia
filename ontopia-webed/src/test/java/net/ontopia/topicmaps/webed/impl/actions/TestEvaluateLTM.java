@@ -21,17 +21,19 @@
 package net.ontopia.topicmaps.webed.impl.actions;
 
 import java.io.IOException;
-import java.util.*;
-import net.ontopia.utils.ontojsp.FakeServletRequest;
-import net.ontopia.utils.ontojsp.FakeServletResponse;
-import net.ontopia.topicmaps.webed.core.*;
-import net.ontopia.topicmaps.webed.impl.basic.*;
-import net.ontopia.topicmaps.webed.impl.actions.*;
-import net.ontopia.topicmaps.webed.impl.actions.tmobject.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.webed.core.ActionIF;
+import net.ontopia.topicmaps.webed.core.ActionParametersIF;
+import net.ontopia.topicmaps.webed.core.ActionResponseIF;
+import net.ontopia.topicmaps.webed.core.WebEdRequestIF;
+import net.ontopia.topicmaps.webed.impl.actions.tmobject.EvaluateLTM;
 import net.ontopia.topicmaps.webed.impl.basic.Constants;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
+import net.ontopia.topicmaps.webed.impl.basic.WebEdRequest;
 
 public class TestEvaluateLTM extends AbstractWebedTestCase {
   

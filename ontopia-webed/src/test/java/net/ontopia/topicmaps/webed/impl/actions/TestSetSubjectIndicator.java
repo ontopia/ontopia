@@ -28,7 +28,6 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.actions.topic.SetSubjectIndicator;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.infoset.core.LocatorIF;
 

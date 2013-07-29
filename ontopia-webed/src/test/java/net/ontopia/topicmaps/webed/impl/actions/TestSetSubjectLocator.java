@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.webed.impl.actions;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +30,6 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
 import net.ontopia.topicmaps.webed.core.ActionRuntimeException;
 import net.ontopia.topicmaps.webed.impl.actions.topic.SetSubjectLocator;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.webed.impl.basic.Constants;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.infoset.core.LocatorIF;
 
