@@ -65,6 +65,7 @@ public interface FunctionIF {
    * @deprecated 1.3.4. Use <code>Object call(PageContext)</code>
    * instead.
    */
+  @Deprecated
   public void call(PageContext pageContext, TagSupport callingTag)
     throws IOException, JspException;
 
@@ -74,6 +75,7 @@ public interface FunctionIF {
    * @deprecated 1.3.4. Function names are now stored outside the
    * function object itself.
    */
+  @Deprecated
   public String getName();
 
   /**
@@ -86,6 +88,7 @@ public interface FunctionIF {
    * @deprecated 1.3.4. Return function value from the <code>Object
    * call(PageContext)</code> method instead.
    */
+  @Deprecated
   public String getReturnVariableName();
   
   /**
@@ -93,6 +96,7 @@ public interface FunctionIF {
    *
    * @deprecated This method is not used, and need not be implemented.
    */
+  @Deprecated
   public JSPTreeNodeIF getRootNode();
 
   /**
@@ -101,6 +105,7 @@ public interface FunctionIF {
    *
    * @deprecated This method is not used, and need not be implemented.
    */
+  @Deprecated
   public ModuleIF getModule();
   
 }

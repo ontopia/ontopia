@@ -252,6 +252,7 @@ public interface NavigatorApplicationIF {
    * @since 1.3.4
    * @deprecated
    */
+  @Deprecated
   public UserStoreRegistry getUserStoreRegistry();
 
   /**

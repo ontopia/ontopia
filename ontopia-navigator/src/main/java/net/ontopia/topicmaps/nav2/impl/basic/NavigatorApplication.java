@@ -164,8 +164,8 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
       return repository;
   }
 
+  @Deprecated
   public UserStoreRegistry getUserStoreRegistry() {
-    // NOTE: deprecated
     throw new UnsupportedOperationException("Method is no longer supported.");
   }
 
@@ -174,6 +174,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
    *
    * @deprecated
    */  
+  @Deprecated
   public void refreshAppConfig() {
     readInAppConfig();
     // refresh also plug-ins because they are assigned to navigation configuration
@@ -456,6 +457,7 @@ public final class NavigatorApplication implements NavigatorApplicationIF {
    *
    * @deprecated
    */
+  @Deprecated
   public synchronized void refreshTopicMapRegistry() {
     //! WARNING: the below is inherently unsafe, so it has been disabled
   }

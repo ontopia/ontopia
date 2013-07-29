@@ -45,6 +45,7 @@ public interface NavigatorPageIF {
    *
    * @deprecated 1.3.4. Replaced by registerFunction(String, Function).
    */
+  @Deprecated
   public void registerFunction(FunctionIF function);
   
   /**
