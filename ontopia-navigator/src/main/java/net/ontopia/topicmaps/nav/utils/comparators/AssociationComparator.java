@@ -23,20 +23,26 @@ package net.ontopia.topicmaps.nav.utils.comparators;
 import java.util.Comparator;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.ArrayList;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.utils.NameStringifier;
+import net.ontopia.topicmaps.utils.TopicNameGrabber;
+import net.ontopia.utils.GrabberGrabber;
+import net.ontopia.utils.GrabberStringifier;
+import net.ontopia.utils.StringifierComparator;
+import net.ontopia.utils.StringifierGrabber;
+import net.ontopia.utils.StringifierIF;
+import net.ontopia.utils.UpperCaseGrabber;
 
 /**
  * INTERNAL: A Comparator for ordering AssociationIFs alphabetically
  * after their type.
  */
-public class AssociationComparator implements Comparator {
+public class AssociationComparator implements Comparator<AssociationIF> {
 
-  protected Comparator tc;
-  protected Collection scopes;
+  protected Comparator<TopicIF> tc;
+  protected Collection<TopicIF> scopes;
 
   /**
    * Empty constructor, used on application startup to initialise a
@@ -44,38 +50,26 @@ public class AssociationComparator implements Comparator {
    * context.
    */  
   public AssociationComparator() {
-    StringifierIF bts =
-      new GrabberStringifier(new TopicNameGrabber(Collections.EMPTY_LIST),
-                             new NameStringifier());
-    tc = new StringifierComparator(new GrabberStringifier(new GrabberGrabber(new StringifierGrabber(bts), new UpperCaseGrabber())));
+    this(null);
   }
 
   /**
    * Constructor used to make a comparator which will compare
    * Associations using the context provided.
    */
-  public AssociationComparator(Collection context) {
+  public AssociationComparator(Collection<TopicIF> context) {
     this.scopes = context;
     if (scopes == null)
-      scopes = Collections.EMPTY_LIST;
-    StringifierIF bts = new GrabberStringifier(new TopicNameGrabber(scopes),
+      scopes = Collections.emptyList();
+    StringifierIF<TopicIF> bts = new GrabberStringifier<TopicIF, TopicNameIF>(new TopicNameGrabber(scopes),
                                                new NameStringifier());
-    tc = new StringifierComparator(new GrabberStringifier(new GrabberGrabber(new StringifierGrabber(bts), new UpperCaseGrabber())));
+    tc = new StringifierComparator<TopicIF>(new GrabberStringifier<TopicIF, String>(new GrabberGrabber<TopicIF, String>(new StringifierGrabber<TopicIF>(bts), new UpperCaseGrabber())));
   }
   
   /**
    * Compares two AssociationIFs.
    */
-  public int compare(Object o1, Object o2) {
-    AssociationIF a1, a2;
-    try {
-      a1 = (AssociationIF) o1;
-      a2 = (AssociationIF) o2;
-    } catch (ClassCastException e) {
-      String msg = "AssociationComparator Error: " +
-        "This comparator only compares AssociationIFs";
-      throw new OntopiaRuntimeException(msg);
-    }
+  public int compare(AssociationIF a1, AssociationIF a2) {
     return tc.compare(a1.getType(), a2.getType());
   }
   

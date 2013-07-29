@@ -20,17 +20,14 @@
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 
-import java.util.Collection;
 import java.util.Comparator;
-
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicNameIF;
 
 /**
  * INTERNAL: A Comparator for ordering TopicNameIFs alphabetically
  * (case-independent).
  */
-public class TopicNameComparator implements Comparator {
+public class TopicNameComparator implements Comparator<TopicNameIF> {
 
   /**
    * Empty constructor, which will compare TopicNameIFs using no
@@ -42,18 +39,10 @@ public class TopicNameComparator implements Comparator {
   /**
    * Compares two TopicNameIFs.
    */
-  public int compare(Object o1, Object o2) {
-    String value1, value2;
+  public int compare(TopicNameIF o1, TopicNameIF o2) {
+    String value1 = o1.getValue();
+    String value2 = o2.getValue();
 
-    try {
-      value1 = ((TopicNameIF) o1).getValue();
-      value2 = ((TopicNameIF) o2).getValue();
-    } catch (ClassCastException e) {
-      String msg = "TopicNameComparator Error: " +
-        "This comparator only compares TopicNameIFs objects.";
-      throw new OntopiaRuntimeException(msg);
-    }
-    
     if (value1 == null) return 1;
     if (value2 == null) return -1;
     

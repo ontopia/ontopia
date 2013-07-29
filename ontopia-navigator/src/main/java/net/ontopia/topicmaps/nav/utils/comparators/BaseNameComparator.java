@@ -20,10 +20,7 @@
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 
-import java.util.Collection;
 import java.util.Comparator;
-
-import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.topicmaps.core.TopicNameIF;
 
 /**
@@ -31,7 +28,7 @@ import net.ontopia.topicmaps.core.TopicNameIF;
  * (case-independent).
  * @deprecated Use TopicNameComparator instead.
  */
-public class BaseNameComparator implements Comparator {
+public class BaseNameComparator implements Comparator<TopicNameIF> {
 
   /**
    * Empty constructor, which will compare TopicNameIFs using no
@@ -43,17 +40,9 @@ public class BaseNameComparator implements Comparator {
   /**
    * Compares two TopicNameIFs.
    */
-  public int compare(Object o1, Object o2) {
-    String value1, value2;
-
-    try {
-      value1 = ((TopicNameIF) o1).getValue();
-      value2 = ((TopicNameIF) o2).getValue();
-    } catch (ClassCastException e) {
-      String msg = "BaseNameComparator Error: " +
-        "This comparator only compares TopicNameIFs objects.";
-      throw new OntopiaRuntimeException(msg);
-    }
+  public int compare(TopicNameIF o1, TopicNameIF o2) {
+    String value1 = o1.getValue();
+    String value2 = o2.getValue();
     
     if (value1 == null) return 1;
     if (value2 == null) return -1;

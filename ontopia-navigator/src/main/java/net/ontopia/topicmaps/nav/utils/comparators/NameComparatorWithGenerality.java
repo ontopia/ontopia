@@ -21,18 +21,11 @@
 package net.ontopia.topicmaps.nav.utils.comparators;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.ArrayList;
-
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.TopicIF;
-import net.ontopia.topicmaps.core.TMObjectIF;
-import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.topicmaps.utils.VariantNameGrabber;
-import net.ontopia.infoset.impl.basic.URILocator;
 
 /**
  * INTERNAL: A Comparator for ordering TopicNameIFs and VariantNameIFs
@@ -41,8 +34,7 @@ import net.ontopia.infoset.impl.basic.URILocator;
  * would always appear first) and second alphabetically
  * (case-independent).
  */
-public class NameComparatorWithGenerality extends NameComparator
-  implements Comparator {
+public class NameComparatorWithGenerality extends NameComparator {
 
   /**
    * Empty constructor, used on application startup to initialise a
@@ -57,7 +49,7 @@ public class NameComparatorWithGenerality extends NameComparator
    * Constructor used to make a comparator which will compare
    * TopicNameIFs and VariantNameIFs using the context provided.
    */
-  public NameComparatorWithGenerality(Collection context) {
+  public NameComparatorWithGenerality(Collection<TopicIF> context) {
     super(context);
   }
 
@@ -67,16 +59,16 @@ public class NameComparatorWithGenerality extends NameComparator
    * retrieve the sort variant name for it. The resulting string
    * contains first the number of themes and after that the name.
    */
-  protected String getName(Object obj) throws ClassCastException {
+  protected String getName(NameIF obj) {
     String value = null;
     
     // --- first try if it's a base name
-    try {
+    if (obj instanceof TopicNameIF) {
       TopicNameIF basename = (TopicNameIF) obj;
 
       // try to get sort variant name for this base name
       initSortNameGrabber( basename );
-      VariantNameIF sortVariant = (VariantNameIF) sortNameGrabber.grab( basename );
+      VariantNameIF sortVariant = sortNameGrabber.grab( basename );
       if (sortVariant != null) {
         if (sortVariant.getValue() != null)
           value = sortVariant.getValue();
@@ -88,7 +80,7 @@ public class NameComparatorWithGenerality extends NameComparator
       // order in first instance after the generality
       value = basename.getScope().size() + value;
 
-    } catch (ClassCastException e) {
+    } else if (obj instanceof VariantNameIF) {
       // --- ...second try if it's a variant name
       VariantNameIF variant = (VariantNameIF) obj;
       if (variant.getValue() != null)
@@ -97,6 +89,9 @@ public class NameComparatorWithGenerality extends NameComparator
         value = variant.getLocator().getAddress();
       // order in first instance after the generality
       value = variant.getScope().size() + value;
+    } else {
+      throw new OntopiaRuntimeException("NameComparator Error: This comparator only compares " +
+                                        "TopicNameIFs and VariantNameIFs. Got " + obj);
     }
     
     return value;

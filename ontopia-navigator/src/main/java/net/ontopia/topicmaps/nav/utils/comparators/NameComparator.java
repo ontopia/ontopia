@@ -26,6 +26,7 @@ import java.util.Comparator;
 import java.util.ArrayList;
 
 import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.core.TopicIF;
@@ -38,9 +39,9 @@ import net.ontopia.infoset.impl.basic.URILocator;
  * INTERNAL: A Comparator for ordering TopicNameIFs and VariantNameIFs
  * alphabetically (case-independent).
  */
-public class NameComparator implements Comparator {
+public class NameComparator implements Comparator<NameIF> {
 
-  protected Collection scopes;
+  protected Collection<TopicIF> scopes;
   protected VariantNameGrabber vnGrabber;
   protected VariantNameGrabber sortNameGrabber;
   
@@ -50,7 +51,7 @@ public class NameComparator implements Comparator {
    * VariantNameIFs using no context.
    */
   public NameComparator() {
-    this.scopes = Collections.EMPTY_SET;
+    this.scopes = Collections.emptyList();
     this.vnGrabber = null;
     this.sortNameGrabber = null;
   }
@@ -59,7 +60,7 @@ public class NameComparator implements Comparator {
    * Constructor used to make a comparator which will compare
    * TopicNameIFs and VariantNameIFs using the context provided.
    */
-  public NameComparator(Collection context) {
+  public NameComparator(Collection<TopicIF> context) {
     this.scopes = context;
     this.vnGrabber = new VariantNameGrabber(context);
     this.sortNameGrabber = null;
@@ -76,7 +77,7 @@ public class NameComparator implements Comparator {
   protected final void initSortNameGrabber(TMObjectIF tmObj) {
     if (sortNameGrabber == null) {
       TopicIF sortTopic = tmObj.getTopicMap().getTopicBySubjectIdentifier(SORT_LOCATOR);
-      Collection sortScope = new ArrayList(1);
+      Collection<TopicIF> sortScope = new ArrayList<TopicIF>(1);
       sortScope.add( sortTopic );
       sortNameGrabber = new VariantNameGrabber(sortScope);
     }
@@ -88,16 +89,16 @@ public class NameComparator implements Comparator {
    * base name or variant name value. If it's a basename try to
    * retrieve the sort variant name for it.
    */
-  protected String getName(Object obj) throws ClassCastException {
+  protected String getName(NameIF obj) {
     String value = null;
     
     // --- first try if it's a base name
-    try {
+    if (obj instanceof TopicNameIF) {
       TopicNameIF basename = (TopicNameIF) obj;
 
       // try to get sort variant name for this base name
       initSortNameGrabber( basename );
-      VariantNameIF sortVariant = (VariantNameIF) sortNameGrabber.grab( basename );
+      VariantNameIF sortVariant = sortNameGrabber.grab( basename );
       if (sortVariant != null) {
         if (sortVariant.getValue() != null)
           value = sortVariant.getValue();
@@ -107,13 +108,16 @@ public class NameComparator implements Comparator {
       else
         value = basename.getValue();
 
-    } catch (ClassCastException e) {
+    } else if (obj instanceof VariantNameIF) {
       // --- ...second try if it's a variant name
       VariantNameIF variant = (VariantNameIF) obj;
       if (variant.getValue() != null)
         value = variant.getValue();
       else
         value = variant.getLocator().getAddress();
+    } else {
+      throw new OntopiaRuntimeException("NameComparator Error: This comparator only compares " +
+                                        "TopicNameIFs and VariantNameIFs. Got " + obj);
     }
 
     return value;
@@ -122,16 +126,9 @@ public class NameComparator implements Comparator {
   /**
    * Compares two TopicNameIFs / VariantNameIFs.
    */
-  public int compare(Object o1, Object o2) {
-    String value1, value2;
-
-    try {
-      value1 = getName(o1);
-      value2 = getName(o2);      
-    } catch (ClassCastException e) {
-      throw new OntopiaRuntimeException("NameComparator Error: This comparator only compares " +
-                                        "TopicNameIFs and VariantNameIFs.", e);
-    }
+  public int compare(NameIF o1, NameIF o2) {
+    String value1 = getName(o1);
+    String value2 = getName(o2);
     
     if (value1 == null) return 1;
     if (value2 == null) return -1;

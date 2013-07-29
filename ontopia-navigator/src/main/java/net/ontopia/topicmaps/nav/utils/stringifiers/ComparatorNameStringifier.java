@@ -21,13 +21,14 @@
 package net.ontopia.topicmaps.nav.utils.stringifiers;
 
 import net.ontopia.utils.StringifierIF;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
  * INTERNAL: Stringifier that stringifies TopicNameIFs and VariantNameIFs.
  */
-public class ComparatorNameStringifier implements StringifierIF {
+public class ComparatorNameStringifier implements StringifierIF<NameIF> {
   
   /**
    * INTERNAL: Stringifies the given basename or variant name.
@@ -35,7 +36,7 @@ public class ComparatorNameStringifier implements StringifierIF {
    * @param name the name object to use; TopicNameIF or VariantNameIF
    * @return string containing name value or "~~~~~" if name not set
    */
-  public String toString(Object name) {
+  public String toString(NameIF name) {
     if (name == null)
       return "~~~~~";
     if (name instanceof TopicNameIF) {

@@ -24,6 +24,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
+import net.ontopia.topicmaps.core.NameIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.StringifierIF;
 
@@ -34,25 +36,25 @@ import net.ontopia.topicmaps.nav.utils.stringifiers.ComparatorNameStringifier;
  * it does not look up the 'sort' topic for you, but that this must be
  * provided explicitly to the constructors.
  */
-public class TopicComparator implements Comparator {
+public class TopicComparator implements Comparator<TopicIF> {
 
-  protected GrabberIF nameGrabber;
-  protected StringifierIF nameStringifier;
+  protected GrabberIF<TopicIF, NameIF> nameGrabber;
+  protected StringifierIF<NameIF> nameStringifier;
 
   /**
    * Empty constructor, used on application startup to initialise a
    * "fast" comparator which will compare Topics using no context.
    */
   public TopicComparator() {
-    this(Collections.EMPTY_SET, Collections.EMPTY_SET);
+    this(null, null);
   }
   
   /**
    * Constructor used to make a comparator which will compare Topics using the 
    * contexts provided. 
    */
-  public TopicComparator(Collection baseNameContext) {
-    this(baseNameContext, Collections.EMPTY_SET);
+  public TopicComparator(Collection<TopicIF> baseNameContext) {
+    this(baseNameContext, null);
   } 
   
   
@@ -62,18 +64,17 @@ public class TopicComparator implements Comparator {
    * generally be a Sort topic if is available. This is the default
    * applied by the application.
    */
-  public TopicComparator(Collection baseNameContext, Collection variantNameContext) {
-    nameGrabber = new ContextNameGrabber((baseNameContext == null ? Collections.EMPTY_SET :
-                                          baseNameContext),
-                                         (variantNameContext == null ? Collections.EMPTY_SET :
-                                          variantNameContext));
+  public TopicComparator(Collection<TopicIF> baseNameContext, Collection<TopicIF> variantNameContext) {
+    if (baseNameContext == null) { baseNameContext = Collections.emptySet(); }
+    if (variantNameContext == null) { variantNameContext = Collections.emptySet(); }
+    nameGrabber = new ContextNameGrabber(baseNameContext, variantNameContext);
     nameStringifier = new ComparatorNameStringifier();
   }
 
   /**
    * implementing method which is required for Comparator interface.
    */
-  public int compare(Object o1, Object o2) {
+  public int compare(TopicIF o1, TopicIF o2) {
 
     // this method is time-critical, since it is called n*log(n) times
     // for every list of topics. could probably do more to make it

@@ -20,18 +20,17 @@
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.Collection;
+import java.util.Comparator;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: A Comparator for ordering OccurrenceIFs alphabetically.
  */
-public class OccurrenceComparator implements Comparator {
+public class OccurrenceComparator implements Comparator<OccurrenceIF> {
 
-  protected Comparator tc;
+  protected Comparator<TopicIF> tc;
 
   /**
    * Empty constructor, used on application startup to initialise a
@@ -46,7 +45,7 @@ public class OccurrenceComparator implements Comparator {
    * Constructor used to make a comparator which will compare
    * Occurrences using the context provided.
    */
-  public OccurrenceComparator(Collection baseNameContext) {
+  public OccurrenceComparator(Collection<TopicIF> baseNameContext) {
     tc = new TopicComparator(baseNameContext);
   }
   
@@ -54,25 +53,15 @@ public class OccurrenceComparator implements Comparator {
    * Constructor used to make a comparator which will compare
    * Occurrences using the context provided.
    */
-  public OccurrenceComparator(Collection baseNameContext,
-                              Collection variantContext) {
+  public OccurrenceComparator(Collection<TopicIF> baseNameContext,
+                              Collection<TopicIF> variantContext) {
     tc = new TopicComparator(baseNameContext, variantContext);
   }
   
   /**
    * Compares two OccurrenceIFs.
    */
-  public int compare(Object o1, Object o2) {
-    OccurrenceIF oc1, oc2;
-    try {
-      oc1 = (OccurrenceIF) o1;
-      oc2 = (OccurrenceIF) o2;
-    } catch (ClassCastException e) {
-      String msg = "OccurrenceComparator Error: " +
-        "This comparator only compares OccurrenceIFs";
-      throw new OntopiaRuntimeException(msg);
-    }
-
+  public int compare(OccurrenceIF oc1, OccurrenceIF oc2) {
     int cmp;
     // first compare by type
     if (oc1.getType() == oc2.getType())

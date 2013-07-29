@@ -30,15 +30,15 @@ import net.ontopia.topicmaps.core.*;
  * INTERNAL: A comparator for ordering AssociationRoleIFs
  * alphabetically by role player and role type.
  */
-public class AssociationRoleComparator implements Comparator {
+public class AssociationRoleComparator implements Comparator<AssociationRoleIF> {
 
   // constants
-  private static final StringifierIF DEF_TOPIC_STRINGIFIER = TopicStringifiers
+  private static final StringifierIF<TopicIF> DEF_TOPIC_STRINGIFIER = TopicStringifiers
     .getSortNameStringifier();
-  private static final Comparator DEF_TOPIC_COMPARATOR = TopicComparators
+  private static final Comparator<TopicIF> DEF_TOPIC_COMPARATOR = TopicComparators
     .getCaseInsensitiveComparator(DEF_TOPIC_STRINGIFIER);
   
-  protected Comparator tc;
+  protected Comparator<TopicIF> tc;
 
   public AssociationRoleComparator() {
     // Empty constructor, used on application startup to initialise a
@@ -54,11 +54,11 @@ public class AssociationRoleComparator implements Comparator {
    * @param context The context to select topics in.
    * @param sortTopic The topic representing sort names.
    */
-  public AssociationRoleComparator(Collection context, TopicIF sortTopic) {
+  public AssociationRoleComparator(Collection<TopicIF> context, TopicIF sortTopic) {
     if (context == null)
-      context = Collections.EMPTY_SET;
+      context = Collections.emptySet();
 
-    List sortContext = new ArrayList(context);
+    List<TopicIF> sortContext = new ArrayList<TopicIF>(context);
     if (sortTopic != null)
       sortContext.add(sortTopic);
     tc = new TopicComparator(context, sortContext);
@@ -67,14 +67,7 @@ public class AssociationRoleComparator implements Comparator {
   /**
    * Compares two AssociationRoleIFs.
    */
-  public int compare (Object o1, Object o2){
-    AssociationRoleIF ar1, ar2;
-    try {
-      ar1 = (AssociationRoleIF) o1;
-      ar2 = (AssociationRoleIF) o2;
-    } catch (ClassCastException e) {
-      throw new OntopiaRuntimeException ("AssociationRoleComparator Error: This comparator only compares AssociationRoleIFs.");
-    }
+  public int compare (AssociationRoleIF ar1, AssociationRoleIF ar2){
     // Compare role players
     int result = tc.compare(ar1.getPlayer(), ar2.getPlayer());
     if (result == 0)

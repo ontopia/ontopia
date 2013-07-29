@@ -34,7 +34,7 @@ import net.ontopia.topicmaps.nav2.core.*;
  * INTERNAL: Decider for verifying if a given topic type is identical or
  * a subclass of a reference topic type (for example occurrence type).
  */
-public class TypeDecider implements DeciderIF, NavigatorDeciderIF {
+public class TypeDecider implements DeciderIF<TopicIF>, NavigatorDeciderIF<TopicIF> {
 
   // constants
   public static final String OCC_METADATA = "metadata";
@@ -89,10 +89,9 @@ public class TypeDecider implements DeciderIF, NavigatorDeciderIF {
   // Implementation of NavigatorDeciderIF
   // -----------------------------------------------------------
 
-  public boolean ok(NavigatorPageIF contextTag, Object obj) {
-    if (obj == null)
+  public boolean ok(NavigatorPageIF contextTag, TopicIF typingTopic) {
+    if (typingTopic == null)
       return false;
-    TopicIF typingTopic = (TopicIF) obj;
     // retrieve topicmap
     TopicMapIF tm = typingTopic.getTopicMap();
     TopicIF refTypingTopic = tm.getTopicBySubjectIdentifier(refTypingTopicLocator);
@@ -108,7 +107,7 @@ public class TypeDecider implements DeciderIF, NavigatorDeciderIF {
   // Implementation of DeciderIF
   // -----------------------------------------------------------
 
-  public boolean ok(Object obj) {
+  public boolean ok(TopicIF obj) {
     return ok(null, obj);
   }
   

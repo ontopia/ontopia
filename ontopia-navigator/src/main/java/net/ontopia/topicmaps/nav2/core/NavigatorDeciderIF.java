@@ -29,13 +29,13 @@ package net.ontopia.topicmaps.nav2.core;
  * @see net.ontopia.topicmaps.nav2.taglibs.logic.IfTag
  * @see net.ontopia.topicmaps.nav2.taglibs.TMvalue.FilterTag
  */
-public interface NavigatorDeciderIF {
+public interface NavigatorDeciderIF<T> {
 
   /**
    * INTERNAL: if implemented criteria are matched: deliver true,
    * otherwise false.
    */
-  public boolean ok(NavigatorPageIF contextTag, Object obj);
+  public boolean ok(NavigatorPageIF contextTag, T obj);
   
 }
 

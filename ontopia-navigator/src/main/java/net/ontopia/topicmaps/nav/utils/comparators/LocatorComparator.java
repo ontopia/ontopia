@@ -20,26 +20,26 @@
 
 package net.ontopia.topicmaps.nav.utils.comparators;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
+import java.util.Collection;
+import java.util.Comparator;
+import net.ontopia.utils.StringifierComparator;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.infoset.core.LocatorIF;
 
 /**
  * INTERNAL: A Comparator for ordering locators alphabetically.
  */
-public class LocatorComparator implements Comparator {
+public class LocatorComparator implements Comparator<LocatorIF> {
 
-  protected Comparator tc;
-  protected Collection scopes;
+  protected Comparator<String> tc;
+  protected Collection<TopicIF> scopes;
 
   /**
    * Empty constructor, used on application startup to initialise a
    * "fast" comparator which will compare Locators using no context.
    */
   public LocatorComparator() {
-    tc = new StringifierComparator();
+    tc = new StringifierComparator<String>();
   }
 
   /**
@@ -47,24 +47,15 @@ public class LocatorComparator implements Comparator {
    * using the context provided. This implementation doesn't use the
    * context yet.
    */
-  public LocatorComparator(Collection context) {
+  public LocatorComparator(Collection<TopicIF> context) {
     this.scopes = context;
-    tc = new StringifierComparator();
+    tc = new StringifierComparator<String>();
   }
   
   /**
    * Compares two LocatorIFs
    */
-  public int compare(Object o1, Object o2) {
-    LocatorIF l1, l2;
-    try {
-      l1 = (LocatorIF) o1;
-      l2 = (LocatorIF) o2;
-    } catch (ClassCastException e) {
-      String msg = "LocatorComparator Error: " +
-        "This comparator only compares LocatorIFs";
-      throw new OntopiaRuntimeException(msg);
-    }
+  public int compare(LocatorIF l1, LocatorIF l2) {
     return tc.compare(l1.getAddress(), l2.getAddress());
   }
 }

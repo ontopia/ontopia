@@ -22,15 +22,14 @@ package net.ontopia.topicmaps.nav.utils.comparators;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.GrabberIF;
 import net.ontopia.utils.CollectionUtils;
-import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.topicmaps.core.NameIF;
 import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.utils.ScopedIFComparator;
 import net.ontopia.topicmaps.utils.IntersectionOfContextDecider;
 
@@ -40,11 +39,11 @@ import net.ontopia.topicmaps.utils.IntersectionOfContextDecider;
  * found. If no better variant name can be found, the base name is
  * used. This class is much used for grabbing display and sort names.
  */
-public class ContextNameGrabber implements GrabberIF {
+public class ContextNameGrabber implements GrabberIF<TopicIF, NameIF> {
 
-  protected DeciderIF within;
-  protected Comparator bnComparator;
-  protected Comparator vnComparator;
+  protected DeciderIF<VariantNameIF> within;
+  protected Comparator<TopicNameIF> bnComparator;
+  protected Comparator<VariantNameIF> vnComparator;
  
   /**
    * INTERNAL: Creates a grabber; makes the comparators ScopedIFComparator
@@ -55,11 +54,11 @@ public class ContextNameGrabber implements GrabberIF {
    * @param variantNameContext variantname scope;
    *        a collection of TopicIF objects.
    */
-  public ContextNameGrabber(Collection baseNameContext,
-                            Collection variantNameContext) {
-    this.within = new IntersectionOfContextDecider(variantNameContext);
-    this.bnComparator = new ScopedIFComparator(baseNameContext);
-    this.vnComparator = new ScopedIFComparator(variantNameContext);
+  public ContextNameGrabber(Collection<TopicIF> baseNameContext,
+                            Collection<TopicIF> variantNameContext) {
+    this.within = new IntersectionOfContextDecider<VariantNameIF>(variantNameContext);
+    this.bnComparator = new ScopedIFComparator<TopicNameIF>(baseNameContext);
+    this.vnComparator = new ScopedIFComparator<VariantNameIF>(variantNameContext);
   }
 
   /**
@@ -72,16 +71,9 @@ public class ContextNameGrabber implements GrabberIF {
    * @exception throws OntopiaRuntimeException if the given topic is
    * not a TopicIF object.
    */
-  public Object grab(Object topic) {
-    TopicIF mytopic;
-    try {
-      mytopic = (TopicIF) topic;
-    } catch (ClassCastException e) {
-      throw new OntopiaRuntimeException(topic + " is not a TopicIF.");
-    }
-
+  public NameIF grab(TopicIF mytopic) {
     // --- pick out best basename
-    Collection basenames = mytopic.getTopicNames();
+    Collection<TopicNameIF> basenames = mytopic.getTopicNames();
     int basenames_size = basenames.size();
     if (basenames_size == 0)
       return null;
@@ -89,24 +81,24 @@ public class ContextNameGrabber implements GrabberIF {
     TopicNameIF bestTopicName;
     if (basenames_size == 1)
       // Pull out the only basename
-      bestTopicName = (TopicNameIF) CollectionUtils.getFirstElement(basenames);
+      bestTopicName = CollectionUtils.getFirstElement(basenames);
     else {
       // Sort list of basenames
-      Object[] mybasenames = basenames.toArray();
+      TopicNameIF[] mybasenames = basenames.toArray(new TopicNameIF[basenames.size()]);
       Arrays.sort(mybasenames, bnComparator);
       // Pull out the first basename
-      bestTopicName = (TopicNameIF) mybasenames[0];
+      bestTopicName = mybasenames[0];
     }
     
     // --- pick out best variant name
-    Collection variantnames = bestTopicName.getVariants();
+    Collection<VariantNameIF> variantnames = bestTopicName.getVariants();
     int variantnames_size = variantnames.size();
     // If there is no variant name return bestTopicName
     if (variantnames_size == 0)
       return bestTopicName;
     
     // If there is multiple basenames rank them.
-    Object[] myvariantnames = variantnames.toArray();
+    VariantNameIF[] myvariantnames = variantnames.toArray(new VariantNameIF[variantnames.size()]);
     if (variantnames_size > 1)
       Arrays.sort(myvariantnames, vnComparator);
     

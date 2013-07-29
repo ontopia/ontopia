@@ -21,18 +21,9 @@
 package net.ontopia.topicmaps.nav.utils.comparators;
 
 import java.net.MalformedURLException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-
-import net.ontopia.utils.GrabberIF;
-import net.ontopia.utils.StringifierIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.DeciderIF;
-
-import net.ontopia.topicmaps.nav.utils.stringifiers.ComparatorNameStringifier;
-
 import net.ontopia.topicmaps.nav2.impl.basic.TypeDecider;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,15 +32,15 @@ import org.slf4j.LoggerFactory;
  * it does not look up the 'sort' topic for you, but that this must be
  * provided explicitly to the constructors.
  */
-public class OccTypeComparator extends TopicComparator implements Comparator {
+public class OccTypeComparator extends TopicComparator {
 
   // initialization of logging facility
   private static Logger log = LoggerFactory
     .getLogger(OccTypeComparator.class.getName());
 
   // members
-  private static DeciderIF metadataDecider = null;
-  private static DeciderIF descriptionDecider = null;
+  private static DeciderIF<TopicIF> metadataDecider = null;
+  private static DeciderIF<TopicIF> descriptionDecider = null;
 
   public OccTypeComparator() {
     super();
@@ -61,7 +52,7 @@ public class OccTypeComparator extends TopicComparator implements Comparator {
     }
   }
 
-  public int compare(Object o1, Object o2) {
+  public int compare(TopicIF o1, TopicIF o2) {
     if (o1 == null)
       return 1;
     if (o2 == null)
