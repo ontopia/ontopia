@@ -24,9 +24,9 @@ package net.ontopia.utils;
  * INTERNAL: Grabber that uppercases the String object given to it.
  */
 
-public class UpperCaseGrabber implements GrabberIF {
+public class UpperCaseGrabber implements GrabberIF<Object, String> {
   
-  public Object grab(Object object) {
+  public String grab(Object object) {
     return object.toString().toUpperCase();
   }
 

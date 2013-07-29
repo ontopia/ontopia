@@ -27,33 +27,33 @@ import java.util.*;
  * given to it.
  */
 
-public class StringifierGrabber implements GrabberIF {
+public class StringifierGrabber<T> implements GrabberIF<T, String> {
 
-  protected StringifierIF stringifier;
+  protected StringifierIF<T> stringifier;
 
   public StringifierGrabber() {
-    this(new DefaultStringifier());
+    this(new DefaultStringifier<T>());
   }
   
-  public StringifierGrabber(StringifierIF stringifier) {
+  public StringifierGrabber(StringifierIF<T> stringifier) {
     setStringifier(stringifier);
   }
 
   /**
    * Gets the stringifier which is to be used.
    */
-  public StringifierIF getStringifier() {
+  public StringifierIF<T> getStringifier() {
     return stringifier;
   }
   
   /**
    * Sets the stringifier which is to be used.
    */
-  public void setStringifier(StringifierIF stringifier) {
+  public void setStringifier(StringifierIF<T> stringifier) {
     this.stringifier = stringifier;
   }
   
-  public Object grab(Object object) {
+  public String grab(T object) {
     return stringifier.toString(object);
   }
   
