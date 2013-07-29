@@ -37,7 +37,7 @@ public class TestTopicRemoveType extends AbstractWebedTestCase {
   
   public void testNormalOperation() throws java.io.IOException{
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicIF type = (TopicIF) topic.getTypes().iterator().next();
+    TopicIF type = topic.getTypes().iterator().next();
     int numSLs = topic.getTypes().size();
    
     //make action

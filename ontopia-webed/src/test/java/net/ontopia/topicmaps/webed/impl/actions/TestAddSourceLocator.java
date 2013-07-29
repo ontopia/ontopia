@@ -54,11 +54,11 @@ public class TestAddSourceLocator extends AbstractWebedTestCase {
       action.perform(params, response);
       //test
      
-      Iterator i = tm.getItemIdentifiers().iterator();
+      Iterator<LocatorIF> i = tm.getItemIdentifiers().iterator();
       boolean excists = false;
 
       while (i.hasNext()) {
-	LocatorIF locator = (LocatorIF) i.next(); 
+	LocatorIF locator = i.next(); 
 	String url = locator.getAddress();
 	if (url.equals("http://slashdot.org/")) {
 	  excists = true;

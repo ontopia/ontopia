@@ -47,11 +47,11 @@ public class TestOccSetValue extends AbstractWebedTestCase {
   public void testNormalOperation() throws java.io.IOException{
     
     TopicIF topic = getTopicById(tm, "tromso");
-    OccurrenceIF occ  = (OccurrenceIF) topic.getOccurrences().iterator().next();
+    OccurrenceIF occ  = topic.getOccurrences().iterator().next();
     String loc = occ.getValue();
-    Iterator occIT = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> occIT = topic.getOccurrences().iterator();
     while (loc == null && occIT.hasNext()){
-      occ = (OccurrenceIF) occIT.next();
+      occ = occIT.next();
       loc = occ.getValue();
     }
     
@@ -87,10 +87,10 @@ public class TestOccSetValue extends AbstractWebedTestCase {
     
     //test              
     assertFalse("Occurrence not added", numOcc >= otherTopic.getOccurrences().size());
-    Iterator i = otherTopic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> i = otherTopic.getOccurrences().iterator();
     boolean hasit = false;
     while (i.hasNext()){
-      OccurrenceIF foo = (OccurrenceIF) i.next();
+      OccurrenceIF foo = i.next();
       if (foo.getValue().equals("http://www.sf.net"))
         hasit = true; 
     }
@@ -115,10 +115,10 @@ public class TestOccSetValue extends AbstractWebedTestCase {
     
     //test              
     assertFalse("Occurrence not added", numOcc >= otherTopic.getOccurrences().size());
-    Iterator i = otherTopic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> i = otherTopic.getOccurrences().iterator();
     boolean hasit = false;
     while (i.hasNext()){
-      OccurrenceIF foo = (OccurrenceIF) i.next();
+      OccurrenceIF foo = i.next();
       if ((foo.getValue().equals("http://www.sf.net")) && 
           (foo.getType() == type))
         hasit = true; 
@@ -154,11 +154,11 @@ public class TestOccSetValue extends AbstractWebedTestCase {
   
   public void testBadParam2() throws java.io.IOException{
     TopicIF topic = getTopicById(tm, "tromso");
-    OccurrenceIF occ  = (OccurrenceIF) topic.getOccurrences().iterator().next();
+    OccurrenceIF occ  = topic.getOccurrences().iterator().next();
     String loc = occ.getValue();
-    Iterator occIT = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> occIT = topic.getOccurrences().iterator();
     while (loc == null && occIT.hasNext()){
-      occ = (OccurrenceIF) occIT.next();
+      occ = occIT.next();
       loc = occ.getValue();
     }
     
@@ -176,11 +176,11 @@ public class TestOccSetValue extends AbstractWebedTestCase {
   
   public void testBadParam3() throws java.io.IOException{
     TopicIF topic = getTopicById(tm, "tromso");
-    OccurrenceIF occ  = (OccurrenceIF) topic.getOccurrences().iterator().next();
+    OccurrenceIF occ  = topic.getOccurrences().iterator().next();
     String loc = occ.getValue();
-    Iterator occIT = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> occIT = topic.getOccurrences().iterator();
     while (loc == null && occIT.hasNext()){
-      occ = (OccurrenceIF) occIT.next();
+      occ = occIT.next();
       loc = occ.getValue();
     }
     
@@ -242,11 +242,11 @@ public class TestOccSetValue extends AbstractWebedTestCase {
     TopicIF otype = getTopicById(tm, "gamst");
     int numOcc = otherTopic.getOccurrences().size();
 
-    OccurrenceIF occ  = (OccurrenceIF) topic.getOccurrences().iterator().next();
+    OccurrenceIF occ  = topic.getOccurrences().iterator().next();
     String loc = occ.getValue();
-    Iterator occIT = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> occIT = topic.getOccurrences().iterator();
     while (loc == null && occIT.hasNext()){
-      occ = (OccurrenceIF) occIT.next();
+      occ = occIT.next();
       loc = occ.getValue();
     }
     
@@ -264,10 +264,10 @@ public class TestOccSetValue extends AbstractWebedTestCase {
     
     assertFalse("Occurrence added to other topic", 
                 numOcc < otherTopic.getOccurrences().size());
-    Iterator i = otherTopic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> i = otherTopic.getOccurrences().iterator();
     boolean hasit = false;
     while (i.hasNext()){
-      OccurrenceIF foo = (OccurrenceIF) i.next();
+      OccurrenceIF foo = i.next();
       if (foo.getValue().equals("http://www.sf.net"))
         hasit = true; 
     }
@@ -277,9 +277,9 @@ public class TestOccSetValue extends AbstractWebedTestCase {
   // --- Helpers
 
   protected OccurrenceIF getOccurrenceWithValue(TopicIF topic) {
-    Iterator it = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> it = topic.getOccurrences().iterator();
     while (it.hasNext()) {
-      OccurrenceIF occ = (OccurrenceIF) it.next();
+      OccurrenceIF occ = it.next();
       if (occ.getValue() != null)
         return occ;
     }

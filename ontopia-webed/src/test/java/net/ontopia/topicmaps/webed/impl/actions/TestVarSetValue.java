@@ -47,7 +47,7 @@ public class TestVarSetValue extends AbstractWebedTestCase {
   public void testNormalOperation() throws java.io.IOException{
      
     TopicIF topic = getTopicById(tm, "tromso");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     TopicMapBuilderIF builder =
       bn.getTopicMap().getBuilder();
             
@@ -72,9 +72,9 @@ public class TestVarSetValue extends AbstractWebedTestCase {
   public void testNormalOperation2() throws java.io.IOException{
     
     TopicIF topic = getTopicById(tm, "tromso");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     TopicIF topic2 = getTopicById(tm, "gamst");
-    TopicNameIF bn2  = (TopicNameIF) topic2.getTopicNames().iterator().next();
+    TopicNameIF bn2  = topic2.getTopicNames().iterator().next();
 
     TopicMapBuilderIF builder =
       bn.getTopicMap().getBuilder();
@@ -98,7 +98,7 @@ public class TestVarSetValue extends AbstractWebedTestCase {
     assertFalse("Variant of base name added or removed", 
 		bnsize != bnNewSize);
    
-    VariantNameIF varNew = (VariantNameIF) bn.getVariants().iterator().next();
+    VariantNameIF varNew = bn.getVariants().iterator().next();
         
     assertFalse("The value is not correct", 
                 !(var.getValue().equals("The variant name string")));
@@ -143,9 +143,9 @@ public class TestVarSetValue extends AbstractWebedTestCase {
   public void testBadParams1() throws java.io.IOException{
     
     TopicIF topic = getTopicById(tm, "tromso");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     TopicIF topic2 = getTopicById(tm, "gamst");
-    TopicNameIF bn2  = (TopicNameIF) topic2.getTopicNames().iterator().next();
+    TopicNameIF bn2  = topic2.getTopicNames().iterator().next();
     int bn2size = bn2.getVariants().size();
 
     TopicMapBuilderIF builder =

@@ -47,8 +47,8 @@ public class TestSetPlayer extends AbstractWebedTestCase {
 
 
   public void testNormalOperation() throws java.io.IOException, InvalidQueryException{
-    AssociationIF assoc = (AssociationIF) tm.getAssociations().iterator().next();
-    AssociationRoleIF role = (AssociationRoleIF) assoc.getRoles().iterator().next();
+    AssociationIF assoc = tm.getAssociations().iterator().next();
+    AssociationRoleIF role = assoc.getRoles().iterator().next();
     TopicIF topicRole = getTopicById(tm, "gamst");
     
     //make action
@@ -66,8 +66,8 @@ public class TestSetPlayer extends AbstractWebedTestCase {
   }
   
   public void testNormalOperation2() throws java.io.IOException, InvalidQueryException{
-    AssociationIF assoc = (AssociationIF) tm.getAssociations().iterator().next();
-    AssociationRoleIF role = (AssociationRoleIF) assoc.getRoles().iterator().next();
+    AssociationIF assoc = tm.getAssociations().iterator().next();
+    AssociationRoleIF role = assoc.getRoles().iterator().next();
     TopicIF topicRole = getTopicById(tm, "gamst");
     String topicRoleId = topicRole.getObjectId();
     //make action
@@ -103,8 +103,8 @@ public class TestSetPlayer extends AbstractWebedTestCase {
     }
 
   public void testBadPlayer() throws java.io.IOException, InvalidQueryException{
-    AssociationIF assoc = (AssociationIF) tm.getAssociations().iterator().next();
-    AssociationRoleIF role = (AssociationRoleIF) assoc.getRoles().iterator().next();
+    AssociationIF assoc = tm.getAssociations().iterator().next();
+    AssociationRoleIF role = assoc.getRoles().iterator().next();
     //make action
     ActionIF action = new SetPlayer();
     
@@ -138,8 +138,8 @@ public class TestSetPlayer extends AbstractWebedTestCase {
   }
 
   public void testNoTopic() throws java.io.IOException, InvalidQueryException{
-    AssociationIF assoc = (AssociationIF) tm.getAssociations().iterator().next();
-    AssociationRoleIF role = (AssociationRoleIF) assoc.getRoles().iterator().next();
+    AssociationIF assoc = tm.getAssociations().iterator().next();
+    AssociationRoleIF role = assoc.getRoles().iterator().next();
     //make action
     ActionIF action = new SetPlayer();
     

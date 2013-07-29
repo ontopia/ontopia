@@ -48,7 +48,7 @@ public class TestSetValue extends AbstractWebedTestCase {
   public void testNormalOperation() throws java.io.IOException{
     
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF basename = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF basename = topic.getTopicNames().iterator().next();
     int numBN = topic.getTopicNames().size();
 
     //make action
@@ -62,10 +62,10 @@ public class TestSetValue extends AbstractWebedTestCase {
     action.perform(params, response);
     //test      
     assertFalse("New basename added", topic.getTopicNames().size() > numBN);
-    Iterator baseIT = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> baseIT = topic.getTopicNames().iterator();
     boolean hasit = false;
     while (baseIT.hasNext()){
-      TopicNameIF base = (TopicNameIF) baseIT.next();
+      TopicNameIF base = baseIT.next();
       if (base.getValue().equals("general"))
 	hasit = true;
     }
@@ -98,17 +98,17 @@ public class TestSetValue extends AbstractWebedTestCase {
     //test      
     assertFalse("No new basename added", topic.getTopicNames().size() == numBN);
     
-    Iterator baseIT = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> baseIT = topic.getTopicNames().iterator();
     boolean hasit = false;
     boolean hastype = false;
     boolean hascope = false;
 
     while (baseIT.hasNext()){
-      TopicNameIF base = (TopicNameIF) baseIT.next();
+      TopicNameIF base = baseIT.next();
       if (base.getValue().equals("general")){
 	hasit = true;
 	hastype = (base.getType() == type);
-	Iterator ix = base.getScope().iterator();
+	Iterator<TopicIF> ix = base.getScope().iterator();
 	while (ix.hasNext()){
 	  if (ix.next() == scope)
 	    hascope = true;
@@ -123,7 +123,7 @@ public class TestSetValue extends AbstractWebedTestCase {
   public void testNormalOperation3() {
     
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF basename = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF basename = topic.getTopicNames().iterator().next();
     int numBN = topic.getTopicNames().size();
 
     //make action

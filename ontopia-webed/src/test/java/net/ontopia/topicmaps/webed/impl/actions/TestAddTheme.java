@@ -44,7 +44,7 @@ public class TestAddTheme extends AbstractWebedTestCase {
 
   public void testNormalOperation() throws java.io.IOException{
     try{
-      AssociationIF assoc = (AssociationIF) tm.getAssociations().iterator().next();
+      AssociationIF assoc = tm.getAssociations().iterator().next();
       
       //make action
       ActionIF action = new AddTheme();
@@ -90,7 +90,7 @@ public void testBadAssoc() throws java.io.IOException{
 
 public void testBadTopicID() throws java.io.IOException{
     try{
-      AssociationIF assoc = (AssociationIF) tm.getAssociations().iterator().next();
+      AssociationIF assoc = tm.getAssociations().iterator().next();
      
       //make action
       

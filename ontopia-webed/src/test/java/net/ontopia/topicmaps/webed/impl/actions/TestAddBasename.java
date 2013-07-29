@@ -61,10 +61,10 @@ public class TestAddBasename extends AbstractWebedTestCase {
     action.perform(params, response);
     //test      
     assertFalse("No new basename added", topic.getTopicNames().size() == numBN);
-    Iterator baseIT = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> baseIT = topic.getTopicNames().iterator();
     boolean hasit = false;
     while (baseIT.hasNext()){
-      TopicNameIF base = (TopicNameIF) baseIT.next();
+      TopicNameIF base = baseIT.next();
       if (base.getValue().equals("general"))
 	hasit = true;
     }
@@ -92,17 +92,17 @@ public class TestAddBasename extends AbstractWebedTestCase {
     //test      
     assertFalse("No new basename added", topic.getTopicNames().size() == numBN);
     
-    Iterator baseIT = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> baseIT = topic.getTopicNames().iterator();
     boolean hasit = false;
     boolean hastype = false;
     boolean hascope = false;
 
     while (baseIT.hasNext()){
-      TopicNameIF base = (TopicNameIF) baseIT.next();
+      TopicNameIF base = baseIT.next();
       if (base.getValue().equals("general")){
 	hasit = true;
 	hastype = (base.getType() == bntype);
-	Iterator ix = base.getScope().iterator();
+	Iterator<TopicIF> ix = base.getScope().iterator();
 	while (ix.hasNext()){
 	  if (ix.next() == scope)
 	    hascope = true;

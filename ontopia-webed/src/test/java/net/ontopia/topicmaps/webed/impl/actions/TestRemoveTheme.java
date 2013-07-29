@@ -52,11 +52,11 @@ public class TestRemoveTheme extends AbstractWebedTestCase {
     TopicIF topic = getTopicById(tm, "gamst");
       
     //find a basename that has scope.
-    Iterator basenames = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> basenames = topic.getTopicNames().iterator();
     TopicNameIF base;
       
     do{
-      base = (TopicNameIF) basenames.next();
+      base = basenames.next();
       if (!(base.getScope().isEmpty()) ){
         break;
       }
@@ -103,11 +103,11 @@ public class TestRemoveTheme extends AbstractWebedTestCase {
     TopicIF topic = getTopicById(tm, "gamst");
       
     //find a basename that has scope.
-    Iterator basenames = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> basenames = topic.getTopicNames().iterator();
     TopicNameIF base;
       
     do{
-      base = (TopicNameIF) basenames.next();
+      base = basenames.next();
       if (!(base.getScope().isEmpty()) ){
         break;
       }
@@ -137,11 +137,11 @@ public class TestRemoveTheme extends AbstractWebedTestCase {
     TopicIF topic = getTopicById(tm, "gamst");
       
     //find a basename that has scope.
-    Iterator basenames = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> basenames = topic.getTopicNames().iterator();
     TopicNameIF base;
       
     do{
-      base = (TopicNameIF) basenames.next();
+      base = basenames.next();
       if (!(base.getScope().isEmpty()))
         break;
     } while (basenames.hasNext());

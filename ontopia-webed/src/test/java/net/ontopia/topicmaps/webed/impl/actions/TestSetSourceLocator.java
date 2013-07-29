@@ -47,7 +47,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
   public void testNormalOperation() throws IOException {
     ActionIF action = new SetSourceLocator();
     TopicIF topic = getTopicById(tm, "super");
-    LocatorIF SL = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+    LocatorIF SL = topic.getItemIdentifiers().iterator().next();
     
     //build parms
     ActionParametersIF params = makeParameters(makeList(topic, SL), "http://mama.no");
@@ -55,7 +55,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
     try{
       action.perform(params, response);
       int newSLNum = topic.getItemIdentifiers().size();  
-      LocatorIF SLnew = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+      LocatorIF SLnew = topic.getItemIdentifiers().iterator().next();
       
       assertFalse("new address not set correctly", 
 		  !(SLnew.getAddress().equals("http://mama.no/")));      
@@ -69,7 +69,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
     TopicIF topic = getTopicById(tm, "gamst");
     
     TopicIF topicDummy = getTopicById(tm, "super");
-    LocatorIF SL = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+    LocatorIF SL = topic.getItemIdentifiers().iterator().next();
     
     //build parms
     ActionParametersIF params = makeParameters(makeList(topic, SL), "http://mama.no");
@@ -78,7 +78,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
       action.perform(params, response);
       int newSLNum = topic.getItemIdentifiers().size();  
       
-      LocatorIF SLnew = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+      LocatorIF SLnew = topic.getItemIdentifiers().iterator().next();
       assertFalse("new address not set correctly", 
 		  !(SLnew.getAddress().equals("http://mama.no/")));
     } catch (ActionRuntimeException e) {
@@ -104,7 +104,7 @@ public class TestSetSourceLocator extends AbstractWebedTestCase {
     
     ActionIF action = new SetSourceLocator();
     TopicIF topic = getTopicById(tm, "super");
-    LocatorIF SL = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+    LocatorIF SL = topic.getItemIdentifiers().iterator().next();
     
     //build parms
     ActionParametersIF params = makeParameters(makeList(topic, SL), "foobar");

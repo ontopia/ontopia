@@ -61,10 +61,10 @@ public class TestAddExtOccurrence extends AbstractWebedTestCase {
     action.perform(params, response);
     //test      
     assertFalse("New occurrence not added", topic.getOccurrences().size() == numO);
-    Iterator occIT = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> occIT = topic.getOccurrences().iterator();
     boolean hasit = false;
     while (occIT.hasNext()){
-      OccurrenceIF occ = (OccurrenceIF) occIT.next();
+      OccurrenceIF occ = occIT.next();
             
       if (occ.getLocator().getAddress().equals("http://www.sf.net/"))
 	hasit = true;
@@ -90,10 +90,10 @@ public class TestAddExtOccurrence extends AbstractWebedTestCase {
     action.perform(params, response);
     //test      
     assertFalse("New occurrence not added", topic.getOccurrences().size() == numO);
-    Iterator occIT = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> occIT = topic.getOccurrences().iterator();
     boolean hasit = false;
     while (occIT.hasNext()){
-      OccurrenceIF occ = (OccurrenceIF) occIT.next();
+      OccurrenceIF occ = occIT.next();
       if ((occ.getLocator().getAddress().equals("http://www.sf.net/")) && 
 	  (occ.getType() == type))
 	hasit = true;
@@ -120,10 +120,10 @@ public class TestAddExtOccurrence extends AbstractWebedTestCase {
     action.perform(params, response);
     //test      
     assertFalse("New occurrence not added", topic.getOccurrences().size() == numO);
-    Iterator occIT = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> occIT = topic.getOccurrences().iterator();
     boolean hasit = false;
     while (occIT.hasNext()){
-      OccurrenceIF occ = (OccurrenceIF) occIT.next();
+      OccurrenceIF occ = occIT.next();
       if ((occ.getLocator().getAddress().equals("http://www.sf.net/")) && 
 	  (occ.getType() == type) &&
 	  (occ.getScope().iterator().next() == scope))

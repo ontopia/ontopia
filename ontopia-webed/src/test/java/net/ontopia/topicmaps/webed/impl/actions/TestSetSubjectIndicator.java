@@ -58,7 +58,7 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
     //test    
     assertFalse("Topic not added", numSLs > topic.getSubjectIdentifiers()
             .size());
-    LocatorIF loc = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
+    LocatorIF loc = topic.getSubjectIdentifiers().iterator().next();
     assertFalse("SI not set to new value", !(loc.getAddress()
             .equals("http://www.freshmeat.net/")));
   }
@@ -169,7 +169,7 @@ public class TestSetSubjectIndicator extends AbstractWebedTestCase {
     //test    
     assertFalse("Topic not added", numSLs > topic.getSubjectIdentifiers()
             .size());
-    LocatorIF loc = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
+    LocatorIF loc = topic.getSubjectIdentifiers().iterator().next();
     assertFalse("SI not set to new value", !(loc.getAddress()
             .equals("http://www.freshmeat.net/")));
   }

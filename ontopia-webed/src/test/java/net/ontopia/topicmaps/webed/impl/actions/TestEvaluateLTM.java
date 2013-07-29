@@ -90,11 +90,11 @@ public class TestEvaluateLTM extends AbstractWebedTestCase {
       
     assertFalse("created topic hasn't basename", topic.getTopicNames().isEmpty());
 
-    Iterator i = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> i = topic.getTopicNames().iterator();
     boolean basenameIsCorr = false;
       
     while (i.hasNext()){
-      TopicNameIF name = (TopicNameIF) i.next();
+      TopicNameIF name = i.next();
 
       if (name.getValue().equals("mama")){
         basenameIsCorr = true;
@@ -135,7 +135,7 @@ public class TestEvaluateLTM extends AbstractWebedTestCase {
     //check if correct basename
     assertFalse("created topic has wrong number of base names",
                 topic.getTopicNames().size() != 1);
-    TopicNameIF bn = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn = topic.getTopicNames().iterator().next();
     assertFalse("basename is not correct", !bn.getValue().equals("mama"));
     assertFalse("basename scope is not empty", !bn.getScope().isEmpty());
       

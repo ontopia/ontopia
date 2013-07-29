@@ -50,7 +50,7 @@ public class TestAssignRolePlayer extends AbstractWebedTestCase {
 
 
   public void testNormalOperationMakeNewAssoc() throws java.io.IOException, InvalidQueryException{
-    AssociationIF assoc = (AssociationIF) tm.getAssociations().iterator().next();
+    AssociationIF assoc = tm.getAssociations().iterator().next();
     TopicIF topicRole = getTopicById(tm, "player");
     TopicIF topicRole2 = getTopicById(tm, "team");
     TopicIF topicPlayer = getTopicById(tm, "gamst");
@@ -93,7 +93,7 @@ public class TestAssignRolePlayer extends AbstractWebedTestCase {
   }
 
   public void testNormalOperationMakeNewAssocWreq() throws java.io.IOException{
-    AssociationIF assoc = (AssociationIF) tm.getAssociations().iterator().next();
+    AssociationIF assoc = tm.getAssociations().iterator().next();
     TopicIF topicRole = getTopicById(tm, "player");
     TopicIF topicRole2 = getTopicById(tm, "team");
     TopicIF topicPlayer = getTopicById(tm, "gamst");

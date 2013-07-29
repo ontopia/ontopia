@@ -44,7 +44,7 @@ public class TestRemoveSourceLocator extends AbstractWebedTestCase {
   public void testNormalOperation() throws java.io.IOException{
     ActionIF action = new RemoveSourceLocator();
     TopicIF topic = getTopicById(tm, "super");
-    LocatorIF SL = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+    LocatorIF SL = topic.getItemIdentifiers().iterator().next();
     int prevSLNum = topic.getItemIdentifiers().size();
     
     //build parms
@@ -63,7 +63,7 @@ public class TestRemoveSourceLocator extends AbstractWebedTestCase {
   public void testNormalOperationUsingStringParameter() throws java.io.IOException{
     ActionIF action = new RemoveSourceLocator();
     TopicIF topic = getTopicById(tm, "super");
-    LocatorIF SL = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+    LocatorIF SL = topic.getItemIdentifiers().iterator().next();
     int prevSLNum = topic.getItemIdentifiers().size();
     
     //build parms
@@ -100,7 +100,7 @@ public class TestRemoveSourceLocator extends AbstractWebedTestCase {
   public void testBadTopic() throws java.io.IOException{
     ActionIF action = new RemoveSourceLocator();
     TopicIF topic = getTopicById(tm, "super");
-    LocatorIF SL = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+    LocatorIF SL = topic.getItemIdentifiers().iterator().next();
         
     //build parms
     ActionParametersIF params = makeParameters(makeList("topic", SL));

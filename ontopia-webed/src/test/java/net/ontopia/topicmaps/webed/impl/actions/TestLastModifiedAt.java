@@ -64,11 +64,11 @@ public class TestLastModifiedAt extends AbstractWebedTestCase {
     //test          
     assertFalse("New occurrence not added", topic.getOccurrences().size() == numO);
     
-    Iterator occIT = topic.getOccurrences().iterator();
+    Iterator<OccurrenceIF> occIT = topic.getOccurrences().iterator();
     boolean hasit = false;
     while (occIT.hasNext()){
-      OccurrenceIF occ = (OccurrenceIF) occIT.next();   
-      LocatorIF loc = (LocatorIF) occ.getType().getSubjectIdentifiers().iterator().next();
+      OccurrenceIF occ = occIT.next();   
+      LocatorIF loc = occ.getType().getSubjectIdentifiers().iterator().next();
       if (loc.getAddress().equals("http://psi.ontopia.net/xtm/occurrence-type/last-modified-at"))
 	hasit = true;
     }

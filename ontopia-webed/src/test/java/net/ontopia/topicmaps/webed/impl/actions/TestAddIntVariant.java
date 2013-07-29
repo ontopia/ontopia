@@ -42,7 +42,7 @@ public class TestAddIntVariant extends AbstractWebedTestCase {
   public void testNormalOperation() throws java.io.IOException{
     
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     int bnNum = bn.getVariants().size();
     
     //make action
@@ -58,7 +58,7 @@ public class TestAddIntVariant extends AbstractWebedTestCase {
     //test
     assertFalse("No new variant set", bnNum == bn.getVariants().size());
     
-    VariantNameIF vNew = (VariantNameIF) bn.getVariants().iterator().next();
+    VariantNameIF vNew = bn.getVariants().iterator().next();
     assertFalse("The URL is not correct", 
 		!(vNew.getValue().equals("http://www.sf.net")));
     
@@ -69,9 +69,9 @@ public class TestAddIntVariant extends AbstractWebedTestCase {
     TopicIF topic = getTopicById(tm, "gamst");
     TopicIF scope = getTopicById(tm, "tromso");
     TopicNameIF bn = null;
-    Iterator iter = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> iter = topic.getTopicNames().iterator();
     while (iter.hasNext()) {
-      bn = (TopicNameIF) iter.next();
+      bn = iter.next();
       if (bn.getValue().equals("Morten Gamst Pedersen")) break;
     }
     int bnNum = bn.getVariants().size();
@@ -89,7 +89,7 @@ public class TestAddIntVariant extends AbstractWebedTestCase {
     //test
     assertFalse("No new variant set", bnNum == bn.getVariants().size());
     
-    VariantNameIF vNew = (VariantNameIF) bn.getVariants().iterator().next();
+    VariantNameIF vNew = bn.getVariants().iterator().next();
     assertFalse("The URL is not correct", 
                 !(vNew.getValue().equals("http://www.sf.net")));
     assertFalse("The scope is not correct", 
@@ -117,7 +117,7 @@ public class TestAddIntVariant extends AbstractWebedTestCase {
   public void testBadParams() throws java.io.IOException{
     
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     
     //make action
     ActionIF action = new AddIntVariant();
@@ -137,7 +137,7 @@ public class TestAddIntVariant extends AbstractWebedTestCase {
   public void testBadParams1() throws java.io.IOException{
     
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     
     //make action
     ActionIF action = new AddIntVariant();

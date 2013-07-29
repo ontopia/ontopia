@@ -40,7 +40,7 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
   
   public void testNormalOperation() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     int bnNum = bn.getVariants().size();
     
     //make action
@@ -56,7 +56,7 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
     //test
     assertFalse("No new variant set", bnNum == bn.getVariants().size());
     
-    VariantNameIF vNew = (VariantNameIF) bn.getVariants().iterator().next();
+    VariantNameIF vNew = bn.getVariants().iterator().next();
     assertFalse("The URL is not correct", 
 		!(vNew.getLocator().getAddress().equals("http://www.sf.net/")));
   }
@@ -64,10 +64,10 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
   public void testNormalOperation2() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
     TopicIF scope = getTopicById(tm, "tromso");
-    Iterator iter = topic.getTopicNames().iterator();
+    Iterator<TopicNameIF> iter = topic.getTopicNames().iterator();
     TopicNameIF bn = null;
     while (iter.hasNext()) {
-      bn = (TopicNameIF) iter.next();
+      bn = iter.next();
       if (bn.getValue().equals("Morten Gamst Pedersen")) break;
     }
     int bnNum = bn.getVariants().size();
@@ -85,7 +85,7 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
     //test
     assertFalse("No new variant set", bnNum == bn.getVariants().size());
     
-    VariantNameIF vNew = (VariantNameIF) bn.getVariants().iterator().next();
+    VariantNameIF vNew = bn.getVariants().iterator().next();
     assertFalse("The URL is not correct", 
                 !(vNew.getLocator().getAddress().equals("http://www.sf.net/")));
     assertFalse("The scope is not correct",
@@ -94,7 +94,7 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
   
   public void testBadURL() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     
     //make action
     ActionIF action = new AddExtVariant();
@@ -132,7 +132,7 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
   public void testBadParams() throws IOException {
     
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     
     //make action
     ActionIF action = new AddExtVariant();
@@ -151,7 +151,7 @@ public class TestAddExtVariant extends AbstractWebedTestCase {
 
   public void testBadParams1() throws IOException {
     TopicIF topic = getTopicById(tm, "gamst");
-    TopicNameIF bn  = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn  = topic.getTopicNames().iterator().next();
     
     //make action
     ActionIF action = new AddExtVariant();
