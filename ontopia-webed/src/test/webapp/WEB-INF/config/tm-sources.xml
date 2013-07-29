@@ -1,38 +1,10 @@
 <?xml version="1.0"?>
 <config>
   <storage id="default">
-    <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
-      <param name="path" value="${CWD}/../topicmaps"/>
-      <param name="suffix" value=".xtm"/>
-      <param name="duplicateSuppression" value="false"/>
-    </source>
-    <source class="net.ontopia.topicmaps.xml.XTMPathTopicMapSource">
-      <param name="path" value="${CWD}/../topicmaps"/>
-      <param name="suffix" value=".psi"/>
-      <param name="duplicateSuppression" value="false"/>
-    </source>
-    <source class="net.ontopia.topicmaps.xml.ISO13250PathTopicMapSource">
-      <param name="path" value="${CWD}/../topicmaps"/>
-      <param name="suffix" value=".iso"/>
-      <param name="duplicateSuppression" value="false"/>
-    </source>
-    <source class="net.ontopia.topicmaps.xml.ISO13250PathTopicMapSource">
-      <param name="path" value="${CWD}/../topicmaps"/>
-      <param name="suffix" value=".hytm"/>
-      <param name="duplicateSuppression" value="false"/>
-    </source>
     <source class="net.ontopia.topicmaps.utils.ltm.LTMPathTopicMapSource">
       <param name="path" value="${CWD}/../topicmaps"/>
       <param name="suffix" value=".ltm"/>
       <param name="duplicateSuppression" value="false"/>
     </source>
-
-    <!--
-    <source class="net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapSource">
-      <param name="propertyFile" value="/home/niko/ontopia/src/java/net/ontopia/topicmaps/impl/rdbms/config/niko.postgresql.props"/>
-    </source>
-    -->
-
   </storage>
-<!-- ${CWD} -->
 </config>
