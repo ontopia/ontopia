@@ -47,22 +47,22 @@ public class TopicComparators {
     return new TypedIFComparator(new StringifierComparator(TopicStringifiers.getTopicNameStringifier(scope)));
   }
 
-  public static Comparator getCaseInsensitiveComparator(StringifierIF stringifier) {
+  public static <E> Comparator<E> getCaseInsensitiveComparator(StringifierIF<E> stringifier) {
     //! return new StringifierComparator(new GrabberStringifier(new GrabberGrabber(new StringifierGrabber(stringifier), new UpperCaseGrabber())));
     // NOTE: 1.3.4 - Replaced above with new and faster comparator:
-    return new CaseInsensitiveStringifierComparator(stringifier);
+    return new CaseInsensitiveStringifierComparator<E>(stringifier);
   }
 
   /**
    * INTERNAL: Case in-sensitive string comparator that is able to
    * handle null values.
    */ 
-  public static class CaseInsensitiveStringifierComparator implements Comparator {
-    protected StringifierIF stringifier;
-    public CaseInsensitiveStringifierComparator(StringifierIF stringifier) {
+  public static class CaseInsensitiveStringifierComparator<E> implements Comparator<E> {
+    protected StringifierIF<E> stringifier;
+    public CaseInsensitiveStringifierComparator(StringifierIF<E> stringifier) {
       this.stringifier = stringifier;
     }
-    public int compare(Object obj1, Object obj2) {
+    public int compare(E obj1, E obj2) {
       String str1 = stringifier.toString(obj1);
       String str2 = stringifier.toString(obj2);      
 

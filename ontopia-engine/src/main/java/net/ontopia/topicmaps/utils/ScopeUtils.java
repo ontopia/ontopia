@@ -151,17 +151,17 @@ public class ScopeUtils {
   /**
    * Ranks the ScopedIFs by the applicability to the specified scope.
    */
-  public static List<ScopedIF> rankByScope(Collection<ScopedIF> scoped, TopicIF theme) {
+  public static <S extends ScopedIF> List<S> rankByScope(Collection<S> scoped, TopicIF theme) {
     return rankByScope(scoped, Collections.singleton(theme));
   }
   
   /**
    * Ranks the ScopedIFs by the applicability to the specified scope.
    */
-  public static List<ScopedIF> rankByScope(Collection<ScopedIF> scoped, Collection<TopicIF> scope) {
+  public static <S extends ScopedIF> List<S> rankByScope(Collection<S> scoped, Collection<TopicIF> scope) {
     // Initialize result
-    List<ScopedIF> ranklist = new ArrayList<ScopedIF>(scoped);
-    Collections.sort(ranklist, new ScopedIFComparator<ScopedIF>(scope));
+    List<S> ranklist = new ArrayList<S>(scoped);
+    Collections.sort(ranklist, new ScopedIFComparator<S>(scope));
     return ranklist;
   }
 

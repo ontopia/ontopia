@@ -29,7 +29,7 @@ import net.ontopia.utils.GrabberIF;
  * given to it.</p>
  */
 
-public class TypedIFGrabber implements GrabberIF<TypedIF, TopicIF> {
+public class TypedIFGrabber<T extends TypedIF> implements GrabberIF<T, TopicIF> {
 
 
   /**
@@ -39,7 +39,7 @@ public class TypedIFGrabber implements GrabberIF<TypedIF, TopicIF> {
    * @return object which is the type; an object implementing TopicIF
    */  
 
-  public TopicIF grab(TypedIF typed) {
+  public TopicIF grab(T typed) {
     return typed.getType();
   }
 

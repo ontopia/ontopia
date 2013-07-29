@@ -20,9 +20,10 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.Collection;
+import net.ontopia.utils.DeciderIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * INTERNAL: Decider that decides whether the ScopedIF's scope is an
@@ -32,17 +33,17 @@ import net.ontopia.topicmaps.core.*;
  * more information.
  */
 
-public class IntersectionOfContextDecider implements DeciderIF {
+public class IntersectionOfContextDecider<S extends ScopedIF> implements DeciderIF<S> {
 
   protected TopicIF[] context;
   
-  public IntersectionOfContextDecider(Collection context) {
+  public IntersectionOfContextDecider(Collection<TopicIF> context) {
     this.context = new TopicIF[context.size()];
     context.toArray(this.context);
   }
 
-  public boolean ok(Object scoped) {
-    return ScopeUtils.isIntersectionOfContext((ScopedIF)scoped, context);
+  public boolean ok(S scoped) {
+    return ScopeUtils.isIntersectionOfContext(scoped, context);
   }
 
 }
