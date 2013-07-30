@@ -112,6 +112,7 @@
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
 					<exclude>WEB-INF/classes/**</exclude>
+					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
 		</dependencySet>
@@ -125,6 +126,7 @@
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
 					<exclude>WEB-INF/classes/jsp/**</exclude>
+					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
 		</dependencySet>
@@ -138,6 +140,7 @@
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
 					<exclude>WEB-INF/classes/**</exclude>
+					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
 		</dependencySet>
@@ -151,6 +154,7 @@
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
 					<exclude>WEB-INF/classes/**</exclude>
+					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
 		</dependencySet>
@@ -164,6 +168,7 @@
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
 					<exclude>WEB-INF/classes/jsp/**</exclude>
+					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
 		</dependencySet>
@@ -194,6 +199,7 @@
 				<excludes>
 					<exclude>WEB-INF/lib/**</exclude>
 					<exclude>WEB-INF/classes/**</exclude>
+					<exclude>META-INF/**</exclude>
 				</excludes>
 			</unpackOptions>
 		</dependencySet>
@@ -205,6 +211,7 @@
 			<unpack>true</unpack>
 			<unpackOptions>
 				<excludes>
+					<exclude>META-INF/**</exclude>
 					<!-- exclude all shared ontopia jar's -->
 					<exclude>WEB-INF/lib/antlr*</exclude>
 					<exclude>WEB-INF/lib/backport-util-concurrent*</exclude>
