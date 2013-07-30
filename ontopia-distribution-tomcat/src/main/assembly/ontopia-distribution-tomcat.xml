@@ -88,13 +88,6 @@
 
 	<dependencySets>
 		<dependencySet>
-			<outputDirectory>apache-tomcat/lib/ontopia</outputDirectory>
-			<excludes>
-				<exclude>*:war:*</exclude>
-				<exclude>*:vizlet:*</exclude>
-			</excludes>
-		</dependencySet>
-		<dependencySet>
 			<outputDirectory>lib</outputDirectory>
 			<excludes>
 				<exclude>*:war:*</exclude>
