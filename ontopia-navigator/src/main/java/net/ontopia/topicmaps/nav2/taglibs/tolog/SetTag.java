@@ -272,10 +272,6 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
     this.reqparam = reqparam;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
   public void setScope(String scope) {
     this.scope = scope;
   }
