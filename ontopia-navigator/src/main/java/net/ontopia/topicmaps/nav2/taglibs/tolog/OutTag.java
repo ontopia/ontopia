@@ -118,10 +118,6 @@ public class OutTag extends BaseOutputProducingTag {
   // Set methods for tag attributes
   // -----------------------------------------------------------------
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
   public void setScope(String scope) {
     this.scope = scope;
   }
