@@ -37,7 +37,7 @@ public interface JSPTreeNodeIF {
   /**
    * Returns the attributes for this JSPTreeNode.
    */
-  public Map getAttributes();
+  public Map<String, String> getAttributes();
 
   /**
    * Add a attribute to this JSPTreeNode.
@@ -82,7 +82,7 @@ public interface JSPTreeNodeIF {
   /**
    * Gets the children (ordered) of this JSPTreeNode.
    */
-  public List getChildren();
+  public List<JSPTreeNodeIF> getChildren();
 
   /**
    * The string content attached to this JSPTreeNode.

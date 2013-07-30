@@ -49,7 +49,7 @@ public class JSPContentHandler extends DefaultHandler {
   protected JSPTreeNodeIF root;
   protected JSPTreeNodeIF current;
   protected JSPTagFactoryIF tagFactory;
-  protected Stack parents;
+  protected Stack<String> parents;
     
   protected ErrorHandler ehandler;
   protected Locator locator;
@@ -57,7 +57,7 @@ public class JSPContentHandler extends DefaultHandler {
   public JSPContentHandler() {
     this.root = new JSPTreeNode("ROOT", null);
     this.current = root;
-    this.parents = new Stack();
+    this.parents = new Stack<String>();
     this.tagFactory = new TaglibTagFactory();
   }
 

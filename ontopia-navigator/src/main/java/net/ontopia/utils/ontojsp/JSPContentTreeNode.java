@@ -54,8 +54,8 @@ public class JSPContentTreeNode implements JSPTreeNodeIF {
     // logger.debug("JSPContentTreeNode(" + content + ")");
   }
 
-  public Map getAttributes() {
-    return Collections.EMPTY_MAP;
+  public Map<String, String> getAttributes() {
+    return Collections.emptyMap();
   }
 
   public void addAttribute(String key, String value) {
@@ -90,8 +90,8 @@ public class JSPContentTreeNode implements JSPTreeNodeIF {
     throw new UnsupportedOperationException("Content nodes can't have children");
   }
 
-  public List getChildren() {
-    return Collections.EMPTY_LIST;
+  public List<JSPTreeNodeIF> getChildren() {
+    return Collections.emptyList();
   }
 
   public String getContent() {
