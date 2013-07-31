@@ -100,7 +100,7 @@ public class DynamicAssociationRole extends AssociationRole {
     if (target == null) return super.getObjectId();
     return target.getObjectId();
   }
-  public Collection getItemIdentifiers() {
+  public Collection<LocatorIF> getItemIdentifiers() {
 
     if (target == null) return super.getItemIdentifiers();
     return target.getItemIdentifiers();

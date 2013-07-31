@@ -54,7 +54,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.AssociationIF#getRoleTypes()
    */
-  public Collection getRoleTypes() {
+  public Collection<TopicIF> getRoleTypes() {
 
     if (target == null) return super.getRoleTypes();
     return target.getRoleTypes();
@@ -65,7 +65,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.AssociationIF#getRolesByType(net.ontopia.topicmaps.core.TopicIF)
    */
-  public Collection getRolesByType(TopicIF roletype) {
+  public Collection<AssociationRoleIF> getRolesByType(TopicIF roletype) {
 
     if (target == null) return super.getRolesByType(roletype);
     return target.getRolesByType(roletype);
@@ -76,7 +76,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.AssociationIF#getRoles()
    */
-  public Collection getRoles() {
+  public Collection<AssociationRoleIF> getRoles() {
 
     if (target == null) return super.getRoles();
     return target.getRoles();
@@ -87,7 +87,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.ScopedIF#getScope()
    */
-  public Collection getScope() {
+  public Collection<TopicIF> getScope() {
 
     if (target == null) return super.getScope();
     return target.getScope();
@@ -182,7 +182,7 @@ public class DynamicAssociation extends Association implements AssociationIF {
    * 
    * @see net.ontopia.topicmaps.core.TMObjectIF#getItemIdentifiers()
    */
-  public Collection getItemIdentifiers() {
+  public Collection<LocatorIF> getItemIdentifiers() {
 
     if (target == null) return super.getItemIdentifiers();
     return target.getItemIdentifiers();

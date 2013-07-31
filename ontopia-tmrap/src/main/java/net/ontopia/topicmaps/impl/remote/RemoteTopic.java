@@ -87,7 +87,7 @@ public class RemoteTopic extends Topic {
   // TopicIF implementation
   // ----------------------------------------------------------------------------
   
-  public Collection getSubjectLocators() {
+  public Collection<LocatorIF> getSubjectLocators() {
     if (realTopic!=null)
       return realTopic.getSubjectLocators();
     else
@@ -109,7 +109,7 @@ public class RemoteTopic extends Topic {
       super.removeSubjectLocator(subject_locator);      
   }
   
-  public Collection getSubjectIdentifiers() {
+  public Collection<LocatorIF> getSubjectIdentifiers() {
     if (realTopic!=null)
       return realTopic.getSubjectIdentifiers();
     else
@@ -131,7 +131,7 @@ public class RemoteTopic extends Topic {
       super.removeSubjectIdentifier(subject_indicator);      
   }
   
-  public Collection getTopicNames() {
+  public Collection<TopicNameIF> getTopicNames() {
     checkLoad();
     if (realTopic != null)
       return realTopic.getTopicNames();
@@ -155,7 +155,7 @@ public class RemoteTopic extends Topic {
       super.removeTopicName(_basename);
   }
   
-  public Collection getOccurrences() {
+  public Collection<OccurrenceIF> getOccurrences() {
     checkLoad();
     if (realTopic!=null)
       return realTopic.getOccurrences();
@@ -179,7 +179,7 @@ public class RemoteTopic extends Topic {
       super.removeOccurrence(_occurrence);
   }
 
-  public Collection getRoles() {
+  public Collection<AssociationRoleIF> getRoles() {
     checkLoad();
     if (realTopic!=null)
       return realTopic.getRoles();
@@ -191,7 +191,7 @@ public class RemoteTopic extends Topic {
     throw new UnsupportedOperationException();
   }
   
-  public Collection getTypes() {
+  public Collection<TopicIF> getTypes() {
     checkLoad();
     if (realTopic != null)
       return realTopic.getTypes();
@@ -252,7 +252,7 @@ public class RemoteTopic extends Topic {
     }  
   }
 
-  public Collection getItemIdentifiers() {
+  public Collection<LocatorIF> getItemIdentifiers() {
     if (realTopic!=null) {
       return realTopic.getItemIdentifiers();
     } else {    
