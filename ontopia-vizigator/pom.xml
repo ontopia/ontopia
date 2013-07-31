@@ -21,8 +21,8 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.touchgraph</groupId>
-			<artifactId>touchgraph</artifactId>
+			<groupId>graphlayout</groupId>
+			<artifactId>graphlayout</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

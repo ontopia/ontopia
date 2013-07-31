@@ -498,9 +498,9 @@
 				<version>1.8</version>
 			</dependency>
 			<dependency>
-				<groupId>com.touchgraph</groupId>
-				<artifactId>touchgraph</artifactId>
-				<version>unknown</version>
+				<groupId>graphlayout</groupId>
+				<artifactId>graphlayout</artifactId>
+				<version>1.2.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
