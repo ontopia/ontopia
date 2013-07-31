@@ -66,6 +66,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
 
   // members
   Collection outValue;
+  String clonedVar;
 
   // tag attributes
   private String reqparam;
@@ -99,6 +100,8 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
     // Check that a valid combination of input parameters has been used.
     // Otherwise, JspTagException is thrown with a suitable error message.
     validateInputAttributes();
+
+    clonedVar = var;
 
     if (query == null) {
       outValue = new ArrayList();
@@ -146,7 +149,7 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
       outValue = getColumn(queryResult, 0);
       // If no variable name given, use the first (only) column from the query.
       if (var == null)
-        var = queryResult.getColumnName(0);
+        clonedVar = queryResult.getColumnName(0);
     }
 
     return SKIP_BODY;
@@ -250,9 +253,9 @@ public class SetTag extends QueryExecutingTag { //BodyTagSupport {
     if (scope == null || scope.equals("ontopia") || scope.equals("oks")) {
       ContextTag contextTag = FrameworkUtils.getContextTag(pageContext);
       ContextManagerIF ctxmgr = contextTag.getContextManager();
-      setOntopia(var, outValue, ctxmgr);
+      setOntopia(clonedVar, outValue, ctxmgr);
     } else
-      setJstl(var, outValue, mapScope(scope));
+      setJstl(clonedVar, outValue, mapScope(scope));
 
     return EVAL_PAGE;
   }

@@ -464,6 +464,7 @@
     <jsp file="ttl-set-query.jsp"/>
     <jsp file="ttl-set-query-qname.jsp"/>
     <jsp file="ttl-set-query-twice.jsp"/>
+    <jsp file="ttl-set-query-twice.jsp" tagpooling="true"/>
     <jsp file="ttl-set-query-0res.jsp"/>
     <jsp file="ttl-set-request.jsp" id="cyrillic|foo|cirth|bar|n|landa|kaithi"/>
     <jsp file="ttl-set-var-query.jsp"/>
