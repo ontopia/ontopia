@@ -115,6 +115,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
    * @deprecated Use makeVariantName(TopicNameIF, String, Collection)
    */
+  @Deprecated
   public VariantNameIF makeVariantName(TopicNameIF name, String value);
 
   /**
@@ -141,6 +142,7 @@ public interface TopicMapBuilderIF {
    * @return An object implementing VariantNameIF.
    * @deprecated Use makeVariantName(TopicNameIF, LocatorIF, Collection)
    */
+  @Deprecated
   public VariantNameIF makeVariantName(TopicNameIF name, LocatorIF locator);
 
   /**
@@ -168,6 +170,7 @@ public interface TopicMapBuilderIF {
 	 * @since 4.0
 	 * @deprecated Use makeVariantName(TopicNameIF, String, LocatorIF, Collection)
    */
+  @Deprecated
   public VariantNameIF makeVariantName(TopicNameIF name, String value, LocatorIF datatype); // NEW
 
   /**
@@ -197,6 +200,7 @@ public interface TopicMapBuilderIF {
 	 * @since 4.0
 	 * @deprecated Use makeVariantName(TopicNameIF, Reader, long, LocatorIF, Collection)
    */
+  @Deprecated
   public VariantNameIF makeVariantName(TopicNameIF name, Reader value, long length, LocatorIF datatype); // NEW
 
   /**

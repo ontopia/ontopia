@@ -228,6 +228,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
    * 
    * @deprecated replaced by getReferenceByKey(String)
    */
+  @Deprecated
   public TopicMapReferenceIF getReferenceById(String reference_id) {
     return getReferenceByKey(reference_id);
   }
@@ -237,6 +238,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
    * 
    * @deprecated use 'getReferenceByKey(key) != null' instead
    */
+  @Deprecated
   public boolean hasId(String reference_id) {
     return getReferenceByKey(reference_id) != null;
   }
@@ -246,6 +248,7 @@ public class TopicMapSourceManager implements TopicMapRepositoryIF {
    * 
    * @deprecated replaced by getReferenceKeys()
    */
+  @Deprecated
   public Collection<String> getIds() {
     return getReferenceKeys();
   }
