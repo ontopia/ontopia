@@ -378,7 +378,7 @@
 			<dependency>
 				<groupId>com.thaiopensource</groupId>
 				<artifactId>jing</artifactId>
-				<version>20030619</version>
+				<version>20091111</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-dbcp</groupId>

@@ -20,18 +20,17 @@
 
 package net.ontopia.xml;
 
-import java.io.StringReader;
 import org.xml.sax.Locator;
-import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
-import com.thaiopensource.relaxng.Schema;
+import com.thaiopensource.validate.Schema;
 import com.thaiopensource.relaxng.SchemaFactory;
-import com.thaiopensource.relaxng.util.Jaxp11XMLReaderCreator;
-import com.thaiopensource.relaxng.util.DraconianErrorHandler;
-import org.relaxng.datatype.helpers.DatatypeLibraryLoader2;
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.xml.sax.DraconianErrorHandler;
+import com.thaiopensource.xml.sax.Jaxp11XMLReaderCreator;
+import com.thaiopensource.datatype.DatatypeLibraryLoader;
 import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
@@ -53,9 +52,9 @@ public class ValidatingContentHandler implements ContentHandler {
       factory.setCompactSyntax(compact_syntax);
       factory.setXMLReaderCreator(new Jaxp11XMLReaderCreator());
       factory.setErrorHandler(new DraconianErrorHandler());
-      factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader2());
+      factory.setDatatypeLibraryFactory(new DatatypeLibraryLoader());
       Schema schema = factory.createSchema(src);
-      this.validator = schema.createValidator(new DraconianErrorHandler());
+	  this.validator = schema.createValidator(PropertyMap.EMPTY).getContentHandler();
     } catch (Exception e) {
       throw new OntopiaRuntimeException("INTERNAL ERROR", e);
     }
