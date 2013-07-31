@@ -77,7 +77,7 @@ public class TopicMapPredicateTest extends AbstractPredicateTest {
     load("jill.xtm");
 
     List matches = new ArrayList(); // should not match anything
-    LocatorIF loc = (LocatorIF)topicmap.getItemIdentifiers().iterator().next();
+    LocatorIF loc = topicmap.getItemIdentifiers().iterator().next();
     addMatch(matches, "SRCLOC", loc.getAddress());
     verifyQuery(matches, "select $SRCLOC from topicmap($TM), item-identifier($TM, $SRCLOC)?");
     closeStore();

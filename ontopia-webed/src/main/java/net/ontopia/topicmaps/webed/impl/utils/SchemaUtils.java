@@ -119,7 +119,7 @@ public class SchemaUtils {
   public Collection getMatchingTopics(TopicMapIF tm, TypeSpecification typeSpec) {
     Collection result = new HashSet();
     if (typeSpec != null) {
-      TMObjectMatcherIF matcher = (TMObjectMatcherIF) typeSpec.getClassMatcher();
+      TMObjectMatcherIF matcher = typeSpec.getClassMatcher();
       addTopic(tm, matcher, result);
     }
     return result;

@@ -299,7 +299,7 @@ public class RemoteTopic extends Topic {
     System.out.println("-----RemoteTopic " + getObjectId() + " " + System.identityHashCode(this));
     if (realTopic != null) {
       System.out.println("Deferring to real topic");
-      ((RemoteTopic) realTopic).debug();
+      realTopic.debug();
     }
     System.out.println("isLoaded: " + isLoaded() + ", isConnected: " + isConnected());
     System.out.println("base names: " + super.getTopicNames().size());

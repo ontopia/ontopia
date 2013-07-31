@@ -45,7 +45,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
     load("int-occs.ltm");
 
     TopicIF topic = getTopicById("topic1");
-    OccurrenceIF oc = (OccurrenceIF) topic.getOccurrences().iterator().next();
+    OccurrenceIF oc = topic.getOccurrences().iterator().next();
     String oid = oc.getObjectId();
 
     // first argument must be unbound
@@ -87,7 +87,7 @@ public class ValueLikePredicateTest extends AbstractPredicateTest {
     load("int-occs.ltm");
 
     TopicIF topic = getTopicById("topic1");
-    OccurrenceIF oc = (OccurrenceIF) topic.getOccurrences().iterator().next();
+    OccurrenceIF oc = topic.getOccurrences().iterator().next();
     String oid = oc.getObjectId();
     
     getParseError("value-like(@" + oid + ", $VALUE)?");

@@ -67,8 +67,8 @@ public class TMClassInstanceAssociation extends TMAbstractEdge
     this.classTopic = classType.getTopic();
     this.instanceTopic = instance.getTopic();
     type = topicType;
-    key = new Key(((TMTopicNode) classType).getTopic(),
-        ((TMTopicNode) instance).getTopic());
+    key = new Key(classType.getTopic(),
+        instance.getTopic());
   }
 
   protected void paintToolTip(Graphics g) {

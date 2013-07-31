@@ -71,7 +71,7 @@ public class UpdateTest extends AbstractQueryTest {
     load("instance-of.ltm");
 
     TopicIF topic1 = getTopicById("topic1");
-    TopicNameIF name = (TopicNameIF) topic1.getTopicNames().iterator().next();
+    TopicNameIF name = topic1.getTopicNames().iterator().next();
     
     update("update value($N, \"TOPIC1\") from topic-name(topic1, $N)");
 
@@ -136,7 +136,7 @@ public class UpdateTest extends AbstractQueryTest {
     load("subclasses.ltm");
 
     TopicIF subclass = getTopicById("subclass");
-    TopicNameIF name = (TopicNameIF) subclass.getTopicNames().iterator().next();
+    TopicNameIF name = subclass.getTopicNames().iterator().next();
     Map params = makeArguments("name", name);
 
     update("update value(%name%, \"SUBCLASS\")", params);
@@ -149,7 +149,7 @@ public class UpdateTest extends AbstractQueryTest {
     load("subclasses.ltm");
 
     TopicIF subclass = getTopicById("subclass");
-    TopicNameIF name = (TopicNameIF) subclass.getTopicNames().iterator().next();
+    TopicNameIF name = subclass.getTopicNames().iterator().next();
     Map params = new HashMap();
     params.put("v", "SUBCLASS");
 
@@ -163,7 +163,7 @@ public class UpdateTest extends AbstractQueryTest {
     load("subclasses.ltm");
 
     TopicIF subclass = getTopicById("subclass");
-    TopicNameIF name = (TopicNameIF) subclass.getTopicNames().iterator().next();
+    TopicNameIF name = subclass.getTopicNames().iterator().next();
     Map params = makeArguments("name", name);
 
     update("update value($N, \"SUBCLASS\") from $N = %name%", params);

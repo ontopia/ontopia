@@ -158,7 +158,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
     
     // TopicNameIF.setValue
     beforeTest();
-    bn = (TopicNameIF)bart.getTopicNames().iterator().next();
+    bn = bart.getTopicNames().iterator().next();
     bn.setValue("New name");
     afterTest();
 
@@ -231,7 +231,7 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // OccurrenceIF.setValue
     beforeTest();
-    oc = (OccurrenceIF)bart.getOccurrences().iterator().next();
+    oc = bart.getOccurrences().iterator().next();
     oc.setValue("New value");
     afterTest();
     
@@ -269,12 +269,12 @@ public abstract class TopicModificationTests extends AbstractTopicMapTest {
 
     // AssociationRoleIF.setPlayer
     beforeTest();
-    AssociationRoleIF ar = (AssociationRoleIF)bart.getRoles().iterator().next();
+    AssociationRoleIF ar = bart.getRoles().iterator().next();
     AssociationIF as = ar.getAssociation();
     AssociationRoleIF or = null;
-    Iterator iter = as.getRoles().iterator();
+    Iterator<AssociationRoleIF> iter = as.getRoles().iterator();
     while (iter.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF)iter.next();
+      AssociationRoleIF role = iter.next();
       if (!role.equals(ar)) {
         or = role;
         break;

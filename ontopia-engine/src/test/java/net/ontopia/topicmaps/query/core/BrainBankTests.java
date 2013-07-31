@@ -151,7 +151,7 @@ public class BrainBankTests extends AbstractPredicateTest {
     TopicMapIF topicmap = type.getTopicMap();
     ClassInstanceIndexIF index = (ClassInstanceIndexIF) topicmap.getIndex("net.ontopia.topicmaps.core.index.ClassInstanceIndexIF");
 
-    return (AssociationIF) index.getAssociations(type).iterator().next();
+    return index.getAssociations(type).iterator().next();
   }
   
 }

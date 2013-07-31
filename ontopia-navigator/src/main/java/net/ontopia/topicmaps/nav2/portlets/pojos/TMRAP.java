@@ -234,7 +234,7 @@ public class TMRAP {
     }
 
     public String getURI() {
-      LocatorIF loc = (LocatorIF) topic.getSubjectLocators().iterator().next();
+      LocatorIF loc = topic.getSubjectLocators().iterator().next();
       return loc.getAddress();
     }
 
@@ -242,11 +242,11 @@ public class TMRAP {
       if (topic.getTypes().isEmpty())
         return null;
 
-      TopicIF type = (TopicIF) topic.getTypes().iterator().next();
+      TopicIF type = topic.getTypes().iterator().next();
       if (type.getSubjectIdentifiers().isEmpty())
         return null;
 
-      LocatorIF psi = (LocatorIF) type.getSubjectIdentifiers().iterator().next();
+      LocatorIF psi = type.getSubjectIdentifiers().iterator().next();
       return psi.getAddress();
     }
   }

@@ -134,7 +134,7 @@ public abstract class AbstractContentStoreTest extends TestCase {
   }
   
   protected ContentInputStream getStream(byte[] content) throws IOException {
-    return new ContentInputStream(new ByteArrayInputStream(content), (int) content.length);
+    return new ContentInputStream(new ByteArrayInputStream(content), content.length);
   }
 
   protected void compare(int key, byte[] CONTENT)

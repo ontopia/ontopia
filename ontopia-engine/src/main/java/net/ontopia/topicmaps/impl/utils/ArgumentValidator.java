@@ -155,7 +155,7 @@ public class ArgumentValidator {
   public Class[] getTypes(int ix) {
     if (ix >= arguments.size())
       ix = arguments.size() - 1;
-    Argument arg = (Argument) arguments.get(ix);
+    Argument arg = arguments.get(ix);
     return arg.getTypes();
   }
 
@@ -167,7 +167,7 @@ public class ArgumentValidator {
     if (ix >= arguments.size())
       return null;
     else
-      return (Argument) arguments.get(ix);
+      return arguments.get(ix);
   }
 
   /**
@@ -222,7 +222,7 @@ public class ArgumentValidator {
    * INTERNAL: Returns a string name for the class.
    */
   public static String getClassName(Class klass) {
-    String classname = (String) typenames.get(klass);
+    String classname = typenames.get(klass);
     if (classname == null)
       classname = klass.toString();
     return classname;

@@ -105,7 +105,7 @@ public class RDBMSAccess implements StorageAccessIF {
   protected Connection getConn() {
     if (readonly)
       synchronized (conn_map) {
-        return (Connection)conn_map.get(Thread.currentThread());
+        return conn_map.get(Thread.currentThread());
       }
     else
       return conn_;

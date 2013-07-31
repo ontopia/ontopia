@@ -109,7 +109,7 @@ public abstract class VizConfigurationManager {
    * Returns the occurrence of the given type, if there is one.
    */
   protected OccurrenceIF getOccurrence(TopicIF topic, TopicIF type) {
-    return (OccurrenceIF) CharacteristicUtils.getByType(topic.getOccurrences(),
+    return CharacteristicUtils.getByType(topic.getOccurrences(),
         type);
   }
 
@@ -121,7 +121,7 @@ public abstract class VizConfigurationManager {
     if (topic == null)
       return false;
     
-    OccurrenceIF occurrence = (OccurrenceIF) CharacteristicUtils
+    OccurrenceIF occurrence = CharacteristicUtils
         .getByType(topic.getOccurrences(), type);
     
     if (occurrence == null)
@@ -283,9 +283,9 @@ public abstract class VizConfigurationManager {
     // try to look topic up
     TopicIF cfg = null;
 
-    Iterator it = real.getSubjectLocators().iterator();
+    Iterator<LocatorIF> it = real.getSubjectLocators().iterator();
     while (cfg == null && it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       cfg = topicmap.getTopicBySubjectLocator(loc);
       if (cfg == null) {
         // is this branch ever used?
@@ -301,7 +301,7 @@ public abstract class VizConfigurationManager {
 
     it = real.getSubjectIdentifiers().iterator();
     while (cfg == null && it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       cfg = topicmap.getTopicBySubjectIdentifier(loc);
       if (cfg == null) {
         // is this branch ever used?
@@ -317,7 +317,7 @@ public abstract class VizConfigurationManager {
 
     it = real.getItemIdentifiers().iterator();
     while (cfg == null && it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       cfg = (TopicIF) topicmap.getObjectByItemIdentifier(loc);
       if (cfg == null)
         cfg = topicmap.getTopicBySubjectIdentifier(loc);
@@ -334,7 +334,7 @@ public abstract class VizConfigurationManager {
   
       it = real.getSubjectLocators().iterator();
       while (it.hasNext()) {
-        LocatorIF loc = (LocatorIF) it.next();
+        LocatorIF loc = it.next();
         String id = relativize(realbase, loc);
         if (id != null)
           loc = cfgloc.resolveAbsolute('#' + id);
@@ -343,7 +343,7 @@ public abstract class VizConfigurationManager {
   
       it = real.getSubjectIdentifiers().iterator();
       while (it.hasNext()) {
-        LocatorIF loc = (LocatorIF) it.next();
+        LocatorIF loc = it.next();
         String id = relativize(realbase, loc);
         if (id != null)
           loc = cfgloc.resolveAbsolute('#' + id);
@@ -352,7 +352,7 @@ public abstract class VizConfigurationManager {
   
       it = real.getItemIdentifiers().iterator();
       while (it.hasNext()) {
-        LocatorIF loc = (LocatorIF) it.next();
+        LocatorIF loc = it.next();
         String id = relativize(realbase, loc);
         if (id != null)
           loc = cfgloc.resolveAbsolute('#' + id);

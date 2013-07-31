@@ -67,7 +67,7 @@ public class BaseLocatorPredicate implements BasicPredicateIF {
     QueryMatches result = new QueryMatches(matches);
     for (int ix = 0; ix <= matches.last; ix++) {
       
-      Object[] newRow = (Object[]) matches.data[ix].clone();
+      Object[] newRow = matches.data[ix].clone();
       LocatorIF loc = topicmap.getStore().getBaseAddress();
       if (loc == null)
         continue;

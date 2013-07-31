@@ -46,12 +46,12 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
     load("family2.ltm");
 
     List matches = new ArrayList();
-    Iterator it = topicmap.getTopics().iterator();
+    Iterator<TopicIF> it = topicmap.getTopics().iterator();
     while (it.hasNext()) {
-      TopicIF topic = (TopicIF) it.next();
-      Iterator it2 = topic.getTopicNames().iterator();
+      TopicIF topic = it.next();
+      Iterator<TopicNameIF> it2 = topic.getTopicNames().iterator();
       while (it2.hasNext()) {
-        TopicNameIF bn = (TopicNameIF) it2.next();
+        TopicNameIF bn = it2.next();
         addMatch(matches, "BNAME", bn, "TOPIC", topic);
       }
     }
@@ -80,7 +80,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     TopicIF topic = getTopicById("marriage");
-    TopicNameIF bn = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn = topic.getTopicNames().iterator().next();
 
     addMatch(matches, "TOPIC", topic);
     
@@ -92,7 +92,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     TopicIF topic = getTopicById("marriage");
-    TopicNameIF bn = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn = topic.getTopicNames().iterator().next();
 
     matches.add(new HashMap());
     
@@ -104,7 +104,7 @@ public class TopicNamePredicateTest extends AbstractPredicateTest {
 
     List matches = new ArrayList();
     TopicIF topic = getTopicById("marriage");
-    TopicNameIF bn = (TopicNameIF) topic.getTopicNames().iterator().next();
+    TopicNameIF bn = topic.getTopicNames().iterator().next();
     
     verifyQuery(matches, "topic-name(parenthood, @" + bn.getObjectId() + ")?");
   }

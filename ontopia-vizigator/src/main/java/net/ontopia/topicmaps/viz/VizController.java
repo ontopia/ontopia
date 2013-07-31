@@ -816,7 +816,7 @@ public class VizController {
                                  false); // only 1 step out, not 2
       }
     }
-    loadNode((TMAbstractNode)node);
+    loadNode(node);
 
     view.getTGPanel().expandNode(node); 
     updateDisplay();
