@@ -20,9 +20,20 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.utils.ObjectUtils;
 
 /**
  * INTERNAL: Characteristic processing utilities.
@@ -37,10 +48,10 @@ public class CharacteristicUtils {
    *
    * @since 2.0
    */
-  public static TypedIF getByType(Collection objects, TopicIF type) {
-    Iterator it = objects.iterator();
+  public static <T extends TypedIF> T getByType(Collection<T> objects, TopicIF type) {
+    Iterator<T> it = objects.iterator();
     while (it.hasNext()) {
-      TypedIF typed = (TypedIF) it.next();
+      T typed = it.next();
       if (type.equals(typed.getType()))
         return typed;
     }
@@ -54,13 +65,13 @@ public class CharacteristicUtils {
    * @return An ArrayList of TopicNameIF objects; the base names of 
    *             all the topics in the given collection.
    */
-  public static Collection getTopicNames(Collection topics) {
+  public static Collection<TopicNameIF> getTopicNames(Collection<TopicIF> topics) {
     // Initialize result
-    List result = new ArrayList();
+    List<TopicNameIF> result = new ArrayList<TopicNameIF>();
     // Loop over topics
-    Iterator iter = topics.iterator();
+    Iterator<TopicIF> iter = topics.iterator();
     while (iter.hasNext()) {
-      TopicIF topic = (TopicIF)iter.next();
+      TopicIF topic = iter.next();
       result.addAll(topic.getTopicNames());
     }
     return result;
@@ -74,13 +85,13 @@ public class CharacteristicUtils {
    * @return The variant names of all the basenames in the given collection; 
    *                an ArrayList of VariantNameIF objects.
    */
-  public static Collection getVariants(Collection names) {
+  public static Collection<VariantNameIF> getVariants(Collection<TopicNameIF> names) {
     // Initialize result
-    List result = new ArrayList();
+    List<VariantNameIF> result = new ArrayList<VariantNameIF>();
     // Loop over the names
-    Iterator iter = names.iterator();
+    Iterator<TopicNameIF> iter = names.iterator();
     while (iter.hasNext()) {
-      TopicNameIF name = (TopicNameIF)iter.next();
+      TopicNameIF name = iter.next();
       result.addAll(name.getVariants());
     }
     return result;
@@ -93,13 +104,13 @@ public class CharacteristicUtils {
    * @return An ArrayList of OccurrenceIF objects; all the occurrences of
    *              the topics in the given collection.
    */
-  public static Collection getOccurrences(Collection topics) {
+  public static Collection<OccurrenceIF> getOccurrences(Collection<TopicIF> topics) {
     // Initialize result
-    List result = new ArrayList();
+    List<OccurrenceIF> result = new ArrayList<OccurrenceIF>();
     // Loop over topics
-    Iterator iter = topics.iterator();
+    Iterator<TopicIF> iter = topics.iterator();
     while (iter.hasNext()) {
-      TopicIF topic = (TopicIF)iter.next();
+      TopicIF topic = iter.next();
       result.addAll(topic.getOccurrences());
     }
     return result;
@@ -113,13 +124,13 @@ public class CharacteristicUtils {
    * @return An ArrayList of AssociationRoleIF objects; all the 
    *         association roles of the topics in the given collection.
    */
-  public static Collection getRoles(Collection topics) {
+  public static Collection<AssociationRoleIF> getRoles(Collection<TopicIF> topics) {
     // Initialize result
-    List result = new ArrayList();
+    List<AssociationRoleIF> result = new ArrayList<AssociationRoleIF>();
     // Loop over topics
-    Iterator iter = topics.iterator();
+    Iterator<TopicIF> iter = topics.iterator();
     while (iter.hasNext()) {
-      TopicIF topic = (TopicIF)iter.next();
+      TopicIF topic = iter.next();
       result.addAll(topic.getRoles());
     }
     return result;
@@ -132,11 +143,11 @@ public class CharacteristicUtils {
    * @return A collection of TopicIF objects; the topics to which the
    * basenames belong.
    */
-  public static Collection getTopicsOfTopicNames(Collection basenames) {
-    Collection topics = new HashSet();
-    Iterator iter = basenames.iterator();
+  public static Collection<TopicIF> getTopicsOfTopicNames(Collection<TopicNameIF> basenames) {
+    Collection<TopicIF> topics = new HashSet<TopicIF>();
+    Iterator<TopicNameIF> iter = basenames.iterator();
     while (iter.hasNext()) {
-      TopicIF topic = ((TopicNameIF)iter.next()).getTopic();
+      TopicIF topic = iter.next().getTopic();
       if (topic != null) topics.add(topic);
     }
     return topics;
@@ -148,17 +159,17 @@ public class CharacteristicUtils {
    *
    * @since 3.4
    */
-  public static Collection getAssociatedTopics(TopicIF topic) {
-    Collection result = new HashSet();
-    Collection roles = topic.getRoles();
+  public static Collection<TopicIF> getAssociatedTopics(TopicIF topic) {
+    Collection<TopicIF> result = new HashSet<TopicIF>();
+    Collection<AssociationRoleIF> roles = topic.getRoles();
     if (roles.isEmpty()) return Collections.EMPTY_SET;
-    Iterator iter = roles.iterator();
+    Iterator<AssociationRoleIF> iter = roles.iterator();
     while (iter.hasNext()) {
-      AssociationRoleIF role1 = (AssociationRoleIF)iter.next();
+      AssociationRoleIF role1 = iter.next();
       AssociationIF assoc = role1.getAssociation();
-      Iterator riter = assoc.getRoles().iterator();
+      Iterator<AssociationRoleIF> riter = assoc.getRoles().iterator();
       while (riter.hasNext()) {
-        AssociationRoleIF role2 = (AssociationRoleIF)riter.next();
+        AssociationRoleIF role2 = riter.next();
         if (ObjectUtils.equals(role1, role2)) continue;
         TopicIF other = role2.getPlayer();
         if (other != null) result.add(other);
