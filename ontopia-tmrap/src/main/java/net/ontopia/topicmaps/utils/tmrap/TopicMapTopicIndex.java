@@ -43,7 +43,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
   protected TopicMapIF topicmap;
   protected String editBaseuri;
   protected String viewBaseuri;
-  protected StringifierIF strify;
+  protected StringifierIF<TopicIF> strify;
   protected String tmid;
 
   /**
@@ -60,15 +60,15 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     this.tmid = tmid;
   }
 
-  public Collection getTopics(Collection indicators,
-                              Collection sources,
-                              Collection subjects) {
-    Collection topics = new ArrayList();
+  public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
+                              Collection<LocatorIF> sources,
+                              Collection<LocatorIF> subjects) {
+    Collection<TopicIF> topics = new ArrayList<TopicIF>();
     TopicIF topic;
 
-    Iterator it = indicators.iterator();
+    Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {
-      LocatorIF indicator = (LocatorIF) it.next();
+      LocatorIF indicator = it.next();
       topic = topicmap.getTopicBySubjectIdentifier(indicator);
       if (topic != null)
         topics.add(topic);
@@ -76,7 +76,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
 
     it = sources.iterator();
     while (it.hasNext()) {
-      LocatorIF srcloc = (LocatorIF) it.next();
+      LocatorIF srcloc = it.next();
       TMObjectIF object;
       String address = srcloc.getAddress();
       if (XTMFragmentExporter.isVirtualReference(address))
@@ -86,12 +86,12 @@ public class TopicMapTopicIndex implements TopicIndexIF {
         object = topicmap.getObjectByItemIdentifier(srcloc);
 
       if (object instanceof TopicIF)
-        topics.add(object);
+        topics.add((TopicIF) object);
     }
 
     it = subjects.iterator();
     while (it.hasNext()) {
-      LocatorIF subject = (LocatorIF) it.next();
+      LocatorIF subject = it.next();
       topic = topicmap.getTopicBySubjectLocator(subject);
       if (topic != null) topics.add(topic);
     }
@@ -99,22 +99,22 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     return topics;
   }
 
-  public Collection loadRelatedTopics(Collection indicators,
-                                      Collection sources,
-                                      Collection subjects,
+  public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
+                                      Collection<LocatorIF> sources,
+                                      Collection<LocatorIF> subjects,
                                       boolean two_step) {
     return getTopics(indicators, sources, subjects);
   }
 
-  public Collection getTopicPages(Collection indicators,
-                                  Collection sources,
-                                  Collection subjects) {
-    Collection pages = new ArrayList();
+  public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
+                                  Collection<LocatorIF> sources,
+                                  Collection<LocatorIF> subjects) {
+    Collection<TopicPage> pages = new ArrayList<TopicPage>();
     TopicIF topic;
 
-    Iterator it = indicators.iterator();
+    Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {
-      LocatorIF indicator = (LocatorIF) it.next();
+      LocatorIF indicator = it.next();
       topic = topicmap.getTopicBySubjectIdentifier(indicator);
       if (topic != null)
         pages.add(getTopicPage(topic, tmid));
@@ -122,7 +122,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
 
     it = sources.iterator();
     while (it.hasNext()) {
-      LocatorIF srcloc = (LocatorIF) it.next();
+      LocatorIF srcloc = it.next();
       TMObjectIF object;
       String address = srcloc.getAddress();
       if (XTMFragmentExporter.isVirtualReference(address))
@@ -137,7 +137,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
 
     it = subjects.iterator();
     while (it.hasNext()) {
-      LocatorIF subject = (LocatorIF) it.next();
+      LocatorIF subject = it.next();
       topic = topicmap.getTopicBySubjectLocator(subject);
       if (topic != null)
         pages.add(getTopicPage(topic, tmid));
@@ -146,9 +146,9 @@ public class TopicMapTopicIndex implements TopicIndexIF {
     return pages;
   }
 
-  public TopicPages getTopicPages2(Collection indicators,
-                                   Collection sources,
-                                   Collection subjects) {
+  public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
+                                   Collection<LocatorIF> sources,
+                                   Collection<LocatorIF> subjects) {
     TopicPages retVal = new TopicPages();
     String topicHandle = topicmap.getStore().getReference().getId();
 
@@ -156,9 +156,9 @@ public class TopicMapTopicIndex implements TopicIndexIF {
 
     TopicIF topic = null;
 
-    Iterator it = indicators.iterator();
+    Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {
-      LocatorIF indicator = (LocatorIF) it.next();
+      LocatorIF indicator = it.next();
       topic = topicmap.getTopicBySubjectIdentifier(indicator);
       if (topic != null)
         retVal.addPage(topicHandle, getTopicPage(topic, tmid), tmReifierName);
@@ -166,7 +166,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
 
     it = sources.iterator();
     while (it.hasNext()) {
-      LocatorIF srcloc = (LocatorIF) it.next();
+      LocatorIF srcloc = it.next();
       TMObjectIF object;
       String address = srcloc.getAddress();
       if (XTMFragmentExporter.isVirtualReference(address))
@@ -182,7 +182,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
 
     it = subjects.iterator();
     while (it.hasNext()) {
-      LocatorIF subject = (LocatorIF) it.next();
+      LocatorIF subject = it.next();
       topic = topicmap.getTopicBySubjectLocator(subject);
       if (topic != null)
         retVal.addPage(topicHandle, getTopicPage(topic, tmid), tmReifierName);
@@ -199,7 +199,7 @@ public class TopicMapTopicIndex implements TopicIndexIF {
 
   private TopicPage getTopicPage(TopicIF topic, String key) {
 
-    Map map = new HashMap();
+    Map<String, Object> map = new HashMap<String, Object>();
     map.put("tmid", tmid);
     map.put("topicid", topic.getObjectId());
 

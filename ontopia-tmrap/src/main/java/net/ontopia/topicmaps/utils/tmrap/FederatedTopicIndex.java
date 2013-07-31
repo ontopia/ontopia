@@ -26,56 +26,57 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * EXPERIMENTAL: An implementation that looks up topics in all
  * the given TopicIndexIFs and returns them.
  */
 public class FederatedTopicIndex implements TopicIndexIF {
-  protected List indexes;
+  protected List<TopicIndexIF> indexes;
   
-  public FederatedTopicIndex(List indexes) {
+  public FederatedTopicIndex(List<TopicIndexIF> indexes) {
     this.indexes = indexes;
   }
   
-  public Collection getTopics(Collection indicators,
-                              Collection sources,
-                              Collection subjects) {
-    Collection topics = new ArrayList();
-    Iterator it = indexes.iterator();
+  public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
+                              Collection<LocatorIF> sources,
+                              Collection<LocatorIF> subjects) {
+    Collection<TopicIF> topics = new ArrayList<TopicIF>();
+    Iterator<TopicIndexIF> it = indexes.iterator();
     while (it.hasNext()) {
-      TopicIndexIF index = (TopicIndexIF) it.next();
+      TopicIndexIF index = it.next();
       topics.addAll(index.getTopics(indicators, sources, subjects));
     }
     return topics;
   }
 
-  public Collection loadRelatedTopics(Collection indicators,
-                                      Collection sources,
-                                      Collection subjects,
+  public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
+                                      Collection<LocatorIF> sources,
+                                      Collection<LocatorIF> subjects,
                                       boolean two_step) {
     return getTopics(indicators, sources, subjects);
   }
 
-  public Collection getTopicPages(Collection indicators,
-                                  Collection sources,
-                                  Collection subjects) {
-    Collection pages = new ArrayList();
-    Iterator it = indexes.iterator();
+  public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
+                                  Collection<LocatorIF> sources,
+                                  Collection<LocatorIF> subjects) {
+    Collection<TopicPage> pages = new ArrayList<TopicPage>();
+    Iterator<TopicIndexIF> it = indexes.iterator();
     while (it.hasNext()) {
-      TopicIndexIF index = (TopicIndexIF) it.next();
+      TopicIndexIF index = it.next();
       pages.addAll(index.getTopicPages(indicators, sources, subjects));
     }
     return pages;
   }
 
-  public TopicPages getTopicPages2(Collection indicators,
-                                   Collection sources,
-                                   Collection subjects) {
+  public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
+                                   Collection<LocatorIF> sources,
+                                   Collection<LocatorIF> subjects) {
     TopicPages pages = new TopicPages();    
-    Iterator it = indexes.iterator();
+    Iterator<TopicIndexIF> it = indexes.iterator();
     while (it.hasNext()) {
-      TopicIndexIF index = (TopicIndexIF) it.next();
+      TopicIndexIF index = it.next();
       TopicPages currentPages = index.getTopicPages2(indicators, sources, subjects);
       pages.addAll(currentPages);
     }
@@ -83,9 +84,9 @@ public class FederatedTopicIndex implements TopicIndexIF {
   }
 
   public void close() {
-    Iterator it = indexes.iterator();
+    Iterator<TopicIndexIF> it = indexes.iterator();
     while (it.hasNext()) {
-      TopicIndexIF index = (TopicIndexIF) it.next();
+      TopicIndexIF index = it.next();
       index.close();
     }
     indexes = null;

@@ -25,43 +25,43 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 
 public class TopicPages {
 
-  Map pagesMap;
-  Map tmNameMap;
+  Map<String, Collection<TopicPage>> pagesMap;
+  Map<String, String> tmNameMap;
   private String name;
-  private Collection sourceLocators;
-  private Collection subjectIndicators;
-  private Collection subjectLocators;
+  private Collection<LocatorIF> sourceLocators;
+  private Collection<LocatorIF> subjectIndicators;
+  private Collection<LocatorIF> subjectLocators;
   
   public TopicPages() {
-    pagesMap = new HashMap();
-    tmNameMap = new HashMap();
+    pagesMap = new HashMap<String, Collection<TopicPage>>();
+    tmNameMap = new HashMap<String, String>();
     name = null;
-    sourceLocators = new ArrayList();
-    subjectIndicators = new ArrayList();
-    subjectLocators = new ArrayList();
+    sourceLocators = new ArrayList<LocatorIF>();
+    subjectIndicators = new ArrayList<LocatorIF>();
+    subjectLocators = new ArrayList<LocatorIF>();
   }
   
-  public Collection getTopicMapHandles() {
+  public Collection<String> getTopicMapHandles() {
     return pagesMap.keySet();
   }
   
-  public Collection getPages(String mapHandle) {
-    return (Collection)pagesMap.get(mapHandle);
+  public Collection<TopicPage> getPages(String mapHandle) {
+    return pagesMap.get(mapHandle);
   }
   
   public String getTMName(String mapHandle) {
-    return (String)tmNameMap.get(mapHandle);
+    return tmNameMap.get(mapHandle);
   }
   
   public void addPage(String mapHandle, TopicPage page, String tmName) {
-    Collection currentPages = (Collection)pagesMap.get(mapHandle);
+    Collection<TopicPage> currentPages = pagesMap.get(mapHandle);
     if (currentPages == null) {
-      currentPages = new HashSet();
+      currentPages = new HashSet<TopicPage>();
       pagesMap.put(mapHandle, currentPages);
       
       if (tmName != null)
@@ -82,14 +82,14 @@ public class TopicPages {
    * @param otherPages The TopicPages to add to TopicPages.
    */
   public void addAll(TopicPages otherPages) {
-    Iterator otherMapHandles = otherPages.getTopicMapHandles().iterator();
+    Iterator<String> otherMapHandles = otherPages.getTopicMapHandles().iterator();
     while (otherMapHandles.hasNext()) {
-      String otherMapHandle = (String)otherMapHandles.next();
+      String otherMapHandle = otherMapHandles.next();
       
-      Collection currentOtherPages = otherPages.getPages(otherMapHandle);
-      Collection currentPages = getPages(otherMapHandle);
+      Collection<TopicPage> currentOtherPages = otherPages.getPages(otherMapHandle);
+      Collection<TopicPage> currentPages = getPages(otherMapHandle);
       if (currentPages == null)
-        pagesMap.put(otherMapHandle, new HashSet(currentOtherPages));
+        pagesMap.put(otherMapHandle, new HashSet<TopicPage>(currentOtherPages));
       else
         currentPages.addAll(currentOtherPages);
 
@@ -110,15 +110,15 @@ public class TopicPages {
     return name;
   }
   
-  public Collection getItemIdentifiers() {
+  public Collection<LocatorIF> getItemIdentifiers() {
     return sourceLocators;
   }
   
-  public Collection getSubjectIdentifiers() {
+  public Collection<LocatorIF> getSubjectIdentifiers() {
     return subjectIndicators;
   }
   
-  public Collection getSubjectLocators() {
+  public Collection<LocatorIF> getSubjectLocators() {
     return subjectLocators;
   }
 }

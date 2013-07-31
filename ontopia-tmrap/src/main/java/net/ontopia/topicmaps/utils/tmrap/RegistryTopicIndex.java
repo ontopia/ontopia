@@ -47,7 +47,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
   protected boolean readonly;
   protected String editBaseuri;
   protected String viewBaseuri;
-  protected StringifierIF strify;
+  protected StringifierIF<TopicIF> strify;
 
   /**
    * @param editBaseuri a URL of the form
@@ -64,13 +64,13 @@ public class RegistryTopicIndex implements TopicIndexIF {
     this.strify = TopicStringifiers.getDefaultStringifier();
   }
 
-  public Collection getTopics(Collection indicators,
-                              Collection sources,
-                              Collection subjects) {
-    Collection topics = new ArrayList();
-    Iterator iter = repository.getReferenceKeys().iterator();
+  public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
+                              Collection<LocatorIF> sources,
+                              Collection<LocatorIF> subjects) {
+    Collection<TopicIF> topics = new ArrayList<TopicIF>();
+    Iterator<String> iter = repository.getReferenceKeys().iterator();
     while (iter.hasNext()) {
-      String key = (String) iter.next();
+      String key = iter.next();
       TopicMapReferenceIF ref = repository.getReferenceByKey(key);
       if (!ref.isOpen()) continue; // if store not open, we skip it
 
@@ -80,16 +80,16 @@ public class RegistryTopicIndex implements TopicIndexIF {
         TopicMapIF topicmap = store.getTopicMap();
         TopicIF topic;
         
-        Iterator it = indicators.iterator();
+        Iterator<LocatorIF> it = indicators.iterator();
         while (it.hasNext()) {
-          LocatorIF indicator = (LocatorIF) it.next();
+          LocatorIF indicator = it.next();
           topic = topicmap.getTopicBySubjectIdentifier(indicator);
           if (topic != null) topics.add(topic);
         }
         
         it = sources.iterator();
         while (it.hasNext()) {
-          LocatorIF srcloc = (LocatorIF) it.next();
+          LocatorIF srcloc = it.next();
           TMObjectIF object = null;
           String address = srcloc.getAddress();
           if (XTMFragmentExporter.isVirtualReference(address)) {
@@ -100,12 +100,12 @@ public class RegistryTopicIndex implements TopicIndexIF {
             } else continue;
           } else object = topicmap.getObjectByItemIdentifier(srcloc);
           
-          if (object instanceof TopicIF) topics.add(object);
+          if (object instanceof TopicIF) topics.add((TopicIF) object);
         }
 
         it = subjects.iterator();
         while (it.hasNext()) {
-          LocatorIF subject = (LocatorIF) it.next();
+          LocatorIF subject = it.next();
           topic = topicmap.getTopicBySubjectLocator(subject);
           if (topic != null) topics.add(topic);
         }
@@ -118,20 +118,20 @@ public class RegistryTopicIndex implements TopicIndexIF {
     return topics;
   }
 
-  public Collection loadRelatedTopics(Collection indicators,
-                                      Collection sources,
-                                      Collection subjects,
+  public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
+                                      Collection<LocatorIF> sources,
+                                      Collection<LocatorIF> subjects,
                                       boolean two_step) {
     return getTopics(indicators, sources, subjects);
   }
 
-  public Collection getTopicPages(Collection indicators,
-                                  Collection sources,
-                                  Collection subjects) {
-    Collection pages = new ArrayList();
-    Iterator iter = repository.getReferenceKeys().iterator();
+  public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
+                                  Collection<LocatorIF> sources,
+                                  Collection<LocatorIF> subjects) {
+    Collection<TopicPage> pages = new ArrayList<TopicPage>();
+    Iterator<String> iter = repository.getReferenceKeys().iterator();
     while (iter.hasNext()) {
-      String key = (String) iter.next();
+      String key = iter.next();
       TopicMapReferenceIF ref = repository.getReferenceByKey(key);
       if (!ref.isOpen()) continue; // if store not open, we skip it
 
@@ -141,16 +141,16 @@ public class RegistryTopicIndex implements TopicIndexIF {
         TopicMapIF topicmap = store.getTopicMap();
         TopicIF topic;
         
-        Iterator it = indicators.iterator();
+        Iterator<LocatorIF> it = indicators.iterator();
         while (it.hasNext()) {
-          LocatorIF indicator = (LocatorIF) it.next();
+          LocatorIF indicator = it.next();
           topic = topicmap.getTopicBySubjectIdentifier(indicator);
           if (topic != null) pages.add(getTopicPage(topic, key));
         }
         
         it = sources.iterator();
         while (it.hasNext()) {
-          LocatorIF srcloc = (LocatorIF) it.next();
+          LocatorIF srcloc = it.next();
           TMObjectIF object = null;
           String address = srcloc.getAddress();
           if (XTMFragmentExporter.isVirtualReference(address)) {
@@ -167,7 +167,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
         
         it = subjects.iterator();
         while (it.hasNext()) {
-          LocatorIF subject = (LocatorIF) it.next();
+          LocatorIF subject = it.next();
           topic = topicmap.getTopicBySubjectLocator(subject);
           if (topic != null) pages.add(getTopicPage(topic, key));
         }
@@ -180,14 +180,14 @@ public class RegistryTopicIndex implements TopicIndexIF {
     return pages;
   }
 
-  public TopicPages getTopicPages2(Collection indicators,
-                                   Collection sources,
-                                   Collection subjects) {
+  public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
+                                   Collection<LocatorIF> sources,
+                                   Collection<LocatorIF> subjects) {
     TopicPages retVal = new TopicPages();
 
-    Iterator iter = repository.getReferenceKeys().iterator();
+    Iterator<String> iter = repository.getReferenceKeys().iterator();
     while (iter.hasNext()) {
-      String key = (String) iter.next();
+      String key = iter.next();
       TopicMapReferenceIF ref = repository.getReferenceByKey(key);
       if (!ref.isOpen()) continue; // if store not open, we skip it
 
@@ -201,9 +201,9 @@ public class RegistryTopicIndex implements TopicIndexIF {
         
         String tmReifierName = TopicPage.getReifierName(topicmap);
         
-        Iterator it = indicators.iterator();
+        Iterator<LocatorIF> it = indicators.iterator();
         while (it.hasNext()) {
-          LocatorIF indicator = (LocatorIF) it.next();
+          LocatorIF indicator = it.next();
           topic = topicmap.getTopicBySubjectIdentifier(indicator);
           if (topic != null)
             retVal.addPage(topicMapHandle, getTopicPage(topic, key), 
@@ -212,7 +212,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
         
         it = sources.iterator();
         while (it.hasNext()) {
-          LocatorIF srcloc = (LocatorIF) it.next();
+          LocatorIF srcloc = it.next();
           TMObjectIF object = null;
           String address = srcloc.getAddress();
           if (XTMFragmentExporter.isVirtualReference(address)) {
@@ -231,7 +231,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
         
         it = subjects.iterator();
         while (it.hasNext()) {
-          LocatorIF subject = (LocatorIF) it.next();
+          LocatorIF subject = it.next();
           topic = topicmap.getTopicBySubjectLocator(subject);
           if (topic != null) 
             retVal.addPage(topicMapHandle, getTopicPage(topic, key),
@@ -253,7 +253,7 @@ public class RegistryTopicIndex implements TopicIndexIF {
   // Internal methods
 
   private TopicPage getTopicPage(TopicIF topic, String key) {
-    Map map = new HashMap();
+    Map<String, Object> map = new HashMap<String, Object>();
     map.put("tmid", key);
     map.put("topicid", topic.getObjectId());
 

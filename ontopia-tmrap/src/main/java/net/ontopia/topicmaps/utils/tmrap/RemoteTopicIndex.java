@@ -89,12 +89,12 @@ public class RemoteTopicIndex implements TopicIndexIF {
     this.tmid = tmid;
   }
   
-  public Collection getTopics(Collection indicators,
-                              Collection sources,
-                              Collection subjects) {
+  public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
+                              Collection<LocatorIF> sources,
+                              Collection<LocatorIF> subjects) {
 
     if (indicators.isEmpty() && sources.isEmpty() && subjects.isEmpty())
-      return Collections.EMPTY_SET;
+      return Collections.emptySet();
 
     // lookup or create target topic
     TopicMapIF targetTopicMap = storefactory.createStore().getTopicMap();    
@@ -124,18 +124,18 @@ public class RemoteTopicIndex implements TopicIndexIF {
   }
 
   private TopicIF createTopic(TopicMapIF tm,
-                              Collection indicators,
-                              Collection sources,
-                              Collection subjects) {
+                              Collection<LocatorIF> indicators,
+                              Collection<LocatorIF> sources,
+                              Collection<LocatorIF> subjects) {
 
     // merge all topics that have any of the identities
     TopicIF topic = null;
-    Collection existing = findTopics(tm, indicators, sources, subjects);
+    Collection<TopicIF> existing = findTopics(tm, indicators, sources, subjects);
     if (!existing.isEmpty()) {
-      Iterator iter = existing.iterator();
-      topic = (TopicIF)iter.next();
+      Iterator<TopicIF> iter = existing.iterator();
+      topic = iter.next();
       if (iter.hasNext()) {
-        MergeUtils.mergeInto(topic, (TopicIF)iter.next());
+        MergeUtils.mergeInto(topic, iter.next());
       }
     }
     // if no topics was found then create a new one
@@ -143,19 +143,19 @@ public class RemoteTopicIndex implements TopicIndexIF {
       topic = tm.getBuilder().makeTopic();
 
     // make sure topic has all the identities
-    Iterator it = indicators.iterator();
+    Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       topic.addSubjectIdentifier(loc);
     }
     it = sources.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       topic.addItemIdentifier(loc);
     }
     it = subjects.iterator();
     while (it.hasNext()) {
-      LocatorIF subject = (LocatorIF) it.next();
+      LocatorIF subject = it.next();
       topic.addSubjectLocator(subject);
     }
 
@@ -163,18 +163,18 @@ public class RemoteTopicIndex implements TopicIndexIF {
   }
   
   private TopicIF findTopic(TopicMapIF tm,
-                            Collection indicators,
-                            Collection sources,
-                            Collection subjects) {
-    Iterator it = indicators.iterator();
+                            Collection<LocatorIF> indicators,
+                            Collection<LocatorIF> sources,
+                            Collection<LocatorIF> subjects) {
+    Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TopicIF topic = tm.getTopicBySubjectIdentifier(loc);
       if (topic != null) return topic;
     }
     it = sources.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TopicIF topic = (TopicIF) tm.getObjectByItemIdentifier(loc);
       if (topic != null) 
 				return topic;
@@ -193,28 +193,28 @@ public class RemoteTopicIndex implements TopicIndexIF {
     }
     it = subjects.iterator();
     while (it.hasNext()) {
-      LocatorIF subject = (LocatorIF) it.next();
+      LocatorIF subject = it.next();
       TopicIF topic = tm.getTopicBySubjectLocator(subject);
       if (topic != null) return topic;
     }
     return null;
   }
   
-  private Collection findTopics(TopicMapIF tm,
-                               Collection indicators,
-                               Collection sources,
-                               Collection subjects) {
+  private Collection<TopicIF> findTopics(TopicMapIF tm,
+                               Collection<LocatorIF> indicators,
+                               Collection<LocatorIF> sources,
+                               Collection<LocatorIF> subjects) {
     // find all topics that have any of the identities
-    Collection result = new HashSet();    
-    Iterator it = indicators.iterator();
+    Collection<TopicIF> result = new HashSet<TopicIF>();    
+    Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TopicIF topic = tm.getTopicBySubjectIdentifier(loc);
       if (topic != null) result.add(topic);
     }
     it = sources.iterator();
     while (it.hasNext()) {
-      LocatorIF loc = (LocatorIF) it.next();
+      LocatorIF loc = it.next();
       TopicIF topic = (TopicIF) tm.getObjectByItemIdentifier(loc);
       if (topic != null) 
 				result.add(topic);
@@ -233,7 +233,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
     }
     it = subjects.iterator();
     while (it.hasNext()) {
-      LocatorIF subject = (LocatorIF) it.next();
+      LocatorIF subject = it.next();
       TopicIF topic = tm.getTopicBySubjectLocator(subject);
       if (topic != null) result.add(topic);
     }
@@ -253,11 +253,11 @@ public class RemoteTopicIndex implements TopicIndexIF {
     }
   }
 
-  private List getIdPredicates(TopicIF topic, String varname) {
-    List idpredicates = new ArrayList();
-    Iterator ids = topic.getItemIdentifiers().iterator();
+  private List<String> getIdPredicates(TopicIF topic, String varname) {
+    List<String> idpredicates = new ArrayList<String>();
+    Iterator<LocatorIF> ids = topic.getItemIdentifiers().iterator();
     while (ids.hasNext()) {
-      LocatorIF loc = (LocatorIF)ids.next();
+      LocatorIF loc = ids.next();
 			String address = loc.getAddress();
 			if (RemoteTopicIndex.isVirtualReference(address)) {
 				String topicId = RemoteTopicIndex.resolveVirtualReference(address, tmid);
@@ -271,24 +271,24 @@ public class RemoteTopicIndex implements TopicIndexIF {
     }
     ids = topic.getSubjectIdentifiers().iterator();
     while (ids.hasNext()) {
-      LocatorIF loc = (LocatorIF)ids.next();
+      LocatorIF loc = ids.next();
       idpredicates.add("subject-identifier($" + varname + ", \"" + loc.getAddress() + "\")");
     }
     ids = topic.getSubjectLocators().iterator();
     while (ids.hasNext()) {
-      LocatorIF loc = (LocatorIF)ids.next();
+      LocatorIF loc = ids.next();
       idpredicates.add("subject-locator($" + varname + ", \"" + loc.getAddress() + "\")");
     }
     return idpredicates;
   }
   
-  public Collection loadRelatedTopics(Collection indicators,
-                                      Collection sources,
-                                      Collection subjects,
+  public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
+                                      Collection<LocatorIF> sources,
+                                      Collection<LocatorIF> subjects,
                                       boolean two_steps) {
     long start = System.currentTimeMillis();
     if (indicators.isEmpty() && sources.isEmpty() && subjects.isEmpty())
-      return Collections.EMPTY_SET;
+      return Collections.emptySet();
     
     try {
       // lookup or create target topic
@@ -297,9 +297,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
       int count = 0;
       
       // build identity predicates
-      List idpredicates_T = getIdPredicates(targetTopic, "T");
+      List<String> idpredicates_T = getIdPredicates(targetTopic, "T");
       if (idpredicates_T.isEmpty())
-        return Collections.EMPTY_SET;
+        return Collections.emptySet();
       
       StringBuffer query = new StringBuffer();
       query.append("related-to($T1, $T2) :- " +
@@ -343,10 +343,10 @@ public class RemoteTopicIndex implements TopicIndexIF {
       }
 
       // get loaded topics (possibly 2 steps out)
-      Collection loaded = new CompactHashSet();
-      Iterator riter = CharacteristicUtils.getAssociatedTopics(sourceTopic).iterator();
+      Collection<TopicIF> loaded = new CompactHashSet<TopicIF>();
+      Iterator<TopicIF> riter = CharacteristicUtils.getAssociatedTopics(sourceTopic).iterator();
       while (riter.hasNext()) {
-        TopicIF topic = (TopicIF) riter.next();
+        TopicIF topic = riter.next();
         loaded.add(topic);
         if (two_steps)
           loaded.addAll(CharacteristicUtils.getAssociatedTopics(topic));
@@ -361,10 +361,10 @@ public class RemoteTopicIndex implements TopicIndexIF {
     }
   }
 
-  public Collection getTopicPages(Collection indicators,
-                                  Collection sources,
-                                  Collection subjects) {
-    Collection pages = new ArrayList();
+  public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
+                                  Collection<LocatorIF> sources,
+                                  Collection<LocatorIF> subjects) {
+    Collection<TopicPage> pages = new ArrayList<TopicPage>();
     
     try {
       String params = encodeIdentityParameters(indicators, sources, subjects);
@@ -384,10 +384,10 @@ public class RemoteTopicIndex implements TopicIndexIF {
       if (vptype == null)
         return pages;
       
-      Iterator it = ix.getTopics(vptype).iterator();
+      Iterator<TopicIF> it = ix.getTopics(vptype).iterator();
       while (it.hasNext()) {
-        TopicIF vp = (TopicIF) it.next();
-        LocatorIF subject = (LocatorIF)CollectionUtils.getFirst(vp.getSubjectLocators());
+        TopicIF vp = it.next();
+        LocatorIF subject = CollectionUtils.getFirst(vp.getSubjectLocators());
         pages.add(new TopicPage(null, subject.getAddress(),
                                 null, null, null));
       }
@@ -398,9 +398,9 @@ public class RemoteTopicIndex implements TopicIndexIF {
     return pages;
   }
 
-  public TopicPages getTopicPages2(Collection indicators,
-                                   Collection sources,
-                                   Collection subjects) {
+  public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
+                                   Collection<LocatorIF> sources,
+                                   Collection<LocatorIF> subjects) {
     throw new UnsupportedOperationException("This method is not supported");
   }
 
@@ -433,10 +433,10 @@ public class RemoteTopicIndex implements TopicIndexIF {
     loadXTM("get-tolog", params, true, tmptm);
     
     // collect newly loaded topics
-    Collection loaded = new ArrayList();
-    Iterator it = tmptm.getTopics().iterator();
+    Collection<TopicIF> loaded = new ArrayList<TopicIF>();
+    Iterator<TopicIF> it = tmptm.getTopics().iterator();
     while (it.hasNext()) {
-      TopicIF topic = (TopicIF) it.next();
+      TopicIF topic = it.next();
       if (!(topic.getTypes().isEmpty() &&
             topic.getTopicNames().isEmpty() &&
             topic.getOccurrences().isEmpty() &&
@@ -503,16 +503,16 @@ public class RemoteTopicIndex implements TopicIndexIF {
     return conn;
   }
 
-  private String encodeIdentityParameters(Collection indicators,
-                                          Collection sources,
-                                          Collection subjects) {
+  private String encodeIdentityParameters(Collection<LocatorIF> indicators,
+                                          Collection<LocatorIF> sources,
+                                          Collection<LocatorIF> subjects) {
 
     boolean notfirst = false;
     StringBuffer buf = new StringBuffer();
 
-    Iterator it = indicators.iterator();
+    Iterator<LocatorIF> it = indicators.iterator();
     while (it.hasNext()) {
-      LocatorIF locator = (LocatorIF) it.next();
+      LocatorIF locator = it.next();
       if (notfirst) buf.append("&");
       buf.append("identifier=" + URLEncoder.encode(locator.getExternalForm()));
       notfirst = true;
@@ -520,7 +520,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
 
     it = sources.iterator();
     while (it.hasNext()) {
-      LocatorIF locator = (LocatorIF) it.next();
+      LocatorIF locator = it.next();
       if (notfirst) buf.append("&");
       buf.append("item=" + URLEncoder.encode(locator.getExternalForm()));
       notfirst = true;
@@ -528,7 +528,7 @@ public class RemoteTopicIndex implements TopicIndexIF {
 
     it = subjects.iterator();
     while (it.hasNext()) {
-      LocatorIF locator = (LocatorIF) it.next();
+      LocatorIF locator = it.next();
       if (notfirst) buf.append("&");
       buf.append("subject=" + URLEncoder.encode(locator.getExternalForm()));
     }
@@ -548,11 +548,11 @@ public class RemoteTopicIndex implements TopicIndexIF {
     reader.importInto(topicmap);
   }
 
-  private void transferLoadedTopics(Collection loaded,
+  private void transferLoadedTopics(Collection<TopicIF> loaded,
                                     TopicMapIF targetTopicMap) {
-    Iterator it = loaded.iterator();
+    Iterator<TopicIF> it = loaded.iterator();
     while (it.hasNext()) {
-      TopicIF sourceRelated = (TopicIF) it.next();
+      TopicIF sourceRelated = it.next();
       TopicIF targetRelated = createTopic(targetTopicMap, 
                                           sourceRelated.getSubjectIdentifiers(), 
                                           sourceRelated.getItemIdentifiers(),

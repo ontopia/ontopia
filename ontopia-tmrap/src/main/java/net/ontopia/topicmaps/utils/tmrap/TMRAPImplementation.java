@@ -81,9 +81,9 @@ public class TMRAPImplementation {
   // -----------------------------------------------------------------------
   // (+) means other values may be allowed later.
   public static void getTopic(NavigatorApplicationIF navapp,
-                              Collection items,
-                              Collection subjects,
-                              Collection indicators,
+                              Collection<LocatorIF> items,
+                              Collection<LocatorIF> subjects,
+                              Collection<LocatorIF> indicators,
                               String[] tmids, 
                               String syntax,
                               String view,
@@ -105,7 +105,7 @@ public class TMRAPImplementation {
     // get on with it
     TopicIndexIF index = getTopicIndex(navapp, true, tmids);
     try {
-      Collection topics = index.getTopics(indicators, items, subjects);
+      Collection<TopicIF> topics = index.getTopics(indicators, items, subjects);
       if (syntax.equals(RAPServlet.SYNTAX_XTM))
         generateXTM(handler, topics, subjects, items, indicators, true);
       else {     
@@ -158,14 +158,14 @@ public class TMRAPImplementation {
           "but produced " + result.getWidth() + " columns.");
 
       if (syntax.equals(RAPServlet.SYNTAX_XTM)) {
-        Collection topics = getTopics(result);
-        generateXTM(handler, topics, Collections.EMPTY_LIST,
-                    Collections.EMPTY_LIST,
-                    Collections.EMPTY_LIST, false);
+        Collection<TopicIF> topics = getTopics(result);
+        generateXTM(handler, topics, Collections.<LocatorIF>emptyList(),
+                    Collections.<LocatorIF>emptyList(),
+                    Collections.<LocatorIF>emptyList(), false);
       } else if (syntax.equals(RAPServlet.SYNTAX_TM_XML)) {
-        Collection topics = getTopics(result);
-        generateTMXML(handler, topics, null, Collections.EMPTY_LIST,
-                      Collections.EMPTY_LIST, false, false);
+        Collection<TopicIF> topics = getTopics(result);
+        generateTMXML(handler, topics, null, Collections.<LocatorIF>emptyList(),
+                      Collections.<LocatorIF>emptyList(), false, false);
       } else {
         try {
           generateTolog(handler, result, view);
@@ -189,9 +189,9 @@ public class TMRAPImplementation {
   // | topicmap  | no        | yes         | String | tm-handles |         |
   // -----------------------------------------------------------------------
   public static String deleteTopic(NavigatorApplicationIF navapp,
-                                   Collection items,
-                                   Collection subjects,
-                                   Collection identifiers,
+                                   Collection<LocatorIF> items,
+                                   Collection<LocatorIF> subjects,
+                                   Collection<LocatorIF> identifiers,
                                    String[] tmids) throws Exception {
 
     TopicIndexIF index = getTopicIndex(navapp, false, tmids);
@@ -199,10 +199,10 @@ public class TMRAPImplementation {
       // The TopicIndexIF takes care of handling TM access
 
       // Delete the topic(s)
-      Collection topics = index.getTopics(identifiers, items, subjects);
-      Iterator it = topics.iterator();
+      Collection<TopicIF> topics = index.getTopics(identifiers, items, subjects);
+      Iterator<TopicIF> it = topics.iterator();
       while (it.hasNext())
-        ((TopicIF) it.next()).remove();
+        it.next().remove();
 
       // Return a message
       return "Deleted " + topics.size() + " topics";
@@ -260,9 +260,9 @@ public class TMRAPImplementation {
                                  String fragment,
                                  String syntax,
                                  String tmid,
-                                 Collection indicators,
-                                 Collection items,
-                                 Collection subjects)
+                                 Collection<LocatorIF> indicators,
+                                 Collection<LocatorIF> items,
+                                 Collection<LocatorIF> subjects)
     throws NavigatorRuntimeException, IOException, TMRAPException {
 
     TopicMapIF topicmap = navapp.getTopicMapById(tmid, false);
@@ -285,10 +285,10 @@ public class TMRAPImplementation {
       // RELATIVE ITEM IDENTIFIERS, METHINKS...
       
       TopicMapTopicIndex ix = new TopicMapTopicIndex(ftm, null, null, null);
-      Collection topics = ix.getTopics(indicators, items, subjects);
+      Collection<TopicIF> topics = ix.getTopics(indicators, items, subjects);
       if (topics.size() != 1)
         throw new TMRAPException("Wrong number of topics identified in fragment");
-      TopicIF ft = (TopicIF) topics.iterator().next();
+      TopicIF ft = topics.iterator().next();
       TopicMapSynchronizer.update(topicmap, ft);
       
       topicmap.getStore().commit();
@@ -310,9 +310,9 @@ public class TMRAPImplementation {
   // (+) means other values may be allowed later.
   public static TopicMapIF getTopicPage(NavigatorApplicationIF navapp,
                                         TMRAPConfiguration config,
-                                        Collection items,
-                                        Collection subjects,
-                                        Collection indicators,
+                                        Collection<LocatorIF> items,
+                                        Collection<LocatorIF> subjects,
+                                        Collection<LocatorIF> indicators,
                                         String[] tmids)
     throws IOException, NavigatorRuntimeException {
     
@@ -344,17 +344,17 @@ public class TMRAPImplementation {
         if (pages.getName() != null)
           builder.makeTopicName(matchTopic, pages.getName());
         
-        Iterator it = pages.getItemIdentifiers().iterator();
+        Iterator<LocatorIF> it = pages.getItemIdentifiers().iterator();
         while (it.hasNext())
-          matchTopic.addItemIdentifier((LocatorIF) it.next());
+          matchTopic.addItemIdentifier(it.next());
         
         it = pages.getSubjectIdentifiers().iterator();
         while (it.hasNext())
-          matchTopic.addSubjectIdentifier((LocatorIF) it.next());
+          matchTopic.addSubjectIdentifier(it.next());
         
         it = pages.getSubjectLocators().iterator();
         if (it.hasNext())
-          matchTopic.addSubjectLocator((LocatorIF) it.next());
+          matchTopic.addSubjectLocator(it.next());
         
         // Create topic type rap:topicmap.
         TopicIF rapTopicMapType = makeTopic(topicmap, "topicmap");
@@ -372,9 +372,9 @@ public class TMRAPImplementation {
         TopicIF rapContaineeType = makeTopic(topicmap, "containee");
   
         // For each topic map that has at least one matching topic.
-        Iterator topicmapHandlesIt = pages.getTopicMapHandles().iterator();
+        Iterator<String> topicmapHandlesIt = pages.getTopicMapHandles().iterator();
         while (topicmapHandlesIt.hasNext()) {
-          String currentHandle = (String)topicmapHandlesIt.next();
+          String currentHandle = topicmapHandlesIt.next();
           
           TopicIF currentRAPTopicMap = builder.makeTopic(rapTopicMapType);
           
@@ -403,9 +403,9 @@ public class TMRAPImplementation {
           
           // For each page. Each page object represents both view and edit page
           // when there's both.
-          Iterator pagesIt = pages.getPages(currentHandle).iterator();
+          Iterator<TopicPage> pagesIt = pages.getPages(currentHandle).iterator();
           while (pagesIt.hasNext()) {
-            TopicPage currentPage =  (TopicPage)pagesIt.next();
+            TopicPage currentPage = pagesIt.next();
             
             String editURL = currentPage.getEditURL();
             String viewURL = currentPage.getViewURL();
@@ -497,7 +497,7 @@ public class TMRAPImplementation {
       return new RegistryTopicIndex(navapp.getTopicMapRepository(), readonly,
                                     editBaseuri, viewBaseuri);
 
-    List topicIndexes = new ArrayList();
+    List<TopicIndexIF> topicIndexes = new ArrayList<TopicIndexIF>();
     for (int i = 0; i < tmids.length; i++) {
       TopicMapIF topicmap = navapp.getTopicMapById(tmids[i], readonly);
       TopicIndexIF currentIndex =
@@ -507,10 +507,10 @@ public class TMRAPImplementation {
     return new FederatedTopicIndex(topicIndexes);
   }
 
-  private static void generateXTM(DocumentHandler ser, Collection topics,
-                                  Collection subjectLocators,
-                                  Collection srclocs,
-                                  Collection indicators, boolean merge)
+  private static void generateXTM(DocumentHandler ser, Collection<TopicIF> topics,
+                                  Collection<LocatorIF> subjectLocators,
+                                  Collection<LocatorIF> srclocs,
+                                  Collection<LocatorIF> indicators, boolean merge)
     throws SAXException {
         
     AttributeListImpl atts = new AttributeListImpl();
@@ -540,27 +540,27 @@ public class TMRAPImplementation {
       atts.clear();
       ser.startElement("subjectIdentity", atts);
 
-      Iterator sublociter = subjectLocators.iterator();
+      Iterator<LocatorIF> sublociter = subjectLocators.iterator();
       while (sublociter.hasNext()) {
-        LocatorIF uriloc = (LocatorIF) sublociter.next();            
+        LocatorIF uriloc = sublociter.next();            
         atts.clear();
         atts.addAttribute("xlink:href", "CDATA", uriloc.getExternalForm());
         ser.startElement("resourceRef", atts);  
         ser.endElement("resourceRef");
       }
                               
-      Iterator srclociter = srclocs.iterator();
+      Iterator<LocatorIF> srclociter = srclocs.iterator();
       while (srclociter.hasNext()) {
-        LocatorIF uriloc = (LocatorIF) srclociter.next();            
+        LocatorIF uriloc = srclociter.next();            
         atts.clear();
         atts.addAttribute("xlink:href", "CDATA", uriloc.getExternalForm());         
         ser.startElement("topicRef", atts);   
         ser.endElement("topicRef");
       }
       
-      Iterator indicatoriter = indicators.iterator();
+      Iterator<LocatorIF> indicatoriter = indicators.iterator();
       while (indicatoriter.hasNext()) {
-        LocatorIF uriloc = (LocatorIF) indicatoriter.next();            
+        LocatorIF uriloc = indicatoriter.next();            
         atts.clear();
         atts.addAttribute("xlink:href", "CDATA", uriloc.getExternalForm());
         ser.startElement("subjectIndicatorRef", atts); 
@@ -575,10 +575,10 @@ public class TMRAPImplementation {
     ser.endDocument();
   }
 
-  private static void generateTMXML(DocumentHandler ser, Collection topics,
-                                    Collection subjectLocators,
-                                    Collection srclocs,
-                                    Collection indicators,
+  private static void generateTMXML(DocumentHandler ser, Collection<TopicIF> topics,
+                                    Collection<LocatorIF> subjectLocators,
+                                    Collection<LocatorIF> srclocs,
+                                    Collection<LocatorIF> indicators,
                                     boolean names,
                                     boolean singletm)
     throws SAXException {
@@ -594,9 +594,9 @@ public class TMRAPImplementation {
       // also output names of referenced topics
         InMemoryTopicMapStore store = new InMemoryTopicMapStore();
         TopicMapIF tm = store.getTopicMap();
-        Iterator it = topics.iterator();
+        Iterator<TopicIF> it = topics.iterator();
         while (it.hasNext()) {
-          TopicIF topic = (TopicIF) it.next();
+          TopicIF topic = it.next();
           copyReferencedTopics(tm, topic);
         }
         
@@ -607,7 +607,7 @@ public class TMRAPImplementation {
           // set the base locator of the new TM, and ensure that the ID
           // references from the fragment already created match the IDs
           // in the fragment we are about to create.
-          TopicIF atopic = (TopicIF) topics.iterator().next();
+          TopicIF atopic = topics.iterator().next();
           LocatorIF base = atopic.getTopicMap().getStore().getBaseAddress();
           store.setBaseAddress(base);
         }
@@ -623,13 +623,13 @@ public class TMRAPImplementation {
   }
 
   private static void copyReferencedTopics(TopicMapIF tm, TopicIF source) {
-    Iterator it = source.getRoles().iterator();
+    Iterator<AssociationRoleIF> it = source.getRoles().iterator();
     while (it.hasNext()) {
-      AssociationRoleIF role = (AssociationRoleIF) it.next();
+      AssociationRoleIF role = it.next();
       AssociationIF assoc = role.getAssociation();
-      Iterator it2 = assoc.getRoles().iterator();
+      Iterator<AssociationRoleIF> it2 = assoc.getRoles().iterator();
       while (it2.hasNext()) {
-        AssociationRoleIF other = (AssociationRoleIF) it2.next();
+        AssociationRoleIF other = it2.next();
         TopicIF refd = other.getPlayer();
         if (refd != source)
           copyTopic(tm, refd);
@@ -642,23 +642,23 @@ public class TMRAPImplementation {
     TopicIF topic = builder.makeTopic();
 
     // copy identity
-    Iterator it = referenced.getSubjectLocators().iterator();
+    Iterator<LocatorIF> it = referenced.getSubjectLocators().iterator();
     while (it.hasNext())
-      topic.addSubjectLocator((LocatorIF) it.next());
+      topic.addSubjectLocator(it.next());
     it = referenced.getSubjectIdentifiers().iterator();
     while (it.hasNext())
-      topic.addSubjectIdentifier((LocatorIF) it.next());
+      topic.addSubjectIdentifier(it.next());
     it = referenced.getItemIdentifiers().iterator();
     while (it.hasNext())
-      topic.addItemIdentifier((LocatorIF) it.next());
+      topic.addItemIdentifier(it.next());
     
     // copy name
     builder.makeTopicName(topic, TopicStringifiers.toString(referenced));
   }
 
-  private static Collection getTopics(QueryResultIF result)
+  private static Collection<TopicIF> getTopics(QueryResultIF result)
     throws TMRAPException {
-    Collection topics = new ArrayList();
+    Collection<TopicIF> topics = new ArrayList<TopicIF>();
     while (result.next()) {
       Object current = result.getValue(0);
       if (!(current instanceof TopicIF))
@@ -667,7 +667,7 @@ public class TMRAPImplementation {
           "topics, but contained an object of type " + 
           current.getClass().getName() + ".");
       
-      topics.add(current);
+      topics.add((TopicIF) current);
     }
     return topics;
   }
@@ -731,13 +731,13 @@ public class TMRAPImplementation {
     LocatorIF loc;
     String elemname;
     if (!topic.getSubjectLocators().isEmpty()) {
-      loc = (LocatorIF) topic.getSubjectLocators().iterator().next();
+      loc = topic.getSubjectLocators().iterator().next();
       elemname = "x:resourceRef";
     } else if (!topic.getSubjectIdentifiers().isEmpty()) {
-      loc = (LocatorIF) topic.getSubjectIdentifiers().iterator().next();
+      loc = topic.getSubjectIdentifiers().iterator().next();
       elemname = "x:subjectIndicatorRef";
     } else if (!topic.getItemIdentifiers().isEmpty()) {
-      loc = (LocatorIF) topic.getItemIdentifiers().iterator().next();
+      loc = topic.getItemIdentifiers().iterator().next();
       elemname = "x:topicRef";
     } else
       throw new TMRAPException("Not implemented yet"); // FIXME!!
@@ -750,7 +750,7 @@ public class TMRAPImplementation {
   public static void makeFullName(TopicIF topic, DocumentHandler handler)
     throws SAXException {
     generateTMXML(handler, Collections.singleton(topic),
-                  null, Collections.EMPTY_LIST,
-                  Collections.EMPTY_LIST, false, false);
+                  null, Collections.<LocatorIF>emptyList(),
+                  Collections.<LocatorIF>emptyList(), false, false);
   }
 }

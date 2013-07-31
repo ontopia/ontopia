@@ -23,6 +23,7 @@ package net.ontopia.topicmaps.utils.tmrap;
 import java.util.Collection;
 
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.topicmaps.core.index.IndexIF;
 
 /**
@@ -43,17 +44,17 @@ public interface TopicIndexIF extends IndexIF {
    *
    * @return Collection of TopicIF
    */
-  public Collection getTopics(Collection indicators,
-                              Collection sources,
-                              Collection subjects);
+  public Collection<TopicIF> getTopics(Collection<LocatorIF> indicators,
+                              Collection<LocatorIF> sources,
+                              Collection<LocatorIF> subjects);
 
   /*
    * Loads all the topics that are directly associated with the given topics.
    * @param two_steps If true, topics two steps out will also be loaded.
    */  
-  public Collection loadRelatedTopics(Collection indicators,
-                                      Collection sources,
-                                      Collection subjects,
+  public Collection<TopicIF> loadRelatedTopics(Collection<LocatorIF> indicators,
+                                      Collection<LocatorIF> sources,
+                                      Collection<LocatorIF> subjects,
                                       boolean two_steps);
 
   /**
@@ -67,9 +68,9 @@ public interface TopicIndexIF extends IndexIF {
    *
    * @return Collection of TopicPage
    */
-  public Collection getTopicPages(Collection indicators,
-                                  Collection sources,
-                                  Collection subjects);
+  public Collection<TopicPage> getTopicPages(Collection<LocatorIF> indicators,
+                                  Collection<LocatorIF> sources,
+                                  Collection<LocatorIF> subjects);
 
   /**
    * Returns all known topic pages for the topics whose identity
@@ -82,9 +83,9 @@ public interface TopicIndexIF extends IndexIF {
    *
    * @return Collection of TopicPage
    */
-  public TopicPages getTopicPages2(Collection indicators,
-                                   Collection sources,
-                                   Collection subjects);
+  public TopicPages getTopicPages2(Collection<LocatorIF> indicators,
+                                   Collection<LocatorIF> sources,
+                                   Collection<LocatorIF> subjects);
 
   /**
    * Lets go of any underlying resources used by the index. Must be

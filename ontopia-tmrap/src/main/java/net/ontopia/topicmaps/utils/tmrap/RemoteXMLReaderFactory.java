@@ -36,7 +36,7 @@ import org.xml.sax.XMLReader;
 public class RemoteXMLReaderFactory extends Object implements
     XMLReaderFactoryIF {
 
-  private Class readerClass;
+  private Class<? extends XMLReader> readerClass;
 
   /*
    * (non-Javadoc)
@@ -56,7 +56,7 @@ public class RemoteXMLReaderFactory extends Object implements
     }
       
     try {
-      return (XMLReader)readerClass.newInstance();
+      return readerClass.newInstance();
     } catch (InstantiationException e) {
       e.printStackTrace();
       throw new OntopiaRuntimeException(e);

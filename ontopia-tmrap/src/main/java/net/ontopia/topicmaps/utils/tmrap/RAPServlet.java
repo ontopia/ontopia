@@ -85,7 +85,7 @@ public class RAPServlet extends HttpServlet {
   public static final String RAP_NAMESPACE = "http://psi.ontopia.net/tmrap/";
   
   // Used to register type listeners
-  Map clientListeners = new HashMap();
+  Map<TopicIF, Map<String, String>> clientListeners = new HashMap<TopicIF, Map<String, String>>();
   
   private TMRAPConfiguration rapconfig;
 
@@ -159,9 +159,9 @@ public class RAPServlet extends HttpServlet {
         NavigatorUtils.getNavigatorApplication(getServletContext());
       
       // get parameters
-      Collection indicators = getIndicators(request);
-      Collection items = getItemIdentifiers(request);
-      Collection subjects = getSubjectLocators(request);
+      Collection<LocatorIF> indicators = getIndicators(request);
+      Collection<LocatorIF> items = getItemIdentifiers(request);
+      Collection<LocatorIF> subjects = getSubjectLocators(request);
       String allowedSyntaxes[] = new String[]{SYNTAX_XTM};
       getParameter(request, response, "get-topic-page", 
           SYNTAX_PARAMETER_NAME, false, allowedSyntaxes, SYNTAX_XTM);
@@ -253,9 +253,9 @@ public class RAPServlet extends HttpServlet {
       String syntax = request.getParameter(SYNTAX_PARAMETER_NAME);
       String fragment = request.getParameter(FRAGMENT_PARAMETER_NAME);
       String tmid = request.getParameter(TOPICMAP_PARAMETER_NAME);
-      Collection indicators = getIndicators(request);
-      Collection items = getItemIdentifiers(request);
-      Collection subjects = getSubjectLocators(request);
+      Collection<LocatorIF> indicators = getIndicators(request);
+      Collection<LocatorIF> items = getItemIdentifiers(request);
+      Collection<LocatorIF> subjects = getSubjectLocators(request);
 
       TMRAPImplementation.updateTopic(navapp, fragment, syntax, tmid,
                                       indicators, items, subjects);
@@ -275,9 +275,9 @@ public class RAPServlet extends HttpServlet {
         NavigatorUtils.getNavigatorApplication(getServletContext()); 
       
       // set up parameters
-      Collection subjectIndicators = getIndicators(request);
-      Collection sourceLocators = getItemIdentifiers(request);
-      Collection subjectLocators = getSubjectLocators(request);
+      Collection<LocatorIF> subjectIndicators = getIndicators(request);
+      Collection<LocatorIF> sourceLocators = getItemIdentifiers(request);
+      Collection<LocatorIF> subjectLocators = getSubjectLocators(request);
       String[] tmids = request.getParameterValues(TOPICMAP_PARAMETER_NAME);
 
       String msg = TMRAPImplementation.deleteTopic(navapp,
@@ -308,9 +308,9 @@ public class RAPServlet extends HttpServlet {
     
     try {
       // fetch topic identity uris from request parameters
-      Collection indicators = getIndicators(request);
-      Collection items = getItemIdentifiers(request);
-      Collection subjects = getSubjectLocators(request);
+      Collection<LocatorIF> indicators = getIndicators(request);
+      Collection<LocatorIF> items = getItemIdentifiers(request);
+      Collection<LocatorIF> subjects = getSubjectLocators(request);
       String[] tmids = request.getParameterValues(TOPICMAP_PARAMETER_NAME);
       String syntax = request.getParameter(SYNTAX_PARAMETER_NAME);
       String view = request.getParameter(VIEW_PARAMETER_NAME);
@@ -343,9 +343,9 @@ public class RAPServlet extends HttpServlet {
     TopicIndexIF topicIndex = null;
     try {
       // fetch topic identity uris from request parameters
-      Collection subjectIndicators = getIndicators(request);
-      Collection sourceLocators = getItemIdentifiers(request);
-      Collection subjectLocators = getSubjectLocators(request);
+      Collection<LocatorIF> subjectIndicators = getIndicators(request);
+      Collection<LocatorIF> sourceLocators = getItemIdentifiers(request);
+      Collection<LocatorIF> subjectLocators = getSubjectLocators(request);
         
       // Check that the topicmap parameter was given (since it's required).
       getParameter(request, response, "add-type-listener", 
@@ -362,16 +362,16 @@ public class RAPServlet extends HttpServlet {
       // get topic(s)
       topicIndex = getTopicIndex(request.getParameterValues(
           TOPICMAP_PARAMETER_NAME));
-      Collection topics = topicIndex.getTopics(subjectIndicators, sourceLocators, subjectLocators);
+      Collection<TopicIF> topics = topicIndex.getTopics(subjectIndicators, sourceLocators, subjectLocators);
       
       if (topics.size() != 1)
         reportError(response, "add-type-listener: Wrong number of topics.");
       
-      TopicIF topic = (TopicIF)topics.iterator().next();
+      TopicIF topic = topics.iterator().next();
       
-      Map currentTypeListeners = (Map)clientListeners.get(topic);
+      Map<String, String> currentTypeListeners = clientListeners.get(topic);
       if (currentTypeListeners == null) {
-        currentTypeListeners = new HashMap();
+        currentTypeListeners = new HashMap<String, String>();
         clientListeners.put(topic, currentTypeListeners);
       }
       
@@ -401,9 +401,9 @@ public class RAPServlet extends HttpServlet {
     TopicIndexIF topicIndex = null;
     try {
       // fetch topic identity uris from request parameters
-      Collection subjectIndicators = getIndicators(request);
-      Collection sourceLocators = getItemIdentifiers(request);
-      Collection subjectLocators = getSubjectLocators(request);
+      Collection<LocatorIF> subjectIndicators = getIndicators(request);
+      Collection<LocatorIF> sourceLocators = getItemIdentifiers(request);
+      Collection<LocatorIF> subjectLocators = getSubjectLocators(request);
       
       // Check that the topicmap parameter was given (since it's required).
       getParameter(request, response, "remove-type-listener",
@@ -415,20 +415,20 @@ public class RAPServlet extends HttpServlet {
       // get topic(s)
       topicIndex = getTopicIndex(request.getParameterValues(
           TOPICMAP_PARAMETER_NAME));
-      Collection topics = topicIndex.getTopics(subjectIndicators, sourceLocators, subjectLocators);
+      Collection<TopicIF> topics = topicIndex.getTopics(subjectIndicators, sourceLocators, subjectLocators);
       
       if (topics.size() != 1)
         reportError(response, "remove-type-listener: Wrong number of topics.");
       
-      TopicIF topic = (TopicIF)topics.iterator().next();
+      TopicIF topic = topics.iterator().next();
       
-      Map currentTypeListeners = (Map)clientListeners.get(topic);
+      Map<String, String> currentTypeListeners = clientListeners.get(topic);
       if (currentTypeListeners == null)
         reportError(response, "remove-type-listener: " +
             "Listener not found. You have to register a listener before it can " +
             "be removed.");
       
-      String currentListener = (String)currentTypeListeners.remove(client);
+      String currentListener = currentTypeListeners.remove(client);
       if (currentListener == null)
         reportError(response, "remove-type-listener: " +
             "Listener not found. You have to register a listener before it can " +
@@ -521,7 +521,7 @@ public class RAPServlet extends HttpServlet {
                                     rapconfig.getEditURI(),
                                     rapconfig.getViewURI());
 
-    List topicIndexes = new ArrayList();
+    List<TopicIndexIF> topicIndexes = new ArrayList<TopicIndexIF>();
     for (int i = 0; i < tmids.length; i++) {
       TopicMapIF topicmap;
       try {
@@ -539,13 +539,13 @@ public class RAPServlet extends HttpServlet {
     return new FederatedTopicIndex(topicIndexes);
   }
   
-  private Collection getURICollection(HttpServletRequest request, 
+  private Collection<LocatorIF> getURICollection(HttpServletRequest request, 
       String paramName) throws RAPServletException {
     String[] value = request.getParameterValues(paramName);
     if (value == null)
-      return Collections.EMPTY_SET;
+      return Collections.emptySet();
       
-    HashSet uriLocators = new HashSet();
+    HashSet<LocatorIF> uriLocators = new HashSet<LocatorIF>();
     for (int i = 0; i < value.length; i++) {
       try {
         uriLocators.add(new URILocator(value[i]));
@@ -557,17 +557,17 @@ public class RAPServlet extends HttpServlet {
     return uriLocators;     
   }
     
-  private Collection getIndicators(HttpServletRequest request) 
+  private Collection<LocatorIF> getIndicators(HttpServletRequest request) 
     throws RAPServletException {
     return getURICollection(request, INDICATOR_PARAMETER_NAME);
   }
 
-  private Collection getItemIdentifiers(HttpServletRequest request) 
+  private Collection<LocatorIF> getItemIdentifiers(HttpServletRequest request) 
     throws RAPServletException  {
     return getURICollection(request, SOURCE_PARAMETER_NAME);
   }
 
-  private Collection getSubjectLocators(HttpServletRequest request) 
+  private Collection<LocatorIF> getSubjectLocators(HttpServletRequest request) 
     throws RAPServletException  {
     return getURICollection(request, SUBJECT_PARAMETER_NAME);
   }

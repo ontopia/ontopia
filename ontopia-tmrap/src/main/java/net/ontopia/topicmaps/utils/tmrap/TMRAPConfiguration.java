@@ -34,10 +34,10 @@ public class TMRAPConfiguration {
   private String edituri;
   private String viewuri;
 
-  public TMRAPConfiguration(Map config) throws ServletException {
-    servername = (String)config.get("server_name");
-    edituri = (String)config.get("edit_uri");
-    viewuri = (String)config.get("view_uri");
+  public TMRAPConfiguration(Map<String, String> config) throws ServletException {
+    servername = config.get("server_name");
+    edituri = config.get("edit_uri");
+    viewuri = config.get("view_uri");
     if (edituri == null && viewuri == null)
       throw new ServletException("One of the 'edit_uri' and 'view_uri' " +
                                  "parameters must be specified");
