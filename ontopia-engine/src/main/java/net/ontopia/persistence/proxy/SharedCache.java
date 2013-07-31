@@ -20,7 +20,7 @@
 
 package net.ontopia.persistence.proxy;
 
-import gnu.trove.THashMap;
+import gnu.trove.map.hash.THashMap;
 
 import java.util.ArrayList;
 import java.util.Collection;

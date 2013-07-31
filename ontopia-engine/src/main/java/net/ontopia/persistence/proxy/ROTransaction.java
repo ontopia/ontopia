@@ -20,7 +20,7 @@
 
 package net.ontopia.persistence.proxy;
 
-import gnu.trove.TObjectIntProcedure;
+import gnu.trove.procedure.TObjectIntProcedure;
 
 import java.util.Collection;
 import java.util.Map;

@@ -23,8 +23,8 @@ package net.ontopia.topicmaps.classify;
 import java.util.Arrays;
 import java.util.Comparator;
 import net.ontopia.utils.ObjectUtils;
-import gnu.trove.TObjectIntHashMap;
-import gnu.trove.TObjectIntIterator;
+import gnu.trove.map.hash.TObjectIntHashMap;
+import gnu.trove.iterator.TObjectIntIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
   

@@ -20,7 +20,7 @@
 
 package ontopoly.conversion;
 
-import gnu.trove.TObjectIntHashMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 
 import java.util.Collection;
 import java.util.Collections;

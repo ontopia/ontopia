@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.classify;
 
-import gnu.trove.TIntHashSet;
+import gnu.trove.set.hash.TIntHashSet;
 
 /**
  * INTERNAL: 

@@ -27,7 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import net.ontopia.utils.OntopiaRuntimeException;
-import gnu.trove.TObjectDoubleHashMap;
+import gnu.trove.map.hash.TObjectDoubleHashMap;
 import au.com.bytecode.opencsv.CSVReader;
 
 /**

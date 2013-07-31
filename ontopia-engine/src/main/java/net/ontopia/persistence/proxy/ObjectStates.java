@@ -20,8 +20,8 @@
 
 package net.ontopia.persistence.proxy;
 
-import gnu.trove.TObjectIntHashMap;
-import gnu.trove.TObjectIntProcedure;
+import gnu.trove.map.hash.TObjectIntHashMap;
+import gnu.trove.procedure.TObjectIntProcedure;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
