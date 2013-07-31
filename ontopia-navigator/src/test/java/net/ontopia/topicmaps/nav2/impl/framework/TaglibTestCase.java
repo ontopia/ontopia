@@ -88,6 +88,10 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
   private boolean shouldFail;
   // string value that holds the expected exception if it is given.
   private String expectedException = "";
+  // boolean value that indicates whether tag pooling should be used
+  private final boolean useTagPooling;
+
+  private final String PARAM_TAGPOOLING = "tagpooling";
 
   @Parameters
   public static List generateTests() throws IOException, SAXException {
@@ -136,6 +140,12 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
       params.remove("fail");
     } else
       shouldFail = false;
+    if (params.containsKey(PARAM_TAGPOOLING)) {
+      useTagPooling = ("true".equals(params.get(PARAM_TAGPOOLING)));
+      params.remove(PARAM_TAGPOOLING);
+    } else {
+      useTagPooling = false;
+    }
     if (params.containsKey("exception")) {
       expectedException = (String) params.get("exception");
       params.remove("exception");
@@ -150,7 +160,7 @@ public class TaglibTestCase extends AbstractTaglibTestCase {
       PageContext page = makePageContext();
       String jspSource = TestFileUtils.getTestInputFile(testdataDirectory, "jsp", jspfile);
       JSPPageReader reader = new JSPPageReader(jspSource);
-      JSPTreeNodeIF root = reader.read();
+      JSPTreeNodeIF root = reader.read(useTagPooling);
       JSPPageExecuter exec = new JSPPageExecuter();
       log.info("Run testcase for " + generateTestCaseDescriptor());
       exec.run(page, null, root);
