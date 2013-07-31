@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.servlet.jsp.tagext.TagSupport;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorRuntimeException;
+import net.ontopia.utils.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,11 @@ import org.slf4j.LoggerFactory;
  */
 public class TaglibTagFactory implements JSPTagFactoryIF {
 
+  // tagPool = <parentTag, <poolKey, pooledTag>>
+  private Map<TagSupport, Map<String, TagSupport>> tagPool;
+  private final boolean useTagPooling;
+  public static final boolean TAGPOOLING_DEFAULT = false;
+
   // initialize logging facility
   static Logger log = LoggerFactory.getLogger(TaglibTagFactory.class.getName());
 
@@ -47,6 +53,10 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
   static Map classes;
 
   public TaglibTagFactory() {
+    this(TAGPOOLING_DEFAULT);
+  }
+  public TaglibTagFactory(boolean useTagPooling) {
+    this.useTagPooling = useTagPooling;
     if (classes == null)
       initClassMap();
   }
@@ -76,6 +86,23 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
       throw new NavigatorRuntimeException("TaglibTagFactory - " +
                                           "Unknown tag: " + tagname);
 
+    if (useTagPooling) {
+      if (tagPool == null) { tagPool = new HashMap<TagSupport, Map<String, TagSupport>>(); }
+      Map<String, TagSupport> poolEntry = tagPool.get(parentTag);
+      String poolKey = getTagPoolingKey(tagname, attrVals);
+      log.debug("Looking up tag with key '" + poolKey + "' in tag pool for parent tag " + parentTag);
+      if (poolEntry == null) {
+        poolEntry = new HashMap<String, TagSupport>();
+        tagPool.put(parentTag, poolEntry);
+      } else {
+        TagSupport pooledTag = poolEntry.get(poolKey);
+        if (pooledTag != null) {
+          log.debug("Found matching tag in pool, reusing " + pooledTag);
+          return pooledTag;
+        }
+      }
+    }
+
     // create tag instance
     String classname = (String) classes.get(tagname);
     TagSupport tag = null;
@@ -91,11 +118,22 @@ public class TaglibTagFactory implements JSPTagFactoryIF {
       throw new NavigatorRuntimeException(msg, e);
     }
 
+    if (useTagPooling) {
+      Map<String, TagSupport> poolEntry = tagPool.get(parentTag);
+      String poolKey = getTagPoolingKey(tagname, attrVals);
+      log.debug("Found no tag in pool, storing tag " + tag);
+      poolEntry.put(poolKey, tag);
+    }
+
     return tag;
   }
 
 
   // --- internal helper method
+
+  private String getTagPoolingKey(String tagname, Map<String, String> attrVals) {
+    return tagname + " " + StringUtils.join(attrVals.keySet(), " ");
+  }
 
   private static void initClassMap() {
     classes = new HashMap();

@@ -50,15 +50,20 @@ public class JSPContentHandler extends DefaultHandler {
   protected JSPTreeNodeIF current;
   protected JSPTagFactoryIF tagFactory;
   protected Stack<String> parents;
+  protected final boolean useTagPooling;
     
   protected ErrorHandler ehandler;
   protected Locator locator;
 
   public JSPContentHandler() {
-    this.root = new JSPTreeNode("ROOT", null);
+    this(TaglibTagFactory.TAGPOOLING_DEFAULT);
+  }
+  public JSPContentHandler(boolean useTagPooling) {
+    this.root = new JSPTreeNode("ROOT", null, useTagPooling);
     this.current = root;
     this.parents = new Stack<String>();
-    this.tagFactory = new TaglibTagFactory();
+    this.tagFactory = new TaglibTagFactory(useTagPooling);
+    this.useTagPooling = useTagPooling;
   }
 
   public void setDocumentLocator(Locator locator) {
@@ -92,7 +97,7 @@ public class JSPContentHandler extends DefaultHandler {
     JSPTreeNodeIF node;
     boolean insideKnownTag;
     if (TaglibTagFactory.isKnownTag(qname)) {
-      node = new JSPTreeNode(qname, current);
+      node = new JSPTreeNode(qname, current, useTagPooling);
       // add the attributes to the tree node.
       for (int i = 0; i < atts.getLength(); i++)
         node.addAttribute(atts.getQName(i), atts.getValue(i));

@@ -79,8 +79,12 @@ public class JSPPageReader {
    */
   public JSPTreeNodeIF read()
     throws IOException, SAXException {
+    return read(TaglibTagFactory.TAGPOOLING_DEFAULT);
+  }
 
-    JSPContentHandler handler = new JSPContentHandler();
+  public JSPTreeNodeIF read(boolean useTagPooling)
+    throws IOException, SAXException {
+    JSPContentHandler handler = new JSPContentHandler(useTagPooling);
     XMLReader parser = createXMLReader();
     handler.register(parser);
     logger.debug("Read in JSP from " + filename);

@@ -41,13 +41,19 @@ public class JSPTreeNode implements JSPTreeNodeIF {
   protected List<JSPTreeNodeIF> children;
   protected Map<String, String> attr;
   protected TagSupport tag;
+  protected final boolean dontCloneTags;
 
   public JSPTreeNode(String name, JSPTreeNodeIF parent) {
+    this(name, parent, TaglibTagFactory.TAGPOOLING_DEFAULT);
+  }
+
+  public JSPTreeNode(String name, JSPTreeNodeIF parent, boolean dontCloneTags) {
     this.name = name;
     this.children = new ArrayList<JSPTreeNodeIF>();
     this.attr = new HashMap<String, String>();
     this.parent = parent;
     this.tag = null; // will be set later using setTag
+    this.dontCloneTags = dontCloneTags;
   }
 
   public Map<String, String> getAttributes() {
@@ -103,11 +109,14 @@ public class JSPTreeNode implements JSPTreeNodeIF {
 
   public JSPTreeNodeIF makeClone() {
     // clone node
-    JSPTreeNode clone = new JSPTreeNode(name, null); // parent will set parent, if any
+    JSPTreeNode clone = new JSPTreeNode(name, null, dontCloneTags); // parent will set parent, if any
     clone.attr = attr;
 
     // clone tag, too
     if (tag != null) {
+      if (dontCloneTags) {
+        clone.setTag(tag);
+      } else
       try {
         clone.setTag(tag.getClass().newInstance());
       } catch (Exception e) {
