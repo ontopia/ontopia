@@ -20,12 +20,6 @@
 
 package net.ontopia.topicmaps.impl.remote;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.core.index.*;
-import net.ontopia.topicmaps.impl.utils.*;
-import net.ontopia.topicmaps.impl.basic.index.IndexManager;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapTransaction;
 import net.ontopia.topicmaps.impl.basic.TopicMap;
 

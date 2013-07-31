@@ -20,13 +20,19 @@
 
 package net.ontopia.topicmaps.impl.remote;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.utils.*;
+import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.impl.basic.*;
-import net.ontopia.topicmaps.utils.tmrap.*;
+import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.impl.basic.Topic;
+import net.ontopia.topicmaps.impl.basic.TopicMap;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
+import net.ontopia.utils.OntopiaRuntimeException;
   
 /**
  * INTERNAL: The remote topic implementation. Checks that it is loaded 

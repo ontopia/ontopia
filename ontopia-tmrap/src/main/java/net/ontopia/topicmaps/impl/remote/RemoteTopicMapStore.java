@@ -20,13 +20,9 @@
 
 package net.ontopia.topicmaps.impl.remote;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
-import net.ontopia.topicmaps.impl.basic.*;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.utils.TopicMapTransactionIF;
-import net.ontopia.topicmaps.utils.tmrap.*;
+import net.ontopia.topicmaps.utils.tmrap.RemoteTopicIndex;
 import net.ontopia.topicmaps.utils.SameStoreFactory;
 
 /**
