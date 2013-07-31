@@ -28,6 +28,7 @@ import net.ontopia.topicmaps.webed.core.ActionResponseIF;
  * PUBLIC: This action does nothing.
  * @deprecated
  */
+@Deprecated
 public class DefaultAction implements ActionIF {
   
   public void perform(ActionParametersIF params, ActionResponseIF response) {

@@ -33,6 +33,7 @@ import net.ontopia.topicmaps.webed.impl.utils.ActionSignature;
  * type. This action really makes no sense any more.
  * @deprecated
  */
+@Deprecated
 public class RemoveType implements ActionIF {
   
   public void perform(ActionParametersIF params, ActionResponseIF response) {
