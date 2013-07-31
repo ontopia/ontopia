@@ -625,13 +625,6 @@
 	
 	<repositories>
 		<repository>
-			<id>Ontopia</id>
-			<url>http://ontopia.googlecode.com/svn/maven-repository</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
 			<id>org.tmapi</id>
 			<name>TMAPI.org repository</name>
 			<url>http://www.tmapi.org/maven-repository</url>
