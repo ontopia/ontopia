@@ -87,7 +87,7 @@ public class FieldInstanceDateTimeField extends TextField<String> implements ITe
   protected void onModelChanged() {
     super.onModelChanged();
     // TODO: replace "HH:mm:ss" pattern with "12:00:00"
-    String newValue = (String)getModelObject();
+    String newValue = getModelObject();
     if (ObjectUtils.equals(newValue, oldValue)) return;
     AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
     FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();

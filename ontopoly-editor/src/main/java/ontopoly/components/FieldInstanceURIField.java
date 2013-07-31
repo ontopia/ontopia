@@ -82,7 +82,7 @@ public class FieldInstanceURIField extends Panel {
       @Override
       protected void onModelChanged() {
         super.onModelChanged();
-        String newValue = (String)getModelObject();
+        String newValue = getModelObject();
         if (ObjectUtils.equals(newValue, oldValue)) return;
         AbstractOntopolyPage page = (AbstractOntopolyPage)getPage();
         FieldInstance fieldInstance = fieldValueModel.getFieldInstanceModel().getFieldInstance();

@@ -179,12 +179,12 @@ public final class FieldAssignment {
     FieldAssignment fa_next = null;
     int indexOfThis = fieldAssignments.indexOf(this);
     if (indexOfThis < (length-1))
-      fa_next = (FieldAssignment)fieldAssignments.get(indexOfThis+1);
+      fa_next = fieldAssignments.get(indexOfThis+1);
 
     // get last field order
     int fieldOrderMax = Ordering.MAX_ORDER;
     for (int i=0; i < length; i++) {
-      FieldAssignment fa = (FieldAssignment)fieldAssignments.get(i);
+      FieldAssignment fa = fieldAssignments.get(i);
       int fieldOrder = fa.getOrder();
       if (fieldOrder != Ordering.MAX_ORDER &&
           (fieldOrderMax == Ordering.MAX_ORDER || fieldOrder > fieldOrderMax))
@@ -212,7 +212,7 @@ public final class FieldAssignment {
         nextAvailableOrder = fieldOrderThis + Ordering.ORDER_INCREMENTS;
         other.setOrder(nextAvailableOrder);
         for (int i=indexOfThis+1; i < length; i++) {
-          FieldAssignment fa = (FieldAssignment)fieldAssignments.get(i);
+          FieldAssignment fa = fieldAssignments.get(i);
           if (!ObjectUtils.equals(fa, other)) {
             nextAvailableOrder += Ordering.ORDER_INCREMENTS;
             fa.setOrder(nextAvailableOrder);

@@ -64,7 +64,7 @@ public class FieldAssignmentModel extends LoadableDetachableModel<FieldAssignmen
   }
   
   public FieldAssignment getFieldAssignment() {
-    return (FieldAssignment)getObject();
+    return getObject();
   }
 
   @Override

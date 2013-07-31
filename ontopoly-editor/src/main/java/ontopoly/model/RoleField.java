@@ -380,7 +380,7 @@ public class RoleField extends FieldDefinition {
       if (scope.size() == 2 && scope.contains(fieldDefinitionIf)) { // note: this is value ordering
         Iterator<TopicIF> siter = scope.iterator();
         while (siter.hasNext()) {
-          TopicIF theme = (TopicIF)siter.next();
+          TopicIF theme = siter.next();
           if (!theme.equals(fieldDefinitionIf)) {
             // FIXME: if map already contains key, we might want to delete occ
             topics_occs.put(new Topic(theme, topic.getTopicMap()), occ);
@@ -418,7 +418,7 @@ public class RoleField extends FieldDefinition {
       boolean replaceValues = roles.size() == 1;
       Iterator<AssociationRoleIF> iter = roles.iterator();
       while (iter.hasNext()) {
-        AssociationRoleIF role = (AssociationRoleIF)iter.next();
+        AssociationRoleIF role = iter.next();
         ValueIF valueIf = createValue(this, role);
         if (valueIf == null) {
           continue;
@@ -713,12 +713,12 @@ public class RoleField extends FieldDefinition {
 
     TopicMapBuilderIF builder = topicIf.getTopicMap().getBuilder();
 
-    OccurrenceIF maxOcc = (OccurrenceIF)(occs.isEmpty() ? null : occs.get(occs.size()-1));
+    OccurrenceIF maxOcc = (occs.isEmpty() ? null : occs.get(occs.size()-1));
     int fieldOrderMax = (maxOcc == null ? 0 : Ordering.stringToOrder(maxOcc.getValue()));
 
     // make sure this value has an order value
     OccurrenceIF p1occ = null;
-    OccurrenceIF p2occ = (OccurrenceIF)topics_occs.get(p2);
+    OccurrenceIF p2occ = topics_occs.get(p2);
     OccurrenceIF next_occ = null;
     int fieldOrderP2;
     int nextOrder = Ordering.MAX_ORDER;
@@ -732,13 +732,13 @@ public class RoleField extends FieldDefinition {
       // find occurrence after p2occ
       int indexP2occ = occs.indexOf(p2occ);
       if (indexP2occ < (occs.size()-1))
-        next_occ = (OccurrenceIF)occs.get(indexP2occ+1);
+        next_occ = occs.get(indexP2occ+1);
       if (next_occ != null) {
         // if next then average this and next field orders
         int fieldOrderNext = Ordering.stringToOrder(next_occ.getValue());
         nextOrder = (fieldOrderP2 + fieldOrderNext)/2;
         if (nextOrder != fieldOrderP2) {
-          p1occ = (OccurrenceIF)topics_occs.get(p1);
+          p1occ = topics_occs.get(p1);
           if (p1occ != null) {
             p1occ.setValue(Ordering.orderToString(nextOrder));
           } else {
@@ -753,7 +753,7 @@ public class RoleField extends FieldDefinition {
       nextOrder = fieldOrderP2;
     if (p1occ == null) {
       nextOrder += Ordering.ORDER_INCREMENTS;
-      p1occ = (OccurrenceIF)topics_occs.get(p1);
+      p1occ = topics_occs.get(p1);
       if (p1occ != null) {
         p1occ.setValue(Ordering.orderToString(nextOrder));
       } else {
@@ -766,7 +766,7 @@ public class RoleField extends FieldDefinition {
       int indexP2occ = occs.indexOf(p2occ);
       if (indexP2occ > 0) {
         for (int i=indexP2occ+1; i < occs.size(); i++) {
-          OccurrenceIF occ = (OccurrenceIF)occs.get(i);
+          OccurrenceIF occ = occs.get(i);
           nextOrder += Ordering.ORDER_INCREMENTS;
           occ.setValue(Ordering.orderToString(nextOrder));      
         }

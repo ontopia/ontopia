@@ -55,7 +55,7 @@ public class LockManager implements Serializable {
       long expiryTime = System.currentTimeMillis(); 
       if (expiryTime >= nextPrune && (++accessCount % 100 == 0))
         pruneLocks(nextPrune);
-      Lock lock = (Lock)locks.get(lockKey);
+      Lock lock = locks.get(lockKey);
       // return existing lock, if not expired
       if (lock != null && !lock.expired(expiryTime, getLockTimeSpan())) {
         // if the existing lock was owned by us, then update the expiry
@@ -76,7 +76,7 @@ public class LockManager implements Serializable {
       long expiryTime = System.currentTimeMillis(); 
       if (expiryTime >= nextPrune && (++accessCount % 100 == 0))
         pruneLocks(nextPrune);
-      return (Lock)locks.remove(lockKey);
+      return locks.remove(lockKey);
     }    
   }
   
@@ -85,9 +85,9 @@ public class LockManager implements Serializable {
       long expiryTime = System.currentTimeMillis(); 
       if (expiryTime >= nextPrune && (+accessCount % 100 == 0))
         pruneLocks(nextPrune);
-      Lock lock = (Lock)locks.get(lockKey);
+      Lock lock = locks.get(lockKey);
       if (lock != null && lock.ownedBy(lockerId))
-        return (LockManager.Lock)locks.remove(lockKey);
+        return locks.remove(lockKey);
       else
         return null;
     }    

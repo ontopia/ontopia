@@ -74,7 +74,7 @@ public abstract class FieldDefinition extends Topic {
     TopicIF player2 = view.getTopicIF();
     TopicIF rType3 = OntopolyModelUtils.getTopicIF(tm, PSI.ON_CHILD_VIEW);
     Collection<TopicIF> players = OntopolyModelUtils.findTernaryPlayers(tm, aType, player1, rType1, player2, rType2, rType3);
-    TopicIF viewIf = (TopicIF) CollectionUtils.getFirst(players);
+    TopicIF viewIf = CollectionUtils.getFirst(players);
     if (viewIf == null) {
       return FieldsView.getDefaultFieldsView(tm);
     } else {
@@ -111,7 +111,7 @@ public abstract class FieldDefinition extends Topic {
     Iterator<AssociationIF> it = associationIFs.iterator();
 
     while (it.hasNext()) {
-      ((AssociationIF) it.next()).remove();
+      it.next().remove();
     }
     OntopolyModelUtils.makeBinaryAssociation(aType, player2,
         type2, player3, type3);

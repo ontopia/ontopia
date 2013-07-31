@@ -53,7 +53,7 @@ public class AssociationTypeModel extends LoadableDetachableModel<AssociationTyp
   }
 
   public AssociationType getAssociationType() {
-    return (AssociationType)getObject();
+    return getObject();
   }
   
   @Override

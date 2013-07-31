@@ -106,7 +106,7 @@ public class AssociationField extends Topic {
 
 		if (roleFields.size() == 1 && getAssociationType().isSymmetric()) {
 			// if association is symmetric we have to add the other field manually
-			RoleField rfield = (RoleField)roleFields.get(0);
+			RoleField rfield = roleFields.get(0);
 			roleFields.add(rfield);
 		} else {
 			Collections.sort(roleFields, RoleFieldComparator.getInstance());

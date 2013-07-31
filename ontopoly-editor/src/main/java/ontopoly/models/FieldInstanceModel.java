@@ -71,7 +71,7 @@ public class FieldInstanceModel extends LoadableDetachableModel<FieldInstance> {
   }
   
   public FieldInstance getFieldInstance() {
-    return (FieldInstance)getObject();
+    return getObject();
   }
   
   @Override
@@ -99,7 +99,7 @@ public class FieldInstanceModel extends LoadableDetachableModel<FieldInstance> {
     List<FieldInstanceModel> result = new ArrayList<FieldInstanceModel>(fieldInstances.size());
     Iterator<FieldInstance> iter = fieldInstances.iterator();
     while (iter.hasNext()) {
-      FieldInstance fieldInstance = (FieldInstance)iter.next();
+      FieldInstance fieldInstance = iter.next();
       result.add(new FieldInstanceModel(fieldInstance));
     }
     return result;

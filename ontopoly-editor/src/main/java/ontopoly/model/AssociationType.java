@@ -212,7 +212,7 @@ public class AssociationType extends AbstractTypingTopic {
       }
       if (match) {
         for (int i=0; i < size; i++) {
-          AssociationRoleIF role = (AssociationRoleIF)roleMatches[i];
+          AssociationRoleIF role = roleMatches[i];
           RoleType fromType = roleTypesFrom.get(i);
           RoleType toType = roleTypesTo.get(i);
           if (role.getType().equals(fromType.getTopicIF())) {

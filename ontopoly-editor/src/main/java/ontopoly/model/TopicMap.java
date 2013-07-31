@@ -239,7 +239,7 @@ public class TopicMap {
     if (occs.isEmpty())
       return 0;
  
-    String versionNumber = ((OccurrenceIF) occs.iterator().next()).getValue();
+    String versionNumber = occs.iterator().next().getValue();
     try {
       return Float.parseFloat(versionNumber);
     } catch (NumberFormatException e) {
@@ -406,7 +406,7 @@ public class TopicMap {
     TopicMap tm = this;
     NameType nameType = new NameType(OntopolyModelUtils.getTopicIF(tm, PSI.TMDM_TOPIC_NAME), tm);
     Collection<NameField> nameFields = nameType.getDeclaredByFields();
-    return (NameField)CollectionUtils.getFirstElement(nameFields);
+    return CollectionUtils.getFirstElement(nameFields);
   }
   
 //  public IdentityField getIdentityField(IdentityType identityType) {

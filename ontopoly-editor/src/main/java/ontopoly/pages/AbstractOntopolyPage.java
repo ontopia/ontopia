@@ -168,7 +168,7 @@ public abstract class AbstractOntopolyPage extends WebPage implements LifeCycleL
           if (!names.isEmpty()) {
             Iterator<TopicNameIF> iter = names.iterator();
             while (iter.hasNext()) {
-              TopicNameIF name = (TopicNameIF) iter.next();
+              TopicNameIF name = iter.next();
               name.remove();
             }
           }

@@ -53,7 +53,7 @@ public class TopicTypeModel extends LoadableDetachableModel<TopicType> {
   }
 
   public TopicType getTopicType() {
-    return (TopicType)getObject();
+    return getObject();
   }
 
   @Override

@@ -606,7 +606,7 @@ public class Upgrade_1_9 extends UpgradeBase {
       TopicIF tt = fen[0];
       TopicIF xt = fen[1];
       
-      TopicIF xtField = (TopicIF)xtfields.get(xt);
+      TopicIF xtField = xtfields.get(xt);
       if (xtField == null)
         throw new OntopiaRuntimeException("Could not find field for " + xt);
       // builder.makeTopicName(newField, TopicStringifiers.toString(xt));
@@ -1562,8 +1562,8 @@ public class Upgrade_1_9 extends UpgradeBase {
         TopicIF fd = (TopicIF)qr.getValue(1);
         TopicIF at = (TopicIF)qr.getValue(2);
         TopicIF ft = (TopicIF)qr.getValue(3);
-        String atkey = (String)(at == null || at.getSubjectIdentifiers().isEmpty() ? null : ((LocatorIF)at.getSubjectIdentifiers().iterator().next()).getAddress());  
-        String ftkey = (String)(ft == null || ft.getSubjectIdentifiers().isEmpty() ? null : ((LocatorIF)ft.getSubjectIdentifiers().iterator().next()).getAddress());
+        String atkey = (at == null || at.getSubjectIdentifiers().isEmpty() ? null : at.getSubjectIdentifiers().iterator().next().getAddress());  
+        String ftkey = (ft == null || ft.getSubjectIdentifiers().isEmpty() ? null : ft.getSubjectIdentifiers().iterator().next().getAddress());
         String fieldkey = atkey + "|" + ftkey;
         int ix = fdo.indexOf(fieldkey);
         if (ix > -1) {
