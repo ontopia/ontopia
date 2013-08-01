@@ -1,81 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <parent>
-    <artifactId>ontopia-parent</artifactId>
-    <groupId>net.ontopia</groupId>
-    <version>5.2.3-SNAPSHOT</version>
-  </parent>
-
-  <artifactId>ontopia-db2tm</artifactId>
-  <packaging>jar</packaging>
-  
-  <name>Ontopia DB2TM</name>
-  <description>Ontopia DB2TM.</description>
-
-  <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>ontopia-engine</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>ontopia-navigator</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.opencsv</groupId>
-      <artifactId>opencsv</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jsp-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>docbook-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-shared-docbook-resources</id>
-            <configuration>
-              <target>
-                <ant antfile="../src/docbook/ant/build.xml" target="main" />
-              </target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- used for test coverage
-           cobertura:cobertura = instrument, test, generate report
-      -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.5.1</version>
-      </plugin>      
-    </plugins>
-  </build>
-
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>ontopia-parent</artifactId>
+		<groupId>net.ontopia</groupId>
+		<version>5.2.3-SNAPSHOT</version>
+	</parent>
+	<artifactId>ontopia-db2tm</artifactId>
+	<packaging>jar</packaging>
+	<name>Ontopia DB2TM</name>
+	<description>Ontopia DB2TM.</description>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-engine</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ontopia-navigator</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>docbook-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-shared-docbook-resources</id>
+						<configuration>
+							<target>
+								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
