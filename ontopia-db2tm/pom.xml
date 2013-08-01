@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>ontopia-parent</artifactId>
 		<groupId>net.ontopia</groupId>
-		<version>5.2.3-SNAPSHOT</version>
+		<version>5.3.0</version>
 	</parent>
 	<artifactId>ontopia-db2tm</artifactId>
 	<packaging>jar</packaging>
@@ -56,7 +56,7 @@
 						<id>copy-shared-docbook-resources</id>
 						<configuration>
 							<target>
-								<ant antfile="../src/docbook/ant/build.xml" target="main"/>
+								<ant antfile="../src/docbook/ant/build.xml" target="main" />
 							</target>
 						</configuration>
 					</execution>
