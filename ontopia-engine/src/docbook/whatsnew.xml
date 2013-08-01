@@ -26,11 +26,14 @@ both at a higher level, and in more detail.
 <section id="sect-5.3.0">
 <title>Ontopia 5.3.0 release notes</title>
 
-<para>This release is a bug fix and cleanup release.</para>
+<para>This release is a bug fix and cleanup release and adds the new <interfacename>NameIF</interfacename> interface.</para>
 
 <para>The following changes have been made:</para>
 
 <itemizedlist>
+  <listitem>
+    <para>Added <interfacename>NameIF</interfacename> interface to support operations that can return any name.</para>
+  </listitem>
   <listitem>
     <para>More generics were added to the Ontopia interfaces</para>
   </listitem>
