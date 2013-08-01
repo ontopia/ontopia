@@ -23,6 +23,10 @@
   <!-- Used for conditional includes -->
   <xsl:param name = "condition" select = "'UUUUUUUUUUUUUU'" />
 
+  <!-- Main Ontopia version info to use, update on release! -->
+  <xsl:param name = "ontopiaversion" select = "'5.3.0'" />
+  <xsl:param name = "ontopiadate" select = "'2013-08-01'" />
+
   <!-- ===== Main style rule ======================================== -->
 
   <xsl:template match="/article | /book">
@@ -858,10 +862,10 @@
                 <tr><th>Revision Date:</th>        <td><xsl:value-of select="$container/revhistory/revision/date"/></td></tr>
         </xsl:if>
   <xsl:if test="$container/pubdate">
-  <tr><th>Date:</th><td><xsl:value-of select="$container/pubdate"/></td></tr>
+  <tr><th>Date:</th><td><xsl:value-of select="$ontopiadate"/></td></tr>
   </xsl:if>
   <xsl:if test="$container/releaseinfo">
-  <tr><th>Version:</th><td><xsl:value-of select="$container/releaseinfo"/></td></tr>
+  <tr><th>Version:</th><td><xsl:value-of select="$ontopiaversion"/></td></tr>
   </xsl:if>
   </table>
   </xsl:template>
