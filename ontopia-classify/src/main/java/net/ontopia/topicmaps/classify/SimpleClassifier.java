@@ -62,7 +62,7 @@ public class SimpleClassifier {
   /**
    * PUBLIC: Extracts keywords from the given content and returns
    * a TermDatabase representing the results.
-   * @since %NEXT%
+   * @since 5.3.0
    */
   public static TermDatabase classify(byte[] content) {
     return classify(content, null);
@@ -72,7 +72,7 @@ public class SimpleClassifier {
    * PUBLIC: Extracts keywords from the given content, using the
    * information in the topic map, and returns a TermDatabase
    * representing the results.
-   * @since %NEXT%
+   * @since 5.3.0
    */
   public static TermDatabase classify(byte[] content, TopicMapIF topicmap) {
     // create classifier

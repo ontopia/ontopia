@@ -122,7 +122,7 @@ public class StreamUtils {
   /**
    * INTERNAL : Returns the entire contents of a stream as a byte array
    * and closes the stream afterwards.
-   * @since %NEXT%
+   * @since 5.3.0
    */
   public static byte[] readAndClose(InputStream in) throws IOException {
     try {

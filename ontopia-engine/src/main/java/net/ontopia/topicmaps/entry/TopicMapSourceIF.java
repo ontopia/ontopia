@@ -84,7 +84,7 @@ public interface TopicMapSourceIF {
    * PUBLIC: Closes the source by releasing references it holds to e.g.
    * database or file system objects.
    *
-   * @since %NEXT%
+   * @since 5.3.0
    */
   public void close();
 
