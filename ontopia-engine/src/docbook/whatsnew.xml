@@ -26,7 +26,7 @@ both at a higher level, and in more detail.
 <section id="sect-5.3.0">
 <title>Ontopia 5.3.0 release notes</title>
 
-<para>This release is a bug fix and cleanup release and introduces some new interface methods for <interfacename>foobar</interfacename> and <interfacename>foobar</interfacename>.</para>
+<para>This release is a bug fix and cleanup release.</para>
 
 <para>The following changes have been made:</para>
 
