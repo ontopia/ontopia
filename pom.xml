@@ -74,6 +74,10 @@
 		<tmapi.version>2.0.2</tmapi.version>
 		<ontopia.jetty.port>8080</ontopia.jetty.port>
 	</properties>
+
+	<prerequisites>
+		<maven>2.2.1</maven>
+	</prerequisites>
 	
 	<build>
 		<pluginManagement>
