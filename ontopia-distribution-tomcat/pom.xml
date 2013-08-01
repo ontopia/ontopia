@@ -149,7 +149,7 @@
 								<containerId>tomcat6x</containerId>
 								<zipUrlInstaller>
 									<url>http://www.eu.apache.org/dist/tomcat/tomcat-6/v6.0.37/bin/apache-tomcat-6.0.37-windows-x64.zip</url>
-									<installDir>${project.build.directory}</installDir>
+									<extractDir>${project.build.directory}</extractDir>
 								</zipUrlInstaller>
 							</container>
 						</configuration>
