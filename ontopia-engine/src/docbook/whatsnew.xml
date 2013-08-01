@@ -10,8 +10,8 @@
 <shortaffil>Ontopia</shortaffil>
 </affiliation>
 </author>
-<pubdate>2012-11-29</pubdate>
-<releaseinfo>5.2.2</releaseinfo>
+<pubdate>2013-08-01</pubdate>
+<releaseinfo>5.3.0</releaseinfo>
 </articleinfo>
 
 <abstract>
@@ -20,6 +20,200 @@ This document describes what has changed in Ontopia between releases,
 both at a higher level, and in more detail.
 </para>
 </abstract>
+
+<!-- ======================================================================
+     5.3.0                                                              -->
+<section id="sect-5.3.0">
+<title>Ontopia 5.3.0 release notes</title>
+
+<para>This release is a bug fix and cleanup release and introduces some new interface methods for <interfacename>foobar</interfacename> and <interfacename>foobar</interfacename>.</para>
+
+<para>The following changes have been made:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>More generics were added to the Ontopia interfaces</para>
+  </listitem>
+  <listitem>
+    <para>The dependencies to patched artifacts hosted by the Ontopia repository (jing, trove and touchgraph) have been refactored to 
+      their respected pulic counterparts. This means the Ontopia repository is no longer present in the POM.
+    </para>
+  </listitem>
+  <listitem>
+    <para>Removed the <interfacename>PoolableSetFactoryIF</interfacename>, <interfacename>PoolableSetIF</interfacename> and 
+      <interfacename>SetPoolIF</interfacename> interfaces and their implementing classes.</para>
+  </listitem>
+  <listitem>
+    <para>Improved the closing of <interfacename>TopicMapSourceIF</interfacename> objects when closing a <interfacename>TopicMapRepositoryIF</interfacename> 
+      object fixing possible memory leaks and clustering issues.</para>
+  </listitem>
+  <listitem>
+    <para>Added missing implementations for persisting reference title and base address changes in an RDBMS environment</para>
+  </listitem>
+  <listitem>
+    <para>Added functionality to LTM parser that allows reification based on a prefixed PSI</para>
+  </listitem>
+  <listitem>
+    <para>Added functionality to LTM parser that allows predefined PSI prefixes to be used when exporting a topic map</para>
+  </listitem>
+  <listitem>
+    <para>A long standing issue regarding difference of topic map loading in Navigator and Engine has been resolved. (issue 392)</para>
+  </listitem>
+  <listitem>
+    <para>Added fallback-value functionality to <interfacename>tolog:id</interfacename>, <interfacename>tolog:oid</interfacename> and 
+      <interfacename>tolog:oid</interfacename></para>
+  </listitem>
+  <listitem>
+    <para>Improved tag pool handling in navigator tags, also added tests for this.</para>
+  </listitem>
+  <listitem>
+    <para>Fixed the export of topic maps within Ontoploy (issue 466)</para>
+  </listitem>
+  <listitem>
+    <para>Fixes missing classes in the Vizlet (issue 450)</para>
+  </listitem>
+  <listitem>
+    <para>Upgraded to SLF4J 1.7.5</para>
+  </listitem>
+  <listitem>
+    <para>Fixed issues in the TMRAP-webapp that were blocking the Axis SOAP service. Note that the presence of 
+      Crimson on the classpath will still stop TMRAP from working as a SOAP service.</para>
+  </listitem>
+</itemizedlist>
+
+<para>The following bugs have been fixed:</para>
+
+<itemizedlist>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=56"
+      >Issue 56: Automate distribution uploading</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=66"
+      >Issue 66: Remove dependency to patched 3rd-party libs</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=70"
+      >Issue 70: Testing after installation failures</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=224"
+      >Issue 224: Ontopia could show version number</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=232"
+      >Issue 232: Execute RDBMS tests during build</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=392"
+      >Issue 392: NavigatorApplication.getTopicMapRepository() returns different repository object then TopicMaps.getTopicMapRepository() for the same sources file</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=406"
+      >Issue 406: Cant build ontopia from scratch</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=422"
+      >Issue 422: ontopia/pom.xml contains duplicate maven-javadoc-plugin dependency</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=432"
+      >Issue 432: Error in NextPreviousOptimizer</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=446"
+      >Issue 446: Export in Ontopoly produces 0 byte file, Export in Ominigator produces correct result</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=450"
+      >Issue 450: the failure when use "Visualize"</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=452"
+      >Issue 452: LTM reification should support prefix:suffix notation</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=454"
+      >Issue 454: LTMTopicMapWriter should support user defined prefixes</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=457"
+      >Issue 457: Cannot create symmetric associations with the browse dialog</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=460"
+      >Issue 460: Omnigator documentation specifies incorrect path for topicmaps location</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=465"
+      >Issue 465: Upgrade slf4j to 1.6 or higher</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=466"
+      >Issue 466: TMRAP webapp fails to start due to missing axis class</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=467"
+      >Issue 467: tolog:out, :oid and :id tags should support fallback value</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=468"
+      >Issue 468: RDBMSTopicMapSource should implement close() method</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=469"
+      >Issue 469: TopicMapSourceIF could use close() method</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=470"
+      >Issue 470: RDBMSTopicMapReference.setTitle is not persisted</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=471"
+      >Issue 471: RDBMSTopicMapReference should implement methods to get and set base address</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=473"
+      >Issue 473: RDBMSTopicMapSource.refresh might leave references open</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=474"
+      >Issue 474: Documentation pages are missing tables of contents and section numbering</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=475"
+      >Issue 475: RDBMS clustering throws exception when shared cache is off</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=476"
+      >Issue 476: JGroups fails to include sub-dependency commons-logging</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=477"
+      >Issue 477: SimpleClassifier holds files open</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=479"
+      >Issue 479: Ability to build Ontopia without need for port 8080</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=480"
+      >Issue 480: PoolableSet[Factory][IF] and SetPool[IF] classes are unused and should be removed</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=481"
+      >Issue 481: XTMTopicMapWriter does not add xlink namespace</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=482"
+      >Issue 482: Ontopia distribution contains duplicate libraries</ulink></para>
+  </listitem>
+  <listitem>
+    <para><ulink url="http://code.google.com/p/ontopia/issues/detail?id=483"
+      >Issue 483: Revision r2338 exposes error in tolog SetTag when used with tag pooling</ulink></para>
+  </listitem>
+</itemizedlist>
+</section>
 
 <!-- ======================================================================
      5.2.2                                                              -->
