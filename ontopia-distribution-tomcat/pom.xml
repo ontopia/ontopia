@@ -188,6 +188,21 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>
+						<configuration>
+							<includeProjectDependencies>false</includeProjectDependencies>
+							<includePluginDependencies>true</includePluginDependencies>
+							<executableDependency>
+								<groupId>${project.parent.groupId}</groupId>
+								<artifactId>ontopia-engine</artifactId>
+							</executableDependency>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>${project.parent.groupId}</groupId>
+								<artifactId>ontopia-engine</artifactId>
+								<version>${project.parent.version}</version>
+							</dependency>
+						</dependencies>
 						<executions>
 							<execution>
 								<id>generate-rdbms-schema-generic</id>
