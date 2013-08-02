@@ -223,9 +223,7 @@
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>2.9</version>
 					<configuration>
-						<reportOutputDirectory>${project.build.directory}/site/</reportOutputDirectory>
-						<outputDirectory>${project.build.directory}/site/</outputDirectory>
-						<destDir>api</destDir>
+						<outputDirectory>${project.build.directory}/site/api</outputDirectory>
 						<author>true</author>
 						<version>true</version>
 						<use>true</use>
@@ -664,6 +662,11 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<!-- aggregate takes different configuration, see #485 -->
+							<reportOutputDirectory>${project.build.directory}/site/api</reportOutputDirectory>
+							<destDir>api</destDir>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
