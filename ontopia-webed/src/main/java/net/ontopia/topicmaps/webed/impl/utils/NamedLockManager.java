@@ -23,12 +23,10 @@ package net.ontopia.topicmaps.webed.impl.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpSession;
 
@@ -73,8 +71,7 @@ public class NamedLockManager {
    */
   public synchronized LockResult attemptToLock(UserIF user, Collection objects,
                                                String nameBase, 
-                                               HttpSession session,
-                                               ResourceBundle resBundle) {
+                                               HttpSession session) {
     if (nameBase == null)
       throw new IllegalArgumentException("Lock name must be specified.");
     String name = nameBase + "$" + suffixCreator.getNextUniqueString();
@@ -112,7 +109,7 @@ public class NamedLockManager {
     Object firstUnlockable = unlockableIt.hasNext() ?
         unlockableIt.next() : null;
     NamedLock unlockableLock = (firstUnlockable == null ? null : (NamedLock)objectLocks.get(firstUnlockable));
-    return new LockResult(unlockable, unlockableLock, name, resBundle);
+    return new LockResult(unlockable, unlockableLock, name);
   }
 
   private synchronized Collection _attemptToLock(Object user, Collection objects) {

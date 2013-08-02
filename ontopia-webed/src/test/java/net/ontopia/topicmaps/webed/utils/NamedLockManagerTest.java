@@ -23,7 +23,6 @@ package net.ontopia.topicmaps.webed.utils;
 import java.util.HashSet;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.ResourceBundle;
 
 import net.ontopia.topicmaps.nav2.core.NavigatorApplicationIF;
 import net.ontopia.topicmaps.nav2.core.UserIF;
@@ -41,7 +40,6 @@ public class NamedLockManagerTest extends TestCase {
   private NamedLockManager lockMan;
   private FakeHttpSession session;
   private NavigatorConfiguration navConf;
-  private ResourceBundle resBundle;
 
   public NamedLockManagerTest(String name) {
     super(name);
@@ -53,7 +51,6 @@ public class NamedLockManagerTest extends TestCase {
     lockMan = TagUtils.getNamedLockManager(session.getServletContext());
     lockMan.clear();
     navConf = new NavigatorConfiguration();
-    resBundle = null;
   }
 
   public void tearDown() {
@@ -85,8 +82,7 @@ public class NamedLockManagerTest extends TestCase {
     Collection objs = new HashSet();
     objs.add("first");
     objs.add("second");
-    assertNoUnlockables(lockMan.attemptToLock(user1, objs, "gusto", session,
-                                              resBundle));
+    assertNoUnlockables(lockMan.attemptToLock(user1, objs, "gusto", session));
   }
 
   public void testLockPrimitiveObjs2() {
@@ -95,10 +91,8 @@ public class NamedLockManagerTest extends TestCase {
     Collection objs = new HashSet();
     objs.add("first");
     objs.add("second");
-    assertNoUnlockables(lockMan.attemptToLock(user1, objs, "gusto", session,
-                                              resBundle));
-    assertEquals(objs, lockMan.attemptToLock(user2, objs, "gusto", session,
-                                             resBundle).getUnlockable());
+    assertNoUnlockables(lockMan.attemptToLock(user1, objs, "gusto", session));
+    assertEquals(objs, lockMan.attemptToLock(user2, objs, "gusto", session).getUnlockable());
   }
 
   public void testUnlockObjs() {
@@ -107,10 +101,10 @@ public class NamedLockManagerTest extends TestCase {
     objs.add("first");
     objs.add("second");
     assertNoUnlockables(lockMan.attemptToLock(user1, objs, "binding-to-1", 
-                        session, resBundle));
+                        session));
     lockMan.unlock(user1, "binding-to-1", false);
     assertNoUnlockables(lockMan.attemptToLock(user1, objs, "binding-to-1", 
-                        session, resBundle));
+                        session));
   }
 
   public void testNotUnlockObjsDependentLocks() {
@@ -131,17 +125,13 @@ public class NamedLockManagerTest extends TestCase {
     objs1.add("third");
     objs4.add("fourth");
 
-    LockResult res1 = lockMan.attemptToLock(user, objs1, "lock1", session,
-                                            resBundle);
+    LockResult res1 = lockMan.attemptToLock(user, objs1, "lock1", session);
     String name1 = res1.getName();
-    LockResult res2 = lockMan.attemptToLock(user, objs1, "lock2", session,
-                                            resBundle);
+    LockResult res2 = lockMan.attemptToLock(user, objs1, "lock2", session);
     String name2 = res2.getName();
-    LockResult res3 = lockMan.attemptToLock(user, objs1, "lock3", session,
-                                            resBundle);
+    LockResult res3 = lockMan.attemptToLock(user, objs1, "lock3", session);
     String name3 = res3.getName();
-    LockResult res4 = lockMan.attemptToLock(user, objs1, "lock4", session,
-                                            resBundle);
+    LockResult res4 = lockMan.attemptToLock(user, objs1, "lock4", session);
     String name4 = res4.getName();
 
     assertNoUnlockables(res1);
@@ -156,10 +146,8 @@ public class NamedLockManagerTest extends TestCase {
     assertTrue("Does not own lock 3-a", lockMan.ownsLock(user, name3));
     assertTrue("Does not own lock 4-a", lockMan.ownsLock(user, name4));
 
-    LockResult res5 = lockMan.attemptToLock(user, objs1, "lock1", session,
-                                            resBundle);
-    LockResult res6 = lockMan.attemptToLock(user, objs2, "lock2", session,
-                                            resBundle);
+    LockResult res5 = lockMan.attemptToLock(user, objs1, "lock1", session);
+    LockResult res6 = lockMan.attemptToLock(user, objs2, "lock2", session);
     
     assertNoUnlockables(res5);
     String name5 = res5.getName();
@@ -192,16 +180,15 @@ public class NamedLockManagerTest extends TestCase {
     session.setMaxInactiveInterval(0);
 
     assertNoUnlockables(lockMan.attemptToLock(user1, objs, "binding-to-1", 
-                        session, resBundle));
+                        session));
     try {
       Thread.sleep(10);
     } catch (InterruptedException e) {}
-    lockMan.attemptToLock(user1, Collections.EMPTY_LIST, "b2", session,
-                          resBundle);
+    lockMan.attemptToLock(user1, Collections.EMPTY_LIST, "b2", session);
 
     // lock should now have expired, and this should go through
     assertNoUnlockables(lockMan.attemptToLock(user2, objs, "binding-to-1", 
-                        session, resBundle));
+                        session));
   }
 
   public void testLockSessionExpiry() {
@@ -215,13 +202,13 @@ public class NamedLockManagerTest extends TestCase {
     session.setAttribute(NavigatorApplicationIF.USER_KEY, user1);
     
     assertNoUnlockables(lockMan.attemptToLock(user1, objs, "binding-to-1",
-                        session, resBundle));
+                        session));
 
     session.expire();
 
     // lock should now have expired, and this should go through
     assertNoUnlockables(lockMan.attemptToLock(user2, objs, "binding-to-1",
-                        session, resBundle));
+                        session));
   }
 
   public void testLockFight() {
@@ -234,38 +221,31 @@ public class NamedLockManagerTest extends TestCase {
     String lockName1 = "lock1";
 
     // User 1 locks all the objects.
-    LockResult res1 = lockMan.attemptToLock(user1, objs, lockName1, session,
-                                            resBundle);
+    LockResult res1 = lockMan.attemptToLock(user1, objs, lockName1, session);
     assertNoUnlockables(res1);
     
     // User 2 attempts to lock the objects, but fails.
-    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session, 
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session)
         .getUnlockable());
     
     // User 2 unlocks the objects and then locks them
     lockMan.unlock(user2, lockName1, true);
-    LockResult res2 = lockMan.attemptToLock(user2, objs, lockName1, session,
-                                            resBundle);
+    LockResult res2 = lockMan.attemptToLock(user2, objs, lockName1, session);
     assertNoUnlockables(res2);
     
     // User 1 attempts to lock the objects, but fails.
-    assertEquals(objs, lockMan.attemptToLock(user1, objs, lockName1, session,
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user1, objs, lockName1, session)
         .getUnlockable());
     
     // User 1 unlocks the objects and then locks them
     lockMan.unlock(user1, lockName1, true);
-    LockResult res3 = lockMan.attemptToLock(user1, objs, lockName1, session,
-                                            resBundle);
+    LockResult res3 = lockMan.attemptToLock(user1, objs, lockName1, session);
     assertNoUnlockables(res3);
 
     // User 2 attempts to lock the objects twice, but fails.
-    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session,
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session)
         .getUnlockable());
-    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session,
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session)
         .getUnlockable());
   }
 
@@ -280,34 +260,29 @@ public class NamedLockManagerTest extends TestCase {
     String lockName1 = "lock1";
 
     // User 1 locks all the objects.
-    LockResult res1 = lockMan.attemptToLock(user1, objs, lockName1, session,
-                                            resBundle);
+    LockResult res1 = lockMan.attemptToLock(user1, objs, lockName1, session);
     assertNoUnlockables(res1);
     
     // User 2 attempts to lock the objects, but fails.
-    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session,
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session)
         .getUnlockable());
     
     // User 1 unlocks the objects.
     lockMan.unlock(user1, res1.getName(), false);
     
     // User 2 locks the objects.
-    LockResult res2 = lockMan.attemptToLock(user2, objs, lockName1, session,
-                                            resBundle);
+    LockResult res2 = lockMan.attemptToLock(user2, objs, lockName1, session);
     assertNoUnlockables(res2);
     
     // User 1 attempts to lock the objects, but fails.
-    assertEquals(objs, lockMan.attemptToLock(user1, objs, lockName1, session,
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user1, objs, lockName1, session)
         .getUnlockable());
     
     // User 2 unlocks the objects
     lockMan.unlock(user2, res2.getName(), false);
     
     // User 1 locks the objects.
-    LockResult res3 = lockMan.attemptToLock(user1, objs, lockName1, session,
-                                            resBundle);
+    LockResult res3 = lockMan.attemptToLock(user1, objs, lockName1, session);
     assertNoUnlockables(res3);
   }
 }
