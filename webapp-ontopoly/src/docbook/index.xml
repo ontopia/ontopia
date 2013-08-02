@@ -15,10 +15,6 @@
 	<abstract>
 		<para>Ontopoly is Ontopia's self-configuring, ontology-drivenTopic Maps editor</para>
 	</abstract>
-	<section>
-		<title>Ontopoly API</title>
-		<para>You can find the Javadoc specific to classes contained in the Ontopoly Webapplication in the <ulink url="api/index.html">Ontopia Ontopoly API</ulink></para>
-	</section>
 	<section><title>Ontopoly Documentation</title>
 		<itemizedlist>
 			<listitem><para><ulink url="ontopoly/user-guide.html">The Ontopoly Topic Maps Editor, User's Guide</ulink></para></listitem>
