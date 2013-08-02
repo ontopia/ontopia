@@ -115,8 +115,7 @@ public class ClusteredNamedLockManagerTest {
     String lockName1 = "lock1";
     
     // User 1 locks all the objects.
-    LockResult res1 = lockMan.attemptToLock(user1, objs, lockName1, session,
-                                            resBundle);
+    LockResult res1 = lockMan.attemptToLock(user1, objs, lockName1, session);
     assertNoUnlockables(res1);
     System.out.println("OK: m1");
 
@@ -124,15 +123,13 @@ public class ClusteredNamedLockManagerTest {
     await(2);
     
     // User 1 attempts to lock the objects, but fails.
-    assertEquals(objs, lockMan.attemptToLock(user1, objs, lockName1, session,
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user1, objs, lockName1, session)
         .getUnlockable());
     System.out.println("OK: m2");
     
     // User 1 unlocks the objects and then locks them
     lockMan.unlock(user1, lockName1, true);
-    LockResult res3 = lockMan.attemptToLock(user1, objs, lockName1, session,
-                                            resBundle);
+    LockResult res3 = lockMan.attemptToLock(user1, objs, lockName1, session);
     assertNoUnlockables(res3);
     System.out.println("OK: m3");
 
@@ -152,15 +149,13 @@ public class ClusteredNamedLockManagerTest {
     await(1);
     
     // User 2 attempts to lock the objects, but fails.
-    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session, 
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session)
         .getUnlockable());
     System.out.println("OK: s1");
     
     // User 2 unlocks the objects and then locks them
     lockMan.unlock(user2, lockName1, true);
-    LockResult res2 = lockMan.attemptToLock(user2, objs, lockName1, session,
-                                            resBundle);
+    LockResult res2 = lockMan.attemptToLock(user2, objs, lockName1, session);
     assertNoUnlockables(res2);
     System.out.println("OK: s2");
 
@@ -168,12 +163,10 @@ public class ClusteredNamedLockManagerTest {
     await(3);
     
     // User 2 attempts to lock the objects twice, but fails.
-    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session,
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session)
         .getUnlockable());
     System.out.println("OK: s3");
-    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session,
-                                             resBundle)
+    assertEquals(objs, lockMan.attemptToLock(user2, objs, lockName1, session)
         .getUnlockable());
     System.out.println("OK: s4");
 

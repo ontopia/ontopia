@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.jstl.fmt.LocalizationContext;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -164,10 +163,8 @@ public class FormTag extends BodyTagSupport {
 
       NamedLockManager lockMan = TagUtils
           .getNamedLockManager(pageContext.getServletContext());
-      LocalizationContext locCtxt =((LocalizationContext)pageContext
-          .getAttribute("javax.servlet.jsp.jstl.fmt.localizationContext.page"));
       LockResult lockResult = lockMan.attemptToLock(user, lockColl,
-          lockVarname, pageContext.getSession(), locCtxt.getResourceBundle());
+          lockVarname, pageContext.getSession());
       lockVarname = lockResult.getName();
       
       Collection unlockable = lockResult.getUnlockable();
