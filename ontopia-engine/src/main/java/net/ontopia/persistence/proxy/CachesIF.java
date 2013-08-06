@@ -20,9 +20,8 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.*;
+import java.util.Map;
 
-import net.ontopia.utils.*;
 
 /**
  * INTERNAL: 

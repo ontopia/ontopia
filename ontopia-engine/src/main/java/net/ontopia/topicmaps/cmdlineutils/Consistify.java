@@ -20,16 +20,23 @@
 
 package net.ontopia.topicmaps.cmdlineutils;
 
-import java.util.*;
 import java.io.File;
-
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.topicmaps.utils.MergeUtils;
 import net.ontopia.topicmaps.utils.KeyGenerator;
 import net.ontopia.topicmaps.impl.basic.index.TNCIndex;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.StringUtils;
 
 /**
  * INTERNAL: Consistifies a topic map by merging topics based on the

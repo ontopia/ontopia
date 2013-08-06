@@ -20,14 +20,26 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.*;
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.utils.*;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.persistence.proxy.*;
+import net.ontopia.persistence.proxy.ContentReader;
+import net.ontopia.persistence.proxy.OnDemandValue;
+import net.ontopia.persistence.proxy.TransactionIF;
+import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.CrossTopicMapException;
+import net.ontopia.topicmaps.core.DataTypes;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.impl.utils.DeletionUtils;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
   
 /**
  * INTERNAL: The rdbms variant name implementation.

@@ -23,13 +23,14 @@ package net.ontopia.topicmaps.xml;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.xml.sax.DocumentHandler;
-import org.xml.sax.SAXException;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import org.xml.sax.helpers.AttributeListImpl;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.utils.CharacterSet;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.infoset.core.*;
 
 /**
  * INTERNAL: Abstract class providing common operations used by XML

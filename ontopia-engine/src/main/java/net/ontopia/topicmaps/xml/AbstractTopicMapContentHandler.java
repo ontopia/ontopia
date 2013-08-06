@@ -20,17 +20,23 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.util.*;
-import net.ontopia.xml.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.infoset.core.*;
-
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
-
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Stack;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.xml.Slf4jSaxErrorHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * INTERNAL: Abstract SAX2 content handler used for reading various

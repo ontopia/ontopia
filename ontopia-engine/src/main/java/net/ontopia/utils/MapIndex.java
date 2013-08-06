@@ -20,7 +20,7 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Map;
 
 /**
  * INTERNAL: A non-synchronized lookup index adapter for Map instances.

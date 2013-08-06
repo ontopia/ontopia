@@ -20,18 +20,8 @@
 
 package net.ontopia.xml;
 
-import java.io.*;
-import java.util.*;
-import java.net.MalformedURLException;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.basic.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
-import net.ontopia.infoset.impl.basic.URILocator;
-
-import org.xml.sax.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.ontopia.infoset.core.LocatorIF;
+import org.xml.sax.InputSource;
 
 /**
  * INTERNAL: A common base class for Reader implementations that can

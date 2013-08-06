@@ -20,11 +20,23 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
 
 /**
  * PUBLIC: Utilities for generating keys from complex topic map

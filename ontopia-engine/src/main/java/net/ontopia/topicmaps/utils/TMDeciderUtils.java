@@ -20,13 +20,15 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
 import java.net.MalformedURLException;
-
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import net.ontopia.utils.DeciderIF;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
 
 /**
  * INTERNAL: Utility class for creating topic map-based deciders.

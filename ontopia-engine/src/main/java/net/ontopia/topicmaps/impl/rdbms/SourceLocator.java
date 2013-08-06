@@ -20,8 +20,7 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import net.ontopia.infoset.core.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.infoset.core.LocatorIF;
 
 /**
  * INTERNAL: A locator class used for representing topic map object

@@ -20,10 +20,13 @@
 
 package net.ontopia.topicmaps.cmdlineutils.statistics;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.basic.*;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * 

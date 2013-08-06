@@ -20,12 +20,10 @@
 
 package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
-import java.io.File;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.xml.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.impl.rdbms.*;
+import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
 
 /**
  * PUBLIC: Command line utility for deleting topic maps in a

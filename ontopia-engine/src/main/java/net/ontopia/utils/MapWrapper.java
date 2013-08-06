@@ -20,7 +20,9 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * INTERNAL: Abstract Map implementation that delegates all its method

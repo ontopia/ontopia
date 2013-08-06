@@ -22,7 +22,11 @@ package net.ontopia.topicmaps.utils;
 
 import java.util.Collection;
 import java.util.Iterator;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * PUBLIC: A helper class that makes it easier to build associations.

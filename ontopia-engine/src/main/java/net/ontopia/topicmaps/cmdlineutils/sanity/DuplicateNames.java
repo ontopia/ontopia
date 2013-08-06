@@ -20,10 +20,12 @@
 
 package net.ontopia.topicmaps.cmdlineutils.sanity;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 
 public class DuplicateNames {
   private TopicMapIF tm;

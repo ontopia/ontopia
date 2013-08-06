@@ -22,13 +22,11 @@ package net.ontopia.utils;
 
 import java.io.Writer;
 import java.io.IOException;
-import java.sql.*;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.text.DecimalFormat;
-import net.ontopia.utils.StringUtils;
 
 /**
  * INTERNAL: Statistics collector for profiling queries, whether tolog

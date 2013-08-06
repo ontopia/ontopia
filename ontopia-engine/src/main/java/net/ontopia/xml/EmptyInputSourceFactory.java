@@ -21,7 +21,7 @@
 package net.ontopia.xml;
 
 import java.io.StringReader;
-import org.xml.sax.*;
+import org.xml.sax.InputSource;
 
 /**
  * INTERNAL: An InputSource factory that creates input sources with no

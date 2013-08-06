@@ -20,9 +20,10 @@
 
 package net.ontopia.xml;
 
-import org.xml.sax.*;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 /**
  * INTERNAL: A factory for creating SAX2 XMLReaders using the JAXP

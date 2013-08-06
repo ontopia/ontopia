@@ -25,7 +25,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
-import net.ontopia.utils.*;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
 
 /**
  * INTERNAL: Class for representing information about a the Ontopia

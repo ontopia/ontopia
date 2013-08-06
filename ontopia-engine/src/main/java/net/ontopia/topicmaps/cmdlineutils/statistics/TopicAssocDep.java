@@ -20,14 +20,16 @@
 
 package net.ontopia.topicmaps.cmdlineutils.statistics;
 
-import java.util.*;
-import java.lang.reflect.Array;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.core.index.*;
-import net.ontopia.topicmaps.cmdlineutils.sanity.AssociationSanity;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * Class used for locating associations and their types.

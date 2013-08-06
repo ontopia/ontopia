@@ -21,10 +21,12 @@
 package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.infoset.impl.basic.URILocator;
 import net.ontopia.persistence.proxy.ConnectionFactoryIF;
 import net.ontopia.persistence.proxy.IdentityIF;
 import net.ontopia.persistence.proxy.PersistentIF;

@@ -22,12 +22,15 @@ package net.ontopia.topicmaps.cmdlineutils.rdbms;
 
 import java.util.Iterator;
 import java.io.File;
-import net.ontopia.utils.*;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.xml.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.impl.rdbms.*;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.UniquenessViolationException;
+import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
+import net.ontopia.topicmaps.utils.MergeUtils;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.URIUtils;
 
 /**
  * INTERNAL: Command line utility for translating the source locators

@@ -2,35 +2,29 @@
 header { package net.ontopia.topicmaps.utils.ctm; }
 
 {
-  import java.io.File;
   import java.io.Reader;
   import java.io.IOException;
-  
   import java.net.MalformedURLException;
-  
   import java.util.Set;
   import java.util.Map;
   import java.util.List;
   import java.util.HashMap;
   import java.util.Iterator;
   import java.util.ArrayList;
-  import java.util.Collection;
-  
   import net.ontopia.utils.CompactHashSet;
   import net.ontopia.utils.OntopiaRuntimeException;
   import net.ontopia.infoset.core.LocatorIF;
   import net.ontopia.infoset.impl.basic.URILocator;
-  import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-  import net.ontopia.topicmaps.core.*;
+  import net.ontopia.topicmaps.core.TopicMapIF;
+  import net.ontopia.topicmaps.core.TopicMapReaderIF;
+  import net.ontopia.topicmaps.core.TopicMapBuilderIF;
   import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-  import net.ontopia.topicmaps.xml.XTMContentHandler;
   import net.ontopia.topicmaps.xml.InvalidTopicMapException;
   import net.ontopia.topicmaps.utils.PSI;
   import net.ontopia.topicmaps.utils.MergeUtils;
   import net.ontopia.topicmaps.utils.ltm.AntlrWrapException;
   import org.xml.sax.InputSource;
   import antlr.TokenStreamException;
-  import antlr.SemanticException;
 }
 
 /**

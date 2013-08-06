@@ -22,16 +22,18 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.sql.*;
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.entry.*;
-import net.ontopia.topicmaps.utils.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Collection;
+import java.util.Collections;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.core.Locators;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.persistence.proxy.*;
-
+import net.ontopia.persistence.proxy.RDBMSStorage;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.entry.TopicMapSourceIF;
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

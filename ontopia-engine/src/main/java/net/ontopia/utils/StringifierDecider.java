@@ -20,8 +20,6 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
-
 /**
  * INTERNAL: Decider that stringifies an object and passes it to the
  * subdecider.

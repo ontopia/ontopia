@@ -24,18 +24,22 @@ import java.util.Set;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.xml.sax.DocumentHandler;
-import org.xml.sax.SAXException;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.utils.StringUtils;
 import net.ontopia.utils.CompactHashSet;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 import net.ontopia.infoset.core.LocatorIF;
-
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.DocumentHandler;
+import org.xml.sax.SAXException;
 
 /**
  * PUBLIC: Exports partial topic maps using an approach inspired

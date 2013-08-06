@@ -24,10 +24,20 @@ import java.util.Iterator;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.ArrayList;
-
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.schema.impl.osl.*;
-import net.ontopia.topicmaps.schema.core.*;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.schema.core.TMObjectMatcherIF;
+import net.ontopia.topicmaps.schema.impl.osl.OSLSchema;
+import net.ontopia.topicmaps.schema.impl.osl.OccurrenceConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.ScopeSpecification;
+import net.ontopia.topicmaps.schema.impl.osl.TopicClass;
+import net.ontopia.topicmaps.schema.impl.osl.TopicNameConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.TopicRoleConstraint;
+import net.ontopia.topicmaps.schema.impl.osl.TypeSpecification;
+import net.ontopia.topicmaps.schema.impl.osl.VariantConstraint;
 
 public class TopicClassAnalyzer extends AbstractSchemaAnalyzer {
 

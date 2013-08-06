@@ -22,11 +22,22 @@ package net.ontopia.topicmaps.impl.rdbms;
 
 import java.io.Reader;
 import java.io.Serializable;
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.Collection;
+import java.util.Iterator;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.utils.PSI;
-import net.ontopia.infoset.core.*;
 import net.ontopia.persistence.proxy.TransactionIF;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.CrossTopicMapException;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 
 /**
  * INTERNAL: The default topic map builder implementation.

@@ -20,7 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 /**
  * PUBLIC: A store factory that always returns the store given to it

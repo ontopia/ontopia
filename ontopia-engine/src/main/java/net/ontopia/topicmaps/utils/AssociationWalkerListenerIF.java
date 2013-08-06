@@ -20,7 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.TopicIF;
 
 /**
  * PUBLIC: This interface defines a listener to the

@@ -20,7 +20,7 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import net.ontopia.infoset.core.*;
+import net.ontopia.infoset.core.LocatorIF;
  
 /**
  * INTERNAL: 

@@ -21,22 +21,17 @@
 package net.ontopia.topicmaps.query.spi;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.DocumentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.AttributeListImpl;
-
-import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.xml.SAXTracker;
 import net.ontopia.xml.DefaultXMLReaderFactory;

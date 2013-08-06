@@ -25,8 +25,10 @@ import java.io.Writer;
 import java.io.OutputStreamWriter;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import org.xml.sax.*;
 import net.ontopia.utils.StringUtils;
+import org.xml.sax.AttributeList;
+import org.xml.sax.DocumentHandler;
+import org.xml.sax.Locator;
 
 /**
  * INTERNAL: SAX document handler that prints canonical XML. Note that

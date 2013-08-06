@@ -20,17 +20,19 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import java.net.URL;
-import java.net.URLConnection;
+import com.hp.hpl.jena.rdf.arp.ALiteral;
+import com.hp.hpl.jena.rdf.arp.AResource;
+import com.hp.hpl.jena.rdf.arp.StatementHandler;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.IOException;
-import java.io.InputStreamReader;
-
-import net.ontopia.utils.OntopiaRuntimeException;
-
-import com.hp.hpl.jena.rdf.arp.*;
-import com.hp.hpl.jena.rdf.model.*;
 
 /**
  * INTERNAL: Used by the RDF2TM plugin.

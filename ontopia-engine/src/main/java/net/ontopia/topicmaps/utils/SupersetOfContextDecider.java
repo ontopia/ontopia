@@ -20,9 +20,10 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.Collection;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: Decider that decides whether the ScopedIF's scope is a

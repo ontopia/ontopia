@@ -20,9 +20,10 @@
 
 package net.ontopia.xml;
 
-import org.xml.sax.*;
 import org.slf4j.Logger;
 import net.ontopia.utils.PropertyUtils;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXParseException;
 
 /**
  * INTERNAL: SAX2 error handler implementation that uses slf4j to log

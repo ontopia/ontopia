@@ -21,12 +21,16 @@
 package net.ontopia.topicmaps.query.spi;
 
 import java.io.IOException;
-import java.sql.*;
-import java.util.*;
-
-import net.ontopia.topicmaps.core.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Properties;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
-import net.ontopia.utils.*;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.PropertyUtils;
+import net.ontopia.utils.StringUtils;
 
 /**
  * EXPERIMENTAL: RDBMS searcher implementation that executes a SQL

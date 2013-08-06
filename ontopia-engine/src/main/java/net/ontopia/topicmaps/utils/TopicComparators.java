@@ -20,8 +20,11 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import net.ontopia.utils.StringifierComparator;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * INTERNAL: A collection of topic related comparators.

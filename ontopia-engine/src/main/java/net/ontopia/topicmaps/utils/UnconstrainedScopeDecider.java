@@ -20,9 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.utils.DeciderIF;
 
 /**
  * INTERNAL: This decider accepts all objects in the unconstrained

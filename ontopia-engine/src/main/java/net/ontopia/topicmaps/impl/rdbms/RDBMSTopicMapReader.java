@@ -20,8 +20,11 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 
 /**
  * INTERNAL: Topic map reader that reads topic maps from the RDBMS

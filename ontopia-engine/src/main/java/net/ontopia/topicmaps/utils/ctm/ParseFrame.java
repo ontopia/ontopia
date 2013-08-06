@@ -20,7 +20,11 @@
 
 package net.ontopia.topicmaps.utils.ctm;
 
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.ReifiableIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
 
 /**
  * INTERNAL: Carrier for variables used during parsing to keep track

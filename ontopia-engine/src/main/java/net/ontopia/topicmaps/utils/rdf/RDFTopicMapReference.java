@@ -20,17 +20,16 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import java.io.*;
-import java.net.*;
+import com.hp.hpl.jena.shared.JenaException;
+import java.io.IOException;
+import java.net.URL;
 import net.ontopia.utils.URIUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.entry.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.infoset.core.LocatorIF;
-
-import com.hp.hpl.jena.shared.JenaException;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.entry.AbstractURLTopicMapReference;
 
 /**
  * INTERNAL: An RDF file topic map reference.

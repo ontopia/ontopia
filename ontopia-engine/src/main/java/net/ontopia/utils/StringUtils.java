@@ -20,10 +20,13 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
 import java.io.Writer;
 import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.StringTokenizer;
 
 /**
  * INTERNAL: Class that contains useful string operation methods.

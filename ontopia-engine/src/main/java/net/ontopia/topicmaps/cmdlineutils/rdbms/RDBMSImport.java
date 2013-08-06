@@ -26,16 +26,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.channels.FileChannel;
 import java.util.Properties;
-
 import org.xml.sax.InputSource;
-
 import net.ontopia.persistence.jdbcspy.SpyDriver;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapImporterIF;
+import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
+import net.ontopia.topicmaps.impl.rdbms.TopicMap;
+import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.PropertyUtils;
 import net.ontopia.xml.AbstractXMLFormatReader;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.xml.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.topicmaps.impl.rdbms.*;
 
 /**
  * PUBLIC: Command line utility for importing topic map files into a

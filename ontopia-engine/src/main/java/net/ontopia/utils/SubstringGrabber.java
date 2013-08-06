@@ -20,8 +20,6 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
-
 /**
  * INTERNAL: Grabber that grabs a substring from the String object given
  * to it.

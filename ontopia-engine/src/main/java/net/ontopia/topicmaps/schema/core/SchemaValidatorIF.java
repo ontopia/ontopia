@@ -20,7 +20,9 @@
 
 package net.ontopia.topicmaps.schema.core;
 
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
 /**
  * PUBLIC: Schema validators can validate topic map objects against a

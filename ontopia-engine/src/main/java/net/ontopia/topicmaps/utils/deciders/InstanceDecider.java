@@ -22,11 +22,10 @@ package net.ontopia.topicmaps.utils.deciders;
 
 import java.util.Collection;
 import java.util.Iterator;
-
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TypedIF;
 import net.ontopia.utils.DeciderIF;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.ClassInstanceUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

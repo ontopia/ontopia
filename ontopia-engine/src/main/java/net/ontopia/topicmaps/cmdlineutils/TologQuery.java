@@ -21,13 +21,18 @@
 package net.ontopia.topicmaps.cmdlineutils;
 
 import java.io.IOException;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.query.core.*;
-import net.ontopia.topicmaps.query.utils.*;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.query.core.InvalidQueryException;
+import net.ontopia.topicmaps.query.core.ParsedQueryIF;
+import net.ontopia.topicmaps.query.core.QueryProcessorIF;
+import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.impl.basic.QueryTracer;
+import net.ontopia.topicmaps.query.utils.QueryUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.StreamUtils;
 
 /**
  * PUBLIC: Runs tolog queries against a given topic map.

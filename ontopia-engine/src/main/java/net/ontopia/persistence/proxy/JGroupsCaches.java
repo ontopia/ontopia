@@ -20,9 +20,10 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.*;
-
-import net.ontopia.utils.*;
+import java.util.Collections;
+import java.util.Map;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.SoftHashMap;
 
 /**
  * INTERNAL: Caches used by JGroups cluster.

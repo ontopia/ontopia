@@ -19,16 +19,17 @@
  */
 
 package net.ontopia.topicmaps.impl.rdbms;
-import java.io.Reader;
-import java.io.InputStream;
-import java.util.*;
 
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.utils.*;
+import java.io.Reader;
+import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.persistence.proxy.*;
+import net.ontopia.topicmaps.core.DataTypes;
+import net.ontopia.topicmaps.core.ReadOnlyException;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
+import net.ontopia.topicmaps.impl.utils.ObjectStrings;
   
 /**
  * INTERNAL: The read-only rdbms variant name implementation.

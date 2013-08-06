@@ -21,14 +21,10 @@
 package net.ontopia.topicmaps.utils.ctm;
 
 import java.util.List;
-import java.util.Stack;
-import java.net.MalformedURLException;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
-
+import net.ontopia.topicmaps.core.TopicIF;
 import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.xml.InvalidTopicMapException;
 
 /**

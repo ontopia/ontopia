@@ -20,9 +20,11 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Map;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.SoftHashMap;
 
-import net.ontopia.utils.*;
 
 /**
  * INTERNAL: Default caches.

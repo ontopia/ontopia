@@ -20,11 +20,15 @@
 
 package net.ontopia.topicmaps.cmdlineutils.statistics;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.core.index.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.utils.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.index.ClassInstanceIndexIF;
+import net.ontopia.topicmaps.utils.TopicStringifiers;
+import net.ontopia.utils.StringifierIF;
 
 /**
  * Topic Map count methods

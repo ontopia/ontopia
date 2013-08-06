@@ -20,9 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.*;
+import java.util.Comparator;
+import net.ontopia.topicmaps.core.TMObjectIF;
 
 /**
  * INTERNAL: Comparator that compares object ids of TMObjectIF objects.

@@ -20,11 +20,15 @@
 
 package net.ontopia.xml;
 
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.HashMap;
+import org.xml.sax.DTDHandler;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.XMLReader;
 
 /**
  * INTERNAL: A factory for creating configured SAX2 XMLReaders.</p>

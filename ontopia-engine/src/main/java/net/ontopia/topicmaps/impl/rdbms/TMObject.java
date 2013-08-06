@@ -20,13 +20,15 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
+import java.util.Collection;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.impl.utils.*;
-import net.ontopia.persistence.proxy.*;
-
+import net.ontopia.persistence.proxy.AbstractRWPersistent;
+import net.ontopia.persistence.proxy.IdentityNotFoundException;
+import net.ontopia.persistence.proxy.TransactionIF;
+import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.impl.utils.EventManagerIF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

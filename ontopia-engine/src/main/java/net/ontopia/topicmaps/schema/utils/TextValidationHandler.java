@@ -23,12 +23,18 @@ package net.ontopia.topicmaps.schema.utils;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.StringifierIF;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.utils.TopicStringifiers;
 import net.ontopia.topicmaps.schema.core.ValidationHandlerIF;
 import net.ontopia.topicmaps.schema.core.ConstraintIF;
-import net.ontopia.topicmaps.schema.impl.osl.*;
+import net.ontopia.topicmaps.schema.impl.osl.TypedConstraintIF;
 
 /**
  * PUBLIC: Validation handler that writes error reports on each

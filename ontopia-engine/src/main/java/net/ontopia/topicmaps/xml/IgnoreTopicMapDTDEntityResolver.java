@@ -20,7 +20,9 @@
 
 package net.ontopia.topicmaps.xml;
 
-import net.ontopia.xml.*;
+import net.ontopia.xml.ConfigurableEntityResolver;
+import net.ontopia.xml.EmptyInputSourceFactory;
+import net.ontopia.xml.InputSourceFactoryIF;
 import org.xml.sax.InputSource;
 
 /**

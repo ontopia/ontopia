@@ -20,15 +20,14 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
+import com.hp.hpl.jena.rdf.arp.ARP;
+import com.hp.hpl.jena.rdf.arp.StatementHandler;
 import java.net.URL;
 import java.net.URLConnection;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
-
 import net.ontopia.utils.OntopiaRuntimeException;
-
-import com.hp.hpl.jena.rdf.arp.*;
 
 /**
  * INTERNAL: Various utilities for working with RDF.
