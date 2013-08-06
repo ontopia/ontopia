@@ -20,12 +20,8 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
-import junit.framework.*;
-import net.ontopia.infoset.impl.basic.URILocator;
-import net.ontopia.utils.URIUtils;
-import net.ontopia.topicmaps.core.*;
+import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 

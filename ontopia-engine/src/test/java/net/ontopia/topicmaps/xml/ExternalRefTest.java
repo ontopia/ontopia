@@ -20,17 +20,11 @@
 
 package net.ontopia.topicmaps.xml;
 
-import net.ontopia.topicmaps.impl.basic.*;
-import net.ontopia.infoset.core.*;
-import net.ontopia.infoset.impl.basic.*;
-import net.ontopia.xml.*;
-
-import org.xml.sax.*;
-import java.util.*;
-import java.io.*;
-import java.net.*;
-
-import net.ontopia.utils.FileUtils;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;

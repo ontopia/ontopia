@@ -20,10 +20,8 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.io.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.io.File;
+import java.io.IOException;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
 import net.ontopia.topicmaps.xml.XTMTopicMapReader;
@@ -31,7 +29,6 @@ import net.ontopia.topicmaps.xml.XTMTopicMapWriter;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
-
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;

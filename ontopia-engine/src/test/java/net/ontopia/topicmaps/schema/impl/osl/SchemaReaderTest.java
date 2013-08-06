@@ -21,7 +21,8 @@
 package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.IOException;
-import net.ontopia.topicmaps.schema.core.*;
+import net.ontopia.topicmaps.schema.core.CardinalityConstraintIF;
+import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
 import org.junit.Assert;
 import org.junit.Test;
 

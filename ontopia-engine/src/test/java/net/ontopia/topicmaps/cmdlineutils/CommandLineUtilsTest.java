@@ -23,10 +23,14 @@ package net.ontopia.topicmaps.cmdlineutils;
 import java.util.Collection;
 import java.util.HashMap;
 import junit.framework.TestCase;
-import net.ontopia.topicmaps.cmdlineutils.statistics.*;
-import net.ontopia.topicmaps.cmdlineutils.sanity.*;
-import net.ontopia.topicmaps.core.*;
-//import net.ontopia.topicmaps.impl.basic.*;
+import net.ontopia.topicmaps.cmdlineutils.sanity.AssociationSanity;
+import net.ontopia.topicmaps.cmdlineutils.sanity.DuplicateNames;
+import net.ontopia.topicmaps.cmdlineutils.sanity.DuplicateOccurrences;
+import net.ontopia.topicmaps.cmdlineutils.sanity.NoNames;
+import net.ontopia.topicmaps.cmdlineutils.statistics.NoTypeCount;
+import net.ontopia.topicmaps.cmdlineutils.statistics.TopicAssocDep;
+import net.ontopia.topicmaps.cmdlineutils.statistics.TopicCounter;
+import net.ontopia.topicmaps.core.TopicMapIF;
 
 public abstract class CommandLineUtilsTest extends TestCase {
 
@@ -37,21 +41,15 @@ public abstract class CommandLineUtilsTest extends TestCase {
     super(name);
   }
 
-
-
   protected abstract void setUp();
 
   protected abstract void tearDown();
-
-
 
   /**
    * **********************************************
    * methods used to test the statistics printer.
    * **********************************************
    */
-
-
 
   public void testTopicCounter() {
     TopicCounter test = new TopicCounter(tm);
@@ -95,9 +93,6 @@ public abstract class CommandLineUtilsTest extends TestCase {
            test.getNumberOfOccurrences() != 0);
 
 
-
-
-
     //Test the "irregular" operations.
     
     test = new TopicCounter(null);
@@ -115,7 +110,6 @@ public abstract class CommandLineUtilsTest extends TestCase {
 
     
   }
-
 
   public void testTopicAssocDep() {
 
@@ -135,7 +129,6 @@ public abstract class CommandLineUtilsTest extends TestCase {
     }
 
   }
-
 
   public void testNoTypeCount() {
     
@@ -172,19 +165,11 @@ public abstract class CommandLineUtilsTest extends TestCase {
   }
 
 
-
-
-
-
-  
   /**
    * *******************************************
    * methods used to test the sanity checker.
    * *******************************************
    */
-
-
-
 
   public void testDuplicateAssociations() {
     
@@ -223,8 +208,6 @@ public abstract class CommandLineUtilsTest extends TestCase {
     assertEquals(2, test.getNoCharacteristics().size());
     //! assertEquals(8, test.getNoNameUnconstrained().size());
 
-
-
   }
 
   public void testDuplicateOccurrences() {
@@ -249,8 +232,3 @@ public abstract class CommandLineUtilsTest extends TestCase {
 
   }
 }
-
-
-
-
-

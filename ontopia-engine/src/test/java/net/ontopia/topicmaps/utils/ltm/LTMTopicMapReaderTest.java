@@ -20,15 +20,12 @@
 
 package net.ontopia.topicmaps.utils.ltm;
 
-import java.io.File;
 import java.io.IOException;
 import net.ontopia.infoset.core.LocatorIF;
-import net.ontopia.topicmaps.core.*;
-
-import net.ontopia.utils.FileUtils;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
-
 import org.junit.Assert;
 import org.junit.Test;
 

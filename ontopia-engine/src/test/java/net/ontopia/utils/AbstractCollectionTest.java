@@ -20,7 +20,9 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import junit.framework.TestCase;
 
 public abstract class AbstractCollectionTest extends TestCase {

@@ -20,11 +20,18 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import junit.framework.TestCase;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.utils.StringifierIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.topicmaps.core.*;
 
 public class TopicStringifiersTest extends TestCase {
 

@@ -20,8 +20,11 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
-import net.ontopia.utils.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import junit.framework.TestCase;
 
 public class CompactHashMapTest extends TestCase {

@@ -20,9 +20,10 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 import net.ontopia.utils.FileUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.infoset.core.LocatorIF;

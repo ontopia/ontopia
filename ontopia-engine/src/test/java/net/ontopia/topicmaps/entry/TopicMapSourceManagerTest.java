@@ -20,7 +20,6 @@
 
 package net.ontopia.topicmaps.entry;
 
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import junit.framework.TestCase;
 

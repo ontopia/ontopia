@@ -20,7 +20,14 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
+import java.util.Set;
 import junit.framework.TestCase;
 
 public class CompactHashSetTest extends TestCase {

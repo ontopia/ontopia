@@ -20,7 +20,7 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.List;
 import junit.framework.TestCase;
 
 public class RingBufferTest extends TestCase {

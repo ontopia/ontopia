@@ -20,19 +20,21 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.entry.*;
-import net.ontopia.persistence.proxy.*;
-
+import java.io.IOException;
 import java.util.Properties;
 import java.sql.Connection;
 import java.sql.SQLException;
+import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.persistence.rdbms.DatabaseProjectReader;
 import net.ontopia.persistence.rdbms.DDLExecuter;
 import net.ontopia.persistence.rdbms.GenericSQLProducer;
 import net.ontopia.persistence.rdbms.Project;
+import net.ontopia.topicmaps.core.TestFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
+import net.ontopia.topicmaps.entry.TopicMapSourceIF;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.utils.StreamUtils;
 import org.xml.sax.SAXException;
 
 public class RDBMSTestFactory implements TestFactoryIF {

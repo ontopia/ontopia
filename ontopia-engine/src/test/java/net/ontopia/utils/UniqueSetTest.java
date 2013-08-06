@@ -20,7 +20,7 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Collections;
 import junit.framework.TestCase;
 
 public class UniqueSetTest extends TestCase {

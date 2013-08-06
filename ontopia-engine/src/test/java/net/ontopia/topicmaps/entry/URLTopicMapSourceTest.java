@@ -20,10 +20,10 @@
 
 package net.ontopia.topicmaps.entry;
 
-import java.util.*;
-import net.ontopia.topicmaps.xml.*;
-import net.ontopia.topicmaps.utils.ltm.*;
-import net.ontopia.topicmaps.utils.rdf.*;
+import java.util.Collection;
+import net.ontopia.topicmaps.utils.ltm.LTMTopicMapReference;
+import net.ontopia.topicmaps.utils.rdf.RDFTopicMapReference;
+import net.ontopia.topicmaps.xml.XTMTopicMapReference;
 
 public class URLTopicMapSourceTest extends AbstractTopicMapSourceTest {
 

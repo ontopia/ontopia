@@ -20,12 +20,14 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.io.File;
-import java.util.*;
-
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.impl.basic.*;
-
+import java.util.Collection;
+import java.util.Set;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 
 public class AssociationWalkerTest extends AbstractUtilsTestCase {
   public AssociationWalkerTest(String name) {

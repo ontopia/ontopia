@@ -20,8 +20,11 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.entry.*;
+import net.ontopia.topicmaps.core.TestFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreFactoryIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.entry.StoreFactoryReference;
+import net.ontopia.topicmaps.entry.TopicMapReferenceIF;
 
 public class BasicTestFactory implements TestFactoryIF {
 

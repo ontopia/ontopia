@@ -22,9 +22,8 @@ package net.ontopia.topicmaps.schema.impl.osl;
 
 import java.io.File;
 import java.io.IOException;
-import junit.framework.TestCase;
-import net.ontopia.topicmaps.schema.core.*;
-import net.ontopia.utils.FileUtils;
+import net.ontopia.topicmaps.schema.core.SchemaIF;
+import net.ontopia.topicmaps.schema.core.SchemaSyntaxException;
 import net.ontopia.utils.TestFileUtils;
 
 public abstract class AbstractSchemaTestCase {

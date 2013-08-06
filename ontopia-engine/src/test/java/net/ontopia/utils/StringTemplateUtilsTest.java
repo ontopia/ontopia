@@ -21,7 +21,9 @@
 
 package net.ontopia.utils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import junit.framework.TestCase;
 
 public class StringTemplateUtilsTest extends TestCase {

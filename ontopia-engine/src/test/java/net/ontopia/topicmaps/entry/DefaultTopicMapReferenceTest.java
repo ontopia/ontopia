@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.entry;
 
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import junit.framework.TestCase;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
 
 public class DefaultTopicMapReferenceTest extends TestCase {
   TopicMapStoreIF store;

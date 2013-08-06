@@ -20,25 +20,18 @@
 
 package net.ontopia.topicmaps.utils.rdf;
 
-import java.io.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import net.ontopia.utils.OntopiaRuntimeException;
-import net.ontopia.topicmaps.core.TopicMapIF;
-import net.ontopia.topicmaps.core.TopicMapReaderIF;
-import net.ontopia.topicmaps.utils.deciders.TMDecider;
-import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
-
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-
-import net.ontopia.utils.FileUtils;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import net.ontopia.utils.OntopiaRuntimeException;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.utils.deciders.TMDecider;
+import net.ontopia.topicmaps.utils.ImportExportUtils;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.StreamUtils;
-import net.ontopia.utils.URIUtils;
-
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;

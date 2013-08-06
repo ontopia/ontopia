@@ -20,12 +20,24 @@
 
 package net.ontopia.topicmaps.impl.basic;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
-import net.ontopia.infoset.core.*;
+import java.util.Collections;
+import java.util.Iterator;
 import junit.framework.TestCase;
+import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.ConstraintViolationException;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.ScopedIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.TypedIF;
+import net.ontopia.topicmaps.core.UniquenessViolationException;
+import net.ontopia.topicmaps.utils.IntersectionOfContextDecider;
+import net.ontopia.utils.DeciderIterator;
 
 public abstract class TopicMapPackageTest extends TestCase {
   public static TopicMapIF tm;

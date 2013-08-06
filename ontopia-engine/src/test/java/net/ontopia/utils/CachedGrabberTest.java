@@ -20,9 +20,8 @@
 
 package net.ontopia.utils;
 
-import junit.framework.*;
-import java.util.*;
-import net.ontopia.utils.*;
+import junit.framework.TestSuite;
+import junit.framework.Test;
 
 public class CachedGrabberTest extends AbstractGrabberTest {
 

@@ -20,21 +20,23 @@
 
 package net.ontopia.persistence.proxy;
 
-import java.util.*;
-import net.ontopia.utils.*;
-import net.ontopia.infoset.core.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.utils.*;
+import java.util.HashMap;
+import java.util.Map;
+import net.ontopia.infoset.core.Locators;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.OccurrenceIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.core.TopicNameIF;
+import net.ontopia.topicmaps.core.VariantNameIF;
 import net.ontopia.topicmaps.entry.TopicMaps;
-
-import org.jgroups.Channel;
-import org.jgroups.ChannelException;
-import org.jgroups.JChannel;
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.OntopiaRuntimeException;
 import org.jgroups.Message;
-import org.jgroups.MessageListener;
-import org.jgroups.blocks.PullPushAdapter;
 import org.junit.Ignore;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

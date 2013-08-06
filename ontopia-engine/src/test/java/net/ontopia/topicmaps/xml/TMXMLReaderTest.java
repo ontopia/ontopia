@@ -20,9 +20,9 @@
 
 package net.ontopia.topicmaps.xml;
 
-import java.io.*;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.utils.FileUtils;
+import java.io.IOException;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.utils.TestFileUtils;
 import net.ontopia.utils.URIUtils;
 import org.junit.Assert;

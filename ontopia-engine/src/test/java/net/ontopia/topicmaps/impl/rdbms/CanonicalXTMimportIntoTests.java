@@ -20,12 +20,12 @@
 
 package net.ontopia.topicmaps.impl.rdbms;
 
-import java.io.File;
 import java.io.IOException;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.xml.*;
-import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
 import net.ontopia.infoset.impl.basic.URILocator;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.topicmaps.core.TopicMapStoreIF;
+import net.ontopia.topicmaps.xml.CanonicalTopicMapWriter;
+import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 import net.ontopia.utils.URIUtils;
 import org.junit.BeforeClass;
 

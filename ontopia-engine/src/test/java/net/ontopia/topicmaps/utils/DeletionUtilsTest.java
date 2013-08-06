@@ -20,14 +20,13 @@
 
 package net.ontopia.topicmaps.utils;
 
-import java.io.*;
-import java.util.*;
 import junit.framework.TestCase;
-
-import net.ontopia.utils.*;
+import net.ontopia.topicmaps.core.AssociationIF;
+import net.ontopia.topicmaps.core.AssociationRoleIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapBuilderIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
-import net.ontopia.topicmaps.core.*;
-import net.ontopia.topicmaps.xml.XTMTopicMapReader;
 
 public class DeletionUtilsTest extends TestCase {
 

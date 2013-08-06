@@ -20,10 +20,9 @@
 
 package net.ontopia.utils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import junit.framework.TestCase;
-import net.ontopia.utils.FileUtils;
-import net.ontopia.utils.TestFileUtils;
 
 public class EncryptionUtilsTest extends TestCase {
 
