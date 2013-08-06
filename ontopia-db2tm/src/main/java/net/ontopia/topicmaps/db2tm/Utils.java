@@ -20,11 +20,18 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.jsp.PageContext;
-import net.ontopia.utils.*;
-import net.ontopia.topicmaps.core.*;
 import net.ontopia.infoset.core.LocatorIF;
+import net.ontopia.topicmaps.core.TMObjectIF;
+import net.ontopia.topicmaps.core.TopicIF;
+import net.ontopia.topicmaps.core.TopicMapIF;
+import net.ontopia.utils.StringUtils;
 
 /**
  * INTERNAL: Helper class used by DB2TM internals.

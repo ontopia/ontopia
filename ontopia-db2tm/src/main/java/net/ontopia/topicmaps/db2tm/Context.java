@@ -28,7 +28,6 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.AssociationIF;
 import net.ontopia.topicmaps.core.AssociationRoleIF;
@@ -44,7 +43,6 @@ import net.ontopia.topicmaps.query.core.QueryResultIF;
 import net.ontopia.topicmaps.query.core.DeclarationContextIF;
 import net.ontopia.topicmaps.query.core.InvalidQueryException;
 import net.ontopia.topicmaps.query.utils.QueryUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

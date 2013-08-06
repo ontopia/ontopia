@@ -21,11 +21,9 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.Date;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import net.ontopia.utils.ObjectUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

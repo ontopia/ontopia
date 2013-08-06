@@ -20,9 +20,6 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-
-import net.ontopia.utils.*;
-
 /**
  * INTERNAL: A tuple reader is an iterator-like interface for looping
  * through the tuples from a given relation.

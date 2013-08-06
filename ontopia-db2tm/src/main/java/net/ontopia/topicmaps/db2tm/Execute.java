@@ -20,10 +20,9 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.io.*;
+import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
-
 import net.ontopia.infoset.core.LocatorIF;
 import net.ontopia.topicmaps.core.TopicMapIF;
 import net.ontopia.topicmaps.core.TopicMapStoreIF;
@@ -31,10 +30,13 @@ import net.ontopia.topicmaps.core.TopicMapReaderIF;
 import net.ontopia.topicmaps.core.TopicMapWriterIF;
 import net.ontopia.topicmaps.impl.basic.InMemoryTopicMapStore;
 import net.ontopia.topicmaps.impl.rdbms.RDBMSTopicMapStore;
-import net.ontopia.topicmaps.utils.DuplicateSuppressionUtils;
 import net.ontopia.topicmaps.utils.ImportExportUtils;
-import net.ontopia.utils.*;
-
+import net.ontopia.utils.CmdlineOptions;
+import net.ontopia.utils.CmdlineUtils;
+import net.ontopia.utils.CollectionUtils;
+import net.ontopia.utils.ObjectUtils;
+import net.ontopia.utils.StringUtils;
+import net.ontopia.utils.URIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

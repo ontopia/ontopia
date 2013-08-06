@@ -20,9 +20,10 @@
 
 package net.ontopia.topicmaps.db2tm;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.ArrayList;
-import java.lang.reflect.*;
 import net.ontopia.utils.DebugUtils;
 
 /**

@@ -21,7 +21,6 @@
 package net.ontopia.topicmaps.db2tm;
 
 import java.util.Arrays;
-import net.ontopia.utils.OntopiaRuntimeException;
 
 /**
  * INTERNAL: Thrown when data input errors are detected by DB2TM.</p>

@@ -20,27 +20,32 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
-import java.text.*;
-
+import au.com.bytecode.opencsv.CSVReader;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 import net.ontopia.persistence.proxy.DefaultConnectionFactory;
 import net.ontopia.utils.CmdlineOptions;
 import net.ontopia.utils.CmdlineUtils;
 import net.ontopia.utils.OntopiaRuntimeException;
 import net.ontopia.utils.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 /** 
  * INTERNAL: Command line tool for importing comma- or semicolon
  * separated files into a database.
  */
-
 public class CSVImport {
 
   // Define a logging category.

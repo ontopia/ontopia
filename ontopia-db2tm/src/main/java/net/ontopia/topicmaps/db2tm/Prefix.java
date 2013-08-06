@@ -20,10 +20,6 @@
 
 package net.ontopia.topicmaps.db2tm;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-
 /**
  * INTERNAL: Represents a prefix declaration.
  */
